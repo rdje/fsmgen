@@ -9151,6 +9151,22 @@ cardinality, scoreboards, backend behavior, backend-language variants,
 verification-code generation, external converter dependencies such as `sv2v`,
 and VHDL remain future exact owners.
 
+Mixed dynamic/static issue-order queue read-data burst-length behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR.md)
+ships `.516`, report-only raw-`ARLEN` burst-length capture over generated mixed
+dynamic/static read burst-last same-ID `issue-order-queue` scalar read-data.
+The public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif`.
+It remains bounded to exactly one dynamic read plus one concrete static read,
+one depth-2 generated mixed queue, complete scalar last-beat `RDATA`/`RRESP`
+bindings, existing report-only `burst-length` metadata, and completion validity
+`generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
+Runtime validation, multi-beat output banks, broader mixed cardinality,
+scoreboards, backend behavior, backend-language variants, verification-code
+generation, external converter dependencies such as `sv2v`, and VHDL remain
+future exact owners. The next owned frontier is `.517`, runtime-validation
+readiness over this mixed-queue raw-`ARLEN` boundary.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

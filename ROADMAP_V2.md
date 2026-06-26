@@ -3768,6 +3768,21 @@ mixed cardinality, scoreboards, backend behavior, backend-language variants,
 verification-code generation, external converter dependencies such as `sv2v`,
 and VHDL remain deferred.
 
+`.516` now ships report-only raw-`ARLEN` burst-length capture over generated
+mixed dynamic/static read burst-last same-ID `issue-order-queue` scalar
+read-data. The new support-accounted sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif`.
+Coverage remains bounded to exactly one dynamic read plus one concrete static
+read, one depth-2 generated mixed queue, complete scalar last-beat
+`RDATA`/`RRESP` bindings, existing report-only `burst-length` metadata, and
+completion validity
+`generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
+Runtime validation, multi-beat output banks, broader mixed cardinality,
+scoreboards, backend behavior, backend-language variants, verification-code
+generation, external converter dependencies such as `sv2v`, and VHDL remain
+deferred. `.517` is the runtime-validation readiness audit over this new
+mixed-queue raw-`ARLEN` boundary.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

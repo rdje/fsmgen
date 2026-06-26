@@ -1170,6 +1170,41 @@ subtest 'mixed dynamic/static read burst-last same-ID issue-order queue read-dat
     unlike($hdl, qr/\baxi0_arlen\b/, 'SystemVerilog keeps ARLEN absent for scalar mixed queue last-beat read-data');
 };
 
+subtest 'mixed dynamic/static read burst-last same-ID issue-order queue read-data captures report-only raw ARLEN' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_order_queue_read_data_burst_length());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(input axi0_rlast\)/, 'mixed dynamic/static read burst-last issue-order queue read-data burst-length declares RLAST input');
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data burst-length declares ARLEN input');
+    like($isf, qr/\(var axi0_r0_arlen_q \(width 8\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data burst-length allocates dynamic raw ARLEN storage');
+    like($isf, qr/\(var axi0_r1_arlen_q \(width 8\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data burst-length allocates static raw ARLEN storage');
+    like($isf, qr/\(rule axi0_r0_burst_length_capture axi0_r0_request\s+\(axi0_r0_arlen_q axi0_arlen\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data burst-length captures dynamic ARLEN under request');
+    like($isf, qr/\(rule axi0_r1_burst_length_capture axi0_r1_request\s+\(axi0_r1_arlen_q axi0_arlen\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data burst-length captures static ARLEN under request');
+    like($isf, qr/\(rule axi0_r1_response_demux [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r1_complete\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data burst-length keeps queue-owned static RID/RLAST demux');
+    like($isf, qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_last_rdata axi0_rdata\)\s+\(axi0_r1_last_rresp axi0_rresp\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data burst-length keeps static last payload capture');
+    unlike($isf, qr/expected_beats|read_beat_count/, 'mixed dynamic/static read burst-last issue-order queue report-only burst-length keeps runtime beat-count state absent');
+
+    assert_mixed_dynamic_static_read_same_id_issue_order_queue_report($result->{report}, 'generator report', burst_last => 1);
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'generator mixed dynamic/static read burst-last same-ID issue-order queue read-data burst-length report',
+        'report_only',
+        'generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/\(-axi0_r1_burst_length_capture\s+<axi0_r1_request\s+\(<- \(axi0_r1_arlen_q axi0_arlen\)\)\s+\)/, 'scheduled .fsm lowers static mixed queue raw ARLEN capture');
+    like($fsm, qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_last_rresp> axi0_rresp\)\)/, 'scheduled .fsm keeps static mixed queue last-beat read-data capture');
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes ARLEN for mixed queue read-data burst-length');
+    like($hdl, qr/\breg\s+\[7:0\]\s+axi0_r1_arlen_q\b/, 'SystemVerilog declares static mixed queue raw ARLEN storage');
+    like($hdl, qr/assign\s+axi0_r1_burst_length_capture_en\s*=\s*axi0_r1_request\s*;/, 'SystemVerilog guards static mixed queue ARLEN capture by request');
+    like($hdl, qr/axi0_r1_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'SystemVerilog captures static mixed queue ARLEN');
+    unlike($hdl, qr/\bexpected_beats_q\b/, 'SystemVerilog omits expected-beat storage for report-only mixed queue burst-length');
+    unlike($hdl, qr/\bread_beat_count_q\b/, 'SystemVerilog omits beat-count storage for report-only mixed queue burst-length');
+};
+
 subtest 'dynamic write depth-3 same-ID issue-order queue captures third AWID slot and matches BID by issue order' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_write_depth3_same_id_issue_order_queue());
     my $isf = $result->{generated_ial1}{text};
@@ -6399,6 +6434,22 @@ sub sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_orde
                 } qw(r0 r1)
             ],
         },
+    };
+    return $contract;
+}
+
+sub sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_order_queue_read_data_burst_length {
+    my $contract = sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_order_queue_read_data();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-mixed-dynamic-static-burst-last-same-id-issue-order-queue-read-data-burst-length';
+    $contract->{read_data}{read}{burst_length} = {
+        source       => 'arlen',
+        signal       => 'axi0_arlen',
+        signal_width => 8,
+        encoding     => 'axlen-plus-one',
+        capture      => 'request',
+        max_beats    => 16,
+        validation   => 'report-only',
     };
     return $contract;
 }

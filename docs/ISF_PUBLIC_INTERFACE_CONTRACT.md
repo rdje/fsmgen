@@ -61,8 +61,9 @@ dynamic/static response-demux families, and generated one-dynamic plus
 one-concrete-static mixed dynamic/static same-ID issue-order queue behavior
 for write `BID`, read single-beat `RID`, read burst-last `RID && RLAST`, and
 paired scalar read-data over the generated mixed read single-beat and
-burst-last queue completions. Raw `ARLEN`, runtime validation, and multi-beat
-output banks over generated mixed dynamic/static issue-order queues, broader mixed
+burst-last queue completions, plus report-only raw-`ARLEN` burst-length capture
+over the generated mixed read burst-last queue completion. Runtime validation and
+multi-beat output banks over generated mixed dynamic/static issue-order queues, broader mixed
 issue-order queue cardinality, scoreboards, group-local simultaneous enqueue
 widening, packed burst-vector outputs, alternate full burst payload assembly,
 aliases, platform clauses, full AXI manager behavior, direct backend lowering,

@@ -2841,18 +2841,18 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/generated one-dynamic plus one-concrete-static mixed dynamic\/static same-ID issue-order queue behavior for write BID, read single-beat RID, read burst-last RID\/RLAST, and paired scalar read-data over the generated mixed read single-beat and burst-last queue completions/,
-        'manifest advertises shipped mixed dynamic/static same-ID issue-order queues and scalar read-data',
+        qr/generated one-dynamic plus one-concrete-static mixed dynamic\/static same-ID issue-order queue behavior for write BID, read single-beat RID, read burst-last RID\/RLAST, paired scalar read-data over the generated mixed read single-beat and burst-last queue completions, and report-only raw-ARLEN burst-length capture over the generated mixed read burst-last queue completion/,
+        'manifest advertises shipped mixed dynamic/static same-ID issue-order queues, scalar read-data, and report-only raw-ARLEN',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/paired scalar read-data over the generated mixed read single-beat and burst-last queue completions/,
-        'manifest advertises shipped mixed dynamic/static issue-order queue scalar read-data',
+        qr/paired scalar read-data over the generated mixed read single-beat and burst-last queue completions, and report-only raw-ARLEN burst-length capture over the generated mixed read burst-last queue completion/,
+        'manifest advertises shipped mixed dynamic/static issue-order queue scalar read-data and report-only raw-ARLEN',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/Raw ARLEN, runtime validation, and multi-beat output banks over generated mixed dynamic\/static issue-order queues/,
-        'manifest keeps mixed dynamic/static issue-order queue raw-ARLEN runtime and multi-beat family deferred',
+        qr/Runtime validation and multi-beat output banks over generated mixed dynamic\/static issue-order queues/,
+        'manifest keeps mixed dynamic/static issue-order queue runtime and multi-beat family deferred',
     );
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
     ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');
