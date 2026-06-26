@@ -4071,6 +4071,16 @@ separate contract and implementation owner settle explicit profile policy,
 authored `.apb` source identity, support-accounting identity/source kind,
 manifest wording, diagnostics, and mandatory generated `.isf` review
 preservation.
+`.553` now selects `.554`, direct bounded implementation of the first APB
+`.apb` profile-alias suffix. The selected contract mirrors
+`ppif/apb_requester_transfer.ppif` at future path
+`ppif/apb_requester_transfer.apb`, keeps explicit `(profile apb)` with no
+suffix inference, lowers through generated `apb_requester.isf` before
+`apb_requester.fsm`, support-accounts the alias as
+`intent.apb_profile_alias_requester_transfer` with source kind
+`ial2_profile_alias`, and reserves focused
+`t/1470-ial2-apb-profile-alias.t` coverage. `.apb` remains unsupported until
+`.554` implements the contract.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -3073,6 +3073,16 @@ separate contract and implementation owner settle explicit profile policy,
 authored `.apb` source identity, support-accounting identity/source kind,
 manifest wording, diagnostics, and mandatory generated `.isf` review
 preservation.
+`.553` now selects `.554`, direct bounded implementation of the first APB
+`.apb` profile-alias suffix. The selected contract mirrors
+`ppif/apb_requester_transfer.ppif` at future path
+`ppif/apb_requester_transfer.apb`, keeps explicit `(profile apb)` with no
+suffix inference, lowers through generated `apb_requester.isf` before
+`apb_requester.fsm`, support-accounts the alias as
+`intent.apb_profile_alias_requester_transfer` with source kind
+`ial2_profile_alias`, and reserves focused
+`t/1470-ial2-apb-profile-alias.t` coverage. `.apb` remains unsupported until
+`.554` implements the contract.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5577,6 +5587,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md` — ships the first APB `.ppif` requester-transfer behavior with `ppif/apb_requester_transfer.ppif`, generated `apb_requester.isf`/`apb_requester.fsm`, report schema `fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`, and `.apb` still unsupported.
 - `docs/IAL2_POST_APB_REQUESTER_TRANSFER_NEXT_SLICE_SELECTION.md` — selects APB `.apb` profile-alias readiness audit after APB `.ppif` requester-transfer behavior, without accepting `.apb` or changing behavior.
 - `docs/IAL2_APB_PROFILE_ALIAS_READINESS_AUDIT.md` — audits APB `.apb` profile-alias readiness and selects public `.apb` contract selection while keeping `.apb` unsupported.
+- `docs/IAL2_APB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects direct bounded implementation of the first APB `.apb` profile alias at `ppif/apb_requester_transfer.apb`, with explicit `(profile apb)` and generated `.isf` review preservation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

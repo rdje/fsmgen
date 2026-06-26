@@ -9630,6 +9630,18 @@ authored `.apb` source identity, support-accounting identity/source kind,
 manifest wording, diagnostics, and mandatory generated `.isf` review
 preservation before implementation.
 
+IAL2 APB `.apb` profile-alias contract:
+[IAL2_APB_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_APB_PROFILE_ALIAS_CONTRACT_SELECTION.md)
+selects `.554`, direct bounded implementation of the first APB `.apb`
+profile-alias suffix. The selected contract mirrors
+`ppif/apb_requester_transfer.ppif` at future path
+`ppif/apb_requester_transfer.apb`, keeps explicit `(profile apb)` with no
+suffix inference, preserves generated `apb_requester.isf` before generated
+`apb_requester.fsm`, and support-accounts the alias as
+`intent.apb_profile_alias_requester_transfer` with source kind
+`ial2_profile_alias`. `.apb` remains unsupported until `.554` implements the
+contract.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
