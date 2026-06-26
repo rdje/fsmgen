@@ -126,14 +126,14 @@ implementation must satisfy the same FSMGen public contracts.
   Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4: select host abstraction`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5`
-  Status: `active`
+  Status: `done`
   Goal: `Select the Perl-reference parity harness and normalization rules.`
   Acceptance: `Define the differential-test matrix, corpus partitions, path/output normalization, expected JSON/artifact comparisons, HDL comparison strategy, diagnostic/support-accounting parity requirements, and pass/fail gates for any future implementation-language variant.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5: select parity harness`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the mdBook language-X implementation blueprint structure.`
   Acceptance: `Define the book chapters/sections needed to let a competent implementer build a conforming FSMGen variant from public contracts rather than Perl internals, including source grammars, lowering order, report schemas, artifact semantics, host abstractions, parity harness, and backend validation boundaries.`
   Verification: `pending`
@@ -160,7 +160,8 @@ implementation must satisfy the same FSMGen public contracts.
 | 1 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `done` | Completed the backend-language-neutral readiness audit and selected future exact leaves for API, host abstraction, parity, mdBook blueprint, extension, and implementation-language selection. |
 | 2 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | `done` | Selected the portable in-memory request/result API candidate after `.2.3.1` supplied focused replacement coverage for the oversized PPIF check-JSON blocker. |
 | 3 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` | `done` | Selected the source catalog plus artifact sink abstraction and preserved the filesystem CLI as an adapter. |
-| 4 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5` | `active` | Select the Perl-reference parity harness and normalization rules for future implementation variants. |
+| 4 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5` | `done` | Selected the Perl-reference parity harness and normalization rules for future implementation variants. |
+| 5 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6` | `active` | Select the mdBook language-X implementation blueprint structure. |
 
 ## Decisions
 
@@ -229,6 +230,13 @@ implementation must satisfy the same FSMGen public contracts.
   onto that logical model. Pure in-memory hosts provide source text and receive
   virtual artifacts without mandatory POSIX paths, environment variables,
   tempfiles, process spawning, or Perl module loading.
+- `2026-06-26`: Completed `.2.5` as a Perl-reference parity harness selector.
+  Future implementation-language variants must run the same logical request
+  families against the same logical source graphs, normalize host-specific
+  details, and compare public results against the Perl reference/oracle. The
+  selected corpus partitions are supported smoke, strict-supported,
+  expected-failure, legacy-out-of-scope, and resource-sensitive fixtures; broad
+  gates must use RAM guarding or exact bounded replacement coverage.
 
 ## Open Questions
 
@@ -276,6 +284,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1` | Diagnosed the oversized generated `.fsm` resource cliff; `perl -c bin/fsmgen`; `./bin/fsmgen --strict --check-json -o /tmp/fsmgen_t301_depth3_check_after.sv ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif`; `test ! -e /tmp/fsmgen_t301_depth3_check_after.sv`; `./bin/fsmgen --check-json -o /tmp/fsmgen_small_ppif_check_after.sv ppif/axi_manager_capacity_status.ppif`; sequential direct strict check-json probe of five oversized depth-3 PPIF manager-capacity fixtures; `scripts/run_with_ram_guard.sh --process-max-rss-mb 2048 --host-max-pct 88 --poll-seconds 1 -- prove -Iperl t/301-check-json-supported-corpus.t`; attempted second guarded `t/301` retry with descendant RSS capped at 1536 MiB and host cutoff 95%; `prove -Iperl t/1466-ppif-check-json-oversized-summary.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed with focused replacement`; exact and oversized direct check-json probes passed with no HDL output file; focused regression, Knowledge Map, memory architecture, diff whitespace, mdBook, and doctrine checks passed; first guarded full `t/301` retry stopped on host-memory cutoff before process RSS cap; second guarded retry was rejected by the approval layer and was not run |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | Updated `docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md` from blocked candidate to complete selector after `.2.3.1`; `prove -Iperl t/297-capability-manifest.t t/1438-semantic-introspection-contract.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1466-ppif-check-json-oversized-summary.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; completed the portable in-memory request/result API selector and advanced the frontier to `.2.4` |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` | Read/audit `.2.2` readiness audit, `.2.3` API selector, current CLI source resolver, report source contract, serializable generation snapshot, downstream/public interface contract source/artifact surfaces, and mdBook backlog; created `docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md`; `rg -n 'BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4|source_catalog|artifact_sink|filesystem CLI remains an adapter|FSMLIB|--path|--outdir|pure in-memory|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5' docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md docs/knowledge/backend-language-portable-host-abstraction-selection.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; selected the source catalog plus artifact sink host abstraction and advanced the frontier to `.2.5` |
+| `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5` | Read/audit `.2.3` API selector, `.2.4` host abstraction selector, regression corpus metadata, supported-smoke behavior gate, classified-failure behavior gate, check JSON corpus gate, normalized semantic JSON corpus gate, capability/semantic-introspection gates, oversized PPIF bounded replacement gate, README, roadmap, and mdBook backlog; created `docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md`; `rg -n 'BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5|Perl-reference parity harness|source_id|support_accounting|resource_sensitive|t/301-check-json-supported-corpus|t/303-normalized-semantic-json-supported-corpus|run_with_ram_guard|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6' docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/backend-language-portable-parity-harness-selection.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; selected the Perl-reference differential parity harness, normalization rules, corpus partitions, resource-sensitive replacement policy, and pass/fail gates; advanced the frontier to `.2.6` |
 
 ## Commit Log
 
@@ -290,6 +299,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1: bound oversized PPIF check JSON` | Added the bounded oversized PPIF check-json summary path, focused regression coverage, and Knowledge Map fact card; full `t/301` retry remains blocked by host-memory approval policy. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3: complete portable API selection` | Completed the request/result API selector after `.2.3.1` replacement coverage and advanced the frontier to `.2.4`. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4: select host abstraction` | Selected source catalog plus artifact sink as the portable host boundary and advanced the frontier to `.2.5`. |
+| `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5: select parity harness` | Selected Perl-reference differential parity, corpus partitions, normalization rules, resource-sensitive replacement policy, and pass/fail gates; advanced the frontier to `.2.6`. |
 
 ## Changelog
 
@@ -326,3 +336,7 @@ implementation must satisfy the same FSMGen public contracts.
 - `2026-06-26`: Completed `.2.4`; the portable host boundary is a source
   catalog plus artifact sink, with the current filesystem CLI preserved as an
   adapter and active work advanced to `.2.5`.
+- `2026-06-26`: Completed `.2.5`; future implementation-language variants
+  must prove normalized public-contract parity against the Perl oracle across
+  corpus partitions, check/semantic/report/artifact/diagnostic/support surfaces,
+  and resource-sensitive fixtures, with active work advanced to `.2.6`.

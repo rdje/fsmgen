@@ -2388,10 +2388,14 @@ family with JSON-safe envelopes and virtual artifacts. The `.2.4` leaf selected
 the host abstraction behind that API: pure in-memory hosts provide a
 `source_catalog` plus `artifact_sink`, while the current filesystem CLI remains
 an adapter for `--path`, `FSMLIB`, current-directory lookup, `--outdir`,
-`--output`, and verification-output directories. The active `.2.5` leaf now owns
-the Perl-reference parity harness and normalization rules before any
-Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other non-Perl
-implementation slice changes code or public contracts.
+`--output`, and verification-output directories. The `.2.5` leaf selected the
+Perl-reference parity harness and normalization rules: future variants compare
+normalized public contracts against the Perl oracle across corpus partitions,
+reports, diagnostics, support accounting, artifacts, HDL behavior, and
+resource-sensitive fixtures. The active `.2.6` leaf now owns the mdBook
+language-X implementation blueprint before any Rust/Rust-Wasm, browser
+JavaScript, Dart/web, Julia, or other non-Perl implementation slice changes
+code or public contracts.
 For SystemVerilog-to-Verilog portability, the default is FSMGen-owned
 generation/lowering rather than a mandatory external converter. Tools such as
 `sv2v` are future audit candidates only: they may become optional validation

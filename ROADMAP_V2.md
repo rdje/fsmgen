@@ -799,13 +799,14 @@ Architecture constraint:
   implementation must satisfy FSMGen's public contracts and stay on par with
   the Perl reference/oracle. Its `.2.2` readiness audit separated
   backend-neutral public contracts from current Perl implementation details
-  and selected exact future leaves. The active `.2.3` frontier has drafted
-  the candidate portable in-memory request/result API family with JSON-safe
-  envelopes and virtual artifacts, but completion is blocked on focused corpus
-  verification. `.2.4`, the host source/artifact abstraction selector, remains
-  pending until `.2.3` completes, before any Rust/Rust-Wasm, browser
-  JavaScript, Dart/web, Julia, or other non-Perl implementation slice changes
-  code or public contracts.
+  and selected exact future leaves. The `.2.3` leaf selected a portable
+  in-memory request/result API family with JSON-safe envelopes and virtual
+  artifacts. The `.2.4` leaf selected a source-catalog plus artifact-sink host
+  abstraction. The `.2.5` leaf selected the Perl-reference parity harness and
+  normalization rules. The active `.2.6` leaf now selects the mdBook language-X
+  implementation blueprint before any Rust/Rust-Wasm, browser JavaScript,
+  Dart/web, Julia, or other non-Perl implementation slice changes code or
+  public contracts.
 - SystemVerilog-to-Verilog portability should default to FSMGen-owned
   generation/lowering instead of a mandatory external converter dependency.
   External converters such as `sv2v` are audit candidates only: they may be
