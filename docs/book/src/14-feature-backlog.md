@@ -9773,6 +9773,15 @@ The selector reverified the generated APB completer `.ppif`, APB requester
 composition surfaces, then chose `apb_interconnect_generation_deferred` as the
 next residue to audit now that both generated endpoint paths exist.
 
+APB interconnect/composition readiness audit:
+[IAL2_APB_INTERCONNECT_COMPOSITION_READINESS_AUDIT](../../IAL2_APB_INTERCONNECT_COMPOSITION_READINESS_AUDIT.md)
+selects `.565`, APB interconnect/composition public contract selection. The
+audit finds contract selection is justified because generated APB requester and
+completer `.ppif` endpoint paths now exist, and the strict-supported
+`fsm/apb_tb.fsm` target already wires `apb_requester` to `apb_completer`
+through the APB bus. Direct interconnect implementation remains deferred until
+that public contract is selected.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

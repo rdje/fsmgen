@@ -4163,6 +4163,15 @@ audit. APB completer `.apb` alias exposure, multi-register decode, sidebands,
 alternate widths, back-to-back policy, direct backend lowering,
 verification-output generation, backend-language variants, AXI behavior, and
 VHDL remain deferred.
+`.564` now selects `.565`, APB interconnect/composition public contract
+selection. The readiness audit found contract selection is justified because
+generated APB `.ppif` requester and completer endpoint paths both exist and
+the strict-supported lower-layer `fsm/apb_tb.fsm` target already wires
+`apb_requester` to `apb_completer` through the APB bus. Direct interconnect
+implementation, APB completer `.apb` alias exposure, multi-register decode,
+sidebands, alternate widths, back-to-back policy, direct backend lowering,
+verification-output generation, backend-language variants, AXI behavior, and
+VHDL remain deferred until a public composition contract is selected.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
