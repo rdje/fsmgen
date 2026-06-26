@@ -3198,6 +3198,14 @@ exposes `start`, request fields, `wait_cycles`, `done`, `last_error`, and
 `last_read_data`, but not requester `busy`. `.566` selects `.567`, the next
 no-behavior APB surface selector after shipped requester, completer, and fixed
 composition `.ppif` paths.
+`.567` now selects `.568`, APB `.apb` profile-alias public contract selection
+for APB completer and fixed APB requester/completer composition sources. The
+selector confirmed requester-transfer `.apb`, completer `.ppif`, and
+composition `.ppif` still pass, while temporary completer/composition `.apb`
+copies fail closed with the current requester-transfer-only alias diagnostic.
+No behavior changed in `.567`; exact `.apb` sample paths, support identities,
+source-kind behavior, diagnostics, and validation scope must be selected before
+alias widening.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5719,6 +5727,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_INTERCONNECT_COMPOSITION_READINESS_AUDIT.md` — audits APB interconnect/composition readiness after generated APB requester/completer endpoints and selects public contract selection before any generated composition behavior.
 - `docs/IAL2_APB_INTERCONNECT_COMPOSITION_CONTRACT_SELECTION.md` — selects the explicit APB `.ppif` requester/completer composition contract and routes the next slice to direct bounded implementation.
 - `docs/IAL2_APB_PPIF_COMPOSITION_BEHAVIOR.md` — ships the first fixed one-requester/one-completer APB `.ppif` composition behavior with `ppif/apb_composition.ppif`, generated endpoint `.isf`/`.fsm` review artifacts, selected `apb_tb.fsm` HDL entry, report schema `fsmgen.ial2.protocol_intent.apb_composition.v1`, and support identity `intent.ppif_apb_composition`.
+- `docs/IAL2_POST_APB_COMPOSITION_NEXT_SLICE_SELECTION.md` — selects APB `.apb` profile-alias public contract selection for the shipped APB completer and fixed APB composition `.ppif` shapes, without changing behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

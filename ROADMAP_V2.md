@@ -4197,6 +4197,14 @@ exposes `start`, request fields, `wait_cycles`, `done`, `last_error`, and
 `last_read_data`, but not requester `busy`. `.566` selects `.567`, the next
 no-behavior APB surface selector after shipped requester, completer, and fixed
 composition `.ppif` paths.
+`.567` now selects `.568`, APB `.apb` profile-alias public contract selection
+for APB completer and fixed APB requester/completer composition sources. The
+selector confirmed requester-transfer `.apb`, completer `.ppif`, and
+composition `.ppif` still pass, while temporary completer/composition `.apb`
+copies fail closed with the current requester-transfer-only alias diagnostic.
+No behavior changed in `.567`; exact `.apb` sample paths, support identities,
+source-kind behavior, diagnostics, and validation scope must be selected before
+alias widening.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -9824,6 +9824,17 @@ variants, AXI behavior, and VHDL remain deferred. The next owner is `.567`,
 a no-behavior selector for the next APB surface after requester, completer,
 and fixed composition `.ppif` paths shipped.
 
+Post APB composition selector:
+[IAL2_POST_APB_COMPOSITION_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_COMPOSITION_NEXT_SLICE_SELECTION.md)
+selects `.568`, APB `.apb` profile-alias public contract selection for the
+now-shipped APB completer and fixed requester/completer composition shapes.
+The selector confirms requester-transfer `.apb`, completer `.ppif`, and
+composition `.ppif` pass, while temporary completer/composition `.apb` copies
+still fail closed with the current requester-transfer-only alias diagnostic.
+No behavior changes in `.567`; exact `.apb` sample paths, support identities,
+source-kind behavior, diagnostics, validation, and rollback must be selected
+before alias widening.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
