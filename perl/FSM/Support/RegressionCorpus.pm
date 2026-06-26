@@ -197,6 +197,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static',
+        relpath => 'ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'axi0_capacity_status',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue',
         relpath => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue.ppif',
         family => 'protocol_fixture',

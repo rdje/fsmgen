@@ -9330,6 +9330,21 @@ raw-`ARLEN`, runtime validation, multi-beat output banks, scoreboards,
 arbitrary cardinality, backend behavior, verification-output generation, and
 VHDL stay deferred.
 
+Mixed dynamic/static write multi-static same-ID issue-order queue behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_MULTI_STATIC_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_MULTI_STATIC_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md)
+ships `.524` through support-accounted public sample
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static.ppif`.
+The generated write `BID` issue-order queue covers one dynamic write plus two
+pairwise-distinct concrete static writes, uses compact runtime-ID queue slots
+of depth three, enqueues `axi0_awid`, `4'd3`, and `4'd5`, reports
+`write_bid_one_dynamic_two_static_transactions`, and preserves the `.503`
+one-static mixed queue plus all-dynamic write depth-2/depth-3 queue behavior.
+Broader read queue cardinality, read-data, raw `ARLEN`, runtime validation,
+multi-beat output banks, scoreboards, arbitrary mixed cardinality,
+group-local simultaneous enqueue widening, backend behavior,
+verification-output generation, backend-language variants, external converter
+dependencies such as `sv2v`, and VHDL stay deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

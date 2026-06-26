@@ -494,6 +494,33 @@ subtest 'PPIF adapter parses AXI manager mixed dynamic/static write same-ID issu
     assert_mixed_dynamic_static_write_same_id_issue_order_queue_report($result->{report}, 'adapter report');
 };
 
+subtest 'PPIF adapter parses AXI manager mixed dynamic/static write multi-static same-ID issue-order queue behavior' => sub {
+    my $sample_path = sample_capacity_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status mixed dynamic/static write multi-static same-ID issue-order queue sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'mixed dynamic/static write multi-static same-ID issue-order queue sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-write-mixed-dynamic-static-same-id-issue-order-queue-multi-static', 'mixed dynamic/static write multi-static same-ID issue-order queue source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static', 'mixed dynamic/static write multi-static same-ID issue-order queue source intent name is preserved');
+    like($isf, qr/\(input axi0_awid \(width 4\)\)/, 'mixed dynamic/static write multi-static same-ID issue-order queue generated IAL1 declares AWID');
+    like($isf, qr/\(input axi0_bid \(width 4\)\)/, 'mixed dynamic/static write multi-static same-ID issue-order queue generated IAL1 declares BID');
+    like($isf, qr/\(var axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q \(width 4\)\)/, 'mixed dynamic/static write multi-static same-ID issue-order queue generated IAL1 allocates slot0 ID');
+    like($isf, qr/\(var axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_id_q \(width 4\)\)/, 'mixed dynamic/static write multi-static same-ID issue-order queue generated IAL1 allocates slot1 ID');
+    like($isf, qr/\(var axi0_write_mixed_dynamic_static_same_id_issue_order_slot2_id_q \(width 4\)\)/, 'mixed dynamic/static write multi-static same-ID issue-order queue generated IAL1 allocates slot2 ID');
+    like($isf, qr/\(rule axi0_write_mixed_dynamic_static_same_id_issue_order_empty_enqueue_w0[\s\S]*\(axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q axi0_awid\)\)/, 'mixed dynamic/static write multi-static same-ID issue-order queue generated IAL1 captures AWID into slot0');
+    like($isf, qr/\(rule axi0_write_mixed_dynamic_static_same_id_issue_order_empty_enqueue_w1[\s\S]*\(axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q 4'd3\)\)/, 'mixed dynamic/static write multi-static same-ID issue-order queue generated IAL1 captures first static literal into slot0');
+    like($isf, qr/\(rule axi0_write_mixed_dynamic_static_same_id_issue_order_empty_enqueue_w2[\s\S]*\(axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q 4'd5\)\)/, 'mixed dynamic/static write multi-static same-ID issue-order queue generated IAL1 captures second static literal into slot0');
+    like($isf, qr/\(rule axi0_w2_response_demux [\s\S]*axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_id_q[\s\S]*axi0_write_mixed_dynamic_static_same_id_issue_order_slot2_id_q[\s\S]*\(pulse axi0_w2_complete\)\)/, 'mixed dynamic/static write multi-static same-ID issue-order queue generated IAL1 emits second static BID demux');
+    assert_mixed_dynamic_static_write_same_id_issue_order_queue_report(
+        $result->{report},
+        'adapter multi-static report',
+        static_transactions => [qw(w1 w2)],
+        static_enqueue_sources => ["4'd3", "4'd5"],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager mixed dynamic/static read same-ID issue-order queue behavior' => sub {
     my $sample_path = sample_capacity_read_mixed_dynamic_static_same_id_issue_order_queue_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status mixed dynamic/static read same-ID issue-order queue sample exists');
@@ -611,7 +638,7 @@ subtest 'PPIF adapter parses AXI manager mixed dynamic/static read burst-last sa
     like($isf, qr/\(output axi0_r0_beat_rdata_0 \(width 32\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat declares dynamic first RDATA lane');
     like($isf, qr/\(output axi0_r1_beat_rdata_15 \(width 32\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat declares static final RDATA lane');
     like($isf, qr/\(output axi0_r1_beat_valid \(width 16\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat declares static valid mask');
-    like($isf, qr/\(rule axi0_r1_read_beat_15_capture [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_r1_q[\s\S]*\(axi0_r1_beat_rdata_15 axi0_rdata\)[\s\S]*\(axi0_r1_beat_rresp_15 axi0_rresp\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat captures static final lane under queue match');
+    like($isf, qr/\(rule axi0_r1_read_beat_15_capture [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_r1_q[\s\S]*\(axi0_r1_beat_rdata_15 axi0_rdata\)[\s\S]*\(axi0_r1_beat_rresp_15 axi0_rresp\)[\s\S]*\(axi0_r1_beat_valid 16'b1111111111111111\)[\s\S]*\(axi0_r1_read_beats 5'd16\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat captures static final lane under queue match');
     like($fsm, qr/axi0_r1_read_beat_15_capture[\s\S]*\(<- \(axi0_r1_beat_rdata_15> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r1_beat_rresp_15> axi0_rresp\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat lowers static final lane capture');
     assert_mixed_dynamic_static_read_same_id_issue_order_queue_report(
         $result->{report},
@@ -3893,6 +3920,25 @@ subtest 'CLI emits IAL2 report JSON for AXI manager mixed dynamic/static write s
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'mixed dynamic/static write same-ID issue-order queue keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager mixed dynamic/static write multi-static same-ID issue-order queue .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status mixed dynamic/static write multi-static same-ID issue-order queue .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status mixed dynamic/static write multi-static same-ID issue-order queue report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static', 'mixed dynamic/static write multi-static same-ID issue-order queue report carries the PPIF top-level intent name');
+    assert_mixed_dynamic_static_write_same_id_issue_order_queue_report(
+        $report,
+        'CLI multi-static report',
+        static_transactions => [qw(w1 w2)],
+        static_enqueue_sources => ["4'd3", "4'd5"],
+    );
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'mixed dynamic/static write multi-static same-ID issue-order queue keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI emits IAL2 report JSON for AXI manager mixed dynamic/static read same-ID issue-order queue .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_mixed_dynamic_static_same_id_issue_order_queue_ppif_path()],
@@ -6843,6 +6889,14 @@ subtest 'CLI check JSON and semantic JSON support-account mixed dynamic/static w
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account mixed dynamic/static write multi-static same-ID issue-order queue .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status mixed dynamic/static write multi-static same-ID issue-order queue',
+        path     => \&sample_capacity_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account mixed dynamic/static read same-ID issue-order queue .ppif separately' => sub {
     assert_ppif_strict_json_support_case(
         owner    => 'capacity/status mixed dynamic/static read same-ID issue-order queue',
@@ -8926,6 +8980,10 @@ sub sample_capacity_write_mixed_dynamic_static_same_id_issue_order_queue_ppif_pa
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue.ppif');
 }
 
+sub sample_capacity_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static.ppif');
+}
+
 sub sample_capacity_read_mixed_dynamic_static_same_id_issue_order_queue_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue.ppif');
 }
@@ -9360,6 +9418,10 @@ sub sample_capacity_dynamic_write_same_id_issue_order_queue_ppif {
 
 sub sample_capacity_write_mixed_dynamic_static_same_id_issue_order_queue_ppif {
     return slurp(sample_capacity_write_mixed_dynamic_static_same_id_issue_order_queue_ppif_path());
+}
+
+sub sample_capacity_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static_ppif {
+    return slurp(sample_capacity_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static_ppif_path());
 }
 
 sub sample_capacity_read_mixed_dynamic_static_same_id_issue_order_queue_ppif {
@@ -10478,7 +10540,20 @@ sub assert_dynamic_write_same_id_issue_order_queue_report {
 }
 
 sub assert_mixed_dynamic_static_write_same_id_issue_order_queue_report {
-    my ($report, $owner) = @_;
+    my ($report, $owner, %args) = @_;
+    my $static_transactions = $args{static_transactions} // [qw(w1)];
+    my $static_enqueue_sources = $args{static_enqueue_sources} // ["4'd3"];
+    my @transactions = ('w0', @$static_transactions);
+    my $mixed_transactions = {
+        dynamic => 'w0',
+        static  => @$static_transactions == 1 ? $static_transactions->[0] : [@$static_transactions],
+    };
+    my @slot_storage_names;
+    for my $slot (0 .. $#transactions) {
+        push @slot_storage_names,
+            (map { "axi0_write_mixed_dynamic_static_same_id_issue_order_slot${slot}_${_}_q" } @transactions),
+            "axi0_write_mixed_dynamic_static_same_id_issue_order_slot${slot}_id_q";
+    }
     my $demux = $report->{response_demux};
     my $write = $demux->{write};
     my $policy = $report->{same_id_ordering}{dynamic_id_reuse_policy}{write};
@@ -10493,10 +10568,10 @@ sub assert_mixed_dynamic_static_write_same_id_issue_order_queue_report {
     is($write->{runtime_id_queue_key}, 'captured_or_static_request_id', "$owner reports captured-or-static request ID key");
     is($write->{response_demux_strategy}, 'mixed_dynamic_static_issue_order_earliest_matching_slot', "$owner reports mixed earliest matching slot strategy");
     is_deeply($write->{dynamic_transactions}, [qw(w0)], "$owner reports covered dynamic write");
-    is_deeply($write->{static_transactions}, [qw(w1)], "$owner reports covered static write");
-    is_deeply($write->{mixed_transactions}, { dynamic => 'w0', static => 'w1' }, "$owner reports mixed transaction roles");
+    is_deeply($write->{static_transactions}, $static_transactions, "$owner reports covered static write");
+    is_deeply($write->{mixed_transactions}, $mixed_transactions, "$owner reports mixed transaction roles");
     is($write->{static_id_overlap_policy}, 'allowed_by_issue_order_queue', "$owner reports ordered overlap policy");
-    is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], "$owner reports generated response-demux rules");
+    is_deeply($write->{generated_rules}, [map { "axi0_${_}_response_demux" } @transactions], "$owner reports generated response-demux rules");
 
     ok($report->{same_id_ordering}{generated_behavior}, "$owner marks same-ID ordering generated");
     is_deeply($report->{same_id_ordering}{residue}, [], "$owner clears same-ID ordering residue");
@@ -10506,29 +10581,27 @@ sub assert_mixed_dynamic_static_write_same_id_issue_order_queue_report {
     ok($policy->{generated_queue_behavior}, "$owner marks generated queue behavior");
     ok($policy->{mixed_dynamic_static_issue_order_queue_covered}, "$owner marks mixed queue coverage");
     is_deeply($policy->{covered_dynamic_transactions}, [qw(w0)], "$owner reports covered dynamic transaction");
-    is_deeply($policy->{covered_static_transactions}, [qw(w1)], "$owner reports covered static transaction");
+    is_deeply($policy->{covered_static_transactions}, $static_transactions, "$owner reports covered static transaction");
     is($policy->{active_id_uniqueness_policy}, 'not_required_for_issue_order_queue', "$owner does not require active ID uniqueness");
     is($policy->{static_id_conflict_policy}, 'ordered_overlap_allowed', "$owner reports ordered static-ID overlap");
-    is_deeply($queue->{transactions}, [qw(w0 w1)], "$owner reports mixed queue transaction order");
+    is_deeply($queue->{transactions}, \@transactions, "$owner reports mixed queue transaction order");
     is($queue->{same_transaction_recapture_id_source}, 'per_transaction_enqueue_id', "$owner reports per-transaction recapture source");
     is_deeply(
         [map { $_->{request_id_source} } @{$queue->{enqueue_pulses}}],
-        ['axi0_awid', "4'd3"],
+        ['axi0_awid', @$static_enqueue_sources],
         "$owner reports dynamic signal and static literal enqueue sources",
     );
     is_deeply(
         [map { $_->{name} } @{$queue->{slot_storage}}],
-        [qw(
-            axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_w0_q
-            axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_w1_q
-            axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q
-            axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_w0_q
-            axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_w1_q
-            axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_id_q
-        )],
+        \@slot_storage_names,
         "$owner reports mixed queue slot storage",
     );
-    ok(grep { $_ eq 'axi0_write_mixed_dynamic_static_same_id_issue_order_empty_enqueue_w1' } @{$queue->{generated_update_rules}}, "$owner reports static literal enqueue rule");
+    for my $static_transaction (@$static_transactions) {
+        ok(
+            grep { $_ eq "axi0_write_mixed_dynamic_static_same_id_issue_order_empty_enqueue_$static_transaction" } @{$queue->{generated_update_rules}},
+            "$owner reports $static_transaction static literal enqueue rule",
+        );
+    }
     ok(grep { $_ eq 'axi0_write_mixed_dynamic_static_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, "$owner reports mixed queue selected-match assertion");
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
     ok($residue{dynamic_transaction_id_behavior}, "$owner keeps future dynamic behavior residue visible");

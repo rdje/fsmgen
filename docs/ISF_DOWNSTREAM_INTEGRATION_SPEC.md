@@ -103,16 +103,18 @@ Intent abstraction levels:
   and read burst-last `RID && RLAST` depth-2/depth-3 shapes, selected
   read-data, raw-`ARLEN`, runtime-validation, and multi-beat output-bank
   behavior over generated all-dynamic read burst-last issue-order queues,
-  generated mixed dynamic/static response-demux families, and generated
+  generated mixed dynamic/static response-demux families, generated
   one-dynamic plus one-concrete-static mixed dynamic/static same-ID
-  issue-order queue behavior for write `BID`, read single-beat `RID`, read
-  burst-last `RID && RLAST`, paired scalar read-data over the generated mixed
-  read single-beat and burst-last queue completions, report-only raw-`ARLEN`
-  burst-length capture, runtime beat-count/`RLAST` validation, and
-  runtime-validation multi-beat output banks over the generated mixed read
-  burst-last queue completion.
-- Broader mixed issue-order queue cardinality, scoreboards, group-local
-  simultaneous enqueue widening, packed burst-vector outputs, alternate full
+  issue-order queue behavior for write `BID`, read single-beat `RID`, and read
+  burst-last `RID && RLAST`, generated one-dynamic plus two-concrete-static
+  mixed dynamic/static write `BID` same-ID issue-order queue behavior, paired
+  scalar read-data over the generated mixed read single-beat and burst-last
+  queue completions, report-only raw-`ARLEN` burst-length capture, runtime
+  beat-count/`RLAST` validation, and runtime-validation multi-beat output
+  banks over the generated mixed read burst-last queue completion.
+- Broader mixed issue-order queue cardinality beyond that selected write
+  `BID` multi-static shape, scoreboards, group-local simultaneous enqueue
+  widening, packed burst-vector outputs, alternate full
   burst payload assembly, aliases, platform clauses, full AXI manager behavior,
   direct backend lowering, verification-output generation, backend-language
   variants, and VHDL remain deferred.

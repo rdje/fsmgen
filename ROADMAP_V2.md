@@ -3862,7 +3862,20 @@ fails closed only at the local mixed write issue-order queue
 planner/materializer boundary, while lower queue transition, assignment,
 assertion, storage, and report helpers are already transaction-list driven.
 No parser, IAL1, IAL0, SystemVerilog, backend, external converter, or VHDL
-prerequisite is required before the bounded `.524` implementation.
+prerequisite is required before the bounded `.524` implementation. `.524` now
+ships generated mixed dynamic/static write `BID` same-ID `issue-order-queue`
+behavior for one dynamic write plus two pairwise-distinct concrete static
+writes through support-accounted public sample
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static.ppif`.
+The generated queue remains FSMGen-owned, uses compact runtime-ID slots of
+depth three, enqueues `axi0_awid`, `4'd3`, and `4'd5`, reports
+`write_bid_one_dynamic_two_static_transactions`, and preserves the `.503`
+one-static mixed queue plus all-dynamic write depth-2/depth-3 queues. Broader
+read queue cardinality, read-data, raw `ARLEN`, runtime validation,
+multi-beat output banks, scoreboards, arbitrary mixed cardinality,
+group-local simultaneous enqueue widening, backend behavior,
+verification-output generation, backend-language variants, external converter
+dependencies such as `sv2v`, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -2864,7 +2864,20 @@ fails closed only at the local mixed write issue-order queue
 planner/materializer boundary, while lower queue transition, assignment,
 assertion, storage, and report helpers are already transaction-list driven.
 No parser, IAL1, IAL0, SystemVerilog, backend, external converter, or VHDL
-prerequisite is required before the bounded `.524` implementation.
+prerequisite is required before the bounded `.524` implementation. `.524` now
+ships generated mixed dynamic/static write `BID` same-ID `issue-order-queue`
+behavior for one dynamic write plus two pairwise-distinct concrete static
+writes through support-accounted public sample
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static.ppif`.
+The generated queue remains FSMGen-owned, uses compact runtime-ID slots of
+depth three, enqueues `axi0_awid`, `4'd3`, and `4'd5`, reports
+`write_bid_one_dynamic_two_static_transactions`, and preserves the `.503`
+one-static mixed queue plus all-dynamic write depth-2/depth-3 queues. Broader
+read queue cardinality, read-data, raw `ARLEN`, runtime validation,
+multi-beat output banks, scoreboards, arbitrary mixed cardinality,
+group-local simultaneous enqueue widening, backend behavior,
+verification-output generation, backend-language variants, external converter
+dependencies such as `sv2v`, and VHDL remain deferred.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5338,6 +5351,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md` — documents runtime beat-count/`RLAST` validation over generated mixed dynamic/static read burst-last same-ID issue-order queue raw-`ARLEN` read-data.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md` — audits multi-beat output-bank readiness over generated mixed dynamic/static read burst-last same-ID issue-order queue runtime-validation read-data and selects direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_BEHAVIOR.md` — documents shipped multi-beat output banks over generated mixed dynamic/static read burst-last same-ID issue-order queue runtime-validation read-data.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_MULTI_STATIC_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited one-dynamic plus two-concrete-static mixed dynamic/static write `BID` same-ID issue-order queue readiness and selected direct bounded implementation.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_MULTI_STATIC_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — documents generated mixed dynamic/static write `BID` same-ID issue-order queue behavior for one dynamic plus two concrete static transactions.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -5431,6 +5446,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic same-ID reject enforcement mapping over read single-beat `RID` response-demux idle-or-releasing assertions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded two-transaction all-dynamic write `BID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded one-dynamic plus one-concrete-static mixed dynamic/static write `BID` same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static.ppif` — checked-in runnable `.ppif` sample for generated bounded one-dynamic plus two-concrete-static mixed dynamic/static write `BID` same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read single-beat `RID` same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read burst-last `RID && RLAST` same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue_read_data.ppif` — checked-in runnable `.ppif` sample for scalar single-beat `RDATA`/`RRESP` capture over generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read single-beat same-ID issue-order queue completions, support-accounted through check JSON and semantic JSON.

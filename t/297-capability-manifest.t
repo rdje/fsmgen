@@ -2952,8 +2952,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/generated one-dynamic plus one-concrete-static mixed dynamic\/static same-ID issue-order queue behavior for write BID, read single-beat RID, read burst-last RID\/RLAST, paired scalar read-data over the generated mixed read single-beat and burst-last queue completions, report-only raw-ARLEN burst-length capture, runtime beat-count\/RLAST validation, and runtime-validation multi-beat output banks over the generated mixed read burst-last queue completion/,
-        'manifest advertises shipped mixed dynamic/static same-ID issue-order queues, scalar read-data, raw-ARLEN, runtime validation, and multi-beat output banks',
+        qr/generated one-dynamic plus one-concrete-static mixed dynamic\/static same-ID issue-order queue behavior for write BID, read single-beat RID, and read burst-last RID\/RLAST, generated one-dynamic plus two-concrete-static mixed dynamic\/static write BID same-ID issue-order queue behavior, paired scalar read-data over the generated mixed read single-beat and burst-last queue completions, report-only raw-ARLEN burst-length capture, runtime beat-count\/RLAST validation, and runtime-validation multi-beat output banks over the generated mixed read burst-last queue completion/,
+        'manifest advertises shipped mixed dynamic/static same-ID issue-order queues, selected write multi-static coverage, scalar read-data, raw-ARLEN, runtime validation, and multi-beat output banks',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
@@ -2962,8 +2962,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/Broader mixed issue-order queue cardinality/,
-        'manifest keeps broader mixed dynamic/static issue-order queue cardinality deferred',
+        qr/Broader mixed issue-order queue cardinality beyond that selected write BID multi-static shape/,
+        'manifest keeps broader mixed dynamic/static issue-order queue cardinality deferred beyond the selected write multi-static shape',
     );
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
     ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');

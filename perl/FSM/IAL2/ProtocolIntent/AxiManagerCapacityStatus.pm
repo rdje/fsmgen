@@ -1150,24 +1150,19 @@ sub _response_demux_dynamic_write_issue_order_queue_plan(%args) {
     } @write_transactions;
     my $all_dynamic = @write_transactions == $dynamic_count;
     if (!$all_dynamic) {
-        confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic-id-reuse issue-order-queue requires exactly two or three all-dynamic write transactions, or exactly one dynamic plus one concrete static write transaction, in this slice\n"
-            unless @write_transactions == 2
+        my $static_count = scalar(@concrete_static);
+        my $mixed_transaction_count = scalar(@write_transactions);
+        confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic-id-reuse issue-order-queue requires exactly two or three all-dynamic write transactions, or exactly one dynamic plus one or two concrete static write transactions, in this slice\n"
+            unless @write_transactions == $dynamic_count + $static_count
                 && $dynamic_count == 1
-                && @concrete_static == 1;
+                && ($static_count == 1 || $static_count == 2);
         confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic-id-reuse issue-order-queue requires write-max-pending at least the mixed write transaction count\n"
-            unless ($args{write_max_pending} // 0) >= 2;
+            unless ($args{write_max_pending} // 0) >= $mixed_transaction_count;
 
         my $completion_fanin = _fanin_expression([map { $_->{completion_event} } @write_transactions]);
         my $dynamic_transaction = $dynamic[0];
-        my $static_transaction = $concrete_static[0];
         my $dynamic_id = $dynamic_transaction->{id};
-        my $static_id = $static_transaction->{id};
-        my $static_id_literal = _sized_decimal_literal(
-            $args{write_family}{width},
-            $static_id->{value},
-        );
         $dynamic_id->{implementation_status} = 'generated_issue_order_queue_matching';
-        $static_id->{implementation_status} = 'generated_issue_order_queue_matching';
 
         my %state_by_transaction = (
             $dynamic_transaction->{name} => {
@@ -1188,7 +1183,21 @@ sub _response_demux_dynamic_write_issue_order_queue_plan(%args) {
                     completion_fanin => $completion_fanin,
                 ),
             },
-            $static_transaction->{name} => {
+        );
+
+        my %seen_static_ids;
+        for my $static_transaction (@concrete_static) {
+            my $static_id = $static_transaction->{id};
+            my $static_id_value = $static_id->{value};
+            confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic-id-reuse issue-order-queue concrete static IDs must be pairwise distinct\n"
+                if $seen_static_ids{$static_id_value}++;
+            my $static_id_literal = _sized_decimal_literal(
+                $args{write_family}{width},
+                $static_id_value,
+            );
+            $static_id->{implementation_status} = 'generated_issue_order_queue_matching';
+
+            $state_by_transaction{$static_transaction->{name}} = {
                 family                  => 'write',
                 transaction             => $static_transaction->{name},
                 tag                     => $static_transaction->{tag},
@@ -1206,20 +1215,24 @@ sub _response_demux_dynamic_write_issue_order_queue_plan(%args) {
                     max_pending      => $args{write_max_pending},
                     completion_fanin => $completion_fanin,
                 ),
-            },
-        );
+            };
+        }
         my @states = map { $state_by_transaction{$_->{name}} } @write_transactions;
+        my @static_transaction_names = map { $_->{name} } @concrete_static;
+        my $mixed_transactions = {
+            dynamic => $dynamic_transaction->{name},
+            static  => @static_transaction_names == 1
+                ? $static_transaction_names[0]
+                : [@static_transaction_names],
+        };
 
         return {
             mode                         => 'bounded_mixed_dynamic_static_write_bid_issue_order_queue_demux_contract',
             transaction_completion_source => 'generated_mixed_dynamic_static_issue_order_queue_demux',
             transaction_completion_semantics => 'earliest_matching_captured_or_static_runtime_id',
             dynamic_transactions          => [$dynamic_transaction->{name}],
-            static_transactions           => [$static_transaction->{name}],
-            mixed_transactions            => {
-                dynamic => $dynamic_transaction->{name},
-                static  => $static_transaction->{name},
-            },
+            static_transactions           => \@static_transaction_names,
+            mixed_transactions            => $mixed_transactions,
             generated_completion_signals  => [map { $_->{completion_event} } @states],
             request_id_source             => $dynamic_id->{request_id_source},
             request_id_width              => $dynamic_id->{family_width},
@@ -1234,12 +1247,9 @@ sub _response_demux_dynamic_write_issue_order_queue_plan(%args) {
                     mixed_dynamic_static_issue_order_queue => 1,
                     transactions            => [map { $_->{transaction} } @states],
                     dynamic_transactions    => [$dynamic_transaction->{name}],
-                    static_transactions     => [$static_transaction->{name}],
-                    mixed_transactions      => {
-                        dynamic => $dynamic_transaction->{name},
-                        static  => $static_transaction->{name},
-                    },
-                    depth                   => 2,
+                    static_transactions     => [@static_transaction_names],
+                    mixed_transactions      => _clone_jsonish($mixed_transactions),
+                    depth                   => scalar(@states),
                     request_id_source       => $dynamic_id->{request_id_source},
                     request_id_width        => $dynamic_id->{family_width},
                     runtime_id_queue_key    => 'captured_or_static_request_id',
@@ -4569,9 +4579,14 @@ sub _same_id_ordering_dynamic_policy_with_issue_order_queue_behavior(%args) {
             if $mixed_dynamic_static;
         if ($family_name eq 'write') {
             my $depth = $dynamic_groups[0]{depth} // 0;
+            my $static_count = ref($dynamic_groups[0]{static_transactions}) eq 'ARRAY'
+                ? scalar(@{$dynamic_groups[0]{static_transactions}})
+                : 0;
             $policy->{$family_name}{first_generated_scope} =
                 $mixed_dynamic_static
-                    ? 'write_bid_one_dynamic_one_static_transaction'
+                    ? $static_count == 2
+                        ? 'write_bid_one_dynamic_two_static_transactions'
+                        : 'write_bid_one_dynamic_one_static_transaction'
                     : $depth == 3
                     ? 'write_bid_three_dynamic_transactions'
                     : 'write_bid_two_dynamic_transactions';
@@ -5628,17 +5643,23 @@ sub _build_dynamic_same_id_issue_order_queue_behavior(%args) {
         && $group_depth == 3
         && $transaction_count == 3;
     my $supported_mixed_dynamic_static_queue = $mixed_dynamic_static_queue
-        && $group_depth == 2
-        && $transaction_count == 2
         && (
-            $family_name eq 'write'
+            (
+                $family_name eq 'write'
+                && ($group_depth == 2 || $group_depth == 3)
+                && $transaction_count == $group_depth
+            )
             || (
-                $family_name eq 'read'
+                $group_depth == 2
+                && $transaction_count == 2
+                && $family_name eq 'read'
                 && ($entry->{response_scope} // '') eq 'single_beat'
                 && !defined($entry->{last_signal})
             )
             || (
-                $family_name eq 'read'
+                $group_depth == 2
+                && $transaction_count == 2
+                && $family_name eq 'read'
                 && ($entry->{response_scope} // '') eq 'burst_last'
                 && defined($entry->{last_signal})
                 && ($entry->{last_signal_width} // 0) == 1
@@ -5684,8 +5705,15 @@ sub _build_dynamic_same_id_issue_order_queue_behavior(%args) {
             id_policy        => $id_policy,
         };
     }
-    return undef if $mixed_dynamic_static_queue
-        && !(@dynamic_transaction_names == 1 && @static_transaction_names == 1);
+    if ($mixed_dynamic_static_queue) {
+        my $supported_mixed_transaction_set = @dynamic_transaction_names == 1
+            && (
+                @static_transaction_names == 1
+                || ($family_name eq 'write' && @static_transaction_names == 2)
+            )
+            && @transactions == @dynamic_transaction_names + @static_transaction_names;
+        return undef unless $supported_mixed_transaction_set;
+    }
 
     my $prefix = $mixed_dynamic_static_queue
         ? _mixed_dynamic_static_same_id_issue_order_queue_group_prefix($args{manager_name}, $family_name)
