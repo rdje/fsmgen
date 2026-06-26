@@ -9164,8 +9164,21 @@ bindings, existing report-only `burst-length` metadata, and completion validity
 Runtime validation, multi-beat output banks, broader mixed cardinality,
 scoreboards, backend behavior, backend-language variants, verification-code
 generation, external converter dependencies such as `sv2v`, and VHDL remain
-future exact owners. The next owned frontier is `.517`, runtime-validation
-readiness over this mixed-queue raw-`ARLEN` boundary.
+future exact owners.
+
+Mixed dynamic/static issue-order queue read-data runtime-validation readiness:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md)
+selects `.518`, direct bounded implementation of runtime beat-count/`RLAST`
+validation over generated mixed dynamic/static read burst-last same-ID
+`issue-order-queue` scalar last-beat read-data with raw-`ARLEN` capture.
+Existing `burst-length` syntax, dynamic issue-order queue runtime behavior,
+ordinary mixed response-demux runtime behavior, and shared runtime generation
+and report helpers are sufficient; the remaining blocker is local to the
+mixed queue read-data coverage branch admitting `report_only` but not
+`runtime_assertion`. Multi-beat output banks, broader mixed cardinality,
+scoreboards, backend behavior, backend-language variants, verification-code
+generation, external converter dependencies such as `sv2v`, and VHDL remain
+future exact owners.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

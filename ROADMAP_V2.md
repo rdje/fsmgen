@@ -3783,6 +3783,18 @@ generation, external converter dependencies such as `sv2v`, and VHDL remain
 deferred. `.517` is the runtime-validation readiness audit over this new
 mixed-queue raw-`ARLEN` boundary.
 
+`.517` now selects `.518`, direct bounded implementation of runtime
+beat-count/`RLAST` validation over generated mixed dynamic/static read
+burst-last same-ID `issue-order-queue` scalar last-beat read-data with
+raw-`ARLEN` capture. Existing `burst-length` syntax, dynamic issue-order queue
+runtime behavior, ordinary mixed response-demux runtime behavior, and shared
+runtime generation/report helpers are sufficient. The remaining blocker is
+local to the mixed queue read-data coverage branch admitting `report_only` but
+not `runtime_assertion`. Multi-beat output banks, broader mixed cardinality,
+scoreboards, backend behavior, backend-language variants, verification-code
+generation, external converter dependencies such as `sv2v`, and VHDL remain
+deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
