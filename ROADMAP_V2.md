@@ -811,8 +811,10 @@ Architecture constraint:
   same-repository Rust/Rust-Wasm portable API smoke as the first implementation
   experiment. The `.3.1` leaf scaffolded the additive `fsmgen_portable_api`
   Rust contract crate with fail-closed unsupported-operation behavior and no
-  shipped Perl runtime integration. The active `.3.2` leaf now adds the first
-  direct `.fsm` check-operation smoke.
+  shipped Perl runtime integration. The `.3.2` leaf added the first direct
+  `.fsm` check smoke for `feature.direct_sreset_active_high` only, with all
+  other Rust check sources and non-check operations still fail-closed. The
+  active `.3.3` leaf now adds Perl-oracle parity for that result.
 - SystemVerilog-to-Verilog portability should default to FSMGen-owned
   generation/lowering instead of a mandatory external converter dependency.
   External converters such as `sv2v` are audit candidates only: they may be

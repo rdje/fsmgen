@@ -2402,10 +2402,15 @@ task selects a portable extension API first. The `.2.8` leaf selected
 the same-repository Rust/Rust-Wasm portable API smoke as the first non-Perl
 implementation experiment. The `.3.1` leaf scaffolded the additive
 `fsmgen_portable_api` Rust contract crate with an incomplete capability
-profile and fail-closed unsupported-operation behavior for every operation.
-The crate is not wired into `bin/fsmgen`, Perl manifests, generated HDL,
-package installation, or shipped runtime behavior. The active `.3.2` leaf now
-owns the first direct `.fsm` check-operation smoke.
+profile. The `.3.2` leaf added exactly one direct `.fsm` check smoke:
+`feature.direct_sreset_active_high` returns a JSON-safe check result with no
+HDL emission and matched `supported_smoke` support accounting. Other Rust check
+sources fail closed with `E_PORTABLE_RUST_UNSUPPORTED_CHECK_SOURCE`, and
+non-check operations fail closed with
+`E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION`. The crate is not wired into
+`bin/fsmgen`, Perl manifests, generated HDL, package installation, or shipped
+runtime behavior. The active `.3.3` leaf now owns the first Perl-oracle parity
+smoke for that result.
 For SystemVerilog-to-Verilog portability, the default is FSMGen-owned
 generation/lowering rather than a mandatory external converter. Tools such as
 `sv2v` are future audit candidates only: they may become optional validation

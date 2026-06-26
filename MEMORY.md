@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1: scaffold Rust contract crate`.
-- active_work_unit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2` is active; add the first direct `.fsm` check-operation smoke in Rust.
-- recently_done: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1` added the same-repo Rust workspace and `fsmgen_portable_api` crate. The crate models the initial request/result, source, host, artifact, diagnostic, support-accounting, and capability-profile shell, returns fail-closed `E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION` results for all operations, and is not wired into the Perl CLI/runtime.
+- latest_commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2: add Rust FSM check smoke`.
+- active_work_unit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3` is active; add the first Perl-oracle parity smoke for the Rust check result.
+- recently_done: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2` added the first direct Rust `.fsm` check smoke for `feature.direct_sreset_active_high`. The crate returns a JSON-safe check result with no HDL emission and matched `supported_smoke` accounting for that exact fixture, fails other check sources with `E_PORTABLE_RUST_UNSUPPORTED_CHECK_SOURCE`, and leaves non-check operations fail-closed with `E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.3.2` by implementing exactly one tiny direct `.fsm` check-operation smoke in the Rust crate, preserving fail-closed behavior for every other operation and leaving shipped Perl runtime behavior unchanged.
+- next_action: Start `.3.3` by comparing the Rust `feature.direct_sreset_active_high` check result against the Perl oracle after `.2.5` normalization, using bounded guarded Perl calls where needed.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

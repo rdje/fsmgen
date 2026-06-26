@@ -30,7 +30,7 @@ selector records, and regression corpus.
 | Semantic introspection and MCP | Chapter 11 and the semantic-introspection contract tests |
 | Parity harness | [BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md) |
 | Extension/plugin portability | [BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md](../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md) |
-| First implementation experiment | Same-repository Rust/Rust-Wasm portable API smoke; `.3.1` scaffolded `fsmgen_portable_api`, and `.3.2` owns the first direct `.fsm` check-operation smoke |
+| First implementation experiment | Same-repository Rust/Rust-Wasm portable API smoke; `.3.2` added one direct `.fsm` check smoke, and `.3.3` owns Perl-oracle parity for that result |
 
 ## Source Layers
 
@@ -111,8 +111,12 @@ The first implementation experiment is a same-repository Rust/Rust-Wasm
 portable API smoke. The `.3.1` slice scaffolded `rust/fsmgen-portable-api` as
 an additive `fsmgen_portable_api` crate. It models the initial source,
 request/result, host, virtual-artifact, diagnostic, support-accounting, and
-capability-profile shell, reports itself as incomplete, and returns
-`E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION` for every operation. It is not wired
-into the shipped Perl CLI, capability manifest, generated HDL, package install
-paths, or runtime behavior. The active `.3.2` slice owns the first direct
-`.fsm` check-operation smoke.
+capability-profile shell. The `.3.2` slice added exactly one direct `.fsm`
+check smoke: `feature.direct_sreset_active_high` returns a JSON-safe check
+result with no HDL emission and matched `supported_smoke` support accounting.
+Other Rust check sources fail closed with
+`E_PORTABLE_RUST_UNSUPPORTED_CHECK_SOURCE`, and non-check operations fail
+closed with `E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION`. It is not wired into the
+shipped Perl CLI, capability manifest, generated HDL, package install paths, or
+runtime behavior. The active `.3.3` slice owns Perl-oracle parity for that
+result.

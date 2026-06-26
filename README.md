@@ -102,8 +102,10 @@ extension API is selected first. The `.2.8` leaf selected the same-repository
 Rust/Rust-Wasm portable API smoke as the first implementation experiment. The
 `.3.1` leaf scaffolded the additive `fsmgen_portable_api` Rust contract crate
 with fail-closed unsupported-operation behavior and no shipped Perl runtime
-integration. The active `.3.2` leaf now adds the first direct `.fsm`
-check-operation smoke.
+integration. The `.3.2` leaf added the first direct `.fsm` check smoke for
+`feature.direct_sreset_active_high` only, with all other Rust check sources and
+non-check operations still fail-closed. The active `.3.3` leaf now adds the
+first Perl-oracle parity smoke for that result.
 For SystemVerilog-to-Verilog portability, the default stance is still
 FSMGen-owned generation/lowering rather than a mandatory external converter.
 Tools such as `sv2v` are future audit candidates only: they may become
@@ -4410,7 +4412,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
-- `docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md` — active backend-language portability contract tree; `.2.1` captured the variant-parity doctrine, `.2.2` completed the readiness audit, `.2.3` selected the portable in-memory request/result API, `.2.4` selected the source-catalog plus artifact-sink host abstraction, `.2.5` selected the Perl-reference parity harness, `.2.6` selected the mdBook language-X blueprint structure, `.2.7` selected the typed extension/plugin portability boundary, `.2.8` selected the same-repo Rust/Rust-Wasm portable API smoke experiment, `.3.1` scaffolded the `fsmgen_portable_api` contract crate, and `.3.2` is the active direct `.fsm` check-operation smoke owner.
+- `docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md` — active backend-language portability contract tree; `.2.1` captured the variant-parity doctrine, `.2.2` completed the readiness audit, `.2.3` selected the portable in-memory request/result API, `.2.4` selected the source-catalog plus artifact-sink host abstraction, `.2.5` selected the Perl-reference parity harness, `.2.6` selected the mdBook language-X blueprint structure, `.2.7` selected the typed extension/plugin portability boundary, `.2.8` selected the same-repo Rust/Rust-Wasm portable API smoke experiment, `.3.1` scaffolded the `fsmgen_portable_api` contract crate, `.3.2` added the first direct `.fsm` check smoke, and `.3.3` is the active Perl-oracle parity-smoke owner.
 - `docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md` — completed IAL1-first verification-code generation tree; `.1` promoted the deferred verification-code route into task-tree ownership, `.2` completed the IAL1 source-readiness audit, `.3` selected actor-level passive observation metadata as the first source prerequisite, `.4` selected a passive UVM monitor skeleton package as the first SV/UVM output target, `.7` selected the public verification-output CLI/artifact/report/support-accounting surface, `.8` shipped the bounded inert UVM passive-monitor skeleton output mode, `.5` deferred VHDL artifact selection behind validation-substrate selection, `.9` selected shape-only inert-artifact validation, `.10` selected an inert VHDL observation package, `.11` shipped the bounded inert VHDL observation package output mode, and `.6` selected no direct IAL2 verification-output route for the current lane.
 - `docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md` — completed implementation owner for the selected IAL1 passive observation source feature; `.1` shipped actor-level `(observe NAME (role passive_monitor) (signals SIG...))` metadata, additive `verification_observations[]` schedule JSON projection, public contract metadata, a supported-smoke fixture, and mdBook coverage without generated verification output.
 - `docs/tasks/ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.md` — completed downstream-response task tree answering SPECFORGE's 2026-06-16 transaction phase-membership/value/order request; records that no runtime code change was needed, `.isf` remains SPECFORGE's synthesizable target, future checked transaction phase-group metadata belongs in an owned ISF slice, and `.val` is not a replacement for `.isf`.
@@ -5578,7 +5580,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `generated/` — generated parser/output artifacts.
 - `grammars/` — grammar definitions.
 - `rust/Cargo.toml` — additive Rust experiment workspace for the backend-language portability smoke.
-- `rust/fsmgen-portable-api/` — incomplete `fsmgen_portable_api` contract crate; currently models the portable API shell and fails closed for all operations without Perl runtime integration.
+- `rust/fsmgen-portable-api/` — incomplete `fsmgen_portable_api` contract crate; currently supports only the `feature.direct_sreset_active_high` `.fsm` check smoke and otherwise fails closed without Perl runtime integration.
 
 ## Quick start
 ```bash

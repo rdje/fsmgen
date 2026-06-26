@@ -9,11 +9,14 @@ not wired into the shipped Perl CLI or capability manifest.
 
 Current behavior:
 
-- `capabilities()` reports an experimental incomplete Rust contract shell.
-- `execute(request)` returns a public fail-closed unsupported-operation result
-  for every operation.
-- No `.fsm`, `.isf`, `.ppif`, HDL, semantic JSON, schedule JSON,
+- `capabilities()` reports an experimental incomplete Rust contract shell with
+  only the `check` operation partially implemented.
+- `execute(request)` succeeds only for the direct `.fsm`
+  `feature.direct_sreset_active_high` check smoke.
+- Other `.fsm` check inputs return `E_PORTABLE_RUST_UNSUPPORTED_CHECK_SOURCE`.
+- Non-check operations return `E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION`.
+- No general `.fsm`, `.isf`, `.ppif`, HDL, semantic JSON, schedule JSON,
   verification-output, MCP, or extension behavior is implemented yet.
 
-The active owner is
-`BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1`.
+The `.3.2` owner added the first direct `.fsm` check smoke; `.3.3` owns the
+first Perl-oracle parity smoke for that result.
