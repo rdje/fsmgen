@@ -3959,6 +3959,13 @@ audits how future suffixes such as `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`,
 `.atb`, `.smbus`, or `.i2s` can remain aliases over the same IAL2 model
 without changing `.ppif` behavior, support accounting, reports, source paths,
 or mandatory `IAL2 -> IAL1 -> IAL0` lowering.
+`.537` now selects `.538`, public unsupported-alias inventory synchronization
+before any profile-alias suffix implementation. The audit found that `.axi`,
+`.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and `.i2s` are valid future
+profile-alias candidates over IAL2, but the shipped CLI still accepts only
+`.fsm`, `.isf`, and `.ppif` as source suffixes, the PPIF adapter requires a
+`.ppif` path, and the manifest unsupported-alias inventory must be aligned with
+the public boundary prose before any suffix behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

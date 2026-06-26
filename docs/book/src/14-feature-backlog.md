@@ -9468,6 +9468,14 @@ suffixes such as `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, or
 behavior, support accounting, reports, source paths, and mandatory
 `IAL2 -> IAL1 -> IAL0` lowering.
 
+IAL2 profile-alias suffix readiness audit:
+[IAL2_PROFILE_ALIAS_SUFFIX_READINESS_AUDIT](../../IAL2_PROFILE_ALIAS_SUFFIX_READINESS_AUDIT.md)
+selects `.538`, public unsupported-alias inventory synchronization before any
+profile-alias suffix implementation. The audit keeps `.ppif` as the only
+shipped IAL2 suffix and records that future profile-alias candidates such as
+`.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and `.i2s` remain
+aliases over IAL2, not separate layers or AXI-only scope.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
