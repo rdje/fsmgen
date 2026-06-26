@@ -9695,6 +9695,19 @@ requester-transfer schedule/check path, then chose the explicit
 `apb_completer_and_interconnect_generation_deferred` residue for audit before
 any APB expansion behavior.
 
+APB completer/interconnect readiness audit:
+[IAL2_APB_COMPLETER_INTERCONNECT_READINESS_AUDIT](../../IAL2_APB_COMPLETER_INTERCONNECT_READINESS_AUDIT.md)
+selects `.559`, APB completer/interconnect public contract selection. The
+audit finds enough lower-layer evidence for a public contract selector:
+`fsm/apb_completer.fsm` is a supported APB target/completer fixture,
+`fsm/apb_tb.fsm` wires requester and completer through the APB bus, and the
+current `.apb` requester-transfer report keeps
+`apb_completer_and_interconnect_generation_deferred` explicit. Direct behavior
+is still deferred until source vocabulary, completer/interconnect split policy,
+mandatory generated `.isf` before `.fsm` artifacts, aggregate top shape,
+report/support identities, diagnostics, and `.ppif` versus `.apb` exposure are
+selected.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

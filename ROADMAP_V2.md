@@ -4109,6 +4109,14 @@ completer fixture, the APB requester-to-completer composition top, and the
 current `.apb` requester-transfer schedule/check path, then chose the explicit
 `apb_completer_and_interconnect_generation_deferred` residue for audit before
 any APB expansion behavior.
+`.558` now selects `.559`, APB completer/interconnect public contract
+selection. The audit found the lower-layer APB completer and requester-to-
+completer composition fixtures plus current APB IAL2 requester-transfer
+residue are sufficient for a contract selector, but direct behavior still needs
+owned decisions for source vocabulary, completer/interconnect split policy,
+mandatory generated `.isf` before `.fsm` artifacts, aggregate top shape,
+report/support-accounting identities, diagnostics, and `.ppif` versus `.apb`
+exposure.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
