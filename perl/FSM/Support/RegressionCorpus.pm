@@ -74,6 +74,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_valid_ready_handshake',
+        relpath => 'ppif/valid_ready_handshake.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_valid_ready_handshake_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'data_link_valid_ready_monitor',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ppif_axi_aw_w_valid_ready_bundle',
         relpath => 'ppif/axi_aw_w_valid_ready_bundle.ppif',
         family => 'protocol_fixture',

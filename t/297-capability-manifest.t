@@ -2883,6 +2883,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/protocol-neutral valid-ready handshake sample/,
+        'manifest advertises the protocol-neutral valid-ready handshake sample',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/AXI is the first shipped IAL2 profile\/example, not the definition of IAL2/,
         'manifest states AXI is the first shipped IAL2 profile, not the IAL2 definition',
     );

@@ -51,6 +51,46 @@ subtest 'AXI Valid-Ready generator emits reviewable IAL1 before IAL0' => sub {
     );
 };
 
+subtest 'protocol-neutral Valid-Ready profile emits reviewable IAL1 without AXI residue' => sub {
+    my $result = generate_generic_sample();
+
+    is($result->{layer}, 'IAL2', 'generic profile result identifies the source layer');
+    is($result->{kind}, 'protocol_intent.valid_ready_channel', 'generic profile keeps the generator kind');
+    is($result->{generated_ial1}{name}, 'data_link_valid_ready_monitor.isf', 'generic profile IAL1 artifact is named from the channel object');
+
+    my $isf = $result->{generated_ial1}{text};
+    like($isf, qr/\A\(actor data_link_valid_ready_monitor\b/, 'generic profile emits reviewable .isf text');
+    like($isf, qr/\(input data \(width 8\)\)/, 'generic profile carries payload width');
+    like($isf, qr/\Q(assert (=> (& (past valid) (! (past ready))) valid)\E/, 'generic profile asserts VALID hold');
+
+    is_deeply(
+        sorted([keys %{$result->{generated_ial0}{files}}]),
+        ['data_link_valid_ready_monitor.fsm'],
+        'generic profile exposes the generated IAL0 .fsm file map',
+    );
+
+    my $report = $result->{report};
+    is($report->{source_object}{id}, 'fsmgen-valid-ready-profile', 'generic source object id is reported');
+    is($report->{source_object}{intent_name}, 'valid_ready_handshake', 'generic intent name is reported');
+    is_deeply(
+        $report->{source_object}{anchors},
+        [{ document => 'FSMGEN-IAL2-VALID-READY-PROFILE', section => 'monitor', page => 'contract' }],
+        'generic profile source anchor is reported',
+    );
+    is($report->{target_channel}{protocol}, 'valid-ready', 'generic profile is reported as the target protocol/profile');
+    is($report->{target_channel}{family}, 'data_link', 'generic profile reports authored channel identifier');
+    is($report->{target_channel}{role}, 'producer-to-consumer', 'generic profile reports neutral role');
+    is($report->{transfer_fire_condition}, 'valid && ready', 'generic profile reports the fire condition');
+
+    my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
+    ok($residue{valid_ready_profile_behavior_outside_monitor}, 'generic profile reports generic monitor-only residue');
+    ok(!$residue{axi_manager_concurrency}, 'generic profile does not report AXI manager residue');
+
+    my $rules = join "\n", @{$report->{enforced_static_rules}};
+    like($rules, qr/valid-ready profile channel must be an ISF identifier/, 'generic profile static rules describe authored channel identifiers');
+    unlike($rules, qr/AXI profile channel must be one of AW/, 'generic profile static rules are not AXI-only');
+};
+
 subtest 'report publishes source anchors, artifacts, bindings, assertions, assumptions, and residue' => sub {
     my $report = generate_sample()->{report};
 
@@ -115,8 +155,10 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['empty payload', sub { my $c = sample_contract(); $c->{payload} = []; $c }, qr/payload.*non-empty array/],
         ['bad width', sub { my $c = sample_contract(); $c->{payload}[0]{width} = 0; $c }, qr/payload\[0\]\.width.*positive integer/],
         ['duplicate endpoint', sub { my $c = sample_contract(); $c->{payload}[0]{name} = 'awvalid'; $c }, qr/duplicates interface signal 'awvalid'/],
-        ['bad protocol', sub { my $c = sample_contract(); $c->{protocol} = 'chi'; $c }, qr/protocol must be axi/],
+        ['bad protocol', sub { my $c = sample_contract(); $c->{protocol} = 'chi'; $c }, qr/profile must be valid-ready, axi/],
         ['bad channel', sub { my $c = sample_contract(); $c->{channel} = 'XYZ'; $c }, qr/channel must be one of AW, W, B, AR, or R/],
+        ['bad generic channel', sub { my $c = generic_contract(); $c->{channel} = 'data-link'; $c }, qr/field 'channel' must be an ISF identifier/],
+        ['bad generic role', sub { my $c = generic_contract(); $c->{role} = 'manager-to-subordinate'; $c }, qr/valid-ready profile role must be producer-to-consumer or consumer-to-producer/],
         ['bad source anchors', sub { my $c = sample_contract(); $c->{source}{anchors} = {}; $c }, qr/source\.anchors must be an array reference/],
     );
 
@@ -132,6 +174,10 @@ done_testing();
 
 sub generate_sample {
     return FSM::IAL2::ProtocolIntent::ValidReadyChannel->new()->generate(sample_contract());
+}
+
+sub generate_generic_sample {
+    return FSM::IAL2::ProtocolIntent::ValidReadyChannel->new()->generate(generic_contract());
 }
 
 sub sample_contract {
@@ -153,6 +199,29 @@ sub sample_contract {
             object_id => 'axi-valid-ready-aw',
             anchors => [
                 { document => 'IHI0022_L_2025-08', section => 'A3.2.1', page => 'A3-40' },
+            ],
+        },
+    };
+}
+
+sub generic_contract {
+    return {
+        name     => 'data_link',
+        intent_name => 'valid_ready_handshake',
+        protocol => 'valid-ready',
+        channel  => 'data_link',
+        role     => 'producer-to-consumer',
+        clock    => 'clk',
+        reset    => { signal => 'rst_n', active_low => 1, async => 1 },
+        valid    => 'valid',
+        ready    => 'ready',
+        payload  => [
+            { name => 'data', width => 8 },
+        ],
+        source => {
+            object_id => 'fsmgen-valid-ready-profile',
+            anchors => [
+                { document => 'FSMGEN-IAL2-VALID-READY-PROFILE', section => 'monitor', page => 'contract' },
             ],
         },
     };

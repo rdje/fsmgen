@@ -34,6 +34,31 @@ subtest 'PPIF adapter parses the selected Valid-Ready source shape' => sub {
     is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'direct IAL2-to-IAL0 remains forbidden');
 };
 
+subtest 'PPIF adapter parses the protocol-neutral Valid-Ready profile source shape' => sub {
+    my $sample_path = sample_valid_ready_handshake_ppif_path();
+    ok(-f $sample_path, 'tracked runnable protocol-neutral PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_valid_ready_handshake_ppif(), $sample_path);
+
+    is($result->{layer}, 'IAL2', 'adapter returns an IAL2 result for the neutral profile');
+    is($result->{generated_ial1}{name}, 'data_link_valid_ready_monitor.isf', 'neutral profile exposes generated IAL1 artifact');
+    like($result->{generated_ial1}{text}, qr/\A\(actor data_link_valid_ready_monitor\b/, 'neutral profile generated IAL1 is .isf text');
+    is_deeply(
+        sorted([keys %{$result->{generated_ial0}{files}}]),
+        ['data_link_valid_ready_monitor.fsm'],
+        'neutral profile exposes generated IAL0 .fsm file map',
+    );
+    is($result->{report}{source_object}{id}, 'fsmgen-valid-ready-profile', 'neutral profile source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'valid_ready_handshake', 'neutral profile source intent name is preserved');
+    is($result->{report}{target_channel}{protocol}, 'valid-ready', 'neutral profile maps to the selected profile');
+    is($result->{report}{target_channel}{family}, 'data_link', 'neutral profile preserves authored channel identifier');
+    is($result->{report}{target_channel}{role}, 'producer-to-consumer', 'neutral profile preserves neutral role');
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok($residue{valid_ready_profile_behavior_outside_monitor}, 'neutral profile reports generic monitor-only residue');
+    ok(!$residue{axi_manager_concurrency}, 'neutral profile does not report AXI manager residue');
+    is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'direct IAL2-to-IAL0 remains forbidden for neutral profile');
+};
+
 subtest 'PPIF adapter parses a multi-channel Valid-Ready bundle' => sub {
     my $sample_path = sample_bundle_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF bundle sample exists');
@@ -3075,6 +3100,9 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
         ['duplicate channel object name',
             '(protocol-platform-intent p (profile axi4) (source (object o) (anchor (document d) (section s) (page p))) (valid-ready-channel a (channel AW) (role manager-to-subordinate) (clock clk) (reset (rst_n active_low async)) (valid v) (ready r) (payload (x width 1))) (valid-ready-channel a (channel W) (role manager-to-subordinate) (clock clk) (reset (rst_n active_low async)) (valid v2) (ready r2) (payload (x2 width 1))))',
             qr/duplicate valid-ready-channel object name 'a'/],
+        ['neutral valid-ready bundle deferred',
+            '(protocol-platform-intent p (profile valid-ready) (source (object o) (anchor (document d) (section s) (page p))) (valid-ready-channel a (channel a) (role producer-to-consumer) (clock clk) (reset (rst_n active_low async)) (valid v) (ready r) (payload (x width 1))) (valid-ready-channel b (channel b) (role producer-to-consumer) (clock clk) (reset (rst_n active_low async)) (valid v2) (ready r2) (payload (x2 width 1))))',
+            qr/profile valid-ready supports exactly one \(valid-ready-channel \.\.\.\) object/],
         ['bad reset tuple',
             '(protocol-platform-intent p (profile axi4) (source (object o) (anchor (document d) (section s) (page p))) (valid-ready-channel a (channel AW) (role manager-to-subordinate) (clock clk) (reset (rst_n async)) (valid v) (ready r) (payload (x width 1))))',
             qr/reset tuple must include exactly one of active_low or active_high/],
@@ -3612,6 +3640,24 @@ subtest 'CLI emits IAL2 report JSON for .ppif without writing HDL' => sub {
     is($report->{generated_artifacts}{ial1}{name}, 'axi_aw_valid_ready_monitor.isf', 'CLI report names generated .isf');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi_aw_valid_ready_monitor.fsm'], 'CLI report names generated .fsm');
     is($report->{transfer_fire_condition}, 'awvalid && awready', 'CLI report carries fire condition');
+};
+
+subtest 'CLI emits IAL2 report JSON for protocol-neutral .ppif without writing HDL' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_valid_ready_handshake_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for protocol-neutral .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'protocol-neutral --emit-schedule-json keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.valid_ready_channel.v1', 'neutral CLI emits the IAL2 report schema');
+    is($report->{source_object}{intent_name}, 'valid_ready_handshake', 'neutral CLI report carries the PPIF top-level intent name');
+    is($report->{generated_artifacts}{ial1}{name}, 'data_link_valid_ready_monitor.isf', 'neutral CLI report names generated .isf');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['data_link_valid_ready_monitor.fsm'], 'neutral CLI report names generated .fsm');
+    is($report->{target_channel}{protocol}, 'valid-ready', 'neutral CLI report carries selected profile');
+    is($report->{target_channel}{family}, 'data_link', 'neutral CLI report carries authored channel identifier');
+    is($report->{target_channel}{role}, 'producer-to-consumer', 'neutral CLI report carries neutral role');
+    is($report->{transfer_fire_condition}, 'valid && ready', 'neutral CLI report carries fire condition');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager capacity/status .ppif' => sub {
@@ -6614,6 +6660,53 @@ subtest 'CLI check JSON and semantic JSON accept .ppif public source identity' =
     ok(!decode_json(join('', @{$alias_stdout || []}))->{success}, '.pif alias check JSON reports failure');
 };
 
+subtest 'CLI check JSON and semantic JSON accept protocol-neutral .ppif public source identity' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', sample_valid_ready_handshake_ppif_path()],
+    );
+    ok($success, '--check --json succeeds for protocol-neutral .ppif');
+    is(join('', @{$stderr_buf || []}), '', '--check --json keeps stderr clean for protocol-neutral .ppif');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'neutral check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs(sample_valid_ready_handshake_ppif_path()),
+        'neutral check JSON reports the public .ppif source path',
+    );
+    ok($check_report->{support_accounting}{matched}, 'neutral check JSON support accounting matches the PPIF sample');
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_valid_ready_handshake',
+        'neutral check JSON support accounting names the PPIF corpus entry',
+    );
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'neutral check JSON support accounting records PPIF source kind');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', sample_valid_ready_handshake_ppif_path()],
+    );
+    ok($semantic_success, '--emit-semantic-json succeeds for protocol-neutral .ppif');
+    is(join('', @{$semantic_stderr || []}), '', '--emit-semantic-json keeps stderr clean for protocol-neutral .ppif');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'neutral semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs(sample_valid_ready_handshake_ppif_path()),
+        'neutral semantic JSON reports the public .ppif source path',
+    );
+    ok($semantic_report->{support_accounting}{matched}, 'neutral semantic JSON support accounting matches the PPIF sample');
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_valid_ready_handshake',
+        'neutral semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is($semantic_report->{support_accounting}{source_kind}, 'ppif', 'neutral semantic JSON support accounting records PPIF source kind');
+    is(
+        $semantic_report->{semantic}{module}{source_root_kind},
+        'fsm',
+        'neutral semantic JSON payload describes the generated .fsm semantic root',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON accept capacity/status .ppif public source identity' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--check', '--json', sample_capacity_ppif_path()],
@@ -8936,6 +9029,10 @@ sub sample_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_aw_valid_ready.ppif');
 }
 
+sub sample_valid_ready_handshake_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'valid_ready_handshake.ppif');
+}
+
 sub sample_bundle_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_aw_w_valid_ready_bundle.ppif');
 }
@@ -9374,6 +9471,10 @@ sub sample_capacity_read_data_multi_beat_ppif_path {
 
 sub sample_ppif {
     return slurp(sample_ppif_path());
+}
+
+sub sample_valid_ready_handshake_ppif {
+    return slurp(sample_valid_ready_handshake_ppif_path());
 }
 
 sub sample_bundle_ppif {

@@ -152,6 +152,9 @@ sub _contract_from_root($root, $source_label) {
             if $seen_channel_names{$channel->{name}}++;
     }
 
+    confess "Error: .ppif source '$source_label' profile valid-ready supports exactly one (valid-ready-channel ...) object in this slice; neutral bundles need a future exact owner\n"
+        if @channels > 1 && lc($profile) eq 'valid-ready';
+
     if (@channels == 1) {
         my %channel = %{$channels[0]};
         my $channel_source = delete($channel{source}) // $source;

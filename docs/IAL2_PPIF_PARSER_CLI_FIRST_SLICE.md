@@ -8,11 +8,17 @@ Task tree:
 Implementation:
 `FSM::Adapter::IAL2::PPIF` plus the `.ppif` branch in `bin/fsmgen`.
 
-Runnable sample:
+Original runnable sample:
 [`ppif/axi_aw_valid_ready.ppif`](../ppif/axi_aw_valid_ready.ppif).
+
+Current protocol-neutral Valid-Ready sample:
+[`ppif/valid_ready_handshake.ppif`](../ppif/valid_ready_handshake.ppif).
 
 Later bounded bundle slice:
 [docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
+
+Protocol-neutral behavior note:
+[docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_BEHAVIOR.md](IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_BEHAVIOR.md).
 
 ## Scope
 
@@ -40,6 +46,9 @@ exact shape:
 
 The file remains protocol/platform-generic. The `(profile axi4)` clause selects
 the AXI vocabulary for this object; `.ppif` is not an AXI-only extension.
+The current protocol-neutral sample uses `(profile valid-ready)`, logical
+channel `data_link`, role `producer-to-consumer`, and generated monitor
+`data_link_valid_ready_monitor`.
 
 The mandatory lowering chain is preserved:
 
@@ -99,9 +108,11 @@ This document records the original Valid-Ready parser/CLI slice. The current
 machine-readable downstream boundary is broader and lives in
 `./bin/fsmgen --capability-manifest` under
 `language_surface.file_surfaces`: bounded public `.ppif` now includes
-one-channel Valid-Ready sources, multi-channel Valid-Ready bundles, and
-one-object AXI manager capacity/status sources. Support-accounted AXI manager
-coverage includes generated auto-ID write/read response-demux, single-beat,
+one-channel Valid-Ready sources including the AXI AW first-profile sample and
+the protocol-neutral valid-ready handshake sample, multi-channel Valid-Ready
+bundles, and one-object AXI manager capacity/status sources.
+Support-accounted AXI manager coverage includes generated auto-ID write/read
+response-demux, single-beat,
 last-beat, and multi-beat read-data capture, burst-length/runtime validation,
 scalar `RRESP` aggregation, one-or-more read burst-last queue-head groups,
 one-or-more write queue-head groups, and read single-beat queue-head

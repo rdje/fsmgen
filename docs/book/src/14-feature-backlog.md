@@ -9400,6 +9400,19 @@ authored logical channel identifier rather than an AXI family, selects
 `producer-to-consumer` as the first neutral role, and introduces no `.axi` or
 other suffix alias.
 
+IAL2 protocol-neutral Valid-Ready PPIF behavior:
+[IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_BEHAVIOR](../../IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_BEHAVIOR.md)
+ships `ppif/valid_ready_handshake.ppif` as the first protocol-neutral/non-AXI
+Valid-Ready `.ppif` sample. It lowers through generated
+`data_link_valid_ready_monitor.isf` and `data_link_valid_ready_monitor.fsm`,
+reports `target_channel.protocol = "valid-ready"`,
+`target_channel.family = "data_link"`, and
+`target_channel.role = "producer-to-consumer"`, and is support-accounted as
+`intent.ppif_valid_ready_handshake`. Existing AXI Valid-Ready, AXI AW/W
+bundle, AXI manager capacity/status, unsupported suffix aliases, direct
+backend, verification-output, backend-language variant, and VHDL boundaries
+remain unchanged.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
@@ -10927,6 +10940,35 @@ CLI examples for the shipped first public slice:
 ./bin/fsmgen --outdir generated ppif/axi_aw_valid_ready.ppif
 ./bin/fsmgen --strict --check --json ppif/axi_aw_valid_ready.ppif
 ./bin/fsmgen --strict --emit-semantic-json ppif/axi_aw_valid_ready.ppif
+```
+
+Protocol-neutral Valid-Ready sample, checked in as
+`ppif/valid_ready_handshake.ppif`:
+
+```text
+(protocol-platform-intent valid_ready_handshake
+  (profile valid-ready)
+  (source
+    (object fsmgen-valid-ready-profile)
+    (anchor (document FSMGEN-IAL2-VALID-READY-PROFILE) (section monitor) (page contract)))
+  (valid-ready-channel data_link
+    (channel data_link)
+    (role producer-to-consumer)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (valid valid)
+    (ready ready)
+    (payload
+      (data width 8))))
+```
+
+The same CLI modes work for the neutral sample:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/valid_ready_handshake.ppif
+./bin/fsmgen --outdir generated ppif/valid_ready_handshake.ppif
+./bin/fsmgen --strict --check --json ppif/valid_ready_handshake.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/valid_ready_handshake.ppif
 ```
 
 The `.ppif` path always lowers through generated `.isf` before generated

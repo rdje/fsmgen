@@ -1,0 +1,14 @@
+(protocol-platform-intent valid_ready_handshake
+  (profile valid-ready)
+  (source
+    (object fsmgen-valid-ready-profile)
+    (anchor (document FSMGEN-IAL2-VALID-READY-PROFILE) (section monitor) (page contract)))
+  (valid-ready-channel data_link
+    (channel data_link)
+    (role producer-to-consumer)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (valid valid)
+    (ready ready)
+    (payload
+      (data width 8))))

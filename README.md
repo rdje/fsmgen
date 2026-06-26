@@ -2915,6 +2915,16 @@ unsupported, uses `ppif/valid_ready_handshake.ppif` with support identity
 authored logical channel identifier rather than an AXI family, selects
 `producer-to-consumer` as the first neutral role, and introduces no `.axi` or
 other suffix alias.
+`.531` now ships that first protocol-neutral/non-AXI Valid-Ready `.ppif`
+sample. `ppif/valid_ready_handshake.ppif` lowers through generated
+`data_link_valid_ready_monitor.isf` and `data_link_valid_ready_monitor.fsm`,
+reports `target_channel.protocol = "valid-ready"`,
+`target_channel.family = "data_link"`, and
+`target_channel.role = "producer-to-consumer"`, and is support-accounted as
+`intent.ppif_valid_ready_handshake`. Existing AXI Valid-Ready, AXI AW/W
+bundle, AXI manager capacity/status, unsupported suffix aliases, direct
+backend, verification-output, backend-language variant, and VHDL boundaries
+remain unchanged.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5396,6 +5406,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_GUARDRAIL_NEXT_SLICE_SELECTION.md` — selected a readiness audit for a protocol-neutral/non-AXI Valid-Ready `.ppif` example boundary as the next IAL2 generality exercise.
 - `docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_READINESS_AUDIT.md` — audited protocol-neutral/non-AXI Valid-Ready `.ppif` readiness and selected public profile/source vocabulary contract selection before any non-AXI sample or behavior change.
 - `docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_CONTRACT_SELECTION.md` — selected `(profile valid-ready)`, `ppif/valid_ready_handshake.ppif`, and `intent.ppif_valid_ready_handshake` for the first protocol-neutral/non-AXI Valid-Ready `.ppif` implementation slice.
+- `docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_BEHAVIOR.md` — documents the shipped protocol-neutral `(profile valid-ready)` `.ppif` sample, report fields, support accounting, and deferred boundaries.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -5424,6 +5435,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md` — selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
 - `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md` — shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
 - `ppif/axi_aw_valid_ready.ppif` — first checked-in runnable `.ppif` sample for the public IAL2 Valid-Ready CLI surface.
+- `ppif/valid_ready_handshake.ppif` — checked-in runnable protocol-neutral/non-AXI `(profile valid-ready)` `.ppif` sample for the bounded Valid-Ready monitor path.
 - `ppif/axi_aw_w_valid_ready_bundle.ppif` — checked-in runnable multi-channel `.ppif` bundle sample for aggregate report/review-artifact modes.
 - `ppif/axi_manager_capacity_status_id_family.ppif` — checked-in runnable `.ppif` sample for static AXI manager ID-family metadata.
 - `ppif/axi_manager_capacity_status_transaction_envelope.ppif` — checked-in runnable `.ppif` sample for AXI manager transaction-envelope metadata and concrete direction-level ID assertions.

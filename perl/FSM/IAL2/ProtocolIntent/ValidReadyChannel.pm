@@ -92,19 +92,7 @@ sub _normalize_contract($raw) {
         ? _identifier_value($raw->{actor_name}, 'actor_name')
         : "${name}_valid_ready_monitor";
 
-    my $protocol = lc _required_scalar($raw, 'protocol');
-    confess "AXI Valid-Ready IAL2 contract protocol must be axi, axi3, axi4, or axi5\n"
-        unless $protocol =~ /\Aaxi(?:3|4|5)?\z/;
-
-    my $channel = uc _required_scalar($raw, 'channel');
-    my %axi_channels = map { $_ => 1 } qw(AW W B AR R);
-    confess "AXI Valid-Ready IAL2 contract channel must be one of AW, W, B, AR, or R\n"
-        unless $axi_channels{$channel};
-
-    my $role = lc _required_scalar($raw, 'role');
-    my %roles = map { $_ => 1 } qw(manager-to-subordinate subordinate-to-manager);
-    confess "AXI Valid-Ready IAL2 contract role must be manager-to-subordinate or subordinate-to-manager\n"
-        unless $roles{$role};
+    my ($protocol, $channel, $role, $profile_kind) = _normalize_profile_channel_role($raw);
 
     my $clock = _required_identifier($raw, 'clock');
     my $reset = _normalize_reset($raw->{reset});
@@ -132,6 +120,7 @@ sub _normalize_contract($raw) {
         actor_name       => $actor_name,
         done             => "${actor_name}_done",
         protocol         => $protocol,
+        profile_kind     => $profile_kind,
         channel          => $channel,
         role             => $role,
         clock            => $clock,
@@ -145,8 +134,42 @@ sub _normalize_contract($raw) {
     };
 }
 
+sub _normalize_profile_channel_role($raw) {
+    my $protocol = lc _required_scalar($raw, 'protocol');
+
+    if (_is_axi_profile($protocol)) {
+        my $channel = uc _required_scalar($raw, 'channel');
+        my %axi_channels = map { $_ => 1 } qw(AW W B AR R);
+        confess "AXI Valid-Ready IAL2 contract channel must be one of AW, W, B, AR, or R\n"
+            unless $axi_channels{$channel};
+
+        my $role = lc _required_scalar($raw, 'role');
+        my %roles = map { $_ => 1 } qw(manager-to-subordinate subordinate-to-manager);
+        confess "AXI Valid-Ready IAL2 contract role must be manager-to-subordinate or subordinate-to-manager\n"
+            unless $roles{$role};
+
+        return ($protocol, $channel, $role, 'axi');
+    }
+
+    if ($protocol eq 'valid-ready') {
+        my $channel = _identifier_value(_required_scalar($raw, 'channel'), 'channel');
+        my $role = lc _required_scalar($raw, 'role');
+        my %roles = map { $_ => 1 } qw(producer-to-consumer consumer-to-producer);
+        confess "Valid-Ready IAL2 contract valid-ready profile role must be producer-to-consumer or consumer-to-producer\n"
+            unless $roles{$role};
+
+        return ($protocol, $channel, $role, 'valid-ready');
+    }
+
+    confess "Valid-Ready IAL2 contract profile must be valid-ready, axi, axi3, axi4, or axi5\n";
+}
+
+sub _is_axi_profile($protocol) {
+    return defined($protocol) && $protocol =~ /\Aaxi(?:3|4|5)?\z/;
+}
+
 sub _required_scalar($raw, $field) {
-    confess "AXI Valid-Ready IAL2 contract is missing required scalar field '$field'\n"
+    confess "Valid-Ready IAL2 contract is missing required scalar field '$field'\n"
         unless exists($raw->{$field});
     return _nonempty_scalar($raw->{$field}, $field);
 }
@@ -156,19 +179,19 @@ sub _required_identifier($raw, $field) {
 }
 
 sub _nonempty_scalar($value, $field) {
-    confess "AXI Valid-Ready IAL2 contract field '$field' must be a non-empty scalar\n"
+    confess "Valid-Ready IAL2 contract field '$field' must be a non-empty scalar\n"
         if !defined($value) || ref($value) || $value eq '';
     return $value;
 }
 
 sub _identifier_value($value, $field) {
-    confess "AXI Valid-Ready IAL2 contract field '$field' must be an ISF identifier\n"
+    confess "Valid-Ready IAL2 contract field '$field' must be an ISF identifier\n"
         unless defined($value) && !ref($value) && $value =~ /\A[A-Za-z_][A-Za-z0-9_]*\z/;
     return $value;
 }
 
 sub _normalize_reset($raw_reset) {
-    confess "AXI Valid-Ready IAL2 contract is missing required reset binding\n"
+    confess "Valid-Ready IAL2 contract is missing required reset binding\n"
         unless defined $raw_reset;
 
     my %reset;
@@ -192,13 +215,13 @@ sub _normalize_reset($raw_reset) {
 }
 
 sub _bool_value($value, $field) {
-    confess "AXI Valid-Ready IAL2 contract field '$field' must be boolean 0 or 1\n"
+    confess "Valid-Ready IAL2 contract field '$field' must be boolean 0 or 1\n"
         if ref($value) || !defined($value) || ($value ne '0' && $value ne '1');
     return $value ? 1 : 0;
 }
 
 sub _normalize_payload($payload) {
-    confess "AXI Valid-Ready IAL2 contract field 'payload' must be a non-empty array reference\n"
+    confess "Valid-Ready IAL2 contract field 'payload' must be a non-empty array reference\n"
         unless ref($payload) eq 'ARRAY' && @$payload;
 
     my @normalized;
@@ -222,7 +245,7 @@ sub _normalize_payload($payload) {
 }
 
 sub _positive_integer($value, $field) {
-    confess "AXI Valid-Ready IAL2 contract field '$field' must be a positive integer\n"
+    confess "Valid-Ready IAL2 contract field '$field' must be a positive integer\n"
         if ref($value) || !defined($value) || $value !~ /\A[1-9][0-9]*\z/;
     return int($value);
 }
@@ -230,13 +253,13 @@ sub _positive_integer($value, $field) {
 sub _reject_duplicate_interface_names($valid, $ready, $payload, $done) {
     my %seen;
     for my $name ($valid, $ready, map({ $_->{name} } @$payload), $done) {
-        confess "AXI Valid-Ready IAL2 contract duplicates interface signal '$name'\n"
+        confess "Valid-Ready IAL2 contract duplicates interface signal '$name'\n"
             if $seen{$name}++;
     }
 }
 
 sub _normalize_source_anchors($anchors) {
-    confess "AXI Valid-Ready IAL2 contract source.anchors must be an array reference\n"
+    confess "Valid-Ready IAL2 contract source.anchors must be an array reference\n"
         unless ref($anchors) eq 'ARRAY';
 
     my @normalized;
@@ -246,7 +269,7 @@ sub _normalize_source_anchors($anchors) {
             my %copy;
             for my $key (sort keys %$anchor) {
                 my $value = $anchor->{$key};
-                confess "AXI Valid-Ready IAL2 contract source.anchors[$index].$key must be a scalar\n"
+                confess "Valid-Ready IAL2 contract source.anchors[$index].$key must be a scalar\n"
                     if ref($value);
                 $copy{$key} = $value;
             }
@@ -366,6 +389,40 @@ sub _build_report(%args) {
     $source_object{intent_name} = $contract->{intent_name}
         if defined($contract->{intent_name}) && length($contract->{intent_name});
 
+    my @profile_static_rules = $contract->{profile_kind} eq 'axi'
+        ? (
+            'AXI profile protocol must be axi, axi3, axi4, or axi5',
+            'AXI profile channel must be one of AW, W, B, AR, or R',
+            'AXI profile role must be manager-to-subordinate or subordinate-to-manager',
+        )
+        : (
+            'valid-ready profile protocol must be valid-ready',
+            'valid-ready profile channel must be an ISF identifier',
+            'valid-ready profile role must be producer-to-consumer or consumer-to-producer',
+        );
+
+    my @unsupported_residue = (
+        {
+            id     => 'reset_low_valid_during_reset',
+            detail => 'The first slice reports reset-valid obligations as residue because the current assertion emitter disables generated assertions during reset.',
+        },
+        {
+            id     => 'ready_independence',
+            detail => 'The first slice does not prove that VALID generation is independent from READY; that requires source behavior or a manager model.',
+        },
+    );
+    if ($contract->{profile_kind} eq 'axi') {
+        push @unsupported_residue, {
+            id     => 'axi_manager_concurrency',
+            detail => 'Transaction IDs, outstanding windows, bursts, response matching, and channel dependency rules remain outside this monitor-only slice.',
+        };
+    } else {
+        push @unsupported_residue, {
+            id     => 'valid_ready_profile_behavior_outside_monitor',
+            detail => 'The generic valid-ready profile is monitor-only; producer/consumer generation policy, backpressure policy, and protocol-specific ordering remain outside this sample.',
+        };
+    }
+
     return {
         schema => 'fsmgen.ial2.protocol_intent.valid_ready_channel.v1',
         mode   => 'monitor-only',
@@ -427,27 +484,12 @@ sub _build_report(%args) {
         enforced_static_rules => [
             'contract object must be a hash reference',
             'name, protocol, channel, role, clock, reset, valid, ready, and payload are required',
-            'protocol must be axi, axi3, axi4, or axi5',
-            'channel must be one of AW, W, B, AR, or R',
-            'role must be manager-to-subordinate or subordinate-to-manager',
+            @profile_static_rules,
             'ISF-entering signal names must be identifiers',
             'payload must be non-empty and payload widths must be positive integers',
             'valid, ready, payload, and generated done endpoint names must be unique',
         ],
-        unsupported_residue => [
-            {
-                id     => 'reset_low_valid_during_reset',
-                detail => 'The first slice reports reset-valid obligations as residue because the current assertion emitter disables generated assertions during reset.',
-            },
-            {
-                id     => 'ready_independence',
-                detail => 'The first slice does not prove that VALID generation is independent from READY; that requires source behavior or a manager model.',
-            },
-            {
-                id     => 'axi_manager_concurrency',
-                detail => 'Transaction IDs, outstanding windows, bursts, response matching, and channel dependency rules remain outside this monitor-only slice.',
-            },
-        ],
+        unsupported_residue => \@unsupported_residue,
     };
 }
 

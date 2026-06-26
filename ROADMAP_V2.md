@@ -3913,6 +3913,16 @@ unsupported, uses `ppif/valid_ready_handshake.ppif` with support identity
 authored logical channel identifier rather than an AXI family, selects
 `producer-to-consumer` as the first neutral role, and introduces no `.axi` or
 other suffix alias.
+`.531` now ships that first protocol-neutral/non-AXI Valid-Ready `.ppif`
+sample. `ppif/valid_ready_handshake.ppif` lowers through generated
+`data_link_valid_ready_monitor.isf` and `data_link_valid_ready_monitor.fsm`,
+reports `target_channel.protocol = "valid-ready"`,
+`target_channel.family = "data_link"`, and
+`target_channel.role = "producer-to-consumer"`, and is support-accounted as
+`intent.ppif_valid_ready_handshake`. Existing AXI Valid-Ready, AXI AW/W
+bundle, AXI manager capacity/status, unsupported suffix aliases, direct
+backend, verification-output, backend-language variant, and VHDL boundaries
+remain unchanged.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
