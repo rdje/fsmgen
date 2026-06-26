@@ -9505,6 +9505,15 @@ ships `.axi` as the first bounded IAL2 profile-alias suffix. The runnable
 `.pif`, and `.ppi` remain unsupported; AXI is still only the first profile
 alias over IAL2.
 
+Post-.axi profile-alias selector:
+[IAL2_POST_AXI_PROFILE_ALIAS_NEXT_SLICE_SELECTION](../../IAL2_POST_AXI_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md)
+selects `.542`, a post-`.axi` IAL2 generality readiness audit before another
+behavior implementation. Current `.axi` acceptance questions route to the
+shipped `.540` behavior fact; older profile-alias readiness and
+unsupported-inventory facts are historical pre-implementation facts. The next owner must
+choose from neutral/profile-generic evidence and must not treat AXI as the
+whole IAL2 layer.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

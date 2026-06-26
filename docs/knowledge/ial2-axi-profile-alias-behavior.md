@@ -3,6 +3,8 @@ id: ial2-axi-profile-alias-behavior
 title: .axi is the first bounded IAL2 profile-alias suffix and remains an AXI example
 answers:
   - "how does the .axi IAL2 profile alias behave?"
+  - "can FSMGen accept .axi files now?"
+  - "does FSMGen now accept .axi or .smbus files?"
   - "does .axi make IAL2 AXI-only?"
   - "what support accounting entry covers the .axi alias?"
   - "which IAL2 profile-alias suffixes remain unsupported after .axi?"

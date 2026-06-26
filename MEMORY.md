@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.540: ship .axi profile alias`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.541` is active after `.540`; select the next roadmap-aligned IAL2 follow-up after the first `.axi` profile-alias example without treating AXI as all of IAL2.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.540` shipped `ppif/axi_aw_valid_ready.axi` as the first bounded IAL2 profile-alias suffix, requiring explicit AXI-family profiles, preserving `.axi -> .isf -> .fsm -> HDL` lowering, support-accounting `intent.axi_profile_alias_aw_valid_ready`, and leaving `.chi/.ace/.ahb/.apb/.atb/.smbus/.i2s/.pif/.ppi` unsupported.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.541: select post-.axi generality audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.542` is active after `.541`; audit the post-`.axi` IAL2 generality frontier before selecting another behavior implementation, without treating AXI as all of IAL2.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.541` selected `.542`, post-`.axi` IAL2 generality readiness, and corrected Knowledge Map routing so current `.axi` acceptance questions point at `.540` behavior while pre-implementation profile-alias inventory/readiness cards are historical. `.540` shipped `ppif/axi_aw_valid_ready.axi` as the first bounded IAL2 profile-alias suffix; remaining `.chi/.ace/.ahb/.apb/.atb/.smbus/.i2s/.pif/.ppi` aliases stay unsupported.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.541` by reading `.540` behavior, `.539` contract, decisions `0015`/`0016`, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then select the next IAL2 follow-up without code changes.
+- next_action: Start `.542` by reading `.541` selector, `.540` `.axi` behavior, `.535`/`.531` neutral `.ppif` behavior, decisions `0015`/`0016`/`0017`, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then select the next exact IAL2 owner from neutral/profile-generic evidence without behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

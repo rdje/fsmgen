@@ -2991,6 +2991,12 @@ as `intent.axi_profile_alias_aw_valid_ready` with source kind
 `ial2_profile_alias`. `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`,
 `.i2s`, `.pif`, and `.ppi` remain unsupported; `.ppif` remains the generic
 IAL2 container and AXI remains only the first profile-alias example.
+`.541` now selects `.542`, a post-`.axi` IAL2 generality readiness audit before
+another behavior implementation. It also corrects Knowledge Map routing so
+current `.axi` acceptance questions point to the shipped `.540` behavior card,
+while older profile-alias readiness and inventory cards are historical
+pre-implementation facts. The next owner must choose from neutral/profile-
+generic evidence and must not treat AXI as all of IAL2.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5483,6 +5489,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_PROFILE_ALIAS_UNSUPPORTED_INVENTORY_SYNC.md` — synchronizes the public unsupported-alias inventory for future IAL2 profile-alias suffixes and selects first-alias contract selection.
 - `docs/IAL2_FIRST_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects `.axi` as the first IAL2 profile-alias contract while keeping AXI as an example over IAL2, not the IAL2 definition.
 - `docs/IAL2_AXI_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped `.axi` IAL2 profile-alias behavior, explicit AXI-family profile matching, generated `.isf`/`.fsm` review artifacts, support accounting, and remaining unsupported aliases.
+- `docs/IAL2_POST_AXI_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md` — selects the post-`.axi` IAL2 generality readiness audit and records the Knowledge Map routing correction for historical pre-implementation alias facts.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

@@ -3989,6 +3989,12 @@ as `intent.axi_profile_alias_aw_valid_ready` with source kind
 `ial2_profile_alias`. `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`,
 `.i2s`, `.pif`, and `.ppi` remain unsupported; `.ppif` remains the generic
 IAL2 container and AXI remains only the first profile-alias example.
+`.541` now selects `.542`, a post-`.axi` IAL2 generality readiness audit before
+another behavior implementation. It also corrects Knowledge Map routing so
+current `.axi` acceptance questions point to the shipped `.540` behavior card,
+while older profile-alias readiness and inventory cards are historical
+pre-implementation facts. The next owner must choose from neutral/profile-
+generic evidence and must not treat AXI as all of IAL2.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
