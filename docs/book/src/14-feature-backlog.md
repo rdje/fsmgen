@@ -9198,6 +9198,22 @@ converter dependencies such as `sv2v`, and VHDL remain future exact owners. The
 next owned frontier is `.519`, multi-beat output-bank readiness over this mixed
 queue path.
 
+Mixed dynamic/static issue-order queue read-data multi-beat readiness:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md)
+selects `.520`, direct bounded implementation of multi-beat output banks over
+the `.518` mixed queue runtime-validation read-data path. The audit found the
+remaining blocker local to the mixed dynamic/static issue-order queue read-data
+coverage branch: it has scalar single-beat and scalar last-beat boundaries, but
+no `capture-scope multi-beat` boundary requiring runtime-assertion
+`burst-length` metadata. Shared parser syntax, normalization, report metadata,
+output-bank rule generation, status aggregation, beat-count/`RLAST` assertions,
+response-state lookup, and test helper vocabulary are already present. The
+selected `.520` public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_multi_beat.ppif`.
+Broader mixed cardinality, scoreboards, backend behavior,
+backend-language variants, verification-code generation, external converter
+dependencies such as `sv2v`, and VHDL remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

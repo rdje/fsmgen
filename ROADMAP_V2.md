@@ -3809,6 +3809,20 @@ behavior, backend-language variants, verification-code generation, external
 converter dependencies such as `sv2v`, and VHDL remain deferred. `.519` is the
 multi-beat output-bank readiness audit over this mixed queue path.
 
+`.519` now selects `.520`, direct bounded implementation of multi-beat output
+banks over the `.518` mixed queue runtime-validation read-data path. The audit
+found the remaining blocker local to the mixed dynamic/static issue-order queue
+read-data coverage branch: it has scalar single-beat and scalar last-beat
+boundaries, but no `capture-scope multi-beat` boundary requiring
+runtime-assertion `burst-length` metadata. Shared parser syntax, normalization,
+report metadata, output-bank rule generation, status aggregation, beat-count/
+`RLAST` assertions, response-state lookup, and test helper vocabulary are
+already present. The selected `.520` public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_multi_beat.ppif`.
+Broader mixed cardinality, scoreboards, backend behavior,
+backend-language variants, verification-code generation, external converter
+dependencies such as `sv2v`, and VHDL remain deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

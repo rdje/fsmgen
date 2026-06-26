@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.518: ship mixed queue runtime validation`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.519` audits multi-beat output-bank readiness over generated mixed dynamic/static read burst-last same-ID issue-order queue runtime-validation read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.518` shipped runtime beat-count/`RLAST` validation over generated mixed dynamic/static read burst-last same-ID `issue-order-queue` scalar last-beat read-data with raw-`ARLEN` capture. The slice added the support-accounted runtime PPIF sample, local mixed queue runtime admission, parser/generator/accounting expectations, public docs, mdBook, and Knowledge Map fact card, while preserving multi-beat output banks and broader mixed queue behavior as future work. Guarded schedule JSON attempts stopped at the 88% RAM guard because host memory was already 88.5%; no unguarded retry or cutoff raise was run.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.519: audit mixed queue multi-beat readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.520` implements multi-beat output banks over generated mixed dynamic/static read burst-last same-ID issue-order queue runtime-validation read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.519` selected `.520`, direct bounded implementation of multi-beat output banks over the `.518` mixed queue runtime-validation read-data path. The audit changed no behavior; source inspection found the remaining blocker local to the mixed dynamic/static issue-order queue read-data coverage branch lacking a `multi-beat` runtime-assertion boundary, while shared parser syntax, normalization, output-bank rule generation, status aggregation, beat-count/`RLAST` assertions, response-state lookup, report metadata, and test helpers already exist.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.519`: audit whether multi-beat output banks over the `.518` mixed burst-last issue-order queue runtime-validation read-data path can be implemented directly, require a narrower contract/prerequisite, or must remain deferred.
+- next_action: Start `.520`: implement only the selected multi-beat output-bank PPIF sample and local coverage admission over the `.518` mixed burst-last issue-order queue runtime-validation read-data path.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
