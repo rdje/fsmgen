@@ -4200,10 +4200,16 @@ from `verification_observations[]`, but it must not sample a DUT interface,
 publish transactions, infer events, build an agent, generate a scoreboard,
 generate coverage, or emit reusable VIP behavior. Public CLI, artifact layout,
 report/manifest shape, support-accounting identity, and validation gates now
-belong to `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7` before
-implementation emits SV/UVM files. VHDL-oriented verification, direct
-IAL2-to-verification routing, scoreboard behavior, coverage behavior, and
-reusable VIP behavior remain deferred behind later selector leaves.
+have their own selector:
+[IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION](../../IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION.md).
+It chooses the future command `--emit-verification-output
+uvm-passive-monitor --verification-outdir DIR source.isf`, with artifacts at
+`DIR/uvm/<actor>_observation_uvm_pkg.sv` and
+`DIR/verification-output-manifest.json`. Implementation belongs to
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` before any SV/UVM files are
+emitted. VHDL-oriented verification, direct IAL2-to-verification routing,
+scoreboard behavior, coverage behavior, and reusable VIP behavior remain
+deferred behind later selector leaves.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)

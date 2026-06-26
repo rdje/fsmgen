@@ -68,8 +68,12 @@ mixed read burst-last queue completion. Broader mixed issue-order queue
 cardinality, scoreboards, group-local simultaneous enqueue widening, packed
 burst-vector outputs, alternate full burst payload assembly, aliases, platform
 clauses, full AXI manager behavior, direct backend lowering,
-verification-output generation, backend-language variants, and VHDL remain
-deferred.
+backend-language variants, and VHDL remain deferred. Verification-output
+generation also remains unimplemented, but its first public surface has been
+selected for a later owner as `--emit-verification-output uvm-passive-monitor
+--verification-outdir DIR source.isf`, emitting an inert UVM monitor skeleton
+package plus `verification-output-manifest.json` only after
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` implements it.
 
 Machine-readable discovery lives in
 [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)

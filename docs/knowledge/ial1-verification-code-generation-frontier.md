@@ -8,12 +8,13 @@ answers:
   - "should verification generation start from IAL1 or IAL2?"
   - "are IAL1 verification-specific features task-tree tracked?"
   - "what owns future SV/UVM verification-code generation?"
+  - "what owns the first verification-output CLI implementation?"
   - "what owns future VHDL verification-code generation?"
 date: 2026-06-16
 status: current
 tags: [ial1, isf, verification, sv-uvm, vhdl, task-tree]
-evidence: docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md; docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md; docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md
-reverify: rg -n 'IAL1-VERIFICATION-CODE-GENERATION-FRONTIER|IAL1 verification-specific|SV/UVM|VHDL-oriented verification|Direct IAL2-to-verification|Verification Code Generation|ISF-VERIFICATION-OBSERVATION-METADATA|observe NAME|verification_observations|passive UVM monitor skeleton|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7' docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md docs/IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md
+evidence: docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md; docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md; docs/IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md; docs/IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION.md; docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md
+reverify: rg -n 'IAL1-VERIFICATION-CODE-GENERATION-FRONTIER|IAL1 verification-specific|SV/UVM|VHDL-oriented verification|Direct IAL2-to-verification|Verification Code Generation|ISF-VERIFICATION-OBSERVATION-METADATA|observe NAME|verification_observations|passive UVM monitor skeleton|--emit-verification-output uvm-passive-monitor|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8' docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md docs/IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md docs/IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION.md
 ---
 
 FSMGen verification-code generation is now owned by the active
@@ -28,9 +29,11 @@ verification-specific source feature. Implementation
 `ISF-VERIFICATION-OBSERVATION-METADATA.1` shipped that report-only source
 contract through `verification_observations[]`. Frontier `.4` selected a
 passive UVM monitor skeleton package as the first SV/UVM output target.
-Generated verification code remains deferred until `.7` selects the public
-CLI, artifact layout, report/manifest shape, support-accounting identity, and
-validation gates.
+Frontier `.7` selected the public CLI, artifact layout, report/manifest shape,
+support-accounting identity, and validation gates:
+`--emit-verification-output uvm-passive-monitor --verification-outdir DIR
+source.isf`. Generated verification code remains deferred until `.8`
+implements that selected surface.
 
 Future target families are explicitly tracked, not implied: SV/UVM agents,
 monitors, scoreboards, protocol checkers, coverage, reusable verification IP,

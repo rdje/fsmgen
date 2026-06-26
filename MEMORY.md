@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4: select passive UVM monitor skeleton`.
-- active_work_unit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7` selects the public CLI/artifact-layout/report/manifest/support-accounting/validation contract for the passive UVM monitor skeleton before any SV/UVM files are emitted; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remains active/pending.
-- recently_done: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` selected a bounded passive UVM monitor skeleton package as the first SV/UVM output target derived from shipped `verification_observations[]`. The selected contract permits inert UVM 1.2 snapshot item and monitor class declarations only; it defers DUT sampling, `run_phase`, virtual interfaces/config DB, transaction publication, assertions/properties, coverage, agents/envs/tests, scoreboards, reusable VIP, VHDL output, direct IAL2 routing, and every public emission surface to `.7`.
+- latest_commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7: select verification output surface`.
+- active_work_unit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` implements the selected `--emit-verification-output uvm-passive-monitor --verification-outdir DIR` surface for `.isf` sources with passive `verification_observations[]`; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remains active/pending.
+- recently_done: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7` selected the first public verification-output surface for the passive UVM monitor skeleton: write `DIR/uvm/<actor>_observation_uvm_pkg.sv` plus `DIR/verification-output-manifest.json`, advertise `uvm_passive_monitor_skeleton` in a future `verification_outputs` capability-manifest section, add support-accounting entry `feature.isf_verification_observation_uvm_passive_monitor_skeleton`, keep schedule/check/semantic JSON unchanged for the first implementation, reject `.fsm`/`.ppif` and incompatible HDL/report options, and do not claim UVM compile support.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7`: select the public CLI, artifact layout, report/manifest, support-accounting, and validation gates for the selected passive UVM monitor skeleton before any verification-code-generation behavior changes.
+- next_action: Start `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8`: implement the selected verification-output command and inert UVM package skeleton, with focused artifact/manifest/support-accounting/capability tests and no UVM compile-support claim.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
