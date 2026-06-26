@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.514: ship mixed queue read-data`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.515` audits raw-`ARLEN` burst-length readiness over generated mixed dynamic/static read burst-last same-ID issue-order queue read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.514` shipped paired scalar read-data over generated mixed dynamic/static read same-ID `issue-order-queue` completions through two support-accounted PPIF samples. The implementation is bounded to exactly one dynamic read plus one concrete static read, one depth-2 generated mixed queue, no `burst_length` metadata, and queue-specific single-beat/last-beat completion-validity names. Syntax, guarded schedule JSON, support-accounting, and capability-manifest checks passed; strict/semantic and broad generator probes hit RAM-guard/stall caveats. Raw `ARLEN`, runtime validation, multi-beat output banks, broader mixed cardinality, scoreboards, backend behavior, backend-language variants, verification-code generation, external converter dependencies such as `sv2v`, and VHDL remain deferred.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.515: audit mixed queue raw-ARLEN readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.516` implements report-only raw-`ARLEN` burst-length capture over generated mixed dynamic/static read burst-last same-ID issue-order queue read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.515` selected `.516`, direct bounded implementation of report-only raw-`ARLEN` burst-length capture over generated mixed dynamic/static read burst-last same-ID `issue-order-queue` scalar read-data. Existing `burst-length` syntax, dynamic queue raw-`ARLEN` behavior, and ordinary mixed response-demux raw-`ARLEN` behavior are sufficient; the temporary candidate failed only at the local mixed queue coverage branch that still requires no `burst_length` metadata. No parser, generator, sample, support-accounting, JSON, test, HDL/runtime, backend, external-converter, verification-output, or VHDL behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.515`: audit raw-`ARLEN` burst-length readiness over generated mixed dynamic/static read burst-last same-ID issue-order queue read-data before any further behavior change.
+- next_action: Start `.516`: implement only the report-only raw-`ARLEN` mixed burst-last queue read-data sample and local coverage admission selected by `.515`.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -3757,6 +3757,17 @@ verification-code generation, external converter dependencies such as `sv2v`,
 and VHDL remain deferred. `.515` is the raw-`ARLEN` burst-length readiness
 audit over the mixed burst-last queue read-data path.
 
+`.515` now selects `.516`, direct bounded implementation of report-only
+raw-`ARLEN` burst-length capture over generated mixed dynamic/static read
+burst-last same-ID `issue-order-queue` scalar read-data. Existing
+`burst-length` syntax, dynamic queue raw-`ARLEN` behavior, and ordinary mixed
+response-demux raw-`ARLEN` behavior are sufficient; the temporary candidate
+failed only at the local mixed queue coverage branch that still requires no
+`burst_length` metadata. Runtime validation, multi-beat output banks, broader
+mixed cardinality, scoreboards, backend behavior, backend-language variants,
+verification-code generation, external converter dependencies such as `sv2v`,
+and VHDL remain deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

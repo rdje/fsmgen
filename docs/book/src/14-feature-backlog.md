@@ -9138,6 +9138,19 @@ converter dependencies such as `sv2v`, and VHDL remain future exact owners.
 The next owned frontier is `.515`, raw-`ARLEN` burst-length readiness over the
 mixed burst-last queue read-data path.
 
+Mixed dynamic/static issue-order queue read-data burst-length readiness:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md)
+selects `.516`, direct bounded implementation of report-only raw-`ARLEN`
+burst-length capture over generated mixed dynamic/static read burst-last
+same-ID `issue-order-queue` scalar read-data. Existing `burst-length` syntax,
+dynamic queue raw-`ARLEN` behavior, and ordinary mixed response-demux
+raw-`ARLEN` behavior are sufficient; the temporary candidate failed only at
+the local mixed queue coverage branch that still requires no `burst_length`
+metadata. Runtime validation, multi-beat output banks, broader mixed
+cardinality, scoreboards, backend behavior, backend-language variants,
+verification-code generation, external converter dependencies such as `sv2v`,
+and VHDL remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
