@@ -9708,6 +9708,17 @@ mandatory generated `.isf` before `.fsm` artifacts, aggregate top shape,
 report/support identities, diagnostics, and `.ppif` versus `.apb` exposure are
 selected.
 
+APB completer/interconnect contract selection:
+[IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION](../../IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md)
+selects `.560`, APB completer generated-IAL1 substrate audit. The contract
+splits the combined APB completer/interconnect residue. The first selected
+public shape is `.ppif` APB completer generation with future sample
+`ppif/apb_completer.ppif`, object `(apb-completer apb_completer ...)`,
+generated `apb_completer.isf` before `apb_completer.fsm`, report schema
+`fsmgen.ial2.protocol_intent.apb_completer.v1`, and future support identity
+`intent.ppif_apb_completer`. APB interconnect/composition and `.apb`
+completer alias exposure remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

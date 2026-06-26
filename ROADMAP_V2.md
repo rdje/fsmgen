@@ -4117,6 +4117,14 @@ owned decisions for source vocabulary, completer/interconnect split policy,
 mandatory generated `.isf` before `.fsm` artifacts, aggregate top shape,
 report/support-accounting identities, diagnostics, and `.ppif` versus `.apb`
 exposure.
+`.559` now selects `.560`, APB completer generated-IAL1 substrate audit. The
+contract splits the combined APB completer/interconnect residue: first select
+`.ppif` APB completer generation with future sample `ppif/apb_completer.ppif`,
+object `(apb-completer apb_completer ...)`, generated `apb_completer.isf`
+before `apb_completer.fsm`, report schema
+`fsmgen.ial2.protocol_intent.apb_completer.v1`, and future support identity
+`intent.ppif_apb_completer`; APB interconnect/composition and `.apb`
+completer alias exposure remain deferred until later owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
