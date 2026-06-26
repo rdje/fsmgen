@@ -4,12 +4,12 @@
 
 - Owner leaf: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3`
 - Date: `2026-06-26`
-- Status: `blocked pending verification`
+- Status: `complete`
 - Outcome: drafted the candidate backend-neutral in-memory request/result API
-  contract family before any non-Perl implementation code. Completion is
-  blocked on the focused corpus verification resource issue recorded below.
-  Implementation remains deferred until `.2.3` is completed and the host
-  source/artifact abstraction is selected by `.2.4`.
+  contract family before any non-Perl implementation code. The selector is
+  complete after the `.2.3.1` focused replacement verification resolved the
+  oversized PPIF check-json resource blocker. Implementation remains deferred
+  until the host source/artifact abstraction is selected by `.2.4`.
 
 ## Evidence Read
 
@@ -37,6 +37,8 @@
   `t/303-normalized-semantic-json-supported-corpus.t`,
   `t/1438-semantic-introspection-contract.t`, and
   `t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t`.
+- Replacement proof surface for the check-json resource cliff:
+  `t/1466-ppif-check-json-oversized-summary.t`.
 
 ## Candidate Selection
 
@@ -177,9 +179,9 @@ Future implementation of this API must prove:
 The Perl reference remains the oracle for these gates until another accepted
 decision changes that role.
 
-## Verification Blocker
+## Verification Resolution
 
-The intended focused proof command for this selector was:
+The originally intended broad proof command for this selector was:
 
 ```console
 prove -Iperl t/297-capability-manifest.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t t/1438-semantic-introspection-contract.t
@@ -200,20 +202,33 @@ That child stayed on the same fixture for about 44 minutes and reached roughly
 signal 143. `t/303-normalized-semantic-json-supported-corpus.t` and
 `t/1438-semantic-introspection-contract.t` were not reached in that run.
 
-The lightweight guarded subset
-`scripts/run_with_ram_guard.sh -- prove -Iperl t/297-capability-manifest.t t/1438-semantic-introspection-contract.t`
-passed afterward. The full focused gate remains blocked because `t/301` did
-not complete.
+`.2.3.1` resolved the exact check-json resource cliff by routing oversized PPIF
+manager-capacity check-json sources through a bounded source-summary path before
+the HDL backend. The focused replacement regression
+`t/1466-ppif-check-json-oversized-summary.t` proves the depth-3 dynamic write
+same-ID issue-order queue fixture returns success JSON with the `.ppif` source
+identity, support-accounting entry, module identity, count fields, and no output
+file.
 
-`.2.3` must not be marked complete until this verification blocker is resolved
-or an explicitly owned, doctrine-compliant replacement validation plan is
-selected and recorded.
+The `.2.3` completion checks are:
+
+```console
+prove -Iperl t/297-capability-manifest.t t/1438-semantic-introspection-contract.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1466-ppif-check-json-oversized-summary.t
+```
+
+The full `t/301` retry remains host-memory-policy blocked in this environment:
+a guarded retry with descendant RSS capped at 2048 MiB stopped on host-memory
+cutoff from a high baseline, and a higher host cutoff was rejected by the
+approval layer. Do not bypass that rejection without explicit user approval.
+The broad `t/301`/`t/303` parity gates remain mandatory for future
+implementation/parity harness work under `.2.5`, with RAM-guarding or another
+owned bounded replacement plan.
 
 ## Deferrals
 
-- No code, manifest field, CLI flag, or public behavior changes in this leaf.
-- No exact host source/artifact abstraction until `.2.3` completes and `.2.4`
-  starts.
+- No implementation code, manifest field, CLI flag, or public behavior changes
+  in this selector leaf.
+- No exact host source/artifact abstraction until `.2.4`.
 - No parity harness implementation until `.2.5`.
 - No mdBook blueprint implementation until `.2.6`.
 - No typed extension portability decision until `.2.7`.

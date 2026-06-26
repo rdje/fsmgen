@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1: bound oversized PPIF check JSON`.
-- active_work_unit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` is active again after `.2.3.1` recovered the oversized PPIF manager-capacity check-json resource cliff.
-- recently_done: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1` added a bounded source-summary check-json path for oversized generated PPIF manager-capacity `.fsm` entries, focused regression `t/1466-ppif-check-json-oversized-summary.t`, and Knowledge Map fact `ppif-check-json-oversized-summary`.
+- latest_commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3: complete portable API selection`.
+- active_work_unit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` is active; select the portable source/artifact host abstraction for filesystem CLI, browser/Wasm, embedded, and pure in-memory hosts.
+- recently_done: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` completed the portable in-memory request/result API selector after `.2.3.1` recovered the oversized PPIF manager-capacity check-json resource cliff.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
-- blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval.
-- next_action: Resume `.2.3` portable in-memory API verification from the focused replacement coverage, then complete `.2.3` before starting `.2.4`.
+- blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; broad `t/301`/`t/303` parity belongs to `.2.5` or another owned bounded plan.
+- next_action: Start `.2.4` by selecting the host source/artifact abstraction without changing implementation code until that selector is recorded.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

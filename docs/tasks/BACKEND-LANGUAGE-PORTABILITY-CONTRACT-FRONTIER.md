@@ -104,12 +104,12 @@ implementation must satisfy the same FSMGen public contracts.
   Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1: sync downstream contract surfaces`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Select the portable in-memory API contract.`
   Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1`
   Acceptance: `Define the backend-neutral source-text/source-id/options/result contract for check, lower, schedule, semantic export, HDL generation, generated review artifacts, diagnostics, support accounting, and verification-output artifact capture without requiring POSIX filesystem access, process spawning, Perl module loading, or Perl object receivers. Record exact entrypoints, JSON-safe result shapes, host-abstraction dependencies, tests, mdBook impact, compatibility risks, and rollback boundaries before any implementation code changes.`
-  Verification: `pending after .2.3.1 recovery`
-  Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3: record portable API verification blocker`
+  Verification: `passed with .2.3.1 replacement coverage`
+  Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3: complete portable API selection`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1`
   Status: `done`
@@ -119,7 +119,7 @@ implementation must satisfy the same FSMGen public contracts.
   Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1: bound oversized PPIF check JSON`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the portable source and artifact host abstraction.`
   Acceptance: `Define how filesystem CLI, browser/Wasm, embedded, and pure in-memory hosts provide source lookup, generated review-artifact storage, HDL/verification artifact sinks, diagnostics provenance, and optional search roots while preserving current CLI behavior through an adapter.`
   Verification: `pending`
@@ -158,8 +158,8 @@ implementation must satisfy the same FSMGen public contracts.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `done` | Completed the backend-language-neutral readiness audit and selected future exact leaves for API, host abstraction, parity, mdBook blueprint, extension, and implementation-language selection. |
-| 2 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | `active` | Resume portable in-memory API selection verification after `.2.3.1` fixed the oversized PPIF check-JSON resource cliff with a bounded replacement path. |
-| 3 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` | `pending` | Select the host source/artifact abstraction after `.2.3` completes. |
+| 2 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | `done` | Selected the portable in-memory request/result API candidate after `.2.3.1` supplied focused replacement coverage for the oversized PPIF check-JSON blocker. |
+| 3 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` | `active` | Select the host source/artifact abstraction for filesystem CLI, browser/Wasm, embedded, and pure in-memory hosts. |
 
 ## Decisions
 
@@ -215,6 +215,12 @@ implementation must satisfy the same FSMGen public contracts.
   identity, support accounting, module identity, count fields, and no output
   file. Normal HDL generation, semantic JSON, schedule JSON, generated review
   artifacts, and smaller PPIF check-json sources keep their existing paths.
+- `2026-06-26`: Completed `.2.3` as a portable in-memory request/result API
+  selector. The selected conceptual entrypoints are `capabilities(request?)`
+  and `execute(request)` over source text/source identity/options/result
+  envelopes, with virtual artifacts for generated review, HDL, and
+  verification outputs. `.2.4` now owns the exact host source/artifact
+  abstraction.
 
 ## Open Questions
 
@@ -222,8 +228,6 @@ implementation must satisfy the same FSMGen public contracts.
   Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or another host? This
   does not block `.2`; the audit must define selection criteria and parity
   gates before choosing an implementation slice.
-- Which exact public in-memory API shape should be canonical for non-CLI
-  hosts? This remains owned by active `.2.3`.
 - Can any external SystemVerilog-to-Verilog converter, including `sv2v`, meet
   a high enough quality and coverage bar to be useful for FSMGen? This does
   not block `.2`; the default remains FSMGen-owned generation/lowering unless
@@ -262,6 +266,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | Read/audit decision `0018`, README, roadmap, mdBook, task index, semantic-introspection/MCP task tree, public ISF/downstream contracts, `bin/fsmgen`, `bin/fsmgen-mcp`, source/lowering/manifest/support/semantic/MCP/facade modules, regression corpus, and focused manifest/check/semantic/MCP tests; `prove -Iperl t/297-capability-manifest.t t/1438-semantic-introspection-contract.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_docs_relative_paths.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed`; completed the portability readiness audit and routed future work to `.2.3` through `.2.8` before non-Perl implementation code |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | Read/audit `.2.2` readiness audit, current CLI/source/lowering facades, check/semantic/verification/result contracts, semantic-introspection/MCP contract, manifest contract, and focused tests; attempted direct `prove -Iperl t/297-capability-manifest.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t t/1438-semantic-introspection-contract.t`; reran lightweight guard-safe subset `scripts/run_with_ram_guard.sh -- prove -Iperl t/297-capability-manifest.t t/1438-semantic-introspection-contract.t` | `blocked`; guarded `t/297`/`t/1438` subset passed, but the full focused gate is blocked because direct `t/301` remained on `ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif` for about 44 minutes with roughly 11 GB RSS and was terminated with signal 143 before `t/303`; candidate API contract is drafted but `.2.3` is not complete |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1` | Diagnosed the oversized generated `.fsm` resource cliff; `perl -c bin/fsmgen`; `./bin/fsmgen --strict --check-json -o /tmp/fsmgen_t301_depth3_check_after.sv ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif`; `test ! -e /tmp/fsmgen_t301_depth3_check_after.sv`; `./bin/fsmgen --check-json -o /tmp/fsmgen_small_ppif_check_after.sv ppif/axi_manager_capacity_status.ppif`; sequential direct strict check-json probe of five oversized depth-3 PPIF manager-capacity fixtures; `scripts/run_with_ram_guard.sh --process-max-rss-mb 2048 --host-max-pct 88 --poll-seconds 1 -- prove -Iperl t/301-check-json-supported-corpus.t`; attempted second guarded `t/301` retry with descendant RSS capped at 1536 MiB and host cutoff 95%; `prove -Iperl t/1466-ppif-check-json-oversized-summary.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed with focused replacement`; exact and oversized direct check-json probes passed with no HDL output file; focused regression, Knowledge Map, memory architecture, diff whitespace, mdBook, and doctrine checks passed; first guarded full `t/301` retry stopped on host-memory cutoff before process RSS cap; second guarded retry was rejected by the approval layer and was not run |
+| `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | Updated `docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md` from blocked candidate to complete selector after `.2.3.1`; `prove -Iperl t/297-capability-manifest.t t/1438-semantic-introspection-contract.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1466-ppif-check-json-oversized-summary.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; completed the portable in-memory request/result API selector and advanced the frontier to `.2.4` |
 
 ## Commit Log
 
@@ -274,6 +279,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2: audit portability readiness` | Completed the readiness audit, separated backend-neutral public contracts from Perl implementation details, and selected future leaves for portable API, host abstraction, parity harness, mdBook blueprint, extension boundary, and first implementation-language selection. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3: record portable API verification blocker` | Drafted the conceptual backend-neutral request/result API family and recorded the focused corpus verification resource blocker that prevents `.2.3` completion. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1: bound oversized PPIF check JSON` | Added the bounded oversized PPIF check-json summary path, focused regression coverage, and Knowledge Map fact card; full `t/301` retry remains blocked by host-memory approval policy. |
+| `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3: complete portable API selection` | Completed the request/result API selector after `.2.3.1` replacement coverage and advanced the frontier to `.2.4`. |
 
 ## Changelog
 
@@ -304,3 +310,6 @@ implementation must satisfy the same FSMGen public contracts.
 - `2026-06-26`: Completed `.2.3.1`; oversized PPIF manager-capacity check JSON
   now avoids the HDL backend resource cliff via a bounded source-summary path,
   while normal HDL/semantic/review-artifact paths remain unchanged.
+- `2026-06-26`: Completed `.2.3`; the portable in-memory API selector now
+  chooses request/result envelopes and virtual artifacts, with host lookup and
+  artifact sink details deferred to active `.2.4`.
