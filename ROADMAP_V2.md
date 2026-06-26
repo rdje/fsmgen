@@ -4025,6 +4025,13 @@ protocol-profile alias candidates that still lack contract evidence.
 Protocol-neutral `(profile valid-ready)` under `.ppif` remains the current
 non-AXI IAL2 evidence; it proves IAL2 is not AXI-only but does not define a
 protocol suffix contract.
+`.547` keeps `.pif` and `.ppi` explicitly unsupported historical
+generic-container spellings and selects `.548`, an APB IAL2 source-shape
+readiness audit. `.ppif` remains the only shipped generic IAL2 container.
+The next APB owner must audit whether existing APB lower-layer fixtures are
+enough for an APB `.ppif` source-shape contract, a lower-layer prerequisite, a
+report/support-accounting prerequisite, or deferral; it must not accept `.apb`
+or add APB `.ppif` behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

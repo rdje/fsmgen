@@ -9556,6 +9556,13 @@ alias candidates without contract evidence. `(profile valid-ready)` under
 `.ppif` is the current protocol-neutral/non-AXI IAL2 evidence and does not
 define a protocol suffix.
 
+IAL2 PIF/PPI generic-container alias policy:
+[IAL2_PIF_PPI_GENERIC_CONTAINER_ALIAS_POLICY_SELECTION](../../IAL2_PIF_PPI_GENERIC_CONTAINER_ALIAS_POLICY_SELECTION.md)
+keeps `.pif` and `.ppi` explicitly unsupported historical generic-container
+spellings and selects `.548`, an APB IAL2 source-shape readiness audit. The
+next owner must audit the existing APB lower-layer fixtures before selecting
+any APB `.ppif` contract or `.apb` suffix behavior.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
