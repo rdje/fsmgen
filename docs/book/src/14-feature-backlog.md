@@ -10316,8 +10316,11 @@ propagate `PPROT/PSTRB` and mux responses. Reports add `protection_policy`,
 remove `apb_protection_policy_effects_deferred` from the selected data16
 protection samples, and keep broader policy, width, back-to-back,
 direct-backend, verification-output, backend-language, AXI/AHB, and VHDL work
-deferred. `.604` is the next no-behavior selector for the post-data16-PPROT
-APB/IAL2 frontier.
+deferred. `.604` selected `.605`, APB back-to-back transfer policy readiness
+audit, without behavior changes. The next audit covers requester transfer
+admission, completer setup admission, composition propagation, report/support
+accounting movement, diagnostics, validation, rollback, and direct-backend/VHDL
+deferral before any timing-policy behavior change.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

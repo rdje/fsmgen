@@ -3563,8 +3563,12 @@ including `PSTRB=0`; fixed and multi-peripheral compositions propagate
 `PPROT/PSTRB` while endpoint completers enforce policies. Reports keep
 `width_policy.selected_contract = sideband_data16`, add `protection_policy`,
 remove `apb_protection_policy_effects_deferred` for the selected data16
-protection samples, and retain the explicit future residues. `.604` is the
-next no-behavior selector for the post-data16-PPROT APB/IAL2 frontier.
+protection samples, and retain the explicit future residues. `.604` selected
+`.605`, APB back-to-back transfer policy readiness audit, without behavior
+changes. Back-to-back is the remaining APB timing/protocol residue spanning
+requester transfer admission, completer setup admission, and composition
+propagation; additional protection policies, remaining widths, direct backend,
+verification-output, backend-language/VHDL, AXI, and AHB remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6116,6 +6120,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_PPROT_EFFECTS_CONTRACT_SELECTION.md` — selects register-local APB `PPROT` access-policy syntax, privileged predicate semantics, denied-access response behavior, reports, diagnostics, and direct implementation ownership.
 - `docs/IAL2_APB_PPROT_EFFECTS_BEHAVIOR.md` — ships register-local APB `PPROT[0]` privileged access-policy enforcement for sideband-aware 32-bit multi-register completers, fixed composition, and multi-peripheral composition.
 - `docs/IAL2_APB_DATA16_PPROT_EFFECTS_BEHAVIOR.md` — ships the selected `sideband_data16_protection` extension of register-local APB `PPROT[0]` privileged access-policy enforcement for sideband-aware 16-bit completers, fixed composition, and multi-peripheral composition.
+- `docs/IAL2_POST_APB_DATA16_PPROT_NEXT_SLICE_SELECTION.md` — selects APB back-to-back transfer policy readiness audit after data16 `PPROT` policy behavior, without behavior changes.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

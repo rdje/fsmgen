@@ -4564,8 +4564,12 @@ including `PSTRB=0`; fixed and multi-peripheral compositions propagate
 `PPROT/PSTRB` while endpoint completers enforce policies. Reports keep
 `width_policy.selected_contract = sideband_data16`, add `protection_policy`,
 remove `apb_protection_policy_effects_deferred` for the selected data16
-protection samples, and retain the explicit future residues. `.604` is the
-next no-behavior selector for the post-data16-PPROT APB/IAL2 frontier.
+protection samples, and retain the explicit future residues. `.604` selected
+`.605`, APB back-to-back transfer policy readiness audit, without behavior
+changes. Back-to-back is the remaining APB timing/protocol residue spanning
+requester transfer admission, completer setup admission, and composition
+propagation; additional protection policies, remaining widths, direct backend,
+verification-output, backend-language/VHDL, AXI, and AHB remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
