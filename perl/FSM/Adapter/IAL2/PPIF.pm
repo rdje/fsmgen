@@ -455,6 +455,8 @@ sub _parse_apb_request_block($items, $source_label, $name) {
         write        => 'write',
         address      => 'address',
         'write-data' => 'write_data',
+        protection   => 'protection',
+        'write-strobe' => 'write_strobe',
     );
     my %request;
 
@@ -464,7 +466,7 @@ sub _parse_apb_request_block($items, $source_label, $name) {
             unless exists $allowed{$head};
         confess "Error: .ppif (apb-requester $name (request ...)) has duplicate ($head ...) clause\n"
             if exists $request{$allowed{$head}};
-        $request{$allowed{$head}} = $head =~ /\A(?:address|write-data)\z/
+        $request{$allowed{$head}} = $head =~ /\A(?:address|write-data|protection|write-strobe)\z/
             ? _parse_apb_width_binding(\@body, $source_label, "apb-requester $name request $head")
             : _parse_apb_scalar_binding(\@body, $source_label, "apb-requester $name request $head");
     }
@@ -522,6 +524,8 @@ sub _parse_apb_bus_block($items, $source_label, $name) {
         address      => 'address',
         write        => 'write',
         'write-data' => 'write_data',
+        protection   => 'protection',
+        strobe       => 'strobe',
         select       => 'select',
         enable       => 'enable',
         ready        => 'ready',
@@ -536,7 +540,7 @@ sub _parse_apb_bus_block($items, $source_label, $name) {
             unless exists $allowed{$head};
         confess "Error: .ppif (apb-requester $name (bus ...)) has duplicate ($head ...) clause\n"
             if exists $bus{$allowed{$head}};
-        $bus{$allowed{$head}} = $head =~ /\A(?:address|write-data|read-data)\z/
+        $bus{$allowed{$head}} = $head =~ /\A(?:address|write-data|read-data|protection|strobe)\z/
             ? _parse_apb_width_binding(\@body, $source_label, "apb-requester $name bus $head")
             : _parse_apb_scalar_binding(\@body, $source_label, "apb-requester $name bus $head");
     }
@@ -719,6 +723,8 @@ sub _parse_apb_completer_bus_block($items, $source_label, $name) {
         write        => 'write',
         address      => 'address',
         'write-data' => 'write_data',
+        protection   => 'protection',
+        strobe       => 'strobe',
         ready        => 'ready',
         'read-data'  => 'read_data',
         error        => 'error',
@@ -731,7 +737,7 @@ sub _parse_apb_completer_bus_block($items, $source_label, $name) {
             unless exists $allowed{$head};
         confess "Error: .ppif (apb-completer $name (bus ...)) has duplicate ($head ...) clause\n"
             if exists $bus{$allowed{$head}};
-        $bus{$allowed{$head}} = $head =~ /\A(?:address|write-data|read-data)\z/
+        $bus{$allowed{$head}} = $head =~ /\A(?:address|write-data|read-data|protection|strobe)\z/
             ? _parse_apb_width_binding(\@body, $source_label, "apb-completer $name bus $head")
             : _parse_apb_scalar_binding(\@body, $source_label, "apb-completer $name bus $head");
     }
@@ -1044,6 +1050,8 @@ sub _parse_apb_composition_wiring_block($items, $source_label, $name) {
         write        => 'write',
         address      => 'address',
         'write-data' => 'write_data',
+        protection   => 'protection',
+        strobe       => 'strobe',
         ready        => 'ready',
         'read-data'  => 'read_data',
         error        => 'error',
@@ -1056,7 +1064,7 @@ sub _parse_apb_composition_wiring_block($items, $source_label, $name) {
             unless exists $allowed{$head};
         confess "Error: .ppif (apb-composition $name (wiring $wiring_name ...)) has duplicate ($head ...) clause\n"
             if exists $bus{$allowed{$head}};
-        $bus{$allowed{$head}} = $head =~ /\A(?:address|write-data|read-data)\z/
+        $bus{$allowed{$head}} = $head =~ /\A(?:address|write-data|read-data|protection|strobe)\z/
             ? _parse_apb_width_binding(\@body, $source_label, "apb-composition $name wiring $wiring_name $head")
             : _parse_apb_scalar_binding(\@body, $source_label, "apb-composition $name wiring $wiring_name $head");
     }

@@ -125,6 +125,43 @@ subtest 'adapter parses the selected APB multi-register completer PPIF shape' =>
     ok($residue{apb_protection_and_strobes_deferred}, 'multi-register completer report keeps sideband residue explicit');
 };
 
+subtest 'adapter parses the selected APB multi-register sideband completer PPIF shape' => sub {
+    ok(-f sample_apb_completer_multi_register_sideband_ppif_path(), 'tracked runnable APB multi-register sideband completer PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'APB multi-register sideband completer adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_completer', 'adapter returns the APB completer kind for sideband source');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-completer-multi-register-sideband', 'sideband source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'apb_completer_multi_register_sideband', 'sideband intent name is preserved');
+    is_deeply($result->{report}{transfer}{registers}, [qw(reg0 reg1)], 'sideband report preserves the multi-register list');
+
+    my $isf = $result->{generated_ial1}{text};
+    like($isf, qr/\(input PPROT \(width 3\)\)/, 'generated IAL1 declares 3-bit PPROT input');
+    like($isf, qr/\(input PSTRB \(width 4\)\)/, 'generated IAL1 declares 4-bit PSTRB input');
+    like($isf, qr/\(sample PPROT as prot_q\)/, 'generated IAL1 samples PPROT during APB setup');
+    like($isf, qr/\(sample PSTRB as strb_q\)/, 'generated IAL1 samples PSTRB during APB setup');
+    like($isf, qr/\(local prot_q \(width 3\)\)/, 'generated IAL1 declares sampled PPROT local');
+    like($isf, qr/\(local strb_q \(width 4\)\)/, 'generated IAL1 declares sampled PSTRB local');
+    like($isf, qr/\(when-bit strb_q 0\s+\(set reg0_data_q \(\| \(& reg0_data_q 32'hffffff00\) \(& wdata_q 32'h000000ff\)\)\)\)/s, 'generated IAL1 byte-enables register 0 low byte');
+    like($isf, qr/\(when-bit strb_q 3\s+\(set reg1_data_q \(\| \(& reg1_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/s, 'generated IAL1 byte-enables register 1 high byte');
+
+    my $fsm = $result->{generated_ial0}{files}{'apb_completer.fsm'};
+    like($fsm, qr/\(PPROT 3\)/, 'generated IAL0 preserves PPROT width');
+    like($fsm, qr/\(PSTRB 4\)/, 'generated IAL0 preserves PSTRB width');
+    like($fsm, qr/\(<= \(prot_q PPROT\) <\(& PSEL \(! PENABLE\)\)\)/, 'generated IAL0 samples PPROT under setup-detect guard');
+    like($fsm, qr/\(<= \(strb_q PSTRB\) <\(& PSEL \(! PENABLE\)\)\)/, 'generated IAL0 samples PSTRB under setup-detect guard');
+    like($fsm, qr/\(\?\(!= \(& strb_q 4'd1\) 4'd0\)/, 'generated IAL0 guards byte 0 writes with PSTRB bit 0');
+    like($fsm, qr/\(\?\(!= \(& strb_q 4'd8\) 4'd0\)/, 'generated IAL0 guards byte 3 writes with PSTRB bit 3');
+    like($fsm, qr/\(<- \(reg0_data_q \(\| \(& reg0_data_q 32'hffffff00\) \(& wdata_q 32'h000000ff\)\)\)\)/, 'generated IAL0 masks register 0 low-byte writes');
+    like($fsm, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, 'generated IAL0 masks register 1 high-byte writes');
+
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$residue{apb_multi_register_decode_deferred}, 'sideband completer report keeps multi-register deferred residue absent');
+    ok(!$residue{apb_protection_and_strobes_deferred}, 'sideband completer report removes broad sideband/strobe deferred residue');
+    ok($residue{apb_protection_policy_effects_deferred}, 'sideband completer report keeps protection-policy effects deferred');
+};
+
 subtest 'adapter rejects malformed APB completer PPIF shapes with targeted diagnostics' => sub {
     my $profile_mismatch = sample_apb_completer_ppif();
     $profile_mismatch =~ s/\(profile apb\)/(profile axi4)/;
@@ -165,6 +202,12 @@ subtest 'adapter rejects malformed APB completer PPIF shapes with targeted diagn
     my $bad_data_reset = sample_apb_completer_multi_register_ppif();
     $bad_data_reset =~ s/\(data reg1_data_q width 32 reset 0\)/(data reg1_data_q width 32 reset 1)/;
 
+    my $partial_sideband = sample_apb_completer_multi_register_sideband_ppif();
+    $partial_sideband =~ s/\n      \(strobe PSTRB width 4\)//;
+
+    my $bad_strobe_width = sample_apb_completer_multi_register_sideband_ppif();
+    $bad_strobe_width =~ s/\(strobe PSTRB width 4\)/(strobe PSTRB width 8)/;
+
     my @cases = (
         ['apb completer profile mismatch', $profile_mismatch, qr/profile 'axi4' does not match \(apb-completer \.\.\.\); expected apb/],
         ['apb completer missing storage', $missing_storage, qr/is missing required \(storage \.\.\.\) clause/],
@@ -179,6 +222,8 @@ subtest 'adapter rejects malformed APB completer PPIF shapes with targeted diagn
         ['apb completer bad address width', $bad_address_width, qr/storage\.registers\[1\]\.address\.width must be 32/],
         ['apb completer bad data width', $bad_data_width, qr/storage\.registers\[1\]\.data\.width must be 32/],
         ['apb completer bad data reset', $bad_data_reset, qr/storage\.registers\[1\]\.data\.reset must be 0/],
+        ['apb completer partial sideband bundle', $partial_sideband, qr/requires bus\.protection and bus\.strobe together/],
+        ['apb completer bad strobe width', $bad_strobe_width, qr/bus\.strobe\.width must be 4/],
     );
 
     for my $case (@cases) {
@@ -212,6 +257,31 @@ subtest 'CLI check and semantic JSON support-account APB multi-register complete
     is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_completer_multi_register', 'APB multi-register completer semantic JSON names the corpus entry');
     is($semantic_report->{semantic}{module}{source_root_kind}, 'fsm', 'APB multi-register completer semantic JSON payload describes the generated .fsm semantic root');
     is($semantic_report->{semantic}{module}{name}, 'apb_completer', 'APB multi-register completer semantic JSON records the generated module');
+};
+
+subtest 'CLI check and semantic JSON support-account APB multi-register sideband completer PPIF identity' => sub {
+    my $path = sample_apb_completer_multi_register_sideband_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'APB multi-register sideband completer --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'APB multi-register sideband completer --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'APB multi-register sideband completer check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'APB multi-register sideband completer check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_completer_multi_register_sideband', 'APB multi-register sideband completer check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'APB multi-register sideband completer check JSON records PPIF source kind');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'APB multi-register sideband completer --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'APB multi-register sideband completer --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'APB multi-register sideband completer semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_completer_multi_register_sideband', 'APB multi-register sideband completer semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'fsm', 'APB multi-register sideband completer semantic JSON payload describes the generated .fsm semantic root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_completer', 'APB multi-register sideband completer semantic JSON records the generated module');
 };
 
 subtest 'CLI check and semantic JSON support-account APB completer PPIF identity' => sub {
@@ -272,6 +342,40 @@ subtest 'CLI schedule JSON and outdir expose APB multi-register completer review
     like($sv, qr/PRDATA_next = reg1_data_q;/, 'APB multi-register HDL can mux PRDATA from second storage register');
 };
 
+subtest 'CLI schedule JSON and outdir expose APB multi-register sideband completer review artifacts and HDL' => sub {
+    my $path = sample_apb_completer_multi_register_sideband_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'APB multi-register sideband completer --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'APB multi-register sideband completer --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is_deeply($schedule_report->{transfer}{registers}, [qw(reg0 reg1)], 'APB multi-register sideband completer schedule JSON reports register list');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_protection_and_strobes_deferred}, 'APB multi-register sideband completer schedule JSON omits broad sideband residue');
+    ok($residue{apb_protection_policy_effects_deferred}, 'APB multi-register sideband completer schedule JSON reports protection-policy residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_completer_multi_sideband.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'APB multi-register sideband completer CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'APB multi-register sideband completer generation keeps stderr clean');
+    ok(-f File::Spec->catfile($outdir, 'apb_completer.isf'), 'APB multi-register sideband completer --outdir writes generated .isf');
+    ok(-f File::Spec->catfile($outdir, 'apb_completer.fsm'), 'APB multi-register sideband completer --outdir writes generated .fsm');
+    ok(-f $hdl, 'APB multi-register sideband completer --output writes generated HDL');
+    my $fsm = slurp(File::Spec->catfile($outdir, 'apb_completer.fsm'));
+    like($fsm, qr/\(<= \(prot_q PPROT\) <\(& PSEL \(! PENABLE\)\)\)/, 'APB multi-register sideband outdir .fsm samples PPROT');
+    like($fsm, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, 'APB multi-register sideband outdir .fsm applies high-byte write mask');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+wire\s+\[2:0\]\s+PPROT\b/, 'APB multi-register sideband HDL exposes PPROT');
+    like($sv, qr/\binput\s+wire\s+\[3:0\]\s+PSTRB\b/, 'APB multi-register sideband HDL exposes PSTRB');
+    like($sv, qr/strb_q\s*&\s*4'd8/, 'APB multi-register sideband HDL preserves PSTRB bit 3 gating');
+};
+
 subtest 'CLI schedule JSON and outdir expose APB completer review artifacts and HDL' => sub {
     my $path = sample_apb_completer_ppif_path();
     my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
@@ -323,6 +427,15 @@ subtest '.apb alias accepts APB completer content' => sub {
     is($multi_alias->{generated_ial1}{text}, $multi_ppif->{generated_ial1}{text}, '.apb APB multi-register completer alias mirrors .ppif generated IAL1');
     is_deeply($multi_alias->{generated_ial0}{files}, $multi_ppif->{generated_ial0}{files}, '.apb APB multi-register completer alias mirrors .ppif generated IAL0');
     is_deeply($multi_alias->{report}{transfer}{registers}, [qw(reg0 reg1)], '.apb APB multi-register completer alias preserves transfer register list');
+
+    ok(-f sample_apb_completer_multi_register_sideband_apb_path(), 'tracked runnable APB multi-register sideband completer .apb sample exists');
+    my $sideband_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_apb_path());
+    my $sideband_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_ppif_path());
+    is($sideband_alias->{kind}, 'protocol_intent.apb_completer', '.apb APB multi-register sideband completer alias returns the completer kind');
+    is($sideband_alias->{generated_ial1}{text}, $sideband_ppif->{generated_ial1}{text}, '.apb APB multi-register sideband completer alias mirrors .ppif generated IAL1');
+    is_deeply($sideband_alias->{generated_ial0}{files}, $sideband_ppif->{generated_ial0}{files}, '.apb APB multi-register sideband completer alias mirrors .ppif generated IAL0');
+    my %sideband_residue = map { $_->{id} => 1 } @{$sideband_alias->{report}{unsupported_residue}};
+    ok(!$sideband_residue{apb_protection_and_strobes_deferred}, '.apb APB multi-register sideband completer alias removes broad sideband residue');
 };
 
 done_testing();
@@ -335,6 +448,10 @@ sub sample_apb_completer_multi_register_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register.ppif');
 }
 
+sub sample_apb_completer_multi_register_sideband_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband.ppif');
+}
+
 sub sample_apb_completer_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer.apb');
 }
@@ -343,12 +460,20 @@ sub sample_apb_completer_multi_register_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register.apb');
 }
 
+sub sample_apb_completer_multi_register_sideband_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband.apb');
+}
+
 sub sample_apb_completer_ppif {
     return slurp(sample_apb_completer_ppif_path());
 }
 
 sub sample_apb_completer_multi_register_ppif {
     return slurp(sample_apb_completer_multi_register_ppif_path());
+}
+
+sub sample_apb_completer_multi_register_sideband_ppif {
+    return slurp(sample_apb_completer_multi_register_sideband_ppif_path());
 }
 
 sub sorted {

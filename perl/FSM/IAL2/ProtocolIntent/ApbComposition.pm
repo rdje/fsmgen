@@ -557,6 +557,10 @@ sub _build_apb_interconnect_isf($contract) {
         _interface_line('input', $request_bus->{write}),
         _interface_line('input', $request_bus->{address}),
         _interface_line('input', $request_bus->{write_data}),
+        (_bus_has_sidebands($request_bus) ? (
+            _interface_line('input', $request_bus->{protection}),
+            _interface_line('input', $request_bus->{strobe}),
+        ) : ()),
         _interface_line('output', $request_bus->{ready}),
         _interface_line('output', $request_bus->{read_data}),
         _interface_line('output', $request_bus->{error}),
@@ -570,6 +574,10 @@ sub _build_apb_interconnect_isf($contract) {
             _interface_line('output', $bus->{write}),
             _interface_line('output', $bus->{address}),
             _interface_line('output', $bus->{write_data}),
+            (_bus_has_sidebands($bus) ? (
+                _interface_line('output', $bus->{protection}),
+                _interface_line('output', $bus->{strobe}),
+            ) : ()),
             _interface_line('input', $bus->{ready}),
             _interface_line('input', $bus->{read_data}),
             _interface_line('input', $bus->{error});
@@ -618,6 +626,10 @@ sub _build_apb_interconnect_fsm($contract) {
         _size_line($request_bus->{write}, 1),
         _size_line($request_bus->{address}{name}, $request_bus->{address}{width}),
         _size_line($request_bus->{write_data}{name}, $request_bus->{write_data}{width}),
+        (_bus_has_sidebands($request_bus) ? (
+            _size_line($request_bus->{protection}{name}, $request_bus->{protection}{width}),
+            _size_line($request_bus->{strobe}{name}, $request_bus->{strobe}{width}),
+        ) : ()),
         _size_line($request_bus->{ready}, 1),
         _size_line($request_bus->{read_data}{name}, $request_bus->{read_data}{width}),
         _size_line($request_bus->{error}, 1),
@@ -630,6 +642,10 @@ sub _build_apb_interconnect_fsm($contract) {
             _size_line($bus->{write}, 1),
             _size_line($bus->{address}{name}, $bus->{address}{width}),
             _size_line($bus->{write_data}{name}, $bus->{write_data}{width}),
+            (_bus_has_sidebands($bus) ? (
+                _size_line($bus->{protection}{name}, $bus->{protection}{width}),
+                _size_line($bus->{strobe}{name}, $bus->{strobe}{width}),
+            ) : ()),
             _size_line($bus->{ready}, 1),
             _size_line($bus->{read_data}{name}, $bus->{read_data}{width}),
             _size_line($bus->{error}, 1);
@@ -646,6 +662,10 @@ sub _build_apb_interconnect_fsm($contract) {
             "    (<- ($bus->{enable}> $request_bus->{enable}))",
             "    (<- ($bus->{write}> $request_bus->{write}))",
             "    (<- ($bus->{write_data}{name}> $request_bus->{write_data}{name}))",
+            (_bus_has_sidebands($request_bus) ? (
+                "    (<- ($bus->{protection}{name}> $request_bus->{protection}{name}))",
+                "    (<- ($bus->{strobe}{name}> $request_bus->{strobe}{name}))",
+            ) : ()),
             "    (<- ($bus->{select}> $request_bus->{select}) <$hit)",
             "    (<- ($bus->{select}> 0) <(! $hit))",
             "    (<- ($bus->{address}{name}> " . _local_address_expr($request_bus, $window) . ") <$hit)",
@@ -816,6 +836,15 @@ sub _any_hit_expr(@hit_exprs) {
     return "(| " . join(' ', @hit_exprs) . ")";
 }
 
+sub _request_has_sidebands($requester) {
+    return defined($requester->{request}{protection})
+        && defined($requester->{request}{write_strobe});
+}
+
+sub _bus_has_sidebands($bus) {
+    return defined($bus->{protection}) && defined($bus->{strobe});
+}
+
 sub _multi_top_port_specs($contract) {
     my $composition = $contract->{composition};
     my $requester = $contract->{requester};
@@ -837,6 +866,10 @@ sub _multi_top_port_specs($contract) {
         _input_port($requester->{request}{write}, 1),
         _input_port($requester->{request}{address}{name}, $requester->{request}{address}{width}),
         _input_port($requester->{request}{write_data}{name}, $requester->{request}{write_data}{width}),
+        (_request_has_sidebands($requester) ? (
+            _input_port($requester->{request}{protection}{name}, $requester->{request}{protection}{width}),
+            _input_port($requester->{request}{write_strobe}{name}, $requester->{request}{write_strobe}{width}),
+        ) : ()),
         (map {
             my $completer = _completer_for_child($contract, $_);
             _input_port($completer->{control}{wait_cycles}{name}, $completer->{control}{wait_cycles}{width});
@@ -861,6 +894,10 @@ sub _multi_wiring_lines($contract, $interconnect) {
         "($requester.$bus->{write} $interconnect_instance.$bus->{write})",
         "($requester.$bus->{address}{name} $interconnect_instance.$bus->{address}{name})",
         "($requester.$bus->{write_data}{name} $interconnect_instance.$bus->{write_data}{name})",
+        (_bus_has_sidebands($bus) ? (
+            "($requester.$bus->{protection}{name} $interconnect_instance.$bus->{protection}{name})",
+            "($requester.$bus->{strobe}{name} $interconnect_instance.$bus->{strobe}{name})",
+        ) : ()),
         "($interconnect_instance.$bus->{ready} $requester.$bus->{ready})",
         "($interconnect_instance.$bus->{read_data}{name} $requester.$bus->{read_data}{name})",
         "($interconnect_instance.$bus->{error} $requester.$bus->{error})",
@@ -875,6 +912,10 @@ sub _multi_wiring_lines($contract, $interconnect) {
             "($interconnect_instance.$peripheral_bus->{write} $instance.$peripheral_bus->{write})",
             "($interconnect_instance.$peripheral_bus->{address}{name} $instance.$peripheral_bus->{address}{name})",
             "($interconnect_instance.$peripheral_bus->{write_data}{name} $instance.$peripheral_bus->{write_data}{name})",
+            (_bus_has_sidebands($peripheral_bus) ? (
+                "($interconnect_instance.$peripheral_bus->{protection}{name} $instance.$peripheral_bus->{protection}{name})",
+                "($interconnect_instance.$peripheral_bus->{strobe}{name} $instance.$peripheral_bus->{strobe}{name})",
+            ) : ()),
             "($instance.$peripheral_bus->{ready} $interconnect_instance.$peripheral_bus->{ready})",
             "($instance.$peripheral_bus->{read_data}{name} $interconnect_instance.$peripheral_bus->{read_data}{name})",
             "($instance.$peripheral_bus->{error} $interconnect_instance.$peripheral_bus->{error})";
@@ -905,6 +946,10 @@ sub _top_port_specs($contract) {
         _input_port($requester->{request}{write}, 1),
         _input_port($requester->{request}{address}{name}, $requester->{request}{address}{width}),
         _input_port($requester->{request}{write_data}{name}, $requester->{request}{write_data}{width}),
+        (_request_has_sidebands($requester) ? (
+            _input_port($requester->{request}{protection}{name}, $requester->{request}{protection}{width}),
+            _input_port($requester->{request}{write_strobe}{name}, $requester->{request}{write_strobe}{width}),
+        ) : ()),
         _input_port($completer->{control}{wait_cycles}{name}, $completer->{control}{wait_cycles}{width}),
         (defined($requester->{response}{busy}) ? (_output_port($requester->{response}{busy}, 1)) : ()),
         (defined($requester->{response}{status}) ? (_output_port($requester->{response}{status}{name}, $requester->{response}{status}{width})) : ()),
@@ -955,6 +1000,10 @@ sub _wiring_lines($composition) {
         "($requester.$bus->{write} $completer.$bus->{write})",
         "($requester.$bus->{address}{name} $completer.$bus->{address}{name})",
         "($requester.$bus->{write_data}{name} $completer.$bus->{write_data}{name})",
+        (_bus_has_sidebands($bus) ? (
+            "($requester.$bus->{protection}{name} $completer.$bus->{protection}{name})",
+            "($requester.$bus->{strobe}{name} $completer.$bus->{strobe}{name})",
+        ) : ()),
         "($completer.$bus->{ready} $requester.$bus->{ready})",
         "($completer.$bus->{read_data}{name} $requester.$bus->{read_data}{name})",
         "($completer.$bus->{error} $requester.$bus->{error})",
@@ -1047,9 +1096,10 @@ sub _build_multi_peripheral_report(%args) {
             'address-map base and size defaults must be static 32-bit non-overlapping 4-byte-aligned decimal values',
             'decode policy is overlap reject, priority source-order, and unmapped-address error',
             'the generated APB interconnect fans out decoded PSEL, forwards control/data, translates local PADDR, muxes selected responses, and returns PSLVERR for unmapped active accesses',
+            (_composition_has_sidebands($contract) ? ('sideband-aware multi-peripheral composition propagates PPROT width 3 and PSTRB width 4 through the generated APB interconnect') : ()),
             'APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
-        unsupported_residue => _apb_multi_peripheral_unsupported_residue(),
+        unsupported_residue => _apb_multi_peripheral_unsupported_residue($contract),
     };
 
     $report->{requester_status_field} = _clone_jsonish($requester_result->{report}{response_status_field})
@@ -1139,21 +1189,25 @@ sub _interconnect_child_report($contract, $interconnect) {
                 module         => $interconnect->{object_name},
             },
         },
-        unsupported_residue => _clone_jsonish(_apb_multi_peripheral_interconnect_unsupported_residue()),
+        unsupported_residue => _clone_jsonish(_apb_multi_peripheral_interconnect_unsupported_residue($contract)),
     };
 }
 
-sub _apb_multi_peripheral_unsupported_residue() {
+sub _composition_has_sidebands($contract) {
+    return _bus_has_sidebands($contract->{composition}{wiring}{bus});
+}
+
+sub _apb_multi_peripheral_unsupported_residue($contract) {
     return [
-        _apb_sideband_residue(),
+        _composition_has_sidebands($contract) ? _apb_protection_policy_effects_residue() : _apb_sideband_residue(),
         _apb_alternate_widths_residue(),
         _apb_back_to_back_residue(),
     ];
 }
 
-sub _apb_multi_peripheral_interconnect_unsupported_residue() {
+sub _apb_multi_peripheral_interconnect_unsupported_residue($contract) {
     return [
-        _apb_sideband_residue(),
+        _composition_has_sidebands($contract) ? _apb_protection_policy_effects_residue() : _apb_sideband_residue(),
         _apb_alternate_widths_residue(),
         _apb_back_to_back_residue(),
     ];
@@ -1163,6 +1217,13 @@ sub _apb_sideband_residue() {
     return {
         id     => 'apb_protection_and_strobes_deferred',
         detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
+    };
+}
+
+sub _apb_protection_policy_effects_residue() {
+    return {
+        id     => 'apb_protection_policy_effects_deferred',
+        detail => 'PPROT is propagated through the generated APB composition and interconnect, but protection access-control policy remains future APB work.',
     };
 }
 
@@ -1248,6 +1309,7 @@ sub _build_report(%args) {
             'requester, completer, and composition must share clock and reset policy',
             'composition children must reference the embedded requester and completer objects by name',
             'composition bus wiring must match requester and completer APB signal names and widths',
+            (_composition_has_sidebands($contract) ? ('sideband-aware composition wiring requires PPROT width 3 and PSTRB width 4 across requester, completer, and composition bus bindings') : ()),
             'APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
         unsupported_residue => _apb_composition_unsupported_residue($contract),
@@ -1287,10 +1349,7 @@ sub _apb_composition_unsupported_residue($contract) {
     } unless _apb_completer_has_multi_registers($contract);
 
     push @residue, (
-        {
-            id     => 'apb_protection_and_strobes_deferred',
-            detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
-        },
+        _composition_has_sidebands($contract) ? _apb_protection_policy_effects_residue() : _apb_sideband_residue(),
         {
             id     => 'apb_alternate_widths_deferred',
             detail => 'The first APB composition fixes address, write-data, and read-data widths to 32 bits and wait_cycles to 4 bits.',
@@ -1531,6 +1590,7 @@ sub _validate_bus_compatibility($wiring, $requester_bus, $completer_bus) {
     for my $field (qw(address write_data read_data)) {
         _require_matching_width_bus_field($field, $wiring, $requester_bus, $completer_bus);
     }
+    _validate_fixed_sideband_compatibility($wiring, $requester_bus, $completer_bus);
 }
 
 sub _validate_multi_peripheral_completers($completers) {
@@ -1584,6 +1644,7 @@ sub _validate_multi_bus_compatibility($wiring, $requester_bus, $completers) {
     for my $field (qw(address write_data read_data)) {
         _require_matching_width_bus_field($field, $wiring, $requester_bus);
     }
+    _validate_multi_sideband_compatibility($wiring, $requester_bus, $completers);
     for my $completer (@$completers) {
         for my $field (qw(address write_data read_data)) {
             my $expected_width = $wiring->{$field}{width};
@@ -1601,6 +1662,8 @@ sub _validate_multi_signal_uniqueness($clock, $reset, $requester, $completers) {
         $requester->{request}{write},
         $requester->{request}{address}{name},
         $requester->{request}{write_data}{name},
+        (defined($requester->{request}{protection}) ? ($requester->{request}{protection}{name}) : ()),
+        (defined($requester->{request}{write_strobe}) ? ($requester->{request}{write_strobe}{name}) : ()),
         (defined($requester->{response}{busy}) ? ($requester->{response}{busy}) : ()),
         (defined($requester->{response}{status}) ? ($requester->{response}{status}{name}) : ()),
         $requester->{response}{done},
@@ -1611,6 +1674,8 @@ sub _validate_multi_signal_uniqueness($clock, $reset, $requester, $completers) {
         $requester->{bus}{write},
         $requester->{bus}{address}{name},
         $requester->{bus}{write_data}{name},
+        (defined($requester->{bus}{protection}) ? ($requester->{bus}{protection}{name}) : ()),
+        (defined($requester->{bus}{strobe}) ? ($requester->{bus}{strobe}{name}) : ()),
         $requester->{bus}{ready},
         $requester->{bus}{read_data}{name},
         $requester->{bus}{error},
@@ -1622,6 +1687,8 @@ sub _validate_multi_signal_uniqueness($clock, $reset, $requester, $completers) {
                 $_->{bus}{write},
                 $_->{bus}{address}{name},
                 $_->{bus}{write_data}{name},
+                (defined($_->{bus}{protection}) ? ($_->{bus}{protection}{name}) : ()),
+                (defined($_->{bus}{strobe}) ? ($_->{bus}{strobe}{name}) : ()),
                 $_->{bus}{ready},
                 $_->{bus}{read_data}{name},
                 $_->{bus}{error},
@@ -1632,6 +1699,59 @@ sub _validate_multi_signal_uniqueness($clock, $reset, $requester, $completers) {
         confess "APB multi-peripheral composition duplicates top, APB bus, or peripheral signal '$name'\n"
             if $seen{$name}++;
     }
+}
+
+sub _validate_fixed_sideband_compatibility($wiring, $requester_bus, $completer_bus) {
+    my $sideband_present = grep { _bus_declares_any_sideband($_) } ($wiring, $requester_bus, $completer_bus);
+    return unless $sideband_present;
+
+    for my $bus_name (
+        ['composition wiring', $wiring],
+        ['requester', $requester_bus],
+        ['completer', $completer_bus],
+    ) {
+        my ($label, $bus) = @$bus_name;
+        confess "APB composition IAL2 contract $label bus must declare protection and strobe together in this slice\n"
+            unless _bus_has_sidebands($bus);
+    }
+
+    for my $field (qw(protection strobe)) {
+        _require_matching_width_bus_field($field, $wiring, $requester_bus, $completer_bus);
+    }
+}
+
+sub _validate_multi_sideband_compatibility($wiring, $requester_bus, $completers) {
+    my $sideband_present = _bus_declares_any_sideband($wiring)
+        || _bus_declares_any_sideband($requester_bus)
+        || grep { _bus_declares_any_sideband($_->{bus}) } @$completers;
+    return unless $sideband_present;
+
+    for my $bus_name (
+        ['composition wiring', $wiring],
+        ['requester', $requester_bus],
+    ) {
+        my ($label, $bus) = @$bus_name;
+        confess "APB multi-peripheral composition IAL2 contract $label bus must declare protection and strobe together in this slice\n"
+            unless _bus_has_sidebands($bus);
+    }
+    for my $field (qw(protection strobe)) {
+        _require_matching_width_bus_field($field, $wiring, $requester_bus);
+    }
+
+    for my $completer (@$completers) {
+        confess "APB multi-peripheral composition peripheral '$completer->{name}' bus must declare protection and strobe together in this slice\n"
+            unless _bus_has_sidebands($completer->{bus});
+        for my $field (qw(protection strobe)) {
+            my $expected_width = $wiring->{$field}{width};
+            confess "APB multi-peripheral composition peripheral '$completer->{name}' bus.$field width must be $expected_width\n"
+                unless ref($completer->{bus}{$field}) eq 'HASH'
+                    && ($completer->{bus}{$field}{width} // '') eq $expected_width;
+        }
+    }
+}
+
+sub _bus_declares_any_sideband($bus) {
+    return defined($bus->{protection}) || defined($bus->{strobe});
 }
 
 sub _require_matching_scalar_bus_field($field, @buses) {

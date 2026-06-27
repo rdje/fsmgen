@@ -107,6 +107,7 @@ sub _normalize_contract($raw) {
     my $reset = _normalize_reset($raw->{reset});
     my $control = _normalize_control(_required_hash($raw, 'control'));
     my $bus = _normalize_bus(_required_hash($raw, 'bus'));
+    _validate_sideband_bundle($bus);
     my $storage = _normalize_storage(_required_hash($raw, 'storage'));
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'), $control, $storage);
 
@@ -119,11 +120,13 @@ sub _normalize_contract($raw) {
         $bus->{write},
         $bus->{address}{name},
         $bus->{write_data}{name},
+        (defined($bus->{protection}) ? ($bus->{protection}{name}) : ()),
+        (defined($bus->{strobe}) ? ($bus->{strobe}{name}) : ()),
         $bus->{ready},
         $bus->{read_data}{name},
         $bus->{error},
         (map { $_->{data}{name} } _storage_registers($storage)),
-        qw(addr write_q wdata_q wait_n apb_complete_done_q),
+        qw(addr write_q wdata_q prot_q strb_q wait_n apb_complete_done_q),
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -164,7 +167,7 @@ sub _normalize_control($raw) {
 }
 
 sub _normalize_bus($raw) {
-    return {
+    my %bus = (
         select     => _required_identifier_field($raw, 'select', 'bus.select'),
         enable     => _required_identifier_field($raw, 'enable', 'bus.enable'),
         write      => _required_identifier_field($raw, 'write', 'bus.write'),
@@ -173,7 +176,20 @@ sub _normalize_bus($raw) {
         ready      => _required_identifier_field($raw, 'ready', 'bus.ready'),
         read_data  => _normalize_width_binding($raw->{read_data}, 'bus.read_data', 32),
         error      => _required_identifier_field($raw, 'error', 'bus.error'),
-    };
+    );
+    $bus{protection} = _normalize_width_binding($raw->{protection}, 'bus.protection', 3)
+        if exists $raw->{protection};
+    $bus{strobe} = _normalize_width_binding($raw->{strobe}, 'bus.strobe', 4)
+        if exists $raw->{strobe};
+    return \%bus;
+}
+
+sub _validate_sideband_bundle($bus) {
+    my @present = grep { defined } ($bus->{protection}, $bus->{strobe});
+    return unless @present;
+
+    confess "APB completer IAL2 sideband contract requires bus.protection and bus.strobe together in this slice\n"
+        unless @present == 2;
 }
 
 sub _normalize_storage($raw) {
@@ -471,6 +487,7 @@ sub _emit_single_register_isf($contract) {
     my $error = $bus->{error};
     my $reg_data = $storage->{data}{name};
     my $internal_done = 'apb_complete_done_q';
+    my $sidebands = _contract_has_sidebands($contract);
 
     return join("\n",
         "(actor $contract->{actor_name}",
@@ -484,6 +501,10 @@ sub _emit_single_register_isf($contract) {
         _interface_line('input', $bus->{write}),
         _interface_line('input', $bus->{address}),
         _interface_line('input', $bus->{write_data}),
+        ($sidebands ? (
+            _interface_line('input', $bus->{protection}),
+            _interface_line('input', $bus->{strobe}),
+        ) : ()),
         _interface_line('input', $control->{wait_cycles}),
         _interface_line('output', $bus->{ready}),
         _interface_line('output', $bus->{read_data}),
@@ -518,11 +539,16 @@ sub _emit_single_register_isf($contract) {
         "      (sample $bus->{address}{name} as addr)",
         "      (sample $bus->{write} as write_q)",
         "      (sample $bus->{write_data}{name} as wdata_q)",
+        ($sidebands ? (
+            "      (sample $bus->{protection}{name} as prot_q)",
+            "      (sample $bus->{strobe}{name} as strb_q)",
+        ) : ()),
         "      (sample $control->{wait_cycles}{name} as wait_n))",
+        _sideband_local_lines($sidebands),
         "    (drive enter_access)",
         "    (wait wait_n)",
         "    (when (& write_q (== addr $storage->{address}{value}))",
-        "      (set $reg_data wdata_q)",
+        _write_storage_lines($reg_data, $sidebands),
         "      (drive write_hit))",
         "    (when (& write_q (! (== addr $storage->{address}{value})))",
         "      (drive error_complete))",
@@ -545,6 +571,7 @@ sub _emit_multi_register_isf($contract) {
     my $error = $bus->{error};
     my $internal_done = 'apb_complete_done_q';
     my @registers = _storage_registers($contract->{storage});
+    my $sidebands = _contract_has_sidebands($contract);
 
     my @storage_lines = map {
         "    (var $_->{data}{name} (width $_->{data}{width}) (reset $_->{data}{reset}))"
@@ -567,7 +594,7 @@ sub _emit_multi_register_isf($contract) {
         my $match = _register_match_expr($register);
         push @transaction_register_lines,
             "    (when (& write_q $match)",
-            "      (set $register->{data}{name} wdata_q)",
+            _write_storage_lines($register->{data}{name}, $sidebands),
             "      (drive write_hit))";
     }
     push @transaction_register_lines,
@@ -595,6 +622,10 @@ sub _emit_multi_register_isf($contract) {
         _interface_line('input', $bus->{write}),
         _interface_line('input', $bus->{address}),
         _interface_line('input', $bus->{write_data}),
+        ($sidebands ? (
+            _interface_line('input', $bus->{protection}),
+            _interface_line('input', $bus->{strobe}),
+        ) : ()),
         _interface_line('input', $control->{wait_cycles}),
         _interface_line('output', $bus->{ready}),
         _interface_line('output', $bus->{read_data}),
@@ -624,12 +655,44 @@ sub _emit_multi_register_isf($contract) {
         "      (sample $bus->{address}{name} as addr)",
         "      (sample $bus->{write} as write_q)",
         "      (sample $bus->{write_data}{name} as wdata_q)",
+        ($sidebands ? (
+            "      (sample $bus->{protection}{name} as prot_q)",
+            "      (sample $bus->{strobe}{name} as strb_q)",
+        ) : ()),
         "      (sample $control->{wait_cycles}{name} as wait_n))",
+        _sideband_local_lines($sidebands),
         "    (drive enter_access)",
         "    (wait wait_n)",
         @transaction_register_lines,
         "    (complete $internal_done)))",
         "",
+    );
+}
+
+sub _contract_has_sidebands($contract) {
+    return defined($contract->{bus}{protection}) && defined($contract->{bus}{strobe});
+}
+
+sub _sideband_local_lines($sidebands) {
+    return () unless $sidebands;
+    return (
+        "    (local prot_q (width 3))",
+        "    (local strb_q (width 4))",
+    );
+}
+
+sub _write_storage_lines($data_signal, $sidebands) {
+    return "      (set $data_signal wdata_q)" unless $sidebands;
+
+    return (
+        "      (when-bit strb_q 0",
+        "        (set $data_signal (| (& $data_signal 32'hffffff00) (& wdata_q 32'h000000ff))))",
+        "      (when-bit strb_q 1",
+        "        (set $data_signal (| (& $data_signal 32'hffff00ff) (& wdata_q 32'h0000ff00))))",
+        "      (when-bit strb_q 2",
+        "        (set $data_signal (| (& $data_signal 32'hff00ffff) (& wdata_q 32'h00ff0000))))",
+        "      (when-bit strb_q 3",
+        "        (set $data_signal (| (& $data_signal 32'h00ffffff) (& wdata_q 32'hff000000))))",
     );
 }
 
@@ -731,18 +794,20 @@ sub _build_report(%args) {
                 module         => $contract->{actor_name},
             },
         },
-        generated_scheduler_or_completer_rules => _report_generated_rules($multi_register),
+        generated_scheduler_or_completer_rules => _report_generated_rules($multi_register, _contract_has_sidebands($contract)),
         assumptions => _report_assumptions($multi_register),
-        enforced_static_rules => _report_enforced_static_rules($multi_register),
-        unsupported_residue => _report_unsupported_residue($multi_register),
+        enforced_static_rules => _report_enforced_static_rules($multi_register, _contract_has_sidebands($contract)),
+        unsupported_residue => _report_unsupported_residue($multi_register, _contract_has_sidebands($contract)),
     };
 }
 
-sub _report_generated_rules($multi_register) {
+sub _report_generated_rules($multi_register, $sidebands) {
     return [
         {
             id     => 'apb_setup_detect',
-            detail => 'Generated IAL1 samples PADDR, PWRITE, PWDATA, and wait_cycles only when PSEL is asserted and PENABLE is low.',
+            detail => $sidebands
+                ? 'Generated IAL1 samples PADDR, PWRITE, PWDATA, PPROT, PSTRB, and wait_cycles only when PSEL is asserted and PENABLE is low.'
+                : 'Generated IAL1 samples PADDR, PWRITE, PWDATA, and wait_cycles only when PSEL is asserted and PENABLE is low.',
         },
         {
             id     => 'apb_access_wait',
@@ -751,8 +816,12 @@ sub _report_generated_rules($multi_register) {
         {
             id     => 'apb_register_or_error_response',
             detail => $multi_register
-                ? 'Generated IAL1 updates or reads the selected decoded register and drives PSLVERR for unmapped addresses.'
-                : 'Generated IAL1 updates or reads the address-0 register and drives PSLVERR for unmapped addresses.',
+                ? ($sidebands
+                    ? 'Generated IAL1 applies PSTRB byte enables to selected decoded-register writes, reads selected registers, and drives PSLVERR for unmapped addresses.'
+                    : 'Generated IAL1 updates or reads the selected decoded register and drives PSLVERR for unmapped addresses.')
+                : ($sidebands
+                    ? 'Generated IAL1 applies PSTRB byte enables to address-0 writes, reads the address-0 register, and drives PSLVERR for unmapped addresses.'
+                    : 'Generated IAL1 updates or reads the address-0 register and drives PSLVERR for unmapped addresses.'),
         },
     ];
 }
@@ -781,13 +850,14 @@ sub _report_assumptions($multi_register) {
     ];
 }
 
-sub _report_enforced_static_rules($multi_register) {
+sub _report_enforced_static_rules($multi_register, $sidebands) {
     my @rules = (
         'contract object must be a hash reference',
         'profile must be apb and the object must be apb-completer',
         'role must be completer',
         'clock, reset, control, bus, storage, and generated local names must be unique ISF identifiers',
         'address, write-data, read-data, and register data widths are fixed at 32 bits for this slice',
+        ($sidebands ? ('sideband-aware completer contracts require PPROT width 3 and PSTRB width 4') : ()),
         'wait-cycles width is fixed at 4 bits for this slice',
         'setup detection must require select 1 and enable 0',
     );
@@ -800,7 +870,7 @@ sub _report_enforced_static_rules($multi_register) {
     return \@rules;
 }
 
-sub _report_unsupported_residue($multi_register) {
+sub _report_unsupported_residue($multi_register, $sidebands) {
     my @residue = (
         {
             id     => 'apb_interconnect_multi_peripheral_decode_deferred',
@@ -811,11 +881,10 @@ sub _report_unsupported_residue($multi_register) {
         id     => 'apb_multi_register_decode_deferred',
         detail => 'Additional register locations, range decode, byte lanes, and side effects remain future APB completer work.',
     } unless $multi_register;
+    push @residue, $sidebands
+        ? _apb_protection_policy_effects_residue()
+        : _apb_sideband_residue();
     push @residue,
-        {
-            id     => 'apb_protection_and_strobes_deferred',
-            detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
-        },
         {
             id     => 'apb_alternate_widths_deferred',
             detail => 'The public APB PPIF completer source fixes address, write-data, read-data, register data, and wait-count widths.',
@@ -825,6 +894,20 @@ sub _report_unsupported_residue($multi_register) {
             detail => 'Back-to-back setup admission and queued transfer policy remain future exact-owner work.',
         };
     return \@residue;
+}
+
+sub _apb_sideband_residue() {
+    return {
+        id     => 'apb_protection_and_strobes_deferred',
+        detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
+    };
+}
+
+sub _apb_protection_policy_effects_residue() {
+    return {
+        id     => 'apb_protection_policy_effects_deferred',
+        detail => 'PPROT is sampled by the generated APB completer, but protection access-control policy remains future APB work.',
+    };
 }
 
 sub _clone_jsonish($value) {

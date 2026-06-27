@@ -111,6 +111,7 @@ sub _normalize_contract($raw) {
     my $request = _normalize_request(_required_hash($raw, 'request'));
     my $response = _normalize_response(_required_hash($raw, 'response'));
     my $bus = _normalize_bus(_required_hash($raw, 'bus'));
+    _validate_sideband_bundle($request, $bus);
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'));
 
     _reject_duplicate_signal_names(
@@ -120,6 +121,8 @@ sub _normalize_contract($raw) {
         $request->{write},
         $request->{address}{name},
         $request->{write_data}{name},
+        (defined($request->{protection}) ? ($request->{protection}{name}) : ()),
+        (defined($request->{write_strobe}) ? ($request->{write_strobe}{name}) : ()),
         (defined($response->{busy}) ? ($response->{busy}) : ()),
         (defined($response->{status}) ? ($response->{status}{name}) : ()),
         $response->{done},
@@ -128,12 +131,14 @@ sub _normalize_contract($raw) {
         $bus->{address}{name},
         $bus->{write},
         $bus->{write_data}{name},
+        (defined($bus->{protection}) ? ($bus->{protection}{name}) : ()),
+        (defined($bus->{strobe}) ? ($bus->{strobe}{name}) : ()),
         $bus->{select},
         $bus->{enable},
         $bus->{ready},
         $bus->{read_data}{name},
         $bus->{error},
-        qw(addr is_write wdata rdata slverr psel penable),
+        qw(addr is_write wdata prot wstrb rdata slverr psel penable),
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -168,12 +173,17 @@ sub _normalize_contract($raw) {
 }
 
 sub _normalize_request($raw) {
-    return {
+    my %request = (
         start      => _required_identifier_field($raw, 'start', 'request.start'),
         write      => _required_identifier_field($raw, 'write', 'request.write'),
         address    => _normalize_width_binding($raw->{address}, 'request.address', 32),
         write_data => _normalize_width_binding($raw->{write_data}, 'request.write_data', 32),
-    };
+    );
+    $request{protection} = _normalize_width_binding($raw->{protection}, 'request.protection', 3)
+        if exists $raw->{protection};
+    $request{write_strobe} = _normalize_width_binding($raw->{write_strobe}, 'request.write_strobe', 4)
+        if exists $raw->{write_strobe};
+    return \%request;
 }
 
 sub _normalize_response($raw) {
@@ -193,7 +203,7 @@ sub _normalize_response($raw) {
 }
 
 sub _normalize_bus($raw) {
-    return {
+    my %bus = (
         address    => _normalize_width_binding($raw->{address}, 'bus.address', 32),
         write      => _required_identifier_field($raw, 'write', 'bus.write'),
         write_data => _normalize_width_binding($raw->{write_data}, 'bus.write_data', 32),
@@ -202,7 +212,25 @@ sub _normalize_bus($raw) {
         ready      => _required_identifier_field($raw, 'ready', 'bus.ready'),
         read_data  => _normalize_width_binding($raw->{read_data}, 'bus.read_data', 32),
         error      => _required_identifier_field($raw, 'error', 'bus.error'),
-    };
+    );
+    $bus{protection} = _normalize_width_binding($raw->{protection}, 'bus.protection', 3)
+        if exists $raw->{protection};
+    $bus{strobe} = _normalize_width_binding($raw->{strobe}, 'bus.strobe', 4)
+        if exists $raw->{strobe};
+    return \%bus;
+}
+
+sub _validate_sideband_bundle($request, $bus) {
+    my @present = grep { defined } (
+        $request->{protection},
+        $request->{write_strobe},
+        $bus->{protection},
+        $bus->{strobe},
+    );
+    return unless @present;
+
+    confess "APB requester-transfer IAL2 sideband contract requires request.protection, request.write_strobe, bus.protection, and bus.strobe together in this slice\n"
+        unless @present == 4;
 }
 
 sub _normalize_transfer($raw) {
@@ -387,6 +415,7 @@ sub _emit_isf($contract) {
     my $bus = $contract->{bus};
     my $transfer = $contract->{transfer};
     my $reset = _reset_clause($contract->{reset});
+    my $sidebands = _contract_has_sidebands($contract);
 
     return join("\n",
         "(actor $contract->{actor_name}",
@@ -399,6 +428,10 @@ sub _emit_isf($contract) {
         _interface_line('input', $request->{write}),
         _interface_line('input', $request->{address}),
         _interface_line('input', $request->{write_data}),
+        ($sidebands ? (
+            _interface_line('input', $request->{protection}),
+            _interface_line('input', $request->{write_strobe}),
+        ) : ()),
         (defined($response->{busy}) ? (_interface_line('output', $response->{busy})) : ()),
         (defined($response->{status}) ? (_interface_line('output', $response->{status})) : ()),
         _interface_line('output', $response->{done}),
@@ -407,6 +440,10 @@ sub _emit_isf($contract) {
         _interface_line('output', $bus->{address}),
         _interface_line('output', $bus->{write}),
         _interface_line('output', $bus->{write_data}),
+        ($sidebands ? (
+            _interface_line('output', $bus->{protection}),
+            _interface_line('output', $bus->{strobe}),
+        ) : ()),
         _interface_line('output', $bus->{select}),
         _interface_line('output', $bus->{enable}),
         _interface_line('input', $bus->{ready}),
@@ -417,6 +454,10 @@ sub _emit_isf($contract) {
         "    ($bus->{address}{name} addr)",
         "    ($bus->{write} is_write)",
         "    ($bus->{write_data}{name} wdata)",
+        ($sidebands ? (
+            "    ($bus->{protection}{name} prot)",
+            "    ($bus->{strobe}{name} (& wstrb (concat is_write is_write is_write is_write)))",
+        ) : ()),
         "    ($bus->{select} $transfer->{setup}{select})",
         (defined($response->{busy}) ? ("    ($response->{busy} 1)") : ()),
         (defined($response->{status}) ? ("    ($response->{status}{name} 1)") : ()),
@@ -433,7 +474,11 @@ sub _emit_isf($contract) {
         "    (on $request->{start}",
         "      (sample $request->{address}{name} as addr)",
         "      (sample $request->{write} as is_write)",
-        "      (sample $request->{write_data}{name} as wdata))",
+        "      (sample $request->{write_data}{name} as wdata" . ($sidebands ? ")" : "))"),
+        ($sidebands ? (
+            "      (sample $request->{protection}{name} as prot)",
+            "      (sample $request->{write_strobe}{name} as wstrb))",
+        ) : ()),
         (defined($response->{status}) ? ("    (local slverr (width 1))") : ()),
         "    (drive setup_phase)",
         "    (drive access_phase)",
@@ -447,11 +492,17 @@ sub _emit_isf($contract) {
     );
 }
 
+sub _contract_has_sidebands($contract) {
+    return defined($contract->{bus}{protection}) && defined($contract->{bus}{strobe});
+}
+
 sub _done_drive_lines($bus, $response) {
     return (
         "  (drive done_phase",
         "    ($bus->{select} 0)",
         "    ($bus->{enable} 0)",
+        (defined($bus->{protection}) ? ("    ($bus->{protection}{name} 0)") : ()),
+        (defined($bus->{strobe}) ? ("    ($bus->{strobe}{name} 0)") : ()),
         "    ($response->{read_data}{name} rdata)",
         "    ($response->{error} slverr))",
     ) unless defined $response->{status};
@@ -461,6 +512,8 @@ sub _done_drive_lines($bus, $response) {
         "  (drive done_phase",
         "    ($bus->{select} 0)",
         "    ($bus->{enable} 0)",
+        (defined($bus->{protection}) ? ("    ($bus->{protection}{name} 0)") : ()),
+        (defined($bus->{strobe}) ? ("    ($bus->{strobe}{name} 0)") : ()),
         "    ($response->{read_data}{name} rdata)",
         "    ($response->{error} slverr)",
         "    ($status (concat 1'b1 slverr)))",
@@ -607,6 +660,7 @@ sub _build_report(%args) {
             'role must be requester',
             'clock, reset, request, response, bus, and generated local names must be unique ISF identifiers',
             'address, write-data, and read-data widths are fixed at 32 bits for this slice',
+            (_contract_has_sidebands($contract) ? ('sideband-aware requester-transfer contracts require PPROT width 3 and PSTRB/write-strobe width 4') : ()),
             'setup phase must drive select 1 and enable 0',
             'access phase must drive select 1 and enable 1',
             'completion waits on ready, samples read-data and error, and reports latency min 2 max 16',
@@ -630,11 +684,10 @@ sub _apb_requester_unsupported_residue($contract) {
             id     => 'apb_multi_peripheral_decode_deferred',
             detail => 'Address decode, peripheral selection beyond one PSEL, and multi-peripheral routing remain future APB work.',
         },
-        {
-            id     => 'apb_protection_and_strobes_deferred',
-            detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
-        },
     );
+    push @residue, _contract_has_sidebands($contract)
+        ? _apb_protection_policy_effects_residue()
+        : _apb_sideband_residue();
 
     if (defined($contract->{response}{status})) {
         # The selected busy+status response contract is fully represented here.
@@ -662,6 +715,20 @@ sub _apb_requester_unsupported_residue($contract) {
     );
 
     return \@residue;
+}
+
+sub _apb_sideband_residue() {
+    return {
+        id     => 'apb_protection_and_strobes_deferred',
+        detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
+    };
+}
+
+sub _apb_protection_policy_effects_residue() {
+    return {
+        id     => 'apb_protection_policy_effects_deferred',
+        detail => 'PPROT is propagated by the generated APB requester, but protection access-control policy remains future APB work.',
+    };
 }
 
 sub _apb_requester_status_encoding() {

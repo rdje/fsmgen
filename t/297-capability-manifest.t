@@ -3114,7 +3114,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/APB requester-transfer, busy-capable APB requester-transfer, status-capable APB requester-transfer, APB completer, APB multi-register completer, fixed one-requester\/one-completer APB composition, busy-capable fixed APB composition, status-capable fixed APB composition, status-capable multi-register fixed APB composition, and selected one-requester\/two-peripheral APB interconnect\/decode composition IAL2 profile-alias suffix/,
+        qr/sideband-aware APB requester-transfer, APB completer, APB multi-register completer, sideband-aware APB multi-register completer, fixed one-requester\/one-completer APB composition, .*sideband-aware multi-register fixed APB composition, selected one-requester\/two-peripheral APB interconnect\/decode composition, and sideband-aware one-requester\/two-peripheral APB interconnect\/decode composition IAL2 profile-alias suffix/,
         'manifest describes .apb as the bounded APB profile-alias suffix',
     );
     like(
@@ -3139,7 +3139,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/ppif\/apb_requester_transfer\.apb, ppif\/apb_requester_transfer_busy\.apb, ppif\/apb_requester_transfer_status\.apb, ppif\/apb_completer\.apb, ppif\/apb_completer_multi_register\.apb, ppif\/apb_composition\.apb, ppif\/apb_composition_busy\.apb, ppif\/apb_composition_status\.apb, ppif\/apb_composition_multi_register\.apb, and ppif\/apb_composition_multi_peripheral\.apb/,
+        qr/ppif\/apb_requester_transfer\.ppif, ppif\/apb_requester_transfer_busy\.ppif, ppif\/apb_requester_transfer_status\.ppif, ppif\/apb_requester_transfer_sideband\.ppif, ppif\/apb_completer\.ppif, ppif\/apb_completer_multi_register\.ppif, ppif\/apb_completer_multi_register_sideband\.ppif, ppif\/apb_composition\.ppif, ppif\/apb_composition_busy\.ppif, ppif\/apb_composition_status\.ppif, ppif\/apb_composition_multi_register\.ppif, ppif\/apb_composition_multi_register_sideband\.ppif, ppif\/apb_composition_multi_peripheral\.ppif, and ppif\/apb_composition_multi_peripheral_sideband\.ppif at matching \.apb paths/,
         'manifest records the shipped APB profile-alias samples',
     );
     like(
@@ -3156,6 +3156,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $file_surface_by_suffix{'.apb'}{current_boundary},
         qr/multi-register completer\/composition aliases decode source-ordered 32-bit aligned register addresses/,
         'manifest records the APB multi-register decode boundary for profile aliases',
+    );
+    like(
+        $file_surface_by_suffix{'.apb'}{current_boundary},
+        qr/sideband-aware requester\/completer\/composition aliases propagate PPROT, drive or sample PSTRB, and apply PSTRB byte-lane writes/,
+        'manifest records the APB sideband/strobe boundary for profile aliases',
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},

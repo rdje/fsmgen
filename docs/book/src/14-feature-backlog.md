@@ -10147,6 +10147,23 @@ composition bus/wiring blocks. The selected 32-bit byte-lane policy maps
 `PWDATA[23:16]`, and `PSTRB[3]` to `PWDATA[31:24]`; `PPROT` is propagated and
 sampled while protection access-control effects remain deferred.
 
+APB sideband/strobe behavior:
+[IAL2_APB_SIDEBAND_STROBE_BEHAVIOR](../../IAL2_APB_SIDEBAND_STROBE_BEHAVIOR.md)
+ships bounded `PPROT`/`PSTRB` behavior through sideband-aware requester,
+multi-register completer, fixed multi-register composition, and
+multi-peripheral composition `.ppif` and `.apb` samples. Requesters sample
+`req_prot` and `req_wstrb`, drive `PPROT` from the sampled value, drive
+`PSTRB` from the sampled strobe only for writes, and clear both sidebands in
+the terminal phase. Completers sample `PPROT/PSTRB` during setup detection and
+use `PSTRB` as little-endian byte enables for mapped register writes while
+preserving unselected bytes. Fixed composition wires the sidebands directly;
+multi-peripheral composition fans them out through `apb_interconnect` to each
+peripheral-side bus while preserving decoded `PSEL`, local `PADDR`
+translation, response muxing, and unmapped active-access `PSLVERR`. Sideband
+reports now replace `apb_protection_and_strobes_deferred` with
+`apb_protection_policy_effects_deferred`; alternate widths, PPROT
+access-control effects, and back-to-back transfer policy remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

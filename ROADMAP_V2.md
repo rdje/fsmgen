@@ -4430,6 +4430,19 @@ APB: `PSTRB[0]` controls `PWDATA[7:0]`, `PSTRB[1]` controls `PWDATA[15:8]`,
 `PSTRB[2]` controls `PWDATA[23:16]`, and `PSTRB[3]` controls `PWDATA[31:24]`.
 `PPROT` is propagated and sampled while protection access-control effects
 remain deferred.
+`.589` now ships bounded APB `PPROT`/`PSTRB` sideband/strobe behavior through
+sideband-aware requester, multi-register completer, fixed multi-register
+composition, and multi-peripheral composition `.ppif` and `.apb` samples.
+Requesters sample `req_prot`/`req_wstrb`, drive `PPROT`, drive `PSTRB` only
+for writes, and clear both sidebands in the terminal phase. Completers sample
+`PPROT/PSTRB` during APB setup and apply little-endian byte-lane register
+writes while preserving unselected bytes. Fixed composition wires sidebands
+directly, and multi-peripheral composition fans them out through
+`apb_interconnect` while preserving decoded `PSEL`, local `PADDR`
+translation, response muxing, and unmapped active-access `PSLVERR`.
+Sideband-aware reports replace `apb_protection_and_strobes_deferred` with
+`apb_protection_policy_effects_deferred`; alternate widths, PPROT
+access-control effects, and back-to-back policy remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
