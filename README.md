@@ -3501,6 +3501,22 @@ IAL1/IAL0 expression and conditional-action support is sufficient for bounded
 static policy checks, so `.596` must settle public policy vocabulary,
 denied-read/write behavior, `PSTRB` interaction, composition/interconnect
 effects, reports, support identities, diagnostics, validation, and rollback.
+`.596` now selects `.597`, direct bounded implementation of the first APB
+`PPROT` access-control effects contract, without changing behavior. The
+selected syntax adds register-local `(access-policy ...)` clauses to
+sideband-aware 32-bit APB completer storage registers, with read/write clauses
+that either `allow` or `require (privileged 0|1)`. The first FSMGen-local
+predicate maps `privileged` to sampled `PPROT[0]`. Denied mapped accesses
+complete at the normal APB response point with `PREADY=1` and `PSLVERR=1`;
+denied reads drive `PRDATA=0`, denied writes are side-effect-free including
+`PSTRB=0`, and fixed/multi-peripheral composition propagates `PPROT` and muxes
+responses while selected completers own enforcement. Selected reports will
+replace `apb_protection_policy_effects_deferred` with
+`apb_additional_protection_policies_deferred`; data16 policy effects,
+additional `PPROT` predicates, global/window/peripheral policies,
+interconnect-owned enforcement, back-to-back policy, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6049,6 +6065,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_ALTERNATE_WIDTH_CONTRACT_SELECTION.md` — selects sideband-aware 16-bit APB data/strobe variants as the first alternate-width implementation contract.
 - `docs/IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md` — ships selected sideband-aware APB data16 requester, completer, fixed-composition, and multi-peripheral composition behavior.
 - `docs/IAL2_APB_PPROT_EFFECTS_READINESS_AUDIT.md` — audits APB `PPROT` access-control effects readiness and selects public policy contract selection before behavior changes.
+- `docs/IAL2_APB_PPROT_EFFECTS_CONTRACT_SELECTION.md` — selects register-local APB `PPROT` access-policy syntax, privileged predicate semantics, denied-access response behavior, reports, diagnostics, and direct implementation ownership.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

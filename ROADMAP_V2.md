@@ -4502,6 +4502,22 @@ IAL1/IAL0 expression and conditional-action support is sufficient for bounded
 static policy checks, so `.596` must settle public policy vocabulary,
 denied-read/write behavior, `PSTRB` interaction, composition/interconnect
 effects, reports, support identities, diagnostics, validation, and rollback.
+`.596` now selects `.597`, direct bounded implementation of the first APB
+`PPROT` access-control effects contract, without changing behavior. The
+selected syntax adds register-local `(access-policy ...)` clauses to
+sideband-aware 32-bit APB completer storage registers, with read/write clauses
+that either `allow` or `require (privileged 0|1)`. The first FSMGen-local
+predicate maps `privileged` to sampled `PPROT[0]`. Denied mapped accesses
+complete at the normal APB response point with `PREADY=1` and `PSLVERR=1`;
+denied reads drive `PRDATA=0`, denied writes are side-effect-free including
+`PSTRB=0`, and fixed/multi-peripheral composition propagates `PPROT` and muxes
+responses while selected completers own enforcement. Selected reports will
+replace `apb_protection_policy_effects_deferred` with
+`apb_additional_protection_policies_deferred`; data16 policy effects,
+additional `PPROT` predicates, global/window/peripheral policies,
+interconnect-owned enforcement, back-to-back policy, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

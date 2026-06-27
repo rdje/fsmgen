@@ -10230,6 +10230,7 @@ and ships a `258`-byte status/control split. Data16 reports add
 `apb_remaining_widths_deferred`; 8-bit/64-bit/non-byte widths, alternate
 address or wait-count widths, PPROT effects, and back-to-back policy remain
 deferred.
+
 APB PPROT effects readiness:
 [IAL2_APB_PPROT_EFFECTS_READINESS_AUDIT](../../IAL2_APB_PPROT_EFFECTS_READINESS_AUDIT.md)
 selects `.596`, public APB `PPROT` access-control effects contract selection,
@@ -10240,6 +10241,25 @@ during setup. Reports still use `apb_protection_policy_effects_deferred`;
 the next contract must settle policy vocabulary, denial behavior, `PSTRB`
 interaction, composition/interconnect effects, reports, support identities,
 diagnostics, validation, and rollback.
+
+APB PPROT effects contract:
+[IAL2_APB_PPROT_EFFECTS_CONTRACT_SELECTION](../../IAL2_APB_PPROT_EFFECTS_CONTRACT_SELECTION.md)
+selects `.597`, direct bounded implementation of the first APB `PPROT`
+access-control effects contract, without changing behavior. The selected
+source syntax adds register-local `(access-policy ...)` clauses to
+sideband-aware 32-bit APB completer storage registers. The first local
+predicate is `(privileged VALUE)`, defined as sampled `PPROT[0] == VALUE`.
+Denied mapped accesses complete with normal APB response timing,
+`PREADY=1`, and `PSLVERR=1`; denied reads drive `PRDATA=0`, and denied
+writes are side-effect-free, including `PSTRB=0`. Fixed and multi-peripheral
+composition only propagate `PPROT` and mux the selected response; selected
+completers own register-local enforcement. Selected reports will replace
+`apb_protection_policy_effects_deferred` with
+`apb_additional_protection_policies_deferred`, while data16 policy effects,
+additional `PPROT` predicates, global/window/peripheral policies,
+interconnect-owned enforcement, back-to-back policy, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
