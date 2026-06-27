@@ -4389,6 +4389,18 @@ local peripheral address translation, selected response muxing, generated
 `apb_composition.v1` report fields, and new
 `ppif/apb_composition_multi_peripheral.ppif`/`.apb` samples. Existing fixed
 APB composition behavior remains unchanged.
+`.585` now ships bounded APB multi-peripheral interconnect/decode through
+`ppif/apb_composition_multi_peripheral.ppif` and
+`ppif/apb_composition_multi_peripheral.apb`. The parser accepts repeated
+`(peripheral INSTANCE OBJECT)` APB completer children, static non-overlapping
+`(address-map ...)` windows, and the selected reject/source-order/unmapped
+error decode policy. Lowering emits `apb_interconnect.isf`,
+`apb_interconnect.fsm`, requester/peripheral endpoint artifacts, and
+`apb_tb.fsm`; the generated interconnect fans out decoded `PSEL`, translates
+local `PADDR`, muxes selected responses, and returns `PSLVERR` for active
+unmapped accesses. Reports expose topology/address-map/response-mux fields,
+preserve authored peripheral names, and publish collision-free generated
+instance names such as `status_peripheral`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

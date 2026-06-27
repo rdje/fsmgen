@@ -342,7 +342,11 @@ or `ppif/apb_composition.apb`, with busy/status variants at
 `ppif/apb_composition_status.{ppif,apb}` plus status-capable multi-register
 variants at `ppif/apb_composition_multi_register.{ppif,apb}`. Composition
 sources lower through generated requester/completer `.isf` and `.fsm` review
-artifacts before the selected top `apb_tb.fsm`. See
+artifacts before the selected top `apb_tb.fsm`. The multi-peripheral
+composition variants at `ppif/apb_composition_multi_peripheral.{ppif,apb}`
+also generate `apb_interconnect.isf` and `apb_interconnect.fsm`, decode static
+address windows, translate local `PADDR`, mux selected responses, and return
+`PSLVERR` for active unmapped accesses. See
 [Feature Backlog](14-feature-backlog.md) for runnable APB `.ppif` and `.apb`
 commands and the current APB residue list.
 

@@ -42,6 +42,7 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     ok(-f sample_apb_composition_alias_path(), 'tracked runnable APB composition .apb sample exists');
     ok(-f sample_apb_completer_multi_register_alias_path(), 'tracked runnable APB multi-register completer .apb sample exists');
     ok(-f sample_apb_composition_multi_register_alias_path(), 'tracked runnable APB multi-register composition .apb sample exists');
+    ok(-f sample_apb_composition_multi_peripheral_alias_path(), 'tracked runnable APB multi-peripheral composition .apb sample exists');
 
     my $completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_alias_path());
     my $completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_ppif_path());
@@ -69,6 +70,15 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     is_deeply($multi_composition_alias->{generated_ial1}{items}, $multi_composition_ppif->{generated_ial1}{items}, '.apb multi-register composition mirrors .ppif generated IAL1 artifacts');
     is_deeply($multi_composition_alias->{generated_ial0}{files}, $multi_composition_ppif->{generated_ial0}{files}, '.apb multi-register composition mirrors .ppif generated IAL0 files');
     is_deeply($multi_composition_alias->{report}{children}[1]{transfer}{registers}, [qw(reg0 reg1)], '.apb multi-register composition preserves completer register list');
+
+    my $multi_peripheral_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_alias_path());
+    my $multi_peripheral_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_ppif_path());
+    is($multi_peripheral_alias->{kind}, 'protocol_intent.apb_composition', '.apb multi-peripheral composition parser result keeps APB composition kind');
+    is($multi_peripheral_alias->{mode}, 'requester-multi-peripheral-composition', '.apb multi-peripheral composition parser result records multi-peripheral mode');
+    is_deeply($multi_peripheral_alias->{generated_ial1}{items}, $multi_peripheral_ppif->{generated_ial1}{items}, '.apb multi-peripheral composition mirrors .ppif generated IAL1 artifacts');
+    is_deeply($multi_peripheral_alias->{generated_ial0}{files}, $multi_peripheral_ppif->{generated_ial0}{files}, '.apb multi-peripheral composition mirrors .ppif generated IAL0 files');
+    is($multi_peripheral_alias->{report}{composition}{topology}, 'multi_peripheral_interconnect', '.apb multi-peripheral composition preserves topology');
+    is($multi_peripheral_alias->{report}{composition}{peripherals}[0]{generated_instance_name}, 'status_peripheral', '.apb multi-peripheral composition preserves generated status instance alias');
 };
 
 subtest 'adapter rejects .apb profile and behavior boundaries' => sub {
@@ -128,7 +138,7 @@ subtest 'adapter rejects .apb profile and behavior boundaries' => sub {
     ok(!$unsupported_object_ok, '.apb valid-ready object remains outside the first alias slice');
     like(
         $@,
-        qr/profile apb requires exactly one \(apb-requester \.\.\.\), one \(apb-completer \.\.\.\), or the explicit one-requester\/one-completer\/one-composition shape in this slice/,
+        qr/profile apb requires exactly one \(apb-requester \.\.\.\), one \(apb-completer \.\.\.\), the explicit one-requester\/one-completer\/one-composition shape, or the selected one-requester\/multi-peripheral APB composition shape in this slice/,
         '.apb unsupported object diagnostic is targeted',
     );
 };
@@ -196,6 +206,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             label => 'APB multi-register composition',
             path => sample_apb_composition_multi_register_alias_path(),
             entry_id => 'intent.apb_profile_alias_composition_multi_register',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+        },
+        {
+            label => 'APB multi-peripheral composition',
+            path => sample_apb_composition_multi_peripheral_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_multi_peripheral',
             source_root_kind => 'top',
             module => 'apb_tb',
         },
@@ -596,6 +613,10 @@ sub sample_apb_composition_multi_register_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register.apb');
 }
 
+sub sample_apb_composition_multi_peripheral_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral.apb');
+}
+
 sub sample_apb_composition_busy_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_busy.apb');
 }
@@ -610,6 +631,10 @@ sub sample_apb_composition_ppif_path {
 
 sub sample_apb_composition_multi_register_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register.ppif');
+}
+
+sub sample_apb_composition_multi_peripheral_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral.ppif');
 }
 
 sub sample_apb_composition_busy_ppif_path {

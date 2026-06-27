@@ -133,7 +133,7 @@ sub _validate_profile_alias_contract($source_label, $contract) {
         confess "Error: .apb source '$source_label' profile '$profile' does not match .apb profile alias; expected apb\n"
             unless defined($profile) && !ref($profile) && $profile eq 'apb';
 
-        confess "Error: .apb source '$source_label' profile apb requires exactly one (apb-requester ...), one (apb-completer ...), or the explicit one-requester/one-completer/one-composition shape in this slice\n"
+        confess "Error: .apb source '$source_label' profile apb requires exactly one (apb-requester ...), one (apb-completer ...), the explicit one-requester/one-completer/one-composition shape, or the selected one-requester/multi-peripheral APB composition shape in this slice\n"
             unless _is_apb_requester_transfer_contract($contract)
                 || _is_apb_completer_contract($contract)
                 || _is_apb_composition_contract($contract);
@@ -197,8 +197,32 @@ sub _contract_from_root($root, $source_label) {
     if (@apb_compositions) {
         confess "Error: $surface source '$source_label' profile '$profile' does not match (apb-composition ...); expected apb\n"
             unless $profile eq 'apb';
-        confess "Error: $surface source '$source_label' APB composition requires exactly one (apb-requester ...), one (apb-completer ...), and one (apb-composition ...) object in this slice\n"
-            unless @apb_requesters == 1 && @apb_completers == 1 && @apb_compositions == 1 && !@channels && !@managers;
+        confess "Error: $surface source '$source_label' APB composition requires exactly one (apb-requester ...) and one (apb-composition ...) object in this slice\n"
+            unless @apb_requesters == 1 && @apb_compositions == 1 && !@channels && !@managers;
+
+        my $composition = $apb_compositions[0];
+        my $children = ref($composition->{children}) eq 'HASH' ? $composition->{children} : {};
+        my $has_peripherals = ref($children->{peripherals}) eq 'ARRAY' && @{$children->{peripherals}};
+        if ($has_peripherals) {
+            confess "Error: $surface source '$source_label' APB multi-peripheral composition requires two or more (apb-completer ...) objects\n"
+                unless @apb_completers >= 2;
+            confess "Error: $surface source '$source_label' APB multi-peripheral composition requires (address-map ...) and (decode ...) clauses\n"
+                unless ref($composition->{address_map}) eq 'HASH' && ref($composition->{decode}) eq 'HASH';
+            return {
+                kind        => 'apb_composition',
+                intent_name => $intent_name,
+                protocol    => $profile,
+                source      => $source,
+                requester   => $apb_requesters[0],
+                completers  => [@apb_completers],
+                composition => $composition,
+            };
+        }
+
+        confess "Error: $surface source '$source_label' APB fixed composition requires exactly one (apb-completer ...) object and one (completer INSTANCE OBJECT) child in this slice\n"
+            unless @apb_completers == 1 && exists $children->{completer};
+        confess "Error: $surface source '$source_label' APB fixed composition does not support (address-map ...) or (decode ...) clauses\n"
+            if exists($composition->{address_map}) || exists($composition->{decode});
 
         return {
             kind        => 'apb_composition',
@@ -240,7 +264,7 @@ sub _contract_from_root($root, $source_label) {
             source      => $source,
         };
     }
-    confess "Error: $surface source '$source_label' profile apb requires exactly one (apb-requester ...), one (apb-completer ...), or the explicit one-requester/one-completer/one-composition shape in this slice\n"
+    confess "Error: $surface source '$source_label' profile apb requires exactly one (apb-requester ...), one (apb-completer ...), the explicit one-requester/one-completer/one-composition shape, or the selected one-requester/multi-peripheral APB composition shape in this slice\n"
         if $profile eq 'apb';
     confess "Error: $surface source '$source_label' cannot mix (valid-ready-channel ...) and (manager-capacity-status ...) objects in this slice\n"
         if @channels && @managers;
@@ -854,6 +878,10 @@ sub _parse_apb_composition($body, $source_label) {
             $contract{reset} = _parse_reset(\@items, $source_label);
         } elsif ($head eq 'children') {
             $contract{children} = _parse_apb_composition_children_block(\@items, $source_label, $name);
+        } elsif ($head eq 'address-map') {
+            $contract{address_map} = _parse_apb_composition_address_map_block(\@items, $source_label, $name);
+        } elsif ($head eq 'decode') {
+            $contract{decode} = _parse_apb_composition_decode_block(\@items, $source_label, $name);
         } elsif ($head eq 'wiring') {
             $contract{wiring} = _parse_apb_composition_wiring_block(\@items, $source_label, $name);
         } else {
@@ -871,27 +899,138 @@ sub _parse_apb_composition($body, $source_label) {
 
 sub _parse_apb_composition_children_block($items, $source_label, $name) {
     my %children;
+    my @peripherals;
 
     for my $clause (@$items) {
         my ($head, @body) = _clause_parts($clause, $source_label);
-        confess "Error: .ppif (apb-composition $name (children ...)) supports only (requester INSTANCE OBJECT) and (completer INSTANCE OBJECT)\n"
-            unless $head =~ /\A(?:requester|completer)\z/;
+        confess "Error: .ppif (apb-composition $name (children ...)) supports only (requester INSTANCE OBJECT), (completer INSTANCE OBJECT), and (peripheral INSTANCE OBJECT)\n"
+            unless $head =~ /\A(?:requester|completer|peripheral)\z/;
         confess "Error: .ppif (apb-composition $name (children ...)) has duplicate ($head ...) clause\n"
-            if exists $children{$head};
+            if $head ne 'peripheral' && exists $children{$head};
         confess "Error: .ppif (apb-composition $name (children ($head ...))) requires exactly instance and object scalar names\n"
             unless @body == 2 && !ref($body[0]) && length($body[0]) && !ref($body[1]) && length($body[1]);
-        $children{$head} = {
+        my $child = {
             instance_name => $body[0],
             object_name   => $body[1],
         };
+        if ($head eq 'peripheral') {
+            push @peripherals, $child;
+        } else {
+            $children{$head} = $child;
+        }
     }
 
-    for my $required (qw(requester completer)) {
+    confess "Error: .ppif (apb-composition $name (children ...)) cannot mix fixed (completer ...) with multi-peripheral (peripheral ...) entries\n"
+        if exists($children{completer}) && @peripherals;
+    $children{peripherals} = \@peripherals
+        if @peripherals;
+
+    for my $required (qw(requester)) {
         confess "Error: .ppif (apb-composition $name (children ...)) is missing required ($required ...) clause\n"
             unless exists $children{$required};
     }
+    confess "Error: .ppif (apb-composition $name (children ...)) is missing required (completer ...) clause or selected multi-peripheral (peripheral ...) entries\n"
+        unless exists($children{completer}) || @peripherals;
 
     return \%children;
+}
+
+sub _parse_apb_composition_address_map_block($items, $source_label, $name) {
+    confess "Error: .ppif (apb-composition $name (address-map ...)) requires a scalar address-map name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $map_name = $items->[0];
+    my @windows;
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-composition $name (address-map $map_name ...)) supports only (window INSTANCE ...)\n"
+            unless $head eq 'window';
+        push @windows, _parse_apb_composition_address_window(\@body, $source_label, $name, $map_name);
+    }
+
+    confess "Error: .ppif (apb-composition $name (address-map $map_name ...)) requires at least one (window ...) clause\n"
+        unless @windows;
+
+    return {
+        name    => $map_name,
+        windows => \@windows,
+    };
+}
+
+sub _parse_apb_composition_address_window($items, $source_label, $name, $map_name) {
+    confess "Error: .ppif (apb-composition $name (address-map $map_name (window ...))) requires a scalar peripheral instance name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $window_name = $items->[0];
+    my %window = (name => $window_name);
+    my %seen;
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-composition $name (address-map $map_name (window $window_name ...))) supports only (base NAME width N default V) and (size NAME width N default V)\n"
+            unless $head =~ /\A(?:base|size)\z/;
+        confess "Error: .ppif (apb-composition $name (address-map $map_name (window $window_name ...))) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+        $window{$head} = _parse_apb_parameter_default_binding(
+            \@body,
+            $source_label,
+            "apb-composition $name address-map $map_name window $window_name $head",
+        );
+    }
+
+    for my $required (qw(base size)) {
+        confess "Error: .ppif (apb-composition $name (address-map $map_name (window $window_name ...))) is missing required ($required ...) clause\n"
+            unless exists $window{$required};
+    }
+
+    return \%window;
+}
+
+sub _parse_apb_parameter_default_binding($body, $source_label, $context) {
+    confess "Error: .ppif ($context ...) requires '(NAME width N default V)'\n"
+        unless @$body == 5
+            && !ref($body->[0])
+            && !ref($body->[1])
+            && !ref($body->[2])
+            && !ref($body->[3])
+            && !ref($body->[4])
+            && $body->[1] eq 'width'
+            && $body->[3] eq 'default';
+    return {
+        name    => $body->[0],
+        width   => $body->[2],
+        default => $body->[4],
+    };
+}
+
+sub _parse_apb_composition_decode_block($items, $source_label, $name) {
+    my %allowed = (
+        overlap           => 'overlap',
+        priority          => 'priority',
+        'unmapped-address' => 'unmapped_address',
+    );
+    my %decode;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-composition $name (decode ...)) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (apb-composition $name (decode ...)) has duplicate ($head ...) clause\n"
+            if exists $decode{$allowed{$head}};
+        $decode{$allowed{$head}} = _parse_apb_scalar_binding(
+            \@body,
+            $source_label,
+            "apb-composition $name decode $head",
+        );
+    }
+
+    for my $required (qw(overlap priority unmapped_address)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (apb-composition $name (decode ...)) is missing required ($clause ...) clause\n"
+            unless exists $decode{$required};
+    }
+
+    return \%decode;
 }
 
 sub _parse_apb_composition_wiring_block($items, $source_label, $name) {

@@ -600,6 +600,7 @@ manifest output while keeping the exact file lists widenable.
 | `intent.ppif_apb_composition_busy` | [ppif/apb_composition_busy.ppif](ppif/apb_composition_busy.ppif) | `supported_smoke` | `ial2_ppif_apb_composition_busy_pipeline_cli` |
 | `intent.ppif_apb_composition_status` | [ppif/apb_composition_status.ppif](ppif/apb_composition_status.ppif) | `supported_smoke` | `ial2_ppif_apb_composition_status_pipeline_cli` |
 | `intent.ppif_apb_composition_multi_register` | [ppif/apb_composition_multi_register.ppif](ppif/apb_composition_multi_register.ppif) | `supported_smoke` | `ial2_ppif_apb_composition_multi_register_pipeline_cli` |
+| `intent.ppif_apb_composition_multi_peripheral` | [ppif/apb_composition_multi_peripheral.ppif](ppif/apb_composition_multi_peripheral.ppif) | `supported_smoke` | `ial2_ppif_apb_composition_multi_peripheral_pipeline_cli` |
 | `intent.apb_profile_alias_requester_transfer` | [ppif/apb_requester_transfer.apb](ppif/apb_requester_transfer.apb) | `supported_smoke` | `ial2_apb_profile_alias_requester_transfer_pipeline_cli` |
 | `intent.apb_profile_alias_requester_transfer_busy` | [ppif/apb_requester_transfer_busy.apb](ppif/apb_requester_transfer_busy.apb) | `supported_smoke` | `ial2_apb_profile_alias_requester_transfer_busy_pipeline_cli` |
 | `intent.apb_profile_alias_requester_transfer_status` | [ppif/apb_requester_transfer_status.apb](ppif/apb_requester_transfer_status.apb) | `supported_smoke` | `ial2_apb_profile_alias_requester_transfer_status_pipeline_cli` |
@@ -609,6 +610,7 @@ manifest output while keeping the exact file lists widenable.
 | `intent.apb_profile_alias_composition_busy` | [ppif/apb_composition_busy.apb](ppif/apb_composition_busy.apb) | `supported_smoke` | `ial2_apb_profile_alias_composition_busy_pipeline_cli` |
 | `intent.apb_profile_alias_composition_status` | [ppif/apb_composition_status.apb](ppif/apb_composition_status.apb) | `supported_smoke` | `ial2_apb_profile_alias_composition_status_pipeline_cli` |
 | `intent.apb_profile_alias_composition_multi_register` | [ppif/apb_composition_multi_register.apb](ppif/apb_composition_multi_register.apb) | `supported_smoke` | `ial2_apb_profile_alias_composition_multi_register_pipeline_cli` |
+| `intent.apb_profile_alias_composition_multi_peripheral` | [ppif/apb_composition_multi_peripheral.apb](ppif/apb_composition_multi_peripheral.apb) | `supported_smoke` | `ial2_apb_profile_alias_composition_multi_peripheral_pipeline_cli` |
 | `intent.ppif_axi_aw_valid_ready` | [ppif/axi_aw_valid_ready.ppif](ppif/axi_aw_valid_ready.ppif) | `supported_smoke` | `ial2_ppif_pipeline_cli` |
 | `intent.ppif_valid_ready_handshake` | [ppif/valid_ready_handshake.ppif](ppif/valid_ready_handshake.ppif) | `supported_smoke` | `ial2_ppif_valid_ready_handshake_pipeline_cli` |
 | `intent.ppif_valid_ready_dual_channel_bundle` | [ppif/valid_ready_dual_channel_bundle.ppif](ppif/valid_ready_dual_channel_bundle.ppif) | `supported_smoke` | `ial2_ppif_valid_ready_dual_channel_bundle_pipeline_cli` |

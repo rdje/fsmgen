@@ -172,6 +172,61 @@ subtest 'adapter parses the status-capable APB multi-register composition PPIF s
     ok($child_residue{apb_interconnect_multi_peripheral_decode_deferred}, 'multi-register composition child completer keeps interconnect residue explicit');
 };
 
+subtest 'adapter parses the selected APB multi-peripheral composition PPIF shape' => sub {
+    ok(-f sample_apb_composition_multi_peripheral_ppif_path(), 'tracked runnable multi-peripheral APB composition PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'multi-peripheral APB composition adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_composition', 'multi-peripheral adapter returns the APB composition kind');
+    is($result->{mode}, 'requester-multi-peripheral-composition', 'multi-peripheral APB composition mode is explicit');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-composition-multi-peripheral', 'multi-peripheral APB composition source object id is preserved');
+    is($result->{report}{composition}{topology}, 'multi_peripheral_interconnect', 'multi-peripheral report names the selected topology');
+    is($result->{report}{composition}{child_instance_count}, 4, 'multi-peripheral report counts requester, interconnect, and two peripherals');
+    is($result->{report}{composition}{endpoint_child_instance_count}, 3, 'multi-peripheral report counts requester plus endpoint peripherals');
+    is($result->{report}{composition}{generated_interconnect}{ial1_artifact}, 'apb_interconnect.isf', 'multi-peripheral report names generated interconnect IAL1 artifact');
+    is($result->{report}{composition}{generated_interconnect}{ial0_artifact}, 'apb_interconnect.fsm', 'multi-peripheral report names generated interconnect IAL0 artifact');
+
+    is_deeply(
+        [map { $_->{name} } @{$result->{generated_ial1}{items}}],
+        [qw(apb_requester.isf apb_status_regs.isf apb_control_regs.isf apb_interconnect.isf)],
+        'multi-peripheral APB composition exposes endpoint and generated interconnect IAL1 artifacts',
+    );
+    is_deeply(
+        sorted([keys %{$result->{generated_ial0}{files}}]),
+        [qw(apb_control_regs.fsm apb_interconnect.fsm apb_requester.fsm apb_status_regs.fsm apb_tb.fsm)],
+        'multi-peripheral APB composition exposes endpoint, interconnect, and top .fsm artifacts',
+    );
+
+    my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
+    like($top, qr/\(\?fsmc:requester apb_requester\)/, 'multi-peripheral top instantiates requester');
+    like($top, qr/\(\?fsmc:interconnect apb_interconnect\)/, 'multi-peripheral top instantiates generated interconnect');
+    like($top, qr/\(\?fsmc:status_peripheral apb_status_regs\)/, 'multi-peripheral top gives colliding status peripheral a deterministic generated instance name');
+    like($top, qr/\(\?fsmc:control apb_control_regs\)/, 'multi-peripheral top preserves non-colliding control peripheral instance name');
+    like($top, qr/\(interconnect\.PSEL_STATUS status_peripheral\.PSEL_STATUS\)/, 'multi-peripheral top wires decoded status select to the status peripheral');
+    like($top, qr/\(status_peripheral\.PREADY_STATUS interconnect\.PREADY_STATUS\)/, 'multi-peripheral top wires status response back to the interconnect');
+
+    my $interconnect = $result->{generated_ial0}{files}{'apb_interconnect.fsm'};
+    like($interconnect, qr/\(<- \(PSEL_STATUS> PSEL\) <\(& PSEL \(>= PADDR 0\) \(< PADDR 256\)\)\)/, 'interconnect decodes the status window select');
+    like($interconnect, qr/\(<- \(PADDR_CONTROL> \(- PADDR 256\)\) <\(& PSEL \(>= PADDR 256\) \(< PADDR 512\)\)\)/, 'interconnect subtracts the control window base for local address');
+    like($interconnect, qr/\(<- \(PREADY> PREADY_CONTROL\) <\(& PSEL \(>= PADDR 256\) \(< PADDR 512\)\)\)/, 'interconnect muxes selected control PREADY');
+    like($interconnect, qr/\(<- \(PSLVERR> 1\) <\(& PSEL PENABLE \(! \(\| /, 'interconnect returns an unmapped active-access error');
+
+    is($result->{report}{children}[0]{role}, 'requester', 'multi-peripheral report carries requester child first');
+    is($result->{report}{children}[1]{role}, 'interconnect', 'multi-peripheral report carries generated interconnect second');
+    is($result->{report}{children}[2]{role}, 'peripheral', 'multi-peripheral report carries first peripheral third');
+    is($result->{report}{children}[2]{instance_name}, 'status', 'multi-peripheral report preserves authored status peripheral name');
+    is($result->{report}{children}[2]{generated_instance_name}, 'status_peripheral', 'multi-peripheral report exposes generated status peripheral instance name');
+    is_deeply(
+        [map { $_->{name} } @{$result->{report}{composition}{address_map}{windows}}],
+        [qw(status control)],
+        'multi-peripheral report preserves source-ordered address-map windows',
+    );
+    my %composition_residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$composition_residue{apb_interconnect_multi_peripheral_decode_deferred}, 'multi-peripheral composition report removes interconnect/decode deferred residue');
+    ok($composition_residue{apb_protection_and_strobes_deferred}, 'multi-peripheral composition report keeps APB sideband residue explicit');
+};
+
 subtest 'adapter rejects malformed APB composition PPIF shapes with targeted diagnostics' => sub {
     my $missing_composition = sample_apb_composition_ppif();
     $missing_composition =~ s/\n  \(apb-composition apb_tb\n    \(role composition\)\n    \(clock clk\)\n    \(reset \(rst_n active_low async\)\)\n    \(children\n      \(requester requester apb_requester\)\n      \(completer completer apb_completer\)\)\n    \(wiring apb_bus\n      \(select PSEL\)\n      \(enable PENABLE\)\n      \(write PWRITE\)\n      \(address PADDR width 32\)\n      \(write-data PWDATA width 32\)\n      \(ready PREADY\)\n      \(read-data PRDATA width 32\)\n      \(error PSLVERR\)\)\)//;
@@ -182,10 +237,22 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
     my $bad_bus = sample_apb_composition_ppif();
     $bad_bus =~ s/\(ready PREADY\)\n      \(read-data PRDATA width 32\)\n      \(error PSLVERR\)\)\)\)\n\z/(ready PREADY_OTHER)\n      (read-data PRDATA width 32)\n      (error PSLVERR))))\n/;
 
+    my $single_peripheral = sample_apb_composition_multi_peripheral_ppif();
+    $single_peripheral =~ s/\n      \(peripheral control apb_control_regs\)//;
+
+    my $mixed_child_forms = sample_apb_composition_multi_peripheral_ppif();
+    $mixed_child_forms =~ s/\(peripheral control apb_control_regs\)/(completer completer apb_control_regs)/;
+
+    my $overlapping_windows = sample_apb_composition_multi_peripheral_ppif();
+    $overlapping_windows =~ s/\(base CONTROL_BASE width 32 default 256\)/(base CONTROL_BASE width 32 default 128)/;
+
     my @cases = (
         ['missing apb composition object', $missing_composition, qr/cannot mix \(apb-requester \.\.\.\) with .* \(apb-completer \.\.\.\).*outside the explicit APB composition shape/s],
         ['bad requester child reference', $bad_child, qr/APB composition requester child references .*expected 'apb_requester'/],
         ['bad ready bus wiring', $bad_bus, qr/APB composition IAL2 contract bus\.ready must be scalar signal 'PREADY_OTHER'/],
+        ['single multi-peripheral child', $single_peripheral, qr/requires two or more peripheral children/],
+        ['mixed fixed and peripheral child forms', $mixed_child_forms, qr/cannot mix fixed \(completer \.\.\.\) with multi-peripheral \(peripheral \.\.\.\) entries/],
+        ['overlapping multi-peripheral windows', $overlapping_windows, qr/address-map windows 'status' and 'control' overlap/],
     );
 
     for my $case (@cases) {
@@ -219,6 +286,33 @@ subtest 'CLI check and semantic JSON support-account multi-register APB composit
     is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_register', 'multi-register APB composition semantic JSON names the corpus entry');
     is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'multi-register APB composition semantic JSON payload describes the generated composition root');
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'multi-register APB composition semantic JSON records the generated top module');
+};
+
+subtest 'CLI check and semantic JSON support-account multi-peripheral APB composition PPIF identity' => sub {
+    my $path = sample_apb_composition_multi_peripheral_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'multi-peripheral APB composition --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'multi-peripheral APB composition --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'multi-peripheral APB composition check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'multi-peripheral APB composition check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_peripheral', 'multi-peripheral APB composition check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'multi-peripheral APB composition check JSON records PPIF source kind');
+    is($check_report->{result}{composition_child_count}, 4, 'multi-peripheral APB composition check JSON reports four generated children');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'multi-peripheral APB composition --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'multi-peripheral APB composition --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'multi-peripheral APB composition semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_peripheral', 'multi-peripheral APB composition semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'multi-peripheral APB composition semantic JSON payload describes the generated composition root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'multi-peripheral APB composition semantic JSON records the generated top module');
+    is($semantic_report->{semantic}{module}{composition_child_count}, 4, 'multi-peripheral APB composition semantic JSON records four generated children');
 };
 
 subtest 'CLI check and semantic JSON support-account APB composition PPIF identity' => sub {
@@ -336,6 +430,51 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose multi-register APB com
     is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'multi-register .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
     is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'multi-register .apb APB composition alias mirrors .ppif generated IAL0');
     is_deeply($alias->{report}{children}[1]{transfer}{registers}, [qw(reg0 reg1)], 'multi-register .apb APB composition alias preserves completer register list');
+};
+
+subtest 'CLI schedule JSON, outdir, and .apb alias expose multi-peripheral APB composition review artifacts' => sub {
+    my $path = sample_apb_composition_multi_peripheral_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'multi-peripheral APB composition --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'multi-peripheral APB composition --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{schema}, 'fsmgen.ial2.protocol_intent.apb_composition.v1', 'multi-peripheral APB composition schedule JSON reports schema');
+    is($schedule_report->{composition}{topology}, 'multi_peripheral_interconnect', 'multi-peripheral APB composition schedule JSON reports topology');
+    is($schedule_report->{generated_artifacts}{hdl_entry}{entry_artifact}, 'apb_tb.fsm', 'multi-peripheral APB composition schedule JSON reports the HDL entry');
+    is($schedule_report->{composition}{peripherals}[0]{generated_instance_name}, 'status_peripheral', 'multi-peripheral APB composition schedule JSON reports generated status instance alias');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_interconnect_multi_peripheral_decode_deferred}, 'multi-peripheral APB composition schedule JSON omits interconnect/decode deferred residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_tb_multi_peripheral.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'multi-peripheral APB composition CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'multi-peripheral APB composition generation keeps stderr clean');
+    for my $artifact (qw(apb_requester.isf apb_status_regs.isf apb_control_regs.isf apb_interconnect.isf apb_requester.fsm apb_status_regs.fsm apb_control_regs.fsm apb_interconnect.fsm apb_tb.fsm)) {
+        ok(-f File::Spec->catfile($outdir, $artifact), "multi-peripheral APB composition --outdir writes $artifact");
+    }
+    ok(-f $hdl, 'multi-peripheral APB composition --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\bmodule\s+apb_tb\b/, 'multi-peripheral APB composition HDL contains the generated top module');
+    like($sv, qr/\bmodule\s+apb_interconnect\b/, 'multi-peripheral APB composition HDL contains the generated interconnect module');
+    like($sv, qr/\bapb_interconnect\s+interconnect\s+\(/, 'multi-peripheral APB composition top instantiates generated interconnect');
+    like($sv, qr/\bapb_status_regs\s+status_peripheral\s+\(/, 'multi-peripheral APB composition top instantiates status peripheral with generated alias');
+    like($sv, qr/PSLVERR_next = 1;/, 'multi-peripheral APB composition HDL includes unmapped-error PSLVERR drive');
+    like($sv, qr/PADDR_CONTROL_next = PADDR - 256;/, 'multi-peripheral APB composition HDL includes control-window local address translation');
+
+    ok(-f sample_apb_composition_multi_peripheral_apb_path(), 'tracked runnable multi-peripheral APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'multi-peripheral .apb APB composition alias returns the composition kind');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'multi-peripheral .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'multi-peripheral .apb APB composition alias mirrors .ppif generated IAL0');
+    is($alias->{report}{composition}{topology}, 'multi_peripheral_interconnect', 'multi-peripheral .apb APB composition alias preserves topology');
 };
 
 subtest 'CLI schedule JSON, outdir, and .apb alias expose APB composition review artifacts' => sub {
@@ -493,8 +632,20 @@ sub sample_apb_composition_multi_register_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register.apb');
 }
 
+sub sample_apb_composition_multi_peripheral_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral.ppif');
+}
+
+sub sample_apb_composition_multi_peripheral_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral.apb');
+}
+
 sub sample_apb_composition_ppif {
     return slurp(sample_apb_composition_ppif_path());
+}
+
+sub sample_apb_composition_multi_peripheral_ppif {
+    return slurp(sample_apb_composition_multi_peripheral_ppif_path());
 }
 
 sub sorted {

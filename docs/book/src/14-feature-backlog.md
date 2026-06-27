@@ -10098,6 +10098,19 @@ generate reusable APB-specific `apb_interconnect.isf` and
 peripheral/address-map/response-mux fields, and preserve all current APB
 samples.
 
+APB multi-peripheral interconnect/decode behavior:
+[IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_BEHAVIOR](../../IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_BEHAVIOR.md)
+ships bounded generated APB composition behavior through
+`ppif/apb_composition_multi_peripheral.ppif` and
+`ppif/apb_composition_multi_peripheral.apb`. The parser accepts repeated
+`(peripheral INSTANCE OBJECT)` APB completer children, static non-overlapping
+address windows, and reject/source-order/unmapped-error decode policy.
+Lowering emits `apb_interconnect.isf`, `apb_interconnect.fsm`, endpoint FSMs,
+and `apb_tb.fsm`; the interconnect fans out decoded `PSEL`, translates local
+`PADDR`, muxes selected responses, and returns `PSLVERR` for active unmapped
+accesses. Reports preserve authored peripheral names and expose generated
+collision-free instance names such as `status_peripheral`.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
