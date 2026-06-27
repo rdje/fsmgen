@@ -4540,7 +4540,8 @@ retain `apb_protection_policy_effects_deferred` and no `protection_policy`.
 `.599` synchronized `docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md` with the shipped
 protection alias behavior, including protection support-accounting prose, CLI
 examples, report wording, diagnostics, and narrowed non-goals, without behavior
-changes. `.600` now owns the next APB/IAL2 selector.
+changes. `.600` selected `.601`, APB sideband data16 `PPROT` policy effects
+readiness audit, without behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

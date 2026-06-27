@@ -3539,7 +3539,8 @@ retain `apb_protection_policy_effects_deferred` and no `protection_policy`.
 `.599` synchronized `docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md` with the shipped
 protection alias behavior, including protection support-accounting prose, CLI
 examples, report wording, diagnostics, and narrowed non-goals, without behavior
-changes. `.600` now owns the next APB/IAL2 selector.
+changes. `.600` selected `.601`, APB sideband data16 `PPROT` policy effects
+readiness audit, without behavior changes.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.

@@ -10283,8 +10283,9 @@ selected `.599`, APB profile-alias/public-surface synchronization after
 `.597`, without behavior changes. `.599` synchronized
 `docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md` with the shipped protection alias
 behavior, including protection support-accounting prose, CLI examples, report
-wording, diagnostics, and narrowed non-goals. `.600` is the next APB/IAL2
-selector.
+wording, diagnostics, and narrowed non-goals. `.600` selected `.601`, APB
+sideband data16 `PPROT` policy effects readiness audit, without behavior
+changes.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
