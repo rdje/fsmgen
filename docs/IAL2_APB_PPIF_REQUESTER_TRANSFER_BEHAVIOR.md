@@ -174,6 +174,13 @@ and replace `apb_requester_busy_status_deferred` with
 `apb_requester_status_field_deferred`. See
 [IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR](IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR.md).
 
+The later `.577` slice adds separate busy-plus-status requester-transfer
+samples at `ppif/apb_requester_transfer_status.ppif` and
+`ppif/apb_requester_transfer_status.apb`. Those samples expose public
+`busy` and `status[1:0]`, use status codes `0 idle`, `1 busy`, `2 done_ok`,
+and `3 done_error`, and remove both requester busy/status residues. See
+[IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR](IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR.md).
+
 Generated APB requester transfers now deassert `PSEL` and `PENABLE` directly
 in the terminal `done_phase`; they do not expose parameterized helper inputs
 for those bus controls in the generated FSM. The later APB completer and fixed
@@ -185,9 +192,10 @@ This `.550` slice did not accept `.apb` or any other new suffix and did not
 extend `.axi`. Current APB completer `.ppif`/`.apb` and fixed
 requester/completer composition `.ppif`/`.apb` behavior are owned by later
 slices. Additive requester `busy` behavior is owned by the later `.572`
-busy-output page; multi-peripheral APB interconnect/decode, verification-output
-behavior, direct IAL2-to-backend lowering, and VHDL remain outside this
-requester-transfer page.
+busy-output page, and additive requester `status[1:0]` behavior is owned by
+the later `.577` status-field page; multi-peripheral APB interconnect/decode,
+verification-output behavior, direct IAL2-to-backend lowering, and VHDL remain
+outside this requester-transfer page.
 
 ## Validation
 

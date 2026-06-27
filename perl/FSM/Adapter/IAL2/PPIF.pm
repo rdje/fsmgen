@@ -458,6 +458,7 @@ sub _parse_apb_request_block($items, $source_label, $name) {
 sub _parse_apb_response_block($items, $source_label, $name) {
     my %allowed = (
         busy       => 'busy',
+        status     => 'status',
         done        => 'done',
         'read-data' => 'read_data',
         error       => 'error',
@@ -466,13 +467,11 @@ sub _parse_apb_response_block($items, $source_label, $name) {
 
     for my $clause (@$items) {
         my ($head, @body) = _clause_parts($clause, $source_label);
-        confess "Error: .ppif (apb-requester $name (response ...)) does not support (status ...) in this busy-only slice; use optional (busy NAME) plus required done/read-data/error\n"
-            if $head eq 'status';
         confess "Error: .ppif (apb-requester $name (response ...)) has unsupported clause '($head ...)'\n"
             unless exists $allowed{$head};
         confess "Error: .ppif (apb-requester $name (response ...)) has duplicate ($head ...) clause\n"
             if exists $response{$allowed{$head}};
-        $response{$allowed{$head}} = $head eq 'read-data'
+        $response{$allowed{$head}} = $head =~ /\A(?:read-data|status)\z/
             ? _parse_apb_width_binding(\@body, $source_label, "apb-requester $name response $head")
             : _parse_apb_scalar_binding(\@body, $source_label, "apb-requester $name response $head");
     }
@@ -482,6 +481,13 @@ sub _parse_apb_response_block($items, $source_label, $name) {
         $clause =~ s/_/-/g;
         confess "Error: .ppif (apb-requester $name (response ...)) is missing required ($clause ...) clause\n"
             unless exists $response{$required};
+    }
+
+    if (exists $response{status}) {
+        confess "Error: .ppif (apb-requester $name (response ...)) status field requires (busy NAME) in this slice\n"
+            unless exists $response{busy};
+        confess "Error: .ppif (apb-requester $name (response ...)) status width must be 2 in this slice\n"
+            unless $response{status}{width} == 2;
     }
 
     return \%response;

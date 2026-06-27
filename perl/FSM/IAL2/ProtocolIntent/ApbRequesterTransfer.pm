@@ -38,8 +38,8 @@ sub generate($self, @args) {
     my $schedule_report_json = $scheduler->report($actor);
     my $schedule_report = JSON::PP->new->decode($schedule_report_json);
 
-    _add_busy_idle_clear($contract, $lowered->{files})
-        if defined $contract->{response}{busy};
+    _add_response_idle_clears($contract, $lowered->{files})
+        if defined($contract->{response}{busy}) || defined($contract->{response}{status});
 
     my $report = _build_report(
         contract => $contract,
@@ -121,6 +121,7 @@ sub _normalize_contract($raw) {
         $request->{address}{name},
         $request->{write_data}{name},
         (defined($response->{busy}) ? ($response->{busy}) : ()),
+        (defined($response->{status}) ? ($response->{status}{name}) : ()),
         $response->{done},
         $response->{read_data}{name},
         $response->{error},
@@ -183,6 +184,11 @@ sub _normalize_response($raw) {
     };
     $response->{busy} = _identifier_value($raw->{busy}, 'response.busy')
         if exists $raw->{busy};
+    if (exists $raw->{status}) {
+        confess "APB requester-transfer IAL2 contract response.status requires response.busy in this slice\n"
+            unless exists $response->{busy};
+        $response->{status} = _normalize_width_binding($raw->{status}, 'response.status', 2);
+    }
     return $response;
 }
 
@@ -394,6 +400,7 @@ sub _emit_isf($contract) {
         _interface_line('input', $request->{address}),
         _interface_line('input', $request->{write_data}),
         (defined($response->{busy}) ? (_interface_line('output', $response->{busy})) : ()),
+        (defined($response->{status}) ? (_interface_line('output', $response->{status})) : ()),
         _interface_line('output', $response->{done}),
         _interface_line('output', $response->{read_data}),
         _interface_line('output', $response->{error}),
@@ -412,50 +419,80 @@ sub _emit_isf($contract) {
         "    ($bus->{write_data}{name} wdata)",
         "    ($bus->{select} $transfer->{setup}{select})",
         (defined($response->{busy}) ? ("    ($response->{busy} 1)") : ()),
+        (defined($response->{status}) ? ("    ($response->{status}{name} 1)") : ()),
         "    ($bus->{enable} $transfer->{setup}{enable}))",
         "",
         "  (drive access_phase",
         (defined($response->{busy}) ? ("    ($response->{busy} 1)") : ()),
+        (defined($response->{status}) ? ("    ($response->{status}{name} 1)") : ()),
         "    ($bus->{enable} $transfer->{access}{enable}))",
         "",
-        "  (drive done_phase",
-        "    ($bus->{select} 0)",
-        "    ($bus->{enable} 0)",
-        "    ($response->{read_data}{name} rdata)",
-        "    ($response->{error} slverr))",
+        _done_drive_lines($bus, $response),
         "",
         "  (transaction $transfer->{name}",
         "    (on $request->{start}",
         "      (sample $request->{address}{name} as addr)",
         "      (sample $request->{write} as is_write)",
         "      (sample $request->{write_data}{name} as wdata))",
+        (defined($response->{status}) ? ("    (local slverr (width 1))") : ()),
         "    (drive setup_phase)",
         "    (drive access_phase)",
         "    (await $bus->{ready})",
         "    (sample $bus->{read_data}{name} as rdata)",
         "    (sample $bus->{error} as slverr)",
-        "    (drive done_phase)",
+        _completion_drive_lines($response),
         "    (complete $response->{done})",
         "    (latency (min $transfer->{latency}{min}) (max $transfer->{latency}{max}))))",
         "",
     );
 }
 
-sub _add_busy_idle_clear($contract, $fsm_files) {
-    confess "APB requester-transfer busy generation requires generated .fsm files\n"
+sub _done_drive_lines($bus, $response) {
+    return (
+        "  (drive done_phase",
+        "    ($bus->{select} 0)",
+        "    ($bus->{enable} 0)",
+        "    ($response->{read_data}{name} rdata)",
+        "    ($response->{error} slverr))",
+    ) unless defined $response->{status};
+
+    my $status = $response->{status}{name};
+    return (
+        "  (drive done_phase",
+        "    ($bus->{select} 0)",
+        "    ($bus->{enable} 0)",
+        "    ($response->{read_data}{name} rdata)",
+        "    ($response->{error} slverr)",
+        "    ($status (concat 1'b1 slverr)))",
+    );
+}
+
+sub _completion_drive_lines($response) {
+    return ("    (drive done_phase)");
+}
+
+sub _add_response_idle_clears($contract, $fsm_files) {
+    confess "APB requester-transfer response-status generation requires generated .fsm files\n"
         unless ref($fsm_files) eq 'HASH';
 
     my $fsm_name = "$contract->{actor_name}.fsm";
-    confess "APB requester-transfer busy generation is missing generated artifact '$fsm_name'\n"
+    confess "APB requester-transfer response-status generation is missing generated artifact '$fsm_name'\n"
         unless exists $fsm_files->{$fsm_name};
 
-    my $busy = $contract->{response}{busy};
-    my $idle_state = "$contract->{transfer}{name}_idle_0";
-    my $assignment = "    (<- ($busy> 0))";
-    return if $fsm_files->{$fsm_name} =~ /^\Q$assignment\E$/m;
+    my @assignments;
+    push @assignments, "    (<- ($contract->{response}{busy}> 0))"
+        if defined $contract->{response}{busy};
+    push @assignments, "    (<- ($contract->{response}{status}{name}> 0))"
+        if defined $contract->{response}{status};
 
-    my $count = ($fsm_files->{$fsm_name} =~ s/^(\s*\(\Q$idle_state\E\s*\n)/$1$assignment\n/m);
-    confess "APB requester-transfer busy generation could not find generated idle state '$idle_state' in '$fsm_name'\n"
+    @assignments = grep { $fsm_files->{$fsm_name} !~ /^\Q$_\E$/m } @assignments;
+    return unless @assignments;
+
+    my $idle_state = "$contract->{transfer}{name}_idle_0";
+    my $assignment_block = join("\n", @assignments) . "\n";
+
+    my $count = ($fsm_files->{$fsm_name} =~ s/^(\s*\(\Q$idle_state\E\s*\n)/$1$assignment_block/m);
+    confess "APB requester-transfer response-status generation could not find generated idle state '$idle_state' in '$fsm_name'\n"
         unless $count == 1;
 }
 
@@ -485,7 +522,7 @@ sub _build_report(%args) {
     $source_object{intent_name} = $contract->{intent_name}
         if defined($contract->{intent_name}) && length($contract->{intent_name});
 
-    return {
+    my $report = {
         schema => 'fsmgen.ial2.protocol_intent.apb_requester_transfer.v1',
         mode   => 'requester-transfer',
         layering => {
@@ -549,6 +586,10 @@ sub _build_report(%args) {
                 id     => 'apb_done_pulse',
                 detail => 'Generated IAL1 deasserts PSEL/PENABLE, publishes read data and error status, and completes through done.',
             },
+            (defined($contract->{response}{status}) ? ({
+                id     => 'apb_status_field_encoding',
+                detail => 'Generated IAL1 drives the selected 2-bit response status encoding: 0 idle, 1 busy, 2 done_ok, 3 done_error.',
+            }) : ()),
         ],
         assumptions => [
             {
@@ -573,6 +614,14 @@ sub _build_report(%args) {
         ],
         unsupported_residue => _apb_requester_unsupported_residue($contract),
     };
+
+    $report->{response_status_field} = {
+        name     => $contract->{response}{status}{name},
+        width    => $contract->{response}{status}{width},
+        encoding => _apb_requester_status_encoding(),
+    } if defined $contract->{response}{status};
+
+    return $report;
 }
 
 sub _apb_requester_unsupported_residue($contract) {
@@ -587,15 +636,19 @@ sub _apb_requester_unsupported_residue($contract) {
         },
     );
 
-    push @residue, defined($contract->{response}{busy})
-        ? {
+    if (defined($contract->{response}{status})) {
+        # The selected busy+status response contract is fully represented here.
+    } elsif (defined($contract->{response}{busy})) {
+        push @residue, {
             id     => 'apb_requester_status_field_deferred',
             detail => 'The APB requester-transfer public response contract exposes busy, done, read-data, and error; named status fields remain future APB contract widening.',
-        }
-        : {
+        };
+    } else {
+        push @residue, {
             id     => 'apb_requester_busy_status_deferred',
             detail => 'The APB requester-transfer public response contract exposes done, read-data, and error; requester busy/status output remains future contract widening.',
         };
+    }
 
     push @residue, (
         {
@@ -609,6 +662,31 @@ sub _apb_requester_unsupported_residue($contract) {
     );
 
     return \@residue;
+}
+
+sub _apb_requester_status_encoding() {
+    return [
+        {
+            name   => 'idle',
+            code   => 0,
+            detail => 'No active transfer is being driven by the requester.',
+        },
+        {
+            name   => 'busy',
+            code   => 1,
+            detail => 'The requester is in setup or access phase for an active transfer.',
+        },
+        {
+            name   => 'done_ok',
+            code   => 2,
+            detail => 'The transfer completed after PREADY with PSLVERR low.',
+        },
+        {
+            name   => 'done_error',
+            code   => 3,
+            detail => 'The transfer completed after PREADY with PSLVERR high.',
+        },
+    ];
 }
 
 sub _clone_jsonish($value) {

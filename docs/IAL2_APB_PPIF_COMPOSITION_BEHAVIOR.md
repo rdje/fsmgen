@@ -219,6 +219,13 @@ For the separate busy-capable composition samples, the requester busy/status
 residue is replaced by `apb_requester_status_field_deferred` while named status
 fields remain future work.
 
+The later `.577` status-capable composition samples at
+`ppif/apb_composition_status.ppif` and `ppif/apb_composition_status.apb`
+propagate requester `busy` and 2-bit `status` to the generated `apb_tb` top.
+Those reports remove both requester busy/status residues and preserve the
+selected status encoding metadata. See
+[IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR](IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR.md).
+
 ## Non-Goals
 
 This `.566` slice does not add a multi-peripheral APB interconnect/decode
@@ -228,6 +235,7 @@ byte lanes, back-to-back policy, direct IAL2-to-IAL0 lowering, direct backend
 lowering, verification-output generation, backend-language variants, AXI
 behavior, or VHDL behavior. The later `.569` slice documents the matching
 `.apb` alias exposure; the later `.572` slice documents separate busy-capable
+composition samples; the later `.577` slice documents separate status-capable
 composition samples.
 
 ## Validation

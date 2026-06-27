@@ -317,6 +317,7 @@ sub _top_port_specs($contract) {
         _input_port($requester->{request}{write_data}{name}, $requester->{request}{write_data}{width}),
         _input_port($completer->{control}{wait_cycles}{name}, $completer->{control}{wait_cycles}{width}),
         (defined($requester->{response}{busy}) ? (_output_port($requester->{response}{busy}, 1)) : ()),
+        (defined($requester->{response}{status}) ? (_output_port($requester->{response}{status}{name}, $requester->{response}{status}{width})) : ()),
         _output_port($requester->{response}{done}, 1),
         _output_port($requester->{response}{error}, 1),
         _output_port($requester->{response}{read_data}{name}, $requester->{response}{read_data}{width}),
@@ -380,7 +381,7 @@ sub _build_report(%args) {
     my @fsm_files = sort keys %{$args{fsm_files} || {}};
     my $composition = $contract->{composition};
 
-    return {
+    my $report = {
         schema => 'fsmgen.ial2.protocol_intent.apb_composition.v1',
         mode   => 'requester-completer-composition',
         layering => {
@@ -442,6 +443,11 @@ sub _build_report(%args) {
         ],
         unsupported_residue => _apb_composition_unsupported_residue($contract),
     };
+
+    $report->{requester_status_field} = _clone_jsonish($requester_result->{report}{response_status_field})
+        if defined $requester_result->{report}{response_status_field};
+
+    return $report;
 }
 
 sub _apb_composition_unsupported_residue($contract) {
@@ -452,15 +458,19 @@ sub _apb_composition_unsupported_residue($contract) {
         },
     );
 
-    push @residue, defined($contract->{requester}{response}{busy})
-        ? {
+    if (defined($contract->{requester}{response}{status})) {
+        # The selected busy+status requester response is surfaced through the top.
+    } elsif (defined($contract->{requester}{response}{busy})) {
+        push @residue, {
             id     => 'apb_requester_status_field_deferred',
             detail => 'The generated APB composition exposes requester busy, done, read-data, and error; named requester status fields remain future endpoint contract widening.',
-        }
-        : {
+        };
+    } else {
+        push @residue, {
             id     => 'apb_requester_busy_status_deferred',
             detail => 'The generated APB composition exposes the shipped requester response keys done, read-data, and error; requester busy/status output remains a future endpoint contract widening.',
         };
+    }
 
     push @residue, (
         {
@@ -485,7 +495,7 @@ sub _apb_composition_unsupported_residue($contract) {
 }
 
 sub _child_report($role, $child, $result) {
-    return {
+    my $report = {
         role                => $role,
         instance_name       => $child->{instance_name},
         object_name         => $child->{object_name},
@@ -496,6 +506,10 @@ sub _child_report($role, $child, $result) {
         generated_artifacts => _clone_jsonish($result->{report}{generated_artifacts}),
         unsupported_residue => _clone_jsonish($result->{report}{unsupported_residue}),
     };
+    $report->{response_status_field} = _clone_jsonish($result->{report}{response_status_field})
+        if defined $result->{report}{response_status_field};
+
+    return $report;
 }
 
 sub _normalize_children($raw) {

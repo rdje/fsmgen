@@ -172,10 +172,12 @@ apb_back_to_back_policy_deferred
 ## Diagnostics
 
 The parser accepts optional `(busy NAME)` only in APB requester response
-blocks. Unsupported `(status ...)` clauses fail closed with a diagnostic that
-points to the busy-only slice and the required `done`, `read-data`, and `error`
-fields. The normal generator validation continues to reject duplicate signal
-names and non-identifier response bindings.
+blocks. At `.572` closeout, `(status ...)` remained unsupported and failed
+closed as outside the busy-only slice. The later `.577` status-field behavior
+accepts only the selected busy-gated `(status NAME width 2)` form and rejects
+status without busy or widths other than `2`. The normal generator validation
+continues to reject duplicate signal names and non-identifier response
+bindings.
 
 ## Non-Goals
 
@@ -184,7 +186,9 @@ fields, add multi-peripheral APB interconnect/decode, add multi-register
 decode, add APB sidebands or strobes, add alternate widths, add back-to-back
 transfer policy, add direct IAL2-to-IAL0 lowering, add direct backend lowering,
 add verification-output generation, add backend-language variants, change AXI
-behavior, or add VHDL behavior.
+behavior, or add VHDL behavior. Additive named status fields are owned by the
+later [IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR](IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR.md)
+page.
 
 ## Validation
 

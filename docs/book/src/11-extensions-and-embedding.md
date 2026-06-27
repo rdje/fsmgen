@@ -55,10 +55,11 @@ downstream consumer: bounded public `.ppif` covers one-channel Valid-Ready
 sources, multi-channel Valid-Ready bundles, one-object AXI manager
 capacity/status sources, APB requester-transfer sources, APB completer
 sources, fixed one-requester/one-completer APB composition sources, and their
-selected busy-capable APB variants. Bounded `.axi` aliases currently cover the
-selected AXI Valid-Ready surface, and bounded `.apb` aliases cover selected
-APB requester-transfer, completer, fixed composition, and busy-capable APB
-sources. Support-accounted AXI manager coverage includes
+selected busy-capable and status-capable APB variants. Bounded `.axi` aliases
+currently cover the selected AXI Valid-Ready surface, and bounded `.apb`
+aliases cover selected APB requester-transfer, completer, fixed composition,
+busy-capable APB sources, and busy-gated 2-bit status APB sources.
+Support-accounted AXI manager coverage includes
 capacity/status, ID-family metadata, transaction envelopes and fan-in,
 concrete-ID assertions, bounded auto-ID lifecycle, same-ID reject and
 issue-order-queue policy, generated auto-ID write/read response-demux,

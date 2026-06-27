@@ -16,6 +16,10 @@ validation, generated-artifact, schedule/check/semantic JSON, HDL/runtime,
 direct backend, verification-output, backend-language variant, AXI, APB, or
 VHDL behavior.
 
+Implementation outcome: `.577` ships the selected additive busy-plus-status
+behavior in
+[IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR](IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR.md).
+
 ## Evidence Read
 
 The selector read the current APB requester/composition surface and residue:

@@ -327,15 +327,20 @@ The APB requester can also be authored from the IAL2 `.ppif` source shape
 `ppif/apb_requester_transfer.ppif`. That path uses `(profile apb)`, lowers
 through generated `apb_requester.isf` before generated `apb_requester.fsm`, and
 the bounded `.apb` profile alias `ppif/apb_requester_transfer.apb` mirrors
-that same requester-transfer behavior. The APB completer can be authored from
-`ppif/apb_completer.ppif` or `ppif/apb_completer.apb`, lowering through
+that same requester-transfer behavior. Additive requester variants at
+`ppif/apb_requester_transfer_busy.{ppif,apb}` and
+`ppif/apb_requester_transfer_status.{ppif,apb}` expose public `busy` and the
+selected busy-gated 2-bit `status` field. The APB completer can be authored
+from `ppif/apb_completer.ppif` or `ppif/apb_completer.apb`, lowering through
 generated `apb_completer.isf` before generated `apb_completer.fsm` for the
 bounded address-0 register completer subset. The fixed one-requester/
 one-completer APB composition can be authored from `ppif/apb_composition.ppif`
-or `ppif/apb_composition.apb`, lowering through generated requester/completer
-`.isf` and `.fsm` review artifacts before selected top `apb_tb.fsm`. See
-[Feature Backlog](14-feature-backlog.md) for runnable APB `.ppif` and `.apb`
-commands and the current APB residue list.
+or `ppif/apb_composition.apb`, with busy and status variants at
+`ppif/apb_composition_busy.{ppif,apb}` and
+`ppif/apb_composition_status.{ppif,apb}`. Composition sources lower through
+generated requester/completer `.isf` and `.fsm` review artifacts before the
+selected top `apb_tb.fsm`. See [Feature Backlog](14-feature-backlog.md) for
+runnable APB `.ppif` and `.apb` commands and the current APB residue list.
 
 ### Public Interface Contract
 

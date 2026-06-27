@@ -9971,6 +9971,44 @@ encodings, sticky status registers, APB decode/storage/sideband/width work,
 back-to-back policy, direct backend, verification-output, backend-language
 variants, AXI follow-on, and VHDL remain deferred.
 
+APB requester status-field behavior:
+[IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR](../../IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR.md)
+ships `.577`, the additive busy-plus-status APB requester output contract. The
+new requester-transfer samples are `ppif/apb_requester_transfer_status.ppif`
+and `ppif/apb_requester_transfer_status.apb`; the new fixed-composition
+samples are `ppif/apb_composition_status.ppif` and
+`ppif/apb_composition_status.apb`. The accepted response shape keeps
+`(busy busy)` and adds `(status status width 2)`. Generated requester artifacts
+expose public `busy` and `status[1:0]`, drive status `0 idle`, `1 busy`, and
+publish `2 done_ok` / `3 done_error` with `(concat 1'b1 slverr)` after sampling
+`PSLVERR`. Status-capable composition sources propagate `status<2` to the
+generated `apb_tb` top. Check/semantic JSON support-account the new samples as
+`intent.ppif_apb_requester_transfer_status`,
+`intent.apb_profile_alias_requester_transfer_status`,
+`intent.ppif_apb_composition_status`, and
+`intent.apb_profile_alias_composition_status`. Status-capable reports remove
+both `apb_requester_status_field_deferred` and
+`apb_requester_busy_status_deferred`; existing no-busy and busy-only APB
+samples keep their prior residue. Status-only samples, enum/custom encodings,
+sticky status registers, APB decode/storage/sideband/width work, back-to-back
+policy, direct backend, verification-output, backend-language variants, AXI
+follow-on, and VHDL remain deferred.
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.ppif
+./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer_status.ppif
+./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.apb
+./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer_status.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_status.ppif
+./bin/fsmgen --strict --check --json ppif/apb_composition_status.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_status.ppif
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_status.apb
+./bin/fsmgen --strict --check --json ppif/apb_composition_status.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_status.apb
+```
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

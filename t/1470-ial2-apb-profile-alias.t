@@ -82,14 +82,26 @@ subtest 'adapter rejects .apb profile and behavior boundaries' => sub {
 
     my $status_path = File::Spec->catfile($tempdir, 'status_response.apb');
     my $status_source = slurp(sample_apb_busy_path());
-    $status_source =~ s/\(busy busy\)/(status status)/;
+    $status_source =~ s/\s+\(busy busy\)\n/      (status status width 2)\n/;
     write_file($status_path, $status_source);
     my $status_ok = eval { FSM::Adapter::IAL2::PPIF->new()->parse_file($status_path); 1 };
-    ok(!$status_ok, '.apb requester response status remains outside the busy-only slice');
+    ok(!$status_ok, '.apb requester response status without busy is rejected');
     like(
         $@,
-        qr/does not support \(status \.\.\.\) in this busy-only slice/,
-        '.apb response status diagnostic points to optional busy plus required response fields',
+        qr/status field requires \(busy NAME\) in this slice/,
+        '.apb response status diagnostic requires the busy gate',
+    );
+
+    my $status_width_path = File::Spec->catfile($tempdir, 'status_width.apb');
+    my $status_width_source = slurp(sample_apb_busy_path());
+    $status_width_source =~ s/\(busy busy\)/(busy busy)\n      (status status width 3)/;
+    write_file($status_width_path, $status_width_source);
+    my $status_width_ok = eval { FSM::Adapter::IAL2::PPIF->new()->parse_file($status_width_path); 1 };
+    ok(!$status_width_ok, '.apb requester response status width other than 2 is rejected');
+    like(
+        $@,
+        qr/status width must be 2 in this slice/,
+        '.apb response status diagnostic pins the selected 2-bit width',
     );
 
     my $unsupported_object_path = File::Spec->catfile($tempdir, 'valid_ready_object.apb');
@@ -313,7 +325,48 @@ subtest 'adapter accepts busy-capable APB .apb profile aliases' => sub {
     ok(!$composition_residue{apb_requester_busy_status_deferred}, 'busy .apb composition removes requester busy/status deferred residue');
 };
 
-subtest 'CLI check, semantic JSON, and outdir report busy APB .apb public source identity' => sub {
+subtest 'adapter accepts status-capable APB .apb profile aliases' => sub {
+    ok(-f sample_apb_status_path(), 'tracked runnable status APB requester .apb sample exists');
+    ok(-f sample_apb_composition_status_alias_path(), 'tracked runnable status APB composition .apb sample exists');
+
+    my $requester_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_status_path());
+    my $requester_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_ppif_status_path());
+    is($requester_alias->{kind}, 'protocol_intent.apb_requester_transfer', 'status .apb requester keeps APB requester-transfer kind');
+    is($requester_alias->{generated_ial1}{text}, $requester_ppif->{generated_ial1}{text}, 'status .apb requester mirrors .ppif generated IAL1');
+    is_deeply($requester_alias->{generated_ial0}{files}, $requester_ppif->{generated_ial0}{files}, 'status .apb requester mirrors .ppif generated IAL0');
+    like($requester_alias->{generated_ial1}{text}, qr/\(output status \(width 2\)\)/, 'status .apb requester IAL1 exposes 2-bit status output');
+    like($requester_alias->{generated_ial1}{text}, qr/\(status \(concat 1'b1 slverr\)\)/, 'status .apb requester IAL1 maps done status from sampled PSLVERR');
+    my $requester_fsm = $requester_alias->{generated_ial0}{files}{'apb_requester.fsm'};
+    like($requester_fsm, qr/\(<- \(status> 0\)\)/, 'status .apb requester FSM clears status in idle');
+    like($requester_fsm, qr/\(<- \(status> 1\) <(?:setup|access)_phase_start\)/, 'status .apb requester FSM asserts busy status during transfer phases');
+    like($requester_fsm, qr/\(<- \(status> \(concat 1'b1 slverr\)\) <done_phase_start\)/, 'status .apb requester FSM publishes done_ok/done_error from sampled error');
+    is($requester_alias->{report}{bindings}{response}{status}{name}, 'status', 'status .apb requester report preserves response status name');
+    is($requester_alias->{report}{bindings}{response}{status}{width}, 2, 'status .apb requester report preserves response status width');
+    is_deeply(
+        [map { $_->{name} } @{$requester_alias->{report}{response_status_field}{encoding}}],
+        [qw(idle busy done_ok done_error)],
+        'status .apb requester report preserves selected status encoding names',
+    );
+    my %requester_residue = map { $_->{id} => 1 } @{$requester_alias->{report}{unsupported_residue}};
+    ok(!$requester_residue{apb_requester_status_field_deferred}, 'status .apb requester removes named status-field deferred residue');
+    ok(!$requester_residue{apb_requester_busy_status_deferred}, 'status .apb requester keeps busy/status deferred residue absent');
+
+    my $composition_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_status_alias_path());
+    my $composition_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_status_ppif_path());
+    is($composition_alias->{kind}, 'protocol_intent.apb_composition', 'status .apb composition keeps APB composition kind');
+    is_deeply($composition_alias->{generated_ial1}{items}, $composition_ppif->{generated_ial1}{items}, 'status .apb composition mirrors .ppif generated IAL1 artifacts');
+    is_deeply($composition_alias->{generated_ial0}{files}, $composition_ppif->{generated_ial0}{files}, 'status .apb composition mirrors .ppif generated IAL0 files');
+    like($composition_alias->{generated_ial0}{files}{'apb_tb.fsm'}, qr/=status>2/, 'status .apb composition top exposes 2-bit status output');
+    is($composition_alias->{report}{requester_status_field}{name}, 'status', 'status .apb composition report exposes requester status metadata');
+    my ($status_top_port) = grep { $_->{name} eq 'status' } @{$composition_alias->{report}{composition}{top_ports}};
+    ok($status_top_port, 'status .apb composition report lists status top port');
+    is($status_top_port->{width}, 2, 'status .apb composition report lists a 2-bit status top port');
+    my %composition_residue = map { $_->{id} => 1 } @{$composition_alias->{report}{unsupported_residue}};
+    ok(!$composition_residue{apb_requester_status_field_deferred}, 'status .apb composition removes named requester status-field residue');
+    ok(!$composition_residue{apb_requester_busy_status_deferred}, 'status .apb composition keeps requester busy/status deferred residue absent');
+};
+
+subtest 'CLI check, semantic JSON, and outdir report busy/status APB .apb public source identity' => sub {
     my @cases = (
         {
             label => 'busy APB requester',
@@ -323,6 +376,7 @@ subtest 'CLI check, semantic JSON, and outdir report busy APB .apb public source
             module => 'apb_requester',
             hdl => 'apb_requester_busy_alias.sv',
             out_artifacts => [qw(apb_requester.isf apb_requester.fsm)],
+            status_output => 0,
         },
         {
             label => 'busy APB composition',
@@ -332,6 +386,27 @@ subtest 'CLI check, semantic JSON, and outdir report busy APB .apb public source
             module => 'apb_tb',
             hdl => 'apb_tb_busy_alias.sv',
             out_artifacts => [qw(apb_requester.isf apb_completer.isf apb_requester.fsm apb_completer.fsm apb_tb.fsm)],
+            status_output => 0,
+        },
+        {
+            label => 'status APB requester',
+            path => sample_apb_status_path(),
+            entry_id => 'intent.apb_profile_alias_requester_transfer_status',
+            source_root_kind => 'fsm',
+            module => 'apb_requester',
+            hdl => 'apb_requester_status_alias.sv',
+            out_artifacts => [qw(apb_requester.isf apb_requester.fsm)],
+            status_output => 1,
+        },
+        {
+            label => 'status APB composition',
+            path => sample_apb_composition_status_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_status',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+            hdl => 'apb_tb_status_alias.sv',
+            out_artifacts => [qw(apb_requester.isf apb_completer.isf apb_requester.fsm apb_completer.fsm apb_tb.fsm)],
+            status_output => 1,
         },
     );
 
@@ -345,7 +420,7 @@ subtest 'CLI check, semantic JSON, and outdir report busy APB .apb public source
         my $check_report = decode_json(join('', @{$check_stdout || []}));
         ok($check_report->{success}, "$case->{label} .apb check JSON reports success");
         is($check_report->{source}{resolved_path}, File::Spec->rel2abs($case->{path}), "$case->{label} .apb check JSON reports source path");
-        is($check_report->{support_accounting}{entry_id}, $case->{entry_id}, "$case->{label} .apb check JSON names busy corpus entry");
+        is($check_report->{support_accounting}{entry_id}, $case->{entry_id}, "$case->{label} .apb check JSON names corpus entry");
         is($check_report->{support_accounting}{source_kind}, 'ial2_profile_alias', "$case->{label} .apb check JSON records profile-alias source kind");
 
         my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
@@ -354,7 +429,7 @@ subtest 'CLI check, semantic JSON, and outdir report busy APB .apb public source
         ok($semantic_success, "$case->{label} .apb --emit-semantic-json succeeds");
         is(join('', @{$semantic_stderr || []}), '', "$case->{label} .apb --emit-semantic-json keeps stderr clean");
         my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
-        is($semantic_report->{support_accounting}{entry_id}, $case->{entry_id}, "$case->{label} .apb semantic JSON names busy corpus entry");
+        is($semantic_report->{support_accounting}{entry_id}, $case->{entry_id}, "$case->{label} .apb semantic JSON names corpus entry");
         is($semantic_report->{semantic}{module}{source_root_kind}, $case->{source_root_kind}, "$case->{label} .apb semantic JSON records source root kind");
         is($semantic_report->{semantic}{module}{name}, $case->{module}, "$case->{label} .apb semantic JSON records generated module");
 
@@ -371,6 +446,11 @@ subtest 'CLI check, semantic JSON, and outdir report busy APB .apb public source
         my $sv = slurp($hdl);
         like($sv, qr/\bmodule\s+$case->{module}\b/, "$case->{label} .apb generated HDL contains selected module");
         like($sv, qr/\boutput(?:\s+reg)?\s+busy\b/, "$case->{label} .apb generated HDL exposes busy output");
+        if ($case->{status_output}) {
+            like($sv, qr/\boutput\s+reg\s+\[1:0\]\s+status\b/, "$case->{label} .apb generated HDL exposes 2-bit status output");
+            my $requester_fsm = slurp(File::Spec->catfile($outdir, 'apb_requester.fsm'));
+            like($requester_fsm, qr/\(<- \(status> \(concat 1'b1 slverr\)\) <done_phase_start\)/, "$case->{label} .apb outdir requester FSM records the selected status encoding");
+        }
     }
 };
 
@@ -416,12 +496,20 @@ sub sample_ppif_busy_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_busy.ppif');
 }
 
+sub sample_ppif_status_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_status.ppif');
+}
+
 sub sample_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer.apb');
 }
 
 sub sample_apb_busy_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_busy.apb');
+}
+
+sub sample_apb_status_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_status.apb');
 }
 
 sub sample_apb_completer_alias_path {
@@ -440,12 +528,20 @@ sub sample_apb_composition_busy_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_busy.apb');
 }
 
+sub sample_apb_composition_status_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_status.apb');
+}
+
 sub sample_apb_composition_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition.ppif');
 }
 
 sub sample_apb_composition_busy_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_busy.ppif');
+}
+
+sub sample_apb_composition_status_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_status.ppif');
 }
 
 sub sample_valid_ready_handshake_ppif_path {

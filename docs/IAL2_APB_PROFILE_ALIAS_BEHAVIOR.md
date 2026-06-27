@@ -14,16 +14,24 @@ The currently supported alias samples are:
 
 ```text
 ppif/apb_requester_transfer.apb
+ppif/apb_requester_transfer_busy.apb
+ppif/apb_requester_transfer_status.apb
 ppif/apb_completer.apb
 ppif/apb_composition.apb
+ppif/apb_composition_busy.apb
+ppif/apb_composition_status.apb
 ```
 
 They mirror the generic APB IAL2 samples:
 
 ```text
 ppif/apb_requester_transfer.ppif
+ppif/apb_requester_transfer_busy.ppif
+ppif/apb_requester_transfer_status.ppif
 ppif/apb_completer.ppif
 ppif/apb_composition.ppif
+ppif/apb_composition_busy.ppif
+ppif/apb_composition_status.ppif
 ```
 
 `.apb` is not a separate APB language, not an APB-to-FSM shortcut, not a direct
@@ -50,6 +58,10 @@ The bounded alias accepts exactly these APB shapes:
 Mixed requester/completer files without the explicit `(apb-composition ...)`
 object still fail closed. Multi-peripheral APB interconnect/decode is not part
 of the alias contract.
+
+Requester-transfer aliases may use the original response shape, the selected
+busy-capable response shape with `(busy NAME)`, or the selected busy-gated
+status response shape with `(busy NAME)` and `(status NAME width 2)`.
 
 ## Lowering And Reports
 
@@ -101,12 +113,28 @@ entry_id: intent.apb_profile_alias_requester_transfer
 coverage: ial2_apb_profile_alias_requester_transfer_pipeline_cli
 source_kind: ial2_profile_alias
 
+entry_id: intent.apb_profile_alias_requester_transfer_busy
+coverage: ial2_apb_profile_alias_requester_transfer_busy_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_requester_transfer_status
+coverage: ial2_apb_profile_alias_requester_transfer_status_pipeline_cli
+source_kind: ial2_profile_alias
+
 entry_id: intent.apb_profile_alias_completer
 coverage: ial2_apb_profile_alias_completer_pipeline_cli
 source_kind: ial2_profile_alias
 
 entry_id: intent.apb_profile_alias_composition
 coverage: ial2_apb_profile_alias_composition_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_composition_busy
+coverage: ial2_apb_profile_alias_composition_busy_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_composition_status
+coverage: ial2_apb_profile_alias_composition_status_pipeline_cli
 source_kind: ial2_profile_alias
 ```
 
@@ -116,23 +144,31 @@ Emit APB IAL2 schedule/report JSON:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_busy.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_completer.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_busy.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_status.apb
 ```
 
 Run strict checks without writing HDL:
 
 ```bash
 ./bin/fsmgen --strict --check --json ppif/apb_requester_transfer.apb
+./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status.apb
 ./bin/fsmgen --strict --check --json ppif/apb_completer.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition.apb
+./bin/fsmgen --strict --check --json ppif/apb_composition_status.apb
 ```
 
 Emit normalized semantic JSON:
 
 ```bash
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer_status.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_completer.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_status.apb
 ```
 
 Materialize generated review artifacts and HDL:
@@ -145,6 +181,10 @@ Materialize generated review artifacts and HDL:
 ./bin/fsmgen --quiet --outdir /tmp/fsmgen-apb-alias-composition \
   --output /tmp/fsmgen-apb-alias-composition/apb_tb.sv \
   ppif/apb_composition.apb
+
+./bin/fsmgen --quiet --outdir /tmp/fsmgen-apb-alias-status \
+  --output /tmp/fsmgen-apb-alias-status/apb_requester_status.sv \
+  ppif/apb_requester_transfer_status.apb
 ```
 
 ## Diagnostics
@@ -170,10 +210,14 @@ behavior, `.isf` behavior, `.fsm` behavior, backend behavior,
 verification-output behavior, backend-language variants, VHDL behavior, or
 direct IAL2-to-IAL0 lowering.
 
-APB requester busy/status, multi-register decode, sidebands/strobes, alternate
-widths, multi-peripheral decode, back-to-back transfer policy, direct backend
-lowering, verification-output generation, backend-language variants, and VHDL
-remain deferred.
+APB multi-register decode, sidebands/strobes, alternate widths,
+multi-peripheral decode, back-to-back transfer policy, direct backend lowering,
+verification-output generation, backend-language variants, and VHDL remain
+deferred. The selected busy output and busy-gated 2-bit requester status
+aliases are documented in
+[IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR](IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR.md)
+and
+[IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR](IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR.md).
 
 ## Validation
 

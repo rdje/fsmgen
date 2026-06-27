@@ -3295,6 +3295,26 @@ and busy-only APB samples remain unchanged. Status-only samples, enum/custom
 encodings, sticky status registers, APB decode/storage/sideband/width work,
 back-to-back policy, direct backend, verification-output, backend-language
 variants, AXI follow-on, and VHDL remain deferred.
+`.577` now ships that additive busy-plus-status contract. The new
+requester-transfer samples are `ppif/apb_requester_transfer_status.ppif` and
+`ppif/apb_requester_transfer_status.apb`; the new fixed-composition samples
+are `ppif/apb_composition_status.ppif` and
+`ppif/apb_composition_status.apb`. The accepted response shape keeps
+`(busy busy)` and adds `(status status width 2)`. Generated requester artifacts
+expose public `busy` and `status[1:0]`, drive status `0 idle`, `1 busy`, and
+publish `2 done_ok` / `3 done_error` with `(concat 1'b1 slverr)` after
+sampling `PSLVERR`. Status-capable composition sources propagate `status<2`
+to generated top `apb_tb`. The new support identities are
+`intent.ppif_apb_requester_transfer_status`,
+`intent.apb_profile_alias_requester_transfer_status`,
+`intent.ppif_apb_composition_status`, and
+`intent.apb_profile_alias_composition_status`. Status-capable reports remove
+both `apb_requester_status_field_deferred` and
+`apb_requester_busy_status_deferred`; existing no-busy and busy-only APB
+samples keep their prior residue. Status-only samples, enum/custom encodings,
+sticky status registers, APB decode/storage/sideband/width work, back-to-back
+policy, direct backend, verification-output, backend-language variants, AXI
+follow-on, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5824,6 +5844,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_APB_BUSY_OUTPUT_NEXT_SLICE_SELECTION.md` — selects no-behavior public-surface and `bin/fsmgen` import-tree synchronization after APB busy output, before any further behavior work.
 - `docs/IAL2_POST_APB_PUBLIC_SYNC_NEXT_SLICE_SELECTION.md` — selects APB requester named status-field public contract selection after APB public-surface/import-tree synchronization, without changing behavior.
 - `docs/IAL2_APB_REQUESTER_STATUS_FIELD_CONTRACT_SELECTION.md` — selects additive 2-bit APB requester named status-field exposure through new busy-plus-status requester-transfer and fixed-composition `.ppif`/`.apb` samples, while keeping existing no-busy and busy-only APB samples unchanged.
+- `docs/IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR.md` — ships additive busy-plus-status APB requester output behavior through `ppif/apb_requester_transfer_status.ppif`, `ppif/apb_requester_transfer_status.apb`, `ppif/apb_composition_status.ppif`, and `ppif/apb_composition_status.apb`, preserving existing APB samples and removing requester busy/status residues only from status-capable reports.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
