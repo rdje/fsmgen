@@ -10072,6 +10072,19 @@ multi-peripheral topology residues. Sidebands/strobes, alternate widths,
 back-to-back policy, direct backend, verification-output, backend-language
 variants, AXI follow-on, and VHDL remain deferred.
 
+APB multi-peripheral interconnect/decode readiness audit:
+[IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_READINESS_AUDIT](../../IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_READINESS_AUDIT.md)
+selects `.584`, APB multi-peripheral interconnect/decode public contract
+selection, before behavior work. Current APB source and reports remain fixed
+to one requester, one completer, and one composition object. The next contract
+must select peripheral-list syntax, address-map bindings, decode priority,
+response mux behavior, diagnostics, report fields, samples, support entries,
+and validation gates. The selected reusable direction is APB-specific: IAL2
+topology/address-map intent lowers into a generated reusable APB IAL1 review
+artifact before generated IAL0 `.fsm` and HDL. AXI and AHB require separate
+protocol-specific future owners and cannot share APB interconnect/decode
+implementation logic.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

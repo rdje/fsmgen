@@ -4368,6 +4368,16 @@ Multi-peripheral topology is selected before sidebands/strobes, alternate
 widths, back-to-back policy, direct backend, verification-output,
 backend-language variants, AXI follow-on, and VHDL because it owns the next
 composition/report/source-shape boundary.
+`.583` now selects `.584`, APB multi-peripheral interconnect/decode public
+contract selection, without changing behavior. Current APB parser/generator/
+report support remains fixed to one requester, one completer, and one
+composition object. The missing public contract must select the peripheral
+list, address map, decode priority, response mux, diagnostics, report schema,
+sample/support/test scope, and validation boundary before behavior work. The
+selected direction is APB-specific generated reusable IAL1 review lowering,
+configured by IAL2 source-level parameter/generic-like topology/address-map
+bindings. AXI and AHB remain separate protocol-specific future owners; their
+interconnect/decode logic cannot share APB implementation logic.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

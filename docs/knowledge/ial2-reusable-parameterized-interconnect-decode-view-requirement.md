@@ -1,21 +1,15 @@
 ---
 id: ial2-reusable-parameterized-interconnect-decode-view-requirement
-title: APB, AXI, and AHB interconnect decode should be audited as protocol-specific reusable views
+title: User input required protocol-specific reusable interconnect/decode audit
 answers:
-  - "should APB interconnect decode be reusable?"
-  - "should APB multi-peripheral decode lower into its own IAL2 or IAL1 view?"
-  - "should APB interconnect topology be parameterized?"
-  - "does AXI need the same reusable interconnect decode audit?"
-  - "does AHB need the same reusable interconnect decode audit?"
-  - "should APB AXI and AHB share one interconnect decode logic block?"
-  - "why can't APB AHB and AXI share interconnect decode logic?"
-  - "do APB AHB and AXI share common signals?"
   - "what user input must .583 consider?"
+  - "what reusable-view user input did .583 have?"
+  - "what protocol-separation user input did .583 have?"
 date: 2026-06-27
 status: current
 tags: [ial2, ial1, apb, axi, ahb, interconnect, decode, reusable-view, parameters, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; MEMORY.md
-reverify: rg -n 'distinct protocols with distinct signal sets|cannot and may not share any multi-peripheral interconnect/decode logic|protocol-specific reusable|AXI/AHB applicability|parameter/generic' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md MEMORY.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; MEMORY.md; docs/IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_READINESS_AUDIT.md; docs/knowledge/ial2-apb-multi-peripheral-interconnect-readiness-audit.md
+reverify: rg -n 'distinct protocols with distinct signal sets|cannot and may not share any multi-peripheral interconnect/decode logic|generated reusable IAL1|parameter/generic|IAL2-FEATURE-COMPLETENESS-FRONTIER\.584' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md MEMORY.md docs/IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_READINESS_AUDIT.md docs/knowledge/ial2-apb-multi-peripheral-interconnect-readiness-audit.md
 ---
 
 User input during `IAL2-FEATURE-COMPLETENESS-FRONTIER.583` requires the APB
@@ -32,3 +26,8 @@ interconnect/decode need their own protocol-specific reusable views or should
 remain deferred behind separate exact owners. APB, AHB, and AXI are distinct
 protocols with distinct signal sets and protocol contracts, so they cannot and
 may not share any multi-peripheral interconnect/decode logic.
+
+The `.583` outcome is recorded in
+`docs/knowledge/ial2-apb-multi-peripheral-interconnect-readiness-audit.md`: it
+selects APB-specific generated reusable IAL1 review lowering and advances to
+`.584` public contract selection.
