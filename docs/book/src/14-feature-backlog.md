@@ -10164,6 +10164,18 @@ reports now replace `apb_protection_and_strobes_deferred` with
 `apb_protection_policy_effects_deferred`; alternate widths, PPROT
 access-control effects, and back-to-back transfer policy remain deferred.
 
+Post APB sideband/strobe selector:
+[IAL2_POST_APB_SIDEBAND_STROBE_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SIDEBAND_STROBE_NEXT_SLICE_SELECTION.md)
+selects `.591`, APB public-surface/report-static cleanup, without changing
+behavior in `.590`. Focused live report probes confirm sideband-aware APB
+reports now carry `apb_protection_policy_effects_deferred`,
+`apb_alternate_widths_deferred`, and `apb_back_to_back_policy_deferred`, while
+the generic `.ppif` language-surface manifest still has stale APB sideband
+deferral wording. The cleanup owner must align public/static prose before APB
+alternate widths, PPROT access-control effects, back-to-back policy,
+additional APB topology work, AXI/AHB return, direct backend,
+verification-output, backend-language variants, or VHDL.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

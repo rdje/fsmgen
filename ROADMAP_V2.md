@@ -4443,6 +4443,16 @@ translation, response muxing, and unmapped active-access `PSLVERR`.
 Sideband-aware reports replace `apb_protection_and_strobes_deferred` with
 `apb_protection_policy_effects_deferred`; alternate widths, PPROT
 access-control effects, and back-to-back policy remain deferred.
+`.590` now selects `.591`, APB public-surface/report-static cleanup, without
+changing behavior in `.590`. Focused live report probes confirm sideband-aware
+APB reports now carry `apb_protection_policy_effects_deferred`,
+`apb_alternate_widths_deferred`, and `apb_back_to_back_policy_deferred`, with
+topology residues only on narrower endpoint/fixed-composition shapes. The
+generic `.ppif` language-surface manifest still has stale APB sideband
+deferral wording after `.589`, so `.591` must align public/static prose before
+APB alternate widths, PPROT access-control effects, back-to-back policy,
+additional APB topology work, AXI/AHB return, direct backend,
+verification-output, backend-language variants, or VHDL.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

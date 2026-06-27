@@ -3442,6 +3442,16 @@ translation, response muxing, and unmapped active-access `PSLVERR`.
 Sideband-aware reports replace `apb_protection_and_strobes_deferred` with
 `apb_protection_policy_effects_deferred`; alternate widths, PPROT
 access-control effects, and back-to-back policy remain deferred.
+`.590` now selects `.591`, APB public-surface/report-static cleanup, without
+changing behavior in `.590`. Focused live report probes confirm sideband-aware
+APB reports now carry `apb_protection_policy_effects_deferred`,
+`apb_alternate_widths_deferred`, and `apb_back_to_back_policy_deferred`, with
+topology residues only on narrower endpoint/fixed-composition shapes. The
+generic `.ppif` language-surface manifest still has stale APB sideband
+deferral wording after `.589`, so `.591` must align public/static prose before
+APB alternate widths, PPROT access-control effects, back-to-back policy,
+additional APB topology work, AXI/AHB return, direct backend,
+verification-output, backend-language variants, or VHDL.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5984,6 +5994,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_SIDEBAND_STROBE_READINESS_AUDIT.md` — audits APB `PPROT`/`PSTRB`/byte-lane readiness and selects public sideband/strobe contract selection before behavior work.
 - `docs/IAL2_APB_SIDEBAND_STROBE_CONTRACT_SELECTION.md` — selects the APB `PPROT`/`PSTRB` source syntax, fixed 32-bit byte-lane semantics, report/support shape, diagnostics, and direct bounded implementation owner.
 - `docs/IAL2_APB_SIDEBAND_STROBE_BEHAVIOR.md` — ships bounded APB `PPROT`/`PSTRB` propagation and `PSTRB` byte-lane register writes through sideband-aware requester, completer, fixed-composition, and multi-peripheral composition `.ppif`/`.apb` samples.
+- `docs/IAL2_POST_APB_SIDEBAND_STROBE_NEXT_SLICE_SELECTION.md` — selects APB public-surface/report-static cleanup after APB sideband/strobe behavior, without changing behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
