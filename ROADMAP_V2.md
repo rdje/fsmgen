@@ -4453,6 +4453,15 @@ deferral wording after `.589`, so `.591` must align public/static prose before
 APB alternate widths, PPROT access-control effects, back-to-back policy,
 additional APB topology work, AXI/AHB return, direct backend,
 verification-output, backend-language variants, or VHDL.
+`.591` now synchronizes APB public-surface/report-static wording without
+changing behavior. The generic `.ppif` language-surface manifest names the
+shipped sideband-aware APB requester-transfer, multi-register completer, fixed
+multi-register composition, and multi-peripheral composition `.ppif` coverage;
+the `.apb` mirror paragraph includes the matching sideband-aware profile-alias
+fixtures. The stale broad "APB sidebands" deferral is removed from the generic
+`.ppif` public boundary, leaving APB alternate widths, PPROT access-control
+effects, and back-to-back policy explicit. `.592` now owns APB alternate-width
+readiness audit after the public surface is aligned.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

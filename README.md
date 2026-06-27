@@ -3452,6 +3452,15 @@ deferral wording after `.589`, so `.591` must align public/static prose before
 APB alternate widths, PPROT access-control effects, back-to-back policy,
 additional APB topology work, AXI/AHB return, direct backend,
 verification-output, backend-language variants, or VHDL.
+`.591` now synchronizes APB public-surface/report-static wording without
+changing behavior. The generic `.ppif` language-surface manifest names the
+shipped sideband-aware APB requester-transfer, multi-register completer, fixed
+multi-register composition, and multi-peripheral composition `.ppif` coverage;
+the `.apb` mirror paragraph includes the matching sideband-aware profile-alias
+fixtures. The stale broad "APB sidebands" deferral is removed from the generic
+`.ppif` public boundary, leaving APB alternate widths, PPROT access-control
+effects, and back-to-back policy explicit. `.592` now owns APB alternate-width
+readiness audit after the public surface is aligned.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5995,6 +6004,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_SIDEBAND_STROBE_CONTRACT_SELECTION.md` — selects the APB `PPROT`/`PSTRB` source syntax, fixed 32-bit byte-lane semantics, report/support shape, diagnostics, and direct bounded implementation owner.
 - `docs/IAL2_APB_SIDEBAND_STROBE_BEHAVIOR.md` — ships bounded APB `PPROT`/`PSTRB` propagation and `PSTRB` byte-lane register writes through sideband-aware requester, completer, fixed-composition, and multi-peripheral composition `.ppif`/`.apb` samples.
 - `docs/IAL2_POST_APB_SIDEBAND_STROBE_NEXT_SLICE_SELECTION.md` — selects APB public-surface/report-static cleanup after APB sideband/strobe behavior, without changing behavior.
+- `docs/IAL2_APB_PUBLIC_SURFACE_REPORT_STATIC_SYNC.md` — synchronizes generic `.ppif` and `.apb` static public-surface wording with shipped sideband-aware APB coverage and selects APB alternate-width readiness audit.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

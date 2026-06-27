@@ -2915,6 +2915,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/sideband-aware APB requester-transfer source/,
+        'manifest advertises the sideband-aware APB requester-transfer PPIF source',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/one-requester\/one-completer APB composition source/,
         'manifest advertises the APB composition PPIF source',
     );
@@ -2935,6 +2940,21 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/sideband-aware APB multi-register completer source/,
+        'manifest advertises the sideband-aware APB multi-register completer PPIF source',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/sideband-aware multi-register one-requester\/one-completer APB composition source/,
+        'manifest advertises the sideband-aware APB multi-register composition PPIF source',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/sideband-aware one-requester\/two-peripheral APB interconnect\/decode composition source/,
+        'manifest advertises the sideband-aware APB multi-peripheral composition PPIF source',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/AXI is the first shipped IAL2 profile\/example, not the definition of IAL2/,
         'manifest states AXI is the first shipped IAL2 profile, not the IAL2 definition',
     );
@@ -2945,8 +2965,23 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/\.apb is now the bounded APB requester-transfer\/completer\/composition plus busy-capable, status-capable, selected multi-register completer\/composition, and selected multi-peripheral interconnect\/decode composition profile-alias file surface/,
+        qr/\.apb is now the bounded APB requester-transfer\/completer\/composition plus busy-capable, status-capable, selected multi-register, selected multi-peripheral interconnect\/decode, and sideband-aware profile-alias file surface/,
         'manifest states .apb is the bounded APB profile alias over the same model',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/sideband-aware APB requester-transfer, APB completer, APB multi-register completer, .*sideband-aware multi-register one-requester\/one-completer APB composition, selected one-requester\/two-peripheral APB interconnect\/decode composition, and sideband-aware one-requester\/two-peripheral APB interconnect\/decode composition \.ppif sources through support-accounted profile-alias fixtures/,
+        'manifest states .apb mirrors the sideband-aware APB PPIF sources through profile aliases',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/APB alternate widths, APB PPROT access-control effects, APB back-to-back policy/,
+        'manifest keeps remaining APB sideband follow-on work explicit after sideband/strobe support shipped',
+    );
+    unlike(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/APB sidebands/,
+        'manifest no longer defers APB sidebands broadly after sideband/strobe support shipped',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},

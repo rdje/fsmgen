@@ -10176,6 +10176,18 @@ alternate widths, PPROT access-control effects, back-to-back policy,
 additional APB topology work, AXI/AHB return, direct backend,
 verification-output, backend-language variants, or VHDL.
 
+APB public-surface/report-static sync:
+[IAL2_APB_PUBLIC_SURFACE_REPORT_STATIC_SYNC](../../IAL2_APB_PUBLIC_SURFACE_REPORT_STATIC_SYNC.md)
+synchronizes the generic `.ppif` and `.apb` public manifest wording after
+bounded APB sideband/strobe behavior. The generic `.ppif` surface now names
+sideband-aware APB requester-transfer, multi-register completer, fixed
+multi-register composition, and multi-peripheral composition coverage; the
+`.apb` mirror paragraph names the matching profile-alias fixtures. The old
+broad "APB sidebands" deferral is gone from the generic `.ppif` boundary.
+APB alternate widths, PPROT access-control effects, and back-to-back policy
+remain explicit deferred residues. `.592` now owns APB alternate-width
+readiness audit.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
