@@ -80,6 +80,18 @@ subtest 'adapter rejects .apb profile and behavior boundaries' => sub {
         '.apb suffix/profile mismatch diagnostic is targeted',
     );
 
+    my $status_path = File::Spec->catfile($tempdir, 'status_response.apb');
+    my $status_source = slurp(sample_apb_busy_path());
+    $status_source =~ s/\(busy busy\)/(status status)/;
+    write_file($status_path, $status_source);
+    my $status_ok = eval { FSM::Adapter::IAL2::PPIF->new()->parse_file($status_path); 1 };
+    ok(!$status_ok, '.apb requester response status remains outside the busy-only slice');
+    like(
+        $@,
+        qr/does not support \(status \.\.\.\) in this busy-only slice/,
+        '.apb response status diagnostic points to optional busy plus required response fields',
+    );
+
     my $unsupported_object_path = File::Spec->catfile($tempdir, 'valid_ready_object.apb');
     my $unsupported_object_source = slurp(sample_valid_ready_handshake_ppif_path());
     $unsupported_object_source =~ s/\(profile valid-ready\)/(profile apb)/;
@@ -224,7 +236,9 @@ subtest 'CLI schedule JSON and outdir expose review artifacts for .apb' => sub {
     ok(-f File::Spec->catfile($outdir, 'apb_requester.isf'), '.apb --outdir writes generated .isf');
     ok(-f File::Spec->catfile($outdir, 'apb_requester.fsm'), '.apb --outdir writes generated .fsm');
     ok(-f $hdl, '.apb --output writes generated HDL');
-    like(slurp($hdl), qr/\bmodule\s+apb_requester\b/, '.apb generated HDL contains the requester module');
+    my $requester_hdl = slurp($hdl);
+    like($requester_hdl, qr/\bmodule\s+apb_requester\b/, '.apb generated HDL contains the requester module');
+    unlike($requester_hdl, qr/\bbusy\b/, '.apb no-busy requester alias keeps busy absent from generated HDL');
 };
 
 subtest 'CLI schedule JSON and outdir expose review artifacts for APB completer and composition .apb' => sub {
@@ -272,6 +286,94 @@ subtest 'CLI schedule JSON and outdir expose review artifacts for APB completer 
     like($composition_sv, qr/\bmodule\s+apb_completer\b/, 'APB composition .apb generated HDL contains the completer module');
 };
 
+subtest 'adapter accepts busy-capable APB .apb profile aliases' => sub {
+    ok(-f sample_apb_busy_path(), 'tracked runnable busy APB requester .apb sample exists');
+    ok(-f sample_apb_composition_busy_alias_path(), 'tracked runnable busy APB composition .apb sample exists');
+
+    my $requester_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_busy_path());
+    my $requester_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_ppif_busy_path());
+    is($requester_alias->{kind}, 'protocol_intent.apb_requester_transfer', 'busy .apb requester keeps APB requester-transfer kind');
+    is($requester_alias->{generated_ial1}{text}, $requester_ppif->{generated_ial1}{text}, 'busy .apb requester mirrors .ppif generated IAL1');
+    is_deeply($requester_alias->{generated_ial0}{files}, $requester_ppif->{generated_ial0}{files}, 'busy .apb requester mirrors .ppif generated IAL0');
+    like($requester_alias->{generated_ial1}{text}, qr/\(output busy\)/, 'busy .apb requester IAL1 exposes busy output');
+    like($requester_alias->{generated_ial0}{files}{'apb_requester.fsm'}, qr/\(<- \(busy> 0\)\)/, 'busy .apb requester FSM clears busy in idle');
+    like($requester_alias->{generated_ial0}{files}{'apb_requester.fsm'}, qr/\(<- \(busy> 1\) <(?:setup|access)_phase_start\)/, 'busy .apb requester FSM asserts busy during transfer phases');
+    my %requester_residue = map { $_->{id} => 1 } @{$requester_alias->{report}{unsupported_residue}};
+    ok($requester_residue{apb_requester_status_field_deferred}, 'busy .apb requester keeps only named status-field widening deferred');
+    ok(!$requester_residue{apb_requester_busy_status_deferred}, 'busy .apb requester removes busy/status deferred residue');
+
+    my $composition_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_busy_alias_path());
+    my $composition_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_busy_ppif_path());
+    is($composition_alias->{kind}, 'protocol_intent.apb_composition', 'busy .apb composition keeps APB composition kind');
+    is_deeply($composition_alias->{generated_ial1}{items}, $composition_ppif->{generated_ial1}{items}, 'busy .apb composition mirrors .ppif generated IAL1 artifacts');
+    is_deeply($composition_alias->{generated_ial0}{files}, $composition_ppif->{generated_ial0}{files}, 'busy .apb composition mirrors .ppif generated IAL0 files');
+    like($composition_alias->{generated_ial0}{files}{'apb_tb.fsm'}, qr/=busy>/, 'busy .apb composition top exposes busy output');
+    my %composition_residue = map { $_->{id} => 1 } @{$composition_alias->{report}{unsupported_residue}};
+    ok($composition_residue{apb_requester_status_field_deferred}, 'busy .apb composition keeps named requester status-field widening deferred');
+    ok(!$composition_residue{apb_requester_busy_status_deferred}, 'busy .apb composition removes requester busy/status deferred residue');
+};
+
+subtest 'CLI check, semantic JSON, and outdir report busy APB .apb public source identity' => sub {
+    my @cases = (
+        {
+            label => 'busy APB requester',
+            path => sample_apb_busy_path(),
+            entry_id => 'intent.apb_profile_alias_requester_transfer_busy',
+            source_root_kind => 'fsm',
+            module => 'apb_requester',
+            hdl => 'apb_requester_busy_alias.sv',
+            out_artifacts => [qw(apb_requester.isf apb_requester.fsm)],
+        },
+        {
+            label => 'busy APB composition',
+            path => sample_apb_composition_busy_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_busy',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+            hdl => 'apb_tb_busy_alias.sv',
+            out_artifacts => [qw(apb_requester.isf apb_completer.isf apb_requester.fsm apb_completer.fsm apb_tb.fsm)],
+        },
+    );
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    for my $case (@cases) {
+        my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+            command => ['./bin/fsmgen', '--strict', '--check', '--json', $case->{path}],
+        );
+        ok($check_success, "$case->{label} .apb --check --json succeeds");
+        is(join('', @{$check_stderr || []}), '', "$case->{label} .apb --check --json keeps stderr clean");
+        my $check_report = decode_json(join('', @{$check_stdout || []}));
+        ok($check_report->{success}, "$case->{label} .apb check JSON reports success");
+        is($check_report->{source}{resolved_path}, File::Spec->rel2abs($case->{path}), "$case->{label} .apb check JSON reports source path");
+        is($check_report->{support_accounting}{entry_id}, $case->{entry_id}, "$case->{label} .apb check JSON names busy corpus entry");
+        is($check_report->{support_accounting}{source_kind}, 'ial2_profile_alias', "$case->{label} .apb check JSON records profile-alias source kind");
+
+        my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+            command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $case->{path}],
+        );
+        ok($semantic_success, "$case->{label} .apb --emit-semantic-json succeeds");
+        is(join('', @{$semantic_stderr || []}), '', "$case->{label} .apb --emit-semantic-json keeps stderr clean");
+        my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+        is($semantic_report->{support_accounting}{entry_id}, $case->{entry_id}, "$case->{label} .apb semantic JSON names busy corpus entry");
+        is($semantic_report->{semantic}{module}{source_root_kind}, $case->{source_root_kind}, "$case->{label} .apb semantic JSON records source root kind");
+        is($semantic_report->{semantic}{module}{name}, $case->{module}, "$case->{label} .apb semantic JSON records generated module");
+
+        my $outdir = File::Spec->catdir($tempdir, $case->{entry_id});
+        my $hdl = File::Spec->catfile($tempdir, $case->{hdl});
+        my ($gen_success, undef, undef, undef, $gen_stderr) = run(
+            command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $case->{path}],
+        );
+        ok($gen_success, "$case->{label} .apb generation succeeds");
+        is(join('', @{$gen_stderr || []}), '', "$case->{label} .apb generation keeps stderr clean");
+        for my $artifact (@{$case->{out_artifacts}}) {
+            ok(-f File::Spec->catfile($outdir, $artifact), "$case->{label} .apb --outdir writes $artifact");
+        }
+        my $sv = slurp($hdl);
+        like($sv, qr/\bmodule\s+$case->{module}\b/, "$case->{label} .apb generated HDL contains selected module");
+        like($sv, qr/\boutput(?:\s+reg)?\s+busy\b/, "$case->{label} .apb generated HDL exposes busy output");
+    }
+};
+
 subtest 'CLI distinguishes unsupported known aliases and unknown suffixes after .apb ships' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
 
@@ -310,8 +412,16 @@ sub sample_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer.ppif');
 }
 
+sub sample_ppif_busy_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_busy.ppif');
+}
+
 sub sample_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer.apb');
+}
+
+sub sample_apb_busy_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_busy.apb');
 }
 
 sub sample_apb_completer_alias_path {
@@ -326,8 +436,16 @@ sub sample_apb_composition_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition.apb');
 }
 
+sub sample_apb_composition_busy_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_busy.apb');
+}
+
 sub sample_apb_composition_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition.ppif');
+}
+
+sub sample_apb_composition_busy_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_busy.ppif');
 }
 
 sub sample_valid_ready_handshake_ppif_path {

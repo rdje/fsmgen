@@ -4252,6 +4252,16 @@ paths are `ppif/apb_requester_transfer_busy.ppif`,
 `ppif/apb_composition_busy.apb`. The selected syntax adds optional
 `(busy busy)` inside the APB requester `(response ...)` block. Named status
 fields remain deferred through `apb_requester_status_field_deferred`.
+`.572` now ships the selected busy-only contract. Busy-capable requester
+sources expose public `busy` in generated `apb_requester.isf`,
+`apb_requester.fsm`, and HDL module `apb_requester`; busy-capable fixed
+composition sources propagate `busy` to generated top `apb_tb`. The new
+support identities are `intent.ppif_apb_requester_transfer_busy`,
+`intent.apb_profile_alias_requester_transfer_busy`,
+`intent.ppif_apb_composition_busy`, and
+`intent.apb_profile_alias_composition_busy`. Existing no-busy APB samples keep
+`apb_requester_busy_status_deferred`; busy-capable reports keep
+`apb_requester_status_field_deferred` for future named status fields.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

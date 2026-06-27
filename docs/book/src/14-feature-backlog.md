@@ -9915,6 +9915,20 @@ selected busy-capable samples are `ppif/apb_requester_transfer_busy.ppif`,
 `(busy busy)` inside the APB requester `(response ...)` block. Named status
 fields remain deferred through `apb_requester_status_field_deferred`.
 
+APB requester busy output behavior:
+[IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR](../../IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR.md)
+ships `.572`, the additive busy-only APB requester output contract. The busy
+requester-transfer samples generate `apb_requester.isf`,
+`apb_requester.fsm`, and HDL module `apb_requester` with public `busy`. The
+busy fixed-composition samples also generate `apb_tb.fsm` and expose
+top-level `busy`. Check/semantic JSON support-account the new samples as
+`intent.ppif_apb_requester_transfer_busy`,
+`intent.apb_profile_alias_requester_transfer_busy`,
+`intent.ppif_apb_composition_busy`, and
+`intent.apb_profile_alias_composition_busy`. Existing no-busy APB samples keep
+`apb_requester_busy_status_deferred`; busy-capable reports keep
+`apb_requester_status_field_deferred` for future named status fields.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

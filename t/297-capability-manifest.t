@@ -2900,8 +2900,18 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/APB busy-capable requester-transfer source/,
+        'manifest advertises the APB busy-capable requester-transfer PPIF source',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/one-requester\/one-completer APB composition source/,
         'manifest advertises the APB composition PPIF source',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/busy-capable one-requester\/one-completer APB composition source/,
+        'manifest advertises the APB busy-capable composition PPIF source',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
@@ -2915,7 +2925,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/\.apb is now the bounded APB requester-transfer\/completer\/fixed-composition profile-alias file surface/,
+        qr/\.apb is now the bounded APB requester-transfer\/completer\/fixed-composition plus busy-capable requester\/composition profile-alias file surface/,
         'manifest states .apb is the bounded APB profile alias over the same model',
     );
     like(
@@ -3084,8 +3094,13 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/APB requester-transfer, APB completer, and fixed one-requester\/one-completer APB composition IAL2 profile-alias suffix/,
+        qr/APB requester-transfer, busy-capable APB requester-transfer, APB completer, fixed one-requester\/one-completer APB composition, and busy-capable fixed APB composition IAL2 profile-alias suffix/,
         'manifest describes .apb as the bounded APB profile-alias suffix',
+    );
+    like(
+        $file_surface_by_suffix{'.apb'}{current_boundary},
+        qr/optional response \(busy NAME\)/,
+        'manifest records the optional APB requester busy response for .apb',
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
@@ -3099,8 +3114,13 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/ppif\/apb_requester_transfer\.apb, ppif\/apb_completer\.apb, and ppif\/apb_composition\.apb/,
+        qr/ppif\/apb_requester_transfer\.apb, ppif\/apb_requester_transfer_busy\.apb, ppif\/apb_completer\.apb, ppif\/apb_composition\.apb, and ppif\/apb_composition_busy\.apb/,
         'manifest records the shipped APB profile-alias samples',
+    );
+    like(
+        $file_surface_by_suffix{'.apb'}{current_boundary},
+        qr/busy-capable requester and composition aliases add the requester busy output/,
+        'manifest records the APB busy output on busy-capable aliases',
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},

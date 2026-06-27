@@ -64,6 +64,34 @@ subtest 'adapter parses the selected APB requester/completer composition PPIF sh
     ok($residue{apb_requester_busy_status_deferred}, 'report keeps requester busy/status residue explicit');
 };
 
+subtest 'adapter parses the busy-capable APB composition PPIF shape' => sub {
+    ok(-f sample_apb_composition_busy_ppif_path(), 'tracked runnable busy APB composition PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_busy_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'busy APB composition adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_composition', 'busy adapter returns the APB composition kind');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-composition-busy', 'busy APB composition source object id is preserved');
+    is($result->{report}{composition}{name}, 'apb_tb', 'busy APB composition report captures top name');
+
+    my $requester_isf = $result->{generated_ial1}{items}[0]{text};
+    like($requester_isf, qr/\(output busy\)/, 'busy APB composition requester IAL1 exposes busy output');
+    like($requester_isf, qr/\(busy 1\)/, 'busy APB composition requester IAL1 drives busy high during transfer phases');
+
+    my $requester_fsm = $result->{generated_ial0}{files}{'apb_requester.fsm'};
+    like($requester_fsm, qr/\(<- \(busy> 0\)\)/, 'busy APB composition requester FSM clears busy in idle');
+    like($requester_fsm, qr/\(<- \(busy> 1\) <(?:setup|access)_phase_start\)/, 'busy APB composition requester FSM asserts busy in transfer phases');
+
+    my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
+    like($top, qr/=busy>/, 'busy APB composition top exposes requester busy output');
+    like($top, qr/\(\?fsm:apb_requester\b/, 'busy APB composition top carries requester child FSM text');
+
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok($residue{apb_interconnect_multi_peripheral_decode_deferred}, 'busy report keeps multi-peripheral interconnect residue explicit');
+    ok($residue{apb_requester_status_field_deferred}, 'busy report keeps named requester status-field widening deferred');
+    ok(!$residue{apb_requester_busy_status_deferred}, 'busy report removes requester busy/status deferred residue');
+};
+
 subtest 'adapter rejects malformed APB composition PPIF shapes with targeted diagnostics' => sub {
     my $missing_composition = sample_apb_composition_ppif();
     $missing_composition =~ s/\n  \(apb-composition apb_tb\n    \(role composition\)\n    \(clock clk\)\n    \(reset \(rst_n active_low async\)\)\n    \(children\n      \(requester requester apb_requester\)\n      \(completer completer apb_completer\)\)\n    \(wiring apb_bus\n      \(select PSEL\)\n      \(enable PENABLE\)\n      \(write PWRITE\)\n      \(address PADDR width 32\)\n      \(write-data PWDATA width 32\)\n      \(ready PREADY\)\n      \(read-data PRDATA width 32\)\n      \(error PSLVERR\)\)\)//;
@@ -113,6 +141,31 @@ subtest 'CLI check and semantic JSON support-account APB composition PPIF identi
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'APB composition semantic JSON records the generated top module');
 };
 
+subtest 'CLI check and semantic JSON support-account busy APB composition PPIF identity' => sub {
+    my $path = sample_apb_composition_busy_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'busy APB composition --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'busy APB composition --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'busy APB composition check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'busy APB composition check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_busy', 'busy APB composition check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'busy APB composition check JSON records PPIF source kind');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'busy APB composition --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'busy APB composition --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'busy APB composition semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_busy', 'busy APB composition semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'busy APB composition semantic JSON payload describes the generated composition root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'busy APB composition semantic JSON records the generated top module');
+};
+
 subtest 'CLI schedule JSON, outdir, and .apb alias expose APB composition review artifacts' => sub {
     my $path = sample_apb_composition_ppif_path();
     my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
@@ -151,6 +204,47 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose APB composition review
     is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, '.apb APB composition alias mirrors .ppif generated IAL0');
 };
 
+subtest 'CLI schedule JSON, outdir, and .apb alias expose busy APB composition review artifacts' => sub {
+    my $path = sample_apb_composition_busy_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'busy APB composition --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'busy APB composition --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{schema}, 'fsmgen.ial2.protocol_intent.apb_composition.v1', 'busy APB composition schedule JSON reports schema');
+    is($schedule_report->{generated_artifacts}{hdl_entry}{entry_artifact}, 'apb_tb.fsm', 'busy APB composition schedule JSON reports the HDL entry');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok($residue{apb_requester_status_field_deferred}, 'busy APB composition schedule JSON keeps named status-field residue');
+    ok(!$residue{apb_requester_busy_status_deferred}, 'busy APB composition schedule JSON omits busy/status deferred residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_tb_busy.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'busy APB composition CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'busy APB composition generation keeps stderr clean');
+    for my $artifact (qw(apb_requester.isf apb_completer.isf apb_requester.fsm apb_completer.fsm apb_tb.fsm)) {
+        ok(-f File::Spec->catfile($outdir, $artifact), "busy APB composition --outdir writes $artifact");
+    }
+    ok(-f $hdl, 'busy APB composition --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\bmodule\s+apb_tb\b/, 'busy APB composition HDL contains the generated top module');
+    like($sv, qr/\bmodule\s+apb_requester\b/, 'busy APB composition HDL contains the requester child module');
+    like($sv, qr/\bmodule\s+apb_completer\b/, 'busy APB composition HDL contains the completer child module');
+    like($sv, qr/\boutput\s+busy\b/, 'busy APB composition top HDL exposes requester busy');
+
+    ok(-f sample_apb_composition_busy_apb_path(), 'tracked runnable busy APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_busy_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_busy_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'busy .apb APB composition alias returns the composition kind');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'busy .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'busy .apb APB composition alias mirrors .ppif generated IAL0');
+};
+
 done_testing();
 
 sub sample_apb_composition_ppif_path {
@@ -159,6 +253,14 @@ sub sample_apb_composition_ppif_path {
 
 sub sample_apb_composition_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition.apb');
+}
+
+sub sample_apb_composition_busy_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_busy.ppif');
+}
+
+sub sample_apb_composition_busy_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_busy.apb');
 }
 
 sub sample_apb_composition_ppif {

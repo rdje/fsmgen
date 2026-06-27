@@ -38,6 +38,9 @@ sub generate($self, @args) {
     my $schedule_report_json = $scheduler->report($actor);
     my $schedule_report = JSON::PP->new->decode($schedule_report_json);
 
+    _add_busy_idle_clear($contract, $lowered->{files})
+        if defined $contract->{response}{busy};
+
     my $report = _build_report(
         contract => $contract,
         isf_name => $isf_name,
@@ -117,6 +120,7 @@ sub _normalize_contract($raw) {
         $request->{write},
         $request->{address}{name},
         $request->{write_data}{name},
+        (defined($response->{busy}) ? ($response->{busy}) : ()),
         $response->{done},
         $response->{read_data}{name},
         $response->{error},
@@ -172,11 +176,14 @@ sub _normalize_request($raw) {
 }
 
 sub _normalize_response($raw) {
-    return {
+    my $response = {
         done      => _required_identifier_field($raw, 'done', 'response.done'),
         read_data => _normalize_width_binding($raw->{read_data}, 'response.read_data', 32),
         error     => _required_identifier_field($raw, 'error', 'response.error'),
     };
+    $response->{busy} = _identifier_value($raw->{busy}, 'response.busy')
+        if exists $raw->{busy};
+    return $response;
 }
 
 sub _normalize_bus($raw) {
@@ -386,6 +393,7 @@ sub _emit_isf($contract) {
         _interface_line('input', $request->{write}),
         _interface_line('input', $request->{address}),
         _interface_line('input', $request->{write_data}),
+        (defined($response->{busy}) ? (_interface_line('output', $response->{busy})) : ()),
         _interface_line('output', $response->{done}),
         _interface_line('output', $response->{read_data}),
         _interface_line('output', $response->{error}),
@@ -403,9 +411,11 @@ sub _emit_isf($contract) {
         "    ($bus->{write} is_write)",
         "    ($bus->{write_data}{name} wdata)",
         "    ($bus->{select} $transfer->{setup}{select})",
+        (defined($response->{busy}) ? ("    ($response->{busy} 1)") : ()),
         "    ($bus->{enable} $transfer->{setup}{enable}))",
         "",
         "  (drive access_phase",
+        (defined($response->{busy}) ? ("    ($response->{busy} 1)") : ()),
         "    ($bus->{enable} $transfer->{access}{enable}))",
         "",
         "  (drive done_phase",
@@ -429,6 +439,24 @@ sub _emit_isf($contract) {
         "    (latency (min $transfer->{latency}{min}) (max $transfer->{latency}{max}))))",
         "",
     );
+}
+
+sub _add_busy_idle_clear($contract, $fsm_files) {
+    confess "APB requester-transfer busy generation requires generated .fsm files\n"
+        unless ref($fsm_files) eq 'HASH';
+
+    my $fsm_name = "$contract->{actor_name}.fsm";
+    confess "APB requester-transfer busy generation is missing generated artifact '$fsm_name'\n"
+        unless exists $fsm_files->{$fsm_name};
+
+    my $busy = $contract->{response}{busy};
+    my $idle_state = "$contract->{transfer}{name}_idle_0";
+    my $assignment = "    (<- ($busy> 0))";
+    return if $fsm_files->{$fsm_name} =~ /^\Q$assignment\E$/m;
+
+    my $count = ($fsm_files->{$fsm_name} =~ s/^(\s*\(\Q$idle_state\E\s*\n)/$1$assignment\n/m);
+    confess "APB requester-transfer busy generation could not find generated idle state '$idle_state' in '$fsm_name'\n"
+        unless $count == 1;
 }
 
 sub _interface_line($direction, $binding) {
@@ -543,29 +571,44 @@ sub _build_report(%args) {
             'completion waits on ready, samples read-data and error, and reports latency min 2 max 16',
             'APB requester-transfer is exposed through .ppif and bounded .apb profile-alias sources; APB completer and fixed composition aliases are exposed through sibling .apb samples; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
-        unsupported_residue => [
-            {
-                id     => 'apb_multi_peripheral_decode_deferred',
-                detail => 'Address decode, peripheral selection beyond one PSEL, and multi-peripheral routing remain future APB work.',
-            },
-            {
-                id     => 'apb_protection_and_strobes_deferred',
-                detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
-            },
-            {
-                id     => 'apb_requester_busy_status_deferred',
-                detail => 'The APB requester-transfer public response contract exposes done, read-data, and error; requester busy/status output remains future contract widening.',
-            },
-            {
-                id     => 'apb_alternate_widths_deferred',
-                detail => 'The public APB PPIF requester-transfer source fixes address, write-data, and read-data widths to 32 bits.',
-            },
-            {
-                id     => 'apb_back_to_back_policy_deferred',
-                detail => 'Back-to-back transfer policy and queued transfer admission remain future exact-owner work.',
-            },
-        ],
+        unsupported_residue => _apb_requester_unsupported_residue($contract),
     };
+}
+
+sub _apb_requester_unsupported_residue($contract) {
+    my @residue = (
+        {
+            id     => 'apb_multi_peripheral_decode_deferred',
+            detail => 'Address decode, peripheral selection beyond one PSEL, and multi-peripheral routing remain future APB work.',
+        },
+        {
+            id     => 'apb_protection_and_strobes_deferred',
+            detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
+        },
+    );
+
+    push @residue, defined($contract->{response}{busy})
+        ? {
+            id     => 'apb_requester_status_field_deferred',
+            detail => 'The APB requester-transfer public response contract exposes busy, done, read-data, and error; named status fields remain future APB contract widening.',
+        }
+        : {
+            id     => 'apb_requester_busy_status_deferred',
+            detail => 'The APB requester-transfer public response contract exposes done, read-data, and error; requester busy/status output remains future contract widening.',
+        };
+
+    push @residue, (
+        {
+            id     => 'apb_alternate_widths_deferred',
+            detail => 'The public APB PPIF requester-transfer source fixes address, write-data, and read-data widths to 32 bits.',
+        },
+        {
+            id     => 'apb_back_to_back_policy_deferred',
+            detail => 'Back-to-back transfer policy and queued transfer admission remain future exact-owner work.',
+        },
+    );
+
+    return \@residue;
 }
 
 sub _clone_jsonish($value) {

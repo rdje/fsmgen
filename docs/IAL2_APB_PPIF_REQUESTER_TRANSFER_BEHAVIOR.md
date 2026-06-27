@@ -165,6 +165,15 @@ apb_alternate_widths_deferred
 apb_back_to_back_policy_deferred
 ```
 
+This residue belongs to the original no-busy sample
+`ppif/apb_requester_transfer.ppif`. The later `.572` slice adds separate
+busy-capable requester-transfer samples at
+`ppif/apb_requester_transfer_busy.ppif` and
+`ppif/apb_requester_transfer_busy.apb`; those samples expose requester `busy`
+and replace `apb_requester_busy_status_deferred` with
+`apb_requester_status_field_deferred`. See
+[IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR](IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR.md).
+
 Generated APB requester transfers now deassert `PSEL` and `PENABLE` directly
 in the terminal `done_phase`; they do not expose parameterized helper inputs
 for those bus controls in the generated FSM. The later APB completer and fixed
@@ -175,9 +184,10 @@ one-requester/one-completer composition behaviors are documented separately.
 This `.550` slice did not accept `.apb` or any other new suffix and did not
 extend `.axi`. Current APB completer `.ppif`/`.apb` and fixed
 requester/completer composition `.ppif`/`.apb` behavior are owned by later
-slices; requester `busy`, multi-peripheral APB interconnect/decode,
-verification-output behavior, direct IAL2-to-backend lowering, and VHDL remain
-outside this requester-transfer page.
+slices. Additive requester `busy` behavior is owned by the later `.572`
+busy-output page; multi-peripheral APB interconnect/decode, verification-output
+behavior, direct IAL2-to-backend lowering, and VHDL remain outside this
+requester-transfer page.
 
 ## Validation
 

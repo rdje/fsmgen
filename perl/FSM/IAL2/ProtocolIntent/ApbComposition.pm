@@ -316,6 +316,7 @@ sub _top_port_specs($contract) {
         _input_port($requester->{request}{address}{name}, $requester->{request}{address}{width}),
         _input_port($requester->{request}{write_data}{name}, $requester->{request}{write_data}{width}),
         _input_port($completer->{control}{wait_cycles}{name}, $completer->{control}{wait_cycles}{width}),
+        (defined($requester->{response}{busy}) ? (_output_port($requester->{response}{busy}, 1)) : ()),
         _output_port($requester->{response}{done}, 1),
         _output_port($requester->{response}{error}, 1),
         _output_port($requester->{response}{read_data}{name}, $requester->{response}{read_data}{width}),
@@ -439,33 +440,48 @@ sub _build_report(%args) {
             'composition bus wiring must match requester and completer APB signal names and widths',
             'APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
-        unsupported_residue => [
-            {
-                id     => 'apb_interconnect_multi_peripheral_decode_deferred',
-                detail => 'The first APB composition wires one requester to one completer; multi-peripheral address decode and routing remain future APB interconnect work.',
-            },
-            {
-                id     => 'apb_requester_busy_status_deferred',
-                detail => 'The generated APB composition exposes the shipped requester response keys done, read-data, and error; requester busy/status output remains a future endpoint contract widening.',
-            },
-            {
-                id     => 'apb_multi_register_decode_deferred',
-                detail => 'The generated completer endpoint still models one address-0 register and leaves broader register decode to future APB work.',
-            },
-            {
-                id     => 'apb_protection_and_strobes_deferred',
-                detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
-            },
-            {
-                id     => 'apb_alternate_widths_deferred',
-                detail => 'The first APB composition fixes address, write-data, and read-data widths to 32 bits and wait_cycles to 4 bits.',
-            },
-            {
-                id     => 'apb_back_to_back_policy_deferred',
-                detail => 'Back-to-back transfer policy and queued requester admission remain future exact-owner work.',
-            },
-        ],
+        unsupported_residue => _apb_composition_unsupported_residue($contract),
     };
+}
+
+sub _apb_composition_unsupported_residue($contract) {
+    my @residue = (
+        {
+            id     => 'apb_interconnect_multi_peripheral_decode_deferred',
+            detail => 'The first APB composition wires one requester to one completer; multi-peripheral address decode and routing remain future APB interconnect work.',
+        },
+    );
+
+    push @residue, defined($contract->{requester}{response}{busy})
+        ? {
+            id     => 'apb_requester_status_field_deferred',
+            detail => 'The generated APB composition exposes requester busy, done, read-data, and error; named requester status fields remain future endpoint contract widening.',
+        }
+        : {
+            id     => 'apb_requester_busy_status_deferred',
+            detail => 'The generated APB composition exposes the shipped requester response keys done, read-data, and error; requester busy/status output remains a future endpoint contract widening.',
+        };
+
+    push @residue, (
+        {
+            id     => 'apb_multi_register_decode_deferred',
+            detail => 'The generated completer endpoint still models one address-0 register and leaves broader register decode to future APB work.',
+        },
+        {
+            id     => 'apb_protection_and_strobes_deferred',
+            detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
+        },
+        {
+            id     => 'apb_alternate_widths_deferred',
+            detail => 'The first APB composition fixes address, write-data, and read-data widths to 32 bits and wait_cycles to 4 bits.',
+        },
+        {
+            id     => 'apb_back_to_back_policy_deferred',
+            detail => 'Back-to-back transfer policy and queued requester admission remain future exact-owner work.',
+        },
+    );
+
+    return \@residue;
 }
 
 sub _child_report($role, $child, $result) {

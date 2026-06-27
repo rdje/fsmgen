@@ -457,6 +457,7 @@ sub _parse_apb_request_block($items, $source_label, $name) {
 
 sub _parse_apb_response_block($items, $source_label, $name) {
     my %allowed = (
+        busy       => 'busy',
         done        => 'done',
         'read-data' => 'read_data',
         error       => 'error',
@@ -465,6 +466,8 @@ sub _parse_apb_response_block($items, $source_label, $name) {
 
     for my $clause (@$items) {
         my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-requester $name (response ...)) does not support (status ...) in this busy-only slice; use optional (busy NAME) plus required done/read-data/error\n"
+            if $head eq 'status';
         confess "Error: .ppif (apb-requester $name (response ...)) has unsupported clause '($head ...)'\n"
             unless exists $allowed{$head};
         confess "Error: .ppif (apb-requester $name (response ...)) has duplicate ($head ...) clause\n"

@@ -3253,6 +3253,17 @@ paths are `ppif/apb_requester_transfer_busy.ppif`,
 `ppif/apb_composition_busy.apb`. The selected syntax adds optional
 `(busy busy)` inside the APB requester `(response ...)` block. Named status
 fields remain deferred through `apb_requester_status_field_deferred`.
+`.572` now ships that additive busy-only contract. Busy-capable requester
+sources generate `apb_requester.isf`, `apb_requester.fsm`, and HDL module
+`apb_requester` with public `busy`; busy-capable fixed composition sources
+also generate `apb_tb.fsm` and expose top-level `busy`. Check/semantic JSON
+support-account the new samples as
+`intent.ppif_apb_requester_transfer_busy`,
+`intent.apb_profile_alias_requester_transfer_busy`,
+`intent.ppif_apb_composition_busy`, and
+`intent.apb_profile_alias_composition_busy`. Existing no-busy APB samples
+keep `apb_requester_busy_status_deferred`; busy-capable reports keep
+`apb_requester_status_field_deferred` for future named status fields.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5778,6 +5789,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_PROFILE_ALIAS_COMPLETER_COMPOSITION_CONTRACT_SELECTION.md` — selects direct bounded implementation of APB `.apb` alias widening for `ppif/apb_completer.apb` and `ppif/apb_composition.apb`, with explicit `(profile apb)`, generated review-artifact preservation, support identities `intent.apb_profile_alias_completer` and `intent.apb_profile_alias_composition`, and no behavior change in the selector slice.
 - `docs/IAL2_POST_APB_ALIAS_WIDENING_NEXT_SLICE_SELECTION.md` — selects APB requester busy/status public contract selection after requester-transfer, completer, fixed composition, and bounded `.apb` alias coverage all shipped, without changing behavior.
 - `docs/IAL2_APB_REQUESTER_BUSY_STATUS_CONTRACT_SELECTION.md` — selects additive busy-only APB requester status exposure through new `.ppif`/`.apb` requester-transfer and fixed-composition samples while keeping existing APB samples unchanged and named status fields deferred.
+- `docs/IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR.md` — ships additive busy-only APB requester output behavior through `ppif/apb_requester_transfer_busy.ppif`, `ppif/apb_requester_transfer_busy.apb`, `ppif/apb_composition_busy.ppif`, and `ppif/apb_composition_busy.apb`, preserving no-busy APB samples and keeping named status fields deferred.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

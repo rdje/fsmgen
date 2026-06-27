@@ -114,10 +114,13 @@ output last_error
 output last_read_data[31:0]
 ```
 
-Requester `busy` is not exposed by the shipped composition top. The public
-requester response contract exposes `done`, `error`, and `read_data`, and this
-composition mirrors those response values as `done`, `last_error`, and
-`last_read_data`.
+Requester `busy` is not exposed by this original no-busy composition top. The
+public requester response contract exposes `done`, `error`, and `read_data`,
+and this composition mirrors those response values as `done`, `last_error`,
+and `last_read_data`. The later `.572` slice adds separate busy-capable
+composition samples at `ppif/apb_composition_busy.ppif` and
+`ppif/apb_composition_busy.apb`; those samples expose top-level `busy`. See
+[IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR](IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR.md).
 
 The APB bus wiring is explicit:
 
@@ -212,15 +215,20 @@ multi-register decode, sidebands/strobes, alternate widths, back-to-back
 policy, and multi-peripheral interconnect/decode separate from the shipped
 fixed composition behavior.
 
+For the separate busy-capable composition samples, the requester busy/status
+residue is replaced by `apb_requester_status_field_deferred` while named status
+fields remain future work.
+
 ## Non-Goals
 
 This `.566` slice does not add a multi-peripheral APB interconnect/decode
-surface, does not expose a requester `busy` status, does not add sidebands,
-strobes, alternate widths, multiple register decode, byte lanes, back-to-back
-policy, direct IAL2-to-IAL0 lowering, direct backend lowering,
-verification-output generation, backend-language variants, AXI behavior, or
-VHDL behavior. The later `.569` slice documents the matching `.apb` alias
-exposure.
+surface, does not expose requester `busy` on the original composition sample,
+does not add sidebands, strobes, alternate widths, multiple register decode,
+byte lanes, back-to-back policy, direct IAL2-to-IAL0 lowering, direct backend
+lowering, verification-output generation, backend-language variants, AXI
+behavior, or VHDL behavior. The later `.569` slice documents the matching
+`.apb` alias exposure; the later `.572` slice documents separate busy-capable
+composition samples.
 
 ## Validation
 
