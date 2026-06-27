@@ -4137,7 +4137,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.583`
   Status: `active`
   Goal: `Audit APB multi-peripheral interconnect/decode readiness after APB multi-register completer decode shipped.`
-  Acceptance: `Read .582 selector, .581 behavior, .580 contract, APB requester/completer/composition/profile-alias behavior pages, current APB schedule reports and residue, ppif/apb_requester_transfer_status.ppif, ppif/apb_completer_multi_register.ppif, ppif/apb_composition_multi_register.ppif, ppif/apb_composition_status.ppif, PPIF parser, ApbRequesterTransfer, ApbCompleter, ApbComposition, RegressionCorpus, LanguageSurfaceSection, focused APB tests, README, ROADMAP_V2, mdBook, task tree, Memory, Knowledge Map, and relevant IAL2 decisions. Decide whether the next owner is APB multi-peripheral public contract selection, lower-layer/composition prerequisite work, parser/report/static-validation readiness, direct implementation, or explicit deferral with a better-supported successor. Record source-shape, child/peripheral list, address-map, decode-priority, response-mux, diagnostics, report-schema, sample/support/test, validation, docs/fact, rollback, and preservation boundaries before any behavior change.`
+  Acceptance: `Read .582 selector, .581 behavior, .580 contract, APB requester/completer/composition/profile-alias behavior pages, current APB schedule reports and residue, ppif/apb_requester_transfer_status.ppif, ppif/apb_completer_multi_register.ppif, ppif/apb_composition_multi_register.ppif, ppif/apb_composition_status.ppif, PPIF parser, ApbRequesterTransfer, ApbCompleter, ApbComposition, RegressionCorpus, LanguageSurfaceSection, focused APB tests, README, ROADMAP_V2, mdBook, task tree, Memory, Knowledge Map, user input on reusable parameterized interconnect/decode views, and relevant IAL2 decisions. Decide whether the next owner is APB multi-peripheral public contract selection, reusable IAL2/IAL1 interconnect/decode view selection, lower-layer/composition prerequisite work, parser/report/static-validation readiness, direct implementation, or explicit deferral with a better-supported successor. Record source-shape, child/peripheral list, address-map, decode-priority, response-mux, diagnostics, report-schema, sample/support/test, validation, docs/fact, rollback, and preservation boundaries before any behavior change. Explicitly decide whether APB interconnect/decode should lower into a reusable standalone IAL2 view or generated IAL1 review artifact, how its topology/address map would be configurable at instantiation time through parameter/generic-like bindings, and whether AXI and AHB multi-peripheral interconnect/decode should share the same abstraction, mirror it with protocol-specific views, or remain deferred behind separate owners.`
   Commit: `pending`
 
 ## Current Frontier
@@ -4456,6 +4456,14 @@ path before reopening VHDL backend or VHDL rerouting work.
   policy, APB report cleanup, another protocol surface, direct backend,
   verification-output, backend-language variants, AXI follow-on, and VHDL
   remain deferred.
+
+- `2026-06-27`: User input for `.583`: APB multi-peripheral
+  interconnect/decode should be audited as a potentially reusable lowered
+  IAL2 or IAL1 view, not only as one-off composition glue. The audit must
+  evaluate instantiation-time parameter/generic-like configuration for topology
+  and address/decode structure, and must decide whether the same reusable
+  abstraction applies to AXI and AHB multi-peripheral interconnect/decode or
+  requires protocol-specific future owners.
 
 - `2026-06-27`: `.581` shipped additive APB multi-register completer decode
   for generated completer and fixed-composition IAL2 surfaces and selected
