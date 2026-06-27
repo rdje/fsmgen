@@ -10062,6 +10062,16 @@ deferred.
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_multi_register.apb
 ```
 
+Post APB multi-register selector:
+[IAL2_POST_APB_MULTI_REGISTER_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_MULTI_REGISTER_NEXT_SLICE_SELECTION.md)
+selects `.583`, APB multi-peripheral interconnect/decode readiness audit,
+without changing behavior. The selector follows live schedule evidence that
+multi-register APB composition has removed the register-local residue while
+the APB requester/completer/composition surfaces still expose
+multi-peripheral topology residues. Sidebands/strobes, alternate widths,
+back-to-back policy, direct backend, verification-output, backend-language
+variants, AXI follow-on, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

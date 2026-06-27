@@ -4359,6 +4359,16 @@ sidebands/strobes, alternate widths, back-to-back policy, direct backend,
 verification-output, backend-language variants, AXI follow-on, and VHDL
 deferred.
 
+`.582` now selects `.583`, APB multi-peripheral interconnect/decode readiness
+audit, without changing behavior. Live APB schedule probes after `.581`
+confirmed that multi-register composition removes the register-local residue
+but still carries `apb_interconnect_multi_peripheral_decode_deferred`, while
+requester reports still carry `apb_multi_peripheral_decode_deferred`.
+Multi-peripheral topology is selected before sidebands/strobes, alternate
+widths, back-to-back policy, direct backend, verification-output,
+backend-language variants, AXI follow-on, and VHDL because it owns the next
+composition/report/source-shape boundary.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
