@@ -10111,6 +10111,18 @@ and `apb_tb.fsm`; the interconnect fans out decoded `PSEL`, translates local
 accesses. Reports preserve authored peripheral names and expose generated
 collision-free instance names such as `status_peripheral`.
 
+Post APB multi-peripheral selector:
+[IAL2_POST_APB_MULTI_PERIPHERAL_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_MULTI_PERIPHERAL_NEXT_SLICE_SELECTION.md)
+selects `.587`, APB sidebands/strobes/byte-lane readiness audit, without
+changing behavior. The selector follows live schedule probes showing no APB
+residue entries in the checked status requester, multi-register completer,
+fixed status composition, and multi-peripheral composition reports after
+`.585`. The audit must decide whether `PPROT`, `PSTRB`, byte-lane write
+semantics, composition/interconnect propagation, diagnostics, report fields,
+samples, support-accounting, and validation should proceed through a public
+contract, a lower-layer prerequisite, an alternate-width prerequisite, or
+explicit deferral before any APB behavior change.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
