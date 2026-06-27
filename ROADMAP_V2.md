@@ -4541,7 +4541,12 @@ retain `apb_protection_policy_effects_deferred` and no `protection_policy`.
 protection alias behavior, including protection support-accounting prose, CLI
 examples, report wording, diagnostics, and narrowed non-goals, without behavior
 changes. `.600` selected `.601`, APB sideband data16 `PPROT` policy effects
-readiness audit, without behavior changes.
+readiness audit, without behavior changes. `.601` audited that readiness and
+selected `.602`, public contract selection for sideband data16 APB `PPROT`
+policy effects, without behavior changes. A temporary data16 access-policy
+candidate failed exactly at the current 32-bit `ApbCompleter` guard, and the
+audit found no parser, IAL1, IAL0, report-schema, composition, direct-backend,
+or VHDL prerequisite before contract selection.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

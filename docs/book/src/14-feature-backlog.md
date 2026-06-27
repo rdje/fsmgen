@@ -10285,7 +10285,12 @@ selected `.599`, APB profile-alias/public-surface synchronization after
 behavior, including protection support-accounting prose, CLI examples, report
 wording, diagnostics, and narrowed non-goals. `.600` selected `.601`, APB
 sideband data16 `PPROT` policy effects readiness audit, without behavior
-changes.
+changes. `.601` audited that readiness and selected `.602`, public contract
+selection for sideband data16 APB `PPROT` policy effects, without behavior
+changes. A temporary data16 access-policy candidate failed exactly at the
+current 32-bit `ApbCompleter` guard, and the audit found no parser, IAL1,
+IAL0, report-schema, composition, direct-backend, or VHDL prerequisite before
+contract selection.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
