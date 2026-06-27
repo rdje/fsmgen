@@ -9981,7 +9981,7 @@ samples are `ppif/apb_composition_status.ppif` and
 `(busy busy)` and adds `(status status width 2)`. Generated requester artifacts
 expose public `busy` and `status[1:0]`, drive status `0 idle`, `1 busy`, and
 publish `2 done_ok` / `3 done_error` with `(concat 1'b1 slverr)` after sampling
-`PSLVERR`. Status-capable composition sources propagate `status<2` to the
+`PSLVERR`. Status-capable composition sources propagate `status<2>` to the
 generated `apb_tb` top. Check/semantic JSON support-account the new samples as
 `intent.ppif_apb_requester_transfer_status`,
 `intent.apb_profile_alias_requester_transfer_status`,
@@ -9993,6 +9993,20 @@ samples keep their prior residue. Status-only samples, enum/custom encodings,
 sticky status registers, APB decode/storage/sideband/width work, back-to-back
 policy, direct backend, verification-output, backend-language variants, AXI
 follow-on, and VHDL remain deferred.
+
+Post APB status-field selector:
+[IAL2_POST_APB_STATUS_FIELD_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_STATUS_FIELD_NEXT_SLICE_SELECTION.md)
+selects `.579`, APB multi-register decode readiness audit, without changing
+behavior. The selector chooses multi-register readiness because status-capable
+APB requester-transfer and fixed-composition reports now remove the requester
+busy/status residues, while APB completer/composition reports still expose the
+single-register boundary through `apb_multi_register_decode_deferred`. `.579`
+must decide whether the next owner is public contract selection,
+lower-layer/storage prerequisite work, parser/report/static-validation
+readiness, direct implementation, or explicit deferral. Multi-peripheral APB
+topology, sidebands/strobes, alternate widths, back-to-back policy, direct
+backend, verification-output, backend-language variants, AXI follow-on, and
+VHDL remain deferred.
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.ppif

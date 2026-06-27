@@ -4314,6 +4314,18 @@ sticky status registers, APB decode/storage/sideband/width work, back-to-back
 policy, direct backend, verification-output, backend-language variants, AXI
 follow-on, and VHDL remain deferred.
 
+`.578` now selects `.579`, APB multi-register decode readiness audit, without
+changing behavior. The selector chose multi-register readiness because
+status-capable APB requester-transfer and fixed-composition reports now remove
+the requester busy/status residues, while APB completer/composition reports
+still expose the single-register boundary through
+`apb_multi_register_decode_deferred`. `.579` must decide whether the next owner
+is public contract selection, lower-layer/storage prerequisite work,
+parser/report/static-validation readiness, direct implementation, or explicit
+deferral. Multi-peripheral APB topology, sidebands/strobes, alternate widths,
+back-to-back policy, direct backend, verification-output, backend-language
+variants, AXI follow-on, and VHDL remain deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
