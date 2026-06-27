@@ -9948,6 +9948,16 @@ generic IAL2 container, `.axi` and `.apb` as bounded shipped profile aliases,
 and keep `.pif`, `.ppi`, `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, and `.i2s`
 unsupported. `.575` is active to select the next exact IAL2 slice.
 
+Post APB public-surface sync selector:
+[IAL2_POST_APB_PUBLIC_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_PUBLIC_SYNC_NEXT_SLICE_SELECTION.md)
+selects `.576`, APB requester named status-field public contract selection,
+without changing behavior. Busy-capable APB requester-transfer and
+fixed-composition reports keep `apb_requester_status_field_deferred`, making
+named status fields the next smallest direct APB follow-on. Multi-peripheral
+decode, multi-register decode, sidebands/strobes, alternate widths,
+back-to-back policy, direct backend, verification-output, backend-language
+variants, AXI follow-on, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

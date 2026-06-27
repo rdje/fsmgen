@@ -4276,6 +4276,13 @@ intent-scheduling chapters describe `.ppif` as the generic IAL2 container,
 `.axi` and `.apb` as bounded shipped profile aliases, and keep `.pif`, `.ppi`,
 `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, and `.i2s` unsupported. `.575` is
 active to select the next exact IAL2 slice.
+`.575` now selects `.576`, APB requester named status-field public contract
+selection, without changing behavior. Busy-capable APB requester-transfer and
+fixed-composition reports keep `apb_requester_status_field_deferred`, making
+named status fields the next smallest direct APB follow-on. Multi-peripheral
+decode, multi-register decode, sidebands/strobes, alternate widths,
+back-to-back policy, direct backend, verification-output, backend-language
+variants, AXI follow-on, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
