@@ -3531,7 +3531,13 @@ for policy; selected completers own enforcement. Reports add
 additional `PPROT` predicates, global/window/peripheral policies,
 interconnect-owned enforcement, back-to-back policy, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
-deferred. `.598` now owns the next post-PPROT APB/IAL2 selector.
+deferred. `.598` selected `.599`, APB profile-alias/public-surface
+synchronization after `.597`, without behavior changes. Live probes confirmed
+selected 32-bit protection aliases carry `protection_policy` metadata and
+`apb_additional_protection_policies_deferred`, while sideband data16 aliases
+retain `apb_protection_policy_effects_deferred` and no `protection_policy`.
+The next owner must align `docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md` with the
+shipped protection alias behavior before deeper APB widening.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
