@@ -42,17 +42,23 @@ can discover the manifest-owned legacy `*_presence_keys` field families from
 one place instead of collecting those compatibility field lists one by one.
 
 The `language_surface.file_surfaces` section advertises the shipped public
-file suffixes: `.fsm` as IAL0, `.isf` as IAL1, and `.ppif` as the first IAL2
-file surface. The `.ppif` entry records that it lowers through generated
-`.isf` before generated `.fsm`, points at `ppif/axi_aw_valid_ready.ppif`, and
-publishes its supported CLI modes, including `--emit-schedule-json`,
-`--check-json`, and `--emit-semantic-json`. It keeps `.pif`, `.ppi`, `.axi`,
-and other aliases outside the current bounded public surface.
+file suffixes: `.fsm` as IAL0, `.isf` as IAL1, `.ppif` as the generic IAL2
+container, and the bounded profile aliases `.axi` and `.apb`. These IAL2
+surfaces lower through generated `.isf` before generated `.fsm` and publish
+their supported CLI modes, including `--emit-schedule-json`, `--check-json`,
+and `--emit-semantic-json`. Historical or future spellings `.pif`, `.ppi`,
+`.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, and `.i2s` remain outside the
+bounded public surface.
 
-The same manifest boundary now describes the current `.ppif` contract for any
+The same manifest boundary now describes the current IAL2 contract for any
 downstream consumer: bounded public `.ppif` covers one-channel Valid-Ready
-sources, multi-channel Valid-Ready bundles, and one-object AXI manager
-capacity/status sources. Support-accounted AXI manager coverage includes
+sources, multi-channel Valid-Ready bundles, one-object AXI manager
+capacity/status sources, APB requester-transfer sources, APB completer
+sources, fixed one-requester/one-completer APB composition sources, and their
+selected busy-capable APB variants. Bounded `.axi` aliases currently cover the
+selected AXI Valid-Ready surface, and bounded `.apb` aliases cover selected
+APB requester-transfer, completer, fixed composition, and busy-capable APB
+sources. Support-accounted AXI manager coverage includes
 capacity/status, ID-family metadata, transaction envelopes and fan-in,
 concrete-ID assertions, bounded auto-ID lifecycle, same-ID reject and
 issue-order-queue policy, generated auto-ID write/read response-demux,

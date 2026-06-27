@@ -4263,12 +4263,19 @@ support identities are `intent.ppif_apb_requester_transfer_busy`,
 `apb_requester_busy_status_deferred`; busy-capable reports keep
 `apb_requester_status_field_deferred` for future named status fields.
 `.573` now selects `.574`, a no-behavior public-surface and `bin/fsmgen`
-import-tree synchronization slice before any further behavior work. The live
-import probe reports `213` project files total and `212` reachable
-`FSM::...` `.pm` packages, including the APB IAL2 requester, completer, and
-composition owners, while the import-tree note/fact still record `206`/`205`.
-The mdBook language-surface prose also needs to reflect shipped `.axi`,
-`.apb`, and APB busy-capable variants.
+import-tree synchronization slice before any further behavior work. At `.573`
+selection time, the live import probe reported `213` project files total and
+`212` reachable `FSM::...` `.pm` packages, including the APB IAL2 requester,
+completer, and composition owners, while the import-tree note/fact and mdBook
+language-surface prose still needed sync.
+`.574` now completes that public-surface sync. `docs/BIN_FSMGEN_IMPORT_TREE.md`
+and the import-tree fact record the live `213` total / `212` reachable
+`FSM::...` `.pm` package closure with APB IAL2 requester, completer, and fixed
+composition owners reachable. The mdBook language-surface and
+intent-scheduling chapters describe `.ppif` as the generic IAL2 container,
+`.axi` and `.apb` as bounded shipped profile aliases, and keep `.pif`, `.ppi`,
+`.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, and `.i2s` unsupported. `.575` is
+active to select the next exact IAL2 slice.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -9932,12 +9932,21 @@ top-level `busy`. Check/semantic JSON support-account the new samples as
 Post APB busy-output selector:
 [IAL2_POST_APB_BUSY_OUTPUT_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_BUSY_OUTPUT_NEXT_SLICE_SELECTION.md)
 selects `.574`, a no-behavior public-surface and `bin/fsmgen` import-tree
-synchronization slice before any further behavior work. The live import probe
-reports `213` project files total and `212` reachable `FSM::...` `.pm`
-packages, including the APB IAL2 requester, completer, and composition owners,
-while the import-tree note/fact still record `206`/`205`. The mdBook
-language-surface prose also needs to reflect shipped `.axi`, `.apb`, and APB
-busy-capable variants.
+synchronization slice before any further behavior work. At `.573` selection
+time, the live import probe reported `213` project files total and `212`
+reachable `FSM::...` `.pm` packages, including the APB IAL2 requester,
+completer, and composition owners, while the import-tree note/fact and mdBook
+language-surface prose still needed sync.
+
+APB public-surface/import-tree sync:
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.574` completes that no-behavior sync.
+`docs/BIN_FSMGEN_IMPORT_TREE.md` and the import-tree fact record the live
+`213` total / `212` reachable `FSM::...` `.pm` package closure with APB IAL2
+requester, completer, and fixed composition owners reachable. The mdBook
+language-surface and intent-scheduling chapters describe `.ppif` as the
+generic IAL2 container, `.axi` and `.apb` as bounded shipped profile aliases,
+and keep `.pif`, `.ppi`, `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, and `.i2s`
+unsupported. `.575` is active to select the next exact IAL2 slice.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

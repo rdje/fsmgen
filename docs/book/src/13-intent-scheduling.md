@@ -26,18 +26,20 @@ repeats, child calls, spawned child activation, and constraints.
 The Layer 1 contract is that lowering produces reviewable Layer 0 `.fsm` unless a targeted
 diagnostic rejects the construct first.
 
-Higher layers are intentionally reserved, not assumed.
+`IAL2` is the current protocol/platform intent layer above IAL1. It covers
+bounded protocol-level source objects such as Valid-Ready channels and bundles,
+AXI manager capacity/status objects, APB requester-transfer objects, APB
+completers, and fixed APB requester/completer compositions.
 
-A future `IAL2` would
-need its own semantic level, such as reusable protocol-level intent objects
-(`APB read transaction`, `AXI burst`, and similar) or platform/resource mapping
-decisions above individual transactions.
+IAL2 is not a macro or alias layer. The generic `.ppif` container and bounded
+profile aliases such as `.axi` and `.apb` lower through generated `.isf`, then
+generated `.fsm`, before HDL generation. Historical spellings such as `.pif`
+and `.ppi`, and future profile aliases that do not yet have selected behavior,
+remain unsupported until an exact task-tree owner selects and verifies them.
 
-It should not be introduced for
-aliases, macros, syntax sugar, or wrappers that have no distinct runtime model.
-
-Any future layer must lower through the same chain: clear source semantics,
-clear lower-layer mapping, and clear runtime behavior.
+Every IAL2 surface must keep the same chain: clear source semantics, clear
+lower-layer mapping, reviewable generated artifacts, and clear runtime
+behavior.
 
 ## Design Principles
 
