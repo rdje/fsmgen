@@ -112,6 +112,7 @@ sub _normalize_contract($raw) {
     my $response = _normalize_response(_required_hash($raw, 'response'));
     my $bus = _normalize_bus(_required_hash($raw, 'bus'));
     _validate_sideband_bundle($request, $bus);
+    _validate_width_policy($request, $response, $bus);
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'));
 
     _reject_duplicate_signal_names(
@@ -177,11 +178,11 @@ sub _normalize_request($raw) {
         start      => _required_identifier_field($raw, 'start', 'request.start'),
         write      => _required_identifier_field($raw, 'write', 'request.write'),
         address    => _normalize_width_binding($raw->{address}, 'request.address', 32),
-        write_data => _normalize_width_binding($raw->{write_data}, 'request.write_data', 32),
+        write_data => _normalize_width_binding_one_of($raw->{write_data}, 'request.write_data', [16, 32]),
     );
     $request{protection} = _normalize_width_binding($raw->{protection}, 'request.protection', 3)
         if exists $raw->{protection};
-    $request{write_strobe} = _normalize_width_binding($raw->{write_strobe}, 'request.write_strobe', 4)
+    $request{write_strobe} = _normalize_width_binding_one_of($raw->{write_strobe}, 'request.write_strobe', [2, 4])
         if exists $raw->{write_strobe};
     return \%request;
 }
@@ -189,7 +190,7 @@ sub _normalize_request($raw) {
 sub _normalize_response($raw) {
     my $response = {
         done      => _required_identifier_field($raw, 'done', 'response.done'),
-        read_data => _normalize_width_binding($raw->{read_data}, 'response.read_data', 32),
+        read_data => _normalize_width_binding_one_of($raw->{read_data}, 'response.read_data', [16, 32]),
         error     => _required_identifier_field($raw, 'error', 'response.error'),
     };
     $response->{busy} = _identifier_value($raw->{busy}, 'response.busy')
@@ -206,16 +207,16 @@ sub _normalize_bus($raw) {
     my %bus = (
         address    => _normalize_width_binding($raw->{address}, 'bus.address', 32),
         write      => _required_identifier_field($raw, 'write', 'bus.write'),
-        write_data => _normalize_width_binding($raw->{write_data}, 'bus.write_data', 32),
+        write_data => _normalize_width_binding_one_of($raw->{write_data}, 'bus.write_data', [16, 32]),
         select     => _required_identifier_field($raw, 'select', 'bus.select'),
         enable     => _required_identifier_field($raw, 'enable', 'bus.enable'),
         ready      => _required_identifier_field($raw, 'ready', 'bus.ready'),
-        read_data  => _normalize_width_binding($raw->{read_data}, 'bus.read_data', 32),
+        read_data  => _normalize_width_binding_one_of($raw->{read_data}, 'bus.read_data', [16, 32]),
         error      => _required_identifier_field($raw, 'error', 'bus.error'),
     );
     $bus{protection} = _normalize_width_binding($raw->{protection}, 'bus.protection', 3)
         if exists $raw->{protection};
-    $bus{strobe} = _normalize_width_binding($raw->{strobe}, 'bus.strobe', 4)
+    $bus{strobe} = _normalize_width_binding_one_of($raw->{strobe}, 'bus.strobe', [2, 4])
         if exists $raw->{strobe};
     return \%bus;
 }
@@ -231,6 +232,35 @@ sub _validate_sideband_bundle($request, $bus) {
 
     confess "APB requester-transfer IAL2 sideband contract requires request.protection, request.write_strobe, bus.protection, and bus.strobe together in this slice\n"
         unless @present == 4;
+}
+
+sub _validate_width_policy($request, $response, $bus) {
+    my $data_width = $request->{write_data}{width};
+    for my $binding (
+        ['response.read_data', $response->{read_data}],
+        ['bus.write_data',    $bus->{write_data}],
+        ['bus.read_data',     $bus->{read_data}],
+    ) {
+        my ($field, $width_binding) = @$binding;
+        confess "APB requester-transfer IAL2 contract $field.width must match selected APB data width $data_width in this slice\n"
+            unless $width_binding->{width} == $data_width;
+    }
+
+    my $sidebands = defined($request->{protection})
+        && defined($request->{write_strobe})
+        && defined($bus->{protection})
+        && defined($bus->{strobe});
+    confess "APB requester-transfer IAL2 contract 16-bit APB data width requires sideband-aware PPROT/PSTRB bindings in this slice\n"
+        if $data_width == 16 && !$sidebands;
+    confess "APB requester-transfer IAL2 contract data width must be 16 or 32 in this slice\n"
+        unless $data_width == 16 || $data_width == 32;
+    return unless $sidebands;
+
+    my $expected_strobe_width = _apb_strobe_width_for_data_width($data_width);
+    confess "APB requester-transfer IAL2 contract request.write_strobe.width must be $expected_strobe_width for selected APB data width $data_width in this slice\n"
+        unless $request->{write_strobe}{width} == $expected_strobe_width;
+    confess "APB requester-transfer IAL2 contract bus.strobe.width must be $expected_strobe_width for selected APB data width $data_width in this slice\n"
+        unless $bus->{strobe}{width} == $expected_strobe_width;
 }
 
 sub _normalize_transfer($raw) {
@@ -289,6 +319,20 @@ sub _normalize_width_binding($raw, $field, $expected_width) {
     my $width = _positive_integer($raw->{width}, "$field.width");
     confess "APB requester-transfer IAL2 contract $field.width must be $expected_width in this slice\n"
         unless $width == $expected_width;
+    return {
+        name  => $name,
+        width => $width,
+    };
+}
+
+sub _normalize_width_binding_one_of($raw, $field, $allowed_widths) {
+    confess "APB requester-transfer IAL2 contract $field must be a signal/width hash reference\n"
+        unless ref($raw) eq 'HASH';
+    my $name = _identifier_value($raw->{name}, "$field.name");
+    my $width = _positive_integer($raw->{width}, "$field.width");
+    my %allowed = map { $_ => 1 } @$allowed_widths;
+    confess "APB requester-transfer IAL2 contract $field.width must be one of " . join(', ', @$allowed_widths) . " in this slice\n"
+        unless $allowed{$width};
     return {
         name  => $name,
         width => $width,
@@ -456,7 +500,7 @@ sub _emit_isf($contract) {
         "    ($bus->{write_data}{name} wdata)",
         ($sidebands ? (
             "    ($bus->{protection}{name} prot)",
-            "    ($bus->{strobe}{name} (& wstrb (concat is_write is_write is_write is_write)))",
+            "    ($bus->{strobe}{name} (& wstrb " . _write_strobe_enable_expr($bus->{strobe}{width}) . "))",
         ) : ()),
         "    ($bus->{select} $transfer->{setup}{select})",
         (defined($response->{busy}) ? ("    ($response->{busy} 1)") : ()),
@@ -494,6 +538,25 @@ sub _emit_isf($contract) {
 
 sub _contract_has_sidebands($contract) {
     return defined($contract->{bus}{protection}) && defined($contract->{bus}{strobe});
+}
+
+sub _apb_data_width($contract) {
+    return $contract->{bus}{write_data}{width};
+}
+
+sub _apb_strobe_width_for_data_width($data_width) {
+    confess "APB requester-transfer IAL2 contract data width must be byte-addressable in this slice\n"
+        unless $data_width % 8 == 0;
+    return int($data_width / 8);
+}
+
+sub _write_strobe_enable_expr($strobe_width) {
+    return 'is_write' if $strobe_width == 1;
+    return '(concat ' . join(' ', ('is_write') x $strobe_width) . ')';
+}
+
+sub _is_sideband_data16_contract($contract) {
+    return _contract_has_sidebands($contract) && _apb_data_width($contract) == 16;
 }
 
 sub _done_drive_lines($bus, $response) {
@@ -602,6 +665,7 @@ sub _build_report(%args) {
             response => _clone_jsonish($contract->{response}),
             bus      => _clone_jsonish($contract->{bus}),
         },
+        width_policy => _apb_requester_width_policy($contract),
         transfer => {
             name        => $contract->{transfer}{name},
             setup       => _clone_jsonish($contract->{transfer}{setup}),
@@ -659,8 +723,8 @@ sub _build_report(%args) {
             'profile must be apb and the object must be apb-requester',
             'role must be requester',
             'clock, reset, request, response, bus, and generated local names must be unique ISF identifiers',
-            'address, write-data, and read-data widths are fixed at 32 bits for this slice',
-            (_contract_has_sidebands($contract) ? ('sideband-aware requester-transfer contracts require PPROT width 3 and PSTRB/write-strobe width 4') : ()),
+            _apb_requester_data_width_rule($contract),
+            (_contract_has_sidebands($contract) ? (_apb_requester_sideband_width_rule($contract)) : ()),
             'setup phase must drive select 1 and enable 0',
             'access phase must drive select 1 and enable 1',
             'completion waits on ready, samples read-data and error, and reports latency min 2 max 16',
@@ -704,10 +768,7 @@ sub _apb_requester_unsupported_residue($contract) {
     }
 
     push @residue, (
-        {
-            id     => 'apb_alternate_widths_deferred',
-            detail => 'The public APB PPIF requester-transfer source fixes address, write-data, and read-data widths to 32 bits.',
-        },
+        _apb_requester_width_residue($contract),
         {
             id     => 'apb_back_to_back_policy_deferred',
             detail => 'Back-to-back transfer policy and queued transfer admission remain future exact-owner work.',
@@ -715,6 +776,45 @@ sub _apb_requester_unsupported_residue($contract) {
     );
 
     return \@residue;
+}
+
+sub _apb_requester_width_policy($contract) {
+    my $data_width = _apb_data_width($contract);
+    my %policy = (
+        address_width          => 32,
+        data_width             => $data_width,
+        requester_status_width => defined($contract->{response}{status}) ? $contract->{response}{status}{width} : undef,
+        supported_data_widths  => [16, 32],
+        selected_contract      => _is_sideband_data16_contract($contract) ? 'sideband_data16' : 'fixed_data32',
+    );
+    if (_contract_has_sidebands($contract)) {
+        $policy{protection_width} = $contract->{bus}{protection}{width};
+        $policy{strobe_width} = $contract->{bus}{strobe}{width};
+        $policy{write_strobe_width} = $contract->{request}{write_strobe}{width};
+    }
+    return \%policy;
+}
+
+sub _apb_requester_data_width_rule($contract) {
+    my $data_width = _apb_data_width($contract);
+    return "address width is fixed at 32 bits; write-data and read-data widths are fixed at the selected $data_width-bit APB data width for this slice";
+}
+
+sub _apb_requester_sideband_width_rule($contract) {
+    my $strobe_width = $contract->{bus}{strobe}{width};
+    return "sideband-aware requester-transfer contracts require PPROT width 3 and data-derived PSTRB/write-strobe width $strobe_width";
+}
+
+sub _apb_requester_width_residue($contract) {
+    return {
+        id     => 'apb_remaining_widths_deferred',
+        detail => 'Address widths other than 32 bits and APB data widths beyond the selected sideband-aware 16/32-bit boundary remain future APB requester-transfer work.',
+    } if _is_sideband_data16_contract($contract);
+
+    return {
+        id     => 'apb_alternate_widths_deferred',
+        detail => 'The public APB PPIF requester-transfer source fixes address, write-data, and read-data widths to 32 bits.',
+    };
 }
 
 sub _apb_sideband_residue() {

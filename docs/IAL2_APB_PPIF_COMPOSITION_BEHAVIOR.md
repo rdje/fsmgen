@@ -235,6 +235,17 @@ addresses `0` and `4`. Those reports remove
 sideband/strobe, alternate-width, and back-to-back APB residues. See
 [IAL2_APB_MULTI_REGISTER_DECODE_BEHAVIOR](IAL2_APB_MULTI_REGISTER_DECODE_BEHAVIOR.md).
 
+The later `.594` sideband-aware data16 composition samples at
+`ppif/apb_composition_multi_register_sideband_data16.ppif`,
+`ppif/apb_composition_multi_register_sideband_data16.apb`,
+`ppif/apb_composition_multi_peripheral_sideband_data16.ppif`, and
+`ppif/apb_composition_multi_peripheral_sideband_data16.apb` keep 32-bit
+addresses and 4-bit wait counts while wiring 16-bit data and 2-bit `PSTRB`
+end-to-end. The fixed data16 composition decodes its second register at byte
+address `2`; the multi-peripheral data16 composition accepts 2-byte-aligned
+address-map windows and ships a `258`-byte status/control split. See
+[IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR](IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md).
+
 ## Non-Goals
 
 This `.566` slice does not add a multi-peripheral APB interconnect/decode

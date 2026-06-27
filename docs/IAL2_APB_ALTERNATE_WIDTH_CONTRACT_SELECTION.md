@@ -13,6 +13,10 @@ The selected contract changes no behavior in `.593`. It records exact source
 syntax, width bounds, generated-artifact expectations, report/support shape,
 diagnostics, validation, and rollback for `.594`.
 
+Implementation note: `.594` implements this selected contract. The realized
+behavior, sample list, report metadata, and narrowed residue are documented in
+[IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR](IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md).
+
 ## Selected Width Matrix
 
 The first alternate-width implementation widens only the APB data/strobe axis:

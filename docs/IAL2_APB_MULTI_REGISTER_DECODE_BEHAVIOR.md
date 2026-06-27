@@ -18,6 +18,16 @@ ppif/apb_composition_multi_register.apb
 
 Existing one-register APB completer and composition sources remain unchanged.
 
+Update `.594`: sideband-aware data16 variants add 16-bit data and 2-byte
+alignment without changing the existing 32-bit multi-register samples:
+
+```text
+ppif/apb_completer_multi_register_sideband_data16.ppif
+ppif/apb_completer_multi_register_sideband_data16.apb
+ppif/apb_composition_multi_register_sideband_data16.ppif
+ppif/apb_composition_multi_register_sideband_data16.apb
+```
+
 ## Source Shape
 
 The selected syntax is repeated `(register ...)` clauses under the existing
@@ -38,6 +48,10 @@ names, unique data signal names, unique decimal addresses, address width 32,
 4-byte address alignment, register data width 32, and reset value 0. Read and
 write transfer policy remains `(read register)`, `(write register)`, and
 `(unmapped-address error)`.
+
+For `.594` data16 sideband variants, register data width is 16, `PSTRB` width
+is 2, and decoded register addresses are 2-byte aligned. The shipped data16
+samples map address `0` to `reg0_data_q` and address `2` to `reg1_data_q`.
 
 ## Generated Behavior
 
@@ -89,6 +103,11 @@ Multi-register completer and multi-register composition reports remove
 `apb_multi_register_decode_deferred`. They continue to leave multi-peripheral
 APB interconnect/decode, sidebands/strobes, alternate widths, and
 back-to-back policy as explicit future owners.
+
+The data16 sideband reports add `width_policy` metadata and replace the broad
+`apb_alternate_widths_deferred` residue with
+`apb_remaining_widths_deferred`. See
+[IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR](IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md).
 
 ## CLI Examples
 

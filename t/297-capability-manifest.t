@@ -2970,13 +2970,13 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/sideband-aware APB requester-transfer, APB completer, APB multi-register completer, .*sideband-aware multi-register one-requester\/one-completer APB composition, selected one-requester\/two-peripheral APB interconnect\/decode composition, and sideband-aware one-requester\/two-peripheral APB interconnect\/decode composition \.ppif sources through support-accounted profile-alias fixtures/,
-        'manifest states .apb mirrors the sideband-aware APB PPIF sources through profile aliases',
+        qr/sideband-aware APB requester-transfer, sideband-aware data16 APB requester-transfer, APB completer, APB multi-register completer, .*sideband-aware data16 multi-register one-requester\/one-completer APB composition, selected one-requester\/two-peripheral APB interconnect\/decode composition, sideband-aware one-requester\/two-peripheral APB interconnect\/decode composition, and sideband-aware data16 one-requester\/two-peripheral APB interconnect\/decode composition \.ppif sources through support-accounted profile-alias fixtures/,
+        'manifest states .apb mirrors the sideband-aware data16 APB PPIF sources through profile aliases',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/APB alternate widths, APB PPROT access-control effects, APB back-to-back policy/,
-        'manifest keeps remaining APB sideband follow-on work explicit after sideband/strobe support shipped',
+        qr/APB address widths other than 32, wait-count widths other than 4, data widths beyond the selected sideband-aware 16\/32-bit boundary, APB PPROT access-control effects, APB back-to-back policy/,
+        'manifest keeps remaining APB width and sideband follow-on work explicit after data16 support shipped',
     );
     unlike(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
@@ -3149,7 +3149,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/sideband-aware APB requester-transfer, APB completer, APB multi-register completer, sideband-aware APB multi-register completer, fixed one-requester\/one-completer APB composition, .*sideband-aware multi-register fixed APB composition, selected one-requester\/two-peripheral APB interconnect\/decode composition, and sideband-aware one-requester\/two-peripheral APB interconnect\/decode composition IAL2 profile-alias suffix/,
+        qr/sideband-aware APB requester-transfer, sideband-aware data16 APB requester-transfer, APB completer, APB multi-register completer, sideband-aware APB multi-register completer, sideband-aware data16 APB multi-register completer, fixed one-requester\/one-completer APB composition, .*sideband-aware data16 multi-register fixed APB composition, selected one-requester\/two-peripheral APB interconnect\/decode composition, sideband-aware one-requester\/two-peripheral APB interconnect\/decode composition, and sideband-aware data16 one-requester\/two-peripheral APB interconnect\/decode composition IAL2 profile-alias suffix/,
         'manifest describes .apb as the bounded APB profile-alias suffix',
     );
     like(
@@ -3174,7 +3174,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/ppif\/apb_requester_transfer\.ppif, ppif\/apb_requester_transfer_busy\.ppif, ppif\/apb_requester_transfer_status\.ppif, ppif\/apb_requester_transfer_sideband\.ppif, ppif\/apb_completer\.ppif, ppif\/apb_completer_multi_register\.ppif, ppif\/apb_completer_multi_register_sideband\.ppif, ppif\/apb_composition\.ppif, ppif\/apb_composition_busy\.ppif, ppif\/apb_composition_status\.ppif, ppif\/apb_composition_multi_register\.ppif, ppif\/apb_composition_multi_register_sideband\.ppif, ppif\/apb_composition_multi_peripheral\.ppif, and ppif\/apb_composition_multi_peripheral_sideband\.ppif at matching \.apb paths/,
+        qr/ppif\/apb_requester_transfer\.ppif, ppif\/apb_requester_transfer_busy\.ppif, ppif\/apb_requester_transfer_status\.ppif, ppif\/apb_requester_transfer_sideband\.ppif, ppif\/apb_requester_transfer_sideband_data16\.ppif, ppif\/apb_completer\.ppif, ppif\/apb_completer_multi_register\.ppif, ppif\/apb_completer_multi_register_sideband\.ppif, ppif\/apb_completer_multi_register_sideband_data16\.ppif, ppif\/apb_composition\.ppif, ppif\/apb_composition_busy\.ppif, ppif\/apb_composition_status\.ppif, ppif\/apb_composition_multi_register\.ppif, ppif\/apb_composition_multi_register_sideband\.ppif, ppif\/apb_composition_multi_register_sideband_data16\.ppif, ppif\/apb_composition_multi_peripheral\.ppif, ppif\/apb_composition_multi_peripheral_sideband\.ppif, and ppif\/apb_composition_multi_peripheral_sideband_data16\.ppif at matching \.apb paths/,
         'manifest records the shipped APB profile-alias samples',
     );
     like(
@@ -3196,6 +3196,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $file_surface_by_suffix{'.apb'}{current_boundary},
         qr/sideband-aware requester\/completer\/composition aliases propagate PPROT, drive or sample PSTRB, and apply PSTRB byte-lane writes/,
         'manifest records the APB sideband/strobe boundary for profile aliases',
+    );
+    like(
+        $file_surface_by_suffix{'.apb'}{current_boundary},
+        qr/sideband-aware data16 aliases use 16-bit PWDATA\/PRDATA\/register data with 2-bit PSTRB and two byte lanes/,
+        'manifest records the APB data16 sideband width boundary for profile aliases',
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},

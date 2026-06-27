@@ -27,6 +27,19 @@ continues to describe the generic `.ppif` APB source shape. APB is also not an
 AXI behavior: AXI is only the first profile-alias example, while this slice
 proves the same `.ppif` IAL2 container can carry a non-AXI protocol profile.
 
+Update `.594`: FSMGen also ships the sideband-aware 16-bit data requester
+variant:
+
+```text
+ppif/apb_requester_transfer_sideband_data16.ppif
+ppif/apb_requester_transfer_sideband_data16.apb
+```
+
+That additive variant keeps 32-bit addresses, 3-bit `PPROT`, and 2-bit
+requester status, while using 16-bit request/write/read data and a
+data-derived 2-bit `PSTRB`/`write-strobe`. See
+[IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR](IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md).
+
 ## Source Shape
 
 The shipped source shape is:

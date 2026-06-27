@@ -108,7 +108,8 @@ sub _normalize_contract($raw) {
     my $control = _normalize_control(_required_hash($raw, 'control'));
     my $bus = _normalize_bus(_required_hash($raw, 'bus'));
     _validate_sideband_bundle($bus);
-    my $storage = _normalize_storage(_required_hash($raw, 'storage'));
+    _validate_width_policy($bus);
+    my $storage = _normalize_storage(_required_hash($raw, 'storage'), $bus);
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'), $control, $storage);
 
     _reject_duplicate_signal_names(
@@ -172,14 +173,14 @@ sub _normalize_bus($raw) {
         enable     => _required_identifier_field($raw, 'enable', 'bus.enable'),
         write      => _required_identifier_field($raw, 'write', 'bus.write'),
         address    => _normalize_width_binding($raw->{address}, 'bus.address', 32),
-        write_data => _normalize_width_binding($raw->{write_data}, 'bus.write_data', 32),
+        write_data => _normalize_width_binding_one_of($raw->{write_data}, 'bus.write_data', [16, 32]),
         ready      => _required_identifier_field($raw, 'ready', 'bus.ready'),
-        read_data  => _normalize_width_binding($raw->{read_data}, 'bus.read_data', 32),
+        read_data  => _normalize_width_binding_one_of($raw->{read_data}, 'bus.read_data', [16, 32]),
         error      => _required_identifier_field($raw, 'error', 'bus.error'),
     );
     $bus{protection} = _normalize_width_binding($raw->{protection}, 'bus.protection', 3)
         if exists $raw->{protection};
-    $bus{strobe} = _normalize_width_binding($raw->{strobe}, 'bus.strobe', 4)
+    $bus{strobe} = _normalize_width_binding_one_of($raw->{strobe}, 'bus.strobe', [2, 4])
         if exists $raw->{strobe};
     return \%bus;
 }
@@ -192,13 +193,32 @@ sub _validate_sideband_bundle($bus) {
         unless @present == 2;
 }
 
-sub _normalize_storage($raw) {
+sub _validate_width_policy($bus) {
+    my $data_width = $bus->{write_data}{width};
+    confess "APB completer IAL2 contract bus.read_data.width must match selected APB data width $data_width in this slice\n"
+        unless $bus->{read_data}{width} == $data_width;
+    confess "APB completer IAL2 contract data width must be 16 or 32 in this slice\n"
+        unless $data_width == 16 || $data_width == 32;
+
+    my $sidebands = defined($bus->{protection}) && defined($bus->{strobe});
+    confess "APB completer IAL2 contract 16-bit APB data width requires sideband-aware PPROT/PSTRB bindings in this slice\n"
+        if $data_width == 16 && !$sidebands;
+    return unless $sidebands;
+
+    my $expected_strobe_width = _apb_strobe_width_for_data_width($data_width);
+    confess "APB completer IAL2 contract bus.strobe.width must be $expected_strobe_width for selected APB data width $data_width in this slice\n"
+        unless $bus->{strobe}{width} == $expected_strobe_width;
+}
+
+sub _normalize_storage($raw, $bus) {
     confess "APB completer IAL2 contract storage must not provide both register and registers fields\n"
         if exists($raw->{register}) && exists($raw->{registers});
+    my $data_width = $bus->{write_data}{width};
+    my $address_alignment = _apb_strobe_width_for_data_width($data_width);
     if (exists $raw->{registers}) {
         confess "APB completer IAL2 contract storage.registers must be a non-empty array reference\n"
             unless ref($raw->{registers}) eq 'ARRAY' && @{$raw->{registers}};
-        return _normalize_multi_register_storage($raw->{registers});
+        return _normalize_multi_register_storage($raw->{registers}, $data_width, $address_alignment);
     }
 
     confess "APB completer IAL2 contract storage.register must be a hash reference\n"
@@ -206,7 +226,7 @@ sub _normalize_storage($raw) {
     my $register = $raw->{register};
     my $name = _required_identifier_field($register, 'name', 'storage.register.name');
     my $address = _normalize_address_binding($register->{address}, 'storage.register.address', 0, 32);
-    my $data = _normalize_storage_data($register->{data}, 'storage.register.data', 32, 0);
+    my $data = _normalize_storage_data($register->{data}, 'storage.register.data', $data_width, 0);
 
     return {
         register => {
@@ -217,7 +237,7 @@ sub _normalize_storage($raw) {
     };
 }
 
-sub _normalize_multi_register_storage($registers) {
+sub _normalize_multi_register_storage($registers, $data_width, $address_alignment) {
     my (@normalized, %register_names, %data_names, %address_values);
     for my $index (0 .. $#$registers) {
         my $register = $registers->[$index];
@@ -226,10 +246,10 @@ sub _normalize_multi_register_storage($registers) {
         my $name = _required_identifier_field($register, 'name', "storage.registers[$index].name");
         confess "APB completer IAL2 contract duplicate storage register name '$name'\n"
             if $register_names{$name}++;
-        my $address = _normalize_decoded_address_binding($register->{address}, "storage.registers[$index].address");
+        my $address = _normalize_decoded_address_binding($register->{address}, "storage.registers[$index].address", $address_alignment);
         confess "APB completer IAL2 contract duplicate storage register address '$address->{value}'\n"
             if $address_values{$address->{value}}++;
-        my $data = _normalize_storage_data($register->{data}, "storage.registers[$index].data", 32, 0);
+        my $data = _normalize_storage_data($register->{data}, "storage.registers[$index].data", $data_width, 0);
         confess "APB completer IAL2 contract duplicate storage register data signal '$data->{name}'\n"
             if $data_names{$data->{name}}++;
         push @normalized, {
@@ -272,7 +292,7 @@ sub _normalize_address_binding($raw, $field, $expected_value, $expected_width) {
     };
 }
 
-sub _normalize_decoded_address_binding($raw, $field) {
+sub _normalize_decoded_address_binding($raw, $field, $address_alignment) {
     confess "APB completer IAL2 contract $field must be an address/width hash reference\n"
         unless ref($raw) eq 'HASH';
     my $value = _integer_value($raw->{value}, "$field.value");
@@ -281,8 +301,8 @@ sub _normalize_decoded_address_binding($raw, $field) {
         unless $width == 32;
     confess "APB completer IAL2 contract $field.value must fit in 32 bits in this slice\n"
         if $value > 0xffffffff;
-    confess "APB completer IAL2 contract $field.value must be 4-byte aligned in this slice\n"
-        unless $value % 4 == 0;
+    confess "APB completer IAL2 contract $field.value must be $address_alignment-byte aligned in this slice\n"
+        unless $value % $address_alignment == 0;
     return {
         value => $value,
         width => $width,
@@ -340,6 +360,20 @@ sub _normalize_width_binding($raw, $field, $expected_width) {
     my $width = _positive_integer($raw->{width}, "$field.width");
     confess "APB completer IAL2 contract $field.width must be $expected_width in this slice\n"
         unless $width == $expected_width;
+    return {
+        name  => $name,
+        width => $width,
+    };
+}
+
+sub _normalize_width_binding_one_of($raw, $field, $allowed_widths) {
+    confess "APB completer IAL2 contract $field must be a signal/width hash reference\n"
+        unless ref($raw) eq 'HASH';
+    my $name = _identifier_value($raw->{name}, "$field.name");
+    my $width = _positive_integer($raw->{width}, "$field.width");
+    my %allowed = map { $_ => 1 } @$allowed_widths;
+    confess "APB completer IAL2 contract $field.width must be one of " . join(', ', @$allowed_widths) . " in this slice\n"
+        unless $allowed{$width};
     return {
         name  => $name,
         width => $width,
@@ -488,6 +522,8 @@ sub _emit_single_register_isf($contract) {
     my $reg_data = $storage->{data}{name};
     my $internal_done = 'apb_complete_done_q';
     my $sidebands = _contract_has_sidebands($contract);
+    my $data_width = $bus->{write_data}{width};
+    my $strobe_width = _apb_strobe_width_for_data_width($data_width);
 
     return join("\n",
         "(actor $contract->{actor_name}",
@@ -544,11 +580,11 @@ sub _emit_single_register_isf($contract) {
             "      (sample $bus->{strobe}{name} as strb_q)",
         ) : ()),
         "      (sample $control->{wait_cycles}{name} as wait_n))",
-        _sideband_local_lines($sidebands),
+        _sideband_local_lines($sidebands, $strobe_width),
         "    (drive enter_access)",
         "    (wait wait_n)",
         "    (when (& write_q (== addr $storage->{address}{value}))",
-        _write_storage_lines($reg_data, $sidebands),
+        _write_storage_lines($reg_data, $sidebands, $data_width),
         "      (drive write_hit))",
         "    (when (& write_q (! (== addr $storage->{address}{value})))",
         "      (drive error_complete))",
@@ -572,6 +608,8 @@ sub _emit_multi_register_isf($contract) {
     my $internal_done = 'apb_complete_done_q';
     my @registers = _storage_registers($contract->{storage});
     my $sidebands = _contract_has_sidebands($contract);
+    my $data_width = $bus->{write_data}{width};
+    my $strobe_width = _apb_strobe_width_for_data_width($data_width);
 
     my @storage_lines = map {
         "    (var $_->{data}{name} (width $_->{data}{width}) (reset $_->{data}{reset}))"
@@ -594,7 +632,7 @@ sub _emit_multi_register_isf($contract) {
         my $match = _register_match_expr($register);
         push @transaction_register_lines,
             "    (when (& write_q $match)",
-            _write_storage_lines($register->{data}{name}, $sidebands),
+            _write_storage_lines($register->{data}{name}, $sidebands, $data_width),
             "      (drive write_hit))";
     }
     push @transaction_register_lines,
@@ -660,7 +698,7 @@ sub _emit_multi_register_isf($contract) {
             "      (sample $bus->{strobe}{name} as strb_q)",
         ) : ()),
         "      (sample $control->{wait_cycles}{name} as wait_n))",
-        _sideband_local_lines($sidebands),
+        _sideband_local_lines($sidebands, $strobe_width),
         "    (drive enter_access)",
         "    (wait wait_n)",
         @transaction_register_lines,
@@ -673,27 +711,38 @@ sub _contract_has_sidebands($contract) {
     return defined($contract->{bus}{protection}) && defined($contract->{bus}{strobe});
 }
 
-sub _sideband_local_lines($sidebands) {
+sub _sideband_local_lines($sidebands, $strobe_width) {
     return () unless $sidebands;
     return (
         "    (local prot_q (width 3))",
-        "    (local strb_q (width 4))",
+        "    (local strb_q (width $strobe_width))",
     );
 }
 
-sub _write_storage_lines($data_signal, $sidebands) {
+sub _write_storage_lines($data_signal, $sidebands, $data_width) {
     return "      (set $data_signal wdata_q)" unless $sidebands;
 
-    return (
-        "      (when-bit strb_q 0",
-        "        (set $data_signal (| (& $data_signal 32'hffffff00) (& wdata_q 32'h000000ff))))",
-        "      (when-bit strb_q 1",
-        "        (set $data_signal (| (& $data_signal 32'hffff00ff) (& wdata_q 32'h0000ff00))))",
-        "      (when-bit strb_q 2",
-        "        (set $data_signal (| (& $data_signal 32'hff00ffff) (& wdata_q 32'h00ff0000))))",
-        "      (when-bit strb_q 3",
-        "        (set $data_signal (| (& $data_signal 32'h00ffffff) (& wdata_q 32'hff000000))))",
-    );
+    my $lanes = _apb_strobe_width_for_data_width($data_width);
+    my $all_bits = (1 << $data_width) - 1;
+    my @lines;
+    for my $lane (0 .. $lanes - 1) {
+        my $write_mask = 0xff << ($lane * 8);
+        my $preserve_mask = $all_bits ^ $write_mask;
+        push @lines,
+            "      (when-bit strb_q $lane",
+            "        (set $data_signal (| (& $data_signal " . _hex_literal($data_width, $preserve_mask) . ") (& wdata_q " . _hex_literal($data_width, $write_mask) . "))))";
+    }
+    return @lines;
+}
+
+sub _apb_strobe_width_for_data_width($data_width) {
+    confess "APB completer IAL2 contract data width must be byte-addressable in this slice\n"
+        unless $data_width % 8 == 0;
+    return int($data_width / 8);
+}
+
+sub _hex_literal($width, $value) {
+    return sprintf("%d'h%0*x", $width, int($width / 4), $value);
 }
 
 sub _read_drive_name($register) {
@@ -777,6 +826,7 @@ sub _build_report(%args) {
             bus     => _clone_jsonish($contract->{bus}),
             storage => _clone_jsonish($contract->{storage}),
         },
+        width_policy => _apb_completer_width_policy($contract),
         transfer => \%transfer_report,
         generated_artifacts => {
             ial1 => {
@@ -795,9 +845,9 @@ sub _build_report(%args) {
             },
         },
         generated_scheduler_or_completer_rules => _report_generated_rules($multi_register, _contract_has_sidebands($contract)),
-        assumptions => _report_assumptions($multi_register),
-        enforced_static_rules => _report_enforced_static_rules($multi_register, _contract_has_sidebands($contract)),
-        unsupported_residue => _report_unsupported_residue($multi_register, _contract_has_sidebands($contract)),
+        assumptions => _report_assumptions($multi_register, $contract),
+        enforced_static_rules => _report_enforced_static_rules($multi_register, $contract),
+        unsupported_residue => _report_unsupported_residue($multi_register, $contract),
     };
 }
 
@@ -826,15 +876,17 @@ sub _report_generated_rules($multi_register, $sidebands) {
     ];
 }
 
-sub _report_assumptions($multi_register) {
+sub _report_assumptions($multi_register, $contract) {
+    my $data_width = _apb_data_width($contract);
+    my $alignment = _apb_strobe_width_for_data_width($data_width);
     my $map_assumption = $multi_register
         ? {
             id     => 'bounded_register_map',
-            detail => 'This APB completer PPIF slice models source-ordered 32-bit 4-byte-aligned registers and one transfer at a time.',
+            detail => "This APB completer PPIF slice models source-ordered $data_width-bit $alignment-byte-aligned registers and one transfer at a time.",
         }
         : {
             id     => 'single_register_map',
-            detail => 'This first APB completer PPIF slice models one 32-bit address-0 register and one transfer at a time.',
+            detail => "This first APB completer PPIF slice models one $data_width-bit address-0 register and one transfer at a time.",
         };
 
     return [
@@ -850,19 +902,23 @@ sub _report_assumptions($multi_register) {
     ];
 }
 
-sub _report_enforced_static_rules($multi_register, $sidebands) {
+sub _report_enforced_static_rules($multi_register, $contract) {
+    my $sidebands = _contract_has_sidebands($contract);
+    my $data_width = _apb_data_width($contract);
+    my $strobe_width = _apb_strobe_width_for_data_width($data_width);
+    my $alignment = $strobe_width;
     my @rules = (
         'contract object must be a hash reference',
         'profile must be apb and the object must be apb-completer',
         'role must be completer',
         'clock, reset, control, bus, storage, and generated local names must be unique ISF identifiers',
-        'address, write-data, read-data, and register data widths are fixed at 32 bits for this slice',
-        ($sidebands ? ('sideband-aware completer contracts require PPROT width 3 and PSTRB width 4') : ()),
+        "address width is fixed at 32 bits; write-data, read-data, and register data widths are fixed at the selected $data_width-bit APB data width for this slice",
+        ($sidebands ? ("sideband-aware completer contracts require PPROT width 3 and data-derived PSTRB width $strobe_width") : ()),
         'wait-cycles width is fixed at 4 bits for this slice',
         'setup detection must require select 1 and enable 0',
     );
     push @rules, $multi_register
-        ? 'register names, register data signals, and register addresses must be unique; register addresses must be 32-bit 4-byte-aligned decimal values and reset values must be 0'
+        ? "register names, register data signals, and register addresses must be unique; register addresses must be 32-bit $alignment-byte-aligned decimal values and reset values must be 0"
         : 'the only implemented register address is 0 and reset value is 0';
     push @rules,
         'read and write behavior must target the selected register and unmapped addresses must assert error',
@@ -870,7 +926,8 @@ sub _report_enforced_static_rules($multi_register, $sidebands) {
     return \@rules;
 }
 
-sub _report_unsupported_residue($multi_register, $sidebands) {
+sub _report_unsupported_residue($multi_register, $contract) {
+    my $sidebands = _contract_has_sidebands($contract);
     my @residue = (
         {
             id     => 'apb_interconnect_multi_peripheral_decode_deferred',
@@ -885,15 +942,60 @@ sub _report_unsupported_residue($multi_register, $sidebands) {
         ? _apb_protection_policy_effects_residue()
         : _apb_sideband_residue();
     push @residue,
-        {
-            id     => 'apb_alternate_widths_deferred',
-            detail => 'The public APB PPIF completer source fixes address, write-data, read-data, register data, and wait-count widths.',
-        },
+        _apb_completer_width_residue($contract),
         {
             id     => 'apb_back_to_back_policy_deferred',
             detail => 'Back-to-back setup admission and queued transfer policy remain future exact-owner work.',
         };
     return \@residue;
+}
+
+sub _apb_data_width($contract) {
+    return $contract->{bus}{write_data}{width};
+}
+
+sub _is_sideband_data16_contract($contract) {
+    return _contract_has_sidebands($contract) && _apb_data_width($contract) == 16;
+}
+
+sub _apb_completer_width_policy($contract) {
+    my $data_width = _apb_data_width($contract);
+    my $strobe_width = _apb_strobe_width_for_data_width($data_width);
+    my @byte_lanes = map {
+        {
+            strobe_bit => $_,
+            data_range => '[' . (($_ * 8) + 7) . ':' . ($_ * 8) . ']',
+        }
+    } 0 .. $strobe_width - 1;
+
+    my %policy = (
+        address_width            => 32,
+        data_width               => $data_width,
+        register_data_width      => $data_width,
+        wait_cycles_width        => $contract->{control}{wait_cycles}{width},
+        register_alignment_bytes => $strobe_width,
+        supported_data_widths    => [16, 32],
+        selected_contract        => _is_sideband_data16_contract($contract) ? 'sideband_data16' : 'fixed_data32',
+    );
+    if (_contract_has_sidebands($contract)) {
+        $policy{protection_width} = $contract->{bus}{protection}{width};
+        $policy{strobe_width} = $contract->{bus}{strobe}{width};
+        $policy{byte_lanes} = \@byte_lanes;
+        $policy{zero_strobe_write_policy} = 'successful_no_byte_write';
+    }
+    return \%policy;
+}
+
+sub _apb_completer_width_residue($contract) {
+    return {
+        id     => 'apb_remaining_widths_deferred',
+        detail => 'Address widths other than 32 bits, wait-count widths other than 4 bits, and APB data widths beyond the selected sideband-aware 16/32-bit boundary remain future APB completer work.',
+    } if _is_sideband_data16_contract($contract);
+
+    return {
+        id     => 'apb_alternate_widths_deferred',
+        detail => 'The public APB PPIF completer source fixes address, write-data, read-data, register data, and wait-count widths.',
+    };
 }
 
 sub _apb_sideband_residue() {

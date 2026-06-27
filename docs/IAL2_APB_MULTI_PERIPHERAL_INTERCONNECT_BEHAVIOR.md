@@ -19,6 +19,17 @@ through generated IAL1 review artifacts before generated IAL0 FSM artifacts.
 Existing one-requester/one-completer APB composition, busy/status, and
 multi-register APB samples remain unchanged.
 
+Update `.594`: the sideband-aware data16 multi-peripheral variants are also
+support-accounted:
+
+```text
+ppif/apb_composition_multi_peripheral_sideband_data16.ppif
+ppif/apb_composition_multi_peripheral_sideband_data16.apb
+```
+
+They keep the same topology while using 16-bit APB data, 2-bit `PSTRB`, and
+2-byte-aligned address-map windows.
+
 ## Source Shape
 
 The shipped public source remains an `(apb-composition ...)` object. The
@@ -49,6 +60,12 @@ static decimal values, width 32, 4-byte aligned, non-overlapping, and within
 the 32-bit address space. The fixed `(completer INSTANCE OBJECT)` child form
 remains the one-requester/one-completer composition shape and cannot be mixed
 with `(peripheral ...)` children.
+
+For `.594` data16 sideband variants, address-map parameter widths remain 32
+bits, but base and size defaults are checked against 2-byte alignment. The
+shipped data16 sample uses `STATUS_SIZE = 258`, `CONTROL_BASE = 258`, and
+`CONTROL_SIZE = 258` to exercise a non-4-byte-aligned but valid 2-byte window
+boundary.
 
 ## Generated Behavior
 
@@ -116,6 +133,11 @@ ial2_apb_profile_alias_composition_multi_peripheral_pipeline_cli
 The multi-peripheral composition report removes
 `apb_interconnect_multi_peripheral_decode_deferred`. APB sidebands/strobes,
 alternate widths, and back-to-back policy remain explicit residue.
+
+The data16 sideband composition report adds `composition.width_policy` and
+`composition.address_map.alignment_bytes = 2`, and replaces
+`apb_alternate_widths_deferred` with `apb_remaining_widths_deferred`. See
+[IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR](IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md).
 
 ## CLI Examples
 

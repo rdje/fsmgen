@@ -47,6 +47,10 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     ok(-f sample_apb_completer_multi_register_sideband_alias_path(), 'tracked runnable APB multi-register sideband completer .apb sample exists');
     ok(-f sample_apb_composition_multi_register_sideband_alias_path(), 'tracked runnable APB multi-register sideband composition .apb sample exists');
     ok(-f sample_apb_composition_multi_peripheral_sideband_alias_path(), 'tracked runnable APB multi-peripheral sideband composition .apb sample exists');
+    ok(-f sample_apb_sideband_data16_path(), 'tracked runnable APB requester sideband data16 .apb sample exists');
+    ok(-f sample_apb_completer_multi_register_sideband_data16_alias_path(), 'tracked runnable APB multi-register sideband data16 completer .apb sample exists');
+    ok(-f sample_apb_composition_multi_register_sideband_data16_alias_path(), 'tracked runnable APB multi-register sideband data16 composition .apb sample exists');
+    ok(-f sample_apb_composition_multi_peripheral_sideband_data16_alias_path(), 'tracked runnable APB multi-peripheral sideband data16 composition .apb sample exists');
 
     my $completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_alias_path());
     my $completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_ppif_path());
@@ -91,12 +95,28 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     is_deeply($requester_sideband_alias->{generated_ial0}{files}, $requester_sideband_ppif->{generated_ial0}{files}, '.apb requester sideband mirrors .ppif generated IAL0 files');
     like($requester_sideband_alias->{generated_ial0}{files}{'apb_requester.fsm'}, qr/\(<- \(PSTRB> \(& wstrb \(concat is_write is_write is_write is_write\)\)\) <setup_phase_start\)/, '.apb requester sideband masks PSTRB with the sampled write bit');
 
+    my $requester_sideband_data16_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_sideband_data16_path());
+    my $requester_sideband_data16_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_ppif_sideband_data16_path());
+    is($requester_sideband_data16_alias->{kind}, 'protocol_intent.apb_requester_transfer', '.apb requester sideband data16 parser result keeps APB requester-transfer kind');
+    is($requester_sideband_data16_alias->{generated_ial1}{text}, $requester_sideband_data16_ppif->{generated_ial1}{text}, '.apb requester sideband data16 mirrors .ppif generated IAL1 text');
+    is_deeply($requester_sideband_data16_alias->{generated_ial0}{files}, $requester_sideband_data16_ppif->{generated_ial0}{files}, '.apb requester sideband data16 mirrors .ppif generated IAL0 files');
+    like($requester_sideband_data16_alias->{generated_ial0}{files}{'apb_requester.fsm'}, qr/\(<- \(PSTRB> \(& wstrb \(concat is_write is_write\)\)\) <setup_phase_start\)/, '.apb requester sideband data16 masks 2-bit PSTRB with the sampled write bit');
+    is($requester_sideband_data16_alias->{report}{width_policy}{data_width}, 16, '.apb requester sideband data16 preserves data width policy');
+
     my $multi_completer_sideband_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_alias_path());
     my $multi_completer_sideband_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_ppif_path());
     is($multi_completer_sideband_alias->{kind}, 'protocol_intent.apb_completer', '.apb multi-register sideband completer parser result keeps APB completer kind');
     is($multi_completer_sideband_alias->{generated_ial1}{text}, $multi_completer_sideband_ppif->{generated_ial1}{text}, '.apb multi-register sideband completer mirrors .ppif generated IAL1 text');
     is_deeply($multi_completer_sideband_alias->{generated_ial0}{files}, $multi_completer_sideband_ppif->{generated_ial0}{files}, '.apb multi-register sideband completer mirrors .ppif generated IAL0 files');
     like($multi_completer_sideband_alias->{generated_ial0}{files}{'apb_completer.fsm'}, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, '.apb multi-register sideband completer preserves byte-lane write lowering');
+
+    my $multi_completer_sideband_data16_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_data16_alias_path());
+    my $multi_completer_sideband_data16_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_data16_ppif_path());
+    is($multi_completer_sideband_data16_alias->{kind}, 'protocol_intent.apb_completer', '.apb multi-register sideband data16 completer parser result keeps APB completer kind');
+    is($multi_completer_sideband_data16_alias->{generated_ial1}{text}, $multi_completer_sideband_data16_ppif->{generated_ial1}{text}, '.apb multi-register sideband data16 completer mirrors .ppif generated IAL1 text');
+    is_deeply($multi_completer_sideband_data16_alias->{generated_ial0}{files}, $multi_completer_sideband_data16_ppif->{generated_ial0}{files}, '.apb multi-register sideband data16 completer mirrors .ppif generated IAL0 files');
+    like($multi_completer_sideband_data16_alias->{generated_ial0}{files}{'apb_completer.fsm'}, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, '.apb multi-register sideband data16 completer preserves two-lane byte write lowering');
+    is($multi_completer_sideband_data16_alias->{report}{width_policy}{strobe_width}, 2, '.apb multi-register sideband data16 completer preserves strobe width policy');
 
     my $multi_composition_sideband_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_alias_path());
     my $multi_composition_sideband_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_ppif_path());
@@ -105,6 +125,14 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     is_deeply($multi_composition_sideband_alias->{generated_ial0}{files}, $multi_composition_sideband_ppif->{generated_ial0}{files}, '.apb multi-register sideband composition mirrors .ppif generated IAL0 files');
     like($multi_composition_sideband_alias->{generated_ial0}{files}{'apb_tb.fsm'}, qr/\(requester\.PSTRB completer\.PSTRB\)/, '.apb multi-register sideband composition wires requester PSTRB to completer PSTRB');
 
+    my $multi_composition_sideband_data16_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_data16_alias_path());
+    my $multi_composition_sideband_data16_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_data16_ppif_path());
+    is($multi_composition_sideband_data16_alias->{kind}, 'protocol_intent.apb_composition', '.apb multi-register sideband data16 composition parser result keeps APB composition kind');
+    is_deeply($multi_composition_sideband_data16_alias->{generated_ial1}{items}, $multi_composition_sideband_data16_ppif->{generated_ial1}{items}, '.apb multi-register sideband data16 composition mirrors .ppif generated IAL1 artifacts');
+    is_deeply($multi_composition_sideband_data16_alias->{generated_ial0}{files}, $multi_composition_sideband_data16_ppif->{generated_ial0}{files}, '.apb multi-register sideband data16 composition mirrors .ppif generated IAL0 files');
+    like($multi_composition_sideband_data16_alias->{generated_ial0}{files}{'apb_tb.fsm'}, qr/=req_wstrb<2/, '.apb multi-register sideband data16 composition exposes 2-bit requester strobe');
+    is($multi_composition_sideband_data16_alias->{report}{composition}{width_policy}{data_width}, 16, '.apb multi-register sideband data16 composition preserves data width policy');
+
     my $multi_peripheral_sideband_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_alias_path());
     my $multi_peripheral_sideband_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_ppif_path());
     is($multi_peripheral_sideband_alias->{kind}, 'protocol_intent.apb_composition', '.apb multi-peripheral sideband composition parser result keeps APB composition kind');
@@ -112,6 +140,15 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     is_deeply($multi_peripheral_sideband_alias->{generated_ial1}{items}, $multi_peripheral_sideband_ppif->{generated_ial1}{items}, '.apb multi-peripheral sideband composition mirrors .ppif generated IAL1 artifacts');
     is_deeply($multi_peripheral_sideband_alias->{generated_ial0}{files}, $multi_peripheral_sideband_ppif->{generated_ial0}{files}, '.apb multi-peripheral sideband composition mirrors .ppif generated IAL0 files');
     like($multi_peripheral_sideband_alias->{generated_ial0}{files}{'apb_interconnect.fsm'}, qr/\(<- \(PSTRB_CONTROL> PSTRB\)\)/, '.apb multi-peripheral sideband composition interconnect fans out PSTRB to the control window');
+
+    my $multi_peripheral_sideband_data16_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_data16_alias_path());
+    my $multi_peripheral_sideband_data16_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_data16_ppif_path());
+    is($multi_peripheral_sideband_data16_alias->{kind}, 'protocol_intent.apb_composition', '.apb multi-peripheral sideband data16 composition parser result keeps APB composition kind');
+    is($multi_peripheral_sideband_data16_alias->{mode}, 'requester-multi-peripheral-composition', '.apb multi-peripheral sideband data16 composition parser result records multi-peripheral mode');
+    is_deeply($multi_peripheral_sideband_data16_alias->{generated_ial1}{items}, $multi_peripheral_sideband_data16_ppif->{generated_ial1}{items}, '.apb multi-peripheral sideband data16 composition mirrors .ppif generated IAL1 artifacts');
+    is_deeply($multi_peripheral_sideband_data16_alias->{generated_ial0}{files}, $multi_peripheral_sideband_data16_ppif->{generated_ial0}{files}, '.apb multi-peripheral sideband data16 composition mirrors .ppif generated IAL0 files');
+    like($multi_peripheral_sideband_data16_alias->{generated_ial0}{files}{'apb_interconnect.fsm'}, qr/\(<- \(PADDR_CONTROL> \(- PADDR 258\)\) <\(& PSEL \(>= PADDR 258\) \(< PADDR 516\)\)\)/, '.apb multi-peripheral sideband data16 composition interconnect uses the 258-byte control window base');
+    is($multi_peripheral_sideband_data16_alias->{report}{composition}{address_map}{alignment_bytes}, 2, '.apb multi-peripheral sideband data16 composition preserves 2-byte address-map alignment');
 };
 
 subtest 'adapter rejects .apb profile and behavior boundaries' => sub {
@@ -274,6 +311,34 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             label => 'APB multi-peripheral sideband composition',
             path => sample_apb_composition_multi_peripheral_sideband_alias_path(),
             entry_id => 'intent.apb_profile_alias_composition_multi_peripheral_sideband',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+        },
+        {
+            label => 'APB requester sideband data16',
+            path => sample_apb_sideband_data16_path(),
+            entry_id => 'intent.apb_profile_alias_requester_transfer_sideband_data16',
+            source_root_kind => 'fsm',
+            module => 'apb_requester',
+        },
+        {
+            label => 'APB multi-register sideband data16 completer',
+            path => sample_apb_completer_multi_register_sideband_data16_alias_path(),
+            entry_id => 'intent.apb_profile_alias_completer_multi_register_sideband_data16',
+            source_root_kind => 'fsm',
+            module => 'apb_completer',
+        },
+        {
+            label => 'APB multi-register sideband data16 composition',
+            path => sample_apb_composition_multi_register_sideband_data16_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_multi_register_sideband_data16',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+        },
+        {
+            label => 'APB multi-peripheral sideband data16 composition',
+            path => sample_apb_composition_multi_peripheral_sideband_data16_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_multi_peripheral_sideband_data16',
             source_root_kind => 'top',
             module => 'apb_tb',
         },
@@ -642,6 +707,10 @@ sub sample_ppif_sideband_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband.ppif');
 }
 
+sub sample_ppif_sideband_data16_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband_data16.ppif');
+}
+
 sub sample_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer.apb');
 }
@@ -656,6 +725,10 @@ sub sample_apb_status_path {
 
 sub sample_apb_sideband_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband.apb');
+}
+
+sub sample_apb_sideband_data16_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband_data16.apb');
 }
 
 sub sample_apb_completer_alias_path {
@@ -682,6 +755,14 @@ sub sample_apb_completer_multi_register_sideband_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband.ppif');
 }
 
+sub sample_apb_completer_multi_register_sideband_data16_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_data16.apb');
+}
+
+sub sample_apb_completer_multi_register_sideband_data16_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_data16.ppif');
+}
+
 sub sample_apb_composition_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition.apb');
 }
@@ -698,6 +779,14 @@ sub sample_apb_composition_multi_register_sideband_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband.ppif');
 }
 
+sub sample_apb_composition_multi_register_sideband_data16_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16.apb');
+}
+
+sub sample_apb_composition_multi_register_sideband_data16_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16.ppif');
+}
+
 sub sample_apb_composition_multi_peripheral_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral.apb');
 }
@@ -708,6 +797,14 @@ sub sample_apb_composition_multi_peripheral_sideband_alias_path {
 
 sub sample_apb_composition_multi_peripheral_sideband_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband.ppif');
+}
+
+sub sample_apb_composition_multi_peripheral_sideband_data16_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_data16.apb');
+}
+
+sub sample_apb_composition_multi_peripheral_sideband_data16_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_data16.ppif');
 }
 
 sub sample_apb_composition_busy_alias_path {

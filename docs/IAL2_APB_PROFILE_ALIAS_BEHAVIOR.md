@@ -16,10 +16,21 @@ The currently supported alias samples are:
 ppif/apb_requester_transfer.apb
 ppif/apb_requester_transfer_busy.apb
 ppif/apb_requester_transfer_status.apb
+ppif/apb_requester_transfer_sideband.apb
+ppif/apb_requester_transfer_sideband_data16.apb
 ppif/apb_completer.apb
+ppif/apb_completer_multi_register.apb
+ppif/apb_completer_multi_register_sideband.apb
+ppif/apb_completer_multi_register_sideband_data16.apb
 ppif/apb_composition.apb
 ppif/apb_composition_busy.apb
 ppif/apb_composition_status.apb
+ppif/apb_composition_multi_register.apb
+ppif/apb_composition_multi_register_sideband.apb
+ppif/apb_composition_multi_register_sideband_data16.apb
+ppif/apb_composition_multi_peripheral.apb
+ppif/apb_composition_multi_peripheral_sideband.apb
+ppif/apb_composition_multi_peripheral_sideband_data16.apb
 ```
 
 They mirror the generic APB IAL2 samples:
@@ -28,10 +39,21 @@ They mirror the generic APB IAL2 samples:
 ppif/apb_requester_transfer.ppif
 ppif/apb_requester_transfer_busy.ppif
 ppif/apb_requester_transfer_status.ppif
+ppif/apb_requester_transfer_sideband.ppif
+ppif/apb_requester_transfer_sideband_data16.ppif
 ppif/apb_completer.ppif
+ppif/apb_completer_multi_register.ppif
+ppif/apb_completer_multi_register_sideband.ppif
+ppif/apb_completer_multi_register_sideband_data16.ppif
 ppif/apb_composition.ppif
 ppif/apb_composition_busy.ppif
 ppif/apb_composition_status.ppif
+ppif/apb_composition_multi_register.ppif
+ppif/apb_composition_multi_register_sideband.ppif
+ppif/apb_composition_multi_register_sideband_data16.ppif
+ppif/apb_composition_multi_peripheral.ppif
+ppif/apb_composition_multi_peripheral_sideband.ppif
+ppif/apb_composition_multi_peripheral_sideband_data16.ppif
 ```
 
 `.apb` is not a separate APB language, not an APB-to-FSM shortcut, not a direct
@@ -52,16 +74,23 @@ The bounded alias accepts exactly these APB shapes:
   `(apb-requester apb_requester ...)`;
 - one APB completer object:
   `(apb-completer apb_completer ...)`; or
-- one explicit fixed composition aggregate containing one requester, one
-  completer, and one `(apb-composition apb_tb ...)` object.
+- one explicit composition aggregate containing one requester, either one
+  completer or two-or-more peripheral completers, and one
+  `(apb-composition apb_tb ...)` object.
 
 Mixed requester/completer files without the explicit `(apb-composition ...)`
-object still fail closed. Multi-peripheral APB interconnect/decode is not part
-of the alias contract.
+object still fail closed.
 
 Requester-transfer aliases may use the original response shape, the selected
 busy-capable response shape with `(busy NAME)`, or the selected busy-gated
 status response shape with `(busy NAME)` and `(status NAME width 2)`.
+
+Sideband-aware aliases may use the existing 32-bit data contract with 4-bit
+`PSTRB`/`write-strobe`, or the selected data16 contract with 16-bit
+`PWDATA`/`PRDATA`/register data and 2-bit `PSTRB`/`write-strobe`. The data16
+contract keeps 32-bit addresses, 4-bit wait counts, 3-bit `PPROT`, and 2-bit
+requester status. See
+[IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR](IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md).
 
 ## Lowering And Reports
 
@@ -121,8 +150,28 @@ entry_id: intent.apb_profile_alias_requester_transfer_status
 coverage: ial2_apb_profile_alias_requester_transfer_status_pipeline_cli
 source_kind: ial2_profile_alias
 
+entry_id: intent.apb_profile_alias_requester_transfer_sideband
+coverage: ial2_apb_profile_alias_requester_transfer_sideband_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_requester_transfer_sideband_data16
+coverage: ial2_apb_profile_alias_requester_transfer_sideband_data16_pipeline_cli
+source_kind: ial2_profile_alias
+
 entry_id: intent.apb_profile_alias_completer
 coverage: ial2_apb_profile_alias_completer_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_completer_multi_register
+coverage: ial2_apb_profile_alias_completer_multi_register_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_completer_multi_register_sideband
+coverage: ial2_apb_profile_alias_completer_multi_register_sideband_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_completer_multi_register_sideband_data16
+coverage: ial2_apb_profile_alias_completer_multi_register_sideband_data16_pipeline_cli
 source_kind: ial2_profile_alias
 
 entry_id: intent.apb_profile_alias_composition
@@ -136,6 +185,30 @@ source_kind: ial2_profile_alias
 entry_id: intent.apb_profile_alias_composition_status
 coverage: ial2_apb_profile_alias_composition_status_pipeline_cli
 source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_composition_multi_register
+coverage: ial2_apb_profile_alias_composition_multi_register_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_composition_multi_register_sideband
+coverage: ial2_apb_profile_alias_composition_multi_register_sideband_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_composition_multi_register_sideband_data16
+coverage: ial2_apb_profile_alias_composition_multi_register_sideband_data16_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_composition_multi_peripheral
+coverage: ial2_apb_profile_alias_composition_multi_peripheral_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_composition_multi_peripheral_sideband
+coverage: ial2_apb_profile_alias_composition_multi_peripheral_sideband_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_composition_multi_peripheral_sideband_data16
+coverage: ial2_apb_profile_alias_composition_multi_peripheral_sideband_data16_pipeline_cli
+source_kind: ial2_profile_alias
 ```
 
 ## CLI Examples
@@ -146,10 +219,14 @@ Emit APB IAL2 schedule/report JSON:
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_busy.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_sideband_data16.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_completer.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_completer_multi_register_sideband_data16.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_busy.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_status.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_register_sideband_data16.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_peripheral_sideband_data16.apb
 ```
 
 Run strict checks without writing HDL:
@@ -158,8 +235,10 @@ Run strict checks without writing HDL:
 ./bin/fsmgen --strict --check --json ppif/apb_requester_transfer.apb
 ./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status.apb
 ./bin/fsmgen --strict --check --json ppif/apb_completer.apb
+./bin/fsmgen --strict --check --json ppif/apb_completer_multi_register_sideband_data16.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition_status.apb
+./bin/fsmgen --strict --check --json ppif/apb_composition_multi_peripheral_sideband_data16.apb
 ```
 
 Emit normalized semantic JSON:
@@ -169,6 +248,7 @@ Emit normalized semantic JSON:
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_completer.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_status.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_multi_register_sideband_data16.apb
 ```
 
 Materialize generated review artifacts and HDL:
@@ -198,8 +278,10 @@ Materialize generated review artifacts and HDL:
   rejected as outside the APB profile-alias slice;
 - mixed APB requester/completer files without the explicit APB composition
   object are rejected as unsupported implicit composition;
-- unsupported APB shapes, malformed composition objects, and multi-peripheral
-  interconnect/decode attempts stay fail-closed; and
+- unsupported APB shapes and malformed composition objects stay fail-closed;
+- unsupported APB width families, including address widths other than 32,
+  wait-count widths other than 4, and data widths beyond the selected
+  sideband-aware 16/32-bit boundary, stay fail-closed; and
 - `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` remain
   known IAL2 alias candidates but unsupported.
 
@@ -210,8 +292,9 @@ behavior, `.isf` behavior, `.fsm` behavior, backend behavior,
 verification-output behavior, backend-language variants, VHDL behavior, or
 direct IAL2-to-IAL0 lowering.
 
-APB multi-register decode, sidebands/strobes, alternate widths,
-multi-peripheral decode, back-to-back transfer policy, direct backend lowering,
+APB address widths other than 32, wait-count widths other than 4, data widths
+beyond the selected sideband-aware 16/32-bit boundary, `PPROT`
+access-control effects, back-to-back transfer policy, direct backend lowering,
 verification-output generation, backend-language variants, and VHDL remain
 deferred. The selected busy output and busy-gated 2-bit requester status
 aliases are documented in

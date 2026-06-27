@@ -289,9 +289,13 @@ sub _normalize_multi_peripheral_contract($raw, $kind, $protocol, $intent_name, $
     my $clock = _required_identifier($raw_composition, 'clock');
     my $reset = _normalize_reset($raw_composition->{reset}, 'composition.reset');
     my $children = _normalize_multi_peripheral_children(_required_hash($raw_composition, 'children'));
-    my $address_map = _normalize_address_map(_required_hash($raw_composition, 'address_map'), $children->{peripherals});
     my $decode = _normalize_decode(_required_hash($raw_composition, 'decode'));
     my $wiring = _normalize_wiring(_required_hash($raw_composition, 'wiring'));
+    my $address_map = _normalize_address_map(
+        _required_hash($raw_composition, 'address_map'),
+        $children->{peripherals},
+        _apb_bus_data_bytes($wiring->{bus}),
+    );
 
     _validate_endpoint_role($requester, 'requester', 'apb_requester_transfer');
     _validate_multi_peripheral_completers($raw_completers);
@@ -1058,6 +1062,7 @@ sub _build_multi_peripheral_report(%args) {
                 ial0_artifact => $interconnect->{entry_artifact},
             },
             wiring                        => _clone_jsonish($composition->{wiring}),
+            width_policy                  => _composition_width_policy($contract),
             top_ports                     => [map { _clone_jsonish($_) } _multi_top_port_specs($contract)],
         },
         children => [
@@ -1093,10 +1098,10 @@ sub _build_multi_peripheral_report(%args) {
             'multi-peripheral composition requires one requester, two or more APB completer peripherals, and one generated APB interconnect',
             'peripheral instances, peripheral object names, address-map windows, and generated signal names must be unique',
             'generated top instance names are deterministic and avoid collisions with declared top ports while reports preserve authored peripheral names',
-            'address-map base and size defaults must be static 32-bit non-overlapping 4-byte-aligned decimal values',
+            'address-map base and size defaults must be static 32-bit non-overlapping ' . _composition_data_bytes($contract) . '-byte-aligned decimal values',
             'decode policy is overlap reject, priority source-order, and unmapped-address error',
             'the generated APB interconnect fans out decoded PSEL, forwards control/data, translates local PADDR, muxes selected responses, and returns PSLVERR for unmapped active accesses',
-            (_composition_has_sidebands($contract) ? ('sideband-aware multi-peripheral composition propagates PPROT width 3 and PSTRB width 4 through the generated APB interconnect') : ()),
+            (_composition_has_sidebands($contract) ? ('sideband-aware multi-peripheral composition propagates PPROT width 3 and data-derived PSTRB width ' . _composition_strobe_width($contract) . ' through the generated APB interconnect') : ()),
             'APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
         unsupported_residue => _apb_multi_peripheral_unsupported_residue($contract),
@@ -1132,6 +1137,7 @@ sub _multi_address_map_report($contract) {
     return {
         name             => $composition->{address_map}{name},
         address_width    => $composition->{address_map}{address_width},
+        alignment_bytes  => $composition->{address_map}{alignment_bytes},
         windows          => _clone_jsonish($composition->{address_map}{windows}),
         overlap_policy   => $composition->{decode}{overlap},
         priority         => $composition->{decode}{priority},
@@ -1197,10 +1203,55 @@ sub _composition_has_sidebands($contract) {
     return _bus_has_sidebands($contract->{composition}{wiring}{bus});
 }
 
+sub _composition_data_width($contract) {
+    return int($contract->{composition}{wiring}{bus}{write_data}{width});
+}
+
+sub _composition_data_bytes($contract) {
+    return _apb_bus_data_bytes($contract->{composition}{wiring}{bus});
+}
+
+sub _composition_strobe_width($contract) {
+    return int($contract->{composition}{wiring}{bus}{strobe}{width})
+        if _composition_has_sidebands($contract);
+    return undef;
+}
+
+sub _is_sideband_data16_contract($contract) {
+    return _composition_has_sidebands($contract) && _composition_data_width($contract) == 16;
+}
+
+sub _composition_width_policy($contract) {
+    my $data_width = _composition_data_width($contract);
+    my %policy = (
+        address_width            => 32,
+        data_width               => $data_width,
+        wait_cycles_width        => 4,
+        address_map_width        => 32,
+        address_map_alignment_bytes => _composition_data_bytes($contract),
+        supported_data_widths    => [16, 32],
+        selected_contract        => _is_sideband_data16_contract($contract) ? 'sideband_data16' : 'fixed_data32',
+    );
+    if (_composition_has_sidebands($contract)) {
+        $policy{protection_width} = $contract->{composition}{wiring}{bus}{protection}{width};
+        $policy{strobe_width} = _composition_strobe_width($contract);
+    }
+    return \%policy;
+}
+
+sub _apb_bus_data_bytes($bus) {
+    my $data_width = _positive_integer($bus->{write_data}{width}, 'composition.wiring.bus.write_data.width');
+    confess "APB composition IAL2 contract bus.write_data.width must match bus.read_data.width in this slice\n"
+        unless $data_width == $bus->{read_data}{width};
+    confess "APB composition IAL2 contract bus data width must be byte-addressable in this slice\n"
+        unless $data_width % 8 == 0;
+    return int($data_width / 8);
+}
+
 sub _apb_multi_peripheral_unsupported_residue($contract) {
     return [
         _composition_has_sidebands($contract) ? _apb_protection_policy_effects_residue() : _apb_sideband_residue(),
-        _apb_alternate_widths_residue(),
+        _apb_alternate_widths_residue($contract),
         _apb_back_to_back_residue(),
     ];
 }
@@ -1208,7 +1259,7 @@ sub _apb_multi_peripheral_unsupported_residue($contract) {
 sub _apb_multi_peripheral_interconnect_unsupported_residue($contract) {
     return [
         _composition_has_sidebands($contract) ? _apb_protection_policy_effects_residue() : _apb_sideband_residue(),
-        _apb_alternate_widths_residue(),
+        _apb_alternate_widths_residue($contract),
         _apb_back_to_back_residue(),
     ];
 }
@@ -1227,7 +1278,12 @@ sub _apb_protection_policy_effects_residue() {
     };
 }
 
-sub _apb_alternate_widths_residue() {
+sub _apb_alternate_widths_residue($contract) {
+    return {
+        id     => 'apb_remaining_widths_deferred',
+        detail => 'Address widths other than 32 bits, wait-count widths other than 4 bits, and APB data widths beyond the selected sideband-aware 16/32-bit boundary remain future APB composition work.',
+    } if _is_sideband_data16_contract($contract);
+
     return {
         id     => 'apb_alternate_widths_deferred',
         detail => 'This APB composition fixes address, write-data, and read-data widths to 32 bits and wait-cycle controls to 4 bits.',
@@ -1276,6 +1332,7 @@ sub _build_report(%args) {
             requester         => _clone_jsonish($composition->{children}{requester}),
             completer         => _clone_jsonish($composition->{children}{completer}),
             wiring            => _clone_jsonish($composition->{wiring}),
+            width_policy      => _composition_width_policy($contract),
             top_ports         => [map { _clone_jsonish($_) } _top_port_specs($contract)],
         },
         children => [
@@ -1309,7 +1366,7 @@ sub _build_report(%args) {
             'requester, completer, and composition must share clock and reset policy',
             'composition children must reference the embedded requester and completer objects by name',
             'composition bus wiring must match requester and completer APB signal names and widths',
-            (_composition_has_sidebands($contract) ? ('sideband-aware composition wiring requires PPROT width 3 and PSTRB width 4 across requester, completer, and composition bus bindings') : ()),
+            (_composition_has_sidebands($contract) ? ('sideband-aware composition wiring requires PPROT width 3 and data-derived PSTRB width ' . _composition_strobe_width($contract) . ' across requester, completer, and composition bus bindings') : ()),
             'APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
         unsupported_residue => _apb_composition_unsupported_residue($contract),
@@ -1350,10 +1407,7 @@ sub _apb_composition_unsupported_residue($contract) {
 
     push @residue, (
         _composition_has_sidebands($contract) ? _apb_protection_policy_effects_residue() : _apb_sideband_residue(),
-        {
-            id     => 'apb_alternate_widths_deferred',
-            detail => 'The first APB composition fixes address, write-data, and read-data widths to 32 bits and wait_cycles to 4 bits.',
-        },
+        _apb_alternate_widths_residue($contract),
         {
             id     => 'apb_back_to_back_policy_deferred',
             detail => 'Back-to-back transfer policy and queued requester admission remain future exact-owner work.',
@@ -1446,7 +1500,7 @@ sub _normalize_wiring($raw) {
     };
 }
 
-sub _normalize_address_map($raw, $peripherals) {
+sub _normalize_address_map($raw, $peripherals, $alignment_bytes) {
     my $name = _required_identifier($raw, 'name');
     my $windows = $raw->{windows};
     confess "APB multi-peripheral composition address_map.windows must be a non-empty array reference\n"
@@ -1469,10 +1523,10 @@ sub _normalize_address_map($raw, $peripherals) {
             confess "APB multi-peripheral composition duplicate address-map parameter '$parameter->{name}'\n"
                 if $parameter_names{$parameter->{name}}++;
         }
-        confess "APB multi-peripheral composition address-map base '$base->{default}' must be 4-byte aligned\n"
-            unless $base->{default} % 4 == 0;
-        confess "APB multi-peripheral composition address-map size '$size->{default}' must be positive and 4-byte-sized\n"
-            unless $size->{default} > 0 && $size->{default} % 4 == 0;
+        confess "APB multi-peripheral composition address-map base '$base->{default}' must be $alignment_bytes-byte aligned\n"
+            unless $base->{default} % $alignment_bytes == 0;
+        confess "APB multi-peripheral composition address-map size '$size->{default}' must be positive and $alignment_bytes-byte-sized\n"
+            unless $size->{default} > 0 && $size->{default} % $alignment_bytes == 0;
         confess "APB multi-peripheral composition address-map window '$window_name' overflows 32-bit address space\n"
             if $base->{default} + $size->{default} > 4_294_967_296;
         push @normalized, {
@@ -1492,6 +1546,7 @@ sub _normalize_address_map($raw, $peripherals) {
     return {
         name          => $name,
         address_width => 32,
+        alignment_bytes => $alignment_bytes,
         windows       => \@normalized,
     };
 }

@@ -10215,6 +10215,22 @@ reports replace `apb_alternate_widths_deferred` with narrower
 remaining-width residue; `PPROT` policy effects and back-to-back policy remain
 deferred.
 
+APB sideband data16 behavior:
+[IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR](../../IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md)
+ships `.594`, the selected sideband-aware 16-bit APB data/strobe contract.
+New `.ppif` and matching `.apb` samples now cover requester-transfer,
+multi-register completer, fixed multi-register composition, and
+multi-peripheral composition variants with 16-bit `PWDATA`/`PRDATA`/register
+data and 2-bit `PSTRB`/write-strobe. Existing 32-bit APB samples remain
+unchanged. The data16 completer maps `PSTRB[0]` to `[7:0]` and `PSTRB[1]` to
+`[15:8]`; fixed composition decodes the second register at byte address `2`;
+multi-peripheral composition accepts 2-byte-aligned 32-bit address-map windows
+and ships a `258`-byte status/control split. Data16 reports add
+`width_policy` metadata and replace `apb_alternate_widths_deferred` with
+`apb_remaining_widths_deferred`; 8-bit/64-bit/non-byte widths, alternate
+address or wait-count widths, PPROT effects, and back-to-back policy remain
+deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
