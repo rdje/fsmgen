@@ -10230,6 +10230,16 @@ and ships a `258`-byte status/control split. Data16 reports add
 `apb_remaining_widths_deferred`; 8-bit/64-bit/non-byte widths, alternate
 address or wait-count widths, PPROT effects, and back-to-back policy remain
 deferred.
+APB PPROT effects readiness:
+[IAL2_APB_PPROT_EFFECTS_READINESS_AUDIT](../../IAL2_APB_PPROT_EFFECTS_READINESS_AUDIT.md)
+selects `.596`, public APB `PPROT` access-control effects contract selection,
+without changing behavior. The current sideband-aware APB paths already
+propagate requester `PPROT` through bus, fixed-composition, and
+multi-peripheral interconnect wiring, and completers already sample `PPROT`
+during setup. Reports still use `apb_protection_policy_effects_deferred`;
+the next contract must settle policy vocabulary, denial behavior, `PSTRB`
+interaction, composition/interconnect effects, reports, support identities,
+diagnostics, validation, and rollback.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

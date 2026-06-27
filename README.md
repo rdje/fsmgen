@@ -3492,6 +3492,15 @@ access-control effects, back-to-back policy, APB address widths other than 32,
 wait-count widths other than 4, and data widths beyond the selected
 sideband-aware 16/32-bit boundary. `.595` now owns APB `PPROT`
 access-control effects readiness audit.
+`.595` now selects `.596`, public APB `PPROT` access-control effects contract
+selection, without changing behavior. The audit found that sideband-aware APB
+requester, completer, fixed-composition, and multi-peripheral composition
+paths already propagate or sample 3-bit `PPROT`, and sideband-aware reports
+still carry `apb_protection_policy_effects_deferred`. Existing generated
+IAL1/IAL0 expression and conditional-action support is sufficient for bounded
+static policy checks, so `.596` must settle public policy vocabulary,
+denied-read/write behavior, `PSTRB` interaction, composition/interconnect
+effects, reports, support identities, diagnostics, validation, and rollback.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6039,6 +6048,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_ALTERNATE_WIDTH_READINESS_AUDIT.md` — audits APB alternate-width readiness and selects public APB alternate-width contract selection before behavior changes.
 - `docs/IAL2_APB_ALTERNATE_WIDTH_CONTRACT_SELECTION.md` — selects sideband-aware 16-bit APB data/strobe variants as the first alternate-width implementation contract.
 - `docs/IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md` — ships selected sideband-aware APB data16 requester, completer, fixed-composition, and multi-peripheral composition behavior.
+- `docs/IAL2_APB_PPROT_EFFECTS_READINESS_AUDIT.md` — audits APB `PPROT` access-control effects readiness and selects public policy contract selection before behavior changes.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

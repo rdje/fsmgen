@@ -4493,6 +4493,15 @@ access-control effects, back-to-back policy, APB address widths other than 32,
 wait-count widths other than 4, and data widths beyond the selected
 sideband-aware 16/32-bit boundary. `.595` now owns APB `PPROT`
 access-control effects readiness audit.
+`.595` now selects `.596`, public APB `PPROT` access-control effects contract
+selection, without changing behavior. The audit found that sideband-aware APB
+requester, completer, fixed-composition, and multi-peripheral composition
+paths already propagate or sample 3-bit `PPROT`, and sideband-aware reports
+still carry `apb_protection_policy_effects_deferred`. Existing generated
+IAL1/IAL0 expression and conditional-action support is sufficient for bounded
+static policy checks, so `.596` must settle public policy vocabulary,
+denied-read/write behavior, `PSTRB` interaction, composition/interconnect
+effects, reports, support identities, diagnostics, validation, and rollback.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
