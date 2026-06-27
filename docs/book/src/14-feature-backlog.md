@@ -10290,7 +10290,15 @@ selection for sideband data16 APB `PPROT` policy effects, without behavior
 changes. A temporary data16 access-policy candidate failed exactly at the
 current 32-bit `ApbCompleter` guard, and the audit found no parser, IAL1,
 IAL0, report-schema, composition, direct-backend, or VHDL prerequisite before
-contract selection.
+contract selection. `.602` selected `.603`, direct bounded implementation of
+the `sideband_data16_protection` contract, without behavior changes. The
+selected sample pairs are data16 protection completer, fixed composition, and
+multi-peripheral composition `.ppif`/`.apb` paths; the contract reuses
+register-local `allow` / `require (privileged 0|1)`, keeps
+`width_policy.selected_contract = sideband_data16`, adds `protection_policy`,
+replaces policy-effects residue with
+`apb_additional_protection_policies_deferred`, and retains
+`apb_remaining_widths_deferred`.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
