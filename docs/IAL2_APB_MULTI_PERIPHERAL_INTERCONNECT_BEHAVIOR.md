@@ -30,6 +30,18 @@ ppif/apb_composition_multi_peripheral_sideband_data16.apb
 They keep the same topology while using 16-bit APB data, 2-bit `PSTRB`, and
 2-byte-aligned address-map windows.
 
+Update `.597`: the sideband-aware 32-bit protection multi-peripheral variants
+are also support-accounted:
+
+```text
+ppif/apb_composition_multi_peripheral_sideband_protection.ppif
+ppif/apb_composition_multi_peripheral_sideband_protection.apb
+```
+
+They keep interconnect enforcement out of scope: selected peripheral completers
+own register-local policy denial, while the interconnect propagates
+`PPROT/PSTRB` and muxes the selected response.
+
 ## Source Shape
 
 The shipped public source remains an `(apb-composition ...)` object. The
@@ -66,6 +78,11 @@ bits, but base and size defaults are checked against 2-byte alignment. The
 shipped data16 sample uses `STATUS_SIZE = 258`, `CONTROL_BASE = 258`, and
 `CONTROL_SIZE = 258` to exercise a non-4-byte-aligned but valid 2-byte window
 boundary.
+
+For `.597` protection variants, peripheral completers remain 32-bit
+sideband-aware multi-register endpoints. The address-map windows remain
+4-byte-aligned, while each selected peripheral register may carry the
+register-local `(access-policy ...)` policy.
 
 ## Generated Behavior
 
@@ -138,6 +155,12 @@ The data16 sideband composition report adds `composition.width_policy` and
 `composition.address_map.alignment_bytes = 2`, and replaces
 `apb_alternate_widths_deferred` with `apb_remaining_widths_deferred`. See
 [IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR](IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md).
+
+The protection composition report adds `protection_policy` metadata identifying
+peripheral completers as the enforcement owners and the interconnect as
+propagation/mux-only. It replaces `apb_protection_policy_effects_deferred` with
+`apb_additional_protection_policies_deferred`. See
+[IAL2_APB_PPROT_EFFECTS_BEHAVIOR](IAL2_APB_PPROT_EFFECTS_BEHAVIOR.md).
 
 ## CLI Examples
 

@@ -3517,6 +3517,21 @@ additional `PPROT` predicates, global/window/peripheral policies,
 interconnect-owned enforcement, back-to-back policy, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.597` now ships the selected bounded APB `PPROT` access-policy behavior. The
+new sideband-aware 32-bit completer, fixed-composition, and multi-peripheral
+composition `.ppif`/`.apb` sample pairs accept register-local
+`(access-policy ...)` clauses. Completers evaluate sampled `PPROT[0]` against
+each selected register's `read`/`write` policy, preserve allowed byte-lane
+writes and reads, return `PSLVERR=1` plus zero `PRDATA` for denied reads, and
+return `PSLVERR=1` without storage updates for denied writes including
+`PSTRB=0`. Fixed and multi-peripheral composition remain propagation/mux-only
+for policy; selected completers own enforcement. Reports add
+`protection_policy` metadata and use
+`apb_additional_protection_policies_deferred`; data16 policy effects,
+additional `PPROT` predicates, global/window/peripheral policies,
+interconnect-owned enforcement, back-to-back policy, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred. `.598` now owns the next post-PPROT APB/IAL2 selector.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6066,6 +6081,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md` — ships selected sideband-aware APB data16 requester, completer, fixed-composition, and multi-peripheral composition behavior.
 - `docs/IAL2_APB_PPROT_EFFECTS_READINESS_AUDIT.md` — audits APB `PPROT` access-control effects readiness and selects public policy contract selection before behavior changes.
 - `docs/IAL2_APB_PPROT_EFFECTS_CONTRACT_SELECTION.md` — selects register-local APB `PPROT` access-policy syntax, privileged predicate semantics, denied-access response behavior, reports, diagnostics, and direct implementation ownership.
+- `docs/IAL2_APB_PPROT_EFFECTS_BEHAVIOR.md` — ships register-local APB `PPROT[0]` privileged access-policy enforcement for sideband-aware 32-bit multi-register completers, fixed composition, and multi-peripheral composition.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

@@ -110,6 +110,7 @@ sub _normalize_contract($raw) {
     _validate_sideband_bundle($bus);
     _validate_width_policy($bus);
     my $storage = _normalize_storage(_required_hash($raw, 'storage'), $bus);
+    _validate_access_policy_contract($storage, $bus);
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'), $control, $storage);
 
     _reject_duplicate_signal_names(
@@ -227,12 +228,16 @@ sub _normalize_storage($raw, $bus) {
     my $name = _required_identifier_field($register, 'name', 'storage.register.name');
     my $address = _normalize_address_binding($register->{address}, 'storage.register.address', 0, 32);
     my $data = _normalize_storage_data($register->{data}, 'storage.register.data', $data_width, 0);
+    my @access_policy = exists($register->{access_policy})
+        ? (access_policy => _normalize_access_policy($register->{access_policy}, 'storage.register.access_policy'))
+        : ();
 
     return {
         register => {
-            name    => $name,
-            address => $address,
-            data    => $data,
+            name          => $name,
+            address       => $address,
+            data          => $data,
+            @access_policy,
         },
     };
 }
@@ -252,10 +257,14 @@ sub _normalize_multi_register_storage($registers, $data_width, $address_alignmen
         my $data = _normalize_storage_data($register->{data}, "storage.registers[$index].data", $data_width, 0);
         confess "APB completer IAL2 contract duplicate storage register data signal '$data->{name}'\n"
             if $data_names{$data->{name}}++;
+        my @access_policy = exists($register->{access_policy})
+            ? (access_policy => _normalize_access_policy($register->{access_policy}, "storage.registers[$index].access_policy"))
+            : ();
         push @normalized, {
-            name    => $name,
-            address => $address,
-            data    => $data,
+            name          => $name,
+            address       => $address,
+            data          => $data,
+            @access_policy,
         };
     }
 
@@ -275,6 +284,77 @@ sub _normalize_storage_data($raw, $field, $expected_width, $expected_reset) {
         %$binding,
         reset => $reset,
     };
+}
+
+sub _normalize_access_policy($raw, $field) {
+    confess "APB completer IAL2 contract $field must be an access-policy hash reference\n"
+        unless ref($raw) eq 'HASH';
+
+    my %policy;
+    for my $operation (qw(read write)) {
+        confess "APB completer IAL2 contract $field.$operation is required in this slice\n"
+            unless exists $raw->{$operation};
+        $policy{$operation} = _normalize_access_policy_action($raw->{$operation}, "$field.$operation");
+    }
+
+    for my $key (sort keys %$raw) {
+        confess "APB completer IAL2 contract $field has unsupported operation '$key'\n"
+            unless $key eq 'read' || $key eq 'write';
+    }
+
+    return \%policy;
+}
+
+sub _normalize_access_policy_action($raw, $field) {
+    confess "APB completer IAL2 contract $field must be an access-policy action hash reference\n"
+        unless ref($raw) eq 'HASH';
+    my $action = _required_scalar_field($raw, 'action', "$field.action");
+    if ($action eq 'allow') {
+        confess "APB completer IAL2 contract $field action allow must not provide a predicate\n"
+            if exists $raw->{predicate};
+        return { action => 'allow' };
+    }
+
+    confess "APB completer IAL2 contract $field action must be allow or require in this slice\n"
+        unless $action eq 'require';
+    my $predicate = _normalize_access_policy_predicate(_required_hash_field($raw, 'predicate', "$field.predicate"), "$field.predicate");
+
+    for my $key (sort keys %$raw) {
+        confess "APB completer IAL2 contract $field has unsupported key '$key'\n"
+            unless $key eq 'action' || $key eq 'predicate';
+    }
+
+    return {
+        action    => 'require',
+        predicate => $predicate,
+    };
+}
+
+sub _normalize_access_policy_predicate($raw, $field) {
+    my $kind = _required_scalar_field($raw, 'kind', "$field.kind");
+    confess "APB completer IAL2 contract $field.kind must be privileged in this slice\n"
+        unless $kind eq 'privileged';
+    my $value = _bool_value($raw->{value}, "$field.value");
+
+    for my $key (sort keys %$raw) {
+        confess "APB completer IAL2 contract $field has unsupported key '$key'\n"
+            unless $key eq 'kind' || $key eq 'value';
+    }
+
+    return {
+        kind  => $kind,
+        value => $value,
+    };
+}
+
+sub _validate_access_policy_contract($storage, $bus) {
+    return unless _storage_has_access_policy($storage);
+    confess "APB completer IAL2 contract access-policy requires multi-register storage in this slice\n"
+        unless _storage_is_multi_register($storage);
+    confess "APB completer IAL2 contract access-policy requires bus.protection and bus.strobe sideband bindings in this slice\n"
+        unless defined($bus->{protection}) && defined($bus->{strobe});
+    confess "APB completer IAL2 contract access-policy requires selected 32-bit APB data width in this slice\n"
+        unless $bus->{write_data}{width} == 32;
 }
 
 sub _normalize_address_binding($raw, $field, $expected_value, $expected_width) {
@@ -480,6 +560,13 @@ sub _storage_is_multi_register($storage) {
     return ref($storage->{registers}) eq 'ARRAY' && @{$storage->{registers}} > 1;
 }
 
+sub _storage_has_access_policy($storage) {
+    for my $register (_storage_registers($storage)) {
+        return 1 if ref($register->{access_policy}) eq 'HASH';
+    }
+    return 0;
+}
+
 sub _normalize_source_anchors($anchors) {
     confess "APB completer IAL2 contract source.anchors must be an array reference\n"
         unless ref($anchors) eq 'ARRAY';
@@ -630,19 +717,14 @@ sub _emit_multi_register_isf($contract) {
     my @transaction_register_lines;
     for my $register (@registers) {
         my $match = _register_match_expr($register);
-        push @transaction_register_lines,
-            "    (when (& write_q $match)",
-            _write_storage_lines($register->{data}{name}, $sidebands, $data_width),
-            "      (drive write_hit))";
+        push @transaction_register_lines, _write_access_lines($register, $match, $sidebands, $data_width);
     }
     push @transaction_register_lines,
         "    (when (& write_q (! $any_address_hit))",
         "      (drive error_complete))";
     for my $register (@registers) {
         my $match = _register_match_expr($register);
-        push @transaction_register_lines,
-            "    (when (& (! write_q) $match)",
-            "      (drive " . _read_drive_name($register) . "))";
+        push @transaction_register_lines, _read_access_lines($register, $match);
     }
     push @transaction_register_lines,
         "    (when (& (! write_q) (! $any_address_hit))",
@@ -705,6 +787,54 @@ sub _emit_multi_register_isf($contract) {
         "    (complete $internal_done)))",
         "",
     );
+}
+
+sub _write_access_lines($register, $match, $sidebands, $data_width) {
+    my $allowed = _register_access_allowed_expr($register, 'write');
+    return (
+        "    (when (& write_q $match)",
+        _write_storage_lines($register->{data}{name}, $sidebands, $data_width),
+        "      (drive write_hit))",
+    ) unless defined $allowed;
+
+    return (
+        "    (when (& write_q $match $allowed)",
+        _write_storage_lines($register->{data}{name}, $sidebands, $data_width),
+        "      (drive write_hit))",
+        "    (when (& write_q $match (! $allowed))",
+        "      (drive error_complete))",
+    );
+}
+
+sub _read_access_lines($register, $match) {
+    my $read_drive = _read_drive_name($register);
+    my $allowed = _register_access_allowed_expr($register, 'read');
+    return (
+        "    (when (& (! write_q) $match)",
+        "      (drive $read_drive))",
+    ) unless defined $allowed;
+
+    return (
+        "    (when (& (! write_q) $match $allowed)",
+        "      (drive $read_drive))",
+        "    (when (& (! write_q) $match (! $allowed))",
+        "      (drive error_complete))",
+    );
+}
+
+sub _register_access_allowed_expr($register, $operation) {
+    my $policy = $register->{access_policy};
+    return undef unless ref($policy) eq 'HASH';
+    my $operation_policy = $policy->{$operation};
+    return undef unless ref($operation_policy) eq 'HASH';
+    return undef if ($operation_policy->{action} // '') eq 'allow';
+    return _privileged_access_expr($operation_policy->{predicate}{value});
+}
+
+sub _privileged_access_expr($required_value) {
+    return $required_value
+        ? "(!= (& prot_q 3'd1) 3'd0)"
+        : "(== (& prot_q 3'd1) 3'd0)";
 }
 
 sub _contract_has_sidebands($contract) {
@@ -777,6 +907,7 @@ sub _build_report(%args) {
     my $contract = $args{contract};
     my @fsm_files = @{$args{fsm_files} || []};
     my $multi_register = _storage_is_multi_register($contract->{storage});
+    my $has_access_policy = _storage_has_access_policy($contract->{storage});
 
     my %source_object = (
         id      => $contract->{source_object_id},
@@ -799,7 +930,7 @@ sub _build_report(%args) {
         $transfer_report{register} = $contract->{transfer}{register};
     }
 
-    return {
+    my $report = {
         schema => 'fsmgen.ial2.protocol_intent.apb_completer.v1',
         mode   => 'completer',
         layering => {
@@ -844,14 +975,19 @@ sub _build_report(%args) {
                 module         => $contract->{actor_name},
             },
         },
-        generated_scheduler_or_completer_rules => _report_generated_rules($multi_register, _contract_has_sidebands($contract)),
+        generated_scheduler_or_completer_rules => _report_generated_rules($multi_register, _contract_has_sidebands($contract), $has_access_policy),
         assumptions => _report_assumptions($multi_register, $contract),
         enforced_static_rules => _report_enforced_static_rules($multi_register, $contract),
         unsupported_residue => _report_unsupported_residue($multi_register, $contract),
     };
+
+    $report->{protection_policy} = _protection_policy_report($contract)
+        if $has_access_policy;
+
+    return $report;
 }
 
-sub _report_generated_rules($multi_register, $sidebands) {
+sub _report_generated_rules($multi_register, $sidebands, $has_access_policy) {
     return [
         {
             id     => 'apb_setup_detect',
@@ -865,7 +1001,9 @@ sub _report_generated_rules($multi_register, $sidebands) {
         },
         {
             id     => 'apb_register_or_error_response',
-            detail => $multi_register
+            detail => $has_access_policy
+                ? 'Generated IAL1 applies register-local PPROT access policies before mapped reads and writes, returns PSLVERR for denied or unmapped accesses, and keeps denied writes side-effect-free.'
+                : $multi_register
                 ? ($sidebands
                     ? 'Generated IAL1 applies PSTRB byte enables to selected decoded-register writes, reads selected registers, and drives PSLVERR for unmapped addresses.'
                     : 'Generated IAL1 updates or reads the selected decoded register and drives PSLVERR for unmapped addresses.')
@@ -914,6 +1052,7 @@ sub _report_enforced_static_rules($multi_register, $contract) {
         'clock, reset, control, bus, storage, and generated local names must be unique ISF identifiers',
         "address width is fixed at 32 bits; write-data, read-data, and register data widths are fixed at the selected $data_width-bit APB data width for this slice",
         ($sidebands ? ("sideband-aware completer contracts require PPROT width 3 and data-derived PSTRB width $strobe_width") : ()),
+        (_storage_has_access_policy($contract->{storage}) ? ('access-policy is register-local, requires sideband-aware 32-bit multi-register completers, and supports allow or privileged PPROT[0] equality predicates only') : ()),
         'wait-cycles width is fixed at 4 bits for this slice',
         'setup detection must require select 1 and enable 0',
     );
@@ -938,9 +1077,7 @@ sub _report_unsupported_residue($multi_register, $contract) {
         id     => 'apb_multi_register_decode_deferred',
         detail => 'Additional register locations, range decode, byte lanes, and side effects remain future APB completer work.',
     } unless $multi_register;
-    push @residue, $sidebands
-        ? _apb_protection_policy_effects_residue()
-        : _apb_sideband_residue();
+    push @residue, _apb_protection_residue($contract);
     push @residue,
         _apb_completer_width_residue($contract),
         {
@@ -948,6 +1085,64 @@ sub _report_unsupported_residue($multi_register, $contract) {
             detail => 'Back-to-back setup admission and queued transfer policy remain future exact-owner work.',
         };
     return \@residue;
+}
+
+sub _protection_policy_report($contract) {
+    my @register_reports = map {
+        {
+            name  => $_->{name},
+            read  => _protection_policy_operation_report($_->{access_policy}{read}),
+            write => _protection_policy_operation_report($_->{access_policy}{write}),
+        }
+    } grep { ref($_->{access_policy}) eq 'HASH' } _storage_registers($contract->{storage});
+
+    return {
+        scope               => 'register',
+        predicate_namespace => 'fsmgen_apb_pprot_v1',
+        predicate_source    => {
+            bus_signal     => $contract->{bus}{protection}{name},
+            sampled_signal => 'prot_q',
+            bit            => 0,
+        },
+        denied_read_behavior => {
+            ready     => 1,
+            read_data => 0,
+            error     => 1,
+        },
+        denied_write_behavior => {
+            ready          => 1,
+            read_data      => 0,
+            error          => 1,
+            storage_update => 'side_effect_free',
+        },
+        zero_strobe_write_policy => {
+            allowed => 'successful_no_byte_write',
+            denied  => 'error_side_effect_free',
+        },
+        registers => \@register_reports,
+    };
+}
+
+sub _protection_policy_operation_report($operation) {
+    return { action => 'allow' }
+        if ($operation->{action} // '') eq 'allow';
+    return {
+        action    => 'require',
+        predicate => {
+            kind        => 'privileged',
+            source_bit  => 'PPROT[0]',
+            value       => $operation->{predicate}{value},
+            expression  => $operation->{predicate}{value} ? 'PPROT[0] == 1' : 'PPROT[0] == 0',
+        },
+    };
+}
+
+sub _apb_protection_residue($contract) {
+    return _apb_sideband_residue()
+        unless _contract_has_sidebands($contract);
+    return _apb_additional_protection_policies_residue()
+        if _storage_has_access_policy($contract->{storage});
+    return _apb_protection_policy_effects_residue();
 }
 
 sub _apb_data_width($contract) {
@@ -1009,6 +1204,13 @@ sub _apb_protection_policy_effects_residue() {
     return {
         id     => 'apb_protection_policy_effects_deferred',
         detail => 'PPROT is sampled by the generated APB completer, but protection access-control policy remains future APB work.',
+    };
+}
+
+sub _apb_additional_protection_policies_residue() {
+    return {
+        id     => 'apb_additional_protection_policies_deferred',
+        detail => 'Register-local privileged PPROT[0] access policy is implemented for sideband-aware 32-bit multi-register APB completers; global, window-level, programmable, boolean, multi-predicate, and non-privileged policy families remain future APB work.',
     };
 }
 

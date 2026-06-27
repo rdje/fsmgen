@@ -786,6 +786,8 @@ sub _parse_apb_completer_storage_register($items, $source_label, $name) {
             $register{address} = _parse_apb_address_binding(\@body, $source_label, "apb-completer $name storage register $register_name address");
         } elsif ($head eq 'data') {
             $register{data} = _parse_apb_storage_data_binding(\@body, $source_label, "apb-completer $name storage register $register_name data");
+        } elsif ($head eq 'access-policy') {
+            $register{access_policy} = _parse_apb_completer_access_policy(\@body, $source_label, $name, $register_name);
         } else {
             confess "Error: .ppif (apb-completer $name (storage (register $register_name ...))) has unsupported clause '($head ...)'\n";
         }
@@ -797,6 +799,62 @@ sub _parse_apb_completer_storage_register($items, $source_label, $name) {
     }
 
     return \%register;
+}
+
+sub _parse_apb_completer_access_policy($items, $source_label, $name, $register_name) {
+    my %policy;
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-completer $name (storage (register $register_name (access-policy ...)))) supports only (read ...) and (write ...) clauses\n"
+            unless $head eq 'read' || $head eq 'write';
+        confess "Error: .ppif (apb-completer $name (storage (register $register_name (access-policy ...)))) has duplicate ($head ...) clause\n"
+            if exists $policy{$head};
+        $policy{$head} = _parse_apb_completer_access_policy_action(
+            \@body,
+            $source_label,
+            "apb-completer $name storage register $register_name access-policy $head",
+        );
+    }
+
+    for my $required (qw(read write)) {
+        confess "Error: .ppif (apb-completer $name (storage (register $register_name (access-policy ...)))) is missing required ($required ...) clause\n"
+            unless exists $policy{$required};
+    }
+
+    return \%policy;
+}
+
+sub _parse_apb_completer_access_policy_action($items, $source_label, $context) {
+    confess "Error: .ppif ($context ...) requires action allow or require\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $action = $items->[0];
+    return { action => 'allow' }
+        if $action eq 'allow' && @$items == 1;
+
+    confess "Error: .ppif ($context allow ...) does not accept predicates\n"
+        if $action eq 'allow';
+    confess "Error: .ppif ($context ...) supports only action allow or require\n"
+        unless $action eq 'require';
+    confess "Error: .ppif ($context require ...) requires exactly one predicate clause\n"
+        unless @$items == 2 && ref($items->[1]) eq 'ARRAY';
+
+    return {
+        action    => 'require',
+        predicate => _parse_apb_completer_access_policy_predicate($items->[1], $source_label, $context),
+    };
+}
+
+sub _parse_apb_completer_access_policy_predicate($clause, $source_label, $context) {
+    my ($head, @body) = _clause_parts($clause, $source_label);
+    confess "Error: .ppif ($context require ...) supports only (privileged 0) or (privileged 1)\n"
+        unless $head eq 'privileged';
+    confess "Error: .ppif ($context require (privileged ...)) requires exactly one scalar value 0 or 1\n"
+        unless @body == 1 && !ref($body[0]) && ($body[0] eq '0' || $body[0] eq '1');
+    return {
+        kind  => 'privileged',
+        value => int($body[0]),
+    };
 }
 
 sub _parse_apb_address_binding($body, $source_label, $context) {

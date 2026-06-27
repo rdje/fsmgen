@@ -4518,6 +4518,21 @@ additional `PPROT` predicates, global/window/peripheral policies,
 interconnect-owned enforcement, back-to-back policy, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.597` now ships the selected bounded APB `PPROT` access-policy behavior. The
+new sideband-aware 32-bit completer, fixed-composition, and multi-peripheral
+composition `.ppif`/`.apb` sample pairs accept register-local
+`(access-policy ...)` clauses. Completers evaluate sampled `PPROT[0]` against
+each selected register's `read`/`write` policy, preserve allowed byte-lane
+writes and reads, return `PSLVERR=1` plus zero `PRDATA` for denied reads, and
+return `PSLVERR=1` without storage updates for denied writes including
+`PSTRB=0`. Fixed and multi-peripheral composition remain propagation/mux-only
+for policy; selected completers own enforcement. Reports add
+`protection_policy` metadata and use
+`apb_additional_protection_policies_deferred`; data16 policy effects,
+additional `PPROT` predicates, global/window/peripheral policies,
+interconnect-owned enforcement, back-to-back policy, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred. `.598` now owns the next post-PPROT APB/IAL2 selector.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

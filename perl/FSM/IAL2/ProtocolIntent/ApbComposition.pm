@@ -1102,6 +1102,7 @@ sub _build_multi_peripheral_report(%args) {
             'decode policy is overlap reject, priority source-order, and unmapped-address error',
             'the generated APB interconnect fans out decoded PSEL, forwards control/data, translates local PADDR, muxes selected responses, and returns PSLVERR for unmapped active accesses',
             (_composition_has_sidebands($contract) ? ('sideband-aware multi-peripheral composition propagates PPROT width 3 and data-derived PSTRB width ' . _composition_strobe_width($contract) . ' through the generated APB interconnect') : ()),
+            (_composition_has_access_policy($contract) ? ('register-local PPROT access-policy enforcement is owned by the selected APB completer/peripheral; the generated composition and interconnect only propagate PPROT/PSTRB and mux selected responses') : ()),
             'APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
         unsupported_residue => _apb_multi_peripheral_unsupported_residue($contract),
@@ -1109,6 +1110,8 @@ sub _build_multi_peripheral_report(%args) {
 
     $report->{requester_status_field} = _clone_jsonish($requester_result->{report}{response_status_field})
         if defined $requester_result->{report}{response_status_field};
+    $report->{protection_policy} = _multi_peripheral_protection_policy_report($peripheral_results)
+        if _composition_has_access_policy($contract);
 
     return $report;
 }
@@ -1167,7 +1170,7 @@ sub _multi_response_mux_report($contract) {
 }
 
 sub _interconnect_child_report($contract, $interconnect) {
-    return {
+    my $report = {
         role                => 'interconnect',
         instance_name       => $interconnect->{instance_name},
         object_name         => $interconnect->{object_name},
@@ -1197,6 +1200,11 @@ sub _interconnect_child_report($contract, $interconnect) {
         },
         unsupported_residue => _clone_jsonish(_apb_multi_peripheral_interconnect_unsupported_residue($contract)),
     };
+    $report->{protection_policy} = {
+        enforcement_owner => 'peripheral_completers',
+        interconnect_role => 'propagate_pprot_pstrb_and_mux_selected_response_only',
+    } if _composition_has_access_policy($contract);
+    return $report;
 }
 
 sub _composition_has_sidebands($contract) {
@@ -1250,7 +1258,7 @@ sub _apb_bus_data_bytes($bus) {
 
 sub _apb_multi_peripheral_unsupported_residue($contract) {
     return [
-        _composition_has_sidebands($contract) ? _apb_protection_policy_effects_residue() : _apb_sideband_residue(),
+        _apb_composition_protection_residue($contract),
         _apb_alternate_widths_residue($contract),
         _apb_back_to_back_residue(),
     ];
@@ -1258,7 +1266,7 @@ sub _apb_multi_peripheral_unsupported_residue($contract) {
 
 sub _apb_multi_peripheral_interconnect_unsupported_residue($contract) {
     return [
-        _composition_has_sidebands($contract) ? _apb_protection_policy_effects_residue() : _apb_sideband_residue(),
+        _apb_composition_protection_residue($contract),
         _apb_alternate_widths_residue($contract),
         _apb_back_to_back_residue(),
     ];
@@ -1276,6 +1284,21 @@ sub _apb_protection_policy_effects_residue() {
         id     => 'apb_protection_policy_effects_deferred',
         detail => 'PPROT is propagated through the generated APB composition and interconnect, but protection access-control policy remains future APB work.',
     };
+}
+
+sub _apb_additional_protection_policies_residue() {
+    return {
+        id     => 'apb_additional_protection_policies_deferred',
+        detail => 'Register-local privileged PPROT[0] access policy is implemented by selected APB completer endpoints; global, window-level, interconnect-owned, programmable, boolean, multi-predicate, and non-privileged policy families remain future APB work.',
+    };
+}
+
+sub _apb_composition_protection_residue($contract) {
+    return _apb_sideband_residue()
+        unless _composition_has_sidebands($contract);
+    return _apb_additional_protection_policies_residue()
+        if _composition_has_access_policy($contract);
+    return _apb_protection_policy_effects_residue();
 }
 
 sub _apb_alternate_widths_residue($contract) {
@@ -1367,6 +1390,7 @@ sub _build_report(%args) {
             'composition children must reference the embedded requester and completer objects by name',
             'composition bus wiring must match requester and completer APB signal names and widths',
             (_composition_has_sidebands($contract) ? ('sideband-aware composition wiring requires PPROT width 3 and data-derived PSTRB width ' . _composition_strobe_width($contract) . ' across requester, completer, and composition bus bindings') : ()),
+            (_composition_has_access_policy($contract) ? ('register-local PPROT access-policy enforcement is owned by the completer child; the fixed composition only propagates PPROT/PSTRB and selected endpoint responses') : ()),
             'APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
         unsupported_residue => _apb_composition_unsupported_residue($contract),
@@ -1374,6 +1398,8 @@ sub _build_report(%args) {
 
     $report->{requester_status_field} = _clone_jsonish($requester_result->{report}{response_status_field})
         if defined $requester_result->{report}{response_status_field};
+    $report->{protection_policy} = _fixed_composition_protection_policy_report($contract, $completer_result)
+        if _composition_has_access_policy($contract);
 
     return $report;
 }
@@ -1406,7 +1432,7 @@ sub _apb_composition_unsupported_residue($contract) {
     } unless _apb_completer_has_multi_registers($contract);
 
     push @residue, (
-        _composition_has_sidebands($contract) ? _apb_protection_policy_effects_residue() : _apb_sideband_residue(),
+        _apb_composition_protection_residue($contract),
         _apb_alternate_widths_residue($contract),
         {
             id     => 'apb_back_to_back_policy_deferred',
@@ -1420,6 +1446,65 @@ sub _apb_composition_unsupported_residue($contract) {
 sub _apb_completer_has_multi_registers($contract) {
     return ref($contract->{completer}{storage}{registers}) eq 'ARRAY'
         && @{$contract->{completer}{storage}{registers}} > 1;
+}
+
+sub _composition_has_access_policy($contract) {
+    if (_is_multi_peripheral_contract($contract)) {
+        for my $completer (@{$contract->{completers} || []}) {
+            return 1 if _endpoint_has_access_policy($completer);
+        }
+        return 0;
+    }
+    return _endpoint_has_access_policy($contract->{completer});
+}
+
+sub _endpoint_has_access_policy($endpoint) {
+    my $storage = $endpoint->{storage};
+    return 0 unless ref($storage) eq 'HASH';
+    for my $register (_endpoint_storage_registers($storage)) {
+        return 1 if ref($register->{access_policy}) eq 'HASH';
+    }
+    return 0;
+}
+
+sub _endpoint_storage_registers($storage) {
+    return @{$storage->{registers}} if ref($storage->{registers}) eq 'ARRAY';
+    return ($storage->{register}) if ref($storage->{register}) eq 'HASH';
+    return ();
+}
+
+sub _fixed_composition_protection_policy_report($contract, $completer_result) {
+    return undef unless ref($completer_result->{report}{protection_policy}) eq 'HASH';
+    my $child = $contract->{composition}{children}{completer};
+    return {
+        enforcement_owner => 'completer',
+        composition_role  => 'propagate_pprot_pstrb_and_selected_response_only',
+        completer         => {
+            instance_name => $child->{instance_name},
+            object_name   => $child->{object_name},
+        },
+        child_policy      => _clone_jsonish($completer_result->{report}{protection_policy}),
+    };
+}
+
+sub _multi_peripheral_protection_policy_report($peripheral_results) {
+    my @peripherals;
+    for my $entry (@$peripheral_results) {
+        my $policy = $entry->{result}{report}{protection_policy};
+        next unless ref($policy) eq 'HASH';
+        push @peripherals, {
+            instance_name           => $entry->{child}{instance_name},
+            generated_instance_name => _generated_instance_name($entry->{child}),
+            object_name             => $entry->{child}{object_name},
+            child_policy            => _clone_jsonish($policy),
+        };
+    }
+    return undef unless @peripherals;
+    return {
+        enforcement_owner => 'peripheral_completers',
+        interconnect_role => 'propagate_pprot_pstrb_and_mux_selected_response_only',
+        peripherals       => \@peripherals,
+    };
 }
 
 sub _child_report($role, $child, $result) {
@@ -1438,6 +1523,8 @@ sub _child_report($role, $child, $result) {
         if defined $child->{generated_instance_name};
     $report->{response_status_field} = _clone_jsonish($result->{report}{response_status_field})
         if defined $result->{report}{response_status_field};
+    $report->{protection_policy} = _clone_jsonish($result->{report}{protection_policy})
+        if defined $result->{report}{protection_policy};
 
     return $report;
 }

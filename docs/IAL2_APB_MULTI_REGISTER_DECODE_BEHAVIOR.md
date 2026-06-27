@@ -28,6 +28,17 @@ ppif/apb_composition_multi_register_sideband_data16.ppif
 ppif/apb_composition_multi_register_sideband_data16.apb
 ```
 
+Update `.597`: sideband-aware 32-bit protection variants add register-local
+`access-policy` enforcement without changing existing unprotected
+multi-register samples:
+
+```text
+ppif/apb_completer_multi_register_sideband_protection.ppif
+ppif/apb_completer_multi_register_sideband_protection.apb
+ppif/apb_composition_multi_register_sideband_protection.ppif
+ppif/apb_composition_multi_register_sideband_protection.apb
+```
+
 ## Source Shape
 
 The selected syntax is repeated `(register ...)` clauses under the existing
@@ -52,6 +63,10 @@ write transfer policy remains `(read register)`, `(write register)`, and
 For `.594` data16 sideband variants, register data width is 16, `PSTRB` width
 is 2, and decoded register addresses are 2-byte aligned. The shipped data16
 samples map address `0` to `reg0_data_q` and address `2` to `reg1_data_q`.
+
+For `.597` protection variants, each selected 32-bit sideband-aware register may
+carry an `(access-policy ...)` block. The first policy predicate is
+`(privileged 0|1)`, which maps to sampled `PPROT[0]`.
 
 ## Generated Behavior
 
@@ -108,6 +123,11 @@ The data16 sideband reports add `width_policy` metadata and replace the broad
 `apb_alternate_widths_deferred` residue with
 `apb_remaining_widths_deferred`. See
 [IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR](IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md).
+
+The protection sideband reports add `protection_policy` metadata and replace
+`apb_protection_policy_effects_deferred` with
+`apb_additional_protection_policies_deferred`. See
+[IAL2_APB_PPROT_EFFECTS_BEHAVIOR](IAL2_APB_PPROT_EFFECTS_BEHAVIOR.md).
 
 ## CLI Examples
 

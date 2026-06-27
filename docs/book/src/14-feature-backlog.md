@@ -10261,6 +10261,26 @@ interconnect-owned enforcement, back-to-back policy, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
 
+APB PPROT access-policy behavior:
+[IAL2_APB_PPROT_EFFECTS_BEHAVIOR](../../IAL2_APB_PPROT_EFFECTS_BEHAVIOR.md)
+ships `.597`, the selected bounded APB `PPROT` access-control behavior. New
+sideband-aware 32-bit completer, fixed-composition, and multi-peripheral
+composition `.ppif`/`.apb` samples accept register-local `(access-policy ...)`
+clauses on completer storage registers. The first public predicate is
+`(privileged VALUE)`, defined as sampled `PPROT[0] == VALUE`. Completers
+evaluate the selected register's policy at the normal response point: allowed
+reads/writes keep existing sideband behavior, denied reads return
+`PREADY=1`, `PSLVERR=1`, and `PRDATA=0`, and denied writes return
+`PREADY=1` and `PSLVERR=1` without storage updates, including when `PSTRB=0`.
+Fixed and multi-peripheral composition only propagate `PPROT/PSTRB` and mux
+selected responses; completers own enforcement. Reports add
+`protection_policy` metadata and use
+`apb_additional_protection_policies_deferred`; data16 policy effects,
+additional predicates, global/window/peripheral policies, interconnect-owned
+enforcement, back-to-back policy, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred. `.598` is the
+next post-PPROT APB/IAL2 selector.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

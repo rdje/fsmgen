@@ -1,7 +1,8 @@
 # IAL2 APB Profile-Alias Behavior
 
 Task-tree owners: `IAL2-FEATURE-COMPLETENESS-FRONTIER.554`,
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.569`
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.569`,
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.597`
 
 Date: 2026-06-26
 
@@ -22,15 +23,18 @@ ppif/apb_completer.apb
 ppif/apb_completer_multi_register.apb
 ppif/apb_completer_multi_register_sideband.apb
 ppif/apb_completer_multi_register_sideband_data16.apb
+ppif/apb_completer_multi_register_sideband_protection.apb
 ppif/apb_composition.apb
 ppif/apb_composition_busy.apb
 ppif/apb_composition_status.apb
 ppif/apb_composition_multi_register.apb
 ppif/apb_composition_multi_register_sideband.apb
 ppif/apb_composition_multi_register_sideband_data16.apb
+ppif/apb_composition_multi_register_sideband_protection.apb
 ppif/apb_composition_multi_peripheral.apb
 ppif/apb_composition_multi_peripheral_sideband.apb
 ppif/apb_composition_multi_peripheral_sideband_data16.apb
+ppif/apb_composition_multi_peripheral_sideband_protection.apb
 ```
 
 They mirror the generic APB IAL2 samples:
@@ -45,15 +49,18 @@ ppif/apb_completer.ppif
 ppif/apb_completer_multi_register.ppif
 ppif/apb_completer_multi_register_sideband.ppif
 ppif/apb_completer_multi_register_sideband_data16.ppif
+ppif/apb_completer_multi_register_sideband_protection.ppif
 ppif/apb_composition.ppif
 ppif/apb_composition_busy.ppif
 ppif/apb_composition_status.ppif
 ppif/apb_composition_multi_register.ppif
 ppif/apb_composition_multi_register_sideband.ppif
 ppif/apb_composition_multi_register_sideband_data16.ppif
+ppif/apb_composition_multi_register_sideband_protection.ppif
 ppif/apb_composition_multi_peripheral.ppif
 ppif/apb_composition_multi_peripheral_sideband.ppif
 ppif/apb_composition_multi_peripheral_sideband_data16.ppif
+ppif/apb_composition_multi_peripheral_sideband_protection.ppif
 ```
 
 `.apb` is not a separate APB language, not an APB-to-FSM shortcut, not a direct
@@ -91,6 +98,10 @@ Sideband-aware aliases may use the existing 32-bit data contract with 4-bit
 contract keeps 32-bit addresses, 4-bit wait counts, 3-bit `PPROT`, and 2-bit
 requester status. See
 [IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR](IAL2_APB_ALTERNATE_WIDTH_DATA16_BEHAVIOR.md).
+
+Protection aliases may use register-local `(access-policy ...)` clauses on the
+selected sideband-aware 32-bit multi-register completer shapes. See
+[IAL2_APB_PPROT_EFFECTS_BEHAVIOR](IAL2_APB_PPROT_EFFECTS_BEHAVIOR.md).
 
 ## Lowering And Reports
 
