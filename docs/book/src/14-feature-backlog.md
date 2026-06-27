@@ -10018,6 +10018,18 @@ Direct implementation is not ready until `.580` selects public source syntax,
 deterministic ordering, address uniqueness/diagnostics, report migration,
 generated storage naming, sample/support/test scope, and deferred boundaries.
 
+APB multi-register decode contract:
+[IAL2_APB_MULTI_REGISTER_DECODE_CONTRACT_SELECTION](../../IAL2_APB_MULTI_REGISTER_DECODE_CONTRACT_SELECTION.md)
+selects `.581`, direct bounded APB multi-register completer decode
+implementation, without changing behavior. The selected syntax is repeated
+`(register ...)` clauses under `(storage ...)`, in source order. The first
+implementation keeps unique decimal 32-bit 4-byte-aligned addresses, 32-bit
+register data, reset 0, existing register read/write policy, and
+unmapped-address error behavior. Existing one-register reports remain
+unchanged; multi-register reports add `bindings.storage.registers[]` and
+`transfer.registers[]`. New standalone completer and status-capable
+fixed-composition `.ppif`/`.apb` samples are selected for `.581`.
+
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.ppif
 ./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status.ppif

@@ -4335,6 +4335,16 @@ implementation is not ready until `.580` selects public source syntax,
 deterministic ordering, address uniqueness/diagnostics, report migration,
 generated storage naming, sample/support/test scope, and deferred boundaries.
 
+`.580` now selects `.581`, direct bounded APB multi-register completer decode
+implementation, without changing behavior. The selected public syntax is
+repeated `(register ...)` clauses under `(storage ...)`, in source order. The
+first implementation keeps unique decimal 32-bit 4-byte-aligned addresses,
+32-bit register data, reset 0, existing register read/write policy, and
+unmapped-address error behavior. Existing one-register reports remain
+unchanged; multi-register reports add `bindings.storage.registers[]` and
+`transfer.registers[]`. New standalone completer and status-capable
+fixed-composition `.ppif`/`.apb` samples are selected for `.581`.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
