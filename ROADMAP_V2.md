@@ -4472,6 +4472,16 @@ to the 32-bit/4-strobe shape. Existing generated IAL1/IAL0 width-bearing
 ports, bitwise operations, concatenation, `when-bit`, and masked
 read-modify-write expressions are enough for bounded static-width contract
 selection, so `.593` must settle the public width matrix before behavior work.
+`.593` now selects `.594`, direct bounded implementation of sideband-aware
+16-bit APB data/strobe variants, without changing behavior. The selected
+contract keeps address width and address-map parameter width at 32, completer
+wait-count width at 4, `PPROT` at 3, and requester status at 2. New `data16`
+requester, multi-register completer, fixed multi-register composition, and
+multi-peripheral composition sample pairs will use 16-bit write/read/register
+data and 2-bit `PSTRB`/write-strobe, with register and address-map window
+alignment tied to the 2-byte data beat. Selected 16-bit reports replace
+`apb_alternate_widths_deferred` with narrower remaining-width residue;
+`PPROT` policy effects and back-to-back policy remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
