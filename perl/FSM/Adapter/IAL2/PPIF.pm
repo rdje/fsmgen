@@ -726,18 +726,19 @@ sub _parse_apb_completer_storage_block($items, $source_label, $name) {
     my @registers;
 
     for my $clause (@$items) {
+        next unless defined $clause;
         my ($head, @body) = _clause_parts($clause, $source_label);
         confess "Error: .ppif (apb-completer $name (storage ...)) has unsupported clause '($head ...)'\n"
             unless $head eq 'register';
         push @registers, _parse_apb_completer_storage_register(\@body, $source_label, $name);
     }
 
-    confess "Error: .ppif (apb-completer $name (storage ...)) supports exactly one (register ...) clause in this slice\n"
-        unless @registers == 1;
+    confess "Error: .ppif (apb-completer $name (storage ...)) requires at least one (register ...) clause\n"
+        unless @registers;
 
-    return {
-        register => $registers[0],
-    };
+    return @registers == 1
+        ? { register => $registers[0] }
+        : { registers => \@registers };
 }
 
 sub _parse_apb_completer_storage_register($items, $source_label, $name) {

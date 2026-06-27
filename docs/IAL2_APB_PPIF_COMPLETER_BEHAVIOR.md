@@ -157,6 +157,19 @@ The alias preserves the authored `.apb` public source path, support-accounts as
 `intent.apb_profile_alias_completer`, and lowers through the same generated
 `apb_completer.isf` and `apb_completer.fsm` review artifacts.
 
+The later `.581` slice adds additive multi-register completer samples:
+
+```text
+ppif/apb_completer_multi_register.ppif
+ppif/apb_completer_multi_register.apb
+```
+
+Those samples use repeated `(register ...)` clauses under `(storage ...)`,
+emit source-order `bindings.storage.registers[]` and `transfer.registers[]`
+report lists, and remove `apb_multi_register_decode_deferred` only from the
+new multi-register reports. The original one-register samples documented here
+keep their singular report fields and residue.
+
 ## Residue
 
 The APB completer report keeps these future APB owners explicit:
@@ -178,11 +191,12 @@ the hand-authored fixture.
 ## Non-Goals
 
 This `.562` slice does not add multi-peripheral APB interconnect/decode
-generation, sidebands, alternate widths, multiple register decode, byte lanes,
-back-to-back policy, direct IAL2-to-IAL0 lowering, direct backend lowering,
-verification-output generation, backend-language variants, AXI behavior, or
-VHDL behavior. The later fixed one-requester/one-completer APB composition
-behavior and the `.569` `.apb` alias expansion are documented separately.
+generation, sidebands, alternate widths, byte lanes, back-to-back policy,
+direct IAL2-to-IAL0 lowering, direct backend lowering, verification-output
+generation, backend-language variants, AXI behavior, or VHDL behavior. The
+later fixed one-requester/one-completer APB composition behavior, the `.569`
+`.apb` alias expansion, and the `.581` additive multi-register APB completer
+behavior are documented separately.
 
 ## Validation
 

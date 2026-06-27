@@ -226,6 +226,15 @@ Those reports remove both requester busy/status residues and preserve the
 selected status encoding metadata. See
 [IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR](IAL2_APB_REQUESTER_STATUS_FIELD_BEHAVIOR.md).
 
+The later `.581` additive multi-register composition samples at
+`ppif/apb_composition_multi_register.ppif` and
+`ppif/apb_composition_multi_register.apb` keep the status-capable top-level
+requester response and embed a completer with source-order decoded registers at
+addresses `0` and `4`. Those reports remove
+`apb_multi_register_decode_deferred` while preserving the multi-peripheral,
+sideband/strobe, alternate-width, and back-to-back APB residues. See
+[IAL2_APB_MULTI_REGISTER_DECODE_BEHAVIOR](IAL2_APB_MULTI_REGISTER_DECODE_BEHAVIOR.md).
+
 ## Non-Goals
 
 This `.566` slice does not add a multi-peripheral APB interconnect/decode
@@ -236,6 +245,7 @@ lowering, verification-output generation, backend-language variants, AXI
 behavior, or VHDL behavior. The later `.569` slice documents the matching
 `.apb` alias exposure; the later `.572` slice documents separate busy-capable
 composition samples; the later `.577` slice documents separate status-capable
+composition samples; the later `.581` slice documents additive multi-register
 composition samples.
 
 ## Validation

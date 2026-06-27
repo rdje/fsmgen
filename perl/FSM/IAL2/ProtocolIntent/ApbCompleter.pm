@@ -122,7 +122,7 @@ sub _normalize_contract($raw) {
         $bus->{ready},
         $bus->{read_data}{name},
         $bus->{error},
-        $storage->{register}{data}{name},
+        (map { $_->{data}{name} } _storage_registers($storage)),
         qw(addr write_q wdata_q wait_n apb_complete_done_q),
     );
 
@@ -177,6 +177,14 @@ sub _normalize_bus($raw) {
 }
 
 sub _normalize_storage($raw) {
+    confess "APB completer IAL2 contract storage must not provide both register and registers fields\n"
+        if exists($raw->{register}) && exists($raw->{registers});
+    if (exists $raw->{registers}) {
+        confess "APB completer IAL2 contract storage.registers must be a non-empty array reference\n"
+            unless ref($raw->{registers}) eq 'ARRAY' && @{$raw->{registers}};
+        return _normalize_multi_register_storage($raw->{registers});
+    }
+
     confess "APB completer IAL2 contract storage.register must be a hash reference\n"
         unless ref($raw->{register}) eq 'HASH';
     my $register = $raw->{register};
@@ -191,6 +199,33 @@ sub _normalize_storage($raw) {
             data    => $data,
         },
     };
+}
+
+sub _normalize_multi_register_storage($registers) {
+    my (@normalized, %register_names, %data_names, %address_values);
+    for my $index (0 .. $#$registers) {
+        my $register = $registers->[$index];
+        confess "APB completer IAL2 contract storage.registers[$index] must be a hash reference\n"
+            unless ref($register) eq 'HASH';
+        my $name = _required_identifier_field($register, 'name', "storage.registers[$index].name");
+        confess "APB completer IAL2 contract duplicate storage register name '$name'\n"
+            if $register_names{$name}++;
+        my $address = _normalize_decoded_address_binding($register->{address}, "storage.registers[$index].address");
+        confess "APB completer IAL2 contract duplicate storage register address '$address->{value}'\n"
+            if $address_values{$address->{value}}++;
+        my $data = _normalize_storage_data($register->{data}, "storage.registers[$index].data", 32, 0);
+        confess "APB completer IAL2 contract duplicate storage register data signal '$data->{name}'\n"
+            if $data_names{$data->{name}}++;
+        push @normalized, {
+            name    => $name,
+            address => $address,
+            data    => $data,
+        };
+    }
+
+    return @normalized == 1
+        ? { register => $normalized[0] }
+        : { registers => \@normalized };
 }
 
 sub _normalize_storage_data($raw, $field, $expected_width, $expected_reset) {
@@ -221,6 +256,23 @@ sub _normalize_address_binding($raw, $field, $expected_value, $expected_width) {
     };
 }
 
+sub _normalize_decoded_address_binding($raw, $field) {
+    confess "APB completer IAL2 contract $field must be an address/width hash reference\n"
+        unless ref($raw) eq 'HASH';
+    my $value = _integer_value($raw->{value}, "$field.value");
+    my $width = _positive_integer($raw->{width}, "$field.width");
+    confess "APB completer IAL2 contract $field.width must be 32 in this slice\n"
+        unless $width == 32;
+    confess "APB completer IAL2 contract $field.value must fit in 32 bits in this slice\n"
+        if $value > 0xffffffff;
+    confess "APB completer IAL2 contract $field.value must be 4-byte aligned in this slice\n"
+        unless $value % 4 == 0;
+    return {
+        value => $value,
+        width => $width,
+    };
+}
+
 sub _normalize_transfer($raw, $control, $storage) {
     my $name = _required_identifier_field($raw, 'name', 'transfer.name');
     my $setup_detect = _normalize_phase(_required_hash_field($raw, 'setup_detect', 'transfer.setup_detect'), 'transfer.setup_detect');
@@ -240,15 +292,22 @@ sub _normalize_transfer($raw, $control, $storage) {
     confess "APB completer IAL2 contract transfer.unmapped_address must be error in this slice\n"
         unless $unmapped_address eq 'error';
 
-    return {
+    my %transfer = (
         name             => $name,
         setup_detect     => $setup_detect,
         wait_cycles      => $wait_cycles,
         read             => $read,
         write            => $write,
         unmapped_address => $unmapped_address,
-        register         => $storage->{register}{name},
-    };
+    );
+    if (_storage_is_multi_register($storage)) {
+        $transfer{registers} = [map { $_->{name} } _storage_registers($storage)];
+    } else {
+        my ($register) = _storage_registers($storage);
+        $transfer{register} = $register->{name};
+    }
+
+    return \%transfer;
 }
 
 sub _normalize_phase($raw, $field) {
@@ -361,6 +420,16 @@ sub _reject_duplicate_signal_names(@names) {
     }
 }
 
+sub _storage_registers($storage) {
+    return @{$storage->{registers}} if ref($storage->{registers}) eq 'ARRAY';
+    return ($storage->{register}) if ref($storage->{register}) eq 'HASH';
+    return ();
+}
+
+sub _storage_is_multi_register($storage) {
+    return ref($storage->{registers}) eq 'ARRAY' && @{$storage->{registers}} > 1;
+}
+
 sub _normalize_source_anchors($anchors) {
     confess "APB completer IAL2 contract source.anchors must be an array reference\n"
         unless ref($anchors) eq 'ARRAY';
@@ -386,6 +455,12 @@ sub _normalize_source_anchors($anchors) {
 }
 
 sub _emit_isf($contract) {
+    return _emit_multi_register_isf($contract)
+        if _storage_is_multi_register($contract->{storage});
+    return _emit_single_register_isf($contract);
+}
+
+sub _emit_single_register_isf($contract) {
     my $control = $contract->{control};
     my $bus = $contract->{bus};
     my $storage = $contract->{storage}{register};
@@ -460,6 +535,117 @@ sub _emit_isf($contract) {
     );
 }
 
+sub _emit_multi_register_isf($contract) {
+    my $control = $contract->{control};
+    my $bus = $contract->{bus};
+    my $transfer = $contract->{transfer};
+    my $reset = _reset_clause($contract->{reset});
+    my $ready = $bus->{ready};
+    my $read_data = $bus->{read_data}{name};
+    my $error = $bus->{error};
+    my $internal_done = 'apb_complete_done_q';
+    my @registers = _storage_registers($contract->{storage});
+
+    my @storage_lines = map {
+        "    (var $_->{data}{name} (width $_->{data}{width}) (reset $_->{data}{reset}))"
+    } @registers;
+    push @storage_lines, "    (var $internal_done (width 1) (reset 0)))";
+
+    my @read_drive_lines;
+    for my $register (@registers) {
+        push @read_drive_lines,
+            "  (drive " . _read_drive_name($register),
+            "    ($ready 1)",
+            "    ($read_data $register->{data}{name})",
+            "    ($error 0))",
+            "";
+    }
+
+    my $any_address_hit = _any_register_match_expr(@registers);
+    my @transaction_register_lines;
+    for my $register (@registers) {
+        my $match = _register_match_expr($register);
+        push @transaction_register_lines,
+            "    (when (& write_q $match)",
+            "      (set $register->{data}{name} wdata_q)",
+            "      (drive write_hit))";
+    }
+    push @transaction_register_lines,
+        "    (when (& write_q (! $any_address_hit))",
+        "      (drive error_complete))";
+    for my $register (@registers) {
+        my $match = _register_match_expr($register);
+        push @transaction_register_lines,
+            "    (when (& (! write_q) $match)",
+            "      (drive " . _read_drive_name($register) . "))";
+    }
+    push @transaction_register_lines,
+        "    (when (& (! write_q) (! $any_address_hit))",
+        "      (drive error_complete))";
+
+    return join("\n",
+        "(actor $contract->{actor_name}",
+        "  (clock $contract->{clock})",
+        "  $reset",
+        "  (watchdog 65536)",
+        "",
+        "  (interface",
+        _interface_line('input', $bus->{select}),
+        _interface_line('input', $bus->{enable}),
+        _interface_line('input', $bus->{write}),
+        _interface_line('input', $bus->{address}),
+        _interface_line('input', $bus->{write_data}),
+        _interface_line('input', $control->{wait_cycles}),
+        _interface_line('output', $bus->{ready}),
+        _interface_line('output', $bus->{read_data}),
+        _interface_line('output', $bus->{error}) . ")",
+        "",
+        "  (storage",
+        @storage_lines,
+        "",
+        "  (drive enter_access",
+        "    ($ready 0)",
+        "    ($read_data 0)",
+        "    ($error 0))",
+        "",
+        @read_drive_lines,
+        "  (drive write_hit",
+        "    ($ready 1)",
+        "    ($read_data 0)",
+        "    ($error 0))",
+        "",
+        "  (drive error_complete",
+        "    ($ready 1)",
+        "    ($read_data 0)",
+        "    ($error 1))",
+        "",
+        "  (transaction $transfer->{name}",
+        "    (when (& $bus->{select} (! $bus->{enable}))",
+        "      (sample $bus->{address}{name} as addr)",
+        "      (sample $bus->{write} as write_q)",
+        "      (sample $bus->{write_data}{name} as wdata_q)",
+        "      (sample $control->{wait_cycles}{name} as wait_n))",
+        "    (drive enter_access)",
+        "    (wait wait_n)",
+        @transaction_register_lines,
+        "    (complete $internal_done)))",
+        "",
+    );
+}
+
+sub _read_drive_name($register) {
+    return "read_$register->{name}_hit";
+}
+
+sub _register_match_expr($register) {
+    return "(== addr $register->{address}{value})";
+}
+
+sub _any_register_match_expr(@registers) {
+    return _register_match_expr($registers[0]) if @registers == 1;
+    return "(| " . join(' ', map { _register_match_expr($_) } @registers) . ")";
+}
+
 sub _interface_line($direction, $binding) {
     return "    ($direction $binding)"
         unless ref($binding) eq 'HASH';
@@ -478,6 +664,7 @@ sub _reset_clause($reset) {
 sub _build_report(%args) {
     my $contract = $args{contract};
     my @fsm_files = @{$args{fsm_files} || []};
+    my $multi_register = _storage_is_multi_register($contract->{storage});
 
     my %source_object = (
         id      => $contract->{source_object_id},
@@ -485,6 +672,20 @@ sub _build_report(%args) {
     );
     $source_object{intent_name} = $contract->{intent_name}
         if defined($contract->{intent_name}) && length($contract->{intent_name});
+
+    my %transfer_report = (
+        name             => $contract->{transfer}{name},
+        setup_detect     => _clone_jsonish($contract->{transfer}{setup_detect}),
+        wait_cycles      => $contract->{transfer}{wait_cycles},
+        read             => $contract->{transfer}{read},
+        write            => $contract->{transfer}{write},
+        unmapped_address => $contract->{transfer}{unmapped_address},
+    );
+    if ($multi_register) {
+        $transfer_report{registers} = _clone_jsonish($contract->{transfer}{registers});
+    } else {
+        $transfer_report{register} = $contract->{transfer}{register};
+    }
 
     return {
         schema => 'fsmgen.ial2.protocol_intent.apb_completer.v1',
@@ -513,15 +714,7 @@ sub _build_report(%args) {
             bus     => _clone_jsonish($contract->{bus}),
             storage => _clone_jsonish($contract->{storage}),
         },
-        transfer => {
-            name             => $contract->{transfer}{name},
-            setup_detect     => _clone_jsonish($contract->{transfer}{setup_detect}),
-            wait_cycles      => $contract->{transfer}{wait_cycles},
-            read             => $contract->{transfer}{read},
-            write            => $contract->{transfer}{write},
-            unmapped_address => $contract->{transfer}{unmapped_address},
-            register         => $contract->{transfer}{register},
-        },
+        transfer => \%transfer_report,
         generated_artifacts => {
             ial1 => {
                 name   => $args{isf_name},
@@ -538,69 +731,100 @@ sub _build_report(%args) {
                 module         => $contract->{actor_name},
             },
         },
-        generated_scheduler_or_completer_rules => [
-            {
-                id     => 'apb_setup_detect',
-                detail => 'Generated IAL1 samples PADDR, PWRITE, PWDATA, and wait_cycles only when PSEL is asserted and PENABLE is low.',
-            },
-            {
-                id     => 'apb_access_wait',
-                detail => 'Generated IAL1 drives PREADY low, waits for the sampled runtime wait count, and then completes the APB access.',
-            },
-            {
-                id     => 'apb_register_or_error_response',
-                detail => 'Generated IAL1 updates or reads the address-0 register and drives PSLVERR for unmapped addresses.',
-            },
-        ],
-        assumptions => [
-            {
-                id     => 'single_register_map',
-                detail => 'This first APB completer PPIF slice models one 32-bit address-0 register and one transfer at a time.',
-            },
-            {
-                id     => 'generated_ial1_review_artifact',
-                detail => 'The source lowers through generated IAL1 before generated IAL0; direct IAL2-to-IAL0 lowering remains forbidden.',
-            },
-            {
-                id     => 'internal_completion_pulse',
-                detail => 'The generated IAL1 uses an internal completion storage bit to make the APB transaction terminal without adding a public done port.',
-            },
-        ],
-        enforced_static_rules => [
-            'contract object must be a hash reference',
-            'profile must be apb and the object must be apb-completer',
-            'role must be completer',
-            'clock, reset, control, bus, storage, and generated local names must be unique ISF identifiers',
-            'address, write-data, read-data, and register data widths are fixed at 32 bits for this slice',
-            'wait-cycles width is fixed at 4 bits for this slice',
-            'setup detection must require select 1 and enable 0',
-            'the only implemented register address is 0 and reset value is 0',
-            'read and write behavior must target the selected register and unmapped addresses must assert error',
-            'APB completer is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
-        ],
-        unsupported_residue => [
-            {
-                id     => 'apb_interconnect_multi_peripheral_decode_deferred',
-                detail => 'The one-requester/one-completer APB composition is support-accounted through generic .ppif; multi-peripheral address decode and routing remain future APB interconnect work.',
-            },
-            {
-                id     => 'apb_multi_register_decode_deferred',
-                detail => 'Additional register locations, range decode, byte lanes, and side effects remain future APB completer work.',
-            },
-            {
-                id     => 'apb_protection_and_strobes_deferred',
-                detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
-            },
-            {
-                id     => 'apb_alternate_widths_deferred',
-                detail => 'The public APB PPIF completer source fixes address, write-data, read-data, register data, and wait-count widths.',
-            },
-            {
-                id     => 'apb_back_to_back_policy_deferred',
-                detail => 'Back-to-back setup admission and queued transfer policy remain future exact-owner work.',
-            },
-        ],
+        generated_scheduler_or_completer_rules => _report_generated_rules($multi_register),
+        assumptions => _report_assumptions($multi_register),
+        enforced_static_rules => _report_enforced_static_rules($multi_register),
+        unsupported_residue => _report_unsupported_residue($multi_register),
     };
+}
+
+sub _report_generated_rules($multi_register) {
+    return [
+        {
+            id     => 'apb_setup_detect',
+            detail => 'Generated IAL1 samples PADDR, PWRITE, PWDATA, and wait_cycles only when PSEL is asserted and PENABLE is low.',
+        },
+        {
+            id     => 'apb_access_wait',
+            detail => 'Generated IAL1 drives PREADY low, waits for the sampled runtime wait count, and then completes the APB access.',
+        },
+        {
+            id     => 'apb_register_or_error_response',
+            detail => $multi_register
+                ? 'Generated IAL1 updates or reads the selected decoded register and drives PSLVERR for unmapped addresses.'
+                : 'Generated IAL1 updates or reads the address-0 register and drives PSLVERR for unmapped addresses.',
+        },
+    ];
+}
+
+sub _report_assumptions($multi_register) {
+    my $map_assumption = $multi_register
+        ? {
+            id     => 'bounded_register_map',
+            detail => 'This APB completer PPIF slice models source-ordered 32-bit 4-byte-aligned registers and one transfer at a time.',
+        }
+        : {
+            id     => 'single_register_map',
+            detail => 'This first APB completer PPIF slice models one 32-bit address-0 register and one transfer at a time.',
+        };
+
+    return [
+        $map_assumption,
+        {
+            id     => 'generated_ial1_review_artifact',
+            detail => 'The source lowers through generated IAL1 before generated IAL0; direct IAL2-to-IAL0 lowering remains forbidden.',
+        },
+        {
+            id     => 'internal_completion_pulse',
+            detail => 'The generated IAL1 uses an internal completion storage bit to make the APB transaction terminal without adding a public done port.',
+        },
+    ];
+}
+
+sub _report_enforced_static_rules($multi_register) {
+    my @rules = (
+        'contract object must be a hash reference',
+        'profile must be apb and the object must be apb-completer',
+        'role must be completer',
+        'clock, reset, control, bus, storage, and generated local names must be unique ISF identifiers',
+        'address, write-data, read-data, and register data widths are fixed at 32 bits for this slice',
+        'wait-cycles width is fixed at 4 bits for this slice',
+        'setup detection must require select 1 and enable 0',
+    );
+    push @rules, $multi_register
+        ? 'register names, register data signals, and register addresses must be unique; register addresses must be 32-bit 4-byte-aligned decimal values and reset values must be 0'
+        : 'the only implemented register address is 0 and reset value is 0';
+    push @rules,
+        'read and write behavior must target the selected register and unmapped addresses must assert error',
+        'APB completer is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden';
+    return \@rules;
+}
+
+sub _report_unsupported_residue($multi_register) {
+    my @residue = (
+        {
+            id     => 'apb_interconnect_multi_peripheral_decode_deferred',
+            detail => 'The one-requester/one-completer APB composition is support-accounted through generic .ppif; multi-peripheral address decode and routing remain future APB interconnect work.',
+        },
+    );
+    push @residue, {
+        id     => 'apb_multi_register_decode_deferred',
+        detail => 'Additional register locations, range decode, byte lanes, and side effects remain future APB completer work.',
+    } unless $multi_register;
+    push @residue,
+        {
+            id     => 'apb_protection_and_strobes_deferred',
+            detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
+        },
+        {
+            id     => 'apb_alternate_widths_deferred',
+            detail => 'The public APB PPIF completer source fixes address, write-data, read-data, register data, and wait-count widths.',
+        },
+        {
+            id     => 'apb_back_to_back_policy_deferred',
+            detail => 'Back-to-back setup admission and queued transfer policy remain future exact-owner work.',
+        };
+    return \@residue;
 }
 
 sub _clone_jsonish($value) {

@@ -333,14 +333,18 @@ that same requester-transfer behavior. Additive requester variants at
 selected busy-gated 2-bit `status` field. The APB completer can be authored
 from `ppif/apb_completer.ppif` or `ppif/apb_completer.apb`, lowering through
 generated `apb_completer.isf` before generated `apb_completer.fsm` for the
-bounded address-0 register completer subset. The fixed one-requester/
+bounded address-0 register completer subset; additive multi-register completer
+variants at `ppif/apb_completer_multi_register.{ppif,apb}` decode
+source-ordered 32-bit aligned register addresses. The fixed one-requester/
 one-completer APB composition can be authored from `ppif/apb_composition.ppif`
-or `ppif/apb_composition.apb`, with busy and status variants at
+or `ppif/apb_composition.apb`, with busy/status variants at
 `ppif/apb_composition_busy.{ppif,apb}` and
-`ppif/apb_composition_status.{ppif,apb}`. Composition sources lower through
-generated requester/completer `.isf` and `.fsm` review artifacts before the
-selected top `apb_tb.fsm`. See [Feature Backlog](14-feature-backlog.md) for
-runnable APB `.ppif` and `.apb` commands and the current APB residue list.
+`ppif/apb_composition_status.{ppif,apb}` plus status-capable multi-register
+variants at `ppif/apb_composition_multi_register.{ppif,apb}`. Composition
+sources lower through generated requester/completer `.isf` and `.fsm` review
+artifacts before the selected top `apb_tb.fsm`. See
+[Feature Backlog](14-feature-backlog.md) for runnable APB `.ppif` and `.apb`
+commands and the current APB residue list.
 
 ### Public Interface Contract
 

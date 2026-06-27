@@ -40,6 +40,8 @@ subtest 'adapter accepts the selected .apb profile alias and preserves lowering'
 subtest 'adapter accepts APB completer and composition .apb profile aliases' => sub {
     ok(-f sample_apb_completer_alias_path(), 'tracked runnable APB completer .apb sample exists');
     ok(-f sample_apb_composition_alias_path(), 'tracked runnable APB composition .apb sample exists');
+    ok(-f sample_apb_completer_multi_register_alias_path(), 'tracked runnable APB multi-register completer .apb sample exists');
+    ok(-f sample_apb_composition_multi_register_alias_path(), 'tracked runnable APB multi-register composition .apb sample exists');
 
     my $completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_alias_path());
     my $completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_ppif_path());
@@ -53,6 +55,20 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     is_deeply($composition_alias->{generated_ial1}{items}, $composition_ppif->{generated_ial1}{items}, '.apb composition mirrors .ppif generated IAL1 artifacts');
     is_deeply($composition_alias->{generated_ial0}{files}, $composition_ppif->{generated_ial0}{files}, '.apb composition mirrors .ppif generated IAL0 files');
     is($composition_alias->{report}{generated_artifacts}{hdl_entry}{entry_artifact}, 'apb_tb.fsm', '.apb composition keeps apb_tb.fsm as HDL entry');
+
+    my $multi_completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_alias_path());
+    my $multi_completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_ppif_path());
+    is($multi_completer_alias->{kind}, 'protocol_intent.apb_completer', '.apb multi-register completer parser result keeps APB completer kind');
+    is($multi_completer_alias->{generated_ial1}{text}, $multi_completer_ppif->{generated_ial1}{text}, '.apb multi-register completer mirrors .ppif generated IAL1 text');
+    is_deeply($multi_completer_alias->{generated_ial0}{files}, $multi_completer_ppif->{generated_ial0}{files}, '.apb multi-register completer mirrors .ppif generated IAL0 files');
+    is_deeply($multi_completer_alias->{report}{transfer}{registers}, [qw(reg0 reg1)], '.apb multi-register completer preserves transfer register list');
+
+    my $multi_composition_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_alias_path());
+    my $multi_composition_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_ppif_path());
+    is($multi_composition_alias->{kind}, 'protocol_intent.apb_composition', '.apb multi-register composition parser result keeps APB composition kind');
+    is_deeply($multi_composition_alias->{generated_ial1}{items}, $multi_composition_ppif->{generated_ial1}{items}, '.apb multi-register composition mirrors .ppif generated IAL1 artifacts');
+    is_deeply($multi_composition_alias->{generated_ial0}{files}, $multi_composition_ppif->{generated_ial0}{files}, '.apb multi-register composition mirrors .ppif generated IAL0 files');
+    is_deeply($multi_composition_alias->{report}{children}[1]{transfer}{registers}, [qw(reg0 reg1)], '.apb multi-register composition preserves completer register list');
 };
 
 subtest 'adapter rejects .apb profile and behavior boundaries' => sub {
@@ -165,6 +181,50 @@ subtest 'CLI check and semantic JSON report APB composition .apb public source i
     is($semantic_report->{support_accounting}{entry_id}, 'intent.apb_profile_alias_composition', 'APB composition .apb semantic JSON names the profile-alias corpus entry');
     is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'APB composition .apb semantic JSON payload describes the generated top semantic root');
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'APB composition .apb semantic JSON records the generated top module');
+};
+
+subtest 'CLI check and semantic JSON report APB multi-register .apb public source identity' => sub {
+    my @cases = (
+        {
+            label => 'APB multi-register completer',
+            path => sample_apb_completer_multi_register_alias_path(),
+            entry_id => 'intent.apb_profile_alias_completer_multi_register',
+            source_root_kind => 'fsm',
+            module => 'apb_completer',
+        },
+        {
+            label => 'APB multi-register composition',
+            path => sample_apb_composition_multi_register_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_multi_register',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+        },
+    );
+
+    for my $case (@cases) {
+        my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+            command => ['./bin/fsmgen', '--strict', '--check', '--json', $case->{path}],
+        );
+        ok($success, "$case->{label} .apb --check --json succeeds");
+        is(join('', @{$stderr_buf || []}), '', "$case->{label} .apb --check --json keeps stderr clean");
+        my $check_report = decode_json(join('', @{$stdout_buf || []}));
+        ok($check_report->{success}, "$case->{label} .apb check JSON reports success");
+        is($check_report->{source}{resolved_path}, File::Spec->rel2abs($case->{path}), "$case->{label} .apb check JSON reports the public alias source path");
+        is($check_report->{support_accounting}{entry_id}, $case->{entry_id}, "$case->{label} .apb check JSON names the profile-alias corpus entry");
+        is($check_report->{support_accounting}{source_kind}, 'ial2_profile_alias', "$case->{label} .apb check JSON records profile-alias source kind");
+
+        my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+            command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $case->{path}],
+        );
+        ok($semantic_success, "$case->{label} .apb --emit-semantic-json succeeds");
+        is(join('', @{$semantic_stderr || []}), '', "$case->{label} .apb --emit-semantic-json keeps stderr clean");
+        my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+        ok($semantic_report->{success}, "$case->{label} .apb semantic JSON reports success");
+        is($semantic_report->{source}{resolved_path}, File::Spec->rel2abs($case->{path}), "$case->{label} .apb semantic JSON reports the public alias source path");
+        is($semantic_report->{support_accounting}{entry_id}, $case->{entry_id}, "$case->{label} .apb semantic JSON names the profile-alias corpus entry");
+        is($semantic_report->{semantic}{module}{source_root_kind}, $case->{source_root_kind}, "$case->{label} .apb semantic JSON records source root kind");
+        is($semantic_report->{semantic}{module}{name}, $case->{module}, "$case->{label} .apb semantic JSON records generated module");
+    }
 };
 
 subtest 'CLI check and semantic JSON report .apb public source identity' => sub {
@@ -520,8 +580,20 @@ sub sample_apb_completer_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer.ppif');
 }
 
+sub sample_apb_completer_multi_register_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register.apb');
+}
+
+sub sample_apb_completer_multi_register_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register.ppif');
+}
+
 sub sample_apb_composition_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition.apb');
+}
+
+sub sample_apb_composition_multi_register_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register.apb');
 }
 
 sub sample_apb_composition_busy_alias_path {
@@ -534,6 +606,10 @@ sub sample_apb_composition_status_alias_path {
 
 sub sample_apb_composition_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition.ppif');
+}
+
+sub sample_apb_composition_multi_register_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register.ppif');
 }
 
 sub sample_apb_composition_busy_ppif_path {

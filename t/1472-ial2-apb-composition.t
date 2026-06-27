@@ -134,6 +134,44 @@ subtest 'adapter parses the status-capable APB composition PPIF shape' => sub {
     ok(!$residue{apb_requester_busy_status_deferred}, 'status report keeps requester busy/status deferred residue absent');
 };
 
+subtest 'adapter parses the status-capable APB multi-register composition PPIF shape' => sub {
+    ok(-f sample_apb_composition_multi_register_ppif_path(), 'tracked runnable multi-register APB composition PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'multi-register APB composition adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_composition', 'multi-register adapter returns the APB composition kind');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-composition-multi-register', 'multi-register APB composition source object id is preserved');
+    is($result->{report}{composition}{name}, 'apb_tb', 'multi-register APB composition report captures top name');
+
+    my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
+    like($top, qr/=busy>/, 'multi-register APB composition top keeps requester busy output');
+    like($top, qr/=status>2/, 'multi-register APB composition top exposes requester status output');
+    like($top, qr/\(reg0_data_q 32 \(reset 0\)\)/, 'multi-register APB composition top embeds first completer register');
+    like($top, qr/\(reg1_data_q 32 \(reset 0\)\)/, 'multi-register APB composition top embeds second completer register');
+    like($top, qr/\(<- \(reg1_data_q wdata_q\)\)/, 'multi-register APB composition top embeds second-register write behavior');
+    like($top, qr/\(<- \(PRDATA> reg1_data_q\) <read_reg1_hit_start\)/, 'multi-register APB composition top embeds second-register read behavior');
+
+    is($result->{report}{requester_status_field}{name}, 'status', 'multi-register APB composition report exposes requester status metadata');
+    my $completer_child = $result->{report}{children}[1];
+    is($completer_child->{role}, 'completer', 'multi-register report carries completer child second');
+    is_deeply(
+        [map { $_->{name} } @{$completer_child->{bindings}{storage}{registers}}],
+        [qw(reg0 reg1)],
+        'multi-register composition child report preserves completer register list',
+    );
+    is_deeply($completer_child->{transfer}{registers}, [qw(reg0 reg1)], 'multi-register composition child report preserves transfer register list');
+
+    my %composition_residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$composition_residue{apb_multi_register_decode_deferred}, 'multi-register composition report removes multi-register deferred residue');
+    ok(!$composition_residue{apb_requester_status_field_deferred}, 'multi-register composition report keeps status-field residue absent');
+    ok(!$composition_residue{apb_requester_busy_status_deferred}, 'multi-register composition report keeps requester busy/status deferred residue absent');
+
+    my %child_residue = map { $_->{id} => 1 } @{$completer_child->{unsupported_residue}};
+    ok(!$child_residue{apb_multi_register_decode_deferred}, 'multi-register composition child completer report removes multi-register deferred residue');
+    ok($child_residue{apb_interconnect_multi_peripheral_decode_deferred}, 'multi-register composition child completer keeps interconnect residue explicit');
+};
+
 subtest 'adapter rejects malformed APB composition PPIF shapes with targeted diagnostics' => sub {
     my $missing_composition = sample_apb_composition_ppif();
     $missing_composition =~ s/\n  \(apb-composition apb_tb\n    \(role composition\)\n    \(clock clk\)\n    \(reset \(rst_n active_low async\)\)\n    \(children\n      \(requester requester apb_requester\)\n      \(completer completer apb_completer\)\)\n    \(wiring apb_bus\n      \(select PSEL\)\n      \(enable PENABLE\)\n      \(write PWRITE\)\n      \(address PADDR width 32\)\n      \(write-data PWDATA width 32\)\n      \(ready PREADY\)\n      \(read-data PRDATA width 32\)\n      \(error PSLVERR\)\)\)//;
@@ -156,6 +194,31 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
         ok(!$ok, "$label is rejected");
         like($@, $pattern, "$label diagnostic is targeted");
     }
+};
+
+subtest 'CLI check and semantic JSON support-account multi-register APB composition PPIF identity' => sub {
+    my $path = sample_apb_composition_multi_register_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'multi-register APB composition --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'multi-register APB composition --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'multi-register APB composition check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'multi-register APB composition check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_register', 'multi-register APB composition check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'multi-register APB composition check JSON records PPIF source kind');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'multi-register APB composition --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'multi-register APB composition --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'multi-register APB composition semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_register', 'multi-register APB composition semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'multi-register APB composition semantic JSON payload describes the generated composition root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'multi-register APB composition semantic JSON records the generated top module');
 };
 
 subtest 'CLI check and semantic JSON support-account APB composition PPIF identity' => sub {
@@ -231,6 +294,48 @@ subtest 'CLI check and semantic JSON support-account status APB composition PPIF
     is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_status', 'status APB composition semantic JSON names the corpus entry');
     is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'status APB composition semantic JSON payload describes the generated composition root');
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'status APB composition semantic JSON records the generated top module');
+};
+
+subtest 'CLI schedule JSON, outdir, and .apb alias expose multi-register APB composition review artifacts' => sub {
+    my $path = sample_apb_composition_multi_register_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'multi-register APB composition --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'multi-register APB composition --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{schema}, 'fsmgen.ial2.protocol_intent.apb_composition.v1', 'multi-register APB composition schedule JSON reports schema');
+    is($schedule_report->{generated_artifacts}{hdl_entry}{entry_artifact}, 'apb_tb.fsm', 'multi-register APB composition schedule JSON reports the HDL entry');
+    is_deeply($schedule_report->{children}[1]{transfer}{registers}, [qw(reg0 reg1)], 'multi-register APB composition schedule JSON reports completer register list');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_multi_register_decode_deferred}, 'multi-register APB composition schedule JSON omits multi-register deferred residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_tb_multi.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'multi-register APB composition CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'multi-register APB composition generation keeps stderr clean');
+    for my $artifact (qw(apb_requester.isf apb_completer.isf apb_requester.fsm apb_completer.fsm apb_tb.fsm)) {
+        ok(-f File::Spec->catfile($outdir, $artifact), "multi-register APB composition --outdir writes $artifact");
+    }
+    ok(-f $hdl, 'multi-register APB composition --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\bmodule\s+apb_tb\b/, 'multi-register APB composition HDL contains the generated top module');
+    like($sv, qr/\boutput\s+reg\s+\[1:0\]\s+status\b/, 'multi-register APB composition HDL exposes requester status');
+    like($sv, qr/\breg \[31:0\] reg1_data_q\b/, 'multi-register APB composition HDL carries second completer register');
+    like($sv, qr/PRDATA_next = reg1_data_q;/, 'multi-register APB composition HDL can mux PRDATA from second storage register');
+
+    ok(-f sample_apb_composition_multi_register_apb_path(), 'tracked runnable multi-register APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'multi-register .apb APB composition alias returns the composition kind');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'multi-register .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'multi-register .apb APB composition alias mirrors .ppif generated IAL0');
+    is_deeply($alias->{report}{children}[1]{transfer}{registers}, [qw(reg0 reg1)], 'multi-register .apb APB composition alias preserves completer register list');
 };
 
 subtest 'CLI schedule JSON, outdir, and .apb alias expose APB composition review artifacts' => sub {
@@ -378,6 +483,14 @@ sub sample_apb_composition_status_ppif_path {
 
 sub sample_apb_composition_status_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_status.apb');
+}
+
+sub sample_apb_composition_multi_register_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register.ppif');
+}
+
+sub sample_apb_composition_multi_register_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register.apb');
 }
 
 sub sample_apb_composition_ppif {

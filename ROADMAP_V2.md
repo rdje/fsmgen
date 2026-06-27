@@ -4345,6 +4345,20 @@ unchanged; multi-register reports add `bindings.storage.registers[]` and
 `transfer.registers[]`. New standalone completer and status-capable
 fixed-composition `.ppif`/`.apb` samples are selected for `.581`.
 
+`.581` now ships additive APB multi-register completer decode through
+`ppif/apb_completer_multi_register.ppif`,
+`ppif/apb_completer_multi_register.apb`,
+`ppif/apb_composition_multi_register.ppif`, and
+`ppif/apb_composition_multi_register.apb`. Repeated register clauses decode
+source-order 32-bit aligned addresses, update/read only the selected register,
+and drive `PSLVERR` on unmapped addresses. Existing one-register APB samples
+and singular report fields remain unchanged. Multi-register reports expose
+`bindings.storage.registers[]` and `transfer.registers[]`, remove
+`apb_multi_register_decode_deferred`, and keep multi-peripheral topology,
+sidebands/strobes, alternate widths, back-to-back policy, direct backend,
+verification-output, backend-language variants, AXI follow-on, and VHDL
+deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

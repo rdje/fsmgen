@@ -10030,19 +10030,36 @@ unchanged; multi-register reports add `bindings.storage.registers[]` and
 `transfer.registers[]`. New standalone completer and status-capable
 fixed-composition `.ppif`/`.apb` samples are selected for `.581`.
 
+APB multi-register decode behavior:
+[IAL2_APB_MULTI_REGISTER_DECODE_BEHAVIOR](../../IAL2_APB_MULTI_REGISTER_DECODE_BEHAVIOR.md)
+ships `.581`, additive APB multi-register completer decode for generated
+completer and status-capable fixed-composition sources. The shipped samples
+are `ppif/apb_completer_multi_register.ppif`,
+`ppif/apb_completer_multi_register.apb`,
+`ppif/apb_composition_multi_register.ppif`, and
+`ppif/apb_composition_multi_register.apb`. Repeated `(register ...)` clauses
+under `(storage ...)` decode source-order 32-bit aligned register addresses;
+the shipped samples map address `0` to `reg0_data_q` and address `4` to
+`reg1_data_q`. Existing one-register APB samples keep their singular report
+fields and `apb_multi_register_decode_deferred` residue. Multi-register
+reports use `bindings.storage.registers[]` and `transfer.registers[]` and
+remove `apb_multi_register_decode_deferred` while keeping multi-peripheral
+topology, sidebands/strobes, alternate widths, and back-to-back policy
+deferred.
+
 ```bash
-./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.ppif
-./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status.ppif
-./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer_status.ppif
-./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.apb
-./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status.apb
-./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer_status.apb
-./bin/fsmgen --emit-schedule-json ppif/apb_composition_status.ppif
-./bin/fsmgen --strict --check --json ppif/apb_composition_status.ppif
-./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_status.ppif
-./bin/fsmgen --emit-schedule-json ppif/apb_composition_status.apb
-./bin/fsmgen --strict --check --json ppif/apb_composition_status.apb
-./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_status.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_completer_multi_register.ppif
+./bin/fsmgen --strict --check --json ppif/apb_completer_multi_register.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_completer_multi_register.ppif
+./bin/fsmgen --emit-schedule-json ppif/apb_completer_multi_register.apb
+./bin/fsmgen --strict --check --json ppif/apb_completer_multi_register.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_completer_multi_register.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_register.ppif
+./bin/fsmgen --strict --check --json ppif/apb_composition_multi_register.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_multi_register.ppif
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_register.apb
+./bin/fsmgen --strict --check --json ppif/apb_composition_multi_register.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_multi_register.apb
 ```
 
 Post multiple dynamic multi-beat selector:

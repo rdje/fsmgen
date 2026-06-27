@@ -472,11 +472,12 @@ sub _apb_composition_unsupported_residue($contract) {
         };
     }
 
+    push @residue, {
+        id     => 'apb_multi_register_decode_deferred',
+        detail => 'The generated completer endpoint still models one address-0 register and leaves broader register decode to future APB work.',
+    } unless _apb_completer_has_multi_registers($contract);
+
     push @residue, (
-        {
-            id     => 'apb_multi_register_decode_deferred',
-            detail => 'The generated completer endpoint still models one address-0 register and leaves broader register decode to future APB work.',
-        },
         {
             id     => 'apb_protection_and_strobes_deferred',
             detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
@@ -492,6 +493,11 @@ sub _apb_composition_unsupported_residue($contract) {
     );
 
     return \@residue;
+}
+
+sub _apb_completer_has_multi_registers($contract) {
+    return ref($contract->{completer}{storage}{registers}) eq 'ARRAY'
+        && @{$contract->{completer}{storage}{registers}} > 1;
 }
 
 sub _child_report($role, $child, $result) {

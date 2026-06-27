@@ -4,7 +4,6 @@ title: APB multi-register contract selects repeated register clauses
 answers:
   - "what is the selected APB multi-register source syntax?"
   - "what does IAL2-FEATURE-COMPLETENESS-FRONTIER.580 select?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.581?"
   - "how will APB multi-register reports look?"
   - "does .580 change APB behavior?"
 date: 2026-06-27
