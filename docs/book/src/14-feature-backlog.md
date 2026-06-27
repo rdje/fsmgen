@@ -10188,6 +10188,19 @@ APB alternate widths, PPROT access-control effects, and back-to-back policy
 remain explicit deferred residues. `.592` now owns APB alternate-width
 readiness audit.
 
+APB alternate-width readiness:
+[IAL2_APB_ALTERNATE_WIDTH_READINESS_AUDIT](../../IAL2_APB_ALTERNATE_WIDTH_READINESS_AUDIT.md)
+selects `.593`, public APB alternate-width contract selection, without
+changing behavior. Parser syntax already preserves APB width tokens, but
+validators and generated behavior still pin the APB slice to 32-bit
+address/data/register/address-map widths, 4-bit wait controls, 3-bit `PPROT`,
+and 4-bit `PSTRB`. Requester `PSTRB` drive, completer `strb_q`, byte-lane
+masks, and address-map width remain hard-coded to the 32-bit/4-strobe shape.
+Existing generated IAL1/IAL0 width-bearing ports, bitwise operations,
+concatenation, `when-bit`, and masked read-modify-write expressions are enough
+for bounded static-width contract selection, so `.593` must settle the public
+width matrix before behavior work.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

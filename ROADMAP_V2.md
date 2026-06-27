@@ -4462,6 +4462,16 @@ fixtures. The stale broad "APB sidebands" deferral is removed from the generic
 `.ppif` public boundary, leaving APB alternate widths, PPROT access-control
 effects, and back-to-back policy explicit. `.592` now owns APB alternate-width
 readiness audit after the public surface is aligned.
+`.592` now selects `.593`, public APB alternate-width contract selection,
+without changing behavior. The audit found that parser syntax already
+preserves APB width tokens, but validators and generated behavior still pin
+the APB slice to 32-bit address/data/register/address-map widths, 4-bit wait
+controls, 3-bit `PPROT`, and 4-bit `PSTRB`; requester `PSTRB` drive,
+completer `strb_q`, byte-lane masks, and address-map width remain hard-coded
+to the 32-bit/4-strobe shape. Existing generated IAL1/IAL0 width-bearing
+ports, bitwise operations, concatenation, `when-bit`, and masked
+read-modify-write expressions are enough for bounded static-width contract
+selection, so `.593` must settle the public width matrix before behavior work.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
