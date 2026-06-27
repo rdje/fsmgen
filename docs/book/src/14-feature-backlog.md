@@ -10085,6 +10085,19 @@ artifact before generated IAL0 `.fsm` and HDL. AXI and AHB require separate
 protocol-specific future owners and cannot share APB interconnect/decode
 implementation logic.
 
+APB multi-peripheral interconnect/decode contract selection:
+[IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_CONTRACT_SELECTION](../../IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_CONTRACT_SELECTION.md)
+selects `.585`, direct bounded implementation, before behavior work. The
+selected public source remains `(apb-composition ...)`, adds repeated
+`(peripheral INSTANCE OBJECT)` APB completer children, an `(address-map ...)`
+with static parameter/generic-like base/size defaults, and `(decode (overlap
+reject) (priority source-order) (unmapped-address error))`. Lowering must
+generate reusable APB-specific `apb_interconnect.isf` and
+`apb_interconnect.fsm` review artifacts before `apb_tb.fsm`, add
+`ppif/apb_composition_multi_peripheral.ppif` and `.apb`, report additive
+peripheral/address-map/response-mux fields, and preserve all current APB
+samples.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

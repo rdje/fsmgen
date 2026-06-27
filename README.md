@@ -3376,6 +3376,18 @@ intent and parameter/generic-like instantiation bindings, then lower into a
 generated reusable APB IAL1 review artifact before generated IAL0 `.fsm` and
 HDL. AXI and AHB remain separate protocol-specific future owners; APB, AXI,
 and AHB interconnect/decode logic cannot be shared.
+`.584` now selects `.585`, direct bounded APB multi-peripheral
+interconnect/decode implementation, without changing behavior. The selected
+public source remains `(apb-composition ...)`, not a standalone
+`(apb-interconnect ...)` IAL2 object. The selected source widening adds two or
+more `(peripheral INSTANCE OBJECT)` APB completer children, an
+`(address-map ...)` block with static parameter/generic-like 32-bit base/size
+defaults, and a `(decode ...)` block selecting overlap rejection, source-order
+deterministic decode, and unmapped-address error response. The implementation
+owner must generate reusable APB-specific `apb_interconnect.isf` and
+`apb_interconnect.fsm` review artifacts before generated `apb_tb.fsm`, add
+`ppif/apb_composition_multi_peripheral.ppif` and `.apb`, and preserve existing
+fixed APB composition behavior.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5912,6 +5924,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_MULTI_REGISTER_DECODE_BEHAVIOR.md` — ships additive APB multi-register completer decode through standalone completer and status-capable composition `.ppif`/`.apb` samples, with source-order `registers[]` report fields and preserved one-register APB behavior.
 - `docs/IAL2_POST_APB_MULTI_REGISTER_NEXT_SLICE_SELECTION.md` — selects APB multi-peripheral interconnect/decode readiness audit after APB multi-register completer decode, without changing behavior.
 - `docs/IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_READINESS_AUDIT.md` — audits APB multi-peripheral interconnect/decode readiness, selects public contract selection before behavior work, and records the APB-specific generated reusable IAL1 review artifact direction.
+- `docs/IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_CONTRACT_SELECTION.md` — selects the APB multi-peripheral interconnect/decode source contract, generated `apb_interconnect.isf` review artifact, report fields, samples, diagnostics, and direct bounded implementation owner.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

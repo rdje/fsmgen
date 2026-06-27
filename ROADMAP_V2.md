@@ -4378,6 +4378,17 @@ selected direction is APB-specific generated reusable IAL1 review lowering,
 configured by IAL2 source-level parameter/generic-like topology/address-map
 bindings. AXI and AHB remain separate protocol-specific future owners; their
 interconnect/decode logic cannot share APB implementation logic.
+`.584` now selects `.585`, direct bounded APB multi-peripheral
+interconnect/decode implementation, without changing behavior. The selected
+contract keeps `(apb-composition ...)` as the IAL2 owner, adds repeated
+`(peripheral INSTANCE OBJECT)` APB completer children, `(address-map ...)`
+windows with static 32-bit parameter/generic-like base/size defaults,
+`(decode (overlap reject) (priority source-order) (unmapped-address error))`,
+local peripheral address translation, selected response muxing, generated
+`apb_interconnect.isf` before `apb_interconnect.fsm`, additive
+`apb_composition.v1` report fields, and new
+`ppif/apb_composition_multi_peripheral.ppif`/`.apb` samples. Existing fixed
+APB composition behavior remains unchanged.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
