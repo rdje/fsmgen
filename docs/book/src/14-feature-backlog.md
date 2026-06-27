@@ -10322,6 +10322,21 @@ admission, completer setup admission, composition propagation, report/support
 accounting movement, diagnostics, validation, rollback, and direct-backend/VHDL
 deferral before any timing-policy behavior change.
 
+APB back-to-back readiness audit:
+[IAL2_APB_BACK_TO_BACK_READINESS_AUDIT](../../IAL2_APB_BACK_TO_BACK_READINESS_AUDIT.md)
+selects `.606`, public APB back-to-back transfer policy contract selection,
+without behavior changes. Current requester reports model one outstanding
+transfer and deassert `PSEL/PENABLE` in the terminal phase. Current completers
+admit setup through `PSEL && !PENABLE` and report one-transfer-at-a-time
+assumptions. Fixed and multi-peripheral composition propagate selected endpoint
+behavior while requester, completer, top-level composition, and interconnect
+reports retain explicit `apb_back_to_back_policy_deferred` residue. The next
+contract must settle source vocabulary, explicit versus implicit timing-policy
+boundary, requester queued admission, completer setup admission,
+composition/interconnect propagation, report/support-accounting movement,
+diagnostics, validation, rollback, and direct-backend/VHDL deferral before
+behavior work.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

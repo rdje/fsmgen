@@ -6,7 +6,6 @@ answers:
   - "what comes after APB data16 PPROT policies?"
   - "which task owns APB back-to-back readiness?"
   - "why choose APB back-to-back before additional PPROT policies?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.605?"
 date: 2026-06-27
 status: current
 tags: [ial2, apb, pprot, data16, back-to-back, selector, task-tree]

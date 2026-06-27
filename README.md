@@ -3569,6 +3569,14 @@ changes. Back-to-back is the remaining APB timing/protocol residue spanning
 requester transfer admission, completer setup admission, and composition
 propagation; additional protection policies, remaining widths, direct backend,
 verification-output, backend-language/VHDL, AXI, and AHB remain deferred.
+`.605` now selects `.606`, public APB back-to-back transfer policy contract
+selection, without behavior changes. The audit confirmed that current
+requester reports model one outstanding transfer and deassert `PSEL/PENABLE`
+in the terminal phase, completers admit setup through `PSEL && !PENABLE` and
+report one-transfer-at-a-time assumptions, and fixed/multi-peripheral
+composition propagates selected endpoint behavior while retaining explicit
+`apb_back_to_back_policy_deferred` residue. No lower-layer/report/static
+prerequisite is selected before contract selection.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6121,6 +6129,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_PPROT_EFFECTS_BEHAVIOR.md` — ships register-local APB `PPROT[0]` privileged access-policy enforcement for sideband-aware 32-bit multi-register completers, fixed composition, and multi-peripheral composition.
 - `docs/IAL2_APB_DATA16_PPROT_EFFECTS_BEHAVIOR.md` — ships the selected `sideband_data16_protection` extension of register-local APB `PPROT[0]` privileged access-policy enforcement for sideband-aware 16-bit completers, fixed composition, and multi-peripheral composition.
 - `docs/IAL2_POST_APB_DATA16_PPROT_NEXT_SLICE_SELECTION.md` — selects APB back-to-back transfer policy readiness audit after data16 `PPROT` policy behavior, without behavior changes.
+- `docs/IAL2_APB_BACK_TO_BACK_READINESS_AUDIT.md` — audits APB requester queued admission, completer setup admission, and composition propagation readiness, then selects public back-to-back timing-policy contract selection before behavior changes.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

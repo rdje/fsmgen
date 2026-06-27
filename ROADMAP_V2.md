@@ -4570,6 +4570,16 @@ changes. Back-to-back is the remaining APB timing/protocol residue spanning
 requester transfer admission, completer setup admission, and composition
 propagation; additional protection policies, remaining widths, direct backend,
 verification-output, backend-language/VHDL, AXI, and AHB remain deferred.
+`.605` now selects `.606`, public APB back-to-back transfer policy contract
+selection, without behavior changes. The audit found no lower-layer,
+report-static, public-surface, or mdBook prerequisite before contract
+selection. Current requester, completer, fixed-composition, multi-peripheral
+composition, and interconnect reports retain explicit
+`apb_back_to_back_policy_deferred` residue, while `.606` must settle source
+vocabulary, explicit versus implicit timing-policy boundary, requester queued
+admission, completer setup admission, composition/interconnect propagation,
+report/support-accounting movement, diagnostics, validation, rollback, and
+direct-backend/VHDL deferral.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
