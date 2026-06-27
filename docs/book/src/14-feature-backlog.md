@@ -10372,6 +10372,19 @@ propagation, sideband/data16/protection variants, deeper queues, alternate
 overflow policies, direct backend, verification-output, backend-language
 variants, AXI, AHB, and VHDL.
 
+APB multi-peripheral back-to-back readiness:
+[IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_READINESS_AUDIT](../../IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_READINESS_AUDIT.md)
+audits APB multi-peripheral back-to-back propagation after fixed-composition
+behavior shipped. The generated interconnect is propagation-only: it decodes
+current `PSEL/PADDR`, forwards `PENABLE`, muxes selected responses, and returns
+unmapped errors only for active accesses (`PSEL && PENABLE`). That is
+structurally compatible with queued requester setup and per-peripheral adjacent
+setup admission. The audit selects `.609`, a direct bounded implementation for
+the 32-bit no-sideband multi-peripheral status back-to-back family, while
+sideband/data16/protection variants, deeper queues, alternate overflow,
+multiple active APB transfers, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

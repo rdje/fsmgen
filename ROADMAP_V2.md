@@ -4609,6 +4609,17 @@ aggregate `back_to_back_policy` metadata, remove broad
 propagation, sideband/data16/protection variants, deeper queues, alternate
 overflow policies, direct backend, verification-output, backend-language
 variants, AXI, AHB, and VHDL.
+`.608` now audits APB multi-peripheral back-to-back propagation readiness
+without behavior changes and selects `.609`, direct bounded implementation for
+the 32-bit no-sideband multi-peripheral status back-to-back family. The audit
+confirms the generated interconnect is propagation-only, decodes current
+`PSEL/PADDR`, forwards `PENABLE`, muxes selected responses, and returns
+unmapped errors only for active accesses (`PSEL && PENABLE`), so it is
+structurally compatible with queued requester setup and per-peripheral
+adjacent setup admission. Sideband/data16/protection variants, deeper queues,
+alternate overflow, multiple active APB transfers, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
