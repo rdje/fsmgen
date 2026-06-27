@@ -1289,7 +1289,7 @@ sub _apb_protection_policy_effects_residue() {
 sub _apb_additional_protection_policies_residue() {
     return {
         id     => 'apb_additional_protection_policies_deferred',
-        detail => 'Register-local privileged PPROT[0] access policy is implemented by selected APB completer endpoints; global, window-level, interconnect-owned, programmable, boolean, multi-predicate, and non-privileged policy families remain future APB work.',
+        detail => 'Register-local privileged PPROT[0] access policy is implemented by selected 16-bit and 32-bit APB completer endpoints; global, window-level, interconnect-owned, programmable, boolean, multi-predicate, and non-privileged policy families remain future APB work.',
     };
 }
 

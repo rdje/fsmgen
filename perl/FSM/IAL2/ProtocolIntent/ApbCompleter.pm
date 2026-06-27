@@ -353,8 +353,8 @@ sub _validate_access_policy_contract($storage, $bus) {
         unless _storage_is_multi_register($storage);
     confess "APB completer IAL2 contract access-policy requires bus.protection and bus.strobe sideband bindings in this slice\n"
         unless defined($bus->{protection}) && defined($bus->{strobe});
-    confess "APB completer IAL2 contract access-policy requires selected 32-bit APB data width in this slice\n"
-        unless $bus->{write_data}{width} == 32;
+    confess "APB completer IAL2 contract access-policy requires selected 16-bit or 32-bit APB data width in this slice\n"
+        unless $bus->{write_data}{width} == 16 || $bus->{write_data}{width} == 32;
 }
 
 sub _normalize_address_binding($raw, $field, $expected_value, $expected_width) {
@@ -1052,7 +1052,7 @@ sub _report_enforced_static_rules($multi_register, $contract) {
         'clock, reset, control, bus, storage, and generated local names must be unique ISF identifiers',
         "address width is fixed at 32 bits; write-data, read-data, and register data widths are fixed at the selected $data_width-bit APB data width for this slice",
         ($sidebands ? ("sideband-aware completer contracts require PPROT width 3 and data-derived PSTRB width $strobe_width") : ()),
-        (_storage_has_access_policy($contract->{storage}) ? ('access-policy is register-local, requires sideband-aware 32-bit multi-register completers, and supports allow or privileged PPROT[0] equality predicates only') : ()),
+        (_storage_has_access_policy($contract->{storage}) ? ('access-policy is register-local, requires sideband-aware 16-bit or 32-bit multi-register completers, and supports allow or privileged PPROT[0] equality predicates only') : ()),
         'wait-cycles width is fixed at 4 bits for this slice',
         'setup detection must require select 1 and enable 0',
     );
@@ -1210,7 +1210,7 @@ sub _apb_protection_policy_effects_residue() {
 sub _apb_additional_protection_policies_residue() {
     return {
         id     => 'apb_additional_protection_policies_deferred',
-        detail => 'Register-local privileged PPROT[0] access policy is implemented for sideband-aware 32-bit multi-register APB completers; global, window-level, programmable, boolean, multi-predicate, and non-privileged policy families remain future APB work.',
+        detail => 'Register-local privileged PPROT[0] access policy is implemented for sideband-aware 16-bit and 32-bit multi-register APB completers; global, window-level, programmable, boolean, multi-predicate, and non-privileged policy families remain future APB work.',
     };
 }
 

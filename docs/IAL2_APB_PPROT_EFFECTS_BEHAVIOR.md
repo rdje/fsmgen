@@ -1,13 +1,15 @@
 # IAL2 APB PPROT Access-Policy Behavior
 
-Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.597`
+Task-tree owners: `IAL2-FEATURE-COMPLETENESS-FRONTIER.597`,
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.603`
 
 Date: 2026-06-27
 
 ## Outcome
 
-FSMGen now ships the first bounded APB `PPROT` access-control behavior for
-sideband-aware 32-bit multi-register APB completers and compositions.
+FSMGen now ships bounded APB `PPROT` access-control behavior for
+sideband-aware 32-bit and data16 multi-register APB completers and
+compositions.
 
 New support-accounted samples:
 
@@ -18,10 +20,16 @@ ppif/apb_composition_multi_register_sideband_protection.ppif
 ppif/apb_composition_multi_register_sideband_protection.apb
 ppif/apb_composition_multi_peripheral_sideband_protection.ppif
 ppif/apb_composition_multi_peripheral_sideband_protection.apb
+ppif/apb_completer_multi_register_sideband_data16_protection.ppif
+ppif/apb_completer_multi_register_sideband_data16_protection.apb
+ppif/apb_composition_multi_register_sideband_data16_protection.ppif
+ppif/apb_composition_multi_register_sideband_data16_protection.apb
+ppif/apb_composition_multi_peripheral_sideband_data16_protection.ppif
+ppif/apb_composition_multi_peripheral_sideband_data16_protection.apb
 ```
 
-Existing APB samples without `access-policy` remain unchanged. Sideband-aware
-data16 policy effects remain deferred.
+Existing APB samples without `access-policy` remain unchanged, including the
+sideband-aware data16 no-policy samples.
 
 ## Source Shape
 
@@ -54,6 +62,19 @@ The first policy contract accepts only:
 No public semantics are added for `PPROT[1]`, `PPROT[2]`, secure/non-secure,
 instruction/data, boolean predicates, global policies, window policies,
 peripheral policies, or runtime-programmable policies.
+
+On data16 protection samples, the same policy syntax applies to selected
+2-byte-aligned registers with 16-bit data:
+
+```lisp
+(storage
+  (register reg1
+    (address 2 width 32)
+    (data reg1_data_q width 16 reset 0)
+    (access-policy
+      (read require (privileged 1))
+      (write require (privileged 1)))))
+```
 
 ## Generated Behavior
 
@@ -103,6 +124,12 @@ intent.ppif_apb_composition_multi_register_sideband_protection
 intent.apb_profile_alias_composition_multi_register_sideband_protection
 intent.ppif_apb_composition_multi_peripheral_sideband_protection
 intent.apb_profile_alias_composition_multi_peripheral_sideband_protection
+intent.ppif_apb_completer_multi_register_sideband_data16_protection
+intent.apb_profile_alias_completer_multi_register_sideband_data16_protection
+intent.ppif_apb_composition_multi_register_sideband_data16_protection
+intent.apb_profile_alias_composition_multi_register_sideband_data16_protection
+intent.ppif_apb_composition_multi_peripheral_sideband_data16_protection
+intent.apb_profile_alias_composition_multi_peripheral_sideband_data16_protection
 ```
 
 Selected completer reports add `protection_policy` metadata with:
@@ -120,10 +147,11 @@ Selected fixed and multi-peripheral composition reports expose
 `protection_policy` as propagation/mux metadata and identify completer or
 peripheral-completer enforcement ownership.
 
-Reports for the selected protection samples replace
+Reports for the selected 32-bit and data16 protection samples replace
 `apb_protection_policy_effects_deferred` with
 `apb_additional_protection_policies_deferred`. Existing sideband-aware samples
-without `access-policy`, including data16 samples, keep their prior residue.
+without `access-policy`, including the data16 no-policy samples, keep their
+prior residue.
 
 ## Diagnostics
 
@@ -131,7 +159,7 @@ The parser and normalizer reject unsupported policy shapes, including:
 
 - `access-policy` outside APB completer storage registers;
 - policy on sources without bus-side `PPROT/PSTRB`;
-- policy on the selected data16 path or on single-register completers;
+- policy on single-register completers or unsupported APB width families;
 - duplicate or missing `read`/`write` clauses;
 - actions other than `allow` and `require`;
 - `allow` with predicates;
@@ -166,8 +194,8 @@ composition:
 
 ## Non-Goals
 
-This slice does not add sideband-aware data16 policy effects, 8-bit or 64-bit
-policy variants, alternate address widths, alternate wait-count widths,
+This behavior does not add 8-bit or 64-bit policy variants, alternate address
+widths, alternate wait-count widths,
 `PPROT[1]` or `PPROT[2]` predicates, secure/non-secure policy,
 instruction/data policy, multiple predicates, boolean policy expressions,
 global completer policies, address-window policies, peripheral policies,
@@ -200,10 +228,12 @@ prove -l t/1471-ial2-apb-completer.t \
 
 ## Rollback
 
-Rollback of `.597` removes the six protection sample files, parser support for
-register-local `access-policy`, APB completer/composition policy lowering and
-reports, the six support-accounting identities, focused tests, this behavior
-record, its Knowledge Map fact card, regression-corpus doc sync, and the
-README/ROADMAP/mdBook/task-tree/memory updates. Earlier APB requester,
-completer, composition, `.apb`, busy/status, multi-register, multi-peripheral,
-sideband/strobe, and data16 behavior remains owned by previous slices.
+Rollback of `.597` removes the 32-bit protection sample files, parser support
+for register-local `access-policy` on 32-bit sideband completers, APB
+completer/composition 32-bit policy lowering and reports, the 32-bit
+support-accounting identities, and the matching docs/tests. Rollback of `.603`
+removes the data16 protection sample files, the data16 policy admission and
+lowering/report support, the data16 protection support-accounting identities,
+and the matching docs/tests. Earlier APB requester, completer, composition,
+`.apb`, busy/status, multi-register, multi-peripheral, sideband/strobe, and
+data16 no-policy behavior remains owned by previous slices.

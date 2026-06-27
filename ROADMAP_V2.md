@@ -4513,8 +4513,8 @@ denied reads drive `PRDATA=0`, denied writes are side-effect-free including
 `PSTRB=0`, and fixed/multi-peripheral composition propagates `PPROT` and muxes
 responses while selected completers own enforcement. Selected reports will
 replace `apb_protection_policy_effects_deferred` with
-`apb_additional_protection_policies_deferred`; data16 policy effects,
-additional `PPROT` predicates, global/window/peripheral policies,
+`apb_additional_protection_policies_deferred`. At that point, data16 policy
+effects, additional `PPROT` predicates, global/window/peripheral policies,
 interconnect-owned enforcement, back-to-back policy, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
@@ -4528,8 +4528,8 @@ return `PSLVERR=1` without storage updates for denied writes including
 `PSTRB=0`. Fixed and multi-peripheral composition remain propagation/mux-only
 for policy; selected completers own enforcement. Reports add
 `protection_policy` metadata and use
-`apb_additional_protection_policies_deferred`; data16 policy effects,
-additional `PPROT` predicates, global/window/peripheral policies,
+`apb_additional_protection_policies_deferred`. At that point, data16 policy
+effects, additional `PPROT` predicates, global/window/peripheral policies,
 interconnect-owned enforcement, back-to-back policy, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred. `.598` selected `.599`, APB profile-alias/public-surface
@@ -4555,6 +4555,17 @@ paths; the contract reuses register-local `allow` / `require (privileged
 `protection_policy`, replaces policy-effects residue with
 `apb_additional_protection_policies_deferred`, and retains
 `apb_remaining_widths_deferred`.
+`.603` now ships that selected behavior. The six new
+`sideband_data16_protection` `.ppif`/`.apb` samples are support-accounted;
+sideband-aware data16 multi-register completers accept the same register-local
+access-policy syntax as the 32-bit protection path; denied 16-bit mapped reads
+return zero data with `PSLVERR=1`; denied writes are side-effect-free,
+including `PSTRB=0`; fixed and multi-peripheral compositions propagate
+`PPROT/PSTRB` while endpoint completers enforce policies. Reports keep
+`width_policy.selected_contract = sideband_data16`, add `protection_policy`,
+remove `apb_protection_policy_effects_deferred` for the selected data16
+protection samples, and retain the explicit future residues. `.604` is the
+next no-behavior selector for the post-data16-PPROT APB/IAL2 frontier.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

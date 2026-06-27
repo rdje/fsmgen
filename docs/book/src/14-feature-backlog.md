@@ -10255,8 +10255,8 @@ writes are side-effect-free, including `PSTRB=0`. Fixed and multi-peripheral
 composition only propagate `PPROT` and mux the selected response; selected
 completers own register-local enforcement. Selected reports will replace
 `apb_protection_policy_effects_deferred` with
-`apb_additional_protection_policies_deferred`, while data16 policy effects,
-additional `PPROT` predicates, global/window/peripheral policies,
+`apb_additional_protection_policies_deferred`. At that point, data16 policy
+effects, additional `PPROT` predicates, global/window/peripheral policies,
 interconnect-owned enforcement, back-to-back policy, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
@@ -10275,10 +10275,11 @@ reads/writes keep existing sideband behavior, denied reads return
 Fixed and multi-peripheral composition only propagate `PPROT/PSTRB` and mux
 selected responses; completers own enforcement. Reports add
 `protection_policy` metadata and use
-`apb_additional_protection_policies_deferred`; data16 policy effects,
-additional predicates, global/window/peripheral policies, interconnect-owned
-enforcement, back-to-back policy, direct backend, verification-output,
-backend-language variants, AXI, AHB, and VHDL remain deferred. `.598`
+`apb_additional_protection_policies_deferred`. At that point, data16 policy
+effects, additional predicates, global/window/peripheral policies,
+interconnect-owned enforcement, back-to-back policy, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred. `.598`
 selected `.599`, APB profile-alias/public-surface synchronization after
 `.597`, without behavior changes. `.599` synchronized
 `docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md` with the shipped protection alias
@@ -10299,6 +10300,24 @@ register-local `allow` / `require (privileged 0|1)`, keeps
 replaces policy-effects residue with
 `apb_additional_protection_policies_deferred`, and retains
 `apb_remaining_widths_deferred`.
+
+APB data16 PPROT access-policy behavior:
+[IAL2_APB_DATA16_PPROT_EFFECTS_BEHAVIOR](../../IAL2_APB_DATA16_PPROT_EFFECTS_BEHAVIOR.md)
+ships `.603`, the selected `sideband_data16_protection` behavior. New data16
+protection completer, fixed-composition, and multi-peripheral composition
+`.ppif`/`.apb` samples are support-accounted. Sideband-aware data16
+multi-register completers accept the same register-local `allow` / `require
+(privileged 0|1)` policy syntax as the 32-bit protection path, while preserving
+16-bit `PWDATA`/`PRDATA`, 2-bit `PSTRB`, two-byte register/window alignment,
+and `width_policy.selected_contract = sideband_data16`. Denied mapped reads
+return 16-bit zero data with `PSLVERR=1`; denied writes leave storage
+unchanged, including `PSTRB=0`. Fixed and multi-peripheral composition only
+propagate `PPROT/PSTRB` and mux responses. Reports add `protection_policy`,
+remove `apb_protection_policy_effects_deferred` from the selected data16
+protection samples, and keep broader policy, width, back-to-back,
+direct-backend, verification-output, backend-language, AXI/AHB, and VHDL work
+deferred. `.604` is the next no-behavior selector for the post-data16-PPROT
+APB/IAL2 frontier.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

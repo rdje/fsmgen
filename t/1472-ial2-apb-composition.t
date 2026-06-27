@@ -262,6 +262,42 @@ subtest 'adapter parses the sideband APB multi-register data16 composition PPIF 
     ok($child_residue{apb_remaining_widths_deferred}, 'sideband multi-register data16 child completer keeps narrowed remaining-width residue');
 };
 
+subtest 'adapter parses the sideband protection APB multi-register data16 composition PPIF shape' => sub {
+    ok(-f sample_apb_composition_multi_register_sideband_data16_protection_ppif_path(), 'tracked runnable sideband protection multi-register data16 APB composition PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_data16_protection_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'sideband protection multi-register data16 APB composition adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_composition', 'sideband protection multi-register data16 adapter returns the APB composition kind');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-composition-multi-register-sideband-data16-protection', 'sideband protection multi-register data16 APB composition source object id is preserved');
+    is($result->{report}{composition}{width_policy}{data_width}, 16, 'sideband protection multi-register data16 report records 16-bit data width');
+    is($result->{report}{composition}{width_policy}{strobe_width}, 2, 'sideband protection multi-register data16 report records 2-bit PSTRB width');
+    is($result->{report}{composition}{width_policy}{selected_contract}, 'sideband_data16', 'sideband protection multi-register data16 report records selected data16 contract');
+    is($result->{report}{protection_policy}{enforcement_owner}, 'completer', 'fixed data16 protection composition report assigns policy enforcement to the completer child');
+    is($result->{report}{protection_policy}{child_policy}{predicate_namespace}, 'fsmgen_apb_pprot_v1', 'fixed data16 protection composition embeds completer protection-policy metadata');
+    is($result->{report}{children}[1]{protection_policy}{registers}[1]{read}{predicate}{value}, 1, 'fixed data16 protection composition child report preserves reg1 read policy');
+
+    my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
+    like($top, qr/=req_wdata<16/, 'sideband protection multi-register data16 top exposes 16-bit request write data input');
+    like($top, qr/=req_wstrb<2/, 'sideband protection multi-register data16 top exposes 2-bit request strobe input');
+    like($top, qr/\(requester\.PPROT completer\.PPROT\)/, 'sideband protection multi-register data16 top wires requester PPROT to completer PPROT');
+    like($top, qr/\(requester\.PSTRB completer\.PSTRB\)/, 'sideband protection multi-register data16 top wires requester PSTRB to completer PSTRB');
+    like($top, qr/\(\?\(& write_q \(== addr 2\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-register data16 top embeds denied reg1 write branch');
+    like($top, qr/\(\?\(& \(! write_q\) \(== addr 2\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-register data16 top embeds denied reg1 read branch');
+    like($top, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'sideband protection multi-register data16 top embeds high-byte write mask');
+
+    my %composition_residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$composition_residue{apb_protection_policy_effects_deferred}, 'sideband protection multi-register data16 composition report removes old policy-effects residue');
+    ok(!$composition_residue{apb_alternate_widths_deferred}, 'sideband protection multi-register data16 composition report keeps broad alternate-width residue absent');
+    ok($composition_residue{apb_additional_protection_policies_deferred}, 'sideband protection multi-register data16 composition report keeps additional-policy residue');
+    ok($composition_residue{apb_remaining_widths_deferred}, 'sideband protection multi-register data16 composition report keeps narrowed remaining-width residue');
+
+    my %child_residue = map { $_->{id} => 1 } @{$result->{report}{children}[1]{unsupported_residue}};
+    ok(!$child_residue{apb_protection_policy_effects_deferred}, 'sideband protection multi-register data16 child removes old policy-effects residue');
+    ok($child_residue{apb_additional_protection_policies_deferred}, 'sideband protection multi-register data16 child keeps additional-policy residue');
+    ok($child_residue{apb_remaining_widths_deferred}, 'sideband protection multi-register data16 child keeps narrowed remaining-width residue');
+};
+
 subtest 'adapter parses the selected APB multi-peripheral composition PPIF shape' => sub {
     ok(-f sample_apb_composition_multi_peripheral_ppif_path(), 'tracked runnable multi-peripheral APB composition PPIF sample exists');
 
@@ -423,6 +459,50 @@ subtest 'adapter parses the sideband APB multi-peripheral data16 composition PPI
     ok($composition_residue{apb_protection_policy_effects_deferred}, 'sideband multi-peripheral data16 composition report keeps protection-policy effects deferred');
 };
 
+subtest 'adapter parses the sideband protection APB multi-peripheral data16 composition PPIF shape' => sub {
+    ok(-f sample_apb_composition_multi_peripheral_sideband_data16_protection_ppif_path(), 'tracked runnable sideband protection multi-peripheral data16 APB composition PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_data16_protection_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'sideband protection multi-peripheral data16 APB composition adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_composition', 'sideband protection multi-peripheral data16 adapter returns the APB composition kind');
+    is($result->{mode}, 'requester-multi-peripheral-composition', 'sideband protection multi-peripheral data16 APB composition mode is explicit');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-composition-multi-peripheral-sideband-data16-protection', 'sideband protection multi-peripheral data16 APB composition source object id is preserved');
+    is($result->{report}{composition}{topology}, 'multi_peripheral_interconnect', 'sideband protection multi-peripheral data16 report names the selected topology');
+    is($result->{report}{composition}{width_policy}{data_width}, 16, 'sideband protection multi-peripheral data16 report records 16-bit data width');
+    is($result->{report}{composition}{width_policy}{strobe_width}, 2, 'sideband protection multi-peripheral data16 report records 2-bit PSTRB width');
+    is($result->{report}{composition}{address_map}{alignment_bytes}, 2, 'sideband protection multi-peripheral data16 report records 2-byte address-map alignment');
+    is_deeply(
+        [map { $_->{base}{default} } @{$result->{report}{composition}{address_map}{windows}}],
+        [0, 258],
+        'sideband protection multi-peripheral data16 report preserves 2-byte-aligned window bases',
+    );
+    is($result->{report}{protection_policy}{enforcement_owner}, 'peripheral_completers', 'multi-peripheral data16 protection report assigns enforcement to peripheral completers');
+    is($result->{report}{protection_policy}{interconnect_role}, 'propagate_pprot_pstrb_and_mux_selected_response_only', 'multi-peripheral data16 protection report keeps interconnect role propagation-only');
+    is($result->{report}{children}[1]{protection_policy}{interconnect_role}, 'propagate_pprot_pstrb_and_mux_selected_response_only', 'multi-peripheral data16 protection interconnect child report remains propagation-only');
+    is($result->{report}{children}[2]{protection_policy}{registers}[1]{write}{predicate}{value}, 1, 'status shadow data16 peripheral report preserves write policy');
+    is($result->{report}{children}[3]{protection_policy}{registers}[1]{read}{predicate}{value}, 1, 'control shadow data16 peripheral report preserves read policy');
+
+    my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
+    like($top, qr/=req_wdata<16/, 'sideband protection multi-peripheral data16 top exposes 16-bit request write-data input');
+    like($top, qr/=req_wstrb<2/, 'sideband protection multi-peripheral data16 top exposes 2-bit request strobe input');
+    like($top, qr/\(interconnect\.PSTRB_CONTROL control\.PSTRB_CONTROL\)/, 'sideband protection multi-peripheral data16 top wires control-window PSTRB');
+    like($top, qr/\(\?\(& \(! write_q\) \(== addr 0\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-peripheral data16 top embeds denied control read branch');
+    like($top, qr/\(<- \(control_shadow_data_q \(\| \(& control_shadow_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'sideband protection multi-peripheral data16 top embeds high-byte control shadow write mask');
+
+    my $interconnect = $result->{generated_ial0}{files}{'apb_interconnect.fsm'};
+    like($interconnect, qr/\(PSTRB_CONTROL 2\)/, 'sideband protection data16 interconnect declares control-window PSTRB width 2');
+    like($interconnect, qr/\(<- \(PPROT_STATUS> PPROT\)\)/, 'sideband protection data16 interconnect fans out PPROT to status');
+    like($interconnect, qr/\(<- \(PADDR_CONTROL> \(- PADDR 258\)\) <\(& PSEL \(>= PADDR 258\) \(< PADDR 516\)\)\)/, 'sideband protection data16 interconnect subtracts the 258-byte control base');
+    unlike($interconnect, qr/prot_q/, 'sideband protection data16 interconnect remains enforcement-free');
+
+    my %composition_residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$composition_residue{apb_protection_policy_effects_deferred}, 'sideband protection multi-peripheral data16 composition report removes old policy-effects residue');
+    ok(!$composition_residue{apb_alternate_widths_deferred}, 'sideband protection multi-peripheral data16 composition report keeps broad alternate-width residue absent');
+    ok($composition_residue{apb_additional_protection_policies_deferred}, 'sideband protection multi-peripheral data16 composition report keeps additional-policy residue');
+    ok($composition_residue{apb_remaining_widths_deferred}, 'sideband protection multi-peripheral data16 composition report keeps narrowed remaining-width residue');
+};
+
 subtest 'adapter rejects malformed APB composition PPIF shapes with targeted diagnostics' => sub {
     my $missing_composition = sample_apb_composition_ppif();
     $missing_composition =~ s/\n  \(apb-composition apb_tb\n    \(role composition\)\n    \(clock clk\)\n    \(reset \(rst_n active_low async\)\)\n    \(children\n      \(requester requester apb_requester\)\n      \(completer completer apb_completer\)\)\n    \(wiring apb_bus\n      \(select PSEL\)\n      \(enable PENABLE\)\n      \(write PWRITE\)\n      \(address PADDR width 32\)\n      \(write-data PWDATA width 32\)\n      \(ready PREADY\)\n      \(read-data PRDATA width 32\)\n      \(error PSLVERR\)\)\)//;
@@ -571,6 +651,31 @@ subtest 'CLI check and semantic JSON support-account sideband multi-register dat
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'sideband multi-register data16 APB composition semantic JSON records the generated top module');
 };
 
+subtest 'CLI check and semantic JSON support-account sideband protection multi-register data16 APB composition PPIF identity' => sub {
+    my $path = sample_apb_composition_multi_register_sideband_data16_protection_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'sideband protection multi-register data16 APB composition --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'sideband protection multi-register data16 APB composition --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'sideband protection multi-register data16 APB composition check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'sideband protection multi-register data16 APB composition check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_register_sideband_data16_protection', 'sideband protection multi-register data16 APB composition check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'sideband protection multi-register data16 APB composition check JSON records PPIF source kind');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'sideband protection multi-register data16 APB composition --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'sideband protection multi-register data16 APB composition --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'sideband protection multi-register data16 APB composition semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_register_sideband_data16_protection', 'sideband protection multi-register data16 APB composition semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'sideband protection multi-register data16 APB composition semantic JSON payload describes the generated composition root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'sideband protection multi-register data16 APB composition semantic JSON records the generated top module');
+};
+
 subtest 'CLI check and semantic JSON support-account multi-peripheral APB composition PPIF identity' => sub {
     my $path = sample_apb_composition_multi_peripheral_ppif_path();
     my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
@@ -677,6 +782,33 @@ subtest 'CLI check and semantic JSON support-account sideband multi-peripheral d
     is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'sideband multi-peripheral data16 APB composition semantic JSON payload describes the generated composition root');
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'sideband multi-peripheral data16 APB composition semantic JSON records the generated top module');
     is($semantic_report->{semantic}{module}{composition_child_count}, 4, 'sideband multi-peripheral data16 APB composition semantic JSON records four generated children');
+};
+
+subtest 'CLI check and semantic JSON support-account sideband protection multi-peripheral data16 APB composition PPIF identity' => sub {
+    my $path = sample_apb_composition_multi_peripheral_sideband_data16_protection_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'sideband protection multi-peripheral data16 APB composition --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'sideband protection multi-peripheral data16 APB composition --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'sideband protection multi-peripheral data16 APB composition check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'sideband protection multi-peripheral data16 APB composition check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_peripheral_sideband_data16_protection', 'sideband protection multi-peripheral data16 APB composition check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'sideband protection multi-peripheral data16 APB composition check JSON records PPIF source kind');
+    is($check_report->{result}{composition_child_count}, 4, 'sideband protection multi-peripheral data16 APB composition check JSON reports four generated children');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'sideband protection multi-peripheral data16 APB composition --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'sideband protection multi-peripheral data16 APB composition --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'sideband protection multi-peripheral data16 APB composition semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_peripheral_sideband_data16_protection', 'sideband protection multi-peripheral data16 APB composition semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'sideband protection multi-peripheral data16 APB composition semantic JSON payload describes the generated composition root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'sideband protection multi-peripheral data16 APB composition semantic JSON records the generated top module');
+    is($semantic_report->{semantic}{module}{composition_child_count}, 4, 'sideband protection multi-peripheral data16 APB composition semantic JSON records four generated children');
 };
 
 subtest 'CLI check and semantic JSON support-account APB composition PPIF identity' => sub {
@@ -929,6 +1061,60 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband multi-registe
     is($alias->{report}{composition}{width_policy}{data_width}, 16, 'sideband multi-register data16 .apb APB composition alias preserves width policy');
 };
 
+subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection multi-register data16 APB composition review artifacts' => sub {
+    my $path = sample_apb_composition_multi_register_sideband_data16_protection_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'sideband protection multi-register data16 APB composition --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'sideband protection multi-register data16 APB composition --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{schema}, 'fsmgen.ial2.protocol_intent.apb_composition.v1', 'sideband protection multi-register data16 APB composition schedule JSON reports schema');
+    is($schedule_report->{composition}{width_policy}{data_width}, 16, 'sideband protection multi-register data16 APB composition schedule JSON reports data width 16');
+    is($schedule_report->{composition}{width_policy}{strobe_width}, 2, 'sideband protection multi-register data16 APB composition schedule JSON reports strobe width 2');
+    is($schedule_report->{protection_policy}{enforcement_owner}, 'completer', 'sideband protection multi-register data16 APB composition schedule JSON reports completer enforcement owner');
+    is($schedule_report->{children}[1]{protection_policy}{registers}[1]{read}{predicate}{value}, 1, 'sideband protection multi-register data16 APB composition schedule JSON reports reg1 read predicate');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_protection_policy_effects_deferred}, 'sideband protection multi-register data16 APB composition schedule JSON omits old policy-effects residue');
+    ok($residue{apb_additional_protection_policies_deferred}, 'sideband protection multi-register data16 APB composition schedule JSON reports additional-policy residue');
+    ok($residue{apb_remaining_widths_deferred}, 'sideband protection multi-register data16 APB composition schedule JSON reports narrowed remaining-width residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_tb_multi_sideband_data16_protection.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'sideband protection multi-register data16 APB composition CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'sideband protection multi-register data16 APB composition generation keeps stderr clean');
+    for my $artifact (qw(apb_requester.isf apb_completer.isf apb_requester.fsm apb_completer.fsm apb_tb.fsm)) {
+        ok(-f File::Spec->catfile($outdir, $artifact), "sideband protection multi-register data16 APB composition --outdir writes $artifact");
+    }
+    ok(-f $hdl, 'sideband protection multi-register data16 APB composition --output writes generated HDL');
+    my $top = slurp(File::Spec->catfile($outdir, 'apb_tb.fsm'));
+    like($top, qr/\(requester\.PPROT completer\.PPROT\)/, 'sideband protection multi-register data16 outdir top wires PPROT');
+    like($top, qr/\(requester\.PSTRB completer\.PSTRB\)/, 'sideband protection multi-register data16 outdir top wires PSTRB');
+    like($top, qr/\(PSTRB 2\)/, 'sideband protection multi-register data16 outdir top preserves 2-bit PSTRB');
+    like($top, qr/\(\?\(& write_q \(== addr 2\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-register data16 outdir top embeds denied reg1 write branch');
+    like($top, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'sideband protection multi-register data16 outdir top embeds high-byte write mask');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[15:0\]\s+req_wdata\b/, 'sideband protection multi-register data16 APB composition HDL exposes 16-bit requester write-data input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+req_wstrb\b/, 'sideband protection multi-register data16 APB composition HDL exposes 2-bit requester write-strobe input');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_requester_PSTRB\b/, 'sideband protection multi-register data16 APB composition HDL declares the 2-bit PSTRB composition link');
+    like($sv, qr/prot_q\s*&\s*3'd1/, 'sideband protection multi-register data16 APB composition HDL preserves PPROT predicate logic');
+    like($sv, qr/PSLVERR_next = 1;/, 'sideband protection multi-register data16 APB composition HDL preserves denied-access error drive');
+
+    ok(-f sample_apb_composition_multi_register_sideband_data16_protection_apb_path(), 'tracked runnable sideband protection multi-register data16 APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_data16_protection_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_data16_protection_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'sideband protection multi-register data16 .apb APB composition alias returns the composition kind');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'sideband protection multi-register data16 .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'sideband protection multi-register data16 .apb APB composition alias mirrors .ppif generated IAL0');
+    is($alias->{report}{composition}{width_policy}{data_width}, 16, 'sideband protection multi-register data16 .apb APB composition alias preserves width policy');
+    is($alias->{report}{protection_policy}{enforcement_owner}, 'completer', 'sideband protection multi-register data16 .apb APB composition alias preserves policy owner');
+};
+
 subtest 'CLI schedule JSON, outdir, and .apb alias expose multi-peripheral APB composition review artifacts' => sub {
     my $path = sample_apb_composition_multi_peripheral_ppif_path();
     my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
@@ -1110,6 +1296,62 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband multi-periphe
     is($alias->{report}{composition}{address_map}{alignment_bytes}, 2, 'sideband multi-peripheral data16 .apb APB composition alias preserves 2-byte alignment policy');
 };
 
+subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection multi-peripheral data16 APB composition review artifacts' => sub {
+    my $path = sample_apb_composition_multi_peripheral_sideband_data16_protection_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'sideband protection multi-peripheral data16 APB composition --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'sideband protection multi-peripheral data16 APB composition --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{schema}, 'fsmgen.ial2.protocol_intent.apb_composition.v1', 'sideband protection multi-peripheral data16 APB composition schedule JSON reports schema');
+    is($schedule_report->{composition}{topology}, 'multi_peripheral_interconnect', 'sideband protection multi-peripheral data16 APB composition schedule JSON reports topology');
+    is($schedule_report->{composition}{width_policy}{data_width}, 16, 'sideband protection multi-peripheral data16 APB composition schedule JSON reports data width 16');
+    is($schedule_report->{composition}{address_map}{alignment_bytes}, 2, 'sideband protection multi-peripheral data16 APB composition schedule JSON reports 2-byte window alignment');
+    is($schedule_report->{protection_policy}{enforcement_owner}, 'peripheral_completers', 'sideband protection multi-peripheral data16 APB composition schedule JSON reports peripheral enforcement owners');
+    is($schedule_report->{children}[1]{protection_policy}{interconnect_role}, 'propagate_pprot_pstrb_and_mux_selected_response_only', 'sideband protection multi-peripheral data16 APB composition schedule JSON reports interconnect propagation role');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_protection_policy_effects_deferred}, 'sideband protection multi-peripheral data16 APB composition schedule JSON omits old policy-effects residue');
+    ok($residue{apb_additional_protection_policies_deferred}, 'sideband protection multi-peripheral data16 APB composition schedule JSON reports additional-policy residue');
+    ok($residue{apb_remaining_widths_deferred}, 'sideband protection multi-peripheral data16 APB composition schedule JSON reports narrowed remaining-width residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_tb_multi_peripheral_sideband_data16_protection.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'sideband protection multi-peripheral data16 APB composition CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'sideband protection multi-peripheral data16 APB composition generation keeps stderr clean');
+    for my $artifact (qw(apb_requester.isf apb_status_regs.isf apb_control_regs.isf apb_interconnect.isf apb_requester.fsm apb_status_regs.fsm apb_control_regs.fsm apb_interconnect.fsm apb_tb.fsm)) {
+        ok(-f File::Spec->catfile($outdir, $artifact), "sideband protection multi-peripheral data16 APB composition --outdir writes $artifact");
+    }
+    ok(-f $hdl, 'sideband protection multi-peripheral data16 APB composition --output writes generated HDL');
+    my $interconnect = slurp(File::Spec->catfile($outdir, 'apb_interconnect.fsm'));
+    like($interconnect, qr/\(PSTRB_CONTROL 2\)/, 'sideband protection multi-peripheral data16 outdir interconnect preserves 2-bit control PSTRB');
+    like($interconnect, qr/\(<- \(PPROT_STATUS> PPROT\)\)/, 'sideband protection multi-peripheral data16 outdir interconnect fans out PPROT');
+    like($interconnect, qr/\(<- \(PADDR_CONTROL> \(- PADDR 258\)\) <\(& PSEL \(>= PADDR 258\) \(< PADDR 516\)\)\)/, 'sideband protection multi-peripheral data16 outdir interconnect uses control base 258');
+    unlike($interconnect, qr/prot_q/, 'sideband protection multi-peripheral data16 outdir interconnect remains enforcement-free');
+    my $top = slurp(File::Spec->catfile($outdir, 'apb_tb.fsm'));
+    like($top, qr/\(\?\(& \(! write_q\) \(== addr 0\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-peripheral data16 outdir top embeds denied control read branch');
+    like($top, qr/\(<- \(control_shadow_data_q \(\| \(& control_shadow_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'sideband protection multi-peripheral data16 outdir top embeds high-byte control shadow write mask');
+    my $sv = slurp($hdl);
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband protection multi-peripheral data16 APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'sideband protection multi-peripheral data16 APB composition HDL includes 258-byte local address translation');
+    like($sv, qr/\breg\s+\[15:0\]\s+control_shadow_data_q\b/, 'sideband protection multi-peripheral data16 APB composition HDL carries 16-bit control shadow register');
+    like($sv, qr/prot_q\s*&\s*3'd1/, 'sideband protection multi-peripheral data16 APB composition HDL preserves endpoint PPROT predicate logic');
+
+    ok(-f sample_apb_composition_multi_peripheral_sideband_data16_protection_apb_path(), 'tracked runnable sideband protection multi-peripheral data16 APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_data16_protection_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_data16_protection_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'sideband protection multi-peripheral data16 .apb APB composition alias returns the composition kind');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'sideband protection multi-peripheral data16 .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'sideband protection multi-peripheral data16 .apb APB composition alias mirrors .ppif generated IAL0');
+    is($alias->{report}{composition}{address_map}{alignment_bytes}, 2, 'sideband protection multi-peripheral data16 .apb APB composition alias preserves 2-byte alignment policy');
+    is($alias->{report}{protection_policy}{enforcement_owner}, 'peripheral_completers', 'sideband protection multi-peripheral data16 .apb APB composition alias preserves policy owner');
+};
+
 subtest 'CLI schedule JSON, outdir, and .apb alias expose APB composition review artifacts' => sub {
     my $path = sample_apb_composition_ppif_path();
     my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
@@ -1277,6 +1519,10 @@ sub sample_apb_composition_multi_register_sideband_data16_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16.ppif');
 }
 
+sub sample_apb_composition_multi_register_sideband_data16_protection_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16_protection.ppif');
+}
+
 sub sample_apb_composition_multi_register_sideband_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband.apb');
 }
@@ -1287,6 +1533,10 @@ sub sample_apb_composition_multi_register_sideband_protection_apb_path {
 
 sub sample_apb_composition_multi_register_sideband_data16_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16.apb');
+}
+
+sub sample_apb_composition_multi_register_sideband_data16_protection_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16_protection.apb');
 }
 
 sub sample_apb_composition_multi_peripheral_ppif_path {
@@ -1309,6 +1559,10 @@ sub sample_apb_composition_multi_peripheral_sideband_data16_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_data16.ppif');
 }
 
+sub sample_apb_composition_multi_peripheral_sideband_data16_protection_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_data16_protection.ppif');
+}
+
 sub sample_apb_composition_multi_peripheral_sideband_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband.apb');
 }
@@ -1319,6 +1573,10 @@ sub sample_apb_composition_multi_peripheral_sideband_protection_apb_path {
 
 sub sample_apb_composition_multi_peripheral_sideband_data16_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_data16.apb');
+}
+
+sub sample_apb_composition_multi_peripheral_sideband_data16_protection_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_data16_protection.apb');
 }
 
 sub sample_apb_composition_ppif {
