@@ -3264,6 +3264,13 @@ support-account the new samples as
 `intent.apb_profile_alias_composition_busy`. Existing no-busy APB samples
 keep `apb_requester_busy_status_deferred`; busy-capable reports keep
 `apb_requester_status_field_deferred` for future named status fields.
+`.573` now selects `.574`, a no-behavior public-surface and `bin/fsmgen`
+import-tree synchronization slice before any further behavior work. The live
+import probe reports `213` project files total and `212` reachable
+`FSM::...` `.pm` packages, including the APB IAL2 requester, completer, and
+composition owners, while the import-tree note/fact still record `206`/`205`.
+The mdBook language-surface prose also needs to reflect shipped `.axi`,
+`.apb`, and APB busy-capable variants.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5790,6 +5797,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_APB_ALIAS_WIDENING_NEXT_SLICE_SELECTION.md` — selects APB requester busy/status public contract selection after requester-transfer, completer, fixed composition, and bounded `.apb` alias coverage all shipped, without changing behavior.
 - `docs/IAL2_APB_REQUESTER_BUSY_STATUS_CONTRACT_SELECTION.md` — selects additive busy-only APB requester status exposure through new `.ppif`/`.apb` requester-transfer and fixed-composition samples while keeping existing APB samples unchanged and named status fields deferred.
 - `docs/IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR.md` — ships additive busy-only APB requester output behavior through `ppif/apb_requester_transfer_busy.ppif`, `ppif/apb_requester_transfer_busy.apb`, `ppif/apb_composition_busy.ppif`, and `ppif/apb_composition_busy.apb`, preserving no-busy APB samples and keeping named status fields deferred.
+- `docs/IAL2_POST_APB_BUSY_OUTPUT_NEXT_SLICE_SELECTION.md` — selects no-behavior public-surface and `bin/fsmgen` import-tree synchronization after APB busy output, before any further behavior work.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

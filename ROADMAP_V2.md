@@ -4262,6 +4262,13 @@ support identities are `intent.ppif_apb_requester_transfer_busy`,
 `intent.apb_profile_alias_composition_busy`. Existing no-busy APB samples keep
 `apb_requester_busy_status_deferred`; busy-capable reports keep
 `apb_requester_status_field_deferred` for future named status fields.
+`.573` now selects `.574`, a no-behavior public-surface and `bin/fsmgen`
+import-tree synchronization slice before any further behavior work. The live
+import probe reports `213` project files total and `212` reachable
+`FSM::...` `.pm` packages, including the APB IAL2 requester, completer, and
+composition owners, while the import-tree note/fact still record `206`/`205`.
+The mdBook language-surface prose also needs to reflect shipped `.axi`,
+`.apb`, and APB busy-capable variants.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

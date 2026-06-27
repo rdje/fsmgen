@@ -9929,6 +9929,16 @@ top-level `busy`. Check/semantic JSON support-account the new samples as
 `apb_requester_busy_status_deferred`; busy-capable reports keep
 `apb_requester_status_field_deferred` for future named status fields.
 
+Post APB busy-output selector:
+[IAL2_POST_APB_BUSY_OUTPUT_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_BUSY_OUTPUT_NEXT_SLICE_SELECTION.md)
+selects `.574`, a no-behavior public-surface and `bin/fsmgen` import-tree
+synchronization slice before any further behavior work. The live import probe
+reports `213` project files total and `212` reachable `FSM::...` `.pm`
+packages, including the APB IAL2 requester, completer, and composition owners,
+while the import-tree note/fact still record `206`/`205`. The mdBook
+language-surface prose also needs to reflect shipped `.axi`, `.apb`, and APB
+busy-capable variants.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
