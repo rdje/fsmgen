@@ -4420,6 +4420,16 @@ needed for a later byte-lane implementation. `.588` must select the exact
 `PPROT`/`PSTRB` source syntax, 32-bit first-slice policy, byte-enable write
 semantics, propagation through fixed and multi-peripheral compositions,
 reports, support-accounting, diagnostics, validation, and rollback.
+`.588` now selects `.589`, direct bounded APB `PPROT`/`PSTRB`
+sideband/strobe implementation, without changing behavior in `.588`. The
+selected syntax adds requester-side `(protection req_prot width 3)` and
+`(write-strobe req_wstrb width 4)` fields plus bus-side `(protection PPROT
+width 3)` and `(strobe PSTRB width 4)` on requester, completer, and
+composition bus/wiring blocks. The selected byte-lane policy is fixed 32-bit
+APB: `PSTRB[0]` controls `PWDATA[7:0]`, `PSTRB[1]` controls `PWDATA[15:8]`,
+`PSTRB[2]` controls `PWDATA[23:16]`, and `PSTRB[3]` controls `PWDATA[31:24]`.
+`PPROT` is propagated and sampled while protection access-control effects
+remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

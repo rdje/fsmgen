@@ -3419,6 +3419,16 @@ needed for a later byte-lane implementation. `.588` must select the exact
 `PPROT`/`PSTRB` source syntax, 32-bit first-slice policy, byte-enable write
 semantics, propagation through fixed and multi-peripheral compositions,
 reports, support-accounting, diagnostics, validation, and rollback.
+`.588` now selects `.589`, direct bounded APB `PPROT`/`PSTRB`
+sideband/strobe implementation, without changing behavior in `.588`. The
+selected syntax adds requester-side `(protection req_prot width 3)` and
+`(write-strobe req_wstrb width 4)` fields plus bus-side `(protection PPROT
+width 3)` and `(strobe PSTRB width 4)` on requester, completer, and
+composition bus/wiring blocks. The selected byte-lane policy is fixed 32-bit
+APB: `PSTRB[0]` controls `PWDATA[7:0]`, `PSTRB[1]` controls `PWDATA[15:8]`,
+`PSTRB[2]` controls `PWDATA[23:16]`, and `PSTRB[3]` controls `PWDATA[31:24]`.
+`PPROT` is propagated and sampled while protection access-control effects
+remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5959,6 +5969,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_MULTI_PERIPHERAL_INTERCONNECT_BEHAVIOR.md` — ships bounded APB multi-peripheral interconnect/decode through generated APB composition `.ppif` and `.apb` sources, including `apb_interconnect.isf`/`.fsm`, static address windows, response muxing, unmapped error response, and collision-free generated instance aliases.
 - `docs/IAL2_POST_APB_MULTI_PERIPHERAL_NEXT_SLICE_SELECTION.md` — selects APB sidebands/strobes/byte-lane readiness audit after APB multi-peripheral interconnect/decode behavior, without changing behavior.
 - `docs/IAL2_APB_SIDEBAND_STROBE_READINESS_AUDIT.md` — audits APB `PPROT`/`PSTRB`/byte-lane readiness and selects public sideband/strobe contract selection before behavior work.
+- `docs/IAL2_APB_SIDEBAND_STROBE_CONTRACT_SELECTION.md` — selects the APB `PPROT`/`PSTRB` source syntax, fixed 32-bit byte-lane semantics, report/support shape, diagnostics, and direct bounded implementation owner.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

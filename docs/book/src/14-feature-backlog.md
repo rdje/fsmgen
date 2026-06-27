@@ -10136,6 +10136,17 @@ report migration, support-accounting, diagnostics, samples, and
 composition/interconnect propagation still need to be selected before
 implementation.
 
+APB sideband/strobe contract selection:
+[IAL2_APB_SIDEBAND_STROBE_CONTRACT_SELECTION](../../IAL2_APB_SIDEBAND_STROBE_CONTRACT_SELECTION.md)
+selects `.589`, direct bounded implementation, without changing behavior. The
+selected source syntax adds requester-side `(protection req_prot width 3)` and
+`(write-strobe req_wstrb width 4)` fields plus bus-side `(protection PPROT
+width 3)` and `(strobe PSTRB width 4)` on requester, completer, and
+composition bus/wiring blocks. The selected 32-bit byte-lane policy maps
+`PSTRB[0]` to `PWDATA[7:0]`, `PSTRB[1]` to `PWDATA[15:8]`, `PSTRB[2]` to
+`PWDATA[23:16]`, and `PSTRB[3]` to `PWDATA[31:24]`; `PPROT` is propagated and
+sampled while protection access-control effects remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
