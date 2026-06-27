@@ -10114,14 +10114,27 @@ collision-free instance names such as `status_peripheral`.
 Post APB multi-peripheral selector:
 [IAL2_POST_APB_MULTI_PERIPHERAL_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_MULTI_PERIPHERAL_NEXT_SLICE_SELECTION.md)
 selects `.587`, APB sidebands/strobes/byte-lane readiness audit, without
-changing behavior. The selector follows live schedule probes showing no APB
-residue entries in the checked status requester, multi-register completer,
-fixed status composition, and multi-peripheral composition reports after
-`.585`. The audit must decide whether `PPROT`, `PSTRB`, byte-lane write
-semantics, composition/interconnect propagation, diagnostics, report fields,
-samples, support-accounting, and validation should proceed through a public
-contract, a lower-layer prerequisite, an alternate-width prerequisite, or
-explicit deferral before any APB behavior change.
+changing behavior. The selector follows live schedule probes through the
+public `unsupported_residue` field: top-level multi-peripheral composition no
+longer reports the top-level multi-peripheral decode residue, while APB
+sideband/strobe, alternate-width, and back-to-back residues remain explicit.
+The audit must decide whether `PPROT`, `PSTRB`, byte-lane write semantics,
+composition/interconnect propagation, diagnostics, report fields, samples,
+support-accounting, and validation should proceed through a public contract,
+a lower-layer prerequisite, an alternate-width prerequisite, or explicit
+deferral before any APB behavior change.
+
+APB sideband/strobe readiness audit:
+[IAL2_APB_SIDEBAND_STROBE_READINESS_AUDIT](../../IAL2_APB_SIDEBAND_STROBE_READINESS_AUDIT.md)
+selects `.588`, public APB sideband/strobe contract selection, without
+changing behavior. APB `PPROT` and `PSTRB` are not accepted today; authored
+`(strobe ...)` and `(protection ...)` bus clauses fail closed. The audit finds
+contract selection is ready because the generated IAL1/IAL0 path already has
+fixed-width ports, bitwise operations, shifts, concatenation, and masked
+field-update support, but the public source syntax, byte-enable semantics,
+report migration, support-accounting, diagnostics, samples, and
+composition/interconnect propagation still need to be selected before
+implementation.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

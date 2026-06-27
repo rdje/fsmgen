@@ -4403,14 +4403,23 @@ preserve authored peripheral names, and publish collision-free generated
 instance names such as `status_peripheral`.
 `.586` now selects `.587`, a no-behavior APB sidebands/strobes/byte-lane
 readiness audit after the multi-peripheral interconnect/decode behavior. Live
-APB schedule probes for the status requester, multi-register completer, fixed
-status composition, and multi-peripheral composition show no APB residue
-entries in the checked report payloads, so report cleanup is not the next
-owner. The selected audit must settle whether `PPROT`, `PSTRB`, byte-lane write
-semantics, composition/interconnect propagation, diagnostics, report fields,
-samples, support-accounting, and validation should proceed through a public
-contract, a lower-layer prerequisite, an alternate-width prerequisite, or
-explicit deferral before any behavior change.
+APB schedule probes through the public `unsupported_residue` field show that
+top-level multi-peripheral composition removed the top-level multi-peripheral
+decode residue, while APB sideband/strobe, alternate-width, and back-to-back
+residues remain explicit. The selected audit must settle whether `PPROT`,
+`PSTRB`, byte-lane write semantics, composition/interconnect propagation,
+diagnostics, report fields, samples, support-accounting, and validation should
+proceed through a public contract, a lower-layer prerequisite, an
+alternate-width prerequisite, or explicit deferral before any behavior change.
+`.587` now selects `.588`, public APB sideband/strobe contract selection,
+without changing behavior. The audit found that current APB bus blocks accept
+only core APB signals and reject unselected `(strobe ...)` and `(protection
+...)` clauses, while generated IAL1/IAL0 already has fixed-width ports,
+bitwise operations, shifts, concatenation, and masked field-update support
+needed for a later byte-lane implementation. `.588` must select the exact
+`PPROT`/`PSTRB` source syntax, 32-bit first-slice policy, byte-enable write
+semantics, propagation through fixed and multi-peripheral compositions,
+reports, support-accounting, diagnostics, validation, and rollback.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

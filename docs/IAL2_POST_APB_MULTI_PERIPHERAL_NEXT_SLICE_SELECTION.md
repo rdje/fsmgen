@@ -40,9 +40,14 @@ Live schedule probes during `.586` checked the current APB report payloads:
 ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_requester_transfer_status.ppif
 ```
 
-Those probes showed no live APB residue entries in the checked reports after
-the `.585` behavior. A report-cleanup-only slice is therefore not the next
-useful owner.
+Those probes must be read through the public `unsupported_residue` field. The
+top-level multi-peripheral composition report removes the top-level
+multi-peripheral decode residue after `.585`, but it still carries
+`apb_protection_and_strobes_deferred`, `apb_alternate_widths_deferred`, and
+`apb_back_to_back_policy_deferred`. Older endpoint and fixed-composition
+samples intentionally retain their own narrower topology residues. A generic
+report-cleanup-only slice is therefore not the next useful owner; the live
+sideband/strobe residue is.
 
 The public language-surface boundary still explicitly defers APB sidebands,
 alternate widths, back-to-back policy, direct IAL2-to-IAL0 lowering, direct

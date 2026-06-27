@@ -21,8 +21,10 @@ sidebands/strobes/byte-lane readiness audit.
 The selector follows `.585` because APB now has requester-transfer, completer,
 multi-register completer decode, fixed composition, and multi-peripheral
 composition topology behavior through `.ppif` and `.apb` sources. Live schedule
-probes during `.586` showed no APB residue entries in the checked report
-payloads, so the next owner is not report cleanup.
+probes during `.586` must be read through `unsupported_residue`: top-level
+multi-peripheral composition removes the top-level multi-peripheral decode
+residue, but APB sideband/strobe, alternate-width, and back-to-back residues
+remain explicit.
 
 `.587` must audit whether APB sideband/strobe work should proceed through a
 public source contract, a lower-layer generated-IAL1 or APB FSM prerequisite,
