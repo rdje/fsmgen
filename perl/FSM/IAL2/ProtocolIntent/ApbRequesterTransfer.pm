@@ -40,6 +40,8 @@ sub generate($self, @args) {
 
     _add_response_idle_clears($contract, $lowered->{files})
         if defined($contract->{response}{busy}) || defined($contract->{response}{status});
+    _add_back_to_back_requester_behavior($contract, $lowered->{files})
+        if _requester_has_back_to_back_policy($contract);
 
     my $report = _build_report(
         contract => $contract,
@@ -114,6 +116,7 @@ sub _normalize_contract($raw) {
     _validate_sideband_bundle($request, $bus);
     _validate_width_policy($request, $response, $bus);
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'));
+    _validate_timing_policy_contract($request, $response, $bus, $transfer);
 
     _reject_duplicate_signal_names(
         $clock,
@@ -124,6 +127,7 @@ sub _normalize_contract($raw) {
         $request->{write_data}{name},
         (defined($request->{protection}) ? ($request->{protection}{name}) : ()),
         (defined($request->{write_strobe}) ? ($request->{write_strobe}{name}) : ()),
+        (defined($response->{accepted}) ? ($response->{accepted}) : ()),
         (defined($response->{busy}) ? ($response->{busy}) : ()),
         (defined($response->{status}) ? ($response->{status}{name}) : ()),
         $response->{done},
@@ -139,7 +143,7 @@ sub _normalize_contract($raw) {
         $bus->{ready},
         $bus->{read_data}{name},
         $bus->{error},
-        qw(addr is_write wdata prot wstrb rdata slverr psel penable),
+        qw(addr is_write wdata prot wstrb rdata slverr psel penable queued_valid queued_addr queued_write queued_wdata),
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -195,6 +199,8 @@ sub _normalize_response($raw) {
     };
     $response->{busy} = _identifier_value($raw->{busy}, 'response.busy')
         if exists $raw->{busy};
+    $response->{accepted} = _identifier_value($raw->{accepted}, 'response.accepted')
+        if exists $raw->{accepted};
     if (exists $raw->{status}) {
         confess "APB requester-transfer IAL2 contract response.status requires response.busy in this slice\n"
             unless exists $response->{busy};
@@ -270,6 +276,9 @@ sub _normalize_transfer($raw) {
     my $complete_on = _required_scalar_field($raw, 'complete_on', 'transfer.complete_on');
     my $sample = _normalize_sample($raw->{sample});
     my $latency = _normalize_latency(_required_hash_field($raw, 'latency', 'transfer.latency'));
+    my $timing_policy = exists($raw->{timing_policy})
+        ? _normalize_timing_policy(_required_hash_field($raw, 'timing_policy', 'transfer.timing_policy'))
+        : undef;
 
     _require_static_value($setup->{select}, 1, 'transfer.setup.select');
     _require_static_value($setup->{enable}, 0, 'transfer.setup.enable');
@@ -289,7 +298,54 @@ sub _normalize_transfer($raw) {
         complete_on => $complete_on,
         sample      => $sample,
         latency     => $latency,
+        (defined($timing_policy) ? (timing_policy => $timing_policy) : ()),
     };
+}
+
+sub _normalize_timing_policy($raw) {
+    my $back_to_back = _required_scalar_field($raw, 'back_to_back', 'transfer.timing_policy.back_to_back');
+    confess "APB requester-transfer IAL2 contract transfer.timing_policy.back_to_back must be queued in this slice\n"
+        unless $back_to_back eq 'queued';
+    my $queue_depth = _positive_integer($raw->{queue_depth}, 'transfer.timing_policy.queue_depth');
+    confess "APB requester-transfer IAL2 contract transfer.timing_policy.queue_depth must be 1 in this slice\n"
+        unless $queue_depth == 1;
+    my $overflow = _required_scalar_field($raw, 'overflow', 'transfer.timing_policy.overflow');
+    confess "APB requester-transfer IAL2 contract transfer.timing_policy.overflow must be reject in this slice\n"
+        unless $overflow eq 'reject';
+
+    for my $key (sort keys %$raw) {
+        confess "APB requester-transfer IAL2 contract transfer.timing_policy has unsupported key '$key'\n"
+            unless $key eq 'back_to_back' || $key eq 'queue_depth' || $key eq 'overflow';
+    }
+
+    return {
+        back_to_back => $back_to_back,
+        queue_depth  => $queue_depth,
+        overflow     => $overflow,
+    };
+}
+
+sub _validate_timing_policy_contract($request, $response, $bus, $transfer) {
+    if (exists $response->{accepted} && !exists $transfer->{timing_policy}) {
+        confess "APB requester-transfer IAL2 contract response.accepted requires selected transfer.timing_policy in this slice\n";
+    }
+    return unless exists $transfer->{timing_policy};
+
+    for my $field (qw(accepted busy status)) {
+        confess "APB requester-transfer IAL2 contract selected back-to-back timing-policy requires response.$field in this slice\n"
+            unless exists $response->{$field};
+    }
+    confess "APB requester-transfer IAL2 contract selected back-to-back timing-policy requires response.status width 2 in this slice\n"
+        unless $response->{status}{width} == 2;
+    confess "APB requester-transfer IAL2 contract selected back-to-back timing-policy supports only the 32-bit no-sideband requester family in this slice\n"
+        unless $request->{write_data}{width} == 32
+            && $response->{read_data}{width} == 32
+            && $bus->{write_data}{width} == 32
+            && $bus->{read_data}{width} == 32
+            && !defined($request->{protection})
+            && !defined($request->{write_strobe})
+            && !defined($bus->{protection})
+            && !defined($bus->{strobe});
 }
 
 sub _normalize_phase($raw, $field) {
@@ -477,6 +533,7 @@ sub _emit_isf($contract) {
             _interface_line('input', $request->{write_strobe}),
         ) : ()),
         (defined($response->{busy}) ? (_interface_line('output', $response->{busy})) : ()),
+        (defined($response->{accepted}) ? (_interface_line('output', $response->{accepted})) : ()),
         (defined($response->{status}) ? (_interface_line('output', $response->{status})) : ()),
         _interface_line('output', $response->{done}),
         _interface_line('output', $response->{read_data}),
@@ -612,6 +669,157 @@ sub _add_response_idle_clears($contract, $fsm_files) {
         unless $count == 1;
 }
 
+sub _add_back_to_back_requester_behavior($contract, $fsm_files) {
+    confess "APB requester-transfer back-to-back generation requires generated .fsm files\n"
+        unless ref($fsm_files) eq 'HASH';
+
+    my $fsm_name = "$contract->{actor_name}.fsm";
+    confess "APB requester-transfer back-to-back generation is missing generated artifact '$fsm_name'\n"
+        unless exists $fsm_files->{$fsm_name};
+
+    my $text = $fsm_files->{$fsm_name};
+    _add_back_to_back_queue_sizes(\$text, $contract, $fsm_name);
+    _patch_back_to_back_idle_state(\$text, $contract, $fsm_name);
+    for my $state_index (1 .. 4) {
+        _patch_back_to_back_queue_capture_state(\$text, $contract, $fsm_name, "$contract->{transfer}{name}_drive_$state_index")
+            if $state_index == 1 || $state_index == 2 || $state_index == 4;
+    }
+    _patch_back_to_back_queue_capture_state(\$text, $contract, $fsm_name, "$contract->{transfer}{name}_await_3");
+    _patch_back_to_back_done_state(\$text, $contract, $fsm_name);
+    _patch_back_to_back_timeout_state(\$text, $contract, $fsm_name);
+    $fsm_files->{$fsm_name} = $text;
+}
+
+sub _add_back_to_back_queue_sizes($text_ref, $contract, $fsm_name) {
+    my $address_width = $contract->{request}{address}{width};
+    my $data_width = $contract->{request}{write_data}{width};
+    my @lines = (
+        "    (queued_valid 1)",
+        "    (queued_addr $address_width)",
+        "    (queued_write 1)",
+        "    (queued_wdata $data_width)",
+    );
+    @lines = grep { $$text_ref !~ /^\Q$_\E$/m } @lines;
+    return unless @lines;
+
+    my $block = join("\n", @lines) . "\n";
+    my $count = ($$text_ref =~ s/^(\s*\(slverr 1\)\n)/$1$block/m);
+    confess "APB requester-transfer back-to-back generation could not add queue locals to '$fsm_name'\n"
+        unless $count == 1;
+}
+
+sub _patch_back_to_back_idle_state($text_ref, $contract, $fsm_name) {
+    my $state = "$contract->{transfer}{name}_idle_0";
+    my $accepted = $contract->{response}{accepted};
+    _insert_unique_state_lines($text_ref, $fsm_name, $state, [
+        "    (<- ($accepted> 0))",
+        "    (<- (queued_valid 0))",
+    ]);
+
+    my $old = join("\n",
+        "    (<$contract->{request}{start}",
+        "      (-> $contract->{transfer}{name}_drive_1)",
+        "    )",
+    );
+    my $new = join("\n",
+        "    (<$contract->{request}{start}",
+        "      (<- ($accepted> 1))",
+        "      (-> $contract->{transfer}{name}_drive_1)",
+        "    )",
+    );
+    my $count = ($$text_ref =~ s/\Q$old\E/$new/);
+    confess "APB requester-transfer back-to-back generation could not patch idle admission in '$fsm_name'\n"
+        unless $count == 1 || $$text_ref =~ /\Q$new\E/;
+}
+
+sub _patch_back_to_back_queue_capture_state($text_ref, $contract, $fsm_name, $state) {
+    my $request = $contract->{request};
+    my $accepted = $contract->{response}{accepted};
+    my @lines = (
+        "    (<- ($accepted> 0))",
+        "    (?(& $request->{start} (! queued_valid))",
+        "      (>0",
+        "        (<- ($accepted> 1))",
+        "        (<= (queued_addr $request->{address}{name}))",
+        "        (<= (queued_write $request->{write}))",
+        "        (<= (queued_wdata $request->{write_data}{name}))",
+        "        (<- (queued_valid 1))))",
+    );
+    _insert_unique_state_lines($text_ref, $fsm_name, $state, \@lines);
+}
+
+sub _patch_back_to_back_done_state($text_ref, $contract, $fsm_name) {
+    my $transfer_name = $contract->{transfer}{name};
+    my $state = "${transfer_name}_done_5";
+    my $accepted = $contract->{response}{accepted};
+    my $request = $contract->{request};
+    my $bus = $contract->{bus};
+    my $response = $contract->{response};
+    my $old = join("\n",
+        "  ($state",
+        "    (<1 ($response->{done}> 1))",
+        "    (= (${transfer_name}_lerr 1) <${transfer_name}_cc<2)",
+        "    (-> ${transfer_name}_idle_0)",
+        "  )",
+    );
+    my $new = join("\n",
+        "  ($state",
+        "    (<- ($accepted> 0))",
+        "    (<1 ($response->{done}> 1))",
+        "    (= (${transfer_name}_lerr 1) <${transfer_name}_cc<2)",
+        "    (?queued_valid",
+        "      (>0",
+        "        (<= (addr queued_addr))",
+        "        (<= (is_write queued_write))",
+        "        (<= (wdata queued_wdata))",
+        "        (<- (queued_valid 0))",
+        "        (<- ($bus->{address}{name}> queued_addr))",
+        "        (<- ($bus->{write}> queued_write))",
+        "        (<- ($bus->{write_data}{name}> queued_wdata))",
+        "        (<- ($bus->{select}> 1))",
+        "        (<- ($bus->{enable}> 0))",
+        "        (<- ($response->{busy}> 1))",
+        "        (<- ($response->{status}{name}> 1))",
+        "        (-> ${transfer_name}_drive_2))",
+        "      (=0",
+        "        (?$request->{start}",
+        "          (>0",
+        "            (<- ($accepted> 1))",
+        "            (<= (addr $request->{address}{name}))",
+        "            (<= (is_write $request->{write}))",
+        "            (<= (wdata $request->{write_data}{name}))",
+        "            (<- ($bus->{address}{name}> $request->{address}{name}))",
+        "            (<- ($bus->{write}> $request->{write}))",
+        "            (<- ($bus->{write_data}{name}> $request->{write_data}{name}))",
+        "            (<- ($bus->{select}> 1))",
+        "            (<- ($bus->{enable}> 0))",
+        "            (<- ($response->{busy}> 1))",
+        "            (<- ($response->{status}{name}> 1))",
+        "            (-> ${transfer_name}_drive_2))",
+        "          (=0",
+        "            (-> ${transfer_name}_idle_0)))))",
+        "  )",
+    );
+    my $count = ($$text_ref =~ s/\Q$old\E/$new/);
+    confess "APB requester-transfer back-to-back generation could not patch terminal state '$state' in '$fsm_name'\n"
+        unless $count == 1 || $$text_ref =~ /^\s*\(\Q$state\E\s*\n\s*\Q(<- ($accepted> 0))\E/m;
+}
+
+sub _patch_back_to_back_timeout_state($text_ref, $contract, $fsm_name) {
+    my $state = "$contract->{transfer}{name}_timeout";
+    _insert_unique_state_lines($text_ref, $fsm_name, $state, [
+        "    (<- ($contract->{response}{accepted}> 0))",
+        "    (<- (queued_valid 0))",
+    ]);
+}
+
+sub _insert_unique_state_lines($text_ref, $fsm_name, $state, $lines) {
+    my $block = join("\n", @$lines) . "\n";
+    my $count = ($$text_ref =~ s/^(\s*\(\Q$state\E\s*\n)/$1$block/m);
+    confess "APB requester-transfer back-to-back generation could not find generated state '$state' in '$fsm_name'\n"
+        unless $count == 1;
+}
+
 sub _interface_line($direction, $binding) {
     return "    ($direction $binding)"
         unless ref($binding) eq 'HASH';
@@ -673,6 +881,9 @@ sub _build_report(%args) {
             complete_on => $contract->{transfer}{complete_on},
             sample      => _clone_jsonish($contract->{transfer}{sample}),
             latency     => _clone_jsonish($contract->{transfer}{latency}),
+            (_requester_has_back_to_back_policy($contract) ? (
+                timing_policy => _apb_requester_timing_policy_report($contract),
+            ) : ()),
         },
         generated_artifacts => {
             ial1 => {
@@ -703,6 +914,10 @@ sub _build_report(%args) {
                 id     => 'apb_done_pulse',
                 detail => 'Generated IAL1 deasserts PSEL/PENABLE, publishes read data and error status, and completes through done.',
             },
+            (_requester_has_back_to_back_policy($contract) ? ({
+                id     => 'apb_back_to_back_queue_depth_1',
+                detail => 'Generated IAL0 accepts one active APB transfer plus one queued transfer, rejects overflow without overwriting the queued request, and can launch the next setup without an inserted idle cycle.',
+            }) : ()),
             (defined($contract->{response}{status}) ? ({
                 id     => 'apb_status_field_encoding',
                 detail => 'Generated IAL1 drives the selected 2-bit response status encoding: 0 idle, 1 busy, 2 done_ok, 3 done_error.',
@@ -711,7 +926,9 @@ sub _build_report(%args) {
         assumptions => [
             {
                 id     => 'single_outstanding_transfer',
-                detail => 'This first APB PPIF slice models one requester transfer at a time and delegates scheduling to the existing IAL1 lowering path.',
+                detail => _requester_has_back_to_back_policy($contract)
+                    ? 'The selected APB requester still drives at most one active APB bus transfer while holding at most one queued next transfer.'
+                    : 'This first APB PPIF slice models one requester transfer at a time and delegates scheduling to the existing IAL1 lowering path.',
             },
             {
                 id     => 'environment_drives_apb_response',
@@ -738,6 +955,11 @@ sub _build_report(%args) {
         width    => $contract->{response}{status}{width},
         encoding => _apb_requester_status_encoding(),
     } if defined $contract->{response}{status};
+    $report->{response_accepted_field} = {
+        name   => $contract->{response}{accepted},
+        width  => 1,
+        policy => 'pulses when start is sampled into the active slot or the empty depth-1 queued slot',
+    } if defined $contract->{response}{accepted};
 
     return $report;
 }
@@ -769,13 +991,36 @@ sub _apb_requester_unsupported_residue($contract) {
 
     push @residue, (
         _apb_requester_width_residue($contract),
-        {
-            id     => 'apb_back_to_back_policy_deferred',
-            detail => 'Back-to-back transfer policy and queued transfer admission remain future exact-owner work.',
-        },
+        _requester_has_back_to_back_policy($contract)
+            ? _apb_additional_back_to_back_policies_residue()
+            : {
+                id     => 'apb_back_to_back_policy_deferred',
+                detail => 'Back-to-back transfer policy and queued transfer admission remain future exact-owner work.',
+            },
     );
 
     return \@residue;
+}
+
+sub _requester_has_back_to_back_policy($contract) {
+    return ref($contract->{transfer}{timing_policy}) eq 'HASH'
+        && ($contract->{transfer}{timing_policy}{back_to_back} // '') eq 'queued';
+}
+
+sub _apb_requester_timing_policy_report($contract) {
+    return {
+        back_to_back => $contract->{transfer}{timing_policy}{back_to_back},
+        queue_depth  => $contract->{transfer}{timing_policy}{queue_depth},
+        overflow     => $contract->{transfer}{timing_policy}{overflow},
+        accepted     => $contract->{response}{accepted},
+    };
+}
+
+sub _apb_additional_back_to_back_policies_residue() {
+    return {
+        id     => 'apb_additional_back_to_back_policies_deferred',
+        detail => 'Depth-1 queued requester admission with overflow reject is implemented for the selected 32-bit no-sideband status requester; deeper queues, alternate overflow policies, accepted-less surfaces, sideband/data16/protection variants, multiple active APB transfers, interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+    };
 }
 
 sub _apb_requester_width_policy($contract) {

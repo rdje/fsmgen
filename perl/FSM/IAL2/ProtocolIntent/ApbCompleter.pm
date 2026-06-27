@@ -112,6 +112,7 @@ sub _normalize_contract($raw) {
     my $storage = _normalize_storage(_required_hash($raw, 'storage'), $bus);
     _validate_access_policy_contract($storage, $bus);
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'), $control, $storage);
+    _validate_timing_policy_contract($bus, $storage, $transfer);
 
     _reject_duplicate_signal_names(
         $clock,
@@ -396,6 +397,9 @@ sub _normalize_transfer($raw, $control, $storage) {
     my $read = _required_scalar_field($raw, 'read', 'transfer.read');
     my $write = _required_scalar_field($raw, 'write', 'transfer.write');
     my $unmapped_address = _required_scalar_field($raw, 'unmapped_address', 'transfer.unmapped_address');
+    my $timing_policy = exists($raw->{timing_policy})
+        ? _normalize_timing_policy(_required_hash_field($raw, 'timing_policy', 'transfer.timing_policy'))
+        : undef;
 
     _require_static_value($setup_detect->{select}, 1, 'transfer.setup_detect.select');
     _require_static_value($setup_detect->{enable}, 0, 'transfer.setup_detect.enable');
@@ -415,6 +419,7 @@ sub _normalize_transfer($raw, $control, $storage) {
         read             => $read,
         write            => $write,
         unmapped_address => $unmapped_address,
+        (defined($timing_policy) ? (timing_policy => $timing_policy) : ()),
     );
     if (_storage_is_multi_register($storage)) {
         $transfer{registers} = [map { $_->{name} } _storage_registers($storage)];
@@ -424,6 +429,33 @@ sub _normalize_transfer($raw, $control, $storage) {
     }
 
     return \%transfer;
+}
+
+sub _normalize_timing_policy($raw) {
+    my $setup_admission = _required_scalar_field($raw, 'setup_admission', 'transfer.timing_policy.setup_admission');
+    confess "APB completer IAL2 contract transfer.timing_policy.setup_admission must be adjacent in this slice\n"
+        unless $setup_admission eq 'adjacent';
+
+    for my $key (sort keys %$raw) {
+        confess "APB completer IAL2 contract transfer.timing_policy has unsupported key '$key'\n"
+            unless $key eq 'setup_admission';
+    }
+
+    return {
+        setup_admission => $setup_admission,
+    };
+}
+
+sub _validate_timing_policy_contract($bus, $storage, $transfer) {
+    return unless exists $transfer->{timing_policy};
+
+    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only one address-0 register in this slice\n"
+        if _storage_is_multi_register($storage);
+    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only the 32-bit no-sideband completer family in this slice\n"
+        unless $bus->{write_data}{width} == 32
+            && $bus->{read_data}{width} == 32
+            && !defined($bus->{protection})
+            && !defined($bus->{strobe});
 }
 
 sub _normalize_phase($raw, $field) {
@@ -923,6 +955,9 @@ sub _build_report(%args) {
         read             => $contract->{transfer}{read},
         write            => $contract->{transfer}{write},
         unmapped_address => $contract->{transfer}{unmapped_address},
+        (_completer_has_adjacent_setup_policy($contract) ? (
+            timing_policy => _apb_completer_timing_policy_report($contract),
+        ) : ()),
     );
     if ($multi_register) {
         $transfer_report{registers} = _clone_jsonish($contract->{transfer}{registers});
@@ -975,7 +1010,7 @@ sub _build_report(%args) {
                 module         => $contract->{actor_name},
             },
         },
-        generated_scheduler_or_completer_rules => _report_generated_rules($multi_register, _contract_has_sidebands($contract), $has_access_policy),
+        generated_scheduler_or_completer_rules => _report_generated_rules($multi_register, _contract_has_sidebands($contract), $has_access_policy, $contract),
         assumptions => _report_assumptions($multi_register, $contract),
         enforced_static_rules => _report_enforced_static_rules($multi_register, $contract),
         unsupported_residue => _report_unsupported_residue($multi_register, $contract),
@@ -987,7 +1022,7 @@ sub _build_report(%args) {
     return $report;
 }
 
-sub _report_generated_rules($multi_register, $sidebands, $has_access_policy) {
+sub _report_generated_rules($multi_register, $sidebands, $has_access_policy, $contract = undef) {
     return [
         {
             id     => 'apb_setup_detect',
@@ -1011,6 +1046,10 @@ sub _report_generated_rules($multi_register, $sidebands, $has_access_policy) {
                     ? 'Generated IAL1 applies PSTRB byte enables to address-0 writes, reads the address-0 register, and drives PSLVERR for unmapped addresses.'
                     : 'Generated IAL1 updates or reads the address-0 register and drives PSLVERR for unmapped addresses.'),
         },
+        (defined($contract) && _completer_has_adjacent_setup_policy($contract) ? ({
+            id     => 'apb_adjacent_setup_admission',
+            detail => 'The selected timing policy explicitly owns setup admission on every PSEL && !PENABLE cycle, including the cycle immediately after the prior access response.',
+        }) : ()),
     ];
 }
 
@@ -1033,6 +1072,10 @@ sub _report_assumptions($multi_register, $contract) {
             id     => 'generated_ial1_review_artifact',
             detail => 'The source lowers through generated IAL1 before generated IAL0; direct IAL2-to-IAL0 lowering remains forbidden.',
         },
+        (_completer_has_adjacent_setup_policy($contract) ? ({
+            id     => 'adjacent_setup_admission',
+            detail => 'The selected completer accepts the next APB setup when PSEL is high and PENABLE is low; it does not require an inter-transfer idle cycle.',
+        }) : ()),
         {
             id     => 'internal_completion_pulse',
             detail => 'The generated IAL1 uses an internal completion storage bit to make the APB transaction terminal without adding a public done port.',
@@ -1061,6 +1104,7 @@ sub _report_enforced_static_rules($multi_register, $contract) {
         : 'the only implemented register address is 0 and reset value is 0';
     push @rules,
         'read and write behavior must target the selected register and unmapped addresses must assert error',
+        (_completer_has_adjacent_setup_policy($contract) ? ('selected timing-policy is setup-admission adjacent and remains bounded to the 32-bit no-sideband one-register completer') : ()),
         'APB completer is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden';
     return \@rules;
 }
@@ -1080,11 +1124,31 @@ sub _report_unsupported_residue($multi_register, $contract) {
     push @residue, _apb_protection_residue($contract);
     push @residue,
         _apb_completer_width_residue($contract),
-        {
-            id     => 'apb_back_to_back_policy_deferred',
-            detail => 'Back-to-back setup admission and queued transfer policy remain future exact-owner work.',
-        };
+        _completer_has_adjacent_setup_policy($contract)
+            ? _apb_additional_back_to_back_policies_residue()
+            : {
+                id     => 'apb_back_to_back_policy_deferred',
+                detail => 'Back-to-back setup admission and queued transfer policy remain future exact-owner work.',
+            };
     return \@residue;
+}
+
+sub _completer_has_adjacent_setup_policy($contract) {
+    return ref($contract->{transfer}{timing_policy}) eq 'HASH'
+        && ($contract->{transfer}{timing_policy}{setup_admission} // '') eq 'adjacent';
+}
+
+sub _apb_completer_timing_policy_report($contract) {
+    return {
+        setup_admission => $contract->{transfer}{timing_policy}{setup_admission},
+    };
+}
+
+sub _apb_additional_back_to_back_policies_residue() {
+    return {
+        id     => 'apb_additional_back_to_back_policies_deferred',
+        detail => 'Adjacent setup admission is implemented for the selected 32-bit no-sideband one-register completer; queued requester policy, multi-register/sideband/data16/protection completer variants, multi-peripheral interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+    };
 }
 
 sub _protection_policy_report($contract) {

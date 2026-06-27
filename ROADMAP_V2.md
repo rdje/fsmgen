@@ -4592,6 +4592,23 @@ coverage. Multi-peripheral propagation, sideband/data16/protection variants,
 deeper queues, alternate overflow policies, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.607` now ships the selected bounded APB back-to-back timing-policy behavior
+for the status-observable requester-transfer, one-register completer, and
+fixed one-requester/one-completer composition samples. The requester samples
+`ppif/apb_requester_transfer_status_back_to_back.ppif` and `.apb` expose
+`accepted`, keep `busy/status`, implement one queued request slot, reject
+overflow without overwriting the queue, and drive queued setup with `PSEL=1`
+and `PENABLE=0` without an inserted idle bus cycle. The completer samples
+`ppif/apb_completer_back_to_back.ppif` and `.apb` explicitly report adjacent
+`PSEL && !PENABLE` setup admission. The fixed-composition samples
+`ppif/apb_composition_status_back_to_back.ppif` and `.apb` expose `accepted`
+at the top, require compatible requester/completer timing policies, report
+aggregate `back_to_back_policy` metadata, remove broad
+`apb_back_to_back_policy_deferred` residue, and keep narrowed
+`apb_additional_back_to_back_policies_deferred` for multi-peripheral
+propagation, sideband/data16/protection variants, deeper queues, alternate
+overflow policies, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

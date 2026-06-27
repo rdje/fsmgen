@@ -14,8 +14,10 @@ evidence: docs/IAL2_APB_BACK_TO_BACK_CONTRACT_SELECTION.md; docs/IAL2_APB_BACK_T
 reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.606|IAL2-FEATURE-COMPLETENESS-FRONTIER\.607|timing-policy|back-to-back queued|queue-depth 1|overflow reject|setup-admission adjacent|accepted|apb_requester_transfer_status_back_to_back|apb_composition_status_back_to_back' docs/IAL2_APB_BACK_TO_BACK_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md MEMORY.md
 ---
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.606` selects the public APB
-back-to-back transfer policy contract without changing behavior.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.606` selected the public APB
+back-to-back transfer policy contract without changing behavior. The first
+selected implementation shipped later in `IAL2-FEATURE-COMPLETENESS-FRONTIER.607`;
+see `docs/knowledge/ial2-apb-back-to-back-behavior.md` for the behavior fact.
 
 The selected requester syntax is an explicit `(timing-policy ...)` clause under
 the existing APB requester `(transfer ...)` block:
@@ -25,7 +27,7 @@ and `(status NAME width 2)` so accepted queued requests and overflow rejection
 are observable. The selected completer syntax adds `(timing-policy
 (setup-admission adjacent))` under the existing APB completer transfer block.
 
-The first implementation owner is
+The first implementation owner was
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.607`, bounded to requester, completer, and
 fixed one-requester/one-completer composition samples:
 `apb_requester_transfer_status_back_to_back`,

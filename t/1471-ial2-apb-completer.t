@@ -76,6 +76,28 @@ subtest 'adapter parses the selected APB completer PPIF shape' => sub {
     ok($residue{apb_back_to_back_policy_deferred}, 'report keeps back-to-back policy residue explicit');
 };
 
+subtest 'adapter parses the selected APB back-to-back completer PPIF shape' => sub {
+    ok(-f sample_apb_completer_back_to_back_ppif_path(), 'tracked runnable APB back-to-back completer PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_back_to_back_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'APB back-to-back completer adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_completer', 'adapter returns the APB completer kind for back-to-back source');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-completer-back-to-back', 'back-to-back completer source object id is preserved');
+    is($result->{report}{transfer}{timing_policy}{setup_admission}, 'adjacent', 'back-to-back completer report records adjacent setup admission');
+
+    my $isf = $result->{generated_ial1}{text};
+    like($isf, qr/\(when \(& PSEL \(! PENABLE\)\)/, 'back-to-back completer IAL1 admits every selected APB setup cycle');
+    unlike($isf, qr/idle-cycle/, 'back-to-back completer IAL1 does not encode an idle-cycle requirement');
+
+    my $fsm = $result->{generated_ial0}{files}{'apb_completer.fsm'};
+    like($fsm, qr/\(<= \(addr PADDR\) <\(& PSEL \(! PENABLE\)\)\)/, 'back-to-back completer FSM samples address under adjacent setup guard');
+
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$residue{apb_back_to_back_policy_deferred}, 'back-to-back completer removes broad back-to-back residue');
+    ok($residue{apb_additional_back_to_back_policies_deferred}, 'back-to-back completer keeps narrowed future-policy residue');
+};
+
 subtest 'adapter parses the selected APB multi-register completer PPIF shape' => sub {
     ok(-f sample_apb_completer_multi_register_ppif_path(), 'tracked runnable APB multi-register completer PPIF sample exists');
 
@@ -385,6 +407,9 @@ subtest 'adapter rejects malformed APB completer PPIF shapes with targeted diagn
     my $allow_with_predicate = sample_apb_completer_multi_register_sideband_protection_ppif();
     $allow_with_predicate =~ s/\(read allow\)/(read allow (privileged 1))/;
 
+    my $bad_setup_admission = slurp(sample_apb_completer_back_to_back_ppif_path());
+    $bad_setup_admission =~ s/\(setup-admission adjacent\)/(setup-admission idle-gap)/;
+
     my @cases = (
         ['apb completer profile mismatch', $profile_mismatch, qr/profile 'axi4' does not match \(apb-completer \.\.\.\); expected apb/],
         ['apb completer missing storage', $missing_storage, qr/is missing required \(storage \.\.\.\) clause/],
@@ -411,6 +436,7 @@ subtest 'adapter rejects malformed APB completer PPIF shapes with targeted diagn
         ['apb completer access-policy unsupported predicate', $unsupported_policy_predicate, qr/supports only \(privileged 0\) or \(privileged 1\)/],
         ['apb completer access-policy bad predicate value', $bad_policy_predicate_value, qr/requires exactly one scalar value 0 or 1/],
         ['apb completer access-policy allow with predicate', $allow_with_predicate, qr/allow \.\.\.\) does not accept predicates/],
+        ['apb completer unsupported setup admission', $bad_setup_admission, qr/timing-policy supports only \(setup-admission adjacent\) in this slice/],
     );
 
     for my $case (@cases) {
@@ -845,6 +871,10 @@ done_testing();
 
 sub sample_apb_completer_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer.ppif');
+}
+
+sub sample_apb_completer_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_back_to_back.ppif');
 }
 
 sub sample_apb_completer_multi_register_ppif_path {

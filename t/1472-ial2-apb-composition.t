@@ -134,6 +134,40 @@ subtest 'adapter parses the status-capable APB composition PPIF shape' => sub {
     ok(!$residue{apb_requester_busy_status_deferred}, 'status report keeps requester busy/status deferred residue absent');
 };
 
+subtest 'adapter parses the status back-to-back APB composition PPIF shape' => sub {
+    ok(-f sample_apb_composition_status_back_to_back_ppif_path(), 'tracked runnable status back-to-back APB composition PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_status_back_to_back_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'status back-to-back APB composition adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_composition', 'status back-to-back adapter returns the APB composition kind');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-composition-status-back-to-back', 'status back-to-back APB composition source object id is preserved');
+    is($result->{report}{back_to_back_policy}{composition_role}, 'propagate_endpoint_policy', 'composition report records endpoint timing-policy propagation');
+    is($result->{report}{back_to_back_policy}{requester}{timing_policy}{queue_depth}, 1, 'composition report records requester queue-depth 1');
+    is($result->{report}{back_to_back_policy}{completer}{timing_policy}{setup_admission}, 'adjacent', 'composition report records completer adjacent setup admission');
+
+    my $requester_isf = $result->{generated_ial1}{items}[0]{text};
+    like($requester_isf, qr/\(output accepted\)/, 'status back-to-back composition requester IAL1 exposes accepted output');
+
+    my $requester_fsm = $result->{generated_ial0}{files}{'apb_requester.fsm'};
+    like($requester_fsm, qr/\(queued_valid 1\)/, 'status back-to-back composition requester FSM declares queued_valid');
+    like($requester_fsm, qr/\(<- \(PADDR> queued_addr\)\)/, 'status back-to-back composition requester FSM drives queued setup address');
+
+    my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
+    like($top, qr/=accepted>/, 'status back-to-back APB composition top exposes accepted output');
+    like($top, qr/\(queued_valid 1\)/, 'status back-to-back APB composition top embeds requester queued state');
+    like($top, qr/\(<= \(addr PADDR\) <\(& PSEL \(! PENABLE\)\)\)/, 'status back-to-back APB composition top embeds adjacent completer setup detector');
+
+    my ($accepted_top_port) = grep { $_->{name} eq 'accepted' } @{$result->{report}{composition}{top_ports}};
+    ok($accepted_top_port, 'status back-to-back composition report lists accepted top port');
+    is($accepted_top_port->{width}, 1, 'status back-to-back composition report lists accepted as one bit');
+    is($result->{report}{requester_accepted_field}{name}, 'accepted', 'status back-to-back composition report exposes requester accepted metadata');
+
+    my %composition_residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$composition_residue{apb_back_to_back_policy_deferred}, 'status back-to-back composition removes broad back-to-back residue');
+    ok($composition_residue{apb_additional_back_to_back_policies_deferred}, 'status back-to-back composition keeps narrowed future-policy residue');
+};
+
 subtest 'adapter parses the status-capable APB multi-register composition PPIF shape' => sub {
     ok(-f sample_apb_composition_multi_register_ppif_path(), 'tracked runnable multi-register APB composition PPIF sample exists');
 
@@ -531,6 +565,9 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
     my $bad_data16_window_alignment = sample_apb_composition_multi_peripheral_sideband_data16_ppif();
     $bad_data16_window_alignment =~ s/\(base CONTROL_BASE width 32 default 258\)/(base CONTROL_BASE width 32 default 259)/;
 
+    my $fixed_missing_completer_timing = sample_apb_composition_status_back_to_back_ppif();
+    $fixed_missing_completer_timing =~ s/\n      \(timing-policy\n        \(setup-admission adjacent\)\)//;
+
     my @cases = (
         ['missing apb composition object', $missing_composition, qr/cannot mix \(apb-requester \.\.\.\) with .* \(apb-completer \.\.\.\).*outside the explicit APB composition shape/s],
         ['bad requester child reference', $bad_child, qr/APB composition requester child references .*expected 'apb_requester'/],
@@ -541,6 +578,7 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
         ['fixed composition partial sideband wiring', $fixed_partial_sideband, qr/APB composition IAL2 contract composition wiring bus must declare protection and strobe together/],
         ['multi-peripheral partial sideband peripheral', $multi_partial_sideband, qr/APB multi-peripheral composition peripheral 'apb_control_regs' bus must declare protection and strobe together/],
         ['multi-peripheral data16 bad window alignment', $bad_data16_window_alignment, qr/address-map base '259' must be 2-byte aligned/],
+        ['fixed composition missing completer timing policy', $fixed_missing_completer_timing, qr/requires requester back-to-back queued queue-depth 1 overflow reject and completer setup-admission adjacent/],
     );
 
     for my $case (@cases) {
@@ -1495,6 +1533,10 @@ sub sample_apb_composition_status_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_status.ppif');
 }
 
+sub sample_apb_composition_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_status_back_to_back.ppif');
+}
+
 sub sample_apb_composition_status_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_status.apb');
 }
@@ -1581,6 +1623,10 @@ sub sample_apb_composition_multi_peripheral_sideband_data16_protection_apb_path 
 
 sub sample_apb_composition_ppif {
     return slurp(sample_apb_composition_ppif_path());
+}
+
+sub sample_apb_composition_status_back_to_back_ppif {
+    return slurp(sample_apb_composition_status_back_to_back_ppif_path());
 }
 
 sub sample_apb_composition_multi_register_sideband_ppif {

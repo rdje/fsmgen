@@ -228,6 +228,14 @@ sideband/data16/protection variants, multi-peripheral interconnect propagation,
 direct backend lowering, verification-output generation, backend-language
 variants, AXI, AHB, and VHDL.
 
+## Implementation Result
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.607` implements the first selected sample
+family. See `docs/IAL2_APB_BACK_TO_BACK_BEHAVIOR.md` for the shipped requester
+accepted/queued behavior, completer adjacent setup-admission behavior, fixed
+composition propagation, reports, support-accounting identities, validation,
+and remaining deferrals.
+
 ## Diagnostics
 
 The `.607` implementation should reject at least:

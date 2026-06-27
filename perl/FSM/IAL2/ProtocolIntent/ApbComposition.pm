@@ -249,6 +249,7 @@ sub _normalize_contract($raw) {
     _validate_shared_system_ports($clock, $reset, $requester, $completer);
     _validate_child_references($children, $requester, $completer);
     _validate_bus_compatibility($wiring->{bus}, $requester->{bus}, $completer->{bus});
+    _validate_fixed_timing_policy_compatibility($wiring->{bus}, $requester, $completer);
 
     my $source_object_id = exists($source->{object_id})
         ? _nonempty_scalar($source->{object_id}, 'source.object_id')
@@ -303,6 +304,7 @@ sub _normalize_multi_peripheral_contract($raw, $kind, $protocol, $intent_name, $
     _validate_multi_child_references($children, $requester, $raw_completers);
     _validate_multi_bus_compatibility($wiring->{bus}, $requester->{bus}, $raw_completers);
     _validate_multi_signal_uniqueness($clock, $reset, $requester, $raw_completers);
+    _reject_multi_peripheral_timing_policy($requester, $raw_completers);
 
     my $source_object_id = exists($source->{object_id})
         ? _nonempty_scalar($source->{object_id}, 'source.object_id')
@@ -878,6 +880,7 @@ sub _multi_top_port_specs($contract) {
             my $completer = _completer_for_child($contract, $_);
             _input_port($completer->{control}{wait_cycles}{name}, $completer->{control}{wait_cycles}{width});
         } @{$composition->{children}{peripherals}}),
+        (defined($requester->{response}{accepted}) ? (_output_port($requester->{response}{accepted}, 1)) : ()),
         (defined($requester->{response}{busy}) ? (_output_port($requester->{response}{busy}, 1)) : ()),
         (defined($requester->{response}{status}) ? (_output_port($requester->{response}{status}{name}, $requester->{response}{status}{width})) : ()),
         _output_port($requester->{response}{done}, 1),
@@ -955,6 +958,7 @@ sub _top_port_specs($contract) {
             _input_port($requester->{request}{write_strobe}{name}, $requester->{request}{write_strobe}{width}),
         ) : ()),
         _input_port($completer->{control}{wait_cycles}{name}, $completer->{control}{wait_cycles}{width}),
+        (defined($requester->{response}{accepted}) ? (_output_port($requester->{response}{accepted}, 1)) : ()),
         (defined($requester->{response}{busy}) ? (_output_port($requester->{response}{busy}, 1)) : ()),
         (defined($requester->{response}{status}) ? (_output_port($requester->{response}{status}{name}, $requester->{response}{status}{width})) : ()),
         _output_port($requester->{response}{done}, 1),
@@ -1389,6 +1393,7 @@ sub _build_report(%args) {
             'requester, completer, and composition must share clock and reset policy',
             'composition children must reference the embedded requester and completer objects by name',
             'composition bus wiring must match requester and completer APB signal names and widths',
+            (_fixed_composition_has_back_to_back_policy($contract) ? ('selected fixed-composition back-to-back policy requires requester back-to-back queued queue-depth 1 overflow reject and completer setup-admission adjacent') : ()),
             (_composition_has_sidebands($contract) ? ('sideband-aware composition wiring requires PPROT width 3 and data-derived PSTRB width ' . _composition_strobe_width($contract) . ' across requester, completer, and composition bus bindings') : ()),
             (_composition_has_access_policy($contract) ? ('register-local PPROT access-policy enforcement is owned by the completer child; the fixed composition only propagates PPROT/PSTRB and selected endpoint responses') : ()),
             'APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
@@ -1398,6 +1403,10 @@ sub _build_report(%args) {
 
     $report->{requester_status_field} = _clone_jsonish($requester_result->{report}{response_status_field})
         if defined $requester_result->{report}{response_status_field};
+    $report->{requester_accepted_field} = _clone_jsonish($requester_result->{report}{response_accepted_field})
+        if defined $requester_result->{report}{response_accepted_field};
+    $report->{back_to_back_policy} = _fixed_composition_back_to_back_policy_report($contract, $requester_result, $completer_result)
+        if _fixed_composition_has_back_to_back_policy($contract);
     $report->{protection_policy} = _fixed_composition_protection_policy_report($contract, $completer_result)
         if _composition_has_access_policy($contract);
 
@@ -1434,10 +1443,12 @@ sub _apb_composition_unsupported_residue($contract) {
     push @residue, (
         _apb_composition_protection_residue($contract),
         _apb_alternate_widths_residue($contract),
-        {
-            id     => 'apb_back_to_back_policy_deferred',
-            detail => 'Back-to-back transfer policy and queued requester admission remain future exact-owner work.',
-        },
+        _fixed_composition_has_back_to_back_policy($contract)
+            ? _apb_additional_back_to_back_policies_residue()
+            : {
+                id     => 'apb_back_to_back_policy_deferred',
+                detail => 'Back-to-back transfer policy and queued requester admission remain future exact-owner work.',
+            },
     );
 
     return \@residue;
@@ -1487,6 +1498,36 @@ sub _fixed_composition_protection_policy_report($contract, $completer_result) {
     };
 }
 
+sub _fixed_composition_has_back_to_back_policy($contract) {
+    return _requester_endpoint_has_selected_back_to_back($contract->{requester})
+        && _completer_endpoint_has_selected_adjacent_setup($contract->{completer});
+}
+
+sub _fixed_composition_back_to_back_policy_report($contract, $requester_result, $completer_result) {
+    my $requester_child = $contract->{composition}{children}{requester};
+    my $completer_child = $contract->{composition}{children}{completer};
+    return {
+        composition_role => 'propagate_endpoint_policy',
+        requester        => {
+            instance_name => $requester_child->{instance_name},
+            object_name   => $requester_child->{object_name},
+            timing_policy => _clone_jsonish($requester_result->{report}{transfer}{timing_policy}),
+        },
+        completer        => {
+            instance_name => $completer_child->{instance_name},
+            object_name   => $completer_child->{object_name},
+            timing_policy => _clone_jsonish($completer_result->{report}{transfer}{timing_policy}),
+        },
+    };
+}
+
+sub _apb_additional_back_to_back_policies_residue() {
+    return {
+        id     => 'apb_additional_back_to_back_policies_deferred',
+        detail => 'Fixed one-requester/one-completer propagation of the selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy is implemented; multi-peripheral interconnect propagation, sideband/data16/protection variants, deeper queues, alternate overflow policies, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+    };
+}
+
 sub _multi_peripheral_protection_policy_report($peripheral_results) {
     my @peripherals;
     for my $entry (@$peripheral_results) {
@@ -1523,6 +1564,8 @@ sub _child_report($role, $child, $result) {
         if defined $child->{generated_instance_name};
     $report->{response_status_field} = _clone_jsonish($result->{report}{response_status_field})
         if defined $result->{report}{response_status_field};
+    $report->{response_accepted_field} = _clone_jsonish($result->{report}{response_accepted_field})
+        if defined $result->{report}{response_accepted_field};
     $report->{protection_policy} = _clone_jsonish($result->{report}{protection_policy})
         if defined $result->{report}{protection_policy};
 
@@ -1735,6 +1778,55 @@ sub _validate_bus_compatibility($wiring, $requester_bus, $completer_bus) {
     _validate_fixed_sideband_compatibility($wiring, $requester_bus, $completer_bus);
 }
 
+sub _validate_fixed_timing_policy_compatibility($wiring, $requester, $completer) {
+    my $requester_policy = _endpoint_has_timing_policy($requester);
+    my $completer_policy = _endpoint_has_timing_policy($completer);
+    return unless $requester_policy || $completer_policy;
+
+    confess "APB fixed composition selected back-to-back timing-policy requires requester back-to-back queued queue-depth 1 overflow reject and completer setup-admission adjacent in this slice\n"
+        unless _requester_endpoint_has_selected_back_to_back($requester)
+            && _completer_endpoint_has_selected_adjacent_setup($completer);
+
+    confess "APB fixed composition selected back-to-back timing-policy supports only 32-bit no-sideband APB wiring in this slice\n"
+        unless $wiring->{write_data}{width} == 32
+            && $wiring->{read_data}{width} == 32
+            && !_bus_has_sidebands($wiring)
+            && !_bus_has_sidebands($requester->{bus})
+            && !_bus_has_sidebands($completer->{bus});
+
+    confess "APB fixed composition selected back-to-back timing-policy supports only one-register completer storage in this slice\n"
+        if ref($completer->{storage}{registers}) eq 'ARRAY';
+}
+
+sub _reject_multi_peripheral_timing_policy($requester, $completers) {
+    confess "APB multi-peripheral composition does not support APB back-to-back timing-policy until its exact owner ships\n"
+        if _endpoint_has_timing_policy($requester)
+            || grep { _endpoint_has_timing_policy($_) } @$completers;
+}
+
+sub _endpoint_has_timing_policy($endpoint) {
+    return ref($endpoint->{transfer}) eq 'HASH'
+        && ref($endpoint->{transfer}{timing_policy}) eq 'HASH';
+}
+
+sub _requester_endpoint_has_selected_back_to_back($requester) {
+    my $policy = ref($requester->{transfer}) eq 'HASH' ? $requester->{transfer}{timing_policy} : undef;
+    return 0 unless ref($policy) eq 'HASH';
+    return ($policy->{back_to_back} // '') eq 'queued'
+        && ($policy->{queue_depth} // '') eq '1'
+        && ($policy->{overflow} // '') eq 'reject'
+        && defined($requester->{response}{accepted})
+        && defined($requester->{response}{busy})
+        && ref($requester->{response}{status}) eq 'HASH'
+        && ($requester->{response}{status}{width} // '') eq '2';
+}
+
+sub _completer_endpoint_has_selected_adjacent_setup($completer) {
+    my $policy = ref($completer->{transfer}) eq 'HASH' ? $completer->{transfer}{timing_policy} : undef;
+    return 0 unless ref($policy) eq 'HASH';
+    return ($policy->{setup_admission} // '') eq 'adjacent';
+}
+
 sub _validate_multi_peripheral_completers($completers) {
     my %names;
     for my $index (0 .. $#$completers) {
@@ -1806,6 +1898,7 @@ sub _validate_multi_signal_uniqueness($clock, $reset, $requester, $completers) {
         $requester->{request}{write_data}{name},
         (defined($requester->{request}{protection}) ? ($requester->{request}{protection}{name}) : ()),
         (defined($requester->{request}{write_strobe}) ? ($requester->{request}{write_strobe}{name}) : ()),
+        (defined($requester->{response}{accepted}) ? ($requester->{response}{accepted}) : ()),
         (defined($requester->{response}{busy}) ? ($requester->{response}{busy}) : ()),
         (defined($requester->{response}{status}) ? ($requester->{response}{status}{name}) : ()),
         $requester->{response}{done},

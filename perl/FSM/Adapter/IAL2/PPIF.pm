@@ -483,6 +483,7 @@ sub _parse_apb_request_block($items, $source_label, $name) {
 
 sub _parse_apb_response_block($items, $source_label, $name) {
     my %allowed = (
+        accepted   => 'accepted',
         busy       => 'busy',
         status     => 'status',
         done        => 'done',
@@ -574,6 +575,8 @@ sub _parse_apb_transfer_block($items, $source_label, $name) {
             $transfer{sample} = _parse_apb_sample_binding(\@body, $source_label, "apb-requester $name transfer $transfer_name sample");
         } elsif ($head eq 'latency') {
             $transfer{latency} = _parse_apb_latency_binding(\@body, $source_label, "apb-requester $name transfer $transfer_name latency");
+        } elsif ($head eq 'timing-policy') {
+            $transfer{timing_policy} = _parse_apb_requester_timing_policy(\@body, $source_label, $name, $transfer_name);
         } else {
             confess "Error: .ppif (apb-requester $name (transfer $transfer_name ...)) has unsupported clause '($head ...)'\n";
         }
@@ -587,6 +590,45 @@ sub _parse_apb_transfer_block($items, $source_label, $name) {
     }
 
     return \%transfer;
+}
+
+sub _parse_apb_requester_timing_policy($items, $source_label, $name, $transfer_name) {
+    my %policy;
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-requester $name (transfer $transfer_name (timing-policy ...))) has duplicate ($head ...) clause\n"
+            if exists $policy{$head};
+        if ($head eq 'back-to-back') {
+            confess "Error: .ppif (apb-requester $name (transfer $transfer_name (timing-policy (back-to-back ...)))) requires exactly one scalar policy value\n"
+                unless @body == 1 && !ref($body[0]);
+            confess "Error: .ppif (apb-requester $name (transfer $transfer_name ...)) timing-policy supports only (back-to-back queued) in this slice\n"
+                unless $body[0] eq 'queued';
+            $policy{back_to_back} = $body[0];
+        } elsif ($head eq 'queue-depth') {
+            confess "Error: .ppif (apb-requester $name (transfer $transfer_name (timing-policy (queue-depth ...)))) requires exactly one scalar value\n"
+                unless @body == 1 && !ref($body[0]);
+            confess "Error: .ppif (apb-requester $name (transfer $transfer_name ...)) timing-policy supports only (queue-depth 1) in this slice\n"
+                unless $body[0] eq '1';
+            $policy{queue_depth} = int($body[0]);
+        } elsif ($head eq 'overflow') {
+            confess "Error: .ppif (apb-requester $name (transfer $transfer_name (timing-policy (overflow ...)))) requires exactly one scalar policy value\n"
+                unless @body == 1 && !ref($body[0]);
+            confess "Error: .ppif (apb-requester $name (transfer $transfer_name ...)) timing-policy supports only (overflow reject) in this slice\n"
+                unless $body[0] eq 'reject';
+            $policy{overflow} = $body[0];
+        } else {
+            confess "Error: .ppif (apb-requester $name (transfer $transfer_name (timing-policy ...))) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(back_to_back queue_depth overflow)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (apb-requester $name (transfer $transfer_name (timing-policy ...))) is missing required ($clause ...) clause\n"
+            unless exists $policy{$required};
+    }
+
+    return \%policy;
 }
 
 sub _parse_apb_scalar_binding($body, $source_label, $context) {
@@ -904,6 +946,8 @@ sub _parse_apb_completer_transfer_block($items, $source_label, $name) {
             $transfer{write} = _parse_apb_scalar_binding(\@body, $source_label, "apb-completer $name transfer $transfer_name $head");
         } elsif ($head eq 'unmapped-address') {
             $transfer{unmapped_address} = _parse_apb_scalar_binding(\@body, $source_label, "apb-completer $name transfer $transfer_name $head");
+        } elsif ($head eq 'timing-policy') {
+            $transfer{timing_policy} = _parse_apb_completer_timing_policy(\@body, $source_label, $name, $transfer_name);
         } else {
             confess "Error: .ppif (apb-completer $name (transfer $transfer_name ...)) has unsupported clause '($head ...)'\n";
         }
@@ -917,6 +961,29 @@ sub _parse_apb_completer_transfer_block($items, $source_label, $name) {
     }
 
     return \%transfer;
+}
+
+sub _parse_apb_completer_timing_policy($items, $source_label, $name, $transfer_name) {
+    my %policy;
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-completer $name (transfer $transfer_name (timing-policy ...))) has duplicate ($head ...) clause\n"
+            if exists $policy{$head};
+        if ($head eq 'setup-admission') {
+            confess "Error: .ppif (apb-completer $name (transfer $transfer_name (timing-policy (setup-admission ...)))) requires exactly one scalar policy value\n"
+                unless @body == 1 && !ref($body[0]);
+            confess "Error: .ppif (apb-completer $name (transfer $transfer_name ...)) timing-policy supports only (setup-admission adjacent) in this slice\n"
+                unless $body[0] eq 'adjacent';
+            $policy{setup_admission} = $body[0];
+        } else {
+            confess "Error: .ppif (apb-completer $name (transfer $transfer_name (timing-policy ...))) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    confess "Error: .ppif (apb-completer $name (transfer $transfer_name (timing-policy ...))) is missing required (setup-admission ...) clause\n"
+        unless exists $policy{setup_admission};
+
+    return \%policy;
 }
 
 sub _parse_apb_composition($body, $source_label) {
