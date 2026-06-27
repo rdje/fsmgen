@@ -10008,6 +10008,16 @@ topology, sidebands/strobes, alternate widths, back-to-back policy, direct
 backend, verification-output, backend-language variants, AXI follow-on, and
 VHDL remain deferred.
 
+APB multi-register decode readiness audit:
+[IAL2_APB_MULTI_REGISTER_DECODE_READINESS_AUDIT](../../IAL2_APB_MULTI_REGISTER_DECODE_READINESS_AUDIT.md)
+selects `.580`, public APB multi-register completer decode contract selection,
+without changing behavior. The parser already scans repeated `(register ...)`
+clauses, but the current source contract, normalized model, reports, generated
+ISF/FSM, samples, lower-layer fixture, and focused tests are still singular.
+Direct implementation is not ready until `.580` selects public source syntax,
+deterministic ordering, address uniqueness/diagnostics, report migration,
+generated storage naming, sample/support/test scope, and deferred boundaries.
+
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.ppif
 ./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status.ppif

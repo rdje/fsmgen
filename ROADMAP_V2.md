@@ -4326,6 +4326,15 @@ deferral. Multi-peripheral APB topology, sidebands/strobes, alternate widths,
 back-to-back policy, direct backend, verification-output, backend-language
 variants, AXI follow-on, and VHDL remain deferred.
 
+`.579` now audits APB multi-register decode readiness and selects `.580`,
+public APB multi-register completer decode contract selection, without
+changing behavior. The parser already scans repeated `(register ...)` clauses,
+but the current source contract, normalized model, reports, generated ISF/FSM,
+samples, lower-layer fixture, and focused tests are still singular. Direct
+implementation is not ready until `.580` selects public source syntax,
+deterministic ordering, address uniqueness/diagnostics, report migration,
+generated storage naming, sample/support/test scope, and deferred boundaries.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
