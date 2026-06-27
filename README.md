@@ -3536,8 +3536,10 @@ synchronization after `.597`, without behavior changes. Live probes confirmed
 selected 32-bit protection aliases carry `protection_policy` metadata and
 `apb_additional_protection_policies_deferred`, while sideband data16 aliases
 retain `apb_protection_policy_effects_deferred` and no `protection_policy`.
-The next owner must align `docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md` with the
-shipped protection alias behavior before deeper APB widening.
+`.599` synchronized `docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md` with the shipped
+protection alias behavior, including protection support-accounting prose, CLI
+examples, report wording, diagnostics, and narrowed non-goals, without behavior
+changes. `.600` now owns the next APB/IAL2 selector.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.

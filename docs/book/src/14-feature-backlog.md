@@ -10280,9 +10280,11 @@ additional predicates, global/window/peripheral policies, interconnect-owned
 enforcement, back-to-back policy, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred. `.598`
 selected `.599`, APB profile-alias/public-surface synchronization after
-`.597`, without behavior changes. The next owner must align
+`.597`, without behavior changes. `.599` synchronized
 `docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md` with the shipped protection alias
-behavior before deeper APB widening.
+behavior, including protection support-accounting prose, CLI examples, report
+wording, diagnostics, and narrowed non-goals. `.600` is the next APB/IAL2
+selector.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

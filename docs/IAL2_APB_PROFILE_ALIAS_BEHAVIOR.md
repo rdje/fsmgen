@@ -2,9 +2,10 @@
 
 Task-tree owners: `IAL2-FEATURE-COMPLETENESS-FRONTIER.554`,
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.569`,
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.597`
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.597`,
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.599`
 
-Date: 2026-06-26
+Date: 2026-06-27
 
 ## Outcome
 
@@ -22,19 +23,19 @@ ppif/apb_requester_transfer_sideband_data16.apb
 ppif/apb_completer.apb
 ppif/apb_completer_multi_register.apb
 ppif/apb_completer_multi_register_sideband.apb
-ppif/apb_completer_multi_register_sideband_data16.apb
 ppif/apb_completer_multi_register_sideband_protection.apb
+ppif/apb_completer_multi_register_sideband_data16.apb
 ppif/apb_composition.apb
 ppif/apb_composition_busy.apb
 ppif/apb_composition_status.apb
 ppif/apb_composition_multi_register.apb
 ppif/apb_composition_multi_register_sideband.apb
-ppif/apb_composition_multi_register_sideband_data16.apb
 ppif/apb_composition_multi_register_sideband_protection.apb
+ppif/apb_composition_multi_register_sideband_data16.apb
 ppif/apb_composition_multi_peripheral.apb
 ppif/apb_composition_multi_peripheral_sideband.apb
-ppif/apb_composition_multi_peripheral_sideband_data16.apb
 ppif/apb_composition_multi_peripheral_sideband_protection.apb
+ppif/apb_composition_multi_peripheral_sideband_data16.apb
 ```
 
 They mirror the generic APB IAL2 samples:
@@ -48,19 +49,19 @@ ppif/apb_requester_transfer_sideband_data16.ppif
 ppif/apb_completer.ppif
 ppif/apb_completer_multi_register.ppif
 ppif/apb_completer_multi_register_sideband.ppif
-ppif/apb_completer_multi_register_sideband_data16.ppif
 ppif/apb_completer_multi_register_sideband_protection.ppif
+ppif/apb_completer_multi_register_sideband_data16.ppif
 ppif/apb_composition.ppif
 ppif/apb_composition_busy.ppif
 ppif/apb_composition_status.ppif
 ppif/apb_composition_multi_register.ppif
 ppif/apb_composition_multi_register_sideband.ppif
-ppif/apb_composition_multi_register_sideband_data16.ppif
 ppif/apb_composition_multi_register_sideband_protection.ppif
+ppif/apb_composition_multi_register_sideband_data16.ppif
 ppif/apb_composition_multi_peripheral.ppif
 ppif/apb_composition_multi_peripheral_sideband.ppif
-ppif/apb_composition_multi_peripheral_sideband_data16.ppif
 ppif/apb_composition_multi_peripheral_sideband_protection.ppif
+ppif/apb_composition_multi_peripheral_sideband_data16.ppif
 ```
 
 `.apb` is not a separate APB language, not an APB-to-FSM shortcut, not a direct
@@ -146,6 +147,11 @@ semantic root kind top
 Check JSON and semantic JSON keep the authored `.apb` path as the public source
 path while describing the generated `.fsm` or `?top` semantic root.
 
+Protection aliases add `protection_policy` metadata to schedule/report JSON and
+use `apb_additional_protection_policies_deferred`. Sideband data16 aliases do
+not accept access policies in this slice and still report
+`apb_protection_policy_effects_deferred`.
+
 Support accounting records the alias samples as:
 
 ```text
@@ -181,6 +187,10 @@ entry_id: intent.apb_profile_alias_completer_multi_register_sideband
 coverage: ial2_apb_profile_alias_completer_multi_register_sideband_pipeline_cli
 source_kind: ial2_profile_alias
 
+entry_id: intent.apb_profile_alias_completer_multi_register_sideband_protection
+coverage: ial2_apb_profile_alias_completer_multi_register_sideband_protection_pipeline_cli
+source_kind: ial2_profile_alias
+
 entry_id: intent.apb_profile_alias_completer_multi_register_sideband_data16
 coverage: ial2_apb_profile_alias_completer_multi_register_sideband_data16_pipeline_cli
 source_kind: ial2_profile_alias
@@ -205,6 +215,10 @@ entry_id: intent.apb_profile_alias_composition_multi_register_sideband
 coverage: ial2_apb_profile_alias_composition_multi_register_sideband_pipeline_cli
 source_kind: ial2_profile_alias
 
+entry_id: intent.apb_profile_alias_composition_multi_register_sideband_protection
+coverage: ial2_apb_profile_alias_composition_multi_register_sideband_protection_pipeline_cli
+source_kind: ial2_profile_alias
+
 entry_id: intent.apb_profile_alias_composition_multi_register_sideband_data16
 coverage: ial2_apb_profile_alias_composition_multi_register_sideband_data16_pipeline_cli
 source_kind: ial2_profile_alias
@@ -215,6 +229,10 @@ source_kind: ial2_profile_alias
 
 entry_id: intent.apb_profile_alias_composition_multi_peripheral_sideband
 coverage: ial2_apb_profile_alias_composition_multi_peripheral_sideband_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_composition_multi_peripheral_sideband_protection
+coverage: ial2_apb_profile_alias_composition_multi_peripheral_sideband_protection_pipeline_cli
 source_kind: ial2_profile_alias
 
 entry_id: intent.apb_profile_alias_composition_multi_peripheral_sideband_data16
@@ -232,11 +250,14 @@ Emit APB IAL2 schedule/report JSON:
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_sideband_data16.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_completer.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_completer_multi_register_sideband_protection.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_completer_multi_register_sideband_data16.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_busy.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_status.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_register_sideband_protection.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_register_sideband_data16.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_peripheral_sideband_protection.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_peripheral_sideband_data16.apb
 ```
 
@@ -246,9 +267,12 @@ Run strict checks without writing HDL:
 ./bin/fsmgen --strict --check --json ppif/apb_requester_transfer.apb
 ./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status.apb
 ./bin/fsmgen --strict --check --json ppif/apb_completer.apb
+./bin/fsmgen --strict --check --json ppif/apb_completer_multi_register_sideband_protection.apb
 ./bin/fsmgen --strict --check --json ppif/apb_completer_multi_register_sideband_data16.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition_status.apb
+./bin/fsmgen --strict --check --json ppif/apb_composition_multi_register_sideband_protection.apb
+./bin/fsmgen --strict --check --json ppif/apb_composition_multi_peripheral_sideband_protection.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition_multi_peripheral_sideband_data16.apb
 ```
 
@@ -259,6 +283,7 @@ Emit normalized semantic JSON:
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_completer.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_status.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_multi_register_sideband_protection.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_multi_register_sideband_data16.apb
 ```
 
@@ -290,6 +315,8 @@ Materialize generated review artifacts and HDL:
 - mixed APB requester/completer files without the explicit APB composition
   object are rejected as unsupported implicit composition;
 - unsupported APB shapes and malformed composition objects stay fail-closed;
+- malformed or unsupported APB access-policy clauses, including policies on
+  data16, no-sideband, or single-register aliases, stay fail-closed;
 - unsupported APB width families, including address widths other than 32,
   wait-count widths other than 4, and data widths beyond the selected
   sideband-aware 16/32-bit boundary, stay fail-closed; and
@@ -304,10 +331,11 @@ verification-output behavior, backend-language variants, VHDL behavior, or
 direct IAL2-to-IAL0 lowering.
 
 APB address widths other than 32, wait-count widths other than 4, data widths
-beyond the selected sideband-aware 16/32-bit boundary, `PPROT`
-access-control effects, back-to-back transfer policy, direct backend lowering,
-verification-output generation, backend-language variants, and VHDL remain
-deferred. The selected busy output and busy-gated 2-bit requester status
+beyond the selected sideband-aware 16/32-bit boundary, data16 protection-policy
+effects, additional `PPROT` predicates, global/window/peripheral policies,
+interconnect-owned enforcement, back-to-back transfer policy, direct backend
+lowering, verification-output generation, backend-language variants, and VHDL
+remain deferred. The selected busy output and busy-gated 2-bit requester status
 aliases are documented in
 [IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR](IAL2_APB_REQUESTER_BUSY_OUTPUT_BEHAVIOR.md)
 and
@@ -342,3 +370,14 @@ Direct probes also covered schedule/check/semantic/outdir success for the new
 completer and composition aliases, requester `.apb` preservation, `.ppif`
 preservation, and fail-closed missing-profile, wrong-profile, Valid-Ready, and
 implicit mixed requester/completer diagnostics.
+
+The `.597` protection alias behavior and `.599` public-surface sync were
+validated with:
+
+```bash
+perl -MJSON::PP -we 'my $file=shift; my $json=qx(./bin/fsmgen --quiet --emit-schedule-json $file); die "fsmgen failed for $file\n" if $?; my $r=JSON::PP->new->decode($json); print "$file protection_policy=" . (exists($r->{protection_policy}) ? q{yes} : q{no}) . "\n";' ppif/apb_completer_multi_register_sideband_protection.apb
+perl -MJSON::PP -we 'my $file=shift; my $json=qx(./bin/fsmgen --quiet --emit-schedule-json $file); die "fsmgen failed for $file\n" if $?; my $r=JSON::PP->new->decode($json); print "$file protection_policy=" . (exists($r->{protection_policy}) ? q{yes} : q{no}) . "\n";' ppif/apb_composition_multi_peripheral_sideband_protection.apb
+prove -Iperl t/1470-ial2-apb-profile-alias.t \
+  t/248-regression-corpus-accounting.t \
+  t/297-capability-manifest.t
+```
