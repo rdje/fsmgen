@@ -10337,6 +10337,21 @@ composition/interconnect propagation, report/support-accounting movement,
 diagnostics, validation, rollback, and direct-backend/VHDL deferral before
 behavior work.
 
+APB back-to-back contract selection:
+[IAL2_APB_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.607`, bounded implementation of the explicit APB back-to-back
+timing-policy contract, without behavior changes. The selected requester
+transfer syntax is `(timing-policy (back-to-back queued) (queue-depth 1)
+(overflow reject))`, and the selected requester response surface requires
+`accepted`, `busy`, and a 2-bit `status` field. The selected completer transfer
+syntax is `(timing-policy (setup-admission adjacent))`. The first supported
+sample family is status-observable requester-transfer, one-register completer,
+and fixed one-requester/one-completer composition, each with `.ppif` and
+`.apb` coverage. Multi-peripheral propagation, sideband/data16/protection
+variants, deeper queues, alternate overflow policies, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

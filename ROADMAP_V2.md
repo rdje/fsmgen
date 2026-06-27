@@ -4580,6 +4580,18 @@ vocabulary, explicit versus implicit timing-policy boundary, requester queued
 admission, completer setup admission, composition/interconnect propagation,
 report/support-accounting movement, diagnostics, validation, rollback, and
 direct-backend/VHDL deferral.
+`.606` now selects `.607`, bounded implementation of the selected APB
+back-to-back timing-policy contract, without behavior changes. The selected
+requester vocabulary is explicit opt-in `(timing-policy (back-to-back queued)
+(queue-depth 1) (overflow reject))`, requiring public `accepted`, `busy`, and
+2-bit `status` response fields. The selected completer vocabulary is
+`(timing-policy (setup-admission adjacent))`. The first implementation family
+is status-observable requester-transfer, one-register completer, and fixed
+one-requester/one-completer composition, each with `.ppif` and `.apb`
+coverage. Multi-peripheral propagation, sideband/data16/protection variants,
+deeper queues, alternate overflow policies, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
