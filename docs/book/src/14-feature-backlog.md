@@ -9946,7 +9946,7 @@ requester, completer, and fixed composition owners reachable. The mdBook
 language-surface and intent-scheduling chapters describe `.ppif` as the
 generic IAL2 container, `.axi` and `.apb` as bounded shipped profile aliases,
 and keep `.pif`, `.ppi`, `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, and `.i2s`
-unsupported. `.575` is active to select the next exact IAL2 slice.
+unsupported. `.575` later selected the next exact IAL2 slice recorded below.
 
 Post APB public-surface sync selector:
 [IAL2_POST_APB_PUBLIC_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_PUBLIC_SYNC_NEXT_SLICE_SELECTION.md)
@@ -9955,6 +9955,19 @@ without changing behavior. Busy-capable APB requester-transfer and
 fixed-composition reports keep `apb_requester_status_field_deferred`, making
 named status fields the next smallest direct APB follow-on. Multi-peripheral
 decode, multi-register decode, sidebands/strobes, alternate widths,
+back-to-back policy, direct backend, verification-output, backend-language
+variants, AXI follow-on, and VHDL remain deferred.
+
+APB requester status-field contract:
+[IAL2_APB_REQUESTER_STATUS_FIELD_CONTRACT_SELECTION](../../IAL2_APB_REQUESTER_STATUS_FIELD_CONTRACT_SELECTION.md)
+selects `.577`, direct bounded implementation of additive 2-bit APB requester
+named status-field exposure, without changing behavior. The selected source
+shape adds `(status status width 2)` only in busy-capable APB requester
+response blocks that also contain `(busy busy)`. The selected code is
+`0 idle`, `1 busy`, `2 done_ok`, and `3 done_error`. Status-capable requester
+and fixed-composition `.ppif`/`.apb` samples will be additive; existing no-busy
+and busy-only APB samples remain unchanged. Status-only samples, enum/custom
+encodings, sticky status registers, APB decode/storage/sideband/width work,
 back-to-back policy, direct backend, verification-output, backend-language
 variants, AXI follow-on, and VHDL remain deferred.
 
