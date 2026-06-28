@@ -1487,6 +1487,24 @@ sub _endpoint_storage_is_selected_sideband_protection_multi_register_timing_shap
         && _endpoint_access_policy_is_selected_reg1_protection($registers[1]);
 }
 
+sub _endpoint_storage_is_selected_sideband_protection_multi_peripheral_status_timing_shape($storage) {
+    my @registers = _endpoint_storage_registers($storage);
+    return 0 unless @registers == 2;
+    return 0 unless _endpoint_storage_register_matches_selected_timing_shape($registers[0], 'status_reg', 0, 32)
+        && _endpoint_storage_register_matches_selected_timing_shape($registers[1], 'status_shadow_reg', 4, 32);
+    return _endpoint_access_policy_is_selected_reg0_protection($registers[0])
+        && _endpoint_access_policy_is_selected_reg0_protection($registers[1]);
+}
+
+sub _endpoint_storage_is_selected_sideband_protection_multi_peripheral_control_timing_shape($storage) {
+    my @registers = _endpoint_storage_registers($storage);
+    return 0 unless @registers == 2;
+    return 0 unless _endpoint_storage_register_matches_selected_timing_shape($registers[0], 'control_reg', 0, 32)
+        && _endpoint_storage_register_matches_selected_timing_shape($registers[1], 'control_shadow_reg', 4, 32);
+    return _endpoint_access_policy_is_selected_reg1_protection($registers[0])
+        && _endpoint_access_policy_is_selected_reg1_protection($registers[1]);
+}
+
 sub _endpoint_storage_is_selected_sideband_data16_multi_register_timing_shape($storage) {
     return _endpoint_storage_is_selected_multi_register_timing_shape($storage, 2, 16);
 }
@@ -1527,6 +1545,19 @@ sub _multi_peripheral_completers_are_selected_sideband_data16_protection_timing_
             if _endpoint_storage_is_selected_sideband_data16_protection_multi_peripheral_status_timing_shape($completer->{storage});
         $control_count++
             if _endpoint_storage_is_selected_sideband_data16_protection_multi_peripheral_control_timing_shape($completer->{storage});
+    }
+    return $status_count == 1 && $control_count == 1;
+}
+
+sub _multi_peripheral_completers_are_selected_sideband_protection_timing_shape($completers) {
+    return 0 unless ref($completers) eq 'ARRAY' && @$completers == 2;
+    my $status_count = 0;
+    my $control_count = 0;
+    for my $completer (@$completers) {
+        $status_count++
+            if _endpoint_storage_is_selected_sideband_protection_multi_peripheral_status_timing_shape($completer->{storage});
+        $control_count++
+            if _endpoint_storage_is_selected_sideband_protection_multi_peripheral_control_timing_shape($completer->{storage});
     }
     return $status_count == 1 && $control_count == 1;
 }
@@ -1656,7 +1687,7 @@ sub _fixed_composition_back_to_back_policy_report($contract, $requester_result, 
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition, selected sideband-aware fixed multi-register composition, selected sideband-aware protected fixed multi-register composition, and the bounded two-peripheral interconnect/decode family; selected sideband-aware data16 requester and adjacent data16 two-register no-policy or protected completer propagation is implemented for fixed composition; selected sideband-aware data16-protection requester and adjacent protected status/control peripheral propagation is implemented for bounded two-peripheral composition; broader multi-peripheral multi-register timing, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition, selected sideband-aware fixed multi-register composition, selected sideband-aware protected fixed multi-register composition, and the bounded two-peripheral interconnect/decode family; selected sideband-aware protection requester and adjacent protected status/control peripheral propagation is implemented for bounded two-peripheral composition; selected sideband-aware data16 requester and adjacent data16 two-register no-policy or protected completer propagation is implemented for fixed composition; selected sideband-aware data16-protection requester and adjacent protected status/control peripheral propagation is implemented for bounded two-peripheral composition; broader multi-peripheral multi-register timing, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 
@@ -2042,11 +2073,13 @@ sub _validate_multi_peripheral_timing_policy_compatibility($wiring, $children, $
     confess "APB multi-peripheral selected back-to-back timing-policy supports only 32-bit no-sideband, selected 32-bit sideband-aware, or selected sideband-aware data16-protection APB wiring in this slice\n"
         unless $is_no_sideband_family || $is_sideband_family || $is_sideband_data16_family;
 
-    if ($is_sideband_data16_family) {
+    if ($is_sideband_family && _multi_peripheral_completers_are_selected_sideband_protection_timing_shape($completers)) {
+        return;
+    } elsif ($is_sideband_data16_family) {
         confess "APB multi-peripheral selected back-to-back timing-policy supports only the selected two-peripheral sideband data16 protection status/control storage shape in this slice\n"
             unless _multi_peripheral_completers_are_selected_sideband_data16_protection_timing_shape($completers);
     } else {
-        confess "APB multi-peripheral selected back-to-back timing-policy supports only one-register peripheral completer storage in this slice\n"
+        confess "APB multi-peripheral selected back-to-back timing-policy supports only one-register peripheral completer storage or the selected two-peripheral sideband protection status/control storage shape in this slice\n"
             if grep {
                 my @registers = _endpoint_storage_registers($_->{storage});
                 @registers != 1;

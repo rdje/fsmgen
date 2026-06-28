@@ -5005,6 +5005,16 @@ multi-register timing, data16-protection generalization beyond the selected
 overflow, accepted-less requesters, multiple active APB transfers, broader
 protection policies, direct backend, verification-output, backend-language
 variants, AXI, AHB, and VHDL remain deferred.
+`.638` now ships that selected bounded APB sideband-aware multi-peripheral
+protection back-to-back timing behavior. The `.ppif` and `.apb` sources are
+support-accounted, generate requester/interconnect/status/control review
+artifacts, report aggregate multi-peripheral `back_to_back_policy`, preserve
+peripheral-completer-owned privileged `PPROT[0]` enforcement, propagate
+queued 32-bit `PWDATA` plus `PPROT/PSTRB` through the interconnect without
+idle insertion, remove broad `apb_back_to_back_policy_deferred`, and retain
+narrowed future timing, broader-protection, and alternate-width residue.
+`.639` is the next selector for the remaining APB back-to-back timing residue
+after the protected 32-bit multi-peripheral timing family shipped.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

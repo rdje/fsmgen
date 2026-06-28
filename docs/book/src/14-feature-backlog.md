@@ -10806,6 +10806,18 @@ windows at `0` and `256`, propagation-only interconnect decode,
 peripheral-owned protection enforcement, and aggregate multi-peripheral
 `back_to_back_policy` reporting.
 
+APB multi-peripheral protection back-to-back behavior:
+[IAL2_APB_MULTI_PERIPHERAL_PROTECTION_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_MULTI_PERIPHERAL_PROTECTION_BACK_TO_BACK_BEHAVIOR.md)
+ships the selected bounded 32-bit sideband-aware protection timing family.
+The `.ppif` and `.apb` sources are support-accounted, generate
+requester/interconnect/status/control review artifacts, propagate queued
+32-bit `PWDATA` plus `PPROT/PSTRB` without idle-cycle insertion, preserve
+peripheral-completer-owned privileged `PPROT[0]` enforcement, remove broad
+`apb_back_to_back_policy_deferred`, and keep narrowed future timing,
+broader-protection, and alternate-width residue. `.639` is the next selector
+for the remaining APB back-to-back timing residue after this protected
+multi-peripheral family shipped.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

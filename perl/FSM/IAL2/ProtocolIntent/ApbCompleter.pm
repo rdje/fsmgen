@@ -470,6 +470,11 @@ sub _validate_timing_policy_contract($bus, $storage, $transfer) {
         && _storage_is_selected_sideband_multi_register_timing_shape($storage);
     my $is_selected_sideband_protection_multi_register = $is_sideband_family
         && _storage_is_selected_sideband_protection_multi_register_timing_shape($storage);
+    my $is_selected_sideband_protection_multi_peripheral_register = $is_sideband_family
+        && (
+            _storage_is_selected_sideband_protection_multi_peripheral_status_timing_shape($storage)
+            || _storage_is_selected_sideband_protection_multi_peripheral_control_timing_shape($storage)
+        );
     my $is_selected_sideband_data16_multi_register = $is_sideband_data16_family
         && _storage_is_selected_sideband_data16_multi_register_timing_shape($storage);
     my $is_selected_sideband_data16_protection_multi_register = $is_sideband_data16_family
@@ -479,10 +484,11 @@ sub _validate_timing_policy_contract($bus, $storage, $transfer) {
             _storage_is_selected_sideband_data16_protection_multi_peripheral_status_timing_shape($storage)
             || _storage_is_selected_sideband_data16_protection_multi_peripheral_control_timing_shape($storage)
         );
-    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, selected sideband-aware data16 two-register no-policy, selected sideband-aware data16 two-register protection, or selected sideband-aware data16 protection status/control peripheral completer families in this slice\n"
+    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, selected 32-bit sideband-aware protection status/control peripheral, selected sideband-aware data16 two-register no-policy, selected sideband-aware data16 two-register protection, or selected sideband-aware data16 protection status/control peripheral completer families in this slice\n"
         unless ($is_one_register && ($is_no_sideband_family || $is_sideband_family))
             || $is_selected_sideband_multi_register
             || $is_selected_sideband_protection_multi_register
+            || $is_selected_sideband_protection_multi_peripheral_register
             || $is_selected_sideband_data16_multi_register
             || $is_selected_sideband_data16_protection_multi_register
             || $is_selected_sideband_data16_protection_multi_peripheral_register;
@@ -633,6 +639,26 @@ sub _storage_is_selected_sideband_protection_multi_register_timing_shape($storag
     return 0 unless _storage_register_matches_selected_timing_shape($registers[0], 'reg0', 0, 32)
         && _storage_register_matches_selected_timing_shape($registers[1], 'reg1', 4, 32);
     return _access_policy_is_selected_reg0_protection($registers[0])
+        && _access_policy_is_selected_reg1_protection($registers[1]);
+}
+
+sub _storage_is_selected_sideband_protection_multi_peripheral_status_timing_shape($storage) {
+    return 0 unless ref($storage->{registers}) eq 'ARRAY';
+    my @registers = @{$storage->{registers}};
+    return 0 unless @registers == 2;
+    return 0 unless _storage_register_matches_selected_timing_shape($registers[0], 'status_reg', 0, 32)
+        && _storage_register_matches_selected_timing_shape($registers[1], 'status_shadow_reg', 4, 32);
+    return _access_policy_is_selected_reg0_protection($registers[0])
+        && _access_policy_is_selected_reg0_protection($registers[1]);
+}
+
+sub _storage_is_selected_sideband_protection_multi_peripheral_control_timing_shape($storage) {
+    return 0 unless ref($storage->{registers}) eq 'ARRAY';
+    my @registers = @{$storage->{registers}};
+    return 0 unless @registers == 2;
+    return 0 unless _storage_register_matches_selected_timing_shape($registers[0], 'control_reg', 0, 32)
+        && _storage_register_matches_selected_timing_shape($registers[1], 'control_shadow_reg', 4, 32);
+    return _access_policy_is_selected_reg1_protection($registers[0])
         && _access_policy_is_selected_reg1_protection($registers[1]);
 }
 
@@ -1243,7 +1269,7 @@ sub _report_enforced_static_rules($multi_register, $contract) {
         : 'the only implemented register address is 0 and reset value is 0';
     push @rules,
         'read and write behavior must target the selected register and unmapped addresses must assert error',
-        (_completer_has_adjacent_setup_policy($contract) ? ('selected timing-policy is setup-admission adjacent and remains bounded to the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, selected sideband-aware data16 two-register no-policy, selected sideband-aware data16 two-register protection, or selected sideband-aware data16 protection status/control peripheral completer families') : ()),
+        (_completer_has_adjacent_setup_policy($contract) ? ('selected timing-policy is setup-admission adjacent and remains bounded to the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, selected 32-bit sideband-aware protection status/control peripheral, selected sideband-aware data16 two-register no-policy, selected sideband-aware data16 two-register protection, or selected sideband-aware data16 protection status/control peripheral completer families') : ()),
         'APB completer is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden';
     return \@rules;
 }
