@@ -3824,6 +3824,20 @@ retaining remaining-width and protection-policy residue. Protection-only
 timing, combined data16-protection timing, multi-peripheral multi-register
 timing, deeper queues, alternate overflow, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.625` now ships that selected bounded APB sideband-aware data16
+back-to-back timing-policy behavior. The new public sources are
+`ppif/apb_requester_transfer_sideband_data16_status_back_to_back.ppif`,
+`ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb`,
+`ppif/apb_completer_multi_register_sideband_data16_back_to_back.ppif`,
+`ppif/apb_completer_multi_register_sideband_data16_back_to_back.apb`,
+`ppif/apb_composition_multi_register_sideband_data16_status_back_to_back.ppif`,
+and `ppif/apb_composition_multi_register_sideband_data16_status_back_to_back.apb`.
+The requester queues 16-bit write data, `PPROT width 3`, and `PSTRB width 2`;
+the adjacent completer decodes `reg0` at address `0` and `reg1` at address
+`2` with 16-bit byte-lane writes; the fixed composition reports aggregate
+`back_to_back_policy` while retaining future-policy, remaining-width, and
+protection-policy residue. `.626` selects the next APB data16/protection
+back-to-back owner without behavior changes.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6396,6 +6410,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_SIDEBAND_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md` — ships selected 32-bit sideband-aware APB two-register adjacent setup plus fixed-composition queued sideband propagation.
 - `docs/IAL2_POST_APB_SIDEBAND_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects APB sideband-aware data16 back-to-back public contract selection after selected sideband multi-register timing shipped.
 - `docs/IAL2_APB_DATA16_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects the bounded APB sideband-aware data16 requester, standalone completer, and fixed-composition back-to-back public contract before implementation.
+- `docs/IAL2_APB_DATA16_BACK_TO_BACK_BEHAVIOR.md` — ships selected APB sideband-aware data16 requester, standalone two-register completer, and fixed-composition back-to-back timing behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

@@ -1,0 +1,47 @@
+(protocol-platform-intent apb_requester_transfer_sideband_data16_status_back_to_back
+  (profile apb)
+  (source
+    (object fsmgen-apb-requester-transfer-sideband-data16-status-back-to-back)
+    (anchor
+      (document FSMGEN-APB-REQUESTER-CAPTURE-WORKSHEET)
+      (section transfer-protocol-sideband-data16-status-back-to-back)
+      (page stage-1)))
+  (apb-requester apb_requester
+    (role requester)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (request
+      (start start)
+      (write req_write)
+      (address req_addr width 32)
+      (write-data req_wdata width 16)
+      (protection req_prot width 3)
+      (write-strobe req_wstrb width 2))
+    (response
+      (accepted accepted)
+      (busy busy)
+      (status status width 2)
+      (done done)
+      (read-data last_read_data width 16)
+      (error last_error))
+    (bus
+      (address PADDR width 32)
+      (write PWRITE)
+      (write-data PWDATA width 16)
+      (protection PPROT width 3)
+      (strobe PSTRB width 2)
+      (select PSEL)
+      (enable PENABLE)
+      (ready PREADY)
+      (read-data PRDATA width 16)
+      (error PSLVERR))
+    (transfer apb_transfer
+      (setup (select 1) (enable 0))
+      (access (select 1) (enable 1))
+      (complete-on ready)
+      (sample read-data error)
+      (latency (min 2) (max 16))
+      (timing-policy
+        (back-to-back queued)
+        (queue-depth 1)
+        (overflow reject)))))

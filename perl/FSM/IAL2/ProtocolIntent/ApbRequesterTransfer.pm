@@ -341,24 +341,26 @@ sub _validate_timing_policy_contract($request, $response, $bus, $transfer) {
         || defined($request->{write_strobe})
         || defined($bus->{protection})
         || defined($bus->{strobe});
-    confess "APB requester-transfer IAL2 contract selected back-to-back timing-policy supports only the 32-bit no-sideband or 32-bit sideband-aware requester families in this slice\n"
-        unless $request->{write_data}{width} == 32
-            && $response->{read_data}{width} == 32
-            && $bus->{write_data}{width} == 32
-            && $bus->{read_data}{width} == 32
-            && (
-                !$has_sidebands
-                || (
-                    defined($request->{protection})
-                    && defined($request->{write_strobe})
-                    && defined($bus->{protection})
-                    && defined($bus->{strobe})
-                    && $request->{protection}{width} == 3
-                    && $request->{write_strobe}{width} == 4
-                    && $bus->{protection}{width} == 3
-                    && $bus->{strobe}{width} == 4
-                )
-            );
+    my $data_width = $request->{write_data}{width};
+    my $is_selected_no_sideband_family = $data_width == 32
+        && $response->{read_data}{width} == 32
+        && $bus->{write_data}{width} == 32
+        && $bus->{read_data}{width} == 32
+        && !$has_sidebands;
+    my $is_selected_sideband_family = ($data_width == 16 || $data_width == 32)
+        && $response->{read_data}{width} == $data_width
+        && $bus->{write_data}{width} == $data_width
+        && $bus->{read_data}{width} == $data_width
+        && defined($request->{protection})
+        && defined($request->{write_strobe})
+        && defined($bus->{protection})
+        && defined($bus->{strobe})
+        && $request->{protection}{width} == 3
+        && $request->{write_strobe}{width} == _apb_strobe_width_for_data_width($data_width)
+        && $bus->{protection}{width} == 3
+        && $bus->{strobe}{width} == _apb_strobe_width_for_data_width($data_width);
+    confess "APB requester-transfer IAL2 contract selected back-to-back timing-policy supports only the 32-bit no-sideband, selected 32-bit sideband-aware, or selected sideband-aware data16 requester families in this slice\n"
+        unless $is_selected_no_sideband_family || $is_selected_sideband_family;
 }
 
 sub _normalize_phase($raw, $field) {
@@ -1064,7 +1066,7 @@ sub _apb_requester_timing_policy_report($contract) {
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Depth-1 queued requester admission with overflow reject is implemented for the selected 32-bit no-sideband status requester and selected 32-bit sideband-aware status requester, including selected fixed-composition and two-peripheral interconnect/decode propagation; deeper queues, alternate overflow policies, accepted-less surfaces, data16/protection variants, multiple active APB transfers, broader interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Depth-1 queued requester admission with overflow reject is implemented for the selected 32-bit no-sideband status requester, selected 32-bit sideband-aware status requester, and selected sideband-aware data16 status requester, including selected fixed-composition and two-peripheral interconnect/decode propagation where exact owners shipped it; deeper queues, alternate overflow policies, accepted-less surfaces, protection variants, multiple active APB transfers, broader interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 

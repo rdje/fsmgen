@@ -8,6 +8,9 @@ The selected alternate-width APB surface is bounded to sideband-aware 16-bit dat
 contracts. Existing 32-bit APB requester, completer, fixed composition, and
 multi-peripheral composition samples remain unchanged.
 
+Update `.625`: the selected sideband-aware data16 back-to-back timing family
+now ships separately. See `docs/IAL2_APB_DATA16_BACK_TO_BACK_BEHAVIOR.md`.
+
 New support-accounted samples:
 
 - `ppif/apb_requester_transfer_sideband_data16.ppif`
@@ -89,7 +92,8 @@ data widths beyond the selected sideband-aware 16/32-bit boundary.
 
 Still deferred: 8-bit data, 64-bit data, non-byte-multiple widths, runtime or
 mixed endpoint widths, alternate address widths, alternate wait-count widths,
-PPROT access-control effects, back-to-back transfer policy, direct backend
+PPROT access-control effects, back-to-back transfer policy beyond the selected
+sideband-aware data16 fixed multi-register status family, direct backend
 lowering, verification-output generation, backend-language variants, AXI, AHB,
 and VHDL.
 

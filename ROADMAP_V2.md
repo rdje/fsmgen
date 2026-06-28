@@ -4823,6 +4823,20 @@ no-policy adjacent completer with `reg0` at address `0` and `reg1` at address
 timing, combined data16-protection timing, multi-peripheral multi-register
 timing, deeper queues, alternate overflow, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.625` now ships that selected bounded APB sideband-aware data16
+back-to-back timing-policy behavior. The new public sources are
+`ppif/apb_requester_transfer_sideband_data16_status_back_to_back.ppif`,
+`ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb`,
+`ppif/apb_completer_multi_register_sideband_data16_back_to_back.ppif`,
+`ppif/apb_completer_multi_register_sideband_data16_back_to_back.apb`,
+`ppif/apb_composition_multi_register_sideband_data16_status_back_to_back.ppif`,
+and `ppif/apb_composition_multi_register_sideband_data16_status_back_to_back.apb`.
+The requester queues 16-bit write data, `PPROT width 3`, and `PSTRB width 2`;
+the adjacent completer decodes `reg0` at address `0` and `reg1` at address
+`2` with 16-bit byte-lane writes; the fixed composition reports aggregate
+`back_to_back_policy` while retaining future-policy, remaining-width, and
+protection-policy residue. `.626` selects the next APB data16/protection
+back-to-back owner without behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -149,7 +149,8 @@ Generate review artifacts and HDL:
 ## Deferred Work
 
 - multi-peripheral multi-register timing propagation;
-- data16 back-to-back timing variants;
+- data16 back-to-back timing variants beyond the selected sideband-aware
+  data16 fixed multi-register status family;
 - protection-policy back-to-back timing variants;
 - combined data16-protection back-to-back timing;
 - queue depths other than `1`;

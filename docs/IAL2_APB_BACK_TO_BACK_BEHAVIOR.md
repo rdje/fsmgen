@@ -39,6 +39,10 @@ Update `.618`: the selected 32-bit sideband-aware two-peripheral status
 multi-peripheral propagation family now ships separately. See
 `docs/IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md`.
 
+Update `.625`: the selected sideband-aware data16 requester, standalone
+two-register completer, and fixed-composition status family now ships
+separately. See `docs/IAL2_APB_DATA16_BACK_TO_BACK_BEHAVIOR.md`.
+
 ## Requester Behavior
 
 The selected requester transfer accepts only:
@@ -162,7 +166,8 @@ identities:
 
 - multi-peripheral APB back-to-back variants beyond the selected 32-bit
   no-sideband and sideband-aware two-peripheral status families;
-- data16/protection back-to-back samples;
+- protection-only, combined data16-protection, and multi-peripheral
+  multi-register data16 back-to-back samples;
 - queue depths other than 1;
 - overflow policies other than `reject`;
 - accepted-less requester surfaces;

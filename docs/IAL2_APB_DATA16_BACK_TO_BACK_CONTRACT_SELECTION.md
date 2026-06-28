@@ -25,6 +25,9 @@ work is a bounded guard widening from the selected 32-bit sideband timing
 families to the selected 16-bit sideband data path and two-register data16
 shape.
 
+Update `.625`: this selected contract now ships. See
+`docs/IAL2_APB_DATA16_BACK_TO_BACK_BEHAVIOR.md`.
+
 This selector changes no parser behavior, generator behavior, sample files,
 support-accounting catalog entries, validation behavior, generated artifacts,
 schedule/check/semantic JSON behavior, HDL/runtime behavior, suffix acceptance,

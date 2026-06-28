@@ -10611,6 +10611,20 @@ combined data16-protection timing, multi-peripheral multi-register timing,
 deeper queues, alternate overflow, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
 
+APB data16 back-to-back behavior:
+[IAL2_APB_DATA16_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_DATA16_BACK_TO_BACK_BEHAVIOR.md)
+ships `.625`, selected sideband-aware data16 requester, standalone
+two-register completer, and fixed-composition back-to-back timing behavior.
+The requester queues 16-bit write data plus `PPROT width 3` and
+`PSTRB width 2`; the completer admits adjacent setup for `reg0` at address `0`
+and `reg1` at address `2`; the fixed composition exposes aggregate
+`back_to_back_policy` while retaining future-policy, remaining-width, and
+protection-policy residue. Protection-only timing, combined data16-protection
+timing, multi-peripheral multi-register timing, deeper queues, alternate
+overflow, direct backend, verification-output, backend-language variants, AXI,
+AHB, and VHDL remain deferred. `.626` selects the next APB
+data16/protection back-to-back owner without behavior changes.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

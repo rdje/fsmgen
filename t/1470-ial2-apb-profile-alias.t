@@ -59,8 +59,11 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     ok(-f sample_apb_composition_multi_peripheral_sideband_data16_protection_alias_path(), 'tracked runnable APB multi-peripheral sideband data16 protection composition .apb sample exists');
     ok(-f sample_apb_status_back_to_back_path(), 'tracked runnable APB requester back-to-back .apb sample exists');
     ok(-f sample_apb_sideband_status_back_to_back_path(), 'tracked runnable APB requester sideband back-to-back .apb sample exists');
+    ok(-f sample_apb_sideband_data16_status_back_to_back_path(), 'tracked runnable APB requester sideband data16 back-to-back .apb sample exists');
     ok(-f sample_apb_completer_back_to_back_alias_path(), 'tracked runnable APB completer back-to-back .apb sample exists');
+    ok(-f sample_apb_completer_multi_register_sideband_data16_back_to_back_alias_path(), 'tracked runnable APB multi-register sideband data16 back-to-back completer .apb sample exists');
     ok(-f sample_apb_composition_status_back_to_back_alias_path(), 'tracked runnable APB composition back-to-back .apb sample exists');
+    ok(-f sample_apb_composition_multi_register_sideband_data16_status_back_to_back_alias_path(), 'tracked runnable APB multi-register sideband data16 back-to-back composition .apb sample exists');
     ok(-f sample_apb_composition_multi_peripheral_status_back_to_back_alias_path(), 'tracked runnable APB multi-peripheral status back-to-back composition .apb sample exists');
 
     my $completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_alias_path());
@@ -102,6 +105,23 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     ok(!$btb_sideband_requester_residue{apb_back_to_back_policy_deferred}, '.apb requester sideband back-to-back removes broad back-to-back residue');
     ok($btb_sideband_requester_residue{apb_additional_back_to_back_policies_deferred}, '.apb requester sideband back-to-back keeps narrowed future-policy residue');
 
+    my $btb_sideband_data16_requester_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_sideband_data16_status_back_to_back_path());
+    my $btb_sideband_data16_requester_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_ppif_sideband_data16_status_back_to_back_path());
+    my $btb_sideband_data16_requester_fsm = $btb_sideband_data16_requester_alias->{generated_ial0}{files}{'apb_requester.fsm'};
+    is($btb_sideband_data16_requester_alias->{kind}, 'protocol_intent.apb_requester_transfer', '.apb requester sideband data16 back-to-back parser result keeps APB requester-transfer kind');
+    is($btb_sideband_data16_requester_alias->{generated_ial1}{text}, $btb_sideband_data16_requester_ppif->{generated_ial1}{text}, '.apb requester sideband data16 back-to-back mirrors .ppif generated IAL1 text');
+    is_deeply($btb_sideband_data16_requester_alias->{generated_ial0}{files}, $btb_sideband_data16_requester_ppif->{generated_ial0}{files}, '.apb requester sideband data16 back-to-back mirrors .ppif generated IAL0 files');
+    like($btb_sideband_data16_requester_fsm, qr/\(queued_wdata 16\)/, '.apb requester sideband data16 back-to-back declares 16-bit queued data');
+    like($btb_sideband_data16_requester_fsm, qr/\(queued_wstrb 2\)/, '.apb requester sideband data16 back-to-back declares 2-bit queued PSTRB');
+    like($btb_sideband_data16_requester_fsm, qr/\(<= \(queued_wdata req_wdata\)\)/, '.apb requester sideband data16 back-to-back captures queued write data');
+    like($btb_sideband_data16_requester_fsm, qr/\(<- \(PWDATA> queued_wdata\)\)/, '.apb requester sideband data16 back-to-back relaunches queued write data');
+    like($btb_sideband_data16_requester_fsm, qr/\(<- \(PSTRB> \(& queued_wstrb \(concat queued_write queued_write\)\)\)/, '.apb requester sideband data16 back-to-back masks queued 2-bit PSTRB with queued write bit');
+    is($btb_sideband_data16_requester_alias->{report}{width_policy}{data_width}, 16, '.apb requester sideband data16 back-to-back preserves data width policy');
+    is($btb_sideband_data16_requester_alias->{report}{width_policy}{strobe_width}, 2, '.apb requester sideband data16 back-to-back preserves strobe width policy');
+    my %btb_sideband_data16_requester_residue = map { $_->{id} => 1 } @{$btb_sideband_data16_requester_alias->{report}{unsupported_residue}};
+    ok(!$btb_sideband_data16_requester_residue{apb_back_to_back_policy_deferred}, '.apb requester sideband data16 back-to-back removes broad back-to-back residue');
+    ok($btb_sideband_data16_requester_residue{apb_additional_back_to_back_policies_deferred}, '.apb requester sideband data16 back-to-back keeps narrowed future-policy residue');
+
     my $btb_completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_back_to_back_alias_path());
     my $btb_completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_back_to_back_ppif_path());
     is($btb_completer_alias->{kind}, 'protocol_intent.apb_completer', '.apb completer back-to-back parser result keeps APB completer kind');
@@ -109,12 +129,38 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     is_deeply($btb_completer_alias->{generated_ial0}{files}, $btb_completer_ppif->{generated_ial0}{files}, '.apb completer back-to-back mirrors .ppif generated IAL0 files');
     is($btb_completer_alias->{report}{transfer}{timing_policy}{setup_admission}, 'adjacent', '.apb completer back-to-back preserves adjacent setup admission policy');
 
+    my $btb_data16_completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_data16_back_to_back_alias_path());
+    my $btb_data16_completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_data16_back_to_back_ppif_path());
+    my $btb_data16_completer_fsm = $btb_data16_completer_alias->{generated_ial0}{files}{'apb_completer.fsm'};
+    is($btb_data16_completer_alias->{kind}, 'protocol_intent.apb_completer', '.apb sideband data16 back-to-back completer parser result keeps APB completer kind');
+    is($btb_data16_completer_alias->{generated_ial1}{text}, $btb_data16_completer_ppif->{generated_ial1}{text}, '.apb sideband data16 back-to-back completer mirrors .ppif generated IAL1 text');
+    is_deeply($btb_data16_completer_alias->{generated_ial0}{files}, $btb_data16_completer_ppif->{generated_ial0}{files}, '.apb sideband data16 back-to-back completer mirrors .ppif generated IAL0 files');
+    is($btb_data16_completer_alias->{report}{transfer}{timing_policy}{setup_admission}, 'adjacent', '.apb sideband data16 back-to-back completer preserves adjacent setup admission policy');
+    is($btb_data16_completer_alias->{report}{width_policy}{data_width}, 16, '.apb sideband data16 back-to-back completer preserves data width policy');
+    is_deeply($btb_data16_completer_alias->{report}{transfer}{registers}, [qw(reg0 reg1)], '.apb sideband data16 back-to-back completer preserves selected two-register list');
+    like($btb_data16_completer_fsm, qr/\(PSTRB 2\)/, '.apb sideband data16 back-to-back completer preserves 2-bit PSTRB');
+    like($btb_data16_completer_fsm, qr/\(<= \(addr PADDR\) <\(& PSEL \(! PENABLE\)\)\)/, '.apb sideband data16 back-to-back completer samples adjacent setup');
+    like($btb_data16_completer_fsm, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, '.apb sideband data16 back-to-back completer preserves high-byte write mask');
+
     my $btb_composition_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_status_back_to_back_alias_path());
     my $btb_composition_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_status_back_to_back_ppif_path());
     is($btb_composition_alias->{kind}, 'protocol_intent.apb_composition', '.apb composition back-to-back parser result keeps APB composition kind');
     is_deeply($btb_composition_alias->{generated_ial1}{items}, $btb_composition_ppif->{generated_ial1}{items}, '.apb composition back-to-back mirrors .ppif generated IAL1 artifacts');
     is_deeply($btb_composition_alias->{generated_ial0}{files}, $btb_composition_ppif->{generated_ial0}{files}, '.apb composition back-to-back mirrors .ppif generated IAL0 files');
     is($btb_composition_alias->{report}{back_to_back_policy}{requester}{timing_policy}{overflow}, 'reject', '.apb composition back-to-back preserves aggregate requester policy');
+
+    my $btb_data16_composition_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_data16_status_back_to_back_alias_path());
+    my $btb_data16_composition_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_data16_status_back_to_back_ppif_path());
+    my $btb_data16_composition_top = $btb_data16_composition_alias->{generated_ial0}{files}{'apb_tb.fsm'};
+    is($btb_data16_composition_alias->{kind}, 'protocol_intent.apb_composition', '.apb sideband data16 fixed back-to-back composition parser result keeps APB composition kind');
+    is_deeply($btb_data16_composition_alias->{generated_ial1}{items}, $btb_data16_composition_ppif->{generated_ial1}{items}, '.apb sideband data16 fixed back-to-back composition mirrors .ppif generated IAL1 artifacts');
+    is_deeply($btb_data16_composition_alias->{generated_ial0}{files}, $btb_data16_composition_ppif->{generated_ial0}{files}, '.apb sideband data16 fixed back-to-back composition mirrors .ppif generated IAL0 files');
+    is($btb_data16_composition_alias->{report}{composition}{width_policy}{data_width}, 16, '.apb sideband data16 fixed back-to-back composition preserves data width policy');
+    is($btb_data16_composition_alias->{report}{back_to_back_policy}{completer}{timing_policy}{setup_admission}, 'adjacent', '.apb sideband data16 fixed back-to-back composition preserves aggregate completer timing policy');
+    like($btb_data16_composition_top, qr/=accepted>/, '.apb sideband data16 fixed back-to-back composition top exposes accepted');
+    like($btb_data16_composition_top, qr/=req_wstrb<2/, '.apb sideband data16 fixed back-to-back composition top exposes 2-bit requester strobe');
+    like($btb_data16_composition_top, qr/\(queued_wdata 16\)/, '.apb sideband data16 fixed back-to-back composition embeds 16-bit queued data state');
+    like($btb_data16_composition_top, qr/\(reg1_data_q 16 \(reset 0\)\)/, '.apb sideband data16 fixed back-to-back composition embeds selected data16 completer storage');
 
     my $btb_multi_peripheral_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_status_back_to_back_alias_path());
     my $btb_multi_peripheral_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path());
@@ -494,6 +540,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             module => 'apb_requester',
         },
         {
+            label => 'APB requester sideband data16 status back-to-back',
+            path => sample_apb_sideband_data16_status_back_to_back_path(),
+            entry_id => 'intent.apb_profile_alias_requester_transfer_sideband_data16_status_back_to_back',
+            source_root_kind => 'fsm',
+            module => 'apb_requester',
+        },
+        {
             label => 'APB requester status back-to-back',
             path => sample_apb_status_back_to_back_path(),
             entry_id => 'intent.apb_profile_alias_requester_transfer_status_back_to_back',
@@ -550,6 +603,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             module => 'apb_completer',
         },
         {
+            label => 'APB multi-register sideband data16 back-to-back completer',
+            path => sample_apb_completer_multi_register_sideband_data16_back_to_back_alias_path(),
+            entry_id => 'intent.apb_profile_alias_completer_multi_register_sideband_data16_back_to_back',
+            source_root_kind => 'fsm',
+            module => 'apb_completer',
+        },
+        {
             label => 'APB multi-register sideband data16 protection completer',
             path => sample_apb_completer_multi_register_sideband_data16_protection_alias_path(),
             entry_id => 'intent.apb_profile_alias_completer_multi_register_sideband_data16_protection',
@@ -560,6 +620,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             label => 'APB multi-register sideband data16 composition',
             path => sample_apb_composition_multi_register_sideband_data16_alias_path(),
             entry_id => 'intent.apb_profile_alias_composition_multi_register_sideband_data16',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+        },
+        {
+            label => 'APB multi-register sideband data16 status back-to-back composition',
+            path => sample_apb_composition_multi_register_sideband_data16_status_back_to_back_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_multi_register_sideband_data16_status_back_to_back',
             source_root_kind => 'top',
             module => 'apb_tb',
         },
@@ -982,6 +1049,10 @@ sub sample_ppif_sideband_data16_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband_data16.ppif');
 }
 
+sub sample_ppif_sideband_data16_status_back_to_back_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband_data16_status_back_to_back.ppif');
+}
+
 sub sample_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer.apb');
 }
@@ -1008,6 +1079,10 @@ sub sample_apb_sideband_status_back_to_back_path {
 
 sub sample_apb_sideband_data16_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband_data16.apb');
+}
+
+sub sample_apb_sideband_data16_status_back_to_back_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband_data16_status_back_to_back.apb');
 }
 
 sub sample_apb_completer_alias_path {
@@ -1066,8 +1141,16 @@ sub sample_apb_completer_multi_register_sideband_data16_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_data16.apb');
 }
 
+sub sample_apb_completer_multi_register_sideband_data16_back_to_back_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_data16_back_to_back.apb');
+}
+
 sub sample_apb_completer_multi_register_sideband_data16_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_data16.ppif');
+}
+
+sub sample_apb_completer_multi_register_sideband_data16_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_data16_back_to_back.ppif');
 }
 
 sub sample_apb_completer_multi_register_sideband_data16_protection_alias_path {
@@ -1110,8 +1193,16 @@ sub sample_apb_composition_multi_register_sideband_data16_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16.apb');
 }
 
+sub sample_apb_composition_multi_register_sideband_data16_status_back_to_back_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16_status_back_to_back.apb');
+}
+
 sub sample_apb_composition_multi_register_sideband_data16_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16.ppif');
+}
+
+sub sample_apb_composition_multi_register_sideband_data16_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16_status_back_to_back.ppif');
 }
 
 sub sample_apb_composition_multi_register_sideband_data16_protection_alias_path {

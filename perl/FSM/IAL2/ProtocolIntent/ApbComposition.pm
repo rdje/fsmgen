@@ -1475,14 +1475,22 @@ sub _apb_completer_has_multi_registers($contract) {
 }
 
 sub _endpoint_storage_is_selected_sideband_multi_register_timing_shape($storage) {
+    return _endpoint_storage_is_selected_multi_register_timing_shape($storage, 4, 32);
+}
+
+sub _endpoint_storage_is_selected_sideband_data16_multi_register_timing_shape($storage) {
+    return _endpoint_storage_is_selected_multi_register_timing_shape($storage, 2, 16);
+}
+
+sub _endpoint_storage_is_selected_multi_register_timing_shape($storage, $reg1_address, $data_width) {
     my @registers = _endpoint_storage_registers($storage);
     return 0 unless @registers == 2;
     return 0 if grep { ref($_) ne 'HASH' || exists $_->{access_policy} } @registers;
-    return _endpoint_storage_register_matches_selected_timing_shape($registers[0], 'reg0', 0)
-        && _endpoint_storage_register_matches_selected_timing_shape($registers[1], 'reg1', 4);
+    return _endpoint_storage_register_matches_selected_timing_shape($registers[0], 'reg0', 0, $data_width)
+        && _endpoint_storage_register_matches_selected_timing_shape($registers[1], 'reg1', $reg1_address, $data_width);
 }
 
-sub _endpoint_storage_register_matches_selected_timing_shape($register, $name, $address_value) {
+sub _endpoint_storage_register_matches_selected_timing_shape($register, $name, $address_value, $data_width) {
     return 0 unless ref($register) eq 'HASH';
     my $address = $register->{address};
     my $data = $register->{data};
@@ -1498,7 +1506,7 @@ sub _endpoint_storage_register_matches_selected_timing_shape($register, $name, $
         && $address->{width} == 32
         && defined($data->{width})
         && !ref($data->{width})
-        && $data->{width} == 32
+        && $data->{width} == $data_width
         && defined($data->{reset})
         && !ref($data->{reset})
         && $data->{reset} == 0;
@@ -1569,7 +1577,7 @@ sub _fixed_composition_back_to_back_policy_report($contract, $requester_result, 
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition, selected sideband-aware fixed multi-register composition, and the bounded two-peripheral interconnect/decode family; data16/protection variants, multi-peripheral multi-register timing, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition, selected sideband-aware fixed multi-register composition, and the bounded two-peripheral interconnect/decode family; selected sideband-aware data16 requester and adjacent data16 two-register no-policy completer propagation is implemented for fixed composition; protection variants, multi-peripheral multi-register timing, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 
@@ -1876,12 +1884,16 @@ sub _validate_fixed_timing_policy_compatibility($wiring, $requester, $completer)
     my $is_sideband_family = _is_selected_sideband_timing_bus($wiring)
         && _is_selected_sideband_timing_bus($requester->{bus})
         && _is_selected_sideband_timing_bus($completer->{bus});
-    confess "APB fixed composition selected back-to-back timing-policy supports only 32-bit no-sideband or selected 32-bit sideband-aware APB wiring in this slice\n"
-        unless $is_no_sideband_family || $is_sideband_family;
+    my $is_sideband_data16_family = _is_selected_sideband_data16_timing_bus($wiring)
+        && _is_selected_sideband_data16_timing_bus($requester->{bus})
+        && _is_selected_sideband_data16_timing_bus($completer->{bus});
+    confess "APB fixed composition selected back-to-back timing-policy supports only 32-bit no-sideband, selected 32-bit sideband-aware, or selected sideband-aware data16 APB wiring in this slice\n"
+        unless $is_no_sideband_family || $is_sideband_family || $is_sideband_data16_family;
 
-    confess "APB fixed composition selected back-to-back timing-policy supports only one-register completer storage or the selected 32-bit sideband-aware two-register no-policy completer storage in this slice\n"
+    confess "APB fixed composition selected back-to-back timing-policy supports only one-register completer storage, selected 32-bit sideband-aware two-register no-policy completer storage, or selected sideband-aware data16 two-register no-policy completer storage in this slice\n"
         if ref($completer->{storage}{registers}) eq 'ARRAY'
-            && !($is_sideband_family && _endpoint_storage_is_selected_sideband_multi_register_timing_shape($completer->{storage}));
+            && !($is_sideband_family && _endpoint_storage_is_selected_sideband_multi_register_timing_shape($completer->{storage}))
+            && !($is_sideband_data16_family && _endpoint_storage_is_selected_sideband_data16_multi_register_timing_shape($completer->{storage}));
 }
 
 sub _is_selected_no_sideband_timing_bus($bus) {
@@ -1896,6 +1908,14 @@ sub _is_selected_sideband_timing_bus($bus) {
         && _bus_has_sidebands($bus)
         && $bus->{protection}{width} == 3
         && $bus->{strobe}{width} == 4;
+}
+
+sub _is_selected_sideband_data16_timing_bus($bus) {
+    return $bus->{write_data}{width} == 16
+        && $bus->{read_data}{width} == 16
+        && _bus_has_sidebands($bus)
+        && $bus->{protection}{width} == 3
+        && $bus->{strobe}{width} == 2;
 }
 
 sub _request_has_selected_sideband_timing_fields($requester) {
