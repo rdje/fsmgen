@@ -5127,6 +5127,18 @@ prerequisite, or explicit deferral. Generalized register shapes,
 deeper queues, alternate overflow, accepted-less requesters, multiple active
 APB transfers, bus matrices, scoreboards, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.647` now selects `.648`, public contract selection for bounded APB
+sideband-aware data16-protection multi-peripheral multi-register
+back-to-back timing, without behavior changes. The audit found that fixed
+data16-protection multi-register timing and selected multi-peripheral
+data16-protection status/control timing are shipped, but no explicit public
+multi-peripheral multi-register data16-protection source family exists yet.
+`.648` must settle exact source names, storage/policy shape, report/residue
+movement, support accounting, diagnostics, validation, rollback, docs, and
+Knowledge Map before behavior changes. Generalized register shapes, deeper
+queues, alternate overflow, accepted-less requesters, multiple active APB
+transfers, bus matrices, scoreboards, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -10941,6 +10941,21 @@ overflow, accepted-less requesters, multiple active APB transfers, bus
 matrices, scoreboards, direct backend, verification-output, backend-language
 variants, AXI, AHB, and VHDL remain deferred.
 
+APB data16-protection multi-peripheral multi-register readiness audit:
+[IAL2_APB_DATA16_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_READINESS_AUDIT](../../IAL2_APB_DATA16_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_READINESS_AUDIT.md)
+selects `.648`, public contract selection for bounded APB sideband-aware
+data16-protection multi-peripheral multi-register back-to-back timing, without
+behavior changes. Fixed data16-protection multi-register timing and selected
+multi-peripheral data16-protection status/control timing are shipped, but no
+explicit public multi-peripheral multi-register data16-protection source
+family exists yet. `.648` must settle exact source names, storage/policy
+shape, report/residue movement, support accounting, diagnostics, validation,
+rollback, docs, and Knowledge Map before behavior changes. Generalized
+register shapes, deeper queues, alternate overflow, accepted-less requesters,
+multiple active APB transfers, bus matrices, scoreboards, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
