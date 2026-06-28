@@ -4978,6 +4978,18 @@ deeper queues, alternate overflow, accepted-less requesters, multiple active
 APB transfers, broader protection policies, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred behind future exact owners.
+`.636` now selects `.637`, public contract selection for bounded 32-bit APB
+sideband-aware protection multi-peripheral back-to-back timing, without
+behavior changes. The readiness audit chose the existing
+`ppif/apb_composition_multi_peripheral_sideband_protection.ppif` family as
+the conservative next candidate: 32-bit data/addressing, `PPROT width 3`,
+`PSTRB width 4`, two protected registers per peripheral at byte addresses
+`0` and `4`, status/control windows at `0` and `256`, propagation-only
+interconnect decode, peripheral-completer-owned protection enforcement, and
+broad `apb_back_to_back_policy_deferred` residue. `.637` will settle exact
+source names, topology, timing, protection, sideband propagation, reporting,
+support accounting, diagnostics, validation, rollback, and implementation
+boundary before any behavior change.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

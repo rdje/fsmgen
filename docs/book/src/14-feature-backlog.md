@@ -10782,6 +10782,18 @@ APB transfers, broader protection policies, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred behind future exact owners.
 
+APB multi-peripheral multi-register back-to-back readiness audit:
+[IAL2_APB_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_READINESS_AUDIT](../../IAL2_APB_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_READINESS_AUDIT.md)
+selects `.637`, public contract selection for bounded 32-bit APB
+sideband-aware protection multi-peripheral back-to-back timing, without
+behavior changes. The selected candidate family starts from
+`ppif/apb_composition_multi_peripheral_sideband_protection.ppif`: 32-bit
+data/addressing, `PPROT width 3`, `PSTRB width 4`, two protected registers
+per peripheral at byte addresses `0` and `4`, status/control windows at `0`
+and `256`, propagation-only interconnect decode, peripheral-owned protection
+enforcement, and broad deferred back-to-back residue. `.637` must settle the
+public contract before any behavior change.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
