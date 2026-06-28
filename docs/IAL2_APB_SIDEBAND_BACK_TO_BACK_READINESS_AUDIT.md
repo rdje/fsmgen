@@ -31,6 +31,12 @@ semantic JSON, HDL/runtime behavior, suffix acceptance, direct backend
 lowering, verification-output generation, backend-language variants, APB
 behavior, AXI behavior, AHB behavior, or VHDL behavior.
 
+Update `.612`: that requester-first implementation now ships. See
+`docs/IAL2_APB_SIDEBAND_BACK_TO_BACK_BEHAVIOR.md` for the supported
+`apb_requester_transfer_sideband_status_back_to_back` `.ppif`/`.apb` samples,
+queued `PPROT/PSTRB` capture, report residue movement, support identities, and
+remaining deferrals.
+
 ## Evidence Read
 
 The audit read:

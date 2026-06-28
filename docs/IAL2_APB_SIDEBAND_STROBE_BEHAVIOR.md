@@ -103,6 +103,14 @@ Sideband-aware reports replace `apb_protection_and_strobes_deferred` with
 `apb_protection_policy_effects_deferred`. Alternate APB widths and back-to-back
 transfer policy remain deferred.
 
+Update `.612`: the selected 32-bit sideband-aware requester back-to-back sample
+now queues and relaunches `PPROT/PSTRB` through
+`ppif/apb_requester_transfer_sideband_status_back_to_back.ppif` and `.apb`.
+Sideband-aware fixed composition, multi-peripheral composition, completer
+timing-policy propagation, data16/protection back-to-back variants, deeper
+queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
+
 ## CLI Examples
 
 Emit schedule JSON for the sideband requester:
@@ -130,10 +138,11 @@ composition:
 
 This slice does not add alternate APB address/data widths, runtime-selected
 strobe widths, APB protection access-control effects, register side effects
-beyond byte-lane writes, back-to-back transfer admission, multiple requesters,
-bus matrices, scoreboards, queues, direct IAL2-to-IAL0 lowering, direct backend
-lowering, verification-output generation, backend-language variants, AXI
-behavior, AHB behavior, or VHDL behavior.
+beyond byte-lane writes, multiple requesters, bus matrices, scoreboards, direct
+IAL2-to-IAL0 lowering, direct backend lowering, verification-output generation,
+backend-language variants, AXI behavior, AHB behavior, or VHDL behavior. The
+later `.612` requester-first sideband back-to-back behavior is documented in
+`docs/IAL2_APB_SIDEBAND_BACK_TO_BACK_BEHAVIOR.md`.
 
 ## Validation
 

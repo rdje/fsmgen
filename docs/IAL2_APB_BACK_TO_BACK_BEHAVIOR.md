@@ -27,6 +27,10 @@ Update `.609`: the selected 32-bit no-sideband two-peripheral status
 multi-peripheral propagation family now ships separately. See
 `docs/IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md`.
 
+Update `.612`: the selected 32-bit sideband-aware requester status
+back-to-back family now ships separately. See
+`docs/IAL2_APB_SIDEBAND_BACK_TO_BACK_BEHAVIOR.md`.
+
 ## Requester Behavior
 
 The selected requester transfer accepts only:
@@ -41,11 +45,13 @@ The selected requester transfer accepts only:
 and requires response fields `accepted`, `busy`, and `status width 2`.
 
 The generated requester exposes `accepted` and adds one queued request slot:
-`queued_valid`, `queued_addr`, `queued_write`, and `queued_wdata`. `accepted`
-pulses when `start` is sampled into the active transfer slot or the empty
-queued slot. If `start` is asserted while the active APB transfer and queued
-slot are both occupied, overflow is rejected: `accepted` does not pulse and
-the queued request is not overwritten.
+`queued_valid`, `queued_addr`, `queued_write`, and `queued_wdata`. The `.612`
+sideband requester extension adds `queued_prot` and `queued_wstrb` for the
+selected 32-bit sideband-aware family. `accepted` pulses when `start` is
+sampled into the active transfer slot or the empty queued slot. If `start` is
+asserted while the active APB transfer and queued slot are both occupied,
+overflow is rejected: `accepted` does not pulse and the queued request is not
+overwritten.
 
 When a queued request exists at the terminal requester state, the generated
 FSM drives the queued address, write bit, write data, `PSEL=1`, and
@@ -122,11 +128,18 @@ Support-accounting identities added in this slice:
 - `intent.ppif_apb_composition_status_back_to_back`
 - `intent.apb_profile_alias_composition_status_back_to_back`
 
+`.612` adds these sideband requester support-accounting identities:
+
+- `intent.ppif_apb_requester_transfer_sideband_status_back_to_back`
+- `intent.apb_profile_alias_requester_transfer_sideband_status_back_to_back`
+
 ## Deferred Work
 
 - multi-peripheral APB back-to-back variants beyond the selected 32-bit
   no-sideband two-peripheral status family;
-- sideband/data16/protection back-to-back samples;
+- sideband fixed/multi-peripheral composition and completer propagation beyond
+  the `.612` selected requester-first sample;
+- data16/protection back-to-back samples;
 - queue depths other than 1;
 - overflow policies other than `reject`;
 - accepted-less requester surfaces;

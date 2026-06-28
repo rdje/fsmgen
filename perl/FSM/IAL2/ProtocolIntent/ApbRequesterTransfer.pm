@@ -143,7 +143,7 @@ sub _normalize_contract($raw) {
         $bus->{ready},
         $bus->{read_data}{name},
         $bus->{error},
-        qw(addr is_write wdata prot wstrb rdata slverr psel penable queued_valid queued_addr queued_write queued_wdata),
+        qw(addr is_write wdata prot wstrb rdata slverr psel penable queued_valid queued_addr queued_write queued_wdata queued_prot queued_wstrb),
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -337,15 +337,28 @@ sub _validate_timing_policy_contract($request, $response, $bus, $transfer) {
     }
     confess "APB requester-transfer IAL2 contract selected back-to-back timing-policy requires response.status width 2 in this slice\n"
         unless $response->{status}{width} == 2;
-    confess "APB requester-transfer IAL2 contract selected back-to-back timing-policy supports only the 32-bit no-sideband requester family in this slice\n"
+    my $has_sidebands = defined($request->{protection})
+        || defined($request->{write_strobe})
+        || defined($bus->{protection})
+        || defined($bus->{strobe});
+    confess "APB requester-transfer IAL2 contract selected back-to-back timing-policy supports only the 32-bit no-sideband or 32-bit sideband-aware requester families in this slice\n"
         unless $request->{write_data}{width} == 32
             && $response->{read_data}{width} == 32
             && $bus->{write_data}{width} == 32
             && $bus->{read_data}{width} == 32
-            && !defined($request->{protection})
-            && !defined($request->{write_strobe})
-            && !defined($bus->{protection})
-            && !defined($bus->{strobe});
+            && (
+                !$has_sidebands
+                || (
+                    defined($request->{protection})
+                    && defined($request->{write_strobe})
+                    && defined($bus->{protection})
+                    && defined($bus->{strobe})
+                    && $request->{protection}{width} == 3
+                    && $request->{write_strobe}{width} == 4
+                    && $bus->{protection}{width} == 3
+                    && $bus->{strobe}{width} == 4
+                )
+            );
 }
 
 sub _normalize_phase($raw, $field) {
@@ -607,9 +620,10 @@ sub _apb_strobe_width_for_data_width($data_width) {
     return int($data_width / 8);
 }
 
-sub _write_strobe_enable_expr($strobe_width) {
-    return 'is_write' if $strobe_width == 1;
-    return '(concat ' . join(' ', ('is_write') x $strobe_width) . ')';
+sub _write_strobe_enable_expr($strobe_width, $write_signal = undef) {
+    $write_signal //= 'is_write';
+    return $write_signal if $strobe_width == 1;
+    return '(concat ' . join(' ', ($write_signal) x $strobe_width) . ')';
 }
 
 sub _is_sideband_data16_contract($contract) {
@@ -693,11 +707,16 @@ sub _add_back_to_back_requester_behavior($contract, $fsm_files) {
 sub _add_back_to_back_queue_sizes($text_ref, $contract, $fsm_name) {
     my $address_width = $contract->{request}{address}{width};
     my $data_width = $contract->{request}{write_data}{width};
+    my $sidebands = _contract_has_sidebands($contract);
     my @lines = (
         "    (queued_valid 1)",
         "    (queued_addr $address_width)",
         "    (queued_write 1)",
         "    (queued_wdata $data_width)",
+        ($sidebands ? (
+            "    (queued_prot $contract->{request}{protection}{width})",
+            "    (queued_wstrb $contract->{request}{write_strobe}{width})",
+        ) : ()),
     );
     @lines = grep { $$text_ref !~ /^\Q$_\E$/m } @lines;
     return unless @lines;
@@ -735,6 +754,7 @@ sub _patch_back_to_back_idle_state($text_ref, $contract, $fsm_name) {
 sub _patch_back_to_back_queue_capture_state($text_ref, $contract, $fsm_name, $state) {
     my $request = $contract->{request};
     my $accepted = $contract->{response}{accepted};
+    my $sidebands = _contract_has_sidebands($contract);
     my @lines = (
         "    (<- ($accepted> 0))",
         "    (?(& $request->{start} (! queued_valid))",
@@ -743,6 +763,10 @@ sub _patch_back_to_back_queue_capture_state($text_ref, $contract, $fsm_name, $st
         "        (<= (queued_addr $request->{address}{name}))",
         "        (<= (queued_write $request->{write}))",
         "        (<= (queued_wdata $request->{write_data}{name}))",
+        ($sidebands ? (
+            "        (<= (queued_prot $request->{protection}{name}))",
+            "        (<= (queued_wstrb $request->{write_strobe}{name}))",
+        ) : ()),
         "        (<- (queued_valid 1))))",
     );
     _insert_unique_state_lines($text_ref, $fsm_name, $state, \@lines);
@@ -755,6 +779,23 @@ sub _patch_back_to_back_done_state($text_ref, $contract, $fsm_name) {
     my $request = $contract->{request};
     my $bus = $contract->{bus};
     my $response = $contract->{response};
+    my $sidebands = _contract_has_sidebands($contract);
+    my @queued_sideband_state_lines = $sidebands ? (
+        "        (<= (prot queued_prot))",
+        "        (<= (wstrb queued_wstrb))",
+    ) : ();
+    my @queued_sideband_bus_lines = $sidebands ? (
+        "        (<- ($bus->{protection}{name}> queued_prot))",
+        "        (<- ($bus->{strobe}{name}> (& queued_wstrb " . _write_strobe_enable_expr($bus->{strobe}{width}, 'queued_write') . ")))",
+    ) : ();
+    my @direct_sideband_state_lines = $sidebands ? (
+        "            (<= (prot $request->{protection}{name}))",
+        "            (<= (wstrb $request->{write_strobe}{name}))",
+    ) : ();
+    my @direct_sideband_bus_lines = $sidebands ? (
+        "            (<- ($bus->{protection}{name}> $request->{protection}{name}))",
+        "            (<- ($bus->{strobe}{name}> (& $request->{write_strobe}{name} " . _write_strobe_enable_expr($bus->{strobe}{width}, $request->{write}) . ")))",
+    ) : ();
     my $old = join("\n",
         "  ($state",
         "    (<1 ($response->{done}> 1))",
@@ -772,10 +813,12 @@ sub _patch_back_to_back_done_state($text_ref, $contract, $fsm_name) {
         "        (<= (addr queued_addr))",
         "        (<= (is_write queued_write))",
         "        (<= (wdata queued_wdata))",
+        @queued_sideband_state_lines,
         "        (<- (queued_valid 0))",
         "        (<- ($bus->{address}{name}> queued_addr))",
         "        (<- ($bus->{write}> queued_write))",
         "        (<- ($bus->{write_data}{name}> queued_wdata))",
+        @queued_sideband_bus_lines,
         "        (<- ($bus->{select}> 1))",
         "        (<- ($bus->{enable}> 0))",
         "        (<- ($response->{busy}> 1))",
@@ -788,9 +831,11 @@ sub _patch_back_to_back_done_state($text_ref, $contract, $fsm_name) {
         "            (<= (addr $request->{address}{name}))",
         "            (<= (is_write $request->{write}))",
         "            (<= (wdata $request->{write_data}{name}))",
+        @direct_sideband_state_lines,
         "            (<- ($bus->{address}{name}> $request->{address}{name}))",
         "            (<- ($bus->{write}> $request->{write}))",
         "            (<- ($bus->{write_data}{name}> $request->{write_data}{name}))",
+        @direct_sideband_bus_lines,
         "            (<- ($bus->{select}> 1))",
         "            (<- ($bus->{enable}> 0))",
         "            (<- ($response->{busy}> 1))",
@@ -1019,7 +1064,7 @@ sub _apb_requester_timing_policy_report($contract) {
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Depth-1 queued requester admission with overflow reject is implemented for the selected 32-bit no-sideband status requester; deeper queues, alternate overflow policies, accepted-less surfaces, sideband/data16/protection variants, multiple active APB transfers, interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Depth-1 queued requester admission with overflow reject is implemented for the selected 32-bit no-sideband status requester and selected 32-bit sideband-aware status requester; deeper queues, alternate overflow policies, accepted-less surfaces, data16/protection variants, composition and multi-peripheral propagation for sideband-aware timing policies, multiple active APB transfers, interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 

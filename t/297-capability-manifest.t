@@ -3164,7 +3164,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/selected back-to-back response \(accepted NAME\) with \(timing-policy \(back-to-back queued\) \(queue-depth 1\) \(overflow reject\)\)/,
+        qr/selected back-to-back response \(accepted NAME\) with \(timing-policy \(back-to-back queued\) \(queue-depth 1\) \(overflow reject\)\) for the 32-bit no-sideband requester or selected 32-bit sideband-aware requester/,
         'manifest records the selected APB requester back-to-back response for .apb',
     );
     like(
@@ -3184,7 +3184,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/ppif\/apb_requester_transfer\.ppif, ppif\/apb_requester_transfer_busy\.ppif, ppif\/apb_requester_transfer_status\.ppif, ppif\/apb_requester_transfer_status_back_to_back\.ppif, ppif\/apb_requester_transfer_sideband\.ppif, ppif\/apb_requester_transfer_sideband_data16\.ppif, ppif\/apb_completer\.ppif, ppif\/apb_completer_back_to_back\.ppif, ppif\/apb_completer_multi_register\.ppif, ppif\/apb_completer_multi_register_sideband\.ppif, ppif\/apb_completer_multi_register_sideband_protection\.ppif, ppif\/apb_completer_multi_register_sideband_data16\.ppif, ppif\/apb_completer_multi_register_sideband_data16_protection\.ppif, ppif\/apb_composition\.ppif, ppif\/apb_composition_busy\.ppif, ppif\/apb_composition_status\.ppif, ppif\/apb_composition_status_back_to_back\.ppif, ppif\/apb_composition_multi_register\.ppif, ppif\/apb_composition_multi_register_sideband\.ppif, ppif\/apb_composition_multi_register_sideband_protection\.ppif, ppif\/apb_composition_multi_register_sideband_data16\.ppif, ppif\/apb_composition_multi_register_sideband_data16_protection\.ppif, ppif\/apb_composition_multi_peripheral\.ppif, ppif\/apb_composition_multi_peripheral_status_back_to_back\.ppif, ppif\/apb_composition_multi_peripheral_sideband\.ppif, ppif\/apb_composition_multi_peripheral_sideband_protection\.ppif, ppif\/apb_composition_multi_peripheral_sideband_data16\.ppif, and ppif\/apb_composition_multi_peripheral_sideband_data16_protection\.ppif at matching \.apb paths/,
+        qr/ppif\/apb_requester_transfer\.ppif, ppif\/apb_requester_transfer_busy\.ppif, ppif\/apb_requester_transfer_status\.ppif, ppif\/apb_requester_transfer_status_back_to_back\.ppif, ppif\/apb_requester_transfer_sideband\.ppif, ppif\/apb_requester_transfer_sideband_status_back_to_back\.ppif, ppif\/apb_requester_transfer_sideband_data16\.ppif, ppif\/apb_completer\.ppif, ppif\/apb_completer_back_to_back\.ppif, ppif\/apb_completer_multi_register\.ppif, ppif\/apb_completer_multi_register_sideband\.ppif, ppif\/apb_completer_multi_register_sideband_protection\.ppif, ppif\/apb_completer_multi_register_sideband_data16\.ppif, ppif\/apb_completer_multi_register_sideband_data16_protection\.ppif, ppif\/apb_composition\.ppif, ppif\/apb_composition_busy\.ppif, ppif\/apb_composition_status\.ppif, ppif\/apb_composition_status_back_to_back\.ppif, ppif\/apb_composition_multi_register\.ppif, ppif\/apb_composition_multi_register_sideband\.ppif, ppif\/apb_composition_multi_register_sideband_protection\.ppif, ppif\/apb_composition_multi_register_sideband_data16\.ppif, ppif\/apb_composition_multi_register_sideband_data16_protection\.ppif, ppif\/apb_composition_multi_peripheral\.ppif, ppif\/apb_composition_multi_peripheral_status_back_to_back\.ppif, ppif\/apb_composition_multi_peripheral_sideband\.ppif, ppif\/apb_composition_multi_peripheral_sideband_protection\.ppif, ppif\/apb_composition_multi_peripheral_sideband_data16\.ppif, and ppif\/apb_composition_multi_peripheral_sideband_data16_protection\.ppif at matching \.apb paths/,
         'manifest records the shipped APB profile-alias samples',
     );
     like(
@@ -3201,6 +3201,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $file_surface_by_suffix{'.apb'}{current_boundary},
         qr/selected back-to-back requester\/composition aliases add accepted pulses plus a depth-1 queued admission path with overflow reject and adjacent next setup/,
         'manifest records the selected APB back-to-back requester and composition alias behavior',
+    );
+    like(
+        $file_surface_by_suffix{'.apb'}{current_boundary},
+        qr/selected sideband requester back-to-back aliases also queue and relaunch PPROT\/PSTRB with the accepted request payload/,
+        'manifest records the selected APB sideband requester back-to-back alias behavior',
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},

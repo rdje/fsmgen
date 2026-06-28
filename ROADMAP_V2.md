@@ -4661,6 +4661,17 @@ timing-policy propagation, data16/protection back-to-back variants, deeper
 queues, alternate overflow, accepted-less requesters, multiple active APB
 transfers, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred.
+`.612` now ships that selected requester-first APB sideband timing-policy
+behavior for the 32-bit
+`apb_requester_transfer_sideband_status_back_to_back` `.ppif`/`.apb` samples.
+The generated requester queues `PPROT/PSTRB` through `queued_prot` and
+`queued_wstrb`, relaunches queued setup without an inserted idle cycle, masks
+queued `PSTRB` by the queued write bit, and removes the broad back-to-back
+residue only for the selected sideband requester surfaces. Fixed composition,
+multi-peripheral composition, completer propagation, data16/protection
+variants, deeper queues, alternate overflow, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

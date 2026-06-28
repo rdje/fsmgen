@@ -10431,6 +10431,20 @@ queues, alternate overflow, accepted-less requesters, multiple active APB
 transfers, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred.
 
+APB sideband requester back-to-back behavior:
+[IAL2_APB_SIDEBAND_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_SIDEBAND_BACK_TO_BACK_BEHAVIOR.md)
+ships `.612`, the selected 32-bit sideband-aware requester timing-policy
+family. The new `.ppif` and `.apb` samples add `PPROT width 3`, `PSTRB width
+4`, `accepted/busy/status`, and the existing depth-1 queued overflow-reject
+policy. The generated requester queues `req_prot/req_wstrb` through
+`queued_prot/queued_wstrb`, relaunches queued setup without an inserted idle
+cycle, drives `PPROT` from the queued value, and masks queued `PSTRB` by the
+queued write bit. Reports remove broad `apb_back_to_back_policy_deferred` only
+for the selected sideband requester surfaces and retain narrowed future-policy
+residue for fixed/multi-peripheral composition, completer propagation,
+data16/protection variants, deeper queues, alternate overflow, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

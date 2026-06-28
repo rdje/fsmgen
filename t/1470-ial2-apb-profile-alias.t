@@ -58,6 +58,7 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     ok(-f sample_apb_composition_multi_peripheral_sideband_data16_alias_path(), 'tracked runnable APB multi-peripheral sideband data16 composition .apb sample exists');
     ok(-f sample_apb_composition_multi_peripheral_sideband_data16_protection_alias_path(), 'tracked runnable APB multi-peripheral sideband data16 protection composition .apb sample exists');
     ok(-f sample_apb_status_back_to_back_path(), 'tracked runnable APB requester back-to-back .apb sample exists');
+    ok(-f sample_apb_sideband_status_back_to_back_path(), 'tracked runnable APB requester sideband back-to-back .apb sample exists');
     ok(-f sample_apb_completer_back_to_back_alias_path(), 'tracked runnable APB completer back-to-back .apb sample exists');
     ok(-f sample_apb_composition_status_back_to_back_alias_path(), 'tracked runnable APB composition back-to-back .apb sample exists');
     ok(-f sample_apb_composition_multi_peripheral_status_back_to_back_alias_path(), 'tracked runnable APB multi-peripheral status back-to-back composition .apb sample exists');
@@ -81,6 +82,25 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     is($btb_requester_alias->{generated_ial1}{text}, $btb_requester_ppif->{generated_ial1}{text}, '.apb requester back-to-back mirrors .ppif generated IAL1 text');
     is_deeply($btb_requester_alias->{generated_ial0}{files}, $btb_requester_ppif->{generated_ial0}{files}, '.apb requester back-to-back mirrors .ppif generated IAL0 files');
     is($btb_requester_alias->{report}{transfer}{timing_policy}{queue_depth}, 1, '.apb requester back-to-back preserves queue-depth 1 policy');
+
+    my $btb_sideband_requester_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_sideband_status_back_to_back_path());
+    my $btb_sideband_requester_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_ppif_sideband_status_back_to_back_path());
+    my $btb_sideband_requester_fsm = $btb_sideband_requester_alias->{generated_ial0}{files}{'apb_requester.fsm'};
+    is($btb_sideband_requester_alias->{kind}, 'protocol_intent.apb_requester_transfer', '.apb requester sideband back-to-back parser result keeps APB requester-transfer kind');
+    is($btb_sideband_requester_alias->{generated_ial1}{text}, $btb_sideband_requester_ppif->{generated_ial1}{text}, '.apb requester sideband back-to-back mirrors .ppif generated IAL1 text');
+    is_deeply($btb_sideband_requester_alias->{generated_ial0}{files}, $btb_sideband_requester_ppif->{generated_ial0}{files}, '.apb requester sideband back-to-back mirrors .ppif generated IAL0 files');
+    like($btb_sideband_requester_fsm, qr/\(queued_prot 3\)/, '.apb requester sideband back-to-back declares queued_prot');
+    like($btb_sideband_requester_fsm, qr/\(queued_wstrb 4\)/, '.apb requester sideband back-to-back declares queued_wstrb');
+    like($btb_sideband_requester_fsm, qr/\(<= \(queued_prot req_prot\)\)/, '.apb requester sideband back-to-back captures queued PPROT');
+    like($btb_sideband_requester_fsm, qr/\(<= \(queued_wstrb req_wstrb\)\)/, '.apb requester sideband back-to-back captures queued PSTRB');
+    like($btb_sideband_requester_fsm, qr/\(<- \(PPROT> queued_prot\)\)/, '.apb requester sideband back-to-back relaunches queued PPROT');
+    like($btb_sideband_requester_fsm, qr/\(<- \(PSTRB> \(& queued_wstrb \(concat queued_write queued_write queued_write queued_write\)\)\)/, '.apb requester sideband back-to-back masks queued PSTRB with queued write bit');
+    like($btb_sideband_requester_fsm, qr/\(<- \(PSTRB> \(& req_wstrb \(concat req_write req_write req_write req_write\)\)\)/, '.apb requester sideband back-to-back masks directly accepted PSTRB with current write bit');
+    is($btb_sideband_requester_alias->{report}{response_accepted_field}{name}, 'accepted', '.apb requester sideband back-to-back report exposes accepted metadata');
+    is($btb_sideband_requester_alias->{report}{transfer}{timing_policy}{overflow}, 'reject', '.apb requester sideband back-to-back preserves overflow reject policy');
+    my %btb_sideband_requester_residue = map { $_->{id} => 1 } @{$btb_sideband_requester_alias->{report}{unsupported_residue}};
+    ok(!$btb_sideband_requester_residue{apb_back_to_back_policy_deferred}, '.apb requester sideband back-to-back removes broad back-to-back residue');
+    ok($btb_sideband_requester_residue{apb_additional_back_to_back_policies_deferred}, '.apb requester sideband back-to-back keeps narrowed future-policy residue');
 
     my $btb_completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_back_to_back_alias_path());
     my $btb_completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_back_to_back_ppif_path());
@@ -400,6 +420,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             label => 'APB requester sideband',
             path => sample_apb_sideband_path(),
             entry_id => 'intent.apb_profile_alias_requester_transfer_sideband',
+            source_root_kind => 'fsm',
+            module => 'apb_requester',
+        },
+        {
+            label => 'APB requester sideband status back-to-back',
+            path => sample_apb_sideband_status_back_to_back_path(),
+            entry_id => 'intent.apb_profile_alias_requester_transfer_sideband_status_back_to_back',
             source_root_kind => 'fsm',
             module => 'apb_requester',
         },
@@ -912,6 +939,10 @@ sub sample_ppif_sideband_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband.ppif');
 }
 
+sub sample_ppif_sideband_status_back_to_back_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband_status_back_to_back.ppif');
+}
+
 sub sample_ppif_sideband_data16_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband_data16.ppif');
 }
@@ -934,6 +965,10 @@ sub sample_apb_status_back_to_back_path {
 
 sub sample_apb_sideband_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband.apb');
+}
+
+sub sample_apb_sideband_status_back_to_back_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer_sideband_status_back_to_back.apb');
 }
 
 sub sample_apb_sideband_data16_path {
