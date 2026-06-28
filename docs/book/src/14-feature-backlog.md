@@ -11306,6 +11306,26 @@ accepted-less requester timing, multiple active transfers, bus matrices,
 scoreboards, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred.
 
+APB generalized five-register contract:
+[IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_CONTRACT_SELECTION](../../IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_CONTRACT_SELECTION.md)
+selects `.672`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back.ppif`
+and its byte-identical `.apb` profile alias, without behavior changes. The
+selected contract widens only the shipped 32-bit sideband-aware no-policy
+two-peripheral generalized register-set family from `maximum_count = 4` to
+`maximum_count = 5`. The public representative uses
+`reg0/reg1/reg2/reg3/reg4` at local addresses `0/4/8/12/16`, 32-bit data,
+`PPROT width 3`, `PSTRB width 4`, status/control windows at `0` and `256`,
+queue-depth `1`, overflow `reject`, adjacent setup, no register-local
+`access-policy`, and propagation-only interconnect decode. `.672` must add the
+new support identities and coverage buckets, report both peripheral register
+arrays as `[reg0, reg1, reg2, reg3, reg4]`, prove generated `reg3/reg4`
+storage/read/write/byte-lane behavior, and keep data16 five-register,
+protected five-register, more-than-five-register, more-than-two-peripheral,
+deeper-queue, alternate-overflow, accepted-less, multiple-active, bus-matrix,
+scoreboard, direct-backend, verification-output, backend-language variant,
+AXI, AHB, and VHDL behavior deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
