@@ -11455,6 +11455,21 @@ alternate-policy, interconnect-owned-policy, bus-matrix, scoreboard,
 direct-backend, verification-output, backend-language variant, AXI, AHB, and
 VHDL behavior remain deferred.
 
+Post APB protected generalized five-register selector:
+[IAL2_POST_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_NEXT_SLICE_SELECTION.md)
+selects `.680`, public contract selection for the bounded APB sideband-aware
+data16 protected five-register generalized `reg0..regN` register-set
+multi-peripheral timing family, without behavior changes. The selector
+follows `.678` because no-policy five-register timing is shipped for 32-bit
+and data16, 32-bit protected five-register timing is shipped, and data16
+protected generalized timing remains capped at two-to-four registers. The
+next contract owner must settle exact `.ppif`/`.apb` source names, object id,
+anchor, `PPROT width 3`, `PSTRB width 2`, status/control windows `0` and
+`258`, representative local addresses `0/2/4/6/8`, admitted-family
+`maximum_count = 5`, protected access-policy matrix, support identities,
+report shape, diagnostics, validation, rollback, docs, Knowledge Map, and
+implementation owner before behavior changes.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

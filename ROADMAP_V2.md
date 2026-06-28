@@ -5622,6 +5622,20 @@ deeper-queue, alternate-overflow, accepted-less, multiple-active,
 alternate-policy, interconnect-owned-policy, bus-matrix, scoreboard,
 direct-backend, verification-output, backend-language variant, AXI, AHB, and
 VHDL behavior remain deferred.
+`.679` now selects `.680`, public contract selection for the bounded APB
+sideband-aware data16 protected five-register generalized `reg0..regN`
+register-set multi-peripheral timing family, without behavior changes. The
+selector follows `.678` because no-policy five-register timing is shipped for
+32-bit and data16, 32-bit protected five-register timing is shipped, and
+data16 protected generalized timing remains capped at two-to-four registers.
+The next contract owner must settle exact `.ppif`/`.apb` source names, object
+id, anchor, `PPROT width 3`, `PSTRB width 2`, status/control windows `0` and
+`258`, representative local addresses `0/2/4/6/8`, admitted-family
+`maximum_count = 5`, protected access-policy matrix, support identities,
+report shape, diagnostics, validation, rollback, docs, Knowledge Map, and
+implementation owner before behavior changes. No parser, generator, public
+source, support-accounting, report, generated artifact, HDL/runtime, APB
+transaction, AXI, AHB, or VHDL behavior changed in `.679`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
