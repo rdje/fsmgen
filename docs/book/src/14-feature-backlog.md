@@ -11101,6 +11101,19 @@ needs public rules for register cardinality, names, local addresses, reset
 values, policy matrices, per-peripheral consistency, support accounting,
 diagnostics, validation, and residue movement before implementation.
 
+APB generalized multi-peripheral multi-register source-shape contract:
+[IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SOURCE_SHAPE_CONTRACT_SELECTION](../../IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SOURCE_SHAPE_CONTRACT_SELECTION.md)
+selects `.660`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back.ppif`
+and its `.apb` alias, without behavior changes. The selected family is the
+first bounded generalized source-shape step: 32-bit sideband-aware APB, one
+requester, exactly two peripheral completers, no register-local access
+policies, matching source-ordered `reg0..regN` register sets, two to four
+registers per peripheral, public representative `reg0/reg1/reg2` at local
+addresses `0/4/8`, status/control windows at `0` and `256`, depth-1 queued
+requester timing, adjacent setup, overflow `reject`, and propagation-only
+interconnect decode.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
