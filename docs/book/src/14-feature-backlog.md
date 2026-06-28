@@ -11504,6 +11504,19 @@ multiple-active, alternate-policy, interconnect-owned-policy, bus-matrix,
 scoreboard, direct-backend, verification-output, backend-language variant,
 AXI, AHB, and VHDL behavior remain deferred.
 
+Post APB data16 protected generalized five-register selector:
+[IAL2_POST_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_NEXT_SLICE_SELECTION.md)
+selects `.683`, a no-behavior readiness audit for broader APB generalized
+register-set cardinality after the 32-bit no-policy, data16 no-policy,
+32-bit protected, and data16 protected five-register siblings all shipped.
+The audit must decide whether the next exact owner is more-than-five
+registers, more-than-two peripheral completers, a smaller report/static
+diagnostic/address-map/public-fixture prerequisite, or explicit deferral
+before any behavior changes. `.682` keeps deeper queues, alternate overflow,
+accepted-less, multiple-active, alternate-policy, interconnect-owned-policy,
+bus-matrix, scoreboard, direct-backend, verification-output,
+backend-language variant, AXI, AHB, and VHDL behavior unchanged.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

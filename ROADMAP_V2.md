@@ -5674,6 +5674,20 @@ deeper-queue, alternate-overflow, accepted-less, multiple-active,
 alternate-policy, interconnect-owned-policy, bus-matrix, scoreboard,
 direct-backend, verification-output, backend-language variant, AXI, AHB, and
 VHDL behavior remain deferred.
+`.682` now selects `.683`, a no-behavior readiness audit for broader APB
+generalized register-set cardinality after the 32-bit no-policy, data16
+no-policy, 32-bit protected, and data16 protected five-register siblings all
+shipped. The audit must re-baseline the current `ApbCompleter` and
+`ApbComposition` register-count/peripheral-count guards, support catalog,
+LanguageSurfaceSection, focused APB tests, reports, residue, README,
+ROADMAP_V2, mdBook, Memory, Knowledge Map, and relevant decisions before any
+behavior change. `.683` must decide whether the next exact owner is
+more-than-five registers, more-than-two peripheral completers, a smaller
+report/static diagnostic/address-map/public-fixture prerequisite, or explicit
+deferral, while keeping deeper queues, alternate overflow, accepted-less,
+multiple-active, alternate-policy, interconnect-owned-policy, bus-matrix,
+scoreboard, direct-backend, verification-output, backend-language variant,
+AXI, AHB, and VHDL behavior unchanged in `.682`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
