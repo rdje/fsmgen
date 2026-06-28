@@ -1482,6 +1482,10 @@ sub _endpoint_storage_is_selected_sideband_generalized_no_policy_register_set_ti
     return _endpoint_storage_is_selected_generalized_no_policy_register_set_timing_shape($storage, 2, 4, 4, 32);
 }
 
+sub _endpoint_storage_is_selected_sideband_protection_generalized_register_set_timing_shape($storage) {
+    return _endpoint_storage_is_selected_generalized_protection_register_set_timing_shape($storage, 2, 4, 4, 32);
+}
+
 sub _endpoint_storage_is_selected_sideband_protection_multi_register_timing_shape($storage) {
     my @registers = _endpoint_storage_registers($storage);
     return 0 unless @registers == 2;
@@ -1590,6 +1594,18 @@ sub _multi_peripheral_completers_are_selected_sideband_generalized_no_policy_reg
     return !(grep { !_endpoint_storage_is_selected_sideband_generalized_no_policy_register_set_timing_shape($_->{storage}) } @$completers);
 }
 
+sub _multi_peripheral_completers_are_selected_sideband_protection_generalized_register_set_timing_shape($completers) {
+    return 0 unless ref($completers) eq 'ARRAY' && @$completers == 2;
+    my $expected_count;
+    for my $completer (@$completers) {
+        return 0 unless _endpoint_storage_is_selected_sideband_protection_generalized_register_set_timing_shape($completer->{storage});
+        my @registers = _endpoint_storage_registers($completer->{storage});
+        $expected_count //= scalar @registers;
+        return 0 unless @registers == $expected_count;
+    }
+    return 1;
+}
+
 sub _multi_peripheral_completers_are_selected_sideband_data16_no_policy_multi_register_timing_shape($completers) {
     return 0 unless ref($completers) eq 'ARRAY' && @$completers == 2;
     return !(grep { !_endpoint_storage_is_selected_sideband_data16_multi_register_timing_shape($_->{storage}) } @$completers);
@@ -1626,6 +1642,23 @@ sub _endpoint_storage_is_selected_generalized_no_policy_register_set_timing_shap
             $index * $address_stride,
             $data_width,
         );
+    }
+    return 1;
+}
+
+sub _endpoint_storage_is_selected_generalized_protection_register_set_timing_shape($storage, $minimum_count, $maximum_count, $address_stride, $data_width) {
+    my @registers = _endpoint_storage_registers($storage);
+    return 0 unless @registers >= $minimum_count && @registers <= $maximum_count;
+    for my $index (0 .. $#registers) {
+        return 0 unless _endpoint_storage_register_matches_selected_timing_shape(
+            $registers[$index],
+            "reg$index",
+            $index * $address_stride,
+            $data_width,
+        );
+        return 0 unless $index == 0
+            ? _endpoint_access_policy_is_selected_reg0_protection($registers[$index])
+            : _endpoint_access_policy_is_selected_reg1_protection($registers[$index]);
     }
     return 1;
 }
@@ -1751,13 +1784,14 @@ sub _apb_additional_back_to_back_policies_residue() {
             'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family;',
             'selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition, selected sideband-aware fixed multi-register composition, selected sideband-aware protected fixed multi-register composition, the bounded two-peripheral interconnect/decode family, and the bounded sideband-aware no-policy two-register two-peripheral composition;',
             'selected bounded 32-bit sideband-aware generalized no-policy reg0..regN register-set requester/completer propagation is implemented for the bounded two-peripheral composition;',
+            'selected bounded 32-bit sideband-aware protected generalized reg0..regN register-set requester/completer propagation is implemented for the bounded two-peripheral composition;',
             'selected sideband-aware protection requester and adjacent protected status/control or protected reg0/reg1 two-register peripheral propagation is implemented for bounded two-peripheral composition;',
             'selected sideband-aware data16 requester and adjacent data16 two-register no-policy or protected completer propagation is implemented for fixed composition;',
             'selected sideband-aware data16 requester and adjacent data16 two-register no-policy peripheral propagation is implemented for bounded two-peripheral composition;',
             'selected bounded sideband-aware data16 generalized no-policy reg0..regN register-set requester/completer propagation is implemented for the bounded two-peripheral composition;',
             'selected sideband-aware data16-protection requester and adjacent protected status/control or protected reg0/reg1 two-register peripheral propagation is implemented for bounded two-peripheral composition;',
             'selected status/control protected storage is complete for the bounded 32-bit and data16 two-peripheral families;',
-            'protected generalized register sets, broader cardinality multi-peripheral multi-register timing beyond the selected bounded families, deeper queues, alternate overflow policies, accepted-less requester timing, multiple active APB transfers, bus matrices, scoreboards, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+            'data16 protected generalized register sets, broader cardinality multi-peripheral multi-register timing beyond the selected bounded families, deeper queues, alternate overflow policies, accepted-less requester timing, multiple active APB transfers, bus matrices, scoreboards, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
         ),
     };
 }
@@ -2148,6 +2182,8 @@ sub _validate_multi_peripheral_timing_policy_compatibility($wiring, $children, $
         return;
     } elsif ($is_sideband_family && _multi_peripheral_completers_are_selected_sideband_generalized_no_policy_register_set_timing_shape($completers)) {
         return;
+    } elsif ($is_sideband_family && _multi_peripheral_completers_are_selected_sideband_protection_generalized_register_set_timing_shape($completers)) {
+        return;
     } elsif ($is_sideband_family && _multi_peripheral_completers_are_selected_sideband_protection_multi_register_timing_shape($completers)) {
         return;
     } elsif ($is_sideband_family && _multi_peripheral_completers_are_selected_sideband_protection_timing_shape($completers)) {
@@ -2163,7 +2199,7 @@ sub _validate_multi_peripheral_timing_policy_compatibility($wiring, $children, $
             if _multi_peripheral_completers_are_selected_sideband_data16_protection_timing_shape($completers);
         confess "APB multi-peripheral selected back-to-back timing-policy supports only the selected two-peripheral sideband data16 no-policy reg0/reg1 storage shape, the selected bounded two-peripheral sideband data16 generalized no-policy reg0..regN register-set storage shape, the selected two-peripheral sideband data16 protection reg0/reg1 storage shape, or the selected two-peripheral sideband data16 protection status/control storage shape in this slice\n";
     } else {
-        confess "APB multi-peripheral selected back-to-back timing-policy supports only one-register peripheral completer storage, the selected two-peripheral sideband no-policy reg0/reg1 storage shape, the selected bounded two-peripheral sideband generalized no-policy reg0..regN register-set storage shape, the selected two-peripheral sideband protection reg0/reg1 storage shape, or the selected two-peripheral sideband protection status/control storage shape in this slice\n"
+        confess "APB multi-peripheral selected back-to-back timing-policy supports only one-register peripheral completer storage, the selected two-peripheral sideband no-policy reg0/reg1 storage shape, the selected bounded two-peripheral sideband generalized no-policy reg0..regN register-set storage shape, the selected bounded two-peripheral sideband protected generalized reg0..regN register-set storage shape, the selected two-peripheral sideband protection reg0/reg1 storage shape, or the selected two-peripheral sideband protection status/control storage shape in this slice\n"
             if grep {
                 my @registers = _endpoint_storage_registers($_->{storage});
                 @registers != 1;

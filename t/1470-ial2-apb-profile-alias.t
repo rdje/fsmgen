@@ -72,6 +72,7 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_status_back_to_back_alias_path(), 'tracked runnable APB multi-peripheral multi-register sideband no-policy status back-to-back composition .apb sample exists');
     ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back_alias_path(), 'tracked runnable APB generalized multi-peripheral multi-register sideband no-policy status back-to-back composition .apb sample exists');
     ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back_alias_path(), 'tracked runnable APB multi-peripheral multi-register sideband protection status back-to-back composition .apb sample exists');
+    ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back_alias_path(), 'tracked runnable APB generalized multi-peripheral multi-register sideband protection status back-to-back composition .apb sample exists');
     ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back_alias_path(), 'tracked runnable APB multi-peripheral multi-register sideband data16 no-policy status back-to-back composition .apb sample exists');
     ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_alias_path(), 'tracked runnable APB generalized multi-peripheral multi-register sideband data16 no-policy status back-to-back composition .apb sample exists');
     ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back_alias_path(), 'tracked runnable APB multi-peripheral multi-register sideband data16 protection status back-to-back composition .apb sample exists');
@@ -265,6 +266,24 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     like($btb_multi_peripheral_protection_mreg_interconnect, qr/\(<- \(PSTRB_CONTROL> PSTRB\)\)/, '.apb multi-peripheral sideband protection multi-register back-to-back interconnect fans out PSTRB');
     like($btb_multi_peripheral_protection_mreg_interconnect, qr/\(<- \(PADDR_CONTROL> \(- PADDR 256\)\) <\(& PSEL \(>= PADDR 256\) \(< PADDR 512\)\)\)/, '.apb multi-peripheral sideband protection multi-register back-to-back interconnect uses the 256-byte control window base');
     unlike($btb_multi_peripheral_protection_mreg_interconnect, qr/prot_q/, '.apb multi-peripheral sideband protection multi-register back-to-back interconnect remains enforcement-free');
+
+    my $btb_multi_peripheral_protection_generalized_mreg_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back_alias_path());
+    my $btb_multi_peripheral_protection_generalized_mreg_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back_ppif_path());
+    my $btb_multi_peripheral_protection_generalized_mreg_interconnect = $btb_multi_peripheral_protection_generalized_mreg_alias->{generated_ial0}{files}{'apb_interconnect.fsm'};
+    my $btb_multi_peripheral_protection_generalized_mreg_top = $btb_multi_peripheral_protection_generalized_mreg_alias->{generated_ial0}{files}{'apb_tb.fsm'};
+    is($btb_multi_peripheral_protection_generalized_mreg_alias->{kind}, 'protocol_intent.apb_composition', '.apb generalized multi-peripheral sideband protection multi-register back-to-back parser result keeps APB composition kind');
+    is($btb_multi_peripheral_protection_generalized_mreg_alias->{mode}, 'requester-multi-peripheral-composition', '.apb generalized multi-peripheral sideband protection multi-register back-to-back parser result preserves multi-peripheral mode');
+    is_deeply($btb_multi_peripheral_protection_generalized_mreg_alias->{generated_ial1}{items}, $btb_multi_peripheral_protection_generalized_mreg_ppif->{generated_ial1}{items}, '.apb generalized multi-peripheral sideband protection multi-register back-to-back mirrors .ppif generated IAL1 artifacts');
+    is_deeply($btb_multi_peripheral_protection_generalized_mreg_alias->{generated_ial0}{files}, $btb_multi_peripheral_protection_generalized_mreg_ppif->{generated_ial0}{files}, '.apb generalized multi-peripheral sideband protection multi-register back-to-back mirrors .ppif generated IAL0 files');
+    is($btb_multi_peripheral_protection_generalized_mreg_alias->{report}{protection_policy}{enforcement_owner}, 'peripheral_completers', '.apb generalized multi-peripheral sideband protection multi-register back-to-back preserves peripheral policy owner');
+    is_deeply($btb_multi_peripheral_protection_generalized_mreg_alias->{report}{children}[2]{transfer}{registers}, [qw(reg0 reg1 reg2)], '.apb generalized multi-peripheral sideband protection multi-register back-to-back preserves status reg0/reg1/reg2 storage');
+    is_deeply($btb_multi_peripheral_protection_generalized_mreg_alias->{report}{children}[3]{transfer}{registers}, [qw(reg0 reg1 reg2)], '.apb generalized multi-peripheral sideband protection multi-register back-to-back preserves control reg0/reg1/reg2 storage');
+    is($btb_multi_peripheral_protection_generalized_mreg_alias->{report}{children}[2]{protection_policy}{registers}[2]{read}{predicate}{value}, 1, '.apb generalized multi-peripheral sideband protection multi-register back-to-back preserves status reg2 read policy');
+    is($btb_multi_peripheral_protection_generalized_mreg_alias->{report}{children}[3]{protection_policy}{registers}[2]{write}{predicate}{value}, 1, '.apb generalized multi-peripheral sideband protection multi-register back-to-back preserves control reg2 write policy');
+    like($btb_multi_peripheral_protection_generalized_mreg_top, qr/\(status_reg2_data_q 32 \(reset 0\)\)/, '.apb generalized multi-peripheral sideband protection multi-register back-to-back top embeds status reg2 storage');
+    like($btb_multi_peripheral_protection_generalized_mreg_top, qr/\(\?\(& \(! write_q\) \(== addr 8\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, '.apb generalized multi-peripheral sideband protection multi-register back-to-back top embeds denied protected reg2 read branch');
+    like($btb_multi_peripheral_protection_generalized_mreg_interconnect, qr/\(<- \(PPROT_STATUS> PPROT\)\)/, '.apb generalized multi-peripheral sideband protection multi-register back-to-back interconnect fans out PPROT');
+    unlike($btb_multi_peripheral_protection_generalized_mreg_interconnect, qr/prot_q/, '.apb generalized multi-peripheral sideband protection multi-register back-to-back interconnect remains enforcement-free');
 
     my $btb_multi_peripheral_data16_no_policy_mreg_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back_alias_path());
     my $btb_multi_peripheral_data16_no_policy_mreg_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back_ppif_path());
@@ -832,6 +851,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             label => 'APB multi-peripheral multi-register sideband protection composition status back-to-back',
             path => sample_apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back_alias_path(),
             entry_id => 'intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+        },
+        {
+            label => 'APB generalized multi-peripheral multi-register sideband protection composition status back-to-back',
+            path => sample_apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back',
             source_root_kind => 'top',
             module => 'apb_tb',
         },
@@ -1569,6 +1595,14 @@ sub sample_apb_composition_multi_peripheral_multi_register_sideband_protection_s
 
 sub sample_apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back.ppif');
+}
+
+sub sample_apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.apb');
+}
+
+sub sample_apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.ppif');
 }
 
 sub sample_apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back_alias_path {

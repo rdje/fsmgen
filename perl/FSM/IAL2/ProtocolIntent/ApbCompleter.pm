@@ -470,6 +470,8 @@ sub _validate_timing_policy_contract($bus, $storage, $transfer) {
         && _storage_is_selected_sideband_multi_register_timing_shape($storage);
     my $is_selected_sideband_generalized_no_policy_register_set = $is_sideband_family
         && _storage_is_selected_sideband_generalized_no_policy_register_set_timing_shape($storage);
+    my $is_selected_sideband_protection_generalized_register_set = $is_sideband_family
+        && _storage_is_selected_sideband_protection_generalized_register_set_timing_shape($storage);
     my $is_selected_sideband_protection_multi_register = $is_sideband_family
         && _storage_is_selected_sideband_protection_multi_register_timing_shape($storage);
     my $is_selected_sideband_protection_multi_peripheral_register = $is_sideband_family
@@ -488,10 +490,11 @@ sub _validate_timing_policy_contract($bus, $storage, $transfer) {
             _storage_is_selected_sideband_data16_protection_multi_peripheral_status_timing_shape($storage)
             || _storage_is_selected_sideband_data16_protection_multi_peripheral_control_timing_shape($storage)
         );
-    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware generalized no-policy reg0..regN register-set, selected 32-bit sideband-aware two-register protection, selected 32-bit sideband-aware protection status/control peripheral, selected sideband-aware data16 two-register no-policy, selected sideband-aware data16 generalized no-policy reg0..regN register-set, selected sideband-aware data16 two-register protection, or selected sideband-aware data16 protection status/control peripheral completer families in this slice\n"
+    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware generalized no-policy reg0..regN register-set, selected 32-bit sideband-aware two-register protection, selected 32-bit sideband-aware protected generalized reg0..regN register-set, selected 32-bit sideband-aware protection status/control peripheral, selected sideband-aware data16 two-register no-policy, selected sideband-aware data16 generalized no-policy reg0..regN register-set, selected sideband-aware data16 two-register protection, or selected sideband-aware data16 protection status/control peripheral completer families in this slice\n"
         unless ($is_one_register && ($is_no_sideband_family || $is_sideband_family))
             || $is_selected_sideband_multi_register
             || $is_selected_sideband_generalized_no_policy_register_set
+            || $is_selected_sideband_protection_generalized_register_set
             || $is_selected_sideband_protection_multi_register
             || $is_selected_sideband_protection_multi_peripheral_register
             || $is_selected_sideband_data16_multi_register
@@ -642,6 +645,10 @@ sub _storage_is_selected_sideband_generalized_no_policy_register_set_timing_shap
     return _storage_is_selected_generalized_no_policy_register_set_timing_shape($storage, 2, 4, 4, 32);
 }
 
+sub _storage_is_selected_sideband_protection_generalized_register_set_timing_shape($storage) {
+    return _storage_is_selected_generalized_protection_register_set_timing_shape($storage, 2, 4, 4, 32);
+}
+
 sub _storage_is_selected_sideband_protection_multi_register_timing_shape($storage) {
     return 0 unless ref($storage->{registers}) eq 'ARRAY';
     my @registers = @{$storage->{registers}};
@@ -731,6 +738,24 @@ sub _storage_is_selected_generalized_no_policy_register_set_timing_shape($storag
             $index * $address_stride,
             $data_width,
         );
+    }
+    return 1;
+}
+
+sub _storage_is_selected_generalized_protection_register_set_timing_shape($storage, $minimum_count, $maximum_count, $address_stride, $data_width) {
+    return 0 unless ref($storage->{registers}) eq 'ARRAY';
+    my @registers = @{$storage->{registers}};
+    return 0 unless @registers >= $minimum_count && @registers <= $maximum_count;
+    for my $index (0 .. $#registers) {
+        return 0 unless _storage_register_matches_selected_timing_shape(
+            $registers[$index],
+            "reg$index",
+            $index * $address_stride,
+            $data_width,
+        );
+        return 0 unless $index == 0
+            ? _access_policy_is_selected_reg0_protection($registers[$index])
+            : _access_policy_is_selected_reg1_protection($registers[$index]);
     }
     return 1;
 }
@@ -1299,7 +1324,7 @@ sub _report_enforced_static_rules($multi_register, $contract) {
         : 'the only implemented register address is 0 and reset value is 0';
     push @rules,
         'read and write behavior must target the selected register and unmapped addresses must assert error',
-        (_completer_has_adjacent_setup_policy($contract) ? ('selected timing-policy is setup-admission adjacent and remains bounded to the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware generalized no-policy reg0..regN register-set, selected 32-bit sideband-aware two-register protection, selected 32-bit sideband-aware protection status/control peripheral, selected sideband-aware data16 two-register no-policy, selected sideband-aware data16 generalized no-policy reg0..regN register-set, selected sideband-aware data16 two-register protection, or selected sideband-aware data16 protection status/control peripheral completer families') : ()),
+        (_completer_has_adjacent_setup_policy($contract) ? ('selected timing-policy is setup-admission adjacent and remains bounded to the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware generalized no-policy reg0..regN register-set, selected 32-bit sideband-aware two-register protection, selected 32-bit sideband-aware protected generalized reg0..regN register-set, selected 32-bit sideband-aware protection status/control peripheral, selected sideband-aware data16 two-register no-policy, selected sideband-aware data16 generalized no-policy reg0..regN register-set, selected sideband-aware data16 two-register protection, or selected sideband-aware data16 protection status/control peripheral completer families') : ()),
         'APB completer is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden';
     return \@rules;
 }
@@ -1342,7 +1367,7 @@ sub _apb_completer_timing_policy_report($contract) {
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Adjacent setup admission is implemented for the selected 32-bit no-sideband one-register completer, selected 32-bit sideband-aware one-register completer, selected 32-bit sideband-aware two-register no-policy completer, selected 32-bit sideband-aware generalized no-policy reg0..regN register-set completer, selected 32-bit sideband-aware two-register protection completer, selected sideband-aware data16 two-register no-policy completer, selected sideband-aware data16 generalized no-policy reg0..regN register-set completer, selected sideband-aware data16 two-register protection completer, and selected sideband-aware data16 protection status/control peripheral completers; queued requester policy beyond selected composition propagation, broader protected/generalized cardinality multi-peripheral multi-register propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Adjacent setup admission is implemented for the selected 32-bit no-sideband one-register completer, selected 32-bit sideband-aware one-register completer, selected 32-bit sideband-aware two-register no-policy completer, selected 32-bit sideband-aware generalized no-policy reg0..regN register-set completer, selected 32-bit sideband-aware two-register protection completer, selected 32-bit sideband-aware protected generalized reg0..regN register-set completer, selected sideband-aware data16 two-register no-policy completer, selected sideband-aware data16 generalized no-policy reg0..regN register-set completer, selected sideband-aware data16 two-register protection completer, and selected sideband-aware data16 protection status/control peripheral completers; queued requester policy beyond selected composition propagation, data16 protected generalized register sets, broader generalized cardinality multi-peripheral multi-register propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 

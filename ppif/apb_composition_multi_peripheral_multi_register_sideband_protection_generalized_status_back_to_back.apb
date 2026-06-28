@@ -1,0 +1,165 @@
+(protocol-platform-intent apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back
+  (profile apb)
+  (source
+    (object fsmgen-apb-composition-multi-peripheral-multi-register-sideband-protection-generalized-status-back-to-back)
+    (anchor
+      (document FSMGEN-APB-REQUESTER-CAPTURE-WORKSHEET)
+      (section requester-multi-peripheral-composition-multi-register-sideband-protection-generalized-status-back-to-back)
+      (page stage-1)))
+  (apb-requester apb_requester
+    (role requester)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (request
+      (start start)
+      (write req_write)
+      (address req_addr width 32)
+      (write-data req_wdata width 32)
+      (protection req_prot width 3)
+      (write-strobe req_wstrb width 4))
+    (response
+      (accepted accepted)
+      (busy busy)
+      (status status width 2)
+      (done done)
+      (read-data last_read_data width 32)
+      (error last_error))
+    (bus
+      (address PADDR width 32)
+      (write PWRITE)
+      (write-data PWDATA width 32)
+      (protection PPROT width 3)
+      (strobe PSTRB width 4)
+      (select PSEL)
+      (enable PENABLE)
+      (ready PREADY)
+      (read-data PRDATA width 32)
+      (error PSLVERR))
+    (transfer apb_transfer
+      (setup (select 1) (enable 0))
+      (access (select 1) (enable 1))
+      (complete-on ready)
+      (sample read-data error)
+      (latency (min 2) (max 16))
+      (timing-policy
+        (back-to-back queued)
+        (queue-depth 1)
+        (overflow reject))))
+  (apb-completer apb_status_regs
+    (role completer)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (control
+      (wait-cycles status_wait_cycles width 4))
+    (bus
+      (select PSEL_STATUS)
+      (enable PENABLE_STATUS)
+      (write PWRITE_STATUS)
+      (address PADDR_STATUS width 32)
+      (write-data PWDATA_STATUS width 32)
+      (protection PPROT_STATUS width 3)
+      (strobe PSTRB_STATUS width 4)
+      (ready PREADY_STATUS)
+      (read-data PRDATA_STATUS width 32)
+      (error PSLVERR_STATUS))
+    (storage
+      (register reg0
+        (address 0 width 32)
+        (data status_reg0_data_q width 32 reset 0)
+        (access-policy
+          (read allow)
+          (write require (privileged 1))))
+      (register reg1
+        (address 4 width 32)
+        (data status_reg1_data_q width 32 reset 0)
+        (access-policy
+          (read require (privileged 1))
+          (write require (privileged 1))))
+      (register reg2
+        (address 8 width 32)
+        (data status_reg2_data_q width 32 reset 0)
+        (access-policy
+          (read require (privileged 1))
+          (write require (privileged 1)))))
+    (transfer apb_complete
+      (setup-detect (select 1) (enable 0))
+      (wait-cycles status_wait_cycles)
+      (read register)
+      (write register)
+      (unmapped-address error)
+      (timing-policy
+        (setup-admission adjacent))))
+  (apb-completer apb_control_regs
+    (role completer)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (control
+      (wait-cycles control_wait_cycles width 4))
+    (bus
+      (select PSEL_CONTROL)
+      (enable PENABLE_CONTROL)
+      (write PWRITE_CONTROL)
+      (address PADDR_CONTROL width 32)
+      (write-data PWDATA_CONTROL width 32)
+      (protection PPROT_CONTROL width 3)
+      (strobe PSTRB_CONTROL width 4)
+      (ready PREADY_CONTROL)
+      (read-data PRDATA_CONTROL width 32)
+      (error PSLVERR_CONTROL))
+    (storage
+      (register reg0
+        (address 0 width 32)
+        (data control_reg0_data_q width 32 reset 0)
+        (access-policy
+          (read allow)
+          (write require (privileged 1))))
+      (register reg1
+        (address 4 width 32)
+        (data control_reg1_data_q width 32 reset 0)
+        (access-policy
+          (read require (privileged 1))
+          (write require (privileged 1))))
+      (register reg2
+        (address 8 width 32)
+        (data control_reg2_data_q width 32 reset 0)
+        (access-policy
+          (read require (privileged 1))
+          (write require (privileged 1)))))
+    (transfer apb_complete
+      (setup-detect (select 1) (enable 0))
+      (wait-cycles control_wait_cycles)
+      (read register)
+      (write register)
+      (unmapped-address error)
+      (timing-policy
+        (setup-admission adjacent))))
+  (apb-composition apb_tb
+    (role composition)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (children
+      (requester requester apb_requester)
+      (peripheral status apb_status_regs)
+      (peripheral control apb_control_regs))
+    (address-map apb_decode
+      (window status
+        (base STATUS_BASE width 32 default 0)
+        (size STATUS_SIZE width 32 default 256))
+      (window control
+        (base CONTROL_BASE width 32 default 256)
+        (size CONTROL_SIZE width 32 default 256)))
+    (decode
+      (overlap reject)
+      (priority source-order)
+      (unmapped-address error))
+    (wiring apb_bus
+      (select PSEL)
+      (enable PENABLE)
+      (write PWRITE)
+      (address PADDR width 32)
+      (write-data PWDATA width 32)
+      (protection PPROT width 3)
+      (strobe PSTRB width 4)
+      (ready PREADY)
+      (read-data PRDATA width 32)
+      (error PSLVERR))))
