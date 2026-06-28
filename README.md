@@ -3897,6 +3897,22 @@ data16-protection timing, broader multi-peripheral multi-register timing,
 deeper queues, alternate overflow, accepted-less requesters, multiple active
 APB transfers, broader protection policy, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.630` now selects `.631` to directly implement exactly four APB
+sideband-aware data16-protection back-to-back public sources:
+`ppif/apb_completer_multi_register_sideband_data16_protection_back_to_back.ppif`,
+its `.apb` alias,
+`ppif/apb_composition_multi_register_sideband_data16_protection_status_back_to_back.ppif`,
+and its `.apb` alias. The selected standalone completer is 16-bit,
+sideband-aware, uses `PPROT width 3`, `PSTRB width 2`, `reg0` at address `0`
+with read-allow/write-privileged policy, and `reg1` at address `2` with
+read/write privileged policy. The selected fixed composition combines that
+protected data16 adjacent completer with the `.625` queued data16 sideband
+requester and leaves protection enforcement owned by the completer. No
+requester-only public source is selected. Multi-peripheral data16-protection
+timing, broader multi-peripheral multi-register timing, deeper queues,
+alternate overflow, accepted-less requesters, multiple active APB transfers,
+broader protection policies, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
