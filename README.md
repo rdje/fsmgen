@@ -3883,6 +3883,20 @@ data16-protection timing, multi-peripheral multi-register timing, deeper
 queues, alternate overflow, accepted-less requesters, multiple active APB
 transfers, broader protection policy, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.629` now selects `.630`, public contract selection for a bounded APB
+sideband-aware data16-protection back-to-back timing-policy family, without
+behavior changes. Live data16-protection standalone, fixed-composition, and
+multi-peripheral reports after `.628` remain 16-bit, expose
+`protection_policy`, have no `back_to_back_policy`, and keep broad
+`apb_back_to_back_policy_deferred`. A temporary data16-protection adjacent
+setup candidate still fails at the current selected-family timing guard, so
+`.630` must settle the exact public sample names, selected 16-bit protected
+two-register shape, requester/status requirements, report/residue movement,
+diagnostics, validation, and rollback before implementation. Multi-peripheral
+data16-protection timing, broader multi-peripheral multi-register timing,
+deeper queues, alternate overflow, accepted-less requesters, multiple active
+APB transfers, broader protection policy, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
