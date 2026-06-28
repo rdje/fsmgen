@@ -3983,6 +3983,21 @@ broad `apb_back_to_back_policy_deferred` residue. `.637` will settle exact
 source names, topology, timing, protection, sideband propagation, reporting,
 support accounting, diagnostics, validation, rollback, and implementation
 boundary before any behavior change.
+`.637` now selects `.638` to directly implement exactly two APB
+sideband-aware protection multi-peripheral back-to-back public sources:
+`ppif/apb_composition_multi_peripheral_sideband_protection_status_back_to_back.ppif`
+and its `.apb` alias. The selected contract uses the existing two-peripheral
+status/control protected 32-bit topology with requester `accepted/busy/status`
+depth-1 queued timing, adjacent setup on both peripheral completers,
+`PPROT width 3`, `PSTRB width 4`, 4-byte-aligned windows at `0` and `256`,
+propagation-only interconnect decode, peripheral-owned protection
+enforcement, and aggregate multi-peripheral `back_to_back_policy` reporting.
+No-policy multi-peripheral multi-register timing, sideband data16 no-policy
+multi-register timing, data16-protection generalization beyond the selected
+`.634` family, generalized register shapes, deeper queues, alternate
+overflow, accepted-less requesters, multiple active APB transfers, broader
+protection policies, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6568,6 +6583,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_BEHAVIOR.md` — ships selected APB sideband-aware multi-peripheral data16-protection back-to-back timing behavior.
 - `docs/IAL2_POST_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects broader APB multi-peripheral multi-register back-to-back timing readiness audit after selected multi-peripheral data16-protection timing shipped.
 - `docs/IAL2_APB_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_READINESS_AUDIT.md` — audits broader APB multi-peripheral multi-register timing readiness and selects bounded 32-bit sideband-aware protection multi-peripheral contract selection.
+- `docs/IAL2_APB_MULTI_PERIPHERAL_PROTECTION_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects the bounded APB sideband-aware multi-peripheral protection back-to-back public contract before implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

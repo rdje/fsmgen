@@ -10794,6 +10794,18 @@ and `256`, propagation-only interconnect decode, peripheral-owned protection
 enforcement, and broad deferred back-to-back residue. `.637` must settle the
 public contract before any behavior change.
 
+APB multi-peripheral protection back-to-back contract selection:
+[IAL2_APB_MULTI_PERIPHERAL_PROTECTION_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_MULTI_PERIPHERAL_PROTECTION_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.638` to directly implement exactly
+`ppif/apb_composition_multi_peripheral_sideband_protection_status_back_to_back.ppif`
+and its `.apb` alias. The selected public contract uses the existing
+two-peripheral status/control protected 32-bit topology with requester
+`accepted/busy/status` depth-1 queued timing, adjacent setup on both
+peripheral completers, `PPROT width 3`, `PSTRB width 4`, 4-byte-aligned
+windows at `0` and `256`, propagation-only interconnect decode,
+peripheral-owned protection enforcement, and aggregate multi-peripheral
+`back_to_back_policy` reporting.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

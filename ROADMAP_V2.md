@@ -4990,6 +4990,21 @@ broad `apb_back_to_back_policy_deferred` residue. `.637` will settle exact
 source names, topology, timing, protection, sideband propagation, reporting,
 support accounting, diagnostics, validation, rollback, and implementation
 boundary before any behavior change.
+`.637` now selects `.638` to directly implement exactly two APB
+sideband-aware protection multi-peripheral back-to-back public sources:
+`ppif/apb_composition_multi_peripheral_sideband_protection_status_back_to_back.ppif`
+and its `.apb` alias. The selected contract uses the existing two-peripheral
+status/control protected 32-bit topology with requester `accepted/busy/status`
+depth-1 queued timing, adjacent setup on both peripheral completers,
+`PPROT width 3`, `PSTRB width 4`, 4-byte-aligned windows at `0` and `256`,
+propagation-only interconnect decode, peripheral-owned protection
+enforcement, and aggregate multi-peripheral `back_to_back_policy` reporting.
+No-policy multi-peripheral multi-register timing, sideband data16 no-policy
+multi-register timing, data16-protection generalization beyond the selected
+`.634` family, generalized register shapes, deeper queues, alternate
+overflow, accepted-less requesters, multiple active APB transfers, broader
+protection policies, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
