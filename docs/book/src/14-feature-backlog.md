@@ -11517,6 +11517,18 @@ accepted-less, multiple-active, alternate-policy, interconnect-owned-policy,
 bus-matrix, scoreboard, direct-backend, verification-output,
 backend-language variant, AXI, AHB, and VHDL behavior unchanged.
 
+Broader APB generalized cardinality readiness audit:
+[IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BROADER_CARDINALITY_READINESS_AUDIT](../../IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BROADER_CARDINALITY_READINESS_AUDIT.md)
+selects `.684`, public contract selection for the first bounded APB
+sideband-aware 32-bit no-policy six-register generalized `reg0..regN`
+register-set multi-peripheral timing family. The audit chooses six registers
+before more-than-two peripherals because it is the smallest step beyond the
+current `maximum_count = 5` guard, keeps exactly two peripheral completers,
+and avoids data16 stride/strobe and protection-policy changes. `.684` must
+settle `reg0/reg1/reg2/reg3/reg4/reg5` local addresses `0/4/8/12/16/20`,
+support identities, reports, diagnostics, validation, rollback, docs,
+Knowledge Map, and implementation owner before behavior changes.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

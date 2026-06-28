@@ -5688,6 +5688,22 @@ deferral, while keeping deeper queues, alternate overflow, accepted-less,
 multiple-active, alternate-policy, interconnect-owned-policy, bus-matrix,
 scoreboard, direct-backend, verification-output, backend-language variant,
 AXI, AHB, and VHDL behavior unchanged in `.682`.
+`.683` now audits that broader APB generalized register-set cardinality
+frontier and selects `.684`, public contract selection for the first bounded
+APB sideband-aware 32-bit no-policy six-register generalized `reg0..regN`
+register-set multi-peripheral timing family. The audit chooses six registers
+before more-than-two peripherals because it is the smallest step beyond the
+current `maximum_count = 5` guard, keeps the already-selected exactly-two
+peripheral topology, avoids data16 stride/strobe changes, and avoids
+protection-policy matrix changes. Temporary strict-check probes confirm the
+current boundaries: a synthetic six-register two-peripheral source fails
+closed at the selected storage-shape diagnostic, while a synthetic
+three-peripheral source fails closed with the explicit two-peripheral
+diagnostic. `.684` must settle source names, object id, anchor,
+`reg0/reg1/reg2/reg3/reg4/reg5` local addresses `0/4/8/12/16/20`, whether
+the admitted 32-bit no-policy family widens to `maximum_count = 6`, support
+identities, reports, diagnostics, validation, rollback, docs, Knowledge Map,
+and implementation owner before behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

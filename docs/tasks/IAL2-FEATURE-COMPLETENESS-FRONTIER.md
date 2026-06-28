@@ -63,7 +63,7 @@ path before reopening VHDL backend or VHDL rerouting work.
   Children continuation 10: `IAL2-FEATURE-COMPLETENESS-FRONTIER.634, IAL2-FEATURE-COMPLETENESS-FRONTIER.635, IAL2-FEATURE-COMPLETENESS-FRONTIER.636, IAL2-FEATURE-COMPLETENESS-FRONTIER.637, IAL2-FEATURE-COMPLETENESS-FRONTIER.638, IAL2-FEATURE-COMPLETENESS-FRONTIER.639, IAL2-FEATURE-COMPLETENESS-FRONTIER.640, IAL2-FEATURE-COMPLETENESS-FRONTIER.641, IAL2-FEATURE-COMPLETENESS-FRONTIER.642, IAL2-FEATURE-COMPLETENESS-FRONTIER.643, IAL2-FEATURE-COMPLETENESS-FRONTIER.644, IAL2-FEATURE-COMPLETENESS-FRONTIER.645, IAL2-FEATURE-COMPLETENESS-FRONTIER.646, IAL2-FEATURE-COMPLETENESS-FRONTIER.647, IAL2-FEATURE-COMPLETENESS-FRONTIER.648, IAL2-FEATURE-COMPLETENESS-FRONTIER.649, IAL2-FEATURE-COMPLETENESS-FRONTIER.650, IAL2-FEATURE-COMPLETENESS-FRONTIER.651, IAL2-FEATURE-COMPLETENESS-FRONTIER.652, IAL2-FEATURE-COMPLETENESS-FRONTIER.653, IAL2-FEATURE-COMPLETENESS-FRONTIER.654, IAL2-FEATURE-COMPLETENESS-FRONTIER.655, IAL2-FEATURE-COMPLETENESS-FRONTIER.656, IAL2-FEATURE-COMPLETENESS-FRONTIER.657, IAL2-FEATURE-COMPLETENESS-FRONTIER.658`
   Children continuation 11: `IAL2-FEATURE-COMPLETENESS-FRONTIER.659, IAL2-FEATURE-COMPLETENESS-FRONTIER.660, IAL2-FEATURE-COMPLETENESS-FRONTIER.661, IAL2-FEATURE-COMPLETENESS-FRONTIER.662, IAL2-FEATURE-COMPLETENESS-FRONTIER.663, IAL2-FEATURE-COMPLETENESS-FRONTIER.664, IAL2-FEATURE-COMPLETENESS-FRONTIER.665, IAL2-FEATURE-COMPLETENESS-FRONTIER.666, IAL2-FEATURE-COMPLETENESS-FRONTIER.667, IAL2-FEATURE-COMPLETENESS-FRONTIER.668, IAL2-FEATURE-COMPLETENESS-FRONTIER.669, IAL2-FEATURE-COMPLETENESS-FRONTIER.670, IAL2-FEATURE-COMPLETENESS-FRONTIER.671, IAL2-FEATURE-COMPLETENESS-FRONTIER.672, IAL2-FEATURE-COMPLETENESS-FRONTIER.673, IAL2-FEATURE-COMPLETENESS-FRONTIER.674, IAL2-FEATURE-COMPLETENESS-FRONTIER.675, IAL2-FEATURE-COMPLETENESS-FRONTIER.676, IAL2-FEATURE-COMPLETENESS-FRONTIER.677, IAL2-FEATURE-COMPLETENESS-FRONTIER.678, IAL2-FEATURE-COMPLETENESS-FRONTIER.679, IAL2-FEATURE-COMPLETENESS-FRONTIER.680`
 
-  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683`
+  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -4840,9 +4840,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.682: select APB broader cardinality audit`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.683`
-  Status: `active`
+  Status: `done`
   Goal: `Audit broader APB generalized register-set cardinality after all selected five-register siblings shipped.`
   Acceptance: `Read .682 selector, .681 data16 protected five-register behavior, .678 32-bit protected five-register behavior, .675 data16 no-policy five-register behavior, .672 32-bit no-policy five-register behavior, .670 cardinality audit, current ApbCompleter/ApbComposition register-count and peripheral-count guards, APB residue reports, RegressionCorpus, LanguageSurfaceSection, focused APB/profile-alias/support/capability tests, README, ROADMAP_V2, mdBook, Memory, Knowledge Map, and relevant decisions. Determine whether the next exact owner should be more-than-five-register public contract selection, more-than-two-peripheral generalized shapes, a smaller report/static diagnostic/address-map/public-fixture/support-accounting prerequisite, explicit deferral, or another bounded APB timing/register-set owner. Record selected scope, public/report expectations, diagnostics, validation gates, rollback, docs, Knowledge Map, and next owner before any parser/generator/sample/test/HDL behavior change.`
+  Verification: `Selected .684, public contract selection for the first bounded APB sideband-aware 32-bit no-policy six-register generalized reg0..regN register-set multi-peripheral timing family. Read .682 selector, .681 data16 protected five-register behavior, .678 32-bit protected five-register behavior, .675 data16 no-policy five-register behavior, .672 32-bit no-policy five-register behavior, .670 cardinality audit, current ApbCompleter/ApbComposition register-count and peripheral-count guards, APB residue reports, RegressionCorpus, LanguageSurfaceSection, focused APB/profile-alias/support/capability tests, README, ROADMAP_V2, mdBook, Memory, Knowledge Map, and relevant decisions. Temporary /tmp strict-check probes confirmed a synthetic six-register two-peripheral 32-bit no-policy source fails closed at the selected storage-shape diagnostic and a synthetic three-peripheral source fails closed with the explicit two-peripheral diagnostic. Selected six registers before more-than-two peripherals because it is the smallest step beyond maximum_count 5, preserves exactly two peripheral completers, avoids data16 stride/strobe changes, and avoids protection-policy matrix changes. Added docs/IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BROADER_CARDINALITY_READINESS_AUDIT.md and docs/knowledge/ial2-apb-generalized-multi-peripheral-multi-register-broader-cardinality-readiness-audit.md. No parser, generator, source, support-accounting, report, generated artifact, HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed. Knowledge Map generation/check, mdBook build, docs path audit, memory architecture check, diff check, fact-card reverify, and doctrine gate passed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.683: audit APB broader cardinality readiness`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.684`
+  Status: `active`
+  Goal: `Select the bounded APB sideband-aware 32-bit no-policy six-register generalized register-set multi-peripheral public contract.`
+  Acceptance: `Read .683 audit, .682 selector, .681 data16 protected five-register behavior, .678 32-bit protected five-register behavior, .675 data16 no-policy five-register behavior, .672 32-bit no-policy five-register behavior, current ApbCompleter/ApbComposition 32-bit no-policy generalized guards and residue, RegressionCorpus, LanguageSurfaceSection, focused APB/profile-alias/support/capability tests, README, ROADMAP_V2, mdBook, Memory, Knowledge Map, and relevant decisions. Select exact public .ppif/.apb source names, protocol-platform-intent name, object id, source anchor, one-requester/two-peripheral scope, 32-bit APB/register data, PPROT/PSTRB widths, status/control windows, queue-depth/overflow/setup/interconnect timing expectations, six-register representative names and local byte addresses, whether the admitted 32-bit no-policy generalized family widens to maximum_count 6, report fields, residue movement, support-accounting identities, capability buckets, diagnostics, validation probes, rollback, docs, Knowledge Map, and next owner before any parser/generator/sample/test/HDL behavior change.`
   Verification: `pending`
   Commit: `pending`
 
@@ -5249,10 +5256,27 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 397 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.680` | `done` | Selected the bounded APB data16 protected five-register generalized register-set public contract. |
 | 398 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.681` | `done` | Shipped the bounded APB data16 protected five-register generalized register-set behavior. |
 | 399 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.682` | `done` | Selected broader APB generalized register-set cardinality readiness audit next. |
-| 400 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.683` | `active` | Audit broader APB generalized register-set cardinality after all selected five-register siblings shipped. |
+| 400 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.683` | `done` | Audited broader APB generalized register-set cardinality after all selected five-register siblings shipped. |
+| 401 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.684` | `active` | Select the bounded APB 32-bit no-policy six-register generalized register-set public contract. |
 
 ## Decisions
 
+- `2026-06-28`: `.683` audits broader APB generalized register-set
+  cardinality after all selected five-register siblings shipped and selects
+  `.684`, public contract selection for the first bounded APB sideband-aware
+  32-bit no-policy six-register generalized `reg0..regN` register-set
+  multi-peripheral timing family. Temporary `/tmp` strict-check probes
+  confirmed a synthetic six-register two-peripheral source fails closed at the
+  selected storage-shape diagnostic and a synthetic three-peripheral source
+  fails closed with the explicit two-peripheral diagnostic. Six registers are
+  selected before more-than-two peripherals because this is the smallest step
+  beyond `maximum_count = 5`, keeps the already-selected two-peripheral
+  topology, and avoids data16 stride/strobe and protection-policy changes.
+  `.684` must settle exact source names, object id, anchor,
+  `reg0/reg1/reg2/reg3/reg4/reg5` local addresses `0/4/8/12/16/20`, family
+  bound `maximum_count = 6`, support identities, report shape, diagnostics,
+  validation, rollback, docs, Knowledge Map, and implementation owner before
+  behavior changes.
 - `2026-06-28`: `.682` selects `.683`, a no-behavior readiness audit for
   broader APB generalized register-set cardinality after the 32-bit
   no-policy, data16 no-policy, 32-bit protected, and data16 protected
@@ -13422,9 +13446,26 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.680` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.680: select APB data16 protected five-register implementation` | Selected bounded APB data16 protected five-register generalized register-set implementation and advanced the frontier to `.681`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.681` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.681: ship APB data16 protected five-register timing` | Shipped bounded APB data16 protected five-register generalized register-set timing behavior and advanced the frontier to `.682`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.682` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.682: select APB broader cardinality audit` | Selected broader APB generalized register-set cardinality readiness audit and advanced the frontier to `.683`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.683` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.683: audit APB broader cardinality readiness` | Audited broader APB generalized register-set cardinality readiness and advanced the frontier to `.684`. |
 
 ## Changelog
 
+- `2026-06-28`: Completed `.683`, auditing broader APB generalized
+  register-set cardinality after all selected five-register siblings shipped
+  and selecting `.684`, public contract selection for the first bounded APB
+  sideband-aware 32-bit no-policy six-register generalized `reg0..regN`
+  register-set multi-peripheral timing family. Temporary `/tmp` strict-check
+  probes confirmed a synthetic six-register two-peripheral source fails closed
+  at the selected storage-shape diagnostic and a synthetic three-peripheral
+  source fails closed with the explicit two-peripheral diagnostic. Six
+  registers are selected before more-than-two peripherals because this is the
+  smallest step beyond `maximum_count = 5`, keeps the already-selected
+  two-peripheral topology, and avoids data16 stride/strobe and
+  protection-policy changes. `.684` owns source names, object id, anchor,
+  `reg0/reg1/reg2/reg3/reg4/reg5` local addresses `0/4/8/12/16/20`,
+  admitted-family `maximum_count = 6`, support identities, report shape,
+  diagnostics, validation, rollback, docs, Knowledge Map, and implementation
+  owner before behavior changes.
 - `2026-06-28`: Completed `.682`, selecting `.683` as the no-behavior
   readiness audit for broader APB generalized register-set cardinality after
   the 32-bit no-policy, data16 no-policy, 32-bit protected, and data16
