@@ -5082,6 +5082,20 @@ window shape, requester/completer/interconnect timing requirements,
 no-policy `reg0`/`reg1` storage requirements, report/residue movement,
 support-accounting identities, diagnostics, validation, rollback, and docs
 before implementation.
+`.644` now selects `.645`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back.ppif`
+and its `.apb` alias, without behavior changes. The selected contract is one
+requester, two peripheral completers, 32-bit addresses, 16-bit APB and
+register data, `PPROT width 3`, `PSTRB width 2`, status/control windows at
+bases `0` and `258` with size `258`, adjacent setup on both peripherals, and
+exactly no-policy `reg0` at local address `0` plus `reg1` at local address
+`2` in each peripheral. Reports shall add aggregate `back_to_back_policy`,
+remove broad back-to-back residue for selected surfaces, retain narrowed
+future-policy, protection-effects, and remaining-width residue, and keep
+data16-protection generalization, generalized register shapes, deeper queues,
+alternate overflow, accepted-less requesters, multiple active APB transfers,
+direct backend, verification-output, backend-language variants, AXI, AHB, and
+VHDL deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

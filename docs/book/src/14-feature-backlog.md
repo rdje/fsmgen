@@ -10892,6 +10892,19 @@ window shape, endpoint/interconnect timing requirements, no-policy `reg0`/`reg1`
 storage, report/residue movement, support-accounting identities, diagnostics,
 validation, rollback, and docs before implementation.
 
+APB data16 no-policy multi-peripheral multi-register back-to-back contract
+selection:
+[IAL2_APB_DATA16_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_DATA16_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.645`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back.ppif`
+and its `.apb` alias. The selected contract is one requester, two
+peripherals, 32-bit addresses, 16-bit APB/register data, `PPROT width 3`,
+`PSTRB width 2`, status/control windows at bases `0` and `258`, adjacent setup
+on both peripherals, and exactly no-policy `reg0` at local address `0` plus
+`reg1` at local address `2` in each peripheral. Reports shall add aggregate
+`back_to_back_policy`, remove broad back-to-back residue, and retain narrowed
+future-policy, protection-effects, and remaining-width residue.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
