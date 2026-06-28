@@ -11274,6 +11274,21 @@ deeper queues, alternate overflow, accepted-less requesters, multiple active
 transfers, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred.
 
+Post APB data16 protected generalized multi-peripheral selector:
+[IAL2_POST_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.670`, readiness audit for broader APB generalized register-set
+cardinality beyond the selected two-to-four-register families, without
+behavior changes. The selector follows `.668` because the selected
+two-peripheral generalized register-set matrix is now shipped for 32-bit and
+data16 widths, with and without the selected protection matrix, while live
+`ApbCompleter` and `ApbComposition` guards still cap each generalized family
+at `maximum_count = 4` and exactly two peripheral completers. `.670` must
+decide whether the next exact owner is a first bounded cardinality widening, a
+smaller report/static, diagnostic, address-map, or fixture prerequisite,
+more-than-two-peripheral generalized ownership, or explicit deferral. No
+parser, generator, public source, support-accounting, generated artifact,
+HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed in `.669`.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

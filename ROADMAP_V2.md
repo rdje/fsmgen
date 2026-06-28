@@ -5455,6 +5455,18 @@ accepted-less requesters, multiple active transfers, bus matrices,
 scoreboards, alternate protection-policy matrices, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred. `.669` now owns the next APB timing/register-set residue selector.
+`.669` now selects `.670`, readiness audit for broader APB generalized
+register-set cardinality beyond the selected two-to-four-register families,
+without behavior changes. The selector follows `.668` because the selected
+two-peripheral generalized register-set matrix is now shipped for 32-bit and
+data16 widths, with and without the selected protection matrix, while live
+`ApbCompleter` and `ApbComposition` guards still cap each generalized family
+at `maximum_count = 4` and exactly two peripheral completers. `.670` must
+decide whether the next exact owner is a first bounded cardinality widening, a
+smaller report/static, diagnostic, address-map, or fixture prerequisite,
+more-than-two-peripheral generalized ownership, or explicit deferral. No
+parser, generator, public source, support-accounting, generated artifact,
+HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed in `.669`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
