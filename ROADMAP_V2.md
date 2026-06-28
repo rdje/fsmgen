@@ -5211,6 +5211,18 @@ prose so selected status/control protected storage is no longer named as live
 residue, while generalized timing, broader protection policies, widths, direct
 backend, verification-output, backend-language variants, AXI, AHB, and VHDL
 remain deferred.
+`.653` now ships the `.652` selected report/static cleanup: the common
+`apb_additional_back_to_back_policies_deferred` residue now says selected
+status/control protected storage is complete for the bounded 32-bit and
+data16 two-peripheral families, and no longer names status/control protected
+storage generalization as live residue. Language-surface static prose now
+routes broader status/control variants to generalized APB
+status/control protected-storage future work beyond the selected
+two-peripheral 32-bit/data16 families. No public source, support-accounting
+identity, parser branch, timing branch, generated artifact, HDL/runtime
+behavior, APB transaction behavior, AXI, AHB, or VHDL behavior changed.
+`.653` selects `.654`, readiness audit for generalized APB multi-peripheral
+multi-register timing.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

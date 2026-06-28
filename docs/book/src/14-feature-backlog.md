@@ -11027,6 +11027,15 @@ data16 status/control protected source pair are the public contract. `.653`
 must refine the narrowed timing residue and related static prose so selected
 status/control protected storage is not named as live residue.
 
+APB status/control protected-storage residue cleanup:
+[IAL2_APB_STATUS_CONTROL_PROTECTED_STORAGE_RESIDUE_CLEANUP](../../IAL2_APB_STATUS_CONTROL_PROTECTED_STORAGE_RESIDUE_CLEANUP.md)
+ships the `.652` selected report/static cleanup. The narrowed APB timing
+residue now states that selected status/control protected storage is complete
+for the bounded 32-bit and data16 two-peripheral families, while generalized
+multi-peripheral multi-register timing remains future work. No source,
+support-accounting, parser, timing, HDL, APB transaction, AXI, AHB, or VHDL
+behavior changed.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

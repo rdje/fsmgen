@@ -2534,11 +2534,13 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband data16 protec
     is($schedule_report->{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition schedule JSON reports interconnect timing role');
     is($schedule_report->{back_to_back_policy}{peripherals}[0]{timing_policy}{setup_admission}, 'adjacent', 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition schedule JSON reports status adjacent setup admission');
     is($schedule_report->{back_to_back_policy}{peripherals}[1]{timing_policy}{setup_admission}, 'adjacent', 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition schedule JSON reports control adjacent setup admission');
-    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    my %residue_by_id = map { $_->{id} => $_ } @{$schedule_report->{unsupported_residue}};
+    my %residue = map { $_ => 1 } keys %residue_by_id;
     ok(!$residue{apb_back_to_back_policy_deferred}, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition schedule JSON omits broad back-to-back residue');
     ok(!$residue{apb_protection_policy_effects_deferred}, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition schedule JSON omits old policy-effects residue');
     ok(!$residue{apb_alternate_widths_deferred}, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition schedule JSON omits broad alternate-width residue');
     ok($residue{apb_additional_back_to_back_policies_deferred}, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition schedule JSON reports narrowed future timing-policy residue');
+    unlike($residue_by_id{apb_additional_back_to_back_policies_deferred}{detail}, qr/status\/control protected storage generalization/, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition residue retires stale status/control protected-storage wording');
     ok($residue{apb_additional_protection_policies_deferred}, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition schedule JSON reports additional-policy residue');
     ok($residue{apb_remaining_widths_deferred}, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition schedule JSON reports narrowed remaining-width residue');
 
@@ -2698,10 +2700,12 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection mu
     is($schedule_report->{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'sideband protection multi-peripheral back-to-back APB composition schedule JSON reports interconnect timing role');
     is($schedule_report->{back_to_back_policy}{peripherals}[0]{timing_policy}{setup_admission}, 'adjacent', 'sideband protection multi-peripheral back-to-back APB composition schedule JSON reports status adjacent setup admission');
     is($schedule_report->{back_to_back_policy}{peripherals}[1]{timing_policy}{setup_admission}, 'adjacent', 'sideband protection multi-peripheral back-to-back APB composition schedule JSON reports control adjacent setup admission');
-    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    my %residue_by_id = map { $_->{id} => $_ } @{$schedule_report->{unsupported_residue}};
+    my %residue = map { $_ => 1 } keys %residue_by_id;
     ok(!$residue{apb_back_to_back_policy_deferred}, 'sideband protection multi-peripheral back-to-back APB composition schedule JSON omits broad back-to-back residue');
     ok(!$residue{apb_protection_policy_effects_deferred}, 'sideband protection multi-peripheral back-to-back APB composition schedule JSON omits old policy-effects residue');
     ok($residue{apb_additional_back_to_back_policies_deferred}, 'sideband protection multi-peripheral back-to-back APB composition schedule JSON reports narrowed future timing-policy residue');
+    unlike($residue_by_id{apb_additional_back_to_back_policies_deferred}{detail}, qr/status\/control protected storage generalization/, 'sideband protection multi-peripheral back-to-back APB composition residue retires stale status/control protected-storage wording');
     ok($residue{apb_additional_protection_policies_deferred}, 'sideband protection multi-peripheral back-to-back APB composition schedule JSON reports additional-policy residue');
     ok($residue{apb_alternate_widths_deferred}, 'sideband protection multi-peripheral back-to-back APB composition schedule JSON reports alternate-width residue');
 
@@ -2869,10 +2873,12 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection mu
     is($schedule_report->{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'sideband protection multi-peripheral data16 back-to-back APB composition schedule JSON reports interconnect timing role');
     is($schedule_report->{back_to_back_policy}{peripherals}[0]{timing_policy}{setup_admission}, 'adjacent', 'sideband protection multi-peripheral data16 back-to-back APB composition schedule JSON reports status adjacent setup admission');
     is($schedule_report->{back_to_back_policy}{peripherals}[1]{timing_policy}{setup_admission}, 'adjacent', 'sideband protection multi-peripheral data16 back-to-back APB composition schedule JSON reports control adjacent setup admission');
-    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    my %residue_by_id = map { $_->{id} => $_ } @{$schedule_report->{unsupported_residue}};
+    my %residue = map { $_ => 1 } keys %residue_by_id;
     ok(!$residue{apb_back_to_back_policy_deferred}, 'sideband protection multi-peripheral data16 back-to-back APB composition schedule JSON omits broad back-to-back residue');
     ok(!$residue{apb_protection_policy_effects_deferred}, 'sideband protection multi-peripheral data16 back-to-back APB composition schedule JSON omits old policy-effects residue');
     ok($residue{apb_additional_back_to_back_policies_deferred}, 'sideband protection multi-peripheral data16 back-to-back APB composition schedule JSON reports narrowed future timing-policy residue');
+    unlike($residue_by_id{apb_additional_back_to_back_policies_deferred}{detail}, qr/status\/control protected storage generalization/, 'sideband protection multi-peripheral data16 back-to-back APB composition residue retires stale status/control protected-storage wording');
     ok($residue{apb_additional_protection_policies_deferred}, 'sideband protection multi-peripheral data16 back-to-back APB composition schedule JSON reports additional-policy residue');
     ok($residue{apb_remaining_widths_deferred}, 'sideband protection multi-peripheral data16 back-to-back APB composition schedule JSON reports narrowed remaining-width residue');
 
