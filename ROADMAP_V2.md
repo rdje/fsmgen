@@ -5048,6 +5048,26 @@ peripheral. Reports shall add aggregate `back_to_back_policy`, remove broad
 back-to-back residue for selected surfaces, retain narrowed future-policy,
 protection-effects, and alternate-width residue, and keep sideband data16
 no-policy multi-peripheral multi-register timing deferred.
+`.642` now ships the selected bounded 32-bit sideband-aware no-policy APB
+multi-peripheral multi-register back-to-back timing behavior for exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_status_back_to_back.ppif`
+and its `.apb` alias. The generated requester exposes
+`accepted/busy/status`, accepts one active transfer plus one queued next
+transfer, and relaunches queued 32-bit `PWDATA` plus `PPROT/PSTRB`. The
+generated interconnect propagates queued setup without idle-cycle insertion,
+decodes the status/control windows at bases `0` and `256`, subtracts the
+control base for `PADDR_CONTROL`, muxes selected responses, and remains
+access-policy-free. Both generated peripheral completers use adjacent setup
+and exactly no-policy `reg0` at local byte address `0` plus `reg1` at local
+byte address `4`, with 32-bit reset-0 storage and 4-bit byte-lane writes.
+Reports add aggregate multi-peripheral `back_to_back_policy`, remove broad
+`apb_back_to_back_policy_deferred` for the selected surfaces, and retain
+narrowed future timing, protection-policy-effects, and alternate-width
+residue. Sideband data16 no-policy multi-peripheral multi-register timing,
+generalized multi-peripheral multi-register shapes, deeper queues, alternate
+overflow, accepted-less requesters, multiple active APB transfers, direct
+backend, verification-output, backend-language variants, AXI, AHB, and VHDL
+remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -10859,6 +10859,26 @@ for selected surfaces, retain narrowed future-policy, protection-effects, and
 alternate-width residue, and keep sideband data16 no-policy multi-peripheral
 multi-register timing deferred.
 
+APB no-policy multi-peripheral multi-register back-to-back behavior:
+[IAL2_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md)
+ships the selected bounded 32-bit sideband-aware no-policy timing behavior for
+exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_status_back_to_back.ppif`
+and its `.apb` alias. The generated requester exposes
+`accepted/busy/status`, accepts one active transfer plus one queued next
+transfer, and relaunches queued 32-bit `PWDATA` plus `PPROT/PSTRB`. The
+generated interconnect propagates queued setup without idle-cycle insertion,
+decodes status/control windows at bases `0` and `256`, translates
+`PADDR_CONTROL`, muxes selected responses, and remains access-policy-free.
+Both peripheral completers use adjacent setup and exactly no-policy `reg0` at
+local byte address `0` plus `reg1` at local byte address `4`, with 32-bit
+reset-0 storage and 4-bit byte-lane writes. Reports add aggregate
+multi-peripheral `back_to_back_policy`, remove broad
+`apb_back_to_back_policy_deferred`, and retain narrowed future timing,
+protection-policy-effects, and alternate-width residue. Sideband data16
+no-policy multi-peripheral multi-register timing and generalized
+multi-peripheral multi-register shapes remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
