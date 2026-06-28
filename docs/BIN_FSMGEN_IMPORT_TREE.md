@@ -11,16 +11,16 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-06-27`.
-- Startup bootstrap refreshed again on `2026-06-27`; the live static trace
+- Reviewed on `2026-06-28`.
+- Startup bootstrap refreshed again on `2026-06-28`; the live static trace
   includes the R14 `.isf` intent-scheduling path, the IAL2 `.ppif` and profile
   alias protocol-intent pre-lowering path, the AXI manager capacity/status PPIF
   surface, the APB requester/completer/composition PPIF and `.apb` surfaces,
   the first-class semantic-introspection manifest support surface, and the
   bounded direct/composition VHDL backend owners. The project-owned closure
-  count now reflects the APB protocol-intent owners reachable from the PPIF
-  adapter, and selected line-count measurements below were refreshed from
-  source after the APB requester busy-output implementation.
+  remains `213` project files total / `212` `.pm` packages after the APB
+  generalized register-set timing work, and selected line-count measurements
+  below were refreshed from source after that implementation.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
 - Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `213` project files total, `212` `.pm` packages.
@@ -41,9 +41,10 @@ Current baseline:
   [perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm](perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm),
   [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm),
   and [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm)
-  for shipped APB requester-transfer, completer, fixed composition, `.apb`
-  alias, and busy-capable source objects, then reuses the IAL1 `.isf` lowerer
-  before handing generated `.fsm` artifacts to the ordinary HDL pipeline.
+  for shipped APB requester-transfer, completer, fixed and bounded generalized
+  register-set composition, `.apb` alias, and busy-capable source objects, then
+  reuses the IAL1 `.isf` lowerer before handing generated `.fsm` artifacts to
+  the ordinary HDL pipeline.
 - The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm), including bounded scalar expressions, matching-shape leafwise aggregate expression folding, and unary aggregate bitwise complement folding.
 - Shared integer literal parsing is now reachable through [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm), keeping common decimal, `0d`, based SystemVerilog, `0x`, `0b`, `0o`, and intent-level sized `.fsm` spellings such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`, and `20'x1` consistent across scalar widths, constants, and direct `+size` expression terms while normalizing to legal target-HDL literals before backend emission.
 - The bounded VHDL generation owners are now reachable from [bin/fsmgen](bin/fsmgen):
@@ -306,12 +307,12 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `125`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm): `509`
 - [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm): `178`
-- [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `2189`
+- [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `2468`
 - [perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm](perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm): `503`
 - [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm): `9773`
-- [perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm](perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm): `621`
-- [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm): `613`
-- [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm): `676`
+- [perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm](perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm): `1158`
+- [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm): `1476`
+- [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm): `2448`
 - [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm): `100`
 - [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `10090`
 - [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm): `99`
@@ -343,10 +344,11 @@ Current largest reachable files by line count:
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12758`
 - [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `10090`
 - [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm): `9773`
-- [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `4277`
+- [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `5431`
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3906`
+- [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `2468`
+- [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm): `2448`
 - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm): `2431`
-- [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `2189`
 - [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2067`
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm): `1835`
 - [bin/fsmgen](bin/fsmgen): `1788`
@@ -355,6 +357,7 @@ Current largest reachable files by line count:
 - [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](perl/FSM/Synthesis/EnableGraph/ASTSupport.pm): `1694`
 - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm): `1501`
 - [perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticReportContract.pm): `1484`
+- [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm): `1476`
 - [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm): `1443`
 - [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPayloadContract.pm): `1343`
 - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm): `1301`
@@ -385,8 +388,9 @@ Interpretation:
   routing public contract growth through task-tree-selected slices,
 - the APB requester-transfer, completer, and fixed-composition protocol-intent
   owners are now reachable through the same PPIF front door; their current
-  line counts are still modest compared with the AXI owner, but future APB
-  decode, register, sideband, width, and back-to-back policy growth should
+  line counts have grown during the APB sideband, multi-peripheral,
+  multi-register, and bounded generalized register-set timing work, so future
+  APB decode, register, sideband, width, and back-to-back policy growth should
   continue to land behind exact task-tree leaves,
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) remains a major `R11` planning hotspot because source-expression resolution, aggregate shape checks, carrier allocation, and binding-type preservation still meet there, but open/numeric actual literal policy now has an explicit owner in [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm), source-expression parsing/spec collection now has an explicit owner in [perl/FSM/Composition/SourceExpressionSpecSupport.pm](perl/FSM/Composition/SourceExpressionSpecSupport.pm), parameter/generic scalar plus aggregate value normalization and bounded expression folding now has an explicit neutral owner in [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm), and child override-value symbol resolution now has a post-import owner in [perl/FSM/Composition/ParameterOverrideResolver.pm](perl/FSM/Composition/ParameterOverrideResolver.pm),
 - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) is now a real mid-sized owner in its own right rather than a facade wrapper, which is a healthier failure mode than leaving the same frontend mass hidden inside `HDLGenerator`,
