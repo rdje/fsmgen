@@ -11560,7 +11560,26 @@ outdir, HDL, support-accounting, and capability tests cover `reg5`
 storage/read/write and byte-lane behavior. Data16 six-register, protected
 six-register, more-than-six-register, more-than-two-peripheral,
 direct-backend, backend-language, AXI, AHB, and VHDL behavior remain
-deferred. `.686` owns the next APB timing/register-set residue selector.
+deferred.
+
+Post six-register APB generalized selector:
+[IAL2_POST_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_NEXT_SLICE_SELECTION.md)
+selects `.687`, public contract selection for bounded APB sideband-aware
+data16 no-policy six-register generalized `reg0..regN` register-set
+multi-peripheral timing, without behavior changes. Data16 no-policy is next
+because it is the nearest unprotected cardinality sibling after `.685`, keeps
+the exactly-two-peripheral topology, avoids the protection-policy matrix, and
+forces the 16-bit data, 2-bit `PSTRB`, 2-byte stride, and status/control
+windows at `0` and `258` to be settled before implementation. A temporary
+data16 six-register strict-check probe fails closed at the current data16
+generalized storage-shape diagnostic with no support-accounting match. `.687`
+must settle the exact public `.ppif`/`.apb` source names, object metadata,
+`reg0` through `reg5` local addresses `0/2/4/6/8/10`, whether the data16
+no-policy family widens to `maximum_count = 6`, report/support identities,
+diagnostics, validation, rollback, docs, Knowledge Map, and next owner before
+behavior changes. Protected six-register, more-than-six-register,
+more-than-two-peripheral, direct-backend, backend-language, AXI, AHB, and VHDL
+behavior remain deferred.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

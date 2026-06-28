@@ -5741,8 +5741,24 @@ behavior. Data16 six-register, protected six-register, more-than-six-register,
 more-than-two-peripheral, deeper-queue, alternate-overflow, accepted-less,
 multiple-active, bus-matrix, scoreboard, direct-backend, verification-output,
 backend-language variant, AXI, AHB, and VHDL behavior remain deferred.
-`.686` owns the next APB timing/register-set residue selector before any
-further behavior change.
+`.686` now selects `.687`, public contract selection for the bounded APB
+sideband-aware data16 no-policy six-register generalized `reg0..regN`
+register-set multi-peripheral timing family, without behavior changes. The
+selector chooses data16 no-policy next because it is the nearest unprotected
+cardinality sibling after `.685`, preserves the exactly-two-peripheral
+topology, avoids the protection-policy matrix, and forces the 16-bit data,
+2-bit `PSTRB`, 2-byte stride, and status/control window bases `0`/`258` to be
+settled before implementation. A temporary `/tmp` data16 six-register strict
+check probe fails closed at the selected data16 generalized storage-shape
+diagnostic with no support-accounting match. `.687` must settle exact public
+`.ppif`/`.apb` source names, object metadata, `reg0..reg5` local addresses
+`0/2/4/6/8/10`, whether the data16 no-policy generalized family widens from
+`maximum_count = 5` to `maximum_count = 6`, support/report identities,
+diagnostics, validation, rollback, docs, Knowledge Map, and next owner before
+any behavior change. Protected six-register, more-than-six-register,
+more-than-two-peripheral, deeper-queue, alternate-overflow, accepted-less,
+multiple-active, bus-matrix, scoreboard, direct-backend, verification-output,
+backend-language variant, AXI, AHB, and VHDL behavior remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

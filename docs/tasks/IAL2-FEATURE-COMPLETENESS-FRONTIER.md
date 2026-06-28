@@ -63,7 +63,7 @@ path before reopening VHDL backend or VHDL rerouting work.
   Children continuation 10: `IAL2-FEATURE-COMPLETENESS-FRONTIER.634, IAL2-FEATURE-COMPLETENESS-FRONTIER.635, IAL2-FEATURE-COMPLETENESS-FRONTIER.636, IAL2-FEATURE-COMPLETENESS-FRONTIER.637, IAL2-FEATURE-COMPLETENESS-FRONTIER.638, IAL2-FEATURE-COMPLETENESS-FRONTIER.639, IAL2-FEATURE-COMPLETENESS-FRONTIER.640, IAL2-FEATURE-COMPLETENESS-FRONTIER.641, IAL2-FEATURE-COMPLETENESS-FRONTIER.642, IAL2-FEATURE-COMPLETENESS-FRONTIER.643, IAL2-FEATURE-COMPLETENESS-FRONTIER.644, IAL2-FEATURE-COMPLETENESS-FRONTIER.645, IAL2-FEATURE-COMPLETENESS-FRONTIER.646, IAL2-FEATURE-COMPLETENESS-FRONTIER.647, IAL2-FEATURE-COMPLETENESS-FRONTIER.648, IAL2-FEATURE-COMPLETENESS-FRONTIER.649, IAL2-FEATURE-COMPLETENESS-FRONTIER.650, IAL2-FEATURE-COMPLETENESS-FRONTIER.651, IAL2-FEATURE-COMPLETENESS-FRONTIER.652, IAL2-FEATURE-COMPLETENESS-FRONTIER.653, IAL2-FEATURE-COMPLETENESS-FRONTIER.654, IAL2-FEATURE-COMPLETENESS-FRONTIER.655, IAL2-FEATURE-COMPLETENESS-FRONTIER.656, IAL2-FEATURE-COMPLETENESS-FRONTIER.657, IAL2-FEATURE-COMPLETENESS-FRONTIER.658`
   Children continuation 11: `IAL2-FEATURE-COMPLETENESS-FRONTIER.659, IAL2-FEATURE-COMPLETENESS-FRONTIER.660, IAL2-FEATURE-COMPLETENESS-FRONTIER.661, IAL2-FEATURE-COMPLETENESS-FRONTIER.662, IAL2-FEATURE-COMPLETENESS-FRONTIER.663, IAL2-FEATURE-COMPLETENESS-FRONTIER.664, IAL2-FEATURE-COMPLETENESS-FRONTIER.665, IAL2-FEATURE-COMPLETENESS-FRONTIER.666, IAL2-FEATURE-COMPLETENESS-FRONTIER.667, IAL2-FEATURE-COMPLETENESS-FRONTIER.668, IAL2-FEATURE-COMPLETENESS-FRONTIER.669, IAL2-FEATURE-COMPLETENESS-FRONTIER.670, IAL2-FEATURE-COMPLETENESS-FRONTIER.671, IAL2-FEATURE-COMPLETENESS-FRONTIER.672, IAL2-FEATURE-COMPLETENESS-FRONTIER.673, IAL2-FEATURE-COMPLETENESS-FRONTIER.674, IAL2-FEATURE-COMPLETENESS-FRONTIER.675, IAL2-FEATURE-COMPLETENESS-FRONTIER.676, IAL2-FEATURE-COMPLETENESS-FRONTIER.677, IAL2-FEATURE-COMPLETENESS-FRONTIER.678, IAL2-FEATURE-COMPLETENESS-FRONTIER.679, IAL2-FEATURE-COMPLETENESS-FRONTIER.680`
 
-  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686`
+  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -4861,9 +4861,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.685: ship APB six-register timing`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.686`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next APB timing/register-set residue owner after 32-bit no-policy six-register generalized timing shipped.`
   Acceptance: `Read .685 behavior, .684 contract, .683 broader-cardinality audit, .681 data16 protected five-register behavior, .678 32-bit protected five-register behavior, .675 data16 no-policy five-register behavior, .672 32-bit no-policy five-register behavior, current ApbCompleter/ApbComposition generalized cardinality predicates and residue, RegressionCorpus, LanguageSurfaceSection, focused APB/profile-alias/support/capability tests, README, ROADMAP_V2, mdBook, Memory, Knowledge Map, and relevant decisions. Decide whether the next exact roadmap-aligned owner is data16 six-register no-policy generalized timing, protected six-register generalized timing, more-than-six-register readiness/contract selection, more-than-two-peripheral generalized ownership, a smaller report/static diagnostic/address-map/fixture prerequisite, or explicit deferral. Record selected scope, public/report expectations, validation gates, rollback, docs, Knowledge Map, and next owner before any parser/generator/sample/test/HDL behavior change.`
+  Verification: `Selected .687, public contract selection for the bounded APB sideband-aware data16 no-policy six-register generalized reg0..regN register-set multi-peripheral timing family. Read .685 behavior, .684 contract, .683 broader-cardinality audit, .681 data16 protected five-register behavior, .678 32-bit protected five-register behavior, .675 data16 no-policy five-register behavior, .672 32-bit no-policy five-register behavior, current ApbCompleter/ApbComposition generalized cardinality predicates and residue, RegressionCorpus, LanguageSurfaceSection, focused APB/profile-alias/support/capability tests, README, ROADMAP_V2, mdBook, Memory, Knowledge Map, and relevant decisions. Chose data16 no-policy next because it is the nearest unprotected cardinality sibling after .685, preserves the exactly-two-peripheral topology, avoids the protection-policy matrix, and forces 16-bit data, PSTRB width 2, 2-byte stride, and status/control window bases 0 and 258 to be settled before implementation. A temporary /tmp data16 six-register strict-check probe failed closed at the selected data16 generalized storage-shape diagnostic with no support-accounting match. Added docs/IAL2_POST_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_NEXT_SLICE_SELECTION.md and docs/knowledge/ial2-post-apb-generalized-multi-peripheral-multi-register-six-register-next-slice-selection.md. No parser, generator, public source, support-accounting, report, generated artifact, HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.686: select APB data16 six-register contract`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.687`
+  Status: `active`
+  Goal: `Select the bounded APB sideband-aware data16 no-policy six-register generalized register-set multi-peripheral public contract.`
+  Acceptance: `Read .686 selector, .685 32-bit no-policy six-register behavior, .684 32-bit no-policy six-register contract, .683 broader-cardinality audit, .675 data16 no-policy five-register behavior, .681 data16 protected five-register behavior, .678 32-bit protected five-register behavior, current ApbCompleter/ApbComposition data16 generalized guards and residue, RegressionCorpus, LanguageSurfaceSection, focused APB/profile-alias/support/capability tests, README, ROADMAP_V2, mdBook, Memory, Knowledge Map, and relevant decisions. Select exact public .ppif/.apb source names, protocol-platform-intent name, object id, source anchor, one-requester/two-peripheral scope, 32-bit APB addresses, 16-bit data, PPROT width 3, PSTRB width 2, status/control windows 0 and 258, public six-register representative names and local byte addresses 0/2/4/6/8/10, whether the admitted data16 no-policy generalized family widens from maximum_count 5 to maximum_count 6, report fields, residue movement, support-accounting identities, capability buckets, diagnostics, validation probes, rollback, docs, Knowledge Map, and next owner before any parser/generator/source/test/HDL behavior change.`
   Verification: `pending`
   Commit: `pending`
 
@@ -5273,10 +5280,30 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 400 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.683` | `done` | Audited broader APB generalized register-set cardinality after all selected five-register siblings shipped. |
 | 401 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.684` | `done` | Selected the bounded APB 32-bit no-policy six-register generalized register-set public contract. |
 | 402 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.685` | `done` | Shipped the bounded APB 32-bit no-policy six-register generalized register-set timing behavior. |
-| 403 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.686` | `active` | Select the next APB timing/register-set residue owner after six-register no-policy timing shipped. |
+| 403 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.686` | `done` | Selected bounded APB data16 no-policy six-register generalized register-set public contract selection next. |
+| 404 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.687` | `active` | Select the bounded APB data16 no-policy six-register generalized register-set public contract. |
 
 ## Decisions
 
+- `2026-06-28`: `.686` selects `.687`, public contract selection for the
+  bounded APB sideband-aware data16 no-policy six-register generalized
+  `reg0..regN` register-set multi-peripheral timing family, without behavior
+  changes. The selector chooses data16 no-policy next because it is the
+  nearest unprotected cardinality sibling after `.685`, preserves the
+  exactly-two-peripheral topology, avoids the protection-policy matrix, and
+  forces 16-bit data, `PSTRB width 2`, 2-byte stride, and status/control
+  window bases `0` and `258` to be settled before implementation. A temporary
+  `/tmp` data16 six-register strict-check probe fails closed at the selected
+  data16 generalized storage-shape diagnostic with no support-accounting
+  match. `.687` must settle exact public `.ppif`/`.apb` names, object
+  metadata, `reg0..reg5` local addresses `0/2/4/6/8/10`, whether the data16
+  no-policy generalized family widens from `maximum_count = 5` to
+  `maximum_count = 6`, support/report identities, diagnostics, validation,
+  rollback, docs, Knowledge Map, and next owner before behavior changes.
+  Protected six-register, more-than-six-register, more-than-two-peripheral,
+  deeper-queue, alternate-overflow, accepted-less, multiple-active,
+  bus-matrix, scoreboard, direct-backend, verification-output,
+  backend-language variant, AXI, AHB, and VHDL behavior remain deferred.
 - `2026-06-28`: `.684` selects `.685`, direct implementation of the
   bounded APB sideband-aware 32-bit no-policy six-register generalized
   `reg0..regN` register-set multi-peripheral timing family. The selected
@@ -12835,6 +12862,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-28` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.679` | `.678` behavior; `.677` contract; `.676` selector; `.675` data16 no-policy five-register behavior; `.674` contract; `.672` 32-bit no-policy five-register behavior; `.668` data16 protected generalized behavior; `.665` 32-bit protected generalized behavior; current `ApbCompleter`/`ApbComposition` protected generalized cardinality predicates and residue; `RegressionCorpus`; `LanguageSurfaceSection`; focused APB/profile-alias/support/capability tests; README; ROADMAP_V2; mdBook; Memory; Knowledge Map; relevant decisions; `docs/IAL2_POST_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_NEXT_SLICE_SELECTION.md`; `docs/knowledge/ial2-post-apb-protection-generalized-multi-peripheral-multi-register-cardinality-next-slice-selection.md`; docs/doctrine closeout gates | `passed`; selected `.680`, public contract selection for bounded APB sideband-aware data16 protected five-register generalized register-set multi-peripheral timing, without behavior changes. No parser, generator, public source, support-accounting, report, generated artifact, HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed. |
 | `2026-06-28` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.680` | `.679` selector; `.678` 32-bit protected five-register behavior; `.677` 32-bit protected five-register contract; `.675` data16 no-policy five-register behavior; `.674` data16 no-policy five-register contract; `.668` data16 protected generalized behavior; `.667` data16 protected generalized contract; `.665` 32-bit protected generalized behavior; `.670` cardinality audit; current `ApbCompleter`/`ApbComposition` data16 protected generalized predicates and residue; `RegressionCorpus`; `LanguageSurfaceSection`; focused APB/profile-alias/support/capability tests; README; ROADMAP_V2; mdBook; Memory; Knowledge Map; relevant decisions; `docs/IAL2_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_CONTRACT_SELECTION.md`; `docs/knowledge/ial2-apb-data16-protection-generalized-multi-peripheral-multi-register-cardinality-contract-selection.md`; docs/doctrine closeout gates | `passed`; selected `.681`, direct implementation of the bounded APB sideband-aware data16 protected five-register generalized register-set public source pair, without behavior changes. No parser, generator, source, support-accounting, report, generated artifact, HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed. |
 | `2026-06-28` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.685` | `ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.ppif`; `ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.apb`; `perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm`; `perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm`; `perl/FSM/Support/RegressionCorpus.pm`; `perl/FSM/Support/LanguageSurfaceSection.pm`; `t/1470-ial2-apb-profile-alias.t`; `t/1472-ial2-apb-composition.t`; `t/248-regression-corpus-accounting.t`; `t/297-capability-manifest.t`; `docs/IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_BEHAVIOR.md`; `docs/knowledge/ial2-apb-generalized-multi-peripheral-multi-register-six-register-behavior.md`; README; ROADMAP_V2; mdBook; task tree; Memory; Knowledge Map; syntax, strict-check, semantic, schedule, outdir, focused support/capability, and RAM-guarded APB tests | `passed`; shipped selected APB sideband-aware 32-bit no-policy six-register generalized `reg0..regN` register-set multi-peripheral timing behavior and advanced the frontier to `.686`, the next APB timing/register-set residue selector. |
+| `2026-06-28` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.686` | `.685` behavior; `.684` contract; `.683` broader-cardinality audit; `.681` data16 protected five-register behavior; `.678` 32-bit protected five-register behavior; `.675` data16 no-policy five-register behavior; `.672` 32-bit no-policy five-register behavior; current `ApbCompleter`/`ApbComposition` generalized cardinality predicates and residue; `RegressionCorpus`; `LanguageSurfaceSection`; focused APB/profile-alias/support/capability surfaces; README; ROADMAP_V2; mdBook; Memory; Knowledge Map; relevant decisions; `/tmp` data16 six-register strict-check probe; `docs/IAL2_POST_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_NEXT_SLICE_SELECTION.md`; `docs/knowledge/ial2-post-apb-generalized-multi-peripheral-multi-register-six-register-next-slice-selection.md`; docs/doctrine closeout gates | `passed`; selected `.687`, public contract selection for bounded APB sideband-aware data16 no-policy six-register generalized `reg0..regN` register-set multi-peripheral timing, without behavior changes. No parser, generator, public source, support-accounting, report, generated artifact, HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed. |
 
 ## Commit Log
 
@@ -13485,9 +13513,24 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.683` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.683: audit APB broader cardinality readiness` | Audited broader APB generalized register-set cardinality readiness and advanced the frontier to `.684`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.684` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.684: select APB six-register public contract` | Selected bounded APB 32-bit no-policy six-register generalized register-set implementation and advanced the frontier to `.685`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.685` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.685: ship APB six-register timing` | Shipped bounded APB 32-bit no-policy six-register generalized register-set timing behavior and advanced the frontier to `.686`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.686` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.686: select APB data16 six-register contract` | Selected bounded APB data16 no-policy six-register generalized register-set public contract selection and advanced the frontier to `.687`. |
 
 ## Changelog
 
+- `2026-06-28`: Completed `.686`, selecting `.687`, public contract
+  selection for the bounded APB sideband-aware data16 no-policy six-register
+  generalized `reg0..regN` register-set multi-peripheral timing family,
+  without behavior changes. The selector chose data16 no-policy next because
+  it is the nearest unprotected cardinality sibling after `.685`, preserves
+  the exactly-two-peripheral topology, avoids the protection-policy matrix,
+  and forces 16-bit data, `PSTRB width 2`, 2-byte stride, and status/control
+  window bases `0` and `258` to be settled before implementation. A temporary
+  `/tmp` data16 six-register strict-check probe failed closed at the selected
+  data16 generalized storage-shape diagnostic with no support-accounting
+  match. `.687` is now active to select exact public sources, object
+  metadata, `reg0..reg5` addresses `0/2/4/6/8/10`, widening/report/support
+  boundaries, diagnostics, validation, rollback, docs, Knowledge Map, and the
+  next owner before any behavior change.
 - `2026-06-28`: Completed `.685`, shipping the bounded APB
   sideband-aware 32-bit no-policy six-register generalized `reg0..regN`
   register-set multi-peripheral timing behavior. Added the public
