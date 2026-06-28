@@ -10583,6 +10583,18 @@ queue, reports aggregate `back_to_back_policy`, and keeps broader APB timing
 families deferred. `.623` selects the next APB data16/protection
 back-to-back owner before any further behavior change.
 
+Post APB sideband multi-register back-to-back selector:
+[IAL2_POST_APB_SIDEBAND_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SIDEBAND_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.624`, public contract selection for bounded APB sideband-aware
+data16 back-to-back timing-policy behavior, without behavior changes. Live
+reports over representative data16, protection, and data16-protection sources
+still keep broad `apb_back_to_back_policy_deferred`. Data16 is selected first
+because it widens queued sideband payloads to 16-bit data and `PSTRB width 2`
+without adding register-local denied-access side effects. Protection-only
+timing, combined data16-protection timing, multi-peripheral multi-register
+timing, deeper queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

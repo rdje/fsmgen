@@ -4798,6 +4798,17 @@ multi-register timing propagation, data16/protection variants, deeper queues,
 alternate overflow, direct backend, verification-output, backend-language
 variants, AXI, AHB, and VHDL remain deferred. `.623` is active to select the
 next APB data16/protection back-to-back owner without behavior changes first.
+`.623` now selects `.624`, public contract selection for the bounded APB
+sideband-aware data16 back-to-back timing-policy family, without behavior
+changes. Live reports over representative data16, protection, and
+data16-protection APB sources still show no aggregate `back_to_back_policy` and
+retain broad `apb_back_to_back_policy_deferred`. Data16 is selected before
+protection because it widens the shipped sideband queue and adjacent-completer
+paths to 16-bit data and `PSTRB width 2` without adding register-local
+denied-access side effects. Protection-only timing, combined data16-protection
+timing, multi-peripheral multi-register timing, deeper queues, alternate
+overflow, direct backend, verification-output, backend-language variants, AXI,
+AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
