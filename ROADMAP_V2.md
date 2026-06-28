@@ -931,6 +931,26 @@ Refactoring implication:
 - the current Perl runtime already has proto-HIR/proto-lowered-IR behavior spread across modules such as `HDLGenerator`, `FSMGenFull`, composition planning, and `FlattenedDT`,
 - so the future goal is not to invent semantics from nothing but to make those semantic layers explicit, shareable, and backend-independent instead of continuing to rediscover them ad hoc inside generation code.
 
+Source-facing HIR roadmap phase:
+- `FSMGEN-HIR-ROADMAP-FRONTIER` now owns the proposed source-facing FSMGEN HIR
+  phase for high-level language frontends and builder APIs. The intended shape
+  is `high-level frontend -> FSMGEN HIR -> validation/canonicalization -> IAL2
+  or IAL1 -> existing lowering`.
+- This HIR does not replace IAL1 or IAL2. It sits above them as a checked
+  semantic input layer: HIR should lower to IAL2 when the source expresses
+  protocol/platform intent and to IAL1 when the source is already concrete
+  FSM/control logic.
+- Direct frontend lowering to IAL2 or IAL1 remains acceptable for one bounded
+  prototype, but it is not the preferred long-term architecture for multiple
+  high-level frontends because each frontend would otherwise need to learn
+  every IAL target, protocol-intent rule, scheduling rule, width/reset rule,
+  diagnostic rule, and future IAL evolution.
+- The first activation leaf must select whether the source-facing HIR extends
+  the existing `IntentHIR` family, creates a new named surface, or remains a
+  textual IAL handoff for the first prototype. It must satisfy
+  [docs/IR_POLICY.md](docs/IR_POLICY.md) before parser, compiler, source,
+  generated-artifact, config, or behavior changes begin.
+
 Advanced synthesizable targets worth considering later, not rejecting upfront:
 - macro/preprocessor-heavy RTL after preprocessing with provenance retained,
 - generate-heavy RTL after elaboration,

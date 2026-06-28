@@ -83,6 +83,30 @@ changes.
 
 ## Language Ergonomics
 
+### Source-Facing FSMGEN HIR
+
+Status: proposed critical roadmap phase.
+
+Goal: give future high-level language frontends and builder APIs one checked
+FSMGEN-native semantic target above IAL2 and IAL1. The intended architecture is
+`high-level frontend -> FSMGEN HIR -> validation/canonicalization -> IAL2 or
+IAL1 -> existing lowering`.
+
+Current boundary: `FSMGEN-HIR-ROADMAP-FRONTIER` owns the phase as a proposed
+task tree. HIR does not replace IAL2 or IAL1; it should lower to IAL2 for
+protocol/platform intent and to IAL1 for concrete FSM/control logic. Direct
+frontend lowering to IAL2 or IAL1 can still be acceptable for one bounded
+prototype, but multiple high-level frontends should not each reimplement every
+IAL target rule, scheduling rule, width/reset convention, diagnostic rule, and
+future IAL evolution.
+
+Activation rule: the first HIR activation is an architecture selection leaf,
+not implementation. It must decide whether the source-facing HIR extends the
+existing `Intent HIR` family, creates a new named surface, or remains a textual
+IAL handoff for the first prototype, and it must satisfy `docs/IR_POLICY.md`
+before parser, compiler, source, generated-artifact, config, or behavior
+changes begin.
+
 ### Inference-First Scalar Authoring
 
 Status: partially shipped; broader inference surfaces remain backlog.

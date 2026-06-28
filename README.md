@@ -6688,6 +6688,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-TRANSACTION-PORT-STORAGE-REPORTS.md` — completed `R14` task tree for transaction-local port storage schedule-report roles.
 - `docs/tasks/ISF-RULE-TRIGGER-STORAGE-REPORTS.md` — completed `R14` task tree for rule-trigger source and payload-source storage schedule-report roles.
 - `docs/tasks/FSMGEN-IR-AUDIT.md` — completed architecture task tree for current IR inventory, canonical/private boundary classification, repo-local IR policy, and consolidation follow-up selection.
+- `docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md` — proposed critical architecture task tree for source-facing FSMGEN HIR as the shared high-level frontend target above IAL2 and IAL1.
 - `docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md` — completed architecture follow-up that guarded the current direct-root `structural_rtl_ir` projection before future convergence work.
 - `docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md` — completed architecture follow-up for expression representation ownership and conversion boundaries.
 - `docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md` — completed architecture follow-up that removed the tracked `ExpressionNamer.pm.new` duplicate.

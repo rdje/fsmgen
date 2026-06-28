@@ -26,6 +26,8 @@ state-machine IR before emitting normal IAL2 or IAL1 sources.
   `IAL1 -> IAL0` lowering chains.
 - Do not accept generated IAL2/IAL1 that lacks stable names, source locations,
   deterministic output, validation diagnostics, and golden equivalence evidence.
+- Do not assume direct IAL2/IAL1 emission is the final architecture now that
+  `FSMGEN-HIR-ROADMAP-FRONTIER` owns the source-facing HIR direction.
 
 ## Acceptance Criteria
 
@@ -75,6 +77,10 @@ package, module, parser, source, or generated-artifact implementation work.
 - `2026-06-28`: Dynamic host-language features may be used only at generation
   time. The emitted object graph must be deterministic, validated, named, and
   reviewable before lowering.
+- `2026-06-28`: `FSMGEN-HIR-ROADMAP-FRONTIER` supersedes direct-to-IAL builder
+  assumptions as the preferred long-term architecture for multiple high-level
+  frontends. Host-language builder activation should consult the HIR boundary
+  selection before choosing direct IAL2 or IAL1 emission.
 
 ## Open Questions
 

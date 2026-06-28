@@ -152,6 +152,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `FSMGEN-HIR-ROADMAP-FRONTIER` | `proposed` | `architecture / high-level frontend IR` | `FSMGEN-HIR-ROADMAP-FRONTIER.2` select the first source-facing HIR architecture boundary | [docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md](docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md) |
 | `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` | `proposed` | `IAL2 horizon exploration / authoring ergonomics` | `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.1` select the first host-language builder contract and prototype boundary | [docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md](docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md) |
 
 ## Completed Task Trees

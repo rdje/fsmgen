@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.688: ship APB data16 six-register timing`.
+- latest_commit: `FSMGEN-HIR-ROADMAP-FRONTIER.1: capture FSMGEN HIR roadmap phase`.
 - active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.689` is active after `.688`; task-tree-own the IAL2 AXI/APB/AHB mdBook tri-mode documentation coverage program before broad book rewrites.
-- recently_done: `.688` shipped exactly `ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.ppif` and the byte-identical `.apb` alias; widened only the selected APB data16 no-policy generalized two-peripheral family from two-to-five registers to two-to-six registers, with `reg0..reg5` at `0/2/4/6/8/10`.
+- recently_done: `FSMGEN-HIR-ROADMAP-FRONTIER.1` captured source-facing FSMGEN HIR as a proposed critical architecture roadmap phase above IAL2 and IAL1; `.688` shipped APB data16 no-policy six-register timing in commit `7d189d964`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan. During `.569`, broad `t/1436-ial2-ppif-parser-cli.t` attempts were not used as closeout: the APB-relevant focused tests and direct probes passed, but the broad run sat in an unrelated AXI subprocess/pipe wait after all visible subtests had passed. During `.634`, grouped RAM-guarded focused test attempts stopped before tests because host memory was already 96.3% against the 88% cutoff; direct focused tests passed.
 - next_action: Execute `.689`: audit current mdBook, README, ROADMAP_V2, Knowledge Map, shipped/deferred IAL2 AXI/APB/AHB surfaces, protocol aliases, examples, support manifests, and decisions; define the exact tri-mode documentation contract and next executable documentation leaves before any broad protocol-wide mdBook edits.
@@ -24,8 +24,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
   (`docs/tasks/KNOWLEDGE-MAP-ADOPT.md`).
 - Push only on explicit user request (no commit-count cadence) — `docs/decisions/0005`.
 - PNT autonomously; do not pause mid-flow — `docs/decisions/0003`.
-- Proposed `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` captures the host-language
-  builder / IAL-as-assembly idea; it is not active or PNT-eligible.
+- Proposed `FSMGEN-HIR-ROADMAP-FRONTIER` owns the source-facing HIR roadmap
+  phase; proposed `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` now consults that HIR
+  boundary before direct IAL2/IAL1 builder work. Neither tree is currently
+  PNT-eligible.
 - Heavy broad Perl/`prove`/`fsmgen` commands must run under
   `scripts/run_with_ram_guard.sh` or equivalent monitoring; default cutoff is
   host RAM 88% / descendant RSS 4096 MiB, below the user's 90% danger zone.
