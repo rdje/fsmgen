@@ -11345,6 +11345,21 @@ multiple-active, bus-matrix, scoreboard, direct-backend, verification-output,
 backend-language variant, AXI, AHB, and VHDL behavior remain deferred. `.673`
 now owns the next APB timing/register-set residue selector.
 
+Post APB generalized five-register selector:
+[IAL2_POST_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_NEXT_SLICE_SELECTION.md)
+selects `.674`, public contract selection for the bounded APB sideband-aware
+data16 no-policy five-register generalized `reg0..regN` register-set
+multi-peripheral back-to-back timing family, without behavior changes. The
+selection follows `.672` because the data16 no-policy family is the nearest
+cardinality sibling: it keeps protection-policy changes out of scope while
+requiring a public contract for 16-bit data, `PSTRB width 2`, status/control
+windows at `0` and `258`, representative local addresses `0/2/4/6/8`,
+whether the admitted data16 no-policy family widens to `maximum_count = 5`,
+support identities, report shape, diagnostics, validation, rollback, docs,
+Knowledge Map, and next owner. No parser, generator, public source,
+support-accounting, report, generated artifact, HDL/runtime, APB transaction,
+AXI, AHB, or VHDL behavior changed in `.673`.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
