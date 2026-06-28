@@ -4783,6 +4783,21 @@ Multi-peripheral multi-register timing propagation, data16/protection
 variants, deeper queues, alternate overflow, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.622` now ships that selected bounded APB sideband-aware multi-register
+back-to-back timing-policy prerequisite. The new public sources are
+`ppif/apb_completer_multi_register_sideband_back_to_back.ppif`,
+`ppif/apb_completer_multi_register_sideband_back_to_back.apb`,
+`ppif/apb_composition_multi_register_sideband_status_back_to_back.ppif`, and
+`ppif/apb_composition_multi_register_sideband_status_back_to_back.apb`. The
+selected standalone completer accepts adjacent setup for the 32-bit
+sideband-aware two-register no-policy shape, decodes `reg0` at address `0` and
+`reg1` at address `4`, samples `PPROT/PSTRB`, and applies byte-lane writes. The
+selected fixed composition combines that completer with the `.612` sideband
+requester queue and exposes aggregate `back_to_back_policy`. Multi-peripheral
+multi-register timing propagation, data16/protection variants, deeper queues,
+alternate overflow, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL remain deferred. `.623` is active to select the
+next APB data16/protection back-to-back owner without behavior changes first.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

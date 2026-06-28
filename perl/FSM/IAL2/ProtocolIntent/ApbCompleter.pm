@@ -449,8 +449,6 @@ sub _normalize_timing_policy($raw) {
 sub _validate_timing_policy_contract($bus, $storage, $transfer) {
     return unless exists $transfer->{timing_policy};
 
-    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only one address-0 register in this slice\n"
-        if _storage_is_multi_register($storage);
     my $is_no_sideband_family = $bus->{write_data}{width} == 32
         && $bus->{read_data}{width} == 32
         && !defined($bus->{protection})
@@ -461,8 +459,12 @@ sub _validate_timing_policy_contract($bus, $storage, $transfer) {
         && defined($bus->{strobe})
         && $bus->{protection}{width} == 3
         && $bus->{strobe}{width} == 4;
-    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only the selected 32-bit no-sideband or 32-bit sideband-aware one-register completer families in this slice\n"
-        unless $is_no_sideband_family || $is_sideband_family;
+    my $is_one_register = !_storage_is_multi_register($storage);
+    my $is_selected_sideband_multi_register = $is_sideband_family
+        && _storage_is_selected_sideband_multi_register_timing_shape($storage);
+    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, or selected 32-bit sideband-aware two-register no-policy completer families in this slice\n"
+        unless ($is_one_register && ($is_no_sideband_family || $is_sideband_family))
+            || $is_selected_sideband_multi_register;
 }
 
 sub _normalize_phase($raw, $field) {
@@ -597,6 +599,37 @@ sub _storage_registers($storage) {
 
 sub _storage_is_multi_register($storage) {
     return ref($storage->{registers}) eq 'ARRAY' && @{$storage->{registers}} > 1;
+}
+
+sub _storage_is_selected_sideband_multi_register_timing_shape($storage) {
+    return 0 unless ref($storage->{registers}) eq 'ARRAY';
+    my @registers = @{$storage->{registers}};
+    return 0 unless @registers == 2;
+    return 0 if grep { ref($_) ne 'HASH' || exists $_->{access_policy} } @registers;
+    return _storage_register_matches_selected_timing_shape($registers[0], 'reg0', 0)
+        && _storage_register_matches_selected_timing_shape($registers[1], 'reg1', 4);
+}
+
+sub _storage_register_matches_selected_timing_shape($register, $name, $address_value) {
+    return 0 unless ref($register) eq 'HASH';
+    my $address = $register->{address};
+    my $data = $register->{data};
+    return 0 unless ref($address) eq 'HASH' && ref($data) eq 'HASH';
+    return defined($register->{name})
+        && !ref($register->{name})
+        && $register->{name} eq $name
+        && defined($address->{value})
+        && !ref($address->{value})
+        && $address->{value} == $address_value
+        && defined($address->{width})
+        && !ref($address->{width})
+        && $address->{width} == 32
+        && defined($data->{width})
+        && !ref($data->{width})
+        && $data->{width} == 32
+        && defined($data->{reset})
+        && !ref($data->{reset})
+        && $data->{reset} == 0;
 }
 
 sub _storage_has_access_policy($storage) {
@@ -1111,7 +1144,7 @@ sub _report_enforced_static_rules($multi_register, $contract) {
         : 'the only implemented register address is 0 and reset value is 0';
     push @rules,
         'read and write behavior must target the selected register and unmapped addresses must assert error',
-        (_completer_has_adjacent_setup_policy($contract) ? ('selected timing-policy is setup-admission adjacent and remains bounded to the selected 32-bit no-sideband or 32-bit sideband-aware one-register completer families') : ()),
+        (_completer_has_adjacent_setup_policy($contract) ? ('selected timing-policy is setup-admission adjacent and remains bounded to the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, or selected 32-bit sideband-aware two-register no-policy completer families') : ()),
         'APB completer is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden';
     return \@rules;
 }
@@ -1154,7 +1187,7 @@ sub _apb_completer_timing_policy_report($contract) {
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Adjacent setup admission is implemented for the selected 32-bit no-sideband one-register completer and selected 32-bit sideband-aware one-register completer; queued requester policy, multi-register/data16/protection completer variants, multi-peripheral interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Adjacent setup admission is implemented for the selected 32-bit no-sideband one-register completer, selected 32-bit sideband-aware one-register completer, and selected 32-bit sideband-aware two-register no-policy completer; queued requester policy beyond selected composition propagation, data16/protection timing variants, multi-peripheral multi-register propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 

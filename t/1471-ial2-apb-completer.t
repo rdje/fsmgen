@@ -214,6 +214,39 @@ subtest 'adapter parses the selected APB multi-register sideband completer PPIF 
     ok($residue{apb_protection_policy_effects_deferred}, 'sideband completer report keeps protection-policy effects deferred');
 };
 
+subtest 'adapter parses the selected APB multi-register sideband back-to-back completer PPIF shape' => sub {
+    ok(-f sample_apb_completer_multi_register_sideband_back_to_back_ppif_path(), 'tracked runnable APB multi-register sideband back-to-back completer PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_back_to_back_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'APB multi-register sideband back-to-back completer adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_completer', 'adapter returns the APB completer kind for sideband multi-register back-to-back source');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-completer-multi-register-sideband-back-to-back', 'sideband multi-register back-to-back source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'apb_completer_multi_register_sideband_back_to_back', 'sideband multi-register back-to-back intent name is preserved');
+    is($result->{report}{transfer}{timing_policy}{setup_admission}, 'adjacent', 'sideband multi-register back-to-back report records adjacent setup admission');
+    is_deeply($result->{report}{transfer}{registers}, [qw(reg0 reg1)], 'sideband multi-register back-to-back report preserves the register list');
+    is($result->{report}{bindings}{bus}{protection}{width}, 3, 'sideband multi-register back-to-back report records PPROT width 3');
+    is($result->{report}{bindings}{bus}{strobe}{width}, 4, 'sideband multi-register back-to-back report records PSTRB width 4');
+
+    my $isf = $result->{generated_ial1}{text};
+    like($isf, qr/\(when \(& PSEL \(! PENABLE\)\)/, 'sideband multi-register back-to-back IAL1 admits adjacent setup cycles');
+    like($isf, qr/\(sample PPROT as prot_q\)/, 'sideband multi-register back-to-back IAL1 samples PPROT');
+    like($isf, qr/\(when \(& write_q \(== addr 4\)\)/, 'sideband multi-register back-to-back IAL1 decodes the second register write');
+    like($isf, qr/\(when-bit strb_q 3\s+\(set reg1_data_q \(\| \(& reg1_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/s, 'sideband multi-register back-to-back IAL1 byte-enables register 1 high byte');
+
+    my $fsm = $result->{generated_ial0}{files}{'apb_completer.fsm'};
+    like($fsm, qr/\(<= \(addr PADDR\) <\(& PSEL \(! PENABLE\)\)\)/, 'sideband multi-register back-to-back FSM samples address under adjacent setup guard');
+    like($fsm, qr/\(<= \(prot_q PPROT\) <\(& PSEL \(! PENABLE\)\)\)/, 'sideband multi-register back-to-back FSM samples PPROT under setup guard');
+    like($fsm, qr/\(<= \(strb_q PSTRB\) <\(& PSEL \(! PENABLE\)\)\)/, 'sideband multi-register back-to-back FSM samples PSTRB under setup guard');
+    like($fsm, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, 'sideband multi-register back-to-back FSM masks register 1 high-byte writes');
+
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$residue{apb_back_to_back_policy_deferred}, 'sideband multi-register back-to-back completer removes broad back-to-back residue');
+    ok(!$residue{apb_protection_and_strobes_deferred}, 'sideband multi-register back-to-back completer removes broad sideband residue');
+    ok($residue{apb_additional_back_to_back_policies_deferred}, 'sideband multi-register back-to-back completer keeps narrowed future-policy residue');
+    ok($residue{apb_protection_policy_effects_deferred}, 'sideband multi-register back-to-back completer keeps protection-policy effects deferred');
+};
+
 subtest 'adapter parses the selected APB multi-register sideband protection completer PPIF shape' => sub {
     ok(-f sample_apb_completer_multi_register_sideband_protection_ppif_path(), 'tracked runnable APB multi-register sideband protection completer PPIF sample exists');
 
@@ -879,6 +912,14 @@ subtest '.apb alias accepts APB completer content' => sub {
     my %sideband_residue = map { $_->{id} => 1 } @{$sideband_alias->{report}{unsupported_residue}};
     ok(!$sideband_residue{apb_protection_and_strobes_deferred}, '.apb APB multi-register sideband completer alias removes broad sideband residue');
 
+    ok(-f sample_apb_completer_multi_register_sideband_back_to_back_apb_path(), 'tracked runnable APB multi-register sideband back-to-back completer .apb sample exists');
+    my $sideband_btb_multi_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_back_to_back_apb_path());
+    my $sideband_btb_multi_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_back_to_back_ppif_path());
+    is($sideband_btb_multi_alias->{kind}, 'protocol_intent.apb_completer', '.apb APB multi-register sideband back-to-back completer alias returns the completer kind');
+    is($sideband_btb_multi_alias->{generated_ial1}{text}, $sideband_btb_multi_ppif->{generated_ial1}{text}, '.apb APB multi-register sideband back-to-back completer alias mirrors .ppif generated IAL1');
+    is_deeply($sideband_btb_multi_alias->{generated_ial0}{files}, $sideband_btb_multi_ppif->{generated_ial0}{files}, '.apb APB multi-register sideband back-to-back completer alias mirrors .ppif generated IAL0');
+    is($sideband_btb_multi_alias->{report}{transfer}{timing_policy}{setup_admission}, 'adjacent', '.apb APB multi-register sideband back-to-back completer alias preserves adjacent timing policy');
+
     ok(-f sample_apb_completer_multi_register_sideband_protection_apb_path(), 'tracked runnable APB multi-register sideband protection completer .apb sample exists');
     my $protection_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_protection_apb_path());
     my $protection_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_protection_ppif_path());
@@ -927,6 +968,10 @@ sub sample_apb_completer_multi_register_sideband_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband.ppif');
 }
 
+sub sample_apb_completer_multi_register_sideband_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_back_to_back.ppif');
+}
+
 sub sample_apb_completer_multi_register_sideband_protection_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_protection.ppif');
 }
@@ -953,6 +998,10 @@ sub sample_apb_completer_multi_register_apb_path {
 
 sub sample_apb_completer_multi_register_sideband_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband.apb');
+}
+
+sub sample_apb_completer_multi_register_sideband_back_to_back_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_back_to_back.apb');
 }
 
 sub sample_apb_completer_multi_register_sideband_protection_apb_path {

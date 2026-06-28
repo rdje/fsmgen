@@ -1474,6 +1474,36 @@ sub _apb_completer_has_multi_registers($contract) {
         && @{$contract->{completer}{storage}{registers}} > 1;
 }
 
+sub _endpoint_storage_is_selected_sideband_multi_register_timing_shape($storage) {
+    my @registers = _endpoint_storage_registers($storage);
+    return 0 unless @registers == 2;
+    return 0 if grep { ref($_) ne 'HASH' || exists $_->{access_policy} } @registers;
+    return _endpoint_storage_register_matches_selected_timing_shape($registers[0], 'reg0', 0)
+        && _endpoint_storage_register_matches_selected_timing_shape($registers[1], 'reg1', 4);
+}
+
+sub _endpoint_storage_register_matches_selected_timing_shape($register, $name, $address_value) {
+    return 0 unless ref($register) eq 'HASH';
+    my $address = $register->{address};
+    my $data = $register->{data};
+    return 0 unless ref($address) eq 'HASH' && ref($data) eq 'HASH';
+    return defined($register->{name})
+        && !ref($register->{name})
+        && $register->{name} eq $name
+        && defined($address->{value})
+        && !ref($address->{value})
+        && $address->{value} == $address_value
+        && defined($address->{width})
+        && !ref($address->{width})
+        && $address->{width} == 32
+        && defined($data->{width})
+        && !ref($data->{width})
+        && $data->{width} == 32
+        && defined($data->{reset})
+        && !ref($data->{reset})
+        && $data->{reset} == 0;
+}
+
 sub _composition_has_access_policy($contract) {
     if (_is_multi_peripheral_contract($contract)) {
         for my $completer (@{$contract->{completers} || []}) {
@@ -1539,7 +1569,7 @@ sub _fixed_composition_back_to_back_policy_report($contract, $requester_result, 
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; data16/protection variants, multi-register timing policy, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition, selected sideband-aware fixed multi-register composition, and the bounded two-peripheral interconnect/decode family; data16/protection variants, multi-peripheral multi-register timing, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 
@@ -1849,8 +1879,9 @@ sub _validate_fixed_timing_policy_compatibility($wiring, $requester, $completer)
     confess "APB fixed composition selected back-to-back timing-policy supports only 32-bit no-sideband or selected 32-bit sideband-aware APB wiring in this slice\n"
         unless $is_no_sideband_family || $is_sideband_family;
 
-    confess "APB fixed composition selected back-to-back timing-policy supports only one-register completer storage in this slice\n"
-        if ref($completer->{storage}{registers}) eq 'ARRAY';
+    confess "APB fixed composition selected back-to-back timing-policy supports only one-register completer storage or the selected 32-bit sideband-aware two-register no-policy completer storage in this slice\n"
+        if ref($completer->{storage}{registers}) eq 'ARRAY'
+            && !($is_sideband_family && _endpoint_storage_is_selected_sideband_multi_register_timing_shape($completer->{storage}));
 }
 
 sub _is_selected_no_sideband_timing_bus($bus) {

@@ -438,6 +438,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             module => 'apb_completer',
         },
         {
+            label => 'APB multi-register sideband back-to-back completer',
+            path => sample_apb_completer_multi_register_sideband_back_to_back_alias_path(),
+            entry_id => 'intent.apb_profile_alias_completer_multi_register_sideband_back_to_back',
+            source_root_kind => 'fsm',
+            module => 'apb_completer',
+        },
+        {
             label => 'APB multi-register sideband protection completer',
             path => sample_apb_completer_multi_register_sideband_protection_alias_path(),
             entry_id => 'intent.apb_profile_alias_completer_multi_register_sideband_protection',
@@ -448,6 +455,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             label => 'APB multi-register sideband composition',
             path => sample_apb_composition_multi_register_sideband_alias_path(),
             entry_id => 'intent.apb_profile_alias_composition_multi_register_sideband',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+        },
+        {
+            label => 'APB multi-register sideband status back-to-back composition',
+            path => sample_apb_composition_multi_register_sideband_status_back_to_back_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_multi_register_sideband_status_back_to_back',
             source_root_kind => 'top',
             module => 'apb_tb',
         },
@@ -1032,6 +1046,10 @@ sub sample_apb_completer_multi_register_sideband_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband.apb');
 }
 
+sub sample_apb_completer_multi_register_sideband_back_to_back_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_back_to_back.apb');
+}
+
 sub sample_apb_completer_multi_register_sideband_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband.ppif');
 }
@@ -1070,6 +1088,10 @@ sub sample_apb_composition_multi_register_alias_path {
 
 sub sample_apb_composition_multi_register_sideband_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband.apb');
+}
+
+sub sample_apb_composition_multi_register_sideband_status_back_to_back_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_status_back_to_back.apb');
 }
 
 sub sample_apb_composition_multi_register_sideband_ppif_path {

@@ -3783,6 +3783,21 @@ requester. Multi-peripheral multi-register timing propagation,
 data16/protection variants, deeper queues, alternate overflow, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.622` now ships that selected bounded APB sideband-aware multi-register
+back-to-back timing-policy prerequisite. The new public sources are
+`ppif/apb_completer_multi_register_sideband_back_to_back.ppif`,
+`ppif/apb_completer_multi_register_sideband_back_to_back.apb`,
+`ppif/apb_composition_multi_register_sideband_status_back_to_back.ppif`, and
+`ppif/apb_composition_multi_register_sideband_status_back_to_back.apb`. The
+selected standalone completer accepts adjacent setup for the 32-bit
+sideband-aware two-register no-policy shape (`reg0` at address `0`, `reg1` at
+address `4`, `PPROT width 3`, `PSTRB width 4`), decodes both registers, and
+applies byte-lane writes. The selected fixed composition combines that
+completer with the `.612` sideband requester queue, exposes aggregate
+`back_to_back_policy`, removes broad back-to-back residue only for the selected
+standalone/fixed surfaces, and keeps narrowed future-policy residue explicit.
+`.623` is active to select the next APB data16/protection back-to-back owner
+after this prerequisite shipped, without behavior changes first.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6352,6 +6367,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects APB data16/protection back-to-back timing-policy readiness audit after selected sideband multi-peripheral timing shipped.
 - `docs/IAL2_APB_DATA16_PROTECTION_BACK_TO_BACK_READINESS_AUDIT.md` — audits APB data16/protection back-to-back readiness and selects sideband-aware multi-register timing-policy contract selection as the prerequisite.
 - `docs/IAL2_APB_SIDEBAND_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects the bounded standalone completer plus fixed-composition APB sideband-aware multi-register back-to-back public contract before implementation.
+- `docs/IAL2_APB_SIDEBAND_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md` — ships selected 32-bit sideband-aware APB two-register adjacent setup plus fixed-composition queued sideband propagation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
