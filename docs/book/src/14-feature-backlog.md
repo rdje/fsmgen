@@ -10879,6 +10879,19 @@ protection-policy-effects, and alternate-width residue. Sideband data16
 no-policy multi-peripheral multi-register timing and generalized
 multi-peripheral multi-register shapes remain deferred.
 
+Post APB no-policy multi-peripheral multi-register back-to-back selector:
+[IAL2_POST_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.644`, public contract selection for bounded APB sideband-aware
+data16 no-policy multi-peripheral multi-register back-to-back timing. The
+selector changes no behavior. The next owner is data16 no-policy because fixed
+data16 no-policy reg0/reg1 timing, data16-protection multi-peripheral timing,
+and 32-bit no-policy multi-peripheral reg0/reg1 timing are already shipped,
+while no public data16 no-policy multi-peripheral multi-register back-to-back
+source exists yet. `.644` must settle source names, data16 status/control
+window shape, endpoint/interconnect timing requirements, no-policy `reg0`/`reg1`
+storage, report/residue movement, support-accounting identities, diagnostics,
+validation, rollback, and docs before implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -5068,6 +5068,20 @@ generalized multi-peripheral multi-register shapes, deeper queues, alternate
 overflow, accepted-less requesters, multiple active APB transfers, direct
 backend, verification-output, backend-language variants, AXI, AHB, and VHDL
 remain deferred.
+`.643` now selects `.644`, public contract selection for the bounded APB
+sideband-aware data16 no-policy multi-peripheral multi-register
+back-to-back timing family, without behavior changes. `.625` already ships
+fixed-composition data16 no-policy reg0/reg1 timing, `.634` already ships
+data16 multi-peripheral timing for the protected status/control shape, and
+`.642` already ships the 32-bit no-policy reg0/reg1 multi-peripheral family.
+No public data16 no-policy multi-peripheral multi-register back-to-back
+source exists yet, and the current multi-peripheral timing guard admits the
+sideband data16 family only for the selected data16-protection status/control
+storage shape. `.644` must settle exact public source names, status/control
+window shape, requester/completer/interconnect timing requirements,
+no-policy `reg0`/`reg1` storage requirements, report/residue movement,
+support-accounting identities, diagnostics, validation, rollback, and docs
+before implementation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
