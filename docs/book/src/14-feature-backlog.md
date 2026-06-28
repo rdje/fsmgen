@@ -10956,6 +10956,22 @@ multiple active APB transfers, bus matrices, scoreboards, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
 
+APB data16-protection multi-peripheral multi-register contract selection:
+[IAL2_APB_DATA16_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_DATA16_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.649`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back.ppif`
+and its `.apb` alias. The selected contract is one requester, two
+peripherals, 32-bit addresses, 16-bit APB/register data, `PPROT width 3`,
+`PSTRB width 2`, status/control windows at bases `0` and `258`, adjacent setup
+on both peripherals, and exactly protected `reg0` at local address `0` plus
+protected `reg1` at local address `2` in each peripheral. `reg0` reads are
+allowed and writes require privileged `PPROT[0]`; `reg1` reads and writes
+require privileged `PPROT[0]`. Status/control protected storage
+generalization beyond `.634`, generalized register shapes, deeper queues,
+alternate overflow, accepted-less requesters, multiple active APB transfers,
+bus matrices, scoreboards, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

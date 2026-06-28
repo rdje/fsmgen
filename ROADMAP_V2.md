@@ -5139,6 +5139,20 @@ Knowledge Map before behavior changes. Generalized register shapes, deeper
 queues, alternate overflow, accepted-less requesters, multiple active APB
 transfers, bus matrices, scoreboards, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.648` now selects `.649`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back.ppif`
+and its `.apb` alias, without behavior changes. The selected contract uses
+one requester, two peripheral completers, 32-bit addresses, 16-bit APB and
+register data, `PPROT width 3`, `PSTRB width 2`, status/control windows at
+bases `0` and `258`, adjacent setup on both peripherals, and exactly
+protected `reg0` at local address `0` plus protected `reg1` at local address
+`2` in each peripheral. `reg0` reads are allowed and writes require
+privileged `PPROT[0]`; `reg1` reads and writes require privileged
+`PPROT[0]`. Status/control protected storage generalization beyond `.634`,
+generalized register shapes, deeper queues, alternate overflow, accepted-less
+requesters, multiple active APB transfers, bus matrices, scoreboards, direct
+backend, verification-output, backend-language variants, AXI, AHB, and VHDL
+remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
