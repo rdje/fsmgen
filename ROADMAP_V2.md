@@ -5357,6 +5357,20 @@ requesters, multiple active transfers, bus matrices, scoreboards, direct
 backend, verification-output, backend-language variants, AXI, AHB, and VHDL
 remain deferred. `.663` now owns the next APB timing/register-set residue
 selector.
+`.663` now selects `.664`, public contract selection for bounded APB
+sideband-aware 32-bit protected generalized `reg0..regN` register-set
+multi-peripheral back-to-back timing, without behavior changes. The selection
+follows `.662` because no-policy generalized timing is shipped for both
+selected 32-bit and data16 widths, while protected generalized register sets
+still need a public access-policy matrix for `reg2..regN` before any timing
+guard widens. `.664` must settle public source names, register cardinality,
+local-address rules, protected policy matrix, report/support shape,
+diagnostics, validation, rollback, docs, Knowledge Map, and the next owner.
+Data16 protected generalized register sets, broader cardinality/peripheral
+count, deeper queues, alternate overflow, accepted-less requesters, multiple
+active transfers, bus matrices, scoreboards, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
