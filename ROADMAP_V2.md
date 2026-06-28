@@ -5341,6 +5341,22 @@ generalized register sets, broader cardinality/peripheral count, deeper
 queues, alternate overflow, accepted-less requesters, multiple active
 transfers, bus matrices, scoreboards, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.662` now ships that selected bounded APB sideband-aware data16 no-policy
+generalized register-set multi-peripheral back-to-back timing behavior. The
+new `.ppif` and `.apb` sources lower through generated `apb_requester`,
+`apb_status_regs`, `apb_control_regs`, `apb_interconnect`, and `apb_tb`
+review artifacts. The requester relaunches queued 16-bit `PWDATA` plus
+`PPROT/PSTRB`; the interconnect decodes status/control windows at `0` and
+`258`, translates `PADDR_CONTROL`, muxes selected responses, and owns no
+protection predicate. The public representative uses no-policy
+`reg0/reg1/reg2` at local addresses `0/2/4`; the admitted family remains
+bounded to matching no-policy `reg0..regN` register sets with two to four
+registers per peripheral. Protected generalized register sets, broader
+cardinality/peripheral count, deeper queues, alternate overflow, accepted-less
+requesters, multiple active transfers, bus matrices, scoreboards, direct
+backend, verification-output, backend-language variants, AXI, AHB, and VHDL
+remain deferred. `.663` now owns the next APB timing/register-set residue
+selector.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

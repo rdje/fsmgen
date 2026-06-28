@@ -954,6 +954,72 @@ subtest 'adapter parses selected sideband data16 no-policy APB multi-peripheral 
     ok($composition_residue{apb_remaining_widths_deferred}, 'sideband data16 no-policy multi-peripheral multi-register back-to-back composition report keeps narrowed remaining-width residue');
 };
 
+subtest 'adapter parses selected generalized sideband data16 no-policy APB multi-peripheral multi-register back-to-back composition PPIF shape' => sub {
+    ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif_path(), 'tracked runnable generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_composition', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back adapter returns the APB composition kind');
+    is($result->{mode}, 'requester-multi-peripheral-composition', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition mode is explicit');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-composition-multi-peripheral-multi-register-sideband-data16-generalized-status-back-to-back', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition source object id is preserved');
+    is($result->{report}{composition}{topology}, 'multi_peripheral_interconnect', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report names the selected topology');
+    is($result->{report}{composition}{width_policy}{data_width}, 16, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report records 16-bit data width');
+    is($result->{report}{composition}{width_policy}{strobe_width}, 2, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report records 2-bit PSTRB width');
+    is($result->{report}{composition}{address_map}{alignment_bytes}, 2, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report records 2-byte address-map alignment');
+    is_deeply(
+        [map { $_->{base}{default} } @{$result->{report}{composition}{address_map}{windows}}],
+        [0, 258],
+        'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report preserves 2-byte-aligned window bases',
+    );
+    is($result->{report}{back_to_back_policy}{composition_role}, 'propagate_endpoint_policy_through_interconnect', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report records aggregate propagation role');
+    is($result->{report}{back_to_back_policy}{requester}{timing_policy}{queue_depth}, 1, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report preserves queue-depth 1');
+    is($result->{report}{back_to_back_policy}{requester}{timing_policy}{overflow}, 'reject', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report preserves overflow reject');
+    is($result->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report preserves interconnect timing role');
+    is_deeply(
+        [map { $_->{timing_policy}{setup_admission} } @{$result->{report}{back_to_back_policy}{peripherals}}],
+        [qw(adjacent adjacent)],
+        'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report records adjacent setup admission for both peripherals',
+    );
+    ok(!exists $result->{report}{protection_policy}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back report has no protection-policy owner');
+    is_deeply($result->{report}{children}[2]{transfer}{registers}, [qw(reg0 reg1 reg2)], 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back status peripheral reports reg0/reg1/reg2 storage');
+    is_deeply($result->{report}{children}[3]{transfer}{registers}, [qw(reg0 reg1 reg2)], 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back control peripheral reports reg0/reg1/reg2 storage');
+    is($result->{report}{children}[2]{bindings}{storage}{registers}[2]{address}{value}, 4, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back status reg2 address is 4');
+    is($result->{report}{children}[3]{bindings}{storage}{registers}[2]{data}{name}, 'control_reg2_data_q', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back control reg2 data signal is preserved');
+
+    my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
+    like($top, qr/=accepted>/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back top exposes accepted output');
+    like($top, qr/=req_wstrb<2/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back top exposes 2-bit requester strobe');
+    like($top, qr/\(queued_wdata 16\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back top embeds 16-bit queued data state');
+    like($top, qr/\(queued_wstrb 2\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back top embeds queued 2-bit PSTRB state');
+    like($top, qr/\(status_reg2_data_q 16 \(reset 0\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back top embeds status reg2 storage');
+    like($top, qr/\(control_reg2_data_q 16 \(reset 0\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back top embeds control reg2 storage');
+    like($top, qr/\(<- \(status_reg2_data_q \(\| \(& status_reg2_data_q 16'hff00\) \(& wdata_q 16'h00ff\)\)\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back top embeds status reg2 byte-lane write mask');
+
+    my $interconnect = $result->{generated_ial0}{files}{'apb_interconnect.fsm'};
+    like($interconnect, qr/\(PSTRB_CONTROL 2\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back interconnect declares control-window PSTRB width 2');
+    like($interconnect, qr/\(<- \(PPROT_STATUS> PPROT\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back interconnect fans out PPROT to status');
+    like($interconnect, qr/\(<- \(PSTRB_CONTROL> PSTRB\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back interconnect fans out PSTRB to control');
+    like($interconnect, qr/\(<- \(PADDR_CONTROL> \(- PADDR 258\)\) <\(& PSEL \(>= PADDR 258\) \(< PADDR 516\)\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back interconnect subtracts the 258-byte control base');
+    unlike($interconnect, qr/prot_q/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back interconnect remains enforcement-free');
+
+    my %composition_residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$composition_residue{apb_back_to_back_policy_deferred}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back composition report removes broad back-to-back residue');
+    ok(!$composition_residue{apb_alternate_widths_deferred}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back composition report removes broad alternate-width residue');
+    ok($composition_residue{apb_additional_back_to_back_policies_deferred}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back composition report keeps narrowed future timing-policy residue');
+    ok($composition_residue{apb_protection_policy_effects_deferred}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back composition report keeps protection-policy effects residue');
+    ok($composition_residue{apb_remaining_widths_deferred}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back composition report keeps narrowed remaining-width residue');
+
+    ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_apb_path(), 'tracked runnable generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias returns the composition kind');
+    is($alias->{mode}, 'requester-multi-peripheral-composition', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves mode');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias mirrors .ppif generated IAL0');
+    is_deeply($alias->{report}{children}[3]{transfer}{registers}, [qw(reg0 reg1 reg2)], 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves control reg0/reg1/reg2 storage');
+};
+
 subtest 'adapter parses selected sideband data16 protection APB multi-peripheral multi-register back-to-back composition PPIF shape' => sub {
     ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back_ppif_path(), 'tracked runnable sideband data16 protection multi-peripheral multi-register back-to-back APB composition PPIF sample exists');
 
@@ -1322,6 +1388,15 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
     my $multi_data16_no_policy_back_to_back_with_status_access_policy = sample_apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back_ppif();
     $multi_data16_no_policy_back_to_back_with_status_access_policy =~ s/\(data status_reg0_data_q width 16 reset 0\)\)/(data status_reg0_data_q width 16 reset 0)\n        (access-policy\n          (read allow)\n          (write require (privileged 1))))/;
 
+    my $multi_data16_generalized_no_policy_back_to_back_wrong_status_reg2_address = sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif();
+    $multi_data16_generalized_no_policy_back_to_back_wrong_status_reg2_address =~ s/\(address 4 width 32\)/(address 6 width 32)/;
+
+    my $multi_data16_generalized_no_policy_back_to_back_with_status_access_policy = sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif();
+    $multi_data16_generalized_no_policy_back_to_back_with_status_access_policy =~ s/\(data status_reg2_data_q width 16 reset 0\)\)/(data status_reg2_data_q width 16 reset 0)\n        (access-policy\n          (read allow)\n          (write require (privileged 1))))/;
+
+    my $multi_data16_generalized_no_policy_back_to_back_mismatched_register_count = sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif();
+    $multi_data16_generalized_no_policy_back_to_back_mismatched_register_count =~ s/\n      \(register reg2\n        \(address 4 width 32\)\n        \(data control_reg2_data_q width 16 reset 0\)\)//;
+
     my $multi_data16_protection_mreg_back_to_back_wrong_status_reg1_address = sample_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back_ppif();
     $multi_data16_protection_mreg_back_to_back_wrong_status_reg1_address =~ s/\(address 2 width 32\)/(address 4 width 32)/;
 
@@ -1336,7 +1411,7 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
 
     my $fixed_timing_storage_error = qr/APB fixed composition selected back-to-back timing-policy supports only one-register completer storage, selected 32-bit sideband-aware two-register no-policy completer storage, selected 32-bit sideband-aware two-register protection completer storage, selected sideband-aware data16 two-register no-policy completer storage, or selected sideband-aware data16 two-register protection completer storage in this slice/;
     my $multi_timing_storage_error = qr/APB multi-peripheral selected back-to-back timing-policy supports only one-register peripheral completer storage, the selected two-peripheral sideband no-policy reg0\/reg1 storage shape, the selected bounded two-peripheral sideband generalized no-policy reg0\.\.regN register-set storage shape, the selected two-peripheral sideband protection reg0\/reg1 storage shape, or the selected two-peripheral sideband protection status\/control storage shape in this slice/;
-    my $multi_data16_timing_storage_error = qr/APB multi-peripheral selected back-to-back timing-policy supports only the selected two-peripheral sideband data16 no-policy reg0\/reg1 storage shape, the selected two-peripheral sideband data16 protection reg0\/reg1 storage shape, or the selected two-peripheral sideband data16 protection status\/control storage shape in this slice/;
+    my $multi_data16_timing_storage_error = qr/APB multi-peripheral selected back-to-back timing-policy supports only the selected two-peripheral sideband data16 no-policy reg0\/reg1 storage shape, the selected bounded two-peripheral sideband data16 generalized no-policy reg0\.\.regN register-set storage shape, the selected two-peripheral sideband data16 protection reg0\/reg1 storage shape, or the selected two-peripheral sideband data16 protection status\/control storage shape in this slice/;
 
     my @cases = (
         ['missing apb composition object', $missing_composition, qr/cannot mix \(apb-requester \.\.\.\) with .* \(apb-completer \.\.\.\).*outside the explicit APB composition shape/s],
@@ -1365,6 +1440,9 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
         ['multi-peripheral protection multi-register back-to-back wrong control policy', $multi_protection_mreg_back_to_back_wrong_control_policy, $multi_timing_storage_error],
         ['multi-peripheral data16 no-policy multi-register back-to-back wrong status register address', $multi_data16_no_policy_back_to_back_wrong_status_reg1_address, $multi_data16_timing_storage_error],
         ['multi-peripheral data16 no-policy multi-register back-to-back unexpected status access policy', $multi_data16_no_policy_back_to_back_with_status_access_policy, $multi_data16_timing_storage_error],
+        ['multi-peripheral data16 generalized no-policy multi-register back-to-back wrong status register address', $multi_data16_generalized_no_policy_back_to_back_wrong_status_reg2_address, $multi_data16_timing_storage_error],
+        ['multi-peripheral data16 generalized no-policy multi-register back-to-back unexpected status access policy', $multi_data16_generalized_no_policy_back_to_back_with_status_access_policy, $multi_data16_timing_storage_error],
+        ['multi-peripheral data16 generalized no-policy multi-register back-to-back mismatched register count', $multi_data16_generalized_no_policy_back_to_back_mismatched_register_count, $multi_data16_timing_storage_error],
         ['multi-peripheral data16 protection multi-register back-to-back wrong status register address', $multi_data16_protection_mreg_back_to_back_wrong_status_reg1_address, $multi_data16_timing_storage_error],
         ['multi-peripheral data16 protection multi-register back-to-back wrong control policy', $multi_data16_protection_mreg_back_to_back_wrong_control_policy, $multi_data16_timing_storage_error],
         ['multi-peripheral data16 protection back-to-back wrong status register address', $multi_data16_protection_back_to_back_wrong_status_reg1_address, $multi_data16_timing_storage_error],
@@ -1739,6 +1817,33 @@ subtest 'CLI check and semantic JSON support-account sideband data16 no-policy m
     is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON payload describes the generated composition root');
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON records the generated top module');
     is($semantic_report->{semantic}{module}{composition_child_count}, 4, 'sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON records four generated children');
+};
+
+subtest 'CLI check and semantic JSON support-account generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition PPIF identity' => sub {
+    my $path = sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition check JSON records PPIF source kind');
+    is($check_report->{result}{composition_child_count}, 4, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition check JSON reports four generated children');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON payload describes the generated composition root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON records the generated top module');
+    is($semantic_report->{semantic}{module}{composition_child_count}, 4, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON records four generated children');
 };
 
 subtest 'CLI check and semantic JSON support-account sideband data16 protection multi-peripheral multi-register back-to-back APB composition PPIF identity' => sub {
@@ -2766,6 +2871,82 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband data16 no-pol
     is($alias->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves interconnect timing policy');
 };
 
+subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition review artifacts' => sub {
+    my $path = sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{schema}, 'fsmgen.ial2.protocol_intent.apb_composition.v1', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports schema');
+    is($schedule_report->{composition}{topology}, 'multi_peripheral_interconnect', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports topology');
+    is($schedule_report->{composition}{width_policy}{data_width}, 16, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports data width 16');
+    is($schedule_report->{composition}{width_policy}{strobe_width}, 2, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports strobe width 2');
+    is($schedule_report->{composition}{address_map}{alignment_bytes}, 2, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports 2-byte window alignment');
+    is($schedule_report->{composition}{address_map}{windows}[1]{base}{default}, 258, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports control base 258');
+    is($schedule_report->{children}[0]{bindings}{bus}{protection}{width}, 3, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports requester PPROT width');
+    is_deeply($schedule_report->{children}[2]{transfer}{registers}, [qw(reg0 reg1 reg2)], 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports status reg0/reg1/reg2 storage');
+    is_deeply($schedule_report->{children}[3]{transfer}{registers}, [qw(reg0 reg1 reg2)], 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports control reg0/reg1/reg2 storage');
+    is($schedule_report->{children}[2]{bindings}{storage}{registers}[2]{address}{value}, 4, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports status reg2 address 4');
+    is($schedule_report->{back_to_back_policy}{requester}{timing_policy}{queue_depth}, 1, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports queue-depth 1');
+    is($schedule_report->{back_to_back_policy}{requester}{timing_policy}{accepted}, 'accepted', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports accepted response field');
+    is($schedule_report->{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports interconnect timing role');
+    is($schedule_report->{back_to_back_policy}{peripherals}[0]{timing_policy}{setup_admission}, 'adjacent', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports status adjacent setup admission');
+    is($schedule_report->{back_to_back_policy}{peripherals}[1]{timing_policy}{setup_admission}, 'adjacent', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports control adjacent setup admission');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_back_to_back_policy_deferred}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON omits broad back-to-back residue');
+    ok(!$residue{apb_alternate_widths_deferred}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON omits broad alternate-width residue');
+    ok($residue{apb_additional_back_to_back_policies_deferred}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports narrowed future timing-policy residue');
+    ok($residue{apb_protection_policy_effects_deferred}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON keeps protection-policy effects residue');
+    ok($residue{apb_remaining_widths_deferred}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports narrowed remaining-width residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_tb_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition generation keeps stderr clean');
+    for my $artifact (qw(apb_requester.isf apb_status_regs.isf apb_control_regs.isf apb_interconnect.isf apb_requester.fsm apb_status_regs.fsm apb_control_regs.fsm apb_interconnect.fsm apb_tb.fsm)) {
+        ok(-f File::Spec->catfile($outdir, $artifact), "generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition --outdir writes $artifact");
+    }
+    ok(-f $hdl, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition --output writes generated HDL');
+    my $interconnect = slurp(File::Spec->catfile($outdir, 'apb_interconnect.fsm'));
+    like($interconnect, qr/\(PSTRB_CONTROL 2\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir interconnect preserves 2-bit control PSTRB');
+    like($interconnect, qr/\(<- \(PPROT_STATUS> PPROT\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir interconnect fans out PPROT');
+    like($interconnect, qr/\(<- \(PSTRB_CONTROL> PSTRB\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir interconnect fans out PSTRB');
+    like($interconnect, qr/\(<- \(PADDR_CONTROL> \(- PADDR 258\)\) <\(& PSEL \(>= PADDR 258\) \(< PADDR 516\)\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir interconnect uses control base 258');
+    unlike($interconnect, qr/prot_q/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir interconnect remains enforcement-free');
+    my $top = slurp(File::Spec->catfile($outdir, 'apb_tb.fsm'));
+    like($top, qr/=accepted>/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top exposes accepted');
+    like($top, qr/\(queued_wstrb 2\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds queued 2-bit PSTRB');
+    like($top, qr/\(status_reg2_data_q 16 \(reset 0\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds status reg2 storage');
+    like($top, qr/\(control_reg2_data_q 16 \(reset 0\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg2 storage');
+    like($top, qr/\(<- \(control_reg2_data_q \(\| \(& control_reg2_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg2 high-byte write mask');
+    my $sv = slurp($hdl);
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL includes 258-byte local address translation');
+    like($sv, qr/\breg\s+\[15:0\]\s+status_reg2_data_q\b/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit status reg2 storage');
+    like($sv, qr/\breg\s+\[15:0\]\s+control_reg2_data_q\b/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit control reg2 storage');
+    like($sv, qr/\breg\s+\[1:0\]\s+queued_wstrb\b/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 2-bit queued PSTRB');
+    unlike($sv, qr/prot_q\s*&\s*3'd1/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL has no endpoint PPROT predicate logic');
+
+    ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_apb_path(), 'tracked runnable generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias returns the composition kind');
+    is($alias->{mode}, 'requester-multi-peripheral-composition', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves mode');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias mirrors .ppif generated IAL0');
+    is($alias->{report}{composition}{width_policy}{data_width}, 16, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves data width policy');
+    is($alias->{report}{composition}{width_policy}{strobe_width}, 2, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves strobe width policy');
+    is_deeply($alias->{report}{children}[3]{transfer}{registers}, [qw(reg0 reg1 reg2)], 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves control reg0/reg1/reg2 storage');
+    is($alias->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves interconnect timing policy');
+};
+
 subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband data16 protection multi-peripheral multi-register back-to-back APB composition review artifacts' => sub {
     my $path = sample_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back_ppif_path();
     my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
@@ -3465,6 +3646,14 @@ sub sample_apb_composition_multi_peripheral_multi_register_sideband_data16_statu
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back.apb');
 }
 
+sub sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back.ppif');
+}
+
+sub sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back.apb');
+}
+
 sub sample_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back.ppif');
 }
@@ -3583,6 +3772,10 @@ sub sample_apb_composition_multi_peripheral_multi_register_sideband_protection_s
 
 sub sample_apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back_ppif {
     return slurp(sample_apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back_ppif_path());
+}
+
+sub sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif {
+    return slurp(sample_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_ppif_path());
 }
 
 sub sample_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back_ppif {
