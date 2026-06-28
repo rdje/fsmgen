@@ -4704,11 +4704,10 @@ alias. The selected sideband completer reports adjacent setup admission with
 `PPROT width 3` and `PSTRB width 4`; the selected fixed composition reports
 aggregate `back_to_back_policy` combining the `.612` sideband requester queue
 with the adjacent sideband completer. Broad `apb_back_to_back_policy_deferred`
-residue is removed from those selected surfaces, while sideband
-multi-peripheral propagation, data16/protection variants, multi-register
-timing policy, deeper queues, alternate overflow, direct backend,
-verification-output, backend-language variants, AXI, AHB, and VHDL remain
-deferred.
+residue is removed from those selected surfaces, while data16/protection
+variants, multi-register timing policy, broader timing-policy families, deeper
+queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 `.616` now selects `.617`, public contract selection for the bounded 32-bit
 sideband-aware APB multi-peripheral back-to-back family, without behavior
 changes. `.609` already shipped no-sideband multi-peripheral back-to-back
@@ -4735,6 +4734,18 @@ the selected top, requester, interconnect, and peripheral surfaces while
 retaining narrowed future-policy residue plus protection-policy effects
 residue. Data16/protection timing variants, multi-register timing policy,
 deeper queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.618` now ships that selected bounded APB sideband-aware multi-peripheral
+status back-to-back behavior. The new public sources are
+`ppif/apb_composition_multi_peripheral_sideband_status_back_to_back.ppif` and
+its `.apb` alias. The selected generated requester queues `PPROT/PSTRB`, the
+generated interconnect decodes the queued setup through current `PSEL/PADDR`
+with `PENABLE` low and fans out `PPROT/PSTRB`, and every selected peripheral
+uses adjacent sideband setup admission. Reports remove broad back-to-back
+residue for the selected top, requester, interconnect, and peripheral surfaces,
+retain narrowed future-policy residue, and keep protection-policy effects
+residue explicit. Data16/protection timing variants, multi-register timing
+policy, deeper queues, alternate overflow, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static

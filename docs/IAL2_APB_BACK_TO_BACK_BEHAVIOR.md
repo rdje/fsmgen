@@ -35,6 +35,10 @@ Update `.615`: the selected 32-bit sideband-aware adjacent completer and
 fixed-composition sideband propagation family now ships separately. See
 `docs/IAL2_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_BEHAVIOR.md`.
 
+Update `.618`: the selected 32-bit sideband-aware two-peripheral status
+multi-peripheral propagation family now ships separately. See
+`docs/IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md`.
+
 ## Requester Behavior
 
 The selected requester transfer accepts only:
@@ -102,7 +106,8 @@ the completer is the selected sideband-aware adjacent setup family.
 At `.607`, multi-peripheral APB back-to-back propagation stayed deferred until
 an exact owner could validate interconnect response muxing and decoded-select
 behavior for adjacent accesses. `.609` later shipped the selected no-sideband
-two-peripheral status family; broader multi-peripheral variants remain
+two-peripheral status family. `.618` later shipped the selected sideband-aware
+two-peripheral status family; broader multi-peripheral timing variants remain
 deferred.
 
 ## Report And Support Accounting
@@ -156,9 +161,7 @@ identities:
 ## Deferred Work
 
 - multi-peripheral APB back-to-back variants beyond the selected 32-bit
-  no-sideband two-peripheral status family;
-- sideband multi-peripheral composition propagation beyond the `.615` selected
-  fixed-composition sample;
+  no-sideband and sideband-aware two-peripheral status families;
 - data16/protection back-to-back samples;
 - queue depths other than 1;
 - overflow policies other than `reject`;

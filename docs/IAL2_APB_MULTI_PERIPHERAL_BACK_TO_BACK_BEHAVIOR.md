@@ -23,6 +23,10 @@ insert an idle cycle between a completed access and the next queued setup.
 This slice does not widen the APB outstanding model. There is still at most one
 active APB bus transfer and one queued requester-side next transfer.
 
+Update `.618`: the selected 32-bit sideband-aware two-peripheral status
+multi-peripheral propagation family now ships separately. See
+`docs/IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md`.
+
 ## Selected Source Contract
 
 The selected family is intentionally narrow:
@@ -40,7 +44,8 @@ The composition itself has no top-level timing-policy clause. It derives the
 aggregate policy from compatible endpoint policies and the generated
 interconnect propagation contract.
 
-The implementation rejects missing or incompatible endpoint policies, sideband,
+The implementation rejects missing or incompatible endpoint policies, sideband
+families outside the later `.618` selected 32-bit sideband status family,
 data16, protection, queue depths other than 1, overflow policies other than
 `reject`, non-selected multi-peripheral topology shapes, and peripheral
 completers outside the selected one-register shape.
@@ -144,7 +149,8 @@ Generate review artifacts and HDL:
 
 ## Deferred Work
 
-- sideband, data16, and protection back-to-back variants;
+- data16/protection back-to-back timing variants and broader sideband-policy
+  variants beyond the selected 32-bit sideband status family;
 - queue depths other than 1;
 - overflow policies other than `reject`;
 - accepted-less requester surfaces;

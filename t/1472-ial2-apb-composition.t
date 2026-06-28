@@ -1378,6 +1378,63 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose multi-peripheral statu
     is($alias->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'multi-peripheral status back-to-back .apb APB composition alias preserves interconnect timing role');
 };
 
+subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband multi-peripheral status back-to-back APB composition review artifacts' => sub {
+    my $path = sample_apb_composition_multi_peripheral_sideband_status_back_to_back_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'sideband multi-peripheral status back-to-back APB composition --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'sideband multi-peripheral status back-to-back APB composition --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{schema}, 'fsmgen.ial2.protocol_intent.apb_composition.v1', 'sideband multi-peripheral status back-to-back APB composition schedule JSON reports schema');
+    is($schedule_report->{composition}{topology}, 'multi_peripheral_interconnect', 'sideband multi-peripheral status back-to-back APB composition schedule JSON reports topology');
+    is($schedule_report->{requester_accepted_field}{name}, 'accepted', 'sideband multi-peripheral status back-to-back APB composition schedule JSON reports accepted metadata');
+    is($schedule_report->{back_to_back_policy}{composition_role}, 'propagate_endpoint_policy_through_interconnect', 'sideband multi-peripheral status back-to-back APB composition schedule JSON reports aggregate policy');
+    is($schedule_report->{children}[1]{back_to_back_policy}{interconnect_role}, 'propagate_queued_setup_without_idle_cycle', 'sideband multi-peripheral status back-to-back APB composition schedule JSON reports interconnect timing role');
+    is($schedule_report->{children}[0]{bindings}{bus}{protection}{width}, 3, 'sideband multi-peripheral status back-to-back APB composition schedule JSON reports requester PPROT width');
+    is($schedule_report->{composition}{wiring}{bus}{strobe}{width}, 4, 'sideband multi-peripheral status back-to-back APB composition schedule JSON reports PSTRB width');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_back_to_back_policy_deferred}, 'sideband multi-peripheral status back-to-back APB composition schedule JSON omits broad back-to-back residue');
+    ok($residue{apb_additional_back_to_back_policies_deferred}, 'sideband multi-peripheral status back-to-back APB composition schedule JSON reports narrowed back-to-back residue');
+    ok($residue{apb_protection_policy_effects_deferred}, 'sideband multi-peripheral status back-to-back APB composition keeps protection-policy effects residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_tb_multi_peripheral_sideband_status_back_to_back.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'sideband multi-peripheral status back-to-back APB composition CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'sideband multi-peripheral status back-to-back APB composition generation keeps stderr clean');
+    for my $artifact (qw(apb_requester.isf apb_status_regs.isf apb_control_regs.isf apb_interconnect.isf apb_requester.fsm apb_status_regs.fsm apb_control_regs.fsm apb_interconnect.fsm apb_tb.fsm)) {
+        ok(-f File::Spec->catfile($outdir, $artifact), "sideband multi-peripheral status back-to-back APB composition --outdir writes $artifact");
+    }
+    ok(-f $hdl, 'sideband multi-peripheral status back-to-back APB composition --output writes generated HDL');
+    my $interconnect = slurp(File::Spec->catfile($outdir, 'apb_interconnect.fsm'));
+    like($interconnect, qr/\(<- \(PPROT_STATUS> PPROT\)\)/, 'sideband multi-peripheral status back-to-back outdir interconnect fans out PPROT to status');
+    like($interconnect, qr/\(<- \(PSTRB_CONTROL> PSTRB\)\)/, 'sideband multi-peripheral status back-to-back outdir interconnect fans out PSTRB to control');
+    like($interconnect, qr/\(<- \(PENABLE_STATUS> PENABLE\)\)/, 'sideband multi-peripheral status back-to-back outdir interconnect forwards PENABLE to status');
+    my $top = slurp(File::Spec->catfile($outdir, 'apb_tb.fsm'));
+    like($top, qr/=accepted>/, 'sideband multi-peripheral status back-to-back outdir top exposes accepted');
+    like($top, qr/\(queued_prot 3\)/, 'sideband multi-peripheral status back-to-back outdir top embeds queued PPROT state');
+    like($top, qr/\(queued_wstrb 4\)/, 'sideband multi-peripheral status back-to-back outdir top embeds queued PSTRB state');
+    my $sv = slurp($hdl);
+    like($sv, qr/\boutput\s+accepted\b/, 'sideband multi-peripheral status back-to-back HDL top exposes accepted');
+    like($sv, qr/\breg\s+\[2:0\]\s+queued_prot\b/, 'sideband multi-peripheral status back-to-back HDL keeps queued PPROT state');
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband multi-peripheral status back-to-back HDL declares control PSTRB link');
+
+    ok(-f sample_apb_composition_multi_peripheral_sideband_status_back_to_back_apb_path(), 'tracked runnable sideband multi-peripheral status back-to-back APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_status_back_to_back_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_status_back_to_back_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'sideband multi-peripheral status back-to-back .apb APB composition alias returns the composition kind');
+    is($alias->{mode}, 'requester-multi-peripheral-composition', 'sideband multi-peripheral status back-to-back .apb APB composition alias preserves mode');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'sideband multi-peripheral status back-to-back .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'sideband multi-peripheral status back-to-back .apb APB composition alias mirrors .ppif generated IAL0');
+    is($alias->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'sideband multi-peripheral status back-to-back .apb APB composition alias preserves interconnect timing role');
+    is($alias->{report}{composition}{wiring}{bus}{protection}{width}, 3, 'sideband multi-peripheral status back-to-back .apb APB composition alias preserves PPROT width');
+};
+
 subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband multi-peripheral APB composition review artifacts' => sub {
     my $path = sample_apb_composition_multi_peripheral_sideband_ppif_path();
     my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
@@ -1783,6 +1840,14 @@ sub sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path {
 
 sub sample_apb_composition_multi_peripheral_status_back_to_back_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_status_back_to_back.apb');
+}
+
+sub sample_apb_composition_multi_peripheral_sideband_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_status_back_to_back.ppif');
+}
+
+sub sample_apb_composition_multi_peripheral_sideband_status_back_to_back_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_status_back_to_back.apb');
 }
 
 sub sample_apb_composition_multi_peripheral_sideband_ppif_path {

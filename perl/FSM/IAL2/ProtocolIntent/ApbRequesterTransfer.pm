@@ -1064,7 +1064,7 @@ sub _apb_requester_timing_policy_report($contract) {
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Depth-1 queued requester admission with overflow reject is implemented for the selected 32-bit no-sideband status requester and selected 32-bit sideband-aware status requester; deeper queues, alternate overflow policies, accepted-less surfaces, data16/protection variants, sideband multi-peripheral propagation, multiple active APB transfers, interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Depth-1 queued requester admission with overflow reject is implemented for the selected 32-bit no-sideband status requester and selected 32-bit sideband-aware status requester, including selected fixed-composition and two-peripheral interconnect/decode propagation; deeper queues, alternate overflow policies, accepted-less surfaces, data16/protection variants, multiple active APB transfers, broader interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 

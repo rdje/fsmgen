@@ -24,6 +24,10 @@ timing variants, multi-register timing policy, deeper queues, alternate overflow
 policies, direct backend lowering, verification-output generation,
 backend-language variants, AXI, AHB, or VHDL behavior.
 
+Update `.618`: the selected 32-bit sideband-aware two-peripheral status
+multi-peripheral propagation family now ships separately. See
+`docs/IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md`.
+
 ## Selected Completer Contract
 
 The sideband-aware completer source is the selected one-register extension of
@@ -98,8 +102,8 @@ cycle and applies byte-lane write semantics.
 
 Selected sideband fixed-composition reports add aggregate back-to-back policy
 metadata for both endpoints, remove broad `apb_back_to_back_policy_deferred`,
-and retain `apb_additional_back_to_back_policies_deferred` for sideband
-multi-peripheral propagation, data16/protection variants, deeper queues,
+and retain `apb_additional_back_to_back_policies_deferred` for
+data16/protection variants, broader timing-policy families, deeper queues,
 alternate overflow policies, multiple active APB transfers, direct backend
 lowering, verification-output generation, backend-language variants, AXI, AHB,
 and VHDL.
@@ -124,7 +128,6 @@ Coverage buckets added in this slice:
 
 The remaining APB timing-policy frontier is intentionally explicit:
 
-- sideband-aware multi-peripheral timing propagation;
 - data16/protection back-to-back variants;
 - multi-register timing policy;
 - queue depths greater than 1;

@@ -522,6 +522,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             module => 'apb_tb',
         },
         {
+            label => 'APB multi-peripheral sideband composition status back-to-back',
+            path => sample_apb_composition_multi_peripheral_sideband_status_back_to_back_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_multi_peripheral_sideband_status_back_to_back',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+        },
+        {
             label => 'APB multi-register sideband data16 completer',
             path => sample_apb_completer_multi_register_sideband_data16_alias_path(),
             entry_id => 'intent.apb_profile_alias_completer_multi_register_sideband_data16',
@@ -1103,6 +1110,14 @@ sub sample_apb_composition_multi_peripheral_status_back_to_back_alias_path {
 
 sub sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_status_back_to_back.ppif');
+}
+
+sub sample_apb_composition_multi_peripheral_sideband_status_back_to_back_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_status_back_to_back.apb');
+}
+
+sub sample_apb_composition_multi_peripheral_sideband_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_status_back_to_back.ppif');
 }
 
 sub sample_apb_composition_multi_peripheral_sideband_alias_path {

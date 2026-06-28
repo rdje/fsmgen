@@ -1539,7 +1539,7 @@ sub _fixed_composition_back_to_back_policy_report($contract, $requester_result, 
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition; sideband multi-peripheral propagation, data16/protection variants, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; data16/protection variants, multi-register timing policy, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 
@@ -1867,6 +1867,13 @@ sub _is_selected_sideband_timing_bus($bus) {
         && $bus->{strobe}{width} == 4;
 }
 
+sub _request_has_selected_sideband_timing_fields($requester) {
+    return ref($requester->{request}{protection}) eq 'HASH'
+        && ref($requester->{request}{write_strobe}) eq 'HASH'
+        && ($requester->{request}{protection}{width} // '') eq '3'
+        && ($requester->{request}{write_strobe}{width} // '') eq '4';
+}
+
 sub _validate_multi_peripheral_timing_policy_compatibility($wiring, $children, $requester, $completers) {
     my $has_policy = _endpoint_has_timing_policy($requester)
         || grep { _endpoint_has_timing_policy($_) } @$completers;
@@ -1880,13 +1887,16 @@ sub _validate_multi_peripheral_timing_policy_compatibility($wiring, $children, $
         unless @$completers == 2
             && @{$children->{peripherals}} == 2;
 
-    confess "APB multi-peripheral selected back-to-back timing-policy supports only 32-bit no-sideband APB wiring in this slice\n"
-        unless $wiring->{write_data}{width} == 32
-            && $wiring->{read_data}{width} == 32
-            && !_bus_has_sidebands($wiring)
-            && !_bus_has_sidebands($requester->{bus})
-            && !_request_has_sidebands($requester)
-            && !(grep { _bus_has_sidebands($_->{bus}) } @$completers);
+    my $is_no_sideband_family = _is_selected_no_sideband_timing_bus($wiring)
+        && _is_selected_no_sideband_timing_bus($requester->{bus})
+        && !_request_has_sidebands($requester)
+        && !(grep { !_is_selected_no_sideband_timing_bus($_->{bus}) } @$completers);
+    my $is_sideband_family = _is_selected_sideband_timing_bus($wiring)
+        && _is_selected_sideband_timing_bus($requester->{bus})
+        && _request_has_selected_sideband_timing_fields($requester)
+        && !(grep { !_is_selected_sideband_timing_bus($_->{bus}) } @$completers);
+    confess "APB multi-peripheral selected back-to-back timing-policy supports only 32-bit no-sideband or selected 32-bit sideband-aware APB wiring in this slice\n"
+        unless $is_no_sideband_family || $is_sideband_family;
 
     confess "APB multi-peripheral selected back-to-back timing-policy supports only one-register peripheral completer storage in this slice\n"
         if grep {

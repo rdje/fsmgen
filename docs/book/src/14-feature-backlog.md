@@ -10482,9 +10482,9 @@ back-to-back behavior. The selected public sources are
 `ppif/apb_composition_sideband_status_back_to_back.ppif`, and its `.apb`
 alias. Reports expose adjacent setup admission on the sideband completer,
 aggregate `back_to_back_policy` on the fixed composition, and narrowed future
-residue for sideband multi-peripheral propagation, data16/protection variants,
-multi-register timing policy, deeper queues, alternate overflow, direct
-backend, verification-output, backend-language variants, AXI, AHB, and VHDL.
+residue for data16/protection variants, multi-register timing policy, broader
+timing-policy families, deeper queues, alternate overflow, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL.
 
 Post APB sideband composition back-to-back selector:
 [IAL2_POST_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
@@ -10512,6 +10512,22 @@ future-policy plus protection-policy effects residue. Data16/protection timing
 variants, multi-register timing policy, deeper queues, alternate overflow,
 direct backend, verification-output, backend-language variants, AXI, AHB, and
 VHDL remain deferred.
+
+APB sideband multi-peripheral back-to-back behavior:
+[IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md)
+ships selected 32-bit sideband-aware APB multi-peripheral status
+back-to-back propagation through the generated interconnect. The public sources
+are
+`ppif/apb_composition_multi_peripheral_sideband_status_back_to_back.ppif` and
+its `.apb` alias. The generated requester queues `PPROT/PSTRB`, the
+interconnect decodes the queued setup through current `PSEL/PADDR` with
+`PENABLE` low and fans out `PPROT/PSTRB`, and every selected peripheral uses
+adjacent sideband setup admission. Reports remove broad back-to-back residue
+for the selected top/requester/interconnect/peripheral surfaces while keeping
+narrowed future-policy and protection-policy effects residue explicit.
+Data16/protection timing variants, multi-register timing policy, deeper queues,
+alternate overflow, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL remain deferred.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

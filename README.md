@@ -3703,10 +3703,10 @@ admission with `PPROT width 3` and `PSTRB width 4`; reports for the selected
 fixed composition expose aggregate `back_to_back_policy` combining the `.612`
 sideband requester queue with the adjacent sideband completer. The selected
 surfaces remove broad `apb_back_to_back_policy_deferred` and retain narrowed
-future-policy residue for sideband multi-peripheral propagation,
-data16/protection variants, multi-register timing policy, deeper queues,
-alternate overflow, direct backend, verification-output, backend-language
-variants, AXI, AHB, and VHDL.
+future-policy residue for data16/protection variants, multi-register timing
+policy, broader timing-policy families, deeper queues, alternate overflow,
+direct backend, verification-output, backend-language variants, AXI, AHB, and
+VHDL.
 `.616` now selects `.617`, public contract selection for the bounded 32-bit
 sideband-aware APB multi-peripheral back-to-back family, without behavior
 changes. The audit found that `.609` shipped no-sideband multi-peripheral
@@ -3733,6 +3733,18 @@ the selected top, requester, interconnect, and peripheral surfaces while
 retaining narrowed future-policy residue plus protection-policy effects
 residue. Data16/protection timing variants, multi-register timing policy,
 deeper queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.618` now ships that selected bounded APB sideband-aware multi-peripheral
+status back-to-back behavior. The new public sources are
+`ppif/apb_composition_multi_peripheral_sideband_status_back_to_back.ppif` and
+its `.apb` alias. The selected generated requester queues `PPROT/PSTRB`, the
+generated interconnect decodes the queued setup through current `PSEL/PADDR`
+with `PENABLE` low and fans out `PPROT/PSTRB`, and every selected peripheral
+uses adjacent sideband setup admission. Reports remove broad back-to-back
+residue for the selected top, requester, interconnect, and peripheral surfaces,
+retain narrowed future-policy residue, and keep protection-policy effects
+residue explicit. Data16/protection timing variants, multi-register timing
+policy, deeper queues, alternate overflow, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
@@ -6299,6 +6311,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_BEHAVIOR.md` — ships selected 32-bit sideband-aware APB adjacent completer setup plus fixed-composition queued sideband `PPROT/PSTRB` propagation.
 - `docs/IAL2_POST_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects public contract selection for bounded 32-bit sideband-aware APB multi-peripheral back-to-back propagation after fixed composition shipped.
 - `docs/IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects the bounded 32-bit sideband-aware APB two-peripheral status back-to-back public contract before implementation.
+- `docs/IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md` — ships selected 32-bit sideband-aware APB multi-peripheral status back-to-back propagation through the generated interconnect.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
