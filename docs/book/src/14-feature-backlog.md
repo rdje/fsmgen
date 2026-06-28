@@ -11415,6 +11415,27 @@ admitted-family `maximum_count = 5`, protected access-policy matrix, support
 identities, report shape, diagnostics, validation, rollback, docs, Knowledge
 Map, and next owner before behavior changes.
 
+APB protected generalized five-register contract:
+[IAL2_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_CONTRACT_SELECTION](../../IAL2_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_CONTRACT_SELECTION.md)
+selects `.678`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.ppif`
+and its byte-identical `.apb` profile alias, without behavior changes. The
+selected contract widens only the shipped 32-bit sideband-aware protected
+two-peripheral generalized `reg0..regN` register-set family from
+`maximum_count = 4` to `maximum_count = 5`. The public representative uses
+`reg0/reg1/reg2/reg3/reg4` at local addresses `0/4/8/12/16`, 32-bit data,
+`PPROT width 3`, `PSTRB width 4`, status/control windows `0` and `256`,
+queue-depth `1`, overflow `reject`, adjacent setup, propagation-only
+interconnect decode, and the selected register-local privileged `PPROT[0]`
+access-policy matrix. `.678` must add the public source pair, support
+identities, report/residue movement, diagnostics, generated-artifact probes,
+focused tests, docs, and Knowledge Map coverage while keeping data16 protected
+five-register, more-than-five-register, more-than-two-peripheral,
+deeper-queue, alternate-overflow, accepted-less, multiple-active,
+alternate-policy, interconnect-owned-policy, bus-matrix, scoreboard,
+direct-backend, verification-output, backend-language variant, AXI, AHB, and
+VHDL behavior deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
