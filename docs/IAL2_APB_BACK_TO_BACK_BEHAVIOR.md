@@ -31,6 +31,10 @@ Update `.612`: the selected 32-bit sideband-aware requester status
 back-to-back family now ships separately. See
 `docs/IAL2_APB_SIDEBAND_BACK_TO_BACK_BEHAVIOR.md`.
 
+Update `.615`: the selected 32-bit sideband-aware adjacent completer and
+fixed-composition sideband propagation family now ships separately. See
+`docs/IAL2_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_BEHAVIOR.md`.
+
 ## Requester Behavior
 
 The selected requester transfer accepts only:
@@ -73,6 +77,10 @@ The generated completer already admits setup with the APB detector
 reports, support accounting, and diagnostics for the selected 32-bit
 one-register no-sideband completer.
 
+The `.615` sideband-aware extension applies the same selected adjacent setup
+policy to the bounded 32-bit one-register completer with `PPROT width 3` and
+`PSTRB width 4`.
+
 ## Fixed Composition
 
 The fixed one-requester/one-completer composition propagates the selected
@@ -86,6 +94,10 @@ aggregate `back_to_back_policy` section naming both endpoint policies. A
 fixed composition with only one endpoint policy, incompatible endpoint policy,
 sideband/data16/protection endpoint, or multi-register completer is rejected
 for this owner.
+
+The `.615` sideband-aware extension accepts the selected 32-bit fixed
+composition when the requester is the `.612` queued sideband status family and
+the completer is the selected sideband-aware adjacent setup family.
 
 At `.607`, multi-peripheral APB back-to-back propagation stayed deferred until
 an exact owner could validate interconnect response muxing and decoded-select
@@ -133,12 +145,20 @@ Support-accounting identities added in this slice:
 - `intent.ppif_apb_requester_transfer_sideband_status_back_to_back`
 - `intent.apb_profile_alias_requester_transfer_sideband_status_back_to_back`
 
+`.615` adds these sideband completer and fixed-composition support-accounting
+identities:
+
+- `intent.ppif_apb_completer_sideband_back_to_back`
+- `intent.apb_profile_alias_completer_sideband_back_to_back`
+- `intent.ppif_apb_composition_sideband_status_back_to_back`
+- `intent.apb_profile_alias_composition_sideband_status_back_to_back`
+
 ## Deferred Work
 
 - multi-peripheral APB back-to-back variants beyond the selected 32-bit
   no-sideband two-peripheral status family;
-- sideband fixed/multi-peripheral composition and completer propagation beyond
-  the `.612` selected requester-first sample;
+- sideband multi-peripheral composition propagation beyond the `.615` selected
+  fixed-composition sample;
 - data16/protection back-to-back samples;
 - queue depths other than 1;
 - overflow policies other than `reject`;

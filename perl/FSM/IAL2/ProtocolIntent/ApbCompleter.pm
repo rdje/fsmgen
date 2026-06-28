@@ -451,11 +451,18 @@ sub _validate_timing_policy_contract($bus, $storage, $transfer) {
 
     confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only one address-0 register in this slice\n"
         if _storage_is_multi_register($storage);
-    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only the 32-bit no-sideband completer family in this slice\n"
-        unless $bus->{write_data}{width} == 32
-            && $bus->{read_data}{width} == 32
-            && !defined($bus->{protection})
-            && !defined($bus->{strobe});
+    my $is_no_sideband_family = $bus->{write_data}{width} == 32
+        && $bus->{read_data}{width} == 32
+        && !defined($bus->{protection})
+        && !defined($bus->{strobe});
+    my $is_sideband_family = $bus->{write_data}{width} == 32
+        && $bus->{read_data}{width} == 32
+        && defined($bus->{protection})
+        && defined($bus->{strobe})
+        && $bus->{protection}{width} == 3
+        && $bus->{strobe}{width} == 4;
+    confess "APB completer IAL2 contract selected setup-admission adjacent policy supports only the selected 32-bit no-sideband or 32-bit sideband-aware one-register completer families in this slice\n"
+        unless $is_no_sideband_family || $is_sideband_family;
 }
 
 sub _normalize_phase($raw, $field) {
@@ -1104,7 +1111,7 @@ sub _report_enforced_static_rules($multi_register, $contract) {
         : 'the only implemented register address is 0 and reset value is 0';
     push @rules,
         'read and write behavior must target the selected register and unmapped addresses must assert error',
-        (_completer_has_adjacent_setup_policy($contract) ? ('selected timing-policy is setup-admission adjacent and remains bounded to the 32-bit no-sideband one-register completer') : ()),
+        (_completer_has_adjacent_setup_policy($contract) ? ('selected timing-policy is setup-admission adjacent and remains bounded to the selected 32-bit no-sideband or 32-bit sideband-aware one-register completer families') : ()),
         'APB completer is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden';
     return \@rules;
 }
@@ -1147,7 +1154,7 @@ sub _apb_completer_timing_policy_report($contract) {
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Adjacent setup admission is implemented for the selected 32-bit no-sideband one-register completer; queued requester policy, multi-register/sideband/data16/protection completer variants, multi-peripheral interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Adjacent setup admission is implemented for the selected 32-bit no-sideband one-register completer and selected 32-bit sideband-aware one-register completer; queued requester policy, multi-register/data16/protection completer variants, multi-peripheral interconnect propagation, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 

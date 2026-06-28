@@ -21,7 +21,7 @@ my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
 ok(@entries >= 50, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
-is(scalar(@protocol_entries), 208, 'first visible corpus slice contains the named protocol and public intent fixtures');
+is(scalar(@protocol_entries), 212, 'first visible corpus slice contains the named protocol and public intent fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
     supported_smoke
@@ -45,6 +45,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     ial2_ppif_apb_requester_transfer_sideband_data16_pipeline_cli
     ial2_ppif_apb_completer_pipeline_cli
     ial2_ppif_apb_completer_back_to_back_pipeline_cli
+    ial2_ppif_apb_completer_sideband_back_to_back_pipeline_cli
     ial2_ppif_apb_completer_multi_register_pipeline_cli
     ial2_ppif_apb_completer_multi_register_sideband_pipeline_cli
     ial2_ppif_apb_completer_multi_register_sideband_protection_pipeline_cli
@@ -54,6 +55,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     ial2_ppif_apb_composition_busy_pipeline_cli
     ial2_ppif_apb_composition_status_pipeline_cli
     ial2_ppif_apb_composition_status_back_to_back_pipeline_cli
+    ial2_ppif_apb_composition_sideband_status_back_to_back_pipeline_cli
     ial2_ppif_apb_composition_multi_register_pipeline_cli
     ial2_ppif_apb_composition_multi_register_sideband_pipeline_cli
     ial2_ppif_apb_composition_multi_register_sideband_protection_pipeline_cli
@@ -74,6 +76,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     ial2_apb_profile_alias_requester_transfer_sideband_data16_pipeline_cli
     ial2_apb_profile_alias_completer_pipeline_cli
     ial2_apb_profile_alias_completer_back_to_back_pipeline_cli
+    ial2_apb_profile_alias_completer_sideband_back_to_back_pipeline_cli
     ial2_apb_profile_alias_completer_multi_register_pipeline_cli
     ial2_apb_profile_alias_completer_multi_register_sideband_pipeline_cli
     ial2_apb_profile_alias_completer_multi_register_sideband_protection_pipeline_cli
@@ -83,6 +86,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     ial2_apb_profile_alias_composition_busy_pipeline_cli
     ial2_apb_profile_alias_composition_status_pipeline_cli
     ial2_apb_profile_alias_composition_status_back_to_back_pipeline_cli
+    ial2_apb_profile_alias_composition_sideband_status_back_to_back_pipeline_cli
     ial2_apb_profile_alias_composition_multi_register_pipeline_cli
     ial2_apb_profile_alias_composition_multi_register_sideband_pipeline_cli
     ial2_apb_profile_alias_composition_multi_register_sideband_protection_pipeline_cli
@@ -285,6 +289,7 @@ my %coverage_classification = (
     ial2_ppif_apb_requester_transfer_sideband_data16_pipeline_cli => 'supported_smoke',
     ial2_ppif_apb_completer_pipeline_cli => 'supported_smoke',
     ial2_ppif_apb_completer_back_to_back_pipeline_cli => 'supported_smoke',
+    ial2_ppif_apb_completer_sideband_back_to_back_pipeline_cli => 'supported_smoke',
     ial2_ppif_apb_completer_multi_register_pipeline_cli => 'supported_smoke',
     ial2_ppif_apb_completer_multi_register_sideband_pipeline_cli => 'supported_smoke',
     ial2_ppif_apb_completer_multi_register_sideband_protection_pipeline_cli => 'supported_smoke',
@@ -294,6 +299,7 @@ my %coverage_classification = (
     ial2_ppif_apb_composition_busy_pipeline_cli => 'supported_smoke',
     ial2_ppif_apb_composition_status_pipeline_cli => 'supported_smoke',
     ial2_ppif_apb_composition_status_back_to_back_pipeline_cli => 'supported_smoke',
+    ial2_ppif_apb_composition_sideband_status_back_to_back_pipeline_cli => 'supported_smoke',
     ial2_ppif_apb_composition_multi_register_pipeline_cli => 'supported_smoke',
     ial2_ppif_apb_composition_multi_register_sideband_pipeline_cli => 'supported_smoke',
     ial2_ppif_apb_composition_multi_register_sideband_protection_pipeline_cli => 'supported_smoke',
@@ -314,6 +320,7 @@ my %coverage_classification = (
     ial2_apb_profile_alias_requester_transfer_sideband_data16_pipeline_cli => 'supported_smoke',
     ial2_apb_profile_alias_completer_pipeline_cli => 'supported_smoke',
     ial2_apb_profile_alias_completer_back_to_back_pipeline_cli => 'supported_smoke',
+    ial2_apb_profile_alias_completer_sideband_back_to_back_pipeline_cli => 'supported_smoke',
     ial2_apb_profile_alias_completer_multi_register_pipeline_cli => 'supported_smoke',
     ial2_apb_profile_alias_completer_multi_register_sideband_pipeline_cli => 'supported_smoke',
     ial2_apb_profile_alias_completer_multi_register_sideband_protection_pipeline_cli => 'supported_smoke',
@@ -323,6 +330,7 @@ my %coverage_classification = (
     ial2_apb_profile_alias_composition_busy_pipeline_cli => 'supported_smoke',
     ial2_apb_profile_alias_composition_status_pipeline_cli => 'supported_smoke',
     ial2_apb_profile_alias_composition_status_back_to_back_pipeline_cli => 'supported_smoke',
+    ial2_apb_profile_alias_composition_sideband_status_back_to_back_pipeline_cli => 'supported_smoke',
     ial2_apb_profile_alias_composition_multi_register_pipeline_cli => 'supported_smoke',
     ial2_apb_profile_alias_composition_multi_register_sideband_pipeline_cli => 'supported_smoke',
     ial2_apb_profile_alias_composition_multi_register_sideband_protection_pipeline_cli => 'supported_smoke',
@@ -1000,8 +1008,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    249,
-    'catalog now keeps two hundred forty-nine named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, and verification-output fixtures',
+    253,
+    'catalog now keeps two hundred fifty-three named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, and verification-output fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -1015,8 +1023,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    249,
-    'catalog now records two hundred forty-nine positive strict-mode supported-smoke acceptance entries',
+    253,
+    'catalog now records two hundred fifty-three positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester

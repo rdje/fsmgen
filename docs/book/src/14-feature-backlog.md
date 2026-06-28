@@ -10474,6 +10474,18 @@ propagation, data16/protection variants, multi-register timing policy, deeper
 queues, alternate overflow, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
 
+APB sideband composition back-to-back behavior:
+[IAL2_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_BEHAVIOR.md)
+ships the selected sideband-aware APB completer and fixed-composition
+back-to-back behavior. The selected public sources are
+`ppif/apb_completer_sideband_back_to_back.ppif`, its `.apb` alias,
+`ppif/apb_composition_sideband_status_back_to_back.ppif`, and its `.apb`
+alias. Reports expose adjacent setup admission on the sideband completer,
+aggregate `back_to_back_policy` on the fixed composition, and narrowed future
+residue for sideband multi-peripheral propagation, data16/protection variants,
+multi-register timing policy, deeper queues, alternate overflow, direct
+backend, verification-output, backend-language variants, AXI, AHB, and VHDL.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

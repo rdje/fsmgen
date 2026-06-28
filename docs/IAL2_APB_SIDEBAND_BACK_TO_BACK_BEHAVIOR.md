@@ -97,12 +97,15 @@ Support-accounting identities added in this slice:
 
 ## Deferred Work
 
-Fixed composition, multi-peripheral composition, completer timing-policy
-propagation, data16/protection back-to-back variants, queue depths greater than
+Update `.615`: the selected sideband-aware adjacent completer and fixed
+one-requester/one-completer sideband composition now ship separately. See
+`docs/IAL2_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_BEHAVIOR.md`.
+
+Sideband multi-peripheral composition propagation, data16/protection
+back-to-back variants, multi-register timing policy, queue depths greater than
 1, overflow policies other than `reject`, accepted-less requester surfaces,
-multiple active APB bus transfers, direct backend lowering,
-verification-output generation, backend-language variants, AXI, AHB, and VHDL
-remain deferred.
+multiple active APB bus transfers, direct backend lowering, verification-output
+generation, backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 ## Validation
 

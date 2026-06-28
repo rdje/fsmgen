@@ -168,6 +168,51 @@ subtest 'adapter parses the status back-to-back APB composition PPIF shape' => s
     ok($composition_residue{apb_additional_back_to_back_policies_deferred}, 'status back-to-back composition keeps narrowed future-policy residue');
 };
 
+subtest 'adapter parses the sideband status back-to-back APB composition PPIF shape' => sub {
+    ok(-f sample_apb_composition_sideband_status_back_to_back_ppif_path(), 'tracked runnable sideband status back-to-back APB composition PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_sideband_status_back_to_back_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'sideband status back-to-back APB composition adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_composition', 'sideband status back-to-back adapter returns the APB composition kind');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-composition-sideband-status-back-to-back', 'sideband status back-to-back APB composition source object id is preserved');
+    is($result->{report}{back_to_back_policy}{composition_role}, 'propagate_endpoint_policy', 'sideband composition report records endpoint timing-policy propagation');
+    is($result->{report}{back_to_back_policy}{requester}{timing_policy}{queue_depth}, 1, 'sideband composition report records requester queue-depth 1');
+    is($result->{report}{back_to_back_policy}{requester}{timing_policy}{accepted}, 'accepted', 'sideband composition report records accepted response field');
+    is($result->{report}{back_to_back_policy}{completer}{timing_policy}{setup_admission}, 'adjacent', 'sideband composition report records completer adjacent setup admission');
+    is($result->{report}{composition}{width_policy}{protection_width}, 3, 'sideband composition report records PPROT width 3');
+    is($result->{report}{composition}{width_policy}{strobe_width}, 4, 'sideband composition report records PSTRB width 4');
+
+    my $requester_fsm = $result->{generated_ial0}{files}{'apb_requester.fsm'};
+    like($requester_fsm, qr/\(queued_prot 3\)/, 'sideband status back-to-back requester FSM declares queued_prot');
+    like($requester_fsm, qr/\(queued_wstrb 4\)/, 'sideband status back-to-back requester FSM declares queued_wstrb');
+    like($requester_fsm, qr/\(<- \(PPROT> queued_prot\)\)/, 'sideband status back-to-back requester FSM drives queued PPROT');
+    like($requester_fsm, qr/\(<- \(PSTRB> \(& queued_wstrb \(concat queued_write queued_write queued_write queued_write\)\)\)/, 'sideband status back-to-back requester FSM drives queued PSTRB masked by queued write');
+
+    my $completer_fsm = $result->{generated_ial0}{files}{'apb_completer.fsm'};
+    like($completer_fsm, qr/\(<= \(prot_q PPROT\) <\(& PSEL \(! PENABLE\)\)\)/, 'sideband status back-to-back completer FSM samples PPROT under setup-detect guard');
+    like($completer_fsm, qr/\(<= \(strb_q PSTRB\) <\(& PSEL \(! PENABLE\)\)\)/, 'sideband status back-to-back completer FSM samples PSTRB under setup-detect guard');
+
+    my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
+    like($top, qr/=req_prot<3/, 'sideband status back-to-back APB composition top exposes request protection');
+    like($top, qr/=req_wstrb<4/, 'sideband status back-to-back APB composition top exposes request strobe');
+    like($top, qr/=accepted>/, 'sideband status back-to-back APB composition top exposes accepted output');
+    like($top, qr/\(requester\.PPROT completer\.PPROT\)/, 'sideband status back-to-back APB composition top wires PPROT');
+    like($top, qr/\(requester\.PSTRB completer\.PSTRB\)/, 'sideband status back-to-back APB composition top wires PSTRB');
+
+    my %composition_residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$composition_residue{apb_back_to_back_policy_deferred}, 'sideband status back-to-back composition removes broad back-to-back residue');
+    ok(!$composition_residue{apb_protection_and_strobes_deferred}, 'sideband status back-to-back composition removes broad sideband residue');
+    ok($composition_residue{apb_additional_back_to_back_policies_deferred}, 'sideband status back-to-back composition keeps narrowed future-policy residue');
+    ok($composition_residue{apb_protection_policy_effects_deferred}, 'sideband status back-to-back composition keeps protection-policy effects deferred');
+
+    ok(-f sample_apb_composition_sideband_status_back_to_back_apb_path(), 'tracked runnable sideband status back-to-back APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_sideband_status_back_to_back_apb_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'sideband status back-to-back .apb APB composition alias returns the composition kind');
+    is_deeply($alias->{generated_ial1}{items}, $result->{generated_ial1}{items}, 'sideband status back-to-back .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $result->{generated_ial0}{files}, 'sideband status back-to-back .apb APB composition alias mirrors .ppif generated IAL0');
+};
+
 subtest 'adapter parses the status-capable APB multi-register composition PPIF shape' => sub {
     ok(-f sample_apb_composition_multi_register_ppif_path(), 'tracked runnable multi-register APB composition PPIF sample exists');
 
@@ -1672,8 +1717,16 @@ sub sample_apb_composition_status_back_to_back_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_status_back_to_back.ppif');
 }
 
+sub sample_apb_composition_sideband_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_sideband_status_back_to_back.ppif');
+}
+
 sub sample_apb_composition_status_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_status.apb');
+}
+
+sub sample_apb_composition_sideband_status_back_to_back_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_sideband_status_back_to_back.apb');
 }
 
 sub sample_apb_composition_multi_register_ppif_path {

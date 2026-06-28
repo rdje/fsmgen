@@ -4696,6 +4696,19 @@ Multi-peripheral sideband timing propagation, data16/protection variants,
 multi-register timing policy, deeper queues, alternate overflow, direct
 backend, verification-output, backend-language variants, AXI, AHB, and VHDL
 remain deferred.
+`.615` now ships the selected sideband-aware APB completer and fixed-composition
+back-to-back behavior. The new public sources are
+`ppif/apb_completer_sideband_back_to_back.ppif`, its `.apb` alias,
+`ppif/apb_composition_sideband_status_back_to_back.ppif`, and its `.apb`
+alias. The selected sideband completer reports adjacent setup admission with
+`PPROT width 3` and `PSTRB width 4`; the selected fixed composition reports
+aggregate `back_to_back_policy` combining the `.612` sideband requester queue
+with the adjacent sideband completer. Broad `apb_back_to_back_policy_deferred`
+residue is removed from those selected surfaces, while sideband
+multi-peripheral propagation, data16/protection variants, multi-register
+timing policy, deeper queues, alternate overflow, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
