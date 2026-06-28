@@ -69,6 +69,7 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     ok(-f sample_apb_composition_multi_register_sideband_protection_status_back_to_back_alias_path(), 'tracked runnable APB multi-register sideband protection back-to-back composition .apb sample exists');
     ok(-f sample_apb_composition_multi_register_sideband_data16_protection_status_back_to_back_alias_path(), 'tracked runnable APB multi-register sideband data16 protection back-to-back composition .apb sample exists');
     ok(-f sample_apb_composition_multi_peripheral_status_back_to_back_alias_path(), 'tracked runnable APB multi-peripheral status back-to-back composition .apb sample exists');
+    ok(-f sample_apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back_alias_path(), 'tracked runnable APB multi-peripheral sideband data16 protection status back-to-back composition .apb sample exists');
 
     my $completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_alias_path());
     my $completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_ppif_path());
@@ -200,6 +201,23 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     is_deeply($btb_multi_peripheral_alias->{generated_ial1}{items}, $btb_multi_peripheral_ppif->{generated_ial1}{items}, '.apb multi-peripheral composition back-to-back mirrors .ppif generated IAL1 artifacts');
     is_deeply($btb_multi_peripheral_alias->{generated_ial0}{files}, $btb_multi_peripheral_ppif->{generated_ial0}{files}, '.apb multi-peripheral composition back-to-back mirrors .ppif generated IAL0 files');
     is($btb_multi_peripheral_alias->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', '.apb multi-peripheral composition back-to-back preserves aggregate interconnect policy');
+
+    my $btb_multi_peripheral_data16_protection_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back_alias_path());
+    my $btb_multi_peripheral_data16_protection_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back_ppif_path());
+    my $btb_multi_peripheral_data16_protection_interconnect = $btb_multi_peripheral_data16_protection_alias->{generated_ial0}{files}{'apb_interconnect.fsm'};
+    is($btb_multi_peripheral_data16_protection_alias->{kind}, 'protocol_intent.apb_composition', '.apb multi-peripheral sideband data16 protection back-to-back parser result keeps APB composition kind');
+    is($btb_multi_peripheral_data16_protection_alias->{mode}, 'requester-multi-peripheral-composition', '.apb multi-peripheral sideband data16 protection back-to-back parser result preserves multi-peripheral mode');
+    is_deeply($btb_multi_peripheral_data16_protection_alias->{generated_ial1}{items}, $btb_multi_peripheral_data16_protection_ppif->{generated_ial1}{items}, '.apb multi-peripheral sideband data16 protection back-to-back mirrors .ppif generated IAL1 artifacts');
+    is_deeply($btb_multi_peripheral_data16_protection_alias->{generated_ial0}{files}, $btb_multi_peripheral_data16_protection_ppif->{generated_ial0}{files}, '.apb multi-peripheral sideband data16 protection back-to-back mirrors .ppif generated IAL0 files');
+    is($btb_multi_peripheral_data16_protection_alias->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', '.apb multi-peripheral sideband data16 protection back-to-back preserves aggregate interconnect policy');
+    is($btb_multi_peripheral_data16_protection_alias->{report}{back_to_back_policy}{requester}{timing_policy}{queue_depth}, 1, '.apb multi-peripheral sideband data16 protection back-to-back preserves queue-depth 1 requester policy');
+    is($btb_multi_peripheral_data16_protection_alias->{report}{composition}{width_policy}{data_width}, 16, '.apb multi-peripheral sideband data16 protection back-to-back preserves data width policy');
+    is($btb_multi_peripheral_data16_protection_alias->{report}{composition}{width_policy}{strobe_width}, 2, '.apb multi-peripheral sideband data16 protection back-to-back preserves strobe width policy');
+    is($btb_multi_peripheral_data16_protection_alias->{report}{protection_policy}{enforcement_owner}, 'peripheral_completers', '.apb multi-peripheral sideband data16 protection back-to-back preserves peripheral policy owner');
+    like($btb_multi_peripheral_data16_protection_interconnect, qr/\(PSTRB_CONTROL 2\)/, '.apb multi-peripheral sideband data16 protection back-to-back interconnect keeps 2-bit control PSTRB');
+    like($btb_multi_peripheral_data16_protection_interconnect, qr/\(<- \(PPROT_STATUS> PPROT\)\)/, '.apb multi-peripheral sideband data16 protection back-to-back interconnect fans out PPROT');
+    like($btb_multi_peripheral_data16_protection_interconnect, qr/\(<- \(PADDR_CONTROL> \(- PADDR 258\)\) <\(& PSEL \(>= PADDR 258\) \(< PADDR 516\)\)\)/, '.apb multi-peripheral sideband data16 protection back-to-back interconnect uses the 258-byte control window base');
+    unlike($btb_multi_peripheral_data16_protection_interconnect, qr/prot_q/, '.apb multi-peripheral sideband data16 protection back-to-back interconnect remains enforcement-free');
 
     my $multi_completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_alias_path());
     my $multi_completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_ppif_path());
@@ -723,6 +741,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             label => 'APB multi-peripheral sideband data16 protection composition',
             path => sample_apb_composition_multi_peripheral_sideband_data16_protection_alias_path(),
             entry_id => 'intent.apb_profile_alias_composition_multi_peripheral_sideband_data16_protection',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+        },
+        {
+            label => 'APB multi-peripheral sideband data16 protection status back-to-back composition',
+            path => sample_apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_multi_peripheral_sideband_data16_protection_status_back_to_back',
             source_root_kind => 'top',
             module => 'apb_tb',
         },
@@ -1370,6 +1395,14 @@ sub sample_apb_composition_multi_peripheral_sideband_data16_protection_alias_pat
 
 sub sample_apb_composition_multi_peripheral_sideband_data16_protection_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_data16_protection.ppif');
+}
+
+sub sample_apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back.apb');
+}
+
+sub sample_apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back.ppif');
 }
 
 sub sample_apb_composition_busy_alias_path {

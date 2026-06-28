@@ -28,6 +28,12 @@ The outstanding model is unchanged: there is still at most one active APB
 transfer and, for the fixed composition, one requester-side queued next
 transfer.
 
+Update `.634`: the selected multi-peripheral data16-protection back-to-back
+composition is now shipped separately in
+`docs/IAL2_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_BEHAVIOR.md`.
+The `.631` behavior here remains the standalone-completer and fixed-composition
+scope.
+
 ## Selected Completer Contract
 
 The selected standalone completer is the protected data16 two-register
@@ -150,7 +156,8 @@ Generate review artifacts and HDL:
 
 ## Deferred Work
 
-- multi-peripheral data16-protection timing;
+- broader multi-peripheral multi-register timing beyond the `.634` selected
+  status/control data16-protection composition;
 - broader multi-peripheral multi-register timing propagation;
 - queue depths other than `1`;
 - overflow policies other than `reject`;

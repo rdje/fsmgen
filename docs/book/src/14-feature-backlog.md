@@ -10681,7 +10681,8 @@ A temporary data16-protection adjacent-setup candidate still fails at the
 current selected-family timing guard, so `.630` must settle the exact public
 sources, 16-bit protected two-register shape, requester/status requirements,
 report/residue movement, diagnostics, validation, and rollback before
-implementation. Multi-peripheral data16-protection timing, broader
+implementation. The selected status/control multi-peripheral
+data16-protection timing subset later shipped in `.634`; broader
 multi-peripheral multi-register timing, deeper queues, alternate overflow,
 direct backend, verification-output, backend-language variants, AXI, AHB, and
 VHDL remain deferred.
@@ -10696,7 +10697,8 @@ completer `.ppif` and `.apb`, plus protected fixed-composition data16 status
 policy, and `reg1` at address `2` with read/write privileged policy. The
 fixed composition combines that protected data16 adjacent completer with the
 `.625` queued data16 sideband requester while leaving policy enforcement in
-the completer. Multi-peripheral data16-protection timing, broader
+the completer. The selected status/control multi-peripheral
+data16-protection timing subset later shipped in `.634`; broader
 multi-peripheral multi-register timing, deeper queues, alternate overflow,
 accepted-less requesters, multiple active APB transfers, broader protection
 policies, direct backend, verification-output, backend-language variants, AXI,
@@ -10750,6 +10752,24 @@ Broader multi-peripheral multi-register timing, deeper queues, alternate
 overflow, accepted-less requesters, multiple active APB transfers, broader
 protection policies, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+
+APB multi-peripheral data16-protection back-to-back behavior:
+[IAL2_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_BEHAVIOR.md)
+ships those two selected public sources. The generated requester keeps
+depth-1 queued `accepted/busy/status` timing and relaunches queued 16-bit
+`PWDATA`, `PPROT`, and 2-bit `PSTRB`; the generated interconnect propagates
+queued setup without inserting an idle cycle, decodes the `0` and `258`
+windows, translates `PADDR_CONTROL`, and remains enforcement-free; the status
+and control peripheral completers own register-local privileged `PPROT[0]`
+enforcement and preserve data16 byte-lane, zero-strobe, denied-access,
+unmapped, and adjacent-setup behavior. Selected reports remove broad
+`apb_back_to_back_policy_deferred` and retain narrowed future timing,
+broader-protection, and remaining-width residue. `.635` is now the next
+selector for the remaining APB back-to-back timing frontier. Broader
+multi-peripheral multi-register timing, deeper queues, alternate overflow,
+accepted-less requesters, multiple active APB transfers, broader protection
+policies, direct backend, verification-output, backend-language variants, AXI,
+AHB, and VHDL remain deferred.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
