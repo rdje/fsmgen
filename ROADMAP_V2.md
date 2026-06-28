@@ -5188,6 +5188,17 @@ prerequisite, or explicit deferral before generalized multi-peripheral
 multi-register shapes, deeper queues, alternate overflow, accepted-less
 requesters, multiple active APB transfers, bus matrices, scoreboards, direct
 backend, verification-output, backend-language variants, AXI, AHB, or VHDL.
+`.651` now selects `.652`, public contract selection for a bounded APB
+status/control protected-storage generalization, without behavior changes. The
+audit found that `.638` and `.634` already ship selected 32-bit and data16
+two-peripheral status/control protected storage with peripheral-owned
+privileged `PPROT[0]` enforcement, requester `accepted/busy/status`,
+queue-depth `1`, overflow `reject`, adjacent setup, and propagation-only
+interconnect timing, while `.649` separately ships the selected data16
+protected `reg0`/`reg1` family. `.652` must decide whether the generalization
+is new public source pairs, report/static residue cleanup, alias/support
+accounting expansion, or explicit deferral, and settle width scope, naming,
+diagnostics, validation, rollback, docs, and Knowledge Map before behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

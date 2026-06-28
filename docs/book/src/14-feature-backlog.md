@@ -11007,6 +11007,17 @@ direct implementation, a smaller source-shape/report-static prerequisite, or
 explicit deferral before generalized multi-peripheral multi-register timing
 families and wider backend/protocol surfaces.
 
+APB status/control protected-storage generalization readiness audit:
+[IAL2_APB_STATUS_CONTROL_PROTECTED_STORAGE_GENERALIZATION_READINESS_AUDIT](../../IAL2_APB_STATUS_CONTROL_PROTECTED_STORAGE_GENERALIZATION_READINESS_AUDIT.md)
+selects `.652`, public contract selection for a bounded APB status/control
+protected-storage generalization, without behavior changes. The audit found
+that the selected 32-bit and data16 status/control protected families already
+ship peripheral-owned privileged `PPROT[0]` enforcement, requester
+`accepted/busy/status`, queue-depth `1`, overflow `reject`, adjacent setup,
+and propagation-only interconnect timing. `.652` must decide whether the
+generalization is new public source pairs, report/static residue cleanup,
+alias/support accounting expansion, or explicit deferral before behavior.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
