@@ -5311,6 +5311,26 @@ interconnect decode. Data16 generalized register sets, protected generalized
 register sets, broader cardinality/peripheral count, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.660` now ships that selected bounded APB sideband-aware no-policy
+generalized register-set multi-peripheral back-to-back timing behavior. The
+new `.ppif` and `.apb` sources lower through generated `apb_requester`,
+`apb_status_regs`, `apb_control_regs`, `apb_interconnect`, and `apb_tb`
+review artifacts. The generated requester exposes `accepted/busy/status`,
+accepts one active transfer plus one queued next transfer, and relaunches
+queued 32-bit `PWDATA` plus `PPROT/PSTRB`. The generated interconnect
+propagates queued setup without idle-cycle insertion, decodes status/control
+windows at bases `0` and `256`, translates `PADDR_CONTROL`, muxes selected
+responses, and remains protection-enforcement free. The public representative
+uses no-policy `reg0/reg1/reg2` at local addresses `0/4/8` on both peripheral
+completers; the guarded family admits matching no-policy `reg0..regN`
+register sets with two to four registers per peripheral. Reports add aggregate
+multi-peripheral `back_to_back_policy`, remove broad back-to-back residue for
+the selected public sources, and retain narrowed residue for protected/data16
+generalized register sets, broader cardinality/peripheral count, deeper
+queues, alternate overflow, accepted-less requesters, multiple active
+transfers, bus matrices, scoreboards, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL. `.661` is now the next selector
+for the remaining APB timing/register-set residue.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

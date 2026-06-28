@@ -11114,6 +11114,24 @@ addresses `0/4/8`, status/control windows at `0` and `256`, depth-1 queued
 requester timing, adjacent setup, overflow `reject`, and propagation-only
 interconnect decode.
 
+APB generalized multi-peripheral multi-register back-to-back behavior:
+[IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md)
+ships `.660`, the selected bounded APB sideband-aware no-policy generalized
+register-set multi-peripheral timing behavior. The supported public sources
+are
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back.ppif`
+and its `.apb` alias. They generate a requester, status/control peripheral
+completers, an interconnect, and `apb_tb`; propagate queued 32-bit `PWDATA`
+plus `PPROT/PSTRB`; keep status/control windows at `0` and `256`; and use
+no-policy `reg0/reg1/reg2` at local addresses `0/4/8` in the public
+representative. The admitted register-set family remains bounded to matching
+no-policy `reg0..regN` storage with two to four registers per peripheral.
+Protected/data16 generalized register sets, broader cardinality/peripheral
+count, deeper queues, alternate overflow, accepted-less requesters, multiple
+active transfers, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL remain deferred. `.661` is the next selector for
+the remaining APB timing/register-set residue.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
