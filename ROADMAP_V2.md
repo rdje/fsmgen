@@ -4747,6 +4747,16 @@ retain narrowed future-policy residue, and keep protection-policy effects
 residue explicit. Data16/protection timing variants, multi-register timing
 policy, deeper queues, alternate overflow, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.619` now selects `.620`, APB data16/protection back-to-back timing-policy
+readiness audit, without behavior changes. Live reports over representative
+data16, protection, and data16-protection requester/composition samples still
+carry broad `apb_back_to_back_policy_deferred` and no aggregate
+`back_to_back_policy`, while current requester/completer/composition timing
+guards remain bounded to selected 32-bit no-sideband or selected 32-bit
+sideband-aware one-register families. `.620` must decide whether the next exact
+owner is data16-only, protection-only, combined data16-protection,
+multi-register adjacent-setup prerequisite, requester/completer prerequisite,
+or explicit deferral before behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

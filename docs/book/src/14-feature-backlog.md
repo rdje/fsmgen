@@ -10529,6 +10529,18 @@ Data16/protection timing variants, multi-register timing policy, deeper queues,
 alternate overflow, direct backend, verification-output, backend-language
 variants, AXI, AHB, and VHDL remain deferred.
 
+Post APB sideband multi-peripheral back-to-back selector:
+[IAL2_POST_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.620`, APB data16/protection back-to-back timing-policy readiness
+audit, without behavior changes. Current data16, protection, and
+data16-protection requester/composition samples still report no aggregate
+`back_to_back_policy` and keep broad `apb_back_to_back_policy_deferred`, while
+timing-policy guards remain bounded to selected 32-bit no-sideband or selected
+32-bit sideband-aware one-register families. `.620` must decide whether the
+next owner is data16-only, protection-only, combined data16-protection,
+multi-register adjacent setup, requester/completer prerequisite, or explicit
+deferral before behavior changes.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
