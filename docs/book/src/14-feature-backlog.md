@@ -10711,11 +10711,28 @@ address `2`, `PPROT width 3`, and `PSTRB width 2`, while preserving allowed,
 denied, zero-strobe, byte-lane, and unmapped behavior. The protected
 fixed-composition status sample propagates the `.625` queued data16 sideband
 requester into that completer, exposes aggregate `back_to_back_policy`, and
-keeps policy enforcement in the completer. `.632` is the next selector for
-remaining APB timing residue; multi-peripheral data16-protection timing,
-broader multi-peripheral multi-register timing, deeper queues, alternate
-overflow, accepted-less requesters, multiple active APB transfers, broader
-protection policies, direct backend, verification-output,
+keeps policy enforcement in the completer. The `.632` post selector records
+the remaining APB timing residue before behavior changes; multi-peripheral
+data16-protection timing, broader multi-peripheral multi-register timing,
+deeper queues, alternate overflow, accepted-less requesters, multiple active
+APB transfers, broader protection policies, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred there.
+
+Post APB data16-protection back-to-back selector:
+[IAL2_POST_APB_DATA16_PROTECTION_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_DATA16_PROTECTION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.633`, public contract selection for bounded APB sideband-aware
+multi-peripheral data16-protection back-to-back timing, without behavior
+changes. Existing multi-peripheral data16-protection reports already expose
+16-bit data, `PPROT width 3`, `PSTRB width 2`, and completer-owned protection
+enforcement, but still have no aggregate `back_to_back_policy` and retain
+broad `apb_back_to_back_policy_deferred`. The next contract must settle exact
+source names, static topology scope, requester/completer/interconnect timing
+requirements, queued setup decode, sideband propagation, report/residue
+movement, support accounting, diagnostics, validation, and rollback before
+implementation. Broader multi-peripheral multi-register timing, deeper queues,
+alternate overflow, accepted-less requesters, multiple active APB transfers,
+broader protection policies, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 Post multiple dynamic multi-beat selector:
