@@ -5656,6 +5656,24 @@ scoreboard, direct-backend, verification-output, backend-language variant,
 AXI, AHB, and VHDL behavior deferred. No parser, generator, public source,
 support-accounting, report, generated artifact, HDL/runtime, APB transaction,
 AXI, AHB, or VHDL behavior changed in `.680`.
+`.681` now ships that selected bounded APB sideband-aware data16 protected
+five-register generalized `reg0..regN` register-set multi-peripheral timing
+behavior through the exact `.ppif` source and byte-identical `.apb` profile
+alias. The admitted data16 protected two-peripheral generalized family now
+covers two-to-five registers per peripheral, with public representative
+`reg0/reg1/reg2/reg3/reg4` at local addresses `0/2/4/6/8`, 16-bit data,
+`PPROT width 3`, `PSTRB width 2`, status/control windows `0` and `258`,
+queue-depth `1`, overflow `reject`, adjacent setup, propagation-only
+interconnect decode, peripheral-owned protection, and the selected
+register-local privileged `PPROT[0]` access-policy matrix. Support accounting
+now tracks the new PPIF and profile-alias identities, reports keep
+status/control register arrays as `[reg0, reg1, reg2, reg3, reg4]`,
+generated artifacts carry `reg3/reg4` storage/read/write/byte-lane and denied
+protection branches, and more-than-five-register, more-than-two-peripheral,
+deeper-queue, alternate-overflow, accepted-less, multiple-active,
+alternate-policy, interconnect-owned-policy, bus-matrix, scoreboard,
+direct-backend, verification-output, backend-language variant, AXI, AHB, and
+VHDL behavior remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

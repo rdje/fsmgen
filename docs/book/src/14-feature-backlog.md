@@ -11487,6 +11487,23 @@ identities, report/residue movement, diagnostics, generated-artifact probes,
 focused tests, docs, and Knowledge Map coverage while keeping broader APB,
 AXI, AHB, and VHDL behavior deferred.
 
+APB data16 protected generalized five-register behavior:
+[IAL2_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_BEHAVIOR](../../IAL2_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_BEHAVIOR.md)
+ships that selected bounded APB sideband-aware data16 protected
+five-register generalized `reg0..regN` register-set multi-peripheral timing
+behavior through the exact `.ppif` source and byte-identical `.apb` profile
+alias. The admitted data16 protected two-peripheral generalized family now
+covers two-to-five registers per peripheral, with public representative
+`reg0/reg1/reg2/reg3/reg4` at local addresses `0/2/4/6/8`, 16-bit data,
+`PPROT width 3`, `PSTRB width 2`, status/control windows `0` and `258`,
+queue-depth `1`, overflow `reject`, adjacent setup, propagation-only
+interconnect decode, peripheral-owned protection, and the selected
+register-local privileged `PPROT[0]` access-policy matrix. More-than-five,
+more-than-two-peripheral, deeper-queue, alternate-overflow, accepted-less,
+multiple-active, alternate-policy, interconnect-owned-policy, bus-matrix,
+scoreboard, direct-backend, verification-output, backend-language variant,
+AXI, AHB, and VHDL behavior remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
