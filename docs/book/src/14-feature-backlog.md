@@ -10445,6 +10445,21 @@ residue for fixed/multi-peripheral composition, completer propagation,
 data16/protection variants, deeper queues, alternate overflow, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL.
 
+APB sideband composition back-to-back readiness audit:
+[IAL2_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_READINESS_AUDIT](../../IAL2_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_READINESS_AUDIT.md)
+selects `.614`, public contract selection for the bounded 32-bit
+sideband-aware APB completer and fixed-composition timing-policy family,
+without behavior changes. The requester prerequisite is present after `.612`,
+and existing sideband completer/fixed-composition substrates already sample or
+propagate `PPROT/PSTRB`; the remaining guards still reject sideband-aware
+adjacent setup and sideband-aware composition timing propagation. `.614` must
+settle sample names, one-register completer scope, fixed-composition
+propagation, report/support movement, diagnostics, validation, and rollback
+before implementation. Multi-peripheral sideband timing propagation,
+data16/protection variants, multi-register timing policy, deeper queues,
+alternate overflow, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -4672,6 +4672,18 @@ multi-peripheral composition, completer propagation, data16/protection
 variants, deeper queues, alternate overflow, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.613` now audits APB sideband-aware completer and composition back-to-back
+readiness and selects `.614`, public contract selection before implementation,
+without behavior changes. The requester prerequisite is present after `.612`,
+and sideband completer/composition substrates already sample or propagate
+`PPROT/PSTRB`; the remaining guards still restrict adjacent completer setup and
+fixed/multi-peripheral composition timing propagation to 32-bit no-sideband
+families. `.614` must settle the bounded one-register sideband completer and
+fixed-composition contract, sample names, report/support movement,
+diagnostics, validation, and rollback before implementation. Multi-peripheral
+sideband timing propagation, data16/protection variants, multi-register timing
+policy, deeper queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
