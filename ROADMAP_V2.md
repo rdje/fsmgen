@@ -5371,6 +5371,21 @@ count, deeper queues, alternate overflow, accepted-less requesters, multiple
 active transfers, bus matrices, scoreboards, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.664` now selects `.665`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.ppif`
+and its `.apb` alias, without behavior changes. The selected public contract
+is bounded to 32-bit sideband-aware APB, one requester, exactly two peripheral
+completers, matching protected `reg0..regN` register sets with two to four
+registers per peripheral, public representative `reg0/reg1/reg2` at local
+addresses `0/4/8`, status/control windows at `0` and `256`, queue-depth `1`,
+overflow `reject`, adjacent setup on every peripheral, and propagation-only
+interconnect decode. The selected policy matrix preserves `.656`: `reg0`
+reads are allowed, `reg0` writes require privileged `PPROT[0] == 1`, and every
+`reg1..regN` read/write requires privileged `PPROT[0] == 1`. Data16 protected
+generalized register sets, broader cardinality/peripheral count, deeper
+queues, alternate overflow, accepted-less requesters, multiple active
+transfers, bus matrices, scoreboards, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
