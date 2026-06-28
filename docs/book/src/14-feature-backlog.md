@@ -10818,6 +10818,18 @@ broader-protection, and alternate-width residue. `.639` is the next selector
 for the remaining APB back-to-back timing residue after this protected
 multi-peripheral family shipped.
 
+Post APB multi-peripheral protection back-to-back selector:
+[IAL2_POST_APB_MULTI_PERIPHERAL_PROTECTION_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_MULTI_PERIPHERAL_PROTECTION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.640`, readiness audit for APB no-policy multi-peripheral
+multi-register back-to-back timing. Fixed no-policy multi-register timing is
+already shipped for selected 32-bit sideband and sideband data16 fixed
+compositions, while multi-peripheral no-policy timing is shipped only for
+one-register peripheral shapes. The current multi-peripheral timing guard
+still rejects broader two-register no-policy peripheral storage, so `.640`
+must settle source shape, endpoint storage, interconnect propagation,
+report/residue movement, diagnostics, support accounting, validation,
+rollback, and docs before any behavior change.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

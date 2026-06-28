@@ -5015,6 +5015,16 @@ idle insertion, remove broad `apb_back_to_back_policy_deferred`, and retain
 narrowed future timing, broader-protection, and alternate-width residue.
 `.639` is the next selector for the remaining APB back-to-back timing residue
 after the protected 32-bit multi-peripheral timing family shipped.
+`.639` now selects `.640`, readiness audit for APB no-policy
+multi-peripheral multi-register back-to-back timing, without behavior
+changes. Fixed no-policy multi-register timing is already shipped for
+selected 32-bit sideband and sideband data16 fixed compositions, while
+multi-peripheral no-policy timing is shipped only for one-register peripheral
+shapes. The current multi-peripheral timing guard still rejects broader
+two-register no-policy peripheral storage, so `.640` must settle source
+shape, endpoint storage, interconnect propagation, report/residue movement,
+diagnostics, support accounting, validation, rollback, and docs before any
+parser/generator/sample/test/HDL behavior change.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
