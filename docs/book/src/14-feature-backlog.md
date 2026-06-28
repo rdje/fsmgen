@@ -10541,6 +10541,17 @@ next owner is data16-only, protection-only, combined data16-protection,
 multi-register adjacent setup, requester/completer prerequisite, or explicit
 deferral before behavior changes.
 
+APB data16/protection back-to-back readiness audit:
+[IAL2_APB_DATA16_PROTECTION_BACK_TO_BACK_READINESS_AUDIT](../../IAL2_APB_DATA16_PROTECTION_BACK_TO_BACK_READINESS_AUDIT.md)
+selects `.621`, public contract selection for a bounded APB sideband-aware
+multi-register back-to-back timing-policy prerequisite, without behavior
+changes. The audit finds that shipped data16/protection completer and
+composition samples all use multi-register storage, while current
+timing-policy guards still reject multi-register completer storage for adjacent
+setup and composition propagation. `.621` must settle exact sideband-aware
+32-bit multi-register samples, endpoint compatibility, report/support movement,
+diagnostics, validation, rollback, and deferrals before implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -4757,6 +4757,18 @@ sideband-aware one-register families. `.620` must decide whether the next exact
 owner is data16-only, protection-only, combined data16-protection,
 multi-register adjacent-setup prerequisite, requester/completer prerequisite,
 or explicit deferral before behavior changes.
+`.620` now audits that data16/protection back-to-back readiness and selects
+`.621`, public contract selection for a bounded APB sideband-aware
+multi-register back-to-back timing-policy prerequisite, without behavior
+changes. The audit found that all shipped data16/protection completer and
+composition samples use multi-register storage, while current timing-policy
+guards still reject multi-register completer storage for adjacent setup and
+composition propagation. The next contract selection must settle exact
+sideband-aware 32-bit multi-register samples, endpoint compatibility,
+report/support movement, diagnostics, validation, rollback, and explicit
+deferral for data16, protection-policy effects, combined data16-protection,
+deeper queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
