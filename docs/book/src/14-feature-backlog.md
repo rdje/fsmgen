@@ -11289,6 +11289,23 @@ more-than-two-peripheral generalized ownership, or explicit deferral. No
 parser, generator, public source, support-accounting, generated artifact,
 HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed in `.669`.
 
+APB generalized multi-peripheral register-set cardinality audit:
+[IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_READINESS_AUDIT](../../IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_READINESS_AUDIT.md)
+selects `.671`, public contract selection for the first bounded APB
+sideband-aware 32-bit no-policy five-register generalized `reg0..regN`
+register-set multi-peripheral back-to-back timing family, without behavior
+changes. The audit found the shared generalized predicates are parameterized
+by count/stride/data width and the existing 32-bit no-policy window can hold a
+five-register representative, but public source names, whether the family
+widens to `maximum_count = 5`, support identities, report shape, diagnostics,
+generated-artifact probes for `reg3/reg4`, rollback, and next owner still
+need a public contract before implementation. Data16 five-register families,
+protected five-register families, more-than-five registers,
+more-than-two-peripheral families, queues, alternate overflow,
+accepted-less requester timing, multiple active transfers, bus matrices,
+scoreboards, direct backend, verification-output, backend-language variants,
+AXI, AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

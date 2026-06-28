@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.669: select APB cardinality audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.670` is active after `.669`; audit broader APB generalized register-set cardinality readiness.
-- recently_done: `.669` selected `.670`, readiness audit for broader APB generalized register-set cardinality beyond the selected two-to-four-register families, without behavior changes. The selected two-peripheral generalized matrix is shipped for 32-bit/data16 widths with and without selected protection, while live guards remain capped at `maximum_count = 4` and exactly two peripheral completers.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.670: audit APB cardinality readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.671` is active after `.670`; select the first bounded APB sideband-aware 32-bit no-policy five-register generalized register-set public contract.
+- recently_done: `.670` audited broader APB generalized register-set cardinality readiness and selected `.671` contract selection. The first widening owner is 32-bit no-policy five-register `reg0..regN`, because it isolates cardinality from data16 stride/strobe and protection-policy changes; no parser, generator, source, support-accounting, report, generated artifact, HDL/runtime, APB, AXI, AHB, or VHDL behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan. During `.569`, broad `t/1436-ial2-ppif-parser-cli.t` attempts were not used as closeout: the APB-relevant focused tests and direct probes passed, but the broad run sat in an unrelated AXI subprocess/pipe wait after all visible subtests had passed. During `.634`, grouped RAM-guarded focused test attempts stopped before tests because host memory was already 96.3% against the 88% cutoff; direct focused tests passed.
-- next_action: Execute `.670`: audit whether broader APB generalized register-set cardinality should move to public contract selection, needs smaller prerequisites, should yield to more-than-two-peripheral work, or should remain deferred.
+- next_action: Execute `.671`: settle exact public source names, admitted family bound, report/support shape, diagnostics, validation, rollback, docs, Knowledge Map, and next owner before any five-register APB implementation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

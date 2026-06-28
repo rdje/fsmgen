@@ -4461,6 +4461,21 @@ smaller report/static, diagnostic, address-map, or fixture prerequisite,
 more-than-two-peripheral generalized ownership, or explicit deferral. No
 parser, generator, public source, support-accounting, generated artifact,
 HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed in `.669`.
+`.670` now audits broader APB generalized register-set cardinality readiness
+and selects `.671`, public contract selection for the first bounded APB
+sideband-aware 32-bit no-policy five-register generalized `reg0..regN`
+register-set multi-peripheral back-to-back timing family, without behavior
+changes. The audit found the shared generalized predicates are parameterized
+by count/stride/data width and the existing 32-bit no-policy window can hold a
+five-register representative, but public source names, whether the family
+widens to `maximum_count = 5`, support identities, report shape, diagnostics,
+generated-artifact probes for `reg3/reg4`, rollback, and next owner still
+need a public contract before implementation. Data16 five-register families,
+protected five-register families, more-than-five registers,
+more-than-two-peripheral families, queues, alternate overflow,
+accepted-less requester timing, multiple active transfers, bus matrices,
+scoreboards, direct backend, verification-output, backend-language variants,
+AXI, AHB, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7079,6 +7094,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects bounded APB sideband-aware data16 protected generalized `reg0..regN` register-set public sources before implementation.
 - `docs/IAL2_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md` — ships selected APB sideband-aware data16 protected generalized `reg0..regN` register-set multi-peripheral back-to-back timing behavior.
 - `docs/IAL2_POST_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects broader APB generalized register-set cardinality readiness audit next.
+- `docs/IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_READINESS_AUDIT.md` — audits broader APB generalized register-set cardinality readiness and selects first 32-bit no-policy five-register contract selection next.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

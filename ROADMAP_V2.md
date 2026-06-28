@@ -5467,6 +5467,21 @@ smaller report/static, diagnostic, address-map, or fixture prerequisite,
 more-than-two-peripheral generalized ownership, or explicit deferral. No
 parser, generator, public source, support-accounting, generated artifact,
 HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed in `.669`.
+`.670` now audits broader APB generalized register-set cardinality readiness
+and selects `.671`, public contract selection for the first bounded APB
+sideband-aware 32-bit no-policy five-register generalized `reg0..regN`
+register-set multi-peripheral back-to-back timing family, without behavior
+changes. The audit found the shared generalized predicates are parameterized
+by count/stride/data width and the existing 32-bit no-policy window can hold a
+five-register representative, but public source names, whether the family
+widens to `maximum_count = 5`, support identities, report shape, diagnostics,
+generated-artifact probes for `reg3/reg4`, rollback, and next owner still
+need a public contract before implementation. Data16 five-register families,
+protected five-register families, more-than-five registers,
+more-than-two-peripheral families, queues, alternate overflow,
+accepted-less requester timing, multiple active transfers, bus matrices,
+scoreboards, direct backend, verification-output, backend-language variants,
+AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
