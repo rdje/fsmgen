@@ -10972,6 +10972,28 @@ alternate overflow, accepted-less requesters, multiple active APB transfers,
 bus matrices, scoreboards, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
 
+APB data16-protection multi-peripheral multi-register back-to-back behavior:
+[IAL2_APB_DATA16_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_DATA16_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md)
+ships the selected bounded APB sideband-aware data16-protection timing
+behavior for exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back.ppif`
+and its `.apb` alias. The generated requester exposes
+`accepted/busy/status`, accepts one active transfer plus one queued next
+transfer, and relaunches queued 16-bit `PWDATA` plus `PPROT/PSTRB`. The
+generated interconnect propagates queued setup without idle-cycle insertion,
+decodes status/control windows at bases `0` and `258`, translates
+`PADDR_CONTROL`, muxes selected responses, and remains protection-enforcement
+free. Both peripheral completers use adjacent setup and exactly protected
+`reg0` at local byte address `0` plus protected `reg1` at local byte address
+`2`, with 16-bit reset-0 storage, 2-bit byte-lane writes, `reg0` read allow
+plus privileged writes, and `reg1` privileged reads/writes. Reports add
+aggregate multi-peripheral `back_to_back_policy`, remove broad
+`apb_back_to_back_policy_deferred` and old
+`apb_protection_policy_effects_deferred`, and retain narrowed future timing,
+additional-protection-policy, and remaining-width residue. Status/control
+protected storage generalization beyond the selected family and generalized
+multi-peripheral multi-register shapes remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

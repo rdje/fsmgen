@@ -1549,6 +1549,11 @@ sub _multi_peripheral_completers_are_selected_sideband_data16_protection_timing_
     return $status_count == 1 && $control_count == 1;
 }
 
+sub _multi_peripheral_completers_are_selected_sideband_data16_protection_multi_register_timing_shape($completers) {
+    return 0 unless ref($completers) eq 'ARRAY' && @$completers == 2;
+    return !(grep { !_endpoint_storage_is_selected_sideband_data16_protection_multi_register_timing_shape($_->{storage}) } @$completers);
+}
+
 sub _multi_peripheral_completers_are_selected_sideband_protection_timing_shape($completers) {
     return 0 unless ref($completers) eq 'ARRAY' && @$completers == 2;
     my $status_count = 0;
@@ -1697,7 +1702,7 @@ sub _fixed_composition_back_to_back_policy_report($contract, $requester_result, 
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition, selected sideband-aware fixed multi-register composition, selected sideband-aware protected fixed multi-register composition, the bounded two-peripheral interconnect/decode family, and the bounded sideband-aware no-policy two-register two-peripheral composition; selected sideband-aware protection requester and adjacent protected status/control peripheral propagation is implemented for bounded two-peripheral composition; selected sideband-aware data16 requester and adjacent data16 two-register no-policy or protected completer propagation is implemented for fixed composition; selected sideband-aware data16 requester and adjacent data16 two-register no-policy peripheral propagation is implemented for bounded two-peripheral composition; selected sideband-aware data16-protection requester and adjacent protected status/control peripheral propagation is implemented for bounded two-peripheral composition; data16-protection generalization, generalized multi-peripheral multi-register timing, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition, selected sideband-aware fixed multi-register composition, selected sideband-aware protected fixed multi-register composition, the bounded two-peripheral interconnect/decode family, and the bounded sideband-aware no-policy two-register two-peripheral composition; selected sideband-aware protection requester and adjacent protected status/control peripheral propagation is implemented for bounded two-peripheral composition; selected sideband-aware data16 requester and adjacent data16 two-register no-policy or protected completer propagation is implemented for fixed composition; selected sideband-aware data16 requester and adjacent data16 two-register no-policy peripheral propagation is implemented for bounded two-peripheral composition; selected sideband-aware data16-protection requester and adjacent protected status/control or protected reg0/reg1 two-register peripheral propagation is implemented for bounded two-peripheral composition; status/control protected storage generalization beyond the selected family, generalized multi-peripheral multi-register timing, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 
@@ -2091,8 +2096,10 @@ sub _validate_multi_peripheral_timing_policy_compatibility($wiring, $children, $
         return
             if _multi_peripheral_completers_are_selected_sideband_data16_no_policy_multi_register_timing_shape($completers);
         return
+            if _multi_peripheral_completers_are_selected_sideband_data16_protection_multi_register_timing_shape($completers);
+        return
             if _multi_peripheral_completers_are_selected_sideband_data16_protection_timing_shape($completers);
-        confess "APB multi-peripheral selected back-to-back timing-policy supports only the selected two-peripheral sideband data16 no-policy reg0/reg1 storage shape or the selected two-peripheral sideband data16 protection status/control storage shape in this slice\n";
+        confess "APB multi-peripheral selected back-to-back timing-policy supports only the selected two-peripheral sideband data16 no-policy reg0/reg1 storage shape, the selected two-peripheral sideband data16 protection reg0/reg1 storage shape, or the selected two-peripheral sideband data16 protection status/control storage shape in this slice\n";
     } else {
         confess "APB multi-peripheral selected back-to-back timing-policy supports only one-register peripheral completer storage, the selected two-peripheral sideband no-policy reg0/reg1 storage shape, or the selected two-peripheral sideband protection status/control storage shape in this slice\n"
             if grep {
