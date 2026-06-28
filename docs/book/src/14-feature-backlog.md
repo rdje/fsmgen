@@ -11470,6 +11470,23 @@ anchor, `PPROT width 3`, `PSTRB width 2`, status/control windows `0` and
 report shape, diagnostics, validation, rollback, docs, Knowledge Map, and
 implementation owner before behavior changes.
 
+APB data16 protected generalized five-register contract:
+[IAL2_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_CONTRACT_SELECTION](../../IAL2_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_CONTRACT_SELECTION.md)
+selects `.681`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_five_register_status_back_to_back.ppif`
+and its byte-identical `.apb` profile alias, without behavior changes. The
+selected contract widens only the shipped data16 sideband-aware protected
+two-peripheral generalized `reg0..regN` register-set family from
+`maximum_count = 4` to `maximum_count = 5`. The public representative uses
+`reg0/reg1/reg2/reg3/reg4` at local addresses `0/2/4/6/8`, 16-bit data,
+`PPROT width 3`, `PSTRB width 2`, status/control windows `0` and `258`,
+queue-depth `1`, overflow `reject`, adjacent setup, propagation-only
+interconnect decode, and the selected register-local privileged `PPROT[0]`
+access-policy matrix. `.681` must add the public source pair, support
+identities, report/residue movement, diagnostics, generated-artifact probes,
+focused tests, docs, and Knowledge Map coverage while keeping broader APB,
+AXI, AHB, and VHDL behavior deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

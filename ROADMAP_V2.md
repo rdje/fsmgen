@@ -5636,6 +5636,26 @@ report shape, diagnostics, validation, rollback, docs, Knowledge Map, and
 implementation owner before behavior changes. No parser, generator, public
 source, support-accounting, report, generated artifact, HDL/runtime, APB
 transaction, AXI, AHB, or VHDL behavior changed in `.679`.
+`.680` now selects `.681`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_five_register_status_back_to_back.ppif`
+and its byte-identical `.apb` profile alias, without behavior changes. The
+selected contract widens only the shipped data16 sideband-aware protected
+two-peripheral generalized `reg0..regN` register-set family from
+`maximum_count = 4` to `maximum_count = 5`, using a public representative with
+`reg0/reg1/reg2/reg3/reg4` at local addresses `0/2/4/6/8`, 16-bit data,
+`PPROT width 3`, `PSTRB width 2`, status/control windows `0` and `258`,
+queue-depth `1`, overflow `reject`, adjacent setup, the selected
+register-local privileged `PPROT[0]` access-policy matrix, and
+propagation-only interconnect decode. `.681` must add the source pair,
+support identities, report/residue movement, diagnostics, generated-artifact
+probes for `reg3/reg4` storage/read/write/protection behavior, focused tests,
+docs, and Knowledge Map coverage while keeping more-than-five-register,
+more-than-two-peripheral, deeper-queue, alternate-overflow, accepted-less,
+multiple-active, alternate-policy, interconnect-owned-policy, bus-matrix,
+scoreboard, direct-backend, verification-output, backend-language variant,
+AXI, AHB, and VHDL behavior deferred. No parser, generator, public source,
+support-accounting, report, generated artifact, HDL/runtime, APB transaction,
+AXI, AHB, or VHDL behavior changed in `.680`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
