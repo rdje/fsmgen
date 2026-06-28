@@ -11218,6 +11218,24 @@ accepted-less requesters, multiple active transfers, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
 
+Post APB protected generalized multi-peripheral multi-register selector:
+[IAL2_POST_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.667`, public contract selection for bounded APB sideband-aware
+data16 protected generalized `reg0..regN` register-set multi-peripheral
+back-to-back timing, without behavior changes. The selector follows `.665`
+because generalized no-policy timing is shipped for both selected widths and
+protected generalized timing is shipped for 32-bit, while data16 protected
+generalized register sets remain explicitly deferred by the current APB guards
+and residue. `.667` must settle exact public source names, object id, source
+anchor, 16-bit APB/register data, `PSTRB width 2`, `PPROT width 3`,
+status/control windows at `0` and `258`, local addresses `0/2/4/...`,
+protected access-policy matrix, report shape, support accounting, diagnostics,
+validation, rollback, docs, Knowledge Map, and next owner before behavior
+changes. Broader register cardinality, more-than-two-peripheral families,
+deeper queues, alternate overflow, accepted-less requesters, multiple active
+transfers, direct backend, verification-output, backend-language variants,
+AXI, AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

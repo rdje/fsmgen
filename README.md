@@ -4399,6 +4399,22 @@ transfers, bus matrices, scoreboards, alternate protection-policy matrices,
 direct backend, verification-output, backend-language variants, AXI, AHB, and
 VHDL remain deferred. `.666` now owns the next APB timing/register-set residue
 selector.
+`.666` now selects `.667`, public contract selection for bounded APB
+sideband-aware data16 protected generalized `reg0..regN` register-set
+multi-peripheral back-to-back timing, without behavior changes. The selection
+follows `.665` because generalized no-policy timing is shipped for both
+selected widths and protected generalized timing is shipped for 32-bit, while
+data16 protected generalized register sets remain explicitly deferred by the
+current APB guards and residue. `.667` must settle exact public source names,
+object id, source anchor, 16-bit APB/register data, `PSTRB width 2`,
+`PPROT width 3`, status/control windows at `0` and `258`, local addresses
+`0/2/4/...`, protected access-policy matrix, report shape, support accounting,
+diagnostics, validation, rollback, docs, Knowledge Map, and next owner before
+behavior changes. Broader register cardinality, more-than-two-peripheral
+families, deeper queues, alternate overflow, accepted-less requesters,
+multiple active transfers, bus matrices, scoreboards, alternate
+protection-policy matrices, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7013,6 +7029,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects public contract selection for bounded APB sideband-aware 32-bit protected generalized `reg0..regN` register-set timing next.
 - `docs/IAL2_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects bounded APB sideband-aware 32-bit protected generalized `reg0..regN` register-set public sources before implementation.
 - `docs/IAL2_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md` — ships selected APB sideband-aware 32-bit protected generalized `reg0..regN` register-set multi-peripheral back-to-back timing behavior.
+- `docs/IAL2_POST_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects public contract selection for bounded APB sideband-aware data16 protected generalized `reg0..regN` register-set timing next.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
