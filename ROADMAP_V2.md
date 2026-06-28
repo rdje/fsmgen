@@ -4796,8 +4796,8 @@ selected fixed composition combines that completer with the `.612` sideband
 requester queue and exposes aggregate `back_to_back_policy`. Multi-peripheral
 multi-register timing propagation, data16/protection variants, deeper queues,
 alternate overflow, direct backend, verification-output, backend-language
-variants, AXI, AHB, and VHDL remain deferred. `.623` is active to select the
-next APB data16/protection back-to-back owner without behavior changes first.
+variants, AXI, AHB, and VHDL remain deferred. `.623` selected the next APB
+data16/protection back-to-back owner without behavior changes first.
 `.623` now selects `.624`, public contract selection for the bounded APB
 sideband-aware data16 back-to-back timing-policy family, without behavior
 changes. Live reports over representative data16, protection, and
@@ -4809,6 +4809,20 @@ denied-access side effects. Protection-only timing, combined data16-protection
 timing, multi-peripheral multi-register timing, deeper queues, alternate
 overflow, direct backend, verification-output, backend-language variants, AXI,
 AHB, and VHDL remain deferred.
+`.624` now selects `.625` to directly implement the bounded APB
+sideband-aware data16 back-to-back timing-policy contract for exactly
+`ppif/apb_requester_transfer_sideband_data16_status_back_to_back.ppif`, its
+`.apb` alias, `ppif/apb_completer_multi_register_sideband_data16_back_to_back.ppif`,
+its `.apb` alias,
+`ppif/apb_composition_multi_register_sideband_data16_status_back_to_back.ppif`,
+and its `.apb` alias. The selected contract keeps APB addresses and wait
+counts at 32/4 bits, uses 16-bit data and `PSTRB width 2`, requires
+`accepted/busy/status` depth-1 queued requester timing, selects a two-register
+no-policy adjacent completer with `reg0` at address `0` and `reg1` at address
+`2`, and selects fixed one-requester/one-completer propagation. Protection-only
+timing, combined data16-protection timing, multi-peripheral multi-register
+timing, deeper queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
