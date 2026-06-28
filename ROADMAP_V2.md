@@ -4648,6 +4648,19 @@ protection back-to-back variants, deeper queues, alternate overflow,
 accepted-less requesters, multiple active APB transfers, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.611` now audits APB sideband-aware back-to-back readiness and selects
+`.612`, bounded requester-first implementation, without behavior changes. The
+audit found no new public timing-policy vocabulary is needed because `.606`
+already selected accepted-time sampling for every request payload field,
+including sidebands when present. The first implementation should add only the
+32-bit sideband requester `apb_requester_transfer_sideband_status_back_to_back`
+`.ppif`/`.apb` pair, with `PPROT` width 3, `PSTRB` width 4,
+`accepted/busy/status`, queued `PPROT/PSTRB` capture, and queued sideband
+relaunch. Fixed composition, multi-peripheral composition, completer
+timing-policy propagation, data16/protection back-to-back variants, deeper
+queues, alternate overflow, accepted-less requesters, multiple active APB
+transfers, direct backend, verification-output, backend-language variants,
+AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

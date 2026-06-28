@@ -10416,6 +10416,21 @@ requesters, multiple active APB transfers, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
 
+APB sideband back-to-back readiness audit:
+[IAL2_APB_SIDEBAND_BACK_TO_BACK_READINESS_AUDIT](../../IAL2_APB_SIDEBAND_BACK_TO_BACK_READINESS_AUDIT.md)
+selects `.612`, bounded requester-first sideband back-to-back implementation,
+without behavior changes. No new public timing-policy vocabulary is needed:
+the `.606` contract already says accepted requests sample every payload field,
+including sidebands when present. The first implementation should add only the
+32-bit sideband requester `apb_requester_transfer_sideband_status_back_to_back`
+`.ppif`/`.apb` pair, with `PPROT` width 3, `PSTRB` width 4,
+`accepted/busy/status`, queued `PPROT/PSTRB` capture, and queued sideband
+relaunch. Fixed composition, multi-peripheral composition, completer
+timing-policy propagation, data16/protection back-to-back variants, deeper
+queues, alternate overflow, accepted-less requesters, multiple active APB
+transfers, direct backend, verification-output, backend-language variants,
+AXI, AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
