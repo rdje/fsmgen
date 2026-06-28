@@ -10498,6 +10498,21 @@ before implementation. Data16/protection variants, multi-register timing
 policy, deeper queues, alternate overflow, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
 
+APB sideband multi-peripheral back-to-back contract selection:
+[IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.618` to implement exactly
+`ppif/apb_composition_multi_peripheral_sideband_status_back_to_back.ppif` and
+its `.apb` alias. The selected contract is a bounded two-peripheral 32-bit
+sideband composition with requester `accepted/busy/status`, depth-1 queued
+requester timing, `PPROT width 3`, `PSTRB width 4`, adjacent setup admission on
+every one-register peripheral completer, and the existing status/control
+address-map/decode shape. Reports must remove broad back-to-back residue for
+the selected top/requester/interconnect/peripheral surfaces and retain narrowed
+future-policy plus protection-policy effects residue. Data16/protection timing
+variants, multi-register timing policy, deeper queues, alternate overflow,
+direct backend, verification-output, backend-language variants, AXI, AHB, and
+VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

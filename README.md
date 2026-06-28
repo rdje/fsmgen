@@ -3721,6 +3721,19 @@ movement, diagnostics, validation, and rollback before implementation.
 Data16/protection variants, multi-register timing policy, deeper queues,
 alternate overflow, direct backend, verification-output, backend-language
 variants, AXI, AHB, and VHDL remain deferred.
+`.617` now selects the public sideband-aware APB multi-peripheral
+back-to-back contract without behavior changes. `.618` shall implement exactly
+`ppif/apb_composition_multi_peripheral_sideband_status_back_to_back.ppif` and
+its `.apb` alias. The selected contract is a two-peripheral 32-bit sideband
+composition with requester `accepted/busy/status`, depth-1 queued requester
+timing, `PPROT width 3`, `PSTRB width 4`, adjacent setup admission on every
+one-register peripheral completer, and the existing static status/control
+address-map/decode shape. Reports shall remove broad back-to-back residue for
+the selected top, requester, interconnect, and peripheral surfaces while
+retaining narrowed future-policy residue plus protection-policy effects
+residue. Data16/protection timing variants, multi-register timing policy,
+deeper queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6285,6 +6298,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects the bounded sideband-aware APB completer plus fixed-composition back-to-back public contract before implementation.
 - `docs/IAL2_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_BEHAVIOR.md` — ships selected 32-bit sideband-aware APB adjacent completer setup plus fixed-composition queued sideband `PPROT/PSTRB` propagation.
 - `docs/IAL2_POST_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects public contract selection for bounded 32-bit sideband-aware APB multi-peripheral back-to-back propagation after fixed composition shipped.
+- `docs/IAL2_APB_SIDEBAND_MULTI_PERIPHERAL_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects the bounded 32-bit sideband-aware APB two-peripheral status back-to-back public contract before implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

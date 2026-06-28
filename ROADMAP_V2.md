@@ -4723,6 +4723,19 @@ movement, diagnostics, validation, and rollback before implementation.
 Data16/protection variants, multi-register timing policy, deeper queues,
 alternate overflow, direct backend, verification-output, backend-language
 variants, AXI, AHB, and VHDL remain deferred.
+`.617` now selects the public sideband-aware APB multi-peripheral
+back-to-back contract without behavior changes. `.618` shall implement exactly
+`ppif/apb_composition_multi_peripheral_sideband_status_back_to_back.ppif` and
+its `.apb` alias. The selected contract is a two-peripheral 32-bit sideband
+composition with requester `accepted/busy/status`, depth-1 queued requester
+timing, `PPROT width 3`, `PSTRB width 4`, adjacent setup admission on every
+one-register peripheral completer, and the existing static status/control
+address-map/decode shape. Reports shall remove broad back-to-back residue for
+the selected top, requester, interconnect, and peripheral surfaces while
+retaining narrowed future-policy residue plus protection-policy effects
+residue. Data16/protection timing variants, multi-register timing policy,
+deeper queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
