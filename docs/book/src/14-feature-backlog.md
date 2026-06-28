@@ -10552,6 +10552,21 @@ setup and composition propagation. `.621` must settle exact sideband-aware
 32-bit multi-register samples, endpoint compatibility, report/support movement,
 diagnostics, validation, rollback, and deferrals before implementation.
 
+APB sideband multi-register back-to-back contract selection:
+[IAL2_APB_SIDEBAND_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_SIDEBAND_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.622`, direct bounded implementation of exactly the standalone
+completer and fixed-composition APB sideband-aware multi-register
+back-to-back contract, without behavior changes. The selected public source
+pairs are `apb_completer_multi_register_sideband_back_to_back` and
+`apb_composition_multi_register_sideband_status_back_to_back` in both `.ppif`
+and `.apb` forms. The first implementation is limited to a 32-bit
+sideband-aware two-register no-policy completer with adjacent setup admission
+and a fixed one-requester/one-completer composition over the `.612` sideband
+requester. Multi-peripheral multi-register propagation, data16/protection
+variants, deeper queues, alternate overflow, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

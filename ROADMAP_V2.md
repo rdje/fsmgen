@@ -4769,6 +4769,20 @@ report/support movement, diagnostics, validation, rollback, and explicit
 deferral for data16, protection-policy effects, combined data16-protection,
 deeper queues, alternate overflow, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL.
+`.621` now selects `.622`, direct bounded implementation of the APB
+sideband-aware multi-register back-to-back timing-policy prerequisite, without
+behavior changes. The selected public sources are
+`ppif/apb_completer_multi_register_sideband_back_to_back.ppif`,
+`ppif/apb_completer_multi_register_sideband_back_to_back.apb`,
+`ppif/apb_composition_multi_register_sideband_status_back_to_back.ppif`, and
+`ppif/apb_composition_multi_register_sideband_status_back_to_back.apb`. The
+selected implementation is limited to a 32-bit sideband-aware no-policy
+two-register completer with adjacent setup admission and a fixed
+one-requester/one-completer composition over the `.612` sideband requester.
+Multi-peripheral multi-register timing propagation, data16/protection
+variants, deeper queues, alternate overflow, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
