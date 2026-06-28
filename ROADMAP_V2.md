@@ -4837,6 +4837,17 @@ the adjacent completer decodes `reg0` at address `0` and `reg1` at address
 `back_to_back_policy` while retaining future-policy, remaining-width, and
 protection-policy residue. `.626` selects the next APB data16/protection
 back-to-back owner without behavior changes.
+`.626` now selects `.627`, public contract selection for a bounded APB
+sideband-aware protection back-to-back timing-policy family, without behavior
+changes. Live reports after `.625` confirm the 32-bit protection and
+data16-protection APB samples still expose `protection_policy`, have no
+`back_to_back_policy`, and retain broad `apb_back_to_back_policy_deferred`.
+A temporary protected adjacent-setup candidate fails at the current no-policy
+timing guard, so protection-only timing is selected before combined
+data16-protection timing. Multi-peripheral multi-register timing, deeper
+queues, alternate overflow, accepted-less requesters, multiple active APB
+transfers, direct backend, verification-output, backend-language variants,
+AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
