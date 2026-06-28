@@ -4912,6 +4912,19 @@ timing, broader multi-peripheral multi-register timing, deeper queues,
 alternate overflow, accepted-less requesters, multiple active APB transfers,
 broader protection policies, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.631` now ships those four selected APB sideband-aware data16-protection
+back-to-back public sources. The standalone completer accepts adjacent setup
+for the selected protected 16-bit two-register shape with `reg0` at address
+`0`, `reg1` at address `2`, `PPROT width 3`, and `PSTRB width 2`, preserving
+allowed, denied, zero-strobe, byte-lane, and unmapped access behavior. The
+fixed composition propagates the `.625` queued data16 sideband requester into
+that completer, exposes aggregate `back_to_back_policy`, and keeps protection
+enforcement owned by the completer. `.632` is the next selector for the
+remaining APB timing residue; multi-peripheral data16-protection timing,
+broader multi-peripheral multi-register timing, deeper queues, alternate
+overflow, accepted-less requesters, multiple active APB transfers, broader
+protection policies, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

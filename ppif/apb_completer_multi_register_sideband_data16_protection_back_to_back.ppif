@@ -1,0 +1,46 @@
+(protocol-platform-intent apb_completer_multi_register_sideband_data16_protection_back_to_back
+  (profile apb)
+  (source
+    (object fsmgen-apb-completer-multi-register-sideband-data16-protection-back-to-back)
+    (anchor
+      (document FSMGEN-APB-REQUESTER-CAPTURE-WORKSHEET)
+      (section completer-multi-register-sideband-data16-protection-back-to-back)
+      (page stage-1)))
+  (apb-completer apb_completer
+    (role completer)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (control
+      (wait-cycles wait_cycles width 4))
+    (bus
+      (select PSEL)
+      (enable PENABLE)
+      (write PWRITE)
+      (address PADDR width 32)
+      (write-data PWDATA width 16)
+      (protection PPROT width 3)
+      (strobe PSTRB width 2)
+      (ready PREADY)
+      (read-data PRDATA width 16)
+      (error PSLVERR))
+    (storage
+      (register reg0
+        (address 0 width 32)
+        (data reg0_data_q width 16 reset 0)
+        (access-policy
+          (read allow)
+          (write require (privileged 1))))
+      (register reg1
+        (address 2 width 32)
+        (data reg1_data_q width 16 reset 0)
+        (access-policy
+          (read require (privileged 1))
+          (write require (privileged 1)))))
+    (transfer apb_complete
+      (setup-detect (select 1) (enable 0))
+      (wait-cycles wait_cycles)
+      (read register)
+      (write register)
+      (unmapped-address error)
+      (timing-policy
+        (setup-admission adjacent)))))

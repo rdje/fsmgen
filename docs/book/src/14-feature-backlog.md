@@ -10702,6 +10702,22 @@ accepted-less requesters, multiple active APB transfers, broader protection
 policies, direct backend, verification-output, backend-language variants, AXI,
 AHB, and VHDL remain deferred.
 
+APB data16-protection back-to-back behavior:
+[IAL2_APB_DATA16_PROTECTION_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_DATA16_PROTECTION_BACK_TO_BACK_BEHAVIOR.md)
+ships the selected APB sideband-aware data16-protection back-to-back public
+sources. The protected standalone data16 completer now accepts adjacent setup
+for the selected two-register shape with `reg0` at address `0`, `reg1` at
+address `2`, `PPROT width 3`, and `PSTRB width 2`, while preserving allowed,
+denied, zero-strobe, byte-lane, and unmapped behavior. The protected
+fixed-composition status sample propagates the `.625` queued data16 sideband
+requester into that completer, exposes aggregate `back_to_back_policy`, and
+keeps policy enforcement in the completer. `.632` is the next selector for
+remaining APB timing residue; multi-peripheral data16-protection timing,
+broader multi-peripheral multi-register timing, deeper queues, alternate
+overflow, accepted-less requesters, multiple active APB transfers, broader
+protection policies, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

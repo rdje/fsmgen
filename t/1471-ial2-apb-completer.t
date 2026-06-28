@@ -476,6 +476,60 @@ subtest 'adapter parses the selected APB multi-register sideband data16 protecti
     ok($residue{apb_remaining_widths_deferred}, 'sideband data16 protection completer report keeps narrowed remaining-width residue');
 };
 
+subtest 'adapter parses the selected APB multi-register sideband data16 protection back-to-back completer PPIF shape' => sub {
+    ok(-f sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif_path(), 'tracked runnable APB multi-register sideband data16 protection back-to-back completer PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'APB multi-register sideband data16 protection back-to-back completer adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_completer', 'adapter returns the APB completer kind for sideband data16 protection back-to-back source');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-completer-multi-register-sideband-data16-protection-back-to-back', 'sideband data16 protection back-to-back source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'apb_completer_multi_register_sideband_data16_protection_back_to_back', 'sideband data16 protection back-to-back intent name is preserved');
+    is($result->{report}{transfer}{timing_policy}{setup_admission}, 'adjacent', 'sideband data16 protection back-to-back report records adjacent setup admission');
+    is($result->{report}{width_policy}{data_width}, 16, 'sideband data16 protection back-to-back report records 16-bit data width');
+    is($result->{report}{width_policy}{strobe_width}, 2, 'sideband data16 protection back-to-back report records 2-bit PSTRB width');
+    is_deeply($result->{report}{transfer}{registers}, [qw(reg0 reg1)], 'sideband data16 protection back-to-back report preserves selected two-register list');
+    is_deeply(
+        [map { $_->{address}{value} } @{$result->{report}{bindings}{storage}{registers}}],
+        [0, 2],
+        'sideband data16 protection back-to-back report preserves selected 2-byte register addresses',
+    );
+
+    my $policy = $result->{report}{protection_policy};
+    is($policy->{scope}, 'register', 'sideband data16 protection back-to-back policy report is register-scoped');
+    is($policy->{predicate_source}{bus_signal}, 'PPROT', 'sideband data16 protection back-to-back policy report names bus-side PPROT');
+    is($policy->{registers}[0]{read}{action}, 'allow', 'sideband data16 protection back-to-back reg0 read is allowed');
+    is($policy->{registers}[0]{write}{predicate}{value}, 1, 'sideband data16 protection back-to-back reg0 write requires privileged PPROT');
+    is($policy->{registers}[1]{read}{predicate}{value}, 1, 'sideband data16 protection back-to-back reg1 read requires privileged PPROT');
+    is($policy->{registers}[1]{write}{predicate}{value}, 1, 'sideband data16 protection back-to-back reg1 write requires privileged PPROT');
+
+    my $isf = $result->{generated_ial1}{text};
+    like($isf, qr/\(input PWDATA \(width 16\)\)/, 'sideband data16 protection back-to-back IAL1 declares 16-bit PWDATA input');
+    like($isf, qr/\(input PSTRB \(width 2\)\)/, 'sideband data16 protection back-to-back IAL1 declares 2-bit PSTRB input');
+    like($isf, qr/\(when \(& PSEL \(! PENABLE\)\)/, 'sideband data16 protection back-to-back IAL1 admits adjacent setup cycles');
+    like($isf, qr/\(sample PPROT as prot_q\)/, 'sideband data16 protection back-to-back IAL1 samples PPROT on setup');
+    like($isf, qr/\(when \(& write_q \(== addr 2\) \(!= \(& prot_q 3'd1\) 3'd0\)\)/, 'sideband data16 protection back-to-back IAL1 gates reg1 writes by PPROT');
+    like($isf, qr/\(when \(& \(! write_q\) \(== addr 2\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)\n      \(drive error_complete\)\)/, 'sideband data16 protection back-to-back IAL1 errors denied reg1 reads');
+    like($isf, qr/\(when-bit strb_q 1\s+\(set reg1_data_q \(\| \(& reg1_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/s, 'sideband data16 protection back-to-back IAL1 preserves data16 high-byte write mask');
+
+    my $fsm = $result->{generated_ial0}{files}{'apb_completer.fsm'};
+    like($fsm, qr/\(PWDATA 16\)/, 'sideband data16 protection back-to-back FSM preserves 16-bit PWDATA');
+    like($fsm, qr/\(PSTRB 2\)/, 'sideband data16 protection back-to-back FSM preserves 2-bit PSTRB');
+    like($fsm, qr/\(<= \(addr PADDR\) <\(& PSEL \(! PENABLE\)\)\)/, 'sideband data16 protection back-to-back FSM samples address under adjacent setup guard');
+    like($fsm, qr/\(<= \(prot_q PPROT\) <\(& PSEL \(! PENABLE\)\)\)/, 'sideband data16 protection back-to-back FSM samples PPROT under adjacent setup guard');
+    like($fsm, qr/\(\?\(& write_q \(== addr 2\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband data16 protection back-to-back FSM keeps denied reg1 write branch');
+    like($fsm, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'sideband data16 protection back-to-back FSM applies high-byte write mask');
+    like($fsm, qr/\(<- \(PSLVERR> 1\) <error_complete_start\)/, 'sideband data16 protection back-to-back denied access drives PSLVERR');
+
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$residue{apb_back_to_back_policy_deferred}, 'sideband data16 protection back-to-back completer removes broad back-to-back residue');
+    ok(!$residue{apb_protection_policy_effects_deferred}, 'sideband data16 protection back-to-back completer removes old protection-policy-effects residue');
+    ok(!$residue{apb_alternate_widths_deferred}, 'sideband data16 protection back-to-back completer keeps broad alternate-width residue absent');
+    ok($residue{apb_additional_back_to_back_policies_deferred}, 'sideband data16 protection back-to-back completer keeps narrowed future timing residue');
+    ok($residue{apb_additional_protection_policies_deferred}, 'sideband data16 protection back-to-back completer keeps additional protection-policy residue');
+    ok($residue{apb_remaining_widths_deferred}, 'sideband data16 protection back-to-back completer keeps narrowed remaining-width residue');
+};
+
 subtest 'adapter rejects malformed APB completer PPIF shapes with targeted diagnostics' => sub {
     my $profile_mismatch = sample_apb_completer_ppif();
     $profile_mismatch =~ s/\(profile apb\)/(profile axi4)/;
@@ -537,8 +591,11 @@ subtest 'adapter rejects malformed APB completer PPIF shapes with targeted diagn
     my $bad_protection_back_to_back_policy = sample_apb_completer_multi_register_sideband_protection_back_to_back_ppif();
     $bad_protection_back_to_back_policy =~ s/\(read require \(privileged 1\)\)/(read allow)/;
 
-    my $data16_protection_back_to_back_attempt = sample_apb_completer_multi_register_sideband_data16_protection_ppif();
-    $data16_protection_back_to_back_attempt =~ s/\(unmapped-address error\)/(unmapped-address error)\n      (timing-policy\n        (setup-admission adjacent))/;
+    my $bad_data16_protection_back_to_back_reg1_address = sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif();
+    $bad_data16_protection_back_to_back_reg1_address =~ s/\(address 2 width 32\)/(address 4 width 32)/;
+
+    my $bad_data16_protection_back_to_back_policy = sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif();
+    $bad_data16_protection_back_to_back_policy =~ s/\(read require \(privileged 1\)\)/(read allow)/;
 
     my $policy_without_sidebands = sample_apb_completer_multi_register_sideband_protection_ppif();
     $policy_without_sidebands =~ s/\n      \(protection PPROT width 3\)//;
@@ -572,6 +629,8 @@ subtest 'adapter rejects malformed APB completer PPIF shapes with targeted diagn
     my $bad_setup_admission = slurp(sample_apb_completer_back_to_back_ppif_path());
     $bad_setup_admission =~ s/\(setup-admission adjacent\)/(setup-admission idle-gap)/;
 
+    my $selected_adjacent_error = qr/selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, selected sideband-aware data16 two-register no-policy, or selected sideband-aware data16 two-register protection completer families in this slice/;
+
     my @cases = (
         ['apb completer profile mismatch', $profile_mismatch, qr/profile 'axi4' does not match \(apb-completer \.\.\.\); expected apb/],
         ['apb completer missing storage', $missing_storage, qr/is missing required \(storage \.\.\.\) clause/],
@@ -589,11 +648,12 @@ subtest 'adapter rejects malformed APB completer PPIF shapes with targeted diagn
         ['apb completer partial sideband bundle', $partial_sideband, qr/requires bus\.protection and bus\.strobe together/],
         ['apb completer bad strobe width', $bad_strobe_width, qr/bus\.strobe\.width must be one of 2, 4/],
         ['apb completer bad data16 strobe width', $bad_data16_strobe_width, qr/bus\.strobe\.width must be 2 for selected APB data width 16/],
-        ['apb completer data16 back-to-back wrong selected register address', $bad_data16_back_to_back_reg1_address, qr/selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, or selected sideband-aware data16 two-register no-policy completer families in this slice/],
-        ['apb completer data16 back-to-back access-policy', $bad_data16_back_to_back_access_policy, qr/selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, or selected sideband-aware data16 two-register no-policy completer families in this slice/],
-        ['apb completer protection back-to-back wrong selected register address', $bad_protection_back_to_back_reg1_address, qr/selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, or selected sideband-aware data16 two-register no-policy completer families in this slice/],
-        ['apb completer protection back-to-back wrong policy', $bad_protection_back_to_back_policy, qr/selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, or selected sideband-aware data16 two-register no-policy completer families in this slice/],
-        ['apb completer data16 protection back-to-back deferred', $data16_protection_back_to_back_attempt, qr/selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, or selected sideband-aware data16 two-register no-policy completer families in this slice/],
+        ['apb completer data16 back-to-back wrong selected register address', $bad_data16_back_to_back_reg1_address, $selected_adjacent_error],
+        ['apb completer data16 back-to-back access-policy', $bad_data16_back_to_back_access_policy, $selected_adjacent_error],
+        ['apb completer protection back-to-back wrong selected register address', $bad_protection_back_to_back_reg1_address, $selected_adjacent_error],
+        ['apb completer protection back-to-back wrong policy', $bad_protection_back_to_back_policy, $selected_adjacent_error],
+        ['apb completer data16 protection back-to-back wrong selected register address', $bad_data16_protection_back_to_back_reg1_address, $selected_adjacent_error],
+        ['apb completer data16 protection back-to-back wrong policy', $bad_data16_protection_back_to_back_policy, $selected_adjacent_error],
         ['apb completer access-policy without sidebands', $policy_without_sidebands, qr/access-policy requires bus\.protection and bus\.strobe sideband bindings/],
         ['apb completer access-policy single register', $single_register_policy, qr/access-policy requires multi-register storage/],
         ['apb completer duplicate access-policy', $duplicate_access_policy, qr/has duplicate \(access-policy \.\.\.\) clause/],
@@ -787,6 +847,31 @@ subtest 'CLI check and semantic JSON support-account APB multi-register sideband
     is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_completer_multi_register_sideband_data16_protection', 'APB multi-register sideband data16 protection completer semantic JSON names the corpus entry');
     is($semantic_report->{semantic}{module}{source_root_kind}, 'fsm', 'APB multi-register sideband data16 protection completer semantic JSON payload describes the generated .fsm semantic root');
     is($semantic_report->{semantic}{module}{name}, 'apb_completer', 'APB multi-register sideband data16 protection completer semantic JSON records the generated module');
+};
+
+subtest 'CLI check and semantic JSON support-account APB multi-register sideband data16 protection back-to-back completer PPIF identity' => sub {
+    my $path = sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'APB multi-register sideband data16 protection back-to-back completer --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'APB multi-register sideband data16 protection back-to-back completer --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'APB multi-register sideband data16 protection back-to-back completer check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'APB multi-register sideband data16 protection back-to-back completer check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_completer_multi_register_sideband_data16_protection_back_to_back', 'APB multi-register sideband data16 protection back-to-back completer check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'APB multi-register sideband data16 protection back-to-back completer check JSON records PPIF source kind');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'APB multi-register sideband data16 protection back-to-back completer --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'APB multi-register sideband data16 protection back-to-back completer --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'APB multi-register sideband data16 protection back-to-back completer semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_completer_multi_register_sideband_data16_protection_back_to_back', 'APB multi-register sideband data16 protection back-to-back completer semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'fsm', 'APB multi-register sideband data16 protection back-to-back completer semantic JSON payload describes the generated .fsm semantic root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_completer', 'APB multi-register sideband data16 protection back-to-back completer semantic JSON records the generated module');
 };
 
 subtest 'CLI check and semantic JSON support-account APB completer PPIF identity' => sub {
@@ -1094,6 +1179,59 @@ subtest 'CLI schedule JSON and outdir expose APB multi-register sideband data16 
     like($sv, qr/PRDATA(?:_next)?\s*(?:<=|=)\s*(?:16'h0000|0);/, 'APB multi-register sideband data16 protection HDL preserves denied-read zero PRDATA drive');
 };
 
+subtest 'CLI schedule JSON, outdir, and .apb alias expose APB multi-register sideband data16 protection back-to-back completer review artifacts and HDL' => sub {
+    my $path = sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'APB multi-register sideband data16 protection back-to-back completer --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'APB multi-register sideband data16 protection back-to-back completer --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{width_policy}{data_width}, 16, 'APB multi-register sideband data16 protection back-to-back schedule JSON reports data width 16');
+    is($schedule_report->{width_policy}{strobe_width}, 2, 'APB multi-register sideband data16 protection back-to-back schedule JSON reports PSTRB width 2');
+    is($schedule_report->{transfer}{timing_policy}{setup_admission}, 'adjacent', 'APB multi-register sideband data16 protection back-to-back schedule JSON reports adjacent setup admission');
+    is($schedule_report->{protection_policy}{scope}, 'register', 'APB multi-register sideband data16 protection back-to-back schedule JSON reports register policy scope');
+    is($schedule_report->{protection_policy}{registers}[1]{read}{predicate}{value}, 1, 'APB multi-register sideband data16 protection back-to-back schedule JSON reports reg1 read predicate');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_back_to_back_policy_deferred}, 'APB multi-register sideband data16 protection back-to-back schedule JSON omits broad back-to-back residue');
+    ok(!$residue{apb_protection_policy_effects_deferred}, 'APB multi-register sideband data16 protection back-to-back schedule JSON omits old policy-effects residue');
+    ok($residue{apb_additional_back_to_back_policies_deferred}, 'APB multi-register sideband data16 protection back-to-back schedule JSON reports narrowed timing residue');
+    ok($residue{apb_additional_protection_policies_deferred}, 'APB multi-register sideband data16 protection back-to-back schedule JSON reports additional-policy residue');
+    ok($residue{apb_remaining_widths_deferred}, 'APB multi-register sideband data16 protection back-to-back schedule JSON reports narrowed remaining-width residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_completer_multi_sideband_data16_protection_back_to_back.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'APB multi-register sideband data16 protection back-to-back completer CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'APB multi-register sideband data16 protection back-to-back completer generation keeps stderr clean');
+    ok(-f File::Spec->catfile($outdir, 'apb_completer.isf'), 'APB multi-register sideband data16 protection back-to-back completer --outdir writes generated .isf');
+    ok(-f File::Spec->catfile($outdir, 'apb_completer.fsm'), 'APB multi-register sideband data16 protection back-to-back completer --outdir writes generated .fsm');
+    ok(-f $hdl, 'APB multi-register sideband data16 protection back-to-back completer --output writes generated HDL');
+    my $fsm = slurp(File::Spec->catfile($outdir, 'apb_completer.fsm'));
+    like($fsm, qr/\(<= \(addr PADDR\) <\(& PSEL \(! PENABLE\)\)\)/, 'APB multi-register sideband data16 protection back-to-back outdir .fsm samples adjacent setup');
+    like($fsm, qr/\(PSTRB 2\)/, 'APB multi-register sideband data16 protection back-to-back outdir .fsm preserves PSTRB width 2');
+    like($fsm, qr/\(\?\(& write_q \(== addr 2\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'APB multi-register sideband data16 protection back-to-back outdir .fsm keeps denied reg1 write branch');
+    like($fsm, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'APB multi-register sideband data16 protection back-to-back outdir .fsm applies high-byte write mask');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+wire\s+\[15:0\]\s+PWDATA\b/, 'APB multi-register sideband data16 protection back-to-back HDL exposes 16-bit PWDATA');
+    like($sv, qr/\binput\s+wire\s+\[1:0\]\s+PSTRB\b/, 'APB multi-register sideband data16 protection back-to-back HDL exposes 2-bit PSTRB');
+    like($sv, qr/prot_q\s*&\s*3'd1/, 'APB multi-register sideband data16 protection back-to-back HDL preserves PPROT bit 0 predicate logic');
+    like($sv, qr/PSLVERR_next = 1;/, 'APB multi-register sideband data16 protection back-to-back HDL preserves denied-access PSLVERR drive');
+
+    ok(-f sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_apb_path(), 'tracked runnable APB multi-register sideband data16 protection back-to-back completer .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_completer', '.apb APB multi-register sideband data16 protection back-to-back completer alias returns the completer kind');
+    is($alias->{generated_ial1}{text}, $ppif->{generated_ial1}{text}, '.apb APB multi-register sideband data16 protection back-to-back completer alias mirrors .ppif generated IAL1');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, '.apb APB multi-register sideband data16 protection back-to-back completer alias mirrors .ppif generated IAL0');
+    is($alias->{report}{transfer}{timing_policy}{setup_admission}, 'adjacent', '.apb APB multi-register sideband data16 protection back-to-back completer alias preserves adjacent timing policy');
+    is($alias->{report}{protection_policy}{predicate_namespace}, 'fsmgen_apb_pprot_v1', '.apb APB multi-register sideband data16 protection back-to-back completer alias preserves protection-policy metadata');
+};
+
 subtest 'CLI schedule JSON and outdir expose APB completer review artifacts and HDL' => sub {
     my $path = sample_apb_completer_ppif_path();
     my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
@@ -1204,6 +1342,16 @@ subtest '.apb alias accepts APB completer content' => sub {
     is_deeply($data16_protection_alias->{generated_ial0}{files}, $data16_protection_ppif->{generated_ial0}{files}, '.apb APB multi-register sideband data16 protection completer alias mirrors .ppif generated IAL0');
     is($data16_protection_alias->{report}{width_policy}{data_width}, 16, '.apb APB multi-register sideband data16 protection completer alias preserves data width policy');
     is($data16_protection_alias->{report}{protection_policy}{predicate_namespace}, 'fsmgen_apb_pprot_v1', '.apb APB multi-register sideband data16 protection completer alias preserves protection-policy metadata');
+
+    ok(-f sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_apb_path(), 'tracked runnable APB multi-register sideband data16 protection back-to-back completer .apb sample exists');
+    my $data16_protection_btb_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_apb_path());
+    my $data16_protection_btb_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif_path());
+    is($data16_protection_btb_alias->{kind}, 'protocol_intent.apb_completer', '.apb APB multi-register sideband data16 protection back-to-back completer alias returns the completer kind');
+    is($data16_protection_btb_alias->{generated_ial1}{text}, $data16_protection_btb_ppif->{generated_ial1}{text}, '.apb APB multi-register sideband data16 protection back-to-back completer alias mirrors .ppif generated IAL1');
+    is_deeply($data16_protection_btb_alias->{generated_ial0}{files}, $data16_protection_btb_ppif->{generated_ial0}{files}, '.apb APB multi-register sideband data16 protection back-to-back completer alias mirrors .ppif generated IAL0');
+    is($data16_protection_btb_alias->{report}{width_policy}{data_width}, 16, '.apb APB multi-register sideband data16 protection back-to-back completer alias preserves data width policy');
+    is($data16_protection_btb_alias->{report}{transfer}{timing_policy}{setup_admission}, 'adjacent', '.apb APB multi-register sideband data16 protection back-to-back completer alias preserves adjacent timing policy');
+    is($data16_protection_btb_alias->{report}{protection_policy}{predicate_namespace}, 'fsmgen_apb_pprot_v1', '.apb APB multi-register sideband data16 protection back-to-back completer alias preserves protection-policy metadata');
 };
 
 done_testing();
@@ -1252,6 +1400,10 @@ sub sample_apb_completer_multi_register_sideband_data16_protection_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_data16_protection.ppif');
 }
 
+sub sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_data16_protection_back_to_back.ppif');
+}
+
 sub sample_apb_completer_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer.apb');
 }
@@ -1292,6 +1444,10 @@ sub sample_apb_completer_multi_register_sideband_data16_protection_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_data16_protection.apb');
 }
 
+sub sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer_multi_register_sideband_data16_protection_back_to_back.apb');
+}
+
 sub sample_apb_completer_ppif {
     return slurp(sample_apb_completer_ppif_path());
 }
@@ -1322,6 +1478,10 @@ sub sample_apb_completer_multi_register_sideband_data16_back_to_back_ppif {
 
 sub sample_apb_completer_multi_register_sideband_data16_protection_ppif {
     return slurp(sample_apb_completer_multi_register_sideband_data16_protection_ppif_path());
+}
+
+sub sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif {
+    return slurp(sample_apb_completer_multi_register_sideband_data16_protection_back_to_back_ppif_path());
 }
 
 sub sorted {
