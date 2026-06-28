@@ -4939,6 +4939,19 @@ timing, deeper queues, alternate overflow, accepted-less requesters, multiple
 active APB transfers, broader protection policies, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.633` now selects `.634` to directly implement exactly two APB
+sideband-aware multi-peripheral data16-protection back-to-back public sources:
+`ppif/apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back.ppif`
+and its `.apb` alias. The selected contract uses the existing two-peripheral
+status/control protected data16 topology with requester `accepted/busy/status`
+depth-1 queued timing, adjacent setup on both peripheral completers, 16-bit
+data, `PPROT width 3`, `PSTRB width 2`, 2-byte-aligned windows at `0` and
+`258`, propagation-only interconnect decode, peripheral-owned protection
+enforcement, and aggregate multi-peripheral `back_to_back_policy` reporting.
+Broader multi-peripheral multi-register timing, deeper queues, alternate
+overflow, accepted-less requesters, multiple active APB transfers, broader
+protection policies, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

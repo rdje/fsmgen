@@ -10726,13 +10726,29 @@ multi-peripheral data16-protection back-to-back timing, without behavior
 changes. Existing multi-peripheral data16-protection reports already expose
 16-bit data, `PPROT width 3`, `PSTRB width 2`, and completer-owned protection
 enforcement, but still have no aggregate `back_to_back_policy` and retain
-broad `apb_back_to_back_policy_deferred`. The next contract must settle exact
-source names, static topology scope, requester/completer/interconnect timing
-requirements, queued setup decode, sideband propagation, report/residue
-movement, support accounting, diagnostics, validation, and rollback before
-implementation. Broader multi-peripheral multi-register timing, deeper queues,
-alternate overflow, accepted-less requesters, multiple active APB transfers,
-broader protection policies, direct backend, verification-output,
+broad `apb_back_to_back_policy_deferred`. `.633` is the selected contract
+owner that settles source names, static topology scope,
+requester/completer/interconnect timing requirements, queued setup decode,
+sideband propagation, report/residue movement, support accounting,
+diagnostics, validation, and rollback before implementation. Broader
+multi-peripheral multi-register timing, deeper queues, alternate overflow,
+accepted-less requesters, multiple active APB transfers, broader protection
+policies, direct backend, verification-output, backend-language variants, AXI,
+AHB, and VHDL remain deferred.
+
+APB multi-peripheral data16-protection back-to-back contract selection:
+[IAL2_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.634` to directly implement exactly two public sources:
+`ppif/apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back.ppif`
+and its `.apb` alias. The selected contract keeps the existing two-peripheral
+status/control protected data16 topology, requester `accepted/busy/status`
+depth-1 queued timing, adjacent setup on both peripheral completers, 16-bit
+data, `PPROT width 3`, `PSTRB width 2`, 2-byte-aligned windows at `0` and
+`258`, propagation-only interconnect decode, peripheral-owned protection
+enforcement, and aggregate multi-peripheral `back_to_back_policy` reporting.
+Broader multi-peripheral multi-register timing, deeper queues, alternate
+overflow, accepted-less requesters, multiple active APB transfers, broader
+protection policies, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 Post multiple dynamic multi-beat selector:
