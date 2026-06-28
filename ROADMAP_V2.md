@@ -5223,6 +5223,22 @@ identity, parser branch, timing branch, generated artifact, HDL/runtime
 behavior, APB transaction behavior, AXI, AHB, or VHDL behavior changed.
 `.653` selects `.654`, readiness audit for generalized APB multi-peripheral
 multi-register timing.
+`.654` now selects `.655`, public contract selection for bounded APB
+sideband-aware 32-bit protected `reg0`/`reg1` multi-peripheral
+multi-register back-to-back timing, without behavior changes. The audit found
+the immediate missing bounded family is the 32-bit counterpart of the shipped
+`.649` data16 protected `reg0`/`reg1` family. Live report probes confirmed the
+selected 32-bit/data16 no-policy `reg0`/`reg1`, data16 protected
+`reg0`/`reg1`, and 32-bit/data16 status/control protected families. A
+corrected `/tmp` 32-bit protected `reg0`/`reg1` candidate still fails closed
+at the current multi-peripheral timing guard, so exact public source names,
+report/residue movement, support accounting, diagnostics, validation,
+rollback, docs, and Knowledge Map must be settled in `.655` before behavior
+changes. Broad generalized timing, arbitrary register shapes, more than two
+peripherals, deeper queues, alternate overflow, accepted-less requesters,
+multiple active transfers, bus matrices, scoreboards, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

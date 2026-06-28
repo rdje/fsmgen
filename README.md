@@ -4217,6 +4217,22 @@ identity, parser branch, timing branch, generated artifact, HDL/runtime
 behavior, APB transaction behavior, AXI, AHB, or VHDL behavior changed.
 `.653` selects `.654`, readiness audit for generalized APB multi-peripheral
 multi-register timing.
+`.654` now selects `.655`, public contract selection for bounded APB
+sideband-aware 32-bit protected `reg0`/`reg1` multi-peripheral
+multi-register back-to-back timing, without behavior changes. The audit found
+the immediate missing bounded family is the 32-bit counterpart of the shipped
+`.649` data16 protected `reg0`/`reg1` family. Live report probes confirmed the
+selected 32-bit/data16 no-policy `reg0`/`reg1`, data16 protected
+`reg0`/`reg1`, and 32-bit/data16 status/control protected families. A
+corrected `/tmp` 32-bit protected `reg0`/`reg1` candidate still fails closed
+at the current multi-peripheral timing guard, so exact public source names,
+report/residue movement, support accounting, diagnostics, validation,
+rollback, docs, and Knowledge Map must be settled in `.655` before behavior
+changes. Broad generalized timing, arbitrary register shapes, more than two
+peripherals, deeper queues, alternate overflow, accepted-less requesters,
+multiple active transfers, bus matrices, scoreboards, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6819,6 +6835,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_STATUS_CONTROL_PROTECTED_STORAGE_GENERALIZATION_READINESS_AUDIT.md` — audits APB status/control protected-storage generalization readiness and selects public contract selection before behavior changes.
 - `docs/IAL2_APB_STATUS_CONTROL_PROTECTED_STORAGE_GENERALIZATION_CONTRACT_SELECTION.md` — selects residue/static cleanup for the already-shipped APB status/control protected-storage generalization contract.
 - `docs/IAL2_APB_STATUS_CONTROL_PROTECTED_STORAGE_RESIDUE_CLEANUP.md` — ships APB status/control protected-storage residue cleanup and selects generalized multi-peripheral multi-register timing readiness next.
+- `docs/IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_TIMING_READINESS_AUDIT.md` — audits generalized APB multi-peripheral multi-register timing readiness and selects bounded 32-bit protected `reg0`/`reg1` contract selection next.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

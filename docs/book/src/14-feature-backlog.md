@@ -11036,6 +11036,18 @@ multi-peripheral multi-register timing remains future work. No source,
 support-accounting, parser, timing, HDL, APB transaction, AXI, AHB, or VHDL
 behavior changed.
 
+APB generalized multi-peripheral multi-register timing readiness audit:
+[IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_TIMING_READINESS_AUDIT](../../IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_TIMING_READINESS_AUDIT.md)
+selects `.655`, public contract selection for bounded APB sideband-aware
+32-bit protected `reg0`/`reg1` multi-peripheral multi-register back-to-back
+timing, without behavior changes. The shipped selected families already cover
+32-bit/data16 no-policy `reg0`/`reg1`, data16 protected `reg0`/`reg1`, and
+32-bit/data16 status/control protected timing. A corrected 32-bit protected
+`reg0`/`reg1` candidate still fails at the current multi-peripheral timing
+guard, so exact public sources, reports, residue movement, support
+accounting, diagnostics, validation, rollback, docs, and Knowledge Map are
+settled before implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
