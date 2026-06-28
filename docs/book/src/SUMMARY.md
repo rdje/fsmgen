@@ -30,4 +30,5 @@
   - [Local Variables](13m-local-variables.md)
 - [Feature Backlog](14-feature-backlog.md)
 - [Implementation Blueprint](15-implementation-blueprint.md)
+  - [Adding IAL2 Protocols](15a-ial2-new-protocol-support.md)
 - [Reference Map](90-reference-map.md)

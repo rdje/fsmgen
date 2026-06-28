@@ -5912,6 +5912,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md` — selected first-class semantic-introspection API and MCP adapter boundary, records the shipped read-only adapter, and names the current client-compatibility limits.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
 - `docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md` — first non-code IAL2 protocol/platform intent evaluation and go/no-go criteria.
+- `docs/IAL2_NEW_PROTOCOL_SUPPORT_WORKFLOW.md` — reusable end-to-end workflow for adding future IAL2 protocol support from evidence through contract, implementation, validation, docs, Knowledge Map, task tree, and commit closeout.
 - `docs/AXI_VALID_READY_INTENT_PROBE.md` — first bounded AXI Valid-Ready source-anchor evidence inventory for future IAL2 design/probe work.
 - `docs/AXI_MANAGER_USER_API_BRAINSTORM.md` — captured AXI manager user-facing API direction for future IAL2 work.
 - `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md` — first bounded AXI ID/order/concurrency source-anchor evidence inventory for future IAL2 manager rule-engine work.

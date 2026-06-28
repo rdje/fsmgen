@@ -21,6 +21,7 @@ selector records, and regression corpus.
 | --- | --- |
 | Source-layer contract map | Chapters 02-08 for `.fsm`, Chapters 13-13m for `.isf`, Chapter 14 for bounded `.ppif` status |
 | Layering and lowering order | Chapter 13h plus the `.isf` and `.ppif` public contract docs |
+| Adding IAL2 protocol surfaces | Chapter 15a plus [IAL2_NEW_PROTOCOL_SUPPORT_WORKFLOW.md](../../IAL2_NEW_PROTOCOL_SUPPORT_WORKFLOW.md) |
 | Portable request/result API | [BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md) |
 | Host source/artifact model | [BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md) |
 | Report and manifest contracts | Chapter 11, Chapter 13i, public contract docs, and `./bin/fsmgen --capability-manifest` |

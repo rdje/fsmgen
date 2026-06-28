@@ -948,6 +948,15 @@ IntentIR → `.isf`). FSMGen captures the method reference in
 and the APB worksheet in [docs/APB_REQUESTER_CAPTURE_WORKSHEET.md](docs/APB_REQUESTER_CAPTURE_WORKSHEET.md)
 as documentation artifacts, but the active implementation belongs to SPECFORGE.
 
+### H4a. IAL2 protocol onboarding workflow
+Future FSMGen-owned protocol support must follow the reusable IAL2 workflow in
+[docs/IAL2_NEW_PROTOCOL_SUPPORT_WORKFLOW.md](docs/IAL2_NEW_PROTOCOL_SUPPORT_WORKFLOW.md).
+The workflow captures the AXI/APB-proven sequence: source evidence, readiness
+audit, public contract selection, bounded parser/report/generator behavior,
+generated `.isf` and `.fsm` review artifacts, runnable examples, support
+accounting, diagnostics, mdBook coverage, Knowledge Map continuity, doctrine
+gates, and per-slice commits.
+
 ### H5. VHDL backend
 Long-term goal:
 - implement a real VHDL backend once a second backend is genuinely warranted.
