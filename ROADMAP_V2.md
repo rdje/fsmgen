@@ -5704,6 +5704,24 @@ diagnostic. `.684` must settle source names, object id, anchor,
 the admitted 32-bit no-policy family widens to `maximum_count = 6`, support
 identities, reports, diagnostics, validation, rollback, docs, Knowledge Map,
 and implementation owner before behavior changes.
+`.684` now selects `.685`, direct implementation of the bounded APB
+sideband-aware 32-bit no-policy six-register generalized `reg0..regN`
+register-set multi-peripheral timing family. The selected public sources are
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.ppif`
+and the byte-identical `.apb` alias. The selected
+`protocol-platform-intent` name is
+`apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back`,
+the selected object is
+`fsmgen-apb-composition-multi-peripheral-multi-register-sideband-generalized-six-register-status-back-to-back`,
+and the selected anchor is
+`requester-multi-peripheral-composition-multi-register-sideband-generalized-six-register-status-back-to-back`.
+The implementation may widen only the selected 32-bit no-policy generalized
+two-peripheral family from `maximum_count = 5` to `maximum_count = 6`; data16
+six-register, protected six-register, more than six registers,
+more-than-two peripherals, deeper queues, alternate overflow, accepted-less
+requesters, multiple active transfers, bus matrices, scoreboards, direct
+backend, verification-output, backend-language variants, AXI, AHB, and VHDL
+remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -11529,6 +11529,18 @@ settle `reg0/reg1/reg2/reg3/reg4/reg5` local addresses `0/4/8/12/16/20`,
 support identities, reports, diagnostics, validation, rollback, docs,
 Knowledge Map, and implementation owner before behavior changes.
 
+Six-register APB generalized contract selection:
+[IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_CONTRACT_SELECTION](../../IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_CONTRACT_SELECTION.md)
+selects `.685`, direct implementation of the bounded APB sideband-aware
+32-bit no-policy six-register generalized `reg0..regN` register-set
+multi-peripheral timing family. The public source pair is
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.ppif`
+and `.apb`; the representative uses `reg0` through `reg5` at local addresses
+`0/4/8/12/16/20`. The implementation may widen only the selected 32-bit
+no-policy generalized two-peripheral family to `maximum_count = 6`; data16,
+protected, more-than-six-register, more-than-two-peripheral, direct-backend,
+backend-language, AXI, AHB, and VHDL behavior remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

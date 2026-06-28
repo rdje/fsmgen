@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.683: audit APB broader cardinality readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.684` is active after `.683`; select the bounded APB 32-bit no-policy six-register generalized register-set public contract before any behavior changes.
-- recently_done: `.683` audited broader APB generalized register-set cardinality and selected `.684`, public contract selection for the first bounded 32-bit no-policy six-register generalized two-peripheral timing family.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.684: select APB six-register public contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.685` is active after `.684`; implement the bounded APB 32-bit no-policy six-register generalized register-set public contract.
+- recently_done: `.684` selected `.685`, direct implementation of the bounded APB sideband-aware 32-bit no-policy six-register generalized `reg0..regN` two-peripheral timing family.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan. During `.569`, broad `t/1436-ial2-ppif-parser-cli.t` attempts were not used as closeout: the APB-relevant focused tests and direct probes passed, but the broad run sat in an unrelated AXI subprocess/pipe wait after all visible subtests had passed. During `.634`, grouped RAM-guarded focused test attempts stopped before tests because host memory was already 96.3% against the 88% cutoff; direct focused tests passed.
-- next_action: Execute `.684`: select exact `.ppif`/`.apb` source names, object id, anchor, six-register representative `reg0..reg5` local addresses `0/4/8/12/16/20`, 32-bit no-policy family bound `maximum_count = 6`, support identities, reports, diagnostics, validation, rollback, docs, Knowledge Map, and implementation owner before behavior changes.
+- next_action: Execute `.685`: add the selected `.ppif`/`.apb` source pair, widen only the 32-bit no-policy generalized APB two-peripheral bound from `maximum_count = 5` to `maximum_count = 6`, add support/test/docs coverage, validate, update Memory/Knowledge Map, and commit before any next slice.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
