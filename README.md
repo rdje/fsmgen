@@ -3963,6 +3963,14 @@ multi-peripheral multi-register timing, deeper queues, alternate overflow,
 accepted-less requesters, multiple active APB transfers, broader protection
 policies, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred.
+`.635` now selects `.636`, readiness audit for broader APB multi-peripheral
+multi-register back-to-back timing propagation, without behavior changes. The
+audit is next because broader multi-peripheral multi-register propagation is
+the first explicit remaining composition timing residue after `.634`, while
+deeper queues, alternate overflow, accepted-less requesters, multiple active
+APB transfers, broader protection policies, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred behind future exact owners.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6546,6 +6554,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_APB_DATA16_PROTECTION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects APB sideband-aware multi-peripheral data16-protection back-to-back public contract selection after selected fixed data16-protection timing shipped.
 - `docs/IAL2_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects the bounded APB sideband-aware multi-peripheral data16-protection back-to-back public contract before implementation.
 - `docs/IAL2_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_BEHAVIOR.md` — ships selected APB sideband-aware multi-peripheral data16-protection back-to-back timing behavior.
+- `docs/IAL2_POST_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects broader APB multi-peripheral multi-register back-to-back timing readiness audit after selected multi-peripheral data16-protection timing shipped.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

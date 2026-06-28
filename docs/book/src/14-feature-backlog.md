@@ -10771,6 +10771,17 @@ accepted-less requesters, multiple active APB transfers, broader protection
 policies, direct backend, verification-output, backend-language variants, AXI,
 AHB, and VHDL remain deferred.
 
+Post APB multi-peripheral data16-protection back-to-back selector:
+[IAL2_POST_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_MULTI_PERIPHERAL_DATA16_PROTECTION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.636`, readiness audit for broader APB multi-peripheral
+multi-register back-to-back timing propagation, without behavior changes. The
+audit is next because broader multi-peripheral multi-register propagation is
+the first explicit remaining composition timing residue after `.634`, while
+deeper queues, alternate overflow, accepted-less requesters, multiple active
+APB transfers, broader protection policies, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred behind future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

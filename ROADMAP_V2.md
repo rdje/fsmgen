@@ -4970,6 +4970,14 @@ multi-peripheral multi-register timing, deeper queues, alternate overflow,
 accepted-less requesters, multiple active APB transfers, broader protection
 policies, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred.
+`.635` now selects `.636`, readiness audit for broader APB multi-peripheral
+multi-register back-to-back timing propagation, without behavior changes. The
+audit is next because broader multi-peripheral multi-register propagation is
+the first explicit remaining composition timing residue after `.634`, while
+deeper queues, alternate overflow, accepted-less requesters, multiple active
+APB transfers, broader protection policies, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred behind future exact owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
