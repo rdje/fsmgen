@@ -4620,6 +4620,21 @@ adjacent setup admission. Sideband/data16/protection variants, deeper queues,
 alternate overflow, multiple active APB transfers, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.609` now ships the selected bounded APB multi-peripheral status
+back-to-back family for
+`ppif/apb_composition_multi_peripheral_status_back_to_back.ppif` and `.apb`.
+The selected shape is exactly two 32-bit no-sideband peripheral completers with
+the existing static non-overlapping address map. The requester exposes
+`accepted/busy/status` and uses the `.607` depth-1 queued overflow-reject
+policy; every peripheral declares adjacent setup admission. The generated
+interconnect remains propagation-only, decodes current `PSEL/PADDR`, forwards
+`PENABLE`, and keeps unmapped errors active-access only. Reports add aggregate
+`back_to_back_policy`, remove broad `apb_back_to_back_policy_deferred` only for
+the selected top/interconnect/requester/peripheral surfaces, and retain
+narrowed `apb_additional_back_to_back_policies_deferred` for
+sideband/data16/protection variants, deeper queues, alternate overflow,
+multiple active APB transfers, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

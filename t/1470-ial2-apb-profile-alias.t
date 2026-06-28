@@ -60,6 +60,7 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     ok(-f sample_apb_status_back_to_back_path(), 'tracked runnable APB requester back-to-back .apb sample exists');
     ok(-f sample_apb_completer_back_to_back_alias_path(), 'tracked runnable APB completer back-to-back .apb sample exists');
     ok(-f sample_apb_composition_status_back_to_back_alias_path(), 'tracked runnable APB composition back-to-back .apb sample exists');
+    ok(-f sample_apb_composition_multi_peripheral_status_back_to_back_alias_path(), 'tracked runnable APB multi-peripheral status back-to-back composition .apb sample exists');
 
     my $completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_alias_path());
     my $completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_ppif_path());
@@ -94,6 +95,14 @@ subtest 'adapter accepts APB completer and composition .apb profile aliases' => 
     is_deeply($btb_composition_alias->{generated_ial1}{items}, $btb_composition_ppif->{generated_ial1}{items}, '.apb composition back-to-back mirrors .ppif generated IAL1 artifacts');
     is_deeply($btb_composition_alias->{generated_ial0}{files}, $btb_composition_ppif->{generated_ial0}{files}, '.apb composition back-to-back mirrors .ppif generated IAL0 files');
     is($btb_composition_alias->{report}{back_to_back_policy}{requester}{timing_policy}{overflow}, 'reject', '.apb composition back-to-back preserves aggregate requester policy');
+
+    my $btb_multi_peripheral_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_status_back_to_back_alias_path());
+    my $btb_multi_peripheral_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path());
+    is($btb_multi_peripheral_alias->{kind}, 'protocol_intent.apb_composition', '.apb multi-peripheral composition back-to-back parser result keeps APB composition kind');
+    is($btb_multi_peripheral_alias->{mode}, 'requester-multi-peripheral-composition', '.apb multi-peripheral composition back-to-back parser result preserves multi-peripheral mode');
+    is_deeply($btb_multi_peripheral_alias->{generated_ial1}{items}, $btb_multi_peripheral_ppif->{generated_ial1}{items}, '.apb multi-peripheral composition back-to-back mirrors .ppif generated IAL1 artifacts');
+    is_deeply($btb_multi_peripheral_alias->{generated_ial0}{files}, $btb_multi_peripheral_ppif->{generated_ial0}{files}, '.apb multi-peripheral composition back-to-back mirrors .ppif generated IAL0 files');
+    is($btb_multi_peripheral_alias->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', '.apb multi-peripheral composition back-to-back preserves aggregate interconnect policy');
 
     my $multi_completer_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_alias_path());
     my $multi_completer_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_multi_register_ppif_path());
@@ -461,6 +470,13 @@ subtest 'CLI check and semantic JSON report APB multi-register .apb public sourc
             label => 'APB composition status back-to-back',
             path => sample_apb_composition_status_back_to_back_alias_path(),
             entry_id => 'intent.apb_profile_alias_composition_status_back_to_back',
+            source_root_kind => 'top',
+            module => 'apb_tb',
+        },
+        {
+            label => 'APB multi-peripheral composition status back-to-back',
+            path => sample_apb_composition_multi_peripheral_status_back_to_back_alias_path(),
+            entry_id => 'intent.apb_profile_alias_composition_multi_peripheral_status_back_to_back',
             source_root_kind => 'top',
             module => 'apb_tb',
         },
@@ -1022,6 +1038,14 @@ sub sample_apb_composition_multi_register_sideband_data16_protection_ppif_path {
 
 sub sample_apb_composition_multi_peripheral_alias_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral.apb');
+}
+
+sub sample_apb_composition_multi_peripheral_status_back_to_back_alias_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_status_back_to_back.apb');
+}
+
+sub sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_status_back_to_back.ppif');
 }
 
 sub sample_apb_composition_multi_peripheral_sideband_alias_path {

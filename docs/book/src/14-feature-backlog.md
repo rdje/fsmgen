@@ -10385,6 +10385,22 @@ sideband/data16/protection variants, deeper queues, alternate overflow,
 multiple active APB transfers, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
 
+APB multi-peripheral back-to-back behavior:
+[IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR](../../IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md)
+ships `.609`, the selected 32-bit no-sideband two-peripheral status
+back-to-back family. The new `.ppif` and `.apb` samples reuse the `.607`
+requester depth-1 queued overflow-reject policy with `accepted/busy/status`,
+require adjacent setup admission on every peripheral completer, preserve the
+generated `.isf -> .fsm` review path, and keep the generated interconnect
+propagation-only. Queued setup to either peripheral decodes through current
+`PSEL/PADDR` with `PENABLE=0`; unmapped errors remain active-access only.
+Reports add aggregate `back_to_back_policy`, remove broad
+`apb_back_to_back_policy_deferred` only for the selected surfaces, and retain
+narrowed `apb_additional_back_to_back_policies_deferred` for
+sideband/data16/protection variants, deeper queues, alternate overflow,
+multiple active APB transfers, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -6,7 +6,6 @@ answers:
   - "does APB back-to-back timing-policy behavior ship?"
   - "which APB back-to-back samples are supported?"
   - "how does the APB requester accepted signal work?"
-  - "does APB multi-peripheral back-to-back propagation ship?"
 date: 2026-06-28
 status: current
 tags: [ial2, apb, back-to-back, timing, behavior, task-tree]
@@ -33,7 +32,10 @@ bus cycle.
 
 The completer policy is explicit adjacent setup admission on `PSEL &&
 !PENABLE`. Fixed composition propagates compatible endpoint policies and
-reports aggregate `back_to_back_policy` metadata. Multi-peripheral,
-sideband/data16/protection variants, deeper queues, alternate overflow
+reports aggregate `back_to_back_policy` metadata.
+
+`.609` later ships the selected 32-bit no-sideband two-peripheral
+multi-peripheral status family. Multi-peripheral variants beyond that selected
+family, sideband/data16/protection variants, deeper queues, alternate overflow
 policies, direct backend, verification-output, backend-language variants, AXI,
 AHB, and VHDL remain deferred.

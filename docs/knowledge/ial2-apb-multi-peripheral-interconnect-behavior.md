@@ -39,6 +39,9 @@ requester `status` output, so the generated top uses `status_peripheral`;
 reports preserve both `instance_name` and `generated_instance_name`.
 
 The multi-peripheral composition report removes
-`apb_interconnect_multi_peripheral_decode_deferred`. APB sidebands/strobes,
-alternate widths, back-to-back policy, direct backend, verification-output,
-backend-language variants, AXI/AHB interconnects, and VHDL remain deferred.
+`apb_interconnect_multi_peripheral_decode_deferred`. `.609` later ships the
+selected 32-bit no-sideband multi-peripheral status back-to-back timing-policy
+family while preserving the same propagation-only interconnect shape.
+Sideband/strobe, alternate-width, protection, broader back-to-back policy,
+direct backend, verification-output, backend-language variants, AXI/AHB
+interconnects, and VHDL remain deferred.

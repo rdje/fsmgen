@@ -24,6 +24,11 @@ fixed-composition implementation for the selected sample family. Multi-
 peripheral interconnect propagation remains a later exact owner after the fixed
 composition path proves the public policy and report migration.
 
+Update `.609`: that later exact owner now ships the selected 32-bit
+no-sideband two-peripheral status multi-peripheral propagation family. This
+contract selection remains the source of the shared requester/completer timing
+vocabulary.
+
 ## Evidence Read
 
 This selection reads and closes the contract questions left by:
@@ -160,12 +165,13 @@ the source must carry compatible requester and completer timing policies:
   the selected fixed-composition sample family.
 
 Multi-peripheral composition is not part of the `.607` first implementation
-owner. A later exact owner must validate that every peripheral endpoint
-selects compatible adjacent setup admission, that the generated interconnect
-does not insert an idle cycle, and that response muxing remains deterministic
-for an access immediately followed by a setup to the same or a different
-peripheral. Until that owner ships, multi-peripheral reports retain
-`apb_back_to_back_policy_deferred`.
+owner. `.609` later validates the selected 32-bit no-sideband two-peripheral
+status family: every peripheral endpoint selects compatible adjacent setup
+admission, the generated interconnect does not insert an idle cycle, and
+response muxing remains deterministic for an access immediately followed by a
+setup to the same or a different peripheral. Broader multi-peripheral
+timing-policy variants still retain narrowed future-policy residue until
+future exact owners ship them.
 
 ## First Supported Sample Family
 
@@ -224,9 +230,9 @@ replace it with narrower future-work residue such as
 
 The narrower residue covers deeper queues, alternate overflow policies,
 accepted-less request surfaces, multiple outstanding APB transfers,
-sideband/data16/protection variants, multi-peripheral interconnect propagation,
-direct backend lowering, verification-output generation, backend-language
-variants, AXI, AHB, and VHDL.
+sideband/data16/protection variants, multi-peripheral interconnect propagation
+beyond the selected `.609` no-sideband status family, direct backend lowering,
+verification-output generation, backend-language variants, AXI, AHB, and VHDL.
 
 ## Implementation Result
 
@@ -235,6 +241,10 @@ family. See `docs/IAL2_APB_BACK_TO_BACK_BEHAVIOR.md` for the shipped requester
 accepted/queued behavior, completer adjacent setup-admission behavior, fixed
 composition propagation, reports, support-accounting identities, validation,
 and remaining deferrals.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.609` later implements the selected
+32-bit no-sideband two-peripheral status multi-peripheral propagation family.
+See `docs/IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md`.
 
 ## Diagnostics
 
@@ -251,7 +261,8 @@ The `.607` implementation should reject at least:
 - fixed composition where requester and completer timing policies are missing
   or incompatible;
 - any top-level composition timing clause in the first slice;
-- multi-peripheral back-to-back timing policy until its exact owner ships;
+- multi-peripheral back-to-back timing policy outside the selected `.609`
+  no-sideband status family until exact owners ship those variants;
 - `.apb` aliases whose generated `.isf`/`.fsm` review artifacts or report
   source identity differ from their `.ppif` twins.
 

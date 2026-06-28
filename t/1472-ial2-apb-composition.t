@@ -387,6 +387,55 @@ subtest 'adapter parses the selected APB multi-peripheral composition PPIF shape
     ok($composition_residue{apb_protection_and_strobes_deferred}, 'multi-peripheral composition report keeps APB sideband residue explicit');
 };
 
+subtest 'adapter parses the selected APB multi-peripheral status back-to-back composition PPIF shape' => sub {
+    ok(-f sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path(), 'tracked runnable multi-peripheral status back-to-back APB composition PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'multi-peripheral status back-to-back APB composition adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_composition', 'multi-peripheral status back-to-back adapter returns the APB composition kind');
+    is($result->{mode}, 'requester-multi-peripheral-composition', 'multi-peripheral status back-to-back mode remains the multi-peripheral composition mode');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-composition-multi-peripheral-status-back-to-back', 'multi-peripheral status back-to-back source object id is preserved');
+    is($result->{report}{back_to_back_policy}{composition_role}, 'propagate_endpoint_policy_through_interconnect', 'multi-peripheral report records interconnect propagation role');
+    is($result->{report}{back_to_back_policy}{requester}{timing_policy}{queue_depth}, 1, 'multi-peripheral report records requester queue-depth 1');
+    is($result->{report}{back_to_back_policy}{requester}{timing_policy}{overflow}, 'reject', 'multi-peripheral report records requester overflow reject');
+    is($result->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'multi-peripheral report records propagation-only interconnect timing role');
+    is($result->{report}{back_to_back_policy}{interconnect}{setup_decode}, 'current_psel_paddr_with_penable_low', 'multi-peripheral report records current setup decode policy');
+    is($result->{report}{back_to_back_policy}{interconnect}{unmapped_policy}, 'active_access_only', 'multi-peripheral report records active-access unmapped policy');
+    is_deeply(
+        [map { $_->{timing_policy}{setup_admission} } @{$result->{report}{back_to_back_policy}{peripherals}}],
+        [qw(adjacent adjacent)],
+        'multi-peripheral report records adjacent setup admission for every peripheral',
+    );
+
+    is($result->{report}{requester_accepted_field}{name}, 'accepted', 'multi-peripheral status back-to-back report exposes requester accepted metadata');
+    my ($accepted_top_port) = grep { $_->{name} eq 'accepted' } @{$result->{report}{composition}{top_ports}};
+    ok($accepted_top_port, 'multi-peripheral status back-to-back report lists accepted top port');
+    is($accepted_top_port->{width}, 1, 'multi-peripheral status back-to-back report lists accepted as one bit');
+
+    my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
+    like($top, qr/=accepted>/, 'multi-peripheral status back-to-back top exposes accepted output');
+    like($top, qr/\(queued_valid 1\)/, 'multi-peripheral status back-to-back top embeds requester queued state');
+    like($top, qr/\(<- \(PADDR> queued_addr\)\)/, 'multi-peripheral status back-to-back top embeds queued setup address drive');
+    like($top, qr/\(<= \(addr PADDR_STATUS\) <\(& PSEL_STATUS \(! PENABLE_STATUS\)\)\)/, 'multi-peripheral status back-to-back top embeds status peripheral adjacent setup detector');
+    like($top, qr/\(<= \(addr PADDR_CONTROL\) <\(& PSEL_CONTROL \(! PENABLE_CONTROL\)\)\)/, 'multi-peripheral status back-to-back top embeds control peripheral adjacent setup detector');
+
+    my $interconnect = $result->{generated_ial0}{files}{'apb_interconnect.fsm'};
+    like($interconnect, qr/\(<- \(PENABLE_STATUS> PENABLE\)\)/, 'multi-peripheral status back-to-back interconnect forwards PENABLE to status without insertion');
+    like($interconnect, qr/\(<- \(PENABLE_CONTROL> PENABLE\)\)/, 'multi-peripheral status back-to-back interconnect forwards PENABLE to control without insertion');
+    like($interconnect, qr/\(<- \(PSEL_STATUS> PSEL\) <\(& PSEL \(>= PADDR 0\) \(< PADDR 256\)\)\)/, 'multi-peripheral status back-to-back interconnect decodes current status setup address');
+    like($interconnect, qr/\(<- \(PSEL_CONTROL> PSEL\) <\(& PSEL \(>= PADDR 256\) \(< PADDR 512\)\)\)/, 'multi-peripheral status back-to-back interconnect decodes current control setup address');
+    like($interconnect, qr/\(<- \(PSLVERR> 1\) <\(& PSEL PENABLE \(! \(\| /, 'multi-peripheral status back-to-back interconnect keeps unmapped error active-access gated');
+
+    is($result->{report}{children}[1]{back_to_back_policy}{setup_decode}, 'current_psel_paddr_with_penable_low', 'interconnect child report records setup decode policy');
+    my %composition_residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$composition_residue{apb_back_to_back_policy_deferred}, 'multi-peripheral status back-to-back composition removes broad back-to-back residue');
+    ok($composition_residue{apb_additional_back_to_back_policies_deferred}, 'multi-peripheral status back-to-back composition keeps narrowed future-policy residue');
+    my %interconnect_residue = map { $_->{id} => 1 } @{$result->{report}{children}[1]{unsupported_residue}};
+    ok(!$interconnect_residue{apb_back_to_back_policy_deferred}, 'multi-peripheral status back-to-back interconnect removes broad back-to-back residue');
+    ok($interconnect_residue{apb_additional_back_to_back_policies_deferred}, 'multi-peripheral status back-to-back interconnect keeps narrowed future-policy residue');
+};
+
 subtest 'adapter parses the sideband APB multi-peripheral composition PPIF shape' => sub {
     ok(-f sample_apb_composition_multi_peripheral_sideband_ppif_path(), 'tracked runnable sideband multi-peripheral APB composition PPIF sample exists');
 
@@ -568,6 +617,9 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
     my $fixed_missing_completer_timing = sample_apb_composition_status_back_to_back_ppif();
     $fixed_missing_completer_timing =~ s/\n      \(timing-policy\n        \(setup-admission adjacent\)\)//;
 
+    my $multi_missing_control_timing = sample_apb_composition_multi_peripheral_status_back_to_back_ppif();
+    $multi_missing_control_timing =~ s/(\(apb-completer apb_control_regs[\s\S]*?\n      \(unmapped-address error\))\n      \(timing-policy\n        \(setup-admission adjacent\)\)/$1/;
+
     my @cases = (
         ['missing apb composition object', $missing_composition, qr/cannot mix \(apb-requester \.\.\.\) with .* \(apb-completer \.\.\.\).*outside the explicit APB composition shape/s],
         ['bad requester child reference', $bad_child, qr/APB composition requester child references .*expected 'apb_requester'/],
@@ -579,6 +631,7 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
         ['multi-peripheral partial sideband peripheral', $multi_partial_sideband, qr/APB multi-peripheral composition peripheral 'apb_control_regs' bus must declare protection and strobe together/],
         ['multi-peripheral data16 bad window alignment', $bad_data16_window_alignment, qr/address-map base '259' must be 2-byte aligned/],
         ['fixed composition missing completer timing policy', $fixed_missing_completer_timing, qr/requires requester back-to-back queued queue-depth 1 overflow reject and completer setup-admission adjacent/],
+        ['multi-peripheral composition missing peripheral timing policy', $multi_missing_control_timing, qr/requires requester back-to-back queued queue-depth 1 overflow reject and every peripheral completer setup-admission adjacent/],
     );
 
     for my $case (@cases) {
@@ -739,6 +792,33 @@ subtest 'CLI check and semantic JSON support-account multi-peripheral APB compos
     is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'multi-peripheral APB composition semantic JSON payload describes the generated composition root');
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'multi-peripheral APB composition semantic JSON records the generated top module');
     is($semantic_report->{semantic}{module}{composition_child_count}, 4, 'multi-peripheral APB composition semantic JSON records four generated children');
+};
+
+subtest 'CLI check and semantic JSON support-account multi-peripheral status back-to-back APB composition PPIF identity' => sub {
+    my $path = sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'multi-peripheral status back-to-back APB composition --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'multi-peripheral status back-to-back APB composition --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'multi-peripheral status back-to-back APB composition check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'multi-peripheral status back-to-back APB composition check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_peripheral_status_back_to_back', 'multi-peripheral status back-to-back APB composition check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'multi-peripheral status back-to-back APB composition check JSON records PPIF source kind');
+    is($check_report->{result}{composition_child_count}, 4, 'multi-peripheral status back-to-back APB composition check JSON reports four generated children');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'multi-peripheral status back-to-back APB composition --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'multi-peripheral status back-to-back APB composition --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'multi-peripheral status back-to-back APB composition semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_peripheral_status_back_to_back', 'multi-peripheral status back-to-back APB composition semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'multi-peripheral status back-to-back APB composition semantic JSON payload describes the generated composition root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'multi-peripheral status back-to-back APB composition semantic JSON records the generated top module');
+    is($semantic_report->{semantic}{module}{composition_child_count}, 4, 'multi-peripheral status back-to-back APB composition semantic JSON records four generated children');
 };
 
 subtest 'CLI check and semantic JSON support-account sideband multi-peripheral APB composition PPIF identity' => sub {
@@ -1198,6 +1278,61 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose multi-peripheral APB c
     is($alias->{report}{composition}{topology}, 'multi_peripheral_interconnect', 'multi-peripheral .apb APB composition alias preserves topology');
 };
 
+subtest 'CLI schedule JSON, outdir, and .apb alias expose multi-peripheral status back-to-back APB composition review artifacts' => sub {
+    my $path = sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'multi-peripheral status back-to-back APB composition --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'multi-peripheral status back-to-back APB composition --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{schema}, 'fsmgen.ial2.protocol_intent.apb_composition.v1', 'multi-peripheral status back-to-back APB composition schedule JSON reports schema');
+    is($schedule_report->{composition}{topology}, 'multi_peripheral_interconnect', 'multi-peripheral status back-to-back APB composition schedule JSON reports topology');
+    is($schedule_report->{requester_accepted_field}{name}, 'accepted', 'multi-peripheral status back-to-back APB composition schedule JSON reports accepted metadata');
+    is($schedule_report->{back_to_back_policy}{composition_role}, 'propagate_endpoint_policy_through_interconnect', 'multi-peripheral status back-to-back APB composition schedule JSON reports aggregate policy');
+    is($schedule_report->{children}[1]{back_to_back_policy}{interconnect_role}, 'propagate_queued_setup_without_idle_cycle', 'multi-peripheral status back-to-back APB composition schedule JSON reports interconnect timing role');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_back_to_back_policy_deferred}, 'multi-peripheral status back-to-back APB composition schedule JSON omits broad back-to-back residue');
+    ok($residue{apb_additional_back_to_back_policies_deferred}, 'multi-peripheral status back-to-back APB composition schedule JSON reports narrowed back-to-back residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_tb_multi_peripheral_status_back_to_back.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'multi-peripheral status back-to-back APB composition CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'multi-peripheral status back-to-back APB composition generation keeps stderr clean');
+    for my $artifact (qw(apb_requester.isf apb_status_regs.isf apb_control_regs.isf apb_interconnect.isf apb_requester.fsm apb_status_regs.fsm apb_control_regs.fsm apb_interconnect.fsm apb_tb.fsm)) {
+        ok(-f File::Spec->catfile($outdir, $artifact), "multi-peripheral status back-to-back APB composition --outdir writes $artifact");
+    }
+    ok(-f $hdl, 'multi-peripheral status back-to-back APB composition --output writes generated HDL');
+    my $interconnect = slurp(File::Spec->catfile($outdir, 'apb_interconnect.fsm'));
+    like($interconnect, qr/\(<- \(PENABLE_STATUS> PENABLE\)\)/, 'multi-peripheral status back-to-back outdir interconnect forwards PENABLE to status');
+    like($interconnect, qr/\(<- \(PENABLE_CONTROL> PENABLE\)\)/, 'multi-peripheral status back-to-back outdir interconnect forwards PENABLE to control');
+    like($interconnect, qr/\(<- \(PSEL_STATUS> PSEL\) <\(& PSEL \(>= PADDR 0\) \(< PADDR 256\)\)\)/, 'multi-peripheral status back-to-back outdir interconnect decodes status setup from current address');
+    like($interconnect, qr/\(<- \(PSEL_CONTROL> PSEL\) <\(& PSEL \(>= PADDR 256\) \(< PADDR 512\)\)\)/, 'multi-peripheral status back-to-back outdir interconnect decodes control setup from current address');
+    like($interconnect, qr/\(<- \(PREADY> 1\) <\(& PSEL PENABLE \(! \(\| /, 'multi-peripheral status back-to-back outdir interconnect keeps unmapped response active-access only');
+    my $top = slurp(File::Spec->catfile($outdir, 'apb_tb.fsm'));
+    like($top, qr/=accepted>/, 'multi-peripheral status back-to-back outdir top exposes accepted');
+    like($top, qr/\(queued_valid 1\)/, 'multi-peripheral status back-to-back outdir top embeds queued requester state');
+    my $sv = slurp($hdl);
+    like($sv, qr/\boutput\s+accepted\b/, 'multi-peripheral status back-to-back HDL top exposes accepted');
+    like($sv, qr/\breg\s+queued_valid\b/, 'multi-peripheral status back-to-back HDL keeps requester queue state');
+    like($sv, qr/PSEL_STATUS_next = PSEL;/, 'multi-peripheral status back-to-back HDL keeps decoded status select propagation');
+    like($sv, qr/PSEL_CONTROL_next = PSEL;/, 'multi-peripheral status back-to-back HDL keeps decoded control select propagation');
+
+    ok(-f sample_apb_composition_multi_peripheral_status_back_to_back_apb_path(), 'tracked runnable multi-peripheral status back-to-back APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_status_back_to_back_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'multi-peripheral status back-to-back .apb APB composition alias returns the composition kind');
+    is($alias->{mode}, 'requester-multi-peripheral-composition', 'multi-peripheral status back-to-back .apb APB composition alias preserves mode');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'multi-peripheral status back-to-back .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'multi-peripheral status back-to-back .apb APB composition alias mirrors .ppif generated IAL0');
+    is($alias->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'multi-peripheral status back-to-back .apb APB composition alias preserves interconnect timing role');
+};
+
 subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband multi-peripheral APB composition review artifacts' => sub {
     my $path = sample_apb_composition_multi_peripheral_sideband_ppif_path();
     my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
@@ -1589,6 +1724,14 @@ sub sample_apb_composition_multi_peripheral_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral.apb');
 }
 
+sub sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_status_back_to_back.ppif');
+}
+
+sub sample_apb_composition_multi_peripheral_status_back_to_back_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_status_back_to_back.apb');
+}
+
 sub sample_apb_composition_multi_peripheral_sideband_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_sideband.ppif');
 }
@@ -1639,6 +1782,10 @@ sub sample_apb_composition_multi_register_sideband_protection_ppif {
 
 sub sample_apb_composition_multi_peripheral_ppif {
     return slurp(sample_apb_composition_multi_peripheral_ppif_path());
+}
+
+sub sample_apb_composition_multi_peripheral_status_back_to_back_ppif {
+    return slurp(sample_apb_composition_multi_peripheral_status_back_to_back_ppif_path());
 }
 
 sub sample_apb_composition_multi_peripheral_sideband_ppif {

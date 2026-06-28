@@ -23,6 +23,10 @@ Direct IAL2-to-IAL0 lowering, direct backend lowering, verification-output
 generation, backend-language variants, AXI behavior, AHB behavior, and VHDL
 remain outside this owner.
 
+Update `.609`: the selected 32-bit no-sideband two-peripheral status
+multi-peripheral propagation family now ships separately. See
+`docs/IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md`.
+
 ## Requester Behavior
 
 The selected requester transfer accepts only:
@@ -77,9 +81,11 @@ fixed composition with only one endpoint policy, incompatible endpoint policy,
 sideband/data16/protection endpoint, or multi-register completer is rejected
 for this owner.
 
-Multi-peripheral APB back-to-back propagation remains deferred until a later
-exact owner validates interconnect response muxing and decoded-select behavior
-for adjacent accesses.
+At `.607`, multi-peripheral APB back-to-back propagation stayed deferred until
+an exact owner could validate interconnect response muxing and decoded-select
+behavior for adjacent accesses. `.609` later shipped the selected no-sideband
+two-peripheral status family; broader multi-peripheral variants remain
+deferred.
 
 ## Report And Support Accounting
 
@@ -118,7 +124,8 @@ Support-accounting identities added in this slice:
 
 ## Deferred Work
 
-- multi-peripheral APB back-to-back propagation;
+- multi-peripheral APB back-to-back variants beyond the selected 32-bit
+  no-sideband two-peripheral status family;
 - sideband/data16/protection back-to-back samples;
 - queue depths other than 1;
 - overflow policies other than `reject`;

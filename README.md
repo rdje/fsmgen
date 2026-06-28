@@ -3617,6 +3617,22 @@ for the 32-bit no-sideband multi-peripheral status back-to-back family, while
 sideband/data16/protection variants, deeper queues, alternate overflow,
 multiple active APB transfers, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL remain deferred.
+`.609` now ships that selected bounded APB multi-peripheral status
+back-to-back family for
+`ppif/apb_composition_multi_peripheral_status_back_to_back.ppif` and `.apb`.
+The selected shape is 32-bit, no-sideband, exactly two peripheral completers,
+and the existing static non-overlapping address-map/decode contract. The
+requester reuses the `.607` depth-1 queued overflow-reject policy and exposes
+`accepted/busy/status`; every peripheral completer declares adjacent setup
+admission. The generated interconnect remains propagation-only, decodes queued
+setup through current `PSEL/PADDR` with `PENABLE=0`, forwards `PENABLE`, and
+keeps unmapped errors active-access only. Reports add aggregate
+`back_to_back_policy`, remove broad `apb_back_to_back_policy_deferred` only for
+the selected surfaces, and keep narrowed
+`apb_additional_back_to_back_policies_deferred` for sideband/data16/protection
+variants, deeper queues, alternate overflow, multiple active APB transfers,
+direct backend, verification-output, backend-language variants, AXI, AHB, and
+VHDL.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6173,6 +6189,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects explicit APB requester `(timing-policy (back-to-back queued) (queue-depth 1) (overflow reject))`, completer `(setup-admission adjacent)`, accepted/busy/status response requirements, first fixed-composition sample family, reports, diagnostics, validation, rollback, and deferrals before behavior changes.
 - `docs/IAL2_APB_BACK_TO_BACK_BEHAVIOR.md` — ships the selected APB depth-1 queued requester, adjacent completer setup admission, and compatible fixed-composition propagation for the status back-to-back sample family.
 - `docs/IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_READINESS_AUDIT.md` — audits APB multi-peripheral back-to-back propagation after fixed-composition behavior shipped and selects a narrow 32-bit no-sideband implementation owner.
+- `docs/IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md` — ships the selected 32-bit no-sideband two-peripheral APB status back-to-back family, with depth-1 queued requester propagation through the generated interconnect and narrowed future-policy residue.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

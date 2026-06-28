@@ -42,6 +42,19 @@ They keep interconnect enforcement out of scope: selected peripheral completers
 own register-local policy denial, while the interconnect propagates
 `PPROT/PSTRB` and muxes the selected response.
 
+Update `.609`: the selected 32-bit no-sideband multi-peripheral status
+back-to-back timing-policy variants are also support-accounted:
+
+```text
+ppif/apb_composition_multi_peripheral_status_back_to_back.ppif
+ppif/apb_composition_multi_peripheral_status_back_to_back.apb
+```
+
+They keep the same generated interconnect topology while the requester carries
+the `.607` depth-1 queued overflow-reject policy, every peripheral completer
+declares adjacent setup admission, and the interconnect propagates queued setup
+without inserting an idle cycle.
+
 ## Source Shape
 
 The shipped public source remains an `(apb-composition ...)` object. The
@@ -133,7 +146,7 @@ composition.peripherals[].generated_instance_name
 children[] role interconnect
 ```
 
-The new support-accounting identities are:
+The base multi-peripheral support-accounting identities are:
 
 ```text
 intent.ppif_apb_composition_multi_peripheral
@@ -149,7 +162,8 @@ ial2_apb_profile_alias_composition_multi_peripheral_pipeline_cli
 
 The multi-peripheral composition report removes
 `apb_interconnect_multi_peripheral_decode_deferred`. APB sidebands/strobes,
-alternate widths, and back-to-back policy remain explicit residue.
+alternate widths, and unselected back-to-back policy variants remain explicit
+residue.
 
 The data16 sideband composition report adds `composition.width_policy` and
 `composition.address_map.alignment_bytes = 2`, and replaces
@@ -161,6 +175,14 @@ peripheral completers as the enforcement owners and the interconnect as
 propagation/mux-only. It replaces `apb_protection_policy_effects_deferred` with
 `apb_additional_protection_policies_deferred`. See
 [IAL2_APB_PPROT_EFFECTS_BEHAVIOR](IAL2_APB_PPROT_EFFECTS_BEHAVIOR.md).
+
+The `.609` status back-to-back multi-peripheral composition report adds
+aggregate `back_to_back_policy` metadata, moves the selected top/interconnect
+surfaces off broad `apb_back_to_back_policy_deferred`, and keeps narrowed
+`apb_additional_back_to_back_policies_deferred` residue for unselected
+sideband/data16/protection, deeper-queue, alternate-overflow, direct-backend,
+backend-language, and VHDL variants. See
+[IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR](IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md).
 
 ## CLI Examples
 
@@ -188,7 +210,8 @@ Generate review artifacts and HDL:
 
 This slice does not add APB side effects, byte lanes, `PPROT`, `PSTRB`,
 APB4/APB5 sidebands, alternate address/data widths, back-to-back transfer
-admission, multiple requesters, bus matrices, scoreboards, queues, direct
+admission beyond the selected `.609` no-sideband status family, multiple
+requesters, bus matrices, scoreboards, queues, direct
 IAL2-to-IAL0 lowering, direct backend lowering, verification-output
 generation, backend-language variants, AXI interconnect, AHB interconnect, or
 VHDL behavior.

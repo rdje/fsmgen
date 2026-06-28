@@ -1,6 +1,6 @@
 ---
 id: ial2-apb-profile-alias-behavior
-title: .apb is the bounded APB requester, completer, and fixed-composition IAL2 profile-alias suffix
+title: .apb is the bounded APB IAL2 profile-alias suffix
 answers:
   - "how does the .apb IAL2 profile alias behave?"
   - "can FSMGen accept .apb files now?"
@@ -19,14 +19,16 @@ evidence: docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_APB_PROFILE_ALIAS_C
 reverify: prove -Iperl t/1470-ial2-apb-profile-alias.t t/1471-ial2-apb-completer.t t/1472-ial2-apb-composition.t t/248-regression-corpus-accounting.t t/297-capability-manifest.t
 ---
 
-`.apb` is the bounded APB IAL2 profile-alias suffix. It accepts the public
-samples `ppif/apb_requester_transfer.apb`, `ppif/apb_completer.apb`, and
-`ppif/apb_composition.apb`, each requiring explicit `(profile apb)`.
+`.apb` is the bounded APB IAL2 profile-alias suffix. Each accepted `.apb`
+sample requires explicit `(profile apb)` and mirrors the corresponding generic
+APB `.ppif` source shape.
 
-The alias supports exactly one requester-transfer object, exactly one completer
-object, or the explicit fixed one-requester/one-completer APB composition
-shape. Mixed requester/completer files without `(apb-composition ...)` still
-fail closed.
+The alias supports the bounded requester-transfer, completer, fixed
+composition, multi-register, multi-peripheral, sideband/strobe, data16,
+protection, fixed back-to-back, and selected multi-peripheral status
+back-to-back APB samples documented in
+`docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md`. Mixed requester/completer files
+without `(apb-composition ...)` still fail closed.
 
 The requester alias lowers through generated `apb_requester.isf` before
 `apb_requester.fsm`. The completer alias lowers through generated
@@ -39,14 +41,39 @@ Support accounting records:
 
 ```text
 intent.apb_profile_alias_requester_transfer
+intent.apb_profile_alias_requester_transfer_busy
+intent.apb_profile_alias_requester_transfer_status
+intent.apb_profile_alias_requester_transfer_status_back_to_back
+intent.apb_profile_alias_requester_transfer_sideband
+intent.apb_profile_alias_requester_transfer_sideband_data16
 intent.apb_profile_alias_completer
+intent.apb_profile_alias_completer_back_to_back
+intent.apb_profile_alias_completer_multi_register
+intent.apb_profile_alias_completer_multi_register_sideband
+intent.apb_profile_alias_completer_multi_register_sideband_protection
+intent.apb_profile_alias_completer_multi_register_sideband_data16
+intent.apb_profile_alias_completer_multi_register_sideband_data16_protection
 intent.apb_profile_alias_composition
+intent.apb_profile_alias_composition_busy
+intent.apb_profile_alias_composition_status
+intent.apb_profile_alias_composition_status_back_to_back
+intent.apb_profile_alias_composition_multi_register
+intent.apb_profile_alias_composition_multi_register_sideband
+intent.apb_profile_alias_composition_multi_register_sideband_protection
+intent.apb_profile_alias_composition_multi_register_sideband_data16
+intent.apb_profile_alias_composition_multi_register_sideband_data16_protection
+intent.apb_profile_alias_composition_multi_peripheral
+intent.apb_profile_alias_composition_multi_peripheral_status_back_to_back
+intent.apb_profile_alias_composition_multi_peripheral_sideband
+intent.apb_profile_alias_composition_multi_peripheral_sideband_protection
+intent.apb_profile_alias_composition_multi_peripheral_sideband_data16
+intent.apb_profile_alias_composition_multi_peripheral_sideband_data16_protection
 ```
 
 All three use `source_kind` `ial2_profile_alias`.
 
 `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` remain
-unsupported aliases. APB requester busy/status, multi-register decode,
-sidebands/strobes, alternate widths, multi-peripheral decode, back-to-back
-policy, direct backend lowering, verification-output generation,
-backend-language variants, and VHDL remain deferred.
+unsupported aliases. APB alias variants beyond the listed bounded samples,
+broader protection policies, broader widths, broader back-to-back policies,
+direct backend lowering, verification-output generation, backend-language
+variants, and VHDL remain deferred.

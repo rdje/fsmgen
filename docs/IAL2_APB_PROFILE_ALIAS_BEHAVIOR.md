@@ -2,11 +2,13 @@
 
 Task-tree owners: `IAL2-FEATURE-COMPLETENESS-FRONTIER.554`,
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.569`,
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.607`,
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.597`,
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.599`,
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.603`
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.603`,
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.609`
 
-Date: 2026-06-27
+Date: 2026-06-28
 
 ## Outcome
 
@@ -19,9 +21,11 @@ The currently supported alias samples are:
 ppif/apb_requester_transfer.apb
 ppif/apb_requester_transfer_busy.apb
 ppif/apb_requester_transfer_status.apb
+ppif/apb_requester_transfer_status_back_to_back.apb
 ppif/apb_requester_transfer_sideband.apb
 ppif/apb_requester_transfer_sideband_data16.apb
 ppif/apb_completer.apb
+ppif/apb_completer_back_to_back.apb
 ppif/apb_completer_multi_register.apb
 ppif/apb_completer_multi_register_sideband.apb
 ppif/apb_completer_multi_register_sideband_protection.apb
@@ -30,12 +34,14 @@ ppif/apb_completer_multi_register_sideband_data16_protection.apb
 ppif/apb_composition.apb
 ppif/apb_composition_busy.apb
 ppif/apb_composition_status.apb
+ppif/apb_composition_status_back_to_back.apb
 ppif/apb_composition_multi_register.apb
 ppif/apb_composition_multi_register_sideband.apb
 ppif/apb_composition_multi_register_sideband_protection.apb
 ppif/apb_composition_multi_register_sideband_data16.apb
 ppif/apb_composition_multi_register_sideband_data16_protection.apb
 ppif/apb_composition_multi_peripheral.apb
+ppif/apb_composition_multi_peripheral_status_back_to_back.apb
 ppif/apb_composition_multi_peripheral_sideband.apb
 ppif/apb_composition_multi_peripheral_sideband_protection.apb
 ppif/apb_composition_multi_peripheral_sideband_data16.apb
@@ -48,9 +54,11 @@ They mirror the generic APB IAL2 samples:
 ppif/apb_requester_transfer.ppif
 ppif/apb_requester_transfer_busy.ppif
 ppif/apb_requester_transfer_status.ppif
+ppif/apb_requester_transfer_status_back_to_back.ppif
 ppif/apb_requester_transfer_sideband.ppif
 ppif/apb_requester_transfer_sideband_data16.ppif
 ppif/apb_completer.ppif
+ppif/apb_completer_back_to_back.ppif
 ppif/apb_completer_multi_register.ppif
 ppif/apb_completer_multi_register_sideband.ppif
 ppif/apb_completer_multi_register_sideband_protection.ppif
@@ -59,12 +67,14 @@ ppif/apb_completer_multi_register_sideband_data16_protection.ppif
 ppif/apb_composition.ppif
 ppif/apb_composition_busy.ppif
 ppif/apb_composition_status.ppif
+ppif/apb_composition_status_back_to_back.ppif
 ppif/apb_composition_multi_register.ppif
 ppif/apb_composition_multi_register_sideband.ppif
 ppif/apb_composition_multi_register_sideband_protection.ppif
 ppif/apb_composition_multi_register_sideband_data16.ppif
 ppif/apb_composition_multi_register_sideband_data16_protection.ppif
 ppif/apb_composition_multi_peripheral.ppif
+ppif/apb_composition_multi_peripheral_status_back_to_back.ppif
 ppif/apb_composition_multi_peripheral_sideband.ppif
 ppif/apb_composition_multi_peripheral_sideband_protection.ppif
 ppif/apb_composition_multi_peripheral_sideband_data16.ppif
@@ -175,6 +185,10 @@ entry_id: intent.apb_profile_alias_requester_transfer_status
 coverage: ial2_apb_profile_alias_requester_transfer_status_pipeline_cli
 source_kind: ial2_profile_alias
 
+entry_id: intent.apb_profile_alias_requester_transfer_status_back_to_back
+coverage: ial2_apb_profile_alias_requester_transfer_status_back_to_back_pipeline_cli
+source_kind: ial2_profile_alias
+
 entry_id: intent.apb_profile_alias_requester_transfer_sideband
 coverage: ial2_apb_profile_alias_requester_transfer_sideband_pipeline_cli
 source_kind: ial2_profile_alias
@@ -185,6 +199,10 @@ source_kind: ial2_profile_alias
 
 entry_id: intent.apb_profile_alias_completer
 coverage: ial2_apb_profile_alias_completer_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_completer_back_to_back
+coverage: ial2_apb_profile_alias_completer_back_to_back_pipeline_cli
 source_kind: ial2_profile_alias
 
 entry_id: intent.apb_profile_alias_completer_multi_register
@@ -219,6 +237,10 @@ entry_id: intent.apb_profile_alias_composition_status
 coverage: ial2_apb_profile_alias_composition_status_pipeline_cli
 source_kind: ial2_profile_alias
 
+entry_id: intent.apb_profile_alias_composition_status_back_to_back
+coverage: ial2_apb_profile_alias_composition_status_back_to_back_pipeline_cli
+source_kind: ial2_profile_alias
+
 entry_id: intent.apb_profile_alias_composition_multi_register
 coverage: ial2_apb_profile_alias_composition_multi_register_pipeline_cli
 source_kind: ial2_profile_alias
@@ -241,6 +263,10 @@ source_kind: ial2_profile_alias
 
 entry_id: intent.apb_profile_alias_composition_multi_peripheral
 coverage: ial2_apb_profile_alias_composition_multi_peripheral_pipeline_cli
+source_kind: ial2_profile_alias
+
+entry_id: intent.apb_profile_alias_composition_multi_peripheral_status_back_to_back
+coverage: ial2_apb_profile_alias_composition_multi_peripheral_status_back_to_back_pipeline_cli
 source_kind: ial2_profile_alias
 
 entry_id: intent.apb_profile_alias_composition_multi_peripheral_sideband
@@ -268,18 +294,22 @@ Emit APB IAL2 schedule/report JSON:
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_busy.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_status_back_to_back.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer_sideband_data16.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_completer.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_completer_back_to_back.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_completer_multi_register_sideband_protection.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_completer_multi_register_sideband_data16.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_completer_multi_register_sideband_data16_protection.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_busy.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_status.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_status_back_to_back.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_register_sideband_protection.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_register_sideband_data16.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_register_sideband_data16_protection.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_peripheral_sideband_protection.apb
+./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_peripheral_status_back_to_back.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_peripheral_sideband_data16.apb
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition_multi_peripheral_sideband_data16_protection.apb
 ```
@@ -289,13 +319,17 @@ Run strict checks without writing HDL:
 ```bash
 ./bin/fsmgen --strict --check --json ppif/apb_requester_transfer.apb
 ./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status.apb
+./bin/fsmgen --strict --check --json ppif/apb_requester_transfer_status_back_to_back.apb
 ./bin/fsmgen --strict --check --json ppif/apb_completer.apb
+./bin/fsmgen --strict --check --json ppif/apb_completer_back_to_back.apb
 ./bin/fsmgen --strict --check --json ppif/apb_completer_multi_register_sideband_protection.apb
 ./bin/fsmgen --strict --check --json ppif/apb_completer_multi_register_sideband_data16.apb
 ./bin/fsmgen --strict --check --json ppif/apb_completer_multi_register_sideband_data16_protection.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition_status.apb
+./bin/fsmgen --strict --check --json ppif/apb_composition_status_back_to_back.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition_multi_register_sideband_protection.apb
+./bin/fsmgen --strict --check --json ppif/apb_composition_multi_peripheral_status_back_to_back.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition_multi_peripheral_sideband_protection.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition_multi_peripheral_sideband_data16.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition_multi_peripheral_sideband_data16_protection.apb
@@ -305,9 +339,13 @@ Emit normalized semantic JSON:
 
 ```bash
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer_status.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer_status_back_to_back.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_completer.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_completer_back_to_back.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_status.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_status_back_to_back.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_multi_peripheral_status_back_to_back.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_multi_register_sideband_protection.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_multi_register_sideband_data16.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition_multi_register_sideband_data16_protection.apb

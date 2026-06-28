@@ -304,7 +304,7 @@ sub _normalize_multi_peripheral_contract($raw, $kind, $protocol, $intent_name, $
     _validate_multi_child_references($children, $requester, $raw_completers);
     _validate_multi_bus_compatibility($wiring->{bus}, $requester->{bus}, $raw_completers);
     _validate_multi_signal_uniqueness($clock, $reset, $requester, $raw_completers);
-    _reject_multi_peripheral_timing_policy($requester, $raw_completers);
+    _validate_multi_peripheral_timing_policy_compatibility($wiring->{bus}, $children, $requester, $raw_completers);
 
     my $source_object_id = exists($source->{object_id})
         ? _nonempty_scalar($source->{object_id}, 'source.object_id')
@@ -1105,6 +1105,7 @@ sub _build_multi_peripheral_report(%args) {
             'address-map base and size defaults must be static 32-bit non-overlapping ' . _composition_data_bytes($contract) . '-byte-aligned decimal values',
             'decode policy is overlap reject, priority source-order, and unmapped-address error',
             'the generated APB interconnect fans out decoded PSEL, forwards control/data, translates local PADDR, muxes selected responses, and returns PSLVERR for unmapped active accesses',
+            (_multi_peripheral_has_back_to_back_policy($contract) ? ('selected multi-peripheral back-to-back policy requires requester back-to-back queued queue-depth 1 overflow reject, every peripheral setup-admission adjacent, and propagation-only interconnect decode without idle-cycle insertion') : ()),
             (_composition_has_sidebands($contract) ? ('sideband-aware multi-peripheral composition propagates PPROT width 3 and data-derived PSTRB width ' . _composition_strobe_width($contract) . ' through the generated APB interconnect') : ()),
             (_composition_has_access_policy($contract) ? ('register-local PPROT access-policy enforcement is owned by the selected APB completer/peripheral; the generated composition and interconnect only propagate PPROT/PSTRB and mux selected responses') : ()),
             'APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
@@ -1114,6 +1115,10 @@ sub _build_multi_peripheral_report(%args) {
 
     $report->{requester_status_field} = _clone_jsonish($requester_result->{report}{response_status_field})
         if defined $requester_result->{report}{response_status_field};
+    $report->{requester_accepted_field} = _clone_jsonish($requester_result->{report}{response_accepted_field})
+        if defined $requester_result->{report}{response_accepted_field};
+    $report->{back_to_back_policy} = _multi_peripheral_back_to_back_policy_report($contract, $requester_result, $peripheral_results, $interconnect)
+        if _multi_peripheral_has_back_to_back_policy($contract);
     $report->{protection_policy} = _multi_peripheral_protection_policy_report($peripheral_results)
         if _composition_has_access_policy($contract);
 
@@ -1208,6 +1213,12 @@ sub _interconnect_child_report($contract, $interconnect) {
         enforcement_owner => 'peripheral_completers',
         interconnect_role => 'propagate_pprot_pstrb_and_mux_selected_response_only',
     } if _composition_has_access_policy($contract);
+    $report->{back_to_back_policy} = {
+        interconnect_role => 'propagate_queued_setup_without_idle_cycle',
+        setup_decode      => 'current_psel_paddr_with_penable_low',
+        response_mux      => 'selected_peripheral_response',
+        unmapped_policy   => 'active_access_only',
+    } if _multi_peripheral_has_back_to_back_policy($contract);
     return $report;
 }
 
@@ -1264,7 +1275,9 @@ sub _apb_multi_peripheral_unsupported_residue($contract) {
     return [
         _apb_composition_protection_residue($contract),
         _apb_alternate_widths_residue($contract),
-        _apb_back_to_back_residue(),
+        _multi_peripheral_has_back_to_back_policy($contract)
+            ? _apb_additional_back_to_back_policies_residue()
+            : _apb_back_to_back_residue(),
     ];
 }
 
@@ -1272,7 +1285,9 @@ sub _apb_multi_peripheral_interconnect_unsupported_residue($contract) {
     return [
         _apb_composition_protection_residue($contract),
         _apb_alternate_widths_residue($contract),
-        _apb_back_to_back_residue(),
+        _multi_peripheral_has_back_to_back_policy($contract)
+            ? _apb_additional_back_to_back_policies_residue()
+            : _apb_back_to_back_residue(),
     ];
 }
 
@@ -1524,7 +1539,45 @@ sub _fixed_composition_back_to_back_policy_report($contract, $requester_result, 
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Fixed one-requester/one-completer propagation of the selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy is implemented; multi-peripheral interconnect propagation, sideband/data16/protection variants, deeper queues, alternate overflow policies, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; sideband/data16/protection variants, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+    };
+}
+
+sub _multi_peripheral_has_back_to_back_policy($contract) {
+    return 0 unless _is_multi_peripheral_contract($contract);
+    return 0 unless _requester_endpoint_has_selected_back_to_back($contract->{requester});
+    my $completers = $contract->{completers} || [];
+    return 0 unless @$completers;
+    return !(grep { !_completer_endpoint_has_selected_adjacent_setup($_) } @$completers);
+}
+
+sub _multi_peripheral_back_to_back_policy_report($contract, $requester_result, $peripheral_results, $interconnect) {
+    my $requester_child = $contract->{composition}{children}{requester};
+    return {
+        composition_role => 'propagate_endpoint_policy_through_interconnect',
+        requester        => {
+            instance_name => $requester_child->{instance_name},
+            object_name   => $requester_child->{object_name},
+            timing_policy => _clone_jsonish($requester_result->{report}{transfer}{timing_policy}),
+        },
+        interconnect     => {
+            instance_name => $interconnect->{instance_name},
+            object_name   => $interconnect->{object_name},
+            timing_role   => 'propagate_queued_setup_without_idle_cycle',
+            setup_decode  => 'current_psel_paddr_with_penable_low',
+            response_mux  => 'selected_peripheral_response',
+            unmapped_policy  => 'active_access_only',
+        },
+        peripherals      => [
+            map {
+                {
+                    instance_name           => $_->{child}{instance_name},
+                    generated_instance_name => _generated_instance_name($_->{child}),
+                    object_name             => $_->{child}{object_name},
+                    timing_policy           => _clone_jsonish($_->{result}{report}{transfer}{timing_policy}),
+                }
+            } @$peripheral_results
+        ],
     };
 }
 
@@ -1798,10 +1851,32 @@ sub _validate_fixed_timing_policy_compatibility($wiring, $requester, $completer)
         if ref($completer->{storage}{registers}) eq 'ARRAY';
 }
 
-sub _reject_multi_peripheral_timing_policy($requester, $completers) {
-    confess "APB multi-peripheral composition does not support APB back-to-back timing-policy until its exact owner ships\n"
-        if _endpoint_has_timing_policy($requester)
-            || grep { _endpoint_has_timing_policy($_) } @$completers;
+sub _validate_multi_peripheral_timing_policy_compatibility($wiring, $children, $requester, $completers) {
+    my $has_policy = _endpoint_has_timing_policy($requester)
+        || grep { _endpoint_has_timing_policy($_) } @$completers;
+    return unless $has_policy;
+
+    confess "APB multi-peripheral selected back-to-back timing-policy requires requester back-to-back queued queue-depth 1 overflow reject and every peripheral completer setup-admission adjacent in this slice\n"
+        unless _requester_endpoint_has_selected_back_to_back($requester)
+            && !(grep { !_completer_endpoint_has_selected_adjacent_setup($_) } @$completers);
+
+    confess "APB multi-peripheral selected back-to-back timing-policy supports only two peripheral completers in this slice\n"
+        unless @$completers == 2
+            && @{$children->{peripherals}} == 2;
+
+    confess "APB multi-peripheral selected back-to-back timing-policy supports only 32-bit no-sideband APB wiring in this slice\n"
+        unless $wiring->{write_data}{width} == 32
+            && $wiring->{read_data}{width} == 32
+            && !_bus_has_sidebands($wiring)
+            && !_bus_has_sidebands($requester->{bus})
+            && !_request_has_sidebands($requester)
+            && !(grep { _bus_has_sidebands($_->{bus}) } @$completers);
+
+    confess "APB multi-peripheral selected back-to-back timing-policy supports only one-register peripheral completer storage in this slice\n"
+        if grep {
+            my @registers = _endpoint_storage_registers($_->{storage});
+            @registers != 1;
+        } @$completers;
 }
 
 sub _endpoint_has_timing_policy($endpoint) {

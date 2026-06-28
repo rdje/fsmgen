@@ -28,6 +28,11 @@ semantic JSON, HDL/runtime behavior, suffix acceptance, direct backend
 lowering, verification-output generation, backend-language variants, APB
 behavior, AXI behavior, AHB behavior, or VHDL behavior.
 
+Implementation result: `.609` later shipped the selected 32-bit no-sideband
+two-peripheral status family documented in
+`docs/IAL2_APB_MULTI_PERIPHERAL_BACK_TO_BACK_BEHAVIOR.md`. This audit remains
+the pre-code readiness record for that implementation.
+
 ## Evidence Read
 
 The audit read:
