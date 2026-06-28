@@ -349,6 +349,53 @@ subtest 'adapter parses the sideband protection APB multi-register composition P
     ok($child_residue{apb_additional_protection_policies_deferred}, 'sideband protection fixed composition child keeps additional-policy residue');
 };
 
+subtest 'adapter parses the sideband protection APB multi-register status back-to-back composition PPIF shape' => sub {
+    ok(-f sample_apb_composition_multi_register_sideband_protection_status_back_to_back_ppif_path(), 'tracked runnable sideband protection multi-register status back-to-back APB composition PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_protection_status_back_to_back_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'sideband protection multi-register status back-to-back APB composition adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_composition', 'sideband protection multi-register status back-to-back adapter returns the APB composition kind');
+    is($result->{mode}, 'requester-completer-composition', 'sideband protection multi-register status back-to-back keeps the fixed composition mode');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-composition-multi-register-sideband-protection-status-back-to-back', 'sideband protection multi-register status back-to-back source object id is preserved');
+    is($result->{report}{back_to_back_policy}{composition_role}, 'propagate_endpoint_policy', 'sideband protection multi-register status back-to-back report records endpoint timing-policy propagation');
+    is($result->{report}{back_to_back_policy}{requester}{timing_policy}{queue_depth}, 1, 'sideband protection multi-register status back-to-back report records requester queue-depth 1');
+    is($result->{report}{back_to_back_policy}{requester}{timing_policy}{overflow}, 'reject', 'sideband protection multi-register status back-to-back report records requester overflow reject');
+    is($result->{report}{back_to_back_policy}{completer}{timing_policy}{setup_admission}, 'adjacent', 'sideband protection multi-register status back-to-back report records completer adjacent setup admission');
+    is($result->{report}{protection_policy}{enforcement_owner}, 'completer', 'sideband protection multi-register status back-to-back report keeps policy enforcement in the completer');
+    is($result->{report}{protection_policy}{composition_role}, 'propagate_pprot_pstrb_and_selected_response_only', 'sideband protection multi-register status back-to-back report keeps composition enforcement-free');
+    is($result->{report}{protection_policy}{child_policy}{predicate_namespace}, 'fsmgen_apb_pprot_v1', 'sideband protection multi-register status back-to-back report embeds child protection policy');
+    is($result->{report}{children}[1]{protection_policy}{registers}[1]{read}{predicate}{value}, 1, 'sideband protection multi-register status back-to-back child report preserves reg1 read policy');
+    is_deeply($result->{report}{children}[1]{transfer}{registers}, [qw(reg0 reg1)], 'sideband protection multi-register status back-to-back child report preserves protected register list');
+
+    my $requester_fsm = $result->{generated_ial0}{files}{'apb_requester.fsm'};
+    like($requester_fsm, qr/\(queued_prot 3\)/, 'sideband protection multi-register status back-to-back requester FSM declares queued_prot');
+    like($requester_fsm, qr/\(<- \(PSTRB> \(& queued_wstrb \(concat queued_write queued_write queued_write queued_write\)\)\)/, 'sideband protection multi-register status back-to-back requester FSM drives queued PSTRB masked by queued write');
+
+    my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
+    like($top, qr/=accepted>/, 'sideband protection multi-register status back-to-back APB composition top exposes accepted output');
+    like($top, qr/\(queued_prot 3\)/, 'sideband protection multi-register status back-to-back APB composition top embeds queued PPROT state');
+    like($top, qr/\(requester\.PPROT completer\.PPROT\)/, 'sideband protection multi-register status back-to-back APB composition top wires PPROT');
+    like($top, qr/\(requester\.PSTRB completer\.PSTRB\)/, 'sideband protection multi-register status back-to-back APB composition top wires PSTRB');
+    like($top, qr/\(<= \(addr PADDR\) <\(& PSEL \(! PENABLE\)\)\)/, 'sideband protection multi-register status back-to-back APB composition top embeds adjacent setup detector');
+    like($top, qr/\(\?\(& write_q \(== addr 4\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-register status back-to-back APB composition top embeds denied reg1 write branch');
+    like($top, qr/\(\?\(& \(! write_q\) \(== addr 4\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-register status back-to-back APB composition top embeds denied reg1 read branch');
+
+    my %composition_residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok(!$composition_residue{apb_back_to_back_policy_deferred}, 'sideband protection multi-register status back-to-back composition removes broad back-to-back residue');
+    ok(!$composition_residue{apb_protection_policy_effects_deferred}, 'sideband protection multi-register status back-to-back composition removes old policy-effects residue');
+    ok($composition_residue{apb_additional_back_to_back_policies_deferred}, 'sideband protection multi-register status back-to-back composition keeps narrowed future timing residue');
+    ok($composition_residue{apb_additional_protection_policies_deferred}, 'sideband protection multi-register status back-to-back composition keeps additional-policy residue');
+
+    ok(-f sample_apb_composition_multi_register_sideband_protection_status_back_to_back_apb_path(), 'tracked runnable sideband protection multi-register status back-to-back APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_protection_status_back_to_back_apb_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'sideband protection multi-register status back-to-back .apb APB composition alias returns the composition kind');
+    is_deeply($alias->{generated_ial1}{items}, $result->{generated_ial1}{items}, 'sideband protection multi-register status back-to-back .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $result->{generated_ial0}{files}, 'sideband protection multi-register status back-to-back .apb APB composition alias mirrors .ppif generated IAL0');
+    is($alias->{report}{back_to_back_policy}{completer}{timing_policy}{setup_admission}, 'adjacent', 'sideband protection multi-register status back-to-back .apb APB composition alias preserves completer timing policy');
+    is($alias->{report}{protection_policy}{enforcement_owner}, 'completer', 'sideband protection multi-register status back-to-back .apb APB composition alias preserves policy owner');
+};
+
 subtest 'adapter parses the sideband APB multi-register data16 composition PPIF shape' => sub {
     ok(-f sample_apb_composition_multi_register_sideband_data16_ppif_path(), 'tracked runnable sideband multi-register data16 APB composition PPIF sample exists');
 
@@ -749,6 +796,12 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
     my $fixed_data16_back_to_back_wrong_reg1_address = sample_apb_composition_multi_register_sideband_data16_status_back_to_back_ppif();
     $fixed_data16_back_to_back_wrong_reg1_address =~ s/\(address 2 width 32\)/(address 4 width 32)/;
 
+    my $fixed_protection_back_to_back_wrong_reg1_address = sample_apb_composition_multi_register_sideband_protection_status_back_to_back_ppif();
+    $fixed_protection_back_to_back_wrong_reg1_address =~ s/\(address 4 width 32\)/(address 8 width 32)/;
+
+    my $fixed_protection_back_to_back_wrong_policy = sample_apb_composition_multi_register_sideband_protection_status_back_to_back_ppif();
+    $fixed_protection_back_to_back_wrong_policy =~ s/\(read require \(privileged 1\)\)/(read allow)/;
+
     my $multi_missing_control_timing = sample_apb_composition_multi_peripheral_status_back_to_back_ppif();
     $multi_missing_control_timing =~ s/(\(apb-completer apb_control_regs[\s\S]*?\n      \(unmapped-address error\))\n      \(timing-policy\n        \(setup-admission adjacent\)\)/$1/;
 
@@ -763,7 +816,9 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
         ['multi-peripheral partial sideband peripheral', $multi_partial_sideband, qr/APB multi-peripheral composition peripheral 'apb_control_regs' bus must declare protection and strobe together/],
         ['multi-peripheral data16 bad window alignment', $bad_data16_window_alignment, qr/address-map base '259' must be 2-byte aligned/],
         ['fixed composition missing completer timing policy', $fixed_missing_completer_timing, qr/requires requester back-to-back queued queue-depth 1 overflow reject and completer setup-admission adjacent/],
-        ['fixed composition data16 back-to-back wrong selected register address', $fixed_data16_back_to_back_wrong_reg1_address, qr/APB fixed composition selected back-to-back timing-policy supports only one-register completer storage, selected 32-bit sideband-aware two-register no-policy completer storage, or selected sideband-aware data16 two-register no-policy completer storage in this slice/],
+        ['fixed composition data16 back-to-back wrong selected register address', $fixed_data16_back_to_back_wrong_reg1_address, qr/APB fixed composition selected back-to-back timing-policy supports only one-register completer storage, selected 32-bit sideband-aware two-register no-policy completer storage, selected 32-bit sideband-aware two-register protection completer storage, or selected sideband-aware data16 two-register no-policy completer storage in this slice/],
+        ['fixed composition protection back-to-back wrong selected register address', $fixed_protection_back_to_back_wrong_reg1_address, qr/APB fixed composition selected back-to-back timing-policy supports only one-register completer storage, selected 32-bit sideband-aware two-register no-policy completer storage, selected 32-bit sideband-aware two-register protection completer storage, or selected sideband-aware data16 two-register no-policy completer storage in this slice/],
+        ['fixed composition protection back-to-back wrong policy', $fixed_protection_back_to_back_wrong_policy, qr/APB fixed composition selected back-to-back timing-policy supports only one-register completer storage, selected 32-bit sideband-aware two-register no-policy completer storage, selected 32-bit sideband-aware two-register protection completer storage, or selected sideband-aware data16 two-register no-policy completer storage in this slice/],
         ['multi-peripheral composition missing peripheral timing policy', $multi_missing_control_timing, qr/requires requester back-to-back queued queue-depth 1 overflow reject and every peripheral completer setup-admission adjacent/],
     );
 
@@ -848,6 +903,31 @@ subtest 'CLI check and semantic JSON support-account sideband protection multi-r
     is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_register_sideband_protection', 'sideband protection multi-register APB composition semantic JSON names the corpus entry');
     is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'sideband protection multi-register APB composition semantic JSON payload describes the generated composition root');
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'sideband protection multi-register APB composition semantic JSON records the generated top module');
+};
+
+subtest 'CLI check and semantic JSON support-account sideband protection multi-register status back-to-back APB composition PPIF identity' => sub {
+    my $path = sample_apb_composition_multi_register_sideband_protection_status_back_to_back_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'sideband protection multi-register status back-to-back APB composition --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'sideband protection multi-register status back-to-back APB composition --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'sideband protection multi-register status back-to-back APB composition check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'sideband protection multi-register status back-to-back APB composition check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_register_sideband_protection_status_back_to_back', 'sideband protection multi-register status back-to-back APB composition check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'sideband protection multi-register status back-to-back APB composition check JSON records PPIF source kind');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'sideband protection multi-register status back-to-back APB composition --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'sideband protection multi-register status back-to-back APB composition --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'sideband protection multi-register status back-to-back APB composition semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_register_sideband_protection_status_back_to_back', 'sideband protection multi-register status back-to-back APB composition semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'sideband protection multi-register status back-to-back APB composition semantic JSON payload describes the generated composition root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'sideband protection multi-register status back-to-back APB composition semantic JSON records the generated top module');
 };
 
 subtest 'CLI check and semantic JSON support-account sideband multi-register data16 APB composition PPIF identity' => sub {
@@ -1289,6 +1369,62 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection mu
     is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'sideband protection multi-register .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
     is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'sideband protection multi-register .apb APB composition alias mirrors .ppif generated IAL0');
     is($alias->{report}{protection_policy}{enforcement_owner}, 'completer', 'sideband protection multi-register .apb APB composition alias preserves policy owner');
+};
+
+subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection multi-register status back-to-back APB composition review artifacts' => sub {
+    my $path = sample_apb_composition_multi_register_sideband_protection_status_back_to_back_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'sideband protection multi-register status back-to-back APB composition --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'sideband protection multi-register status back-to-back APB composition --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{schema}, 'fsmgen.ial2.protocol_intent.apb_composition.v1', 'sideband protection multi-register status back-to-back APB composition schedule JSON reports schema');
+    is($schedule_report->{requester_accepted_field}{name}, 'accepted', 'sideband protection multi-register status back-to-back APB composition schedule JSON reports accepted metadata');
+    is($schedule_report->{back_to_back_policy}{composition_role}, 'propagate_endpoint_policy', 'sideband protection multi-register status back-to-back APB composition schedule JSON reports aggregate policy');
+    is($schedule_report->{children}[1]{transfer}{timing_policy}{setup_admission}, 'adjacent', 'sideband protection multi-register status back-to-back APB composition schedule JSON reports completer adjacent setup admission');
+    is($schedule_report->{protection_policy}{enforcement_owner}, 'completer', 'sideband protection multi-register status back-to-back APB composition schedule JSON reports completer enforcement owner');
+    is($schedule_report->{children}[1]{protection_policy}{registers}[1]{write}{predicate}{value}, 1, 'sideband protection multi-register status back-to-back APB composition schedule JSON reports reg1 write predicate');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_back_to_back_policy_deferred}, 'sideband protection multi-register status back-to-back APB composition schedule JSON omits broad back-to-back residue');
+    ok(!$residue{apb_protection_policy_effects_deferred}, 'sideband protection multi-register status back-to-back APB composition schedule JSON omits old policy-effects residue');
+    ok($residue{apb_additional_back_to_back_policies_deferred}, 'sideband protection multi-register status back-to-back APB composition schedule JSON reports narrowed timing residue');
+    ok($residue{apb_additional_protection_policies_deferred}, 'sideband protection multi-register status back-to-back APB composition schedule JSON reports additional-policy residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_tb_multi_sideband_protection_status_back_to_back.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'sideband protection multi-register status back-to-back APB composition CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'sideband protection multi-register status back-to-back APB composition generation keeps stderr clean');
+    for my $artifact (qw(apb_requester.isf apb_completer.isf apb_requester.fsm apb_completer.fsm apb_tb.fsm)) {
+        ok(-f File::Spec->catfile($outdir, $artifact), "sideband protection multi-register status back-to-back APB composition --outdir writes $artifact");
+    }
+    ok(-f $hdl, 'sideband protection multi-register status back-to-back APB composition --output writes generated HDL');
+    my $top = slurp(File::Spec->catfile($outdir, 'apb_tb.fsm'));
+    like($top, qr/=accepted>/, 'sideband protection multi-register status back-to-back outdir top exposes accepted');
+    like($top, qr/\(queued_prot 3\)/, 'sideband protection multi-register status back-to-back outdir top embeds queued PPROT state');
+    like($top, qr/\(requester\.PPROT completer\.PPROT\)/, 'sideband protection multi-register status back-to-back outdir top wires PPROT');
+    like($top, qr/\(<= \(addr PADDR\) <\(& PSEL \(! PENABLE\)\)\)/, 'sideband protection multi-register status back-to-back outdir top embeds adjacent completer setup detector');
+    like($top, qr/\(\?\(& write_q \(== addr 4\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-register status back-to-back outdir top embeds denied reg1 write branch');
+    like($top, qr/\(<- \(reg1_data_q \(\| \(& reg1_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, 'sideband protection multi-register status back-to-back outdir top embeds high-byte write mask');
+    my $sv = slurp($hdl);
+    like($sv, qr/\boutput\s+accepted\b/, 'sideband protection multi-register status back-to-back APB composition HDL exposes accepted');
+    like($sv, qr/\breg\s+\[2:0\]\s+queued_prot\b/, 'sideband protection multi-register status back-to-back APB composition HDL keeps queued PPROT state');
+    like($sv, qr/prot_q\s*&\s*3'd1/, 'sideband protection multi-register status back-to-back APB composition HDL preserves PPROT predicate logic');
+    like($sv, qr/PSLVERR_next = 1;/, 'sideband protection multi-register status back-to-back APB composition HDL preserves denied-access error drive');
+
+    ok(-f sample_apb_composition_multi_register_sideband_protection_status_back_to_back_apb_path(), 'tracked runnable sideband protection multi-register status back-to-back APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_protection_status_back_to_back_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_register_sideband_protection_status_back_to_back_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'sideband protection multi-register status back-to-back .apb APB composition alias returns the composition kind');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'sideband protection multi-register status back-to-back .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'sideband protection multi-register status back-to-back .apb APB composition alias mirrors .ppif generated IAL0');
+    is($alias->{report}{back_to_back_policy}{completer}{timing_policy}{setup_admission}, 'adjacent', 'sideband protection multi-register status back-to-back .apb APB composition alias preserves completer timing policy');
+    is($alias->{report}{protection_policy}{enforcement_owner}, 'completer', 'sideband protection multi-register status back-to-back .apb APB composition alias preserves policy owner');
 };
 
 subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband multi-register data16 APB composition review artifacts' => sub {
@@ -1973,6 +2109,10 @@ sub sample_apb_composition_multi_register_sideband_protection_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_protection.ppif');
 }
 
+sub sample_apb_composition_multi_register_sideband_protection_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_protection_status_back_to_back.ppif');
+}
+
 sub sample_apb_composition_multi_register_sideband_data16_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_data16.ppif');
 }
@@ -1995,6 +2135,10 @@ sub sample_apb_composition_multi_register_sideband_status_back_to_back_apb_path 
 
 sub sample_apb_composition_multi_register_sideband_protection_apb_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_protection.apb');
+}
+
+sub sample_apb_composition_multi_register_sideband_protection_status_back_to_back_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_register_sideband_protection_status_back_to_back.apb');
 }
 
 sub sample_apb_composition_multi_register_sideband_data16_apb_path {
@@ -2079,6 +2223,10 @@ sub sample_apb_composition_multi_register_sideband_ppif {
 
 sub sample_apb_composition_multi_register_sideband_protection_ppif {
     return slurp(sample_apb_composition_multi_register_sideband_protection_ppif_path());
+}
+
+sub sample_apb_composition_multi_register_sideband_protection_status_back_to_back_ppif {
+    return slurp(sample_apb_composition_multi_register_sideband_protection_status_back_to_back_ppif_path());
 }
 
 sub sample_apb_composition_multi_register_sideband_data16_status_back_to_back_ppif {

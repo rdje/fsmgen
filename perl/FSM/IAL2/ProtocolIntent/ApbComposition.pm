@@ -1478,6 +1478,15 @@ sub _endpoint_storage_is_selected_sideband_multi_register_timing_shape($storage)
     return _endpoint_storage_is_selected_multi_register_timing_shape($storage, 4, 32);
 }
 
+sub _endpoint_storage_is_selected_sideband_protection_multi_register_timing_shape($storage) {
+    my @registers = _endpoint_storage_registers($storage);
+    return 0 unless @registers == 2;
+    return 0 unless _endpoint_storage_register_matches_selected_timing_shape($registers[0], 'reg0', 0, 32)
+        && _endpoint_storage_register_matches_selected_timing_shape($registers[1], 'reg1', 4, 32);
+    return _endpoint_access_policy_is_selected_reg0_protection($registers[0])
+        && _endpoint_access_policy_is_selected_reg1_protection($registers[1]);
+}
+
 sub _endpoint_storage_is_selected_sideband_data16_multi_register_timing_shape($storage) {
     return _endpoint_storage_is_selected_multi_register_timing_shape($storage, 2, 16);
 }
@@ -1510,6 +1519,36 @@ sub _endpoint_storage_register_matches_selected_timing_shape($register, $name, $
         && defined($data->{reset})
         && !ref($data->{reset})
         && $data->{reset} == 0;
+}
+
+sub _endpoint_access_policy_is_selected_reg0_protection($register) {
+    my $policy = $register->{access_policy};
+    return 0 unless ref($policy) eq 'HASH';
+    return _endpoint_access_policy_operation_is_allow($policy->{read})
+        && _endpoint_access_policy_operation_is_privileged($policy->{write}, 1);
+}
+
+sub _endpoint_access_policy_is_selected_reg1_protection($register) {
+    my $policy = $register->{access_policy};
+    return 0 unless ref($policy) eq 'HASH';
+    return _endpoint_access_policy_operation_is_privileged($policy->{read}, 1)
+        && _endpoint_access_policy_operation_is_privileged($policy->{write}, 1);
+}
+
+sub _endpoint_access_policy_operation_is_allow($operation) {
+    return ref($operation) eq 'HASH'
+        && ($operation->{action} // '') eq 'allow'
+        && !exists($operation->{predicate});
+}
+
+sub _endpoint_access_policy_operation_is_privileged($operation, $value) {
+    return ref($operation) eq 'HASH'
+        && ($operation->{action} // '') eq 'require'
+        && ref($operation->{predicate}) eq 'HASH'
+        && ($operation->{predicate}{kind} // '') eq 'privileged'
+        && defined($operation->{predicate}{value})
+        && !ref($operation->{predicate}{value})
+        && $operation->{predicate}{value} == $value;
 }
 
 sub _composition_has_access_policy($contract) {
@@ -1577,7 +1616,7 @@ sub _fixed_composition_back_to_back_policy_report($contract, $requester_result, 
 sub _apb_additional_back_to_back_policies_residue() {
     return {
         id     => 'apb_additional_back_to_back_policies_deferred',
-        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition, selected sideband-aware fixed multi-register composition, and the bounded two-peripheral interconnect/decode family; selected sideband-aware data16 requester and adjacent data16 two-register no-policy completer propagation is implemented for fixed composition; protection variants, multi-peripheral multi-register timing, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
+        detail => 'Selected 32-bit no-sideband depth-1 queued requester and adjacent completer policy propagation is implemented for fixed composition and the bounded two-peripheral interconnect/decode family; selected 32-bit sideband-aware requester and adjacent completer policy propagation is implemented for fixed composition, selected sideband-aware fixed multi-register composition, selected sideband-aware protected fixed multi-register composition, and the bounded two-peripheral interconnect/decode family; selected sideband-aware data16 requester and adjacent data16 two-register no-policy completer propagation is implemented for fixed composition; data16-protection timing, multi-peripheral multi-register timing, deeper queues, alternate overflow policies, multiple active APB transfers, direct backend lowering, verification-output, backend-language variants, AXI, AHB, and VHDL remain future work.',
     };
 }
 
@@ -1890,9 +1929,10 @@ sub _validate_fixed_timing_policy_compatibility($wiring, $requester, $completer)
     confess "APB fixed composition selected back-to-back timing-policy supports only 32-bit no-sideband, selected 32-bit sideband-aware, or selected sideband-aware data16 APB wiring in this slice\n"
         unless $is_no_sideband_family || $is_sideband_family || $is_sideband_data16_family;
 
-    confess "APB fixed composition selected back-to-back timing-policy supports only one-register completer storage, selected 32-bit sideband-aware two-register no-policy completer storage, or selected sideband-aware data16 two-register no-policy completer storage in this slice\n"
+    confess "APB fixed composition selected back-to-back timing-policy supports only one-register completer storage, selected 32-bit sideband-aware two-register no-policy completer storage, selected 32-bit sideband-aware two-register protection completer storage, or selected sideband-aware data16 two-register no-policy completer storage in this slice\n"
         if ref($completer->{storage}{registers}) eq 'ARRAY'
             && !($is_sideband_family && _endpoint_storage_is_selected_sideband_multi_register_timing_shape($completer->{storage}))
+            && !($is_sideband_family && _endpoint_storage_is_selected_sideband_protection_multi_register_timing_shape($completer->{storage}))
             && !($is_sideband_data16_family && _endpoint_storage_is_selected_sideband_data16_multi_register_timing_shape($completer->{storage}));
 }
 
