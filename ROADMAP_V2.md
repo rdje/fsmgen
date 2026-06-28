@@ -4709,6 +4709,20 @@ multi-peripheral propagation, data16/protection variants, multi-register
 timing policy, deeper queues, alternate overflow, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.616` now selects `.617`, public contract selection for the bounded 32-bit
+sideband-aware APB multi-peripheral back-to-back family, without behavior
+changes. `.609` already shipped no-sideband multi-peripheral back-to-back
+propagation, `.612` shipped sideband requester queued `PPROT/PSTRB`, and
+`.615` shipped sideband adjacent completer setup plus fixed-composition
+propagation. Existing sideband multi-peripheral samples propagate
+`PPROT/PSTRB` through the generated interconnect but still carry broad
+`apb_back_to_back_policy_deferred`; a temporary combined candidate failed at
+the current no-sideband-only multi-peripheral timing guard. `.617` must settle
+exact public sources, endpoint/interconnect compatibility, report/support
+movement, diagnostics, validation, and rollback before implementation.
+Data16/protection variants, multi-register timing policy, deeper queues,
+alternate overflow, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

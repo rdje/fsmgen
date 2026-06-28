@@ -10486,6 +10486,18 @@ residue for sideband multi-peripheral propagation, data16/protection variants,
 multi-register timing policy, deeper queues, alternate overflow, direct
 backend, verification-output, backend-language variants, AXI, AHB, and VHDL.
 
+Post APB sideband composition back-to-back selector:
+[IAL2_POST_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SIDEBAND_COMPOSITION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.617`, public contract selection for bounded 32-bit sideband-aware
+APB multi-peripheral back-to-back propagation, without behavior changes. The
+current sideband multi-peripheral substrate already propagates `PPROT/PSTRB`,
+but timing propagation still fails at the no-sideband-only multi-peripheral
+guard. `.617` must settle exact public sources, endpoint/interconnect
+compatibility, report/support movement, diagnostics, validation, and rollback
+before implementation. Data16/protection variants, multi-register timing
+policy, deeper queues, alternate overflow, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
