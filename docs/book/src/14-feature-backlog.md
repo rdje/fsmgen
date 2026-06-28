@@ -10844,6 +10844,21 @@ requester/completer/interconnect timing requirements, report/residue
 movement, support-accounting identities, diagnostics, validation, rollback,
 and docs before implementation.
 
+APB no-policy multi-peripheral multi-register back-to-back contract selection:
+[IAL2_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.642`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_status_back_to_back.ppif`
+and its `.apb` alias. The selected contract is the bounded two-peripheral
+32-bit sideband-aware no-policy multi-register family with requester
+`accepted/busy/status`, depth-1 queued overflow-reject timing,
+`PPROT width 3`, `PSTRB width 4`, status/control windows at bases `0` and
+`256`, adjacent setup on both peripherals, and exactly `reg0` at address `0`
+plus `reg1` at address `4` with no access policy in each peripheral. Reports
+shall add aggregate `back_to_back_policy`, remove broad back-to-back residue
+for selected surfaces, retain narrowed future-policy, protection-effects, and
+alternate-width residue, and keep sideband data16 no-policy multi-peripheral
+multi-register timing deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -5036,6 +5036,18 @@ multi-peripheral timing guard, so `.641` must settle public source names,
 32-bit register/window shape, requester/completer/interconnect timing
 requirements, report/residue movement, support-accounting identities,
 diagnostics, validation, rollback, and docs before implementation.
+`.641` now selects `.642`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_status_back_to_back.ppif`
+and its `.apb` alias, without behavior changes. The selected contract is a
+bounded two-peripheral 32-bit sideband-aware no-policy multi-register family:
+requester `accepted/busy/status`, depth-1 queued overflow-reject timing,
+`PPROT width 3`, `PSTRB width 4`, status/control windows at bases `0` and
+`256`, adjacent setup on both peripheral completers, and exactly `reg0` at
+address `0` plus `reg1` at address `4` with no access policy in each
+peripheral. Reports shall add aggregate `back_to_back_policy`, remove broad
+back-to-back residue for selected surfaces, retain narrowed future-policy,
+protection-effects, and alternate-width residue, and keep sideband data16
+no-policy multi-peripheral multi-register timing deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
