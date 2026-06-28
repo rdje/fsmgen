@@ -10638,6 +10638,21 @@ queues, alternate overflow, accepted-less requesters, multiple active APB
 transfers, direct backend, verification-output, backend-language variants, AXI,
 AHB, and VHDL remain deferred.
 
+APB protection back-to-back contract selection:
+[IAL2_APB_PROTECTION_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_PROTECTION_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.628` to directly implement exactly four APB sideband-aware
+protection back-to-back sources: protected standalone completer `.ppif` and
+`.apb`, plus protected fixed-composition status `.ppif` and `.apb`. The
+selected completer is 32-bit with `PPROT width 3`, `PSTRB width 4`, `reg0` at
+address `0` with read-allow/write-privileged policy, and `reg1` at address `4`
+with read/write privileged policy. The fixed composition combines that
+protected adjacent completer with the `.612` queued sideband requester while
+leaving policy enforcement in the completer. Data16-protection timing,
+multi-peripheral multi-register timing, deeper queues, alternate overflow,
+accepted-less requesters, multiple active APB transfers, broader protection
+policies, direct backend, verification-output, backend-language variants, AXI,
+AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
