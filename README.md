@@ -4019,6 +4019,17 @@ must settle source shape, endpoint storage, interconnect propagation,
 report/residue movement, diagnostics, support accounting, validation,
 rollback, and docs before any parser/generator/sample/test/HDL behavior
 change.
+`.640` now selects `.641`, public contract selection for the bounded 32-bit
+sideband-aware no-policy multi-peripheral multi-register back-to-back timing
+family, without behavior changes. The audit confirmed fixed sideband
+no-policy multi-register timing and sideband data16 no-policy multi-register
+timing are support-accounted on fixed compositions, while multi-peripheral
+no-policy timing is currently one-register per peripheral. In-memory
+two-register no-policy multi-peripheral candidates fail closed at the current
+multi-peripheral timing guard, so `.641` must settle public source names,
+32-bit register/window shape, requester/completer/interconnect timing
+requirements, report/residue movement, support-accounting identities,
+diagnostics, validation, rollback, and docs before implementation.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6607,6 +6618,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_MULTI_PERIPHERAL_PROTECTION_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects the bounded APB sideband-aware multi-peripheral protection back-to-back public contract before implementation.
 - `docs/IAL2_APB_MULTI_PERIPHERAL_PROTECTION_BACK_TO_BACK_BEHAVIOR.md` — ships selected APB sideband-aware multi-peripheral protection back-to-back timing behavior.
 - `docs/IAL2_POST_APB_MULTI_PERIPHERAL_PROTECTION_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects APB no-policy multi-peripheral multi-register back-to-back timing readiness audit after selected protected multi-peripheral timing shipped.
+- `docs/IAL2_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_READINESS_AUDIT.md` — audits APB no-policy multi-peripheral multi-register timing readiness and selects bounded 32-bit sideband-aware public contract selection.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

@@ -10830,6 +10830,20 @@ must settle source shape, endpoint storage, interconnect propagation,
 report/residue movement, diagnostics, support accounting, validation,
 rollback, and docs before any behavior change.
 
+APB no-policy multi-peripheral multi-register back-to-back readiness audit:
+[IAL2_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_READINESS_AUDIT](../../IAL2_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_READINESS_AUDIT.md)
+selects `.641`, public contract selection for the bounded 32-bit
+sideband-aware no-policy multi-peripheral multi-register back-to-back timing
+family. Fixed sideband no-policy multi-register timing and sideband data16
+no-policy multi-register timing are support-accounted on fixed compositions,
+while multi-peripheral no-policy timing is currently one-register per
+peripheral. In-memory two-register no-policy multi-peripheral candidates fail
+closed at the current multi-peripheral timing guard, so `.641` must settle
+public source names, 32-bit register/window shape,
+requester/completer/interconnect timing requirements, report/residue
+movement, support-accounting identities, diagnostics, validation, rollback,
+and docs before implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

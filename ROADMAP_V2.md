@@ -5025,6 +5025,17 @@ two-register no-policy peripheral storage, so `.640` must settle source
 shape, endpoint storage, interconnect propagation, report/residue movement,
 diagnostics, support accounting, validation, rollback, and docs before any
 parser/generator/sample/test/HDL behavior change.
+`.640` now selects `.641`, public contract selection for the bounded 32-bit
+sideband-aware no-policy multi-peripheral multi-register back-to-back timing
+family, without behavior changes. Fixed sideband no-policy multi-register
+timing and sideband data16 no-policy multi-register timing are
+support-accounted on fixed compositions, while multi-peripheral no-policy
+timing is currently one-register per peripheral. In-memory two-register
+no-policy multi-peripheral candidates fail closed at the current
+multi-peripheral timing guard, so `.641` must settle public source names,
+32-bit register/window shape, requester/completer/interconnect timing
+requirements, report/residue movement, support-accounting identities,
+diagnostics, validation, rollback, and docs before implementation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
