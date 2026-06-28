@@ -5239,6 +5239,19 @@ peripherals, deeper queues, alternate overflow, accepted-less requesters,
 multiple active transfers, bus matrices, scoreboards, direct backend,
 verification-output, backend-language variants, AXI, AHB, and VHDL remain
 deferred.
+`.655` now selects `.656`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back.ppif`
+and its `.apb` alias, without behavior changes. The selected contract is the
+32-bit counterpart of the shipped `.649` data16 protected `reg0`/`reg1`
+family: one requester, two peripheral completers, 32-bit APB/register data,
+`PPROT width 3`, `PSTRB width 4`, status/control windows at bases `0` and
+`256`, adjacent setup on both peripherals, and protected `reg0`/`reg1`
+storage at local addresses `0` and `4` in each peripheral. Protection remains
+peripheral-owned; the interconnect only propagates `PPROT/PSTRB/PWDATA`,
+translates the control address by subtracting `256`, muxes the selected
+response, and inserts no idle cycle for selected queued setup. A temporary
+exact-name candidate still fails closed at the current multi-peripheral
+timing guard, so behavior waits for `.656`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

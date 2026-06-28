@@ -11048,6 +11048,16 @@ guard, so exact public sources, reports, residue movement, support
 accounting, diagnostics, validation, rollback, docs, and Knowledge Map are
 settled before implementation.
 
+APB 32-bit protection multi-peripheral multi-register contract selection:
+[IAL2_APB_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.656`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back.ppif`
+and its `.apb` alias, without behavior changes. The selected family uses
+32-bit APB/register data, `PPROT width 3`, `PSTRB width 4`, windows at bases
+`0` and `256`, adjacent setup on both peripherals, and protected `reg0` at
+local address `0` plus protected `reg1` at local address `4` in each
+peripheral.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
