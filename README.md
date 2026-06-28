@@ -4268,6 +4268,17 @@ accepted-less requesters, multiple active APB transfers, bus matrices,
 scoreboards, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred. `.657` is now the next selector for the
 remaining APB timing/protection residue.
+`.657` now selects `.658`, readiness audit for generalized APB
+multi-peripheral multi-register source shapes, without behavior changes. The
+selector chooses an audit because `.656` closed the last explicit selected
+16/32-bit `reg0`/`reg1` no-policy/protection multi-peripheral timing family,
+while the remaining live timing residue would change the public acceptance
+boundary from exact source families to generalized rules for register counts,
+names, addresses, reset values, policy matrices, and possibly peripheral
+counts. Deeper queues, alternate overflow, accepted-less requesters, multiple
+active APB transfers, bus matrices, scoreboards, broader protection policies,
+direct backend, verification-output, backend-language variants, AXI, AHB, and
+VHDL remain deferred behind future exact owners.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6873,6 +6884,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_TIMING_READINESS_AUDIT.md` — audits generalized APB multi-peripheral multi-register timing readiness and selects bounded 32-bit protected `reg0`/`reg1` contract selection next.
 - `docs/IAL2_APB_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects exact APB 32-bit protected `reg0`/`reg1` multi-peripheral multi-register back-to-back public sources before implementation.
 - `docs/IAL2_APB_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md` — ships selected APB 32-bit protection multi-peripheral multi-register back-to-back timing behavior.
+- `docs/IAL2_POST_APB_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects generalized APB multi-peripheral multi-register source-shape readiness audit after selected 32-bit protection multi-register timing shipped.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

@@ -5274,6 +5274,17 @@ accepted-less requesters, multiple active APB transfers, bus matrices,
 scoreboards, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred. `.657` is now the next selector for the
 remaining APB timing/protection residue.
+`.657` now selects `.658`, readiness audit for generalized APB
+multi-peripheral multi-register source shapes, without behavior changes. The
+selector chooses an audit because `.656` closed the last explicit selected
+16/32-bit `reg0`/`reg1` no-policy/protection multi-peripheral timing family,
+while the remaining live timing residue would change the public acceptance
+boundary from exact source families to generalized rules for register counts,
+names, addresses, reset values, policy matrices, and possibly peripheral
+counts. Deeper queues, alternate overflow, accepted-less requesters, multiple
+active APB transfers, bus matrices, scoreboards, broader protection policies,
+direct backend, verification-output, backend-language variants, AXI, AHB, and
+VHDL remain deferred behind future exact owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

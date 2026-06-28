@@ -11079,6 +11079,17 @@ aggregate multi-peripheral `back_to_back_policy`, remove broad
 additional-protection-policy, and alternate-width residue. Generalized
 multi-peripheral multi-register shapes remain deferred.
 
+Post APB 32-bit protection multi-peripheral multi-register back-to-back
+selector:
+[IAL2_POST_APB_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.658`, readiness audit for generalized APB multi-peripheral
+multi-register source shapes, without behavior changes. The selected audit is
+next because the explicit selected 16/32-bit `reg0`/`reg1`
+no-policy/protection multi-peripheral timing families and the selected
+status/control protected families are shipped, while a generalized shape would
+need public rules for register counts, names, addresses, reset values, policy
+matrices, and possibly peripheral counts before any implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
