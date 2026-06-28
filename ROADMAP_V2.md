@@ -5285,6 +5285,19 @@ counts. Deeper queues, alternate overflow, accepted-less requesters, multiple
 active APB transfers, bus matrices, scoreboards, broader protection policies,
 direct backend, verification-output, backend-language variants, AXI, AHB, and
 VHDL remain deferred behind future exact owners.
+`.658` now selects `.659`, public contract selection for one bounded
+generalized APB multi-peripheral multi-register source-shape family, without
+behavior changes. The audit found the selected exact 16/32-bit
+no-policy/protected `reg0`/`reg1` and status/control protected two-peripheral
+timing families are shipped, while current `ApbComposition` remains
+exact-family guarded. Generalized acceptance needs public rules for register
+cardinality, names, local addresses, reset values, policy matrices,
+per-peripheral consistency, support accounting, diagnostics, validation, and
+residue movement before implementation. Deeper queues, alternate overflow,
+accepted-less requesters, multiple active APB transfers, bus matrices,
+scoreboards, broader protection policies, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred behind future
+exact owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

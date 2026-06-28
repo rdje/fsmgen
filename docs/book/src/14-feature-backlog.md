@@ -11090,6 +11090,17 @@ status/control protected families are shipped, while a generalized shape would
 need public rules for register counts, names, addresses, reset values, policy
 matrices, and possibly peripheral counts before any implementation.
 
+APB generalized multi-peripheral multi-register source-shape readiness audit:
+[IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SOURCE_SHAPE_READINESS_AUDIT](../../IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SOURCE_SHAPE_READINESS_AUDIT.md)
+selects `.659`, public contract selection for one bounded generalized APB
+multi-peripheral multi-register source-shape family, without behavior
+changes. The selected exact 16/32-bit no-policy/protected `reg0`/`reg1` and
+status/control protected two-peripheral timing families are shipped, while
+current `ApbComposition` remains exact-family guarded. Generalized acceptance
+needs public rules for register cardinality, names, local addresses, reset
+values, policy matrices, per-peripheral consistency, support accounting,
+diagnostics, validation, and residue movement before implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
