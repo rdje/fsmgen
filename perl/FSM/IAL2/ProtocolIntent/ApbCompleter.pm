@@ -645,7 +645,7 @@ sub _storage_is_selected_sideband_multi_register_timing_shape($storage) {
 }
 
 sub _storage_is_selected_sideband_generalized_no_policy_register_set_timing_shape($storage) {
-    return _storage_is_selected_generalized_no_policy_register_set_timing_shape($storage, 2, 5, 4, 32);
+    return _storage_is_selected_generalized_no_policy_register_set_timing_shape($storage, 2, 6, 4, 32);
 }
 
 sub _storage_is_selected_sideband_protection_generalized_register_set_timing_shape($storage) {

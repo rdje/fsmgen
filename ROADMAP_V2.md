@@ -5722,6 +5722,27 @@ more-than-two peripherals, deeper queues, alternate overflow, accepted-less
 requesters, multiple active transfers, bus matrices, scoreboards, direct
 backend, verification-output, backend-language variants, AXI, AHB, and VHDL
 remain deferred.
+`.685` now ships that selected APB sideband-aware 32-bit no-policy
+six-register generalized `reg0..regN` register-set timing behavior through
+the byte-identical
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.ppif`
+and `.apb` public sources. The admitted no-policy two-peripheral family now
+accepts two through six source-ordered registers with 32-bit APB/register
+data, `PPROT width 3`, `PSTRB width 4`, local addresses `0/4/8/12/16/20`
+for the public six-register representative, queue-depth `1`, overflow
+`reject`, adjacent setup on both peripherals, status/control windows at `0`
+and `256`, propagation-only interconnect decode, and no interconnect-owned
+protection predicate. Reports expose status/control register arrays as
+`[reg0, reg1, reg2, reg3, reg4, reg5]`, support accounting covers the new
+`.ppif` and `.apb` identities, and focused parser/profile-alias/composition,
+support-accounting, capability-manifest, schedule JSON, semantic JSON, outdir,
+and generated-artifact probes cover `reg5` storage/read/write and byte-lane
+behavior. Data16 six-register, protected six-register, more-than-six-register,
+more-than-two-peripheral, deeper-queue, alternate-overflow, accepted-less,
+multiple-active, bus-matrix, scoreboard, direct-backend, verification-output,
+backend-language variant, AXI, AHB, and VHDL behavior remain deferred.
+`.686` owns the next APB timing/register-set residue selector before any
+further behavior change.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

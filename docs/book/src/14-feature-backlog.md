@@ -11541,6 +11541,27 @@ no-policy generalized two-peripheral family to `maximum_count = 6`; data16,
 protected, more-than-six-register, more-than-two-peripheral, direct-backend,
 backend-language, AXI, AHB, and VHDL behavior remain deferred.
 
+Six-register APB generalized behavior:
+[IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_BEHAVIOR](../../IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_BEHAVIOR.md)
+ships `.685`, bounded APB sideband-aware 32-bit no-policy six-register
+generalized `reg0..regN` register-set multi-peripheral timing behavior. The
+public source pair is
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.ppif`
+and `.apb`; the representative uses `reg0` through `reg5` at local addresses
+`0/4/8/12/16/20`. The admitted no-policy two-peripheral family now accepts
+two through six source-ordered registers, preserves 32-bit data,
+`PPROT width 3`, `PSTRB width 4`, queue-depth `1`, overflow `reject`,
+adjacent setup, status/control windows at `0` and `256`, propagation-only
+interconnect decode, and no interconnect-owned protection predicate. Reports
+list status/control register arrays as
+`[reg0, reg1, reg2, reg3, reg4, reg5]`; support accounting tracks the new
+`.ppif` and `.apb` identities; focused CLI, parser, schedule, semantic,
+outdir, HDL, support-accounting, and capability tests cover `reg5`
+storage/read/write and byte-lane behavior. Data16 six-register, protected
+six-register, more-than-six-register, more-than-two-peripheral,
+direct-backend, backend-language, AXI, AHB, and VHDL behavior remain
+deferred. `.686` owns the next APB timing/register-set residue selector.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -1762,7 +1762,7 @@ subtest 'adapter rejects malformed APB composition PPIF shapes with targeted dia
     $multi_generalized_five_register_no_policy_back_to_back_with_status_access_policy =~ s/\(data status_reg4_data_q width 32 reset 0\)\)/(data status_reg4_data_q width 32 reset 0)\n        (access-policy\n          (read allow)\n          (write require (privileged 1))))/;
 
     my $multi_generalized_five_register_no_policy_back_to_back_too_many_status_registers = sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back_ppif();
-    $multi_generalized_five_register_no_policy_back_to_back_too_many_status_registers =~ s/\(data status_reg4_data_q width 32 reset 0\)\)\)/(data status_reg4_data_q width 32 reset 0))\n      (register reg5\n        (address 20 width 32)\n        (data status_reg5_data_q width 32 reset 0)))/;
+    $multi_generalized_five_register_no_policy_back_to_back_too_many_status_registers =~ s/\(data status_reg4_data_q width 32 reset 0\)\)\)/(data status_reg4_data_q width 32 reset 0))\n      (register reg5\n        (address 20 width 32)\n        (data status_reg5_data_q width 32 reset 0))\n      (register reg6\n        (address 24 width 32)\n        (data status_reg6_data_q width 32 reset 0)))/;
 
     my $multi_protection_mreg_back_to_back_wrong_status_reg1_address = sample_apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back_ppif();
     $multi_protection_mreg_back_to_back_wrong_status_reg1_address =~ s/\(address 4 width 32\)/(address 8 width 32)/;
@@ -2253,6 +2253,33 @@ subtest 'CLI check and semantic JSON support-account generalized five-register s
     is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON payload describes the generated composition root');
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON records the generated top module');
     is($semantic_report->{semantic}{module}{composition_child_count}, 4, 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON records four generated children');
+};
+
+subtest 'CLI check and semantic JSON support-account generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition PPIF identity' => sub {
+    my $path = sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_ppif_path();
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $path],
+    );
+    ok($check_success, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition --check --json succeeds');
+    is(join('', @{$check_stderr || []}), '', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition check JSON reports success');
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($path), 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition check JSON reports the public .ppif source path');
+    is($check_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition check JSON names the corpus entry');
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition check JSON records PPIF source kind');
+    is($check_report->{result}{composition_child_count}, 4, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition check JSON reports four generated children');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+    );
+    ok($semantic_success, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON reports success');
+    is($semantic_report->{support_accounting}{entry_id}, 'intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON names the corpus entry');
+    is($semantic_report->{semantic}{module}{source_root_kind}, 'top', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON payload describes the generated composition root');
+    is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON records the generated top module');
+    is($semantic_report->{semantic}{module}{composition_child_count}, 4, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition semantic JSON records four generated children');
 };
 
 subtest 'CLI check and semantic JSON support-account sideband protection multi-peripheral multi-register back-to-back APB composition PPIF identity' => sub {
@@ -3414,6 +3441,83 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized five-regis
     is($alias->{report}{composition}{width_policy}{data_width}, 32, 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves data width policy');
     is_deeply($alias->{report}{children}[3]{transfer}{registers}, [qw(reg0 reg1 reg2 reg3 reg4)], 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves control reg0..reg4 storage');
     is($alias->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves interconnect timing policy');
+};
+
+subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition review artifacts' => sub {
+    my $path = sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_ppif_path();
+    my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+    ok($schedule_success, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition --emit-schedule-json succeeds');
+    is(join('', @{$schedule_stderr || []}), '', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition --emit-schedule-json keeps stderr clean');
+    my $schedule_report = decode_json(join('', @{$schedule_stdout || []}));
+    is($schedule_report->{schema}, 'fsmgen.ial2.protocol_intent.apb_composition.v1', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports schema');
+    is($schedule_report->{composition}{topology}, 'multi_peripheral_interconnect', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports topology');
+    is($schedule_report->{composition}{width_policy}{data_width}, 32, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports data width 32');
+    is($schedule_report->{composition}{width_policy}{strobe_width}, 4, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports strobe width 4');
+    is($schedule_report->{composition}{address_map}{alignment_bytes}, 4, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports 4-byte window alignment');
+    is($schedule_report->{composition}{address_map}{windows}[0]{base}{default}, 0, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports status base 0');
+    is($schedule_report->{composition}{address_map}{windows}[1]{base}{default}, 256, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports control base 256');
+    is($schedule_report->{children}[0]{bindings}{bus}{protection}{width}, 3, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports requester PPROT width');
+    is_deeply($schedule_report->{children}[2]{transfer}{registers}, [qw(reg0 reg1 reg2 reg3 reg4 reg5)], 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports status reg0..reg5 storage');
+    is_deeply($schedule_report->{children}[3]{transfer}{registers}, [qw(reg0 reg1 reg2 reg3 reg4 reg5)], 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports control reg0..reg5 storage');
+    is($schedule_report->{children}[2]{bindings}{storage}{registers}[4]{address}{value}, 16, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports status reg4 address 16');
+    is($schedule_report->{children}[2]{bindings}{storage}{registers}[5]{address}{value}, 20, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports status reg5 address 20');
+    is($schedule_report->{back_to_back_policy}{requester}{timing_policy}{queue_depth}, 1, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports queue-depth 1');
+    is($schedule_report->{back_to_back_policy}{requester}{timing_policy}{accepted}, 'accepted', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports accepted response field');
+    is($schedule_report->{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports interconnect timing role');
+    is($schedule_report->{back_to_back_policy}{peripherals}[0]{timing_policy}{setup_admission}, 'adjacent', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports status adjacent setup admission');
+    is($schedule_report->{back_to_back_policy}{peripherals}[1]{timing_policy}{setup_admission}, 'adjacent', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports control adjacent setup admission');
+    my %residue = map { $_->{id} => 1 } @{$schedule_report->{unsupported_residue}};
+    ok(!$residue{apb_back_to_back_policy_deferred}, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON omits broad back-to-back residue');
+    ok($residue{apb_additional_back_to_back_policies_deferred}, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON reports narrowed future timing-policy residue');
+    ok($residue{apb_protection_policy_effects_deferred}, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON keeps protection-policy effects residue');
+    ok($residue{apb_alternate_widths_deferred}, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition schedule JSON keeps alternate-width residue');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_tb_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.sv');
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+    );
+
+    ok($success, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition generation keeps stderr clean');
+    for my $artifact (qw(apb_requester.isf apb_status_regs.isf apb_control_regs.isf apb_interconnect.isf apb_requester.fsm apb_status_regs.fsm apb_control_regs.fsm apb_interconnect.fsm apb_tb.fsm)) {
+        ok(-f File::Spec->catfile($outdir, $artifact), "generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition --outdir writes $artifact");
+    }
+    ok(-f $hdl, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition --output writes generated HDL');
+    my $interconnect = slurp(File::Spec->catfile($outdir, 'apb_interconnect.fsm'));
+    like($interconnect, qr/\(PSTRB_CONTROL 4\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir interconnect preserves 4-bit control PSTRB');
+    like($interconnect, qr/\(<- \(PPROT_STATUS> PPROT\)\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir interconnect fans out PPROT');
+    like($interconnect, qr/\(<- \(PSTRB_CONTROL> PSTRB\)\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir interconnect fans out PSTRB');
+    like($interconnect, qr/\(<- \(PADDR_CONTROL> \(- PADDR 256\)\) <\(& PSEL \(>= PADDR 256\) \(< PADDR 512\)\)\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir interconnect uses control base 256');
+    unlike($interconnect, qr/prot_q/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir interconnect remains enforcement-free');
+    my $top = slurp(File::Spec->catfile($outdir, 'apb_tb.fsm'));
+    like($top, qr/=accepted>/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir top exposes accepted');
+    like($top, qr/\(queued_wstrb 4\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds queued 4-bit PSTRB');
+    like($top, qr/\(status_reg4_data_q 32 \(reset 0\)\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds status reg4 storage');
+    like($top, qr/\(status_reg5_data_q 32 \(reset 0\)\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds status reg5 storage');
+    like($top, qr/\(control_reg5_data_q 32 \(reset 0\)\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg5 storage');
+    like($top, qr/\(<- \(control_reg5_data_q \(\| \(& control_reg5_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg5 high-byte write mask');
+    my $sv = slurp($hdl);
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
+    like($sv, qr/PADDR_CONTROL_next = PADDR - 256;/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL includes 256-byte local address translation');
+    like($sv, qr/\breg\s+\[31:0\]\s+status_reg5_data_q\b/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit status reg5 storage');
+    like($sv, qr/\breg\s+\[31:0\]\s+control_reg5_data_q\b/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit control reg5 storage');
+    like($sv, qr/\breg\s+\[3:0\]\s+queued_wstrb\b/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 4-bit queued PSTRB');
+    unlike($sv, qr/prot_q\s*&\s*3'd1/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL has no endpoint PPROT predicate logic');
+
+    ok(-f sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_apb_path(), 'tracked runnable generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back .apb APB composition alias returns the composition kind');
+    is($alias->{mode}, 'requester-multi-peripheral-composition', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves mode');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back .apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back .apb APB composition alias mirrors .ppif generated IAL0');
+    is($alias->{report}{composition}{width_policy}{data_width}, 32, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves data width policy');
+    is_deeply($alias->{report}{children}[3]{transfer}{registers}, [qw(reg0 reg1 reg2 reg3 reg4 reg5)], 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves control reg0..reg5 storage');
+    is($alias->{report}{back_to_back_policy}{interconnect}{timing_role}, 'propagate_queued_setup_without_idle_cycle', 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back .apb APB composition alias preserves interconnect timing policy');
 };
 
 subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection multi-peripheral multi-register back-to-back APB composition review artifacts' => sub {
@@ -4737,6 +4841,14 @@ sub sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back.apb');
 }
 
+sub sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.ppif');
+}
+
+sub sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.apb');
+}
+
 sub sample_apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back.ppif');
 }
@@ -4915,6 +5027,10 @@ sub sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_
 
 sub sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back_ppif {
     return slurp(sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back_ppif_path());
+}
+
+sub sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_ppif {
+    return slurp(sample_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_ppif_path());
 }
 
 sub sample_apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back_ppif {
