@@ -5549,6 +5549,23 @@ direct-backend, verification-output, backend-language variant, AXI, AHB, and
 VHDL behavior deferred. No parser, generator, public source,
 support-accounting, report, generated artifact, HDL/runtime, APB transaction,
 AXI, AHB, or VHDL behavior changed in `.674`.
+`.675` now ships that selected APB sideband-aware data16 no-policy
+five-register generalized register-set timing behavior through the
+byte-identical `.ppif`/`.apb` source pair. The admitted data16 no-policy
+two-peripheral generalized family now accepts source-ordered `reg0..regN`
+sets with two, three, four, or five registers, 2-byte spacing, 16-bit data,
+reset `0`, no register-local `access-policy`, queue-depth `1`, overflow
+`reject`, adjacent setup on both peripheral completers, status/control
+windows `0` and `258`, and propagation-only interconnect decode. Reports show
+both status and control peripheral register arrays as
+`[reg0, reg1, reg2, reg3, reg4]` for the five-register representative,
+support accounting tracks the new PPIF/profile-alias identities, generated
+artifacts carry `reg3/reg4` storage/read/write and byte-lane behavior, and
+protected five-register, more-than-five-register, more-than-two-peripheral,
+deeper-queue, alternate-overflow, accepted-less, multiple-active, bus-matrix,
+scoreboard, direct-backend, verification-output, backend-language variant,
+AXI, AHB, and VHDL behavior remain deferred. `.676` now owns the next APB
+timing/register-set residue selector.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

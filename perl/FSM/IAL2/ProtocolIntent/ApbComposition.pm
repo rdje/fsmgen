@@ -1518,7 +1518,7 @@ sub _endpoint_storage_is_selected_sideband_data16_multi_register_timing_shape($s
 }
 
 sub _endpoint_storage_is_selected_sideband_data16_generalized_no_policy_register_set_timing_shape($storage) {
-    return _endpoint_storage_is_selected_generalized_no_policy_register_set_timing_shape($storage, 2, 4, 2, 16);
+    return _endpoint_storage_is_selected_generalized_no_policy_register_set_timing_shape($storage, 2, 5, 2, 16);
 }
 
 sub _endpoint_storage_is_selected_sideband_data16_protection_generalized_register_set_timing_shape($storage) {
