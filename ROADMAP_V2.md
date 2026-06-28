@@ -5566,6 +5566,20 @@ deeper-queue, alternate-overflow, accepted-less, multiple-active, bus-matrix,
 scoreboard, direct-backend, verification-output, backend-language variant,
 AXI, AHB, and VHDL behavior remain deferred. `.676` now owns the next APB
 timing/register-set residue selector.
+`.676` now selects `.677`, public contract selection for the bounded APB
+sideband-aware 32-bit protected five-register generalized `reg0..regN`
+register-set multi-peripheral timing family, without behavior changes. The
+selector follows `.675` because no-policy five-register timing is shipped for
+both 32-bit and data16 while protected generalized timing remains capped at
+two-to-four registers. The 32-bit protected path keeps data16 stride/strobe
+details out of the first protected cardinality widening and requires a public
+contract for 32-bit data, `PPROT width 3`, `PSTRB width 4`, status/control
+windows `0` and `256`, representative local addresses `0/4/8/12/16`,
+admitted-family `maximum_count = 5`, protected access-policy matrix,
+support identities, report shape, diagnostics, validation, rollback, docs,
+Knowledge Map, and next owner before behavior changes. No parser, generator,
+public source, support-accounting, report, generated artifact, HDL/runtime,
+APB transaction, AXI, AHB, or VHDL behavior changed in `.676`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
