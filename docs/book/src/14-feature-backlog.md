@@ -10925,6 +10925,22 @@ protection-policy-effects, and remaining-width residue. Data16-protection
 generalization and generalized multi-peripheral multi-register shapes remain
 deferred.
 
+Post APB data16 no-policy multi-peripheral multi-register back-to-back
+selector:
+[IAL2_POST_APB_DATA16_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_DATA16_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.647`, readiness audit for APB data16-protection generalization,
+without behavior changes. Selected no-policy multi-peripheral multi-register
+timing is shipped for both 32-bit and data16 families, selected protected
+data16 timing is shipped for fixed and multi-peripheral status/control
+families, and no explicit public multi-peripheral multi-register
+data16-protection source family exists yet. `.647` must decide whether the
+next exact owner is public contract selection, direct implementation of an
+already-selected family, a source-shape/report-static prerequisite, or
+explicit deferral. Generalized register shapes, deeper queues, alternate
+overflow, accepted-less requesters, multiple active APB transfers, bus
+matrices, scoreboards, direct backend, verification-output, backend-language
+variants, AXI, AHB, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

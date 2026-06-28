@@ -5115,6 +5115,18 @@ generalization, generalized multi-peripheral multi-register shapes, deeper
 queues, alternate overflow, accepted-less requesters, multiple active APB
 transfers, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred.
+`.646` now selects `.647`, readiness audit for APB data16-protection
+generalization, without behavior changes. The selector found that selected
+no-policy multi-peripheral multi-register timing is shipped for both 32-bit
+and data16 families, selected protected data16 timing is shipped for fixed and
+multi-peripheral status/control families, and no explicit public
+multi-peripheral multi-register data16-protection source family exists yet.
+`.647` must decide whether the next exact owner is public contract selection,
+direct implementation of an already-selected family, a source-shape/report-static
+prerequisite, or explicit deferral. Generalized register shapes,
+deeper queues, alternate overflow, accepted-less requesters, multiple active
+APB transfers, bus matrices, scoreboards, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

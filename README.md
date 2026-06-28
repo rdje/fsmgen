@@ -4109,6 +4109,18 @@ generalization, generalized multi-peripheral multi-register shapes, deeper
 queues, alternate overflow, accepted-less requesters, multiple active APB
 transfers, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred.
+`.646` now selects `.647`, readiness audit for APB data16-protection
+generalization, without behavior changes. The selector found that selected
+no-policy multi-peripheral multi-register timing is shipped for both 32-bit
+and data16 families, selected protected data16 timing is shipped for fixed and
+multi-peripheral status/control families, and no explicit public
+multi-peripheral multi-register data16-protection source family exists yet.
+`.647` must decide whether the next exact owner is public contract selection,
+direct implementation of an already-selected family, a source-shape/report-static
+prerequisite, or explicit deferral. Generalized register shapes,
+deeper queues, alternate overflow, accepted-less requesters, multiple active
+APB transfers, bus matrices, scoreboards, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6703,6 +6715,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects APB sideband-aware data16 no-policy multi-peripheral multi-register back-to-back public contract selection after selected 32-bit no-policy multi-register timing shipped.
 - `docs/IAL2_APB_DATA16_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects exact APB data16 no-policy multi-peripheral multi-register back-to-back public sources before implementation.
 - `docs/IAL2_APB_DATA16_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md` — ships selected APB data16 no-policy multi-peripheral multi-register back-to-back timing behavior.
+- `docs/IAL2_POST_APB_DATA16_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects APB data16-protection generalization readiness audit after selected data16 no-policy multi-peripheral multi-register timing shipped.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
