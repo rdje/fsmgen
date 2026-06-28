@@ -11236,6 +11236,24 @@ deeper queues, alternate overflow, accepted-less requesters, multiple active
 transfers, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred.
 
+APB data16 protected generalized multi-peripheral multi-register contract:
+[IAL2_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION](../../IAL2_APB_DATA16_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md)
+selects `.668`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_status_back_to_back.ppif`
+and its `.apb` alias, without behavior changes. The selected family is
+bounded to 16-bit sideband-aware APB, one requester, exactly two peripheral
+completers, matching protected `reg0..regN` register sets with two to four
+registers per peripheral, public representative `reg0/reg1/reg2` at local
+addresses `0/2/4`, status/control windows at `0` and `258`, queue-depth `1`,
+overflow `reject`, adjacent setup on every peripheral, and propagation-only
+interconnect decode. The selected policy matrix keeps `reg0` reads allowed,
+requires privileged `PPROT[0] == 1` for `reg0` writes, and requires privileged
+`PPROT[0] == 1` for every `reg1..regN` read/write. Broader
+cardinality/peripheral count, deeper queues, alternate overflow,
+accepted-less requesters, multiple active transfers, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
