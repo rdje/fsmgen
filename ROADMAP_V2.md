@@ -5175,6 +5175,19 @@ multi-peripheral multi-register shapes, deeper queues, alternate overflow,
 accepted-less requesters, multiple active APB transfers, bus matrices,
 scoreboards, direct backend, verification-output, backend-language variants,
 AXI, AHB, and VHDL remain deferred.
+`.650` now selects `.651`, readiness audit for APB status/control
+protected-storage generalization, without behavior changes. The selector
+chooses that residue because `.649` closed the explicit selected
+data16-protection `reg0`/`reg1` two-peripheral timing surface while `.638` and
+`.634` already ship selected 32-bit and data16 status/control protected
+two-peripheral timing families. `.651` must decide whether the next exact
+owner is public contract selection for a bounded status/control
+protected-storage generalization, direct implementation of one already-selected
+status/control protected shape, a smaller source-shape/report-static
+prerequisite, or explicit deferral before generalized multi-peripheral
+multi-register shapes, deeper queues, alternate overflow, accepted-less
+requesters, multiple active APB transfers, bus matrices, scoreboards, direct
+backend, verification-output, backend-language variants, AXI, AHB, or VHDL.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

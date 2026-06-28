@@ -10994,6 +10994,19 @@ additional-protection-policy, and remaining-width residue. Status/control
 protected storage generalization beyond the selected family and generalized
 multi-peripheral multi-register shapes remain deferred.
 
+Post APB data16-protection multi-peripheral multi-register back-to-back
+selector:
+[IAL2_POST_APB_DATA16_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_DATA16_PROTECTION_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.651`, readiness audit for APB status/control protected-storage
+generalization, without behavior changes. The selector chooses that residue
+because `.649` closed the explicit selected data16-protection `reg0`/`reg1`
+two-peripheral timing surface while `.638` and `.634` already ship selected
+32-bit and data16 status/control protected two-peripheral timing families.
+`.651` must decide whether the next exact owner is public contract selection,
+direct implementation, a smaller source-shape/report-static prerequisite, or
+explicit deferral before generalized multi-peripheral multi-register timing
+families and wider backend/protocol surfaces.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
