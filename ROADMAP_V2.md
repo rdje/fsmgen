@@ -5759,6 +5759,26 @@ any behavior change. Protected six-register, more-than-six-register,
 more-than-two-peripheral, deeper-queue, alternate-overflow, accepted-less,
 multiple-active, bus-matrix, scoreboard, direct-backend, verification-output,
 backend-language variant, AXI, AHB, and VHDL behavior remain deferred.
+`.687` now selects `.688`, direct implementation of the bounded APB
+sideband-aware data16 no-policy six-register generalized `reg0..regN`
+register-set multi-peripheral timing family, without behavior changes. The
+selected public sources are
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.ppif`
+and the byte-identical `.apb` alias. The selected
+`protocol-platform-intent` name is
+`apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back`,
+the selected object is
+`fsmgen-apb-composition-multi-peripheral-multi-register-sideband-data16-generalized-six-register-status-back-to-back`,
+and the selected anchor is
+`requester-multi-peripheral-composition-multi-register-sideband-data16-generalized-six-register-status-back-to-back`.
+The implementation may widen only the selected data16 no-policy generalized
+two-peripheral family from `maximum_count = 5` to `maximum_count = 6`, using
+16-bit data, `PSTRB width 2`, status/control windows at `0` and `258`, and
+public representative `reg0..reg5` local addresses `0/2/4/6/8/10`. Protected
+six-register, more-than-six-register, more-than-two-peripheral, deeper-queue,
+alternate-overflow, accepted-less, multiple-active, bus-matrix, scoreboard,
+direct-backend, verification-output, backend-language variant, AXI, AHB, and
+VHDL behavior remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

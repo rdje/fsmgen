@@ -11581,6 +11581,23 @@ behavior changes. Protected six-register, more-than-six-register,
 more-than-two-peripheral, direct-backend, backend-language, AXI, AHB, and VHDL
 behavior remain deferred.
 
+Data16 six-register APB generalized contract:
+[IAL2_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_CONTRACT_SELECTION](../../IAL2_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_CONTRACT_SELECTION.md)
+selects `.688`, direct implementation of bounded APB sideband-aware data16
+no-policy six-register generalized `reg0..regN` register-set
+multi-peripheral timing, without behavior changes. The selected public source
+pair is
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.ppif`
+and `.apb`; the representative uses `reg0` through `reg5` at local addresses
+`0/2/4/6/8/10`. The implementation may widen only the selected data16
+no-policy generalized two-peripheral family to `maximum_count = 6`, preserving
+16-bit data, `PPROT width 3`, `PSTRB width 2`, queue-depth `1`, overflow
+`reject`, adjacent setup, status/control windows at `0` and `258`,
+propagation-only interconnect decode, and no interconnect-owned protection
+predicate. Protected six-register, more-than-six-register,
+more-than-two-peripheral, direct-backend, backend-language, AXI, AHB, and VHDL
+behavior remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
