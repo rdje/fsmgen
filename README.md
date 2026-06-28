@@ -4090,6 +4090,25 @@ data16-protection generalization, generalized register shapes, deeper queues,
 alternate overflow, accepted-less requesters, multiple active APB transfers,
 direct backend, verification-output, backend-language variants, AXI, AHB, and
 VHDL deferred.
+`.645` now ships the selected bounded APB sideband-aware data16 no-policy
+multi-peripheral multi-register back-to-back timing behavior for exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back.ppif`
+and its `.apb` alias. The generated requester exposes
+`accepted/busy/status`, accepts one active transfer plus one queued next
+transfer, and relaunches queued 16-bit `PWDATA` plus `PPROT/PSTRB`. The
+generated interconnect propagates queued setup without idle-cycle insertion,
+decodes status/control windows at bases `0` and `258`, subtracts the control
+base for `PADDR_CONTROL`, muxes selected responses, and remains
+access-policy-free. Both generated peripheral completers use adjacent setup
+and exactly no-policy `reg0` at local byte address `0` plus `reg1` at local
+byte address `2`, with 16-bit reset-0 storage and 2-bit byte-lane writes.
+Reports add aggregate multi-peripheral `back_to_back_policy`, remove broad
+`apb_back_to_back_policy_deferred`, and retain narrowed future timing,
+protection-policy-effects, and remaining-width residue. Data16-protection
+generalization, generalized multi-peripheral multi-register shapes, deeper
+queues, alternate overflow, accepted-less requesters, multiple active APB
+transfers, direct backend, verification-output, backend-language variants,
+AXI, AHB, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -6683,6 +6702,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md` — ships selected APB no-policy multi-peripheral multi-register back-to-back timing behavior.
 - `docs/IAL2_POST_APB_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md` — selects APB sideband-aware data16 no-policy multi-peripheral multi-register back-to-back public contract selection after selected 32-bit no-policy multi-register timing shipped.
 - `docs/IAL2_APB_DATA16_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_CONTRACT_SELECTION.md` — selects exact APB data16 no-policy multi-peripheral multi-register back-to-back public sources before implementation.
+- `docs/IAL2_APB_DATA16_NO_POLICY_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md` — ships selected APB data16 no-policy multi-peripheral multi-register back-to-back timing behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
