@@ -5199,6 +5199,18 @@ protected `reg0`/`reg1` family. `.652` must decide whether the generalization
 is new public source pairs, report/static residue cleanup, alias/support
 accounting expansion, or explicit deferral, and settle width scope, naming,
 diagnostics, validation, rollback, docs, and Knowledge Map before behavior.
+`.652` now selects `.653`, report/static residue cleanup for the already
+shipped bounded APB status/control protected-storage generalization, without
+behavior changes. The existing `.638` 32-bit status/control protected source
+pair and `.634` data16 status/control protected source pair are the public
+contract; no new `.ppif`, `.apb`, support-accounting identity, capability
+bucket, parser branch, timing branch, generated artifact, HDL behavior, APB
+transaction behavior, AXI, AHB, or VHDL behavior is selected. `.653` must
+refine `apb_additional_back_to_back_policies_deferred` and related static
+prose so selected status/control protected storage is no longer named as live
+residue, while generalized timing, broader protection policies, widths, direct
+backend, verification-output, backend-language variants, AXI, AHB, and VHDL
+remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

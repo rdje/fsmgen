@@ -11018,6 +11018,15 @@ and propagation-only interconnect timing. `.652` must decide whether the
 generalization is new public source pairs, report/static residue cleanup,
 alias/support accounting expansion, or explicit deferral before behavior.
 
+APB status/control protected-storage generalization contract selection:
+[IAL2_APB_STATUS_CONTROL_PROTECTED_STORAGE_GENERALIZATION_CONTRACT_SELECTION](../../IAL2_APB_STATUS_CONTROL_PROTECTED_STORAGE_GENERALIZATION_CONTRACT_SELECTION.md)
+selects `.653`, report/static residue cleanup for the already-shipped bounded
+APB status/control protected-storage generalization, without behavior changes.
+The existing `.638` 32-bit status/control protected source pair and `.634`
+data16 status/control protected source pair are the public contract. `.653`
+must refine the narrowed timing residue and related static prose so selected
+status/control protected storage is not named as live residue.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
