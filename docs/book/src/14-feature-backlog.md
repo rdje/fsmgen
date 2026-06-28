@@ -10401,6 +10401,21 @@ sideband/data16/protection variants, deeper queues, alternate overflow,
 multiple active APB transfers, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL.
 
+Post APB multi-peripheral back-to-back selector:
+[IAL2_POST_APB_MULTI_PERIPHERAL_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_MULTI_PERIPHERAL_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.611`, APB sideband-aware back-to-back timing-policy readiness audit,
+without behavior changes. The selected audit is next because no-sideband fixed
+and multi-peripheral back-to-back paths are shipped, while shipped
+sideband/data16/protection APB families still retain explicit back-to-back
+residue. The audit must settle queued `PPROT/PSTRB` capture, fixed versus
+multi-peripheral propagation scope, adjacent completer setup with byte lanes
+and endpoint-local policies, report/residue movement, diagnostics,
+validation, and rollback before implementation. Data16/protection
+back-to-back variants, deeper queues, alternate overflow, accepted-less
+requesters, multiple active APB transfers, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

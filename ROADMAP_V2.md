@@ -4635,6 +4635,19 @@ narrowed `apb_additional_back_to_back_policies_deferred` for
 sideband/data16/protection variants, deeper queues, alternate overflow,
 multiple active APB transfers, direct backend, verification-output,
 backend-language variants, AXI, AHB, and VHDL.
+`.610` now selects `.611`, APB sideband-aware back-to-back timing-policy
+readiness audit, without behavior changes. Sideband-aware timing is the next
+APB residue because no-sideband fixed and multi-peripheral back-to-back paths
+are shipped, shipped sideband/data16/protection APB families still carry
+explicit back-to-back residue, and data16/protection variants build on the
+sideband-aware request payload. The audit must settle queued `PPROT/PSTRB`
+capture, fixed versus multi-peripheral propagation scope, adjacent completer
+setup with byte lanes and endpoint-local policies, report/residue movement,
+diagnostics, validation, and rollback before any implementation. Data16 and
+protection back-to-back variants, deeper queues, alternate overflow,
+accepted-less requesters, multiple active APB transfers, direct backend,
+verification-output, backend-language variants, AXI, AHB, and VHDL remain
+deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
