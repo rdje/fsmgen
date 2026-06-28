@@ -11436,6 +11436,25 @@ alternate-policy, interconnect-owned-policy, bus-matrix, scoreboard,
 direct-backend, verification-output, backend-language variant, AXI, AHB, and
 VHDL behavior deferred.
 
+APB protected generalized five-register behavior:
+[IAL2_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_BEHAVIOR](../../IAL2_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_BEHAVIOR.md)
+ships the selected APB sideband-aware 32-bit protected five-register
+generalized `reg0..regN` register-set multi-peripheral timing behavior. The
+public `.ppif` source and byte-identical `.apb` profile alias now admit
+two-to-five 32-bit protected registers per selected peripheral, with the
+five-register representative at local addresses `0/4/8/12/16`, `PPROT width
+3`, `PSTRB width 4`, status/control windows `0` and `256`, queue-depth `1`,
+overflow `reject`, adjacent setup, propagation-only interconnect decode, and
+peripheral-owned register-local protection. Reports preserve
+`[reg0, reg1, reg2, reg3, reg4]`, support accounting records the new PPIF and
+profile-alias identities, and generated artifacts include `reg3/reg4`
+storage, read/write, byte-lane, and denied-protection branches. Data16
+protected five-register, more-than-five-register, more-than-two-peripheral,
+deeper-queue, alternate-overflow, accepted-less, multiple-active,
+alternate-policy, interconnect-owned-policy, bus-matrix, scoreboard,
+direct-backend, verification-output, backend-language variant, AXI, AHB, and
+VHDL behavior remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

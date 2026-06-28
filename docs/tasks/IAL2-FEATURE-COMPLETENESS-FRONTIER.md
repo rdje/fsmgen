@@ -4803,11 +4803,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.677: select APB protected five-register implementation`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.678`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the bounded APB sideband-aware 32-bit protected five-register generalized register-set multi-peripheral back-to-back timing behavior.`
   Acceptance: `Implement only the .677-selected public source pair ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.ppif and .apb. Widen only the selected 32-bit sideband-aware protected two-peripheral generalized register-set helper boundary from maximum_count 4 to maximum_count 5 while preserving minimum_count 2, stride 4, data width 32, one requester, exactly two peripheral completers, PPROT width 3, PSTRB width 4, queue-depth 1, overflow reject, adjacent setup, status/control windows 0 and 256, propagation-only interconnect behavior, and the selected access-policy matrix: reg0 read allow, reg0 write privileged PPROT[0] == 1, and every reg1..regN read/write privileged PPROT[0] == 1. Add support-accounting identities, capability buckets, focused APB/profile-alias/support tests, diagnostics, report/residue movement, generated-artifact probes for reg3/reg4 storage/read/write/byte-lane/protection behavior, README, ROADMAP_V2, mdBook, Memory, Knowledge Map, and docs/doctrine closeout. Do not implement data16 protected five-register, more-than-five-register, more-than-two-peripheral, deeper-queue, alternate-overflow, accepted-less, multiple-active, alternate-policy, interconnect-owned-policy, bus-matrix, scoreboard, direct-backend, verification-output, backend-language variant, AXI, AHB, or VHDL behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Shipped exactly ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.ppif and ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.apb. Widened ApbCompleter adjacent setup and ApbComposition multi-peripheral back-to-back timing compatibility only for the selected bounded 32-bit sideband-aware protected generalized reg0..regN register-set family with two to five registers per peripheral, exactly two peripheral completers, matching register sets, reset 0, selected access-policy clauses, requester queue-depth 1, overflow reject, adjacent setup on both completers, PPROT width 3, PSTRB width 4, status/control windows at 0 and 256, window size 256, and propagation-only interconnect decode. The public representative uses reg0/reg1/reg2/reg3/reg4 at local addresses 0/4/8/12/16, reports generated status/control register arrays as reg0/reg1/reg2/reg3/reg4, preserves aggregate multi-peripheral back_to_back_policy, removes broad apb_back_to_back_policy_deferred for the selected public surfaces, and keeps narrowed residue for data16 protected five-register, more-than-five-register, more-than-two-peripheral, deeper-queue, alternate-overflow, accepted-less, multiple-active, alternate-policy, interconnect-owned-policy, bus-matrix, scoreboard, direct-backend, verification-output, backend-language variant, AXI, AHB, and VHDL behavior. Added support-accounting identities, LanguageSurfaceSection/capability-manifest coverage, focused parser/profile-alias/composition/support tests, behavior docs, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map surfaces. Syntax checks passed for touched Perl modules and focused tests. Direct strict check JSON passed for the new .ppif and .apb, semantic JSON and schedule JSON probes passed, generated outdir inspection confirmed reg3/reg4 storage/read/write artifacts, 4-bit PSTRB, control base 256, queued_wstrb, peripheral-owned protection, denied reg4 read/write branches, and no interconnect-owned protection predicate. Focused prove gates passed: t/248-regression-corpus-accounting.t, t/297-capability-manifest.t, and RAM-guarded t/1470-ial2-apb-profile-alias.t plus t/1472-ial2-apb-composition.t with descendant RSS capped at 2048 MiB. Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, fact-card reverify, and doctrine gate passed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.678: ship APB protected five-register timing`
 
 ## Current Frontier
 
@@ -5207,10 +5207,28 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 392 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.675` | `done` | Shipped the selected bounded APB data16 no-policy five-register generalized register-set timing behavior. |
 | 393 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.676` | `done` | Selected APB 32-bit protected five-register public contract selection next. |
 | 394 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.677` | `done` | Selected the bounded APB 32-bit protected five-register generalized register-set public contract. |
-| 395 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.678` | `active` | Implement the bounded APB 32-bit protected five-register generalized register-set behavior. |
+| 395 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.678` | `done` | Shipped the bounded APB 32-bit protected five-register generalized register-set behavior. |
 
 ## Decisions
 
+- `2026-06-28`: `.678` ships the bounded APB sideband-aware 32-bit protected
+  five-register generalized `reg0..regN` register-set multi-peripheral timing
+  behavior through exactly
+  `ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.ppif`
+  and its byte-identical `.apb` profile alias. The selected protected
+  two-peripheral family now admits two-to-five 32-bit registers per
+  peripheral, with public representative local addresses `0/4/8/12/16`,
+  `PPROT width 3`, `PSTRB width 4`, status/control windows `0` and `256`,
+  queue-depth `1`, overflow `reject`, adjacent setup, propagation-only
+  interconnect decode, and peripheral-owned protection. The selected policy
+  matrix keeps `reg0` reads allowed, requires privileged `PPROT[0] == 1` for
+  `reg0` writes, and requires privileged `PPROT[0] == 1` for every
+  `reg1..regN` read/write. Data16 protected five-register,
+  more-than-five-register, more-than-two-peripheral, deeper-queue,
+  alternate-overflow, accepted-less, multiple-active, alternate-policy,
+  interconnect-owned-policy, bus-matrix, scoreboard, direct-backend,
+  verification-output, backend-language variant, AXI, AHB, and VHDL behavior
+  remain deferred.
 - `2026-06-28`: `.677` selects `.678`, direct implementation of exactly
   `ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.ppif`
   and its byte-identical `.apb` profile alias, without behavior changes. The
@@ -12650,6 +12668,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-28` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.675` | `ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_five_register_status_back_to_back.ppif`; `ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_five_register_status_back_to_back.apb`; `perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm`; `perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm`; `perl/FSM/Support/RegressionCorpus.pm`; `perl/FSM/Support/LanguageSurfaceSection.pm`; `t/1470-ial2-apb-profile-alias.t`; `t/1472-ial2-apb-composition.t`; `t/248-regression-corpus-accounting.t`; `t/297-capability-manifest.t`; `docs/IAL2_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_BEHAVIOR.md`; `docs/knowledge/ial2-apb-data16-generalized-multi-peripheral-multi-register-cardinality-behavior.md`; README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; syntax checks; direct strict check JSON, semantic JSON, schedule JSON, and outdir probes; focused support/capability tests; RAM-guarded APB profile-alias and composition tests; docs/doctrine closeout gates | `passed`; shipped selected APB sideband-aware data16 no-policy five-register generalized `reg0..regN` register-set multi-peripheral timing behavior. The admitted data16 no-policy two-peripheral family now accepts two-to-five-register peripheral sets, docs/doctrine closeout gates passed, and `.676` is now active to select the next APB timing/register-set residue owner. |
 | `2026-06-28` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.676` | `.675` behavior; `.674` contract; `.673` selector; `.672` 32-bit no-policy five-register behavior; `.671` contract; `.670` audit; `.668/.665` protected generalized behavior records; `.662` data16 no-policy generalized behavior; current `ApbCompleter`/`ApbComposition` protected generalized predicates and residue; `RegressionCorpus`; `LanguageSurfaceSection`; focused APB/profile-alias/support/capability tests; README; ROADMAP_V2; mdBook; Memory; Knowledge Map; relevant decisions; `docs/IAL2_POST_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_NEXT_SLICE_SELECTION.md`; `docs/knowledge/ial2-post-apb-data16-generalized-multi-peripheral-multi-register-cardinality-next-slice-selection.md`; docs/doctrine closeout gates | `passed`; selected `.677`, public contract selection for bounded APB sideband-aware 32-bit protected five-register generalized register-set multi-peripheral timing, without behavior changes. No parser, generator, public source, support-accounting, report, generated artifact, HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed. |
 | `2026-06-28` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.677` | `.676` selector; `.675` data16 no-policy five-register behavior; `.672` 32-bit no-policy five-register behavior; `.665` 32-bit protected generalized behavior; `.668` data16 protected generalized behavior; `.670` cardinality audit; current `ApbCompleter`/`ApbComposition` protected generalized predicates and residue; `RegressionCorpus`; `LanguageSurfaceSection`; focused APB/profile-alias/support/capability tests; README; ROADMAP_V2; mdBook; Memory; Knowledge Map; relevant decisions; `docs/IAL2_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_CONTRACT_SELECTION.md`; `docs/knowledge/ial2-apb-protection-generalized-multi-peripheral-multi-register-cardinality-contract-selection.md`; docs/doctrine closeout gates | `passed`; selected `.678`, direct implementation of exactly `ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.ppif` and its byte-identical `.apb` profile alias, without behavior changes. No parser, generator, public source, support-accounting, report, generated artifact, HDL/runtime, APB transaction, AXI, AHB, or VHDL behavior changed. |
+| `2026-06-28` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.678` | `ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.ppif`; `ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.apb`; `perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm`; `perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm`; `perl/FSM/Support/RegressionCorpus.pm`; `perl/FSM/Support/LanguageSurfaceSection.pm`; `t/1470-ial2-apb-profile-alias.t`; `t/1472-ial2-apb-composition.t`; `t/248-regression-corpus-accounting.t`; `t/297-capability-manifest.t`; `docs/IAL2_APB_PROTECTION_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_CARDINALITY_BEHAVIOR.md`; `docs/knowledge/ial2-apb-protection-generalized-multi-peripheral-multi-register-cardinality-behavior.md`; README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; syntax checks; direct strict check JSON, semantic JSON, schedule JSON, and outdir probes; focused support/capability tests; RAM-guarded APB profile-alias and composition tests; docs/doctrine closeout gates | `passed`; shipped selected APB sideband-aware 32-bit protected five-register generalized `reg0..regN` register-set multi-peripheral timing behavior. The admitted protected two-peripheral family now accepts two-to-five-register peripheral sets, docs/doctrine closeout gates passed, and the next action is to select a new task-tree-owned roadmap slice before any further source/test/config change. |
 
 ## Commit Log
 
@@ -13292,9 +13311,25 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.675` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.675: ship APB data16 five-register timing` | Shipped bounded APB data16 no-policy five-register generalized register-set timing behavior and advanced the frontier to `.676`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.676` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.676: select APB protected five-register contract` | Selected bounded APB 32-bit protected five-register generalized register-set public contract selection and advanced the frontier to `.677`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.677` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.677: select APB protected five-register implementation` | Selected bounded APB 32-bit protected five-register generalized register-set implementation and advanced the frontier to `.678`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.678` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.678: ship APB protected five-register timing` | Shipped bounded APB 32-bit protected five-register generalized register-set timing behavior. |
 
 ## Changelog
 
+- `2026-06-28`: Completed `.678`, shipping the bounded APB sideband-aware
+  32-bit protected five-register generalized `reg0..regN` register-set
+  multi-peripheral timing behavior through exactly
+  `ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.ppif`
+  and its byte-identical `.apb` profile alias. The selected protected
+  two-peripheral family now admits two-to-five 32-bit registers per
+  peripheral, with public representative `reg0/reg1/reg2/reg3/reg4` at local
+  addresses `0/4/8/12/16`, `PPROT width 3`, `PSTRB width 4`, status/control
+  windows `0` and `256`, queue-depth `1`, overflow `reject`, adjacent setup,
+  propagation-only interconnect decode, peripheral-owned protection, and the
+  selected access-policy matrix. Data16 protected five-register,
+  more-than-five, more-than-two-peripheral, deeper-queue, alternate-overflow,
+  accepted-less, multiple-active, alternate-policy, interconnect-owned-policy,
+  bus-matrix, scoreboard, direct-backend, verification-output,
+  backend-language variant, AXI, AHB, and VHDL behavior remain deferred.
 - `2026-06-28`: Completed `.677`, selecting `.678` for direct
   implementation of exactly
   `ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.ppif`
