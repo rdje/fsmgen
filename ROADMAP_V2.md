@@ -5329,8 +5329,18 @@ the selected public sources, and retain narrowed residue for protected/data16
 generalized register sets, broader cardinality/peripheral count, deeper
 queues, alternate overflow, accepted-less requesters, multiple active
 transfers, bus matrices, scoreboards, direct backend, verification-output,
-backend-language variants, AXI, AHB, and VHDL. `.661` is now the next selector
-for the remaining APB timing/register-set residue.
+backend-language variants, AXI, AHB, and VHDL.
+`.661` now selects `.662`, direct implementation of exactly
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back.ppif`
+and its `.apb` alias, without behavior changes. The selected contract mirrors
+`.660`'s no-policy generalized `reg0..regN` shape but uses 16-bit APB/register
+data, `PSTRB width 2`, 2-byte register stride, public representative
+`reg0/reg1/reg2` at local addresses `0/2/4`, and sideband data16
+status/control windows at bases `0` and `258` with size `258`. Protected
+generalized register sets, broader cardinality/peripheral count, deeper
+queues, alternate overflow, accepted-less requesters, multiple active
+transfers, bus matrices, scoreboards, direct backend, verification-output,
+backend-language variants, AXI, AHB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

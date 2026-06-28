@@ -6,7 +6,6 @@ answers:
   - "which APB generalized multi-peripheral multi-register behavior shipped?"
   - "which APB generalized register-set samples are supported?"
   - "what APB generalized register-set residue remains after .660?"
-  - "what will IAL2-FEATURE-COMPLETENESS-FRONTIER.661 select?"
 date: 2026-06-28
 status: current
 tags: [ial2, apb, source-shape, timing, multi-peripheral, multi-register, behavior, task-tree]
@@ -33,5 +32,5 @@ Data16 generalized register sets, protected generalized register sets, more
 than four registers, more than two peripherals, deeper queues, alternate
 overflow, accepted-less requesters, multiple active APB transfers, bus
 matrices, scoreboards, direct backend, verification-output, backend-language
-variants, AXI, AHB, and VHDL remain deferred. `.661` is the next selector for
-that remaining APB timing/register-set residue.
+variants, AXI, AHB, and VHDL remain deferred. `.661` selects the next owner in
+the post-generalized-register-set selector record.

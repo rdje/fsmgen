@@ -74,8 +74,8 @@ accepted-less requesters, multiple active APB transfers, bus matrices,
 scoreboards, direct backend lowering, verification-output generation,
 backend-language variants, AXI, AHB, or VHDL.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.661` is the next selector for that
-remaining APB timing/register-set residue.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.661` selects the next owner for that
+remaining APB timing/register-set residue in the follow-on selector record.
 
 ## Validation
 

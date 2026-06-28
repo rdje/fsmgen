@@ -11129,8 +11129,22 @@ no-policy `reg0..regN` storage with two to four registers per peripheral.
 Protected/data16 generalized register sets, broader cardinality/peripheral
 count, deeper queues, alternate overflow, accepted-less requesters, multiple
 active transfers, direct backend, verification-output, backend-language
-variants, AXI, AHB, and VHDL remain deferred. `.661` is the next selector for
-the remaining APB timing/register-set residue.
+variants, AXI, AHB, and VHDL remain deferred.
+
+Post APB generalized multi-peripheral multi-register selector:
+[IAL2_POST_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_NEXT_SLICE_SELECTION.md)
+selects `.662`, direct implementation of the bounded APB sideband-aware
+data16 no-policy generalized `reg0..regN` register-set multi-peripheral
+timing behavior, without behavior changes. The selected public source pair is
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back.ppif`
+and its `.apb` alias. The contract mirrors `.660`'s no-policy generalized
+shape but uses 16-bit data, `PSTRB width 2`, 2-byte register stride, public
+representative `reg0/reg1/reg2` at local addresses `0/2/4`, and data16
+status/control windows at bases `0` and `258` with size `258`. Protected
+generalized register sets, broader cardinality/peripheral count, deeper
+queues, alternate overflow, accepted-less requesters, multiple active
+transfers, direct backend, verification-output, backend-language variants,
+AXI, AHB, and VHDL remain deferred.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
