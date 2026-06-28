@@ -5780,6 +5780,23 @@ alternate-overflow, accepted-less, multiple-active, bus-matrix, scoreboard,
 direct-backend, verification-output, backend-language variant, AXI, AHB, and
 VHDL behavior remain deferred.
 
+`.688` now ships the bounded APB sideband-aware data16 no-policy
+six-register generalized `reg0..regN` register-set multi-peripheral timing
+behavior. The public sources are
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.ppif`
+and its byte-identical `.apb` alias. The admitted data16 no-policy
+two-peripheral family now accepts two to six registers, with the public
+representative using `reg0..reg5` at local byte addresses `0/2/4/6/8/10`,
+16-bit data, 2-bit `PSTRB`, status/control windows at `0` and `258`,
+queue-depth `1`, overflow `reject`, adjacent setup on both completers, and
+propagation-only interconnect decode with no interconnect-owned protection
+predicate. Protected data16 six-register, protected 32-bit six-register,
+more-than-six-register, more-than-two-peripheral, backend, AXI, AHB, and VHDL
+behavior remain deferred. `.689` now owns the protocol-wide mdBook
+documentation coverage mandate for IAL2 AXI, APB, and AHB across the
+user-friendly, more-control, and raw/full-control modes before broad book
+edits.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

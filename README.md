@@ -4773,6 +4773,22 @@ six-register, more-than-six-register, more-than-two-peripheral, deeper-queue,
 alternate-overflow, accepted-less, multiple-active, bus-matrix, scoreboard,
 direct-backend, verification-output, backend-language variant, AXI, AHB, and
 VHDL behavior remain deferred.
+`.688` now ships the bounded APB sideband-aware data16 no-policy
+six-register generalized `reg0..regN` register-set multi-peripheral timing
+behavior. The public sources are
+`ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.ppif`
+and its byte-identical `.apb` alias. The admitted data16 no-policy
+two-peripheral family now accepts two to six registers, with the public
+representative using `reg0..reg5` at local byte addresses `0/2/4/6/8/10`,
+16-bit data, 2-bit `PSTRB`, status/control windows at `0` and `258`,
+queue-depth `1`, overflow `reject`, adjacent setup on both completers, and
+propagation-only interconnect decode with no interconnect-owned protection
+predicate. Protected data16 six-register, protected 32-bit six-register,
+more-than-six-register, more-than-two-peripheral, backend, AXI, AHB, and VHDL
+behavior remain deferred. `.689` now owns the protocol-wide mdBook
+documentation coverage mandate for IAL2 AXI, APB, and AHB across the
+user-friendly, more-control, and raw/full-control modes before broad book
+edits.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7409,6 +7425,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_BEHAVIOR.md` — ships bounded APB sideband-aware 32-bit no-policy six-register generalized `reg0..regN` register-set multi-peripheral timing behavior.
 - `docs/IAL2_POST_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_NEXT_SLICE_SELECTION.md` — selects bounded APB sideband-aware data16 no-policy six-register generalized `reg0..regN` public contract selection next.
 - `docs/IAL2_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_CONTRACT_SELECTION.md` — selects bounded APB sideband-aware data16 no-policy six-register generalized `reg0..regN` public sources before implementation.
+- `docs/IAL2_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_BEHAVIOR.md` — ships bounded APB sideband-aware data16 no-policy six-register generalized `reg0..regN` register-set multi-peripheral timing behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
