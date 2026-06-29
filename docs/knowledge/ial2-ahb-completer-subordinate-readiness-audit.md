@@ -10,8 +10,8 @@ answers:
 date: 2026-06-29
 status: current
 tags: [ial2, ahb, completer, subordinate, readiness, lower-layer, task-tree]
-evidence: docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md; docs/IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md; docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; fsm/amba_requester.fsm; ppif/ahb_requester.ppif; ppif/ahb_requester.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
-reverify: ./bin/fsmgen --quiet --strict --check --json fsm/amba_requester.fsm && ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif && ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ahb && perl -we 'for my $f (qx(rg --files fsm ppif perl/FSM/IAL2/ProtocolIntent t)) { die $f if $f =~ /ahb.*(?:completer|subordinate|slave)|(?:completer|subordinate|slave).*ahb/ } print "no AHB completer/subordinate fixture\n";' && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.702|IAL2-FEATURE-COMPLETENESS-FRONTIER\.704|ahb_completer_subordinate_deferred|ahb_interconnect_decode_deferred|source-reference' docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md MEMORY.md README.md ROADMAP_V2.md
+evidence: docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md; docs/IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md; docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; fsm/amba_requester.fsm; ppif/ahb_requester.ppif; ppif/ahb_requester.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
+reverify: ./bin/fsmgen --quiet --strict --check --json fsm/amba_requester.fsm && ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif && ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ahb && perl -we 'for my $f (qx(rg --files fsm ppif perl/FSM/IAL2/ProtocolIntent t)) { die $f if $f =~ /ahb.*(?:completer|subordinate|slave)|(?:completer|subordinate|slave).*ahb/ } print "no AHB completer/subordinate fixture\n";' && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.702|IAL2-FEATURE-COMPLETENESS-FRONTIER\.705|ahb_completer_subordinate_deferred|ahb_interconnect_decode_deferred|source-reference import' docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md MEMORY.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.702` finds AHB
@@ -37,4 +37,7 @@ remain future owners.
 
 The follow-on `.703` selector found no local AHB/AHB-Lite source reference
 under `docs/vendor/` and selected `.704`, AHB subordinate source-reference and
-seed-evidence audit, before lower-layer seed contract selection.
+seed-evidence audit, before lower-layer seed contract selection. `.704` then
+selected `.705`, AHB/AHB-Lite local source-reference import prerequisite,
+because no local source artifact or curated subordinate evidence inventory
+exists yet.

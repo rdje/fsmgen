@@ -4863,6 +4863,15 @@ generator, public source, support-accounting, manifest, test behavior,
 schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend,
 verification-output, backend-language variant, AXI, APB, or VHDL behavior
 changed in `.703`.
+`.704` now selects `.705`, AHB/AHB-Lite local source-reference import
+prerequisite, before source-fact extraction or seed contract selection. The
+audit found no local AHB/AHB-Lite source reference artifact and no curated AHB
+subordinate source-evidence inventory. Requester code and APB precedent remain
+useful context but cannot define AHB subordinate protocol truth. No source
+reference, parser, generator, public source, support-accounting, manifest,
+test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime,
+direct-backend, verification-output, backend-language variant, AXI, APB, or
+VHDL behavior changed in `.704`.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7512,6 +7521,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md` — selects AHB completer/subordinate readiness audit after requester `.ppif` and `.ahb` support shipped.
 - `docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md` — selects lower-layer AHB subordinate seed contract selection before any IAL2 AHB completer/subordinate contract or behavior.
 - `docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md` — selects AHB subordinate source-reference and seed-evidence audit before lower-layer seed contract selection.
+- `docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md` — selects AHB/AHB-Lite local source-reference import prerequisite before source-fact extraction or seed contract selection.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

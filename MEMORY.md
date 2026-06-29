@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.703: select AHB subordinate reference audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.704` is pending after `.703`; audit AHB subordinate source-reference and seed evidence before lower-layer seed contract selection.
-- recently_done: `.703` selected `.704` because `docs/vendor/` has no local AHB/AHB-Lite source reference and current shipped AHB evidence remains requester-only; `.702` found no shipped AHB subordinate fixture/generator; `.700` shipped bounded `.ahb`; `.697` shipped bounded requester `.ppif`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.704: audit AHB source reference evidence`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` is pending after `.704`; establish the AHB/AHB-Lite local source-reference import prerequisite or record the exact missing-artifact blocker.
+- recently_done: `.704` selected `.705` because no local AHB/AHB-Lite source reference artifact or curated AHB subordinate source-evidence inventory exists; `.703` selected source-reference audit before seed contract selection; `.702` found no shipped AHB subordinate fixture/generator; `.700` shipped bounded `.ahb`; `.697` shipped bounded requester `.ppif`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan. During `.569`, broad `t/1436-ial2-ppif-parser-cli.t` attempts were not used as closeout: the APB-relevant focused tests and direct probes passed, but the broad run sat in an unrelated AXI subprocess/pipe wait after all visible subtests had passed. During `.634`, grouped RAM-guarded focused test attempts stopped before tests because host memory was already 96.3% against the 88% cutoff; direct focused tests passed.
-- next_action: Execute `.704`: audit source-backed AHB subordinate evidence and decide whether the next owner is seed contract selection, reference ingestion, or another prerequisite; do not add source references, seeds, parser/generator behavior, support accounting, manifest entries, or runtime behavior.
+- next_action: Execute `.705`: search repo-local approved/provided inputs for an acceptable AHB/AHB-Lite reference artifact; import it under `docs/vendor/arm/amba/ahb/` with provenance/SHA docs if available, or record the exact blocker if not. Do not extract source facts, select/add seeds, or change parser/generator/support/manifest/runtime behavior.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

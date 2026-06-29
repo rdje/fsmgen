@@ -5890,6 +5890,15 @@ generator, public source, support-accounting, manifest, test behavior,
 schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend,
 verification-output, backend-language variant, AXI, APB, or VHDL behavior
 changed in `.703`.
+`.704` now selects `.705`, AHB/AHB-Lite local source-reference import
+prerequisite, before source-fact extraction or seed contract selection. The
+audit found no local AHB/AHB-Lite source reference artifact and no curated AHB
+subordinate source-evidence inventory. Requester code and APB precedent remain
+useful context but cannot define AHB subordinate protocol truth. No source
+reference, parser, generator, public source, support-accounting, manifest,
+test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime,
+direct-backend, verification-output, backend-language variant, AXI, APB, or
+VHDL behavior changed in `.704`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -9752,6 +9752,13 @@ current shipped AHB evidence remains requester-only, so the direct lower-layer
 seed contract remains deferred until subordinate signal/timing/storage/response
 and error-policy facts are source-backed.
 
+AHB subordinate source-reference seed-evidence audit:
+[IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT](../../IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md)
+selects `.705`, AHB/AHB-Lite local source-reference import prerequisite,
+before source-fact extraction or seed contract selection. The audit found no
+local AHB/AHB-Lite source reference artifact and no curated AHB subordinate
+source-evidence inventory.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

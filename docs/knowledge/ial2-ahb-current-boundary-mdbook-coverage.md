@@ -10,8 +10,8 @@ answers:
 date: 2026-06-29
 status: current
 tags: [ial2, ahb, amba, mdbook, protocol-intent, profile-alias, documentation]
-evidence: docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md; docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md; ppif/ahb_requester.ppif; ppif/ahb_requester.ahb; fsm/amba_requester.fsm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; bin/fsmgen; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
-reverify: rg -n 'AHB IAL2 Current Boundary|ppif/ahb_requester\.ppif|ppif/ahb_requester\.ahb|intent\.ppif_ahb_requester|intent\.ahb_profile_alias_requester|protocol\.amba_requester|source_kind.*ppif|source_kind.*ial2_profile_alias|source_kind.*fsm|IAL2-FEATURE-COMPLETENESS-FRONTIER\.704|source-reference|16c-ial2-ahb' docs/book/src/16c-ial2-ahb.md docs/book/src/16-ial2-protocol-platform-intent.md docs/book/src/SUMMARY.md docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md docs/IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md perl/FSM/Support/RegressionCorpus.pm ppif/ahb_requester.ppif ppif/ahb_requester.ahb fsm/amba_requester.fsm
+evidence: docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md; docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md; ppif/ahb_requester.ppif; ppif/ahb_requester.ahb; fsm/amba_requester.fsm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; bin/fsmgen; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
+reverify: rg -n 'AHB IAL2 Current Boundary|ppif/ahb_requester\.ppif|ppif/ahb_requester\.ahb|intent\.ppif_ahb_requester|intent\.ahb_profile_alias_requester|protocol\.amba_requester|source_kind.*ppif|source_kind.*ial2_profile_alias|source_kind.*fsm|IAL2-FEATURE-COMPLETENESS-FRONTIER\.705|source-reference import|16c-ial2-ahb' docs/book/src/16c-ial2-ahb.md docs/book/src/16-ial2-protocol-platform-intent.md docs/book/src/SUMMARY.md docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md docs/IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md perl/FSM/Support/RegressionCorpus.pm ppif/ahb_requester.ppif ppif/ahb_requester.ahb fsm/amba_requester.fsm
 ---
 
 `docs/book/src/16c-ial2-ahb.md` is the user-facing AHB current-boundary
@@ -33,9 +33,10 @@ AHB completers/subordinates, interconnect/decode, scoreboards, full-manager
 behavior, direct backend, verification-output generation, backend-language
 variants, and VHDL remain task-tree-owned residue.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.703` selected `.704`, AHB subordinate
-source-reference and seed-evidence audit, as the next owner before lower-layer
-seed contract selection. The selector found no local AHB/AHB-Lite source
-reference under `docs/vendor/`, so subordinate signal/timing/storage/response
-and error-policy facts must be source-backed before any AHB subordinate source,
-parser, generator, support-accounting, or manifest behavior is added.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.704` selected `.705`, AHB/AHB-Lite local
+source-reference import prerequisite, as the next owner before source-fact
+extraction or lower-layer seed contract selection. The audits found no local
+AHB/AHB-Lite source reference under `docs/vendor/`, so subordinate
+signal/timing/storage/response and error-policy facts must be source-backed
+before any AHB subordinate source, parser, generator, support-accounting, or
+manifest behavior is added.

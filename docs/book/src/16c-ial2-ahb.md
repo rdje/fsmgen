@@ -209,15 +209,16 @@ generic `.ppif` source. The shipped `.ahb` alias removes that stale residue
 from alias reports while keeping the broader AHB residue above.
 
 The next selected AHB owner is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.704`, AHB subordinate source-reference and
-seed-evidence audit. The `.703` selector found no local AHB/AHB-Lite source
-reference under `docs/vendor/` and current shipped AHB evidence remains
-requester-only. Source-backed subordinate signal roles, transfer/ready/response
-timing, reset/default outputs, read/write storage policy, and
-error/unsupported-transfer behavior must be established before a lower-layer
-direct `.fsm` subordinate seed contract can be selected. The lower-layer seed
-contract must still be selected before any IAL2 AHB completer/subordinate
-source, parser, generator, support-accounting, or manifest behavior ships.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.705`, AHB/AHB-Lite local source-reference
+import prerequisite. The `.704` audit found no local AHB/AHB-Lite source
+reference artifact and no curated AHB subordinate source-evidence inventory.
+Source-backed subordinate signal roles, transfer/ready/response timing,
+reset/default outputs, read/write storage policy, and
+error/unsupported-transfer behavior must be extracted from an approved local
+reference before a lower-layer direct `.fsm` subordinate seed contract can be
+selected. The lower-layer seed contract must still be selected before any IAL2
+AHB completer/subordinate source, parser, generator, support-accounting, or
+manifest behavior ships.
 
 ## Validation Used For This Chapter
 
