@@ -208,6 +208,13 @@ The `.ppif` report keeps its historical `.ahb` profile-alias residue for the
 generic `.ppif` source. The shipped `.ahb` alias removes that stale residue
 from alias reports while keeping the broader AHB residue above.
 
+The next selected AHB owner is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.702`, a readiness audit for AHB
+completer/subordinate generation. That audit must choose whether a public
+contract can be selected next or whether a lower-layer subordinate seed or
+other prerequisite is needed first. The selection does not ship
+completer/subordinate behavior.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:

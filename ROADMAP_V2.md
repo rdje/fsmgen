@@ -5866,6 +5866,13 @@ completers/subordinates, interconnect/decode, scoreboards, full-manager
 behavior, direct backend, verification-output, backend-language variants, and
 VHDL remain deferred. `.700` selects `.701`, a no-behavior post-`.ahb`
 next-slice selector.
+`.701` now selects `.702`, AHB completer/subordinate readiness audit. The
+selector revalidated current requester `.ppif` and `.ahb` schedule/report
+behavior, kept `ahb_completer_subordinate_deferred` and
+`ahb_interconnect_decode_deferred` as real future owners, and made no parser,
+generator, source, support-accounting, manifest, test-behavior,
+generated-artifact, HDL/runtime, direct-backend, verification-output,
+backend-language variant, AXI, APB, or VHDL behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

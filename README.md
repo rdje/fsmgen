@@ -4839,6 +4839,13 @@ completers/subordinates, interconnect/decode, scoreboards, full-manager
 behavior, direct backend, verification-output, backend-language variants, and
 VHDL remain deferred. `.700` selects `.701`, a no-behavior post-`.ahb`
 next-slice selector.
+`.701` now selects `.702`, AHB completer/subordinate readiness audit. The
+selector revalidated current requester `.ppif` and `.ahb` schedule/report
+behavior, kept `ahb_completer_subordinate_deferred` and
+`ahb_interconnect_decode_deferred` as real future owners, and made no parser,
+generator, source, support-accounting, manifest, test-behavior,
+generated-artifact, HDL/runtime, direct-backend, verification-output,
+backend-language variant, AXI, APB, or VHDL behavior changes.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7485,6 +7492,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.
+- `docs/IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md` — selects AHB completer/subordinate readiness audit after requester `.ppif` and `.ahb` support shipped.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

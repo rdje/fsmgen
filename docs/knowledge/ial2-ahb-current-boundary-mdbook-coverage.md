@@ -10,8 +10,8 @@ answers:
 date: 2026-06-29
 status: current
 tags: [ial2, ahb, amba, mdbook, protocol-intent, profile-alias, documentation]
-evidence: docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md; ppif/ahb_requester.ppif; ppif/ahb_requester.ahb; fsm/amba_requester.fsm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; bin/fsmgen; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
-reverify: rg -n 'AHB IAL2 Current Boundary|ppif/ahb_requester\.ppif|ppif/ahb_requester\.ahb|intent\.ppif_ahb_requester|intent\.ahb_profile_alias_requester|protocol\.amba_requester|source_kind.*ppif|source_kind.*ial2_profile_alias|source_kind.*fsm|16c-ial2-ahb' docs/book/src/16c-ial2-ahb.md docs/book/src/16-ial2-protocol-platform-intent.md docs/book/src/SUMMARY.md docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md perl/FSM/Support/RegressionCorpus.pm ppif/ahb_requester.ppif ppif/ahb_requester.ahb fsm/amba_requester.fsm
+evidence: docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md; ppif/ahb_requester.ppif; ppif/ahb_requester.ahb; fsm/amba_requester.fsm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; bin/fsmgen; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
+reverify: rg -n 'AHB IAL2 Current Boundary|ppif/ahb_requester\.ppif|ppif/ahb_requester\.ahb|intent\.ppif_ahb_requester|intent\.ahb_profile_alias_requester|protocol\.amba_requester|source_kind.*ppif|source_kind.*ial2_profile_alias|source_kind.*fsm|IAL2-FEATURE-COMPLETENESS-FRONTIER\.702|AHB completer/subordinate readiness|16c-ial2-ahb' docs/book/src/16c-ial2-ahb.md docs/book/src/16-ial2-protocol-platform-intent.md docs/book/src/SUMMARY.md docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md docs/IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md perl/FSM/Support/RegressionCorpus.pm ppif/ahb_requester.ppif ppif/ahb_requester.ahb fsm/amba_requester.fsm
 ---
 
 `docs/book/src/16c-ial2-ahb.md` is the user-facing AHB current-boundary
@@ -32,3 +32,8 @@ bounded `.ahb` profile alias. Both IAL2 paths lower through generated
 AHB completers/subordinates, interconnect/decode, scoreboards, full-manager
 behavior, direct backend, verification-output generation, backend-language
 variants, and VHDL remain task-tree-owned residue.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.701` selected `.702`, AHB
+completer/subordinate readiness audit, as the next owner before any AHB
+subordinate source, parser, generator, support-accounting, or manifest behavior
+is added.

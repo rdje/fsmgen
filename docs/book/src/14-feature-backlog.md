@@ -9717,6 +9717,25 @@ completes that sync. After `.700`, current profile-alias surfaces list `.axi`,
 history. No behavior changes in `.556`; it selects `.557`, the next exact IAL2
 owner selector after the sync.
 
+IAL2 AHB `.ahb` profile-alias behavior:
+[IAL2_AHB_PROFILE_ALIAS_BEHAVIOR](../../IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md)
+ships `.ahb` as the bounded AHB requester profile alias. The alias mirrors
+`ppif/ahb_requester.ppif` at `ppif/ahb_requester.ahb`, keeps explicit
+`(profile ahb)`, accepts exactly one `(ahb-requester amba_requester ...)`
+object, lowers through generated `amba_requester.isf` before generated
+`amba_requester.fsm`, and support-accounts as
+`intent.ahb_profile_alias_requester` with source kind `ial2_profile_alias`.
+AHB completers/subordinates, interconnect/decode, scoreboards, full-manager
+behavior, direct backend, verification-output, backend-language variants, and
+VHDL remain future task-tree-owned work.
+
+Post AHB profile-alias selector:
+[IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md)
+selects `.702`, AHB completer/subordinate readiness audit, after requester
+`.ppif` and `.ahb` support shipped. The selector keeps current requester
+behavior unchanged and records that interconnect/decode depends on a selected
+subordinate endpoint shape first.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
