@@ -63,7 +63,7 @@ path before reopening VHDL backend or VHDL rerouting work.
   Children continuation 10: `IAL2-FEATURE-COMPLETENESS-FRONTIER.634, IAL2-FEATURE-COMPLETENESS-FRONTIER.635, IAL2-FEATURE-COMPLETENESS-FRONTIER.636, IAL2-FEATURE-COMPLETENESS-FRONTIER.637, IAL2-FEATURE-COMPLETENESS-FRONTIER.638, IAL2-FEATURE-COMPLETENESS-FRONTIER.639, IAL2-FEATURE-COMPLETENESS-FRONTIER.640, IAL2-FEATURE-COMPLETENESS-FRONTIER.641, IAL2-FEATURE-COMPLETENESS-FRONTIER.642, IAL2-FEATURE-COMPLETENESS-FRONTIER.643, IAL2-FEATURE-COMPLETENESS-FRONTIER.644, IAL2-FEATURE-COMPLETENESS-FRONTIER.645, IAL2-FEATURE-COMPLETENESS-FRONTIER.646, IAL2-FEATURE-COMPLETENESS-FRONTIER.647, IAL2-FEATURE-COMPLETENESS-FRONTIER.648, IAL2-FEATURE-COMPLETENESS-FRONTIER.649, IAL2-FEATURE-COMPLETENESS-FRONTIER.650, IAL2-FEATURE-COMPLETENESS-FRONTIER.651, IAL2-FEATURE-COMPLETENESS-FRONTIER.652, IAL2-FEATURE-COMPLETENESS-FRONTIER.653, IAL2-FEATURE-COMPLETENESS-FRONTIER.654, IAL2-FEATURE-COMPLETENESS-FRONTIER.655, IAL2-FEATURE-COMPLETENESS-FRONTIER.656, IAL2-FEATURE-COMPLETENESS-FRONTIER.657, IAL2-FEATURE-COMPLETENESS-FRONTIER.658`
   Children continuation 11: `IAL2-FEATURE-COMPLETENESS-FRONTIER.659, IAL2-FEATURE-COMPLETENESS-FRONTIER.660, IAL2-FEATURE-COMPLETENESS-FRONTIER.661, IAL2-FEATURE-COMPLETENESS-FRONTIER.662, IAL2-FEATURE-COMPLETENESS-FRONTIER.663, IAL2-FEATURE-COMPLETENESS-FRONTIER.664, IAL2-FEATURE-COMPLETENESS-FRONTIER.665, IAL2-FEATURE-COMPLETENESS-FRONTIER.666, IAL2-FEATURE-COMPLETENESS-FRONTIER.667, IAL2-FEATURE-COMPLETENESS-FRONTIER.668, IAL2-FEATURE-COMPLETENESS-FRONTIER.669, IAL2-FEATURE-COMPLETENESS-FRONTIER.670, IAL2-FEATURE-COMPLETENESS-FRONTIER.671, IAL2-FEATURE-COMPLETENESS-FRONTIER.672, IAL2-FEATURE-COMPLETENESS-FRONTIER.673, IAL2-FEATURE-COMPLETENESS-FRONTIER.674, IAL2-FEATURE-COMPLETENESS-FRONTIER.675, IAL2-FEATURE-COMPLETENESS-FRONTIER.676, IAL2-FEATURE-COMPLETENESS-FRONTIER.677, IAL2-FEATURE-COMPLETENESS-FRONTIER.678, IAL2-FEATURE-COMPLETENESS-FRONTIER.679, IAL2-FEATURE-COMPLETENESS-FRONTIER.680`
 
-  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693, IAL2-FEATURE-COMPLETENESS-FRONTIER.694, IAL2-FEATURE-COMPLETENESS-FRONTIER.695, IAL2-FEATURE-COMPLETENESS-FRONTIER.696, IAL2-FEATURE-COMPLETENESS-FRONTIER.697, IAL2-FEATURE-COMPLETENESS-FRONTIER.698, IAL2-FEATURE-COMPLETENESS-FRONTIER.699, IAL2-FEATURE-COMPLETENESS-FRONTIER.700, IAL2-FEATURE-COMPLETENESS-FRONTIER.701, IAL2-FEATURE-COMPLETENESS-FRONTIER.702, IAL2-FEATURE-COMPLETENESS-FRONTIER.703, IAL2-FEATURE-COMPLETENESS-FRONTIER.704, IAL2-FEATURE-COMPLETENESS-FRONTIER.705`
+  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693, IAL2-FEATURE-COMPLETENESS-FRONTIER.694, IAL2-FEATURE-COMPLETENESS-FRONTIER.695, IAL2-FEATURE-COMPLETENESS-FRONTIER.696, IAL2-FEATURE-COMPLETENESS-FRONTIER.697, IAL2-FEATURE-COMPLETENESS-FRONTIER.698, IAL2-FEATURE-COMPLETENESS-FRONTIER.699, IAL2-FEATURE-COMPLETENESS-FRONTIER.700, IAL2-FEATURE-COMPLETENESS-FRONTIER.701, IAL2-FEATURE-COMPLETENESS-FRONTIER.702, IAL2-FEATURE-COMPLETENESS-FRONTIER.703, IAL2-FEATURE-COMPLETENESS-FRONTIER.704, IAL2-FEATURE-COMPLETENESS-FRONTIER.705, IAL2-FEATURE-COMPLETENESS-FRONTIER.706, IAL2-FEATURE-COMPLETENESS-FRONTIER.707`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -5000,6 +5000,20 @@ path before reopening VHDL backend or VHDL rerouting work.
   Verification: `Blocked in docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md and docs/knowledge/ial2-ahb-local-source-reference-import-blocker.md. The slice read .704, .703, AXI/Accellera import precedent, tracked docs/vendor inventory, local .cache/local-references mirror, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. The tracked vendor inventory contains AXI, PSS, UVM, and SystemRDL references only; the focused repo-local vendor/cache scan found no AHB/AHB-Lite source artifact; the source/fixture scan still finds no AHB completer/subordinate fixture. No artifact was imported, so no SHA-256 or git-ignore status exists yet. The exact required unblock action is a user-provided or explicitly approved official AHB/AHB-Lite source artifact suitable for tracking under docs/vendor/arm/amba/ahb/. No source facts, seed, parser, generator, source sample, support-accounting, manifest, test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed.`
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.705: record AHB source reference blocker`
 
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.706`
+  Status: `done`
+  Goal: `Import the user-approved official AHB/AHB-Lite source reference artifact under the tracked repo-local vendor tree.`
+  Acceptance: `Use the user-provided chipdoc fragment arm/amba/core/ahb/current/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf reference. Copy the PDF into docs/vendor/arm/amba/ahb/, keep it git-trackable, record the repo-local path, PDF metadata, SHA-256, and git-ignore status in tracked continuity docs/facts, and select the next exact source-fact extraction owner. Do not extract source facts, select or add a seed, change parser/generator/source/support-accounting/manifest/test behavior, add generated artifacts, change HDL/runtime behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, or VHDL behavior.`
+  Verification: `Imported docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf. pdfinfo reports Title "AMBA AHB  Protocol Specification", Author "Arm Limited", 104 pages, PDF 1.7, file size 957201 bytes, CreationDate Thu Sep 9 15:10:18 2021, ModDate Thu Sep 9 15:10:51 2021. SHA-256 is 2ba2920e050e1d9f6a1b728dfef85e66eb400a3c29d774b086b7de71c768f724. git check-ignore produced no match, so the artifact is git-trackable. Updated AHB import docs, Knowledge Map fact card, README, ROADMAP_V2, mdBook AHB/backlog prose, task tree, and Memory; selected .707 for source-backed AHB/AHB-Lite fact extraction before seed contract selection. No source facts, seed, parser, generator, source sample, support-accounting, manifest, test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.706: import AHB source reference`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.707`
+  Status: `active`
+  Goal: `Extract the first source-backed AHB/AHB-Lite subordinate fact inventory from the imported reference before lower-layer seed contract selection.`
+  Acceptance: `Read the imported docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf reference, .706 import record, .704 source-reference audit, .703 seed prerequisite, .702 readiness audit, shipped AHB requester .ppif/.ahb behavior, direct fsm/amba_requester.fsm seed, README, ROADMAP_V2, mdBook, task tree, Memory, Knowledge Map, and relevant decisions. Extract only source-backed facts needed for subordinate signal roles, transfer/ready/response timing, reset/default outputs, read/write storage policy, and error/unsupported-transfer behavior. Decide whether the next owner is lower-layer direct .fsm subordinate seed contract selection, another source-fact extraction slice, or a narrower prerequisite. Do not add a seed, change parser/generator/source/support-accounting/manifest/test behavior, add generated artifacts, change HDL/runtime behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, or VHDL behavior.`
+  Verification: `pending`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -5426,6 +5440,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 420 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.703` | `done` | Selected AHB subordinate source-reference and seed-evidence audit as the prerequisite before seed contract selection. |
 | 421 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.704` | `done` | Selected AHB/AHB-Lite local source-reference import prerequisite before source-fact extraction. |
 | 422 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` | `blocked` | No approved repo-local AHB/AHB-Lite source artifact exists; source-fact extraction is blocked until one is provided or explicitly approved. |
+| 423 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.706` | `done` | Imported the user-approved AHB/AHB-Lite source artifact under `docs/vendor/arm/amba/ahb/` and selected source-fact extraction as `.707`. |
+| 424 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.707` | `active` | Extract the first source-backed AHB/AHB-Lite subordinate fact inventory before lower-layer seed contract selection. |
 
 ## Decisions
 
@@ -12290,11 +12306,12 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 ## Blockers
 
-- `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` is blocked: no approved repo-local
-  AHB/AHB-Lite source artifact exists under `docs/vendor/` or
-  `.cache/local-references/`; source-fact extraction and seed contract
-  selection require a user-provided or explicitly approved official source
-  artifact suitable for tracking under `docs/vendor/arm/amba/ahb/`.
+- No active AHB source-reference artifact blocker remains. `.706` imported the
+  user-approved AHB/AHB-Lite reference under `docs/vendor/arm/amba/ahb/`.
+  `.707` owns the next source-backed fact extraction step before any seed,
+  parser/generator, support-accounting, manifest, test, generated-artifact,
+  HDL/runtime, direct-backend, verification-output, backend-language variant,
+  AXI, APB, or VHDL behavior changes.
 
 ## Verification Log
 
@@ -13077,6 +13094,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` | docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md; docs/knowledge/ial2-ahb-local-source-reference-import-blocker.md; docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md; docs/vendor; .cache/local-references; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `blocked`; no approved repo-local AHB/AHB-Lite source artifact was found under tracked docs/vendor or the local reference cache, so no import, SHA-256, or git-ignore status can be recorded yet. The focused repo-local vendor/cache scan and no-AHB-completer/subordinate fixture scan passed with absence evidence. Source-fact extraction and lower-layer direct .fsm subordinate seed contract selection remain blocked until the user provides or explicitly approves an official AHB/AHB-Lite source artifact suitable for tracking under docs/vendor/arm/amba/ahb/. No source reference, source facts, seed, parser, generator, source sample, support-accounting, manifest, test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed. |
 
+| `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.706` | docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf; docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md; docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md; docs/knowledge/ial2-ahb-local-source-reference-import.md; docs/knowledge/ial2-ahb-local-source-reference-import-blocker.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; imported the user-approved Arm AMBA AHB Protocol Specification PDF under docs/vendor/arm/amba/ahb/. The copied artifact is git-trackable, has SHA-256 2ba2920e050e1d9f6a1b728dfef85e66eb400a3c29d774b086b7de71c768f724, and pdfinfo reports Title "AMBA AHB  Protocol Specification", Author "Arm Limited", 104 pages, PDF 1.7, file size 957201 bytes. Selected .707, source-backed AHB/AHB-Lite subordinate fact extraction, before lower-layer seed contract selection. No source facts, seed, parser, generator, source sample, support-accounting, manifest, test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed. |
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -13746,8 +13765,23 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.703` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.703: select AHB subordinate reference audit` | Selected AHB subordinate source-reference and seed-evidence audit as `.704` before seed contract selection. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.704` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.704: audit AHB source reference evidence` | Selected AHB/AHB-Lite local source-reference import prerequisite as `.705` before source-fact extraction. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705: record AHB source reference blocker` | Recorded the missing local AHB/AHB-Lite source artifact blocker for subordinate source-fact extraction and seed contract selection. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.706` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.706: import AHB source reference` | Imported the user-approved AHB/AHB-Lite source reference artifact and selected source-fact extraction as `.707`. |
 
 ## Changelog
+
+- `2026-06-29`: Completed `.706`, importing the user-approved Arm AMBA AHB
+  Protocol Specification PDF as
+  `docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf`.
+  The artifact is git-trackable, has SHA-256
+  `2ba2920e050e1d9f6a1b728dfef85e66eb400a3c29d774b086b7de71c768f724`,
+  and `pdfinfo` reports Title `AMBA AHB  Protocol Specification`, Author
+  `Arm Limited`, 104 pages, PDF 1.7, and file size 957201 bytes. The AHB
+  source-reference artifact blocker is resolved; `.707` now owns source-backed
+  fact extraction before lower-layer seed contract selection. No source facts,
+  seed, parser, generator, public source, support-accounting, manifest, test
+  behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime,
+  direct backend, verification-output, backend-language variant, AXI, APB, or
+  VHDL behavior changed.
 
 - `2026-06-29`: Executed `.705` and recorded the AHB/AHB-Lite local
   source-reference import blocker. The repo-local vendor/cache search found no

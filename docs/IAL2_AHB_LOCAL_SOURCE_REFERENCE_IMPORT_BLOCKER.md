@@ -4,6 +4,12 @@ Date: 2026-06-29
 
 Owning task-tree leaf: `IAL2-FEATURE-COMPLETENESS-FRONTIER.705`
 
+Status: historical blocker, resolved by
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.706`.
+
+Resolution record:
+[docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md](IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md).
+
 ## Outcome
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` did not import an AHB/AHB-Lite source
@@ -12,13 +18,10 @@ acceptable AHB/AHB-Lite reference artifact under tracked `docs/vendor/` or the
 local `.cache/local-references/` mirror.
 
 The AHB subordinate source-fact extraction and lower-layer direct `.fsm`
-subordinate seed contract remain blocked until the user provides, or explicitly
-approves an acquisition path for, an official AHB/AHB-Lite source artifact
-suitable for tracking under `docs/vendor/arm/amba/ahb/`.
-
-No SHA-256 is recorded because no artifact was imported. No git-ignore status
-for an imported artifact is recorded because no `docs/vendor/arm/amba/ahb/`
-artifact exists yet.
+subordinate seed contract were blocked at the end of `.705`. `.706` later
+imported the user-approved official AHB/AHB-Lite source artifact under
+`docs/vendor/arm/amba/ahb/`, recorded its SHA-256 and git-ignore status, and
+selected `.707` as the next source-fact extraction owner.
 
 ## Evidence Read
 
@@ -88,13 +91,11 @@ no AHB completer/subordinate fixture
 
 ## Required Unblock Action
 
-Provide, or explicitly authorize obtaining, an official AHB/AHB-Lite source
-artifact suitable for committing under `docs/vendor/arm/amba/ahb/`.
+Resolved by `.706`: the user approved an official AHB/AHB-Lite source artifact
+and it was imported under `docs/vendor/arm/amba/ahb/`.
 
-After that artifact exists locally, a future owned leaf must:
+After that artifact exists locally, `.707` must:
 
-- import the artifact under `docs/vendor/arm/amba/ahb/`;
-- record its SHA-256 and git-ignore status;
 - extract only source-backed AHB subordinate facts;
 - select the lower-layer direct `.fsm` subordinate seed contract before any
   IAL2 AHB completer/subordinate parser, generator, source,

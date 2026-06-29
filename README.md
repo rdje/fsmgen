@@ -4872,17 +4872,20 @@ reference, parser, generator, public source, support-accounting, manifest,
 test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime,
 direct-backend, verification-output, backend-language variant, AXI, APB, or
 VHDL behavior changed in `.704`.
-`.705` is blocked: the repo-local vendor/cache search found no approved or
-provided AHB/AHB-Lite source artifact under `docs/vendor/` or
-`.cache/local-references/`. No artifact was imported, no SHA-256 or git-ignore
-status can be recorded yet, and AHB subordinate source-fact extraction plus
-lower-layer direct `.fsm` seed contract selection require a user-provided or
-explicitly approved official source artifact suitable for
-`docs/vendor/arm/amba/ahb/`. No source reference, source facts, seed, parser,
-generator, public source, support-accounting, manifest, test behavior,
+`.705` recorded a source-reference blocker: the repo-local vendor/cache search
+found no approved or provided AHB/AHB-Lite source artifact under
+`docs/vendor/` or `.cache/local-references/`. `.706` resolves the local source
+availability blocker by importing the user-approved Arm AMBA AHB Protocol
+Specification PDF under
+`docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf`
+with SHA-256
+`2ba2920e050e1d9f6a1b728dfef85e66eb400a3c29d774b086b7de71c768f724`.
+`.707` now owns source-backed AHB/AHB-Lite subordinate fact extraction before
+lower-layer direct `.fsm` seed contract selection. No source facts, seed,
+parser, generator, public source, support-accounting, manifest, test behavior,
 schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend,
 verification-output, backend-language variant, AXI, APB, or VHDL behavior
-changed in `.705`.
+changed in `.706`.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7533,7 +7536,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md` — selects lower-layer AHB subordinate seed contract selection before any IAL2 AHB completer/subordinate contract or behavior.
 - `docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md` — selects AHB subordinate source-reference and seed-evidence audit before lower-layer seed contract selection.
 - `docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md` — selects AHB/AHB-Lite local source-reference import prerequisite before source-fact extraction or seed contract selection.
-- `docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md` — records the `.705` blocker: no approved/provided repo-local AHB/AHB-Lite source artifact exists yet under `docs/vendor/` or `.cache/local-references/`, so subordinate source-fact extraction and seed contract selection require a user-provided or explicitly approved official source artifact.
+- `docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md` — records the historical `.705` blocker: no approved/provided repo-local AHB/AHB-Lite source artifact existed before `.706`.
+- `docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md` — records the `.706` import of the user-approved Arm AMBA AHB Protocol Specification PDF under `docs/vendor/arm/amba/ahb/`, its SHA-256, git-trackability, and the `.707` source-fact extraction follow-on.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

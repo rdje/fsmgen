@@ -9759,12 +9759,15 @@ before source-fact extraction or seed contract selection. The audit found no
 local AHB/AHB-Lite source reference artifact and no curated AHB subordinate
 source-evidence inventory.
 
-AHB local source-reference import blocker:
+AHB local source-reference import:
 [IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER](../../IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md)
-records `.705` as blocked. No approved/provided AHB/AHB-Lite source artifact
-exists under `docs/vendor/` or `.cache/local-references/`, so AHB subordinate
-source-fact extraction and lower-layer direct `.fsm` seed contract selection
-require a user-provided or explicitly approved official source artifact.
+records the historical `.705` blocker.
+[IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT](../../IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md)
+records the `.706` import of the user-approved Arm AMBA AHB Protocol
+Specification PDF under `docs/vendor/arm/amba/ahb/`. Source material is now
+available locally, but AHB subordinate source-fact extraction and lower-layer
+direct `.fsm` seed contract selection still require the `.707` source-backed
+fact extraction leaf before any behavior ships.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -208,16 +208,16 @@ The `.ppif` report keeps its historical `.ahb` profile-alias residue for the
 generic `.ppif` source. The shipped `.ahb` alias removes that stale residue
 from alias reports while keeping the broader AHB residue above.
 
-The next AHB work is blocked on source material. `IAL2-FEATURE-COMPLETENESS-FRONTIER.705`
-searched repo-local approved/provided inputs and found no AHB/AHB-Lite source
-reference artifact under `docs/vendor/` or `.cache/local-references/`.
-Source-backed subordinate signal roles, transfer/ready/response timing,
-reset/default outputs, read/write storage policy, and
-error/unsupported-transfer behavior must come from a user-provided or explicitly
-approved official source artifact before a lower-layer direct `.fsm`
-subordinate seed contract can be selected. The lower-layer seed contract must
-still be selected before any IAL2 AHB completer/subordinate source, parser,
-generator, support-accounting, or manifest behavior ships.
+The next AHB work is now source-fact extraction. `IAL2-FEATURE-COMPLETENESS-FRONTIER.705`
+recorded that no AHB/AHB-Lite source reference artifact was available, and
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.706` imported the user-approved Arm AMBA
+AHB Protocol Specification PDF under `docs/vendor/arm/amba/ahb/`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.707` owns the next source-backed extraction
+of subordinate signal roles, transfer/ready/response timing, reset/default
+outputs, read/write storage policy, and error/unsupported-transfer behavior.
+The lower-layer seed contract must still be selected before any IAL2 AHB
+completer/subordinate source, parser, generator, support-accounting, or
+manifest behavior ships.
 
 ## Validation Used For This Chapter
 
