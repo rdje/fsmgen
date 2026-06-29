@@ -6038,6 +6038,15 @@ contract selection, before any alias parser/generator/source/support-accounting
 or manifest behavior changes. Current behavior is unchanged:
 `ppif/ahb_lite_subordinate.ppif` remains the public subordinate IAL2 source,
 and `.ahb` remains requester-only until a later exact implementation owner.
+`.717` now selects `.718`, bounded implementation of public AHB subordinate
+`.ahb` profile-alias exposure. The selected future source is
+`ppif/ahb_lite_subordinate.ahb`, mirroring
+`ppif/ahb_lite_subordinate.ppif`, with support identity
+`intent.ahb_profile_alias_subordinate`, source kind `ial2_profile_alias`, and
+coverage key `ial2_ahb_profile_alias_subordinate_pipeline_cli`. No parser,
+generator, source sample, support-accounting catalog, capability manifest,
+test, report, generated artifact, HDL/runtime, backend, AXI, APB, broader AHB,
+or VHDL behavior changed in `.717`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -5013,6 +5013,15 @@ contract selection, before any alias parser/generator/source/support-accounting
 or manifest behavior changes. Current behavior is unchanged:
 `ppif/ahb_lite_subordinate.ppif` remains the public subordinate IAL2 source,
 and `.ahb` remains requester-only until a later exact implementation owner.
+`.717` now selects `.718`, bounded implementation of public AHB subordinate
+`.ahb` profile-alias exposure. The selected future source is
+`ppif/ahb_lite_subordinate.ahb`, mirroring
+`ppif/ahb_lite_subordinate.ppif`, with support identity
+`intent.ahb_profile_alias_subordinate`, source kind `ial2_profile_alias`, and
+coverage key `ial2_ahb_profile_alias_subordinate_pipeline_cli`. No parser,
+generator, source sample, support-accounting catalog, capability manifest,
+test, report, generated artifact, HDL/runtime, backend, AXI, APB, broader AHB,
+or VHDL behavior changed in `.717`.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7675,6 +7684,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md` — records the `.714` generated-IAL1 output reset/default parser/lowering/SystemVerilog substrate and selects `.715` for public AHB subordinate implementation.
 - `docs/IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md` — documents the `.715` shipped public `ppif/ahb_lite_subordinate.ppif` behavior, generated `.isf`/`.fsm` review artifacts, report schema, support accounting, reset/default metadata, validation, and remaining AHB residue.
 - `docs/IAL2_POST_AHB_SUBORDINATE_PPIF_NEXT_SLICE_SELECTION.md` — records the `.716` no-behavior selector after AHB subordinate `.ppif` shipment and selects `.717`, public AHB subordinate `.ahb` profile-alias contract selection.
+- `docs/IAL2_AHB_SUBORDINATE_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.717` no-behavior selector and selects `.718`, bounded public AHB subordinate `.ahb` profile-alias implementation at `ppif/ahb_lite_subordinate.ahb` with support identity `intent.ahb_profile_alias_subordinate`.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

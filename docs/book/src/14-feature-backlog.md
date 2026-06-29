@@ -9814,6 +9814,13 @@ transfers, legacy two-bit `HRESP`, and interconnect/decode.
 selection. Current behavior is unchanged: use
 `ppif/ahb_lite_subordinate.ppif` for the subordinate IAL2 path, and `.ahb`
 remains requester-only until a later exact implementation owner.
+`.717` selects `.718`, bounded implementation of public AHB subordinate `.ahb`
+profile-alias exposure. The selected future source is
+`ppif/ahb_lite_subordinate.ahb`, mirroring
+`ppif/ahb_lite_subordinate.ppif`, with support identity
+`intent.ahb_profile_alias_subordinate`, source kind `ial2_profile_alias`, and
+coverage key `ial2_ahb_profile_alias_subordinate_pipeline_cli`. Current
+behavior is still unchanged until `.718` implements that alias.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
