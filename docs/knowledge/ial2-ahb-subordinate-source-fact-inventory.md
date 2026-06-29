@@ -29,10 +29,13 @@ The inventory covers:
 - OKAY, pending, and two-cycle ERROR response timing;
 - reset and signal-validity constraints.
 
-The selected next owner is
+The selected next owner was
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.708`, lower-layer AHB subordinate seed
-contract selection. `.708` must choose a bounded AHB-Lite/common-AHB direct
-`.fsm` seed contract before any seed file, IAL2 AHB completer/subordinate
-source, parser/generator behavior, support-accounting, manifest, test,
-generated-artifact, HDL/runtime, direct-backend, verification-output,
-backend-language variant, AXI, APB, or VHDL behavior changes.
+contract selection. `.708` selected `fsm/ahb_lite_subordinate.fsm`, module
+`ahb_lite_subordinate`, and support-accounting identity
+`protocol.ahb_lite_subordinate` as the first bounded AHB-Lite/common-AHB
+direct `.fsm` seed target. `.709` owns direct implementation before any IAL2
+AHB completer/subordinate source, parser/generator behavior,
+support-accounting, manifest, test, generated-artifact, HDL/runtime,
+direct-backend, verification-output, backend-language variant, AXI, APB, or
+VHDL behavior changes.

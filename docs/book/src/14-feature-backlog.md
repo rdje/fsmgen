@@ -9767,9 +9767,14 @@ records the `.706` import of the user-approved Arm AMBA AHB Protocol
 Specification PDF under `docs/vendor/arm/amba/ahb/`. Source material is now
 available locally.
 [IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY](../../IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md)
-records the `.707` source-backed subordinate fact extraction. Lower-layer
-direct `.fsm` seed contract selection still requires `.708` before any AHB
-subordinate seed or IAL2 AHB completer/subordinate behavior ships.
+records the `.707` source-backed subordinate fact extraction.
+[IAL2_AHB_SUBORDINATE_SEED_CONTRACT_SELECTION](../../IAL2_AHB_SUBORDINATE_SEED_CONTRACT_SELECTION.md)
+records the `.708` lower-layer seed contract selection. The selected future
+direct seed is `fsm/ahb_lite_subordinate.fsm`, module
+`ahb_lite_subordinate`, support-accounting identity
+`protocol.ahb_lite_subordinate`, with bounded AHB-Lite/common-AHB
+single-register behavior. `.709` must implement that direct seed before any
+IAL2 AHB completer/subordinate behavior ships.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

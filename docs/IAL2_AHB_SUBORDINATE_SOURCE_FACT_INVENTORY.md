@@ -141,6 +141,11 @@ shape, direct `.fsm` fixture shape, selected subset, diagnostics/report
 expectations, validation scope, docs/book updates, and residue before any seed
 file or behavior is added.
 
+Later status: `.708` selected `fsm/ahb_lite_subordinate.fsm`, module
+`ahb_lite_subordinate`, and support-accounting identity
+`protocol.ahb_lite_subordinate` as the first lower-layer AHB-Lite/common-AHB
+subordinate direct seed target. `.709` owns implementation of that direct seed.
+
 ## Non-Changes
 
 This slice does not add a source reference, seed, parser, generator, source

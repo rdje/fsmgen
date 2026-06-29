@@ -4898,6 +4898,22 @@ generator, public source, support-accounting, manifest, test behavior,
 schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend,
 verification-output, backend-language variant, AXI, APB, or VHDL behavior
 changed in `.707`.
+`.708` selects the first lower-layer AHB-Lite/common-AHB subordinate seed
+contract. The selected future direct seed is `fsm/ahb_lite_subordinate.fsm`,
+module `ahb_lite_subordinate`, support-accounting identity
+`protocol.ahb_lite_subordinate`, with core
+`HSEL`/`HADDR`/`HTRANS`/`HWRITE`/`HSIZE`/`HREADY`/`HWDATA`/`wait_cycles`
+inputs and `HREADYOUT`/one-bit `HRESP`/`HRDATA` outputs. The selected behavior
+is one 32-bit register at `32'h00000000`, bounded wait states, reset/idle
+`HREADYOUT=1 HRESP=0 HRDATA=0`, zero-wait OKAY for `IDLE`/`BUSY`,
+successful `NONSEQ` word reads/writes, and source-backed two-cycle ERROR for
+unsupported `SEQ`, unsupported sizes, or unmapped addresses. `.709` now owns
+direct seed implementation; IAL2 AHB completer/subordinate source behavior
+remains deferred until after that seed ships. No seed, parser, generator,
+public source, support-accounting catalog entry, manifest, test behavior,
+schedule/check/semantic JSON, generated artifact, HDL/runtime,
+direct-backend, verification-output, backend-language variant, AXI, APB, or
+VHDL behavior changed in `.708`.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7551,6 +7567,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md` — records the historical `.705` blocker: no approved/provided repo-local AHB/AHB-Lite source artifact existed before `.706`.
 - `docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md` — records the `.706` import of the user-approved Arm AMBA AHB Protocol Specification PDF under `docs/vendor/arm/amba/ahb/`, its SHA-256, git-trackability, and the `.707` source-fact extraction follow-on.
 - `docs/IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md` — records the `.707` first source-backed AHB/AHB-Lite subordinate fact inventory and selects `.708`, lower-layer AHB subordinate seed contract selection.
+- `docs/IAL2_AHB_SUBORDINATE_SEED_CONTRACT_SELECTION.md` — selects the `.708` lower-layer AHB-Lite/common-AHB subordinate direct seed contract: future `fsm/ahb_lite_subordinate.fsm`, module `ahb_lite_subordinate`, support-accounting identity `protocol.ahb_lite_subordinate`, selected port/reset/transfer/response policy, and `.709` implementation owner.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

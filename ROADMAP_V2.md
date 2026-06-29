@@ -5923,6 +5923,22 @@ generator, public source, support-accounting, manifest, test behavior,
 schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend,
 verification-output, backend-language variant, AXI, APB, or VHDL behavior
 changed in `.707`.
+`.708` selects the first lower-layer AHB-Lite/common-AHB subordinate seed
+contract. The selected future direct seed is `fsm/ahb_lite_subordinate.fsm`,
+module `ahb_lite_subordinate`, support-accounting identity
+`protocol.ahb_lite_subordinate`, with core
+`HSEL`/`HADDR`/`HTRANS`/`HWRITE`/`HSIZE`/`HREADY`/`HWDATA`/`wait_cycles`
+inputs and `HREADYOUT`/one-bit `HRESP`/`HRDATA` outputs. The selected behavior
+is one 32-bit register at `32'h00000000`, bounded wait states, reset/idle
+`HREADYOUT=1 HRESP=0 HRDATA=0`, zero-wait OKAY for `IDLE`/`BUSY`,
+successful `NONSEQ` word reads/writes, and source-backed two-cycle ERROR for
+unsupported `SEQ`, unsupported sizes, or unmapped addresses. `.709` now owns
+direct seed implementation; IAL2 AHB completer/subordinate source behavior
+remains deferred until after that seed ships. No seed, parser, generator,
+public source, support-accounting catalog entry, manifest, test behavior,
+schedule/check/semantic JSON, generated artifact, HDL/runtime,
+direct-backend, verification-output, backend-language variant, AXI, APB, or
+VHDL behavior changed in `.708`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

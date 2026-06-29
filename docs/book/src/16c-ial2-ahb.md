@@ -208,17 +208,25 @@ The `.ppif` report keeps its historical `.ahb` profile-alias residue for the
 generic `.ppif` source. The shipped `.ahb` alias removes that stale residue
 from alias reports while keeping the broader AHB residue above.
 
-The next AHB work is lower-layer seed contract selection.
+The next AHB work is lower-layer seed implementation.
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` recorded that no AHB/AHB-Lite source
 reference artifact was available, `.706` imported the user-approved Arm AMBA
-AHB Protocol Specification PDF under `docs/vendor/arm/amba/ahb/`, and `.707`
-extracted the first source-backed subordinate fact inventory. That inventory
-covers subordinate signal roles, selection/completion gating, address/data
-phase separation, transfer types, ready/response timing, reset behavior,
-read/write data validity, and ERROR response behavior. `.708` must still
-select the lower-layer direct `.fsm` seed contract before any IAL2 AHB
-completer/subordinate source, parser, generator, support-accounting, or
-manifest behavior ships.
+AHB Protocol Specification PDF under `docs/vendor/arm/amba/ahb/`, `.707`
+extracted the first source-backed subordinate fact inventory, and `.708`
+selected the first direct seed contract. The selected future direct fixture is
+`fsm/ahb_lite_subordinate.fsm`, module `ahb_lite_subordinate`, with
+support-accounting identity `protocol.ahb_lite_subordinate`.
+
+That future fixture is a bounded AHB-Lite/common-AHB single-register
+subordinate. Its selected port set is `HSEL`, `HADDR`, `HTRANS`, `HWRITE`,
+`HSIZE`, `HREADY`, `HWDATA`, fixture-local `wait_cycles`, `HREADYOUT`,
+one-bit `HRESP`, and `HRDATA`. The selected behavior accepts `NONSEQ` word
+reads/writes to `32'h00000000`, ignores `IDLE` and `BUSY` with zero-wait
+OKAY, uses bounded data-phase wait states, and reports unsupported `SEQ`,
+unsupported sizes, and unmapped addresses through the source-backed two-cycle
+ERROR response. IAL2 AHB completer/subordinate source, parser, generator,
+support-accounting, and manifest behavior still remain deferred until after
+that lower-layer seed ships.
 
 ## Validation Used For This Chapter
 
