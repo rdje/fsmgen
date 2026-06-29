@@ -20,6 +20,10 @@ implementation of the selected lower-layer seed. `.709` must add the direct
 `.fsm` seed and its focused validation/support-accounting/docs updates, and
 must not add IAL2 AHB completer/subordinate parser or generator behavior.
 
+Later status: `.709` shipped `fsm/ahb_lite_subordinate.fsm` and
+`protocol.ahb_lite_subordinate`. `.710` now owns a no-behavior IAL2 AHB
+completer/subordinate readiness audit.
+
 No seed, parser behavior, generator behavior, public source sample,
 support-accounting catalog entry, capability manifest, test behavior,
 schedule/check/semantic JSON behavior, generated artifact, HDL/runtime

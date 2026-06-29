@@ -55,6 +55,13 @@ ppif/ahb_requester.ppif
 ppif/ahb_requester.ahb
 ```
 
+Later status: `.706` imported the local AHB source reference, `.707`
+extracted source-backed subordinate facts, `.708` selected the lower-layer
+seed contract, and `.709` shipped `fsm/ahb_lite_subordinate.fsm` with
+support-accounting identity `protocol.ahb_lite_subordinate`. This `.703`
+selector remains the historical reason source-backed evidence was required
+before the direct subordinate seed contract.
+
 ## Finding
 
 `.702` established that a lower-layer AHB subordinate seed must precede IAL2

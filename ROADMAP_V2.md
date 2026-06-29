@@ -5939,6 +5939,21 @@ public source, support-accounting catalog entry, manifest, test behavior,
 schedule/check/semantic JSON, generated artifact, HDL/runtime,
 direct-backend, verification-output, backend-language variant, AXI, APB, or
 VHDL behavior changed in `.708`.
+`.709` now ships the selected direct lower-layer AHB-Lite/common-AHB
+subordinate seed at `fsm/ahb_lite_subordinate.fsm`. The seed is
+support-accounted as `protocol.ahb_lite_subordinate`, passes strict check as
+module `ahb_lite_subordinate`, and generates SystemVerilog with the selected
+`HSEL`/`HADDR`/`HTRANS`/`HWRITE`/`HSIZE`/`HREADY`/`HWDATA`/`wait_cycles` to
+`HREADYOUT`/one-bit `HRESP`/`HRDATA` interface. The generated HDL was
+inspected to confirm `HTRANS` gating for `NONSEQ`/unsupported `SEQ`,
+word-size guard `size_q == 2`, `reg_data_q <- HWDATA` only on successful
+mapped writes, and first/second ERROR response cycles. `.710` now owns the
+next no-behavior readiness audit before any IAL2 AHB completer/subordinate
+source behavior is selected. No IAL2 parser/generator/source behavior, `.ahb`
+completer/subordinate alias behavior, interconnect/decode, scoreboards,
+full-manager behavior, direct backend behavior, verification-output
+generation, backend-language variant, AXI, APB, or VHDL behavior changed in
+`.709`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

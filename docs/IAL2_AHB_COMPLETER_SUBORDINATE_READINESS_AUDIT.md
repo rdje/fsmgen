@@ -54,6 +54,12 @@ fsm/amba_requester.fsm
 It passes strict check as `protocol.amba_requester` and support-accounts as a
 direct-root protocol fixture.
 
+Later status: `.709` shipped the lower-layer direct subordinate fixture
+`fsm/ahb_lite_subordinate.fsm` with support-accounting identity
+`protocol.ahb_lite_subordinate`. This `.702` readiness finding remains the
+historical reason the direct seed path was selected before IAL2
+completer/subordinate source work.
+
 ## Lower-Layer Evidence Gap
 
 APB completer work was able to move toward IAL2 public contract selection only
@@ -64,10 +70,11 @@ fsm/apb_completer.fsm
 fsm/apb_tb.fsm
 ```
 
-AHB does not have an equivalent subordinate target today. A repository scan
-over `fsm/`, `ppif/`, `perl/FSM/IAL2/ProtocolIntent/`, and `t/` finds no
-shipped AHB completer, subordinate, or slave fixture/generator beyond the
-current requester behavior.
+At `.702` time, AHB did not have an equivalent subordinate target. The
+repository scan over `fsm/`, `ppif/`, `perl/FSM/IAL2/ProtocolIntent/`, and
+`t/` found no shipped AHB completer, subordinate, or slave fixture/generator
+beyond the requester behavior. `.709` later closed the lower-layer direct seed
+gap by adding `fsm/ahb_lite_subordinate.fsm`; IAL2 source work remains future.
 
 That gap matters because a bounded AHB subordinate is not just an inverted
 requester. The first seed must select, at minimum, the subordinate-side signal

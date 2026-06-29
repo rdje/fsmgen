@@ -1,0 +1,121 @@
+; Bounded AHB-Lite/common-AHB subordinate model in active FSMGen ?fsm syntax.
+; Scope:
+; - subordinate side only
+; - local HSEL represents the selected subordinate's HSELx decode line
+; - accepts selected NONSEQ word transfers to address 32'h00000000
+; - IDLE and BUSY are ignored with zero-wait OKAY
+; - SEQ, unsupported sizes, and unmapped addresses return two-cycle ERROR
+; - optional wait cycles are provided by input wait_cycles
+; - HRESP is the one-bit OKAY/ERROR response used by the selected AHB-Lite subset
+
+(?fsm:ahb_lite_subordinate
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (:= (addr_q 32'h00000000))
+  (:= (write_q 0))
+  (:= (size_q 3'b010))
+  (:= (wait_ctr 4'h0))
+  (:= (reg_data_q 32'h00000000))
+
+  (+size
+    (HSEL 1)
+    (HADDR 32)
+    (HTRANS 2)
+    (HWRITE 1)
+    (HSIZE 3)
+    (HREADY 1)
+    (HWDATA 32)
+    (wait_cycles 4)
+    (HREADYOUT 1)
+    (HRESP 1)
+    (HRDATA 32)
+    (addr_q 32)
+    (write_q 1)
+    (size_q 3)
+    (wait_ctr 4)
+    (reg_data_q 32)
+  )
+
+  (idle
+    (= (HREADYOUT> 1))
+    (= (HRESP> 0))
+    (= (HRDATA> 32'h00000000))
+
+    (<HSEL
+      (<HREADY
+        (?HTRANS
+          (=2'b10
+            (<= (addr_q HADDR))
+            (<= (write_q HWRITE))
+            (<= (size_q HSIZE))
+            (<= (wait_ctr wait_cycles))
+            (-> access)
+          )
+          (=2'b11
+            (<= (wait_ctr wait_cycles))
+            (-> unsupported)
+          )
+        )
+      )
+    )
+  )
+
+  (access
+    (= (HREADYOUT> 0))
+    (= (HRESP> 0))
+    (= (HRDATA> 32'h00000000))
+
+    (<wait_ctr!=0
+      (-- wait_ctr)
+    )
+
+    (<wait_ctr=0
+      (<size_q!=2
+        (= (HRESP> 1))
+        (-> error_complete)
+      )
+      (<size_q=2
+        (<addr_q!=32'h00000000
+          (= (HRESP> 1))
+          (-> error_complete)
+        )
+        (<addr_q=32'h00000000
+          (= (HREADYOUT> 1))
+          (<!write_q
+            (= (HRDATA> reg_data_q))
+          )
+          (<write_q
+            (<= (reg_data_q HWDATA))
+          )
+          (-> idle)
+        )
+      )
+    )
+  )
+
+  (unsupported
+    (= (HREADYOUT> 0))
+    (= (HRESP> 0))
+    (= (HRDATA> 32'h00000000))
+
+    (<wait_ctr!=0
+      (-- wait_ctr)
+    )
+
+    (<wait_ctr=0
+      (= (HRESP> 1))
+      (-> error_complete)
+    )
+  )
+
+  (error_complete
+    (= (HREADYOUT> 1))
+    (= (HRESP> 1))
+    (= (HRDATA> 32'h00000000))
+    (-> idle)
+  )
+)

@@ -39,6 +39,16 @@ my @REGRESSION_CORPUS = (
         expected_module_name => 'amba_requester',
     },
     {
+        id => 'protocol.ahb_lite_subordinate',
+        relpath => 'fsm/ahb_lite_subordinate.fsm',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'ahb_lite_subordinate',
+    },
+    {
         id => 'intent.ppif_ahb_requester',
         relpath => 'ppif/ahb_requester.ppif',
         family => 'protocol_fixture',

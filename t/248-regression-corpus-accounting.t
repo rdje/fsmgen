@@ -618,6 +618,7 @@ for my $required_id (qw(
     protocol.apb_requester
     protocol.apb_completer
     protocol.amba_requester
+    protocol.ahb_lite_subordinate
     protocol.apb_tb
     intent.isf_apb_requester
     intent.ppif_ahb_requester
@@ -1142,8 +1143,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    307,
-    'catalog now keeps three hundred seven named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, and verification-output fixtures',
+    308,
+    'catalog now keeps three hundred eight named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, and verification-output fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -1157,13 +1158,14 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    307,
-    'catalog now records three hundred seven positive strict-mode supported-smoke acceptance entries',
+    308,
+    'catalog now records three hundred eight positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
     protocol.apb_completer
     protocol.amba_requester
+    protocol.ahb_lite_subordinate
     protocol.apb_tb
     intent.isf_apb_requester
     intent.ppif_ahb_requester

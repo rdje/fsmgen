@@ -9773,8 +9773,11 @@ records the `.708` lower-layer seed contract selection. The selected future
 direct seed is `fsm/ahb_lite_subordinate.fsm`, module
 `ahb_lite_subordinate`, support-accounting identity
 `protocol.ahb_lite_subordinate`, with bounded AHB-Lite/common-AHB
-single-register behavior. `.709` must implement that direct seed before any
-IAL2 AHB completer/subordinate behavior ships.
+single-register behavior.
+[IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR](../../IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md)
+records the `.709` shipped direct seed behavior and support-accounting entry.
+`.710` now owns the next no-behavior readiness audit before any IAL2 AHB
+completer/subordinate behavior ships.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

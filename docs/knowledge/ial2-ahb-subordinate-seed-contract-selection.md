@@ -34,7 +34,8 @@ unsupported `SEQ`, unsupported sizes, and unmapped addresses with the
 source-backed two-cycle ERROR response, and drives reset/idle defaults
 `HREADYOUT=1`, `HRESP=0`, and `HRDATA=0`.
 
-The selected next owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.709`, direct
-implementation of `fsm/ahb_lite_subordinate.fsm`. IAL2 AHB
+The selected next owner was `IAL2-FEATURE-COMPLETENESS-FRONTIER.709`, direct
+implementation of `fsm/ahb_lite_subordinate.fsm`. `.709` shipped that seed and
+support-accounted it as `protocol.ahb_lite_subordinate`. IAL2 AHB
 completer/subordinate `.ppif` and `.ahb` source behavior remains deferred
-until after that lower-layer seed ships.
+behind `.710`, the next readiness audit.

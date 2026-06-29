@@ -34,7 +34,7 @@ The selected next owner was
 contract selection. `.708` selected `fsm/ahb_lite_subordinate.fsm`, module
 `ahb_lite_subordinate`, and support-accounting identity
 `protocol.ahb_lite_subordinate` as the first bounded AHB-Lite/common-AHB
-direct `.fsm` seed target. `.709` owns direct implementation before any IAL2
+direct `.fsm` seed target. `.709` shipped that direct seed before any IAL2
 AHB completer/subordinate source, parser/generator behavior,
 support-accounting, manifest, test, generated-artifact, HDL/runtime,
 direct-backend, verification-output, backend-language variant, AXI, APB, or
