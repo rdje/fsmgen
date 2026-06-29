@@ -24,6 +24,13 @@ shape, object naming, generated `.isf`/`.fsm` review-artifact names, report
 schema, support-accounting identity, diagnostics, validation, residue, and
 next implementation or substrate-audit owner before any IAL2 behavior changes.
 
+Later status: `.711` selected `ppif/ahb_lite_subordinate.ppif`, object
+`(ahb-subordinate ahb_lite_subordinate ...)`, generated
+`ahb_lite_subordinate.isf` before `ahb_lite_subordinate.fsm`, report schema
+`fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, support identity
+`intent.ppif_ahb_lite_subordinate`, and `.712`, a no-behavior
+generated-IAL1/IAL0/SV substrate audit before implementation.
+
 No parser behavior, generator behavior, public source sample,
 support-accounting catalog behavior, capability manifest behavior, test
 behavior, schedule/check/semantic JSON behavior, generated artifact,

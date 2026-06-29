@@ -11,7 +11,7 @@ date: 2026-06-29
 status: current
 tags: [ial2, ahb, subordinate, ahb-lite, direct-fsm, support-accounting]
 evidence: docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md; fsm/ahb_lite_subordinate.fsm; perl/FSM/Support/RegressionCorpus.pm; t/248-regression-corpus-accounting.t; docs/IAL2_AHB_SUBORDINATE_SEED_CONTRACT_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/16c-ial2-ahb.md; MEMORY.md; README.md; ROADMAP_V2.md
-reverify: ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm && rg -n 'protocol\.ahb_lite_subordinate|ahb_lite_subordinate|three hundred eight|IAL2-FEATURE-COMPLETENESS-FRONTIER\.709|IAL2-FEATURE-COMPLETENESS-FRONTIER\.710' perl/FSM/Support/RegressionCorpus.pm t/248-regression-corpus-accounting.t docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/16-ial2-protocol-platform-intent.md
+reverify: ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm && rg -n 'protocol\.ahb_lite_subordinate|ahb_lite_subordinate|three hundred eight|IAL2-FEATURE-COMPLETENESS-FRONTIER\.709|IAL2-FEATURE-COMPLETENESS-FRONTIER\.710|IAL2-FEATURE-COMPLETENESS-FRONTIER\.711|IAL2-FEATURE-COMPLETENESS-FRONTIER\.712' perl/FSM/Support/RegressionCorpus.pm t/248-regression-corpus-accounting.t docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/16-ial2-protocol-platform-intent.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.709` ships a lower-layer direct AHB
@@ -37,3 +37,7 @@ The selected next owner was `IAL2-FEATURE-COMPLETENESS-FRONTIER.710`, a
 no-behavior readiness audit for IAL2 AHB completer/subordinate source work.
 `.710` selected `.711`, public IAL2 AHB subordinate/completer contract
 selection, before any parser/generator/source behavior changes.
+
+Later `.711` selected the future public source
+`ppif/ahb_lite_subordinate.ppif` and `.712`, a no-behavior generated-substrate
+audit before implementation.

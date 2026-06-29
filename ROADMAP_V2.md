@@ -5966,6 +5966,20 @@ manifest behavior, test behavior, schedule/check/semantic JSON behavior,
 generated artifact, HDL/runtime behavior, seed behavior, direct backend
 behavior, verification-output generation, backend-language variant, AXI, APB,
 or VHDL behavior changed in `.710`.
+`.711` selects the first public IAL2 AHB subordinate contract without
+behavior changes. The selected future source is
+`ppif/ahb_lite_subordinate.ppif`, object
+`(ahb-subordinate ahb_lite_subordinate ...)`, generated review artifacts
+`ahb_lite_subordinate.isf` before `ahb_lite_subordinate.fsm`, report schema
+`fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, support identity
+`intent.ppif_ahb_lite_subordinate`, and coverage key
+`ial2_ppif_ahb_lite_subordinate_pipeline_cli`. `.712` now owns a no-behavior
+generated-IAL1/IAL0/SV substrate audit before implementation. No parser,
+generator, public source, sample, support-accounting catalog behavior,
+manifest behavior, test behavior, schedule/check/semantic JSON behavior,
+generated artifact, HDL/runtime behavior, seed behavior, direct backend
+behavior, verification-output generation, backend-language variant, AXI, APB,
+or VHDL behavior changed in `.711`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

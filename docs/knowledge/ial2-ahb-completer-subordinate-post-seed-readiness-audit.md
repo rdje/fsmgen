@@ -11,7 +11,7 @@ date: 2026-06-29
 status: current
 tags: [ial2, ahb, subordinate, completer, readiness, contract-selection]
 evidence: docs/IAL2_AHB_COMPLETER_SUBORDINATE_POST_SEED_READINESS_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md; fsm/ahb_lite_subordinate.fsm; docs/IAL2_AHB_SUBORDINATE_SEED_CONTRACT_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md; docs/IAL2_APB_COMPLETER_GENERATED_IAL1_SUBSTRATE_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
-reverify: ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.710|IAL2-FEATURE-COMPLETENESS-FRONTIER\.711|protocol\.ahb_lite_subordinate|public IAL2 contract-selection|generated \\.isf|generated \\.fsm' docs/IAL2_AHB_COMPLETER_SUBORDINATE_POST_SEED_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md
+reverify: ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.710|IAL2-FEATURE-COMPLETENESS-FRONTIER\.711|IAL2-FEATURE-COMPLETENESS-FRONTIER\.712|protocol\.ahb_lite_subordinate|ppif/ahb_lite_subordinate\.ppif|generated \\.isf|generated \\.fsm' docs/IAL2_AHB_COMPLETER_SUBORDINATE_POST_SEED_READINESS_AUDIT.md docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.710` audits AHB
@@ -33,3 +33,11 @@ must choose the exact public object name, source path, generated `.isf` and
 diagnostics, validation, residue, rollback, and next implementation or
 substrate-audit owner before any IAL2 AHB subordinate/completer behavior
 changes.
+
+Later `.711` selected the future public source
+`ppif/ahb_lite_subordinate.ppif`, object
+`(ahb-subordinate ahb_lite_subordinate ...)`, generated
+`ahb_lite_subordinate.isf` before `ahb_lite_subordinate.fsm`, report schema
+`fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, support identity
+`intent.ppif_ahb_lite_subordinate`, and `.712` as the no-behavior substrate
+audit before implementation.

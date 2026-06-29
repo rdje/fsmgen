@@ -29,6 +29,10 @@ Later status: `.710` selected `.711`, public IAL2 AHB
 subordinate/completer contract selection, before any parser/generator/source
 behavior changes.
 
+Later `.711` selected the future public source
+`ppif/ahb_lite_subordinate.ppif` and `.712`, a no-behavior generated-substrate
+audit before implementation.
+
 ## Shipped Direct Fixture
 
 The shipped port set is:

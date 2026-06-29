@@ -9780,6 +9780,14 @@ records the `.709` shipped direct seed behavior and support-accounting entry.
 records the `.710` no-behavior post-seed readiness audit and selects `.711`,
 public IAL2 AHB subordinate/completer contract selection, before any IAL2 AHB
 completer/subordinate behavior ships.
+[IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION](../../IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md)
+selects the `.711` future public source `ppif/ahb_lite_subordinate.ppif`,
+object `(ahb-subordinate ahb_lite_subordinate ...)`, generated
+`ahb_lite_subordinate.isf` before `ahb_lite_subordinate.fsm`, report schema
+`fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, support identity
+`intent.ppif_ahb_lite_subordinate`, and `.712`, a no-behavior
+generated-IAL1/IAL0/SV substrate audit before implementation. The source and
+behavior remain deferred until a later implementation slice.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

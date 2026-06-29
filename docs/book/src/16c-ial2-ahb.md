@@ -232,7 +232,8 @@ The `.ppif` report keeps its historical `.ahb` profile-alias residue for the
 generic `.ppif` source. The shipped `.ahb` alias removes that stale residue
 from alias reports while keeping the broader AHB residue above.
 
-The next AHB work is public IAL2 AHB subordinate/completer contract selection.
+The current AHB subordinate work has selected a public IAL2 contract but has
+not shipped parser or generator behavior for it yet.
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` recorded that no AHB/AHB-Lite source
 reference artifact was available, `.706` imported the user-approved Arm AMBA
 AHB Protocol Specification PDF under `docs/vendor/arm/amba/ahb/`, `.707`
@@ -252,6 +253,30 @@ ERROR response. IAL2 AHB completer/subordinate source, parser, generator,
 support-accounting, and manifest behavior still remain deferred.
 `.710` audits post-seed readiness and selects `.711`, public IAL2 AHB
 subordinate/completer contract selection, before any such behavior changes.
+`.711` then selects the future generic `.ppif` subordinate source:
+
+```text
+ppif/ahb_lite_subordinate.ppif
+(ahb-subordinate ahb_lite_subordinate ...)
+ahb_lite_subordinate.isf
+ahb_lite_subordinate.fsm
+fsmgen.ial2.protocol_intent.ahb_subordinate.v1
+intent.ppif_ahb_lite_subordinate
+```
+
+That selected source will mirror the direct seed's bounded
+AHB-Lite/common-AHB behavior: one subordinate endpoint, `HSEL && HREADY`
+address/control acceptance, ignored `IDLE`/`BUSY`, selected `NONSEQ` word
+transfers, one 32-bit register at address `0`, bounded `wait_cycles`, one-bit
+OKAY/ERROR `HRESP`, and two-cycle ERROR for unsupported `SEQ`, unsupported
+sizes, or unmapped addresses. The `.ahb` subordinate alias, AHB
+interconnect/decode, burst `SEQ` support, optional AHB signals, byte-lane
+behavior, legacy two-bit `HRESP`, direct backend behavior,
+verification-output generation, backend-language variants, AXI, APB, and VHDL
+remain deferred.
+
+The next owned AHB work is `.712`, a generated-IAL1/IAL0/SV substrate audit
+for the selected public subordinate contract before implementation.
 
 ## Validation Used For This Chapter
 
@@ -270,6 +295,7 @@ prove -v t/1474-ial2-ahb-profile-alias.t
 ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm
 ./bin/fsmgen --quiet --output /tmp/fsmgen_ahb_lite_subordinate.sv fsm/ahb_lite_subordinate.fsm
 rg -n "size_q_eq|size_q_ne|HRESP <- 1|HREADYOUT <- 1|reg_data_q <- HWDATA|HTRANS == 2'b1" /tmp/fsmgen_ahb_lite_subordinate.sv
+rg -n "ppif/ahb_lite_subordinate\\.ppif|ahb-subordinate|intent\\.ppif_ahb_lite_subordinate" docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md docs/book/src/16c-ial2-ahb.md
 ```
 
 The `.ppif` and `.ahb` probes passed and generated `amba_requester.isf`,
