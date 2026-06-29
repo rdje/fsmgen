@@ -9886,6 +9886,12 @@ check/semantic/schedule/support-accounting surfaces, preserves generated
 aggregate `ahb_tb.fsm`, emits HDL module `ahb_tb`, and removes only
 `ahb_aggregate_profile_alias_deferred` from aggregate `.ahb` reports. Broader
 AHB behavior remains deferred.
+`.727` selects `.728`, a no-behavior readiness audit for bounded
+multi-subordinate AHB interconnect/decode. The selector records the shipped
+six-entrypoint AHB surface, the remaining
+`ahb_multi_subordinate_decode_deferred` residue, the current singular parser
+and generator assumptions, and the temporary second-subordinate child
+fail-closed diagnostic. No behavior changes until a later owner is selected.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

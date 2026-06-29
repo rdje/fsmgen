@@ -5113,6 +5113,16 @@ support identity `intent.ahb_profile_alias_interconnect`, source kind
 `ial2_ahb_profile_alias_interconnect_pipeline_cli`. The alias removes only
 `ahb_aggregate_profile_alias_deferred`; broader AHB behavior remains
 deferred.
+`.727` now selects `.728`, a no-behavior readiness audit for bounded
+multi-subordinate AHB interconnect/decode after the aggregate `.ahb` alias
+shipped. The selector records that the shipped aggregate interconnect sources
+remain singular, `ppif/ahb_interconnect.ahb` strict-checks as
+`intent.ahb_profile_alias_interconnect`, and a temporary second-subordinate
+child still fails closed under duplicate `(subordinate ...)` validation.
+`.728` must audit parser/generator assumptions around multiple subordinate
+objects, multiple child bindings, multiple static address windows, decoded
+select naming, local-address translation, report/support-accounting shape,
+diagnostics, validation, and rollback before any behavior changes.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7785,6 +7795,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_INTERCONNECT_PPIF_NEXT_SLICE_SELECTION.md` — records the `.724` no-behavior selector after AHB interconnect `.ppif` shipment and selects `.725`, aggregate AHB `.ahb` profile-alias contract selection.
 - `docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.725` no-behavior contract selection for `ppif/ahb_interconnect.ahb`, support identity `intent.ahb_profile_alias_interconnect`, generated aggregate review artifacts, and `.726` implementation owner.
 - `docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.726` shipped public `ppif/ahb_interconnect.ahb` aggregate profile alias, support accounting, residue removal, generated review artifacts, and validation.
+- `docs/IAL2_POST_AHB_INTERCONNECT_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.727` no-behavior selector after aggregate `.ahb` alias shipment and selects `.728`, bounded multi-subordinate AHB interconnect/decode readiness audit.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

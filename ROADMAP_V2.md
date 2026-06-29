@@ -6154,6 +6154,12 @@ records semantic root kind `top`, support-accounts the source as
 AHB interconnect/decode, optional signals, burst `SEQ`, byte-lane/narrow
 transfer, direct backend, verification-output, backend-language, AXI/APB, and
 VHDL behavior remain deferred.
+`.727` now selects `.728`, a no-behavior readiness audit for bounded
+multi-subordinate AHB interconnect/decode. The selector records the shipped
+six-entrypoint AHB surface, the remaining
+`ahb_multi_subordinate_decode_deferred` residue, the current singular parser
+and generator assumptions, and the temporary second-subordinate child
+fail-closed diagnostic. No behavior changes until a later owner is selected.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
