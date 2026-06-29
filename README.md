@@ -4790,8 +4790,10 @@ behavior remain deferred. `.689` selected documentation-only follow-on leaves
 AHB across user-friendly, more-control, and raw/full-control modes. `.690` now
 ships the user-facing IAL2 protocol/platform intent chapter scaffold, including
 the shared lowering/review-artifact rule, mode definitions, and AXI/APB/AHB
-navigation matrix. `.691` owns AXI tri-mode coverage, `.692` owns APB tri-mode
-coverage, and `.693` owns AHB current-state and future-boundary coverage.
+navigation matrix. `.691` now ships AXI tri-mode mdBook coverage with runnable
+checked-in guided, more-control, and raw/full-control examples. `.692` owns APB
+tri-mode coverage, and `.693` owns AHB current-state and future-boundary
+coverage.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7432,6 +7434,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_BEHAVIOR.md` — ships bounded APB sideband-aware data16 no-policy six-register generalized `reg0..regN` register-set multi-peripheral timing behavior.
 - `docs/IAL2_AXI_APB_AHB_TRIMODE_MDBOOK_COVERAGE_AUDIT.md` — selects the IAL2 AXI/APB/AHB tri-mode mdBook documentation coverage plan and follow-on leaves.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
+- `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

@@ -52,7 +52,7 @@ coverage as `.ppif`, a profile alias, or generated IAL1 behavior.
 
 Detailed protocol examples are split into separate follow-on chapters so the
 examples can be validated and kept current per protocol without making this
-map unreadable.
+map unreadable. AXI examples are in [AXI IAL2 Examples](16a-ial2-axi.md).
 
 ## Reviewing Generated Artifacts
 
