@@ -43,12 +43,12 @@ one place instead of collecting those compatibility field lists one by one.
 
 The `language_surface.file_surfaces` section advertises the shipped public
 file suffixes: `.fsm` as IAL0, `.isf` as IAL1, `.ppif` as the generic IAL2
-container, and the bounded profile aliases `.axi` and `.apb`. These IAL2
-surfaces lower through generated `.isf` before generated `.fsm` and publish
-their supported CLI modes, including `--emit-schedule-json`, `--check-json`,
-and `--emit-semantic-json`. Historical or future spellings `.pif`, `.ppi`,
-`.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, and `.i2s` remain outside the
-bounded public surface.
+container, and the bounded profile aliases `.axi`, `.apb`, and `.ahb`. These
+IAL2 surfaces lower through generated `.isf` before generated `.fsm` and
+publish their supported CLI modes, including `--emit-schedule-json`,
+`--check-json`, and `--emit-semantic-json`. Historical or future spellings
+`.pif`, `.ppi`, `.chi`, `.ace`, `.atb`, `.smbus`, and `.i2s` remain outside
+the bounded public surface.
 
 The same manifest boundary now describes the current IAL2 contract for any
 downstream consumer: bounded public `.ppif` covers one-channel Valid-Ready
@@ -58,7 +58,8 @@ sources, fixed one-requester/one-completer APB composition sources, and their
 selected busy-capable and status-capable APB variants. Bounded `.axi` aliases
 currently cover the selected AXI Valid-Ready surface, and bounded `.apb`
 aliases cover selected APB requester-transfer, completer, fixed composition,
-busy-capable APB sources, and busy-gated 2-bit status APB sources.
+busy-capable APB sources, and busy-gated 2-bit status APB sources. Bounded
+`.ahb` aliases currently cover the selected AHB requester surface.
 Support-accounted AXI manager coverage includes
 capacity/status, ID-family metadata, transaction envelopes and fan-in,
 concrete-ID assertions, bounded auto-ID lifecycle, same-ID reject and

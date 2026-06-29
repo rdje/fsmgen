@@ -10018,11 +10018,15 @@ APB public-surface/import-tree sync:
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.574` completes that no-behavior sync.
 `docs/BIN_FSMGEN_IMPORT_TREE.md` and the import-tree fact record the live
 `213` total / `212` reachable `FSM::...` `.pm` package closure with APB IAL2
-requester, completer, and fixed composition owners reachable. The mdBook
-language-surface and intent-scheduling chapters describe `.ppif` as the
-generic IAL2 container, `.axi` and `.apb` as bounded shipped profile aliases,
-and keep `.pif`, `.ppi`, `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, and `.i2s`
-unsupported. `.575` later selected the next exact IAL2 slice recorded below.
+requester, completer, and fixed composition owners reachable. At that time,
+the mdBook language-surface and intent-scheduling chapters described `.ppif`
+as the generic IAL2 container, `.axi` and `.apb` as bounded shipped profile
+aliases, and kept `.pif`, `.ppi`, `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`,
+and `.i2s` unsupported. Later `.700` shipped `.ahb` as the bounded AHB
+requester profile alias, so current public-surface summaries list `.ahb` with
+the shipped aliases and keep only `.pif`, `.ppi`, `.chi`, `.ace`, `.atb`,
+`.smbus`, and `.i2s` unsupported. `.575` later selected the next exact IAL2
+slice recorded below.
 
 Post APB public-surface sync selector:
 [IAL2_POST_APB_PUBLIC_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_PUBLIC_SYNC_NEXT_SLICE_SELECTION.md)
