@@ -63,7 +63,7 @@ path before reopening VHDL backend or VHDL rerouting work.
   Children continuation 10: `IAL2-FEATURE-COMPLETENESS-FRONTIER.634, IAL2-FEATURE-COMPLETENESS-FRONTIER.635, IAL2-FEATURE-COMPLETENESS-FRONTIER.636, IAL2-FEATURE-COMPLETENESS-FRONTIER.637, IAL2-FEATURE-COMPLETENESS-FRONTIER.638, IAL2-FEATURE-COMPLETENESS-FRONTIER.639, IAL2-FEATURE-COMPLETENESS-FRONTIER.640, IAL2-FEATURE-COMPLETENESS-FRONTIER.641, IAL2-FEATURE-COMPLETENESS-FRONTIER.642, IAL2-FEATURE-COMPLETENESS-FRONTIER.643, IAL2-FEATURE-COMPLETENESS-FRONTIER.644, IAL2-FEATURE-COMPLETENESS-FRONTIER.645, IAL2-FEATURE-COMPLETENESS-FRONTIER.646, IAL2-FEATURE-COMPLETENESS-FRONTIER.647, IAL2-FEATURE-COMPLETENESS-FRONTIER.648, IAL2-FEATURE-COMPLETENESS-FRONTIER.649, IAL2-FEATURE-COMPLETENESS-FRONTIER.650, IAL2-FEATURE-COMPLETENESS-FRONTIER.651, IAL2-FEATURE-COMPLETENESS-FRONTIER.652, IAL2-FEATURE-COMPLETENESS-FRONTIER.653, IAL2-FEATURE-COMPLETENESS-FRONTIER.654, IAL2-FEATURE-COMPLETENESS-FRONTIER.655, IAL2-FEATURE-COMPLETENESS-FRONTIER.656, IAL2-FEATURE-COMPLETENESS-FRONTIER.657, IAL2-FEATURE-COMPLETENESS-FRONTIER.658`
   Children continuation 11: `IAL2-FEATURE-COMPLETENESS-FRONTIER.659, IAL2-FEATURE-COMPLETENESS-FRONTIER.660, IAL2-FEATURE-COMPLETENESS-FRONTIER.661, IAL2-FEATURE-COMPLETENESS-FRONTIER.662, IAL2-FEATURE-COMPLETENESS-FRONTIER.663, IAL2-FEATURE-COMPLETENESS-FRONTIER.664, IAL2-FEATURE-COMPLETENESS-FRONTIER.665, IAL2-FEATURE-COMPLETENESS-FRONTIER.666, IAL2-FEATURE-COMPLETENESS-FRONTIER.667, IAL2-FEATURE-COMPLETENESS-FRONTIER.668, IAL2-FEATURE-COMPLETENESS-FRONTIER.669, IAL2-FEATURE-COMPLETENESS-FRONTIER.670, IAL2-FEATURE-COMPLETENESS-FRONTIER.671, IAL2-FEATURE-COMPLETENESS-FRONTIER.672, IAL2-FEATURE-COMPLETENESS-FRONTIER.673, IAL2-FEATURE-COMPLETENESS-FRONTIER.674, IAL2-FEATURE-COMPLETENESS-FRONTIER.675, IAL2-FEATURE-COMPLETENESS-FRONTIER.676, IAL2-FEATURE-COMPLETENESS-FRONTIER.677, IAL2-FEATURE-COMPLETENESS-FRONTIER.678, IAL2-FEATURE-COMPLETENESS-FRONTIER.679, IAL2-FEATURE-COMPLETENESS-FRONTIER.680`
 
-  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693, IAL2-FEATURE-COMPLETENESS-FRONTIER.694, IAL2-FEATURE-COMPLETENESS-FRONTIER.695, IAL2-FEATURE-COMPLETENESS-FRONTIER.696, IAL2-FEATURE-COMPLETENESS-FRONTIER.697`
+  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693, IAL2-FEATURE-COMPLETENESS-FRONTIER.694, IAL2-FEATURE-COMPLETENESS-FRONTIER.695, IAL2-FEATURE-COMPLETENESS-FRONTIER.696, IAL2-FEATURE-COMPLETENESS-FRONTIER.697, IAL2-FEATURE-COMPLETENESS-FRONTIER.698`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -4938,9 +4938,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.696: select AHB requester PPIF contract`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.697`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement the selected first AHB requester .ppif behavior slice.`
   Acceptance: `Read .696 contract selection, .695 readiness audit, .694 selector, IAL2 new-protocol workflow, AHB current-boundary docs/facts, decisions 0014-0018, fsm/amba_requester.fsm, bin/fsmgen PPIF/suffix/report handling, FSM::Adapter::IAL2::PPIF, ProtocolIntent patterns, RegressionCorpus, LanguageSurfaceSection, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. Implement only the selected generic ppif/ahb_requester.ppif surface with (profile ahb) and one (ahb-requester amba_requester ...) object, generated amba_requester.isf, generated amba_requester.fsm, HDL module amba_requester, report kind protocol_intent.ahb_requester, schema fsmgen.ial2.protocol_intent.ahb_requester.v1, diagnostics selected in .696, support-accounting entry intent.ppif_ahb_requester/source_kind ppif, runnable CLI examples, mdBook coverage, Knowledge Map facts, and focused validation. Preserve .ahb unsupported-alias behavior. Do not implement AHB completers/subordinates, AHB interconnect/decode, scoreboards, full AHB manager behavior, direct IAL2 lowering, direct backend behavior, verification-output generation, backend-language variants, AXI behavior, APB behavior, or VHDL behavior.`
+  Verification: `Implemented the selected bounded generic AHB requester .ppif path. Added ppif/ahb_requester.ppif, FSM::IAL2::ProtocolIntent::AhbRequester, parser dispatch/static diagnostics for exactly one (ahb-requester ...) under (profile ahb), generated amba_requester.isf before amba_requester.fsm, report schema fsmgen.ial2.protocol_intent.ahb_requester.v1, support-accounting entry intent.ppif_ahb_requester/source_kind ppif, LanguageSurfaceSection metadata, focused t/1473 coverage, behavior docs/fact card, mdBook AHB/IAL2 updates, README/ROADMAP/task-tree/Memory/Knowledge Map sync, and .ahb fail-closed coverage. The generated IAL1 uses ahb_request_done_q as an internal completion bit so public done remains ordinary status. Kept .ahb, AHB completers/subordinates, interconnect/decode, scoreboards, full-manager behavior, direct backend, verification-output, backend-language variants, AXI, APB, and VHDL deferred.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.697: implement AHB requester PPIF`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.698`
+  Status: `pending`
+  Goal: `Audit AHB .ahb profile-alias readiness after generic AHB requester .ppif shipped.`
+  Acceptance: `Read .697 behavior, .696 contract selection, AHB mdBook, PPIF parser/suffix handling, RegressionCorpus, LanguageSurfaceSection, CapabilityManifest if relevant, focused AHB test coverage, README, ROADMAP_V2, task tree, Memory, and Knowledge Map. Select the exact next owner for .ahb profile-alias work or a blocker/no-go with evidence. Do not accept .ahb, do not add .ahb support-accounting entries, do not change parser/generator behavior, do not add AHB completers/subordinates, interconnect/decode, scoreboards, full-manager behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, or VHDL behavior.`
   Verification: `pending`
   Commit: `pending`
 
@@ -5361,7 +5368,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 411 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.694` | `done` | Selected AHB IAL2 source-shape readiness as the next owner. |
 | 412 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.695` | `done` | Audited AHB IAL2 source-shape readiness. |
 | 413 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.696` | `done` | Selected the first AHB requester .ppif public contract. |
-| 414 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.697` | `pending` | Implement the selected first AHB requester .ppif behavior slice. |
+| 414 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.697` | `done` | Implemented the selected first AHB requester .ppif behavior slice. |
+| 415 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.698` | `pending` | Audit AHB .ahb profile-alias readiness after generic AHB requester .ppif shipped. |
 
 ## Decisions
 
@@ -12991,6 +12999,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.696` | docs/IAL2_AHB_REQUESTER_PPIF_PUBLIC_CONTRACT_SELECTION.md; docs/knowledge/ial2-ahb-requester-ppif-public-contract-selection.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/16c-ial2-ahb.md; docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md; docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md; docs/decisions/0016-ppif-is-first-public-ial2-container.md; docs/decisions/0017-ppif-valid-ready-bundle-contract.md; docs/decisions/0018-ial-contracts-are-backend-language-neutral.md; fsm/amba_requester.fsm; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/*.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; selected the first AHB requester .ppif public contract and .697 implementation owner. Fact-card reverify, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No parser, generator, public source, support-accounting, suffix, generated-artifact, HDL/runtime, AXI, APB, AHB behavior, backend-language, verification-output, direct-backend, or VHDL behavior changed. |
 
+| `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.697` | ppif/ahb_requester.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1473-ial2-ahb-requester.t; docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md; docs/knowledge/ial2-ahb-requester-ppif-behavior.md; docs/knowledge/ial2-ahb-requester-ppif-public-contract-selection.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/16c-ial2-ahb.md; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; shipped bounded AHB requester generic .ppif behavior with generated amba_requester.isf before generated amba_requester.fsm, HDL module amba_requester, report schema fsmgen.ial2.protocol_intent.ahb_requester.v1, and support accounting intent.ppif_ahb_requester/source_kind ppif. Preserved .ahb fail-closed behavior and deferred AHB completers/subordinates, interconnect/decode, scoreboards, full-manager behavior, direct backend, verification-output, backend-language variants, AXI, APB, and VHDL. Syntax checks, focused prove, direct check/schedule/semantic/outdir/HDL/.ahb probes, fact-card reverify, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. |
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -13651,8 +13661,23 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.694` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.694: select AHB IAL2 readiness audit` | Selected AHB IAL2 source-shape readiness as `.695` before any AHB source or behavior change. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.695` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.695: audit AHB IAL2 source-shape readiness` | Selected AHB requester `.ppif` public contract selection as `.696` before implementation. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.696` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.696: select AHB requester PPIF contract` | Selected the first AHB requester `.ppif` public contract and `.697` implementation owner. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.697` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.697: implement AHB requester PPIF` | Shipped the bounded AHB requester generic `.ppif` behavior and advanced the frontier to `.698` `.ahb` readiness audit. |
 
 ## Changelog
+
+- `2026-06-29`: Completed `.697`, shipping the bounded AHB requester generic
+  `.ppif` source at `ppif/ahb_requester.ppif`. The source uses `(profile ahb)`
+  and one `(ahb-requester amba_requester ...)` object, lowers through generated
+  `amba_requester.isf` before generated `amba_requester.fsm`, emits HDL module
+  `amba_requester`, reports `protocol_intent.ahb_requester` with schema
+  `fsmgen.ial2.protocol_intent.ahb_requester.v1`, and is support-accounted as
+  `intent.ppif_ahb_requester` with `source_kind ppif`. Added focused parser,
+  CLI, support-accounting, outdir, and `.ahb` fail-closed tests; updated
+  behavior docs, Knowledge Map facts, mdBook, README, ROADMAP, task tree, and
+  Memory. `.ahb`, AHB completers/subordinates, interconnect/decode,
+  scoreboards, full-manager behavior, direct backend, verification-output,
+  backend-language variants, AXI, APB, and VHDL remain deferred. `.698` now
+  owns a no-behavior AHB `.ahb` profile-alias readiness audit.
 
 - `2026-06-29`: Completed `.696`, selecting the first AHB requester generic
   `.ppif` public contract and `.697` as the bounded implementation owner. The

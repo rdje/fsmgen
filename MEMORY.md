@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.696: select AHB requester PPIF contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.697` is pending after `.696`; implement only the selected first AHB requester `.ppif` behavior surface.
-- recently_done: `.696` selected the exact AHB requester `.ppif` public contract and `.697` implementation owner; `.695` audited AHB IAL2 source-shape readiness; `.694` selected AHB IAL2 readiness.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.697: implement AHB requester PPIF`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.698` is pending after `.697`; perform a no-behavior AHB `.ahb` profile-alias readiness audit.
+- recently_done: `.697` shipped the bounded AHB requester generic `.ppif` source at `ppif/ahb_requester.ppif`, generated `amba_requester.isf` and `amba_requester.fsm`, support-accounted `intent.ppif_ahb_requester`, updated mdBook/docs/facts/tests, and kept `.ahb` unsupported; `.696` selected the contract; `.695` audited readiness.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan. During `.569`, broad `t/1436-ial2-ppif-parser-cli.t` attempts were not used as closeout: the APB-relevant focused tests and direct probes passed, but the broad run sat in an unrelated AXI subprocess/pipe wait after all visible subtests had passed. During `.634`, grouped RAM-guarded focused test attempts stopped before tests because host memory was already 96.3% against the 88% cutoff; direct focused tests passed.
-- next_action: Execute `.697`: implement the selected AHB requester `.ppif` parser/report/generator/sample/support/docs slice, keeping `.ahb`, AHB completers, interconnect/decode, scoreboards, direct backend, verification-output, backend-language variants, AXI, APB, and VHDL out of scope.
+- next_action: Execute `.698`: audit readiness for an AHB `.ahb` profile alias after generic AHB requester `.ppif` shipped, without accepting `.ahb` or changing parser/generator behavior.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

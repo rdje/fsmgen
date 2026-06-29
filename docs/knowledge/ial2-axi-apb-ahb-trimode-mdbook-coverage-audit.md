@@ -9,8 +9,8 @@ answers:
 date: 2026-06-29
 status: current
 tags: [ial2, axi, apb, ahb, mdbook, documentation, profile-alias, task-tree]
-evidence: docs/IAL2_AXI_APB_AHB_TRIMODE_MDBOOK_COVERAGE_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/SUMMARY.md; docs/book/src/14-feature-backlog.md; docs/book/src/15a-ial2-new-protocol-support.md; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm; perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm; perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm; fsm/amba_requester.fsm
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.689|16-ial2-protocol-platform-intent|16a-ial2-axi|16b-ial2-apb|16c-ial2-ahb|no `ppif/\*ahb\*`|unsupported_ial2_alias_suffix|protocol\.amba_requester|\.690|\.691|\.692|\.693' docs/IAL2_AXI_APB_AHB_TRIMODE_MDBOOK_COVERAGE_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md bin/fsmgen perl/FSM/Support/RegressionCorpus.pm fsm/amba_requester.fsm
+evidence: docs/IAL2_AXI_APB_AHB_TRIMODE_MDBOOK_COVERAGE_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/SUMMARY.md; docs/book/src/14-feature-backlog.md; docs/book/src/15a-ial2-new-protocol-support.md; docs/book/src/16c-ial2-ahb.md; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm; perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm; perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; ppif/ahb_requester.ppif; fsm/amba_requester.fsm
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.689|IAL2-FEATURE-COMPLETENESS-FRONTIER\.697|16-ial2-protocol-platform-intent|16a-ial2-axi|16b-ial2-apb|16c-ial2-ahb|ppif/ahb_requester\.ppif|intent\.ppif_ahb_requester|protocol\.amba_requester|source suffix.*\.ahb.*known IAL2 alias candidate' docs/IAL2_AXI_APB_AHB_TRIMODE_MDBOOK_COVERAGE_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/16c-ial2-ahb.md perl/FSM/Support/RegressionCorpus.pm ppif/ahb_requester.ppif fsm/amba_requester.fsm
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.689` selects a documentation-only
@@ -24,7 +24,8 @@ The selected mdBook targets are
 `.693` own the scaffold, AXI, APB, and AHB documentation slices.
 
 AXI and APB have shipped IAL2 `.ppif` examples, with selected `.axi` and
-`.apb` profile aliases. AHB currently has only the direct
-`fsm/amba_requester.fsm` support-accounted protocol seed; no AHB IAL2
-`.ppif` or `.ahb` behavior is shipped, and `.ahb` remains a known unsupported
-future alias suffix.
+`.apb` profile aliases. After the original `.689` documentation plan, `.697`
+shipped bounded AHB requester IAL2 coverage at `ppif/ahb_requester.ppif`
+alongside the direct `fsm/amba_requester.fsm` protocol seed. AHB `.ahb`
+behavior is still not shipped, and `.ahb` remains a known unsupported future
+alias suffix.

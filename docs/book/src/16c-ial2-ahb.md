@@ -1,48 +1,137 @@
-# AHB Current Boundary
+# AHB IAL2 Current Boundary
 
-AHB is not a shipped IAL2 protocol surface yet. FSMGen currently has a
-support-accounted direct `.fsm` AMBA requester seed:
+FSMGen ships one bounded AHB IAL2 source today:
+
+```text
+ppif/ahb_requester.ppif
+```
+
+That source is a generic `.ppif` Protocol/Platform Intent file with
+`(profile ahb)` and exactly one `(ahb-requester amba_requester ...)` object.
+It lowers through generated review artifacts before HDL:
+
+```text
+ppif/ahb_requester.ppif -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
+```
+
+FSMGen also keeps the older direct `.fsm` AMBA requester seed:
 
 ```text
 fsm/amba_requester.fsm
 ```
 
-That file is useful current AHB coverage and future IAL2 source material, but
-it is not a `.ppif` source, not a `.ahb` profile alias, and not generated from
-IAL2. Treat it as a direct IAL0 FSMGen fixture.
+The direct seed remains useful cycle-level coverage, but it is not IAL2 and
+does not produce generated `.isf` or generated `.fsm` review artifacts. The
+`.ahb` suffix remains a known future profile-alias candidate and is still
+unsupported.
 
 ## Mode Map
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | `fsm/amba_requester.fsm` | Direct `.fsm` AHB requester seed, support-accounted as `protocol.amba_requester`. |
-| More-control mode | The same direct `.fsm` seed | Requester knobs are authored directly as FSM signals and states, not as AHB IAL2 clauses. |
-| Raw/full-control mode | Not shipped for AHB IAL2 | `.ahb`, AHB `.ppif`, generated AHB `.isf`, generated AHB `.fsm`, AHB completers, AHB interconnect/decode, scoreboards, and full-manager behavior need future task-tree leaves. |
+| Guided mode | `ppif/ahb_requester.ppif` | Bounded AHB requester IAL2 source, support-accounted as `intent.ppif_ahb_requester`. |
+| More-control mode | `ppif/ahb_requester.ppif` plus direct `fsm/amba_requester.fsm` for cycle-level comparison | Selected requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. |
+| Raw/full-control mode | Direct `fsm/amba_requester.fsm` only | AHB completers/subordinates, interconnect/decode, scoreboards, full manager behavior, `.ahb`, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
-Unlike the AXI and APB chapters, this chapter does not describe runnable AHB
-IAL2 examples. There are none checked in today.
+## Guided PPIF Requester
 
-## Guided Direct FSM Seed
+Run the shipped IAL2 requester through the standard review path:
 
-The direct seed models a bounded AHB requester/master with one local command
-active at a time. Its source comments and state machine cover:
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ppif
+./bin/fsmgen --quiet --outdir generated/ial2-ahb-requester ppif/ahb_requester.ppif
+```
 
-- arbitration through `HBUSREQ` and `HGRANT`;
-- `SINGLE`, `INCR`, `INCR4`, `INCR8`, `INCR16`, `WRAP4`, `WRAP8`, and
-  `WRAP16` bursts;
-- `HTRANS=NONSEQ` for the first beat and `HTRANS=SEQ` for later beats;
-- wait states through `HREADY`;
-- `HRESP` handling for `OKAY`, `ERROR`, `RETRY`, and `SPLIT`;
-- local command inputs and status outputs.
+The strict check reports:
 
-Validate the direct seed with the normal `.fsm` path:
+```text
+entry_id: intent.ppif_ahb_requester
+source_kind: ppif
+coverage: ial2_ppif_ahb_requester_pipeline_cli
+module_name: amba_requester
+```
+
+The source starts with the public AHB requester shape:
+
+```text
+(protocol-platform-intent ahb_requester
+  (profile ahb)
+  (source
+    (object fsmgen-ahb-requester)
+    (anchor
+      (document FSMGEN-AHB-REQUESTER-CAPTURE-WORKSHEET)
+      (section bounded-requester)
+      (page stage-1)))
+  (ahb-requester amba_requester
+    (role requester)
+    (clock clk)
+    (reset (rst_n active_low async))
+    ...))
+```
+
+The generated AHB-side HDL ports include `HGRANT`, `HREADY`, `HRESP`,
+`HRDATA`, `HBUSREQ`, `HLOCK`, `HADDR`, `HTRANS`, `HWRITE`, `HSIZE`, `HBURST`,
+`HPROT`, and `HWDATA`. The local command/status ports include `cmd_valid`,
+`cmd_ready`, `cmd_write`, `cmd_addr`, `cmd_wdata`, `cmd_wdata_step`,
+`cmd_size`, `cmd_prot`, `cmd_lock`, `cmd_burst`, `cmd_len`, `busy`,
+`beat_done`, `done`, `burst_active`, `wrap_active`, `beat_index`,
+`beats_remaining`, `active_addr`, `active_hburst`, `last_error`,
+`last_retry`, `last_split`, `last_resp`, and `last_read_data`.
+
+The generated IAL1 requester uses an internal completion bit for transaction
+completion, so the public `done` status output remains an ordinary status
+drive:
+
+```text
+(storage
+  (var ahb_request_done_q (width 1) (reset 0)))
+...
+(complete ahb_request_done_q)
+```
+
+## Requester Clauses
+
+The first public AHB source intentionally models a bounded requester rather
+than a full AMBA manager. The accepted object is exactly one
+`(ahb-requester amba_requester ...)` under `(profile ahb)`.
+
+Required blocks:
+
+- `clock` and `reset`;
+- `local-command` for `cmd_*` request fields;
+- `local-status` for status outputs and last-response capture;
+- `bus` for AHB request/response signal bindings;
+- `burst` for the selected AHB burst encodings;
+- `transfer` for IDLE/NONSEQ/SEQ transfer behavior;
+- `response` for OKAY/ERROR/RETRY/SPLIT actions.
+
+Selected widths are fixed in this slice: 32-bit address/data, 3-bit AHB size
+and burst, 4-bit protection, 5-bit local length/index/count, and 2-bit transfer
+and response. Unsupported widths, missing required blocks, duplicate blocks,
+duplicate fields, unsupported fields, and non-AHB profiles fail closed.
+
+The selected transfer behavior is:
+
+- first accepted beat uses `HTRANS=NONSEQ`;
+- later accepted beats use `HTRANS=SEQ`;
+- transfer activity is gated by `HGRANT`;
+- response advancement is gated by `HREADY`;
+- `OKAY` advances or completes;
+- `ERROR` completes with error status;
+- `RETRY` and `SPLIT` keep the request active for re-request behavior.
+
+## Direct FSM Seed
+
+The direct seed remains available for the lower-level `.fsm` path:
 
 ```bash
 ./bin/fsmgen --quiet --strict --check --json fsm/amba_requester.fsm
 ./bin/fsmgen --quiet -o generated/amba_requester.sv fsm/amba_requester.fsm
 ```
 
-The strict check reports the support-accounting entry:
+It is support-accounted separately:
 
 ```text
 entry_id: protocol.amba_requester
@@ -51,66 +140,20 @@ coverage: direct_root_pipeline_cli
 module_name: amba_requester
 ```
 
-The generated HDL module is `amba_requester`. Its AHB-side ports include
-`HGRANT`, `HREADY`, `HRESP`, `HRDATA`, `HBUSREQ`, `HLOCK`, `HADDR`, `HTRANS`,
-`HWRITE`, `HSIZE`, `HBURST`, `HPROT`, and `HWDATA`. Its local command/status
-ports include `cmd_valid`, `cmd_ready`, `cmd_write`, `cmd_addr`, `cmd_wdata`,
-`cmd_wdata_step`, `cmd_size`, `cmd_prot`, `cmd_lock`, `cmd_burst`, `cmd_len`,
-`busy`, `beat_done`, `done`, `burst_active`, `wrap_active`, `beat_index`,
-`beats_remaining`, `active_addr`, `active_hburst`, `last_error`,
-`last_retry`, `last_split`, `last_resp`, and `last_read_data`.
-
-Because this is already a `.fsm` source, there is no generated IAL1 `.isf`
-review artifact and no generated IAL0 `.fsm` review artifact. The authored
-`.fsm` file itself is the reviewable cycle-level source.
-
-## More-Control Direct-FSM Details
-
-The current requester knobs are direct FSM ports and storage, not protocol
-intent clauses:
-
-- `cmd_burst` selects fixed, incrementing, or wrapping burst families;
-- `cmd_len` supplies the bounded length for incrementing bursts;
-- `cmd_size` selects the address step from byte through 128-byte beats;
-- `cmd_prot`, `cmd_lock`, `cmd_write`, `cmd_addr`, `cmd_wdata`, and
-  `cmd_wdata_step` drive the bus-side request fields;
-- wrap bursts compute local wrap span, base, and high-address state before
-  transfer;
-- `HREADY` stalls the transfer state until a beat is accepted;
-- `HRESP` records `last_error`, `last_retry`, `last_split`, and `last_resp`;
-- read transfers capture `HRDATA` into `last_read_data`.
-
-This is meaningful AHB coverage, but it is still direct FSMGen coverage. It
-does not provide an AHB IAL2 report schema, AHB source anchors, AHB generated
-artifact metadata, AHB profile-alias support accounting, or AHB IAL2 static
-diagnostics.
-
-## Selected Future PPIF Contract
-
-The first future AHB IAL2 source contract is selected but not implemented. It
-will be a generic `.ppif` source named `ppif/ahb_requester.ppif`, with
-`(profile ahb)` and exactly one `(ahb-requester amba_requester ...)` object.
-
-The selected object vocabulary mirrors the current bounded direct requester:
-clock/reset, local-command, local-status, AHB bus, burst, transfer, and
-response clauses. The selected generated review artifacts are
-`amba_requester.isf` and `amba_requester.fsm`, and the selected HDL module is
-`amba_requester`.
-
-Do not run that future `.ppif` shape as a current example yet. The current CLI
-does not accept `ahb-requester` IAL2 sources until a later implementation
-slice adds parser, generator, report, support-accounting, diagnostics, and
-checked-in sample coverage.
+Use the direct seed when you need to inspect or modify explicit cycle-level
+state transitions. Use `ppif/ahb_requester.ppif` when you need the public IAL2
+source identity, source anchors, generated `.isf` review artifact, generated
+`.fsm` review artifact, AHB report schema, and IAL2 diagnostics.
 
 ## Unsupported `.ahb` Boundary
 
 The `.ahb` suffix is known to the CLI as a future IAL2 alias candidate, but it
-is not accepted today. A temporary copy of the direct seed with a `.ahb`
-extension fails closed:
+is not accepted today. A temporary copy of the AHB `.ppif` source with a
+`.ahb` extension fails closed:
 
 ```bash
-cp fsm/amba_requester.fsm /tmp/fsmgen-doc-ahb-693.ahb
-./bin/fsmgen --quiet --strict --check --json /tmp/fsmgen-doc-ahb-693.ahb
+cp ppif/ahb_requester.ppif /tmp/fsmgen-doc-ahb.ahb
+./bin/fsmgen --quiet --strict --check --json /tmp/fsmgen-doc-ahb.ahb
 ```
 
 The expected diagnostic is:
@@ -119,42 +162,17 @@ The expected diagnostic is:
 source suffix '.ahb' is a known IAL2 alias candidate but is not supported in this slice
 ```
 
-That failure is the current public boundary. Do not rename the direct `.fsm`
-fixture to `.ahb` and treat it as an IAL2 source.
-
-## Future IAL2 Task-Tree Prerequisites
-
-AHB IAL2 guided mode has selected its first requester `.ppif` contract, but
-the source is not implemented or checked in yet. The next implementation owner
-has to add parser/generator behavior, generated `.isf` artifact shape,
-generated `.fsm` artifact shape, report schema, support-accounting identity,
-diagnostics, runnable examples, and validation gates before AHB IAL2 becomes
-shipped behavior.
-
-AHB IAL2 more-control mode needs task-tree owners for mapping the direct seed's
-requester controls into explicit IAL2 clauses. Those owners must settle burst,
-size, protection, lock, arbitration, wait-state, response, retry/split,
-status, and wrap-address behavior without bypassing generated review artifacts.
-
-AHB IAL2 raw/full-control mode needs later owners for any subordinate/completer
-shape, interconnect/decode or arbitration behavior, scoreboards, broader
-manager behavior, protocol matrices, verification-output generation, direct
-backend behavior, backend-language variants, and VHDL.
+Do not rename the `.ppif` fixture to `.ahb` and treat it as a profile alias.
 
 ## Residue
 
-The following are not shipped by the current AHB surface:
+The following are not shipped by the current AHB IAL2 surface:
 
-- `ppif/*ahb*` examples;
 - `.ahb` profile aliases;
-- `FSM::IAL2::ProtocolIntent::Ahb*` implementation modules;
-- generated AHB `.isf` review artifacts;
-- generated AHB `.fsm` review artifacts;
-- AHB IAL2 check, schedule, or semantic JSON report families;
 - AHB completer/subordinate generation;
 - AHB interconnect/decode generation;
 - AHB scoreboards;
-- full AHB manager behavior;
+- full AHB manager behavior beyond the bounded requester;
 - direct IAL2-to-IAL0 or IAL2-to-HDL lowering;
 - verification-output generation;
 - backend-language variants;
@@ -162,15 +180,19 @@ The following are not shipped by the current AHB surface:
 
 ## Validation Used For This Chapter
 
-This chapter was validated from checked-in and temporary boundary sources with:
+This chapter was validated with:
 
 ```bash
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ppif
+./bin/fsmgen --quiet --outdir /tmp/fsmgen-697-ahb-out ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --strict --check --json fsm/amba_requester.fsm
-./bin/fsmgen --quiet -o /tmp/fsmgen-693-amba-requester.sv fsm/amba_requester.fsm
-cp fsm/amba_requester.fsm /tmp/fsmgen-693-amba-requester.ahb
-./bin/fsmgen --quiet --strict --check --json /tmp/fsmgen-693-amba-requester.ahb
+cp ppif/ahb_requester.ppif /tmp/fsmgen-697-ahb.ahb
+./bin/fsmgen --quiet --strict --check --json /tmp/fsmgen-697-ahb.ahb
 ```
 
-The first two probes passed for the direct `.fsm` seed. The `.ahb` probe failed
-closed with the known unsupported IAL2 alias diagnostic, which is the expected
-boundary for this slice.
+The `.ppif` probes passed and generated `amba_requester.isf`,
+`amba_requester.fsm`, and HDL module `amba_requester`. The direct `.fsm` seed
+also passed. The `.ahb` probe failed closed with the known unsupported IAL2
+alias diagnostic, which remains the expected boundary.

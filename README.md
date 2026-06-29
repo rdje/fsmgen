@@ -4803,6 +4803,17 @@ before any AHB `.ppif` or `.ahb` contract selection or implementation.
 AHB implementation and `.ahb` alias support remain deferred.
 `.696` now selects the exact first generic `.ppif` AHB requester public
 contract and `.697` as its implementation owner; no AHB behavior ships yet.
+`.697` now ships the bounded AHB requester IAL2 `.ppif` surface at
+`ppif/ahb_requester.ppif`. The new source uses `(profile ahb)` and one
+`(ahb-requester amba_requester ...)` object, lowers through generated
+`amba_requester.isf` before generated `amba_requester.fsm`, emits HDL module
+`amba_requester`, reports `protocol_intent.ahb_requester` with schema
+`fsmgen.ial2.protocol_intent.ahb_requester.v1`, and is support-accounted as
+`intent.ppif_ahb_requester` with `source_kind ppif`. `.ahb` remains
+unsupported; AHB completers/subordinates, interconnect/decode, scoreboards,
+full-manager behavior, direct backend, verification-output, backend-language
+variants, AXI, APB, and VHDL remain deferred. `.698` now owns the next
+no-behavior AHB `.ahb` profile-alias readiness audit.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7445,10 +7456,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_TRIMODE_MDBOOK_NEXT_SLICE_SELECTION.md` — selects the AHB IAL2 source-shape readiness audit after tri-mode mdBook coverage completed.
 - `docs/IAL2_AHB_SOURCE_SHAPE_READINESS_AUDIT.md` — selects AHB requester `.ppif` public contract selection before any AHB implementation or `.ahb` alias support.
 - `docs/IAL2_AHB_REQUESTER_PPIF_PUBLIC_CONTRACT_SELECTION.md` — selects the first AHB requester generic `.ppif` public contract and the follow-on implementation owner.
+- `docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md` — documents the shipped bounded AHB requester generic `.ppif` behavior, generated `.isf`/`.fsm` review artifacts, support accounting, diagnostics, validation, and remaining `.ahb`/broader-AHB residue.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
-- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB current-boundary chapter covering direct `fsm/amba_requester.fsm` support, unsupported `.ahb` IAL2 alias status, and future AHB IAL2 prerequisites.
+- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped `ppif/ahb_requester.ppif` support, direct `fsm/amba_requester.fsm` support, unsupported `.ahb` IAL2 alias status, and broader AHB residue.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

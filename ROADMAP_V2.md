@@ -5830,6 +5830,17 @@ before any AHB `.ppif` or `.ahb` contract selection or implementation.
 AHB implementation and `.ahb` alias support remain deferred.
 `.696` now selects the exact first generic `.ppif` AHB requester public
 contract and `.697` as its implementation owner; no AHB behavior ships yet.
+`.697` now ships the bounded AHB requester IAL2 `.ppif` surface at
+`ppif/ahb_requester.ppif`. The source uses `(profile ahb)` and one
+`(ahb-requester amba_requester ...)` object, lowers through generated
+`amba_requester.isf` before generated `amba_requester.fsm`, emits HDL module
+`amba_requester`, reports `protocol_intent.ahb_requester` with schema
+`fsmgen.ial2.protocol_intent.ahb_requester.v1`, and is support-accounted as
+`intent.ppif_ahb_requester` with `source_kind ppif`. `.ahb` remains
+unsupported; AHB completers/subordinates, interconnect/decode, scoreboards,
+full-manager behavior, direct backend, verification-output, backend-language
+variants, AXI, APB, and VHDL remain deferred. `.698` now owns the next
+no-behavior AHB `.ahb` profile-alias readiness audit.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
