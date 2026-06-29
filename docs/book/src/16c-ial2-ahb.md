@@ -1,22 +1,27 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships two public bounded AHB IAL2 entrypoints today:
+FSMGen ships three public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
+ppif/ahb_lite_subordinate.ppif
 ppif/ahb_requester.ahb
 ```
 
-The `.ppif` source is the generic Protocol/Platform Intent file. The `.ahb`
+The `.ppif` sources are generic Protocol/Platform Intent files. The `.ahb`
 source is the bounded AHB requester profile alias over the same IAL2 model. It
 uses the same `protocol-platform-intent` form, keeps explicit `(profile ahb)`,
-and supports exactly one `(ahb-requester amba_requester ...)` object.
+and supports exactly one `(ahb-requester amba_requester ...)` object. AHB
+subordinate behavior is currently exposed through generic `.ppif`, not through
+the `.ahb` alias.
 
-Both public IAL2 sources lower through generated review artifacts before HDL:
+All public AHB IAL2 sources lower through generated review artifacts before
+HDL:
 
 ```text
-ppif/ahb_requester.ppif -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
-ppif/ahb_requester.ahb  -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
+ppif/ahb_requester.ppif          -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
+ppif/ahb_requester.ahb           -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
+ppif/ahb_lite_subordinate.ppif   -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
 ```
 
 FSMGen also keeps direct lower-layer `.fsm` seeds:
@@ -33,9 +38,9 @@ and do not produce generated `.isf` or generated `.fsm` review artifacts.
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | `ppif/ahb_requester.ppif` or `ppif/ahb_requester.ahb` | Bounded AHB requester IAL2 source. The `.ppif` entry is support-accounted as `intent.ppif_ahb_requester`; the `.ahb` alias is support-accounted as `intent.ahb_profile_alias_requester`. |
-| More-control mode | The same bounded requester sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Selected requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. The subordinate seed is lower-layer/direct only. |
-| Raw/full-control mode | Direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` | IAL2 AHB completer/subordinate generation, interconnect/decode, scoreboards, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, or `ppif/ahb_requester.ahb` | Bounded AHB requester and bounded AHB-Lite/common-AHB subordinate IAL2 sources. |
+| More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs are exposed as `control`, `bus`, one-register `storage`, and `transfer` clauses. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, AHB subordinate `.ahb` alias exposure, AHB interconnect/decode, optional signals, burst continuation, byte-lane/narrow-transfer behavior, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -56,6 +61,41 @@ source_kind: ppif
 coverage: ial2_ppif_ahb_requester_pipeline_cli
 module_name: amba_requester
 ```
+
+## Guided PPIF Subordinate
+
+Run the shipped generic IAL2 subordinate through the same review path:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_lite_subordinate.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_lite_subordinate.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_lite_subordinate.ppif
+./bin/fsmgen --quiet --outdir generated/ial2-ahb-subordinate ppif/ahb_lite_subordinate.ppif
+```
+
+The strict check reports:
+
+```text
+entry_id: intent.ppif_ahb_lite_subordinate
+source_kind: ppif
+coverage: ial2_ppif_ahb_lite_subordinate_pipeline_cli
+module_name: ahb_lite_subordinate
+```
+
+The schedule/report JSON uses schema
+`fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, reports target object
+`ahb-subordinate`, exposes generated `ahb_lite_subordinate.isf` before
+`ahb_lite_subordinate.fsm`, and records output reset/default policy:
+
+```text
+HREADYOUT: reset 1, default 1
+HRESP:     reset 0, default 0
+HRDATA:    reset 0, default 0
+```
+
+The generated `.isf` keeps those values as actor-level output metadata, and
+the generated `.fsm` keeps them as `+size` reset metadata plus idle output
+assignments.
 
 ## AHB Profile Alias
 
@@ -84,7 +124,7 @@ and exposes generated `amba_requester.isf` before `amba_requester.fsm`.
 
 ## Requester Source Shape
 
-Both public IAL2 sources start with the same selected AHB requester shape:
+The public requester sources start with the selected AHB requester shape:
 
 ```text
 (protocol-platform-intent ahb_requester
@@ -124,8 +164,8 @@ drive:
 
 ## Requester Clauses
 
-The first public AHB source intentionally models a bounded requester rather
-than a full AMBA manager. The accepted object is exactly one
+The public requester intentionally models a bounded requester rather than a
+full AMBA manager. The accepted object is exactly one
 `(ahb-requester amba_requester ...)` under `(profile ahb)`.
 
 Required blocks:
@@ -143,7 +183,7 @@ and burst, 4-bit protection, 5-bit local length/index/count, and 2-bit transfer
 and response. Unsupported widths, missing required blocks, duplicate blocks,
 duplicate fields, unsupported fields, and non-AHB profiles fail closed.
 
-The selected transfer behavior is:
+The selected requester transfer behavior is:
 
 - first accepted beat uses `HTRANS=NONSEQ`;
 - later accepted beats use `HTRANS=SEQ`;
@@ -153,6 +193,77 @@ The selected transfer behavior is:
 - `ERROR` completes with error status;
 - `RETRY` and `SPLIT` keep the request active for re-request behavior.
 
+## Subordinate Source Shape
+
+The public subordinate source starts with the selected AHB-Lite/common-AHB
+single-register shape:
+
+```text
+(protocol-platform-intent ahb_lite_subordinate
+  (profile ahb)
+  (source
+    (object fsmgen-ahb-lite-subordinate)
+    (anchor
+      (document ARM-AMBA-AHB-IHI0033-C-2021-09)
+      (section bounded-ahb-lite-subordinate)
+      (page first-public-contract)))
+  (ahb-subordinate ahb_lite_subordinate
+    (role subordinate)
+    (clock clk)
+    (reset (rst_n active_low async))
+    ...))
+```
+
+The generated HDL ports are `HSEL`, `HREADY`, `HADDR`, `HTRANS`, `HWRITE`,
+`HSIZE`, `HWDATA`, fixture-local `wait_cycles`, `HREADYOUT`, one-bit `HRESP`,
+and `HRDATA`.
+
+Required blocks:
+
+- `clock` and `reset`;
+- `control` with `(wait-cycles wait_cycles width 4)`;
+- `bus` with the selected AHB-Lite/common-AHB signal bindings;
+- `storage` with exactly one register at address `0`;
+- `transfer` with selected encodings and response policy.
+
+Selected subordinate widths are fixed in this slice: 32-bit address/write-data
+/read-data/register data, 2-bit `HTRANS`, 3-bit `HSIZE`, 4-bit `wait_cycles`,
+and one-bit `HRESP`. Unsupported widths, missing required blocks, duplicate
+blocks, duplicate names, unsupported fields, and non-AHB profiles fail closed.
+
+## Subordinate Behavior
+
+The selected subordinate transaction begins only when `HSEL && HREADY` and
+`HTRANS` is `NONSEQ` or `SEQ`. `IDLE` and `BUSY` are ignored by not starting
+the transaction; the idle/default outputs remain:
+
+```text
+HREADYOUT = 1
+HRESP     = 0
+HRDATA    = 0
+```
+
+For accepted transfers, the generated `.isf` samples `HADDR`, `HWRITE`,
+`HSIZE`, `HTRANS`, and `wait_cycles`, drives the data phase pending state with
+`HREADYOUT=0`, waits the sampled count, then resolves the transfer:
+
+- `NONSEQ`, word size, address `0`, and `HWRITE=1` writes `reg_data_q` from
+  `HWDATA` and completes with OKAY;
+- `NONSEQ`, word size, address `0`, and `HWRITE=0` drives `HRDATA` from
+  `reg_data_q` and completes with OKAY;
+- `SEQ` is treated as unsupported burst continuation and returns ERROR;
+- unsupported sizes return ERROR;
+- unmapped addresses return ERROR.
+
+ERROR completion is the selected source-backed two-cycle policy:
+
+```text
+cycle 1: HREADYOUT = 0, HRESP = 1, HRDATA = 0
+cycle 2: HREADYOUT = 1, HRESP = 1, HRDATA = 0
+```
+
+The generated behavior performs no write update on ERROR.
+
 ## Alias Diagnostics
 
 `.ahb` is accepted only as the bounded AHB requester profile alias:
@@ -160,7 +271,7 @@ The selected transfer behavior is:
 - missing `(profile ...)` is rejected;
 - any profile other than `ahb` is rejected as a suffix/profile mismatch;
 - any object other than exactly one `(ahb-requester amba_requester ...)` is
-  rejected for this slice;
+  rejected for this slice, including `(ahb-subordinate ...)`;
 - malformed AHB requester fields still use the same requester diagnostics as
   the `.ppif` source.
 
@@ -186,8 +297,7 @@ coverage: direct_root_pipeline_cli
 module_name: amba_requester
 ```
 
-The direct subordinate seed is a bounded AHB-Lite/common-AHB single-register
-fixture:
+The direct subordinate seed remains available for cycle-level comparison:
 
 ```bash
 ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm
@@ -203,24 +313,23 @@ coverage: direct_root_pipeline_cli
 module_name: ahb_lite_subordinate
 ```
 
-The subordinate seed accepts selected `NONSEQ` word reads/writes to
-`32'h00000000`, ignores `IDLE` and `BUSY` with zero-wait OKAY, inserts bounded
-data-phase wait states through `wait_cycles`, and reports unsupported `SEQ`,
-unsupported sizes, and unmapped addresses with the source-backed two-cycle
-ERROR response. It uses a one-bit AHB-Lite `HRESP` OKAY/ERROR boundary.
-
-Use the direct seeds when you need to inspect or modify explicit cycle-level
-state transitions. Use `ppif/ahb_requester.ppif` or `ppif/ahb_requester.ahb`
-when you need the public IAL2 requester source identity, source anchors,
-generated `.isf` review artifact, generated `.fsm` review artifact, AHB report
-schema, and IAL2 diagnostics.
+Use the direct seeds when you need to inspect explicit cycle-level state
+transitions. Use the public IAL2 sources when you need source identity, source
+anchors, generated `.isf` review artifacts, generated `.fsm` review artifacts,
+protocol-intent reports, support accounting, and IAL2 diagnostics.
 
 ## Residue
 
 The following are not shipped by the current AHB IAL2 surface:
 
-- AHB completer/subordinate generation;
+- `.ahb` profile-alias exposure for AHB subordinate behavior;
+- AHB completer behavior;
 - AHB interconnect/decode generation;
+- optional/property-gated AHB signals such as `HBURST`, `HPROT`, `HMASTLOCK`,
+  and AHB5 additions on the subordinate side;
+- burst `SEQ` continuation support in the subordinate;
+- byte-lane and narrow-transfer behavior;
+- legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;
 - direct IAL2-to-IAL0 or IAL2-to-HDL lowering;
@@ -228,65 +337,11 @@ The following are not shipped by the current AHB IAL2 surface:
 - backend-language variants;
 - VHDL behavior.
 
-The `.ppif` report keeps its historical `.ahb` profile-alias residue for the
-generic `.ppif` source. The shipped `.ahb` alias removes that stale residue
-from alias reports while keeping the broader AHB residue above.
-
-The current AHB subordinate work has selected a public IAL2 contract but has
-not shipped parser or generator behavior for it yet.
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.705` recorded that no AHB/AHB-Lite source
-reference artifact was available, `.706` imported the user-approved Arm AMBA
-AHB Protocol Specification PDF under `docs/vendor/arm/amba/ahb/`, `.707`
-extracted the first source-backed subordinate fact inventory, and `.708`
-selected the first direct seed contract. `.709` now ships that direct fixture
-as `fsm/ahb_lite_subordinate.fsm`, module `ahb_lite_subordinate`, with
-support-accounting identity `protocol.ahb_lite_subordinate`.
-
-That fixture is a bounded AHB-Lite/common-AHB single-register subordinate. Its
-selected port set is `HSEL`, `HADDR`, `HTRANS`, `HWRITE`,
-`HSIZE`, `HREADY`, `HWDATA`, fixture-local `wait_cycles`, `HREADYOUT`,
-one-bit `HRESP`, and `HRDATA`. The shipped behavior accepts `NONSEQ` word
-reads/writes to `32'h00000000`, ignores `IDLE` and `BUSY` with zero-wait
-OKAY, uses bounded data-phase wait states, and reports unsupported `SEQ`,
-unsupported sizes, and unmapped addresses through the source-backed two-cycle
-ERROR response. IAL2 AHB completer/subordinate source, parser, generator,
-support-accounting, and manifest behavior still remain deferred.
-`.710` audits post-seed readiness and selects `.711`, public IAL2 AHB
-subordinate/completer contract selection, before any such behavior changes.
-`.711` then selects the future generic `.ppif` subordinate source:
-
-```text
-ppif/ahb_lite_subordinate.ppif
-(ahb-subordinate ahb_lite_subordinate ...)
-ahb_lite_subordinate.isf
-ahb_lite_subordinate.fsm
-fsmgen.ial2.protocol_intent.ahb_subordinate.v1
-intent.ppif_ahb_lite_subordinate
-```
-
-That selected source will mirror the direct seed's bounded
-AHB-Lite/common-AHB behavior: one subordinate endpoint, `HSEL && HREADY`
-address/control acceptance, ignored `IDLE`/`BUSY`, selected `NONSEQ` word
-transfers, one 32-bit register at address `0`, bounded `wait_cycles`, one-bit
-OKAY/ERROR `HRESP`, and two-cycle ERROR for unsupported `SEQ`, unsupported
-sizes, or unmapped addresses. The `.ahb` subordinate alias, AHB
-interconnect/decode, burst `SEQ` support, optional AHB signals, byte-lane
-behavior, legacy two-bit `HRESP`, direct backend behavior,
-verification-output generation, backend-language variants, AXI, APB, and VHDL
-remain deferred.
-
-`.712` audits the generated-IAL1/IAL0/SV substrate for that selected
-subordinate contract. The generated path can model the core transaction flow,
-but direct implementation remains deferred because reset/idle output behavior
-must be reviewable in generated artifacts first. In particular, the selected
-contract needs `HREADYOUT=1`, `HRESP=0`, and `HRDATA=0` at reset/idle.
-
-The current owned implementation leaf is `.715`, selected public IAL2 AHB
-subordinate `.ppif` behavior over the shipped generated-IAL1 output
-default/reset substrate. `.714` proved the substrate with parser metadata,
-generated `.fsm` reset/default review output, and strict SystemVerilog output
-reset/default coverage. Public AHB subordinate `.ppif` behavior remains
-deferred until `.715` ships it.
+The generic AHB requester `.ppif` report keeps historical `.ahb`
+profile-alias residue. The shipped requester `.ahb` alias removes that stale
+residue from alias reports. The subordinate `.ppif` report keeps a separate
+`ahb_subordinate_profile_alias_deferred` residue because subordinate `.ahb`
+alias exposure remains future work.
 
 ## Validation Used For This Chapter
 
@@ -295,30 +350,25 @@ This chapter was validated with:
 ```bash
 prove -v t/1473-ial2-ahb-requester.t
 prove -v t/1474-ial2-ahb-profile-alias.t
+prove -v t/1475-ial2-ahb-subordinate.t
+prove -v t/1476-isf-output-default-reset.t
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ahb
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ahb
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ahb
-./bin/fsmgen --quiet --outdir /tmp/fsmgen-700-ahb-alias-out ppif/ahb_requester.ahb
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_lite_subordinate.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_lite_subordinate.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_lite_subordinate.ppif
 ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm
-./bin/fsmgen --quiet --output /tmp/fsmgen_ahb_lite_subordinate.sv fsm/ahb_lite_subordinate.fsm
-rg -n "size_q_eq|size_q_ne|HRESP <- 1|HREADYOUT <- 1|reg_data_q <- HWDATA|HTRANS == 2'b1" /tmp/fsmgen_ahb_lite_subordinate.sv
-rg -n "ppif/ahb_lite_subordinate\\.ppif|ahb-subordinate|intent\\.ppif_ahb_lite_subordinate|HREADYOUT|output default" docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md docs/book/src/16c-ial2-ahb.md
-prove -v t/1476-isf-output-default-reset.t
 ```
 
-The `.ppif` and `.ahb` probes passed and generated `amba_requester.isf`,
-`amba_requester.fsm`, and HDL module `amba_requester`. The `.ahb` checks also
-confirmed profile-alias support accounting and authored alias source identity.
-The direct subordinate strict check passed as
-`protocol.ahb_lite_subordinate`, and the generated HDL inspection confirmed
-the selected transfer, word-size, write-update, and two-cycle ERROR response
-paths.
-The generated-substrate audit confirmed core AHB subordinate transaction
-representability, while routing generated-IAL1 output default/reset semantics
-to a smaller owned substrate before public subordinate behavior ships. The
-follow-on contract selector chose `(reset VALUE)` and `(default VALUE)` output
-metadata, and `.714` shipped parser/lowering/strict-HDL coverage for that
-substrate. Public subordinate behavior is now owned by `.715`.
+The requester `.ppif` and `.ahb` probes passed and generated
+`amba_requester.isf`, `amba_requester.fsm`, and HDL module `amba_requester`.
+The subordinate `.ppif` probes passed and generated
+`ahb_lite_subordinate.isf`, `ahb_lite_subordinate.fsm`, and HDL module
+`ahb_lite_subordinate`. The generated subordinate artifacts preserve
+`HREADYOUT`/`HRESP`/`HRDATA` reset/default metadata, selected register read
+and write behavior, unsupported `SEQ` routing, unsupported size/address
+ERROR routing, and support accounting as `intent.ppif_ahb_lite_subordinate`.

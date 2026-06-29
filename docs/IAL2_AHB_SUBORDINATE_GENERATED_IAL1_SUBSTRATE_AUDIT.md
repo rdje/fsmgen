@@ -44,6 +44,11 @@ implementation owner. The output default/reset blocker recorded by this audit
 is closed for the selected non-negative integer literal, resolved-width
 surface; broader type-aware and symbolic values remain deferred.
 
+Later status: `.715` shipped the selected public
+`ppif/ahb_lite_subordinate.ppif` behavior through generated
+`ahb_lite_subordinate.isf` before generated `ahb_lite_subordinate.fsm`. See
+[IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR](IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md).
+
 No parser behavior, generator behavior, public source sample,
 support-accounting catalog behavior, capability-manifest behavior, test
 behavior, schedule/check/semantic JSON behavior, generated tracked artifact,

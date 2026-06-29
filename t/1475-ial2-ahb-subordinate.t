@@ -1,0 +1,234 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
+use File::Temp qw(tempdir);
+use FindBin;
+use IPC::Cmd qw(run);
+use JSON::PP qw(decode_json);
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use FSM::Adapter::IAL2::PPIF;
+
+subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
+    ok(-f sample_ahb_subordinate_ppif_path(), 'tracked runnable AHB subordinate PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_ahb_subordinate_ppif_path());
+
+    is($result->{layer}, 'IAL2', 'AHB subordinate adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.ahb_subordinate', 'adapter returns the AHB subordinate kind');
+    is($result->{mode}, 'subordinate', 'AHB subordinate mode is explicit');
+    is($result->{report}{schema}, 'fsmgen.ial2.protocol_intent.ahb_subordinate.v1', 'AHB subordinate report schema is selected');
+    is($result->{report}{source_object}{id}, 'fsmgen-ahb-lite-subordinate', 'AHB subordinate source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'ahb_lite_subordinate', 'AHB subordinate source intent name is preserved');
+    is($result->{report}{target_protocol}{profile}, 'ahb', 'AHB subordinate report carries the AHB profile');
+    is($result->{report}{target_protocol}{object}, 'ahb-subordinate', 'AHB subordinate report carries the AHB subordinate object');
+    is($result->{report}{target_protocol}{role}, 'subordinate', 'AHB subordinate report carries the subordinate role');
+    is($result->{report}{target_protocol}{transfer}, 'ahb_lite_access', 'AHB subordinate report names the selected transfer');
+    is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'AHB subordinate lowering goes through generated IAL1 before IAL0');
+
+    my $isf = $result->{generated_ial1}{text};
+    is($result->{generated_ial1}{name}, 'ahb_lite_subordinate.isf', 'AHB subordinate exposes generated IAL1 artifact');
+    like($isf, qr/\A\(actor ahb_lite_subordinate\b/, 'generated AHB subordinate IAL1 is .isf text');
+    like($isf, qr/\(input HSEL\)/, 'generated AHB subordinate IAL1 declares HSEL');
+    like($isf, qr/\(input HREADY\)/, 'generated AHB subordinate IAL1 declares HREADY');
+    like($isf, qr/\(input HADDR \(width 32\)\)/, 'generated AHB subordinate IAL1 declares HADDR');
+    like($isf, qr/\(input HTRANS \(width 2\)\)/, 'generated AHB subordinate IAL1 declares HTRANS');
+    like($isf, qr/\(output HREADYOUT \(reset 1\) \(default 1\)\)/, 'generated AHB subordinate IAL1 records HREADYOUT reset/default');
+    like($isf, qr/\(output HRESP \(reset 0\) \(default 0\)\)/, 'generated AHB subordinate IAL1 records HRESP reset/default');
+    like($isf, qr/\(output HRDATA \(width 32\) \(reset 0\) \(default 0\)\)/, 'generated AHB subordinate IAL1 records HRDATA reset/default');
+    like($isf, qr/\(when \(& HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated AHB subordinate IAL1 gates access on selected active transfers');
+    like($isf, qr/\(wait wait_n\)/, 'generated AHB subordinate IAL1 uses sampled wait cycles');
+    like($isf, qr/\(when \(== trans_q 2'b11\)\s+\(drive error_first\)\s+\(drive error_complete\)\)/s, 'generated AHB subordinate IAL1 routes SEQ to two-cycle ERROR');
+    like($isf, qr/\(set reg_data_q HWDATA\)/, 'generated AHB subordinate IAL1 writes the selected register from HWDATA');
+    like($isf, qr/\(drive read_hit\)/, 'generated AHB subordinate IAL1 has a read-hit drive');
+
+    is_deeply(
+        sorted([keys %{$result->{generated_ial0}{files}}]),
+        ['ahb_lite_subordinate.fsm'],
+        'AHB subordinate adapter exposes generated AHB IAL0 .fsm file map',
+    );
+    my $fsm = $result->{generated_ial0}{files}{'ahb_lite_subordinate.fsm'};
+    like($fsm, qr/\(\?fsm:ahb_lite_subordinate\b/, 'generated AHB subordinate IAL0 names the subordinate FSM');
+    like($fsm, qr/\(HREADYOUT 1 \(reset 1\)\)/, 'generated AHB subordinate IAL0 carries HREADYOUT reset metadata');
+    like($fsm, qr/\(HRESP 1 \(reset 0\)\)/, 'generated AHB subordinate IAL0 carries HRESP reset metadata');
+    like($fsm, qr/\(HRDATA 32 \(reset 0\)\)/, 'generated AHB subordinate IAL0 carries HRDATA reset metadata');
+    like($fsm, qr/\(ahb_lite_access_idle_0\s+\(<- \(HRDATA> 0\)\)\s+\(<- \(HREADYOUT> 1\)\)\s+\(<- \(HRESP> 0\)\)/s,
+        'generated AHB subordinate IAL0 drives idle output defaults');
+    like($fsm, qr/\(<- \(reg_data_q HWDATA\)\)/, 'generated AHB subordinate IAL0 writes storage on mapped writes');
+    like($fsm, qr/\(<- \(HRDATA> reg_data_q\) <read_hit_start\)/, 'generated AHB subordinate IAL0 drives read data on mapped reads');
+    like($fsm, qr/\(<- \(HRESP> 1'b1\) <error_first_start\)/, 'generated AHB subordinate IAL0 drives first ERROR response');
+    like($fsm, qr/\(<- \(HREADYOUT> 1\) <error_complete_start\)/, 'generated AHB subordinate IAL0 completes the second ERROR cycle');
+
+    is($result->{report}{bindings}{bus}{response}{name}, 'HRESP', 'report captures AHB response binding');
+    is($result->{report}{bindings}{bus}{response}{width}, 1, 'report captures one-bit AHB-Lite response width');
+    is($result->{report}{bindings}{storage}{register}{data}{name}, 'reg_data_q', 'report captures selected register storage');
+    is($result->{report}{transfer}{supported_transfer}, 'nonseq', 'report captures selected NONSEQ support');
+    is($result->{report}{transfer}{ignored_transfer}[0], 'idle', 'report captures IDLE as ignored');
+    is($result->{report}{transfer}{ignored_transfer}[1], 'busy', 'report captures BUSY as ignored');
+    is($result->{report}{transfer}{error_completion}, 'two-cycle', 'report captures selected two-cycle ERROR policy');
+    is($result->{report}{output_defaults}{HREADYOUT}{reset}, 1, 'report captures HREADYOUT reset high');
+    is($result->{report}{output_defaults}{HREADYOUT}{default}, 1, 'report captures HREADYOUT idle default high');
+    is($result->{report}{output_defaults}{HRESP}{reset}, 0, 'report captures HRESP reset OKAY');
+    is($result->{report}{output_defaults}{HRDATA}{default}, 0, 'report captures HRDATA idle default zero');
+    is($result->{report}{generated_artifacts}{hdl_entry}{entry_artifact}, 'ahb_lite_subordinate.fsm', 'report selects generated subordinate .fsm as HDL entry');
+
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok($residue{ahb_subordinate_profile_alias_deferred}, 'report keeps .ahb subordinate alias residue explicit');
+    ok($residue{ahb_interconnect_generation_deferred}, 'report keeps interconnect/decode residue explicit');
+    ok($residue{ahb_subordinate_optional_signal_residue}, 'report keeps optional-signal residue explicit');
+    ok($residue{ahb_burst_seq_support_deferred}, 'report keeps burst SEQ residue explicit');
+};
+
+subtest 'malformed AHB subordinate PPIF sources fail closed' => sub {
+    my @cases = (
+        [
+            'non-AHB profile',
+            sub {
+                my $source = sample_ahb_subordinate_ppif();
+                $source =~ s/\(profile ahb\)/(profile apb)/;
+                return $source;
+            },
+            qr/profile 'apb' does not match \(ahb-subordinate \.\.\.\); expected ahb/,
+        ],
+        [
+            'two-bit response',
+            sub {
+                my $source = sample_ahb_subordinate_ppif();
+                $source =~ s/\(response HRESP width 1\)/(response HRESP width 2)/;
+                return $source;
+            },
+            qr/bus\.response\.width must be 1/,
+        ],
+        [
+            'missing BUSY ignored transfer',
+            sub {
+                my $source = sample_ahb_subordinate_ppif();
+                $source =~ s/\n      \(ignored-transfer busy\)//;
+                return $source;
+            },
+            qr/transfer\.ignored_transfer must contain idle and busy/,
+        ],
+        [
+            'unsupported selected transfer',
+            sub {
+                my $source = sample_ahb_subordinate_ppif();
+                $source =~ s/\(supported-transfer nonseq\)/(supported-transfer seq)/;
+                return $source;
+            },
+            qr/transfer\.supported_transfer must be nonseq/,
+        ],
+        [
+            'duplicate accept ready-in',
+            sub {
+                my $source = sample_ahb_subordinate_ppif();
+                $source =~ s/\(accept-when \(select 1\) \(ready-in 1\)\)/(accept-when (select 1) (ready-in 1) (ready-in 1))/;
+                return $source;
+            },
+            qr/has duplicate \(ready-in \.\.\.\) clause/,
+        ],
+        [
+            '.ahb alias still requester-only',
+            sub {
+                return sample_ahb_subordinate_ppif();
+            },
+            qr/\.ahb source 'ahb_lite_subordinate\.ahb' profile ahb requires exactly one \(ahb-requester \.\.\.\) object in this slice/,
+            'ahb_lite_subordinate.ahb',
+        ],
+    );
+
+    for my $case (@cases) {
+        my ($label, $build_source, $pattern, $source_label) = @$case;
+        $source_label //= "$label.ppif";
+        my $ok = eval {
+            FSM::Adapter::IAL2::PPIF->new()->parse_source($build_source->(), $source_label);
+            1;
+        };
+        ok(!$ok, "$label is rejected");
+        like($@, $pattern, "$label diagnostic is targeted");
+    }
+};
+
+subtest 'CLI checks, semantic export, schedule report, and outdir all use the public AHB subordinate path' => sub {
+    my $check = run_json_command('./bin/fsmgen', '--quiet', '--strict', '--check', '--json', sample_ahb_subordinate_ppif_path());
+    ok($check->{success}, 'strict check JSON succeeds for AHB subordinate PPIF');
+    is($check->{result}{module_name}, 'ahb_lite_subordinate', 'check JSON reports generated subordinate module name');
+    is($check->{support_accounting}{entry_id}, 'intent.ppif_ahb_lite_subordinate', 'check JSON matches AHB subordinate support accounting');
+    is($check->{support_accounting}{source_kind}, 'ppif', 'check JSON reports PPIF source kind');
+    is($check->{support_accounting}{coverage}, 'ial2_ppif_ahb_lite_subordinate_pipeline_cli', 'check JSON reports selected coverage key');
+
+    my $semantic = run_json_command('./bin/fsmgen', '--quiet', '--strict', '--emit-semantic-json', sample_ahb_subordinate_ppif_path());
+    ok($semantic->{success}, 'strict semantic JSON succeeds for AHB subordinate PPIF');
+    is($semantic->{generation_result_snapshot}{summary}{module_name}, 'ahb_lite_subordinate', 'semantic JSON reports generated subordinate module name');
+    is($semantic->{generation_result_snapshot}{summary}{source_root_kind}, 'fsm', 'semantic JSON reports generated FSM source root');
+    is($semantic->{support_accounting}{entry_id}, 'intent.ppif_ahb_lite_subordinate', 'semantic JSON matches AHB subordinate support accounting');
+
+    my $schedule = run_json_command('./bin/fsmgen', '--quiet', '--emit-schedule-json', sample_ahb_subordinate_ppif_path());
+    is($schedule->{schema}, 'fsmgen.ial2.protocol_intent.ahb_subordinate.v1', 'schedule/report JSON exposes the AHB subordinate schema');
+    is($schedule->{target_protocol}{object}, 'ahb-subordinate', 'schedule/report JSON exposes the AHB subordinate object');
+    is($schedule->{generated_artifacts}{ial1}{name}, 'ahb_lite_subordinate.isf', 'schedule/report JSON exposes generated IAL1 artifact');
+    is_deeply($schedule->{generated_artifacts}{ial0}{files}, ['ahb_lite_subordinate.fsm'], 'schedule/report JSON exposes generated IAL0 artifact');
+    is($schedule->{output_defaults}{HREADYOUT}{default}, 1, 'schedule/report JSON exposes HREADYOUT default high');
+    is($schedule->{output_defaults}{HRESP}{reset}, 0, 'schedule/report JSON exposes HRESP reset OKAY');
+    my %schedule_residue = map { $_->{id} => 1 } @{$schedule->{unsupported_residue}};
+    ok($schedule_residue{ahb_subordinate_profile_alias_deferred}, 'schedule/report JSON keeps .ahb subordinate alias residue explicit');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'ahb_lite_subordinate.sv');
+    my ($success, undef, undef, undef, $stderr) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, sample_ahb_subordinate_ppif_path()],
+    );
+    ok($success, 'AHB subordinate PPIF emits HDL and review artifacts through --outdir');
+    is(join('', @{$stderr || []}), '', 'outdir generation keeps stderr clean');
+    ok(-f File::Spec->catfile($outdir, 'ahb_lite_subordinate.isf'), 'outdir contains generated AHB subordinate IAL1 artifact');
+    ok(-f File::Spec->catfile($outdir, 'ahb_lite_subordinate.fsm'), 'outdir contains generated AHB subordinate IAL0 artifact');
+    ok(-f $hdl, 'outdir command emits selected AHB subordinate HDL output');
+    my $generated_isf = slurp(File::Spec->catfile($outdir, 'ahb_lite_subordinate.isf'));
+    my $generated_fsm = slurp(File::Spec->catfile($outdir, 'ahb_lite_subordinate.fsm'));
+    my $generated_hdl = slurp($hdl);
+    like($generated_isf, qr/\(output HREADYOUT \(reset 1\) \(default 1\)\)/, 'outdir generated .isf keeps HREADYOUT reset/default metadata');
+    like($generated_fsm, qr/\(HREADYOUT 1 \(reset 1\)\)/, 'outdir generated .fsm keeps HREADYOUT reset metadata');
+    like($generated_hdl, qr/\bmodule\s+ahb_lite_subordinate\b/, 'generated HDL contains the AHB subordinate module');
+    like($generated_hdl, qr/HREADYOUT\s*<=\s*1;/, 'generated HDL resets HREADYOUT high');
+    like($generated_hdl, qr/assign\s+\w*error_complete\w*hresp__1_b1_en\b.*HRESP <- 1'b1/, 'generated HDL contains ERROR response drive');
+};
+
+done_testing();
+
+sub sample_ahb_subordinate_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'ahb_lite_subordinate.ppif');
+}
+
+sub sample_ahb_subordinate_ppif {
+    return slurp(sample_ahb_subordinate_ppif_path());
+}
+
+sub run_json_command {
+    my @command = @_;
+    my ($success, undef, undef, $stdout, $stderr) = run(command => \@command);
+    my $json = join('', @{$stdout || []});
+    my $decoded = eval { decode_json($json) };
+    ok($decoded, join(' ', @command) . ' emits decodable JSON')
+        or do {
+            diag($json);
+            diag(join('', @{$stderr || []}));
+            diag('command failed') unless $success;
+            return {};
+        };
+    return $decoded;
+}
+
+sub slurp {
+    my ($path) = @_;
+    open my $fh, '<', $path or die "Cannot read $path: $!";
+    local $/;
+    return <$fh>;
+}
+
+sub sorted {
+    my ($values) = @_;
+    return [sort @$values];
+}

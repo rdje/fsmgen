@@ -9781,13 +9781,12 @@ records the `.710` no-behavior post-seed readiness audit and selects `.711`,
 public IAL2 AHB subordinate/completer contract selection, before any IAL2 AHB
 completer/subordinate behavior ships.
 [IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION](../../IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md)
-selects the `.711` future public source `ppif/ahb_lite_subordinate.ppif`,
+selected the `.711` future public source `ppif/ahb_lite_subordinate.ppif`,
 object `(ahb-subordinate ahb_lite_subordinate ...)`, generated
 `ahb_lite_subordinate.isf` before `ahb_lite_subordinate.fsm`, report schema
 `fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, support identity
 `intent.ppif_ahb_lite_subordinate`, and `.712`, a no-behavior
-generated-IAL1/IAL0/SV substrate audit before implementation. The source and
-behavior remain deferred until a later implementation slice.
+generated-IAL1/IAL0/SV substrate audit before implementation.
 [IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT](../../IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md)
 records the `.712` generated-substrate audit. The core AHB subordinate
 transaction flow is representable through generated IAL1, but implementation
@@ -9803,6 +9802,14 @@ non-negative integer literal reset/default values on resolved positive integer
 widths, lower reset metadata into generated `.fsm` `+size`, and lower idle
 defaults into generated transaction `<-` output assignments. `.715` now owns
 public AHB subordinate `.ppif` implementation over that substrate.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.715` ships that public subordinate path:
+`ppif/ahb_lite_subordinate.ppif` now lowers through generated
+`ahb_lite_subordinate.isf` before generated `ahb_lite_subordinate.fsm`, emits
+HDL module `ahb_lite_subordinate`, reports schema
+`fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, and support-accounts as
+`intent.ppif_ahb_lite_subordinate`. Remaining AHB subordinate work is the
+`.ahb` alias, optional signals, burst `SEQ` continuation, byte-lane/narrow
+transfers, legacy two-bit `HRESP`, and interconnect/decode.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

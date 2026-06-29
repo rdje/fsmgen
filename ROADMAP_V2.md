@@ -6020,6 +6020,19 @@ substrate. No AHB subordinate parser/generator/source/sample/support-accounting
 behavior, direct backend behavior, verification-output generation,
 backend-language variant, AXI, APB, AHB protocol behavior, or VHDL behavior
 changed in `.714`.
+`.715` now ships the selected public IAL2 AHB subordinate `.ppif`
+implementation. The public source `ppif/ahb_lite_subordinate.ppif` uses
+`(profile ahb)` and one `(ahb-subordinate ahb_lite_subordinate ...)` object,
+lowers through generated `ahb_lite_subordinate.isf` before generated
+`ahb_lite_subordinate.fsm`, emits HDL module `ahb_lite_subordinate`, reports
+schema `fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, and is
+support-accounted as `intent.ppif_ahb_lite_subordinate` with coverage key
+`ial2_ppif_ahb_lite_subordinate_pipeline_cli`. Generated outputs preserve
+`HREADYOUT`/`HRESP`/`HRDATA` reset/default metadata from `.714`. The `.ahb`
+subordinate alias, AHB interconnect/decode, optional AHB signals, burst `SEQ`
+continuation, byte-lane/narrow-transfer behavior, legacy two-bit `HRESP`,
+direct backend behavior, verification-output generation, backend-language
+variants, AXI, APB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

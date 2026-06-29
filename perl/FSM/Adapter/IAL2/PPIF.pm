@@ -11,6 +11,7 @@ no warnings 'experimental::signatures';
 use Lispish;
 use FSM::Adapter::ISF::LispishAdapter;
 use FSM::IAL2::ProtocolIntent::AhbRequester;
+use FSM::IAL2::ProtocolIntent::AhbSubordinate;
 use FSM::IAL2::ProtocolIntent::ApbComposition;
 use FSM::IAL2::ProtocolIntent::ApbCompleter;
 use FSM::IAL2::ProtocolIntent::ApbRequesterTransfer;
@@ -74,6 +75,8 @@ sub parse_source($self, @args) {
             if _is_ahb_profile_alias_source($source_label);
         return $result;
     }
+    return FSM::IAL2::ProtocolIntent::AhbSubordinate->new(debug => $self->{debug})->generate($contract)
+        if _is_ahb_subordinate_contract($contract);
     return FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new(debug => $self->{debug})->generate($contract)
         if _is_manager_capacity_status_contract($contract);
     return $generator->generate($contract);
@@ -195,6 +198,7 @@ sub _contract_from_root($root, $source_label) {
     my @apb_completers;
     my @apb_compositions;
     my @ahb_requesters;
+    my @ahb_subordinates;
     for my $clause (@clauses) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         if ($head eq 'profile') {
@@ -219,6 +223,8 @@ sub _contract_from_root($root, $source_label) {
             push @apb_compositions, _parse_apb_composition(\@body, $source_label);
         } elsif ($head eq 'ahb-requester') {
             push @ahb_requesters, _parse_ahb_requester(\@body, $source_label);
+        } elsif ($head eq 'ahb-subordinate') {
+            push @ahb_subordinates, _parse_ahb_subordinate(\@body, $source_label);
         } else {
             confess "Error: $surface source '$source_label' has unsupported top-level clause '($head ...)'\n";
         }
@@ -228,18 +234,33 @@ sub _contract_from_root($root, $source_label) {
         unless defined $profile;
     confess "Error: $surface source '$source_label' is missing required (source ...) clause\n"
         unless defined $source;
-    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), (apb-composition ...), or (ahb-requester ...)\n"
-        unless @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters;
+    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), (apb-composition ...), (ahb-requester ...), or (ahb-subordinate ...)\n"
+        unless @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates;
     if (@ahb_requesters) {
         confess "Error: $surface source '$source_label' profile '$profile' does not match (ahb-requester ...); expected ahb\n"
             unless $profile eq 'ahb';
-        confess "Error: $surface source '$source_label' cannot mix (ahb-requester ...) with (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), or (apb-composition ...) objects in this slice\n"
-            if @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions;
+        confess "Error: $surface source '$source_label' cannot mix (ahb-requester ...) with (ahb-subordinate ...), (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), or (apb-composition ...) objects in this slice\n"
+            if @ahb_subordinates || @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions;
         confess "Error: $surface source '$source_label' supports exactly one (ahb-requester ...) object in this slice\n"
             if @ahb_requesters > 1;
 
         return {
             %{$ahb_requesters[0]},
+            intent_name => $intent_name,
+            protocol    => $profile,
+            source      => $source,
+        };
+    }
+    if (@ahb_subordinates) {
+        confess "Error: $surface source '$source_label' profile '$profile' does not match (ahb-subordinate ...); expected ahb\n"
+            unless $profile eq 'ahb';
+        confess "Error: $surface source '$source_label' cannot mix (ahb-subordinate ...) with (ahb-requester ...), (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), or (apb-composition ...) objects in this slice\n"
+            if @ahb_requesters || @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions;
+        confess "Error: $surface source '$source_label' supports exactly one (ahb-subordinate ...) object in this slice\n"
+            if @ahb_subordinates > 1;
+
+        return {
+            %{$ahb_subordinates[0]},
             intent_name => $intent_name,
             protocol    => $profile,
             source      => $source,
@@ -862,6 +883,210 @@ sub _parse_ahb_literal_block($items, $source_label, $context, $required) {
         $key =~ s/-/_/g;
         confess "Error: .ppif ($context ...) is missing required ($field ...) clause\n"
             unless exists $parsed{$key};
+    }
+
+    return \%parsed;
+}
+
+sub _parse_ahb_subordinate($body, $source_label) {
+    confess "Error: .ppif (ahb-subordinate ...) requires a scalar object name\n"
+        unless @$body >= 1 && !ref($body->[0]) && length($body->[0]);
+
+    my $name = $body->[0];
+    my %contract = (
+        kind => 'ahb_subordinate',
+        name => $name,
+    );
+    my %seen;
+    for my $clause (@{$body}[1 .. $#$body]) {
+        my ($head, @items) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-subordinate $name ...) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+
+        if ($head =~ /\A(?:role|clock)\z/) {
+            confess "Error: .ppif (ahb-subordinate $name ($head ...)) requires exactly one scalar value\n"
+                unless @items == 1 && !ref($items[0]);
+            $contract{$head} = $items[0];
+        } elsif ($head eq 'reset') {
+            $contract{reset} = _parse_reset(\@items, $source_label);
+        } elsif ($head eq 'control') {
+            $contract{control} = _parse_ahb_subordinate_control_block(\@items, $source_label, $name);
+        } elsif ($head eq 'bus') {
+            $contract{bus} = _parse_ahb_subordinate_bus_block(\@items, $source_label, $name);
+        } elsif ($head eq 'storage') {
+            $contract{storage} = _parse_ahb_subordinate_storage_block(\@items, $source_label, $name);
+        } elsif ($head eq 'transfer') {
+            $contract{transfer} = _parse_ahb_subordinate_transfer_block(\@items, $source_label, $name);
+        } else {
+            confess "Error: .ppif (ahb-subordinate $name ...) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(role clock reset control bus storage transfer)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (ahb-subordinate $name ...) is missing required ($clause ...) clause\n"
+            unless exists $contract{$required};
+    }
+
+    return \%contract;
+}
+
+sub _parse_ahb_subordinate_control_block($items, $source_label, $name) {
+    return _parse_ahb_binding_block(
+        $items,
+        $source_label,
+        "ahb-subordinate $name control",
+        {
+            'wait-cycles' => 'width',
+        },
+        [qw(wait-cycles)],
+    );
+}
+
+sub _parse_ahb_subordinate_bus_block($items, $source_label, $name) {
+    return _parse_ahb_binding_block(
+        $items,
+        $source_label,
+        "ahb-subordinate $name bus",
+        {
+            select       => 'scalar',
+            'ready-in'   => 'scalar',
+            address      => 'width',
+            transfer     => 'width',
+            write        => 'scalar',
+            size         => 'width',
+            'write-data' => 'width',
+            'ready-out'  => 'scalar',
+            response     => 'width',
+            'read-data'  => 'width',
+        },
+        [qw(select ready-in address transfer write size write-data ready-out response read-data)],
+    );
+}
+
+sub _parse_ahb_subordinate_storage_block($items, $source_label, $name) {
+    my @registers;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-subordinate $name (storage ...)) has unsupported clause '($head ...)'\n"
+            unless $head eq 'register';
+        push @registers, _parse_ahb_subordinate_storage_register(\@body, $source_label, $name);
+    }
+
+    confess "Error: .ppif (ahb-subordinate $name (storage ...)) requires exactly one (register ...) clause in this slice\n"
+        unless @registers == 1;
+
+    return { register => $registers[0] };
+}
+
+sub _parse_ahb_subordinate_storage_register($items, $source_label, $name) {
+    confess "Error: .ppif (ahb-subordinate $name (storage (register ...))) requires a scalar register name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $register_name = $items->[0];
+    my %register = (name => $register_name);
+    my %seen;
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-subordinate $name (storage (register $register_name ...))) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+        if ($head eq 'address') {
+            $register{address} = _parse_apb_address_binding(\@body, $source_label, "ahb-subordinate $name storage register $register_name address");
+        } elsif ($head eq 'data') {
+            $register{data} = _parse_apb_storage_data_binding(\@body, $source_label, "ahb-subordinate $name storage register $register_name data");
+        } else {
+            confess "Error: .ppif (ahb-subordinate $name (storage (register $register_name ...))) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(address data)) {
+        confess "Error: .ppif (ahb-subordinate $name (storage (register $register_name ...))) is missing required ($required ...) clause\n"
+            unless exists $register{$required};
+    }
+
+    return \%register;
+}
+
+sub _parse_ahb_subordinate_transfer_block($items, $source_label, $name) {
+    confess "Error: .ppif (ahb-subordinate $name (transfer ...)) requires a scalar transfer name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $transfer_name = $items->[0];
+    my %transfer = (name => $transfer_name);
+    my %seen_single;
+    my @ignored;
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        if ($head eq 'ignored-transfer') {
+            push @ignored, _parse_apb_scalar_binding(\@body, $source_label, "ahb-subordinate $name transfer $transfer_name ignored-transfer");
+            next;
+        }
+
+        confess "Error: .ppif (ahb-subordinate $name (transfer $transfer_name ...)) has duplicate ($head ...) clause\n"
+            if $seen_single{$head}++;
+        if ($head eq 'accept-when') {
+            $transfer{accept_when} = _parse_ahb_subordinate_accept_when(\@body, $source_label, $name, $transfer_name);
+        } elsif ($head =~ /\A(?:idle|busy|nonseq|seq|supported-transfer|wait-cycles|read|write|unmapped-address|unsupported-size|unsupported-transfer|error-completion)\z/) {
+            my $key = $head;
+            $key =~ s/-/_/g;
+            $transfer{$key} = _parse_apb_scalar_binding(\@body, $source_label, "ahb-subordinate $name transfer $transfer_name $head");
+        } elsif ($head eq 'response') {
+            $transfer{response} = _parse_ahb_subordinate_response_block(\@body, $source_label, $name, $transfer_name);
+        } else {
+            confess "Error: .ppif (ahb-subordinate $name (transfer $transfer_name ...)) has unsupported clause '($head ...)'\n";
+        }
+    }
+    $transfer{ignored_transfer} = \@ignored if @ignored;
+
+    for my $required (qw(accept_when idle busy nonseq seq supported_transfer ignored_transfer wait_cycles read write unmapped_address unsupported_size unsupported_transfer response error_completion)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (ahb-subordinate $name (transfer $transfer_name ...)) is missing required ($clause ...) clause\n"
+            unless exists $transfer{$required};
+    }
+
+    return \%transfer;
+}
+
+sub _parse_ahb_subordinate_accept_when($items, $source_label, $name, $transfer_name) {
+    my %parsed;
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-subordinate $name (transfer $transfer_name (accept-when ...))) supports only (select ...) and (ready-in ...) clauses\n"
+            unless $head eq 'select' || $head eq 'ready-in';
+        my $key = $head;
+        $key =~ s/-/_/g;
+        confess "Error: .ppif (ahb-subordinate $name (transfer $transfer_name (accept-when ...))) has duplicate ($head ...) clause\n"
+            if exists $parsed{$key};
+        $parsed{$key} = _parse_apb_scalar_binding(\@body, $source_label, "ahb-subordinate $name transfer $transfer_name accept-when $head");
+    }
+
+    for my $required (qw(select ready_in)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (ahb-subordinate $name (transfer $transfer_name (accept-when ...))) is missing required ($clause ...) clause\n"
+            unless exists $parsed{$required};
+    }
+
+    return \%parsed;
+}
+
+sub _parse_ahb_subordinate_response_block($items, $source_label, $name, $transfer_name) {
+    my %parsed;
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-subordinate $name (transfer $transfer_name (response ...))) supports only (okay ...) and (error ...) clauses\n"
+            unless $head eq 'okay' || $head eq 'error';
+        confess "Error: .ppif (ahb-subordinate $name (transfer $transfer_name (response ...))) has duplicate ($head ...) clause\n"
+            if exists $parsed{$head};
+        $parsed{$head} = _parse_apb_scalar_binding(\@body, $source_label, "ahb-subordinate $name transfer $transfer_name response $head");
+    }
+
+    for my $required (qw(okay error)) {
+        confess "Error: .ppif (ahb-subordinate $name (transfer $transfer_name (response ...))) is missing required ($required ...) clause\n"
+            unless exists $parsed{$required};
     }
 
     return \%parsed;
@@ -2298,6 +2523,11 @@ sub _is_apb_composition_contract($contract) {
 sub _is_ahb_requester_contract($contract) {
     return ref($contract) eq 'HASH'
         && ($contract->{kind} // '') eq 'ahb_requester';
+}
+
+sub _is_ahb_subordinate_contract($contract) {
+    return ref($contract) eq 'HASH'
+        && ($contract->{kind} // '') eq 'ahb_subordinate';
 }
 
 sub _generate_bundle($generator, $bundle) {

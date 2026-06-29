@@ -30,6 +30,10 @@ The next exact owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.715`, public IAL2
 AHB subordinate implementation over the now-shipped output default/reset
 substrate.
 
+Later status: `.715` consumed this substrate and shipped the selected public
+`ppif/ahb_lite_subordinate.ppif` behavior. See
+[IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR](IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md).
+
 ## Parser Contract
 
 Accepted output metadata is stored on the parser-returned actor shell output

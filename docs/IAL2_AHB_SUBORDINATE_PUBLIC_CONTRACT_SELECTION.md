@@ -48,6 +48,10 @@ subordinate contract needs reviewable reset/idle output behavior, especially
 `HREADYOUT=1`, before `ppif/ahb_lite_subordinate.ppif` behavior ships. `.713`
 now owns no-behavior output default/reset contract selection.
 
+Later status: `.714` shipped the output default/reset substrate and `.715`
+shipped the selected public `ppif/ahb_lite_subordinate.ppif` behavior. See
+[IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR](IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md).
+
 No parser behavior, generator behavior, public source sample,
 support-accounting catalog behavior, capability-manifest behavior, test
 behavior, schedule/check/semantic JSON behavior, generated artifact,

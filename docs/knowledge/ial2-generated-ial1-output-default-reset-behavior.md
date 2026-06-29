@@ -6,11 +6,12 @@ answers:
   - "how do generated IAL1 output reset/default options lower?"
   - "does generated IAL1 support output reset_value/default_value metadata?"
   - "what task owns AHB subordinate implementation after output defaults?"
+  - "did .715 consume the generated IAL1 output default/reset substrate?"
 date: 2026-06-29
 status: current
 tags: [ial1, ial2, isf, output-defaults, reset, ahb, behavior]
 evidence: docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md; docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Support/ISFPublicInterfaceContract.pm; t/1476-isf-output-default-reset.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/13h-lowering-reference.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
-reverify: prove -v t/1476-isf-output-default-reset.t && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.714|IAL2-FEATURE-COMPLETENESS-FRONTIER\.715|output default/reset|reset_value|default_value|<-\s+\(ready>' docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/13h-lowering-reference.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md perl/FSM/Adapter/ISF/Parser.pm perl/FSM/Scheduler/ISF/LoweringIR.pm t/1476-isf-output-default-reset.t
+reverify: prove -v t/1476-isf-output-default-reset.t && prove -v t/1475-ial2-ahb-subordinate.t && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.714|IAL2-FEATURE-COMPLETENESS-FRONTIER\.715|output default/reset|reset_value|default_value|<-\s+\(ready>|ppif/ahb_lite_subordinate\.ppif' docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md docs/IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/13h-lowering-reference.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md perl/FSM/Adapter/ISF/Parser.pm perl/FSM/Scheduler/ISF/LoweringIR.pm t/1476-isf-output-default-reset.t t/1475-ial2-ahb-subordinate.t
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.714` implements generated-IAL1 actor
@@ -26,6 +27,5 @@ It emits `(default VALUE)` as idle/quiescent `<- (output> VALUE)` assignments
 in generated transaction entry states, skipping outputs already assigned in
 that state and preserving explicit named-drive behavior.
 
-The next owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.715`, public IAL2 AHB
-subordinate implementation over the now-shipped output default/reset
-substrate.
+Later status: `IAL2-FEATURE-COMPLETENESS-FRONTIER.715` consumes this substrate
+and ships the selected public `ppif/ahb_lite_subordinate.ppif` behavior.

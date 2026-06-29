@@ -48,7 +48,7 @@ coverage as `.ppif`, a profile alias, or generated IAL1 behavior.
 | --- | --- | --- | --- |
 | AXI | Checked-in `.ppif` Valid-Ready and selected `.axi` profile-alias samples. | Bounded manager capacity/status, ID-family, transaction, response-demux, read-data, burst, dynamic-ID, same-ID, queue, and runtime-validation families. | Shipped examples remain bounded IAL2 surfaces. Full AXI manager behavior, arbitrary cardinalities, complete scoreboards, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 | APB | Checked-in requester, completer, and fixed-composition `.ppif` samples plus byte-identical `.apb` aliases where selected. | Busy/status, sideband, data16, protection, multi-register, multi-peripheral, generalized register-set, and selected back-to-back timing families. | APB interconnect and decode are protocol-specific generated behavior. More-than-six-register, more-than-two-peripheral, bus-matrix, scoreboard, direct backend, verification-output, backend-language variant, AXI, AHB, and VHDL work remain deferred. |
-| AHB | Checked-in bounded requester `ppif/ahb_requester.ppif`, selected `.ahb` profile alias `ppif/ahb_requester.ahb`, direct `fsm/amba_requester.fsm` requester seed, and direct `fsm/ahb_lite_subordinate.fsm` subordinate seed. | Bounded requester clauses for local command/status, AHB bus bindings, burst, transfer, and response behavior. The future public subordinate contract is selected as `ppif/ahb_lite_subordinate.ppif`, but shipped subordinate evidence is still direct `.fsm` only. | IAL2 AHB subordinate generation, AHB interconnect/decode, scoreboards, full AHB manager behavior beyond the bounded requester, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| AHB | Checked-in bounded requester `ppif/ahb_requester.ppif`, bounded subordinate `ppif/ahb_lite_subordinate.ppif`, selected requester `.ahb` profile alias `ppif/ahb_requester.ahb`, and direct `.fsm` seeds. | Bounded requester clauses for local command/status, AHB bus bindings, burst, transfer, and response behavior; bounded subordinate clauses for control, bus, one-register storage, and selected NONSEQ/error transfer behavior. | AHB subordinate `.ahb` alias exposure, AHB completer behavior, AHB interconnect/decode, optional subordinate signals, burst continuation, byte-lane/narrow-transfer behavior, scoreboards, full AHB manager behavior beyond the bounded requester, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 Detailed protocol examples are split into separate follow-on chapters so the
 examples can be validated and kept current per protocol without making this
@@ -91,15 +91,13 @@ AXI and APB have shipped IAL2 `.ppif` examples and selected profile aliases.
 They are still bounded protocol surfaces, not claims that every AXI or APB
 legal behavior is generated.
 
-AHB has shipped bounded generic `.ppif` requester coverage, the selected
-`.ahb` profile alias for that requester, the older direct `.fsm` AMBA
-requester seed, and a direct lower-layer AHB-Lite/common-AHB subordinate seed
-at `fsm/ahb_lite_subordinate.fsm`. The AHB IAL2 paths still lower through
-generated `.isf` and generated `.fsm` review artifacts; the subordinate seed
-is not an IAL2 subordinate source surface yet. The selected future subordinate
-source is `ppif/ahb_lite_subordinate.ppif` with object
-`(ahb-subordinate ahb_lite_subordinate ...)`; implementation remains deferred
-until the generated-substrate audit and follow-on owner complete.
+AHB has shipped bounded generic `.ppif` requester coverage, bounded generic
+`.ppif` AHB-Lite/common-AHB subordinate coverage, the selected `.ahb` profile
+alias for the requester, the older direct `.fsm` AMBA requester seed, and a
+direct lower-layer subordinate seed at `fsm/ahb_lite_subordinate.fsm`. The AHB
+IAL2 paths lower through generated `.isf` and generated `.fsm` review
+artifacts. Subordinate `.ahb` profile-alias exposure remains deferred; use
+`ppif/ahb_lite_subordinate.ppif` for the public IAL2 subordinate path.
 
 Any new suffix, protocol object, report family, generated artifact, or example
 must first be selected by a task-tree leaf, then documented with checked-in
