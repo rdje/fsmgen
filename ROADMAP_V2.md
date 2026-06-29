@@ -5841,6 +5841,10 @@ unsupported; AHB completers/subordinates, interconnect/decode, scoreboards,
 full-manager behavior, direct backend, verification-output, backend-language
 variants, AXI, APB, and VHDL remain deferred. `.698` now owns the next
 no-behavior AHB `.ahb` profile-alias readiness audit.
+`.698` now selects `.699`, AHB `.ahb` public profile-alias contract
+selection, before any `.ahb` parser/generator/source/support-accounting or
+manifest behavior changes. `.ahb` remains unsupported until a later exact
+implementation owner.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

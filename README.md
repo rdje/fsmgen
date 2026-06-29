@@ -4814,6 +4814,10 @@ unsupported; AHB completers/subordinates, interconnect/decode, scoreboards,
 full-manager behavior, direct backend, verification-output, backend-language
 variants, AXI, APB, and VHDL remain deferred. `.698` now owns the next
 no-behavior AHB `.ahb` profile-alias readiness audit.
+`.698` now selects `.699`, AHB `.ahb` public profile-alias contract
+selection, before any `.ahb` parser/generator/source/support-accounting or
+manifest behavior changes. `.ahb` remains unsupported until a later exact
+implementation owner.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7457,6 +7461,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_SOURCE_SHAPE_READINESS_AUDIT.md` — selects AHB requester `.ppif` public contract selection before any AHB implementation or `.ahb` alias support.
 - `docs/IAL2_AHB_REQUESTER_PPIF_PUBLIC_CONTRACT_SELECTION.md` — selects the first AHB requester generic `.ppif` public contract and the follow-on implementation owner.
 - `docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md` — documents the shipped bounded AHB requester generic `.ppif` behavior, generated `.isf`/`.fsm` review artifacts, support accounting, diagnostics, validation, and remaining `.ahb`/broader-AHB residue.
+- `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
