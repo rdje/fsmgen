@@ -6168,6 +6168,15 @@ endpoint generation can produce unique artifacts from distinct object names.
 Direct implementation remains deferred until `.729` freezes syntax,
 cardinality, per-subordinate wiring, generated artifacts, reports, support
 accounting, diagnostics, residue migration, validation, and rollback.
+`.729` now selects `.730`, direct implementation of the selected generic
+`ppif/ahb_interconnect_two_subordinate.ppif` contract. The contract is exactly
+one requester, two unique subordinate objects, two subordinate child bindings,
+two non-overlapping static address-map windows, requester/global AHB wiring in
+the interconnect block, per-subordinate bus names from subordinate objects,
+report topology `one_requester_two_subordinate_static_window_interconnect`,
+support identity `intent.ppif_ahb_interconnect_two_subordinate`, and coverage
+`ial2_ppif_ahb_interconnect_two_subordinate_pipeline_cli`. Matching `.ahb`
+alias support remains deferred until after the generic `.ppif` behavior ships.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

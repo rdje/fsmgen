@@ -9899,6 +9899,16 @@ implementation remains deferred until the source syntax, child/window
 cardinality, per-subordinate wiring, generated artifacts, reports, support
 accounting, diagnostics, residue migration, validation, and rollback contract
 are selected.
+`.729` selects `.730`, direct implementation of the selected generic
+`ppif/ahb_interconnect_two_subordinate.ppif` contract. The selected first
+widening is exactly one requester, two unique subordinate objects, two
+subordinate child bindings, two non-overlapping static address-map windows,
+requester/global AHB wiring in the interconnect block, per-subordinate bus
+names from each subordinate object, report topology
+`one_requester_two_subordinate_static_window_interconnect`, support identity
+`intent.ppif_ahb_interconnect_two_subordinate`, and coverage
+`ial2_ppif_ahb_interconnect_two_subordinate_pipeline_cli`. Matching `.ahb`
+alias support remains deferred until after the generic `.ppif` behavior ships.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
