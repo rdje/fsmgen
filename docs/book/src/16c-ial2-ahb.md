@@ -275,8 +275,14 @@ behavior, legacy two-bit `HRESP`, direct backend behavior,
 verification-output generation, backend-language variants, AXI, APB, and VHDL
 remain deferred.
 
-The next owned AHB work is `.712`, a generated-IAL1/IAL0/SV substrate audit
-for the selected public subordinate contract before implementation.
+`.712` audits the generated-IAL1/IAL0/SV substrate for that selected
+subordinate contract. The generated path can model the core transaction flow,
+but direct implementation remains deferred because reset/idle output behavior
+must be reviewable in generated artifacts first. In particular, the selected
+contract needs `HREADYOUT=1`, `HRESP=0`, and `HRDATA=0` at reset/idle.
+
+The next owned AHB work is `.713`, generated-IAL1 output default/reset
+contract selection before AHB subordinate implementation.
 
 ## Validation Used For This Chapter
 
@@ -295,7 +301,7 @@ prove -v t/1474-ial2-ahb-profile-alias.t
 ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm
 ./bin/fsmgen --quiet --output /tmp/fsmgen_ahb_lite_subordinate.sv fsm/ahb_lite_subordinate.fsm
 rg -n "size_q_eq|size_q_ne|HRESP <- 1|HREADYOUT <- 1|reg_data_q <- HWDATA|HTRANS == 2'b1" /tmp/fsmgen_ahb_lite_subordinate.sv
-rg -n "ppif/ahb_lite_subordinate\\.ppif|ahb-subordinate|intent\\.ppif_ahb_lite_subordinate" docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md docs/book/src/16c-ial2-ahb.md
+rg -n "ppif/ahb_lite_subordinate\\.ppif|ahb-subordinate|intent\\.ppif_ahb_lite_subordinate|HREADYOUT|output default" docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md docs/book/src/16c-ial2-ahb.md
 ```
 
 The `.ppif` and `.ahb` probes passed and generated `amba_requester.isf`,
@@ -305,3 +311,6 @@ The direct subordinate strict check passed as
 `protocol.ahb_lite_subordinate`, and the generated HDL inspection confirmed
 the selected transfer, word-size, write-update, and two-cycle ERROR response
 paths.
+The generated-substrate audit confirmed core AHB subordinate transaction
+representability, while routing generated-IAL1 output default/reset semantics
+to the next owned slice before public subordinate behavior ships.

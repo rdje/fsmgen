@@ -7,11 +7,12 @@ answers:
   - "what source path is selected for AHB subordinate IAL2?"
   - "what report schema and support identity are selected for AHB subordinate?"
   - "what comes after .711?"
+  - "what did .712 later find about the .711 AHB subordinate contract?"
 date: 2026-06-29
 status: current
 tags: [ial2, ahb, subordinate, contract-selection, ppif]
-evidence: docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md; docs/IAL2_AHB_COMPLETER_SUBORDINATE_POST_SEED_READINESS_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md; fsm/ahb_lite_subordinate.fsm; docs/IAL2_AHB_SUBORDINATE_SEED_CONTRACT_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md; docs/IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md; docs/IAL2_APB_COMPLETER_GENERATED_IAL1_SUBSTRATE_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
-reverify: ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.711|IAL2-FEATURE-COMPLETENESS-FRONTIER\.712|ppif/ahb_lite_subordinate\.ppif|ahb-subordinate|ahb_lite_subordinate\.(isf|fsm)|fsmgen\.ial2\.protocol_intent\.ahb_subordinate\.v1|intent\.ppif_ahb_lite_subordinate' docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md
+evidence: docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md; docs/IAL2_AHB_COMPLETER_SUBORDINATE_POST_SEED_READINESS_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md; fsm/ahb_lite_subordinate.fsm; docs/IAL2_AHB_SUBORDINATE_SEED_CONTRACT_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md; docs/IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md; docs/IAL2_APB_COMPLETER_GENERATED_IAL1_SUBSTRATE_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
+reverify: ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.711|IAL2-FEATURE-COMPLETENESS-FRONTIER\.712|IAL2-FEATURE-COMPLETENESS-FRONTIER\.713|ppif/ahb_lite_subordinate\.ppif|ahb-subordinate|ahb_lite_subordinate\.(isf|fsm)|fsmgen\.ial2\.protocol_intent\.ahb_subordinate\.v1|intent\.ppif_ahb_lite_subordinate|HREADYOUT' docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.711` selects the first public IAL2 AHB
@@ -32,3 +33,8 @@ object spelling.
 `.711` selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.712`, a no-behavior
 generated-IAL1/IAL0/SV substrate audit, before any parser/generator/source
 behavior implementation.
+
+Later status: `.712` finds the generated transaction substrate ready for the
+core AHB subordinate flow, but blocks implementation on generated-IAL1 output
+default/reset semantics needed to prove reset/idle outputs such as
+`HREADYOUT=1`. `.713` owns that no-behavior contract selection.

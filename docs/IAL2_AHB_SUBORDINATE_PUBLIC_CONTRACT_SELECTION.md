@@ -41,6 +41,13 @@ no-behavior generated-IAL1/IAL0/SV substrate audit for this selected contract.
 before generated `.fsm` without bypassing the review boundary. It must not
 implement parser or generator behavior.
 
+Later status: `.712` found the generated transaction substrate ready for the
+core AHB subordinate transaction flow, but blocked direct implementation on a
+smaller generated-IAL1 output default/reset contract gap. The selected AHB
+subordinate contract needs reviewable reset/idle output behavior, especially
+`HREADYOUT=1`, before `ppif/ahb_lite_subordinate.ppif` behavior ships. `.713`
+now owns no-behavior output default/reset contract selection.
+
 No parser behavior, generator behavior, public source sample,
 support-accounting catalog behavior, capability-manifest behavior, test
 behavior, schedule/check/semantic JSON behavior, generated artifact,

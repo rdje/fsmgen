@@ -5980,6 +5980,20 @@ manifest behavior, test behavior, schedule/check/semantic JSON behavior,
 generated artifact, HDL/runtime behavior, seed behavior, direct backend
 behavior, verification-output generation, backend-language variant, AXI, APB,
 or VHDL behavior changed in `.711`.
+`.712` audits generated-IAL1/IAL0/SV substrate readiness for the selected AHB
+subordinate contract without behavior changes. Generated IAL1 can express the
+core transaction flow, including `HSEL && HREADY` activation, runtime
+`wait_cycles`, storage reset/update, mapped read/write behavior, unsupported
+`SEQ`/size/address branches, and two sequential ERROR drives. Direct public
+implementation remains blocked on generated-IAL1 output default/reset
+semantics because the selected contract needs reviewable reset/idle outputs
+such as `HREADYOUT=1`, `HRESP=0`, and `HRDATA=0`. `.713` now owns
+generated-IAL1 output default/reset contract selection. No parser, generator,
+public source, sample, support-accounting catalog behavior, manifest behavior,
+test behavior, schedule/check/semantic JSON behavior, generated artifact,
+HDL/runtime behavior, seed behavior, direct backend behavior,
+verification-output generation, backend-language variant, AXI, APB, or VHDL
+behavior changed in `.712`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

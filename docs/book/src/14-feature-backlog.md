@@ -9788,6 +9788,12 @@ object `(ahb-subordinate ahb_lite_subordinate ...)`, generated
 `intent.ppif_ahb_lite_subordinate`, and `.712`, a no-behavior
 generated-IAL1/IAL0/SV substrate audit before implementation. The source and
 behavior remain deferred until a later implementation slice.
+[IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT](../../IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md)
+records the `.712` generated-substrate audit. The core AHB subordinate
+transaction flow is representable through generated IAL1, but implementation
+is still deferred until generated-IAL1 output default/reset semantics can
+prove reset/idle outputs such as `HREADYOUT=1`; `.713` owns that no-behavior
+contract selection.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
