@@ -4,6 +4,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Math::BigInt;
 use feature qw(signatures postderef);
 no warnings qw(experimental::signatures);
 
@@ -8544,6 +8545,8 @@ sub _parse_interface($self, $clause) {
         my $width = 1;
         my $type;
         my $domain;
+        my $reset_value;
+        my $default_value;
 
         confess "Error: interface port direction must be input or output\n"
             unless defined($dir) && !ref($dir) && ($dir eq 'input' || $dir eq 'output');
@@ -8584,18 +8587,58 @@ sub _parse_interface($self, $clause) {
                 );
                 next;
             }
+            if ($prop->[0] eq 'reset' || $prop->[0] eq 'default') {
+                confess "Error: interface input '$name' cannot specify output '$prop->[0]' metadata\n"
+                    unless $dir eq 'output';
+                my $value = _parse_interface_output_static_value($prop, $name);
+                if ($prop->[0] eq 'reset') {
+                    $reset_value = $value;
+                } else {
+                    $default_value = $value;
+                }
+                next;
+            }
         }
         confess "Error: interface port '$name' cannot specify both '(width ...)' and '(type ...)'\n"
             if defined($type) && exists($seen_options{width});
+        if (defined($reset_value) || defined($default_value)) {
+            confess "Error: interface output '$name' output reset/default metadata requires a resolved positive integer width; '(type ...)' outputs remain deferred\n"
+                if defined $type;
+            confess "Error: interface output '$name' output reset/default metadata requires a resolved positive integer width\n"
+                unless defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/;
+            _validate_interface_output_static_value_fits($name, 'reset', $reset_value, $width)
+                if defined $reset_value;
+            _validate_interface_output_static_value_fits($name, 'default', $default_value, $width)
+                if defined $default_value;
+        }
 
         my $entry = { name => $name, width => $width };
         $entry->{type} = $type if defined $type;
         $entry->{domain} = $domain if defined $domain;
+        $entry->{reset_value} = $reset_value if defined $reset_value;
+        $entry->{default_value} = $default_value if defined $default_value;
         if ($dir eq 'input')  { push @inputs,  $entry; }
         if ($dir eq 'output') { push @outputs, $entry; }
     }
 
     return { inputs => \@inputs, outputs => \@outputs };
+}
+
+sub _parse_interface_output_static_value($option, $port_name) {
+    my $option_name = $option->[0];
+    confess "Error: interface output '$port_name' $option_name requires '($option_name V)' with a non-negative integer literal\n"
+        unless @$option == 2
+            && defined($option->[1])
+            && !ref($option->[1])
+            && $option->[1] =~ /\A(?:0|[1-9][0-9]*)\z/;
+    return $option->[1];
+}
+
+sub _validate_interface_output_static_value_fits($port_name, $option_name, $value, $width) {
+    my $limit = Math::BigInt->new(2)->bpow($width + 0);
+    my $actual = Math::BigInt->new($value);
+    confess "Error: interface output '$port_name' $option_name value $value does not fit in $width bit(s)\n"
+        if $actual->bcmp($limit) >= 0;
 }
 
 sub _parse_storage($self, $clause, $actor_name) {

@@ -8,11 +8,12 @@ answers:
   - "what comes after .712?"
   - "what gap blocks ppif/ahb_lite_subordinate.ppif implementation?"
   - "what did .713 later select after the AHB subordinate substrate audit?"
+  - "did .714 close the generated IAL1 output default/reset blocker?"
 date: 2026-06-29
 status: current
 tags: [ial2, ahb, subordinate, generated-ial1, substrate-audit, output-defaults]
-evidence: docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md; docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md; fsm/ahb_lite_subordinate.fsm; docs/IAL2_APB_COMPLETER_GENERATED_IAL1_SUBSTRATE_AUDIT.md; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
-reverify: ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.712|IAL2-FEATURE-COMPLETENESS-FRONTIER\.713|IAL2-FEATURE-COMPLETENESS-FRONTIER\.714|HREADYOUT|output default|generated-IAL1 output default/reset|ppif/ahb_lite_subordinate\.ppif|\\(reset VALUE\\)|\\(default VALUE\\)' docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md
+evidence: docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md; docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md; docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md; docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md; fsm/ahb_lite_subordinate.fsm; docs/IAL2_APB_COMPLETER_GENERATED_IAL1_SUBSTRATE_AUDIT.md; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
+reverify: ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.712|IAL2-FEATURE-COMPLETENESS-FRONTIER\.713|IAL2-FEATURE-COMPLETENESS-FRONTIER\.714|IAL2-FEATURE-COMPLETENESS-FRONTIER\.715|HREADYOUT|output default|generated-IAL1 output default/reset|ppif/ahb_lite_subordinate\.ppif|\\(reset VALUE\\)|\\(default VALUE\\)' docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.712` finds that the generated-IAL1 path
@@ -32,5 +33,7 @@ the generated `.fsm` review artifact.
 contract-selection slice for generated-IAL1 output default/reset semantics,
 before `ppif/ahb_lite_subordinate.ppif` implementation.
 
-Later status: `.713` selects additive generated-IAL1 interface output options
-`(reset VALUE)` and `(default VALUE)`, with implementation owned by `.714`.
+Later status: `.713` selected additive generated-IAL1 interface output options
+`(reset VALUE)` and `(default VALUE)`, and `.714` implemented the selected
+non-negative integer literal, resolved-width substrate. Public AHB subordinate
+`.ppif` behavior is now routed to `.715`.

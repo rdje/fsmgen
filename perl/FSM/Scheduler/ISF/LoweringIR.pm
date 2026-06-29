@@ -141,7 +141,11 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
     # ISF-REGISTER-RESET-VALUES: storage var reset values (actor-level) + this transaction's
     # local reset values (the 10th _build_transaction return).
-    my %module_reset_values = (_declared_storage_reset_values($actor), %{$reset_values || {}});
+    my %module_reset_values = (
+        _declared_storage_reset_values($actor),
+        _declared_interface_output_reset_values($actor),
+        %{$reset_values || {}},
+    );
     my %module_signal_widths = _declared_storage_signal_widths($actor);
     my %module_storage_roles = _declared_storage_roles($actor);
     my %module_signal_type_refs = (
@@ -1108,7 +1112,11 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     my %storage_roles = _declared_storage_roles($actor);
     # ISF-REGISTER-RESET-VALUES: signal -> hardware reset value (opt-in). Seed with the
     # actor-level storage var reset values; per-transaction local reset values merge in below.
-    my %reset_values = _declared_storage_reset_values($actor);
+    my %reset_values = (
+        _declared_storage_reset_values($actor),
+        _declared_interface_output_reset_values($actor),
+    );
+    my %output_defaults = _declared_interface_output_default_values($actor);
     my %signal_type_refs = (
         _actor_interface_signal_type_refs($actor),
         _declared_storage_signal_type_refs($actor),
@@ -1198,6 +1206,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     # named point/activation's `state_active` (module-wide; an (at …) may reference a point in
     # another transaction). Unknown names fail closed.
     _resolve_at_references(\@immediate_assertions, \%point_bindings, \@states, \%ctrs);
+    _apply_interface_output_defaults_to_entry_states(\@states, \%output_defaults);
 
     my $ir = {
         actor_name => $actor->{actor_name},
@@ -1223,6 +1232,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         signal_type_refs => \%signal_type_refs,
         storage_roles => \%storage_roles,
         reset_values => \%reset_values,
+        output_defaults => \%output_defaults,
         children   => {},
         spawn_instances => \@spawn_instances,
         temporal_contracts => \@temporal_contracts,
@@ -4341,6 +4351,52 @@ sub _declared_storage_reset_values {
     }
 
     return %resets;
+}
+
+sub _declared_interface_output_reset_values {
+    my ($actor) = @_;
+    my %resets;
+
+    for my $output (@{($actor->{interface} || {})->{outputs} || []}) {
+        $resets{$output->{name}} = $output->{reset_value}
+            if defined $output->{reset_value};
+    }
+
+    return %resets;
+}
+
+sub _declared_interface_output_default_values {
+    my ($actor) = @_;
+    my %defaults;
+
+    for my $output (@{($actor->{interface} || {})->{outputs} || []}) {
+        $defaults{$output->{name}} = $output->{default_value}
+            if defined $output->{default_value};
+    }
+
+    return %defaults;
+}
+
+sub _apply_interface_output_defaults_to_entry_states {
+    my ($states, $defaults) = @_;
+    return unless ref($defaults) eq 'HASH' && %$defaults;
+
+    my @assignments = map {
+        {
+            lhs         => $_,
+            rhs         => $defaults->{$_},
+            op          => '<-',
+            source_kind => 'interface_output_default',
+        }
+    } sort keys %$defaults;
+
+    for my $state (@{$states || []}) {
+        next unless ref($state) eq 'HASH' && ($state->{kind} // '') eq 'entry';
+        my %already_assigned = map { ($_->{lhs} // '') => 1 } @{$state->{assignments} || []};
+        my @missing = grep { !$already_assigned{$_->{lhs}} } @assignments;
+        next unless @missing;
+        unshift @{$state->{assignments}}, map { { %$_ } } @missing;
+    }
 }
 
 sub _actor_interface_signal_type_refs {

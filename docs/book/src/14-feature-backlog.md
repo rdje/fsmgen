@@ -9796,9 +9796,13 @@ prove reset/idle outputs such as `HREADYOUT=1`; `.713` owns that no-behavior
 contract selection.
 [IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION](../../IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md)
 selects the `.713` generated-IAL1 actor interface output `(reset VALUE)` and
-`(default VALUE)` contract and routes implementation to `.714`. AHB
-subordinate `.ppif` behavior remains deferred until that substrate is
-implemented and proven.
+`(default VALUE)` contract and routes implementation to `.714`.
+[IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR](../../IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md)
+records the `.714` shipped substrate: generated-IAL1 outputs now accept
+non-negative integer literal reset/default values on resolved positive integer
+widths, lower reset metadata into generated `.fsm` `+size`, and lower idle
+defaults into generated transaction `<-` output assignments. `.715` now owns
+public AHB subordinate `.ppif` implementation over that substrate.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

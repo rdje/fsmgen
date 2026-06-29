@@ -762,6 +762,15 @@ The actor-shell interface subshape is checked by
 to keep the parser-returned `interface` inputs/outputs arrays and public port
 entry `name`/`width` shape exact across direct and manifest views without
 freezing the rest of the raw actor hash.
+Generated-IAL1 output reset/default metadata is checked by
+[t/1476-isf-output-default-reset.t](../t/1476-isf-output-default-reset.t).
+Actor-level interface outputs may carry parser-validated `reset_value` and
+`default_value` fields when the source uses `(reset V)` or `(default V)` with
+a non-negative integer literal `V` that fits the resolved positive integer
+width. Reset metadata lowers to generated `.fsm` `+size`; default metadata
+lowers to idle/quiescent `<-` output assignments. Inputs, type-referenced
+outputs, unresolved-width outputs, negative values, malformed arity, and
+too-wide values fail closed.
 Actor top-level interface widths backed by actor-local scalar parameter
 defaults are checked by
 [t/1333-isf-interface-actor-param-widths.t](../t/1333-isf-interface-actor-param-widths.t)

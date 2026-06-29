@@ -281,11 +281,12 @@ but direct implementation remains deferred because reset/idle output behavior
 must be reviewable in generated artifacts first. In particular, the selected
 contract needs `HREADYOUT=1`, `HRESP=0`, and `HRDATA=0` at reset/idle.
 
-The current owned prerequisite is `.714`, generated-IAL1 output default/reset
-substrate implementation before AHB subordinate implementation. `.713`
-selected additive generated-IAL1 actor interface output `(reset VALUE)` and
-`(default VALUE)` options and routed implementation to `.714`; public AHB
-subordinate `.ppif` behavior remains deferred until that substrate is proven.
+The current owned implementation leaf is `.715`, selected public IAL2 AHB
+subordinate `.ppif` behavior over the shipped generated-IAL1 output
+default/reset substrate. `.714` proved the substrate with parser metadata,
+generated `.fsm` reset/default review output, and strict SystemVerilog output
+reset/default coverage. Public AHB subordinate `.ppif` behavior remains
+deferred until `.715` ships it.
 
 ## Validation Used For This Chapter
 
@@ -305,6 +306,7 @@ prove -v t/1474-ial2-ahb-profile-alias.t
 ./bin/fsmgen --quiet --output /tmp/fsmgen_ahb_lite_subordinate.sv fsm/ahb_lite_subordinate.fsm
 rg -n "size_q_eq|size_q_ne|HRESP <- 1|HREADYOUT <- 1|reg_data_q <- HWDATA|HTRANS == 2'b1" /tmp/fsmgen_ahb_lite_subordinate.sv
 rg -n "ppif/ahb_lite_subordinate\\.ppif|ahb-subordinate|intent\\.ppif_ahb_lite_subordinate|HREADYOUT|output default" docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md docs/book/src/16c-ial2-ahb.md
+prove -v t/1476-isf-output-default-reset.t
 ```
 
 The `.ppif` and `.ahb` probes passed and generated `amba_requester.isf`,
@@ -316,6 +318,7 @@ the selected transfer, word-size, write-update, and two-cycle ERROR response
 paths.
 The generated-substrate audit confirmed core AHB subordinate transaction
 representability, while routing generated-IAL1 output default/reset semantics
-to the next owned slice before public subordinate behavior ships. The follow-on
-contract selector chose `(reset VALUE)` and `(default VALUE)` output metadata,
-with implementation owned by `.714`.
+to a smaller owned substrate before public subordinate behavior ships. The
+follow-on contract selector chose `(reset VALUE)` and `(default VALUE)` output
+metadata, and `.714` shipped parser/lowering/strict-HDL coverage for that
+substrate. Public subordinate behavior is now owned by `.715`.

@@ -1757,7 +1757,10 @@ Watchdog rules:
   (output name)
   (output name (width N))
   (output name (width PARAM))
-  (output name (width CONST)))
+  (output name (width CONST))
+  (output name (reset V))
+  (output name (default V))
+  (output name (width N) (reset V) (default V)))
 ```
 
 Default width is `1`. Interface entries lower into `.fsm` `+size` entries.
@@ -1782,6 +1785,14 @@ If an inferred scheduler storage name matches a declared interface port, the
 declared port entry is kept and the inferred duplicate is suppressed.
 Output ports are marked as public outputs by the `.fsm` emitter when assigned
 from drive/rule output paths.
+
+Output entries may carry `(reset V)` and `(default V)` metadata when `V` is a
+non-negative integer literal that fits the resolved positive integer output
+width. `(reset V)` lowers to generated `.fsm` `+size` reset metadata.
+`(default V)` lowers to generated transaction idle/quiescent `<-` output
+assignments, matching the generated drive output assignment family. Inputs,
+type-referenced outputs, unresolved-width outputs, negative values,
+malformed arity, and too-wide values fail closed.
 
 ### 5.1 Actor-Owned Storage
 

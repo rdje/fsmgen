@@ -215,8 +215,8 @@ whose domains do not declare resets.
 (interface
   (input  start)
   (input  addr (width 32))
-  (output done)
-  (output rdata (width 32)))
+  (output done (reset 0) (default 0))
+  (output rdata (width 32) (reset 0) (default 0)))
 ```
 
 ↓
@@ -225,8 +225,8 @@ whose domains do not declare resets.
 (+size
   (start 1)
   (addr 32)
-  (done 1)
-  (rdata 32))
+  (done 1 (reset 0))
+  (rdata 32 (reset 0)))
 ```
 
 Declared interface ports are emitted once. If inferred scheduler storage such
@@ -235,6 +235,21 @@ inferred duplicate is suppressed.
 
 When generated scheduled `.fsm` assigns a declared output port, the assignment
 LHS carries the normal `.fsm` output marker, for example `done>` or `rdata>`.
+
+Output `(default V)` metadata lowers into generated transaction idle states as
+flopped output assignments:
+
+```lisp
+(main_idle_0
+  (<- (done> 0))
+  (<- (rdata> 0))
+  ...)
+```
+
+The first shipped reset/default surface accepts non-negative integer literals
+on outputs whose widths resolve to positive integers. Inputs,
+type-referenced outputs, unresolved-width outputs, negative values,
+malformed values, and too-wide values fail closed.
 
 ## Reset → +system
 

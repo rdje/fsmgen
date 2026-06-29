@@ -6007,6 +6007,19 @@ test behavior, schedule/check/semantic JSON behavior, generated artifact,
 HDL/runtime behavior, seed behavior, direct backend behavior,
 verification-output generation, backend-language variant, AXI, APB, AHB, or
 VHDL behavior changed in `.713`.
+`.714` now ships the generated-IAL1 output default/reset substrate. The ISF
+parser accepts `(reset VALUE)` and `(default VALUE)` on actor-level outputs
+when `VALUE` is a non-negative integer literal that fits the resolved positive
+integer output width, exposes `reset_value`/`default_value` metadata, and
+rejects inputs, malformed values, negative values, too-wide values, unresolved
+widths, and type-referenced outputs. Lowering emits reset metadata into
+generated `.fsm` `+size` and idle/quiescent defaults as `<-` output
+assignments so they compose with generated named drives. `.715` now owns
+selected public IAL2 AHB subordinate `.ppif` implementation over this
+substrate. No AHB subordinate parser/generator/source/sample/support-accounting
+behavior, direct backend behavior, verification-output generation,
+backend-language variant, AXI, APB, AHB protocol behavior, or VHDL behavior
+changed in `.714`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

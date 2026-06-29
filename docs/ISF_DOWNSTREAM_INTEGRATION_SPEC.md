@@ -542,7 +542,10 @@ Interface:
   (output name)
   (output name (width N))
   (output name (width PARAM))
-  (output name (width CONST)))
+  (output name (width CONST))
+  (output name (reset V))
+  (output name (default V))
+  (output name (width N) (reset V) (default V)))
 ```
 
 Rules:
@@ -564,6 +567,13 @@ Rules:
 - Port names are unique across both directions.
 - `(domain NAME)` is accepted on interface entries when named domains are in
   use.
+- Output ports may carry `(reset V)` and `(default V)` metadata when `V` is a
+  non-negative integer literal that fits the resolved positive integer output
+  width. `(reset V)` lowers to generated `.fsm` `+size` reset metadata.
+  `(default V)` lowers to generated transaction idle/quiescent `<-` output
+  assignments. This output metadata is rejected on inputs, type-referenced
+  outputs, unresolved-width outputs, negative values, malformed arity, and
+  too-wide values.
 - Malformed directions, duplicate names, nested names, and unsupported widths
   fail closed.
 

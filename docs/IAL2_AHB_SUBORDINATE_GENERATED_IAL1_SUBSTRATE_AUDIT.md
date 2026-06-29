@@ -34,8 +34,15 @@ code changes.
 
 Later status: `.713` selected additive `(reset VALUE)` and
 `(default VALUE)` options on generated-IAL1 actor interface outputs and routed
-implementation to `.714`. AHB subordinate parser/generator/source behavior
-remains deferred until that substrate is implemented and proven.
+implementation to `.714`. At that point, AHB subordinate
+parser/generator/source behavior remained deferred until the substrate was
+implemented and proven.
+
+Later status: `.714` implemented the generated-IAL1 output default/reset
+substrate and selected `.715` as the public IAL2 AHB subordinate
+implementation owner. The output default/reset blocker recorded by this audit
+is closed for the selected non-negative integer literal, resolved-width
+surface; broader type-aware and symbolic values remain deferred.
 
 No parser behavior, generator behavior, public source sample,
 support-accounting catalog behavior, capability-manifest behavior, test

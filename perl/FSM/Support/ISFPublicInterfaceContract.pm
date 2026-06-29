@@ -558,6 +558,7 @@ sub build_isf_public_interface_contract {
             't/1359-isf-wait-package-constant-counts.t',
             't/1360-isf-repeat-package-constant-counts.t',
             't/1367-isf-data-op-transaction-param-widths.t',
+            't/1476-isf-output-default-reset.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -913,7 +914,7 @@ sub isf_public_interface_actor_shell_timing_shape {
 }
 
 sub isf_public_interface_actor_shell_interface_shape {
-    return 'interface has inputs and outputs arrays; each public port entry has unique non-empty scalar name and positive integer width, defaulting omitted source widths to 1; actor top-level interface width parameters, constants, and qualified imported package scalar constants are accepted when they resolve to positive integers, and the public port entry carries the resolved integer width; accepted clock-domain sources may include scalar domain ownership metadata on port entries';
+    return 'interface has inputs and outputs arrays; each public port entry has unique non-empty scalar name and positive integer width, defaulting omitted source widths to 1; actor top-level interface width parameters, constants, and qualified imported package scalar constants are accepted when they resolve to positive integers, and the public port entry carries the resolved integer width; output entries may carry parser-validated reset_value/default_value non-negative integer literals when the output width is a resolved positive integer and the value fits that width; accepted clock-domain sources may include scalar domain ownership metadata on port entries';
 }
 
 sub isf_public_interface_actor_shell_transaction_shape {

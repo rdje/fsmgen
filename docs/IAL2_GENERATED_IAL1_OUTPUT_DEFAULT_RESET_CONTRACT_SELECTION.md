@@ -24,6 +24,13 @@ The first implementation owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.714`.
 only for the selected output default/reset substrate. It must not implement
 AHB subordinate `.ppif` parser/generator/source behavior.
 
+Later status: `.714` implemented this substrate in
+[docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md](IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md).
+The shipped idle/default assignment family is `<-`, not the illustrative `=`
+shown in the original selector draft, so generated defaults compose with
+existing generated named-drive output assignments as one registered output
+family.
+
 No parser behavior, generator behavior, public source sample,
 support-accounting catalog behavior, capability-manifest behavior, test
 behavior, schedule/check/semantic JSON behavior, generated tracked artifact,
@@ -79,9 +86,9 @@ state that can wait for a new activation:
 
 ```text
 (ahb_lite_access_idle_0
-  (= (HREADYOUT> 1))
-  (= (HRESP> 0))
-  (= (HRDATA> 0))
+  (<- (HREADYOUT> 1))
+  (<- (HRESP> 0))
+  (<- (HRDATA> 0))
   ...)
 ```
 
@@ -89,6 +96,12 @@ The default assignment must not override explicit named-drive behavior in
 scheduled transaction states. It is the value presented while the generated
 transaction is idle or quiescent, not a replacement for transaction-specific
 `(drive ...)` clauses.
+
+Implementation note: `.714` uses the flopped output assignment operator `<-`
+for generated default assignments because ISF named-drive output assignments
+also lower through that family. This keeps each output in one backend
+assignment class and lets SystemVerilog emission produce resettable registered
+outputs.
 
 For the AHB subordinate follow-on, the generated `.fsm` must prove reset/idle
 behavior equivalent to the direct seed boundary selected in `.708` and shipped

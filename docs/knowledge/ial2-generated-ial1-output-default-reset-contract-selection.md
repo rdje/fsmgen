@@ -10,11 +10,11 @@ answers:
 date: 2026-06-29
 status: current
 tags: [ial1, ial2, isf, output-defaults, reset, ahb, contract-selection]
-evidence: docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md; fsm/ahb_lite_subordinate.fsm; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
-reverify: ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.713|IAL2-FEATURE-COMPLETENESS-FRONTIER\.714|output default/reset|\\(output HREADYOUT \\(reset 1\\) \\(default 1\\)\\)|t/1476-isf-output-default-reset\.t' docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md
+evidence: docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md; docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md; docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md; fsm/ahb_lite_subordinate.fsm; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
+reverify: ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.713|IAL2-FEATURE-COMPLETENESS-FRONTIER\.714|IAL2-FEATURE-COMPLETENESS-FRONTIER\.715|output default/reset|\\(output HREADYOUT \\(reset 1\\) \\(default 1\\)\\)|t/1476-isf-output-default-reset\.t' docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md
 ---
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.713` selects generated-IAL1 output
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.713` selected generated-IAL1 output
 default/reset semantics without implementation.
 
 The selected source surface is additive metadata on actor-level interface
@@ -30,6 +30,7 @@ resolved positive integer widths. `(reset VALUE)` must lower to generated
 `.fsm` `+size` reset metadata, while `(default VALUE)` must lower to
 reviewable idle/quiescent output assignments.
 
-`.713` selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.714` as the implementation
-owner for this substrate. AHB subordinate `.ppif` parser/generator/source
-behavior remains deferred until the substrate is implemented and proven.
+`.713` selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.714` as the implementation
+owner for this substrate. `.714` has since shipped the parser/lowering/HDL
+substrate with `<-` idle default assignments, and AHB subordinate `.ppif`
+parser/generator/source behavior is routed to `.715`.
