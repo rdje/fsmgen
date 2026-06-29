@@ -9892,6 +9892,13 @@ six-entrypoint AHB surface, the remaining
 `ahb_multi_subordinate_decode_deferred` residue, the current singular parser
 and generator assumptions, and the temporary second-subordinate child
 fail-closed diagnostic. No behavior changes until a later owner is selected.
+`.728` selects `.729`, public contract selection for a first bounded
+two-subordinate AHB interconnect/decode surface. The audit finds no separate
+lower-layer repair is needed before contract selection, but direct
+implementation remains deferred until the source syntax, child/window
+cardinality, per-subordinate wiring, generated artifacts, reports, support
+accounting, diagnostics, residue migration, validation, and rollback contract
+are selected.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

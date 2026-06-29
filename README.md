@@ -5123,6 +5123,15 @@ child still fails closed under duplicate `(subordinate ...)` validation.
 objects, multiple child bindings, multiple static address windows, decoded
 select naming, local-address translation, report/support-accounting shape,
 diagnostics, validation, and rollback before any behavior changes.
+`.728` now selects `.729`, a no-behavior public contract selection for the
+first bounded two-subordinate AHB interconnect/decode surface. The audit found
+that APB multi-peripheral precedent and AHB endpoint artifact naming make a
+bounded implementation plausible without a separate lower-layer repair, but
+direct implementation must wait until `.729` freezes the source paths,
+top-level object cardinality, repeated subordinate child/window syntax,
+per-subordinate wiring, generated artifact names, report topology,
+support-accounting identities, residue migration, diagnostics, validation, and
+rollback contract.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7796,6 +7805,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.725` no-behavior contract selection for `ppif/ahb_interconnect.ahb`, support identity `intent.ahb_profile_alias_interconnect`, generated aggregate review artifacts, and `.726` implementation owner.
 - `docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.726` shipped public `ppif/ahb_interconnect.ahb` aggregate profile alias, support accounting, residue removal, generated review artifacts, and validation.
 - `docs/IAL2_POST_AHB_INTERCONNECT_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.727` no-behavior selector after aggregate `.ahb` alias shipment and selects `.728`, bounded multi-subordinate AHB interconnect/decode readiness audit.
+- `docs/IAL2_AHB_MULTI_SUBORDINATE_DECODE_READINESS_AUDIT.md` — records the `.728` no-behavior readiness audit for bounded multi-subordinate AHB interconnect/decode and selects `.729`, public contract selection for a first bounded two-subordinate surface.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

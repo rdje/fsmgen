@@ -6160,6 +6160,14 @@ six-entrypoint AHB surface, the remaining
 `ahb_multi_subordinate_decode_deferred` residue, the current singular parser
 and generator assumptions, and the temporary second-subordinate child
 fail-closed diagnostic. No behavior changes until a later owner is selected.
+`.728` now selects `.729`, public contract selection for a first bounded
+two-subordinate AHB interconnect/decode surface. The audit finds no separate
+lower-layer repair is needed before contract selection, because APB
+multi-peripheral precedent covers list-shaped decode mechanics and AHB
+endpoint generation can produce unique artifacts from distinct object names.
+Direct implementation remains deferred until `.729` freezes syntax,
+cardinality, per-subordinate wiring, generated artifacts, reports, support
+accounting, diagnostics, residue migration, validation, and rollback.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

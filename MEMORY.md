@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.727: select AHB multi-subordinate readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.728` is active; audit bounded multi-subordinate AHB interconnect/decode readiness after aggregate `.ahb` alias shipment.
-- recently_done: `.727` selected `.728`, a no-behavior readiness audit for bounded multi-subordinate AHB interconnect/decode after `.726` shipped `ppif/ahb_interconnect.ahb`. The selector reverified the aggregate `.ahb` strict check/support accounting, current aggregate `.ahb` residue, duplicate subordinate child fail-closed diagnostics, and singular parser/generator assumptions around one subordinate child and one static address window.
-- in_flight_uncommitted: none after the `.727` commit; ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
-- blockers: The `.705` AHB source-reference artifact blocker is resolved through `.706`; `.707`-.725 now carry source facts, direct seed, public requester/subordinate/interconnect contracts, generated-IAL1 output reset/default substrate, public `.ppif` behavior, endpoint `.ahb` aliases, and the aggregate `.ahb` implementation route. Broad corpus/accounting work must remain guarded.
-- next_action: Run `IAL2-FEATURE-COMPLETENESS-FRONTIER.728`: audit bounded multi-subordinate AHB interconnect/decode readiness without behavior changes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.728: audit AHB multi-subordinate readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.729` is active; select the public contract for a bounded two-subordinate AHB interconnect/decode surface.
+- recently_done: `.728` selected `.729`, no-behavior public contract selection for the first bounded two-subordinate AHB interconnect/decode surface. The audit found the current AHB parser/generator/report path is singular, extra subordinate object/child/window probes fail closed, APB multi-peripheral precedent supplies list-shaped comparison evidence, and no separate lower-layer repair is needed before contract selection.
+- in_flight_uncommitted: none after the `.728` commit; ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- blockers: The `.705` AHB source-reference artifact blocker is resolved through `.706`; `.707`-.728 now carry source facts, direct seed, public requester/subordinate/interconnect contracts, generated-IAL1 output reset/default substrate, public `.ppif` behavior, endpoint/aggregate `.ahb` aliases, and the two-subordinate contract-selection route. Broad corpus/accounting work must remain guarded.
+- next_action: Run `IAL2-FEATURE-COMPLETENESS-FRONTIER.729`: select the bounded two-subordinate AHB interconnect/decode public contract without behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
