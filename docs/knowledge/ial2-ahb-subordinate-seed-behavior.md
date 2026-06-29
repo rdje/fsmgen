@@ -33,6 +33,7 @@ data-phase wait states through `wait_cycles`, and reports unsupported `SEQ`,
 unsupported sizes, and unmapped addresses through the source-backed two-cycle
 ERROR response.
 
-The selected next owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.710`, a
-no-behavior readiness audit for IAL2 AHB completer/subordinate source work now
-that the lower-layer direct seed exists.
+The selected next owner was `IAL2-FEATURE-COMPLETENESS-FRONTIER.710`, a
+no-behavior readiness audit for IAL2 AHB completer/subordinate source work.
+`.710` selected `.711`, public IAL2 AHB subordinate/completer contract
+selection, before any parser/generator/source behavior changes.

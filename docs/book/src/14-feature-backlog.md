@@ -9776,7 +9776,9 @@ direct seed is `fsm/ahb_lite_subordinate.fsm`, module
 single-register behavior.
 [IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR](../../IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md)
 records the `.709` shipped direct seed behavior and support-accounting entry.
-`.710` now owns the next no-behavior readiness audit before any IAL2 AHB
+[IAL2_AHB_COMPLETER_SUBORDINATE_POST_SEED_READINESS_AUDIT](../../IAL2_AHB_COMPLETER_SUBORDINATE_POST_SEED_READINESS_AUDIT.md)
+records the `.710` no-behavior post-seed readiness audit and selects `.711`,
+public IAL2 AHB subordinate/completer contract selection, before any IAL2 AHB
 completer/subordinate behavior ships.
 
 Post APB surface-sync selector:

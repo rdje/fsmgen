@@ -25,6 +25,10 @@ The next exact owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.710`, a
 no-behavior readiness audit for IAL2 AHB completer/subordinate source work now
 that the lower-layer direct seed exists.
 
+Later status: `.710` selected `.711`, public IAL2 AHB
+subordinate/completer contract selection, before any parser/generator/source
+behavior changes.
+
 ## Shipped Direct Fixture
 
 The shipped port set is:

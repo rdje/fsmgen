@@ -232,8 +232,7 @@ The `.ppif` report keeps its historical `.ahb` profile-alias residue for the
 generic `.ppif` source. The shipped `.ahb` alias removes that stale residue
 from alias reports while keeping the broader AHB residue above.
 
-The next AHB work is IAL2 AHB completer/subordinate readiness after the
-lower-layer seed.
+The next AHB work is public IAL2 AHB subordinate/completer contract selection.
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` recorded that no AHB/AHB-Lite source
 reference artifact was available, `.706` imported the user-approved Arm AMBA
 AHB Protocol Specification PDF under `docs/vendor/arm/amba/ahb/`, `.707`
@@ -251,6 +250,8 @@ OKAY, uses bounded data-phase wait states, and reports unsupported `SEQ`,
 unsupported sizes, and unmapped addresses through the source-backed two-cycle
 ERROR response. IAL2 AHB completer/subordinate source, parser, generator,
 support-accounting, and manifest behavior still remain deferred.
+`.710` audits post-seed readiness and selects `.711`, public IAL2 AHB
+subordinate/completer contract selection, before any such behavior changes.
 
 ## Validation Used For This Chapter
 

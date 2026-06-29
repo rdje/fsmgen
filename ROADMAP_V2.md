@@ -5954,6 +5954,18 @@ completer/subordinate alias behavior, interconnect/decode, scoreboards,
 full-manager behavior, direct backend behavior, verification-output
 generation, backend-language variant, AXI, APB, or VHDL behavior changed in
 `.709`.
+`.710` audits IAL2 AHB completer/subordinate readiness after the direct seed
+shipped. The audit finds the lower-layer endpoint evidence gap closed by
+`fsm/ahb_lite_subordinate.fsm` and `protocol.ahb_lite_subordinate`, but
+rejects immediate implementation until the public source shape, generated
+`.isf`/`.fsm` review-artifact names, report schema, support-accounting
+identity, diagnostics, validation, residue, and next owner are selected.
+`.711` now owns public IAL2 AHB subordinate/completer contract selection. No
+parser, generator, public source, support-accounting catalog behavior,
+manifest behavior, test behavior, schedule/check/semantic JSON behavior,
+generated artifact, HDL/runtime behavior, seed behavior, direct backend
+behavior, verification-output generation, backend-language variant, AXI, APB,
+or VHDL behavior changed in `.710`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

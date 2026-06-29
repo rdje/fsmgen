@@ -4929,6 +4929,18 @@ completer/subordinate alias behavior, interconnect/decode, scoreboards,
 full-manager behavior, direct backend behavior, verification-output
 generation, backend-language variant, AXI, APB, or VHDL behavior changed in
 `.709`.
+`.710` audits IAL2 AHB completer/subordinate readiness after the direct seed
+shipped. The audit finds the lower-layer endpoint evidence gap closed by
+`fsm/ahb_lite_subordinate.fsm` and `protocol.ahb_lite_subordinate`, but
+rejects immediate implementation until the public source shape, generated
+`.isf`/`.fsm` review-artifact names, report schema, support-accounting
+identity, diagnostics, validation, residue, and next owner are selected.
+`.711` now owns public IAL2 AHB subordinate/completer contract selection. No
+parser, generator, public source, support-accounting catalog behavior,
+manifest behavior, test behavior, schedule/check/semantic JSON behavior,
+generated artifact, HDL/runtime behavior, seed behavior, direct backend
+behavior, verification-output generation, backend-language variant, AXI, APB,
+or VHDL behavior changed in `.710`.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7584,6 +7596,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md` — records the `.707` first source-backed AHB/AHB-Lite subordinate fact inventory and selects `.708`, lower-layer AHB subordinate seed contract selection.
 - `docs/IAL2_AHB_SUBORDINATE_SEED_CONTRACT_SELECTION.md` — selects the `.708` lower-layer AHB-Lite/common-AHB subordinate direct seed contract: future `fsm/ahb_lite_subordinate.fsm`, module `ahb_lite_subordinate`, support-accounting identity `protocol.ahb_lite_subordinate`, selected port/reset/transfer/response policy, and `.709` implementation owner.
 - `docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md` — documents the `.709` shipped direct `fsm/ahb_lite_subordinate.fsm` seed, support-accounting entry `protocol.ahb_lite_subordinate`, validation, generated-HDL inspection, and `.710` readiness-audit follow-on.
+- `docs/IAL2_AHB_COMPLETER_SUBORDINATE_POST_SEED_READINESS_AUDIT.md` — records the `.710` no-behavior readiness audit after the direct seed and selects `.711`, public IAL2 AHB subordinate/completer contract selection.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
