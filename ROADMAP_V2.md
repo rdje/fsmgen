@@ -6072,6 +6072,19 @@ catalog, capability manifest behavior, focused test behavior,
 schedule/check/semantic JSON behavior, generated artifact, HDL/runtime,
 direct-backend, verification-output, backend-language variant, AXI, APB,
 broader AHB behavior, or VHDL behavior changed in `.719`.
+`.720` now selects `.721`, public AHB interconnect/decode contract selection,
+after auditing endpoint compatibility and residue. The audit found AHB
+interconnect/decode ready for contract selection, not direct implementation:
+requester and subordinate `.ppif`/`.ahb` entrypoints are strict-supported,
+source-backed `HSELx`/`HREADY`/`HREADYOUT` facts exist, and direct behavior
+still needs source vocabulary, one-requester/one-subordinate topology,
+HRESP-width conversion, HREADY aggregation, generated artifact names,
+report/support-accounting contracts, diagnostics, and residue-key migration.
+No parser, generator, source sample, support-accounting catalog, capability
+manifest behavior, focused test behavior, schedule/check/semantic JSON
+behavior, generated artifact, HDL/runtime, direct-backend, verification-output,
+backend-language variant, AXI, APB, broader AHB behavior, or VHDL behavior
+changed in `.720`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

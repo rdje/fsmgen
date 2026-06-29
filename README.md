@@ -5044,6 +5044,13 @@ shipped. Live schedule probes confirmed requester-side
 `ahb_interconnect_generation_deferred` residue remain; `.720` must audit
 topology/decode readiness and residue-key convergence before any behavior
 change.
+`.720` now selects `.721`, public AHB interconnect/decode contract selection,
+after auditing endpoint compatibility and residue. The first selected boundary
+is deliberately conservative: generic `.ppif`, one requester, one subordinate,
+one static address window, generated AHB-specific review artifacts, no
+aggregate `.ahb` alias yet, no multi-subordinate fabric, no multiple managers,
+no bus matrices, no optional signals, no burst `SEQ`, no byte-lane/narrow
+transfer behavior, and no direct backend or verification-output route.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7709,6 +7716,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_SUBORDINATE_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.717` no-behavior selector and selects `.718`, bounded public AHB subordinate `.ahb` profile-alias implementation at `ppif/ahb_lite_subordinate.ahb` with support identity `intent.ahb_profile_alias_subordinate`.
 - `docs/IAL2_AHB_SUBORDINATE_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.718` shipped public `ppif/ahb_lite_subordinate.ahb` profile-alias behavior, support accounting, generated review artifacts, residue movement, diagnostics, and validation.
 - `docs/IAL2_POST_AHB_SUBORDINATE_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.719` no-behavior selector after requester and subordinate `.ppif`/`.ahb` entrypoints shipped and selects `.720`, AHB interconnect/decode readiness audit.
+- `docs/IAL2_AHB_INTERCONNECT_DECODE_READINESS_AUDIT.md` — records the `.720` no-behavior readiness audit and selects `.721`, public AHB interconnect/decode contract selection for a conservative one-requester/one-subordinate generic `.ppif` boundary.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

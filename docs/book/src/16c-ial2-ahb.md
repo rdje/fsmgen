@@ -356,8 +356,8 @@ protocol-intent reports, support accounting, and IAL2 diagnostics.
 The following are not shipped by the current AHB IAL2 surface:
 
 - AHB completer behavior;
-- AHB interconnect/decode generation; the active task-tree owner audits this
-  readiness next before any fabric behavior;
+- AHB interconnect/decode generation; the active task-tree owner is selecting
+  the conservative public contract before any fabric behavior;
 - optional/property-gated AHB signals such as `HBURST`, `HPROT`, `HMASTLOCK`,
   and AHB5 additions on the subordinate side;
 - burst `SEQ` continuation support in the subordinate;

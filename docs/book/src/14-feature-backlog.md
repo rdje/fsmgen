@@ -9834,6 +9834,10 @@ and subordinate `.ppif`/`.ahb` public entrypoints shipped. The readiness audit
 must reconcile requester-side `ahb_interconnect_decode_deferred` and
 subordinate-side `ahb_interconnect_generation_deferred` residue before any
 fabric behavior.
+`.720` selects `.721`, public AHB interconnect/decode contract selection. The
+first contract boundary is generic `.ppif`, one requester, one subordinate, one
+static address window, generated AHB-specific review artifacts, and no
+multi-subordinate fabric or aggregate `.ahb` alias yet.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
