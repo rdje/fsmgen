@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.720: audit AHB interconnect readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.721` is active; select the public AHB interconnect/decode contract before behavior changes.
-- recently_done: `.720` audited AHB interconnect/decode readiness and selected `.721`, public AHB interconnect/decode contract selection. The audit selected a conservative generic `.ppif` first boundary: one requester, one subordinate, one static address window, generated AHB-specific review artifacts, no aggregate `.ahb` alias yet, no multi-subordinate fabric, no multiple managers, no bus matrices, no optional signals, no burst `SEQ`, no byte-lane/narrow-transfer behavior, no direct backend, no verification-output route, no AXI/APB/VHDL behavior. Live probes confirmed all four requester/subordinate `.ppif`/`.ahb` entrypoints remain strict-supported.
-- in_flight_uncommitted: `.720` closeout is ready to commit through `COMMIT.md`; ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.721: select AHB interconnect contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.722` is active; audit generated-IAL1/IAL0 substrate readiness for the selected AHB interconnect/decode contract.
+- recently_done: `.721` selected the first public AHB interconnect/decode contract and routed `.722`, generated-substrate audit, before implementation. The selected future source is `ppif/ahb_interconnect.ppif`, report schema `fsmgen.ial2.protocol_intent.ahb_interconnect.v1`, support identity `intent.ppif_ahb_interconnect`, coverage `ial2_ppif_ahb_interconnect_pipeline_cli`, generated `ahb_interconnect.isf`/`.fsm`, aggregate `ahb_tb.fsm`, and HDL entry `ahb_tb`. No aggregate `.ahb` alias, multi-subordinate fabric, optional signals, burst `SEQ`, byte-lane/narrow-transfer behavior, direct backend, verification-output route, AXI/APB/VHDL behavior changed.
+- in_flight_uncommitted: `.721` closeout is ready to commit through `COMMIT.md`; ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The `.705` AHB source-reference artifact blocker is resolved through `.706`; `.707`-.715 now carry source facts, direct seed, public contract, generated-IAL1 output reset/default substrate, and public subordinate `.ppif` behavior. Broad guarded prove including `t/248-regression-corpus-accounting.t` stopped before tests because host memory was 91.0% against the 88% RAM-guard cutoff; do not rerun broad corpus/accounting work unguarded.
-- next_action: Run `IAL2-FEATURE-COMPLETENESS-FRONTIER.721`: select the public AHB interconnect/decode contract before behavior changes.
+- next_action: Run `IAL2-FEATURE-COMPLETENESS-FRONTIER.722`: audit generated-IAL1/IAL0 substrate readiness for the selected AHB interconnect/decode contract.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

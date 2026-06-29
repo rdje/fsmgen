@@ -9838,6 +9838,11 @@ fabric behavior.
 first contract boundary is generic `.ppif`, one requester, one subordinate, one
 static address window, generated AHB-specific review artifacts, and no
 multi-subordinate fabric or aggregate `.ahb` alias yet.
+`.721` selects future `ppif/ahb_interconnect.ppif`, report schema
+`fsmgen.ial2.protocol_intent.ahb_interconnect.v1`, support identity
+`intent.ppif_ahb_interconnect`, generated `ahb_interconnect.isf` before
+`ahb_interconnect.fsm`, aggregate `ahb_tb.fsm`, and `.722`, a generated
+substrate audit before implementation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -6085,6 +6085,20 @@ manifest behavior, focused test behavior, schedule/check/semantic JSON
 behavior, generated artifact, HDL/runtime, direct-backend, verification-output,
 backend-language variant, AXI, APB, broader AHB behavior, or VHDL behavior
 changed in `.720`.
+`.721` now selects the first public AHB interconnect/decode contract and routes
+`.722`, generated-IAL1/IAL0 substrate audit, before implementation. The
+selected future source is `ppif/ahb_interconnect.ppif` with explicit
+`(profile ahb)`, one requester, one subordinate, one `ahb-interconnect`
+object, one static address window, generated `ahb_interconnect.isf` before
+`ahb_interconnect.fsm`, aggregate `ahb_tb.fsm`, report schema
+`fsmgen.ial2.protocol_intent.ahb_interconnect.v1`, support identity
+`intent.ppif_ahb_interconnect`, coverage
+`ial2_ppif_ahb_interconnect_pipeline_cli`, and focused
+`t/1478-ial2-ahb-interconnect.t`. No parser, generator, source sample,
+support-accounting catalog, capability manifest behavior, focused test
+behavior, schedule/check/semantic JSON behavior, generated artifact,
+HDL/runtime, direct-backend, verification-output, backend-language variant,
+AXI, APB, broader AHB behavior, or VHDL behavior changed in `.721`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
