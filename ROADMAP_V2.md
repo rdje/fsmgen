@@ -5873,6 +5873,12 @@ behavior, kept `ahb_completer_subordinate_deferred` and
 generator, source, support-accounting, manifest, test-behavior,
 generated-artifact, HDL/runtime, direct-backend, verification-output,
 backend-language variant, AXI, APB, or VHDL behavior changes.
+`.702` now selects `.703`, lower-layer AHB subordinate seed contract
+selection. The audit found current AHB evidence is requester-only
+(`fsm/amba_requester.fsm`, `ppif/ahb_requester.ppif`, and
+`ppif/ahb_requester.ahb`) and no shipped AHB completer/subordinate/slave
+fixture or generator exists, so IAL2 AHB completer/subordinate contract
+selection remains premature until the lower-layer seed is selected.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

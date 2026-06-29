@@ -9736,6 +9736,14 @@ selects `.702`, AHB completer/subordinate readiness audit, after requester
 behavior unchanged and records that interconnect/decode depends on a selected
 subordinate endpoint shape first.
 
+AHB completer/subordinate readiness audit:
+[IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT](../../IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md)
+selects `.703`, lower-layer AHB subordinate seed contract selection. The audit
+finds the current AHB evidence is requester-only and that no shipped AHB
+completer/subordinate/slave fixture or generator exists, so IAL2 AHB
+completer/subordinate contract selection remains deferred until the seed
+contract is selected.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

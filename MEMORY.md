@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.701: select AHB completer readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.702` is pending after `.701`; audit AHB completer/subordinate readiness after bounded requester `.ppif` and `.ahb` support shipped.
-- recently_done: `.701` selected `.702`, AHB completer/subordinate readiness audit, after current AHB requester `.ppif` and `.ahb` support shipped; the selector revalidated requester schedule/report paths, kept `ahb_completer_subordinate_deferred` and `ahb_interconnect_decode_deferred` as real future owners, and made no behavior changes. `.700` shipped bounded AHB `.ahb` profile-alias support; `.697` shipped the bounded AHB requester `.ppif`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.702: audit AHB completer readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.703` is pending after `.702`; select the lower-layer AHB subordinate seed contract before any AHB subordinate behavior.
+- recently_done: `.702` audited AHB completer/subordinate readiness, found current AHB evidence is requester-only with no shipped AHB subordinate fixture/generator, and selected `.703`, lower-layer AHB subordinate seed contract selection; `.701` selected the audit; `.700` shipped bounded `.ahb`; `.697` shipped bounded requester `.ppif`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan. During `.569`, broad `t/1436-ial2-ppif-parser-cli.t` attempts were not used as closeout: the APB-relevant focused tests and direct probes passed, but the broad run sat in an unrelated AXI subprocess/pipe wait after all visible subtests had passed. During `.634`, grouped RAM-guarded focused test attempts stopped before tests because host memory was already 96.3% against the 88% cutoff; direct focused tests passed.
-- next_action: Execute `.702`: audit whether the first AHB completer/subordinate owner is ready for public contract selection or needs a lower-layer seed/prerequisite; do not change parser/generator/source/support-accounting/manifest behavior.
+- next_action: Execute `.703`: select the exact lower-layer AHB subordinate seed contract, including path/module name, vocabulary, signal set, reset/default outputs, transfer/wait/storage/response policy, support accounting, validation, rollback, and future IAL2 contract questions; do not add the seed or behavior.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

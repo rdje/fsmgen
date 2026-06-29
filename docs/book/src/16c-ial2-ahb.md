@@ -209,11 +209,12 @@ generic `.ppif` source. The shipped `.ahb` alias removes that stale residue
 from alias reports while keeping the broader AHB residue above.
 
 The next selected AHB owner is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.702`, a readiness audit for AHB
-completer/subordinate generation. That audit must choose whether a public
-contract can be selected next or whether a lower-layer subordinate seed or
-other prerequisite is needed first. The selection does not ship
-completer/subordinate behavior.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.703`, lower-layer AHB subordinate seed
+contract selection. The `.702` readiness audit found the current AHB evidence
+is requester-only and that no shipped AHB completer/subordinate/slave fixture
+or generator exists. The lower-layer seed contract must be selected before any
+IAL2 AHB completer/subordinate source, parser, generator, support-accounting,
+or manifest behavior ships.
 
 ## Validation Used For This Chapter
 
