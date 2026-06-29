@@ -9693,7 +9693,7 @@ source paths in check JSON and semantic JSON, and support-account as
 ```
 
 Remaining unsupported aliases are `.chi`, `.ace`, `.atb`, `.smbus`, `.i2s`,
-`.pif`, and `.ppi`. `.ahb` is a separate shipped AHB requester profile alias
+`.pif`, and `.ppi`. `.ahb` is a separate shipped AHB requester and subordinate profile alias
 after `.700`. APB requester busy/status, multi-register decode,
 sidebands, alternate widths, multi-peripheral decode, back-to-back policy,
 implicit profile inference, direct backend lowering, verification-output
@@ -9811,7 +9811,7 @@ HDL module `ahb_lite_subordinate`, reports schema
 `.ahb` alias, optional signals, burst `SEQ` continuation, byte-lane/narrow
 transfers, legacy two-bit `HRESP`, and interconnect/decode.
 `.716` selects `.717`, public AHB subordinate `.ahb` profile-alias contract
-selection. Current behavior is unchanged: use
+selection. At `.716` closeout, behavior was unchanged: use
 `ppif/ahb_lite_subordinate.ppif` for the subordinate IAL2 path, and `.ahb`
 remains requester-only until a later exact implementation owner.
 `.717` selects `.718`, bounded implementation of public AHB subordinate `.ahb`
@@ -9819,8 +9819,16 @@ profile-alias exposure. The selected future source is
 `ppif/ahb_lite_subordinate.ahb`, mirroring
 `ppif/ahb_lite_subordinate.ppif`, with support identity
 `intent.ahb_profile_alias_subordinate`, source kind `ial2_profile_alias`, and
-coverage key `ial2_ahb_profile_alias_subordinate_pipeline_cli`. Current
-behavior is still unchanged until `.718` implements that alias.
+coverage key `ial2_ahb_profile_alias_subordinate_pipeline_cli`. At `.717`
+closeout, behavior was still unchanged until `.718` implemented that alias.
+`.718` ships that selected public AHB subordinate `.ahb` profile alias at
+`ppif/ahb_lite_subordinate.ahb`. It mirrors
+`ppif/ahb_lite_subordinate.ppif`, keeps generated
+`ahb_lite_subordinate.isf` before generated `ahb_lite_subordinate.fsm`,
+reports schema `fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, removes
+`ahb_subordinate_profile_alias_deferred` only from subordinate `.ahb` reports,
+and support-accounts as `intent.ahb_profile_alias_subordinate` with source kind
+`ial2_profile_alias`.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

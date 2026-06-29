@@ -5010,7 +5010,7 @@ direct backend behavior, verification-output generation, backend-language
 variants, AXI, APB, and VHDL remain deferred.
 `.716` now selects `.717`, public AHB subordinate `.ahb` profile-alias
 contract selection, before any alias parser/generator/source/support-accounting
-or manifest behavior changes. Current behavior is unchanged:
+or manifest behavior changes. At `.716` closeout, behavior was unchanged:
 `ppif/ahb_lite_subordinate.ppif` remains the public subordinate IAL2 source,
 and `.ahb` remains requester-only until a later exact implementation owner.
 `.717` now selects `.718`, bounded implementation of public AHB subordinate
@@ -5022,6 +5022,21 @@ coverage key `ial2_ahb_profile_alias_subordinate_pipeline_cli`. No parser,
 generator, source sample, support-accounting catalog, capability manifest,
 test, report, generated artifact, HDL/runtime, backend, AXI, APB, broader AHB,
 or VHDL behavior changed in `.717`.
+`.718` now ships the selected public AHB subordinate `.ahb` profile-alias
+behavior. The public source `ppif/ahb_lite_subordinate.ahb` mirrors
+`ppif/ahb_lite_subordinate.ppif`, keeps explicit `(profile ahb)`, lowers
+through generated `ahb_lite_subordinate.isf` before generated
+`ahb_lite_subordinate.fsm`, emits HDL module `ahb_lite_subordinate`, reports
+schema `fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, and is
+support-accounted as `intent.ahb_profile_alias_subordinate` with source kind
+`ial2_profile_alias` and coverage key
+`ial2_ahb_profile_alias_subordinate_pipeline_cli`. The subordinate `.ahb`
+report removes `ahb_subordinate_profile_alias_deferred`; the generic
+subordinate `.ppif` report keeps that historical residue. AHB
+interconnect/decode, optional AHB signals, burst `SEQ` continuation,
+byte-lane/narrow-transfer behavior, legacy two-bit `HRESP`, direct backend
+behavior, verification-output generation, backend-language variants, AXI, APB,
+and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7685,10 +7700,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md` — documents the `.715` shipped public `ppif/ahb_lite_subordinate.ppif` behavior, generated `.isf`/`.fsm` review artifacts, report schema, support accounting, reset/default metadata, validation, and remaining AHB residue.
 - `docs/IAL2_POST_AHB_SUBORDINATE_PPIF_NEXT_SLICE_SELECTION.md` — records the `.716` no-behavior selector after AHB subordinate `.ppif` shipment and selects `.717`, public AHB subordinate `.ahb` profile-alias contract selection.
 - `docs/IAL2_AHB_SUBORDINATE_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.717` no-behavior selector and selects `.718`, bounded public AHB subordinate `.ahb` profile-alias implementation at `ppif/ahb_lite_subordinate.ahb` with support identity `intent.ahb_profile_alias_subordinate`.
+- `docs/IAL2_AHB_SUBORDINATE_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.718` shipped public `ppif/ahb_lite_subordinate.ahb` profile-alias behavior, support accounting, generated review artifacts, residue movement, diagnostics, and validation.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
-- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester and subordinate `.ppif` support, shipped requester `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
+- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester and subordinate `.ppif` support, shipped requester and subordinate `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

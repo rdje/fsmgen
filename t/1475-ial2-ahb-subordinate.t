@@ -129,14 +129,6 @@ subtest 'malformed AHB subordinate PPIF sources fail closed' => sub {
             },
             qr/has duplicate \(ready-in \.\.\.\) clause/,
         ],
-        [
-            '.ahb alias still requester-only',
-            sub {
-                return sample_ahb_subordinate_ppif();
-            },
-            qr/\.ahb source 'ahb_lite_subordinate\.ahb' profile ahb requires exactly one \(ahb-requester \.\.\.\) object in this slice/,
-            'ahb_lite_subordinate.ahb',
-        ],
     );
 
     for my $case (@cases) {

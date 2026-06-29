@@ -1,19 +1,20 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships three public bounded AHB IAL2 entrypoints today:
+FSMGen ships four public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
 ppif/ahb_lite_subordinate.ppif
 ppif/ahb_requester.ahb
+ppif/ahb_lite_subordinate.ahb
 ```
 
 The `.ppif` sources are generic Protocol/Platform Intent files. The `.ahb`
-source is the bounded AHB requester profile alias over the same IAL2 model. It
-uses the same `protocol-platform-intent` form, keeps explicit `(profile ahb)`,
-and supports exactly one `(ahb-requester amba_requester ...)` object. AHB
-subordinate behavior is currently exposed through generic `.ppif`, not through
-the `.ahb` alias.
+sources are bounded AHB requester and subordinate profile aliases over the
+same IAL2 model. They use the same `protocol-platform-intent` form, keep
+explicit `(profile ahb)`, and support exactly one selected AHB object:
+`(ahb-requester amba_requester ...)` or
+`(ahb-subordinate ahb_lite_subordinate ...)`.
 
 All public AHB IAL2 sources lower through generated review artifacts before
 HDL:
@@ -22,6 +23,7 @@ HDL:
 ppif/ahb_requester.ppif          -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
 ppif/ahb_requester.ahb           -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
 ppif/ahb_lite_subordinate.ppif   -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
+ppif/ahb_lite_subordinate.ahb    -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
 ```
 
 FSMGen also keeps direct lower-layer `.fsm` seeds:
@@ -38,9 +40,9 @@ and do not produce generated `.isf` or generated `.fsm` review artifacts.
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, or `ppif/ahb_requester.ahb` | Bounded AHB requester and bounded AHB-Lite/common-AHB subordinate IAL2 sources. |
+| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, `ppif/ahb_requester.ahb`, or `ppif/ahb_lite_subordinate.ahb` | Bounded AHB requester and bounded AHB-Lite/common-AHB subordinate IAL2 sources. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs are exposed as `control`, `bus`, one-register `storage`, and `transfer` clauses. |
-| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, AHB subordinate `.ahb` alias exposure, AHB interconnect/decode, optional signals, burst continuation, byte-lane/narrow-transfer behavior, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, AHB interconnect/decode, optional signals, burst continuation, byte-lane/narrow-transfer behavior, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -99,8 +101,9 @@ assignments.
 
 ## AHB Profile Alias
 
-Use the `.ahb` alias when you want the source filename to advertise the AHB
-profile while keeping the same IAL2 syntax and generated review artifacts:
+Use the `.ahb` aliases when you want the source filename to advertise the AHB
+profile while keeping the same IAL2 syntax and generated review artifacts.
+The requester alias is:
 
 ```bash
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ahb
@@ -109,7 +112,8 @@ profile while keeping the same IAL2 syntax and generated review artifacts:
 ./bin/fsmgen --quiet --outdir generated/ial2-ahb-profile-alias ppif/ahb_requester.ahb
 ```
 
-The `.ahb` strict check reports the authored alias path and support identity:
+The requester `.ahb` strict check reports the authored alias path and support
+identity:
 
 ```text
 entry_id: intent.ahb_profile_alias_requester
@@ -121,6 +125,31 @@ module_name: amba_requester
 The `.ahb` schedule/report JSON uses schema
 `fsmgen.ial2.protocol_intent.ahb_requester.v1`, reports target profile `ahb`,
 and exposes generated `amba_requester.isf` before `amba_requester.fsm`.
+
+The subordinate alias is:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_lite_subordinate.ahb
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_lite_subordinate.ahb
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_lite_subordinate.ahb
+./bin/fsmgen --quiet --outdir generated/ial2-ahb-subordinate-profile-alias ppif/ahb_lite_subordinate.ahb
+```
+
+The subordinate `.ahb` strict check reports:
+
+```text
+entry_id: intent.ahb_profile_alias_subordinate
+source_kind: ial2_profile_alias
+coverage: ial2_ahb_profile_alias_subordinate_pipeline_cli
+module_name: ahb_lite_subordinate
+```
+
+The subordinate `.ahb` schedule/report JSON uses schema
+`fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, reports target object
+`ahb-subordinate`, exposes generated `ahb_lite_subordinate.isf` before
+`ahb_lite_subordinate.fsm`, and removes
+`ahb_subordinate_profile_alias_deferred` from the alias report while preserving
+the broader AHB residue.
 
 ## Requester Source Shape
 
@@ -266,14 +295,18 @@ The generated behavior performs no write update on ERROR.
 
 ## Alias Diagnostics
 
-`.ahb` is accepted only as the bounded AHB requester profile alias:
+`.ahb` is accepted only as the bounded AHB requester or subordinate profile
+alias:
 
 - missing `(profile ...)` is rejected;
 - any profile other than `ahb` is rejected as a suffix/profile mismatch;
-- any object other than exactly one `(ahb-requester amba_requester ...)` is
-  rejected for this slice, including `(ahb-subordinate ...)`;
-- malformed AHB requester fields still use the same requester diagnostics as
-  the `.ppif` source.
+- any object other than exactly one `(ahb-requester amba_requester ...)` or
+  exactly one `(ahb-subordinate ahb_lite_subordinate ...)` is rejected for this
+  slice;
+- mixed requester/subordinate objects are rejected;
+- duplicate requester or duplicate subordinate objects are rejected;
+- malformed AHB requester and subordinate fields still use the same focused
+  diagnostics as the equivalent `.ppif` source.
 
 Known aliases that have not shipped yet still fail closed. For example, a
 temporary `.chi` copy reports a known unsupported alias, while an unrelated
@@ -322,7 +355,6 @@ protocol-intent reports, support accounting, and IAL2 diagnostics.
 
 The following are not shipped by the current AHB IAL2 surface:
 
-- `.ahb` profile-alias exposure for AHB subordinate behavior;
 - AHB completer behavior;
 - AHB interconnect/decode generation;
 - optional/property-gated AHB signals such as `HBURST`, `HPROT`, `HMASTLOCK`,
@@ -338,10 +370,10 @@ The following are not shipped by the current AHB IAL2 surface:
 - VHDL behavior.
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`
-profile-alias residue. The shipped requester `.ahb` alias removes that stale
-residue from alias reports. The subordinate `.ppif` report keeps a separate
-`ahb_subordinate_profile_alias_deferred` residue because subordinate `.ahb`
-alias exposure remains future work.
+profile-alias residue, and the shipped requester `.ahb` alias removes that
+stale residue from alias reports. The generic subordinate `.ppif` report keeps
+its historical `ahb_subordinate_profile_alias_deferred` residue, and the
+shipped subordinate `.ahb` alias removes that stale residue from alias reports.
 
 ## Validation Used For This Chapter
 
@@ -352,6 +384,7 @@ prove -v t/1473-ial2-ahb-requester.t
 prove -v t/1474-ial2-ahb-profile-alias.t
 prove -v t/1475-ial2-ahb-subordinate.t
 prove -v t/1476-isf-output-default-reset.t
+prove -v t/1477-ial2-ahb-subordinate-profile-alias.t
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ppif
@@ -361,14 +394,19 @@ prove -v t/1476-isf-output-default-reset.t
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_lite_subordinate.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_lite_subordinate.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_lite_subordinate.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_lite_subordinate.ahb
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_lite_subordinate.ahb
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_lite_subordinate.ahb
 ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm
 ```
 
 The requester `.ppif` and `.ahb` probes passed and generated
 `amba_requester.isf`, `amba_requester.fsm`, and HDL module `amba_requester`.
-The subordinate `.ppif` probes passed and generated
+The subordinate `.ppif` and `.ahb` probes passed and generated
 `ahb_lite_subordinate.isf`, `ahb_lite_subordinate.fsm`, and HDL module
 `ahb_lite_subordinate`. The generated subordinate artifacts preserve
 `HREADYOUT`/`HRESP`/`HRDATA` reset/default metadata, selected register read
 and write behavior, unsupported `SEQ` routing, unsupported size/address
-ERROR routing, and support accounting as `intent.ppif_ahb_lite_subordinate`.
+ERROR routing, support accounting as `intent.ppif_ahb_lite_subordinate` for
+the generic source, and support accounting as
+`intent.ahb_profile_alias_subordinate` for the alias source.

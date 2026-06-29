@@ -20,8 +20,9 @@ The source uses the explicit AHB profile and one AHB subordinate object:
 (ahb-subordinate ahb_lite_subordinate ...)
 ```
 
-This is not a `.ahb` profile-alias source yet. The `.ahb` alias remains scoped
-to the bounded requester sample `ppif/ahb_requester.ahb`.
+The companion subordinate `.ahb` profile-alias source is documented separately
+in `docs/IAL2_AHB_SUBORDINATE_PROFILE_ALIAS_BEHAVIOR.md`; the generic `.ppif`
+source keeps its own support identity and report residue.
 
 ## Source Shape
 
@@ -217,7 +218,7 @@ Materialize generated review artifacts and HDL:
 
 ## Residue
 
-The AHB subordinate report keeps these future owners explicit:
+The generic AHB subordinate `.ppif` report keeps these future owners explicit:
 
 ```text
 ahb_subordinate_profile_alias_deferred
@@ -227,11 +228,14 @@ ahb_burst_seq_support_deferred
 ahb_verification_output_deferred
 ```
 
-This slice does not add AHB subordinate `.ahb` alias exposure, AHB
-interconnect/decode, optional/property-gated AHB signals, burst `SEQ`
-continuation, byte-lane or narrow-transfer behavior, legacy two-bit `HRESP`
-compatibility, direct backend lowering, verification-output generation,
-backend-language variants, AXI behavior, APB behavior, or VHDL behavior.
+The `.715` slice did not add AHB subordinate `.ahb` alias exposure; that alias
+is now shipped separately by `.718`. The generic `.ppif` report still keeps
+`ahb_subordinate_profile_alias_deferred` as historical residue while the
+subordinate `.ahb` alias report removes it. AHB interconnect/decode,
+optional/property-gated AHB signals, burst `SEQ` continuation, byte-lane or
+narrow-transfer behavior, legacy two-bit `HRESP` compatibility, direct backend
+lowering, verification-output generation, backend-language variants, AXI
+behavior, APB behavior, and VHDL behavior remain future work.
 
 ## Validation
 

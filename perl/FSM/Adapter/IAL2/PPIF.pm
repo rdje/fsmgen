@@ -75,8 +75,12 @@ sub parse_source($self, @args) {
             if _is_ahb_profile_alias_source($source_label);
         return $result;
     }
-    return FSM::IAL2::ProtocolIntent::AhbSubordinate->new(debug => $self->{debug})->generate($contract)
-        if _is_ahb_subordinate_contract($contract);
+    if (_is_ahb_subordinate_contract($contract)) {
+        my $result = FSM::IAL2::ProtocolIntent::AhbSubordinate->new(debug => $self->{debug})->generate($contract);
+        _remove_unsupported_residue_id($result, 'ahb_subordinate_profile_alias_deferred')
+            if _is_ahb_profile_alias_source($source_label);
+        return $result;
+    }
     return FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new(debug => $self->{debug})->generate($contract)
         if _is_manager_capacity_status_contract($contract);
     return $generator->generate($contract);
@@ -159,8 +163,9 @@ sub _validate_profile_alias_contract($source_label, $contract) {
         confess "Error: .ahb source '$source_label' profile '$profile' does not match .ahb profile alias; expected ahb\n"
             unless defined($profile) && !ref($profile) && $profile eq 'ahb';
 
-        confess "Error: .ahb source '$source_label' profile ahb requires exactly one (ahb-requester ...) object in this slice\n"
-            unless _is_ahb_requester_contract($contract);
+        confess "Error: .ahb source '$source_label' profile ahb requires exactly one (ahb-requester ...) object or exactly one (ahb-subordinate ...) object in this slice\n"
+            unless _is_ahb_requester_contract($contract)
+                || _is_ahb_subordinate_contract($contract);
         return;
     }
 

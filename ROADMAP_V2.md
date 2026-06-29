@@ -6035,7 +6035,7 @@ direct backend behavior, verification-output generation, backend-language
 variants, AXI, APB, and VHDL remain deferred.
 `.716` now selects `.717`, public AHB subordinate `.ahb` profile-alias
 contract selection, before any alias parser/generator/source/support-accounting
-or manifest behavior changes. Current behavior is unchanged:
+or manifest behavior changes. At `.716` closeout, behavior was unchanged:
 `ppif/ahb_lite_subordinate.ppif` remains the public subordinate IAL2 source,
 and `.ahb` remains requester-only until a later exact implementation owner.
 `.717` now selects `.718`, bounded implementation of public AHB subordinate
@@ -6047,6 +6047,21 @@ coverage key `ial2_ahb_profile_alias_subordinate_pipeline_cli`. No parser,
 generator, source sample, support-accounting catalog, capability manifest,
 test, report, generated artifact, HDL/runtime, backend, AXI, APB, broader AHB,
 or VHDL behavior changed in `.717`.
+`.718` now ships the selected public AHB subordinate `.ahb` profile-alias
+behavior. The public source `ppif/ahb_lite_subordinate.ahb` mirrors
+`ppif/ahb_lite_subordinate.ppif`, keeps explicit `(profile ahb)`, lowers
+through generated `ahb_lite_subordinate.isf` before generated
+`ahb_lite_subordinate.fsm`, emits HDL module `ahb_lite_subordinate`, reports
+schema `fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, and is
+support-accounted as `intent.ahb_profile_alias_subordinate` with source kind
+`ial2_profile_alias` and coverage key
+`ial2_ahb_profile_alias_subordinate_pipeline_cli`. The subordinate `.ahb`
+report removes `ahb_subordinate_profile_alias_deferred`; the generic
+subordinate `.ppif` report keeps that historical residue. AHB
+interconnect/decode, optional AHB signals, burst `SEQ` continuation,
+byte-lane/narrow-transfer behavior, legacy two-bit `HRESP`, direct backend
+behavior, verification-output generation, backend-language variants, AXI, APB,
+and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

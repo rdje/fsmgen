@@ -81,7 +81,7 @@ subtest 'adapter rejects .ahb profile and behavior boundaries' => sub {
     ok(!$wrong_object_ok, '.ahb profile with non-AHB behavior is rejected');
     like(
         $@,
-        qr/profile ahb requires exactly one \(ahb-requester \.\.\.\) object in this slice/,
+        qr/profile ahb requires exactly one \(ahb-requester \.\.\.\) object or exactly one \(ahb-subordinate \.\.\.\) object in this slice/,
         '.ahb unsupported object diagnostic is targeted',
     );
 
