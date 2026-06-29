@@ -9692,8 +9692,9 @@ source paths in check JSON and semantic JSON, and support-account as
   ppif/apb_requester_transfer.apb
 ```
 
-Remaining unsupported aliases are `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`,
-`.i2s`, `.pif`, and `.ppi`. APB requester busy/status, multi-register decode,
+Remaining unsupported aliases are `.chi`, `.ace`, `.atb`, `.smbus`, `.i2s`,
+`.pif`, and `.ppi`. `.ahb` is a separate shipped AHB requester profile alias
+after `.700`. APB requester busy/status, multi-register decode,
 sidebands, alternate widths, multi-peripheral decode, back-to-back policy,
 implicit profile inference, direct backend lowering, verification-output
 generation, backend-language variants, and VHDL remain deferred.
@@ -9704,15 +9705,17 @@ selects `.556`, a no-behavior public-surface sync after APB `.apb`
 profile-alias support shipped. The next owner must make current `.axi`
 behavior/fact wording stop listing `.apb` as unsupported after `.554`, while
 preserving historical pre-`.554` closeout wording and keeping `.chi`, `.ace`,
-`.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` unsupported.
+`.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` unsupported at that
+pre-`.700` closeout date.
 
 Post APB profile-alias public-surface sync:
 [IAL2_POST_APB_PROFILE_ALIAS_PUBLIC_SURFACE_SYNC](../../IAL2_POST_APB_PROFILE_ALIAS_PUBLIC_SURFACE_SYNC.md)
-completes that sync. Current profile-alias surfaces list `.axi` and `.apb` as
-shipped bounded aliases, keep `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`,
-`.i2s`, `.pif`, and `.ppi` unsupported, and preserve pre-`.554`
-`.apb`-unsupported wording only as dated history. No behavior changes in
-`.556`; it selects `.557`, the next exact IAL2 owner selector after the sync.
+completes that sync. After `.700`, current profile-alias surfaces list `.axi`,
+`.apb`, and `.ahb` as shipped bounded aliases, keep `.chi`, `.ace`, `.atb`,
+`.smbus`, `.i2s`, `.pif`, and `.ppi` unsupported, and preserve pre-`.554`
+`.apb`-unsupported plus pre-`.700` `.ahb`-unsupported wording only as dated
+history. No behavior changes in `.556`; it selects `.557`, the next exact IAL2
+owner selector after the sync.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

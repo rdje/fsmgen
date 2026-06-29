@@ -23,6 +23,11 @@ ppif/ahb_requester.ppif -> amba_requester.isf -> amba_requester.fsm -> HDL modul
 This implements the public contract selected by
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.696`.
 
+Implementation note: `IAL2-FEATURE-COMPLETENESS-FRONTIER.700` later shipped
+the bounded `.ahb` profile alias for this same requester at
+`ppif/ahb_requester.ahb`. This document remains the generic `.ppif` behavior
+record.
+
 ## Source Shape
 
 The checked-in source contains the selected top-level shape:
@@ -141,14 +146,17 @@ The parser/generator fail closed for:
 - unsupported widths outside the selected first contract;
 - unsupported burst, transfer, or response encodings.
 
-The `.ahb` suffix remains unsupported and keeps the known profile-alias
-candidate diagnostic.
+At `.697` closeout, the `.ahb` suffix remained unsupported and kept the known
+profile-alias candidate diagnostic. Current FSMGen accepts the bounded
+`ppif/ahb_requester.ahb` alias after `.700`.
 
 ## Residue
 
-The AHB requester `.ppif` slice does not implement:
+The generic AHB requester `.ppif` report preserves the `.697`
+`ahb_profile_alias_deferred` residue for compatibility. The current `.ahb`
+alias removes that stale residue from alias reports. The AHB requester `.ppif`
+slice still does not implement:
 
-- `.ahb` profile aliases;
 - AHB completers or subordinates;
 - AHB interconnect/decode, arbitration fabrics, or bus matrices;
 - scoreboards;
@@ -177,4 +185,5 @@ cp ppif/ahb_requester.ppif /tmp/fsmgen-697-ahb.ahb
 
 The `.ppif` probes passed, support accounting matched
 `intent.ppif_ahb_requester`, and the `.ahb` probe failed closed with the known
-unsupported-alias diagnostic.
+unsupported-alias diagnostic at `.697` closeout. Current `.ahb` behavior is
+documented in `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md`.

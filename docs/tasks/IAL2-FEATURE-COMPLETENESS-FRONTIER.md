@@ -63,7 +63,7 @@ path before reopening VHDL backend or VHDL rerouting work.
   Children continuation 10: `IAL2-FEATURE-COMPLETENESS-FRONTIER.634, IAL2-FEATURE-COMPLETENESS-FRONTIER.635, IAL2-FEATURE-COMPLETENESS-FRONTIER.636, IAL2-FEATURE-COMPLETENESS-FRONTIER.637, IAL2-FEATURE-COMPLETENESS-FRONTIER.638, IAL2-FEATURE-COMPLETENESS-FRONTIER.639, IAL2-FEATURE-COMPLETENESS-FRONTIER.640, IAL2-FEATURE-COMPLETENESS-FRONTIER.641, IAL2-FEATURE-COMPLETENESS-FRONTIER.642, IAL2-FEATURE-COMPLETENESS-FRONTIER.643, IAL2-FEATURE-COMPLETENESS-FRONTIER.644, IAL2-FEATURE-COMPLETENESS-FRONTIER.645, IAL2-FEATURE-COMPLETENESS-FRONTIER.646, IAL2-FEATURE-COMPLETENESS-FRONTIER.647, IAL2-FEATURE-COMPLETENESS-FRONTIER.648, IAL2-FEATURE-COMPLETENESS-FRONTIER.649, IAL2-FEATURE-COMPLETENESS-FRONTIER.650, IAL2-FEATURE-COMPLETENESS-FRONTIER.651, IAL2-FEATURE-COMPLETENESS-FRONTIER.652, IAL2-FEATURE-COMPLETENESS-FRONTIER.653, IAL2-FEATURE-COMPLETENESS-FRONTIER.654, IAL2-FEATURE-COMPLETENESS-FRONTIER.655, IAL2-FEATURE-COMPLETENESS-FRONTIER.656, IAL2-FEATURE-COMPLETENESS-FRONTIER.657, IAL2-FEATURE-COMPLETENESS-FRONTIER.658`
   Children continuation 11: `IAL2-FEATURE-COMPLETENESS-FRONTIER.659, IAL2-FEATURE-COMPLETENESS-FRONTIER.660, IAL2-FEATURE-COMPLETENESS-FRONTIER.661, IAL2-FEATURE-COMPLETENESS-FRONTIER.662, IAL2-FEATURE-COMPLETENESS-FRONTIER.663, IAL2-FEATURE-COMPLETENESS-FRONTIER.664, IAL2-FEATURE-COMPLETENESS-FRONTIER.665, IAL2-FEATURE-COMPLETENESS-FRONTIER.666, IAL2-FEATURE-COMPLETENESS-FRONTIER.667, IAL2-FEATURE-COMPLETENESS-FRONTIER.668, IAL2-FEATURE-COMPLETENESS-FRONTIER.669, IAL2-FEATURE-COMPLETENESS-FRONTIER.670, IAL2-FEATURE-COMPLETENESS-FRONTIER.671, IAL2-FEATURE-COMPLETENESS-FRONTIER.672, IAL2-FEATURE-COMPLETENESS-FRONTIER.673, IAL2-FEATURE-COMPLETENESS-FRONTIER.674, IAL2-FEATURE-COMPLETENESS-FRONTIER.675, IAL2-FEATURE-COMPLETENESS-FRONTIER.676, IAL2-FEATURE-COMPLETENESS-FRONTIER.677, IAL2-FEATURE-COMPLETENESS-FRONTIER.678, IAL2-FEATURE-COMPLETENESS-FRONTIER.679, IAL2-FEATURE-COMPLETENESS-FRONTIER.680`
 
-  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693, IAL2-FEATURE-COMPLETENESS-FRONTIER.694, IAL2-FEATURE-COMPLETENESS-FRONTIER.695, IAL2-FEATURE-COMPLETENESS-FRONTIER.696, IAL2-FEATURE-COMPLETENESS-FRONTIER.697, IAL2-FEATURE-COMPLETENESS-FRONTIER.698, IAL2-FEATURE-COMPLETENESS-FRONTIER.699, IAL2-FEATURE-COMPLETENESS-FRONTIER.700`
+  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693, IAL2-FEATURE-COMPLETENESS-FRONTIER.694, IAL2-FEATURE-COMPLETENESS-FRONTIER.695, IAL2-FEATURE-COMPLETENESS-FRONTIER.696, IAL2-FEATURE-COMPLETENESS-FRONTIER.697, IAL2-FEATURE-COMPLETENESS-FRONTIER.698, IAL2-FEATURE-COMPLETENESS-FRONTIER.699, IAL2-FEATURE-COMPLETENESS-FRONTIER.700, IAL2-FEATURE-COMPLETENESS-FRONTIER.701`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -4959,9 +4959,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.699: select AHB profile alias contract`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.700`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement the bounded AHB .ahb profile-alias suffix.`
   Acceptance: `Read .699 contract selection, .698 audit, .697 behavior, .696 contract selection, decisions 0015/0016, bin/fsmgen suffix resolution and bare-name handling, FSM::Adapter::IAL2::PPIF parse_file/profile validation paths, FSM::IAL2::ProtocolIntent::AhbRequester report/source-path behavior, LanguageSurfaceSection manifest boundaries, RegressionCorpus support-accounting precedent, focused AHB tests, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. Implement only ppif/ahb_requester.ahb as an IAL2 profile alias mirroring ppif/ahb_requester.ppif: explicit (profile ahb), exactly one (ahb-requester amba_requester ...), generated amba_requester.isf before generated amba_requester.fsm, report schema fsmgen.ial2.protocol_intent.ahb_requester.v1, authored .ahb source-path identity in schedule/check/semantic JSON and diagnostics, support accounting intent.ahb_profile_alias_requester/source_kind ial2_profile_alias/coverage ial2_ahb_profile_alias_requester_pipeline_cli, capability-manifest movement from unsupported aliases to shipped suffix/entry, focused t/1474 coverage, mdBook and Knowledge Map sync. Preserve .ppif AHB behavior and do not add AHB completers/subordinates, interconnect/decode, scoreboards, full-manager behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, or VHDL behavior.`
+  Verification: `Implemented ppif/ahb_requester.ahb as the bounded AHB requester IAL2 profile alias. The alias routes through the PPIF-backed IAL2 parser, requires explicit (profile ahb), accepts exactly one (ahb-requester amba_requester ...) object, preserves generated amba_requester.isf before generated amba_requester.fsm and HDL module amba_requester, preserves schema fsmgen.ial2.protocol_intent.ahb_requester.v1, keeps authored .ahb source paths in check/semantic JSON and reports, support-accounts intent.ahb_profile_alias_requester/source_kind ial2_profile_alias/coverage ial2_ahb_profile_alias_requester_pipeline_cli, moves .ahb into the shipped language-surface manifest, removes only stale ahb_profile_alias_deferred residue from .ahb reports while preserving .ppif behavior, and keeps .chi/.ace/.atb/.smbus/.i2s/.pif/.ppi fail-closed. Added focused t/1474 coverage, updated t/1473, t/248, t/297, README, ROADMAP_V2, mdBook, behavior docs/facts, Knowledge Map routing, task tree, and Memory.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.700: implement AHB profile alias`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.701`
+  Status: `pending`
+  Goal: `Select the next roadmap-aligned IAL2/AHB feature-completeness slice after bounded .ahb profile-alias support shipped.`
+  Acceptance: `Read .700 behavior, .699 contract selection, .697 AHB requester PPIF behavior, current mdBook AHB chapter, LanguageSurfaceSection manifest, RegressionCorpus support accounting, focused AHB tests, README, ROADMAP_V2, task tree, Memory, Knowledge Map, and relevant decisions. Decide the next exact owner: AHB completer/subordinate readiness, AHB interconnect/decode readiness, AHB full-manager/residue audit, profile-alias public-surface sync, or another roadmap-aligned prerequisite. Do not change parser/generator/source/support-accounting/manifest behavior, do not add AHB completers/subordinates, interconnect/decode, scoreboards, full-manager behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, or VHDL behavior. Update docs, task tree, Memory, Knowledge Map, and closeout gates.`
   Verification: `pending`
   Commit: `pending`
 
@@ -5385,7 +5392,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 414 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.697` | `done` | Implemented the selected first AHB requester .ppif behavior slice. |
 | 415 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.698` | `done` | Audited AHB .ahb profile-alias readiness after generic AHB requester .ppif shipped. |
 | 416 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.699` | `done` | Selected the AHB .ahb public profile-alias contract before implementation. |
-| 417 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.700` | `pending` | Implement the bounded AHB .ahb profile-alias suffix. |
+| 417 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.700` | `done` | Implemented the bounded AHB .ahb profile-alias suffix. |
+| 418 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.701` | `pending` | Select the next roadmap-aligned IAL2/AHB feature-completeness slice after bounded .ahb support shipped. |
 
 ## Decisions
 
@@ -13021,6 +13029,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.699` | docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md; docs/knowledge/ial2-ahb-profile-alias-contract-selection.md; docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md; docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md; ppif/ahb_requester.ppif; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1473-ial2-ahb-requester.t; README; ROADMAP_V2; mdBook; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; selected .700, bounded AHB .ahb profile-alias implementation. The selected future alias mirrors ppif/ahb_requester.ppif at ppif/ahb_requester.ahb, keeps explicit (profile ahb), supports exactly one (ahb-requester amba_requester ...) object, lowers through generated amba_requester.isf before generated amba_requester.fsm, preserves report schema fsmgen.ial2.protocol_intent.ahb_requester.v1 and HDL module amba_requester, and uses support identity intent.ahb_profile_alias_requester/source_kind ial2_profile_alias. Direct AHB check/schedule/semantic probes passed; temporary .ahb copy failed closed; capability manifest kept .ahb unsupported. Fact-card reverify, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No parser, generator, public source/sample, support-accounting, manifest behavior, suffix behavior, generated-artifact, HDL/runtime, AXI, APB, AHB behavior, backend-language, verification-output, direct-backend, or VHDL behavior changed. |
 
+| `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.700` | ppif/ahb_requester.ahb; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1474-ial2-ahb-profile-alias.t; t/1473-ial2-ahb-requester.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md; docs/knowledge/ial2-ahb-profile-alias-behavior.md; docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md; docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; shipped bounded AHB .ahb profile-alias behavior. FSMGen now accepts ppif/ahb_requester.ahb as a profile alias over the same IAL2 protocol-platform-intent model, requires explicit (profile ahb), accepts exactly one (ahb-requester amba_requester ...) object, preserves generated amba_requester.isf before generated amba_requester.fsm and HDL module amba_requester, keeps authored .ahb source paths in check/semantic JSON, support-accounts intent.ahb_profile_alias_requester/source_kind ial2_profile_alias/coverage ial2_ahb_profile_alias_requester_pipeline_cli, marks .ahb as a shipped bounded profile-alias file surface, and keeps .chi/.ace/.atb/.smbus/.i2s/.pif/.ppi fail-closed. Syntax checks, focused prove tests, direct .ahb check/schedule/semantic/outdir probes, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No AHB completer/subordinate, interconnect/decode, scoreboard, full-manager, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed. Selected .701 as the next no-behavior IAL2/AHB selector owner. |
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -13684,8 +13694,25 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.697` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.697: implement AHB requester PPIF` | Shipped the bounded AHB requester generic `.ppif` behavior and advanced the frontier to `.698` `.ahb` readiness audit. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.698` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.698: audit AHB profile alias readiness` | Selected AHB `.ahb` public profile-alias contract selection as `.699` without behavior changes. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.699` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.699: select AHB profile alias contract` | Selected bounded AHB `.ahb` profile-alias implementation as `.700` without behavior changes. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.700` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.700: implement AHB profile alias` | Shipped bounded AHB `.ahb` profile-alias support and advanced the frontier to `.701` next-slice selection. |
 
 ## Changelog
+
+- `2026-06-29`: Completed `.700`, shipping bounded AHB `.ahb`
+  profile-alias support at `ppif/ahb_requester.ahb`. The alias mirrors
+  `ppif/ahb_requester.ppif`, requires explicit `(profile ahb)`, supports
+  exactly one `(ahb-requester amba_requester ...)` object, preserves generated
+  `amba_requester.isf` before generated `amba_requester.fsm`, schema
+  `fsmgen.ial2.protocol_intent.ahb_requester.v1`, HDL module
+  `amba_requester`, authored `.ahb` source identity in check/semantic JSON,
+  and support accounting as
+  `intent.ahb_profile_alias_requester/source_kind ial2_profile_alias`.
+  `.ahb` is now a shipped bounded profile-alias file surface; `.chi`, `.ace`,
+  `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` remain fail-closed. AHB
+  completers/subordinates, interconnect/decode, scoreboards, full-manager
+  behavior, direct backend, verification-output, backend-language variants,
+  AXI, APB, and VHDL remain deferred. Selected `.701`, a no-behavior
+  post-`.ahb` next-slice selector.
 
 - `2026-06-29`: Completed `.699`, selecting the bounded AHB `.ahb`
   profile-alias public contract and `.700` implementation owner. The selected

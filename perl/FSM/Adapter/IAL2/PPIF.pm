@@ -32,7 +32,7 @@ sub parse_file($self, @args) {
     _validate_object_receiver($self, 'parse_file');
     my ($source_path) = _validate_scalar_args('parse_file', 1, @args);
     confess "FSM::Adapter::IAL2::PPIF->parse_file argument 1 must name a readable .ppif file or supported IAL2 profile-alias file\n"
-        unless $source_path =~ /\.(?:ppif|axi|apb)\z/i && -f $source_path && -r $source_path;
+        unless $source_path =~ /\.(?:ppif|axi|apb|ahb)\z/i && -f $source_path && -r $source_path;
 
     open my $fh, '<', $source_path or confess "Cannot read IAL2 PPIF/profile-alias file '$source_path': $!\n";
     my $source_text = do { local $/; <$fh> };
@@ -68,8 +68,12 @@ sub parse_source($self, @args) {
         if _is_apb_completer_contract($contract);
     return FSM::IAL2::ProtocolIntent::ApbRequesterTransfer->new(debug => $self->{debug})->generate($contract)
         if _is_apb_requester_transfer_contract($contract);
-    return FSM::IAL2::ProtocolIntent::AhbRequester->new(debug => $self->{debug})->generate($contract)
-        if _is_ahb_requester_contract($contract);
+    if (_is_ahb_requester_contract($contract)) {
+        my $result = FSM::IAL2::ProtocolIntent::AhbRequester->new(debug => $self->{debug})->generate($contract);
+        _remove_unsupported_residue_id($result, 'ahb_profile_alias_deferred')
+            if _is_ahb_profile_alias_source($source_label);
+        return $result;
+    }
     return FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new(debug => $self->{debug})->generate($contract)
         if _is_manager_capacity_status_contract($contract);
     return $generator->generate($contract);
@@ -113,9 +117,14 @@ sub _validate_scalar_args($method, $expected, @args) {
 }
 
 sub _source_surface_name($source_label) {
+    return '.ahb' if defined($source_label) && $source_label =~ /\.ahb\z/i;
     return '.apb' if defined($source_label) && $source_label =~ /\.apb\z/i;
     return '.axi' if defined($source_label) && $source_label =~ /\.axi\z/i;
     return '.ppif';
+}
+
+sub _is_ahb_profile_alias_source($source_label) {
+    return defined($source_label) && $source_label =~ /\.ahb\z/i;
 }
 
 sub _is_axi_profile_alias_source($source_label) {
@@ -130,7 +139,28 @@ sub _is_axi_family_profile($profile) {
     return defined($profile) && !ref($profile) && $profile =~ /\Aaxi(?:3|4|5)?\z/;
 }
 
+sub _remove_unsupported_residue_id($result, $residue_id) {
+    return unless ref($result) eq 'HASH'
+        && ref($result->{report}) eq 'HASH'
+        && ref($result->{report}{unsupported_residue}) eq 'ARRAY';
+
+    my @kept = grep {
+        !(ref($_) eq 'HASH' && defined($_->{id}) && $_->{id} eq $residue_id)
+    } @{$result->{report}{unsupported_residue}};
+    $result->{report}{unsupported_residue} = \@kept;
+}
+
 sub _validate_profile_alias_contract($source_label, $contract) {
+    if (_is_ahb_profile_alias_source($source_label)) {
+        my $profile = $contract->{protocol};
+        confess "Error: .ahb source '$source_label' profile '$profile' does not match .ahb profile alias; expected ahb\n"
+            unless defined($profile) && !ref($profile) && $profile eq 'ahb';
+
+        confess "Error: .ahb source '$source_label' profile ahb requires exactly one (ahb-requester ...) object in this slice\n"
+            unless _is_ahb_requester_contract($contract);
+        return;
+    }
+
     if (_is_apb_profile_alias_source($source_label)) {
         my $profile = $contract->{protocol};
         confess "Error: .apb source '$source_label' profile '$profile' does not match .apb profile alias; expected apb\n"

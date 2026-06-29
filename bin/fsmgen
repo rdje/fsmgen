@@ -187,7 +187,7 @@ sub unsupported_ial2_alias_suffix {
     my ($path) = @_;
     my $suffix = source_suffix($path);
     return undef unless defined $suffix;
-    my %unsupported = map { $_ => 1 } qw(.pif .ppi .chi .ace .ahb .atb .smbus .i2s);
+    my %unsupported = map { $_ => 1 } qw(.pif .ppi .chi .ace .atb .smbus .i2s);
     return $suffix if $unsupported{$suffix};
     return undef;
 }
@@ -586,6 +586,7 @@ Arguments:
                   • bare_name.ppif    - lowers IAL2 protocol/platform intent to .isf, then .fsm before HDL
                   • bare_name.axi     - lowers the first AXI IAL2 profile alias through .isf, then .fsm
                   • bare_name.apb     - lowers bounded APB IAL2 profile aliases through .isf, then .fsm
+                  • bare_name.ahb     - lowers the bounded AHB requester IAL2 profile alias through .isf, then .fsm
                   • relative/path.fsm - uses relative path (no FSMLIB search)
                   • /absolute/path.fsm - uses absolute path (no FSMLIB search)
 
@@ -953,7 +954,7 @@ if (length($emit_verification_output)) {
 
 # PPIF pipeline: if input is .ppif or a supported profile alias, lower through
 # generated .isf to .fsm first.
-if ($fsm_file =~ /\.(?:ppif|axi|apb)$/i) {
+if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
     require FSM::Adapter::IAL2::PPIF;
     require File::Temp;
 
@@ -1275,7 +1276,7 @@ if (!$check_mode && !$emit_semantic_json && !$output_file) {
     } else {
         # Bare name or name.fsm provided - extract bare name
         $fsm_bare_name = $fsm_input;
-        $fsm_bare_name =~ s/\.(?:fsm|isf|ppif|axi)$//i;  # Remove source extension if present
+        $fsm_bare_name =~ s/\.(?:fsm|isf|ppif|axi|ahb)$//i;  # Remove source extension if present
     }
     
     # Keep implicit generated HDL out of the repository root.

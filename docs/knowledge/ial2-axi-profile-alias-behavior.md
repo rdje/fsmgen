@@ -14,8 +14,8 @@ answers:
 date: 2026-06-26
 status: current
 tags: [ial2, profile-alias, axi, apb, ppif, task-tree]
-evidence: docs/IAL2_AXI_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_FIRST_PROFILE_ALIAS_CONTRACT_SELECTION.md; ppif/axi_aw_valid_ready.axi; ppif/axi_aw_valid_ready.ppif; ppif/apb_requester_transfer.apb; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/RegressionCorpus.pm; t/1469-ial2-axi-profile-alias.t; t/1470-ial2-apb-profile-alias.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: prove -Iperl t/1469-ial2-axi-profile-alias.t t/1470-ial2-apb-profile-alias.t t/248-regression-corpus-accounting.t t/297-capability-manifest.t
+evidence: docs/IAL2_AXI_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_FIRST_PROFILE_ALIAS_CONTRACT_SELECTION.md; ppif/axi_aw_valid_ready.axi; ppif/axi_aw_valid_ready.ppif; ppif/apb_requester_transfer.apb; ppif/ahb_requester.ahb; bin/fsmgen; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/RegressionCorpus.pm; t/1469-ial2-axi-profile-alias.t; t/1470-ial2-apb-profile-alias.t; t/1474-ial2-ahb-profile-alias.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: prove -Iperl t/1469-ial2-axi-profile-alias.t t/1470-ial2-apb-profile-alias.t t/1474-ial2-ahb-profile-alias.t t/248-regression-corpus-accounting.t t/297-capability-manifest.t
 ---
 
 `.axi` is the first bounded IAL2 profile-alias suffix. It accepts the selected
@@ -28,7 +28,8 @@ with coverage `ial2_axi_profile_alias_aw_valid_ready_pipeline_cli` and
 `source_kind` `ial2_profile_alias`.
 
 After `.554`, `.apb` is a separate shipped APB requester-transfer
-profile-alias at `ppif/apb_requester_transfer.apb`; it is not part of the
-`.axi` source shape. `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, `.i2s`,
-`.pif`, and `.ppi` remain unsupported. `.axi` is only the first
+profile-alias at `ppif/apb_requester_transfer.apb`. After `.700`, `.ahb` is a
+separate shipped AHB requester profile-alias at `ppif/ahb_requester.ahb`.
+Neither is part of the `.axi` source shape. `.chi`, `.ace`, `.atb`, `.smbus`,
+`.i2s`, `.pif`, and `.ppi` remain unsupported. `.axi` is only the first
 profile-alias example over IAL2; it does not make IAL2 AXI-only.

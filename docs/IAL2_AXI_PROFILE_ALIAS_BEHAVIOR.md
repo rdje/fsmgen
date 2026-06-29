@@ -23,10 +23,12 @@ ppif/axi_aw_valid_ready.ppif
 
 `.axi` is a profile-alias entrypoint over the same IAL2
 `protocol-platform-intent` model. It does not make AXI the definition of IAL2,
-does not add `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, or `.i2s`, and does
-not allow direct IAL2-to-IAL0 lowering. The APB `.apb` alias shipped later as
-its own bounded APB requester-transfer profile alias in
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.554`; it is not part of the `.axi` slice.
+does not add `.chi`, `.ace`, `.atb`, `.smbus`, or `.i2s`, and does not allow
+direct IAL2-to-IAL0 lowering. The APB `.apb` alias shipped later as its own
+bounded APB requester-transfer profile alias in
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.554`; the AHB `.ahb` alias shipped later
+as its own bounded AHB requester profile alias in
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.700`. Neither is part of the `.axi` slice.
 
 ## Source Shape
 
@@ -133,9 +135,11 @@ Materialize the generated review artifacts and HDL:
   suffix/profile mismatch;
 - broader `.axi` AXI bundle or manager behavior is rejected as outside the first
   profile-alias slice;
-- `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` are
+- `.chi`, `.ace`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` are
   known IAL2 alias candidates but remain unsupported;
 - `.apb` is a separate shipped APB profile alias after `.554`, not a `.axi`
+  source shape;
+- `.ahb` is a separate shipped AHB profile alias after `.700`, not a `.axi`
   source shape; and
 - an unrelated suffix such as `.foo` is reported as an unknown source suffix.
 

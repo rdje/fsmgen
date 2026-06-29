@@ -143,21 +143,21 @@ subtest 'CLI checks, semantic export, schedule report, and outdir all use the pu
     like(slurp($hdl), qr/\bmodule\s+amba_requester\b/, 'generated HDL contains the AHB requester module');
 };
 
-subtest '.ahb remains an unsupported profile-alias suffix' => sub {
+subtest '.chi remains an unsupported profile-alias suffix' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $ahb_path = File::Spec->catfile($tempdir, 'ahb_requester.ahb');
-    write_file($ahb_path, sample_ahb_ppif());
+    my $chi_path = File::Spec->catfile($tempdir, 'ahb_requester.chi');
+    write_file($chi_path, sample_ahb_ppif());
 
     my ($success, undef, undef, $stdout, undef) = run(
-        command => ['./bin/fsmgen', '--quiet', '--strict', '--check', '--json', $ahb_path],
+        command => ['./bin/fsmgen', '--quiet', '--strict', '--check', '--json', $chi_path],
     );
-    ok(!$success, '.ahb check JSON fails closed');
+    ok(!$success, '.chi check JSON fails closed');
     my $report = decode_json(join('', @{$stdout || []}));
-    ok(!$report->{success}, '.ahb check JSON reports failure');
+    ok(!$report->{success}, '.chi check JSON reports failure');
     like(
         $report->{diagnostics}[0]{message},
-        qr/source suffix '\.ahb' is a known IAL2 alias candidate but is not supported in this slice/,
-        '.ahb failure keeps the unsupported known-alias diagnostic',
+        qr/source suffix '\.chi' is a known IAL2 alias candidate but is not supported in this slice/,
+        '.chi failure keeps the unsupported known-alias diagnostic',
     );
 };
 

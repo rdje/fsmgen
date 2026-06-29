@@ -1,17 +1,22 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships one bounded AHB IAL2 source today:
+FSMGen ships two public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
+ppif/ahb_requester.ahb
 ```
 
-That source is a generic `.ppif` Protocol/Platform Intent file with
-`(profile ahb)` and exactly one `(ahb-requester amba_requester ...)` object.
-It lowers through generated review artifacts before HDL:
+The `.ppif` source is the generic Protocol/Platform Intent file. The `.ahb`
+source is the bounded AHB requester profile alias over the same IAL2 model. It
+uses the same `protocol-platform-intent` form, keeps explicit `(profile ahb)`,
+and supports exactly one `(ahb-requester amba_requester ...)` object.
+
+Both public IAL2 sources lower through generated review artifacts before HDL:
 
 ```text
 ppif/ahb_requester.ppif -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
+ppif/ahb_requester.ahb  -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
 ```
 
 FSMGen also keeps the older direct `.fsm` AMBA requester seed:
@@ -21,21 +26,19 @@ fsm/amba_requester.fsm
 ```
 
 The direct seed remains useful cycle-level coverage, but it is not IAL2 and
-does not produce generated `.isf` or generated `.fsm` review artifacts. The
-`.ahb` suffix remains a known future profile-alias candidate and is still
-unsupported.
+does not produce generated `.isf` or generated `.fsm` review artifacts.
 
 ## Mode Map
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | `ppif/ahb_requester.ppif` | Bounded AHB requester IAL2 source, support-accounted as `intent.ppif_ahb_requester`. |
-| More-control mode | `ppif/ahb_requester.ppif` plus direct `fsm/amba_requester.fsm` for cycle-level comparison | Selected requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. |
-| Raw/full-control mode | Direct `fsm/amba_requester.fsm` only | AHB completers/subordinates, interconnect/decode, scoreboards, full manager behavior, `.ahb`, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Guided mode | `ppif/ahb_requester.ppif` or `ppif/ahb_requester.ahb` | Bounded AHB requester IAL2 source. The `.ppif` entry is support-accounted as `intent.ppif_ahb_requester`; the `.ahb` alias is support-accounted as `intent.ahb_profile_alias_requester`. |
+| More-control mode | The same bounded requester sources plus direct `fsm/amba_requester.fsm` for cycle-level comparison | Selected requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. |
+| Raw/full-control mode | Direct `fsm/amba_requester.fsm` only | AHB completers/subordinates, interconnect/decode, scoreboards, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
-Run the shipped IAL2 requester through the standard review path:
+Run the shipped generic IAL2 requester through the standard review path:
 
 ```bash
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif
@@ -53,7 +56,34 @@ coverage: ial2_ppif_ahb_requester_pipeline_cli
 module_name: amba_requester
 ```
 
-The source starts with the public AHB requester shape:
+## AHB Profile Alias
+
+Use the `.ahb` alias when you want the source filename to advertise the AHB
+profile while keeping the same IAL2 syntax and generated review artifacts:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ahb
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ahb
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ahb
+./bin/fsmgen --quiet --outdir generated/ial2-ahb-profile-alias ppif/ahb_requester.ahb
+```
+
+The `.ahb` strict check reports the authored alias path and support identity:
+
+```text
+entry_id: intent.ahb_profile_alias_requester
+source_kind: ial2_profile_alias
+coverage: ial2_ahb_profile_alias_requester_pipeline_cli
+module_name: amba_requester
+```
+
+The `.ahb` schedule/report JSON uses schema
+`fsmgen.ial2.protocol_intent.ahb_requester.v1`, reports target profile `ahb`,
+and exposes generated `amba_requester.isf` before `amba_requester.fsm`.
+
+## Requester Source Shape
+
+Both public IAL2 sources start with the same selected AHB requester shape:
 
 ```text
 (protocol-platform-intent ahb_requester
@@ -122,6 +152,21 @@ The selected transfer behavior is:
 - `ERROR` completes with error status;
 - `RETRY` and `SPLIT` keep the request active for re-request behavior.
 
+## Alias Diagnostics
+
+`.ahb` is accepted only as the bounded AHB requester profile alias:
+
+- missing `(profile ...)` is rejected;
+- any profile other than `ahb` is rejected as a suffix/profile mismatch;
+- any object other than exactly one `(ahb-requester amba_requester ...)` is
+  rejected for this slice;
+- malformed AHB requester fields still use the same requester diagnostics as
+  the `.ppif` source.
+
+Known aliases that have not shipped yet still fail closed. For example, a
+temporary `.chi` copy reports a known unsupported alias, while an unrelated
+`.foo` suffix reports an unknown source suffix.
+
 ## Direct FSM Seed
 
 The direct seed remains available for the lower-level `.fsm` path:
@@ -141,37 +186,15 @@ module_name: amba_requester
 ```
 
 Use the direct seed when you need to inspect or modify explicit cycle-level
-state transitions. Use `ppif/ahb_requester.ppif` when you need the public IAL2
-source identity, source anchors, generated `.isf` review artifact, generated
-`.fsm` review artifact, AHB report schema, and IAL2 diagnostics.
-
-## Unsupported `.ahb` Boundary
-
-The `.ahb` suffix is known to the CLI as a future IAL2 alias candidate, but it
-is not accepted today. A temporary copy of the AHB `.ppif` source with a
-`.ahb` extension fails closed:
-
-```bash
-cp ppif/ahb_requester.ppif /tmp/fsmgen-doc-ahb.ahb
-./bin/fsmgen --quiet --strict --check --json /tmp/fsmgen-doc-ahb.ahb
-```
-
-The expected diagnostic is:
-
-```text
-source suffix '.ahb' is a known IAL2 alias candidate but is not supported in this slice
-```
-
-Do not rename the `.ppif` fixture to `.ahb` and treat it as a profile alias.
-The selected future implementation owner is `.700`, bounded AHB `.ahb`
-profile-alias implementation. Until that owner lands, `.ahb` remains
-unsupported and generated behavior is unchanged.
+state transitions. Use `ppif/ahb_requester.ppif` or `ppif/ahb_requester.ahb`
+when you need the public IAL2 source identity, source anchors, generated
+`.isf` review artifact, generated `.fsm` review artifact, AHB report schema,
+and IAL2 diagnostics.
 
 ## Residue
 
 The following are not shipped by the current AHB IAL2 surface:
 
-- `.ahb` profile aliases;
 - AHB completer/subordinate generation;
 - AHB interconnect/decode generation;
 - AHB scoreboards;
@@ -181,21 +204,26 @@ The following are not shipped by the current AHB IAL2 surface:
 - backend-language variants;
 - VHDL behavior.
 
+The `.ppif` report keeps its historical `.ahb` profile-alias residue for the
+generic `.ppif` source. The shipped `.ahb` alias removes that stale residue
+from alias reports while keeping the broader AHB residue above.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:
 
 ```bash
+prove -v t/1473-ial2-ahb-requester.t
+prove -v t/1474-ial2-ahb-profile-alias.t
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ppif
-./bin/fsmgen --quiet --outdir /tmp/fsmgen-697-ahb-out ppif/ahb_requester.ppif
-./bin/fsmgen --quiet --strict --check --json fsm/amba_requester.fsm
-cp ppif/ahb_requester.ppif /tmp/fsmgen-697-ahb.ahb
-./bin/fsmgen --quiet --strict --check --json /tmp/fsmgen-697-ahb.ahb
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ahb
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ahb
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ahb
+./bin/fsmgen --quiet --outdir /tmp/fsmgen-700-ahb-alias-out ppif/ahb_requester.ahb
 ```
 
-The `.ppif` probes passed and generated `amba_requester.isf`,
-`amba_requester.fsm`, and HDL module `amba_requester`. The direct `.fsm` seed
-also passed. The `.ahb` probe failed closed with the known unsupported IAL2
-alias diagnostic, which remains the expected boundary.
+The `.ppif` and `.ahb` probes passed and generated `amba_requester.isf`,
+`amba_requester.fsm`, and HDL module `amba_requester`. The `.ahb` checks also
+confirmed profile-alias support accounting and authored alias source identity.

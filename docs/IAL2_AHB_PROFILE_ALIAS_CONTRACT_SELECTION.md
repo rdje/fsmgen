@@ -10,6 +10,10 @@ Date: 2026-06-29
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.700`, bounded implementation of the first
 AHB `.ahb` profile-alias suffix.
 
+Implementation note: `IAL2-FEATURE-COMPLETENESS-FRONTIER.700` later shipped
+this selected contract at `ppif/ahb_requester.ahb`. Current behavior is
+documented in `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md`.
+
 The selected alias is:
 
 ```text
@@ -185,8 +189,8 @@ git --no-pager diff --check
 scripts/check_doctrines.sh
 ```
 
-The `.ahb` probe is expected to fail closed until `.700` implements the
-contract.
+At `.699` closeout, the `.ahb` probe was expected to fail closed until `.700`
+implemented the contract.
 
 ## Rollback
 

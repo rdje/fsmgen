@@ -2831,6 +2831,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok($suffixes{'.ppif'}, 'manifest advertises .ppif as a shipped file surface');
     ok($suffixes{'.axi'}, 'manifest advertises .axi as a shipped profile-alias file surface');
     ok($suffixes{'.apb'}, 'manifest advertises .apb as a shipped profile-alias file surface');
+    ok($suffixes{'.ahb'}, 'manifest advertises .ahb as a shipped profile-alias file surface');
     ok(
         !$manifest->{language_surface}{file_surfaces}{direct_ial2_to_ial0_allowed},
         'manifest states direct IAL2-to-IAL0 lowering is not allowed',
@@ -2970,6 +2971,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/\.ahb is now the bounded AHB requester profile-alias file surface/,
+        'manifest states .ahb is the bounded AHB requester profile alias over the same model',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/selected status back-to-back APB requester-transfer, sideband-aware APB requester-transfer, sideband-aware data16 APB requester-transfer, selected sideband-aware data16 status back-to-back APB requester-transfer, APB completer, selected back-to-back APB completer, APB multi-register completer, .*selected sideband-aware data16 back-to-back APB multi-register completer, .*selected sideband-aware data16 protection back-to-back APB multi-register completer, .*selected status back-to-back one-requester\/one-completer APB composition, .*sideband-aware data16 multi-register one-requester\/one-completer APB composition, selected sideband-aware data16 status back-to-back multi-register one-requester\/one-completer APB composition, .*sideband-aware data16 protection multi-register one-requester\/one-completer APB composition, selected sideband-aware data16 protection status back-to-back multi-register one-requester\/one-completer APB composition, .*selected sideband-aware protection multi-register status back-to-back one-requester\/two-peripheral APB interconnect\/decode composition, .*selected sideband-aware data16 no-policy multi-register status back-to-back one-requester\/two-peripheral APB interconnect\/decode composition, selected bounded sideband-aware data16 generalized no-policy multi-register status back-to-back one-requester\/two-peripheral APB interconnect\/decode composition, .*sideband-aware protection one-requester\/two-peripheral APB interconnect\/decode composition, .*sideband-aware data16 protection one-requester\/two-peripheral APB interconnect\/decode composition \.ppif sources through support-accounted profile-alias fixtures/,
         'manifest states .apb mirrors the sideband-aware data16 APB PPIF sources through profile aliases',
     );
@@ -2985,8 +2991,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/additional protocol-specific suffixes such as \.chi, \.ace, \.ahb, \.atb, \.smbus, or \.i2s remain future profile aliases/,
-        'manifest states remaining non-APB protocol-specific suffixes are future IAL2 profile aliases',
+        qr/additional protocol-specific suffixes such as \.chi, \.ace, \.atb, \.smbus, or \.i2s remain future profile aliases/,
+        'manifest states remaining non-APB and non-AHB protocol-specific suffixes are future IAL2 profile aliases',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
@@ -3327,12 +3333,73 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         qr/Direct IAL2-to-IAL0 lowering|direct IAL2-to-IAL0 lowering/,
         'manifest keeps direct IAL2-to-IAL0 lowering forbidden for .apb',
     );
+    is($file_surface_by_suffix{'.ahb'}{intent_layer}, 'IAL2', 'manifest marks .ahb as IAL2');
+    is(
+        $file_surface_by_suffix{'.ahb'}{status},
+        'shipped_bounded_profile_alias',
+        'manifest marks .ahb as a bounded profile-alias surface',
+    );
+    is_deeply(
+        $file_surface_by_suffix{'.ahb'}{lowers_to},
+        ['.isf', '.fsm'],
+        'manifest records .ahb lowering through .isf before .fsm',
+    );
+    is_deeply(
+        $file_surface_by_suffix{'.ahb'}{generated_review_artifacts},
+        ['.isf', '.fsm'],
+        'manifest records .ahb generated review artifacts',
+    );
+    my %ahb_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.ahb'}{supported_cli_modes} || []};
+    ok($ahb_cli_modes{'--emit-schedule-json'}, 'manifest records .ahb schedule-report CLI mode');
+    ok($ahb_cli_modes{'--emit-semantic-json'}, 'manifest records .ahb semantic JSON CLI mode');
+    ok($ahb_cli_modes{'--check --json / --check-json'}, 'manifest records .ahb check JSON CLI mode');
+    is(
+        $file_surface_by_suffix{'.ahb'}{sample_path},
+        'ppif/ahb_requester.ahb',
+        'manifest points at the .ahb profile-alias sample',
+    );
+    like(
+        $file_surface_by_suffix{'.ahb'}{current_boundary},
+        qr/bounded public \.ahb is the AHB requester profile-alias suffix/,
+        'manifest describes .ahb as the bounded AHB requester profile-alias suffix',
+    );
+    like(
+        $file_surface_by_suffix{'.ahb'}{current_boundary},
+        qr/must declare explicit \(profile ahb\)/,
+        'manifest records explicit AHB profile matching for .ahb',
+    );
+    like(
+        $file_surface_by_suffix{'.ahb'}{current_boundary},
+        qr/support exactly one \(ahb-requester amba_requester \.\.\.\) object in this slice/,
+        'manifest records the selected one-object AHB requester boundary for .ahb',
+    );
+    like(
+        $file_surface_by_suffix{'.ahb'}{current_boundary},
+        qr/lower through generated amba_requester\.isf before generated amba_requester\.fsm/,
+        'manifest records generated AHB review artifacts for .ahb',
+    );
+    like(
+        $file_surface_by_suffix{'.ahb'}{current_boundary},
+        qr/mirrors ppif\/ahb_requester\.ppif at ppif\/ahb_requester\.ahb/,
+        'manifest records the shipped AHB profile-alias sample',
+    );
+    like(
+        $file_surface_by_suffix{'.ahb'}{current_boundary},
+        qr/Non-AHB profiles are rejected as suffix\/profile mismatches for \.ahb/,
+        'manifest records non-AHB suffix/profile rejection for .ahb',
+    );
+    like(
+        $file_surface_by_suffix{'.ahb'}{current_boundary},
+        qr/direct IAL2-to-IAL0 lowering/,
+        'manifest keeps direct IAL2-to-IAL0 lowering forbidden for .ahb',
+    );
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
     ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');
     ok($unsupported_aliases{'.ppi'}, 'manifest keeps .ppi unsupported in the first PPIF slice');
     ok(!$unsupported_aliases{'.axi'}, 'manifest no longer lists .axi as unsupported after the first profile-alias slice');
     ok(!$unsupported_aliases{'.apb'}, 'manifest no longer lists .apb as unsupported after the APB profile-alias slice');
-    for my $profile_alias (qw(.chi .ace .ahb .atb .smbus .i2s)) {
+    ok(!$unsupported_aliases{'.ahb'}, 'manifest no longer lists .ahb as unsupported after the AHB profile-alias slice');
+    for my $profile_alias (qw(.chi .ace .atb .smbus .i2s)) {
         ok(
             $unsupported_aliases{$profile_alias},
             "manifest keeps $profile_alias unsupported as a future IAL2 profile alias",

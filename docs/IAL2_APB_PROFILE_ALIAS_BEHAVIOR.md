@@ -384,8 +384,9 @@ Materialize generated review artifacts and HDL:
 - unsupported APB width families, including address widths other than 32,
   wait-count widths other than 4, and data widths beyond the selected
   sideband-aware 16/32-bit boundary, stay fail-closed; and
-- `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` remain
-  known IAL2 alias candidates but unsupported.
+- `.chi`, `.ace`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` remain known
+  IAL2 alias candidates but unsupported; `.ahb` is a separate shipped AHB
+  requester profile alias after `.700`, not an APB alias shape.
 
 ## Non-Goals
 

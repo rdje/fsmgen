@@ -25,8 +25,8 @@ FSMGen's public source layers are:
 | IAL2 | `.ppif` and selected profile aliases | Protocol or platform intent that lowers into reviewable `.isf`, then `.fsm`. |
 
 `.ppif` is the generic IAL2 container. Selected protocol aliases such as
-`.axi` and `.apb` are aliases over the same IAL2 model, not separate language
-layers. A protocol alias does not get direct-lowering privileges.
+`.axi`, `.apb`, and `.ahb` are aliases over the same IAL2 model, not separate
+language layers. A protocol alias does not get direct-lowering privileges.
 
 ## Three Authoring Modes
 
@@ -48,7 +48,7 @@ coverage as `.ppif`, a profile alias, or generated IAL1 behavior.
 | --- | --- | --- | --- |
 | AXI | Checked-in `.ppif` Valid-Ready and selected `.axi` profile-alias samples. | Bounded manager capacity/status, ID-family, transaction, response-demux, read-data, burst, dynamic-ID, same-ID, queue, and runtime-validation families. | Shipped examples remain bounded IAL2 surfaces. Full AXI manager behavior, arbitrary cardinalities, complete scoreboards, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 | APB | Checked-in requester, completer, and fixed-composition `.ppif` samples plus byte-identical `.apb` aliases where selected. | Busy/status, sideband, data16, protection, multi-register, multi-peripheral, generalized register-set, and selected back-to-back timing families. | APB interconnect and decode are protocol-specific generated behavior. More-than-six-register, more-than-two-peripheral, bus-matrix, scoreboard, direct backend, verification-output, backend-language variant, AXI, AHB, and VHDL work remain deferred. |
-| AHB | Checked-in bounded requester `ppif/ahb_requester.ppif` plus direct `fsm/amba_requester.fsm` cycle-level seed. | Bounded requester clauses for local command/status, AHB bus bindings, burst, transfer, and response behavior. | `.ahb`, AHB completers/subordinates, AHB interconnect/decode, scoreboards, full AHB manager behavior beyond the bounded requester, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| AHB | Checked-in bounded requester `ppif/ahb_requester.ppif`, selected `.ahb` profile alias `ppif/ahb_requester.ahb`, plus direct `fsm/amba_requester.fsm` cycle-level seed. | Bounded requester clauses for local command/status, AHB bus bindings, burst, transfer, and response behavior. | AHB completers/subordinates, AHB interconnect/decode, scoreboards, full AHB manager behavior beyond the bounded requester, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 Detailed protocol examples are split into separate follow-on chapters so the
 examples can be validated and kept current per protocol without making this
@@ -68,10 +68,10 @@ These command families are the common IAL2 inspection path:
 ```
 
 For selected profile aliases, replace `SOURCE.ppif` with the alias file, such
-as a shipped `.axi` or `.apb` example. The expected review shape is the same:
-source identity remains on the public IAL2 file, reports describe the protocol
-intent and residue, and `--outdir` writes generated `.isf` and `.fsm` review
-artifacts before HDL.
+as a shipped `.axi`, `.apb`, or `.ahb` example. The expected review shape is the
+same: source identity remains on the public IAL2 file, reports describe the
+protocol intent and residue, and `--outdir` writes generated `.isf` and `.fsm`
+review artifacts before HDL.
 
 ## Implementation Workflow
 
@@ -91,10 +91,10 @@ AXI and APB have shipped IAL2 `.ppif` examples and selected profile aliases.
 They are still bounded protocol surfaces, not claims that every AXI or APB
 legal behavior is generated.
 
-AHB has shipped bounded generic `.ppif` requester coverage plus the older
-direct `.fsm` AMBA requester seed. The AHB `.ppif` path still lowers through
-generated `.isf` and generated `.fsm` review artifacts, and `.ahb` remains
-unsupported.
+AHB has shipped bounded generic `.ppif` requester coverage, the selected
+`.ahb` profile alias for that requester, and the older direct `.fsm` AMBA
+requester seed. The AHB IAL2 paths still lower through generated `.isf` and
+generated `.fsm` review artifacts.
 
 Any new suffix, protocol object, report family, generated artifact, or example
 must first be selected by a task-tree leaf, then documented with checked-in
