@@ -6099,6 +6099,19 @@ support-accounting catalog, capability manifest behavior, focused test
 behavior, schedule/check/semantic JSON behavior, generated artifact,
 HDL/runtime, direct-backend, verification-output, backend-language variant,
 AXI, APB, broader AHB behavior, or VHDL behavior changed in `.721`.
+`.722` now finds the generated-IAL1/IAL0/SV substrate ready for the selected
+bounded AHB interconnect/decode implementation and selects `.723` as the direct
+implementation owner. The audit cites APB generated-interconnect precedent for
+generated interconnect artifacts, static-window hit detection, local address
+subtraction, decoded fanout, response mux/defaults, and aggregate top wiring,
+and current AHB endpoint generation for requester/subordinate artifacts,
+output reset/default metadata, HRESP width surfaces, and two-cycle ERROR
+precedent. No lower-layer substrate repair is required before
+`ppif/ahb_interconnect.ppif` implementation, and no parser, generator, source
+sample, support-accounting catalog, capability manifest behavior, focused test
+behavior, schedule/check/semantic JSON behavior, generated artifact,
+HDL/runtime, direct-backend, verification-output, backend-language variant,
+AXI, APB, broader AHB behavior, or VHDL behavior changed in `.722`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

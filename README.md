@@ -5059,6 +5059,15 @@ source is `ppif/ahb_interconnect.ppif`, with report schema
 `ial2_ppif_ahb_interconnect_pipeline_cli`, generated
 `ahb_interconnect.isf`/`ahb_interconnect.fsm`, aggregate `ahb_tb.fsm`, and HDL
 entry `ahb_tb`.
+`.722` now finds the generated substrate ready for the selected bounded AHB
+interconnect/decode implementation and selects `.723` as the direct
+implementation owner. APB generated-interconnect precedent covers generated
+interconnect artifacts, static-window hit detection, local address subtraction,
+decoded fanout, response mux/defaults, and aggregate top wiring; current AHB
+endpoint generation covers requester/subordinate review artifacts,
+HREADYOUT/HRESP/HRDATA reset/default metadata, HRESP width surfaces, and
+two-cycle ERROR precedent. No lower-layer substrate repair is required before
+`ppif/ahb_interconnect.ppif` implementation.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7726,6 +7735,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_SUBORDINATE_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.719` no-behavior selector after requester and subordinate `.ppif`/`.ahb` entrypoints shipped and selects `.720`, AHB interconnect/decode readiness audit.
 - `docs/IAL2_AHB_INTERCONNECT_DECODE_READINESS_AUDIT.md` — records the `.720` no-behavior readiness audit and selects `.721`, public AHB interconnect/decode contract selection for a conservative one-requester/one-subordinate generic `.ppif` boundary.
 - `docs/IAL2_AHB_INTERCONNECT_DECODE_CONTRACT_SELECTION.md` — records the `.721` no-behavior contract selection for future `ppif/ahb_interconnect.ppif`, support identity `intent.ppif_ahb_interconnect`, generated AHB interconnect review artifacts, aggregate `ahb_tb.fsm`, and `.722` substrate audit.
+- `docs/IAL2_AHB_INTERCONNECT_DECODE_GENERATED_SUBSTRATE_AUDIT.md` — records the `.722` no-behavior generated-substrate audit, finds no lower-layer repair is required before the selected bounded AHB interconnect/decode implementation, and selects `.723`.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

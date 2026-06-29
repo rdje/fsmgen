@@ -9843,6 +9843,11 @@ multi-subordinate fabric or aggregate `.ahb` alias yet.
 `intent.ppif_ahb_interconnect`, generated `ahb_interconnect.isf` before
 `ahb_interconnect.fsm`, aggregate `ahb_tb.fsm`, and `.722`, a generated
 substrate audit before implementation.
+`.722` finds no generated-IAL1/IAL0/SV substrate repair is required before the
+selected bounded AHB interconnect/decode implementation. `.723` owns direct
+implementation of the generic `.ppif` source, one-requester/one-subordinate
+decode, generated `ahb_interconnect.isf`/`.fsm`, aggregate `ahb_tb.fsm`, and
+the selected report/support-accounting contract.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

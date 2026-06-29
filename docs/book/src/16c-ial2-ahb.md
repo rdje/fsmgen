@@ -357,8 +357,9 @@ The following are not shipped by the current AHB IAL2 surface:
 
 - AHB completer behavior;
 - AHB interconnect/decode generation; the selected future public contract is
-  `ppif/ahb_interconnect.ppif`, and the active task-tree owner audits the
-  generated substrate before implementation;
+  `ppif/ahb_interconnect.ppif`. The generated-substrate audit found no
+  lower-layer repair is required, and the active task-tree owner is the direct
+  bounded implementation slice;
 - optional/property-gated AHB signals such as `HBURST`, `HPROT`, `HMASTLOCK`,
   and AHB5 additions on the subordinate side;
 - burst `SEQ` continuation support in the subordinate;
