@@ -9848,6 +9848,23 @@ selected bounded AHB interconnect/decode implementation. `.723` owns direct
 implementation of the generic `.ppif` source, one-requester/one-subordinate
 decode, generated `ahb_interconnect.isf`/`.fsm`, aggregate `ahb_tb.fsm`, and
 the selected report/support-accounting contract.
+`.723` ships `ppif/ahb_interconnect.ppif` as the selected bounded public AHB
+interconnect/decode source. It embeds one requester, one subordinate, and one
+interconnect object, lowers through generated `amba_requester.isf`,
+`ahb_lite_subordinate.isf`, and `ahb_interconnect.isf`, emits generated
+`amba_requester.fsm`, `ahb_lite_subordinate.fsm`, `ahb_interconnect.fsm`, and
+aggregate `ahb_tb.fsm`, and emits HDL module `ahb_tb`. The report schema is
+`fsmgen.ial2.protocol_intent.ahb_interconnect.v1`; support accounting records
+`intent.ppif_ahb_interconnect`, `source_kind ppif`, and coverage
+`ial2_ppif_ahb_interconnect_pipeline_cli`. The shipped decode is one static
+window at base 0 size 4, fixed `HGRANT=1`, decoded `HSEL_REGS`, global
+`HREADY`, one-bit subordinate `HRESP_REGS` to two-bit requester `HRESP`
+OKAY/ERROR mapping, and interconnect-owned two-cycle unmapped active-transfer
+ERROR. Aggregate `.ahb` aliases, multi-subordinate fabrics, multiple managers,
+bus matrices, optional signals, burst `SEQ` continuation, byte-lane/narrow
+transfers, direct backend behavior, verification-output generation, AXI/APB
+behavior, and VHDL remain future task-tree-owned work. `.724` owns the next
+no-behavior selector after this shipped interconnect.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

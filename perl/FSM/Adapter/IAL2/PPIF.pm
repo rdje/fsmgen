@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 
 use Lispish;
 use FSM::Adapter::ISF::LispishAdapter;
+use FSM::IAL2::ProtocolIntent::AhbInterconnect;
 use FSM::IAL2::ProtocolIntent::AhbRequester;
 use FSM::IAL2::ProtocolIntent::AhbSubordinate;
 use FSM::IAL2::ProtocolIntent::ApbComposition;
@@ -69,6 +70,8 @@ sub parse_source($self, @args) {
         if _is_apb_completer_contract($contract);
     return FSM::IAL2::ProtocolIntent::ApbRequesterTransfer->new(debug => $self->{debug})->generate($contract)
         if _is_apb_requester_transfer_contract($contract);
+    return FSM::IAL2::ProtocolIntent::AhbInterconnect->new(debug => $self->{debug})->generate($contract)
+        if _is_ahb_interconnect_contract($contract);
     if (_is_ahb_requester_contract($contract)) {
         my $result = FSM::IAL2::ProtocolIntent::AhbRequester->new(debug => $self->{debug})->generate($contract);
         _remove_unsupported_residue_id($result, 'ahb_profile_alias_deferred')
@@ -204,6 +207,7 @@ sub _contract_from_root($root, $source_label) {
     my @apb_compositions;
     my @ahb_requesters;
     my @ahb_subordinates;
+    my @ahb_interconnects;
     for my $clause (@clauses) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         if ($head eq 'profile') {
@@ -230,6 +234,8 @@ sub _contract_from_root($root, $source_label) {
             push @ahb_requesters, _parse_ahb_requester(\@body, $source_label);
         } elsif ($head eq 'ahb-subordinate') {
             push @ahb_subordinates, _parse_ahb_subordinate(\@body, $source_label);
+        } elsif ($head eq 'ahb-interconnect') {
+            push @ahb_interconnects, _parse_ahb_interconnect(\@body, $source_label);
         } else {
             confess "Error: $surface source '$source_label' has unsupported top-level clause '($head ...)'\n";
         }
@@ -239,13 +245,36 @@ sub _contract_from_root($root, $source_label) {
         unless defined $profile;
     confess "Error: $surface source '$source_label' is missing required (source ...) clause\n"
         unless defined $source;
-    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), (apb-composition ...), (ahb-requester ...), or (ahb-subordinate ...)\n"
-        unless @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates;
+    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), (apb-composition ...), (ahb-requester ...), (ahb-subordinate ...), or (ahb-interconnect ...)\n"
+        unless @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+    if (@ahb_interconnects) {
+        confess "Error: $surface source '$source_label' profile '$profile' does not match (ahb-interconnect ...); expected ahb\n"
+            unless $profile eq 'ahb';
+        confess "Error: $surface source '$source_label' AHB interconnect requires exactly one (ahb-requester ...), one (ahb-subordinate ...), and one (ahb-interconnect ...) object in this slice\n"
+            unless @ahb_requesters == 1
+                && @ahb_subordinates == 1
+                && @ahb_interconnects == 1
+                && !@channels
+                && !@managers
+                && !@apb_requesters
+                && !@apb_completers
+                && !@apb_compositions;
+
+        return {
+            kind         => 'ahb_interconnect',
+            intent_name  => $intent_name,
+            protocol     => $profile,
+            source       => $source,
+            requester    => $ahb_requesters[0],
+            subordinate  => $ahb_subordinates[0],
+            interconnect => $ahb_interconnects[0],
+        };
+    }
     if (@ahb_requesters) {
         confess "Error: $surface source '$source_label' profile '$profile' does not match (ahb-requester ...); expected ahb\n"
             unless $profile eq 'ahb';
-        confess "Error: $surface source '$source_label' cannot mix (ahb-requester ...) with (ahb-subordinate ...), (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), or (apb-composition ...) objects in this slice\n"
-            if @ahb_subordinates || @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions;
+        confess "Error: $surface source '$source_label' cannot mix (ahb-requester ...) with (ahb-subordinate ...), (ahb-interconnect ...), (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), or (apb-composition ...) objects outside the selected AHB interconnect shape in this slice\n"
+            if @ahb_subordinates || @ahb_interconnects || @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions;
         confess "Error: $surface source '$source_label' supports exactly one (ahb-requester ...) object in this slice\n"
             if @ahb_requesters > 1;
 
@@ -259,8 +288,8 @@ sub _contract_from_root($root, $source_label) {
     if (@ahb_subordinates) {
         confess "Error: $surface source '$source_label' profile '$profile' does not match (ahb-subordinate ...); expected ahb\n"
             unless $profile eq 'ahb';
-        confess "Error: $surface source '$source_label' cannot mix (ahb-subordinate ...) with (ahb-requester ...), (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), or (apb-composition ...) objects in this slice\n"
-            if @ahb_requesters || @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions;
+        confess "Error: $surface source '$source_label' cannot mix (ahb-subordinate ...) with (ahb-requester ...), (ahb-interconnect ...), (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), or (apb-composition ...) objects outside the selected AHB interconnect shape in this slice\n"
+            if @ahb_requesters || @ahb_interconnects || @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions;
         confess "Error: $surface source '$source_label' supports exactly one (ahb-subordinate ...) object in this slice\n"
             if @ahb_subordinates > 1;
 
@@ -1095,6 +1124,206 @@ sub _parse_ahb_subordinate_response_block($items, $source_label, $name, $transfe
     }
 
     return \%parsed;
+}
+
+sub _parse_ahb_interconnect($body, $source_label) {
+    confess "Error: .ppif (ahb-interconnect ...) requires a scalar object name\n"
+        unless @$body >= 1 && !ref($body->[0]) && length($body->[0]);
+
+    my $name = $body->[0];
+    my %contract = (
+        kind => 'ahb_interconnect',
+        name => $name,
+    );
+    my %seen;
+    for my $clause (@{$body}[1 .. $#$body]) {
+        my ($head, @items) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-interconnect $name ...) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+
+        if ($head =~ /\A(?:role|clock)\z/) {
+            confess "Error: .ppif (ahb-interconnect $name ($head ...)) requires exactly one scalar value\n"
+                unless @items == 1 && !ref($items[0]);
+            $contract{$head} = $items[0];
+        } elsif ($head eq 'reset') {
+            $contract{reset} = _parse_reset(\@items, $source_label);
+        } elsif ($head eq 'children') {
+            $contract{children} = _parse_ahb_interconnect_children_block(\@items, $source_label, $name);
+        } elsif ($head eq 'address-map') {
+            $contract{address_map} = _parse_ahb_interconnect_address_map_block(\@items, $source_label, $name);
+        } elsif ($head eq 'decode') {
+            $contract{decode} = _parse_ahb_interconnect_decode_block(\@items, $source_label, $name);
+        } elsif ($head eq 'wiring') {
+            $contract{wiring} = _parse_ahb_interconnect_wiring_block(\@items, $source_label, $name);
+        } else {
+            confess "Error: .ppif (ahb-interconnect $name ...) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(role clock reset children address_map decode wiring)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (ahb-interconnect $name ...) is missing required ($clause ...) clause\n"
+            unless exists $contract{$required};
+    }
+
+    return \%contract;
+}
+
+sub _parse_ahb_interconnect_children_block($items, $source_label, $name) {
+    my %children;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-interconnect $name (children ...)) supports only (requester INSTANCE OBJECT) and (subordinate INSTANCE OBJECT)\n"
+            unless $head =~ /\A(?:requester|subordinate)\z/;
+        confess "Error: .ppif (ahb-interconnect $name (children ...)) has duplicate ($head ...) clause\n"
+            if exists $children{$head};
+        confess "Error: .ppif (ahb-interconnect $name (children ($head ...))) requires exactly instance and object scalar names\n"
+            unless @body == 2 && !ref($body[0]) && length($body[0]) && !ref($body[1]) && length($body[1]);
+        $children{$head} = {
+            instance_name => $body[0],
+            object_name   => $body[1],
+        };
+    }
+
+    for my $required (qw(requester subordinate)) {
+        confess "Error: .ppif (ahb-interconnect $name (children ...)) is missing required ($required ...) clause\n"
+            unless exists $children{$required};
+    }
+
+    return \%children;
+}
+
+sub _parse_ahb_interconnect_address_map_block($items, $source_label, $name) {
+    confess "Error: .ppif (ahb-interconnect $name (address-map ...)) requires a scalar address-map name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $map_name = $items->[0];
+    my @windows;
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-interconnect $name (address-map $map_name ...)) supports only (window INSTANCE ...)\n"
+            unless $head eq 'window';
+        push @windows, _parse_ahb_interconnect_address_window(\@body, $source_label, $name, $map_name);
+    }
+
+    confess "Error: .ppif (ahb-interconnect $name (address-map $map_name ...)) requires exactly one (window ...) clause in this slice\n"
+        unless @windows == 1;
+
+    return {
+        name    => $map_name,
+        windows => \@windows,
+    };
+}
+
+sub _parse_ahb_interconnect_address_window($items, $source_label, $name, $map_name) {
+    confess "Error: .ppif (ahb-interconnect $name (address-map $map_name (window ...))) requires a scalar subordinate instance name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $window_name = $items->[0];
+    my %window = (name => $window_name);
+    my %seen;
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-interconnect $name (address-map $map_name (window $window_name ...))) supports only (base NAME width N default V) and (size NAME width N default V)\n"
+            unless $head =~ /\A(?:base|size)\z/;
+        confess "Error: .ppif (ahb-interconnect $name (address-map $map_name (window $window_name ...))) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+        $window{$head} = _parse_apb_parameter_default_binding(
+            \@body,
+            $source_label,
+            "ahb-interconnect $name address-map $map_name window $window_name $head",
+        );
+    }
+
+    for my $required (qw(base size)) {
+        confess "Error: .ppif (ahb-interconnect $name (address-map $map_name (window $window_name ...))) is missing required ($required ...) clause\n"
+            unless exists $window{$required};
+    }
+
+    return \%window;
+}
+
+sub _parse_ahb_interconnect_decode_block($items, $source_label, $name) {
+    my %allowed = (
+        overlap            => 'overlap',
+        priority           => 'priority',
+        'unmapped-address' => 'unmapped_address',
+    );
+    my %decode;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-interconnect $name (decode ...)) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (ahb-interconnect $name (decode ...)) has duplicate ($head ...) clause\n"
+            if exists $decode{$allowed{$head}};
+        $decode{$allowed{$head}} = _parse_apb_scalar_binding(
+            \@body,
+            $source_label,
+            "ahb-interconnect $name decode $head",
+        );
+    }
+
+    for my $required (qw(overlap priority unmapped_address)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (ahb-interconnect $name (decode ...)) is missing required ($clause ...) clause\n"
+            unless exists $decode{$required};
+    }
+
+    return \%decode;
+}
+
+sub _parse_ahb_interconnect_wiring_block($items, $source_label, $name) {
+    confess "Error: .ppif (ahb-interconnect $name (wiring ...)) requires a scalar wiring name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $wiring_name = $items->[0];
+    my %allowed = (
+        grant                   => 'grant',
+        request                 => 'request',
+        ready                   => 'ready',
+        response                => 'response',
+        'read-data'             => 'read_data',
+        address                 => 'address',
+        transfer                => 'transfer',
+        write                   => 'write',
+        size                    => 'size',
+        burst                   => 'burst',
+        protection              => 'protection',
+        lock                    => 'lock',
+        'write-data'            => 'write_data',
+        'subordinate-select'    => 'subordinate_select',
+        'subordinate-ready-out' => 'subordinate_ready_out',
+        'subordinate-response'  => 'subordinate_response',
+        'subordinate-read-data' => 'subordinate_read_data',
+    );
+    my %bus;
+
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (ahb-interconnect $name (wiring $wiring_name ...)) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (ahb-interconnect $name (wiring $wiring_name ...)) has duplicate ($head ...) clause\n"
+            if exists $bus{$allowed{$head}};
+        $bus{$allowed{$head}} = $head =~ /\A(?:response|read-data|address|transfer|size|burst|protection|write-data|subordinate-response|subordinate-read-data)\z/
+            ? _parse_apb_width_binding(\@body, $source_label, "ahb-interconnect $name wiring $wiring_name $head")
+            : _parse_apb_scalar_binding(\@body, $source_label, "ahb-interconnect $name wiring $wiring_name $head");
+    }
+
+    for my $required (qw(grant request ready response read_data address transfer write size burst protection lock write_data subordinate_select subordinate_ready_out subordinate_response subordinate_read_data)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (ahb-interconnect $name (wiring $wiring_name ...)) is missing required ($clause ...) clause\n"
+            unless exists $bus{$required};
+    }
+
+    return {
+        name => $wiring_name,
+        bus  => \%bus,
+    };
 }
 
 sub _parse_apb_scalar_binding($body, $source_label, $context) {
@@ -2528,6 +2757,11 @@ sub _is_apb_composition_contract($contract) {
 sub _is_ahb_requester_contract($contract) {
     return ref($contract) eq 'HASH'
         && ($contract->{kind} // '') eq 'ahb_requester';
+}
+
+sub _is_ahb_interconnect_contract($contract) {
+    return ref($contract) eq 'HASH'
+        && ($contract->{kind} // '') eq 'ahb_interconnect';
 }
 
 sub _is_ahb_subordinate_contract($contract) {

@@ -6112,6 +6112,25 @@ sample, support-accounting catalog, capability manifest behavior, focused test
 behavior, schedule/check/semantic JSON behavior, generated artifact,
 HDL/runtime, direct-backend, verification-output, backend-language variant,
 AXI, APB, broader AHB behavior, or VHDL behavior changed in `.722`.
+`.723` now ships the selected bounded public AHB interconnect/decode source at
+`ppif/ahb_interconnect.ppif`. The source embeds one AHB requester, one
+AHB-Lite/common-AHB subordinate, and one `ahb-interconnect` object, lowers
+through generated `amba_requester.isf`, `ahb_lite_subordinate.isf`, and
+`ahb_interconnect.isf`, emits generated `amba_requester.fsm`,
+`ahb_lite_subordinate.fsm`, `ahb_interconnect.fsm`, and aggregate
+`ahb_tb.fsm`, and generates HDL module `ahb_tb`. Its report schema is
+`fsmgen.ial2.protocol_intent.ahb_interconnect.v1`; support accounting records
+`intent.ppif_ahb_interconnect`, `source_kind ppif`, and coverage
+`ial2_ppif_ahb_interconnect_pipeline_cli`. The shipped decode is one static
+window at base 0 size 4 with fixed `HGRANT=1`, decoded `HSEL_REGS`, local
+`HADDR_REGS`, global `HREADY`, one-bit subordinate `HRESP_REGS` to two-bit
+requester `HRESP` OKAY/ERROR mapping, and interconnect-owned two-cycle
+unmapped active-transfer ERROR. Aggregate `.ahb` interconnect aliases,
+multi-subordinate fabrics, multiple managers, bus matrices, optional signals,
+burst `SEQ` continuation, byte-lane/narrow-transfer behavior, direct backend,
+verification-output generation, AXI/APB behavior, and VHDL remain future
+task-tree-owned work. `.724` is the next no-behavior selector after this
+shipped interconnect.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -5068,6 +5068,26 @@ endpoint generation covers requester/subordinate review artifacts,
 HREADYOUT/HRESP/HRDATA reset/default metadata, HRESP width surfaces, and
 two-cycle ERROR precedent. No lower-layer substrate repair is required before
 `ppif/ahb_interconnect.ppif` implementation.
+`.723` now ships the selected bounded public AHB interconnect/decode source at
+`ppif/ahb_interconnect.ppif`. The generic `.ppif` source embeds one
+`(ahb-requester amba_requester ...)`, one
+`(ahb-subordinate ahb_lite_subordinate ...)`, and one
+`(ahb-interconnect ahb_tb ...)` object, lowers through generated
+`amba_requester.isf`, `ahb_lite_subordinate.isf`, and `ahb_interconnect.isf`
+before generated `amba_requester.fsm`, `ahb_lite_subordinate.fsm`,
+`ahb_interconnect.fsm`, and aggregate `ahb_tb.fsm`, then emits HDL module
+`ahb_tb`. The report schema is
+`fsmgen.ial2.protocol_intent.ahb_interconnect.v1`; support accounting records
+`intent.ppif_ahb_interconnect`, `source_kind ppif`, and coverage
+`ial2_ppif_ahb_interconnect_pipeline_cli`. The shipped behavior is one static
+window at base 0 size 4, fixed `HGRANT=1`, decoded `HSEL_REGS`, local
+`HADDR_REGS`, global `HREADY`, one-bit subordinate `HRESP_REGS` to two-bit
+requester `HRESP` OKAY/ERROR mapping, and interconnect-owned two-cycle
+unmapped active-transfer ERROR. Aggregate `.ahb` interconnect aliases,
+multi-subordinate fabrics, multiple managers, bus matrices, optional signals,
+burst `SEQ` continuation, byte-lane/narrow-transfer behavior, direct backend
+behavior, verification-output generation, AXI/APB behavior, and VHDL remain
+future task-tree-owned work; `.724` is the next no-behavior selector.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7736,10 +7756,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_INTERCONNECT_DECODE_READINESS_AUDIT.md` — records the `.720` no-behavior readiness audit and selects `.721`, public AHB interconnect/decode contract selection for a conservative one-requester/one-subordinate generic `.ppif` boundary.
 - `docs/IAL2_AHB_INTERCONNECT_DECODE_CONTRACT_SELECTION.md` — records the `.721` no-behavior contract selection for future `ppif/ahb_interconnect.ppif`, support identity `intent.ppif_ahb_interconnect`, generated AHB interconnect review artifacts, aggregate `ahb_tb.fsm`, and `.722` substrate audit.
 - `docs/IAL2_AHB_INTERCONNECT_DECODE_GENERATED_SUBSTRATE_AUDIT.md` — records the `.722` no-behavior generated-substrate audit, finds no lower-layer repair is required before the selected bounded AHB interconnect/decode implementation, and selects `.723`.
+- `docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md` — documents the `.723` shipped public `ppif/ahb_interconnect.ppif` behavior, generated requester/subordinate/interconnect review artifacts, aggregate `ahb_tb.fsm`, report schema, support accounting, validation, and remaining AHB residue.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
-- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester and subordinate `.ppif` support, shipped requester and subordinate `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
+- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester, subordinate, and interconnect `.ppif` support, shipped requester and subordinate `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

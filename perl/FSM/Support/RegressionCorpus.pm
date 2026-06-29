@@ -71,6 +71,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_ahb_interconnect',
+        relpath => 'ppif/ahb_interconnect.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_ahb_interconnect_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'ahb_tb',
+        expected_semantic_source_root_kind => 'top',
+    },
+    {
         id => 'intent.ahb_profile_alias_requester',
         relpath => 'ppif/ahb_requester.ahb',
         family => 'protocol_fixture',
