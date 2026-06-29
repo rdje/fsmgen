@@ -208,7 +208,11 @@ the broader AHB residue. Aggregate AHB interconnect/decode remains generic
 `ppif/ahb_interconnect.ppif` is rejected by the endpoint-alias boundary.
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.724` selects the aggregate `.ahb`
 interconnect profile-alias contract as the next no-behavior owner before any
-alias implementation.
+alias implementation. `IAL2-FEATURE-COMPLETENESS-FRONTIER.725` selects the
+future alias path `ppif/ahb_interconnect.ahb`, support identity
+`intent.ahb_profile_alias_interconnect`, source kind `ial2_profile_alias`, and
+coverage `ial2_ahb_profile_alias_interconnect_pipeline_cli`; behavior remains
+unchanged until that alias implementation ships.
 
 ## Requester Source Shape
 
@@ -439,7 +443,7 @@ its historical `ahb_subordinate_profile_alias_deferred` residue, and the
 shipped subordinate `.ahb` alias removes that stale residue from alias reports.
 The generic aggregate interconnect `.ppif` report keeps
 `ahb_aggregate_profile_alias_deferred` until the selected aggregate `.ahb`
-contract and implementation ship in later task-tree leaves.
+implementation ships in a later task-tree leaf.
 
 ## Validation Used For This Chapter
 

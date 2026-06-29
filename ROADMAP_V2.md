@@ -6136,6 +6136,16 @@ selection. The selector makes no behavior change: `ppif/ahb_interconnect.ppif`
 remains the shipped aggregate AHB source, aggregate `.ahb` interconnect aliases
 still fail closed, and `ahb_aggregate_profile_alias_deferred` remains explicit
 until a later implementation owner ships the selected alias.
+`.725` now selects `.726`, bounded implementation of the public aggregate AHB
+`.ahb` profile-alias source `ppif/ahb_interconnect.ahb`. The selected alias
+mirrors `ppif/ahb_interconnect.ppif`, preserves generated
+requester/subordinate/interconnect review artifacts plus aggregate
+`ahb_tb.fsm`, reports schema
+`fsmgen.ial2.protocol_intent.ahb_interconnect.v1`, support-accounts as
+`intent.ahb_profile_alias_interconnect` with source kind `ial2_profile_alias`
+and coverage `ial2_ahb_profile_alias_interconnect_pipeline_cli`, and removes
+`ahb_aggregate_profile_alias_deferred` only from aggregate `.ahb` reports.
+Behavior remains unchanged until `.726` implements the selected alias.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

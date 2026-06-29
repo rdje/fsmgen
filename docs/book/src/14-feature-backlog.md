@@ -9870,6 +9870,15 @@ The selector keeps current behavior unchanged: `ppif/ahb_interconnect.ppif`
 is the shipped aggregate source, the aggregate `.ahb` path still fails closed,
 and the interconnect report keeps `ahb_aggregate_profile_alias_deferred` until
 a later implementation owner ships the selected alias contract.
+`.725` selects `.726`, bounded implementation of the public aggregate AHB
+`.ahb` profile-alias source `ppif/ahb_interconnect.ahb`. The selected alias
+must mirror `ppif/ahb_interconnect.ppif`, keep explicit `(profile ahb)`,
+preserve generated requester/subordinate/interconnect `.isf` and `.fsm`
+review artifacts plus aggregate `ahb_tb.fsm`, use support identity
+`intent.ahb_profile_alias_interconnect`, source kind `ial2_profile_alias`,
+coverage `ial2_ahb_profile_alias_interconnect_pipeline_cli`, and remove
+`ahb_aggregate_profile_alias_deferred` only from aggregate `.ahb` reports.
+Current behavior is unchanged until `.726` implements the selected alias.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

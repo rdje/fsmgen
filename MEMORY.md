@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.724: select AHB interconnect alias contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.725` is active; select the public AHB aggregate `.ahb` profile-alias contract before behavior changes.
-- recently_done: `.723` shipped `ppif/ahb_interconnect.ppif`, lowering one requester, one subordinate, and one interconnect object through generated requester/subordinate/interconnect `.isf` and `.fsm` artifacts, aggregate `ahb_tb.fsm`, and HDL module `ahb_tb`. `.724` selected `.725`, aggregate AHB `.ahb` profile-alias contract selection. Current behavior is unchanged: `ppif/ahb_interconnect.ppif` is the shipped aggregate source, aggregate `.ahb` interconnect aliases still fail closed, and `ahb_aggregate_profile_alias_deferred` remains explicit until a later implementation owner ships the selected alias.
-- in_flight_uncommitted: none after the `.724` commit; ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
-- blockers: The `.705` AHB source-reference artifact blocker is resolved through `.706`; `.707`-.724 now carry source facts, direct seed, public requester/subordinate/interconnect contracts, generated-IAL1 output reset/default substrate, public `.ppif` behavior, endpoint `.ahb` aliases, and the aggregate `.ahb` alias contract-selection route. Broad corpus/accounting work must remain guarded.
-- next_action: Run `IAL2-FEATURE-COMPLETENESS-FRONTIER.725`: select the aggregate AHB `.ahb` alias contract without behavior changes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.725: select AHB interconnect alias implementation`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.726` is active; implement the selected bounded public AHB aggregate `.ahb` profile-alias exposure.
+- recently_done: `.724` selected aggregate AHB `.ahb` profile-alias contract selection. `.725` selected `.726`, bounded implementation of `ppif/ahb_interconnect.ahb`, mirroring `ppif/ahb_interconnect.ppif`, with support identity `intent.ahb_profile_alias_interconnect`, source kind `ial2_profile_alias`, coverage `ial2_ahb_profile_alias_interconnect_pipeline_cli`, report schema `fsmgen.ial2.protocol_intent.ahb_interconnect.v1`, generated requester/subordinate/interconnect `.isf` and `.fsm` artifacts, aggregate `ahb_tb.fsm`, HDL module `ahb_tb`, semantic root kind `top`, and `ahb_aggregate_profile_alias_deferred` removed only from aggregate `.ahb` reports.
+- in_flight_uncommitted: none after the `.725` commit; ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- blockers: The `.705` AHB source-reference artifact blocker is resolved through `.706`; `.707`-.725 now carry source facts, direct seed, public requester/subordinate/interconnect contracts, generated-IAL1 output reset/default substrate, public `.ppif` behavior, endpoint `.ahb` aliases, and the aggregate `.ahb` implementation route. Broad corpus/accounting work must remain guarded.
+- next_action: Run `IAL2-FEATURE-COMPLETENESS-FRONTIER.726`: implement `ppif/ahb_interconnect.ahb` without broadening AHB behavior.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
