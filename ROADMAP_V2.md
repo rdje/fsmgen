@@ -5994,6 +5994,19 @@ test behavior, schedule/check/semantic JSON behavior, generated artifact,
 HDL/runtime behavior, seed behavior, direct backend behavior,
 verification-output generation, backend-language variant, AXI, APB, or VHDL
 behavior changed in `.712`.
+`.713` selects generated-IAL1 output default/reset semantics without behavior
+changes. The selected source surface adds `(reset VALUE)` and
+`(default VALUE)` to actor-level interface outputs, first for non-negative
+integer literal values that fit resolved positive integer widths. Reset values
+must lower to generated `.fsm` `+size` reset metadata; default values must
+lower to generated transaction idle/quiescent output assignments without
+overriding explicit named drives. `.714` now owns implementation of that
+substrate before AHB subordinate `.ppif` behavior. No parser, generator,
+public source, sample, support-accounting catalog behavior, manifest behavior,
+test behavior, schedule/check/semantic JSON behavior, generated artifact,
+HDL/runtime behavior, seed behavior, direct backend behavior,
+verification-output generation, backend-language variant, AXI, APB, AHB, or
+VHDL behavior changed in `.713`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

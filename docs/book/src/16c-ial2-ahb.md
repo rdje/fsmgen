@@ -281,8 +281,11 @@ but direct implementation remains deferred because reset/idle output behavior
 must be reviewable in generated artifacts first. In particular, the selected
 contract needs `HREADYOUT=1`, `HRESP=0`, and `HRDATA=0` at reset/idle.
 
-The next owned AHB work is `.713`, generated-IAL1 output default/reset
-contract selection before AHB subordinate implementation.
+The current owned prerequisite is `.714`, generated-IAL1 output default/reset
+substrate implementation before AHB subordinate implementation. `.713`
+selected additive generated-IAL1 actor interface output `(reset VALUE)` and
+`(default VALUE)` options and routed implementation to `.714`; public AHB
+subordinate `.ppif` behavior remains deferred until that substrate is proven.
 
 ## Validation Used For This Chapter
 
@@ -313,4 +316,6 @@ the selected transfer, word-size, write-update, and two-cycle ERROR response
 paths.
 The generated-substrate audit confirmed core AHB subordinate transaction
 representability, while routing generated-IAL1 output default/reset semantics
-to the next owned slice before public subordinate behavior ships.
+to the next owned slice before public subordinate behavior ships. The follow-on
+contract selector chose `(reset VALUE)` and `(default VALUE)` output metadata,
+with implementation owned by `.714`.

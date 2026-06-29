@@ -32,6 +32,11 @@ review-artifact expectation, SystemVerilog reset/idle expectation, diagnostics,
 tests, documentation, and follow-on implementation owner before any substrate
 code changes.
 
+Later status: `.713` selected additive `(reset VALUE)` and
+`(default VALUE)` options on generated-IAL1 actor interface outputs and routed
+implementation to `.714`. AHB subordinate parser/generator/source behavior
+remains deferred until that substrate is implemented and proven.
+
 No parser behavior, generator behavior, public source sample,
 support-accounting catalog behavior, capability-manifest behavior, test
 behavior, schedule/check/semantic JSON behavior, generated tracked artifact,

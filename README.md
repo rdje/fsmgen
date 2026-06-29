@@ -4969,6 +4969,19 @@ test behavior, schedule/check/semantic JSON behavior, generated artifact,
 HDL/runtime behavior, seed behavior, direct backend behavior,
 verification-output generation, backend-language variant, AXI, APB, or VHDL
 behavior changed in `.712`.
+`.713` selects generated-IAL1 output default/reset semantics without behavior
+changes. The selected source surface adds `(reset VALUE)` and
+`(default VALUE)` to actor-level interface outputs, first for non-negative
+integer literal values that fit resolved positive integer widths. Reset values
+must lower to generated `.fsm` `+size` reset metadata; default values must
+lower to generated transaction idle/quiescent output assignments without
+overriding explicit named drives. `.714` now owns implementation of that
+substrate before AHB subordinate `.ppif` behavior. No parser, generator,
+public source, sample, support-accounting catalog behavior, manifest behavior,
+test behavior, schedule/check/semantic JSON behavior, generated artifact,
+HDL/runtime behavior, seed behavior, direct backend behavior,
+verification-output generation, backend-language variant, AXI, APB, AHB, or
+VHDL behavior changed in `.713`.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7627,6 +7640,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_COMPLETER_SUBORDINATE_POST_SEED_READINESS_AUDIT.md` — records the `.710` no-behavior readiness audit after the direct seed and selects `.711`, public IAL2 AHB subordinate/completer contract selection.
 - `docs/IAL2_AHB_SUBORDINATE_PUBLIC_CONTRACT_SELECTION.md` — selects the `.711` future public source `ppif/ahb_lite_subordinate.ppif`, object `(ahb-subordinate ahb_lite_subordinate ...)`, generated `ahb_lite_subordinate.isf` before `ahb_lite_subordinate.fsm`, report schema `fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, support identity `intent.ppif_ahb_lite_subordinate`, and `.712` generated-substrate audit follow-on.
 - `docs/IAL2_AHB_SUBORDINATE_GENERATED_IAL1_SUBSTRATE_AUDIT.md` — records the `.712` generated-substrate audit, confirms the core AHB subordinate transaction flow is representable, blocks direct implementation on generated-IAL1 output default/reset semantics, and selects `.713`.
+- `docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md` — selects the `.713` generated-IAL1 actor interface output `(reset VALUE)` and `(default VALUE)` contract and routes implementation to `.714`.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
