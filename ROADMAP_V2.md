@@ -5845,6 +5845,12 @@ no-behavior AHB `.ahb` profile-alias readiness audit.
 selection, before any `.ahb` parser/generator/source/support-accounting or
 manifest behavior changes. `.ahb` remains unsupported until a later exact
 implementation owner.
+`.699` now selects `.700`, bounded AHB `.ahb` profile-alias implementation.
+The selected future alias mirrors `ppif/ahb_requester.ppif` at
+`ppif/ahb_requester.ahb`, keeps explicit `(profile ahb)`, preserves generated
+`amba_requester.isf` before `amba_requester.fsm`, and will be support-accounted
+as `intent.ahb_profile_alias_requester` with `source_kind ial2_profile_alias`.
+`.ahb` remains unsupported until `.700` lands.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

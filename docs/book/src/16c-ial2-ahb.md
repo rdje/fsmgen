@@ -163,8 +163,9 @@ source suffix '.ahb' is a known IAL2 alias candidate but is not supported in thi
 ```
 
 Do not rename the `.ppif` fixture to `.ahb` and treat it as a profile alias.
-The next task-tree owner is `.699`, AHB `.ahb` public profile-alias contract
-selection; it still must not accept `.ahb` or change generated behavior.
+The selected future implementation owner is `.700`, bounded AHB `.ahb`
+profile-alias implementation. Until that owner lands, `.ahb` remains
+unsupported and generated behavior is unchanged.
 
 ## Residue
 
