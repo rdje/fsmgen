@@ -9865,6 +9865,11 @@ bus matrices, optional signals, burst `SEQ` continuation, byte-lane/narrow
 transfers, direct backend behavior, verification-output generation, AXI/APB
 behavior, and VHDL remain future task-tree-owned work. `.724` owns the next
 no-behavior selector after this shipped interconnect.
+`.724` selects `.725`, AHB aggregate `.ahb` profile-alias contract selection.
+The selector keeps current behavior unchanged: `ppif/ahb_interconnect.ppif`
+is the shipped aggregate source, the aggregate `.ahb` path still fails closed,
+and the interconnect report keeps `ahb_aggregate_profile_alias_deferred` until
+a later implementation owner ships the selected alias contract.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

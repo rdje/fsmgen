@@ -206,6 +206,9 @@ The subordinate `.ahb` schedule/report JSON uses schema
 the broader AHB residue. Aggregate AHB interconnect/decode remains generic
 `.ppif` only in the shipped surface; an aggregate `.ahb` source for
 `ppif/ahb_interconnect.ppif` is rejected by the endpoint-alias boundary.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.724` selects the aggregate `.ahb`
+interconnect profile-alias contract as the next no-behavior owner before any
+alias implementation.
 
 ## Requester Source Shape
 
@@ -434,6 +437,9 @@ profile-alias residue, and the shipped requester `.ahb` alias removes that
 stale residue from alias reports. The generic subordinate `.ppif` report keeps
 its historical `ahb_subordinate_profile_alias_deferred` residue, and the
 shipped subordinate `.ahb` alias removes that stale residue from alias reports.
+The generic aggregate interconnect `.ppif` report keeps
+`ahb_aggregate_profile_alias_deferred` until the selected aggregate `.ahb`
+contract and implementation ship in later task-tree leaves.
 
 ## Validation Used For This Chapter
 

@@ -6131,6 +6131,11 @@ burst `SEQ` continuation, byte-lane/narrow-transfer behavior, direct backend,
 verification-output generation, AXI/APB behavior, and VHDL remain future
 task-tree-owned work. `.724` is the next no-behavior selector after this
 shipped interconnect.
+`.724` now selects `.725`, AHB aggregate `.ahb` profile-alias contract
+selection. The selector makes no behavior change: `ppif/ahb_interconnect.ppif`
+remains the shipped aggregate AHB source, aggregate `.ahb` interconnect aliases
+still fail closed, and `ahb_aggregate_profile_alias_deferred` remains explicit
+until a later implementation owner ships the selected alias.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

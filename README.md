@@ -5088,6 +5088,11 @@ multi-subordinate fabrics, multiple managers, bus matrices, optional signals,
 burst `SEQ` continuation, byte-lane/narrow-transfer behavior, direct backend
 behavior, verification-output generation, AXI/APB behavior, and VHDL remain
 future task-tree-owned work; `.724` is the next no-behavior selector.
+`.724` now selects `.725`, AHB aggregate `.ahb` profile-alias contract
+selection. Current behavior remains unchanged: `ppif/ahb_interconnect.ppif`
+is the shipped aggregate AHB source, aggregate `.ahb` interconnect aliases
+still fail closed, and `ahb_aggregate_profile_alias_deferred` remains explicit
+until a later implementation owner ships the selected alias.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7757,6 +7762,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_INTERCONNECT_DECODE_CONTRACT_SELECTION.md` — records the `.721` no-behavior contract selection for future `ppif/ahb_interconnect.ppif`, support identity `intent.ppif_ahb_interconnect`, generated AHB interconnect review artifacts, aggregate `ahb_tb.fsm`, and `.722` substrate audit.
 - `docs/IAL2_AHB_INTERCONNECT_DECODE_GENERATED_SUBSTRATE_AUDIT.md` — records the `.722` no-behavior generated-substrate audit, finds no lower-layer repair is required before the selected bounded AHB interconnect/decode implementation, and selects `.723`.
 - `docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md` — documents the `.723` shipped public `ppif/ahb_interconnect.ppif` behavior, generated requester/subordinate/interconnect review artifacts, aggregate `ahb_tb.fsm`, report schema, support accounting, validation, and remaining AHB residue.
+- `docs/IAL2_POST_AHB_INTERCONNECT_PPIF_NEXT_SLICE_SELECTION.md` — records the `.724` no-behavior selector after AHB interconnect `.ppif` shipment and selects `.725`, aggregate AHB `.ahb` profile-alias contract selection.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
