@@ -63,7 +63,7 @@ path before reopening VHDL backend or VHDL rerouting work.
   Children continuation 10: `IAL2-FEATURE-COMPLETENESS-FRONTIER.634, IAL2-FEATURE-COMPLETENESS-FRONTIER.635, IAL2-FEATURE-COMPLETENESS-FRONTIER.636, IAL2-FEATURE-COMPLETENESS-FRONTIER.637, IAL2-FEATURE-COMPLETENESS-FRONTIER.638, IAL2-FEATURE-COMPLETENESS-FRONTIER.639, IAL2-FEATURE-COMPLETENESS-FRONTIER.640, IAL2-FEATURE-COMPLETENESS-FRONTIER.641, IAL2-FEATURE-COMPLETENESS-FRONTIER.642, IAL2-FEATURE-COMPLETENESS-FRONTIER.643, IAL2-FEATURE-COMPLETENESS-FRONTIER.644, IAL2-FEATURE-COMPLETENESS-FRONTIER.645, IAL2-FEATURE-COMPLETENESS-FRONTIER.646, IAL2-FEATURE-COMPLETENESS-FRONTIER.647, IAL2-FEATURE-COMPLETENESS-FRONTIER.648, IAL2-FEATURE-COMPLETENESS-FRONTIER.649, IAL2-FEATURE-COMPLETENESS-FRONTIER.650, IAL2-FEATURE-COMPLETENESS-FRONTIER.651, IAL2-FEATURE-COMPLETENESS-FRONTIER.652, IAL2-FEATURE-COMPLETENESS-FRONTIER.653, IAL2-FEATURE-COMPLETENESS-FRONTIER.654, IAL2-FEATURE-COMPLETENESS-FRONTIER.655, IAL2-FEATURE-COMPLETENESS-FRONTIER.656, IAL2-FEATURE-COMPLETENESS-FRONTIER.657, IAL2-FEATURE-COMPLETENESS-FRONTIER.658`
   Children continuation 11: `IAL2-FEATURE-COMPLETENESS-FRONTIER.659, IAL2-FEATURE-COMPLETENESS-FRONTIER.660, IAL2-FEATURE-COMPLETENESS-FRONTIER.661, IAL2-FEATURE-COMPLETENESS-FRONTIER.662, IAL2-FEATURE-COMPLETENESS-FRONTIER.663, IAL2-FEATURE-COMPLETENESS-FRONTIER.664, IAL2-FEATURE-COMPLETENESS-FRONTIER.665, IAL2-FEATURE-COMPLETENESS-FRONTIER.666, IAL2-FEATURE-COMPLETENESS-FRONTIER.667, IAL2-FEATURE-COMPLETENESS-FRONTIER.668, IAL2-FEATURE-COMPLETENESS-FRONTIER.669, IAL2-FEATURE-COMPLETENESS-FRONTIER.670, IAL2-FEATURE-COMPLETENESS-FRONTIER.671, IAL2-FEATURE-COMPLETENESS-FRONTIER.672, IAL2-FEATURE-COMPLETENESS-FRONTIER.673, IAL2-FEATURE-COMPLETENESS-FRONTIER.674, IAL2-FEATURE-COMPLETENESS-FRONTIER.675, IAL2-FEATURE-COMPLETENESS-FRONTIER.676, IAL2-FEATURE-COMPLETENESS-FRONTIER.677, IAL2-FEATURE-COMPLETENESS-FRONTIER.678, IAL2-FEATURE-COMPLETENESS-FRONTIER.679, IAL2-FEATURE-COMPLETENESS-FRONTIER.680`
 
-  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693`
+  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693, IAL2-FEATURE-COMPLETENESS-FRONTIER.694, IAL2-FEATURE-COMPLETENESS-FRONTIER.695`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -4916,6 +4916,20 @@ path before reopening VHDL backend or VHDL rerouting work.
   Verification: `Added docs/book/src/16c-ial2-ahb.md under the IAL2 protocol/platform intent chapter. The chapter documents current direct fsm/amba_requester.fsm AHB requester coverage, support-accounting identity protocol.amba_requester, source_kind fsm, local requester knobs, generated HDL module/ports, unsupported .ahb IAL2 alias diagnostics, future task-tree prerequisites for AHB IAL2 guided, more-control, and raw/full-control modes, and residue. Added docs/knowledge/ial2-ahb-current-boundary-mdbook-coverage.md. Validated the direct seed with strict check JSON and HDL generation probes, and validated the .ahb boundary with an expected fail-closed temporary alias probe. No parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed.`
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.693: document AHB current boundary`
 
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.694`
+  Status: `done`
+  Goal: `Select the next IAL2 owner after tri-mode mdBook coverage.`
+  Acceptance: `Read the post-.693 Memory/task-tree state, IAL2 new-protocol workflow, AHB current-boundary chapter/fact, tri-mode coverage audit, profile-alias facts, direct AHB seed/support surfaces, README, ROADMAP_V2, mdBook, and Knowledge Map. Select the next exact roadmap-aligned IAL2 owner before any behavior/source change, record docs/IAL2_POST_TRIMODE_MDBOOK_NEXT_SLICE_SELECTION.md and a fact card, update task tree, README, ROADMAP_V2, Memory, and Knowledge Map, and validate docs/doctrine gates. Preserve parser, generator, public source, support-accounting, suffix, generated-artifact, HDL/runtime, AXI, APB, AHB, backend-language, verification-output, direct-backend, and VHDL behavior.`
+  Verification: `Selected .695, an AHB IAL2 source-shape readiness audit, as the next executable owner after tri-mode mdBook coverage. Added docs/IAL2_POST_TRIMODE_MDBOOK_NEXT_SLICE_SELECTION.md and docs/knowledge/ial2-post-trimode-mdbook-next-slice-selection.md. The selector records that AHB has a direct fsm/amba_requester.fsm seed and unsupported .ahb alias boundary, while AHB .ppif/.ahb source shape, generated .isf/.fsm artifacts, reports, support accounting, diagnostics, examples, and residue require readiness before contract selection or implementation. No parser, generator, public source, support-accounting, suffix, generated-artifact, HDL/runtime, AXI, APB, AHB, backend-language, verification-output, direct-backend, or VHDL behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.694: select AHB IAL2 readiness audit`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.695`
+  Status: `pending`
+  Goal: `Audit AHB IAL2 source-shape readiness.`
+  Acceptance: `Read .694 selector, docs/book/src/15a-ial2-new-protocol-support.md, docs/book/src/16c-ial2-ahb.md, fsm/amba_requester.fsm, bin/fsmgen suffix handling, FSM::Adapter::IAL2::PPIF, current IAL2 protocol-intent modules, RegressionCorpus, LanguageSurfaceSection, relevant profile-alias decisions/facts, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. Use bounded direct probes as needed to confirm fsm/amba_requester.fsm support accounting and .ahb fail-closed behavior. Decide whether the next owner should be an AHB requester .ppif public contract selection, a smaller AHB evidence/source-vocabulary prerequisite, a .ahb profile-alias policy prerequisite, or deferral to a different exact owner. Record required source syntax, generated .isf/.fsm artifact expectations, report/support/diagnostic/example/doc gates, validation strategy, rollback, and residue. Do not change parser, generator, public sources/samples, support-accounting catalog, suffix behavior, generated artifacts, HDL/runtime behavior, AXI, APB, AHB, backend-language, verification-output, direct-backend, or VHDL behavior.`
+  Verification: `pending`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -5330,6 +5344,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 408 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691` | `done` | Added AXI tri-mode mdBook coverage with runnable checked-in examples. |
 | 409 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692` | `done` | Added APB tri-mode mdBook coverage with runnable checked-in examples. |
 | 410 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.693` | `done` | Added AHB current-state and future IAL2 boundary mdBook coverage. |
+| 411 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.694` | `done` | Selected AHB IAL2 source-shape readiness as the next owner. |
+| 412 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.695` | `pending` | Audit AHB IAL2 source-shape readiness before any AHB source or behavior change. |
 
 ## Decisions
 
@@ -12953,6 +12969,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.693` | docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/SUMMARY.md; docs/knowledge/ial2-ahb-current-boundary-mdbook-coverage.md; fsm/amba_requester.fsm; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; documented AHB current direct .fsm coverage and future IAL2 boundary without claiming shipped AHB .ppif/.ahb IAL2 behavior. Validated direct fsm/amba_requester.fsm strict check JSON and HDL generation, and validated .ahb unsupported-alias fail-closed behavior with a temporary boundary probe. Fact-card reverify, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed. |
 
+| `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.694` | docs/IAL2_POST_TRIMODE_MDBOOK_NEXT_SLICE_SELECTION.md; docs/knowledge/ial2-post-trimode-mdbook-next-slice-selection.md; docs/book/src/15a-ial2-new-protocol-support.md; docs/book/src/16c-ial2-ahb.md; fsm/amba_requester.fsm; bin/fsmgen; perl/FSM/Support/RegressionCorpus.pm; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; selected .695, AHB IAL2 source-shape readiness audit, after tri-mode mdBook coverage completed. Fact-card reverify, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No parser, generator, public source, support-accounting, suffix, generated-artifact, HDL/runtime, AXI, APB, AHB, backend-language, verification-output, direct-backend, or VHDL behavior changed. |
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -13610,8 +13628,18 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691: document AXI IAL2 tri-mode examples` | Added AXI tri-mode mdBook coverage and advanced the frontier to APB tri-mode coverage in `.692`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692: document APB IAL2 tri-mode examples` | Added APB tri-mode mdBook coverage and advanced the frontier to AHB current-state/future-boundary coverage in `.693`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.693` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.693: document AHB current boundary` | Added AHB current-boundary mdBook coverage and left the next IAL2 owner selection pending before further changes. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.694` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.694: select AHB IAL2 readiness audit` | Selected AHB IAL2 source-shape readiness as `.695` before any AHB source or behavior change. |
 
 ## Changelog
+
+- `2026-06-29`: Completed `.694`, selecting `.695` as the AHB IAL2
+  source-shape readiness audit after the AXI/APB/AHB tri-mode mdBook chain.
+  The selector records that AHB has a direct `fsm/amba_requester.fsm` seed and
+  unsupported `.ahb` alias boundary, but no shipped AHB `.ppif`, `.ahb`,
+  generated `.isf`, generated `.fsm`, report, support-accounting, diagnostic,
+  or sample contract. No parser, generator, public source, support-accounting,
+  suffix, generated-artifact, HDL/runtime, AXI, APB, AHB, backend-language,
+  verification-output, direct-backend, or VHDL behavior changed.
 
 - `2026-06-29`: Completed `.693`, adding AHB current-boundary mdBook coverage
   under the IAL2 protocol/platform intent chapter. The chapter documents the

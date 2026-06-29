@@ -4797,6 +4797,8 @@ requester/completer/interconnect review artifacts, APB-specific decode
 boundaries, and residue. `.693` now documents the AHB current direct
 `fsm/amba_requester.fsm` boundary, unsupported `.ahb` IAL2 alias status, and
 future task-tree prerequisites without claiming shipped AHB IAL2 behavior.
+`.694` now selects `.695`, a no-behavior AHB IAL2 source-shape readiness audit,
+before any AHB `.ppif` or `.ahb` contract selection or implementation.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7436,6 +7438,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_CONTRACT_SELECTION.md` — selects bounded APB sideband-aware data16 no-policy six-register generalized `reg0..regN` public sources before implementation.
 - `docs/IAL2_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_BEHAVIOR.md` — ships bounded APB sideband-aware data16 no-policy six-register generalized `reg0..regN` register-set multi-peripheral timing behavior.
 - `docs/IAL2_AXI_APB_AHB_TRIMODE_MDBOOK_COVERAGE_AUDIT.md` — selects the IAL2 AXI/APB/AHB tri-mode mdBook documentation coverage plan and follow-on leaves.
+- `docs/IAL2_POST_TRIMODE_MDBOOK_NEXT_SLICE_SELECTION.md` — selects the AHB IAL2 source-shape readiness audit after tri-mode mdBook coverage completed.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
