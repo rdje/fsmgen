@@ -4801,6 +4801,8 @@ future task-tree prerequisites without claiming shipped AHB IAL2 behavior.
 before any AHB `.ppif` or `.ahb` contract selection or implementation.
 `.695` now selects `.696`, AHB requester `.ppif` public contract selection;
 AHB implementation and `.ahb` alias support remain deferred.
+`.696` now selects the exact first generic `.ppif` AHB requester public
+contract and `.697` as its implementation owner; no AHB behavior ships yet.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7442,6 +7444,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AXI_APB_AHB_TRIMODE_MDBOOK_COVERAGE_AUDIT.md` — selects the IAL2 AXI/APB/AHB tri-mode mdBook documentation coverage plan and follow-on leaves.
 - `docs/IAL2_POST_TRIMODE_MDBOOK_NEXT_SLICE_SELECTION.md` — selects the AHB IAL2 source-shape readiness audit after tri-mode mdBook coverage completed.
 - `docs/IAL2_AHB_SOURCE_SHAPE_READINESS_AUDIT.md` — selects AHB requester `.ppif` public contract selection before any AHB implementation or `.ahb` alias support.
+- `docs/IAL2_AHB_REQUESTER_PPIF_PUBLIC_CONTRACT_SELECTION.md` — selects the first AHB requester generic `.ppif` public contract and the follow-on implementation owner.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

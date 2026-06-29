@@ -5828,6 +5828,8 @@ future task-tree prerequisites without claiming shipped AHB IAL2 behavior.
 before any AHB `.ppif` or `.ahb` contract selection or implementation.
 `.695` now selects `.696`, AHB requester `.ppif` public contract selection;
 AHB implementation and `.ahb` alias support remain deferred.
+`.696` now selects the exact first generic `.ppif` AHB requester public
+contract and `.697` as its implementation owner; no AHB behavior ships yet.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

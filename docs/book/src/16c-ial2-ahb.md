@@ -85,6 +85,23 @@ does not provide an AHB IAL2 report schema, AHB source anchors, AHB generated
 artifact metadata, AHB profile-alias support accounting, or AHB IAL2 static
 diagnostics.
 
+## Selected Future PPIF Contract
+
+The first future AHB IAL2 source contract is selected but not implemented. It
+will be a generic `.ppif` source named `ppif/ahb_requester.ppif`, with
+`(profile ahb)` and exactly one `(ahb-requester amba_requester ...)` object.
+
+The selected object vocabulary mirrors the current bounded direct requester:
+clock/reset, local-command, local-status, AHB bus, burst, transfer, and
+response clauses. The selected generated review artifacts are
+`amba_requester.isf` and `amba_requester.fsm`, and the selected HDL module is
+`amba_requester`.
+
+Do not run that future `.ppif` shape as a current example yet. The current CLI
+does not accept `ahb-requester` IAL2 sources until a later implementation
+slice adds parser, generator, report, support-accounting, diagnostics, and
+checked-in sample coverage.
+
 ## Unsupported `.ahb` Boundary
 
 The `.ahb` suffix is known to the CLI as a future IAL2 alias candidate, but it
@@ -107,11 +124,12 @@ fixture to `.ahb` and treat it as an IAL2 source.
 
 ## Future IAL2 Task-Tree Prerequisites
 
-AHB IAL2 guided mode needs a future readiness and contract sequence before any
-source is added. That sequence has to select an AHB IAL2 object vocabulary,
-explicit profile policy, source anchors, generated `.isf` artifact shape,
+AHB IAL2 guided mode has selected its first requester `.ppif` contract, but
+the source is not implemented or checked in yet. The next implementation owner
+has to add parser/generator behavior, generated `.isf` artifact shape,
 generated `.fsm` artifact shape, report schema, support-accounting identity,
-diagnostics, and validation gates.
+diagnostics, runnable examples, and validation gates before AHB IAL2 becomes
+shipped behavior.
 
 AHB IAL2 more-control mode needs task-tree owners for mapping the direct seed's
 requester controls into explicit IAL2 clauses. Those owners must settle burst,
