@@ -5008,6 +5008,11 @@ subordinate alias, AHB interconnect/decode, optional AHB signals, burst `SEQ`
 continuation, byte-lane/narrow-transfer behavior, legacy two-bit `HRESP`,
 direct backend behavior, verification-output generation, backend-language
 variants, AXI, APB, and VHDL remain deferred.
+`.716` now selects `.717`, public AHB subordinate `.ahb` profile-alias
+contract selection, before any alias parser/generator/source/support-accounting
+or manifest behavior changes. Current behavior is unchanged:
+`ppif/ahb_lite_subordinate.ppif` remains the public subordinate IAL2 source,
+and `.ahb` remains requester-only until a later exact implementation owner.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7669,6 +7674,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_CONTRACT_SELECTION.md` — selects the `.713` generated-IAL1 actor interface output `(reset VALUE)` and `(default VALUE)` contract and routes implementation to `.714`.
 - `docs/IAL2_GENERATED_IAL1_OUTPUT_DEFAULT_RESET_BEHAVIOR.md` — records the `.714` generated-IAL1 output reset/default parser/lowering/SystemVerilog substrate and selects `.715` for public AHB subordinate implementation.
 - `docs/IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md` — documents the `.715` shipped public `ppif/ahb_lite_subordinate.ppif` behavior, generated `.isf`/`.fsm` review artifacts, report schema, support accounting, reset/default metadata, validation, and remaining AHB residue.
+- `docs/IAL2_POST_AHB_SUBORDINATE_PPIF_NEXT_SLICE_SELECTION.md` — records the `.716` no-behavior selector after AHB subordinate `.ppif` shipment and selects `.717`, public AHB subordinate `.ahb` profile-alias contract selection.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

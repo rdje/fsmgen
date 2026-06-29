@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.715: ship AHB subordinate PPIF`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.716` is active; select the next exact IAL2/AHB follow-on owner after public AHB subordinate `.ppif` shipment.
-- recently_done: `.715` shipped public `ppif/ahb_lite_subordinate.ppif` through generated `ahb_lite_subordinate.isf` before `ahb_lite_subordinate.fsm`, report schema `fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, support identity `intent.ppif_ahb_lite_subordinate`, and HREADYOUT/HRESP/HRDATA reset/default metadata from `.714`. Focused subordinate, adjacent AHB/output-default/capability, CLI, Knowledge Map, and mdBook checks passed.
-- in_flight_uncommitted: `.715` closeout is ready to commit through `COMMIT.md`; ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.716: select AHB subordinate alias contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.717` is active; select the public AHB subordinate `.ahb` profile-alias contract before alias behavior changes.
+- recently_done: `.716` selected `.717`, public AHB subordinate `.ahb` profile-alias contract selection, after public `ppif/ahb_lite_subordinate.ppif` shipped. Focused probes confirmed subordinate `.ppif` check/schedule behavior, requester `.ahb` support accounting, and subordinate content under an `.ahb` label still fails closed as requester-only. No behavior changed.
+- in_flight_uncommitted: `.716` closeout is ready to commit through `COMMIT.md`; ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The `.705` AHB source-reference artifact blocker is resolved through `.706`; `.707`-.715 now carry source facts, direct seed, public contract, generated-IAL1 output reset/default substrate, and public subordinate `.ppif` behavior. Broad guarded prove including `t/248-regression-corpus-accounting.t` stopped before tests because host memory was 91.0% against the 88% RAM-guard cutoff; do not rerun broad corpus/accounting work unguarded.
-- next_action: Run `IAL2-FEATURE-COMPLETENESS-FRONTIER.716`: select the next exact IAL2/AHB follow-on owner before any behavior changes.
+- next_action: Run `IAL2-FEATURE-COMPLETENESS-FRONTIER.717`: select the exact public AHB subordinate `.ahb` profile-alias contract before any alias behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

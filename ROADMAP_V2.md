@@ -6033,6 +6033,11 @@ subordinate alias, AHB interconnect/decode, optional AHB signals, burst `SEQ`
 continuation, byte-lane/narrow-transfer behavior, legacy two-bit `HRESP`,
 direct backend behavior, verification-output generation, backend-language
 variants, AXI, APB, and VHDL remain deferred.
+`.716` now selects `.717`, public AHB subordinate `.ahb` profile-alias
+contract selection, before any alias parser/generator/source/support-accounting
+or manifest behavior changes. Current behavior is unchanged:
+`ppif/ahb_lite_subordinate.ppif` remains the public subordinate IAL2 source,
+and `.ahb` remains requester-only until a later exact implementation owner.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

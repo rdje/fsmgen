@@ -9810,6 +9810,10 @@ HDL module `ahb_lite_subordinate`, reports schema
 `intent.ppif_ahb_lite_subordinate`. Remaining AHB subordinate work is the
 `.ahb` alias, optional signals, burst `SEQ` continuation, byte-lane/narrow
 transfers, legacy two-bit `HRESP`, and interconnect/decode.
+`.716` selects `.717`, public AHB subordinate `.ahb` profile-alias contract
+selection. Current behavior is unchanged: use
+`ppif/ahb_lite_subordinate.ppif` for the subordinate IAL2 path, and `.ahb`
+remains requester-only until a later exact implementation owner.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
