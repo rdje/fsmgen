@@ -4994,11 +4994,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.704: audit AHB source reference evidence`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.705`
-  Status: `pending`
+  Status: `blocked`
   Goal: `Establish the AHB/AHB-Lite local source-reference import prerequisite before source-fact extraction.`
   Acceptance: `Read .704 source-reference audit, .703 prerequisite selection, AXI-SPEC-LOCAL-REFERENCE-IMPORT and ACCELLERA-STANDARDS-LOCAL-REFERENCE-IMPORT precedent, docs/vendor inventory, docs path doctrine, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. Search only repo-local approved/provided inputs first; if an acceptable AHB/AHB-Lite reference artifact is available, import it under a repo-relative docs/vendor/arm/amba/ahb/ path, keep it git-trackable, record SHA-256 and git-ignore status, and update docs/facts/book/task-tree/Memory. If no acceptable artifact is available, record the exact blocker and next required user/input action instead of inferring protocol facts from requester code or non-authoritative summaries. Do not extract source facts, select or add a seed, change parser/generator/source/support-accounting/manifest/test behavior, add generated artifacts, change HDL/runtime behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, or VHDL behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Blocked in docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md and docs/knowledge/ial2-ahb-local-source-reference-import-blocker.md. The slice read .704, .703, AXI/Accellera import precedent, tracked docs/vendor inventory, local .cache/local-references mirror, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. The tracked vendor inventory contains AXI, PSS, UVM, and SystemRDL references only; the focused repo-local vendor/cache scan found no AHB/AHB-Lite source artifact; the source/fixture scan still finds no AHB completer/subordinate fixture. No artifact was imported, so no SHA-256 or git-ignore status exists yet. The exact required unblock action is a user-provided or explicitly approved official AHB/AHB-Lite source artifact suitable for tracking under docs/vendor/arm/amba/ahb/. No source facts, seed, parser, generator, source sample, support-accounting, manifest, test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.705: record AHB source reference blocker`
 
 ## Current Frontier
 
@@ -5425,7 +5425,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 419 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.702` | `done` | Audited AHB completer/subordinate readiness after requester .ppif and .ahb support shipped. |
 | 420 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.703` | `done` | Selected AHB subordinate source-reference and seed-evidence audit as the prerequisite before seed contract selection. |
 | 421 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.704` | `done` | Selected AHB/AHB-Lite local source-reference import prerequisite before source-fact extraction. |
-| 422 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` | `pending` | Establish the local AHB/AHB-Lite source-reference import prerequisite or record the exact missing-artifact blocker. |
+| 422 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` | `blocked` | No approved repo-local AHB/AHB-Lite source artifact exists; source-fact extraction is blocked until one is provided or explicitly approved. |
 
 ## Decisions
 
@@ -12290,7 +12290,11 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 ## Blockers
 
-- Not blocked.
+- `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` is blocked: no approved repo-local
+  AHB/AHB-Lite source artifact exists under `docs/vendor/` or
+  `.cache/local-references/`; source-fact extraction and seed contract
+  selection require a user-provided or explicitly approved official source
+  artifact suitable for tracking under `docs/vendor/arm/amba/ahb/`.
 
 ## Verification Log
 
@@ -13071,6 +13075,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.704` | docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md; docs/knowledge/ial2-ahb-subordinate-source-reference-seed-evidence-audit.md; docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md; docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md; docs/vendor; docs/tasks/AXI-SPEC-LOCAL-REFERENCE-IMPORT.md; docs/tasks/ACCELLERA-STANDARDS-LOCAL-REFERENCE-IMPORT.md; docs/AXI_VALID_READY_INTENT_PROBE.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; selected .705, AHB/AHB-Lite local source-reference import prerequisite, before source-fact extraction or seed contract selection. The audit found no local AHB/AHB-Lite source reference artifact and no curated AHB subordinate source-evidence inventory; requester code and APB precedent are insufficient to define AHB subordinate protocol truth. Vendor inventory, no-AHB-reference scan, no-subordinate-fixture scan, import-precedent text probes, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No source reference, parser, generator, source sample, support-accounting, manifest, test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed. |
 
+| `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` | docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md; docs/knowledge/ial2-ahb-local-source-reference-import-blocker.md; docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md; docs/vendor; .cache/local-references; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `blocked`; no approved repo-local AHB/AHB-Lite source artifact was found under tracked docs/vendor or the local reference cache, so no import, SHA-256, or git-ignore status can be recorded yet. The focused repo-local vendor/cache scan and no-AHB-completer/subordinate fixture scan passed with absence evidence. Source-fact extraction and lower-layer direct .fsm subordinate seed contract selection remain blocked until the user provides or explicitly approves an official AHB/AHB-Lite source artifact suitable for tracking under docs/vendor/arm/amba/ahb/. No source reference, source facts, seed, parser, generator, source sample, support-accounting, manifest, test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed. |
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -13739,8 +13745,22 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.702` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.702: audit AHB completer readiness` | Selected lower-layer AHB subordinate seed contract selection as `.703` without behavior changes. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.703` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.703: select AHB subordinate reference audit` | Selected AHB subordinate source-reference and seed-evidence audit as `.704` before seed contract selection. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.704` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.704: audit AHB source reference evidence` | Selected AHB/AHB-Lite local source-reference import prerequisite as `.705` before source-fact extraction. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705: record AHB source reference blocker` | Recorded the missing local AHB/AHB-Lite source artifact blocker for subordinate source-fact extraction and seed contract selection. |
 
 ## Changelog
+
+- `2026-06-29`: Executed `.705` and recorded the AHB/AHB-Lite local
+  source-reference import blocker. The repo-local vendor/cache search found no
+  approved/provided AHB/AHB-Lite source artifact under `docs/vendor/` or
+  `.cache/local-references/`, so no artifact was imported and no SHA-256 or
+  git-ignore status can be recorded yet. AHB subordinate source-fact extraction
+  and lower-layer direct `.fsm` subordinate seed contract selection are blocked
+  until the user provides or explicitly approves an official source artifact
+  suitable for tracking under `docs/vendor/arm/amba/ahb/`. No source reference,
+  source facts, seed, parser, generator, public source, support-accounting,
+  manifest, test behavior, schedule/check/semantic JSON, generated artifact,
+  HDL/runtime, direct backend, verification-output, backend-language variant,
+  AXI, APB, or VHDL behavior changed.
 
 - `2026-06-29`: Completed `.704`, selecting `.705`, AHB/AHB-Lite local
   source-reference import prerequisite, before source-fact extraction or seed

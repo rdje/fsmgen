@@ -9759,6 +9759,13 @@ before source-fact extraction or seed contract selection. The audit found no
 local AHB/AHB-Lite source reference artifact and no curated AHB subordinate
 source-evidence inventory.
 
+AHB local source-reference import blocker:
+[IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER](../../IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md)
+records `.705` as blocked. No approved/provided AHB/AHB-Lite source artifact
+exists under `docs/vendor/` or `.cache/local-references/`, so AHB subordinate
+source-fact extraction and lower-layer direct `.fsm` seed contract selection
+require a user-provided or explicitly approved official source artifact.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

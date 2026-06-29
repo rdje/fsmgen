@@ -5899,6 +5899,16 @@ reference, parser, generator, public source, support-accounting, manifest,
 test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime,
 direct-backend, verification-output, backend-language variant, AXI, APB, or
 VHDL behavior changed in `.704`.
+`.705` records a blocker for that import prerequisite. No approved/provided
+AHB/AHB-Lite source artifact was found under `docs/vendor/` or
+`.cache/local-references/`, so no import, SHA-256, or git-ignore status exists
+yet. AHB subordinate source-fact extraction and lower-layer direct `.fsm`
+subordinate seed contract selection require a user-provided or explicitly
+approved official source artifact suitable for `docs/vendor/arm/amba/ahb/`.
+No source reference, source facts, seed, parser, generator, public source,
+support-accounting, manifest, test behavior, schedule/check/semantic JSON,
+generated artifact, HDL/runtime, direct-backend, verification-output,
+backend-language variant, AXI, APB, or VHDL behavior changed in `.705`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
