@@ -4903,11 +4903,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.691: document AXI IAL2 tri-mode examples`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.692`
-  Status: `pending`
+  Status: `done`
   Goal: `Add APB tri-mode mdBook coverage.`
   Acceptance: `Populate docs/book/src/16b-ial2-apb.md with runnable checked-in APB examples across guided, more-control, and raw/full-control modes; document .ppif/.apb alias parity, generated requester/completer/interconnect review artifacts, reports, validation commands, and residue; keep APB interconnect/decode protocol-specific rather than shared with AXI/AHB. Validate selected examples, mdBook, Knowledge Map, docs path, memory, diff, and doctrine gates.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Added docs/book/src/16b-ial2-apb.md under the IAL2 protocol/platform intent chapter. The chapter documents guided APB requester/completer/fixed-composition .ppif and selected .apb alias examples, more-control busy/status/sideband/data16/protection/multi-register/back-to-back examples, raw/full-control data16 six-register generalized multi-peripheral composition coverage, .ppif/.apb alias parity, generated requester/completer/interconnect review artifacts, APB-specific decode/interconnect boundaries, report/source-kind expectations, validation commands, and APB residue. Added docs/knowledge/ial2-apb-trimode-mdbook-coverage.md. Validated selected checked-in examples with direct fsmgen check/schedule/semantic/outdir probes. No parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.692: document APB IAL2 tri-mode examples`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.693`
   Status: `pending`
@@ -5328,7 +5328,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 406 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.689` | `done` | Selected the IAL2 AXI/APB/AHB tri-mode mdBook documentation coverage plan and follow-on leaves. |
 | 407 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.690` | `done` | Scaffolded the mdBook IAL2 protocol/platform intent chapter and tri-mode navigation map. |
 | 408 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691` | `done` | Added AXI tri-mode mdBook coverage with runnable checked-in examples. |
-| 409 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692` | `pending` | Add APB tri-mode mdBook coverage with runnable checked-in examples. |
+| 409 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692` | `done` | Added APB tri-mode mdBook coverage with runnable checked-in examples. |
+| 410 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.693` | `pending` | Add AHB current-state and future IAL2 tri-mode boundary coverage. |
 
 ## Decisions
 
@@ -12948,6 +12949,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691` | docs/book/src/16a-ial2-axi.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/SUMMARY.md; docs/knowledge/ial2-axi-trimode-mdbook-coverage.md; selected AXI ppif examples; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; documented AXI guided, more-control, and raw/full-control mdBook coverage using checked-in examples. Validated ppif/axi_aw_valid_ready.ppif, ppif/axi_aw_valid_ready.axi, ppif/axi_manager_capacity_status_id_family.ppif, ppif/axi_manager_capacity_status_transaction_envelope.ppif, and ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif with direct fsmgen probes. Fact-card reverify, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed. |
 
+| `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692` | docs/book/src/16b-ial2-apb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/SUMMARY.md; docs/knowledge/ial2-apb-trimode-mdbook-coverage.md; selected APB ppif/apb examples; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; documented APB guided, more-control, and raw/full-control mdBook coverage using checked-in examples. Validated requester .ppif/.apb, completer .apb schedule, fixed composition .apb semantic, fixed composition outdir, and data16 six-register generalized raw/full-control .ppif/.apb checks plus raw outdir with direct fsmgen probes. Fact-card reverify, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed. |
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -13603,9 +13606,19 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.689` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.689: select IAL2 tri-mode doc plan` | Selected documentation-only follow-on leaves `.690` through `.693` for IAL2 protocol-platform mdBook tri-mode coverage. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.690` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.690: scaffold IAL2 protocol intent chapter` | Scaffolded the user-facing IAL2 protocol/platform intent chapter and advanced the frontier to AXI tri-mode coverage in `.691`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691: document AXI IAL2 tri-mode examples` | Added AXI tri-mode mdBook coverage and advanced the frontier to APB tri-mode coverage in `.692`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.692` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692: document APB IAL2 tri-mode examples` | Added APB tri-mode mdBook coverage and advanced the frontier to AHB current-state/future-boundary coverage in `.693`. |
 
 ## Changelog
 
+- `2026-06-29`: Completed `.692`, adding APB tri-mode mdBook coverage under
+  the IAL2 protocol/platform intent chapter. The chapter documents checked-in
+  requester/completer/fixed-composition guided examples, `.ppif`/`.apb` alias
+  parity, more-control busy/status/sideband/data16/protection/multi-register
+  examples, raw/full-control data16 six-register generalized multi-peripheral
+  composition coverage, generated requester/completer/interconnect review
+  artifacts, APB-specific decode/interconnect boundaries, validation commands,
+  and residue. No parser, generator, public source, support-accounting,
+  generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed.
 - `2026-06-29`: Completed `.691`, adding AXI tri-mode mdBook coverage under
   the IAL2 protocol/platform intent chapter. The chapter documents checked-in
   guided `.ppif` and selected `.axi` alias examples, more-control

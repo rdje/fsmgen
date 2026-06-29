@@ -5818,8 +5818,10 @@ AHB across user-friendly, more-control, and raw/full-control modes. `.690` now
 ships the user-facing IAL2 protocol/platform intent chapter scaffold, including
 the shared lowering/review-artifact rule, mode definitions, and AXI/APB/AHB
 navigation matrix. `.691` now ships AXI tri-mode mdBook coverage with runnable
-checked-in guided, more-control, and raw/full-control examples. `.692` owns APB
-tri-mode coverage, and `.693` owns AHB current-state and future-boundary
+checked-in guided, more-control, and raw/full-control examples. `.692` now
+ships APB tri-mode mdBook coverage with `.ppif`/`.apb` alias parity,
+requester/completer/interconnect review artifacts, APB-specific decode
+boundaries, and residue. `.693` owns AHB current-state and future-boundary
 coverage.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
