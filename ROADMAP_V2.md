@@ -5826,6 +5826,8 @@ boundaries, and residue. `.693` now documents the AHB current direct
 future task-tree prerequisites without claiming shipped AHB IAL2 behavior.
 `.694` now selects `.695`, a no-behavior AHB IAL2 source-shape readiness audit,
 before any AHB `.ppif` or `.ahb` contract selection or implementation.
+`.695` now selects `.696`, AHB requester `.ppif` public contract selection;
+AHB implementation and `.ahb` alias support remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
