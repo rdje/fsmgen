@@ -11,7 +11,7 @@ date: 2026-06-29
 status: current
 tags: [ial2, ahb, subordinate, source-reference, vendor, task-tree]
 evidence: docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md; docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
-reverify: test -f docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf && shasum -a 256 docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.706|IAL2-FEATURE-COMPLETENESS-FRONTIER\.707|docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification\.pdf|source-backed AHB/AHB-Lite subordinate fact' docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md
+reverify: test -f docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf && shasum -a 256 docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.706|IAL2-FEATURE-COMPLETENESS-FRONTIER\.707|IAL2-FEATURE-COMPLETENESS-FRONTIER\.708|docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification\.pdf|source-backed AHB/AHB-Lite subordinate fact|seed contract selection' docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.706` imported the user-approved official
@@ -30,11 +30,10 @@ The imported artifact has SHA-256:
 `git check-ignore -v` produced no match for the imported path, so the PDF is
 git-trackable.
 
-This resolves the local source-reference artifact blocker recorded by `.705`.
-It does not itself extract source facts, select an AHB subordinate seed, change
-parser/generator behavior, add tests, change generated artifacts, or change
-HDL/runtime behavior.
+This resolved the local source-reference artifact blocker recorded by `.705`.
+The follow-on `.707` source-backed fact inventory has since been completed and
+`.708` now owns lower-layer AHB subordinate seed contract selection.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.707` is the next owner. It must extract
-only source-backed AHB/AHB-Lite subordinate facts before any lower-layer direct
-`.fsm` subordinate seed contract selection.
+The import did not itself extract source facts, select an AHB subordinate seed,
+change parser/generator behavior, add tests, change generated artifacts, or
+change HDL/runtime behavior.

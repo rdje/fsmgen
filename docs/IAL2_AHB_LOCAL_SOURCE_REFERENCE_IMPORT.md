@@ -51,19 +51,19 @@ The copied artifact SHA-256 is:
 `git check-ignore -v` produced no match for the imported path, so the PDF is
 git-trackable.
 
-## Follow-On Owner
+## Follow-On Owners
 
 The source-reference artifact blocker recorded by
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` is resolved for the purpose of local
-source availability. `IAL2-FEATURE-COMPLETENESS-FRONTIER.707` now owns the
-first source-backed AHB/AHB-Lite subordinate fact extraction pass before
-lower-layer direct `.fsm` subordinate seed contract selection.
+source availability. `IAL2-FEATURE-COMPLETENESS-FRONTIER.707` completed the
+first source-backed AHB/AHB-Lite subordinate fact extraction pass in
+[docs/IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md](IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md).
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.708` now owns lower-layer direct `.fsm`
+subordinate seed contract selection.
 
-That follow-on must extract only source-backed facts needed for subordinate
-signal roles, transfer/ready/response timing, reset/default outputs,
-read/write storage policy, and error/unsupported-transfer behavior. It must
-not infer protocol truth from requester-only code, APB precedent, or
-non-authoritative summaries.
+That seed-contract follow-on must select the exact first direct `.fsm`
+subordinate seed boundary before any seed file or IAL2 AHB
+completer/subordinate behavior is added.
 
 ## Non-Changes
 

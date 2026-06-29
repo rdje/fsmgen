@@ -63,7 +63,7 @@ path before reopening VHDL backend or VHDL rerouting work.
   Children continuation 10: `IAL2-FEATURE-COMPLETENESS-FRONTIER.634, IAL2-FEATURE-COMPLETENESS-FRONTIER.635, IAL2-FEATURE-COMPLETENESS-FRONTIER.636, IAL2-FEATURE-COMPLETENESS-FRONTIER.637, IAL2-FEATURE-COMPLETENESS-FRONTIER.638, IAL2-FEATURE-COMPLETENESS-FRONTIER.639, IAL2-FEATURE-COMPLETENESS-FRONTIER.640, IAL2-FEATURE-COMPLETENESS-FRONTIER.641, IAL2-FEATURE-COMPLETENESS-FRONTIER.642, IAL2-FEATURE-COMPLETENESS-FRONTIER.643, IAL2-FEATURE-COMPLETENESS-FRONTIER.644, IAL2-FEATURE-COMPLETENESS-FRONTIER.645, IAL2-FEATURE-COMPLETENESS-FRONTIER.646, IAL2-FEATURE-COMPLETENESS-FRONTIER.647, IAL2-FEATURE-COMPLETENESS-FRONTIER.648, IAL2-FEATURE-COMPLETENESS-FRONTIER.649, IAL2-FEATURE-COMPLETENESS-FRONTIER.650, IAL2-FEATURE-COMPLETENESS-FRONTIER.651, IAL2-FEATURE-COMPLETENESS-FRONTIER.652, IAL2-FEATURE-COMPLETENESS-FRONTIER.653, IAL2-FEATURE-COMPLETENESS-FRONTIER.654, IAL2-FEATURE-COMPLETENESS-FRONTIER.655, IAL2-FEATURE-COMPLETENESS-FRONTIER.656, IAL2-FEATURE-COMPLETENESS-FRONTIER.657, IAL2-FEATURE-COMPLETENESS-FRONTIER.658`
   Children continuation 11: `IAL2-FEATURE-COMPLETENESS-FRONTIER.659, IAL2-FEATURE-COMPLETENESS-FRONTIER.660, IAL2-FEATURE-COMPLETENESS-FRONTIER.661, IAL2-FEATURE-COMPLETENESS-FRONTIER.662, IAL2-FEATURE-COMPLETENESS-FRONTIER.663, IAL2-FEATURE-COMPLETENESS-FRONTIER.664, IAL2-FEATURE-COMPLETENESS-FRONTIER.665, IAL2-FEATURE-COMPLETENESS-FRONTIER.666, IAL2-FEATURE-COMPLETENESS-FRONTIER.667, IAL2-FEATURE-COMPLETENESS-FRONTIER.668, IAL2-FEATURE-COMPLETENESS-FRONTIER.669, IAL2-FEATURE-COMPLETENESS-FRONTIER.670, IAL2-FEATURE-COMPLETENESS-FRONTIER.671, IAL2-FEATURE-COMPLETENESS-FRONTIER.672, IAL2-FEATURE-COMPLETENESS-FRONTIER.673, IAL2-FEATURE-COMPLETENESS-FRONTIER.674, IAL2-FEATURE-COMPLETENESS-FRONTIER.675, IAL2-FEATURE-COMPLETENESS-FRONTIER.676, IAL2-FEATURE-COMPLETENESS-FRONTIER.677, IAL2-FEATURE-COMPLETENESS-FRONTIER.678, IAL2-FEATURE-COMPLETENESS-FRONTIER.679, IAL2-FEATURE-COMPLETENESS-FRONTIER.680`
 
-  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693, IAL2-FEATURE-COMPLETENESS-FRONTIER.694, IAL2-FEATURE-COMPLETENESS-FRONTIER.695, IAL2-FEATURE-COMPLETENESS-FRONTIER.696, IAL2-FEATURE-COMPLETENESS-FRONTIER.697, IAL2-FEATURE-COMPLETENESS-FRONTIER.698, IAL2-FEATURE-COMPLETENESS-FRONTIER.699, IAL2-FEATURE-COMPLETENESS-FRONTIER.700, IAL2-FEATURE-COMPLETENESS-FRONTIER.701, IAL2-FEATURE-COMPLETENESS-FRONTIER.702, IAL2-FEATURE-COMPLETENESS-FRONTIER.703, IAL2-FEATURE-COMPLETENESS-FRONTIER.704, IAL2-FEATURE-COMPLETENESS-FRONTIER.705, IAL2-FEATURE-COMPLETENESS-FRONTIER.706, IAL2-FEATURE-COMPLETENESS-FRONTIER.707`
+  Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693, IAL2-FEATURE-COMPLETENESS-FRONTIER.694, IAL2-FEATURE-COMPLETENESS-FRONTIER.695, IAL2-FEATURE-COMPLETENESS-FRONTIER.696, IAL2-FEATURE-COMPLETENESS-FRONTIER.697, IAL2-FEATURE-COMPLETENESS-FRONTIER.698, IAL2-FEATURE-COMPLETENESS-FRONTIER.699, IAL2-FEATURE-COMPLETENESS-FRONTIER.700, IAL2-FEATURE-COMPLETENESS-FRONTIER.701, IAL2-FEATURE-COMPLETENESS-FRONTIER.702, IAL2-FEATURE-COMPLETENESS-FRONTIER.703, IAL2-FEATURE-COMPLETENESS-FRONTIER.704, IAL2-FEATURE-COMPLETENESS-FRONTIER.705, IAL2-FEATURE-COMPLETENESS-FRONTIER.706, IAL2-FEATURE-COMPLETENESS-FRONTIER.707, IAL2-FEATURE-COMPLETENESS-FRONTIER.708`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -5008,9 +5008,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.706: import AHB source reference`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.707`
-  Status: `active`
+  Status: `done`
   Goal: `Extract the first source-backed AHB/AHB-Lite subordinate fact inventory from the imported reference before lower-layer seed contract selection.`
   Acceptance: `Read the imported docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf reference, .706 import record, .704 source-reference audit, .703 seed prerequisite, .702 readiness audit, shipped AHB requester .ppif/.ahb behavior, direct fsm/amba_requester.fsm seed, README, ROADMAP_V2, mdBook, task tree, Memory, Knowledge Map, and relevant decisions. Extract only source-backed facts needed for subordinate signal roles, transfer/ready/response timing, reset/default outputs, read/write storage policy, and error/unsupported-transfer behavior. Decide whether the next owner is lower-layer direct .fsm subordinate seed contract selection, another source-fact extraction slice, or a narrower prerequisite. Do not add a seed, change parser/generator/source/support-accounting/manifest/test behavior, add generated artifacts, change HDL/runtime behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, or VHDL behavior.`
+  Verification: `Extracted docs/IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md and docs/knowledge/ial2-ahb-subordinate-source-fact-inventory.md from the imported Arm AMBA AHB Protocol Specification. The inventory records source anchors for common AHB/AHB-Lite scope, subordinate input/output signal roles, HSELx/HREADY selection gating, address/data phase separation, HREADYOUT wait-state behavior, IDLE/BUSY/NONSEQ/SEQ transfer-type handling, read/write data validity, OKAY/pending/two-cycle ERROR response timing, reset HREADYOUT-high behavior, and signal-validity rules. Selected .708, lower-layer AHB subordinate seed contract selection, before adding any direct .fsm seed or IAL2 AHB completer/subordinate behavior. No seed, parser, generator, source sample, support-accounting, manifest, test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.707: extract AHB subordinate facts`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.708`
+  Status: `active`
+  Goal: `Select the lower-layer AHB subordinate seed contract before adding any direct .fsm seed.`
+  Acceptance: `Read .707 source-fact inventory, imported AHB reference, .706 import record, .703/.704 prerequisite docs, .702 readiness audit, shipped AHB requester .ppif/.ahb behavior, direct fsm/amba_requester.fsm seed, APB lower-layer seed precedents, README, ROADMAP_V2, mdBook, task tree, Memory, Knowledge Map, and relevant decisions. Select the exact first direct .fsm subordinate seed contract: subset name, port set, transfer support, register/storage policy, reset/default outputs, OKAY/pending/ERROR response policy, unsupported-transfer/address behavior, validation scope, docs/book updates, rollback boundary, explicit residue, and next implementation owner. Do not add a seed, change parser/generator/source/support-accounting/manifest/test behavior, add generated artifacts, change HDL/runtime behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, or VHDL behavior.`
   Verification: `pending`
   Commit: `pending`
 
@@ -5441,7 +5448,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 421 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.704` | `done` | Selected AHB/AHB-Lite local source-reference import prerequisite before source-fact extraction. |
 | 422 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` | `blocked` | No approved repo-local AHB/AHB-Lite source artifact exists; source-fact extraction is blocked until one is provided or explicitly approved. |
 | 423 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.706` | `done` | Imported the user-approved AHB/AHB-Lite source artifact under `docs/vendor/arm/amba/ahb/` and selected source-fact extraction as `.707`. |
-| 424 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.707` | `active` | Extract the first source-backed AHB/AHB-Lite subordinate fact inventory before lower-layer seed contract selection. |
+| 424 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.707` | `done` | Extracted the first source-backed AHB/AHB-Lite subordinate fact inventory and selected seed contract selection as `.708`. |
+| 425 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.708` | `active` | Select the lower-layer AHB subordinate seed contract before adding any direct `.fsm` seed. |
 
 ## Decisions
 
@@ -12308,7 +12316,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 - No active AHB source-reference artifact blocker remains. `.706` imported the
   user-approved AHB/AHB-Lite reference under `docs/vendor/arm/amba/ahb/`.
-  `.707` owns the next source-backed fact extraction step before any seed,
+  `.707` extracted the first source-backed subordinate fact inventory, and
+  `.708` owns lower-layer seed contract selection before any seed,
   parser/generator, support-accounting, manifest, test, generated-artifact,
   HDL/runtime, direct-backend, verification-output, backend-language variant,
   AXI, APB, or VHDL behavior changes.
@@ -13096,6 +13105,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.706` | docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf; docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md; docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md; docs/knowledge/ial2-ahb-local-source-reference-import.md; docs/knowledge/ial2-ahb-local-source-reference-import-blocker.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; imported the user-approved Arm AMBA AHB Protocol Specification PDF under docs/vendor/arm/amba/ahb/. The copied artifact is git-trackable, has SHA-256 2ba2920e050e1d9f6a1b728dfef85e66eb400a3c29d774b086b7de71c768f724, and pdfinfo reports Title "AMBA AHB  Protocol Specification", Author "Arm Limited", 104 pages, PDF 1.7, file size 957201 bytes. Selected .707, source-backed AHB/AHB-Lite subordinate fact extraction, before lower-layer seed contract selection. No source facts, seed, parser, generator, source sample, support-accounting, manifest, test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed. |
 
+| `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.707` | docs/IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md; docs/knowledge/ial2-ahb-subordinate-source-fact-inventory.md; docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf; docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md; docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md; docs/IAL2_AHB_COMPLETER_SUBORDINATE_READINESS_AUDIT.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; extracted the first source-backed AHB/AHB-Lite subordinate fact inventory from the imported Arm AMBA AHB Protocol Specification. The inventory records common AHB/AHB-Lite scope, subordinate signal roles, HSELx/HREADY selection gating, address/data phase separation, HREADYOUT wait-state behavior, transfer-type handling, read/write data validity, OKAY/pending/two-cycle ERROR response timing, reset behavior, and signal-validity rules. Selected .708, lower-layer AHB subordinate seed contract selection, before adding a direct .fsm seed. No seed, parser, generator, source sample, support-accounting, manifest, test behavior, schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend, verification-output, backend-language variant, AXI, APB, or VHDL behavior changed. |
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -13766,8 +13777,22 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.704` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.704: audit AHB source reference evidence` | Selected AHB/AHB-Lite local source-reference import prerequisite as `.705` before source-fact extraction. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.705: record AHB source reference blocker` | Recorded the missing local AHB/AHB-Lite source artifact blocker for subordinate source-fact extraction and seed contract selection. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.706` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.706: import AHB source reference` | Imported the user-approved AHB/AHB-Lite source reference artifact and selected source-fact extraction as `.707`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.707` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.707: extract AHB subordinate facts` | Extracted source-backed AHB/AHB-Lite subordinate facts and selected lower-layer seed contract selection as `.708`. |
 
 ## Changelog
+
+- `2026-06-29`: Completed `.707`, extracting the first source-backed
+  AHB/AHB-Lite subordinate fact inventory from the imported Arm AMBA AHB
+  Protocol Specification. The inventory records common AHB/AHB-Lite scope,
+  subordinate signal roles, selection/completion gating, address/data phase
+  separation, wait-state behavior, transfer-type handling, read/write data
+  validity, OKAY/pending/two-cycle ERROR response timing, reset behavior, and
+  signal-validity rules. `.708` now owns lower-layer AHB subordinate seed
+  contract selection before adding a direct `.fsm` seed. No seed, parser,
+  generator, public source, support-accounting, manifest, test behavior,
+  schedule/check/semantic JSON, generated artifact, HDL/runtime, direct
+  backend, verification-output, backend-language variant, AXI, APB, or VHDL
+  behavior changed.
 
 - `2026-06-29`: Completed `.706`, importing the user-approved Arm AMBA AHB
   Protocol Specification PDF as

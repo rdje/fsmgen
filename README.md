@@ -4880,12 +4880,24 @@ Specification PDF under
 `docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf`
 with SHA-256
 `2ba2920e050e1d9f6a1b728dfef85e66eb400a3c29d774b086b7de71c768f724`.
-`.707` now owns source-backed AHB/AHB-Lite subordinate fact extraction before
+`.707` then owned source-backed AHB/AHB-Lite subordinate fact extraction before
 lower-layer direct `.fsm` seed contract selection. No source facts, seed,
 parser, generator, public source, support-accounting, manifest, test behavior,
 schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend,
 verification-output, backend-language variant, AXI, APB, or VHDL behavior
 changed in `.706`.
+`.707` extracts the first source-backed AHB/AHB-Lite subordinate fact
+inventory from the imported Arm AMBA AHB Protocol Specification. The inventory
+records common AHB/AHB-Lite scope, subordinate signal roles,
+selection/completion gating, address/data phase separation, wait-state
+behavior, transfer-type handling, read/write data validity,
+OKAY/pending/two-cycle ERROR response timing, reset behavior, and
+signal-validity rules. `.708` now owns lower-layer AHB subordinate seed
+contract selection before adding any direct `.fsm` seed. No seed, parser,
+generator, public source, support-accounting, manifest, test behavior,
+schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend,
+verification-output, backend-language variant, AXI, APB, or VHDL behavior
+changed in `.707`.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7538,6 +7550,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_SUBORDINATE_SOURCE_REFERENCE_SEED_EVIDENCE_AUDIT.md` — selects AHB/AHB-Lite local source-reference import prerequisite before source-fact extraction or seed contract selection.
 - `docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER.md` — records the historical `.705` blocker: no approved/provided repo-local AHB/AHB-Lite source artifact existed before `.706`.
 - `docs/IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT.md` — records the `.706` import of the user-approved Arm AMBA AHB Protocol Specification PDF under `docs/vendor/arm/amba/ahb/`, its SHA-256, git-trackability, and the `.707` source-fact extraction follow-on.
+- `docs/IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md` — records the `.707` first source-backed AHB/AHB-Lite subordinate fact inventory and selects `.708`, lower-layer AHB subordinate seed contract selection.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

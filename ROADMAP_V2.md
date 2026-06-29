@@ -5905,12 +5905,24 @@ importing the user-approved Arm AMBA AHB Protocol Specification PDF under
 `docs/vendor/arm/amba/ahb/IHI0033_C_2021-09_AMBA_5_AHB_Protocol_Specification.pdf`
 with SHA-256
 `2ba2920e050e1d9f6a1b728dfef85e66eb400a3c29d774b086b7de71c768f724`.
-`.707` now owns source-backed AHB/AHB-Lite subordinate fact extraction before
+`.707` then owned source-backed AHB/AHB-Lite subordinate fact extraction before
 lower-layer direct `.fsm` seed contract selection. No source facts, seed,
 parser, generator, public source, support-accounting, manifest, test behavior,
 schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend,
 verification-output, backend-language variant, AXI, APB, or VHDL behavior
 changed in `.706`.
+`.707` extracts the first source-backed AHB/AHB-Lite subordinate fact
+inventory from the imported Arm AMBA AHB Protocol Specification. The inventory
+records common AHB/AHB-Lite scope, subordinate signal roles,
+selection/completion gating, address/data phase separation, wait-state
+behavior, transfer-type handling, read/write data validity,
+OKAY/pending/two-cycle ERROR response timing, reset behavior, and
+signal-validity rules. `.708` now owns lower-layer AHB subordinate seed
+contract selection before adding any direct `.fsm` seed. No seed, parser,
+generator, public source, support-accounting, manifest, test behavior,
+schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend,
+verification-output, backend-language variant, AXI, APB, or VHDL behavior
+changed in `.707`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
