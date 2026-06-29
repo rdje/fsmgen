@@ -6132,10 +6132,10 @@ verification-output generation, AXI/APB behavior, and VHDL remain future
 task-tree-owned work. `.724` is the next no-behavior selector after this
 shipped interconnect.
 `.724` now selects `.725`, AHB aggregate `.ahb` profile-alias contract
-selection. The selector makes no behavior change: `ppif/ahb_interconnect.ppif`
-remains the shipped aggregate AHB source, aggregate `.ahb` interconnect aliases
-still fail closed, and `ahb_aggregate_profile_alias_deferred` remains explicit
-until a later implementation owner ships the selected alias.
+selection. That selector made no behavior change at the time:
+`ppif/ahb_interconnect.ppif` remained the shipped aggregate AHB source and
+`ahb_aggregate_profile_alias_deferred` stayed explicit until the selected
+alias implementation owner.
 `.725` now selects `.726`, bounded implementation of the public aggregate AHB
 `.ahb` profile-alias source `ppif/ahb_interconnect.ahb`. The selected alias
 mirrors `ppif/ahb_interconnect.ppif`, preserves generated
@@ -6145,7 +6145,15 @@ requester/subordinate/interconnect review artifacts plus aggregate
 `intent.ahb_profile_alias_interconnect` with source kind `ial2_profile_alias`
 and coverage `ial2_ahb_profile_alias_interconnect_pipeline_cli`, and removes
 `ahb_aggregate_profile_alias_deferred` only from aggregate `.ahb` reports.
-Behavior remains unchanged until `.726` implements the selected alias.
+`.726` now ships that alias. FSMGen accepts `ppif/ahb_interconnect.ahb`,
+preserves the generated requester/subordinate/interconnect `.isf` and `.fsm`
+review artifacts plus aggregate `ahb_tb.fsm`, emits HDL module `ahb_tb`,
+records semantic root kind `top`, support-accounts the source as
+`intent.ahb_profile_alias_interconnect`, and removes only
+`ahb_aggregate_profile_alias_deferred` from aggregate `.ahb` reports. Broader
+AHB interconnect/decode, optional signals, burst `SEQ`, byte-lane/narrow
+transfer, direct backend, verification-output, backend-language, AXI/APB, and
+VHDL behavior remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -9866,10 +9866,10 @@ transfers, direct backend behavior, verification-output generation, AXI/APB
 behavior, and VHDL remain future task-tree-owned work. `.724` owns the next
 no-behavior selector after this shipped interconnect.
 `.724` selects `.725`, AHB aggregate `.ahb` profile-alias contract selection.
-The selector keeps current behavior unchanged: `ppif/ahb_interconnect.ppif`
-is the shipped aggregate source, the aggregate `.ahb` path still fails closed,
-and the interconnect report keeps `ahb_aggregate_profile_alias_deferred` until
-a later implementation owner ships the selected alias contract.
+That selector made no behavior change at the time:
+`ppif/ahb_interconnect.ppif` remained the shipped aggregate source and the
+interconnect report kept `ahb_aggregate_profile_alias_deferred` until the
+selected alias implementation owner.
 `.725` selects `.726`, bounded implementation of the public aggregate AHB
 `.ahb` profile-alias source `ppif/ahb_interconnect.ahb`. The selected alias
 must mirror `ppif/ahb_interconnect.ppif`, keep explicit `(profile ahb)`,
@@ -9878,7 +9878,14 @@ review artifacts plus aggregate `ahb_tb.fsm`, use support identity
 `intent.ahb_profile_alias_interconnect`, source kind `ial2_profile_alias`,
 coverage `ial2_ahb_profile_alias_interconnect_pipeline_cli`, and remove
 `ahb_aggregate_profile_alias_deferred` only from aggregate `.ahb` reports.
-Current behavior is unchanged until `.726` implements the selected alias.
+`.726` ships that alias. FSMGen accepts `ppif/ahb_interconnect.ahb` as the
+bounded aggregate AHB profile alias, keeps authored `.ahb` source identity in
+check/semantic/schedule/support-accounting surfaces, preserves generated
+`amba_requester.isf`, `ahb_lite_subordinate.isf`, `ahb_interconnect.isf`,
+`amba_requester.fsm`, `ahb_lite_subordinate.fsm`, `ahb_interconnect.fsm`, and
+aggregate `ahb_tb.fsm`, emits HDL module `ahb_tb`, and removes only
+`ahb_aggregate_profile_alias_deferred` from aggregate `.ahb` reports. Broader
+AHB behavior remains deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

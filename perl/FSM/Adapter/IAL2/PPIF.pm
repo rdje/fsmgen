@@ -70,8 +70,12 @@ sub parse_source($self, @args) {
         if _is_apb_completer_contract($contract);
     return FSM::IAL2::ProtocolIntent::ApbRequesterTransfer->new(debug => $self->{debug})->generate($contract)
         if _is_apb_requester_transfer_contract($contract);
-    return FSM::IAL2::ProtocolIntent::AhbInterconnect->new(debug => $self->{debug})->generate($contract)
-        if _is_ahb_interconnect_contract($contract);
+    if (_is_ahb_interconnect_contract($contract)) {
+        my $result = FSM::IAL2::ProtocolIntent::AhbInterconnect->new(debug => $self->{debug})->generate($contract);
+        _remove_unsupported_residue_id($result, 'ahb_aggregate_profile_alias_deferred')
+            if _is_ahb_profile_alias_source($source_label);
+        return $result;
+    }
     if (_is_ahb_requester_contract($contract)) {
         my $result = FSM::IAL2::ProtocolIntent::AhbRequester->new(debug => $self->{debug})->generate($contract);
         _remove_unsupported_residue_id($result, 'ahb_profile_alias_deferred')
@@ -166,9 +170,10 @@ sub _validate_profile_alias_contract($source_label, $contract) {
         confess "Error: .ahb source '$source_label' profile '$profile' does not match .ahb profile alias; expected ahb\n"
             unless defined($profile) && !ref($profile) && $profile eq 'ahb';
 
-        confess "Error: .ahb source '$source_label' profile ahb requires exactly one (ahb-requester ...) object or exactly one (ahb-subordinate ...) object in this slice\n"
+        confess "Error: .ahb source '$source_label' profile ahb requires exactly one (ahb-requester ...) object, exactly one (ahb-subordinate ...) object, or the selected aggregate one-requester/one-subordinate (ahb-interconnect ...) shape in this slice\n"
             unless _is_ahb_requester_contract($contract)
-                || _is_ahb_subordinate_contract($contract);
+                || _is_ahb_subordinate_contract($contract)
+                || _is_ahb_interconnect_contract($contract);
         return;
     }
 

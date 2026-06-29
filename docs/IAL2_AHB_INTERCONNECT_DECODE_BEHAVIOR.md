@@ -23,9 +23,11 @@ in one authored source:
 (ahb-interconnect ahb_tb ...)
 ```
 
-This is the first public aggregate AHB IAL2 source. It is not an aggregate
-`.ahb` alias, not a multi-subordinate fabric, not a multiple-manager arbiter,
-not a bus matrix, and not a direct IAL2-to-IAL0 or IAL2-to-HDL path.
+This is the first public aggregate AHB IAL2 source. The matching selected
+aggregate `.ahb` alias now ships separately as `ppif/ahb_interconnect.ahb`;
+this generic source remains the `.ppif` entrypoint. Neither source is a
+multi-subordinate fabric, multiple-manager arbiter, bus matrix, direct
+IAL2-to-IAL0 path, or direct IAL2-to-HDL path.
 
 ## Source Shape
 
@@ -197,34 +199,33 @@ diagnostics for:
 
 - non-AHB profile under an interconnect source;
 - missing required requester or subordinate child references;
-- address-map windows that do not match the subordinate child instance;
-- subordinate response width other than the selected one-bit `HRESP_REGS`; and
-- aggregate `.ahb` interconnect aliases.
+- address-map windows that do not match the subordinate child instance; and
+- subordinate response width other than the selected one-bit `HRESP_REGS`.
 
-The aggregate `.ahb` rejection preserves the shipped endpoint-alias boundary:
-`.ahb` currently accepts exactly one bounded requester endpoint or one bounded
-subordinate endpoint, not an aggregate interconnect source.
+The matching aggregate `.ahb` alias is covered by
+`docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_BEHAVIOR.md`.
 
 ## Residue
 
-The shipped interconnect report keeps these future owners explicit:
+The generic `.ppif` interconnect report keeps these source-surface and future
+owners explicit:
 
 ```text
 ahb_aggregate_profile_alias_deferred
 ahb_multi_subordinate_decode_deferred
-ahb_multi_requester_arbitration_deferred
-ahb_bus_matrix_deferred
 ahb_optional_signal_residue
 ahb_burst_seq_support_deferred
+ahb_direct_backend_deferred
 ahb_verification_output_deferred
 ```
 
-AHB completer behavior, aggregate `.ahb` aliases, multi-subordinate fabrics,
-multiple managers, bus matrices, programmable/multiple windows, optional AHB
-signals, burst `SEQ` continuation, byte-lane or narrow-transfer behavior,
-legacy two-bit subordinate `HRESP`, direct backend lowering, verification
-output generation, backend-language variants, AXI behavior, APB behavior, and
-VHDL behavior remain future work.
+The selected aggregate `.ahb` alias removes
+`ahb_aggregate_profile_alias_deferred` from its alias report. AHB completer
+behavior, broader multi-subordinate fabrics, multiple managers, bus matrices,
+programmable/multiple windows, optional AHB signals, burst `SEQ` continuation,
+byte-lane or narrow-transfer behavior, legacy two-bit subordinate `HRESP`,
+direct backend lowering, verification-output generation, backend-language
+variants, AXI behavior, APB behavior, and VHDL behavior remain future work.
 
 ## Validation
 

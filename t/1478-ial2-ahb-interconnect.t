@@ -154,19 +154,6 @@ subtest 'malformed AHB interconnect PPIF sources fail closed' => sub {
         like($@, $pattern, "$label diagnostic is targeted");
     }
 
-    my $tempdir = tempdir(CLEANUP => 1);
-    my $ahb_path = File::Spec->catfile($tempdir, 'ahb_interconnect.ahb');
-    write_file($ahb_path, sample_ahb_interconnect_ppif());
-    my $ok = eval {
-        FSM::Adapter::IAL2::PPIF->new()->parse_file($ahb_path);
-        1;
-    };
-    ok(!$ok, 'aggregate .ahb alias is rejected in this slice');
-    like(
-        $@,
-        qr/profile ahb requires exactly one \(ahb-requester \.\.\.\) object or exactly one \(ahb-subordinate \.\.\.\) object in this slice/,
-        'aggregate .ahb diagnostic stays bounded to endpoint aliases',
-    );
 };
 
 subtest 'CLI checks, semantic export, schedule report, and outdir all use the public AHB interconnect path' => sub {

@@ -744,7 +744,7 @@ sub _build_report(%args) {
             'the generated AHB interconnect asserts HGRANT permanently, decodes HTRANS != IDLE against the static window, emits local subordinate HADDR, and muxes subordinate response/data',
             'the generated AHB interconnect maps one-bit subordinate OKAY/ERROR HRESP to requester two-bit OKAY/ERROR HRESP',
             'unmapped active transfers complete with a two-cycle interconnect-owned ERROR response',
-            'AHB interconnect is exposed through .ppif only in this slice; aggregate .ahb profile aliases remain deferred',
+            'AHB interconnect is exposed through generic .ppif and the selected aggregate .ahb profile alias; broader aggregate AHB interconnect/decode shapes remain deferred',
         ],
         unsupported_residue => _unsupported_residue(),
     };
@@ -901,7 +901,7 @@ sub _unsupported_residue {
     return [
         {
             id     => 'ahb_aggregate_profile_alias_deferred',
-            detail => 'The selected AHB interconnect/decode contract is exposed through generic .ppif only; aggregate .ahb profile aliases remain future work.',
+            detail => 'Generic .ppif reports retain the aggregate profile-alias distinction; use ppif/ahb_interconnect.ahb for the selected .ahb alias surface, while broader aggregate AHB alias shapes remain future work.',
         },
         {
             id     => 'ahb_multi_subordinate_decode_deferred',

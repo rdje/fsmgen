@@ -2971,8 +2971,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/\.ahb is now the bounded AHB requester and subordinate profile-alias file surface/,
-        'manifest states .ahb is the bounded AHB requester and subordinate profile alias over the same model',
+        qr/\.ahb is now the bounded AHB requester, subordinate, and aggregate interconnect profile-alias file surface/,
+        'manifest states .ahb is the bounded AHB requester, subordinate, and aggregate interconnect profile alias over the same model',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
@@ -3370,8 +3370,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
-        qr/bounded public \.ahb is the AHB requester and subordinate profile-alias suffix/,
-        'manifest describes .ahb as the bounded AHB requester and subordinate profile-alias suffix',
+        qr/bounded public \.ahb is the AHB requester, subordinate, and aggregate interconnect profile-alias suffix/,
+        'manifest describes .ahb as the bounded AHB requester, subordinate, and aggregate interconnect profile-alias suffix',
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
@@ -3380,8 +3380,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
-        qr/support exactly one \(ahb-requester amba_requester \.\.\.\) object or exactly one \(ahb-subordinate ahb_lite_subordinate \.\.\.\) object in this slice/,
-        'manifest records the selected one-object AHB requester or subordinate boundary for .ahb',
+        qr/support exactly one \(ahb-requester amba_requester \.\.\.\) object, exactly one \(ahb-subordinate ahb_lite_subordinate \.\.\.\) object, or the selected aggregate one-requester\/one-subordinate \(ahb-interconnect ahb_tb \.\.\.\) shape in this slice/,
+        'manifest records the selected AHB requester, subordinate, or aggregate interconnect boundary for .ahb',
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
@@ -3390,7 +3390,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
-        qr/mirror ppif\/ahb_requester\.ppif at ppif\/ahb_requester\.ahb and ppif\/ahb_lite_subordinate\.ppif at ppif\/ahb_lite_subordinate\.ahb/,
+        qr/mirror ppif\/ahb_requester\.ppif at ppif\/ahb_requester\.ahb, ppif\/ahb_lite_subordinate\.ppif at ppif\/ahb_lite_subordinate\.ahb, and ppif\/ahb_interconnect\.ppif at ppif\/ahb_interconnect\.ahb/,
         'manifest records the shipped AHB profile-alias samples',
     );
     like(
@@ -3400,8 +3400,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
-        qr/AHB completers, aggregate \.ahb interconnect\/decode aliases, optional subordinate signals/,
-        'manifest keeps aggregate AHB profile-alias follow-on work deferred for .ahb',
+        qr/AHB completers, broader AHB interconnect\/decode beyond the selected one-requester\/one-subordinate static-window aggregate, optional subordinate signals/,
+        'manifest keeps broader AHB profile-alias follow-on work deferred for .ahb',
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},

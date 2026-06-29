@@ -11,8 +11,8 @@ answers:
 date: 2026-06-29
 status: current
 tags: [ial2, ahb, interconnect, decode, ppif, behavior]
-evidence: docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md; ppif/ahb_interconnect.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1478-ial2-ahb-interconnect.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
-reverify: prove -Iperl t/1478-ial2-ahb-interconnect.t && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.723|ppif/ahb_interconnect\.ppif|ahb-interconnect|ahb_interconnect\.(isf|fsm)|ahb_tb\.fsm|fsmgen\.ial2\.protocol_intent\.ahb_interconnect\.v1|intent\.ppif_ahb_interconnect|ial2_ppif_ahb_interconnect_pipeline_cli|two-cycle unmapped' docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md ppif/ahb_interconnect.ppif
+evidence: docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md; docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_BEHAVIOR.md; ppif/ahb_interconnect.ppif; ppif/ahb_interconnect.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1478-ial2-ahb-interconnect.t; t/1479-ial2-ahb-interconnect-profile-alias.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
+reverify: prove -Iperl t/1478-ial2-ahb-interconnect.t t/1479-ial2-ahb-interconnect-profile-alias.t && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect.ppif && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect.ahb && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.723|IAL2-FEATURE-COMPLETENESS-FRONTIER\.726|ppif/ahb_interconnect\.(ppif|ahb)|ahb-interconnect|ahb_interconnect\.(isf|fsm)|ahb_tb\.fsm|fsmgen\.ial2\.protocol_intent\.ahb_interconnect\.v1|intent\.ppif_ahb_interconnect|intent\.ahb_profile_alias_interconnect|ial2_ppif_ahb_interconnect_pipeline_cli|ial2_ahb_profile_alias_interconnect_pipeline_cli|two-cycle unmapped' docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md ppif/ahb_interconnect.ppif ppif/ahb_interconnect.ahb
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.723` implements the selected public IAL2
@@ -38,5 +38,7 @@ window at base 0 size 4, fixed `HGRANT=1`, decoded `HSEL_REGS`, local
 requester two-bit `HRESP` OKAY/ERROR, and interconnect-owned two-cycle
 unmapped active-transfer ERROR.
 
-Aggregate AHB `.ahb` alias behavior remains deferred. The `.ahb` surface is
-still limited to the shipped requester and subordinate endpoint aliases.
+Aggregate AHB `.ahb` alias behavior now ships separately as
+`ppif/ahb_interconnect.ahb`, support-accounted as
+`intent.ahb_profile_alias_interconnect`. The generic `.ppif` support identity
+above remains unchanged.

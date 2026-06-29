@@ -5089,18 +5089,30 @@ burst `SEQ` continuation, byte-lane/narrow-transfer behavior, direct backend
 behavior, verification-output generation, AXI/APB behavior, and VHDL remain
 future task-tree-owned work; `.724` is the next no-behavior selector.
 `.724` now selects `.725`, AHB aggregate `.ahb` profile-alias contract
-selection. Current behavior remains unchanged: `ppif/ahb_interconnect.ppif`
-is the shipped aggregate AHB source, aggregate `.ahb` interconnect aliases
-still fail closed, and `ahb_aggregate_profile_alias_deferred` remains explicit
-until a later implementation owner ships the selected alias.
+selection. That selector made no behavior change at the time:
+`ppif/ahb_interconnect.ppif` remained the shipped aggregate AHB source and
+`ahb_aggregate_profile_alias_deferred` stayed explicit until the selected
+alias implementation owner.
 `.725` now selects `.726`, bounded implementation of the public aggregate AHB
 `.ahb` profile-alias source `ppif/ahb_interconnect.ahb`. The selected alias
 must mirror `ppif/ahb_interconnect.ppif`, preserve generated
 requester/subordinate/interconnect review artifacts plus aggregate
 `ahb_tb.fsm`, use support identity `intent.ahb_profile_alias_interconnect`,
 source kind `ial2_profile_alias`, and coverage
-`ial2_ahb_profile_alias_interconnect_pipeline_cli`. No behavior changes until
-`.726` implements the selected alias.
+`ial2_ahb_profile_alias_interconnect_pipeline_cli`.
+`.726` now ships that alias. FSMGen accepts `ppif/ahb_interconnect.ahb` as
+the bounded aggregate AHB profile alias with explicit `(profile ahb)`, one
+requester object, one subordinate object, and one interconnect object. The
+alias preserves generated `amba_requester.isf`, `ahb_lite_subordinate.isf`,
+`ahb_interconnect.isf`, `amba_requester.fsm`,
+`ahb_lite_subordinate.fsm`, `ahb_interconnect.fsm`, aggregate `ahb_tb.fsm`,
+HDL module `ahb_tb`, report schema
+`fsmgen.ial2.protocol_intent.ahb_interconnect.v1`, semantic root kind `top`,
+support identity `intent.ahb_profile_alias_interconnect`, source kind
+`ial2_profile_alias`, and coverage
+`ial2_ahb_profile_alias_interconnect_pipeline_cli`. The alias removes only
+`ahb_aggregate_profile_alias_deferred`; broader AHB behavior remains
+deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7771,11 +7783,12 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_INTERCONNECT_DECODE_GENERATED_SUBSTRATE_AUDIT.md` — records the `.722` no-behavior generated-substrate audit, finds no lower-layer repair is required before the selected bounded AHB interconnect/decode implementation, and selects `.723`.
 - `docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md` — documents the `.723` shipped public `ppif/ahb_interconnect.ppif` behavior, generated requester/subordinate/interconnect review artifacts, aggregate `ahb_tb.fsm`, report schema, support accounting, validation, and remaining AHB residue.
 - `docs/IAL2_POST_AHB_INTERCONNECT_PPIF_NEXT_SLICE_SELECTION.md` — records the `.724` no-behavior selector after AHB interconnect `.ppif` shipment and selects `.725`, aggregate AHB `.ahb` profile-alias contract selection.
-- `docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.725` no-behavior contract selection for future `ppif/ahb_interconnect.ahb`, support identity `intent.ahb_profile_alias_interconnect`, generated aggregate review artifacts, and `.726` implementation owner.
+- `docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.725` no-behavior contract selection for `ppif/ahb_interconnect.ahb`, support identity `intent.ahb_profile_alias_interconnect`, generated aggregate review artifacts, and `.726` implementation owner.
+- `docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.726` shipped public `ppif/ahb_interconnect.ahb` aggregate profile alias, support accounting, residue removal, generated review artifacts, and validation.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
-- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester, subordinate, and interconnect `.ppif` support, shipped requester and subordinate `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
+- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester, subordinate, and interconnect `.ppif` support, shipped requester, subordinate, and aggregate interconnect `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

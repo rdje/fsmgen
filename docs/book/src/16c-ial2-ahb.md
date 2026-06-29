@@ -1,6 +1,6 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships five public bounded AHB IAL2 entrypoints today:
+FSMGen ships six public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
@@ -8,18 +8,19 @@ ppif/ahb_lite_subordinate.ppif
 ppif/ahb_interconnect.ppif
 ppif/ahb_requester.ahb
 ppif/ahb_lite_subordinate.ahb
+ppif/ahb_interconnect.ahb
 ```
 
 The `.ppif` sources are generic Protocol/Platform Intent files. They cover the
 bounded AHB requester, the bounded AHB-Lite/common-AHB subordinate, and the
 selected one-requester/one-subordinate static-window interconnect/decode top.
-The `.ahb` sources are bounded endpoint profile aliases over the same IAL2
-model. They use the same `protocol-platform-intent` form, keep explicit
-`(profile ahb)`, and support exactly one selected endpoint object:
+The `.ahb` sources are bounded profile aliases over the same IAL2 model. They
+use the same `protocol-platform-intent` form, keep explicit `(profile ahb)`,
+and support exactly one selected endpoint object:
 `(ahb-requester amba_requester ...)` or
-`(ahb-subordinate ahb_lite_subordinate ...)`. The aggregate interconnect is
-available through generic `.ppif`; aggregate `.ahb` interconnect aliases remain
-future work.
+`(ahb-subordinate ahb_lite_subordinate ...)`, or the selected aggregate
+one-requester/one-subordinate interconnect shape
+`(ahb-interconnect ahb_tb ...)`.
 
 All public AHB IAL2 sources lower through generated review artifacts before
 HDL:
@@ -30,6 +31,7 @@ ppif/ahb_requester.ahb           -> amba_requester.isf -> amba_requester.fsm -> 
 ppif/ahb_lite_subordinate.ppif   -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
 ppif/ahb_lite_subordinate.ahb    -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
 ppif/ahb_interconnect.ppif       -> amba_requester.isf + ahb_lite_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
+ppif/ahb_interconnect.ahb        -> amba_requester.isf + ahb_lite_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ```
 
 FSMGen also keeps direct lower-layer `.fsm` seeds:
@@ -46,9 +48,9 @@ and do not produce generated `.isf` or generated `.fsm` review artifacts.
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, `ppif/ahb_interconnect.ppif`, `ppif/ahb_requester.ahb`, or `ppif/ahb_lite_subordinate.ahb` | Bounded AHB requester, bounded AHB-Lite/common-AHB subordinate, selected one-requester/one-subordinate static-window AHB interconnect, and endpoint `.ahb` aliases. |
+| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, `ppif/ahb_interconnect.ppif`, `ppif/ahb_requester.ahb`, `ppif/ahb_lite_subordinate.ahb`, or `ppif/ahb_interconnect.ahb` | Bounded AHB requester, bounded AHB-Lite/common-AHB subordinate, selected one-requester/one-subordinate static-window AHB interconnect, and matching `.ahb` aliases. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs are exposed as `control`, `bus`, one-register `storage`, and `transfer` clauses. Interconnect knobs are exposed as `children`, one static `address-map` window, `decode`, and `wiring` clauses. |
-| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader AHB interconnect/decode beyond the selected one-requester/one-subordinate static-window `.ppif` source, aggregate `.ahb` interconnect aliases, optional signals, burst continuation, byte-lane/narrow-transfer behavior, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader AHB interconnect/decode beyond the selected one-requester/one-subordinate static-window `.ppif`/`.ahb` source, optional signals, burst continuation, byte-lane/narrow-transfer behavior, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -203,16 +205,34 @@ The subordinate `.ahb` schedule/report JSON uses schema
 `ahb-subordinate`, exposes generated `ahb_lite_subordinate.isf` before
 `ahb_lite_subordinate.fsm`, and removes
 `ahb_subordinate_profile_alias_deferred` from the alias report while preserving
-the broader AHB residue. Aggregate AHB interconnect/decode remains generic
-`.ppif` only in the shipped surface; an aggregate `.ahb` source for
-`ppif/ahb_interconnect.ppif` is rejected by the endpoint-alias boundary.
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.724` selects the aggregate `.ahb`
-interconnect profile-alias contract as the next no-behavior owner before any
-alias implementation. `IAL2-FEATURE-COMPLETENESS-FRONTIER.725` selects the
-future alias path `ppif/ahb_interconnect.ahb`, support identity
-`intent.ahb_profile_alias_interconnect`, source kind `ial2_profile_alias`, and
-coverage `ial2_ahb_profile_alias_interconnect_pipeline_cli`; behavior remains
-unchanged until that alias implementation ships.
+the broader AHB residue.
+
+The aggregate interconnect alias is:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect.ahb
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect.ahb
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_interconnect.ahb
+./bin/fsmgen --quiet --outdir generated/ial2-ahb-interconnect-profile-alias ppif/ahb_interconnect.ahb
+```
+
+The aggregate `.ahb` strict check reports:
+
+```text
+entry_id: intent.ahb_profile_alias_interconnect
+source_kind: ial2_profile_alias
+coverage: ial2_ahb_profile_alias_interconnect_pipeline_cli
+module_name: ahb_tb
+composition_child_count: 3
+```
+
+The aggregate `.ahb` schedule/report JSON uses schema
+`fsmgen.ial2.protocol_intent.ahb_interconnect.v1`, reports target object
+`ahb-interconnect`, exposes generated `amba_requester.isf`,
+`ahb_lite_subordinate.isf`, and `ahb_interconnect.isf` before generated
+`amba_requester.fsm`, `ahb_lite_subordinate.fsm`, `ahb_interconnect.fsm`, and
+aggregate `ahb_tb.fsm`, and removes `ahb_aggregate_profile_alias_deferred`
+from the alias report while preserving the broader AHB residue.
 
 ## Requester Source Shape
 
@@ -358,18 +378,19 @@ The generated behavior performs no write update on ERROR.
 
 ## Alias Diagnostics
 
-`.ahb` is accepted only as the bounded AHB requester or subordinate profile
-alias:
+`.ahb` is accepted only as the bounded AHB requester, subordinate, or selected
+aggregate interconnect profile alias:
 
 - missing `(profile ...)` is rejected;
 - any profile other than `ahb` is rejected as a suffix/profile mismatch;
-- any object other than exactly one `(ahb-requester amba_requester ...)` or
-  exactly one `(ahb-subordinate ahb_lite_subordinate ...)` is rejected for this
-  slice;
-- mixed requester/subordinate objects are rejected;
-- duplicate requester or duplicate subordinate objects are rejected;
-- malformed AHB requester and subordinate fields still use the same focused
-  diagnostics as the equivalent `.ppif` source.
+- any object other than exactly one `(ahb-requester amba_requester ...)`,
+  exactly one `(ahb-subordinate ahb_lite_subordinate ...)`, or the selected
+  aggregate one-requester/one-subordinate `(ahb-interconnect ahb_tb ...)`
+  shape is rejected for this slice;
+- mixed endpoint objects outside the selected aggregate shape are rejected;
+- duplicate requester, subordinate, or interconnect objects are rejected;
+- malformed AHB requester, subordinate, and interconnect fields still use the
+  same focused diagnostics as the equivalent `.ppif` source.
 
 Known aliases that have not shipped yet still fail closed. For example, a
 temporary `.chi` copy reports a known unsupported alias, while an unrelated
@@ -419,11 +440,10 @@ protocol-intent reports, support accounting, and IAL2 diagnostics.
 The following are not shipped by the current AHB IAL2 surface:
 
 - AHB completer behavior;
-- aggregate `.ahb` AHB interconnect/decode aliases;
 - multi-subordinate fabrics, multiple managers, arbitration fabrics, bus
   matrices, programmable/multiple windows, and broader AHB interconnect/decode
   beyond the selected one-requester/one-subordinate static-window
-  `ppif/ahb_interconnect.ppif`;
+  `ppif/ahb_interconnect.ppif` / `ppif/ahb_interconnect.ahb`;
 - optional/property-gated AHB signals such as `HBURST`, `HPROT`, `HMASTLOCK`,
   and AHB5 additions on the subordinate side;
 - burst `SEQ` continuation support in the subordinate;
@@ -442,8 +462,8 @@ stale residue from alias reports. The generic subordinate `.ppif` report keeps
 its historical `ahb_subordinate_profile_alias_deferred` residue, and the
 shipped subordinate `.ahb` alias removes that stale residue from alias reports.
 The generic aggregate interconnect `.ppif` report keeps
-`ahb_aggregate_profile_alias_deferred` until the selected aggregate `.ahb`
-implementation ships in a later task-tree leaf.
+`ahb_aggregate_profile_alias_deferred` for source-surface distinction, and the
+shipped aggregate `.ahb` alias removes that stale residue from alias reports.
 
 ## Validation Used For This Chapter
 
@@ -456,6 +476,7 @@ prove -v t/1475-ial2-ahb-subordinate.t
 prove -v t/1476-isf-output-default-reset.t
 prove -v t/1477-ial2-ahb-subordinate-profile-alias.t
 prove -v t/1478-ial2-ahb-interconnect.t
+prove -v t/1479-ial2-ahb-interconnect-profile-alias.t
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ppif
@@ -471,6 +492,9 @@ prove -v t/1478-ial2-ahb-interconnect.t
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_interconnect.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect.ahb
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect.ahb
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_interconnect.ahb
 ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm
 ```
 
@@ -484,8 +508,9 @@ and write behavior, unsupported `SEQ` routing, unsupported size/address
 ERROR routing, support accounting as `intent.ppif_ahb_lite_subordinate` for
 the generic source, and support accounting as
 `intent.ahb_profile_alias_subordinate` for the alias source. The interconnect
-`.ppif` probes passed and generated `amba_requester.isf`,
+`.ppif` and `.ahb` probes passed and generated `amba_requester.isf`,
 `ahb_lite_subordinate.isf`, `ahb_interconnect.isf`, `amba_requester.fsm`,
 `ahb_lite_subordinate.fsm`, `ahb_interconnect.fsm`, aggregate `ahb_tb.fsm`,
-and HDL module `ahb_tb`, support-accounted as
-`intent.ppif_ahb_interconnect`.
+and HDL module `ahb_tb`, support-accounted as `intent.ppif_ahb_interconnect`
+for the generic source and `intent.ahb_profile_alias_interconnect` for the
+alias source.
