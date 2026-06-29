@@ -4794,8 +4794,9 @@ navigation matrix. `.691` now ships AXI tri-mode mdBook coverage with runnable
 checked-in guided, more-control, and raw/full-control examples. `.692` now
 ships APB tri-mode mdBook coverage with `.ppif`/`.apb` alias parity,
 requester/completer/interconnect review artifacts, APB-specific decode
-boundaries, and residue. `.693` owns AHB current-state and future-boundary
-coverage.
+boundaries, and residue. `.693` now documents the AHB current direct
+`fsm/amba_requester.fsm` boundary, unsupported `.ahb` IAL2 alias status, and
+future task-tree prerequisites without claiming shipped AHB IAL2 behavior.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7438,6 +7439,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
+- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB current-boundary chapter covering direct `fsm/amba_requester.fsm` support, unsupported `.ahb` IAL2 alias status, and future AHB IAL2 prerequisites.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

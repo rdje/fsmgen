@@ -53,7 +53,8 @@ coverage as `.ppif`, a profile alias, or generated IAL1 behavior.
 Detailed protocol examples are split into separate follow-on chapters so the
 examples can be validated and kept current per protocol without making this
 map unreadable. AXI examples are in [AXI IAL2 Examples](16a-ial2-axi.md), and
-APB examples are in [APB IAL2 Examples](16b-ial2-apb.md).
+APB examples are in [APB IAL2 Examples](16b-ial2-apb.md). The current AHB
+boundary is documented in [AHB Current Boundary](16c-ial2-ahb.md).
 
 ## Reviewing Generated Artifacts
 

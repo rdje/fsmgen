@@ -5821,8 +5821,9 @@ navigation matrix. `.691` now ships AXI tri-mode mdBook coverage with runnable
 checked-in guided, more-control, and raw/full-control examples. `.692` now
 ships APB tri-mode mdBook coverage with `.ppif`/`.apb` alias parity,
 requester/completer/interconnect review artifacts, APB-specific decode
-boundaries, and residue. `.693` owns AHB current-state and future-boundary
-coverage.
+boundaries, and residue. `.693` now documents the AHB current direct
+`fsm/amba_requester.fsm` boundary, unsupported `.ahb` IAL2 alias status, and
+future task-tree prerequisites without claiming shipped AHB IAL2 behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

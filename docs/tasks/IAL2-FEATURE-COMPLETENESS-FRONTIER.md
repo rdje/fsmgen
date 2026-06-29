@@ -4910,11 +4910,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.692: document APB IAL2 tri-mode examples`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.693`
-  Status: `pending`
+  Status: `done`
   Goal: `Add AHB current-state and future IAL2 tri-mode boundary coverage.`
   Acceptance: `Populate docs/book/src/16c-ial2-ahb.md with the direct fsm/amba_requester.fsm support-accounted seed, the unsupported .ahb IAL2 alias boundary, and future task-tree prerequisites for AHB IAL2 guided, more-control, and raw/full-control modes. Do not imply that AHB .ppif/.ahb IAL2 behavior is shipped. Validate the selected direct seed as warranted, mdBook, Knowledge Map, docs path, memory, diff, and doctrine gates.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Added docs/book/src/16c-ial2-ahb.md under the IAL2 protocol/platform intent chapter. The chapter documents current direct fsm/amba_requester.fsm AHB requester coverage, support-accounting identity protocol.amba_requester, source_kind fsm, local requester knobs, generated HDL module/ports, unsupported .ahb IAL2 alias diagnostics, future task-tree prerequisites for AHB IAL2 guided, more-control, and raw/full-control modes, and residue. Added docs/knowledge/ial2-ahb-current-boundary-mdbook-coverage.md. Validated the direct seed with strict check JSON and HDL generation probes, and validated the .ahb boundary with an expected fail-closed temporary alias probe. No parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.693: document AHB current boundary`
 
 ## Current Frontier
 
@@ -5329,7 +5329,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 407 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.690` | `done` | Scaffolded the mdBook IAL2 protocol/platform intent chapter and tri-mode navigation map. |
 | 408 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691` | `done` | Added AXI tri-mode mdBook coverage with runnable checked-in examples. |
 | 409 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692` | `done` | Added APB tri-mode mdBook coverage with runnable checked-in examples. |
-| 410 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.693` | `pending` | Add AHB current-state and future IAL2 tri-mode boundary coverage. |
+| 410 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.693` | `done` | Added AHB current-state and future IAL2 boundary mdBook coverage. |
 
 ## Decisions
 
@@ -12951,6 +12951,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692` | docs/book/src/16b-ial2-apb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/SUMMARY.md; docs/knowledge/ial2-apb-trimode-mdbook-coverage.md; selected APB ppif/apb examples; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; documented APB guided, more-control, and raw/full-control mdBook coverage using checked-in examples. Validated requester .ppif/.apb, completer .apb schedule, fixed composition .apb semantic, fixed composition outdir, and data16 six-register generalized raw/full-control .ppif/.apb checks plus raw outdir with direct fsmgen probes. Fact-card reverify, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed. |
 
+| `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.693` | docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/SUMMARY.md; docs/knowledge/ial2-ahb-current-boundary-mdbook-coverage.md; fsm/amba_requester.fsm; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; documented AHB current direct .fsm coverage and future IAL2 boundary without claiming shipped AHB .ppif/.ahb IAL2 behavior. Validated direct fsm/amba_requester.fsm strict check JSON and HDL generation, and validated .ahb unsupported-alias fail-closed behavior with a temporary boundary probe. Fact-card reverify, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed. |
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -13607,8 +13609,19 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.690` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.690: scaffold IAL2 protocol intent chapter` | Scaffolded the user-facing IAL2 protocol/platform intent chapter and advanced the frontier to AXI tri-mode coverage in `.691`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691: document AXI IAL2 tri-mode examples` | Added AXI tri-mode mdBook coverage and advanced the frontier to APB tri-mode coverage in `.692`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.692: document APB IAL2 tri-mode examples` | Added APB tri-mode mdBook coverage and advanced the frontier to AHB current-state/future-boundary coverage in `.693`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.693` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.693: document AHB current boundary` | Added AHB current-boundary mdBook coverage and left the next IAL2 owner selection pending before further changes. |
 
 ## Changelog
+
+- `2026-06-29`: Completed `.693`, adding AHB current-boundary mdBook coverage
+  under the IAL2 protocol/platform intent chapter. The chapter documents the
+  direct `fsm/amba_requester.fsm` requester seed, support-accounting identity
+  `protocol.amba_requester`, direct `.fsm` local requester knobs and generated
+  HDL module surface, the unsupported `.ahb` IAL2 alias diagnostic, future
+  task-tree prerequisites for AHB IAL2 guided/more-control/raw-full-control
+  modes, and residue. No AHB `.ppif`, `.ahb`, generated `.isf`, generated
+  `.fsm`, parser, generator, support-accounting, public source, HDL/runtime,
+  backend-language, or VHDL behavior changed.
 
 - `2026-06-29`: Completed `.692`, adding APB tri-mode mdBook coverage under
   the IAL2 protocol/platform intent chapter. The chapter documents checked-in

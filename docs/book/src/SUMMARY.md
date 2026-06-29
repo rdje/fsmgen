@@ -34,4 +34,5 @@
 - [IAL2 Protocol and Platform Intent](16-ial2-protocol-platform-intent.md)
   - [AXI IAL2 Examples](16a-ial2-axi.md)
   - [APB IAL2 Examples](16b-ial2-apb.md)
+  - [AHB Current Boundary](16c-ial2-ahb.md)
 - [Reference Map](90-reference-map.md)
