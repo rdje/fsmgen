@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `FSMGEN-HIR-ROADMAP-FRONTIER.1: capture FSMGEN HIR roadmap phase`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.689` is active after `.688`; task-tree-own the IAL2 AXI/APB/AHB mdBook tri-mode documentation coverage program before broad book rewrites.
-- recently_done: `FSMGEN-HIR-ROADMAP-FRONTIER.1` captured source-facing FSMGEN HIR as a proposed critical architecture roadmap phase above IAL2 and IAL1; `.688` shipped APB data16 no-policy six-register timing in commit `7d189d964`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.689: select IAL2 tri-mode doc plan`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.690` is pending after `.689`; scaffold the mdBook IAL2 protocol/platform intent chapter and tri-mode navigation map before protocol-specific chapter work.
+- recently_done: `.689` selected documentation-only follow-on leaves `.690` through `.693` for IAL2 AXI/APB/AHB tri-mode mdBook coverage; `.688` shipped APB data16 no-policy six-register timing in commit `7d189d964`; `FSMGEN-HIR-ROADMAP-FRONTIER.1` captured source-facing FSMGEN HIR as a proposed critical architecture roadmap phase above IAL2 and IAL1.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan. During `.569`, broad `t/1436-ial2-ppif-parser-cli.t` attempts were not used as closeout: the APB-relevant focused tests and direct probes passed, but the broad run sat in an unrelated AXI subprocess/pipe wait after all visible subtests had passed. During `.634`, grouped RAM-guarded focused test attempts stopped before tests because host memory was already 96.3% against the 88% cutoff; direct focused tests passed.
-- next_action: Execute `.689`: audit current mdBook, README, ROADMAP_V2, Knowledge Map, shipped/deferred IAL2 AXI/APB/AHB surfaces, protocol aliases, examples, support manifests, and decisions; define the exact tri-mode documentation contract and next executable documentation leaves before any broad protocol-wide mdBook edits.
+- next_action: Execute `.690`: add the selected mdBook IAL2 protocol/platform intent scaffold, mode definitions, protocol matrix, shared lowering/review-artifact rules, and SUMMARY entry without protocol-specific deep example coverage.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
