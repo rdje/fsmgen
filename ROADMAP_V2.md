@@ -5812,12 +5812,13 @@ queue-depth `1`, overflow `reject`, adjacent setup on both completers, and
 propagation-only interconnect decode with no interconnect-owned protection
 predicate. Protected data16 six-register, protected 32-bit six-register,
 more-than-six-register, more-than-two-peripheral, backend, AXI, AHB, and VHDL
-behavior remain deferred. `.689` now selects documentation-only follow-on
-leaves `.690` through `.693` for protocol-wide mdBook coverage of IAL2 AXI,
-APB, and AHB across user-friendly, more-control, and raw/full-control modes
-before broad book edits. `.690` scaffolds the IAL2 protocol/platform intent
-chapter, `.691` owns AXI tri-mode coverage, `.692` owns APB tri-mode coverage,
-and `.693` owns AHB current-state and future-boundary coverage.
+behavior remain deferred. `.689` selected documentation-only follow-on leaves
+`.690` through `.693` for protocol-wide mdBook coverage of IAL2 AXI, APB, and
+AHB across user-friendly, more-control, and raw/full-control modes. `.690` now
+ships the user-facing IAL2 protocol/platform intent chapter scaffold, including
+the shared lowering/review-artifact rule, mode definitions, and AXI/APB/AHB
+navigation matrix. `.691` owns AXI tri-mode coverage, `.692` owns APB tri-mode
+coverage, and `.693` owns AHB current-state and future-boundary coverage.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

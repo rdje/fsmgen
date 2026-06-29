@@ -4889,11 +4889,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.689: select IAL2 tri-mode doc plan`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.690`
-  Status: `pending`
+  Status: `done`
   Goal: `Scaffold the mdBook IAL2 protocol/platform intent chapter and tri-mode navigation map.`
   Acceptance: `Create the selected docs/book/src/16-ial2-protocol-platform-intent.md chapter and SUMMARY entry. Define user-friendly guided, more-control, and raw/full-control modes; document the shared IAL2 lowering/review-artifact rule; add a protocol matrix for AXI, APB, and AHB; link existing implementation-blueprint guidance; summarize shipped versus deferred boundaries without rewriting the detailed AXI/APB/AHB examples. Validate the book, Knowledge Map, docs path, memory, diff, and doctrine gates.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Added docs/book/src/16-ial2-protocol-platform-intent.md and linked it from docs/book/src/SUMMARY.md. The scaffold defines the IAL2 layer boundary, user-facing guided/more-control/raw-full-control modes, the mandatory generated .isf then generated .fsm review-artifact rule, AXI/APB/AHB protocol navigation, current shipped-versus-deferred boundaries, and links back to the implementation blueprint and new-protocol workflow. Added docs/knowledge/ial2-protocol-platform-intent-mdbook-chapter.md. Selected .691 as the next protocol-specific AXI tri-mode mdBook coverage leaf. No parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.690: scaffold IAL2 protocol intent chapter`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.691`
   Status: `pending`
@@ -5326,7 +5326,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 404 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.687` | `done` | Selected the bounded APB data16 no-policy six-register generalized register-set implementation. |
 | 405 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.688` | `done` | Shipped the bounded APB data16 no-policy six-register generalized register-set timing behavior. |
 | 406 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.689` | `done` | Selected the IAL2 AXI/APB/AHB tri-mode mdBook documentation coverage plan and follow-on leaves. |
-| 407 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.690` | `pending` | Scaffold the mdBook IAL2 protocol/platform intent chapter and tri-mode navigation map before protocol-specific chapter work. |
+| 407 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.690` | `done` | Scaffolded the mdBook IAL2 protocol/platform intent chapter and tri-mode navigation map. |
+| 408 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.691` | `pending` | Add AXI tri-mode mdBook coverage with runnable checked-in examples. |
 
 ## Decisions
 
@@ -12942,6 +12943,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-28` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.688` | `ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.ppif`; `ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.apb`; `perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm`; `perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm`; `perl/FSM/Support/RegressionCorpus.pm`; `perl/FSM/Support/LanguageSurfaceSection.pm`; `t/1470-ial2-apb-profile-alias.t`; `t/1472-ial2-apb-composition.t`; `t/248-regression-corpus-accounting.t`; `t/297-capability-manifest.t`; `docs/IAL2_APB_DATA16_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_SIX_REGISTER_BEHAVIOR.md`; `docs/knowledge/ial2-apb-data16-generalized-multi-peripheral-multi-register-six-register-behavior.md`; README; ROADMAP_V2; mdBook; task tree; Memory; Knowledge Map; syntax, strict-check, semantic, schedule, outdir, focused support/capability, and RAM-guarded APB tests; docs/doctrine closeout gates | `passed`; shipped selected APB sideband-aware data16 no-policy six-register generalized `reg0..regN` register-set multi-peripheral timing behavior and advanced the frontier to `.689`, the IAL2 AXI/APB/AHB tri-mode mdBook documentation coverage owner. |
 | `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.689` | README; MEMORY; MEMORY_ARCHITECTURE; COMMIT; DOCTRINE_ENFORCEMENT; TOOLBOX; docs/TASK_TREE; docs/TASK_TREE_README; ROADMAP_V2; Knowledge Map routes; decisions 0003/0005/0006/0007/0014-0018; mdBook SUMMARY, feature backlog, implementation blueprint, and IAL2 protocol workflow; support-accounting manifests; ppif example inventory; bin/fsmgen suffix handling; IAL2 parser/protocol-intent modules; focused tests; fsm/amba_requester.fsm; docs/IAL2_AXI_APB_AHB_TRIMODE_MDBOOK_COVERAGE_AUDIT.md; docs/knowledge/ial2-axi-apb-ahb-trimode-mdbook-coverage-audit.md; docs/doctrine closeout gates | `passed`; selected .690-.693 as documentation-only follow-ons for IAL2 protocol-platform tri-mode mdBook coverage. Reverified the fact card, regenerated and checked the Knowledge Map, built the mdBook, ran the docs path audit, memory-architecture check, diff check, and doctrine driver. No broad mdBook rewrite, parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed. |
 
+| `2026-06-29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.690` | docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/SUMMARY.md; docs/knowledge/ial2-protocol-platform-intent-mdbook-chapter.md; .689 audit and follow-on selection; README; ROADMAP_V2; task tree; Memory; Knowledge Map; docs/doctrine closeout gates | `passed`; scaffolded the user-facing IAL2 protocol/platform intent chapter, tri-mode navigation map, shared lowering/review-artifact rule, AXI/APB/AHB protocol matrix, and shipped-versus-deferred boundaries. Fact-card reverify, Knowledge Map generation/check, mdBook build, docs path audit, memory-architecture check, diff check, and doctrine driver passed. No parser, generator, public source, support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL behavior changed. |
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -13595,9 +13598,18 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.687` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.687: select APB data16 six-register implementation` | Selected bounded APB data16 no-policy six-register generalized register-set implementation and advanced the frontier to `.688`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.688` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.688: ship APB data16 six-register timing` | Shipped bounded APB data16 no-policy six-register generalized register-set timing behavior and advanced the frontier to `.689`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.689` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.689: select IAL2 tri-mode doc plan` | Selected documentation-only follow-on leaves `.690` through `.693` for IAL2 protocol-platform mdBook tri-mode coverage. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.690` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.690: scaffold IAL2 protocol intent chapter` | Scaffolded the user-facing IAL2 protocol/platform intent chapter and advanced the frontier to AXI tri-mode coverage in `.691`. |
 
 ## Changelog
 
+- `2026-06-29`: Completed `.690`, scaffolding the mdBook IAL2
+  protocol/platform intent chapter and tri-mode navigation map. The chapter
+  defines guided, more-control, and raw/full-control modes, documents the
+  mandatory generated `.isf` then generated `.fsm` review-artifact rule, maps
+  current AXI/APB/AHB shipped-versus-deferred boundaries, and routes detailed
+  AXI coverage to `.691`. No parser, generator, public source,
+  support-accounting, generated artifact, HDL/runtime, AXI, APB, AHB, or VHDL
+  behavior changed.
 - `2026-06-29`: Completed `.689`, selecting documentation-only follow-on
   leaves `.690` through `.693` for the IAL2 AXI/APB/AHB tri-mode mdBook
   coverage plan. `.690` scaffolds the IAL2 protocol/platform intent chapter,

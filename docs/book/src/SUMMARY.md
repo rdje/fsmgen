@@ -31,4 +31,5 @@
 - [Feature Backlog](14-feature-backlog.md)
 - [Implementation Blueprint](15-implementation-blueprint.md)
   - [Adding IAL2 Protocols](15a-ial2-new-protocol-support.md)
+- [IAL2 Protocol and Platform Intent](16-ial2-protocol-platform-intent.md)
 - [Reference Map](90-reference-map.md)
