@@ -6062,6 +6062,16 @@ interconnect/decode, optional AHB signals, burst `SEQ` continuation,
 byte-lane/narrow-transfer behavior, legacy two-bit `HRESP`, direct backend
 behavior, verification-output generation, backend-language variants, AXI, APB,
 and VHDL remain deferred.
+`.719` now selects `.720`, AHB interconnect/decode readiness audit, after
+requester and subordinate `.ppif`/`.ahb` public entrypoints shipped. Live
+schedule probes confirmed requester-side `ahb_interconnect_decode_deferred` and
+subordinate-side `ahb_interconnect_generation_deferred` residue remain; `.720`
+must audit topology/decode readiness and residue-key convergence before any
+behavior change. No parser, generator, source sample, support-accounting
+catalog, capability manifest behavior, focused test behavior,
+schedule/check/semantic JSON behavior, generated artifact, HDL/runtime,
+direct-backend, verification-output, backend-language variant, AXI, APB,
+broader AHB behavior, or VHDL behavior changed in `.719`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -9829,6 +9829,11 @@ reports schema `fsmgen.ial2.protocol_intent.ahb_subordinate.v1`, removes
 `ahb_subordinate_profile_alias_deferred` only from subordinate `.ahb` reports,
 and support-accounts as `intent.ahb_profile_alias_subordinate` with source kind
 `ial2_profile_alias`.
+`.719` selects `.720`, AHB interconnect/decode readiness audit, after requester
+and subordinate `.ppif`/`.ahb` public entrypoints shipped. The readiness audit
+must reconcile requester-side `ahb_interconnect_decode_deferred` and
+subordinate-side `ahb_interconnect_generation_deferred` residue before any
+fabric behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
