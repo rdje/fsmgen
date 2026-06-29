@@ -9744,6 +9744,14 @@ completer/subordinate/slave fixture or generator exists, so IAL2 AHB
 completer/subordinate contract selection remains deferred until the seed
 contract is selected.
 
+AHB subordinate seed prerequisite selection:
+[IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION](../../IAL2_AHB_SUBORDINATE_SEED_PREREQUISITE_SELECTION.md)
+selects `.704`, AHB subordinate source-reference and seed-evidence audit. The
+selector found no local AHB/AHB-Lite source reference under `docs/vendor/` and
+current shipped AHB evidence remains requester-only, so the direct lower-layer
+seed contract remains deferred until subordinate signal/timing/storage/response
+and error-policy facts are source-backed.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

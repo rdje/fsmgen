@@ -5879,6 +5879,17 @@ selection. The audit found current AHB evidence is requester-only
 `ppif/ahb_requester.ahb`) and no shipped AHB completer/subordinate/slave
 fixture or generator exists, so IAL2 AHB completer/subordinate contract
 selection remains premature until the lower-layer seed is selected.
+`.703` now selects `.704`, AHB subordinate source-reference and seed-evidence
+audit, instead of selecting a lower-layer seed contract directly. The selector
+found no local AHB/AHB-Lite source reference under `docs/vendor/` and current
+shipped AHB evidence remains requester-only, so subordinate signal roles,
+transfer/ready/response timing, reset/default outputs, read/write storage
+policy, and error/unsupported-transfer behavior must be source-backed before a
+signoff direct `.fsm` subordinate seed contract can be chosen. No parser,
+generator, public source, support-accounting, manifest, test behavior,
+schedule/check/semantic JSON, generated artifact, HDL/runtime, direct-backend,
+verification-output, backend-language variant, AXI, APB, or VHDL behavior
+changed in `.703`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
