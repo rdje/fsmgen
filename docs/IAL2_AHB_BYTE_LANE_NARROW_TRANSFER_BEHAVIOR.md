@@ -29,7 +29,9 @@ ppif/ahb_lite_subordinate.ppif
 ppif/ahb_lite_subordinate.ahb
 ```
 
-The byte-lane source has no `.ahb` profile alias in this slice.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.739` later ships the matching `.ahb`
+profile alias at `ppif/ahb_lite_subordinate_byte_lane.ahb`; see
+`docs/IAL2_AHB_BYTE_LANE_PROFILE_ALIAS_BEHAVIOR.md`.
 
 ## Public Source Contract
 
@@ -125,7 +127,6 @@ write/read policy, and ERROR policy.
 The byte-lane source removes byte-lane wording from the subordinate
 optional-signal residue. Remaining AHB residue includes:
 
-- a `.ahb` alias for the byte-lane subordinate source;
 - byte-lane propagation through aggregate interconnects;
 - AHB completer behavior;
 - optional/property-gated subordinate signals;

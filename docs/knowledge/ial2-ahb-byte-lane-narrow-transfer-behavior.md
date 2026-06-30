@@ -6,11 +6,10 @@ answers:
   - "what does ppif/ahb_lite_subordinate_byte_lane.ppif generate?"
   - "how does the AHB byte-lane subordinate handle narrow writes and reads?"
   - "what report block describes AHB byte-lane narrow transfer policy?"
-  - "does the AHB byte-lane subordinate have an .ahb alias?"
 date: 2026-06-30
 status: current
 tags: [ial2, ahb, byte-lane, narrow-transfer, ppif, behavior]
-evidence: docs/IAL2_AHB_BYTE_LANE_NARROW_TRANSFER_BEHAVIOR.md; ppif/ahb_lite_subordinate_byte_lane.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1482-ial2-ahb-subordinate-byte-lane.t; t/1475-ial2-ahb-subordinate.t; t/1477-ial2-ahb-subordinate-profile-alias.t; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
+evidence: docs/IAL2_AHB_BYTE_LANE_NARROW_TRANSFER_BEHAVIOR.md; docs/IAL2_AHB_BYTE_LANE_PROFILE_ALIAS_BEHAVIOR.md; ppif/ahb_lite_subordinate_byte_lane.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1482-ial2-ahb-subordinate-byte-lane.t; t/1475-ial2-ahb-subordinate.t; t/1477-ial2-ahb-subordinate-profile-alias.t; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
 reverify: prove -v t/1482-ial2-ahb-subordinate-byte-lane.t && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_lite_subordinate_byte_lane.ppif && ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_lite_subordinate_byte_lane.ppif
 ---
 
@@ -32,5 +31,6 @@ two-cycle ERROR policy for unsupported size, unsupported transfer, unmapped,
 unaligned, and crossing accesses.
 
 The schedule/report JSON includes `narrow_transfer_policy`. The existing
-word-only subordinate `.ppif` and `.ahb` alias do not gain that report block,
-and the byte-lane source has no `.ahb` alias yet.
+word-only subordinate `.ppif` and `.ahb` alias do not gain that report block.
+The matching byte-lane `.ahb` profile alias is documented by
+`docs/knowledge/ial2-ahb-byte-lane-profile-alias-behavior.md`.

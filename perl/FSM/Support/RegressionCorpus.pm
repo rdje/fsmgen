@@ -128,6 +128,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ahb_profile_alias_subordinate_byte_lane',
+        relpath => 'ppif/ahb_lite_subordinate_byte_lane.ahb',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ahb_profile_alias_subordinate_byte_lane_pipeline_cli',
+        source_kind => 'ial2_profile_alias',
+        strict_supported => 1,
+        expected_module_name => 'ahb_lite_subordinate_byte_lane',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ahb_profile_alias_interconnect',
         relpath => 'ppif/ahb_interconnect.ahb',
         family => 'protocol_fixture',

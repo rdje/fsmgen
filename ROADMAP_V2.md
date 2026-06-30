@@ -6244,8 +6244,8 @@ transfer, unmapped, unaligned, or crossing accesses.
 `narrow_transfer_policy` with accepted sizes, `HSIZE` encodings, address
 rules, little-endian byte-lane masks, inactive-lane write/read policies, and
 ERROR policy. Existing word-only subordinate `.ppif`/`.ahb` behavior remains
-unchanged. Remaining AHB work includes a byte-lane `.ahb` alias, byte-lane
-propagation through aggregate interconnects, optional signals, burst `SEQ`,
+unchanged. Remaining AHB work includes byte-lane propagation through aggregate
+interconnects, optional signals, burst `SEQ`,
 broader interconnect/decode, completer/full-manager behavior, direct backend,
 verification-output generation, backend-language variants, and VHDL. `.738`
 now owns the next no-behavior AHB follow-on selector.
@@ -6262,6 +6262,21 @@ in-memory `.ahb` label probe confirmed current code already preserves
 byte-lane semantics and removes `ahb_subordinate_profile_alias_deferred` for
 the alias report, so `.739` is source/support/docs/test work rather than
 generator-semantics work.
+`.739` now ships that matching bounded public AHB byte-lane/narrow-transfer
+subordinate `.ahb` profile alias. The alias source
+`ppif/ahb_lite_subordinate_byte_lane.ahb` mirrors the generic byte-lane
+`.ppif` source, lowers through generated
+`ahb_lite_subordinate_byte_lane.isf` before generated
+`ahb_lite_subordinate_byte_lane.fsm`, emits HDL module
+`ahb_lite_subordinate_byte_lane`, support-accounts as
+`intent.ahb_profile_alias_subordinate_byte_lane` with source kind
+`ial2_profile_alias`, preserves `narrow_transfer_policy`, and removes
+`ahb_subordinate_profile_alias_deferred` only from the alias report. Existing
+word-only subordinate `.ppif`/`.ahb` behavior and generic byte-lane `.ppif`
+residue remain unchanged. Aggregate byte-lane propagation, optional signals,
+burst `SEQ`, broader AHB behavior, direct backend, verification-output,
+backend-language variants, and VHDL remain deferred. `.740` now owns the next
+no-behavior AHB follow-on selector.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

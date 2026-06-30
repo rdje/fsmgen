@@ -9968,10 +9968,11 @@ accesses on the existing two-cycle ERROR policy.
 generates `ahb_lite_subordinate_byte_lane.isf` before
 `ahb_lite_subordinate_byte_lane.fsm`, emits HDL module
 `ahb_lite_subordinate_byte_lane`, reports `narrow_transfer_policy`, and keeps
-existing word-only subordinate `.ppif`/`.ahb` behavior unchanged. The new
-byte-lane `.ahb` alias, aggregate byte-lane propagation, optional signals,
-burst `SEQ`, broader AHB behavior, direct backend, verification-output,
-backend-language variants, and VHDL remain deferred. `.738` selects the next
+existing word-only subordinate `.ppif`/`.ahb` behavior unchanged. At `.737`
+closeout, the then-new byte-lane `.ahb` alias, aggregate byte-lane
+propagation, optional signals, burst `SEQ`, broader AHB behavior, direct
+backend, verification-output, backend-language variants, and VHDL remained
+deferred. `.738` selects the next
 exact AHB follow-on owner.
 `.738` selects `.739`, direct implementation of the matching bounded public
 AHB byte-lane/narrow-transfer subordinate `.ahb` profile alias, without
@@ -9984,6 +9985,17 @@ coverage `ial2_ahb_profile_alias_subordinate_byte_lane_pipeline_cli`. The next
 slice is source/support/docs/test work; aggregate byte-lane propagation,
 optional signals, burst `SEQ`, broader AHB behavior, direct backend,
 verification-output, backend-language variants, and VHDL remain deferred.
+`.739` ships that alias. `ppif/ahb_lite_subordinate_byte_lane.ahb` mirrors the
+generic byte-lane `.ppif` source, generates
+`ahb_lite_subordinate_byte_lane.isf` before
+`ahb_lite_subordinate_byte_lane.fsm`, emits HDL module
+`ahb_lite_subordinate_byte_lane`, support-accounts as
+`intent.ahb_profile_alias_subordinate_byte_lane`, preserves
+`narrow_transfer_policy`, and removes the subordinate profile-alias residue
+only from the alias report. Aggregate byte-lane propagation, optional signals,
+burst `SEQ`, broader AHB behavior, direct backend, verification-output,
+backend-language variants, and VHDL remain deferred. `.740` owns the next
+AHB follow-on selector.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
