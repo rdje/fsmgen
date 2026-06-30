@@ -10266,15 +10266,32 @@ Post AHB HBURST `SEQ` `.ppif` selector:
 [IAL2_POST_AHB_HBURST_SEQ_PPIF_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_HBURST_SEQ_PPIF_NEXT_SLICE_SELECTION.md)
 selects `.766`, direct implementation of the matching public
 `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb` profile alias. The alias
-will mirror the generic `.ppif` source, support-account as
-`intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, use coverage
-`ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_pipeline_cli`, report
-source kind `ial2_profile_alias`, preserve generated
-`ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm`, preserve
+mirrors the generic `.ppif` source, support-accounts as
+`intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, uses coverage
+`ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_pipeline_cli`,
+reports source kind `ial2_profile_alias`, preserves generated
+`ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm`, preserves
 `bindings.bus.burst` and
-`transfer.seq_policy.mode = hburst_in_word_progressive`, and remove `.ahb`
-alias exposure only from the alias report. The alias is not shipped until
-`.766`; aggregate HBURST propagation, BUSY-in-burst, halfword/word burst
+`transfer.seq_policy.mode = hburst_in_word_progressive`, and removes `.ahb`
+alias exposure only from the alias report. Aggregate HBURST propagation,
+BUSY-in-burst, halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank, optional signals, broader AHB, direct backend,
+verification-output, backend-language variants, AXI/APB, and VHDL remain
+deferred.
+
+AHB HBURST length/wrap `SEQ` profile-alias behavior:
+[IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_PROFILE_ALIAS_BEHAVIOR](../../IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_PROFILE_ALIAS_BEHAVIOR.md)
+ships `.766`, the matching public
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb` profile alias. The alias
+support-accounts as
+`intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, uses source kind
+`ial2_profile_alias`, preserves generated
+`ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm`, preserves
+`bindings.bus.burst` and
+`transfer.seq_policy.mode = hburst_in_word_progressive`, and removes endpoint
+profile-alias residue plus `.ahb alias exposure` only from the alias report.
+The generic `.ppif` report keeps source-surface alias residue. Aggregate
+HBURST propagation, BUSY-in-burst, halfword/word burst
 `SEQ`, wider or indefinite bursts, multi-word/register-bank, optional signals,
 broader AHB, direct backend, verification-output, backend-language variants,
 AXI/APB, and VHDL remain deferred.

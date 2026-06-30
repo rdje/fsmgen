@@ -64,7 +64,7 @@ path before reopening VHDL backend or VHDL rerouting work.
   Children continuation 11: `IAL2-FEATURE-COMPLETENESS-FRONTIER.659, IAL2-FEATURE-COMPLETENESS-FRONTIER.660, IAL2-FEATURE-COMPLETENESS-FRONTIER.661, IAL2-FEATURE-COMPLETENESS-FRONTIER.662, IAL2-FEATURE-COMPLETENESS-FRONTIER.663, IAL2-FEATURE-COMPLETENESS-FRONTIER.664, IAL2-FEATURE-COMPLETENESS-FRONTIER.665, IAL2-FEATURE-COMPLETENESS-FRONTIER.666, IAL2-FEATURE-COMPLETENESS-FRONTIER.667, IAL2-FEATURE-COMPLETENESS-FRONTIER.668, IAL2-FEATURE-COMPLETENESS-FRONTIER.669, IAL2-FEATURE-COMPLETENESS-FRONTIER.670, IAL2-FEATURE-COMPLETENESS-FRONTIER.671, IAL2-FEATURE-COMPLETENESS-FRONTIER.672, IAL2-FEATURE-COMPLETENESS-FRONTIER.673, IAL2-FEATURE-COMPLETENESS-FRONTIER.674, IAL2-FEATURE-COMPLETENESS-FRONTIER.675, IAL2-FEATURE-COMPLETENESS-FRONTIER.676, IAL2-FEATURE-COMPLETENESS-FRONTIER.677, IAL2-FEATURE-COMPLETENESS-FRONTIER.678, IAL2-FEATURE-COMPLETENESS-FRONTIER.679, IAL2-FEATURE-COMPLETENESS-FRONTIER.680`
 
   Children continuation 12: `IAL2-FEATURE-COMPLETENESS-FRONTIER.681, IAL2-FEATURE-COMPLETENESS-FRONTIER.682, IAL2-FEATURE-COMPLETENESS-FRONTIER.683, IAL2-FEATURE-COMPLETENESS-FRONTIER.684, IAL2-FEATURE-COMPLETENESS-FRONTIER.685, IAL2-FEATURE-COMPLETENESS-FRONTIER.686, IAL2-FEATURE-COMPLETENESS-FRONTIER.687, IAL2-FEATURE-COMPLETENESS-FRONTIER.688, IAL2-FEATURE-COMPLETENESS-FRONTIER.689, IAL2-FEATURE-COMPLETENESS-FRONTIER.690, IAL2-FEATURE-COMPLETENESS-FRONTIER.691, IAL2-FEATURE-COMPLETENESS-FRONTIER.692, IAL2-FEATURE-COMPLETENESS-FRONTIER.693, IAL2-FEATURE-COMPLETENESS-FRONTIER.694, IAL2-FEATURE-COMPLETENESS-FRONTIER.695, IAL2-FEATURE-COMPLETENESS-FRONTIER.696, IAL2-FEATURE-COMPLETENESS-FRONTIER.697, IAL2-FEATURE-COMPLETENESS-FRONTIER.698, IAL2-FEATURE-COMPLETENESS-FRONTIER.699, IAL2-FEATURE-COMPLETENESS-FRONTIER.700, IAL2-FEATURE-COMPLETENESS-FRONTIER.701, IAL2-FEATURE-COMPLETENESS-FRONTIER.702, IAL2-FEATURE-COMPLETENESS-FRONTIER.703, IAL2-FEATURE-COMPLETENESS-FRONTIER.704, IAL2-FEATURE-COMPLETENESS-FRONTIER.705, IAL2-FEATURE-COMPLETENESS-FRONTIER.706, IAL2-FEATURE-COMPLETENESS-FRONTIER.707, IAL2-FEATURE-COMPLETENESS-FRONTIER.708, IAL2-FEATURE-COMPLETENESS-FRONTIER.709, IAL2-FEATURE-COMPLETENESS-FRONTIER.710, IAL2-FEATURE-COMPLETENESS-FRONTIER.711, IAL2-FEATURE-COMPLETENESS-FRONTIER.712, IAL2-FEATURE-COMPLETENESS-FRONTIER.713, IAL2-FEATURE-COMPLETENESS-FRONTIER.714, IAL2-FEATURE-COMPLETENESS-FRONTIER.715, IAL2-FEATURE-COMPLETENESS-FRONTIER.716, IAL2-FEATURE-COMPLETENESS-FRONTIER.717, IAL2-FEATURE-COMPLETENESS-FRONTIER.718, IAL2-FEATURE-COMPLETENESS-FRONTIER.719, IAL2-FEATURE-COMPLETENESS-FRONTIER.720, IAL2-FEATURE-COMPLETENESS-FRONTIER.721, IAL2-FEATURE-COMPLETENESS-FRONTIER.722, IAL2-FEATURE-COMPLETENESS-FRONTIER.723, IAL2-FEATURE-COMPLETENESS-FRONTIER.724, IAL2-FEATURE-COMPLETENESS-FRONTIER.725, IAL2-FEATURE-COMPLETENESS-FRONTIER.726, IAL2-FEATURE-COMPLETENESS-FRONTIER.727, IAL2-FEATURE-COMPLETENESS-FRONTIER.728, IAL2-FEATURE-COMPLETENESS-FRONTIER.729, IAL2-FEATURE-COMPLETENESS-FRONTIER.730, IAL2-FEATURE-COMPLETENESS-FRONTIER.731, IAL2-FEATURE-COMPLETENESS-FRONTIER.732, IAL2-FEATURE-COMPLETENESS-FRONTIER.733, IAL2-FEATURE-COMPLETENESS-FRONTIER.734, IAL2-FEATURE-COMPLETENESS-FRONTIER.735`
-  Children continuation 13: `IAL2-FEATURE-COMPLETENESS-FRONTIER.736, IAL2-FEATURE-COMPLETENESS-FRONTIER.737, IAL2-FEATURE-COMPLETENESS-FRONTIER.738, IAL2-FEATURE-COMPLETENESS-FRONTIER.739, IAL2-FEATURE-COMPLETENESS-FRONTIER.740, IAL2-FEATURE-COMPLETENESS-FRONTIER.741, IAL2-FEATURE-COMPLETENESS-FRONTIER.742, IAL2-FEATURE-COMPLETENESS-FRONTIER.743, IAL2-FEATURE-COMPLETENESS-FRONTIER.744, IAL2-FEATURE-COMPLETENESS-FRONTIER.745, IAL2-FEATURE-COMPLETENESS-FRONTIER.746, IAL2-FEATURE-COMPLETENESS-FRONTIER.747, IAL2-FEATURE-COMPLETENESS-FRONTIER.748, IAL2-FEATURE-COMPLETENESS-FRONTIER.749, IAL2-FEATURE-COMPLETENESS-FRONTIER.750, IAL2-FEATURE-COMPLETENESS-FRONTIER.751, IAL2-FEATURE-COMPLETENESS-FRONTIER.752, IAL2-FEATURE-COMPLETENESS-FRONTIER.753, IAL2-FEATURE-COMPLETENESS-FRONTIER.754, IAL2-FEATURE-COMPLETENESS-FRONTIER.755, IAL2-FEATURE-COMPLETENESS-FRONTIER.756, IAL2-FEATURE-COMPLETENESS-FRONTIER.757, IAL2-FEATURE-COMPLETENESS-FRONTIER.758, IAL2-FEATURE-COMPLETENESS-FRONTIER.759, IAL2-FEATURE-COMPLETENESS-FRONTIER.760, IAL2-FEATURE-COMPLETENESS-FRONTIER.761, IAL2-FEATURE-COMPLETENESS-FRONTIER.762, IAL2-FEATURE-COMPLETENESS-FRONTIER.763, IAL2-FEATURE-COMPLETENESS-FRONTIER.764, IAL2-FEATURE-COMPLETENESS-FRONTIER.765, IAL2-FEATURE-COMPLETENESS-FRONTIER.766`
+  Children continuation 13: `IAL2-FEATURE-COMPLETENESS-FRONTIER.736, IAL2-FEATURE-COMPLETENESS-FRONTIER.737, IAL2-FEATURE-COMPLETENESS-FRONTIER.738, IAL2-FEATURE-COMPLETENESS-FRONTIER.739, IAL2-FEATURE-COMPLETENESS-FRONTIER.740, IAL2-FEATURE-COMPLETENESS-FRONTIER.741, IAL2-FEATURE-COMPLETENESS-FRONTIER.742, IAL2-FEATURE-COMPLETENESS-FRONTIER.743, IAL2-FEATURE-COMPLETENESS-FRONTIER.744, IAL2-FEATURE-COMPLETENESS-FRONTIER.745, IAL2-FEATURE-COMPLETENESS-FRONTIER.746, IAL2-FEATURE-COMPLETENESS-FRONTIER.747, IAL2-FEATURE-COMPLETENESS-FRONTIER.748, IAL2-FEATURE-COMPLETENESS-FRONTIER.749, IAL2-FEATURE-COMPLETENESS-FRONTIER.750, IAL2-FEATURE-COMPLETENESS-FRONTIER.751, IAL2-FEATURE-COMPLETENESS-FRONTIER.752, IAL2-FEATURE-COMPLETENESS-FRONTIER.753, IAL2-FEATURE-COMPLETENESS-FRONTIER.754, IAL2-FEATURE-COMPLETENESS-FRONTIER.755, IAL2-FEATURE-COMPLETENESS-FRONTIER.756, IAL2-FEATURE-COMPLETENESS-FRONTIER.757, IAL2-FEATURE-COMPLETENESS-FRONTIER.758, IAL2-FEATURE-COMPLETENESS-FRONTIER.759, IAL2-FEATURE-COMPLETENESS-FRONTIER.760, IAL2-FEATURE-COMPLETENESS-FRONTIER.761, IAL2-FEATURE-COMPLETENESS-FRONTIER.762, IAL2-FEATURE-COMPLETENESS-FRONTIER.763, IAL2-FEATURE-COMPLETENESS-FRONTIER.764, IAL2-FEATURE-COMPLETENESS-FRONTIER.765, IAL2-FEATURE-COMPLETENESS-FRONTIER.766, IAL2-FEATURE-COMPLETENESS-FRONTIER.767`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -5421,9 +5421,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.765: select AHB HBURST SEQ alias`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.766`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the matching AHB HBURST-aware byte-lane SEQ subordinate .ahb profile alias.`
   Acceptance: `Implement exactly the .765-selected alias. Add ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb mirroring the generic .ppif source; support-account it as intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq with coverage ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_pipeline_cli and source kind ial2_profile_alias; preserve generated ahb_lite_subordinate_byte_lane_hburst_seq.isf/.fsm artifacts, HDL module, bindings.bus.burst, transfer.seq_policy.mode hburst_in_word_progressive, and WRAP4/INCR4 metadata; remove endpoint profile-alias residue and .ahb alias exposure only from the alias report while preserving generic .ppif source-surface residue; add focused alias tests, support-accounting, language-surface/capability expectations, README, ROADMAP_V2, mdBook, behavior docs, Knowledge Map, task tree, Memory, and closeout validation. Do not add aggregate HBURST forwarding, aggregate propagation, BUSY-in-burst parking, halfword/word burst SEQ, wider or indefinite bursts, multi-word/register-bank progression, optional/property-gated AHB signals, legacy two-bit HRESP, broader AHB, direct backend, verification-output, backend-language variants, AXI/APB behavior, or VHDL behavior.`
+  Verification: `Shipped ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb, support-accounted as intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq with coverage ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_pipeline_cli and source kind ial2_profile_alias. The alias mirrors the generic .ppif source, preserves generated ahb_lite_subordinate_byte_lane_hburst_seq.isf/.fsm artifacts, HDL module, bindings.bus.burst, transfer.seq_policy.mode hburst_in_word_progressive, WRAP4/INCR4 metadata, and generic .ppif source-surface alias residue. Alias reports remove ahb_subordinate_profile_alias_deferred and no longer list .ahb alias exposure in ahb_burst_seq_support_deferred. Added focused t/1491 coverage, support/language-surface updates, behavior docs, mdBook, README, ROADMAP_V2, Knowledge Map, task tree, and Memory. Focused alias test passed; final closeout gates are recorded in the validation log.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.766: ship AHB HBURST SEQ alias`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.767`
+  Status: `active`
+  Goal: `Select aggregate AHB HBURST propagation readiness after the endpoint HBURST .ahb alias shipment.`
+  Acceptance: `Read the .766 alias behavior, .765 selector, .764 generic HBURST endpoint behavior, existing aggregate byte-lane and aggregate byte-lane SEQ .ppif/.ahb behavior, AhbInterconnect/AhbSubordinate/AhbRequester code owners, support accounting, language surface, focused tests, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. Select the next exact AHB owner before behavior changes, likely a no-behavior readiness audit for aggregate HBURST forwarding/propagation, or a narrower prerequisite if current probes show one. Record source/report/generated-artifact boundaries, validation gates, rollback, preservation matrix, and explicit non-goals. Do not change parser, generator, public sources, support-accounting, capability manifest, tests, generated artifacts, HDL/runtime behavior, direct backend, verification-output, backend-language variants, AXI/APB, broader AHB, or VHDL behavior in this selector leaf.`
 
 ## Current Frontier
 
@@ -5911,7 +5918,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | 480 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.763` | `done` | Selected direct implementation of `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif` as `.764`. |
 | 481 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.764` | `done` | Shipped the bounded endpoint-only AHB HBURST-aware byte-lane `SEQ` source contract. |
 | 482 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.765` | `done` | Selected the matching AHB HBURST-aware endpoint `.ahb` alias as `.766`. |
-| 483 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.766` | `active` | Implement the matching AHB HBURST-aware endpoint `.ahb` alias. |
+| 483 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.766` | `done` | Shipped the matching AHB HBURST-aware endpoint `.ahb` alias. |
+| 484 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.767` | `active` | Select aggregate AHB HBURST propagation readiness after the endpoint alias shipment. |
 
 ## Decisions
 
@@ -13649,6 +13657,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-30` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.763` | docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_CONTRACT_SELECTION.md; docs/knowledge/ial2-ahb-hburst-length-wrap-seq-contract-selection.md; docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_READINESS_AUDIT.md; docs/IAL2_AHB_BURST_SEQ_CONTRACT_SELECTION.md; docs/IAL2_AHB_BYTE_LANE_SEQ_BEHAVIOR.md; ppif/ahb_lite_subordinate_byte_lane_seq.ppif; ppif/ahb_requester.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/RegressionCorpus.pm; README; ROADMAP_V2; mdBook backlog/AHB; task tree; Memory; Knowledge Map; candidate fail-closed probes; docs/doctrine closeout gates | `passed`; selected `.764`, direct implementation of `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`. The selected source adds subordinate bus syntax `(burst HBURST width 3)` and `(seq-policy hburst-in-word-progressive)`, support-accounts as `intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq`, emits `ahb_lite_subordinate_byte_lane_hburst_seq.isf` and `.fsm`, and supports byte-only `WRAP4`/`INCR4` `SEQ` inside one 32-bit register word. `SINGLE` remains non-SEQ only; `INCR`, `WRAP8`, `INCR8`, `WRAP16`, `INCR16`, halfword/word burst `SEQ`, BUSY-in-burst, aggregate propagation, `.ahb` alias exposure, broader AHB, backend variants, AXI/APB, and VHDL remain deferred. Current-code probes confirm the exact candidate fails closed at subordinate `(burst ...)` parsing and the new policy name fails closed at the current `seq-policy` validator. |
 | `2026-06-30` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.764` | ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1490-ial2-ahb-subordinate-byte-lane-hburst-seq.t; t/1486-ial2-ahb-subordinate-byte-lane-seq.t; t/1487-ial2-ahb-subordinate-byte-lane-seq-profile-alias.t; t/1488-ial2-ahb-interconnect-byte-lane-seq.t; t/1489-ial2-ahb-interconnect-byte-lane-seq-profile-alias.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_BEHAVIOR.md; docs/knowledge/ial2-ahb-hburst-length-wrap-seq-behavior.md; docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_CONTRACT_SELECTION.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/14-feature-backlog.md; README; ROADMAP_V2; task tree; Memory; Knowledge Map; focused tests; docs/doctrine closeout gates | `passed with noted guard limitation`; shipped the bounded generic endpoint-only AHB HBURST-aware byte-lane `SEQ` subordinate source `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`. The source adds subordinate `(burst HBURST width 3)` and `(seq-policy hburst-in-word-progressive)`, support-accounts as `intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq`, lowers through generated `ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm`, and emits HDL module `ahb_lite_subordinate_byte_lane_hburst_seq`. Generated behavior supports byte-only `WRAP4`/`INCR4` `SEQ` inside one 32-bit register word, with `SINGLE` as independent `NONSEQ` only, stable `HBURST`/`HWRITE`/`HSIZE`, expected in-word byte progression, and fourth-beat history clearing. Standalone/mismatched `SEQ`, unsupported HBURST modes, halfword/word burst `SEQ`, invalid `INCR4` starts, unsupported sizes, unmapped/unaligned/crossing accesses, BUSY parking, and multi-word/register-bank progression fail closed or remain deferred. Existing word-only `.ppif/.ahb`, byte-lane `.ppif/.ahb`, byte-lane `SEQ` `.ppif/.ahb`, requester, aggregate `.ppif/.ahb`, support-accounting, capability manifest, generated artifacts, and HDL behavior remain preserved except for additive source/catalog/language-surface/docs entries and the broader `seq-policy` diagnostic wording. Syntax checks, focused t/1490, preservation t/1486/t/1487/t/1488/t/1489, t/297, Knowledge Map generation/check, mdBook build, docs path audit, diff check, and doctrine driver passed. The RAM-guarded t/248 run stopped at pre-existing host memory 99.6% against the 88% cutoff; the cutoff was not bypassed. `.765` is the next no-behavior AHB follow-on selector. |
 | `2026-06-30` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.765` | docs/IAL2_POST_AHB_HBURST_SEQ_PPIF_NEXT_SLICE_SELECTION.md; docs/knowledge/ial2-post-ahb-hburst-seq-ppif-next-slice-selection.md; docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_BEHAVIOR.md; docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_CONTRACT_SELECTION.md; docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_READINESS_AUDIT.md; ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1490-ial2-ahb-subordinate-byte-lane-hburst-seq.t; t/1487-ial2-ahb-subordinate-byte-lane-seq-profile-alias.t; README; ROADMAP_V2; mdBook backlog/AHB; task tree; Memory; Knowledge Map; generic support/report probes; reserved `.ahb` label and temporary CLI alias probes; docs/doctrine closeout gates | `passed`; selected `.766`, direct implementation of `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb`, the matching AHB HBURST-aware byte-lane `SEQ` subordinate `.ahb` profile alias. Current probes confirmed the generic source support-accounts as `intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq` with source kind `ppif`, coverage `ial2_ppif_ahb_lite_subordinate_byte_lane_hburst_seq_pipeline_cli`, generated `ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm`, `bindings.bus.burst`, `transfer.seq_policy.mode = hburst_in_word_progressive`, and intentional generic `.ahb alias exposure` residue. Reserved `.ahb` label and temporary CLI alias probes lower the same source with endpoint profile-alias residue removed and without `.ahb alias exposure` in the alias report's remaining `ahb_burst_seq_support_deferred` detail. `.766` is scoped to the alias fixture, support identity `intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, coverage `ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_pipeline_cli`, source kind `ial2_profile_alias`, support/language-surface/docs/test updates, and preservation of generic `.ppif` behavior. Aggregate HBURST propagation, BUSY-in-burst parking, halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank progression, optional signals, broader AHB, direct backend, verification-output, backend-language variants, AXI/APB, and VHDL remain deferred. |
+| `2026-06-30` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.766` | ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb; ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; t/1491-ial2-ahb-subordinate-byte-lane-hburst-seq-profile-alias.t; t/1490-ial2-ahb-subordinate-byte-lane-hburst-seq.t; t/1487-ial2-ahb-subordinate-byte-lane-seq-profile-alias.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_PROFILE_ALIAS_BEHAVIOR.md; docs/knowledge/ial2-ahb-hburst-length-wrap-seq-profile-alias-behavior.md; docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/14-feature-backlog.md; README; ROADMAP_V2; task tree; Memory; Knowledge Map; focused tests; docs/doctrine closeout gates | `passed`; shipped the matching bounded public AHB HBURST-aware byte-lane `SEQ` subordinate `.ahb` profile alias `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb`. The alias mirrors the generic `.ppif` source, preserves generated `ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm`, preserves `bindings.bus.burst`, `transfer.seq_policy.mode = hburst_in_word_progressive`, supported `WRAP4`/`INCR4` metadata, byte-lane policy, and HDL module `ahb_lite_subordinate_byte_lane_hburst_seq`, support-accounts as `intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, and uses source kind `ial2_profile_alias`. Alias reports remove `ahb_subordinate_profile_alias_deferred` and no longer list `.ahb alias exposure` in the remaining `ahb_burst_seq_support_deferred` detail while the generic `.ppif` report keeps source-surface alias residue. Existing word-only `.ppif/.ahb`, byte-lane `.ppif/.ahb`, byte-lane `SEQ` `.ppif/.ahb`, requester, aggregate `.ppif/.ahb`, support accounting, capability manifest, generated artifacts, and HDL behavior remain preserved except for additive alias/catalog/language-surface/docs entries and selected alias-only residue cleanup. Aggregate HBURST propagation, BUSY-in-burst parking, halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank progression, optional signals, broader AHB, direct backend, verification-output, backend-language variants, AXI/APB, and VHDL remain deferred. `.767` is the next no-behavior AHB follow-on selector. |
 
 ### IAL2-FEATURE-COMPLETENESS-FRONTIER.765 — Select AHB HBURST SEQ Alias Follow-On
 
@@ -13719,7 +13728,7 @@ Verification:
 
 ### IAL2-FEATURE-COMPLETENESS-FRONTIER.766 — Implement AHB HBURST SEQ Alias
 
-Status: active.
+Status: done.
 
 Owner: IAL2 / SV-backed feature completeness.
 
@@ -13759,6 +13768,68 @@ Acceptance:
   legacy two-bit subordinate `HRESP`, broader AHB, direct backend,
   verification-output, backend-language variants, AXI/APB, and VHDL remain
   deferred.
+
+Result:
+- Shipped `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb`, the matching
+  bounded public AHB HBURST-aware byte-lane `SEQ` subordinate `.ahb` profile
+  alias.
+- Added support identity
+  `intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, coverage key
+  `ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_pipeline_cli`,
+  source kind `ial2_profile_alias`, focused `t/1491` coverage, language
+  surface updates, behavior docs, mdBook, README, ROADMAP_V2, Knowledge Map,
+  task tree, and Memory sync.
+- Preserved generated `ahb_lite_subordinate_byte_lane_hburst_seq.isf` /
+  `.fsm`, HDL module `ahb_lite_subordinate_byte_lane_hburst_seq`,
+  `bindings.bus.burst`, `transfer.seq_policy.mode =
+  hburst_in_word_progressive`, byte-only `WRAP4`/`INCR4` metadata, generic
+  `.ppif` source-surface alias residue, and existing AHB endpoint/aggregate
+  surfaces.
+
+Verification:
+- Focused alias test `t/1491` passed and covered adapter parsing, malformed
+  alias diagnostics, strict check JSON, semantic JSON, schedule JSON,
+  `--outdir` review artifacts, alias-only residue cleanup, generic `.ppif`
+  residue preservation, and adjacent AHB preservation checks.
+- Final syntax, focused/preservation, support-accounting, capability, mdBook,
+  Knowledge Map, docs path, diff hygiene, and doctrine gates are recorded in
+  the validation log.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.767 — Select Aggregate AHB HBURST Propagation Readiness
+
+Status: active.
+
+Owner: IAL2 / SV-backed feature completeness.
+
+Intent: select the next task-tree-owned AHB follow-on after the endpoint
+HBURST-aware `.ppif` source and matching `.ahb` alias are shipped, with
+aggregate HBURST forwarding/propagation readiness as the default candidate
+unless current-state probes expose a narrower prerequisite.
+
+Scope:
+- Read `.766`, `.765`, `.764`, aggregate byte-lane and aggregate byte-lane
+  `SEQ` `.ppif/.ahb` behavior, AHB interconnect/subordinate/requester code
+  owners, support accounting, language surface, focused tests, README,
+  ROADMAP_V2, mdBook, task tree, Memory, Knowledge Map, and relevant
+  decisions.
+- Probe whether current aggregate byte-lane `SEQ` interconnect sources still
+  omit subordinate-local HBURST forwarding and whether temporary aggregate
+  HBURST candidates fail closed or lower far enough to select a direct
+  implementation owner.
+- Select the exact next owner, likely a no-behavior readiness audit for
+  bounded aggregate HBURST propagation, before any behavior change.
+
+Acceptance:
+- No parser, generator, public source, support-accounting, capability-manifest,
+  test, generated-artifact, HDL/runtime, direct-backend, verification-output,
+  backend-language variant, AXI/APB, broader AHB, or VHDL behavior change.
+- Record selected source/report/generated-artifact boundaries, validation
+  gates, rollback, preservation matrix, and explicit deferrals.
+- Keep BUSY-in-burst parking, halfword/word burst `SEQ`, wider or indefinite
+  bursts, multi-word/register-bank progression, optional/property-gated
+  signals, broader AHB, direct backend, verification-output,
+  backend-language variants, AXI/APB, and VHDL deferred unless a later owner
+  selects them.
 
 ## Commit Log
 
@@ -14489,8 +14560,26 @@ Acceptance:
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.763` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.763: select AHB HBURST SEQ contract` | Selected `.764`, direct implementation of `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`, without behavior changes. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.764` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.764: ship AHB HBURST SEQ subordinate` | Shipped `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`, support-accounted it as `intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq`, synced docs/mdBook/Knowledge Map, and selected `.765`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.765` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.765: select AHB HBURST SEQ alias` | Selected `.766`, direct implementation of `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb`, without behavior changes. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.766` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.766: ship AHB HBURST SEQ alias` | Shipped `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb`, support-accounted it as `intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, synced docs/mdBook/Knowledge Map, and selected `.767`. |
 
 ## Changelog
+
+- `2026-06-30`: Completed `.766`, shipping the matching bounded public AHB
+  HBURST-aware byte-lane `SEQ` subordinate `.ahb` profile alias
+  `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb`. The alias mirrors the
+  generic `.ppif`, support-accounts as
+  `intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, uses coverage
+  `ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_pipeline_cli`,
+  reports source kind `ial2_profile_alias`, preserves generated
+  `ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm`, preserves
+  `bindings.bus.burst` and
+  `transfer.seq_policy.mode = hburst_in_word_progressive`, removes endpoint
+  profile-alias residue plus `.ahb alias exposure` only from the alias report,
+  and keeps generic `.ppif` source-surface alias residue. Aggregate HBURST
+  propagation, BUSY-in-burst, halfword/word burst `SEQ`, wider or indefinite
+  bursts, multi-word/register-bank, optional signals, broader AHB, backend
+  variants, AXI/APB, and VHDL remain deferred. `.767` is the next
+  no-behavior AHB follow-on selector.
 
 - `2026-06-30`: Completed `.765`, selecting `.766`, direct implementation
   of the matching bounded public AHB HBURST-aware byte-lane `SEQ` subordinate

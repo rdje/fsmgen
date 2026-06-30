@@ -22,9 +22,12 @@ coverage: ial2_ppif_ahb_lite_subordinate_byte_lane_hburst_seq_pipeline_cli
 module_name: ahb_lite_subordinate_byte_lane_hburst_seq
 ```
 
-The source is generic `.ppif` only in this slice. Existing word-only,
-byte-lane, byte-lane in-word `SEQ`, `.ahb` alias, requester, and aggregate AHB
-sources remain unchanged.
+The source shipped as generic `.ppif` only in `.764`. The matching `.ahb`
+profile alias is tracked separately in
+`docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_PROFILE_ALIAS_BEHAVIOR.md`.
+Existing word-only, byte-lane, byte-lane in-word `SEQ`, `.ahb` alias,
+requester, and aggregate AHB sources remain unchanged by the generic `.ppif`
+slice.
 
 ## Public Source Contract
 
@@ -138,10 +141,11 @@ The selected two-cycle ERROR response is used for:
 - any multi-word/register-bank progression.
 
 BUSY-in-burst parking, halfword/word burst `SEQ`, indefinite `INCR`, wider
-fixed bursts, aggregate propagation, matching `.ahb` alias exposure, full
-manager behavior, direct backend behavior, verification-output generation,
-backend-language variants, AXI, APB, broader AHB behavior, and VHDL remain
-deferred.
+fixed bursts, aggregate propagation, full manager behavior, direct backend
+behavior, verification-output generation, backend-language variants, AXI, APB,
+broader AHB behavior, and VHDL remain deferred. The matching endpoint `.ahb`
+alias exposure is shipped by
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.766`.
 
 For this HBURST-aware source only,
 `ahb_subordinate_optional_signal_residue` no longer lists `HBURST` as

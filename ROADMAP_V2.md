@@ -6543,6 +6543,21 @@ exposure only from the alias report, and keeps aggregate HBURST propagation,
 BUSY-in-burst, halfword/word burst `SEQ`, wider or indefinite bursts,
 multi-word/register-bank progression, optional signals, broader AHB, backend
 variants, AXI/APB, and VHDL deferred.
+`.766` now ships `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb`, the
+matching public AHB HBURST-aware byte-lane `SEQ` subordinate `.ahb` profile
+alias. The alias mirrors the generic `.ppif`, support-accounts as
+`intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, reports source
+kind `ial2_profile_alias`, preserves generated
+`ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm`, preserves
+`bindings.bus.burst` and
+`transfer.seq_policy.mode = hburst_in_word_progressive`, and removes endpoint
+profile-alias residue plus `.ahb alias exposure` only from the alias report.
+The generic `.ppif` report keeps source-surface alias residue. Aggregate
+HBURST propagation, BUSY-in-burst, halfword/word burst `SEQ`, wider or
+indefinite bursts, multi-word/register-bank progression, optional signals,
+broader AHB, backend variants, AXI/APB, and VHDL remain deferred. `.767` is
+the next no-behavior AHB follow-on selector for aggregate HBURST propagation
+readiness.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
