@@ -1141,6 +1141,19 @@ include `bindings.bus.burst` and
 BUSY parking, aggregate propagation, matching `.ahb` alias exposure, broader
 backend/protocol behavior, and VHDL.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.765` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.766`, direct implementation of the
+matching public
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb` profile alias. The
+selected alias keeps the same generated review artifacts and HBURST/SEQ report
+metadata, support-accounts as
+`intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, uses source kind
+`ial2_profile_alias`, and removes `.ahb alias exposure` only from the alias
+report. The alias is not shipped until `.766`; aggregate HBURST propagation,
+BUSY parking, halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank progression, optional signals, broader AHB, backend
+variants, AXI/APB, and VHDL remain deferred.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:

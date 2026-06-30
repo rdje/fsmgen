@@ -10262,6 +10262,23 @@ burst `SEQ`, BUSY-in-burst, aggregate propagation, matching `.ahb` aliases,
 broader AHB, direct backend, verification-output, backend-language variants,
 AXI/APB, and VHDL remain deferred.
 
+Post AHB HBURST `SEQ` `.ppif` selector:
+[IAL2_POST_AHB_HBURST_SEQ_PPIF_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_HBURST_SEQ_PPIF_NEXT_SLICE_SELECTION.md)
+selects `.766`, direct implementation of the matching public
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb` profile alias. The alias
+will mirror the generic `.ppif` source, support-account as
+`intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, use coverage
+`ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_pipeline_cli`, report
+source kind `ial2_profile_alias`, preserve generated
+`ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm`, preserve
+`bindings.bus.burst` and
+`transfer.seq_policy.mode = hburst_in_word_progressive`, and remove `.ahb`
+alias exposure only from the alias report. The alias is not shipped until
+`.766`; aggregate HBURST propagation, BUSY-in-burst, halfword/word burst
+`SEQ`, wider or indefinite bursts, multi-word/register-bank, optional signals,
+broader AHB, direct backend, verification-output, backend-language variants,
+AXI/APB, and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

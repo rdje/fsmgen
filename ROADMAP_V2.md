@@ -6530,6 +6530,19 @@ independent `NONSEQ` only and wider/indefinite bursts, halfword/word burst
 AHB, backend variants, AXI/APB, and VHDL remain deferred. `.765` is the next
 no-behavior AHB follow-on selector for the matching HBURST-aware endpoint
 `.ahb` alias decision.
+`.765` now selects `.766`, direct implementation of the matching public
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb` profile alias. The
+selected alias support-accounts as
+`intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`, uses coverage
+`ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_pipeline_cli`,
+reports source kind `ial2_profile_alias`, preserves generated
+`ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm`, preserves
+`bindings.bus.burst` and
+`transfer.seq_policy.mode = hburst_in_word_progressive`, removes alias
+exposure only from the alias report, and keeps aggregate HBURST propagation,
+BUSY-in-burst, halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank progression, optional signals, broader AHB, backend
+variants, AXI/APB, and VHDL deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
