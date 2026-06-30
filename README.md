@@ -5323,6 +5323,17 @@ implementation is deferred until source syntax, report semantics,
 prior-transfer history, address/control progression, bounded byte-lane or
 register-bank scope, unsupported-shape fail-closed behavior, residue movement,
 tests, docs, and rollback are selected.
+`.751` selects `.752`, direct implementation of the new generic `.ppif`
+byte-lane subordinate `SEQ` source
+`ppif/ahb_lite_subordinate_byte_lane_seq.ppif`. The selected source adds
+`(seq-policy in-word-progressive)` and support identity
+`intent.ppif_ahb_lite_subordinate_byte_lane_seq`. Existing word-only,
+byte-lane, `.ahb` alias, requester, and aggregate behavior stay unchanged.
+The first bounded `SEQ` policy supports only byte/halfword in-word
+continuation with prior successful active-transfer history, expected address
+progression, and stable `HWRITE`/`HSIZE`; HBURST length/wrap, BUSY-in-burst,
+multi-word/register-bank, alias, aggregate, optional-signal, broader AHB,
+AXI/APB, and VHDL behavior remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8019,6 +8030,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_AGGREGATE_ALIAS_NESTED_PROFILE_RESIDUE_BEHAVIOR.md` — documents the `.748` shipped report-only cleanup for aggregate `.ahb` alias nested endpoint profile-residue and the preserved generic `.ppif` source-surface residue.
 - `docs/IAL2_POST_AHB_AGGREGATE_ALIAS_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION.md` — records the `.749` no-behavior selector after aggregate alias residue cleanup and selects `.750`, bounded AHB burst `SEQ` readiness audit.
 - `docs/IAL2_AHB_BURST_SEQ_READINESS_AUDIT.md` — records the `.750` no-behavior readiness audit for bounded AHB burst `SEQ` and selects `.751`, public contract selection for subordinate-side `SEQ` support.
+- `docs/IAL2_AHB_BURST_SEQ_CONTRACT_SELECTION.md` — records the `.751` no-behavior public contract selection for a new generic byte-lane in-word `SEQ` subordinate source and selects `.752` implementation.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

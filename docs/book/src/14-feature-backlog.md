@@ -10096,6 +10096,17 @@ implementation is deferred until source syntax, report semantics,
 prior-transfer history, address/control progression, bounded byte-lane or
 register-bank scope, unsupported-shape fail-closed behavior, residue movement,
 tests, docs, and rollback are selected.
+`.751` selects `.752`, direct implementation of the new generic `.ppif`
+byte-lane subordinate `SEQ` source
+`ppif/ahb_lite_subordinate_byte_lane_seq.ppif`. The selected source adds
+`(seq-policy in-word-progressive)` and support identity
+`intent.ppif_ahb_lite_subordinate_byte_lane_seq`. Existing word-only,
+byte-lane, `.ahb` alias, requester, and aggregate behavior stay unchanged.
+The first bounded `SEQ` policy supports only byte/halfword in-word
+continuation with prior successful active-transfer history, expected address
+progression, and stable `HWRITE`/`HSIZE`; HBURST length/wrap, BUSY-in-burst,
+multi-word/register-bank, alias, aggregate, optional-signal, broader AHB,
+AXI/APB, and VHDL behavior remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
