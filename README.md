@@ -5351,17 +5351,22 @@ parking, multi-word/register-bank progression, `.ahb` alias exposure,
 aggregate propagation, optional/property-gated AHB signals, broader AHB,
 direct backend, verification-output, backend-language variants, AXI/APB, and
 VHDL remain deferred.
-`.753` now selects `.754`, direct implementation of the matching bounded
-public AHB byte-lane in-word `SEQ` subordinate `.ahb` profile alias at
-`ppif/ahb_lite_subordinate_byte_lane_seq.ahb`. Current probes show a temporary
-`.ahb` copy already lowers through the selected `transfer.seq_policy`, but no
-tracked alias fixture/support-accounting entry exists yet and the alias report
-still needs to stop listing `.ahb alias exposure` as deferred. `.754` is
-therefore scoped to source/support-accounting/language-surface/tests/docs plus
-alias-only residue cleanup; aggregate `SEQ` propagation, HBURST length/wrap,
-BUSY-in-burst parking, multi-word/register-bank progression, optional signals,
-broader AHB, direct backend, verification-output, backend-language variants,
-AXI/APB, and VHDL remain deferred.
+`.753` selected `.754`, direct implementation of the matching bounded public
+AHB byte-lane in-word `SEQ` subordinate `.ahb` profile alias at
+`ppif/ahb_lite_subordinate_byte_lane_seq.ahb`.
+`.754` now ships that alias. It mirrors the shipped generic `.ppif` source,
+support-accounts as `intent.ahb_profile_alias_subordinate_byte_lane_seq`, uses
+coverage `ial2_ahb_profile_alias_subordinate_byte_lane_seq_pipeline_cli`,
+preserves generated `ahb_lite_subordinate_byte_lane_seq.isf` /
+`ahb_lite_subordinate_byte_lane_seq.fsm`, preserves `narrow_transfer_policy`
+and `transfer.seq_policy`, removes endpoint profile-alias residue, and no
+longer lists `.ahb alias exposure` in the alias report's remaining
+`ahb_burst_seq_support_deferred` detail. The generic `.ppif` report still
+keeps source-surface alias residue. Aggregate `SEQ` propagation, HBURST
+length/wrap, BUSY-in-burst parking, multi-word/register-bank progression,
+optional signals, broader AHB, direct backend, verification-output,
+backend-language variants, AXI/APB, and VHDL remain deferred. `.755` is the
+next no-behavior AHB follow-on selector.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8061,10 +8066,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_BURST_SEQ_CONTRACT_SELECTION.md` — records the `.751` no-behavior public contract selection for a new generic byte-lane in-word `SEQ` subordinate source and selects `.752` implementation.
 - `docs/IAL2_AHB_BYTE_LANE_SEQ_BEHAVIOR.md` — documents the `.752` shipped generic `ppif/ahb_lite_subordinate_byte_lane_seq.ppif` behavior, generated review artifacts, support accounting, `transfer.seq_policy` report block, byte/halfword in-word `SEQ` progression, preservation checks, validation, and remaining AHB residue.
 - `docs/IAL2_POST_AHB_BYTE_LANE_SEQ_NEXT_SLICE_SELECTION.md` — records the `.753` no-behavior selector after the generic byte-lane in-word `SEQ` `.ppif` shipment and selects `.754`, matching `.ahb` profile-alias implementation.
+- `docs/IAL2_AHB_BYTE_LANE_SEQ_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.754` shipped public `ppif/ahb_lite_subordinate_byte_lane_seq.ahb` profile alias, support accounting, generated review artifacts, `narrow_transfer_policy` and `transfer.seq_policy` preservation, alias-only residue cleanup, validation, and preserved generic `.ppif` source-surface residue.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
-- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester, subordinate, interconnect, and aggregate byte-lane `.ppif` support, shipped requester, subordinate, aggregate interconnect, and aggregate byte-lane `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
+- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester, subordinate, byte-lane `SEQ`, interconnect, and aggregate byte-lane `.ppif` support, shipped requester, subordinate, byte-lane `SEQ`, aggregate interconnect, and aggregate byte-lane `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

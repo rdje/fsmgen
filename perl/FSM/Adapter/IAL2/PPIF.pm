@@ -87,8 +87,10 @@ sub parse_source($self, @args) {
     }
     if (_is_ahb_subordinate_contract($contract)) {
         my $result = FSM::IAL2::ProtocolIntent::AhbSubordinate->new(debug => $self->{debug})->generate($contract);
-        _remove_unsupported_residue_id($result, 'ahb_subordinate_profile_alias_deferred')
-            if _is_ahb_profile_alias_source($source_label);
+        if (_is_ahb_profile_alias_source($source_label)) {
+            _remove_unsupported_residue_id($result, 'ahb_subordinate_profile_alias_deferred');
+            _remove_ahb_seq_alias_exposure_from_residue($result);
+        }
         return $result;
     }
     return FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new(debug => $self->{debug})->generate($contract)
@@ -159,6 +161,42 @@ sub _is_axi_family_profile($profile) {
 sub _remove_unsupported_residue_id($result, $residue_id) {
     return unless ref($result) eq 'HASH' && ref($result->{report}) eq 'HASH';
     _remove_unsupported_residue_id_from_node($result->{report}, $residue_id);
+}
+
+sub _remove_ahb_seq_alias_exposure_from_residue($result) {
+    return unless ref($result) eq 'HASH' && ref($result->{report}) eq 'HASH';
+    _rewrite_unsupported_residue_detail(
+        $result->{report},
+        'ahb_burst_seq_support_deferred',
+        sub {
+            my ($detail) = @_;
+            $detail =~ s/, \.ahb alias exposure//;
+            return $detail;
+        },
+    );
+}
+
+sub _rewrite_unsupported_residue_detail($node, $residue_id, $rewrite) {
+    return unless ref($node);
+
+    if (ref($node) eq 'HASH') {
+        if (ref($node->{unsupported_residue}) eq 'ARRAY') {
+            for my $entry (@{$node->{unsupported_residue}}) {
+                next unless ref($entry) eq 'HASH';
+                next unless defined($entry->{id}) && $entry->{id} eq $residue_id;
+                next unless defined($entry->{detail}) && !ref($entry->{detail});
+                $entry->{detail} = $rewrite->($entry->{detail});
+            }
+        }
+        _rewrite_unsupported_residue_detail($_, $residue_id, $rewrite)
+            for values %$node;
+        return;
+    }
+
+    if (ref($node) eq 'ARRAY') {
+        _rewrite_unsupported_residue_detail($_, $residue_id, $rewrite)
+            for @$node;
+    }
 }
 
 sub _remove_unsupported_residue_id_from_node($node, $residue_id) {

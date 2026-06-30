@@ -32,4 +32,6 @@ prior OKAY `NONSEQ` or valid `SEQ`, expected next address, and stable
 Standalone `SEQ`, `SEQ` after reset/IDLE/BUSY/ERROR, word `SEQ`, crossing,
 unexpected address, changed control, unsupported size, unmapped, unaligned,
 and crossing accesses fail closed with the selected two-cycle ERROR response.
-No matching `.ahb` alias or aggregate propagation is shipped yet.
+The matching `.ahb` alias now ships as
+`ppif/ahb_lite_subordinate_byte_lane_seq.ahb`; aggregate propagation is still
+deferred.

@@ -22,8 +22,13 @@ coverage: ial2_ppif_ahb_lite_subordinate_byte_lane_seq_pipeline_cli
 module_name: ahb_lite_subordinate_byte_lane_seq
 ```
 
-The existing word-only, byte-lane, `.ahb` alias, requester, and aggregate AHB
-sources remain unchanged.
+The existing word-only, byte-lane, requester, and aggregate AHB sources remain
+unchanged. `IAL2-FEATURE-COMPLETENESS-FRONTIER.754` later adds the matching
+`.ahb` profile alias for this selected `SEQ` source:
+
+```text
+ppif/ahb_lite_subordinate_byte_lane_seq.ahb
+```
 
 ## Public Source Contract
 
@@ -132,10 +137,11 @@ The selected two-cycle ERROR response is used for:
 - unsupported size, unmapped address, unaligned access, or crossing access.
 
 `HBURST`-driven length/wrap semantics, BUSY-as-burst-parking continuation,
-multi-word/register-bank progression, `.ahb` alias exposure, aggregate
-propagation, full-manager behavior, direct backend behavior,
-verification-output generation, backend-language variants, AXI, APB, broader
-AHB behavior, and VHDL remain deferred.
+multi-word/register-bank progression, aggregate propagation, full-manager
+behavior, direct backend behavior, verification-output generation,
+backend-language variants, AXI, APB, broader AHB behavior, and VHDL remain
+deferred. The matching `.ahb` alias exposure is now tracked separately in
+`docs/IAL2_AHB_BYTE_LANE_SEQ_PROFILE_ALIAS_BEHAVIOR.md`.
 
 ## Validation
 
