@@ -5312,6 +5312,17 @@ owner and substrate needs. Optional/property-gated signals, broader
 interconnect/decode, legacy two-bit subordinate `HRESP`, scoreboards,
 full-manager behavior, direct backend, verification-output, backend-language
 variants, AXI/APB behavior, broader AHB behavior, and VHDL remain deferred.
+`.750` selects `.751`, a no-behavior public contract selection for first
+bounded subordinate-side AHB burst `SEQ` support. Current requester behavior
+already emits first-beat `NONSEQ`, later-beat `SEQ`, address progression/wrap
+state, and response handling. Current subordinate sources still report
+`supported-transfer nonseq`, route `SEQ` to the selected two-cycle ERROR path,
+and carry `ahb_burst_seq_support_deferred`; aggregate reports keep
+corresponding top-level/interconnect/subordinate burst residue. Direct
+implementation is deferred until source syntax, report semantics,
+prior-transfer history, address/control progression, bounded byte-lane or
+register-bank scope, unsupported-shape fail-closed behavior, residue movement,
+tests, docs, and rollback are selected.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8007,6 +8018,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_AGGREGATE_ALIAS_NESTED_PROFILE_RESIDUE_CONTRACT_SELECTION.md` — records the `.747` no-behavior contract selection for aggregate `.ahb` alias nested endpoint profile-residue cleanup and selects `.748`, direct report cleanup.
 - `docs/IAL2_AHB_AGGREGATE_ALIAS_NESTED_PROFILE_RESIDUE_BEHAVIOR.md` — documents the `.748` shipped report-only cleanup for aggregate `.ahb` alias nested endpoint profile-residue and the preserved generic `.ppif` source-surface residue.
 - `docs/IAL2_POST_AHB_AGGREGATE_ALIAS_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION.md` — records the `.749` no-behavior selector after aggregate alias residue cleanup and selects `.750`, bounded AHB burst `SEQ` readiness audit.
+- `docs/IAL2_AHB_BURST_SEQ_READINESS_AUDIT.md` — records the `.750` no-behavior readiness audit for bounded AHB burst `SEQ` and selects `.751`, public contract selection for subordinate-side `SEQ` support.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

@@ -10085,6 +10085,17 @@ owner and substrate needs. Optional/property-gated signals, broader
 interconnect/decode, legacy two-bit subordinate `HRESP`, scoreboards,
 full-manager behavior, direct backend, verification-output, backend-language
 variants, AXI/APB behavior, broader AHB behavior, and VHDL remain deferred.
+`.750` selects `.751`, a no-behavior public contract selection for first
+bounded subordinate-side AHB burst `SEQ` support. Current requester behavior
+already emits first-beat `NONSEQ`, later-beat `SEQ`, address progression/wrap
+state, and response handling. Current subordinate sources still report
+`supported-transfer nonseq`, route `SEQ` to the selected two-cycle ERROR path,
+and carry `ahb_burst_seq_support_deferred`; aggregate reports keep
+corresponding top-level/interconnect/subordinate burst residue. Direct
+implementation is deferred until source syntax, report semantics,
+prior-transfer history, address/control progression, bounded byte-lane or
+register-bank scope, unsupported-shape fail-closed behavior, residue movement,
+tests, docs, and rollback are selected.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
