@@ -5286,6 +5286,15 @@ residue. `.747` must decide the exact cleanup/preservation boundary before any
 report implementation change. Optional signals, burst `SEQ`, broader AHB
 behavior, direct backend, verification-output, backend-language variants, and
 VHDL remain deferred.
+`.747` selects `.748`, direct report cleanup for aggregate `.ahb` alias
+nested endpoint profile-alias residue. The selected contract covers shipped
+word-only and byte-lane aggregate `.ahb` aliases, removes
+`ahb_aggregate_profile_alias_deferred`, `ahb_profile_alias_deferred`, and
+`ahb_subordinate_profile_alias_deferred` recursively from aggregate `.ahb`
+report trees only, keeps generic aggregate `.ppif` source-surface residue,
+and adds no new nested child provenance fields. Optional signals, burst `SEQ`,
+broader AHB behavior, direct backend, verification-output, backend-language
+variants, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7978,6 +7987,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_AGGREGATE_BYTE_LANE_PPIF_NEXT_SLICE_SELECTION.md` — records the `.744` no-behavior selector for the matching aggregate byte-lane `.ahb` profile aliases, selected support identities, validation strategy, rollback, and `.745` implementation owner.
 - `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.745` shipped public `ppif/ahb_interconnect_byte_lane.ahb` and `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb` aliases, support accounting, generated review artifacts, `composition.byte_lane_propagation` preservation, alias-residue movement, validation, and remaining AHB residue.
 - `docs/IAL2_POST_AHB_AGGREGATE_BYTE_LANE_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.746` no-behavior selector for aggregate `.ahb` alias nested profile-alias residue cleanup and selects `.747`, public report-contract selection.
+- `docs/IAL2_AHB_AGGREGATE_ALIAS_NESTED_PROFILE_RESIDUE_CONTRACT_SELECTION.md` — records the `.747` no-behavior contract selection for aggregate `.ahb` alias nested endpoint profile-residue cleanup and selects `.748`, direct report cleanup.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

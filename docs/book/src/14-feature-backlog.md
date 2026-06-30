@@ -10059,6 +10059,15 @@ residue. `.747` must decide the exact cleanup/preservation boundary before any
 report implementation change. Optional signals, burst `SEQ`, broader AHB
 behavior, direct backend, verification-output, backend-language variants, and
 VHDL remain deferred.
+`.747` selects `.748`, direct report cleanup for aggregate `.ahb` alias
+nested endpoint profile-alias residue. The selected contract covers shipped
+word-only and byte-lane aggregate `.ahb` aliases, removes
+`ahb_aggregate_profile_alias_deferred`, `ahb_profile_alias_deferred`, and
+`ahb_subordinate_profile_alias_deferred` recursively from aggregate `.ahb`
+report trees only, keeps generic aggregate `.ppif` source-surface residue,
+and adds no new nested child provenance fields. Optional signals, burst `SEQ`,
+broader AHB behavior, direct backend, verification-output, backend-language
+variants, and VHDL remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
