@@ -6444,6 +6444,16 @@ before contract selection. Likely future source names are
 `ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif`; exact support
 identities, report shape, residue movement, validation, and later aggregate
 `.ahb` alias sequencing remain for `.757`.
+`.757` now selects `.758`, direct implementation of those two generic `.ppif`
+aggregate `SEQ` sources. The selected support identities are
+`intent.ppif_ahb_interconnect_byte_lane_seq` and
+`intent.ppif_ahb_interconnect_two_subordinate_byte_lane_seq`; reports must
+preserve `composition.byte_lane_propagation` and add
+`composition.seq_policy_propagation`, with generated child reports carrying
+both `narrow_transfer_policy` and `transfer.seq_policy`. Matching aggregate
+`.ahb` aliases, HBURST length/wrap, BUSY-in-burst, multi-word/register-bank,
+optional signals, broader AHB, direct backend, verification-output,
+backend-language variants, AXI/APB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
