@@ -1053,6 +1053,7 @@ sub _parse_ahb_subordinate_bus_block($items, $source_label, $name) {
             'ready-in'   => 'scalar',
             address      => 'width',
             transfer     => 'width',
+            burst        => 'width',
             write        => 'scalar',
             size         => 'width',
             'write-data' => 'width',

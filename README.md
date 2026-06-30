@@ -5444,7 +5444,7 @@ rollback, and explicit deferrals before behavior changes.
 endpoint-only HBURST-aware byte-lane `SEQ` source family. The audit found
 requester HBURST/wrap generation is already present, but the selected
 byte-lane `SEQ` subordinate bus has no HBURST binding and a candidate
-`(burst HBURST width 3)` subordinate bus clause fails closed today. Aggregate
+`(burst HBURST width 3)` subordinate bus clause failed before `.764`. Aggregate
 byte-lane `SEQ` interconnects see global `HBURST` but do not forward
 subordinate-local HBURST (`subordinate_hburst_refs=0`), so aggregate
 propagation remains a later owner. `.763` must settle source path, bus/policy
@@ -5463,6 +5463,18 @@ inside one 32-bit register word; `SINGLE` remains non-SEQ only, and `INCR`,
 `WRAP8`, `INCR8`, `WRAP16`, `INCR16`, halfword/word burst `SEQ`,
 BUSY-in-burst, aggregate propagation, `.ahb` alias exposure, broader AHB,
 backend variants, AXI/APB, and VHDL remain deferred.
+`.764` now ships `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`, the
+first generic endpoint-only AHB HBURST-aware byte-lane `SEQ` source. The
+parser accepts subordinate `(burst HBURST width 3)`, the generator emits
+`HBURST` input sampling plus `seq_hburst_q` and `seq_beats_remaining_q`
+continuation state, and reports expose `bindings.bus.burst` plus
+`transfer.seq_policy.mode = hburst_in_word_progressive`. Runtime support is
+byte-only `WRAP4`/`INCR4` inside one 32-bit register word; `SINGLE` remains
+independent `NONSEQ` only and wider/indefinite bursts, halfword/word burst
+`SEQ`, BUSY-in-burst, aggregate propagation, matching `.ahb` aliases, broader
+AHB, backend variants, AXI/APB, and VHDL remain deferred. `.765` is the next
+no-behavior AHB follow-on selector for the matching HBURST-aware endpoint
+`.ahb` alias decision.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8172,6 +8184,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_AGGREGATE_BYTE_LANE_SEQ_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.761` no-behavior selector after aggregate byte-lane `SEQ` `.ahb` alias shipment and selects `.762`, HBURST-driven length/wrap readiness audit.
 - `docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_READINESS_AUDIT.md` — records the `.762` no-behavior readiness audit for bounded AHB HBURST-driven length/wrap `SEQ` semantics and selects `.763`, public contract selection for a new endpoint-only HBURST-aware byte-lane `SEQ` source family.
 - `docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_CONTRACT_SELECTION.md` — records the `.763` no-behavior public contract selection for `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`, `(burst HBURST width 3)`, `(seq-policy hburst-in-word-progressive)`, selected byte-only `WRAP4`/`INCR4` semantics, report/residue movement, validation, rollback, and `.764` implementation owner.
+- `docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_BEHAVIOR.md` — documents the `.764` shipped generic `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif` behavior, generated review artifacts, support accounting, `bindings.bus.burst`, `transfer.seq_policy.mode = hburst_in_word_progressive`, byte-only `WRAP4`/`INCR4` semantics, preservation checks, validation, and remaining alias/aggregate/burst/backend/protocol residue.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

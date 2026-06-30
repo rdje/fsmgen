@@ -6500,7 +6500,7 @@ rollback, and explicit deferrals before behavior changes.
 endpoint-only HBURST-aware byte-lane `SEQ` source family. The audit found
 requester HBURST/wrap generation is already present, but the selected
 byte-lane `SEQ` subordinate bus has no HBURST binding and a candidate
-`(burst HBURST width 3)` subordinate bus clause fails closed today. Aggregate
+`(burst HBURST width 3)` subordinate bus clause failed before `.764`. Aggregate
 byte-lane `SEQ` interconnects see global `HBURST` but do not forward
 subordinate-local HBURST (`subordinate_hburst_refs=0`), so aggregate
 propagation remains a later owner. `.763` must settle source path, bus/policy
@@ -6519,6 +6519,17 @@ inside one 32-bit register word; `SINGLE` remains non-SEQ only, and `INCR`,
 `WRAP8`, `INCR8`, `WRAP16`, `INCR16`, halfword/word burst `SEQ`,
 BUSY-in-burst, aggregate propagation, `.ahb` alias exposure, broader AHB,
 backend variants, AXI/APB, and VHDL remain deferred.
+`.764` now ships `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`, the
+first generic endpoint-only AHB HBURST-aware byte-lane `SEQ` source. The
+parser accepts subordinate `(burst HBURST width 3)`, the generated review
+artifacts and HDL expose `HBURST`, and reports expose `bindings.bus.burst`
+plus `transfer.seq_policy.mode = hburst_in_word_progressive`. Runtime support
+is byte-only `WRAP4`/`INCR4` inside one 32-bit register word; `SINGLE` remains
+independent `NONSEQ` only and wider/indefinite bursts, halfword/word burst
+`SEQ`, BUSY-in-burst, aggregate propagation, matching `.ahb` aliases, broader
+AHB, backend variants, AXI/APB, and VHDL remain deferred. `.765` is the next
+no-behavior AHB follow-on selector for the matching HBURST-aware endpoint
+`.ahb` alias decision.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

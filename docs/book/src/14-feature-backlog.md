@@ -10228,7 +10228,7 @@ selects `.763`, a no-behavior public contract selection for a new
 endpoint-only HBURST-aware byte-lane `SEQ` source family. Requester
 HBURST/wrap generation is already present, but the selected byte-lane `SEQ`
 subordinate bus has no HBURST binding and candidate `(burst HBURST width 3)`
-syntax fails closed. Aggregate byte-lane `SEQ` interconnects see global
+syntax failed before `.764`. Aggregate byte-lane `SEQ` interconnects see global
 `HBURST` but do not forward subordinate-local HBURST, so aggregate propagation,
 matching `.ahb` aliases, BUSY-in-burst, multi-word/register-bank, broader
 AHB, direct backend, verification-output, backend-language variants, AXI/APB,
@@ -10246,6 +10246,21 @@ remains non-SEQ only; wider/indefinite bursts, halfword/word burst `SEQ`,
 BUSY-in-burst, aggregate propagation, matching `.ahb` aliases, broader AHB,
 direct backend, verification-output, backend-language variants, AXI/APB, and
 VHDL remain deferred.
+
+AHB HBURST length/wrap `SEQ` behavior:
+[IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_BEHAVIOR](../../IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_BEHAVIOR.md)
+ships `.764`, the generic endpoint-only source
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`. It adds subordinate
+`(burst HBURST width 3)`, `(seq-policy hburst-in-word-progressive)`,
+support-accounting entry
+`intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq`, generated
+`ahb_lite_subordinate_byte_lane_hburst_seq.isf` / `.fsm` review artifacts,
+and HDL module `ahb_lite_subordinate_byte_lane_hburst_seq`. Runtime support
+is byte-only `WRAP4`/`INCR4` `SEQ` inside one 32-bit register word. `SINGLE`
+remains independent `NONSEQ` only; wider/indefinite bursts, halfword/word
+burst `SEQ`, BUSY-in-burst, aggregate propagation, matching `.ahb` aliases,
+broader AHB, direct backend, verification-output, backend-language variants,
+AXI/APB, and VHDL remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

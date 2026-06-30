@@ -88,7 +88,7 @@ subtest 'malformed byte-lane SEQ AHB subordinate PPIF sources fail closed' => su
                 $source =~ s/\(seq-policy in-word-progressive\)/(seq-policy full-burst)/;
                 return $source;
             },
-            qr/transfer\.seq_policy must be in-word-progressive/,
+            qr/transfer\.seq_policy must be in-word-progressive or hburst-in-word-progressive/,
         ],
         [
             'seq policy without byte-lane size policy',
