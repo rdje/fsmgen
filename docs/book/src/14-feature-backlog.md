@@ -9996,6 +9996,14 @@ only from the alias report. Aggregate byte-lane propagation, optional signals,
 burst `SEQ`, broader AHB behavior, direct backend, verification-output,
 backend-language variants, and VHDL remain deferred. `.740` owns the next
 AHB follow-on selector.
+`.740` selects `.741`, a no-behavior readiness audit for AHB aggregate/
+interconnect byte-lane and narrow-transfer propagation. The selector confirms
+the endpoint byte-lane `.ppif` and `.ahb` surfaces are shipped, and in-memory
+aggregate probes can parse byte-lane subordinate policies and emit byte-lane
+subordinate review artifacts. The aggregate reports still keep byte lanes in
+deferred residue, so `.741` must settle source shape, report/residue movement,
+support identities, validation, and `.ahb` alias sequencing before adding any
+public aggregate byte-lane source.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

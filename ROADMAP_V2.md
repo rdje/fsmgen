@@ -6277,6 +6277,17 @@ residue remain unchanged. Aggregate byte-lane propagation, optional signals,
 burst `SEQ`, broader AHB behavior, direct backend, verification-output,
 backend-language variants, and VHDL remain deferred. `.740` now owns the next
 no-behavior AHB follow-on selector.
+`.740` now selects `.741`, a no-behavior readiness audit for AHB
+aggregate/interconnect byte-lane and narrow-transfer propagation. The selector
+confirmed the endpoint byte-lane `.ppif` and `.ahb` surfaces are shipped, and
+that one-subordinate and two-subordinate aggregate current-code probes can
+parse byte-lane subordinate policies and emit byte-lane subordinate review
+artifacts. The aggregate reports still keep byte lanes in deferred residue, so
+`.741` must settle the exact source shape, report/residue movement, support
+identities, validation strategy, and `.ahb` alias sequencing before any public
+aggregate byte-lane source is added. Optional signals, burst `SEQ`, broader
+interconnect/decode, direct backend, verification-output, backend-language
+variants, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
