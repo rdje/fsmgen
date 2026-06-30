@@ -6496,6 +6496,17 @@ done, leaving `ahb_burst_seq_support_deferred` as the front-most shared AHB
 burst kinds, length/wrap windows, endpoint-only versus aggregate-inclusive
 scope, diagnostics, report shape, generated review artifacts, validation,
 rollback, and explicit deferrals before behavior changes.
+`.762` now selects `.763`, a no-behavior public contract selection for a new
+endpoint-only HBURST-aware byte-lane `SEQ` source family. The audit found
+requester HBURST/wrap generation is already present, but the selected
+byte-lane `SEQ` subordinate bus has no HBURST binding and a candidate
+`(burst HBURST width 3)` subordinate bus clause fails closed today. Aggregate
+byte-lane `SEQ` interconnects see global `HBURST` but do not forward
+subordinate-local HBURST (`subordinate_hburst_refs=0`), so aggregate
+propagation remains a later owner. `.763` must settle source path, bus/policy
+syntax, supported/fail-closed HBURST modes, length/wrap windows, report and
+residue shape, support accounting, diagnostics, generated artifacts,
+validation, and rollback before behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -10222,6 +10222,18 @@ length/wrap windows, endpoint-only versus aggregate-inclusive scope,
 diagnostics, report shape, generated review artifacts, validation, rollback,
 and explicit deferrals before behavior changes.
 
+AHB HBURST length/wrap `SEQ` readiness audit:
+[IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_READINESS_AUDIT](../../IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_READINESS_AUDIT.md)
+selects `.763`, a no-behavior public contract selection for a new
+endpoint-only HBURST-aware byte-lane `SEQ` source family. Requester
+HBURST/wrap generation is already present, but the selected byte-lane `SEQ`
+subordinate bus has no HBURST binding and candidate `(burst HBURST width 3)`
+syntax fails closed. Aggregate byte-lane `SEQ` interconnects see global
+`HBURST` but do not forward subordinate-local HBURST, so aggregate propagation,
+matching `.ahb` aliases, BUSY-in-burst, multi-word/register-bank, broader
+AHB, direct backend, verification-output, backend-language variants, AXI/APB,
+and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
