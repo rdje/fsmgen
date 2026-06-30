@@ -110,6 +110,10 @@ sub _normalize_contract($raw) {
     my $storage = _normalize_storage(_required_hash($raw, 'storage'), $bus);
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'), $control, $storage);
 
+    my @internal_signals = qw(addr_q write_q size_q trans_q wait_n ahb_access_done_q);
+    push @internal_signals, qw(seq_valid_q seq_expected_addr_q seq_size_q seq_write_q ahb_seq_idle_done_q)
+        if _transfer_selects_seq_policy($transfer);
+
     _reject_duplicate_signal_names(
         $clock,
         $reset->{signal},
@@ -125,7 +129,7 @@ sub _normalize_contract($raw) {
         $bus->{response}{name},
         $bus->{read_data}{name},
         $storage->{register}{data}{name},
-        qw(addr_q write_q size_q trans_q wait_n ahb_access_done_q),
+        @internal_signals,
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -242,6 +246,13 @@ sub _normalize_transfer($raw, $control, $storage) {
         $transfer{crossing_access} = _exact_scalar($raw, 'crossing_access', 'error', 'transfer.crossing_access');
     }
 
+    if (exists $raw->{seq_policy}) {
+        confess "AHB subordinate IAL2 contract transfer.seq_policy requires the selected byte-lane size policy in this slice\n"
+            unless $has_size_policy;
+        _exact_scalar($raw, 'seq_policy', 'in-word-progressive', 'transfer.seq_policy');
+        $transfer{seq_policy} = _seq_policy_report();
+    }
+
     return \%transfer;
 }
 
@@ -293,6 +304,8 @@ sub _emit_isf($contract) {
     my $reset = _reset_clause($contract->{reset});
     my $reg_data = $storage->{data}{name};
     my $internal_done = 'ahb_access_done_q';
+    my @seq_storage_lines = _seq_policy_storage_lines($contract);
+    my @seq_idle_clear_lines = _seq_policy_idle_clear_transaction_lines($contract);
     my @read_drive_lines = _read_drive_lines($contract);
     my @access_lines = _access_lines($contract);
 
@@ -317,7 +330,9 @@ sub _emit_isf($contract) {
         "",
         "  (storage",
         "    (var $reg_data (width $storage->{data}{width}) (reset $storage->{data}{reset}))",
-        "    (var $internal_done (width 1) (reset 0)))",
+        "    (var $internal_done (width 1) (reset 0))",
+        @seq_storage_lines,
+        "  )",
         "",
         "  (drive enter_data_phase",
         "    ($bus->{ready_out} 0)",
@@ -340,6 +355,7 @@ sub _emit_isf($contract) {
         "    ($bus->{response}{name} $response->{error})",
         "    ($bus->{read_data}{name} 0))",
         "",
+        @seq_idle_clear_lines,
         "  (transaction $transfer->{name}",
         "    (when (& $bus->{select} $bus->{ready_in} (| (== $bus->{transfer}{name} $transfer->{nonseq}) (== $bus->{transfer}{name} $transfer->{seq})))",
         "      (sample $bus->{address}{name} as addr_q)",
@@ -420,6 +436,9 @@ sub _word_only_access_lines($contract) {
 }
 
 sub _narrow_access_lines($contract) {
+    return _narrow_seq_policy_access_lines($contract)
+        if _transfer_selects_seq_policy($contract->{transfer});
+
     my $bus = $contract->{bus};
     my $transfer = $contract->{transfer};
     my $storage = $contract->{storage}{register};
@@ -465,8 +484,125 @@ sub _narrow_access_lines($contract) {
     return @lines;
 }
 
+sub _narrow_seq_policy_access_lines($contract) {
+    my $bus = $contract->{bus};
+    my $transfer = $contract->{transfer};
+    my $storage = $contract->{storage}{register};
+    my $reg_data = $storage->{data}{name};
+    my $write_data = $bus->{write_data}{name};
+    my $nonseq = "(== trans_q $transfer->{nonseq})";
+    my $seq = "(== trans_q $transfer->{seq})";
+    my $byte_valid = _byte_valid_access_expr();
+    my $halfword_valid = _halfword_valid_access_expr();
+    my $word_valid = _word_valid_access_expr($storage->{address}{value});
+    my $supported_size = _supported_size_expr();
+    my $valid_access = "(| $byte_valid $halfword_valid $word_valid)";
+    my $seq_supported_access = "(| $byte_valid $halfword_valid)";
+    my $seq_ok_base = "(& seq_valid_q (== addr_q seq_expected_addr_q) (== size_q seq_size_q) (== write_q seq_write_q))";
+
+    my @lines = (
+        "    (when (& $nonseq (! $supported_size))",
+        _seq_clear_lines(),
+        "      (drive error_first)",
+        "      (drive error_complete))",
+        "    (when (& $nonseq $supported_size (! $valid_access))",
+        _seq_clear_lines(),
+        "      (drive error_first)",
+        "      (drive error_complete))",
+        "    (when (& $seq (! (& $seq_ok_base $seq_supported_access)))",
+        _seq_clear_lines(),
+        "      (drive error_first)",
+        "      (drive error_complete))",
+    );
+
+    for my $entry (
+        [$byte_valid,     _addr_low_expr(0x3, 0x0), 0x000000ff, 'read_byte_lane0_hit',     1],
+        [$byte_valid,     _addr_low_expr(0x3, 0x1), 0x0000ff00, 'read_byte_lane1_hit',     2],
+        [$byte_valid,     _addr_low_expr(0x3, 0x2), 0x00ff0000, 'read_byte_lane2_hit',     3],
+        [$byte_valid,     _addr_low_expr(0x3, 0x3), 0xff000000, 'read_byte_lane3_hit', undef],
+        [$halfword_valid, _addr_low_expr(0x2, 0x0), 0x0000ffff, 'read_halfword_lane0_hit', 2],
+        [$halfword_valid, _addr_low_expr(0x2, 0x2), 0xffff0000, 'read_halfword_lane1_hit', undef],
+        [$word_valid,     '(== addr_q 0)',          0xffffffff, 'read_word_hit', undef],
+    ) {
+        my ($valid_expr, $lane_expr, $write_mask, $read_drive, $next_addr) = @$entry;
+        push @lines,
+            "    (when (& $nonseq $valid_expr $lane_expr write_q)",
+            _masked_write_line($reg_data, $write_data, $write_mask),
+            _seq_update_lines($next_addr),
+            "      (drive write_hit))",
+            "    (when (& $nonseq $valid_expr $lane_expr (! write_q))",
+            _seq_update_lines($next_addr),
+            "      (drive $read_drive))";
+
+        next if $write_mask == 0xffffffff;
+
+        push @lines,
+            "    (when (& $seq $seq_ok_base $valid_expr $lane_expr write_q)",
+            _masked_write_line($reg_data, $write_data, $write_mask),
+            _seq_update_lines($next_addr),
+            "      (drive write_hit))",
+            "    (when (& $seq $seq_ok_base $valid_expr $lane_expr (! write_q))",
+            _seq_update_lines($next_addr),
+            "      (drive $read_drive))";
+    }
+
+    return @lines;
+}
+
 sub _transfer_supports_narrow_sizes($transfer) {
     return exists $transfer->{supported_size};
+}
+
+sub _transfer_selects_seq_policy($transfer) {
+    return ref($transfer->{seq_policy}) eq 'HASH' && $transfer->{seq_policy}{selected};
+}
+
+sub _seq_policy_storage_lines($contract) {
+    return () unless _transfer_selects_seq_policy($contract->{transfer});
+    return (
+        "    (var seq_valid_q (width 1) (reset 0))",
+        "    (var seq_expected_addr_q (width 32) (reset 0))",
+        "    (var seq_size_q (width 3) (reset 0))",
+        "    (var seq_write_q (width 1) (reset 0))",
+        "    (var ahb_seq_idle_done_q (width 1) (reset 0))",
+    );
+}
+
+sub _seq_policy_idle_clear_transaction_lines($contract) {
+    return () unless _transfer_selects_seq_policy($contract->{transfer});
+
+    my $bus = $contract->{bus};
+    my $transfer = $contract->{transfer};
+    my @clear_lines = _seq_clear_lines('      ');
+    $clear_lines[-1] .= ')';
+    return (
+        "  (transaction ahb_seq_idle_clear",
+        "    (when (& $bus->{select} $bus->{ready_in} (| (== $bus->{transfer}{name} $transfer->{idle}) (== $bus->{transfer}{name} $transfer->{busy})))",
+        @clear_lines,
+        "    (complete ahb_seq_idle_done_q))",
+        "",
+    );
+}
+
+sub _seq_update_lines($next_addr) {
+    return _seq_clear_lines()
+        unless defined $next_addr;
+
+    return (
+        "      (set seq_valid_q 1)",
+        "      (set seq_expected_addr_q " . _hex_literal(32, $next_addr) . ")",
+        "      (set seq_size_q size_q)",
+        "      (set seq_write_q write_q)",
+    );
+}
+
+sub _seq_clear_lines($indent = '      ') {
+    return (
+        "${indent}(set seq_valid_q 0)",
+        "${indent}(set seq_expected_addr_q 0)",
+        "${indent}(set seq_size_q 0)",
+        "${indent}(set seq_write_q 0)",
+    );
 }
 
 sub _supported_size_expr() {
@@ -517,7 +653,15 @@ sub _build_report(%args) {
         'role must be subordinate',
         'address, write-data, read-data, and register data widths are 32 in this slice',
         'AHB transfer width is 2, size width is 3, response width is 1, and wait-cycles width is 4 in this slice',
-        _transfer_supports_narrow_sizes($contract->{transfer})
+        _transfer_selects_seq_policy($contract->{transfer})
+            ? (
+                'selected transfer support is NONSEQ byte, halfword, and word access plus bounded in-word SEQ byte/halfword continuation; IDLE and BUSY remain ignored and clear continuation history',
+                'SEQ completes OKAY only when the previous active transfer completed OKAY as NONSEQ or valid SEQ, HWRITE and HSIZE match, HADDR equals the expected next in-word address, and the current size is byte or halfword',
+                'byte accesses require HSIZE 0 and HADDR[31:2] == 0; halfword accesses require HSIZE 1, HADDR[31:2] == 0, and HADDR[0] == 0; word accesses require HSIZE 2 and HADDR == 0 but do not arm SEQ continuation',
+                'little-endian byte lanes map lane0 to bits [7:0], lane1 to bits [15:8], lane2 to bits [23:16], and lane3 to bits [31:24]',
+                'narrow writes preserve inactive register lanes and narrow reads zero-fill inactive HRDATA lanes',
+            )
+            : _transfer_supports_narrow_sizes($contract->{transfer})
             ? (
                 'selected transfer support is NONSEQ byte, halfword, and word access; IDLE and BUSY remain ignored, and SEQ is an unsupported burst continuation',
                 'byte accesses require HSIZE 0 and HADDR[31:2] == 0; halfword accesses require HSIZE 1, HADDR[31:2] == 0, and HADDR[0] == 0; word accesses require HSIZE 2 and HADDR == 0',
@@ -526,7 +670,9 @@ sub _build_report(%args) {
             )
             : 'selected transfer support is NONSEQ word access only; IDLE and BUSY remain ignored, and SEQ is an unsupported burst continuation',
         'the implemented register map contains exactly one address-0 register with reset value 0',
-        _transfer_supports_narrow_sizes($contract->{transfer})
+        _transfer_selects_seq_policy($contract->{transfer})
+            ? 'unsupported transfer, standalone SEQ, SEQ after IDLE/BUSY/ERROR, changed-control SEQ, unexpected-address SEQ, unsupported size, unmapped address, unaligned access, and crossing access complete with the selected two-cycle ERROR response'
+            : _transfer_supports_narrow_sizes($contract->{transfer})
             ? 'unsupported transfer, unsupported size, unmapped address, unaligned access, and crossing access complete with the selected two-cycle ERROR response'
             : 'unsupported transfer, unsupported size, and unmapped address complete with the selected two-cycle ERROR response',
         'direct IAL2-to-IAL0 lowering is forbidden',
@@ -640,10 +786,25 @@ sub _narrow_transfer_policy_report() {
     };
 }
 
+sub _seq_policy_report() {
+    return {
+        selected => JSON::PP::true,
+        mode => 'in_word_progressive',
+        requires_prior_transfer => 'prior_okay_nonseq_or_seq',
+        supported_sizes => [qw(byte halfword)],
+        address_progression => 'previous_address_plus_size_bytes',
+        control_stability => [qw(HWRITE HSIZE)],
+        clears_on => [qw(reset idle busy error new_nonseq)],
+    };
+}
+
 sub _unsupported_residue($contract) {
     my $optional_signal_detail = _transfer_supports_narrow_sizes($contract->{transfer})
         ? 'HBURST, HPROT, HMASTLOCK, AHB5 optional/property-gated signals, exclusive access, and legacy two-bit HRESP compatibility remain deferred.'
         : 'HBURST, HPROT, HMASTLOCK, AHB5 optional/property-gated signals, byte lanes, exclusive access, and legacy two-bit HRESP compatibility remain deferred.';
+    my $seq_detail = _transfer_selects_seq_policy($contract->{transfer})
+        ? 'HBURST-driven length/wrap semantics, BUSY-in-burst continuation rather than history clearing, multi-word/register-bank progression, .ahb alias exposure, aggregate propagation, full-manager behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, broader AHB behavior, and VHDL remain future work.'
+        : 'SEQ burst continuation, wrapping/incrementing bursts, burst address progression, and broader manager/subordinate behavior remain future work.';
 
     return [
         {
@@ -660,7 +821,7 @@ sub _unsupported_residue($contract) {
         },
         {
             id => 'ahb_burst_seq_support_deferred',
-            detail => 'SEQ burst continuation, wrapping/incrementing bursts, burst address progression, and broader manager/subordinate behavior remain future work.',
+            detail => $seq_detail,
         },
         {
             id => 'ahb_verification_output_deferred',

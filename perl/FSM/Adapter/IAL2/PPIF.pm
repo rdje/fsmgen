@@ -1093,7 +1093,7 @@ sub _parse_ahb_subordinate_transfer_block($items, $source_label, $name) {
             if $seen_single{$head}++;
         if ($head eq 'accept-when') {
             $transfer{accept_when} = _parse_ahb_subordinate_accept_when(\@body, $source_label, $name, $transfer_name);
-        } elsif ($head =~ /\A(?:idle|busy|nonseq|seq|supported-transfer|wait-cycles|read|write|unmapped-address|unsupported-size|unsupported-transfer|lane-order|narrow-write|narrow-read|unaligned-access|crossing-access|error-completion)\z/) {
+        } elsif ($head =~ /\A(?:idle|busy|nonseq|seq|supported-transfer|wait-cycles|read|write|unmapped-address|unsupported-size|unsupported-transfer|lane-order|narrow-write|narrow-read|unaligned-access|crossing-access|seq-policy|error-completion)\z/) {
             my $key = $head;
             $key =~ s/-/_/g;
             $transfer{$key} = _parse_apb_scalar_binding(\@body, $source_label, "ahb-subordinate $name transfer $transfer_name $head");

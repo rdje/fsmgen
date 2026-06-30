@@ -10107,6 +10107,24 @@ continuation with prior successful active-transfer history, expected address
 progression, and stable `HWRITE`/`HSIZE`; HBURST length/wrap, BUSY-in-burst,
 multi-word/register-bank, alias, aggregate, optional-signal, broader AHB,
 AXI/APB, and VHDL behavior remain deferred.
+`.752` now ships that selected generic byte-lane in-word `SEQ` subordinate
+source. It adds `ppif/ahb_lite_subordinate_byte_lane_seq.ppif`, generated
+`ahb_lite_subordinate_byte_lane_seq.isf` /
+`ahb_lite_subordinate_byte_lane_seq.fsm`, HDL module
+`ahb_lite_subordinate_byte_lane_seq`, support identity
+`intent.ppif_ahb_lite_subordinate_byte_lane_seq`, and structured
+`transfer.seq_policy` reporting. `SEQ` OKAY completion is bounded to
+byte/halfword in-word progression with prior OKAY `NONSEQ` or valid `SEQ`
+history, expected next address, and stable `HWRITE`/`HSIZE`. Standalone
+`SEQ`, `SEQ` after `IDLE`/`BUSY`/ERROR/reset, word `SEQ`, crossing,
+unexpected address, changed control, unsupported size, unmapped, unaligned,
+and crossing accesses fail closed with the selected two-cycle ERROR response.
+Existing word-only `.ppif/.ahb`, byte-lane `.ppif/.ahb`, requester, aggregate,
+and alias behavior stay preserved. HBURST-driven length/wrap semantics,
+BUSY-in-burst parking, multi-word/register-bank progression, `.ahb` alias
+exposure, aggregate propagation, optional/property-gated AHB signals, broader
+AHB behavior, direct backend, verification-output generation,
+backend-language variants, AXI/APB, and VHDL remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

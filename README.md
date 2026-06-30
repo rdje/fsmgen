@@ -5334,6 +5334,23 @@ continuation with prior successful active-transfer history, expected address
 progression, and stable `HWRITE`/`HSIZE`; HBURST length/wrap, BUSY-in-burst,
 multi-word/register-bank, alias, aggregate, optional-signal, broader AHB,
 AXI/APB, and VHDL behavior remain deferred.
+`.752` now ships that selected generic byte-lane in-word `SEQ` subordinate
+source. `ppif/ahb_lite_subordinate_byte_lane_seq.ppif` lowers through generated
+`ahb_lite_subordinate_byte_lane_seq.isf` before
+`ahb_lite_subordinate_byte_lane_seq.fsm`, emits HDL module
+`ahb_lite_subordinate_byte_lane_seq`, support-accounts as
+`intent.ppif_ahb_lite_subordinate_byte_lane_seq`, and reports structured
+`transfer.seq_policy` with `mode: in_word_progressive`, prior OKAY
+`NONSEQ`/valid-`SEQ` history, byte/halfword-only continuation, expected
+address progression, stable `HWRITE`/`HSIZE`, and reset/IDLE/BUSY/error/new
+`NONSEQ` clear events. Existing word-only `.ppif/.ahb`, byte-lane
+`.ppif/.ahb`, requester, aggregate, support-accounting identities, and HDL
+behavior stay preserved except for the additive new generic source and
+catalog/docs entries. HBURST-driven length/wrap semantics, BUSY-in-burst
+parking, multi-word/register-bank progression, `.ahb` alias exposure,
+aggregate propagation, optional/property-gated AHB signals, broader AHB,
+direct backend, verification-output, backend-language variants, AXI/APB, and
+VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8031,6 +8048,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_AGGREGATE_ALIAS_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION.md` — records the `.749` no-behavior selector after aggregate alias residue cleanup and selects `.750`, bounded AHB burst `SEQ` readiness audit.
 - `docs/IAL2_AHB_BURST_SEQ_READINESS_AUDIT.md` — records the `.750` no-behavior readiness audit for bounded AHB burst `SEQ` and selects `.751`, public contract selection for subordinate-side `SEQ` support.
 - `docs/IAL2_AHB_BURST_SEQ_CONTRACT_SELECTION.md` — records the `.751` no-behavior public contract selection for a new generic byte-lane in-word `SEQ` subordinate source and selects `.752` implementation.
+- `docs/IAL2_AHB_BYTE_LANE_SEQ_BEHAVIOR.md` — documents the `.752` shipped generic `ppif/ahb_lite_subordinate_byte_lane_seq.ppif` behavior, generated review artifacts, support accounting, `transfer.seq_policy` report block, byte/halfword in-word `SEQ` progression, preservation checks, validation, and remaining AHB residue.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

@@ -2976,7 +2976,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/bounded AHB requester source, the bounded AHB-Lite word-only subordinate source, the bounded AHB-Lite byte-lane\/narrow-transfer subordinate source/,
+        qr/bounded AHB requester source, the bounded AHB-Lite word-only subordinate source, the bounded AHB-Lite byte-lane\/narrow-transfer subordinate source, the bounded AHB-Lite byte-lane in-word SEQ subordinate source/,
         'manifest states .ppif includes the bounded AHB requester and subordinate sources',
     );
     like(

@@ -1,11 +1,12 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships fourteen public bounded AHB IAL2 entrypoints today:
+FSMGen ships fifteen public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
 ppif/ahb_lite_subordinate.ppif
 ppif/ahb_lite_subordinate_byte_lane.ppif
+ppif/ahb_lite_subordinate_byte_lane_seq.ppif
 ppif/ahb_interconnect.ppif
 ppif/ahb_interconnect_two_subordinate.ppif
 ppif/ahb_interconnect_byte_lane.ppif
@@ -22,9 +23,10 @@ ppif/ahb_interconnect_two_subordinate_byte_lane.ahb
 The `.ppif` sources are generic Protocol/Platform Intent files. They cover the
 bounded AHB requester, the bounded word-only AHB-Lite/common-AHB subordinate,
 the bounded AHB-Lite/common-AHB byte-lane/narrow-transfer subordinate, and the
-selected one-requester/one-subordinate and one-requester/two-subordinate
-static-window interconnect/decode tops, including the selected generic
-aggregate byte-lane propagation variants.
+bounded AHB-Lite/common-AHB byte-lane in-word `SEQ` subordinate. They also
+cover the selected one-requester/one-subordinate and one-requester/two-subordinate
+static-window interconnect/decode tops, including the selected generic aggregate
+byte-lane propagation variants.
 The `.ahb` sources are bounded profile aliases over the same IAL2 model. They
 use the same `protocol-platform-intent` form, keep explicit `(profile ahb)`,
 and support exactly one selected endpoint object:
@@ -46,6 +48,7 @@ ppif/ahb_requester.ppif          -> amba_requester.isf -> amba_requester.fsm -> 
 ppif/ahb_requester.ahb           -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
 ppif/ahb_lite_subordinate.ppif   -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
 ppif/ahb_lite_subordinate_byte_lane.ppif -> ahb_lite_subordinate_byte_lane.isf -> ahb_lite_subordinate_byte_lane.fsm -> HDL module ahb_lite_subordinate_byte_lane
+ppif/ahb_lite_subordinate_byte_lane_seq.ppif -> ahb_lite_subordinate_byte_lane_seq.isf -> ahb_lite_subordinate_byte_lane_seq.fsm -> HDL module ahb_lite_subordinate_byte_lane_seq
 ppif/ahb_lite_subordinate.ahb    -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
 ppif/ahb_lite_subordinate_byte_lane.ahb -> ahb_lite_subordinate_byte_lane.isf -> ahb_lite_subordinate_byte_lane.fsm -> HDL module ahb_lite_subordinate_byte_lane
 ppif/ahb_interconnect.ppif       -> amba_requester.isf + ahb_lite_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
@@ -72,9 +75,9 @@ and do not produce generated `.isf` or generated `.fsm` review artifacts.
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, `ppif/ahb_lite_subordinate_byte_lane.ppif`, `ppif/ahb_interconnect.ppif`, `ppif/ahb_interconnect_two_subordinate.ppif`, `ppif/ahb_interconnect_byte_lane.ppif`, `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, `ppif/ahb_requester.ahb`, `ppif/ahb_lite_subordinate.ahb`, `ppif/ahb_lite_subordinate_byte_lane.ahb`, `ppif/ahb_interconnect.ahb`, `ppif/ahb_interconnect_two_subordinate.ahb`, `ppif/ahb_interconnect_byte_lane.ahb`, or `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb` | Bounded AHB requester, bounded word-only AHB-Lite/common-AHB subordinate, bounded byte-lane/narrow-transfer AHB-Lite/common-AHB subordinate, selected one-requester/one-subordinate static-window AHB interconnect, selected one-requester/two-subordinate static-window AHB interconnect, selected aggregate byte-lane propagation variants, and matching `.ahb` aliases for those selected bounded sources. |
-| More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs are exposed as `control`, `bus`, one-register `storage`, and `transfer` clauses, including selected byte/halfword/word `supported-size`, `lane-order`, narrow read/write, and unaligned/crossing policy clauses on the byte-lane source. Interconnect knobs are exposed as `children`, one or two static `address-map` windows, `decode`, and `wiring` clauses. |
-| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader AHB interconnect/decode beyond the selected one-requester/one-subordinate static-window `.ppif`/`.ahb` sources and selected one-requester/two-subordinate static-window `.ppif`/`.ahb` sources, optional signals, burst continuation, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, `ppif/ahb_lite_subordinate_byte_lane.ppif`, `ppif/ahb_lite_subordinate_byte_lane_seq.ppif`, `ppif/ahb_interconnect.ppif`, `ppif/ahb_interconnect_two_subordinate.ppif`, `ppif/ahb_interconnect_byte_lane.ppif`, `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, `ppif/ahb_requester.ahb`, `ppif/ahb_lite_subordinate.ahb`, `ppif/ahb_lite_subordinate_byte_lane.ahb`, `ppif/ahb_interconnect.ahb`, `ppif/ahb_interconnect_two_subordinate.ahb`, `ppif/ahb_interconnect_byte_lane.ahb`, or `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb` | Bounded AHB requester, bounded word-only AHB-Lite/common-AHB subordinate, bounded byte-lane/narrow-transfer AHB-Lite/common-AHB subordinate, bounded generic byte-lane in-word `SEQ` subordinate, selected one-requester/one-subordinate static-window AHB interconnect, selected one-requester/two-subordinate static-window AHB interconnect, selected aggregate byte-lane propagation variants, and matching `.ahb` aliases for the earlier selected bounded sources. |
+| More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs are exposed as `control`, `bus`, one-register `storage`, and `transfer` clauses, including selected byte/halfword/word `supported-size`, `lane-order`, narrow read/write, unaligned/crossing policy clauses, and the selected `(seq-policy in-word-progressive)` clause on the generic byte-lane `SEQ` source. Interconnect knobs are exposed as `children`, one or two static `address-map` windows, `decode`, and `wiring` clauses. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader AHB interconnect/decode beyond the selected one-requester/one-subordinate static-window `.ppif`/`.ahb` sources and selected one-requester/two-subordinate static-window `.ppif`/`.ahb` sources, optional signals, HBURST-driven length/wrap continuation beyond the bounded in-word `SEQ` source, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -176,6 +179,74 @@ sizes, little-endian byte-lane masks, inactive-lane write/read policies, and
 the selected ERROR policy. The matching byte-lane `.ahb` alias preserves that
 report block. The existing word-only subordinate `.ppif` and `.ahb` alias do
 not gain it.
+
+## Guided PPIF Byte-Lane In-Word SEQ Subordinate
+
+Run the shipped generic byte-lane `SEQ` subordinate through the same review
+path:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_lite_subordinate_byte_lane_seq.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_lite_subordinate_byte_lane_seq.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_lite_subordinate_byte_lane_seq.ppif
+./bin/fsmgen --quiet --outdir generated/ial2-ahb-byte-lane-seq-subordinate ppif/ahb_lite_subordinate_byte_lane_seq.ppif
+```
+
+The strict check reports:
+
+```text
+entry_id: intent.ppif_ahb_lite_subordinate_byte_lane_seq
+source_kind: ppif
+coverage: ial2_ppif_ahb_lite_subordinate_byte_lane_seq_pipeline_cli
+module_name: ahb_lite_subordinate_byte_lane_seq
+```
+
+The source lowers through generated `ahb_lite_subordinate_byte_lane_seq.isf`
+before `ahb_lite_subordinate_byte_lane_seq.fsm`, then emits HDL module
+`ahb_lite_subordinate_byte_lane_seq`. It is generic `.ppif` only; no matching
+`.ahb` alias or aggregate propagation is shipped for this `SEQ` policy.
+
+The selected source keeps `supported-transfer nonseq` for compatibility and
+adds:
+
+```text
+(seq-policy in-word-progressive)
+```
+
+The schedule/report JSON includes `transfer.seq_policy`:
+
+```text
+selected: true
+mode: in_word_progressive
+requires_prior_transfer: prior_okay_nonseq_or_seq
+supported_sizes: [byte, halfword]
+address_progression: previous_address_plus_size_bytes
+control_stability: [HWRITE, HSIZE]
+clears_on: [reset, idle, busy, error, new_nonseq]
+```
+
+`SEQ` completes OKAY only for byte or halfword in-word continuation after a
+previous accepted active transfer completed OKAY. The current `SEQ` must keep
+the same `HWRITE` and `HSIZE`, use the stored expected next address, remain
+inside the selected 32-bit register word, and satisfy the normal byte-lane
+alignment rule.
+
+Selected OKAY examples:
+
+```text
+NONSEQ byte     at HADDR 0 -> SEQ byte     at HADDR 1
+NONSEQ byte     at HADDR 1 -> SEQ byte     at HADDR 2
+NONSEQ byte     at HADDR 2 -> SEQ byte     at HADDR 3
+NONSEQ halfword at HADDR 0 -> SEQ halfword at HADDR 2
+```
+
+Standalone `SEQ`, `SEQ` after `IDLE`/`BUSY`/ERROR/reset, `SEQ` after word
+access, changed `HWRITE` or `HSIZE`, unexpected address progression, and
+crossing out of the selected word use the selected two-cycle ERROR response.
+Accepted `IDLE` and `BUSY` transfers keep zero-wait OKAY defaults and clear the
+continuation history. Successful `SEQ` reads and writes reuse the shipped
+byte-lane policy: active lanes update/read in place, inactive write lanes are
+preserved, and inactive read lanes are zero-filled.
 
 ## Guided PPIF Interconnect
 
@@ -671,7 +742,10 @@ For accepted transfers, the generated `.isf` samples `HADDR`, `HWRITE`,
   `HWDATA` and completes with OKAY;
 - `NONSEQ`, word size, address `0`, and `HWRITE=0` drives `HRDATA` from
   `reg_data_q` and completes with OKAY;
-- `SEQ` is treated as unsupported burst continuation and returns ERROR;
+- the word-only and original byte-lane subordinate sources treat `SEQ` as
+  unsupported burst continuation and return ERROR; use
+  `ppif/ahb_lite_subordinate_byte_lane_seq.ppif` for the bounded generic
+  in-word byte/halfword `SEQ` policy;
 - unsupported sizes return ERROR;
 - unmapped addresses return ERROR.
 
@@ -761,7 +835,8 @@ The following are not shipped by the current AHB IAL2 surface:
   `ppif/ahb_interconnect_two_subordinate.ahb` source;
 - optional/property-gated AHB signals such as `HBURST`, `HPROT`, `HMASTLOCK`,
   and AHB5 additions on the subordinate side;
-- burst `SEQ` continuation support in the subordinate;
+- HBURST-driven length/wrap `SEQ` continuation beyond the bounded generic
+  byte-lane in-word `SEQ` subordinate source;
 - legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;

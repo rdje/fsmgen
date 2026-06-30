@@ -6395,6 +6395,23 @@ continuation with prior successful active-transfer history, expected address
 progression, and stable `HWRITE`/`HSIZE`; HBURST length/wrap, BUSY-in-burst,
 multi-word/register-bank, alias, aggregate, optional-signal, broader AHB,
 AXI/APB, and VHDL behavior remain deferred.
+`.752` now ships that selected generic byte-lane in-word `SEQ` subordinate
+source. `ppif/ahb_lite_subordinate_byte_lane_seq.ppif` lowers through generated
+`ahb_lite_subordinate_byte_lane_seq.isf` before
+`ahb_lite_subordinate_byte_lane_seq.fsm`, emits HDL module
+`ahb_lite_subordinate_byte_lane_seq`, support-accounts as
+`intent.ppif_ahb_lite_subordinate_byte_lane_seq`, and reports structured
+`transfer.seq_policy` with `mode: in_word_progressive`, prior OKAY
+`NONSEQ`/valid-`SEQ` history, byte/halfword-only continuation, expected
+address progression, stable `HWRITE`/`HSIZE`, and reset/IDLE/BUSY/error/new
+`NONSEQ` clear events. Existing word-only `.ppif/.ahb`, byte-lane
+`.ppif/.ahb`, requester, aggregate, support-accounting identities, and HDL
+behavior stay preserved except for the additive new generic source and
+catalog/docs entries. HBURST-driven length/wrap semantics, BUSY-in-burst
+parking, multi-word/register-bank progression, `.ahb` alias exposure,
+aggregate propagation, optional/property-gated AHB signals, broader AHB,
+direct backend, verification-output, backend-language variants, AXI/APB, and
+VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
