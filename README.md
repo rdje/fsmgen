@@ -5295,6 +5295,14 @@ report trees only, keeps generic aggregate `.ppif` source-surface residue,
 and adds no new nested child provenance fields. Optional signals, burst `SEQ`,
 broader AHB behavior, direct backend, verification-output, backend-language
 variants, and VHDL remain deferred.
+`.748` now ships that report-only cleanup. Aggregate AHB `.ahb` report trees
+no longer carry the aggregate, requester-child, or subordinate-child
+profile-alias residues, while matching generic aggregate `.ppif` reports keep
+those source-surface residues. Parser behavior, public source samples, support
+accounting, capability-manifest entries, generated `.isf`/`.fsm`, HDL/runtime
+behavior, direct backend, verification-output generation, backend-language
+variants, AXI/APB behavior, broader AHB behavior, and VHDL behavior are
+unchanged. `.749` is the next no-behavior AHB follow-on selector.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7988,6 +7996,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.745` shipped public `ppif/ahb_interconnect_byte_lane.ahb` and `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb` aliases, support accounting, generated review artifacts, `composition.byte_lane_propagation` preservation, alias-residue movement, validation, and remaining AHB residue.
 - `docs/IAL2_POST_AHB_AGGREGATE_BYTE_LANE_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.746` no-behavior selector for aggregate `.ahb` alias nested profile-alias residue cleanup and selects `.747`, public report-contract selection.
 - `docs/IAL2_AHB_AGGREGATE_ALIAS_NESTED_PROFILE_RESIDUE_CONTRACT_SELECTION.md` — records the `.747` no-behavior contract selection for aggregate `.ahb` alias nested endpoint profile-residue cleanup and selects `.748`, direct report cleanup.
+- `docs/IAL2_AHB_AGGREGATE_ALIAS_NESTED_PROFILE_RESIDUE_BEHAVIOR.md` — documents the `.748` shipped report-only cleanup for aggregate `.ahb` alias nested endpoint profile-residue and the preserved generic `.ppif` source-surface residue.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

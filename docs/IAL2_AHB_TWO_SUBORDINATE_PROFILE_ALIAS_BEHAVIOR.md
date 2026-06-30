@@ -100,10 +100,15 @@ The `.ahb` alias reports remove:
 
 ```text
 ahb_aggregate_profile_alias_deferred
+ahb_profile_alias_deferred
+ahb_subordinate_profile_alias_deferred
 ```
 
-The generic `.ppif` report keeps that residue as a source-surface distinction.
-Both reports keep:
+The requester and subordinate residue ids are removed from generated child
+reports because the authored aggregate source is already the public `.ahb`
+profile-alias surface. The generic `.ppif` report keeps the aggregate,
+requester-child, and subordinate-child profile-alias residues as
+source-surface distinction. Both reports keep:
 
 ```text
 ahb_broader_interconnect_decode_deferred

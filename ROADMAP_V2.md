@@ -6356,6 +6356,14 @@ report trees only, keeps generic aggregate `.ppif` source-surface residue,
 and adds no new nested child provenance fields. Optional signals, burst `SEQ`,
 broader AHB behavior, direct backend, verification-output, backend-language
 variants, and VHDL remain deferred.
+`.748` now ships that report-only cleanup. Aggregate AHB `.ahb` report trees
+no longer carry the aggregate, requester-child, or subordinate-child
+profile-alias residues, while matching generic aggregate `.ppif` reports keep
+those source-surface residues. Parser behavior, public source samples, support
+accounting, capability-manifest entries, generated `.isf`/`.fsm`, HDL/runtime
+behavior, direct backend, verification-output generation, backend-language
+variants, AXI/APB behavior, broader AHB behavior, and VHDL behavior are
+unchanged. `.749` is the next no-behavior AHB follow-on selector.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

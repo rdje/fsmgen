@@ -72,8 +72,11 @@ sub parse_source($self, @args) {
         if _is_apb_requester_transfer_contract($contract);
     if (_is_ahb_interconnect_contract($contract)) {
         my $result = FSM::IAL2::ProtocolIntent::AhbInterconnect->new(debug => $self->{debug})->generate($contract);
-        _remove_unsupported_residue_id($result, 'ahb_aggregate_profile_alias_deferred')
-            if _is_ahb_profile_alias_source($source_label);
+        if (_is_ahb_profile_alias_source($source_label)) {
+            _remove_unsupported_residue_id($result, 'ahb_aggregate_profile_alias_deferred');
+            _remove_unsupported_residue_id($result, 'ahb_profile_alias_deferred');
+            _remove_unsupported_residue_id($result, 'ahb_subordinate_profile_alias_deferred');
+        }
         return $result;
     }
     if (_is_ahb_requester_contract($contract)) {

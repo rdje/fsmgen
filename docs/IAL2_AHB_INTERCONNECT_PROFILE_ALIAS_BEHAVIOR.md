@@ -72,9 +72,18 @@ The generic `.ppif` interconnect sample keeps support identity
 
 ## Residue
 
-The alias report removes only the stale
-`ahb_aggregate_profile_alias_deferred` residue. It keeps the broader AHB
-residue explicit:
+The alias report removes stale profile-alias residue from the aggregate report
+tree:
+
+```text
+ahb_aggregate_profile_alias_deferred
+ahb_profile_alias_deferred
+ahb_subordinate_profile_alias_deferred
+```
+
+The requester and subordinate residue ids are removed from generated child
+reports because the authored aggregate source is already the public `.ahb`
+profile-alias surface. The alias keeps the broader AHB residue explicit:
 
 ```text
 ahb_multi_subordinate_decode_deferred
@@ -85,7 +94,8 @@ ahb_verification_output_deferred
 ```
 
 The generic `.ppif` interconnect report keeps
-`ahb_aggregate_profile_alias_deferred` for source-surface distinction.
+`ahb_aggregate_profile_alias_deferred` plus the generated requester and
+subordinate child profile-alias residues for source-surface distinction.
 
 ## Validation
 

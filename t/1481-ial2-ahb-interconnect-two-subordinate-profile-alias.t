@@ -60,6 +60,8 @@ subtest 'adapter accepts the selected two-subordinate AHB interconnect .ahb prof
     my %alias_residue = map { $_->{id} => 1 } @{$alias->{report}{unsupported_residue}};
     ok(!$alias_residue{ahb_aggregate_profile_alias_deferred}, '.ahb report removes stale aggregate profile-alias residue');
     ok(!residue_id_occurs($alias->{report}, 'ahb_aggregate_profile_alias_deferred'), '.ahb report removes stale aggregate profile-alias residue from nested children');
+    ok(!residue_id_occurs($alias->{report}, 'ahb_profile_alias_deferred'), '.ahb report removes stale requester profile-alias residue from nested children');
+    ok(!residue_id_occurs($alias->{report}, 'ahb_subordinate_profile_alias_deferred'), '.ahb report removes stale subordinate profile-alias residue from nested children');
     ok(!$alias_residue{ahb_multi_subordinate_decode_deferred}, '.ahb report keeps old multi-subordinate residue removed');
     ok($alias_residue{ahb_broader_interconnect_decode_deferred}, '.ahb report keeps broader interconnect/decode residue explicit');
     ok($alias_residue{ahb_optional_signal_residue}, '.ahb report keeps optional-signal residue explicit');
@@ -69,6 +71,8 @@ subtest 'adapter accepts the selected two-subordinate AHB interconnect .ahb prof
 
     my %ppif_residue = map { $_->{id} => 1 } @{$ppif->{report}{unsupported_residue}};
     ok($ppif_residue{ahb_aggregate_profile_alias_deferred}, 'generic two-subordinate PPIF report preserves aggregate profile-alias residue');
+    ok(residue_id_occurs($ppif->{report}, 'ahb_profile_alias_deferred'), 'generic two-subordinate PPIF report preserves requester profile-alias residue');
+    ok(residue_id_occurs($ppif->{report}, 'ahb_subordinate_profile_alias_deferred'), 'generic two-subordinate PPIF report preserves subordinate profile-alias residue');
 };
 
 subtest 'two-subordinate aggregate .ahb diagnostics stay fail-closed for malformed aliases' => sub {
@@ -168,6 +172,8 @@ subtest 'schedule JSON and outdir expose two-subordinate .ahb review artifacts' 
     my %schedule_residue = map { $_->{id} => 1 } @{$schedule->{unsupported_residue}};
     ok(!$schedule_residue{ahb_aggregate_profile_alias_deferred}, 'two-subordinate .ahb schedule JSON removes stale aggregate profile-alias residue');
     ok(!residue_id_occurs($schedule, 'ahb_aggregate_profile_alias_deferred'), 'two-subordinate .ahb schedule JSON removes stale aggregate profile-alias residue from nested children');
+    ok(!residue_id_occurs($schedule, 'ahb_profile_alias_deferred'), 'two-subordinate .ahb schedule JSON removes stale requester profile-alias residue from nested children');
+    ok(!residue_id_occurs($schedule, 'ahb_subordinate_profile_alias_deferred'), 'two-subordinate .ahb schedule JSON removes stale subordinate profile-alias residue from nested children');
     ok($schedule_residue{ahb_broader_interconnect_decode_deferred}, 'two-subordinate .ahb schedule JSON keeps broader AHB residue');
     ok($schedule_residue{ahb_optional_signal_residue}, 'two-subordinate .ahb schedule JSON keeps optional-signal residue');
 

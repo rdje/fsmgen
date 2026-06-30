@@ -114,11 +114,16 @@ The `.ahb` alias reports remove:
 
 ```text
 ahb_aggregate_profile_alias_deferred
+ahb_profile_alias_deferred
+ahb_subordinate_profile_alias_deferred
 ```
 
-The generic aggregate byte-lane `.ppif` reports keep that residue as a
-source-surface distinction. Existing word-only aggregate `.ppif/.ahb` and
-endpoint byte-lane `.ppif/.ahb` behavior remains unchanged.
+The requester and subordinate residue ids are removed from generated child
+reports because the authored aggregate source is already the public `.ahb`
+profile-alias surface. The generic aggregate byte-lane `.ppif` reports keep
+the aggregate, requester-child, and subordinate-child profile-alias residues as
+source-surface distinction. Existing endpoint byte-lane `.ppif/.ahb` behavior
+remains unchanged.
 
 Remaining AHB work stays task-tree-owned future work: optional/property-gated
 signals, burst `SEQ` continuation, broader interconnect/decode cardinality,

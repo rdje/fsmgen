@@ -466,8 +466,10 @@ The aggregate `.ahb` schedule/report JSON uses schema
 `ahb-interconnect`, exposes generated `amba_requester.isf`,
 `ahb_lite_subordinate.isf`, and `ahb_interconnect.isf` before generated
 `amba_requester.fsm`, `ahb_lite_subordinate.fsm`, `ahb_interconnect.fsm`, and
-aggregate `ahb_tb.fsm`, and removes `ahb_aggregate_profile_alias_deferred`
-from the alias report while preserving the broader AHB residue.
+aggregate `ahb_tb.fsm`, and removes `ahb_aggregate_profile_alias_deferred`,
+`ahb_profile_alias_deferred`, and
+`ahb_subordinate_profile_alias_deferred` from the alias report tree while
+preserving the broader AHB residue.
 
 The two-subordinate aggregate interconnect alias is:
 
@@ -495,8 +497,10 @@ The two-subordinate aggregate `.ahb` schedule/report JSON uses schema
 `ahb_control_subordinate.isf`, and `ahb_interconnect.isf` before generated
 `amba_requester.fsm`, `ahb_status_subordinate.fsm`,
 `ahb_control_subordinate.fsm`, `ahb_interconnect.fsm`, and aggregate
-`ahb_tb.fsm`, and removes `ahb_aggregate_profile_alias_deferred` from the
-alias report while preserving the broader AHB residue.
+`ahb_tb.fsm`, and removes `ahb_aggregate_profile_alias_deferred`,
+`ahb_profile_alias_deferred`, and
+`ahb_subordinate_profile_alias_deferred` from the alias report tree while
+preserving the broader AHB residue.
 
 The aggregate byte-lane interconnect aliases are:
 
@@ -532,8 +536,11 @@ Both aggregate byte-lane aliases preserve
 `composition.byte_lane_propagation`, child `narrow_transfer_policy`,
 local-address-before-byte-lane policy, subordinate-owned mapped-hit
 byte/halfword/word behavior, and interconnect-owned unmapped ERROR behavior.
-They remove `ahb_aggregate_profile_alias_deferred` from alias reports while the
-generic aggregate byte-lane `.ppif` reports keep that source-surface residue.
+They remove `ahb_aggregate_profile_alias_deferred`,
+`ahb_profile_alias_deferred`, and
+`ahb_subordinate_profile_alias_deferred` from alias report trees while the
+generic aggregate byte-lane `.ppif` reports keep those source-surface
+residues.
 
 ## Requester Source Shape
 
@@ -769,20 +776,25 @@ stale residue from alias reports. The generic subordinate `.ppif` report keeps
 its historical `ahb_subordinate_profile_alias_deferred` residue, and the
 shipped subordinate `.ahb` alias removes that stale residue from alias reports.
 The generic aggregate interconnect `.ppif` report keeps
-`ahb_aggregate_profile_alias_deferred` for source-surface distinction, and the
-shipped aggregate `.ahb` alias removes that stale residue from alias reports.
+`ahb_aggregate_profile_alias_deferred` for source-surface distinction, and its
+generated endpoint child reports keep `ahb_profile_alias_deferred` and
+`ahb_subordinate_profile_alias_deferred`. The shipped aggregate `.ahb` alias
+removes all three stale profile-alias residues from alias report trees.
 The generic two-subordinate aggregate `.ppif` report also keeps
-`ahb_aggregate_profile_alias_deferred` for source-surface distinction, and the
-shipped two-subordinate aggregate `.ahb` alias removes that stale residue from
-alias reports. Both use `ahb_broader_interconnect_decode_deferred` for the
-remaining AHB interconnect/decode backlog.
+`ahb_aggregate_profile_alias_deferred` for source-surface distinction, and its
+generated endpoint child reports keep `ahb_profile_alias_deferred` and
+`ahb_subordinate_profile_alias_deferred`. The shipped two-subordinate
+aggregate `.ahb` alias removes all three stale profile-alias residues from
+alias report trees. Both use `ahb_broader_interconnect_decode_deferred` for
+the remaining AHB interconnect/decode backlog.
 The generic aggregate byte-lane `.ppif` reports keep
-`ahb_aggregate_profile_alias_deferred` as a source-surface distinction, while
-the shipped aggregate byte-lane `.ahb` aliases remove that stale residue from
-alias reports. The generic aggregate byte-lane `.ppif` reports also remove
-byte-lane wording from their optional/interconnect residue because
-byte/halfword/word subordinate-owned narrow transfers are now selected through
-the aggregate.
+`ahb_aggregate_profile_alias_deferred` as a source-surface distinction, and
+their generated endpoint child reports keep `ahb_profile_alias_deferred` and
+`ahb_subordinate_profile_alias_deferred`. The shipped aggregate byte-lane
+`.ahb` aliases remove all three stale profile-alias residues from alias report
+trees. The generic aggregate byte-lane `.ppif` reports also remove byte-lane
+wording from their optional/interconnect residue because byte/halfword/word
+subordinate-owned narrow transfers are now selected through the aggregate.
 
 ## Validation Used For This Chapter
 
@@ -881,4 +893,5 @@ generated review artifacts and HDL module, support-accounted as
 `intent.ahb_profile_alias_interconnect_byte_lane` and
 `intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane`, preserving
 `composition.byte_lane_propagation` while removing
-`ahb_aggregate_profile_alias_deferred` from alias reports.
+`ahb_aggregate_profile_alias_deferred`, `ahb_profile_alias_deferred`, and
+`ahb_subordinate_profile_alias_deferred` from alias report trees.

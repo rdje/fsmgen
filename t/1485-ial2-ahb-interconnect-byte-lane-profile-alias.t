@@ -68,6 +68,8 @@ subtest 'adapter accepts selected AHB aggregate byte-lane .ahb profile aliases' 
         my %alias_residue = map { $_->{id} => 1 } @{$alias->{report}{unsupported_residue}};
         ok(!$alias_residue{ahb_aggregate_profile_alias_deferred}, "$case->{label} .ahb removes aggregate profile-alias residue");
         ok(!residue_id_occurs($alias->{report}, 'ahb_aggregate_profile_alias_deferred'), "$case->{label} .ahb removes aggregate profile-alias residue from nested reports");
+        ok(!residue_id_occurs($alias->{report}, 'ahb_profile_alias_deferred'), "$case->{label} .ahb removes requester profile-alias residue from nested reports");
+        ok(!residue_id_occurs($alias->{report}, 'ahb_subordinate_profile_alias_deferred'), "$case->{label} .ahb removes subordinate profile-alias residue from nested reports");
         ok($alias_residue{ahb_optional_signal_residue}, "$case->{label} .ahb keeps optional-signal residue");
         ok($alias_residue{ahb_burst_seq_support_deferred}, "$case->{label} .ahb keeps burst SEQ residue");
         ok($alias_residue{ahb_direct_backend_deferred}, "$case->{label} .ahb keeps direct-backend residue");
@@ -75,6 +77,8 @@ subtest 'adapter accepts selected AHB aggregate byte-lane .ahb profile aliases' 
 
         my %ppif_residue = map { $_->{id} => 1 } @{$ppif->{report}{unsupported_residue}};
         ok($ppif_residue{ahb_aggregate_profile_alias_deferred}, "$case->{label} generic PPIF keeps aggregate profile-alias residue");
+        ok(residue_id_occurs($ppif->{report}, 'ahb_profile_alias_deferred'), "$case->{label} generic PPIF keeps requester profile-alias residue");
+        ok(residue_id_occurs($ppif->{report}, 'ahb_subordinate_profile_alias_deferred'), "$case->{label} generic PPIF keeps subordinate profile-alias residue");
     }
 };
 
@@ -166,6 +170,8 @@ subtest 'schedule JSON and outdir expose aggregate byte-lane .ahb review artifac
         my %schedule_residue = map { $_->{id} => 1 } @{$schedule->{unsupported_residue}};
         ok(!$schedule_residue{ahb_aggregate_profile_alias_deferred}, "$case->{label} schedule JSON removes aggregate profile-alias residue");
         ok(!residue_id_occurs($schedule, 'ahb_aggregate_profile_alias_deferred'), "$case->{label} schedule JSON removes nested aggregate profile-alias residue");
+        ok(!residue_id_occurs($schedule, 'ahb_profile_alias_deferred'), "$case->{label} schedule JSON removes nested requester profile-alias residue");
+        ok(!residue_id_occurs($schedule, 'ahb_subordinate_profile_alias_deferred'), "$case->{label} schedule JSON removes nested subordinate profile-alias residue");
         ok($schedule_residue{$case->{topology_residue}}, "$case->{label} schedule JSON keeps topology residue");
         ok($schedule_residue{ahb_optional_signal_residue}, "$case->{label} schedule JSON keeps optional-signal residue");
 
@@ -194,6 +200,8 @@ subtest 'existing AHB aggregate and endpoint boundaries stay unchanged' => sub {
     my $byte_lane_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(one_subordinate_byte_lane_ppif_path());
     my %byte_lane_ppif_residue = map { $_->{id} => 1 } @{$byte_lane_ppif->{report}{unsupported_residue}};
     ok($byte_lane_ppif_residue{ahb_aggregate_profile_alias_deferred}, 'generic aggregate byte-lane PPIF keeps alias-deferred residue');
+    ok(residue_id_occurs($byte_lane_ppif->{report}, 'ahb_profile_alias_deferred'), 'generic aggregate byte-lane PPIF keeps requester profile-alias residue');
+    ok(residue_id_occurs($byte_lane_ppif->{report}, 'ahb_subordinate_profile_alias_deferred'), 'generic aggregate byte-lane PPIF keeps subordinate profile-alias residue');
 
     my $endpoint_alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(endpoint_byte_lane_alias_path());
     is($endpoint_alias->{report}{narrow_transfer_policy}{narrow_read}{policy}, 'zero-fill-inactive-lanes', 'endpoint byte-lane .ahb keeps narrow-transfer policy');
