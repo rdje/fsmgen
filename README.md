@@ -5142,6 +5142,16 @@ from each subordinate object, report topology
 `intent.ppif_ahb_interconnect_two_subordinate`, and coverage
 `ial2_ppif_ahb_interconnect_two_subordinate_pipeline_cli`. Matching `.ahb`
 alias support remains deferred until after the generic `.ppif` behavior ships.
+`.730` now ships that selected generic `.ppif` source. It accepts
+`ppif/ahb_interconnect_two_subordinate.ppif`, lowers through generated
+`amba_requester.isf`, `ahb_status_subordinate.isf`,
+`ahb_control_subordinate.isf`, and `ahb_interconnect.isf` before generated
+`amba_requester.fsm`, `ahb_status_subordinate.fsm`,
+`ahb_control_subordinate.fsm`, `ahb_interconnect.fsm`, and `ahb_tb.fsm`,
+emits HDL module `ahb_tb`, reports topology
+`one_requester_two_subordinate_static_window_interconnect`, support-accounts as
+`intent.ppif_ahb_interconnect_two_subordinate`, and keeps matching `.ahb`
+two-subordinate alias behavior deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7817,6 +7827,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_INTERCONNECT_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.727` no-behavior selector after aggregate `.ahb` alias shipment and selects `.728`, bounded multi-subordinate AHB interconnect/decode readiness audit.
 - `docs/IAL2_AHB_MULTI_SUBORDINATE_DECODE_READINESS_AUDIT.md` — records the `.728` no-behavior readiness audit for bounded multi-subordinate AHB interconnect/decode and selects `.729`, public contract selection for a first bounded two-subordinate surface.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_CONTRACT_SELECTION.md` — records the `.729` no-behavior public contract selection for `ppif/ahb_interconnect_two_subordinate.ppif`, support identity `intent.ppif_ahb_interconnect_two_subordinate`, generated two-subordinate aggregate artifacts, and `.730` implementation owner.
+- `docs/IAL2_AHB_TWO_SUBORDINATE_BEHAVIOR.md` — documents the `.730` shipped public generic `ppif/ahb_interconnect_two_subordinate.ppif` behavior, support accounting, generated review artifacts, report topology, validation, and remaining `.ahb` alias residue.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

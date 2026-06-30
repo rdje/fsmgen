@@ -2986,6 +2986,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/selected one-requester\/two-subordinate static-window AHB interconnect\/decode source/,
+        'manifest states .ppif includes the selected generic two-subordinate AHB interconnect/decode source',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/selected status back-to-back APB requester-transfer, sideband-aware APB requester-transfer, sideband-aware data16 APB requester-transfer, selected sideband-aware data16 status back-to-back APB requester-transfer, APB completer, selected back-to-back APB completer, APB multi-register completer, .*selected sideband-aware data16 back-to-back APB multi-register completer, .*selected sideband-aware data16 protection back-to-back APB multi-register completer, .*selected status back-to-back one-requester\/one-completer APB composition, .*sideband-aware data16 multi-register one-requester\/one-completer APB composition, selected sideband-aware data16 status back-to-back multi-register one-requester\/one-completer APB composition, .*sideband-aware data16 protection multi-register one-requester\/one-completer APB composition, selected sideband-aware data16 protection status back-to-back multi-register one-requester\/one-completer APB composition, .*selected sideband-aware protection multi-register status back-to-back one-requester\/two-peripheral APB interconnect\/decode composition, .*selected sideband-aware data16 no-policy multi-register status back-to-back one-requester\/two-peripheral APB interconnect\/decode composition, selected bounded sideband-aware data16 generalized no-policy multi-register status back-to-back one-requester\/two-peripheral APB interconnect\/decode composition, .*sideband-aware protection one-requester\/two-peripheral APB interconnect\/decode composition, .*sideband-aware data16 protection one-requester\/two-peripheral APB interconnect\/decode composition \.ppif sources through support-accounted profile-alias fixtures/,
         'manifest states .apb mirrors the sideband-aware data16 APB PPIF sources through profile aliases',
     );
@@ -2993,6 +2998,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/APB address widths other than 32, wait-count widths other than 4, data widths beyond the selected sideband-aware 16\/32-bit boundary, additional APB PPROT policy families, APB back-to-back variants beyond the selected fixed\/status, selected sideband-aware fixed\/status, selected sideband-aware protected fixed multi-register status, selected sideband-aware data16 fixed multi-register status, selected sideband-aware data16-protection fixed multi-register status, no-sideband multi-peripheral status, selected sideband-aware multi-peripheral status, selected sideband-aware no-policy multi-peripheral multi-register status, selected bounded sideband-aware generalized no-policy multi-peripheral multi-register status, selected sideband-aware protection multi-peripheral multi-register status, selected sideband-aware data16 no-policy multi-peripheral multi-register status, selected bounded sideband-aware data16 generalized no-policy multi-peripheral multi-register status, selected sideband-aware protection multi-peripheral status, selected sideband-aware data16-protection multi-peripheral status\/control families/,
         'manifest keeps remaining APB width and sideband follow-on work explicit after data16 support shipped',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/broader AHB interconnect\/decode beyond the selected one-requester\/one-subordinate static-window PPIF\/\.ahb source and selected generic one-requester\/two-subordinate static-window PPIF source/,
+        'manifest keeps broader AHB interconnect/decode deferred beyond the selected one- and two-subordinate sources',
     );
     unlike(
         $file_surface_by_suffix{'.ppif'}{current_boundary},

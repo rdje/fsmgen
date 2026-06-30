@@ -28,14 +28,18 @@ sub generate($self, @args) {
 
     my $contract = _normalize_contract($args[0]);
     my $requester_contract = _endpoint_contract($contract, 'requester');
-    my $subordinate_contract = _endpoint_contract($contract, 'subordinate');
+    my @subordinate_contracts = map {
+        _endpoint_contract_from_hash($contract, $_)
+    } @{$contract->{subordinates}};
 
     my $requester_result = FSM::IAL2::ProtocolIntent::AhbRequester
         ->new(debug => $self->{debug})
         ->generate($requester_contract);
-    my $subordinate_result = FSM::IAL2::ProtocolIntent::AhbSubordinate
-        ->new(debug => $self->{debug})
-        ->generate($subordinate_contract);
+    my @subordinate_results = map {
+        FSM::IAL2::ProtocolIntent::AhbSubordinate
+            ->new(debug => $self->{debug})
+            ->generate($_)
+    } @subordinate_contracts;
 
     my (@ial1_items, @ial0_items, @schedule_reports);
     my %all_fsm_files;
@@ -49,15 +53,17 @@ sub generate($self, @args) {
         schedule_reports => \@schedule_reports,
         fsm_files        => \%all_fsm_files,
     );
-    _add_endpoint_result(
-        result           => $subordinate_result,
-        role             => 'subordinate',
-        object_name      => $contract->{subordinate}{name},
-        ial1_items       => \@ial1_items,
-        ial0_items       => \@ial0_items,
-        schedule_reports => \@schedule_reports,
-        fsm_files        => \%all_fsm_files,
-    );
+    for my $index (0 .. $#subordinate_results) {
+        _add_endpoint_result(
+            result           => $subordinate_results[$index],
+            role             => 'subordinate',
+            object_name      => $contract->{subordinates}[$index]{name},
+            ial1_items       => \@ial1_items,
+            ial0_items       => \@ial0_items,
+            schedule_reports => \@schedule_reports,
+            fsm_files        => \%all_fsm_files,
+        );
+    }
 
     my $interconnect = _build_ahb_interconnect_artifacts($contract);
     push @ial1_items, $interconnect->{ial1_item};
@@ -69,7 +75,7 @@ sub generate($self, @args) {
     my $top = _build_composition_top(
         contract           => $contract,
         requester_result   => $requester_result,
-        subordinate_result => $subordinate_result,
+        subordinate_results => \@subordinate_results,
         interconnect       => $interconnect,
         fsm_files          => \%all_fsm_files,
     );
@@ -81,7 +87,7 @@ sub generate($self, @args) {
     my $report = _build_report(
         contract           => $contract,
         requester_result   => $requester_result,
-        subordinate_result => $subordinate_result,
+        subordinate_results => \@subordinate_results,
         interconnect       => $interconnect,
         ial1_items         => \@ial1_items,
         ial0_items         => \@ial0_items,
@@ -144,7 +150,7 @@ sub _normalize_contract($raw) {
     my $source = _required_hash($raw, 'source');
     my $interconnect = _required_hash($raw, 'interconnect');
     my $requester = _required_hash($raw, 'requester');
-    my $subordinate = _required_hash($raw, 'subordinate');
+    my @subordinates = _raw_subordinate_contracts($raw);
 
     my $name = _required_identifier($interconnect, 'name');
     my $role = lc _required_scalar($interconnect, 'role');
@@ -157,14 +163,16 @@ sub _normalize_contract($raw) {
     my $wiring = _normalize_wiring(_required_hash($interconnect, 'wiring'));
     my $address_map = _normalize_address_map(
         _required_hash($interconnect, 'address_map'),
-        $children->{subordinate}{instance_name},
+        $children->{subordinates},
     );
 
     _validate_endpoint_role($requester, 'requester', 'ahb_requester');
-    _validate_endpoint_role($subordinate, 'subordinate', 'ahb_subordinate');
-    _validate_shared_system_ports($clock, $reset, $requester, $subordinate);
-    _validate_child_references($children, $requester, $subordinate);
-    _validate_bus_compatibility($wiring->{bus}, $requester->{bus}, $subordinate->{bus});
+    for my $subordinate (@subordinates) {
+        _validate_endpoint_role($subordinate, 'subordinate', 'ahb_subordinate');
+    }
+    _validate_shared_system_ports($clock, $reset, $requester, \@subordinates);
+    _validate_child_references($children, $requester, \@subordinates);
+    _validate_bus_compatibility($wiring->{bus}, $requester->{bus}, \@subordinates);
 
     my $source_object_id = exists($source->{object_id})
         ? _nonempty_scalar($source->{object_id}, 'source.object_id')
@@ -191,7 +199,8 @@ sub _normalize_contract($raw) {
             wiring      => $wiring,
         },
         requester        => _clone_jsonish($requester),
-        subordinate      => _clone_jsonish($subordinate),
+        subordinate      => _clone_jsonish($subordinates[0]),
+        subordinates     => [map { _clone_jsonish($_) } @subordinates],
     };
     _assign_generated_instance_names($contract);
     return $contract;
@@ -205,15 +214,50 @@ sub _endpoint_contract($contract, $role) {
     return \%endpoint;
 }
 
+sub _endpoint_contract_from_hash($contract, $endpoint) {
+    my %copy = %$endpoint;
+    $copy{protocol} = $contract->{protocol};
+    $copy{intent_name} = $contract->{intent_name};
+    $copy{source} = _clone_jsonish($contract->{source});
+    return \%copy;
+}
+
+sub _raw_subordinate_contracts($raw) {
+    my @subordinates;
+    if (exists $raw->{subordinates}) {
+        confess "AHB interconnect IAL2 contract subordinates must be an array reference\n"
+            unless ref($raw->{subordinates}) eq 'ARRAY';
+        @subordinates = @{$raw->{subordinates}};
+    } elsif (exists $raw->{subordinate}) {
+        @subordinates = ($raw->{subordinate});
+    } else {
+        confess "AHB interconnect IAL2 contract is missing required hash field 'subordinate'\n";
+    }
+
+    confess "AHB interconnect IAL2 contract supports one or two subordinate endpoints in this slice\n"
+        unless @subordinates == 1 || @subordinates == 2;
+    for my $index (0 .. $#subordinates) {
+        confess "AHB interconnect IAL2 contract subordinates[$index] must be a hash reference\n"
+            unless ref($subordinates[$index]) eq 'HASH';
+    }
+    return @subordinates;
+}
+
 sub _assign_generated_instance_names($contract) {
     my $interconnect = $contract->{interconnect};
     my %reserved = map { $_->{name} => 1 } _top_port_specs($contract);
 
-    for my $role (qw(requester subordinate)) {
-        my $child = $interconnect->{children}{$role};
+    my $requester_child = $interconnect->{children}{requester};
+    $requester_child->{generated_instance_name} = _unique_generated_instance_name(
+        $requester_child->{instance_name},
+        'requester',
+        \%reserved,
+    );
+
+    for my $child (@{$interconnect->{children}{subordinates}}) {
         $child->{generated_instance_name} = _unique_generated_instance_name(
             $child->{instance_name},
-            $role,
+            'subordinate',
             \%reserved,
         );
     }
@@ -325,8 +369,7 @@ sub _build_ahb_interconnect_isf($contract) {
     my $interconnect = $contract->{interconnect};
     my $reset = _reset_clause($interconnect->{reset});
     my $bus = $interconnect->{wiring}{bus};
-    my $sub_bus = $contract->{subordinate}{bus};
-    my $window = _selected_window($contract);
+    my @subordinates = _subordinate_binding_entries($contract);
 
     return join("\n",
         "(actor ahb_interconnect",
@@ -344,20 +387,37 @@ sub _build_ahb_interconnect_isf($contract) {
         _interface_line('input', $bus->{burst}),
         _interface_line('input', $bus->{protection}),
         _interface_line('input', $bus->{write_data}),
-        _interface_line('input', $bus->{subordinate_ready_out}),
-        _interface_line('input', $bus->{subordinate_response}),
-        _interface_line('input', $bus->{subordinate_read_data}),
+        (map {
+            my $sub_bus = $_->{endpoint}{bus};
+            (
+                _interface_line('input', $sub_bus->{ready_out}),
+                _interface_line('input', $sub_bus->{response}),
+                _interface_line('input', $sub_bus->{read_data}),
+            )
+        } @subordinates),
         _output_interface_line($bus->{grant}, 1, 1),
         _output_interface_line($bus->{ready}, 1, 1),
         _output_interface_line($bus->{response}, 0, 0),
         _output_interface_line($bus->{read_data}, 0, 0),
-        _output_interface_line($bus->{subordinate_select}, 0, 0),
-        _output_interface_line($sub_bus->{address}, 0, 0) . ")",
+        (map {
+            my $sub_bus = $_->{endpoint}{bus};
+            (
+                _output_interface_line($sub_bus->{select}, 0, 0),
+                _output_interface_line($sub_bus->{address}, 0, 0),
+            )
+        } @subordinates),
+        "  )",
         "",
         "  (address-map $interconnect->{address_map}{name}",
-        "    (window $window->{name}",
-        "      (base $window->{base}{name} width $window->{base}{width} default $window->{base}{default})",
-        "      (size $window->{size}{name} width $window->{size}{width} default $window->{size}{default})))",
+        (map {
+            my $window = $_->{window};
+            (
+                "    (window $window->{name}",
+                "      (base $window->{base}{name} width $window->{base}{width} default $window->{base}{default})",
+                "      (size $window->{size}{name} width $window->{size}{width} default $window->{size}{default}))",
+            )
+        } @subordinates),
+        "  )",
         "",
         "  (decode",
         "    (overlap $interconnect->{decode}{overlap})",
@@ -376,15 +436,17 @@ sub _build_ahb_interconnect_isf($contract) {
 sub _build_ahb_interconnect_fsm($contract) {
     my $interconnect = $contract->{interconnect};
     my $bus = $interconnect->{wiring}{bus};
-    my $sub_bus = $contract->{subordinate}{bus};
-    my $window = _selected_window($contract);
+    my @subordinates = _subordinate_binding_entries($contract);
     my $address = $bus->{address}{name};
     my $transfer = $bus->{transfer}{name};
     my $active_transfer = "(! (== $transfer 2'b00))";
-    my $window_match = "(& (>= $address $window->{base}{default}) (< $address $window->{limit}))";
-    my $hit = "(& $active_transfer $window_match)";
-    my $unmapped = "(& $active_transfer (! $window_match))";
-    my $local_address = _local_address_expr($address, $window);
+    my @window_matches = map {
+        "(& (>= $address $_->{window}{base}{default}) (< $address $_->{window}{limit}))"
+    } @subordinates;
+    my $any_window_match = @window_matches == 1
+        ? $window_matches[0]
+        : "(| " . join(' ', @window_matches) . ")";
+    my $unmapped = "(& $active_transfer (! $any_window_match))";
     my $input_visibility_guard = "(& "
         . join(
             ' ',
@@ -397,6 +459,44 @@ sub _build_ahb_interconnect_fsm($contract) {
             "(== $bus->{write_data}{name} $bus->{write_data}{name})",
         )
         . ")";
+    my @subordinate_size_lines;
+    my @subordinate_idle_lines;
+    my @subordinate_hit_blocks;
+    my @subordinate_unmapped_lines;
+    for my $index (0 .. $#subordinates) {
+        my $entry = $subordinates[$index];
+        my $sub_bus = $entry->{endpoint}{bus};
+        my $window = $entry->{window};
+        my $hit = "(& $active_transfer $window_matches[$index])";
+        my $local_address = _local_address_expr($address, $window);
+
+        push @subordinate_size_lines,
+            _size_line($sub_bus->{ready_out}, 1),
+            _size_line($sub_bus->{response}{name}, $sub_bus->{response}{width}),
+            _size_line($sub_bus->{read_data}{name}, $sub_bus->{read_data}{width}),
+            _size_line($sub_bus->{select}, 1, 0),
+            _size_line($sub_bus->{address}{name}, $sub_bus->{address}{width}, 0);
+        push @subordinate_idle_lines,
+            "    (= ($sub_bus->{select}> 0))",
+            "    (= ($sub_bus->{address}{name}> 0))";
+        push @subordinate_hit_blocks,
+            "",
+            "    (<$hit",
+            "      (= ($bus->{ready}> $sub_bus->{ready_out}))",
+            "      (= ($bus->{read_data}{name}> $sub_bus->{read_data}{name}))",
+            "      (= ($sub_bus->{select}> 1))",
+            "      (= ($sub_bus->{address}{name}> $local_address))",
+            "      (<$sub_bus->{response}{name}",
+            "        (= ($bus->{response}{name}> 2'b01))",
+            "      )",
+            "      (<!$sub_bus->{response}{name}",
+            "        (= ($bus->{response}{name}> 2'b00))",
+            "      )",
+            "    )";
+        push @subordinate_unmapped_lines,
+            "      (= ($sub_bus->{select}> 0))",
+            "      (= ($sub_bus->{address}{name}> 0))";
+    }
 
     return join("\n",
         "(?fsm:ahb_interconnect",
@@ -416,15 +516,11 @@ sub _build_ahb_interconnect_fsm($contract) {
         _size_line($bus->{burst}{name}, $bus->{burst}{width}),
         _size_line($bus->{protection}{name}, $bus->{protection}{width}),
         _size_line($bus->{write_data}{name}, $bus->{write_data}{width}),
-        _size_line($bus->{subordinate_ready_out}, 1),
-        _size_line($bus->{subordinate_response}{name}, $bus->{subordinate_response}{width}),
-        _size_line($bus->{subordinate_read_data}{name}, $bus->{subordinate_read_data}{width}),
+        @subordinate_size_lines,
         _size_line($bus->{grant}, 1, 1),
         _size_line($bus->{ready}, 1, 1),
         _size_line($bus->{response}{name}, $bus->{response}{width}, 0),
         _size_line($bus->{read_data}{name}, $bus->{read_data}{width}, 0),
-        _size_line($bus->{subordinate_select}, 1, 0),
-        _size_line($sub_bus->{address}{name}, $sub_bus->{address}{width}, 0),
         "  )",
         "",
         "  (idle",
@@ -432,31 +528,17 @@ sub _build_ahb_interconnect_fsm($contract) {
         "    (= ($bus->{ready}> 1))",
         "    (= ($bus->{response}{name}> 2'b00))",
         "    (= ($bus->{read_data}{name}> 0))",
-        "    (= ($bus->{subordinate_select}> 0))",
-        "    (= ($sub_bus->{address}{name}> 0))",
+        @subordinate_idle_lines,
         "    (<$input_visibility_guard",
         "      (= ($bus->{grant}> 1))",
         "    )",
-        "",
-        "    (<$hit",
-        "      (= ($bus->{ready}> $bus->{subordinate_ready_out}))",
-        "      (= ($bus->{read_data}{name}> $bus->{subordinate_read_data}{name}))",
-        "      (= ($bus->{subordinate_select}> 1))",
-        "      (= ($sub_bus->{address}{name}> $local_address))",
-        "      (<$bus->{subordinate_response}{name}",
-        "        (= ($bus->{response}{name}> 2'b01))",
-        "      )",
-        "      (<!$bus->{subordinate_response}{name}",
-        "        (= ($bus->{response}{name}> 2'b00))",
-        "      )",
-        "    )",
+        @subordinate_hit_blocks,
         "",
         "    (<$unmapped",
         "      (= ($bus->{ready}> 0))",
         "      (= ($bus->{response}{name}> 2'b01))",
         "      (= ($bus->{read_data}{name}> 0))",
-        "      (= ($bus->{subordinate_select}> 0))",
-        "      (= ($sub_bus->{address}{name}> 0))",
+        @subordinate_unmapped_lines,
         "      (-> unmapped_error_complete)",
         "    )",
         "  )",
@@ -466,8 +548,7 @@ sub _build_ahb_interconnect_fsm($contract) {
         "    (= ($bus->{ready}> 1))",
         "    (= ($bus->{response}{name}> 2'b01))",
         "    (= ($bus->{read_data}{name}> 0))",
-        "    (= ($bus->{subordinate_select}> 0))",
-        "    (= ($sub_bus->{address}{name}> 0))",
+        @subordinate_idle_lines,
         "    (-> idle)",
         "  )",
         ")",
@@ -478,7 +559,7 @@ sub _build_ahb_interconnect_fsm($contract) {
 sub _build_composition_top(%args) {
     my $contract = $args{contract};
     my $requester_result = $args{requester_result};
-    my $subordinate_result = $args{subordinate_result};
+    my @subordinate_results = @{$args{subordinate_results} || []};
     my $interconnect = $args{interconnect};
     my $fsm_files = $args{fsm_files};
 
@@ -486,12 +567,13 @@ sub _build_composition_top(%args) {
     my $top_name = $ic->{name};
     my $entry_artifact = "$top_name.fsm";
     my $requester_child = $ic->{children}{requester};
-    my $subordinate_child = $ic->{children}{subordinate};
+    my @subordinate_children = @{$ic->{children}{subordinates}};
     my $requester_instance = _generated_instance_name($requester_child);
-    my $subordinate_instance = _generated_instance_name($subordinate_child);
     my $requester_entry = $requester_result->{report}{generated_artifacts}{hdl_entry}{entry_artifact};
-    my $subordinate_entry = $subordinate_result->{report}{generated_artifacts}{hdl_entry}{entry_artifact};
-    my @child_artifacts = ($requester_entry, $interconnect->{entry_artifact}, $subordinate_entry);
+    my @subordinate_entries = map {
+        $_->{report}{generated_artifacts}{hdl_entry}{entry_artifact}
+    } @subordinate_results;
+    my @child_artifacts = ($requester_entry, $interconnect->{entry_artifact}, @subordinate_entries);
 
     my @port_specs = _top_port_specs($contract);
     my @lines = (
@@ -501,7 +583,9 @@ sub _build_composition_top(%args) {
         "  )",
         "  (?fsmc:$requester_instance $requester_child->{object_name})",
         "  (?fsmc:$interconnect->{instance_name} $interconnect->{object_name})",
-        "  (?fsmc:$subordinate_instance $subordinate_child->{object_name})",
+        (map {
+            "  (?fsmc:" . _generated_instance_name($_) . " $_->{object_name})"
+        } @subordinate_children),
         "  (?wiring:$ic->{wiring}{name}",
         (map { "    $_" } _wiring_lines($contract, $interconnect)),
         "  )",
@@ -540,7 +624,7 @@ sub _build_composition_top(%args) {
                     clock => $ic->{clock},
                     reset => _clone_jsonish($ic->{reset}),
                 },
-                ahb_bus_wiring => 'one_requester_one_subordinate_static_window_interconnect',
+                ahb_bus_wiring => _topology_name($contract),
             },
         },
     };
@@ -549,10 +633,8 @@ sub _build_composition_top(%args) {
 sub _wiring_lines($contract, $interconnect) {
     my $ic = $contract->{interconnect};
     my $requester = _generated_instance_name($ic->{children}{requester});
-    my $subordinate = _generated_instance_name($ic->{children}{subordinate});
     my $fabric = $interconnect->{instance_name};
     my $bus = $ic->{wiring}{bus};
-    my $sub_bus = $contract->{subordinate}{bus};
 
     return (
         "($requester.$bus->{request} $fabric.$bus->{request})",
@@ -568,23 +650,29 @@ sub _wiring_lines($contract, $interconnect) {
         "($fabric.$bus->{ready} $requester.$bus->{ready})",
         "($fabric.$bus->{response}{name} $requester.$bus->{response}{name})",
         "($fabric.$bus->{read_data}{name} $requester.$bus->{read_data}{name})",
-        "($fabric.$bus->{ready} $subordinate.$sub_bus->{ready_in})",
-        "($fabric.$bus->{subordinate_select} $subordinate.$sub_bus->{select})",
-        "($fabric.$sub_bus->{address}{name} $subordinate.$sub_bus->{address}{name})",
-        "($requester.$bus->{transfer}{name} $subordinate.$sub_bus->{transfer}{name})",
-        "($requester.$bus->{write} $subordinate.$sub_bus->{write})",
-        "($requester.$bus->{size}{name} $subordinate.$sub_bus->{size}{name})",
-        "($requester.$bus->{write_data}{name} $subordinate.$sub_bus->{write_data}{name})",
-        "($subordinate.$sub_bus->{ready_out} $fabric.$bus->{subordinate_ready_out})",
-        "($subordinate.$sub_bus->{response}{name} $fabric.$bus->{subordinate_response}{name})",
-        "($subordinate.$sub_bus->{read_data}{name} $fabric.$bus->{subordinate_read_data}{name})",
+        (map {
+            my $subordinate = _generated_instance_name($_->{child});
+            my $sub_bus = $_->{endpoint}{bus};
+            (
+                "($fabric.$bus->{ready} $subordinate.$sub_bus->{ready_in})",
+                "($fabric.$sub_bus->{select} $subordinate.$sub_bus->{select})",
+                "($fabric.$sub_bus->{address}{name} $subordinate.$sub_bus->{address}{name})",
+                "($requester.$bus->{transfer}{name} $subordinate.$sub_bus->{transfer}{name})",
+                "($requester.$bus->{write} $subordinate.$sub_bus->{write})",
+                "($requester.$bus->{size}{name} $subordinate.$sub_bus->{size}{name})",
+                "($requester.$bus->{write_data}{name} $subordinate.$sub_bus->{write_data}{name})",
+                "($subordinate.$sub_bus->{ready_out} $fabric.$sub_bus->{ready_out})",
+                "($subordinate.$sub_bus->{response}{name} $fabric.$sub_bus->{response}{name})",
+                "($subordinate.$sub_bus->{read_data}{name} $fabric.$sub_bus->{read_data}{name})",
+            )
+        } _subordinate_binding_entries($contract)),
     );
 }
 
 sub _top_port_specs($contract) {
     my $ic = $contract->{interconnect};
     my $requester = $contract->{requester};
-    my $subordinate = $contract->{subordinate};
+    my @subordinates = @{$contract->{subordinates}};
 
     return (
         {
@@ -609,7 +697,9 @@ sub _top_port_specs($contract) {
         _input_port($requester->{local_command}{lock}, 1),
         _input_port($requester->{local_command}{burst}{name}, $requester->{local_command}{burst}{width}),
         _input_port($requester->{local_command}{length}{name}, $requester->{local_command}{length}{width}),
-        _input_port($subordinate->{control}{wait_cycles}{name}, $subordinate->{control}{wait_cycles}{width}),
+        (map {
+            _input_port($_->{control}{wait_cycles}{name}, $_->{control}{wait_cycles}{width})
+        } @subordinates),
         _output_port($requester->{local_command}{ready}, 1),
         _output_port($requester->{local_status}{busy}, 1),
         _output_port($requester->{local_status}{beat_done}, 1),
@@ -661,7 +751,7 @@ sub _composition_port_token($spec) {
 sub _build_report(%args) {
     my $contract = $args{contract};
     my $requester_result = $args{requester_result};
-    my $subordinate_result = $args{subordinate_result};
+    my @subordinate_results = @{$args{subordinate_results} || []};
     my $interconnect = $args{interconnect};
     my @ial1_items = @{$args{ial1_items} || []};
     my @ial0_items = @{$args{ial0_items} || []};
@@ -690,11 +780,12 @@ sub _build_report(%args) {
         },
         composition => {
             name                          => $ic->{name},
-            topology                      => 'one_requester_one_subordinate_static_window_interconnect',
-            child_instance_count          => 3,
-            endpoint_child_instance_count => 2,
+            topology                      => _topology_name($contract),
+            child_instance_count          => 2 + scalar(@{$contract->{subordinates}}),
+            endpoint_child_instance_count => 1 + scalar(@{$contract->{subordinates}}),
             requester                     => _clone_jsonish($ic->{children}{requester}),
             subordinate                   => _subordinate_report_entry($contract),
+            subordinates                  => _subordinate_report_entries($contract),
             address_map                   => _address_map_report($contract),
             decode                        => _clone_jsonish($ic->{decode}),
             response_mux                  => _response_mux_report($contract),
@@ -711,7 +802,9 @@ sub _build_report(%args) {
         children => [
             _child_report('requester', $ic->{children}{requester}, $requester_result),
             _interconnect_child_report($contract, $interconnect),
-            _child_report('subordinate', $ic->{children}{subordinate}, $subordinate_result),
+            (map {
+                _child_report('subordinate', $ic->{children}{subordinates}[$_], $subordinate_results[$_])
+            } 0 .. $#subordinate_results),
         ],
         generated_artifacts => {
             ial1 => {
@@ -736,29 +829,103 @@ sub _build_report(%args) {
         },
         enforced_static_rules => [
             'profile must be ahb and the aggregate object must be ahb-interconnect',
-            'source must contain exactly one AHB requester, one AHB subordinate, and one AHB interconnect object',
-            'requester, subordinate, and interconnect must share clock and reset policy',
+            _static_cardinality_rule($contract),
+            'requester, subordinate endpoints, and interconnect must share clock and reset policy',
             'interconnect children must reference the embedded requester and subordinate objects by name',
-            'address-map must contain exactly one static 32-bit word-aligned window matching the subordinate child instance',
+            _static_address_map_rule($contract),
             'decode policy is overlap reject, priority source-order, and unmapped-address error',
             'the generated AHB interconnect asserts HGRANT permanently, decodes HTRANS != IDLE against the static window, emits local subordinate HADDR, and muxes subordinate response/data',
             'the generated AHB interconnect maps one-bit subordinate OKAY/ERROR HRESP to requester two-bit OKAY/ERROR HRESP',
             'unmapped active transfers complete with a two-cycle interconnect-owned ERROR response',
             'AHB interconnect is exposed through generic .ppif and the selected aggregate .ahb profile alias; broader aggregate AHB interconnect/decode shapes remain deferred',
         ],
-        unsupported_residue => _unsupported_residue(),
+        unsupported_residue => _unsupported_residue($contract),
     };
 }
 
 sub _subordinate_report_entry($contract) {
-    my $child = $contract->{interconnect}{children}{subordinate};
+    return _subordinate_report_entries($contract)->[0];
+}
+
+sub _subordinate_report_entries($contract) {
+    return [
+        map {
+            my $child = $_->{child};
+            my $endpoint = $_->{endpoint};
+            my $window = $_->{window};
+            +{
+                %{$child},
+                address_window        => _clone_jsonish($window),
+                local_address_policy  => 'subtract_window_base',
+                decoded_select_signal => $endpoint->{bus}{select},
+                local_address_signal  => _clone_jsonish($endpoint->{bus}{address}),
+            }
+        } _subordinate_binding_entries($contract)
+    ];
+}
+
+sub _topology_name($contract) {
+    my $count = scalar @{$contract->{subordinates} || []};
+    return 'one_requester_one_subordinate_static_window_interconnect'
+        if $count == 1;
+    return 'one_requester_two_subordinate_static_window_interconnect'
+        if $count == 2;
+    confess "AHB interconnect unsupported subordinate count '$count'\n";
+}
+
+sub _static_cardinality_rule($contract) {
+    return scalar(@{$contract->{subordinates}}) == 1
+        ? 'source must contain exactly one AHB requester, one AHB subordinate, and one AHB interconnect object'
+        : 'source must contain exactly one AHB requester, two AHB subordinates, and one AHB interconnect object';
+}
+
+sub _static_address_map_rule($contract) {
+    return scalar(@{$contract->{subordinates}}) == 1
+        ? 'address-map must contain exactly one static 32-bit word-aligned window matching the subordinate child instance'
+        : 'address-map must contain exactly two static 32-bit word-aligned non-overlapping windows matching the subordinate child instances';
+}
+
+sub _subordinate_binding_entries($contract) {
+    my @children = @{$contract->{interconnect}{children}{subordinates} || []};
+    my @endpoints = @{$contract->{subordinates} || []};
+    my %endpoint_by_name = map { $_->{name} => $_ } @endpoints;
+    my %window_by_name = map { $_->{name} => $_ } @{$contract->{interconnect}{address_map}{windows} || []};
+    my @entries;
+    for my $child (@children) {
+        my $endpoint = $endpoint_by_name{$child->{object_name}}
+            or confess "AHB interconnect internal error: no subordinate endpoint for '$child->{object_name}'\n";
+        my $window = $window_by_name{$child->{instance_name}}
+            or confess "AHB interconnect internal error: no address window for '$child->{instance_name}'\n";
+        push @entries, {
+            child    => $child,
+            endpoint => $endpoint,
+            window   => $window,
+        };
+    }
+    return @entries;
+}
+
+sub _selected_window($contract) {
+    return $contract->{interconnect}{address_map}{windows}[0];
+}
+
+sub _legacy_subordinate_bus($contract) {
+    return $contract->{subordinates}[0]{bus};
+}
+
+sub _legacy_subordinate_child($contract) {
+    return $contract->{interconnect}{children}{subordinates}[0];
+}
+
+sub _legacy_subordinate_report_entry($contract) {
+    my $child = _legacy_subordinate_child($contract);
     my $window = _selected_window($contract);
     return {
         %{$child},
         address_window        => _clone_jsonish($window),
         local_address_policy  => 'subtract_window_base',
-        decoded_select_signal => $contract->{subordinate}{bus}{select},
-        local_address_signal  => _clone_jsonish($contract->{subordinate}{bus}{address}),
+        decoded_select_signal => _legacy_subordinate_bus($contract)->{select},
+        local_address_signal  => _clone_jsonish(_legacy_subordinate_bus($contract)->{address}),
     };
 }
 
@@ -777,14 +944,25 @@ sub _address_map_report($contract) {
 
 sub _response_mux_report($contract) {
     my $bus = $contract->{interconnect}{wiring}{bus};
+    my @subordinates = _subordinate_binding_entries($contract);
     return {
         grant           => $bus->{grant},
         ready           => $bus->{ready},
         response        => _clone_jsonish($bus->{response}),
         read_data       => _clone_jsonish($bus->{read_data}),
         selected_policy => 'selected_subordinate_response',
+        subordinate_sources => [
+            map {
+                {
+                    instance_name => $_->{child}{instance_name},
+                    ready_out     => $_->{endpoint}{bus}{ready_out},
+                    response      => _clone_jsonish($_->{endpoint}{bus}{response}),
+                    read_data     => _clone_jsonish($_->{endpoint}{bus}{read_data}),
+                }
+            } @subordinates
+        ],
         hresp_mapping   => {
-            subordinate_width => $bus->{subordinate_response}{width},
+            subordinate_width => 1,
             requester_width   => $bus->{response}{width},
             okay              => {
                 subordinate => "1'b0",
@@ -833,7 +1011,7 @@ sub _interconnect_child_report($contract, $interconnect) {
             profile  => $contract->{protocol},
             object   => 'ahb-interconnect',
             role     => 'interconnect',
-            topology => 'one_requester_one_subordinate_static_window_interconnect',
+            topology => _topology_name($contract),
         },
         address_map         => _address_map_report($contract),
         response_mux        => _response_mux_report($contract),
@@ -853,7 +1031,7 @@ sub _interconnect_child_report($contract, $interconnect) {
                 module         => $interconnect->{object_name},
             },
         },
-        unsupported_residue => _clone_jsonish(_unsupported_residue()),
+        unsupported_residue => _clone_jsonish(_unsupported_residue($contract)),
     };
 }
 
@@ -881,6 +1059,7 @@ sub _child_report($role, $child, $result) {
 }
 
 sub _width_policy($contract) {
+    my $subordinate_count = scalar @{$contract->{subordinates}};
     return {
         address_width                   => 32,
         data_width                      => 32,
@@ -892,21 +1071,28 @@ sub _width_policy($contract) {
         protection_width                => 4,
         wait_cycles_width               => 4,
         local_address_policy            => 'subtract_window_base',
-        supported_subordinate_cardinality => 1,
+        supported_subordinate_cardinality => $subordinate_count,
         supported_requester_cardinality => 1,
     };
 }
 
-sub _unsupported_residue {
+sub _unsupported_residue($contract = undef) {
+    my $subordinate_count = ref($contract) eq 'HASH' ? scalar @{$contract->{subordinates} || []} : 1;
+    my $interconnect_residue = $subordinate_count == 2
+        ? {
+            id     => 'ahb_broader_interconnect_decode_deferred',
+            detail => 'The first one-requester/two-subordinate static-window AHB interconnect/decode source ships; broader subordinate cardinality, multiple requesters, arbitration, bus matrices, programmable or dynamic windows, optional AHB signals, burst continuation, byte lanes, direct backend, verification-output, backend-language variants, AXI/APB behavior, and VHDL remain future work.',
+        }
+        : {
+            id     => 'ahb_multi_subordinate_decode_deferred',
+            detail => 'Only one requester, one subordinate, and one static address window are implemented for this source; multi-subordinate decode, arbitration, and bus matrices remain future AHB work.',
+        };
     return [
         {
             id     => 'ahb_aggregate_profile_alias_deferred',
             detail => 'Generic .ppif reports retain the aggregate profile-alias distinction; use ppif/ahb_interconnect.ahb for the selected .ahb alias surface, while broader aggregate AHB alias shapes remain future work.',
         },
-        {
-            id     => 'ahb_multi_subordinate_decode_deferred',
-            detail => 'Only one requester, one subordinate, and one static address window are implemented; multi-subordinate decode, arbitration, and bus matrices remain future AHB work.',
-        },
+        $interconnect_residue,
         {
             id     => 'ahb_optional_signal_residue',
             detail => 'Optional AHB and AHB5 property-gated signals, byte lanes, exclusive access, protection policy effects, and legacy two-bit subordinate HRESP compatibility remain deferred.',
@@ -928,10 +1114,27 @@ sub _unsupported_residue {
 
 sub _normalize_children($raw) {
     my $requester = _required_hash($raw, 'requester');
-    my $subordinate = _required_hash($raw, 'subordinate');
+    my @subordinates;
+    if (ref($raw->{subordinates}) eq 'ARRAY') {
+        @subordinates = @{$raw->{subordinates}};
+    } elsif (ref($raw->{subordinate}) eq 'HASH') {
+        @subordinates = ($raw->{subordinate});
+    } else {
+        confess "AHB interconnect children must contain one or two subordinate child bindings\n";
+    }
+    confess "AHB interconnect children must contain one or two subordinate child bindings\n"
+        unless @subordinates == 1 || @subordinates == 2;
+    my $requester_child = _normalize_child($requester, 'requester');
+    my @subordinate_children = map { _normalize_child($_, 'subordinate') } @subordinates;
+    my %seen_instances = ($requester_child->{instance_name} => 1);
+    for my $child (@subordinate_children) {
+        confess "AHB interconnect child instance aliases must be unique\n"
+            if $seen_instances{$child->{instance_name}}++;
+    }
     return {
-        requester   => _normalize_child($requester, 'requester'),
-        subordinate => _normalize_child($subordinate, 'subordinate'),
+        requester    => $requester_child,
+        subordinate  => $subordinate_children[0],
+        subordinates => \@subordinate_children,
     };
 }
 
@@ -952,41 +1155,67 @@ sub _normalize_wiring($raw) {
     };
 }
 
-sub _normalize_address_map($raw, $subordinate_instance_name) {
+sub _normalize_address_map($raw, $subordinate_children) {
     my $name = _required_identifier($raw, 'name');
     my $windows = $raw->{windows};
-    confess "AHB interconnect address_map.windows must contain exactly one window in this slice\n"
-        unless ref($windows) eq 'ARRAY' && @$windows == 1;
+    confess "AHB interconnect address_map.windows must contain one window per subordinate child in this slice\n"
+        unless ref($windows) eq 'ARRAY'
+            && (@$windows == 1 || @$windows == 2)
+            && @$windows == @$subordinate_children;
 
-    my $window = $windows->[0];
-    confess "AHB interconnect address_map.windows[0] must be a hash reference\n"
-        unless ref($window) eq 'HASH';
-    my $window_name = _required_identifier($window, 'name');
-    confess "AHB interconnect address-map window '$window_name' must match subordinate child instance '$subordinate_instance_name'\n"
-        unless $window_name eq $subordinate_instance_name;
-    my $base = _normalize_address_parameter($window->{base}, 'address_map.windows[0].base', 1);
-    my $size = _normalize_address_parameter($window->{size}, 'address_map.windows[0].size', 0);
-    confess "AHB interconnect duplicate address-map parameter '$base->{name}'\n"
-        if $base->{name} eq $size->{name};
-    confess "AHB interconnect address-map base '$base->{default}' must be 4-byte aligned\n"
-        unless $base->{default} % 4 == 0;
-    confess "AHB interconnect address-map size '$size->{default}' must be positive and 4-byte aligned\n"
-        unless $size->{default} > 0 && $size->{default} % 4 == 0;
-    confess "AHB interconnect address-map window '$window_name' overflows 32-bit address space\n"
-        if $base->{default} + $size->{default} > 4_294_967_296;
+    my %child_instances = map { $_->{instance_name} => 1 } @$subordinate_children;
+    my %seen_windows;
+    my %seen_parameters;
+    my @normalized_windows;
+    for my $index (0 .. $#$windows) {
+        my $window = $windows->[$index];
+        confess "AHB interconnect address_map.windows[$index] must be a hash reference\n"
+            unless ref($window) eq 'HASH';
+        my $window_name = _required_identifier($window, 'name');
+        confess "AHB interconnect duplicate address-map window '$window_name'\n"
+            if $seen_windows{$window_name}++;
+        confess "AHB interconnect address-map window '$window_name' must match subordinate child instance '$subordinate_children->[0]{instance_name}'\n"
+            if @$subordinate_children == 1 && !$child_instances{$window_name};
+        confess "AHB interconnect address-map window '$window_name' does not match a subordinate child instance\n"
+            unless $child_instances{$window_name};
+        my $base = _normalize_address_parameter($window->{base}, "address_map.windows[$index].base", 1);
+        my $size = _normalize_address_parameter($window->{size}, "address_map.windows[$index].size", 0);
+        for my $parameter ($base, $size) {
+            confess "AHB interconnect duplicate address-map parameter '$parameter->{name}'\n"
+                if $seen_parameters{$parameter->{name}}++;
+        }
+        confess "AHB interconnect address-map base '$base->{default}' must be 4-byte aligned\n"
+            unless $base->{default} % 4 == 0;
+        confess "AHB interconnect address-map size '$size->{default}' must be positive and 4-byte aligned\n"
+            unless $size->{default} > 0 && $size->{default} % 4 == 0;
+        confess "AHB interconnect address-map window '$window_name' overflows 32-bit address space\n"
+            if $base->{default} + $size->{default} > 4_294_967_296;
+        push @normalized_windows, {
+            name  => $window_name,
+            base  => $base,
+            size  => $size,
+            limit => $base->{default} + $size->{default},
+        };
+    }
+    for my $child (@$subordinate_children) {
+        confess "AHB interconnect address-map is missing a window for subordinate '$child->{instance_name}'\n"
+            unless $seen_windows{$child->{instance_name}};
+    }
+    for my $left_index (0 .. $#normalized_windows) {
+        for my $right_index ($left_index + 1 .. $#normalized_windows) {
+            my $left = $normalized_windows[$left_index];
+            my $right = $normalized_windows[$right_index];
+            next if $left->{limit} <= $right->{base}{default}
+                || $right->{limit} <= $left->{base}{default};
+            confess "AHB interconnect address-map windows '$left->{name}' and '$right->{name}' overlap\n";
+        }
+    }
 
     return {
         name            => $name,
         address_width   => 32,
         alignment_bytes => 4,
-        windows         => [
-            {
-                name  => $window_name,
-                base  => $base,
-                size  => $size,
-                limit => $base->{default} + $size->{default},
-            },
-        ],
+        windows         => \@normalized_windows,
     };
 }
 
@@ -1033,10 +1262,10 @@ sub _validate_endpoint_role($endpoint, $role, $kind) {
         unless lc($endpoint->{role} // '') eq $role;
 }
 
-sub _validate_shared_system_ports($clock, $reset, $requester, $subordinate) {
+sub _validate_shared_system_ports($clock, $reset, $requester, $subordinates) {
     for my $entry (
         ['requester', $requester],
-        ['subordinate', $subordinate],
+        (map { ['subordinate', $_] } @$subordinates),
     ) {
         my ($role, $endpoint) = @$entry;
         confess "AHB interconnect IAL2 contract requires shared clock '$clock'; $role uses '$endpoint->{clock}'\n"
@@ -1055,38 +1284,80 @@ sub _same_reset_policy($left, $right) {
     return 1;
 }
 
-sub _validate_child_references($children, $requester, $subordinate) {
+sub _validate_child_references($children, $requester, $subordinates) {
     confess "AHB interconnect requester child references '$children->{requester}{object_name}', expected '$requester->{name}'\n"
         unless $children->{requester}{object_name} eq $requester->{name};
-    confess "AHB interconnect subordinate child references '$children->{subordinate}{object_name}', expected '$subordinate->{name}'\n"
-        unless $children->{subordinate}{object_name} eq $subordinate->{name};
-    confess "AHB interconnect child instance aliases must be unique\n"
-        if $children->{requester}{instance_name} eq $children->{subordinate}{instance_name};
+    my %subordinate_by_name;
+    for my $subordinate (@$subordinates) {
+        confess "AHB interconnect duplicate subordinate object '$subordinate->{name}'\n"
+            if $subordinate_by_name{$subordinate->{name}}++;
+    }
+
+    my %seen_instances = ($children->{requester}{instance_name} => 1);
+    my %referenced_objects;
+    for my $child (@{$children->{subordinates}}) {
+        confess "AHB interconnect child instance aliases must be unique\n"
+            if $seen_instances{$child->{instance_name}}++;
+        confess "AHB interconnect subordinate child references unknown object '$child->{object_name}'\n"
+            unless $subordinate_by_name{$child->{object_name}};
+        confess "AHB interconnect duplicate subordinate child object reference '$child->{object_name}'\n"
+            if $referenced_objects{$child->{object_name}}++;
+    }
+    for my $subordinate (@$subordinates) {
+        confess "AHB interconnect subordinate object '$subordinate->{name}' is not referenced by a child\n"
+            unless $referenced_objects{$subordinate->{name}};
+    }
 }
 
-sub _validate_bus_compatibility($wiring, $requester_bus, $subordinate_bus) {
+sub _validate_bus_compatibility($wiring, $requester_bus, $subordinates) {
     _require_matching_scalar_bus_field('grant', $wiring, $requester_bus);
     _require_matching_scalar_bus_field('request', $wiring, $requester_bus);
     _require_matching_scalar_bus_field('lock', $wiring, $requester_bus);
     _require_matching_scalar_bus_field('ready', $wiring, $requester_bus);
-    _require_matching_scalar_bus_field('ready', $wiring, { ready => $subordinate_bus->{ready_in} });
-    _require_matching_scalar_bus_field('write', $wiring, $requester_bus, $subordinate_bus);
+    _require_matching_scalar_bus_field('write', $wiring, $requester_bus);
 
     for my $field (qw(response read_data address transfer size write_data)) {
         _require_matching_width_bus_field($field, $wiring, $requester_bus);
-    }
-    for my $field (qw(transfer size write_data)) {
-        _require_matching_width_bus_field($field, $wiring, $subordinate_bus);
     }
     for my $field (qw(burst protection)) {
         _require_matching_width_bus_field($field, $wiring, $requester_bus);
     }
 
-    _require_matching_scalar_bus_field('subordinate_select', $wiring, { subordinate_select => $subordinate_bus->{select} });
-    _require_matching_scalar_bus_field('subordinate_ready_out', $wiring, { subordinate_ready_out => $subordinate_bus->{ready_out} });
-    _require_matching_width_bus_field('subordinate_response', $wiring, { subordinate_response => $subordinate_bus->{response} });
-    _require_matching_width_bus_field('subordinate_read_data', $wiring, { subordinate_read_data => $subordinate_bus->{read_data} });
-    _require_width_binding($subordinate_bus->{address}, 'subordinate.bus.address', 32);
+    my %local_names;
+    for my $subordinate (@$subordinates) {
+        my $subordinate_bus = $subordinate->{bus};
+        _require_matching_scalar_bus_field('ready', $wiring, { ready => $subordinate_bus->{ready_in} });
+        _require_matching_scalar_bus_field('write', $wiring, $subordinate_bus);
+        for my $field (qw(transfer size write_data)) {
+            _require_matching_width_bus_field($field, $wiring, $subordinate_bus);
+        }
+        _require_width_binding($subordinate_bus->{address}, 'subordinate.bus.address', 32);
+        _require_width_binding($subordinate_bus->{response}, 'subordinate.bus.response', 1);
+        _require_width_binding($subordinate_bus->{read_data}, 'subordinate.bus.read_data', 32);
+        for my $signal (
+            $subordinate_bus->{select},
+            $subordinate_bus->{address}{name},
+            $subordinate_bus->{ready_out},
+            $subordinate_bus->{response}{name},
+            $subordinate_bus->{read_data}{name},
+        ) {
+            confess "AHB interconnect duplicate subordinate local signal '$signal'\n"
+                if $local_names{$signal}++;
+        }
+    }
+
+    if (@$subordinates == 1) {
+        my $subordinate_bus = $subordinates->[0]{bus};
+        _require_matching_scalar_bus_field('subordinate_select', $wiring, { subordinate_select => $subordinate_bus->{select} });
+        _require_matching_scalar_bus_field('subordinate_ready_out', $wiring, { subordinate_ready_out => $subordinate_bus->{ready_out} });
+        _require_matching_width_bus_field('subordinate_response', $wiring, { subordinate_response => $subordinate_bus->{response} });
+        _require_matching_width_bus_field('subordinate_read_data', $wiring, { subordinate_read_data => $subordinate_bus->{read_data} });
+    } else {
+        for my $field (qw(subordinate_select subordinate_ready_out subordinate_response subordinate_read_data)) {
+            confess "AHB interconnect two-subordinate wiring must omit scalar bus.$field; use each subordinate bus block for per-subordinate signals\n"
+                if exists $wiring->{$field};
+        }
+    }
 }
 
 sub _require_matching_scalar_bus_field($field, @buses) {
@@ -1148,10 +1419,6 @@ sub _normalize_source_anchors($anchors) {
     }
 
     return \@normalized;
-}
-
-sub _selected_window($contract) {
-    return $contract->{interconnect}{address_map}{windows}[0];
 }
 
 sub _local_address_expr($address, $window) {

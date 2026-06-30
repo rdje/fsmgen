@@ -6177,6 +6177,16 @@ report topology `one_requester_two_subordinate_static_window_interconnect`,
 support identity `intent.ppif_ahb_interconnect_two_subordinate`, and coverage
 `ial2_ppif_ahb_interconnect_two_subordinate_pipeline_cli`. Matching `.ahb`
 alias support remains deferred until after the generic `.ppif` behavior ships.
+`.730` now ships that selected generic `.ppif` behavior. The public source
+`ppif/ahb_interconnect_two_subordinate.ppif` lowers through generated
+`amba_requester.isf`, `ahb_status_subordinate.isf`,
+`ahb_control_subordinate.isf`, and `ahb_interconnect.isf` before generated
+`amba_requester.fsm`, `ahb_status_subordinate.fsm`,
+`ahb_control_subordinate.fsm`, `ahb_interconnect.fsm`, and aggregate
+`ahb_tb.fsm`, emits HDL module `ahb_tb`, reports topology
+`one_requester_two_subordinate_static_window_interconnect`, support-accounts as
+`intent.ppif_ahb_interconnect_two_subordinate`, and keeps matching
+two-subordinate `.ahb` alias behavior deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

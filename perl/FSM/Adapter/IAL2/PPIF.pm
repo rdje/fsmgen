@@ -173,7 +173,8 @@ sub _validate_profile_alias_contract($source_label, $contract) {
         confess "Error: .ahb source '$source_label' profile ahb requires exactly one (ahb-requester ...) object, exactly one (ahb-subordinate ...) object, or the selected aggregate one-requester/one-subordinate (ahb-interconnect ...) shape in this slice\n"
             unless _is_ahb_requester_contract($contract)
                 || _is_ahb_subordinate_contract($contract)
-                || _is_ahb_interconnect_contract($contract);
+                || (_is_ahb_interconnect_contract($contract)
+                    && _ahb_interconnect_subordinate_count($contract) == 1);
         return;
     }
 
@@ -255,9 +256,12 @@ sub _contract_from_root($root, $source_label) {
     if (@ahb_interconnects) {
         confess "Error: $surface source '$source_label' profile '$profile' does not match (ahb-interconnect ...); expected ahb\n"
             unless $profile eq 'ahb';
-        confess "Error: $surface source '$source_label' AHB interconnect requires exactly one (ahb-requester ...), one (ahb-subordinate ...), and one (ahb-interconnect ...) object in this slice\n"
+        my $cardinality_message = $surface eq '.ahb'
+            ? "Error: $surface source '$source_label' AHB interconnect requires exactly one (ahb-requester ...), one (ahb-subordinate ...), and one (ahb-interconnect ...) object in this slice\n"
+            : "Error: $surface source '$source_label' AHB interconnect requires exactly one (ahb-requester ...), one or two (ahb-subordinate ...) objects, and one (ahb-interconnect ...) object in this slice\n";
+        confess $cardinality_message
             unless @ahb_requesters == 1
-                && @ahb_subordinates == 1
+                && (@ahb_subordinates == 1 || @ahb_subordinates == 2)
                 && @ahb_interconnects == 1
                 && !@channels
                 && !@managers
@@ -272,6 +276,7 @@ sub _contract_from_root($root, $source_label) {
             source       => $source,
             requester    => $ahb_requesters[0],
             subordinate  => $ahb_subordinates[0],
+            subordinates => [@ahb_subordinates],
             interconnect => $ahb_interconnects[0],
         };
     }
@@ -1177,26 +1182,36 @@ sub _parse_ahb_interconnect($body, $source_label) {
 
 sub _parse_ahb_interconnect_children_block($items, $source_label, $name) {
     my %children;
+    my @subordinates;
 
     for my $clause (@$items) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         confess "Error: .ppif (ahb-interconnect $name (children ...)) supports only (requester INSTANCE OBJECT) and (subordinate INSTANCE OBJECT)\n"
             unless $head =~ /\A(?:requester|subordinate)\z/;
-        confess "Error: .ppif (ahb-interconnect $name (children ...)) has duplicate ($head ...) clause\n"
-            if exists $children{$head};
+        confess "Error: .ppif (ahb-interconnect $name (children ...)) has duplicate (requester ...) clause\n"
+            if $head eq 'requester' && exists $children{$head};
         confess "Error: .ppif (ahb-interconnect $name (children ($head ...))) requires exactly instance and object scalar names\n"
             unless @body == 2 && !ref($body[0]) && length($body[0]) && !ref($body[1]) && length($body[1]);
-        $children{$head} = {
+        my $child = {
             instance_name => $body[0],
             object_name   => $body[1],
         };
+        if ($head eq 'subordinate') {
+            push @subordinates, $child;
+            next;
+        }
+        $children{$head} = $child;
     }
 
-    for my $required (qw(requester subordinate)) {
-        confess "Error: .ppif (ahb-interconnect $name (children ...)) is missing required ($required ...) clause\n"
-            unless exists $children{$required};
-    }
+    confess "Error: .ppif (ahb-interconnect $name (children ...)) is missing required (requester ...) clause\n"
+        unless exists $children{requester};
+    confess "Error: .ppif (ahb-interconnect $name (children ...)) is missing required (subordinate ...) clause\n"
+        unless @subordinates;
+    confess "Error: .ppif (ahb-interconnect $name (children ...)) supports one or two (subordinate ...) clauses in this slice\n"
+        unless @subordinates == 1 || @subordinates == 2;
 
+    $children{subordinate} = $subordinates[0];
+    $children{subordinates} = \@subordinates;
     return \%children;
 }
 
@@ -1213,8 +1228,8 @@ sub _parse_ahb_interconnect_address_map_block($items, $source_label, $name) {
         push @windows, _parse_ahb_interconnect_address_window(\@body, $source_label, $name, $map_name);
     }
 
-    confess "Error: .ppif (ahb-interconnect $name (address-map $map_name ...)) requires exactly one (window ...) clause in this slice\n"
-        unless @windows == 1;
+    confess "Error: .ppif (ahb-interconnect $name (address-map $map_name ...)) requires one or two (window ...) clauses in this slice\n"
+        unless @windows == 1 || @windows == 2;
 
     return {
         name    => $map_name,
@@ -1318,7 +1333,7 @@ sub _parse_ahb_interconnect_wiring_block($items, $source_label, $name) {
             : _parse_apb_scalar_binding(\@body, $source_label, "ahb-interconnect $name wiring $wiring_name $head");
     }
 
-    for my $required (qw(grant request ready response read_data address transfer write size burst protection lock write_data subordinate_select subordinate_ready_out subordinate_response subordinate_read_data)) {
+    for my $required (qw(grant request ready response read_data address transfer write size burst protection lock write_data)) {
         my $clause = $required;
         $clause =~ s/_/-/g;
         confess "Error: .ppif (ahb-interconnect $name (wiring $wiring_name ...)) is missing required ($clause ...) clause\n"
@@ -2767,6 +2782,13 @@ sub _is_ahb_requester_contract($contract) {
 sub _is_ahb_interconnect_contract($contract) {
     return ref($contract) eq 'HASH'
         && ($contract->{kind} // '') eq 'ahb_interconnect';
+}
+
+sub _ahb_interconnect_subordinate_count($contract) {
+    return 0 unless _is_ahb_interconnect_contract($contract);
+    return scalar @{$contract->{subordinates}}
+        if ref($contract->{subordinates}) eq 'ARRAY';
+    return ref($contract->{subordinate}) eq 'HASH' ? 1 : 0;
 }
 
 sub _is_ahb_subordinate_contract($contract) {
