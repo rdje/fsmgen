@@ -10004,6 +10004,16 @@ subordinate review artifacts. The aggregate reports still keep byte lanes in
 deferred residue, so `.741` must settle source shape, report/residue movement,
 support identities, validation, and `.ahb` alias sequencing before adding any
 public aggregate byte-lane source.
+`.741` selects `.742`, public contract selection for a combined bounded
+generic `.ppif` AHB aggregate byte-lane/narrow-transfer family. The audit
+confirms the current parser/generator substrate can already lower one- and
+two-subordinate aggregate candidates with byte-lane subordinate policies, but
+the aggregate report must still explicitly select propagated
+`narrow_transfer_policy`/byte-lane report shape and remove byte-lane residue
+only from the future byte-lane aggregate sources. Likely future sources are
+`ppif/ahb_interconnect_byte_lane.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`; matching `.ahb`
+aliases stay separate follow-on work.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -6288,6 +6288,17 @@ identities, validation strategy, and `.ahb` alias sequencing before any public
 aggregate byte-lane source is added. Optional signals, burst `SEQ`, broader
 interconnect/decode, direct backend, verification-output, backend-language
 variants, and VHDL remain deferred.
+`.741` now selects `.742`, public contract selection for a combined bounded
+generic `.ppif` AHB aggregate byte-lane/narrow-transfer family. Current-code
+in-memory probes confirm both selected aggregate topologies can parse
+byte-lane subordinate policies and emit byte-lane subordinate review artifacts:
+the likely future sources are `ppif/ahb_interconnect_byte_lane.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`. Direct implementation
+remains deferred until `.742` settles exact source names, child bindings,
+windows, report shape, residue movement, support identities, validation, and
+`.ahb` alias sequencing. Existing word-only aggregate `.ppif`/`.ahb` behavior,
+optional signals, burst `SEQ`, broader AHB behavior, direct backend,
+verification-output, backend-language variants, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
