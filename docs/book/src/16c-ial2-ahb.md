@@ -1201,6 +1201,17 @@ matching aggregate aliases, BUSY parking, halfword/word burst `SEQ`, wider or
 indefinite bursts, multi-word/register-bank progression, optional signals,
 broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.768` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.769`, a no-behavior public contract
+selection for a combined bounded generic `.ppif` aggregate HBURST-aware
+byte-lane `SEQ` propagation family. Likely source names are
+`ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`. `.769`
+must pin exact paths, child object names, subordinate-local HBURST names,
+support identities, coverage keys, child HBURST fanout policy, aggregate
+report schema, residue movement, tests, docs, and later matching aggregate
+`.ahb` alias sequencing before implementation.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:

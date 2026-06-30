@@ -5516,6 +5516,15 @@ subordinate-local HBURST forwarding, top-level connection policy,
 `composition.seq_policy_propagation` recognition, candidate source names,
 support identities, report/residue movement, tests, docs, and preservation
 before any aggregate HBURST behavior changes.
+`.768` now selects `.769`, a no-behavior public contract selection for a
+combined bounded generic `.ppif` aggregate HBURST-aware byte-lane `SEQ`
+propagation family. The likely source names are
+`ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`, but `.769`
+must pin the exact paths, child object names, subordinate-local HBURST names,
+support identities, coverage keys, child HBURST fanout policy, aggregate
+report schema, residue movement, tests, docs, and later matching aggregate
+`.ahb` alias sequence before implementation.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8229,6 +8238,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_HBURST_SEQ_PPIF_NEXT_SLICE_SELECTION.md` — records the `.765` no-behavior selector after the shipped generic AHB HBURST-aware byte-lane `SEQ` `.ppif` source and selects `.766`, direct implementation of the matching `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb` profile alias with support identity `intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq`.
 - `docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.766` shipped matching `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb` profile alias, support accounting, alias-only residue cleanup, generated review artifacts, preservation checks, validation, and remaining aggregate/burst/backend/protocol residue.
 - `docs/IAL2_POST_AHB_HBURST_SEQ_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.767` no-behavior selector after the endpoint HBURST-aware `.ahb` alias shipment and selects `.768`, aggregate AHB HBURST propagation readiness audit after current aggregate candidate probes fail closed on missing subordinate-local HBURST wiring.
+- `docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_READINESS_AUDIT.md` — records the `.768` no-behavior readiness audit for bounded aggregate AHB HBURST propagation and selects `.769`, public contract selection for likely `ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif` sources.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

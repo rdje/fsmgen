@@ -6571,6 +6571,15 @@ subordinate-local HBURST forwarding, top-level connection policy,
 `composition.seq_policy_propagation` recognition, candidate source names,
 support identities, report/residue movement, tests, docs, and preservation
 before any aggregate HBURST behavior changes.
+`.768` now selects `.769`, a no-behavior public contract selection for a
+combined bounded generic `.ppif` aggregate HBURST-aware byte-lane `SEQ`
+propagation family. The likely source names are
+`ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`, but `.769`
+must pin the exact paths, child object names, subordinate-local HBURST names,
+support identities, coverage keys, child HBURST fanout policy, aggregate
+report schema, residue movement, tests, docs, and later matching aggregate
+`.ahb` alias sequence before implementation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
