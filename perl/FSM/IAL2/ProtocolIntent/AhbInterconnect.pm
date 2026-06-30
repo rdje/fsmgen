@@ -758,6 +758,30 @@ sub _build_report(%args) {
     my $hdl_entry = $args{hdl_entry};
     my @fsm_files = sort keys %{$args{fsm_files} || {}};
     my $ic = $contract->{interconnect};
+    my $composition = {
+        name                          => $ic->{name},
+        topology                      => _topology_name($contract),
+        child_instance_count          => 2 + scalar(@{$contract->{subordinates}}),
+        endpoint_child_instance_count => 1 + scalar(@{$contract->{subordinates}}),
+        requester                     => _clone_jsonish($ic->{children}{requester}),
+        subordinate                   => _subordinate_report_entry($contract),
+        subordinates                  => _subordinate_report_entries($contract),
+        address_map                   => _address_map_report($contract),
+        decode                        => _clone_jsonish($ic->{decode}),
+        response_mux                  => _response_mux_report($contract),
+        generated_interconnect        => {
+            object_name   => $interconnect->{object_name},
+            instance_name => $interconnect->{instance_name},
+            ial1_artifact => $interconnect->{ial1_name},
+            ial0_artifact => $interconnect->{entry_artifact},
+        },
+        wiring                        => _clone_jsonish($ic->{wiring}),
+        width_policy                  => _width_policy($contract),
+        top_ports                     => [map { _clone_jsonish($_) } _top_port_specs($contract)],
+    };
+    if (my $byte_lane_propagation = _byte_lane_propagation_report($contract, \@subordinate_results)) {
+        $composition->{byte_lane_propagation} = $byte_lane_propagation;
+    }
 
     return {
         schema => 'fsmgen.ial2.protocol_intent.ahb_interconnect.v1',
@@ -778,27 +802,7 @@ sub _build_report(%args) {
             object  => 'ahb-interconnect',
             role    => $ic->{role},
         },
-        composition => {
-            name                          => $ic->{name},
-            topology                      => _topology_name($contract),
-            child_instance_count          => 2 + scalar(@{$contract->{subordinates}}),
-            endpoint_child_instance_count => 1 + scalar(@{$contract->{subordinates}}),
-            requester                     => _clone_jsonish($ic->{children}{requester}),
-            subordinate                   => _subordinate_report_entry($contract),
-            subordinates                  => _subordinate_report_entries($contract),
-            address_map                   => _address_map_report($contract),
-            decode                        => _clone_jsonish($ic->{decode}),
-            response_mux                  => _response_mux_report($contract),
-            generated_interconnect        => {
-                object_name   => $interconnect->{object_name},
-                instance_name => $interconnect->{instance_name},
-                ial1_artifact => $interconnect->{ial1_name},
-                ial0_artifact => $interconnect->{entry_artifact},
-            },
-            wiring                        => _clone_jsonish($ic->{wiring}),
-            width_policy                  => _width_policy($contract),
-            top_ports                     => [map { _clone_jsonish($_) } _top_port_specs($contract)],
-        },
+        composition => $composition,
         children => [
             _child_report('requester', $ic->{children}{requester}, $requester_result),
             _interconnect_child_report($contract, $interconnect),
@@ -1049,6 +1053,8 @@ sub _child_report($role, $child, $result) {
     };
     $report->{generated_instance_name} = _generated_instance_name($child)
         if defined $child->{generated_instance_name};
+    $report->{narrow_transfer_policy} = _clone_jsonish($result->{report}{narrow_transfer_policy})
+        if defined $result->{report}{narrow_transfer_policy};
     $report->{burst} = _clone_jsonish($result->{report}{burst})
         if defined $result->{report}{burst};
     $report->{response} = _clone_jsonish($result->{report}{response})
@@ -1076,12 +1082,105 @@ sub _width_policy($contract) {
     };
 }
 
+sub _byte_lane_propagation_report($contract, $subordinate_results) {
+    return undef unless _all_subordinates_have_byte_lane_policy($contract);
+    my @bindings = _subordinate_binding_entries($contract);
+    return undef unless @$subordinate_results == @bindings;
+
+    my $bus = $contract->{interconnect}{wiring}{bus};
+    my @subordinates;
+    for my $index (0 .. $#bindings) {
+        my $child_report = $subordinate_results->[$index]{report};
+        return undef unless ref($child_report->{narrow_transfer_policy}) eq 'HASH';
+        my $binding = $bindings[$index];
+        my $endpoint = $binding->{endpoint};
+        my $sub_bus = $endpoint->{bus};
+        push @subordinates, {
+            instance_name          => $binding->{child}{instance_name},
+            object_name            => $binding->{child}{object_name},
+            address_window         => _clone_jsonish($binding->{window}),
+            transfer               => $endpoint->{transfer}{name},
+            supported_size         => _clone_jsonish($endpoint->{transfer}{supported_size}),
+            narrow_transfer_policy => _clone_jsonish($child_report->{narrow_transfer_policy}),
+            local_address_policy   => 'subtract_window_base_before_subordinate_lane_policy',
+            select_signal          => $sub_bus->{select},
+            local_address_signal   => _clone_jsonish($sub_bus->{address}),
+            ready_out_signal       => $sub_bus->{ready_out},
+            response_signal        => _clone_jsonish($sub_bus->{response}),
+            read_data_signal       => _clone_jsonish($sub_bus->{read_data}),
+        };
+    }
+
+    return {
+        selected             => JSON::PP::true,
+        mode                 => 'subordinate_owned_narrow_transfer_policy',
+        local_address_policy => 'subtract_window_base_before_subordinate_lane_policy',
+        mapped_hit_owner     => 'selected_subordinate',
+        unmapped_error_owner => 'interconnect',
+        request_forwarding   => {
+            address    => _clone_jsonish($bus->{address}),
+            transfer   => _clone_jsonish($bus->{transfer}),
+            write      => $bus->{write},
+            size       => _clone_jsonish($bus->{size}),
+            write_data => _clone_jsonish($bus->{write_data}),
+            ready      => $bus->{ready},
+        },
+        response_forwarding  => {
+            ready     => $bus->{ready},
+            response  => _clone_jsonish($bus->{response}),
+            read_data => _clone_jsonish($bus->{read_data}),
+            hresp_mapping => {
+                subordinate_width => 1,
+                requester_width   => $bus->{response}{width},
+                okay              => {
+                    subordinate => "1'b0",
+                    requester   => "2'b00",
+                },
+                error             => {
+                    subordinate => "1'b1",
+                    requester   => "2'b01",
+                },
+            },
+        },
+        subordinates         => \@subordinates,
+    };
+}
+
+sub _all_subordinates_have_byte_lane_policy($contract) {
+    return 0 unless ref($contract) eq 'HASH';
+    my @subordinates = @{$contract->{subordinates} || []};
+    return 0 unless @subordinates;
+    for my $subordinate (@subordinates) {
+        return 0 unless _subordinate_has_byte_lane_policy($subordinate);
+    }
+    return 1;
+}
+
+sub _subordinate_has_byte_lane_policy($subordinate) {
+    return 0 unless ref($subordinate) eq 'HASH' && ref($subordinate->{transfer}) eq 'HASH';
+    my $transfer = $subordinate->{transfer};
+    return 0 unless ($transfer->{name} // '') eq 'ahb_lite_byte_lane_access';
+
+    my @sizes = @{$transfer->{supported_size} || []};
+    my %sizes = map { $_ => 1 } @sizes;
+    return 0 unless @sizes == 3 && $sizes{byte} && $sizes{halfword} && $sizes{word};
+    return 0 unless ($transfer->{lane_order} // '') eq 'little-endian';
+    return 0 unless ($transfer->{narrow_write} // '') eq 'preserve-inactive-lanes';
+    return 0 unless ($transfer->{narrow_read} // '') eq 'zero-fill-inactive-lanes';
+    return 0 unless ($transfer->{unaligned_access} // '') eq 'error';
+    return 0 unless ($transfer->{crossing_access} // '') eq 'error';
+    return 1;
+}
+
 sub _unsupported_residue($contract = undef) {
     my $subordinate_count = ref($contract) eq 'HASH' ? scalar @{$contract->{subordinates} || []} : 1;
+    my $byte_lane_selected = _all_subordinates_have_byte_lane_policy($contract);
     my $interconnect_residue = $subordinate_count == 2
         ? {
             id     => 'ahb_broader_interconnect_decode_deferred',
-            detail => 'The first one-requester/two-subordinate static-window AHB interconnect/decode source ships; broader subordinate cardinality, multiple requesters, arbitration, bus matrices, programmable or dynamic windows, optional AHB signals, burst continuation, byte lanes, direct backend, verification-output, backend-language variants, AXI/APB behavior, and VHDL remain future work.',
+            detail => $byte_lane_selected
+                ? 'The first one-requester/two-subordinate static-window AHB interconnect/decode source ships with subordinate-owned byte/halfword/word narrow transfers; broader subordinate cardinality, multiple requesters, arbitration, bus matrices, programmable or dynamic windows, optional AHB signals, burst continuation, direct backend, verification-output, backend-language variants, AXI/APB behavior, and VHDL remain future work.'
+                : 'The first one-requester/two-subordinate static-window AHB interconnect/decode source ships; broader subordinate cardinality, multiple requesters, arbitration, bus matrices, programmable or dynamic windows, optional AHB signals, burst continuation, byte lanes, direct backend, verification-output, backend-language variants, AXI/APB behavior, and VHDL remain future work.',
         }
         : {
             id     => 'ahb_multi_subordinate_decode_deferred',
@@ -1095,7 +1194,9 @@ sub _unsupported_residue($contract = undef) {
         $interconnect_residue,
         {
             id     => 'ahb_optional_signal_residue',
-            detail => 'Optional AHB and AHB5 property-gated signals, byte lanes, exclusive access, protection policy effects, and legacy two-bit subordinate HRESP compatibility remain deferred.',
+            detail => $byte_lane_selected
+                ? 'Optional AHB and AHB5 property-gated signals, exclusive access, protection policy effects, and legacy two-bit subordinate HRESP compatibility remain deferred.'
+                : 'Optional AHB and AHB5 property-gated signals, byte lanes, exclusive access, protection policy effects, and legacy two-bit subordinate HRESP compatibility remain deferred.',
         },
         {
             id     => 'ahb_burst_seq_support_deferred',

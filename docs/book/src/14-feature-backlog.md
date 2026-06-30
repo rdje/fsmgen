@@ -10024,6 +10024,20 @@ objects. The selected support identities are
 `intent.ppif_ahb_interconnect_byte_lane` and
 `intent.ppif_ahb_interconnect_two_subordinate_byte_lane`. `.ahb` aliases and
 broader AHB work remain deferred.
+`.743` ships that selected generic `.ppif` family. The one-subordinate source
+emits `ahb_lite_subordinate_byte_lane.isf` /
+`ahb_lite_subordinate_byte_lane.fsm`; the two-subordinate source emits
+`ahb_status_subordinate_byte_lane.isf`,
+`ahb_control_subordinate_byte_lane.isf`,
+`ahb_status_subordinate_byte_lane.fsm`, and
+`ahb_control_subordinate_byte_lane.fsm`; both keep aggregate HDL entry
+`ahb_tb`. Schedule/report JSON now exposes
+`composition.byte_lane_propagation` and child `narrow_transfer_policy` for the
+selected aggregate byte-lane `.ppif` sources only. Existing word-only
+aggregate `.ppif`/`.ahb` behavior, endpoint byte-lane `.ppif`/`.ahb`
+behavior, matching aggregate byte-lane `.ahb` aliases, optional signals,
+burst `SEQ`, broader AHB behavior, direct backend, verification-output,
+backend-language variants, and VHDL remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

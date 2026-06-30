@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.742: select AHB aggregate byte-lane contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.743` is active; implement combined bounded generic AHB aggregate byte-lane propagation sources.
-- recently_done: `.742` selected `.743`, direct implementation of `ppif/ahb_interconnect_byte_lane.ppif` and `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, with support identities `intent.ppif_ahb_interconnect_byte_lane` and `intent.ppif_ahb_interconnect_two_subordinate_byte_lane`, report block `composition.byte_lane_propagation`, child `narrow_transfer_policy` propagation, and `.ahb` aliases deferred.
-- in_flight_uncommitted: none after the `.742` commit; ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.743: ship AHB aggregate byte-lane PPIF`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.744` is active; select the next AHB follow-on after generic aggregate byte-lane `.ppif` shipment.
+- recently_done: `.743` shipped `ppif/ahb_interconnect_byte_lane.ppif` and `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, support-accounted as `intent.ppif_ahb_interconnect_byte_lane` and `intent.ppif_ahb_interconnect_two_subordinate_byte_lane`, with report block `composition.byte_lane_propagation`, child `narrow_transfer_policy` propagation, and matching aggregate byte-lane `.ahb` aliases still deferred.
+- in_flight_uncommitted: none after the `.743` commit; ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The `.705` AHB source-reference artifact blocker is resolved through `.706`; `.707`-.742 now carry source facts, direct seed, public requester/subordinate/interconnect contracts, generated-IAL1 output reset/default substrate, public `.ppif` behavior, endpoint/aggregate `.ahb` aliases, generic two-subordinate behavior, matching two-subordinate `.ahb` alias behavior, remaining-residue audit, byte-lane/narrow-transfer readiness audit, selected/shipped byte-lane subordinate `.ppif`/`.ahb` behavior, aggregate byte-lane readiness audit, and selected aggregate byte-lane implementation contract. The `.730` RAM-guarded `t/248` attempt and `.737` RAM-guarded combined focused prove attempt were blocked by pre-existing host memory pressure; direct lightweight/focused tests passed.
-- next_action: Run `IAL2-FEATURE-COMPLETENESS-FRONTIER.743`: add the two selected generic aggregate byte-lane `.ppif` sources, report/support/test coverage, docs, Knowledge Map, and closeout gates without adding `.ahb` aliases.
+- next_action: Run `IAL2-FEATURE-COMPLETENESS-FRONTIER.744`: select the next exact AHB follow-on owner without behavior changes, likely matching aggregate byte-lane `.ahb` alias sequencing unless evidence points elsewhere.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

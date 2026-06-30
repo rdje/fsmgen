@@ -6244,9 +6244,9 @@ transfer, unmapped, unaligned, or crossing accesses.
 `narrow_transfer_policy` with accepted sizes, `HSIZE` encodings, address
 rules, little-endian byte-lane masks, inactive-lane write/read policies, and
 ERROR policy. Existing word-only subordinate `.ppif`/`.ahb` behavior remains
-unchanged. Remaining AHB work includes byte-lane propagation through aggregate
-interconnects, optional signals, burst `SEQ`,
-broader interconnect/decode, completer/full-manager behavior, direct backend,
+unchanged. After `.743`, remaining AHB work includes matching aggregate
+byte-lane `.ahb` aliases, optional signals, burst `SEQ`, broader
+interconnect/decode, completer/full-manager behavior, direct backend,
 verification-output generation, backend-language variants, and VHDL. `.738`
 now owns the next no-behavior AHB follow-on selector.
 `.738` now selects `.739`, direct implementation of the matching bounded
@@ -6311,6 +6311,21 @@ byte-lane residue removal only from the new selected aggregate sources.
 Matching `.ahb` aliases, optional signals, burst `SEQ`, broader AHB behavior,
 direct backend, verification-output, backend-language variants, and VHDL
 remain deferred.
+`.743` now ships that selected generic `.ppif` AHB aggregate byte-lane
+propagation family. The new public sources
+`ppif/ahb_interconnect_byte_lane.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane.ppif` lower through generated
+byte-lane subordinate `.isf` and `.fsm` review artifacts before the aggregate
+`ahb_tb` HDL entry. They support-account as
+`intent.ppif_ahb_interconnect_byte_lane` and
+`intent.ppif_ahb_interconnect_two_subordinate_byte_lane`, report
+`composition.byte_lane_propagation`, propagate child `narrow_transfer_policy`,
+and remove byte-lane wording from aggregate residue only for the selected
+byte-lane aggregate `.ppif` sources. Existing word-only aggregate `.ppif` and
+`.ahb` behavior, endpoint byte-lane `.ppif` and `.ahb` behavior, matching
+aggregate byte-lane `.ahb` aliases, optional signals, burst `SEQ`, broader AHB
+behavior, direct backend, verification-output, backend-language variants, and
+VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
