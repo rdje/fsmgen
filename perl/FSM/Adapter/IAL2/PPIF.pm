@@ -76,6 +76,7 @@ sub parse_source($self, @args) {
             _remove_unsupported_residue_id($result, 'ahb_aggregate_profile_alias_deferred');
             _remove_unsupported_residue_id($result, 'ahb_profile_alias_deferred');
             _remove_unsupported_residue_id($result, 'ahb_subordinate_profile_alias_deferred');
+            _remove_ahb_seq_alias_exposure_from_residue($result);
         }
         return $result;
     }

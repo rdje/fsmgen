@@ -30,8 +30,8 @@ module_name: ahb_tb
 composition_child_count: 4
 ```
 
-Matching aggregate `.ahb` aliases are not shipped by this slice. The reserved
-follow-on paths remain:
+Matching aggregate `.ahb` aliases were not shipped by `.758`; they are now
+shipped by `IAL2-FEATURE-COMPLETENESS-FRONTIER.760` at:
 
 ```text
 ppif/ahb_interconnect_byte_lane_seq.ahb
@@ -165,8 +165,8 @@ Child reports for embedded byte-lane `SEQ` subordinates carry both
 
 The aggregate `SEQ` reports remove stale aggregate-propagation wording from
 the top-level and subordinate-child `ahb_burst_seq_support_deferred` details.
-They preserve true remaining residue for matching aggregate `.ahb` aliases,
-HBURST-driven length/wrap semantics, BUSY-in-burst handling,
+They preserve true remaining residue for HBURST-driven length/wrap semantics,
+BUSY-in-burst handling,
 multi-word/register-bank progression, optional/property-gated AHB signals,
 broader AHB behavior, direct backend behavior, verification-output generation,
 backend-language variants, AXI/APB behavior, and VHDL.

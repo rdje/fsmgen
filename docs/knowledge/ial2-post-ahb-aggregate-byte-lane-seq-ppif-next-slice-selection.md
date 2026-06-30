@@ -4,7 +4,6 @@ title: AHB aggregate byte-lane SEQ PPIF follow-on selects aggregate SEQ aliases
 answers:
   - "what follows AHB aggregate byte-lane SEQ PPIF?"
   - "which task will add AHB aggregate byte-lane SEQ .ahb aliases?"
-  - "does ppif/ahb_interconnect_byte_lane_seq.ahb exist yet?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.759 select?"
 date: 2026-06-30
 status: current
@@ -17,13 +16,13 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.759|IAL2-FEATURE-COMPLETENE
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.760`, direct implementation of the matching
 bounded public AHB aggregate byte-lane in-word `SEQ` `.ahb` profile aliases.
 
-The selected future sources are
+The selected implementation sources were
 `ppif/ahb_interconnect_byte_lane_seq.ahb` and
 `ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ahb`, mirroring the
 shipped generic sources `ppif/ahb_interconnect_byte_lane_seq.ppif` and
 `ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif`.
 
-The selected aliases must support-account as
+The selected aliases were required to support-account as
 `intent.ahb_profile_alias_interconnect_byte_lane_seq` and
 `intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_seq`, use
 coverage keys `ial2_ahb_profile_alias_interconnect_byte_lane_seq_pipeline_cli`

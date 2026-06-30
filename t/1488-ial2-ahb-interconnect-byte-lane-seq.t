@@ -213,8 +213,8 @@ subtest 'existing AHB aggregate and endpoint boundaries stay unchanged' => sub {
     is($endpoint_seq_ppif->{report}{transfer}{seq_policy}{mode}, 'in_word_progressive', 'endpoint byte-lane SEQ PPIF keeps endpoint SEQ report');
     ok(!exists $endpoint_seq_ppif->{report}{composition}, 'endpoint byte-lane SEQ PPIF does not gain aggregate composition report');
 
-    ok(!-e one_subordinate_seq_alias_path(), 'matching one-subordinate aggregate byte-lane SEQ .ahb alias remains unshipped');
-    ok(!-e two_subordinate_seq_alias_path(), 'matching two-subordinate aggregate byte-lane SEQ .ahb alias remains unshipped');
+    ok(-f one_subordinate_seq_alias_path(), 'matching one-subordinate aggregate byte-lane SEQ .ahb alias now ships as a separate profile-alias surface');
+    ok(-f two_subordinate_seq_alias_path(), 'matching two-subordinate aggregate byte-lane SEQ .ahb alias now ships as a separate profile-alias surface');
 };
 
 done_testing();

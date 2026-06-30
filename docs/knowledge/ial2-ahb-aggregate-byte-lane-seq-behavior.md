@@ -32,4 +32,4 @@ ownership, `supported_seq_size`, and child `seq_policy` propagation. Child
 reports carry both `narrow_transfer_policy` and `transfer.seq_policy`.
 
 Matching aggregate `.ahb` aliases for the aggregate byte-lane `SEQ` sources
-remain deferred after `.758`.
+were deferred after `.758` and are now shipped by `.760`.
