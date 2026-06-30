@@ -6412,6 +6412,20 @@ parking, multi-word/register-bank progression, `.ahb` alias exposure,
 aggregate propagation, optional/property-gated AHB signals, broader AHB,
 direct backend, verification-output, backend-language variants, AXI/APB, and
 VHDL remain deferred.
+`.753` now selects `.754`, direct implementation of the matching bounded
+public AHB byte-lane in-word `SEQ` subordinate `.ahb` profile alias. The
+selected future source is `ppif/ahb_lite_subordinate_byte_lane_seq.ahb`,
+mirroring the shipped generic `.ppif` source, support-accounting as
+`intent.ahb_profile_alias_subordinate_byte_lane_seq`, using coverage
+`ial2_ahb_profile_alias_subordinate_byte_lane_seq_pipeline_cli`, preserving
+generated `ahb_lite_subordinate_byte_lane_seq.isf` /
+`ahb_lite_subordinate_byte_lane_seq.fsm`, preserving `transfer.seq_policy`,
+and removing `.ahb alias exposure` from the alias report's remaining
+`ahb_burst_seq_support_deferred` detail. Aggregate `SEQ` propagation, HBURST
+length/wrap semantics, BUSY-in-burst parking, multi-word/register-bank
+progression, optional/property-gated AHB signals, broader AHB behavior, direct
+backend, verification-output generation, backend-language variants, AXI/APB,
+and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
