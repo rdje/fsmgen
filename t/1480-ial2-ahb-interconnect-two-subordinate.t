@@ -142,14 +142,6 @@ subtest 'malformed two-subordinate AHB interconnect PPIF sources fail closed' =>
             },
             qr/two-subordinate wiring must omit scalar bus.subordinate_select/,
         ],
-        [
-            'two-subordinate aggregate via .ahb alias',
-            sub {
-                return sample_two_subordinate_ppif();
-            },
-            qr/profile ahb requires exactly one \(ahb-requester \.\.\.\) object, exactly one \(ahb-subordinate \.\.\.\) object, or the selected aggregate one-requester\/one-subordinate \(ahb-interconnect \.\.\.\) shape/,
-            'two-subordinate.ahb',
-        ],
     );
 
     for my $case (@cases) {

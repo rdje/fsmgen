@@ -54,6 +54,7 @@ subtest 'adapter accepts the selected aggregate AHB interconnect .ahb profile al
 
     my %alias_residue = map { $_->{id} => 1 } @{$alias->{report}{unsupported_residue}};
     ok(!$alias_residue{ahb_aggregate_profile_alias_deferred}, '.ahb report removes stale aggregate profile-alias residue');
+    ok(!residue_id_occurs($alias->{report}, 'ahb_aggregate_profile_alias_deferred'), '.ahb report removes stale aggregate profile-alias residue from nested children');
     ok($alias_residue{ahb_multi_subordinate_decode_deferred}, '.ahb report keeps multi-subordinate residue explicit');
     ok($alias_residue{ahb_optional_signal_residue}, '.ahb report keeps optional-signal residue explicit');
     ok($alias_residue{ahb_burst_seq_support_deferred}, '.ahb report keeps burst SEQ residue explicit');
@@ -97,7 +98,7 @@ subtest 'aggregate interconnect .ahb diagnostics stay distinct' => sub {
     ok(!$wrong_object_ok, '.ahb profile with unsupported object breadth is rejected');
     like(
         $@,
-        qr/profile ahb requires exactly one \(ahb-requester \.\.\.\) object, exactly one \(ahb-subordinate \.\.\.\) object, or the selected aggregate one-requester\/one-subordinate \(ahb-interconnect \.\.\.\) shape in this slice/,
+        qr/profile ahb requires exactly one \(ahb-requester \.\.\.\) object, exactly one \(ahb-subordinate \.\.\.\) object, the selected aggregate one-requester\/one-subordinate \(ahb-interconnect \.\.\.\) shape, or the selected aggregate one-requester\/two-subordinate \(ahb-interconnect \.\.\.\) shape in this slice/,
         '.ahb unsupported object diagnostic names the selected aggregate shape',
     );
 
@@ -109,7 +110,7 @@ subtest 'aggregate interconnect .ahb diagnostics stay distinct' => sub {
     ok(!$missing_subordinate_ok, 'aggregate .ahb without the subordinate object is rejected');
     like(
         $@,
-        qr/AHB interconnect requires exactly one \(ahb-requester \.\.\.\), one \(ahb-subordinate \.\.\.\), and one \(ahb-interconnect \.\.\.\) object in this slice/,
+        qr/AHB interconnect requires exactly one \(ahb-requester \.\.\.\), one or two \(ahb-subordinate \.\.\.\) objects, and one \(ahb-interconnect \.\.\.\) object in this slice/,
         'aggregate .ahb missing-subordinate diagnostic is targeted',
     );
 };
@@ -155,6 +156,7 @@ subtest 'schedule JSON and outdir expose aggregate .ahb review artifacts' => sub
     );
     my %schedule_residue = map { $_->{id} => 1 } @{$schedule->{unsupported_residue}};
     ok(!$schedule_residue{ahb_aggregate_profile_alias_deferred}, 'aggregate .ahb schedule JSON removes stale aggregate profile-alias residue');
+    ok(!residue_id_occurs($schedule, 'ahb_aggregate_profile_alias_deferred'), 'aggregate .ahb schedule JSON removes stale aggregate profile-alias residue from nested children');
     ok($schedule_residue{ahb_multi_subordinate_decode_deferred}, 'aggregate .ahb schedule JSON keeps multi-subordinate residue');
     ok($schedule_residue{ahb_optional_signal_residue}, 'aggregate .ahb schedule JSON keeps optional-signal residue');
 
@@ -229,4 +231,31 @@ sub slurp {
 sub sorted {
     my ($values) = @_;
     return [sort @$values];
+}
+
+sub residue_id_occurs {
+    my ($node, $residue_id) = @_;
+    return 0 unless ref($node);
+
+    if (ref($node) eq 'HASH') {
+        if (ref($node->{unsupported_residue}) eq 'ARRAY') {
+            for my $entry (@{$node->{unsupported_residue}}) {
+                return 1 if ref($entry) eq 'HASH'
+                    && defined($entry->{id})
+                    && $entry->{id} eq $residue_id;
+            }
+        }
+        for my $value (values %$node) {
+            return 1 if residue_id_occurs($value, $residue_id);
+        }
+        return 0;
+    }
+
+    if (ref($node) eq 'ARRAY') {
+        for my $value (@$node) {
+            return 1 if residue_id_occurs($value, $residue_id);
+        }
+    }
+
+    return 0;
 }

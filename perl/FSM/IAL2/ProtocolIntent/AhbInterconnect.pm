@@ -1090,7 +1090,7 @@ sub _unsupported_residue($contract = undef) {
     return [
         {
             id     => 'ahb_aggregate_profile_alias_deferred',
-            detail => 'Generic .ppif reports retain the aggregate profile-alias distinction; use ppif/ahb_interconnect.ahb for the selected .ahb alias surface, while broader aggregate AHB alias shapes remain future work.',
+            detail => 'Generic .ppif reports retain the aggregate profile-alias distinction; use ppif/ahb_interconnect.ahb for the selected one-subordinate .ahb alias surface or ppif/ahb_interconnect_two_subordinate.ahb for the selected two-subordinate .ahb alias surface, while broader aggregate AHB alias shapes remain future work.',
         },
         $interconnect_residue,
         {

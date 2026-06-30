@@ -10,8 +10,8 @@ answers:
 date: 2026-06-30
 status: current
 tags: [ial2, ahb, interconnect, decode, ppif, behavior]
-evidence: docs/IAL2_AHB_TWO_SUBORDINATE_BEHAVIOR.md; ppif/ahb_interconnect_two_subordinate.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1480-ial2-ahb-interconnect-two-subordinate.t; t/1478-ial2-ahb-interconnect.t; t/1479-ial2-ahb-interconnect-profile-alias.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
-reverify: prove -Iperl t/1480-ial2-ahb-interconnect-two-subordinate.t && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect_two_subordinate.ppif && ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect_two_subordinate.ppif
+evidence: docs/IAL2_AHB_TWO_SUBORDINATE_BEHAVIOR.md; docs/IAL2_AHB_TWO_SUBORDINATE_PROFILE_ALIAS_BEHAVIOR.md; ppif/ahb_interconnect_two_subordinate.ppif; ppif/ahb_interconnect_two_subordinate.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1480-ial2-ahb-interconnect-two-subordinate.t; t/1481-ial2-ahb-interconnect-two-subordinate-profile-alias.t; t/1478-ial2-ahb-interconnect.t; t/1479-ial2-ahb-interconnect-profile-alias.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
+reverify: prove -Iperl t/1480-ial2-ahb-interconnect-two-subordinate.t t/1481-ial2-ahb-interconnect-two-subordinate-profile-alias.t && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect_two_subordinate.ppif && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect_two_subordinate.ahb
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.730` ships the bounded public generic
@@ -27,11 +27,13 @@ child bindings, and two non-overlapping static windows: `status` at base 0 size
 `ahb_control_subordinate.fsm`, `ahb_interconnect.fsm`, and `ahb_tb.fsm`, then
 emits HDL module `ahb_tb`.
 
-Support accounting is `intent.ppif_ahb_interconnect_two_subordinate`,
-`source_kind ppif`, and coverage
-`ial2_ppif_ahb_interconnect_two_subordinate_pipeline_cli`. The report schema
-is `fsmgen.ial2.protocol_intent.ahb_interconnect.v1` and topology is
+Support accounting for the generic source is
+`intent.ppif_ahb_interconnect_two_subordinate`, `source_kind ppif`, and
+coverage `ial2_ppif_ahb_interconnect_two_subordinate_pipeline_cli`. The report
+schema is `fsmgen.ial2.protocol_intent.ahb_interconnect.v1` and topology is
 `one_requester_two_subordinate_static_window_interconnect`.
 
-The matching `.ahb` alias is not shipped; two-subordinate aggregate `.ahb`
-sources still fail closed until a later task-tree leaf selects that behavior.
+The matching `.ahb` alias now ships as
+`ppif/ahb_interconnect_two_subordinate.ahb`, support-accounted as
+`intent.ahb_profile_alias_interconnect_two_subordinate` with source kind
+`ial2_profile_alias`.

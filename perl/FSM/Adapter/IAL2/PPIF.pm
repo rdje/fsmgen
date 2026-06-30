@@ -154,14 +154,29 @@ sub _is_axi_family_profile($profile) {
 }
 
 sub _remove_unsupported_residue_id($result, $residue_id) {
-    return unless ref($result) eq 'HASH'
-        && ref($result->{report}) eq 'HASH'
-        && ref($result->{report}{unsupported_residue}) eq 'ARRAY';
+    return unless ref($result) eq 'HASH' && ref($result->{report}) eq 'HASH';
+    _remove_unsupported_residue_id_from_node($result->{report}, $residue_id);
+}
 
-    my @kept = grep {
-        !(ref($_) eq 'HASH' && defined($_->{id}) && $_->{id} eq $residue_id)
-    } @{$result->{report}{unsupported_residue}};
-    $result->{report}{unsupported_residue} = \@kept;
+sub _remove_unsupported_residue_id_from_node($node, $residue_id) {
+    return unless ref($node);
+
+    if (ref($node) eq 'HASH') {
+        if (ref($node->{unsupported_residue}) eq 'ARRAY') {
+            my @kept = grep {
+                !(ref($_) eq 'HASH' && defined($_->{id}) && $_->{id} eq $residue_id)
+            } @{$node->{unsupported_residue}};
+            $node->{unsupported_residue} = \@kept;
+        }
+        _remove_unsupported_residue_id_from_node($_, $residue_id)
+            for values %$node;
+        return;
+    }
+
+    if (ref($node) eq 'ARRAY') {
+        _remove_unsupported_residue_id_from_node($_, $residue_id)
+            for @$node;
+    }
 }
 
 sub _validate_profile_alias_contract($source_label, $contract) {
@@ -170,11 +185,10 @@ sub _validate_profile_alias_contract($source_label, $contract) {
         confess "Error: .ahb source '$source_label' profile '$profile' does not match .ahb profile alias; expected ahb\n"
             unless defined($profile) && !ref($profile) && $profile eq 'ahb';
 
-        confess "Error: .ahb source '$source_label' profile ahb requires exactly one (ahb-requester ...) object, exactly one (ahb-subordinate ...) object, or the selected aggregate one-requester/one-subordinate (ahb-interconnect ...) shape in this slice\n"
+        confess "Error: .ahb source '$source_label' profile ahb requires exactly one (ahb-requester ...) object, exactly one (ahb-subordinate ...) object, the selected aggregate one-requester/one-subordinate (ahb-interconnect ...) shape, or the selected aggregate one-requester/two-subordinate (ahb-interconnect ...) shape in this slice\n"
             unless _is_ahb_requester_contract($contract)
                 || _is_ahb_subordinate_contract($contract)
-                || (_is_ahb_interconnect_contract($contract)
-                    && _ahb_interconnect_subordinate_count($contract) == 1);
+                || _is_selected_ahb_profile_alias_interconnect_contract($contract);
         return;
     }
 
@@ -256,9 +270,8 @@ sub _contract_from_root($root, $source_label) {
     if (@ahb_interconnects) {
         confess "Error: $surface source '$source_label' profile '$profile' does not match (ahb-interconnect ...); expected ahb\n"
             unless $profile eq 'ahb';
-        my $cardinality_message = $surface eq '.ahb'
-            ? "Error: $surface source '$source_label' AHB interconnect requires exactly one (ahb-requester ...), one (ahb-subordinate ...), and one (ahb-interconnect ...) object in this slice\n"
-            : "Error: $surface source '$source_label' AHB interconnect requires exactly one (ahb-requester ...), one or two (ahb-subordinate ...) objects, and one (ahb-interconnect ...) object in this slice\n";
+        my $cardinality_message =
+            "Error: $surface source '$source_label' AHB interconnect requires exactly one (ahb-requester ...), one or two (ahb-subordinate ...) objects, and one (ahb-interconnect ...) object in this slice\n";
         confess $cardinality_message
             unless @ahb_requesters == 1
                 && (@ahb_subordinates == 1 || @ahb_subordinates == 2)
@@ -2782,6 +2795,12 @@ sub _is_ahb_requester_contract($contract) {
 sub _is_ahb_interconnect_contract($contract) {
     return ref($contract) eq 'HASH'
         && ($contract->{kind} // '') eq 'ahb_interconnect';
+}
+
+sub _is_selected_ahb_profile_alias_interconnect_contract($contract) {
+    return 0 unless _is_ahb_interconnect_contract($contract);
+    my $subordinate_count = _ahb_interconnect_subordinate_count($contract);
+    return $subordinate_count == 1 || $subordinate_count == 2;
 }
 
 sub _ahb_interconnect_subordinate_count($contract) {

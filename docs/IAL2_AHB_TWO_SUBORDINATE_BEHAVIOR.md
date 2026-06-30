@@ -23,9 +23,10 @@ module_name: ahb_tb
 composition_child_count: 4
 ```
 
-The matching `.ahb` alias is not shipped in this slice. A two-subordinate
-aggregate routed through an `.ahb` source still fails closed; a later task-tree
-leaf must explicitly select that alias before behavior changes.
+The matching `.ahb` alias was not shipped in this `.730` slice. It is now
+shipped separately by `IAL2-FEATURE-COMPLETENESS-FRONTIER.732`; see
+`docs/IAL2_AHB_TWO_SUBORDINATE_PROFILE_ALIAS_BEHAVIOR.md` for the current
+alias behavior.
 
 ## Public Source Contract
 
@@ -132,9 +133,10 @@ The report records four generated child instances, three endpoint child
 instances, both subordinate bindings, both address windows, both subordinate
 response mux sources, and `supported_subordinate_cardinality = 2`.
 
-The two-subordinate `.ppif` report keeps
-`ahb_aggregate_profile_alias_deferred` because matching `.ahb` alias behavior
-has not shipped. It removes the old one-subordinate report's
+The two-subordinate generic `.ppif` report keeps
+`ahb_aggregate_profile_alias_deferred` as a source-surface distinction even
+after the matching `.ahb` alias ships. The `.ahb` alias report removes that
+residue. The two-subordinate behavior removes the old one-subordinate report's
 `ahb_multi_subordinate_decode_deferred` residue and uses
 `ahb_broader_interconnect_decode_deferred` for remaining AHB interconnect work
 such as broader cardinality, arbitration, bus matrices, dynamic/programmed

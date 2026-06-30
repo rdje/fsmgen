@@ -9929,6 +9929,13 @@ support identity `intent.ahb_profile_alias_interconnect_two_subordinate`,
 source kind `ial2_profile_alias`, and coverage
 `ial2_ahb_profile_alias_interconnect_two_subordinate_pipeline_cli`. No behavior
 changed in `.731`; the alias remains deferred until `.732` implements it.
+`.732` ships that selected alias. FSMGen accepts
+`ppif/ahb_interconnect_two_subordinate.ahb`, preserves the same generated
+review artifacts and HDL module `ahb_tb` as the generic source, reports
+topology `one_requester_two_subordinate_static_window_interconnect`,
+support-accounts as `intent.ahb_profile_alias_interconnect_two_subordinate`,
+and removes `ahb_aggregate_profile_alias_deferred` only from the alias report;
+the generic `.ppif` report keeps that residue as a source-surface distinction.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
