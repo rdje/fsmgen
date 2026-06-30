@@ -1212,6 +1212,22 @@ support identities, coverage keys, child HBURST fanout policy, aggregate
 report schema, residue movement, tests, docs, and later matching aggregate
 `.ahb` alias sequencing before implementation.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.769` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.770`, direct implementation of the
+combined bounded generic `.ppif` aggregate HBURST-aware byte-lane `SEQ`
+propagation family. The selected sources are
+`ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`,
+support-accounted as `intent.ppif_ahb_interconnect_byte_lane_hburst_seq` and
+`intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq`.
+Requester/global `HBURST` must fan out directly to child-local
+`HBURST_REGS`, `HBURST_STATUS`, and `HBURST_CONTROL` as applicable, while the
+aggregate report reuses `composition.seq_policy_propagation` with mode
+`subordinate_owned_hburst_in_word_seq_policy`. Matching aggregate `.ahb`
+aliases, BUSY parking, halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank progression, broader AHB, backend variants, AXI/APB,
+and VHDL remain deferred.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:

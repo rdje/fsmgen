@@ -6580,6 +6580,17 @@ must pin the exact paths, child object names, subordinate-local HBURST names,
 support identities, coverage keys, child HBURST fanout policy, aggregate
 report schema, residue movement, tests, docs, and later matching aggregate
 `.ahb` alias sequence before implementation.
+`.769` now selects `.770`, direct implementation of the combined bounded
+generic `.ppif` aggregate HBURST-aware byte-lane `SEQ` propagation family.
+The selected sources are `ppif/ahb_interconnect_byte_lane_hburst_seq.ppif`
+and `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`, with
+support identities `intent.ppif_ahb_interconnect_byte_lane_hburst_seq` and
+`intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq`.
+Requester/global `HBURST` must fan out directly to child-local
+`HBURST_REGS`, `HBURST_STATUS`, and `HBURST_CONTROL` as applicable, and the
+aggregate report must reuse `composition.seq_policy_propagation` with the
+selected `subordinate_owned_hburst_in_word_seq_policy` mode. Matching
+aggregate `.ahb` aliases remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

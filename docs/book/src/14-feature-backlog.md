@@ -10323,6 +10323,22 @@ support identities, coverage keys, child HBURST fanout policy, aggregate
 report schema, residue movement, tests, docs, and later matching aggregate
 `.ahb` alias sequencing before implementation.
 
+AHB aggregate HBURST `SEQ` contract selection:
+[IAL2_AHB_AGGREGATE_HBURST_SEQ_CONTRACT_SELECTION](../../IAL2_AHB_AGGREGATE_HBURST_SEQ_CONTRACT_SELECTION.md)
+selects `.770`, direct implementation of
+`ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`. The
+selected support identities are
+`intent.ppif_ahb_interconnect_byte_lane_hburst_seq` and
+`intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq`; the
+selected child HBURST fanout is requester/global `HBURST` directly to
+`HBURST_REGS`, `HBURST_STATUS`, and `HBURST_CONTROL`; and the selected report
+shape reuses `composition.seq_policy_propagation` with
+`subordinate_owned_hburst_in_word_seq_policy`. Matching aggregate `.ahb`
+aliases, BUSY-in-burst, halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank progression, broader AHB, backend variants, AXI/APB,
+and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
