@@ -6,7 +6,6 @@ answers:
   - "what does ppif/ahb_interconnect_byte_lane.ppif generate?"
   - "what does ppif/ahb_interconnect_two_subordinate_byte_lane.ppif generate?"
   - "how is aggregate byte-lane propagation reported?"
-  - "are matching AHB aggregate byte-lane .ahb aliases shipped?"
 date: 2026-06-30
 status: current
 tags: [ial2, ahb, interconnect, aggregate, byte-lane, narrow-transfer, behavior]
@@ -31,6 +30,6 @@ selected-subordinate mapped-hit ownership, interconnect-owned unmapped ERROR
 ownership, and child `narrow_transfer_policy` propagation. Existing word-only
 aggregate `.ppif` and `.ahb` sources do not gain that block.
 
-Matching `.ahb` aliases for the aggregate byte-lane sources are not shipped
-yet; `ppif/ahb_interconnect_byte_lane.ahb` and
-`ppif/ahb_interconnect_two_subordinate_byte_lane.ahb` remain future work.
+Matching `.ahb` aliases for the aggregate byte-lane sources were not shipped
+by `.743`; they are documented separately by the `.745` behavior card after
+that follow-on slice shipped.

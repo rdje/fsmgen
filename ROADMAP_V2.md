@@ -6322,23 +6322,23 @@ byte-lane subordinate `.isf` and `.fsm` review artifacts before the aggregate
 `composition.byte_lane_propagation`, propagate child `narrow_transfer_policy`,
 and remove byte-lane wording from aggregate residue only for the selected
 byte-lane aggregate `.ppif` sources. Existing word-only aggregate `.ppif` and
-`.ahb` behavior, endpoint byte-lane `.ppif` and `.ahb` behavior, matching
-aggregate byte-lane `.ahb` aliases, optional signals, burst `SEQ`, broader AHB
-behavior, direct backend, verification-output, backend-language variants, and
-VHDL remain deferred.
-`.744` selects `.745`, direct implementation of the matching bounded public
-AHB aggregate byte-lane `.ahb` profile aliases. The selected paths are
-`ppif/ahb_interconnect_byte_lane.ahb` and
-`ppif/ahb_interconnect_two_subordinate_byte_lane.ahb`; selected support
-identities are `intent.ahb_profile_alias_interconnect_byte_lane` and
+`.ahb` behavior, endpoint byte-lane `.ppif` and `.ahb` behavior, optional
+signals, burst `SEQ`, broader AHB behavior, direct backend,
+verification-output, backend-language variants, and VHDL remain deferred.
+`.745` now ships the matching bounded public AHB aggregate byte-lane `.ahb`
+profile aliases. The shipped paths are `ppif/ahb_interconnect_byte_lane.ahb`
+and `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb`; support identities
+are `intent.ahb_profile_alias_interconnect_byte_lane` and
 `intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane`; source kind
-is `ial2_profile_alias`; selected coverage keys are
+is `ial2_profile_alias`; coverage keys are
 `ial2_ahb_profile_alias_interconnect_byte_lane_pipeline_cli` and
 `ial2_ahb_profile_alias_interconnect_two_subordinate_byte_lane_pipeline_cli`;
-HDL module remains `ahb_tb`; and child counts remain 3 and 4. Current-code
-selector probes confirmed alias-labeled reports preserve
-`composition.byte_lane_propagation`, child `narrow_transfer_policy`, and
-alias-residue removal. The aliases are selected next but not shipped yet.
+HDL module remains `ahb_tb`; and child counts remain 3 and 4. The aliases
+preserve `composition.byte_lane_propagation`, child `narrow_transfer_policy`,
+local-address-before-byte-lane policy, subordinate-owned mapped-hit
+byte/halfword/word behavior, and interconnect-owned unmapped ERROR behavior.
+Alias reports remove `ahb_aggregate_profile_alias_deferred`, while the generic
+aggregate byte-lane `.ppif` reports keep that source-surface residue.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -30,8 +30,10 @@ module_name: ahb_tb
 composition_child_count: 4
 ```
 
-Matching `.ahb` aliases are not shipped in this slice. The following paths
-remain future work:
+Matching `.ahb` aliases were not shipped in this slice. They shipped later in
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.745`; see
+[IAL2_AHB_AGGREGATE_BYTE_LANE_PROFILE_ALIAS_BEHAVIOR](IAL2_AHB_AGGREGATE_BYTE_LANE_PROFILE_ALIAS_BEHAVIOR.md).
+The `.743` follow-on paths were:
 
 ```text
 ppif/ahb_interconnect_byte_lane.ahb

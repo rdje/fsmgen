@@ -1,6 +1,6 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships twelve public bounded AHB IAL2 entrypoints today:
+FSMGen ships fourteen public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
@@ -15,6 +15,8 @@ ppif/ahb_lite_subordinate.ahb
 ppif/ahb_lite_subordinate_byte_lane.ahb
 ppif/ahb_interconnect.ahb
 ppif/ahb_interconnect_two_subordinate.ahb
+ppif/ahb_interconnect_byte_lane.ahb
+ppif/ahb_interconnect_two_subordinate_byte_lane.ahb
 ```
 
 The `.ppif` sources are generic Protocol/Platform Intent files. They cover the
@@ -29,9 +31,11 @@ and support exactly one selected endpoint object:
 `(ahb-requester amba_requester ...)` or
 `(ahb-subordinate ahb_lite_subordinate ...)`, or
 `(ahb-subordinate ahb_lite_subordinate_byte_lane ...)`, or the selected
-aggregate one-requester/one-subordinate interconnect shape
+aggregate one-requester/one-subordinate interconnect shape, including the
+selected aggregate byte-lane propagation variant,
 `(ahb-interconnect ahb_tb ...)`, or the selected aggregate
-one-requester/two-subordinate interconnect shape
+one-requester/two-subordinate interconnect shape, including the selected
+two-subordinate aggregate byte-lane propagation variant,
 `(ahb-interconnect ahb_tb ...)`.
 
 All public AHB IAL2 sources lower through generated review artifacts before
@@ -50,6 +54,8 @@ ppif/ahb_interconnect_byte_lane.ppif -> amba_requester.isf + ahb_lite_subordinat
 ppif/ahb_interconnect_two_subordinate_byte_lane.ppif -> amba_requester.isf + ahb_status_subordinate_byte_lane.isf + ahb_control_subordinate_byte_lane.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_status_subordinate_byte_lane.fsm + ahb_control_subordinate_byte_lane.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect.ahb        -> amba_requester.isf + ahb_lite_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_two_subordinate.ahb -> amba_requester.isf + ahb_status_subordinate.isf + ahb_control_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_status_subordinate.fsm + ahb_control_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
+ppif/ahb_interconnect_byte_lane.ahb -> amba_requester.isf + ahb_lite_subordinate_byte_lane.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate_byte_lane.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
+ppif/ahb_interconnect_two_subordinate_byte_lane.ahb -> amba_requester.isf + ahb_status_subordinate_byte_lane.isf + ahb_control_subordinate_byte_lane.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_status_subordinate_byte_lane.fsm + ahb_control_subordinate_byte_lane.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ```
 
 FSMGen also keeps direct lower-layer `.fsm` seeds:
@@ -66,9 +72,9 @@ and do not produce generated `.isf` or generated `.fsm` review artifacts.
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, `ppif/ahb_lite_subordinate_byte_lane.ppif`, `ppif/ahb_interconnect.ppif`, `ppif/ahb_interconnect_two_subordinate.ppif`, `ppif/ahb_interconnect_byte_lane.ppif`, `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, `ppif/ahb_requester.ahb`, `ppif/ahb_lite_subordinate.ahb`, `ppif/ahb_lite_subordinate_byte_lane.ahb`, `ppif/ahb_interconnect.ahb`, or `ppif/ahb_interconnect_two_subordinate.ahb` | Bounded AHB requester, bounded word-only AHB-Lite/common-AHB subordinate, bounded byte-lane/narrow-transfer AHB-Lite/common-AHB subordinate, selected one-requester/one-subordinate static-window AHB interconnect, selected one-requester/two-subordinate static-window AHB interconnect, selected generic aggregate byte-lane propagation variants, and matching `.ahb` aliases for the non-aggregate-byte-lane sources. The aggregate byte-lane `.ahb` aliases are selected for the next implementation slice but are not shipped yet. |
+| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, `ppif/ahb_lite_subordinate_byte_lane.ppif`, `ppif/ahb_interconnect.ppif`, `ppif/ahb_interconnect_two_subordinate.ppif`, `ppif/ahb_interconnect_byte_lane.ppif`, `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, `ppif/ahb_requester.ahb`, `ppif/ahb_lite_subordinate.ahb`, `ppif/ahb_lite_subordinate_byte_lane.ahb`, `ppif/ahb_interconnect.ahb`, `ppif/ahb_interconnect_two_subordinate.ahb`, `ppif/ahb_interconnect_byte_lane.ahb`, or `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb` | Bounded AHB requester, bounded word-only AHB-Lite/common-AHB subordinate, bounded byte-lane/narrow-transfer AHB-Lite/common-AHB subordinate, selected one-requester/one-subordinate static-window AHB interconnect, selected one-requester/two-subordinate static-window AHB interconnect, selected aggregate byte-lane propagation variants, and matching `.ahb` aliases for those selected bounded sources. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs are exposed as `control`, `bus`, one-register `storage`, and `transfer` clauses, including selected byte/halfword/word `supported-size`, `lane-order`, narrow read/write, and unaligned/crossing policy clauses on the byte-lane source. Interconnect knobs are exposed as `children`, one or two static `address-map` windows, `decode`, and `wiring` clauses. |
-| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader AHB interconnect/decode beyond the selected one-requester/one-subordinate static-window `.ppif`/`.ahb` source and selected one-requester/two-subordinate static-window `.ppif`/`.ahb` source, matching aggregate byte-lane `.ahb` aliases selected next but not shipped yet, optional signals, burst continuation, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader AHB interconnect/decode beyond the selected one-requester/one-subordinate static-window `.ppif`/`.ahb` sources and selected one-requester/two-subordinate static-window `.ppif`/`.ahb` sources, optional signals, burst continuation, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -353,10 +359,9 @@ subordinate entry carries `supported_size` and the child
 `narrow_transfer_policy`.
 
 The existing word-only aggregate `.ppif` and `.ahb` sources do not gain
-`composition.byte_lane_propagation`. Matching `.ahb` aliases for the aggregate
-byte-lane sources remain future work; there are no shipped
-`ppif/ahb_interconnect_byte_lane.ahb` or
-`ppif/ahb_interconnect_two_subordinate_byte_lane.ahb` files yet.
+`composition.byte_lane_propagation`. The matching aggregate byte-lane `.ahb`
+aliases are shipped as profile aliases over these two generic sources and are
+documented in the profile-alias section below.
 
 ## AHB Profile Alias
 
@@ -492,6 +497,43 @@ The two-subordinate aggregate `.ahb` schedule/report JSON uses schema
 `ahb_control_subordinate.fsm`, `ahb_interconnect.fsm`, and aggregate
 `ahb_tb.fsm`, and removes `ahb_aggregate_profile_alias_deferred` from the
 alias report while preserving the broader AHB residue.
+
+The aggregate byte-lane interconnect aliases are:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect_byte_lane.ahb
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect_byte_lane.ahb
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_interconnect_byte_lane.ahb
+./bin/fsmgen --quiet --outdir generated/ial2-ahb-interconnect-byte-lane-profile-alias ppif/ahb_interconnect_byte_lane.ahb
+
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect_two_subordinate_byte_lane.ahb
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect_two_subordinate_byte_lane.ahb
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_interconnect_two_subordinate_byte_lane.ahb
+./bin/fsmgen --quiet --outdir generated/ial2-ahb-two-subordinate-byte-lane-profile-alias ppif/ahb_interconnect_two_subordinate_byte_lane.ahb
+```
+
+The aggregate byte-lane `.ahb` strict checks report:
+
+```text
+entry_id: intent.ahb_profile_alias_interconnect_byte_lane
+source_kind: ial2_profile_alias
+coverage: ial2_ahb_profile_alias_interconnect_byte_lane_pipeline_cli
+module_name: ahb_tb
+composition_child_count: 3
+
+entry_id: intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane
+source_kind: ial2_profile_alias
+coverage: ial2_ahb_profile_alias_interconnect_two_subordinate_byte_lane_pipeline_cli
+module_name: ahb_tb
+composition_child_count: 4
+```
+
+Both aggregate byte-lane aliases preserve
+`composition.byte_lane_propagation`, child `narrow_transfer_policy`,
+local-address-before-byte-lane policy, subordinate-owned mapped-hit
+byte/halfword/word behavior, and interconnect-owned unmapped ERROR behavior.
+They remove `ahb_aggregate_profile_alias_deferred` from alias reports while the
+generic aggregate byte-lane `.ppif` reports keep that source-surface residue.
 
 ## Requester Source Shape
 
@@ -639,7 +681,7 @@ The generated behavior performs no write update on ERROR.
 
 `.ahb` is accepted only as the bounded AHB requester, word-only subordinate,
 byte-lane/narrow-transfer subordinate, or selected aggregate interconnect
-profile alias:
+profile alias, including the selected aggregate byte-lane variants:
 
 - missing `(profile ...)` is rejected;
 - any profile other than `ahb` is rejected as a suffix/profile mismatch;
@@ -648,7 +690,7 @@ profile alias:
   one byte-lane/narrow-transfer
   `(ahb-subordinate ahb_lite_subordinate_byte_lane ...)`, or the selected
   aggregate one-requester/one-subordinate or one-requester/two-subordinate
-  `(ahb-interconnect ahb_tb ...)` shape is rejected for this slice;
+  `(ahb-interconnect ahb_tb ...)` shapes is rejected for this slice;
 - mixed endpoint objects outside the selected aggregate shape are rejected;
 - duplicate requester, subordinate, or interconnect objects are rejected;
 - malformed AHB requester, subordinate, and interconnect fields still use the
@@ -713,7 +755,6 @@ The following are not shipped by the current AHB IAL2 surface:
 - optional/property-gated AHB signals such as `HBURST`, `HPROT`, `HMASTLOCK`,
   and AHB5 additions on the subordinate side;
 - burst `SEQ` continuation support in the subordinate;
-- matching `.ahb` aliases for the aggregate byte-lane interconnect sources;
 - legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;
@@ -736,14 +777,12 @@ shipped two-subordinate aggregate `.ahb` alias removes that stale residue from
 alias reports. Both use `ahb_broader_interconnect_decode_deferred` for the
 remaining AHB interconnect/decode backlog.
 The generic aggregate byte-lane `.ppif` reports keep
-`ahb_aggregate_profile_alias_deferred` because the matching aggregate
-byte-lane `.ahb` aliases are not shipped yet, and remove byte-lane wording
-from their optional/interconnect residue because byte/halfword/word
-subordinate-owned narrow transfers are now selected through the aggregate.
-Those matching aliases are selected for the next implementation slice at
-`ppif/ahb_interconnect_byte_lane.ahb` and
-`ppif/ahb_interconnect_two_subordinate_byte_lane.ahb`; they are not part of
-the shipped public surface until that slice lands.
+`ahb_aggregate_profile_alias_deferred` as a source-surface distinction, while
+the shipped aggregate byte-lane `.ahb` aliases remove that stale residue from
+alias reports. The generic aggregate byte-lane `.ppif` reports also remove
+byte-lane wording from their optional/interconnect residue because
+byte/halfword/word subordinate-owned narrow transfers are now selected through
+the aggregate.
 
 ## Validation Used For This Chapter
 
@@ -762,6 +801,7 @@ prove -v t/1481-ial2-ahb-interconnect-two-subordinate-profile-alias.t
 prove -v t/1482-ial2-ahb-subordinate-byte-lane.t
 prove -v t/1483-ial2-ahb-subordinate-byte-lane-profile-alias.t
 prove -v t/1484-ial2-ahb-interconnect-byte-lane.t
+prove -v t/1485-ial2-ahb-interconnect-byte-lane-profile-alias.t
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ppif
@@ -792,6 +832,12 @@ prove -v t/1484-ial2-ahb-interconnect-byte-lane.t
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect_two_subordinate.ahb
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect_two_subordinate.ahb
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_interconnect_two_subordinate.ahb
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect_byte_lane.ahb
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect_byte_lane.ahb
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_interconnect_byte_lane.ahb
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect_two_subordinate_byte_lane.ahb
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect_two_subordinate_byte_lane.ahb
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_interconnect_two_subordinate_byte_lane.ahb
 ./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm
 ```
 
@@ -830,3 +876,9 @@ emits `ahb_lite_subordinate_byte_lane.isf` /
 `ahb_control_subordinate_byte_lane.fsm`. Both schedules report
 `composition.byte_lane_propagation` and keep the selected HDL module
 `ahb_tb`.
+The matching aggregate byte-lane `.ahb` alias probes passed with the same
+generated review artifacts and HDL module, support-accounted as
+`intent.ahb_profile_alias_interconnect_byte_lane` and
+`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane`, preserving
+`composition.byte_lane_propagation` while removing
+`ahb_aggregate_profile_alias_deferred` from alias reports.

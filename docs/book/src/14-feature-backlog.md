@@ -10035,22 +10035,22 @@ emits `ahb_lite_subordinate_byte_lane.isf` /
 `composition.byte_lane_propagation` and child `narrow_transfer_policy` for the
 selected aggregate byte-lane `.ppif` sources only. Existing word-only
 aggregate `.ppif`/`.ahb` behavior, endpoint byte-lane `.ppif`/`.ahb`
-behavior, matching aggregate byte-lane `.ahb` aliases, optional signals,
-burst `SEQ`, broader AHB behavior, direct backend, verification-output,
-backend-language variants, and VHDL remain deferred.
-`.744` selects `.745`, direct implementation of the matching aggregate
-byte-lane `.ahb` aliases. The selected aliases are
-`ppif/ahb_interconnect_byte_lane.ahb` and
+behavior, optional signals, burst `SEQ`, broader AHB behavior, direct backend,
+verification-output, backend-language variants, and VHDL remain deferred.
+`.745` now ships the matching aggregate byte-lane `.ahb` aliases. The public
+aliases are `ppif/ahb_interconnect_byte_lane.ahb` and
 `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb`, with support identities
 `intent.ahb_profile_alias_interconnect_byte_lane` and
 `intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane`, source kind
 `ial2_profile_alias`, coverage keys
 `ial2_ahb_profile_alias_interconnect_byte_lane_pipeline_cli` and
 `ial2_ahb_profile_alias_interconnect_two_subordinate_byte_lane_pipeline_cli`,
-HDL module `ahb_tb`, and child counts 3 and 4. The selector probes confirmed
-the current alias path preserves `composition.byte_lane_propagation`, child
-`narrow_transfer_policy`, and alias-residue removal, so the aliases are
-selected next but are not shipped yet.
+HDL module `ahb_tb`, and child counts 3 and 4. They preserve
+`composition.byte_lane_propagation`, child `narrow_transfer_policy`,
+local-address-before-byte-lane policy, subordinate-owned mapped-hit
+byte/halfword/word behavior, and interconnect-owned unmapped ERROR behavior.
+Alias reports remove `ahb_aggregate_profile_alias_deferred`, while generic
+aggregate byte-lane `.ppif` reports keep that source-surface residue.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

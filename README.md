@@ -5261,25 +5261,23 @@ aggregate `ahb_tb` HDL entry. The new sources support-account as
 `composition.byte_lane_propagation`, propagate child `narrow_transfer_policy`,
 and remove byte-lane wording from aggregate residue only for the selected
 byte-lane aggregate `.ppif` sources. Existing word-only aggregate `.ppif` and
-`.ahb` behavior, endpoint byte-lane `.ppif` and `.ahb` behavior, matching
-aggregate byte-lane `.ahb` aliases, optional signals, burst `SEQ`, broader AHB
-behavior, direct backend, verification-output, backend-language variants, and
-VHDL remain deferred.
-`.744` selects `.745`, direct implementation of those matching aggregate
-byte-lane `.ahb` profile aliases. Selector probes using `.ahb` labels over the
-shipped generic aggregate byte-lane `.ppif` text confirmed the existing alias
-path already preserves `composition.byte_lane_propagation`, child
-`narrow_transfer_policy`, topology/child counts, and removal of
-`ahb_aggregate_profile_alias_deferred` for alias-labeled reports. `.745` owns
-`ppif/ahb_interconnect_byte_lane.ahb` and
-`ppif/ahb_interconnect_two_subordinate_byte_lane.ahb`, support identities
+`.ahb` behavior, endpoint byte-lane `.ppif` and `.ahb` behavior, optional
+signals, burst `SEQ`, broader AHB behavior, direct backend,
+verification-output, backend-language variants, and VHDL remain deferred.
+`.745` now ships those matching aggregate byte-lane `.ahb` profile aliases.
+The new public aliases are `ppif/ahb_interconnect_byte_lane.ahb` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane.ahb`, support-accounted as
 `intent.ahb_profile_alias_interconnect_byte_lane` and
-`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane`, source kind
-`ial2_profile_alias`, coverage keys
+`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane` with source
+kind `ial2_profile_alias`, coverage keys
 `ial2_ahb_profile_alias_interconnect_byte_lane_pipeline_cli` and
 `ial2_ahb_profile_alias_interconnect_two_subordinate_byte_lane_pipeline_cli`,
-HDL module `ahb_tb`, and child counts 3 and 4. The aliases are selected next
-but not shipped yet.
+HDL module `ahb_tb`, and child counts 3 and 4. They preserve
+`composition.byte_lane_propagation`, child `narrow_transfer_policy`,
+local-address-before-byte-lane policy, subordinate-owned mapped-hit
+byte/halfword/word behavior, and interconnect-owned unmapped ERROR behavior.
+Alias reports remove `ahb_aggregate_profile_alias_deferred`, while the generic
+aggregate byte-lane `.ppif` reports keep that source-surface residue.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7968,12 +7966,13 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_BYTE_LANE_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.740` no-behavior selector after the byte-lane `.ahb` alias shipment and selects `.741`, aggregate/interconnect byte-lane propagation readiness audit.
 - `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROPAGATION_READINESS_AUDIT.md` — records the `.741` no-behavior readiness audit for AHB aggregate/interconnect byte-lane propagation and selects `.742`, public contract selection for a combined bounded generic `.ppif` aggregate byte-lane family.
 - `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROPAGATION_CONTRACT_SELECTION.md` — records the `.742` no-behavior contract selection for `ppif/ahb_interconnect_byte_lane.ppif` and `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, support identities, `composition.byte_lane_propagation`, and `.743` implementation owner.
-- `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROPAGATION_BEHAVIOR.md` — documents the `.743` shipped generic aggregate byte-lane `.ppif` behavior, generated review artifacts, support accounting, `composition.byte_lane_propagation`, child `narrow_transfer_policy` propagation, residue movement, validation, and deferred matching `.ahb` aliases.
+- `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROPAGATION_BEHAVIOR.md` — documents the `.743` shipped generic aggregate byte-lane `.ppif` behavior, generated review artifacts, support accounting, `composition.byte_lane_propagation`, child `narrow_transfer_policy` propagation, residue movement, validation, and later `.ahb` alias handoff.
 - `docs/IAL2_POST_AHB_AGGREGATE_BYTE_LANE_PPIF_NEXT_SLICE_SELECTION.md` — records the `.744` no-behavior selector for the matching aggregate byte-lane `.ahb` profile aliases, selected support identities, validation strategy, rollback, and `.745` implementation owner.
+- `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.745` shipped public `ppif/ahb_interconnect_byte_lane.ahb` and `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb` aliases, support accounting, generated review artifacts, `composition.byte_lane_propagation` preservation, alias-residue movement, validation, and remaining AHB residue.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
-- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester, subordinate, and interconnect `.ppif` support, shipped requester, subordinate, and aggregate interconnect `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
+- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester, subordinate, interconnect, and aggregate byte-lane `.ppif` support, shipped requester, subordinate, aggregate interconnect, and aggregate byte-lane `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
