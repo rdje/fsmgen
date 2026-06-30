@@ -5536,6 +5536,24 @@ Requester/global `HBURST` must fan out directly to child-local
 aggregate report must reuse `composition.seq_policy_propagation` with the
 selected `subordinate_owned_hburst_in_word_seq_policy` mode. Matching
 aggregate `.ahb` aliases remain deferred.
+`.770` now ships `ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`, the
+bounded generic AHB aggregate HBURST-aware byte-lane `SEQ` propagation
+sources. They support-account as
+`intent.ppif_ahb_interconnect_byte_lane_hburst_seq` and
+`intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq`, lower
+through generated HBURST-aware subordinate `.isf`/`.fsm` review artifacts,
+select HDL entry `ahb_tb`, forward requester/global `HBURST` directly to
+child-local `HBURST_REGS`, `HBURST_STATUS`, and `HBURST_CONTROL`, preserve
+`composition.byte_lane_propagation`, and reuse
+`composition.seq_policy_propagation` with
+`subordinate_owned_hburst_in_word_seq_policy`, request-forwarding `burst`,
+child `bindings.bus.burst`, and child `transfer.seq_policy` metadata.
+Matching aggregate `.ahb` aliases, BUSY-in-burst, halfword/word burst `SEQ`,
+wider or indefinite bursts, multi-word/register-bank progression, optional
+signals, broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
+`.771` is the next no-behavior AHB follow-on selector for the matching
+aggregate HBURST-aware `.ahb` alias contract.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8251,10 +8269,12 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_HBURST_SEQ_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.767` no-behavior selector after the endpoint HBURST-aware `.ahb` alias shipment and selects `.768`, aggregate AHB HBURST propagation readiness audit after current aggregate candidate probes fail closed on missing subordinate-local HBURST wiring.
 - `docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_READINESS_AUDIT.md` — records the `.768` no-behavior readiness audit for bounded aggregate AHB HBURST propagation and selects `.769`, public contract selection for likely `ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif` sources.
 - `docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_CONTRACT_SELECTION.md` — records the `.769` no-behavior public contract selection for bounded generic aggregate AHB HBURST propagation and selects `.770`, direct implementation of `ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`.
+- `docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_BEHAVIOR.md` — documents the `.770` shipped generic aggregate HBURST-aware byte-lane `SEQ` `.ppif` sources, generated review artifacts, support accounting, child HBURST fanout, `composition.seq_policy_propagation`, residue movement, preservation checks, validation, and remaining alias/burst/backend/protocol residue.
+- `docs/IAL2_POST_AHB_AGGREGATE_HBURST_SEQ_PPIF_NEXT_SLICE_SELECTION.md` — records the `.770` no-behavior selector after generic aggregate HBURST-aware byte-lane `SEQ` `.ppif` shipment and selects `.771`, matching aggregate HBURST-aware `.ahb` profile-alias contract selection.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
-- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester, subordinate, byte-lane `SEQ`, interconnect, aggregate byte-lane, aggregate byte-lane `SEQ` `.ppif` support, matching `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
+- `docs/book/src/16c-ial2-ahb.md` — user-facing AHB chapter covering shipped requester, subordinate, byte-lane `SEQ`, interconnect, aggregate byte-lane, aggregate byte-lane `SEQ` `.ppif` support, aggregate HBURST-aware byte-lane `SEQ` `.ppif` support, matching `.ahb` profile-alias support, direct `.fsm` seeds, generated review artifacts, and broader AHB residue.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

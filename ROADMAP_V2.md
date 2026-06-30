@@ -6591,6 +6591,24 @@ Requester/global `HBURST` must fan out directly to child-local
 aggregate report must reuse `composition.seq_policy_propagation` with the
 selected `subordinate_owned_hburst_in_word_seq_policy` mode. Matching
 aggregate `.ahb` aliases remain deferred.
+`.770` now ships `ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`, the
+bounded generic AHB aggregate HBURST-aware byte-lane `SEQ` propagation
+sources. They support-account as
+`intent.ppif_ahb_interconnect_byte_lane_hburst_seq` and
+`intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq`, lower
+through generated HBURST-aware subordinate `.isf`/`.fsm` review artifacts,
+select HDL entry `ahb_tb`, forward requester/global `HBURST` directly to
+child-local `HBURST_REGS`, `HBURST_STATUS`, and `HBURST_CONTROL`, preserve
+`composition.byte_lane_propagation`, and reuse
+`composition.seq_policy_propagation` with
+`subordinate_owned_hburst_in_word_seq_policy`, request-forwarding `burst`,
+child `bindings.bus.burst`, and child `transfer.seq_policy` metadata.
+Matching aggregate `.ahb` aliases, BUSY-in-burst, halfword/word burst `SEQ`,
+wider or indefinite bursts, multi-word/register-bank progression, optional
+signals, broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
+`.771` is the next no-behavior AHB follow-on selector for the matching
+aggregate HBURST-aware `.ahb` alias contract.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

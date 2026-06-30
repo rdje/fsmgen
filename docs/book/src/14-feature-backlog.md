@@ -10339,6 +10339,26 @@ aliases, BUSY-in-burst, halfword/word burst `SEQ`, wider or indefinite bursts,
 multi-word/register-bank progression, broader AHB, backend variants, AXI/APB,
 and VHDL remain deferred.
 
+AHB aggregate HBURST `SEQ` behavior:
+[IAL2_AHB_AGGREGATE_HBURST_SEQ_BEHAVIOR](../../IAL2_AHB_AGGREGATE_HBURST_SEQ_BEHAVIOR.md)
+ships `ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`. The
+sources support-account as `intent.ppif_ahb_interconnect_byte_lane_hburst_seq`
+and `intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq`,
+forward requester/global `HBURST` to child-local `HBURST_REGS`,
+`HBURST_STATUS`, and `HBURST_CONTROL`, preserve
+`composition.byte_lane_propagation`, and reuse
+`composition.seq_policy_propagation` with
+`subordinate_owned_hburst_in_word_seq_policy`.
+
+Post AHB aggregate HBURST `SEQ` PPIF selector:
+[IAL2_POST_AHB_AGGREGATE_HBURST_SEQ_PPIF_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_AGGREGATE_HBURST_SEQ_PPIF_NEXT_SLICE_SELECTION.md)
+selects `.771`, a no-behavior public contract selection for matching
+aggregate HBURST-aware `.ahb` aliases. Matching aggregate `.ahb` aliases,
+BUSY-in-burst, halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank progression, broader AHB, backend variants, AXI/APB,
+and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

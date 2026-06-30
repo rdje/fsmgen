@@ -173,6 +173,7 @@ sub _normalize_contract($raw) {
     _validate_shared_system_ports($clock, $reset, $requester, \@subordinates);
     _validate_child_references($children, $requester, \@subordinates);
     _validate_bus_compatibility($wiring->{bus}, $requester->{bus}, \@subordinates);
+    _validate_aggregate_seq_policy_family(\@subordinates);
 
     my $source_object_id = exists($source->{object_id})
         ? _nonempty_scalar($source->{object_id}, 'source.object_id')
@@ -653,18 +654,23 @@ sub _wiring_lines($contract, $interconnect) {
         (map {
             my $subordinate = _generated_instance_name($_->{child});
             my $sub_bus = $_->{endpoint}{bus};
-            (
+            my @lines = (
                 "($fabric.$bus->{ready} $subordinate.$sub_bus->{ready_in})",
                 "($fabric.$sub_bus->{select} $subordinate.$sub_bus->{select})",
                 "($fabric.$sub_bus->{address}{name} $subordinate.$sub_bus->{address}{name})",
                 "($requester.$bus->{transfer}{name} $subordinate.$sub_bus->{transfer}{name})",
                 "($requester.$bus->{write} $subordinate.$sub_bus->{write})",
                 "($requester.$bus->{size}{name} $subordinate.$sub_bus->{size}{name})",
+            );
+            push @lines, "($requester.$bus->{burst}{name} $subordinate.$sub_bus->{burst}{name})"
+                if ref($sub_bus->{burst}) eq 'HASH';
+            push @lines, (
                 "($requester.$bus->{write_data}{name} $subordinate.$sub_bus->{write_data}{name})",
                 "($subordinate.$sub_bus->{ready_out} $fabric.$sub_bus->{ready_out})",
                 "($subordinate.$sub_bus->{response}{name} $fabric.$sub_bus->{response}{name})",
                 "($subordinate.$sub_bus->{read_data}{name} $fabric.$sub_bus->{read_data}{name})",
-            )
+            );
+            @lines
         } _subordinate_binding_entries($contract)),
     );
 }
@@ -844,7 +850,7 @@ sub _build_report(%args) {
             'the generated AHB interconnect asserts HGRANT permanently, decodes HTRANS != IDLE against the static window, emits local subordinate HADDR, and muxes subordinate response/data',
             'the generated AHB interconnect maps one-bit subordinate OKAY/ERROR HRESP to requester two-bit OKAY/ERROR HRESP',
             'unmapped active transfers complete with a two-cycle interconnect-owned ERROR response',
-            'AHB interconnect is exposed through generic .ppif and the selected aggregate .ahb profile alias; broader aggregate AHB interconnect/decode shapes remain deferred',
+            _static_source_surface_rule($contract),
         ],
         unsupported_residue => _unsupported_residue($contract),
     };
@@ -1042,6 +1048,12 @@ sub _interconnect_child_report($contract, $interconnect) {
     };
 }
 
+sub _static_source_surface_rule($contract) {
+    return 'AHB interconnect HBURST-aware aggregate propagation is exposed through generic .ppif in this slice; matching aggregate .ahb profile aliases and broader aggregate AHB interconnect/decode shapes remain deferred'
+        if _all_subordinates_have_hburst_seq_policy($contract);
+    return 'AHB interconnect is exposed through generic .ppif and the selected aggregate .ahb profile alias; broader aggregate AHB interconnect/decode shapes remain deferred';
+}
+
 sub _child_report($role, $child, $result, $parent_contract = undef) {
     my $report = {
         role                => $role,
@@ -1168,7 +1180,15 @@ sub _seq_policy_propagation_report($contract, $subordinate_results) {
     return undef unless @$subordinate_results == @bindings;
 
     my $bus = $contract->{interconnect}{wiring}{bus};
+    my $hburst_selected = _all_subordinates_have_hburst_seq_policy($contract);
+    my $mode = $hburst_selected
+        ? 'subordinate_owned_hburst_in_word_seq_policy'
+        : 'subordinate_owned_in_word_seq_policy';
+    my $local_address_policy = $hburst_selected
+        ? 'subtract_window_base_before_subordinate_hburst_seq_policy'
+        : 'subtract_window_base_before_subordinate_seq_policy';
     my @subordinates;
+    my @child_burst_names;
     for my $index (0 .. $#bindings) {
         my $child_report = $subordinate_results->[$index]{report};
         return undef unless ref($child_report->{transfer}) eq 'HASH'
@@ -1177,7 +1197,7 @@ sub _seq_policy_propagation_report($contract, $subordinate_results) {
         my $binding = $bindings[$index];
         my $endpoint = $binding->{endpoint};
         my $sub_bus = $endpoint->{bus};
-        push @subordinates, {
+        my %entry = (
             instance_name        => $binding->{child}{instance_name},
             object_name          => $binding->{child}{object_name},
             address_window       => _clone_jsonish($binding->{window}),
@@ -1185,29 +1205,43 @@ sub _seq_policy_propagation_report($contract, $subordinate_results) {
             supported_size       => _clone_jsonish($endpoint->{transfer}{supported_size}),
             supported_seq_size   => _clone_jsonish($seq_policy->{supported_sizes}),
             seq_policy           => _clone_jsonish($seq_policy),
-            local_address_policy => 'subtract_window_base_before_subordinate_seq_policy',
+            local_address_policy => $local_address_policy,
             select_signal        => $sub_bus->{select},
             local_address_signal => _clone_jsonish($sub_bus->{address}),
             ready_out_signal     => $sub_bus->{ready_out},
             response_signal      => _clone_jsonish($sub_bus->{response}),
             read_data_signal     => _clone_jsonish($sub_bus->{read_data}),
-        };
+        );
+        if ($hburst_selected) {
+            $entry{burst_signal} = _clone_jsonish($sub_bus->{burst});
+            $entry{supported_hburst_modes} = _clone_jsonish($seq_policy->{supported_hburst_modes});
+            $entry{fail_closed_hburst_modes} = _clone_jsonish($seq_policy->{fail_closed_hburst_modes});
+            push @child_burst_names, $sub_bus->{burst}{name};
+        }
+        push @subordinates, \%entry;
     }
 
-    return {
+    my %request_forwarding = (
+        address    => _clone_jsonish($bus->{address}),
+        transfer   => _clone_jsonish($bus->{transfer}),
+        write      => $bus->{write},
+        size       => _clone_jsonish($bus->{size}),
+        write_data => _clone_jsonish($bus->{write_data}),
+        ready      => $bus->{ready},
+    );
+    $request_forwarding{burst} = {
+        global_name => $bus->{burst}{name},
+        width       => $bus->{burst}{width},
+        child_names => \@child_burst_names,
+    } if $hburst_selected;
+
+    my %report = (
         selected             => JSON::PP::true,
-        mode                 => 'subordinate_owned_in_word_seq_policy',
-        local_address_policy => 'subtract_window_base_before_subordinate_seq_policy',
+        mode                 => $mode,
+        local_address_policy => $local_address_policy,
         mapped_hit_owner     => 'selected_subordinate',
         unmapped_error_owner => 'interconnect',
-        request_forwarding   => {
-            address    => _clone_jsonish($bus->{address}),
-            transfer   => _clone_jsonish($bus->{transfer}),
-            write      => $bus->{write},
-            size       => _clone_jsonish($bus->{size}),
-            write_data => _clone_jsonish($bus->{write_data}),
-            ready      => $bus->{ready},
-        },
+        request_forwarding   => \%request_forwarding,
         response_forwarding  => {
             ready     => $bus->{ready},
             response  => _clone_jsonish($bus->{response}),
@@ -1226,7 +1260,13 @@ sub _seq_policy_propagation_report($contract, $subordinate_results) {
             },
         },
         subordinates         => \@subordinates,
-    };
+    );
+    if ($hburst_selected) {
+        $report{policy} = 'hburst_in_word_progressive';
+        $report{base_policy} = 'in_word_progressive';
+        $report{length_source} = $bus->{burst}{name};
+    }
+    return \%report;
 }
 
 sub _all_subordinates_have_byte_lane_policy($contract) {
@@ -1265,7 +1305,22 @@ sub _all_subordinates_have_seq_policy($contract) {
     return 1;
 }
 
+sub _all_subordinates_have_hburst_seq_policy($contract) {
+    return 0 unless ref($contract) eq 'HASH';
+    my @subordinates = @{$contract->{subordinates} || []};
+    return 0 unless @subordinates;
+    for my $subordinate (@subordinates) {
+        return 0 unless _subordinate_has_hburst_seq_policy($subordinate);
+    }
+    return 1;
+}
+
 sub _subordinate_has_seq_policy($subordinate) {
+    return _subordinate_has_in_word_seq_policy($subordinate)
+        || _subordinate_has_hburst_seq_policy($subordinate);
+}
+
+sub _subordinate_has_in_word_seq_policy($subordinate) {
     return 0 unless _subordinate_has_byte_lane_policy($subordinate);
     my $transfer = $subordinate->{transfer};
     return 0 unless ($transfer->{name} // '') eq 'ahb_lite_byte_lane_seq_access';
@@ -1281,19 +1336,46 @@ sub _subordinate_has_seq_policy($subordinate) {
     return 1;
 }
 
+sub _subordinate_has_hburst_seq_policy($subordinate) {
+    return 0 unless _subordinate_has_byte_lane_policy($subordinate);
+    my $transfer = $subordinate->{transfer};
+    return 0 unless ($transfer->{name} // '') eq 'ahb_lite_byte_lane_hburst_seq_access';
+    my $seq_policy = $transfer->{seq_policy};
+    return 0 unless defined $seq_policy;
+    my $mode = ref($seq_policy) eq 'HASH' ? ($seq_policy->{mode} // '') : $seq_policy;
+    return 0 unless $mode eq 'hburst_in_word_progressive'
+        || $mode eq 'hburst-in-word-progressive';
+    return 0 unless ref($subordinate->{bus}{burst}) eq 'HASH'
+        && ($subordinate->{bus}{burst}{width} // '') eq '3';
+    return 1;
+}
+
+sub _subordinate_requests_hburst_seq_policy($subordinate) {
+    return 0 unless ref($subordinate) eq 'HASH' && ref($subordinate->{transfer}) eq 'HASH';
+    my $seq_policy = $subordinate->{transfer}{seq_policy};
+    return 0 unless defined $seq_policy;
+    my $mode = ref($seq_policy) eq 'HASH' ? ($seq_policy->{mode} // '') : $seq_policy;
+    return $mode eq 'hburst_in_word_progressive'
+        || $mode eq 'hburst-in-word-progressive';
+}
+
 sub _is_byte_lane_transfer_name($name) {
     return ($name // '') eq 'ahb_lite_byte_lane_access'
-        || ($name // '') eq 'ahb_lite_byte_lane_seq_access';
+        || ($name // '') eq 'ahb_lite_byte_lane_seq_access'
+        || ($name // '') eq 'ahb_lite_byte_lane_hburst_seq_access';
 }
 
 sub _unsupported_residue($contract = undef) {
     my $subordinate_count = ref($contract) eq 'HASH' ? scalar @{$contract->{subordinates} || []} : 1;
     my $byte_lane_selected = _all_subordinates_have_byte_lane_policy($contract);
     my $seq_policy_selected = _all_subordinates_have_seq_policy($contract);
+    my $hburst_seq_policy_selected = _all_subordinates_have_hburst_seq_policy($contract);
     my $interconnect_residue = $subordinate_count == 2
         ? {
             id     => 'ahb_broader_interconnect_decode_deferred',
-            detail => $byte_lane_selected
+            detail => $hburst_seq_policy_selected
+                ? 'The first one-requester/two-subordinate static-window AHB interconnect/decode source ships with subordinate-owned byte/halfword/word narrow transfers and byte-only HBURST WRAP4/INCR4 in-word SEQ propagation; broader subordinate cardinality, multiple requesters, arbitration, bus matrices, programmable or dynamic windows, optional AHB signals, BUSY-in-burst continuation, halfword/word burst SEQ, wider bursts, direct backend, verification-output, backend-language variants, AXI/APB behavior, and VHDL remain future work.'
+                : $byte_lane_selected
                 ? 'The first one-requester/two-subordinate static-window AHB interconnect/decode source ships with subordinate-owned byte/halfword/word narrow transfers; broader subordinate cardinality, multiple requesters, arbitration, bus matrices, programmable or dynamic windows, optional AHB signals, burst continuation, direct backend, verification-output, backend-language variants, AXI/APB behavior, and VHDL remain future work.'
                 : 'The first one-requester/two-subordinate static-window AHB interconnect/decode source ships; broader subordinate cardinality, multiple requesters, arbitration, bus matrices, programmable or dynamic windows, optional AHB signals, burst continuation, byte lanes, direct backend, verification-output, backend-language variants, AXI/APB behavior, and VHDL remain future work.',
         }
@@ -1315,7 +1397,9 @@ sub _unsupported_residue($contract = undef) {
         },
         {
             id     => 'ahb_burst_seq_support_deferred',
-            detail => $seq_policy_selected
+            detail => $hburst_seq_policy_selected
+                ? 'The interconnect decodes active transfers by HTRANS != IDLE and ships subordinate-owned byte-only HBURST WRAP4/INCR4 in-word SEQ propagation for selected aggregate HBURST byte-lane sources; indefinite INCR, WRAP8/INCR8/WRAP16/INCR16, halfword/word burst SEQ, BUSY-in-burst handling, multi-word/register-bank SEQ progression, and broader manager/subordinate behavior remain future work.'
+                : $seq_policy_selected
                 ? 'The interconnect decodes active transfers by HTRANS != IDLE and ships subordinate-owned byte/halfword in-word SEQ continuation for selected aggregate byte-lane sources; HBURST-driven length/wrap semantics, BUSY-in-burst handling, multi-word/register-bank SEQ progression, wrapping/incrementing burst address progression beyond requester generation, and broader manager/subordinate behavior remain future work.'
                 : 'The interconnect decodes active transfers by HTRANS != IDLE and leaves burst SEQ continuation policy, wrapping/incrementing burst address progression beyond requester generation, and broader manager/subordinate behavior to future work.',
         },
@@ -1549,12 +1633,15 @@ sub _validate_bus_compatibility($wiring, $requester_bus, $subordinates) {
         for my $field (qw(transfer size write_data)) {
             _require_matching_width_bus_field($field, $wiring, $subordinate_bus);
         }
+        _require_width_binding($subordinate_bus->{burst}, 'subordinate.bus.burst', 3)
+            if ref($subordinate_bus->{burst}) eq 'HASH';
         _require_width_binding($subordinate_bus->{address}, 'subordinate.bus.address', 32);
         _require_width_binding($subordinate_bus->{response}, 'subordinate.bus.response', 1);
         _require_width_binding($subordinate_bus->{read_data}, 'subordinate.bus.read_data', 32);
         for my $signal (
             $subordinate_bus->{select},
             $subordinate_bus->{address}{name},
+            (ref($subordinate_bus->{burst}) eq 'HASH' ? $subordinate_bus->{burst}{name} : ()),
             $subordinate_bus->{ready_out},
             $subordinate_bus->{response}{name},
             $subordinate_bus->{read_data}{name},
@@ -1575,6 +1662,16 @@ sub _validate_bus_compatibility($wiring, $requester_bus, $subordinates) {
             confess "AHB interconnect two-subordinate wiring must omit scalar bus.$field; use each subordinate bus block for per-subordinate signals\n"
                 if exists $wiring->{$field};
         }
+    }
+}
+
+sub _validate_aggregate_seq_policy_family($subordinates) {
+    my @hburst_requested = grep { _subordinate_requests_hburst_seq_policy($_) } @$subordinates;
+    return unless @hburst_requested;
+
+    for my $subordinate (@$subordinates) {
+        confess "AHB interconnect aggregate hburst-in-word-progressive sources require every subordinate child to use transfer ahb_lite_byte_lane_hburst_seq_access with bus.burst width 3\n"
+            unless _subordinate_has_hburst_seq_policy($subordinate);
     }
 }
 
