@@ -9964,6 +9964,15 @@ word `HSIZE` encodings, uses little-endian active lanes, preserves inactive
 lanes on narrow writes, zero-fills inactive lanes on narrow reads, and keeps
 unaligned, crossing, unsupported-size, unsupported-transfer, and unmapped
 accesses on the existing two-cycle ERROR policy.
+`.737` ships that source. `ppif/ahb_lite_subordinate_byte_lane.ppif` now
+generates `ahb_lite_subordinate_byte_lane.isf` before
+`ahb_lite_subordinate_byte_lane.fsm`, emits HDL module
+`ahb_lite_subordinate_byte_lane`, reports `narrow_transfer_policy`, and keeps
+existing word-only subordinate `.ppif`/`.ahb` behavior unchanged. The new
+byte-lane `.ahb` alias, aggregate byte-lane propagation, optional signals,
+burst `SEQ`, broader AHB behavior, direct backend, verification-output,
+backend-language variants, and VHDL remain deferred. `.738` selects the next
+exact AHB follow-on owner.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

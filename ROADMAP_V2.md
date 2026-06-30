@@ -6235,6 +6235,20 @@ word (`HSIZE == 3'b010`) transfers, uses little-endian active lanes, preserves
 inactive lanes on narrow writes, zero-fills inactive lanes on narrow reads,
 and returns the existing two-cycle ERROR for unsupported size, unsupported
 transfer, unmapped, unaligned, or crossing accesses.
+`.737` now ships that selected generic `.ppif` source. The public source
+`ppif/ahb_lite_subordinate_byte_lane.ppif` lowers through generated
+`ahb_lite_subordinate_byte_lane.isf` before generated
+`ahb_lite_subordinate_byte_lane.fsm`, emits HDL module
+`ahb_lite_subordinate_byte_lane`, support-accounts as
+`intent.ppif_ahb_lite_subordinate_byte_lane`, and reports
+`narrow_transfer_policy` with accepted sizes, `HSIZE` encodings, address
+rules, little-endian byte-lane masks, inactive-lane write/read policies, and
+ERROR policy. Existing word-only subordinate `.ppif`/`.ahb` behavior remains
+unchanged. Remaining AHB work includes a byte-lane `.ahb` alias, byte-lane
+propagation through aggregate interconnects, optional signals, burst `SEQ`,
+broader interconnect/decode, completer/full-manager behavior, direct backend,
+verification-output generation, backend-language variants, and VHDL. `.738`
+now owns the next no-behavior AHB follow-on selector.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

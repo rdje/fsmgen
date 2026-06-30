@@ -205,6 +205,7 @@ sub _normalize_transfer($raw, $control, $storage) {
     my $accept_when = _normalize_accept_when(_required_hash($raw, 'accept_when'));
     my @ignored = @{_required_array($raw, 'ignored_transfer')};
     my %ignored = map { _nonempty_scalar($_, 'transfer.ignored_transfer') => 1 } @ignored;
+    my $has_size_policy = _has_ahb_subordinate_size_policy($raw);
 
     confess "AHB subordinate IAL2 contract transfer.ignored_transfer must contain idle and busy in this slice\n"
         unless keys(%ignored) == 2 && $ignored{idle} && $ignored{busy};
@@ -213,7 +214,7 @@ sub _normalize_transfer($raw, $control, $storage) {
     confess "AHB subordinate IAL2 contract transfer.register must name the selected storage register\n"
         if exists($raw->{register}) && $raw->{register} ne $storage->{register}{name};
 
-    return {
+    my %transfer = (
         name                 => $name,
         accept_when          => $accept_when,
         idle                 => _exact_scalar($raw, 'idle', "2'b00", 'transfer.idle'),
@@ -230,7 +231,43 @@ sub _normalize_transfer($raw, $control, $storage) {
         unsupported_transfer => _exact_scalar($raw, 'unsupported_transfer', 'error', 'transfer.unsupported_transfer'),
         response             => _normalize_response(_required_hash($raw, 'response')),
         error_completion     => _exact_scalar($raw, 'error_completion', 'two-cycle', 'transfer.error_completion'),
-    };
+    );
+
+    if ($has_size_policy) {
+        $transfer{supported_size} = _normalize_supported_size_policy($raw);
+        $transfer{lane_order} = _exact_scalar($raw, 'lane_order', 'little-endian', 'transfer.lane_order');
+        $transfer{narrow_write} = _exact_scalar($raw, 'narrow_write', 'preserve-inactive-lanes', 'transfer.narrow_write');
+        $transfer{narrow_read} = _exact_scalar($raw, 'narrow_read', 'zero-fill-inactive-lanes', 'transfer.narrow_read');
+        $transfer{unaligned_access} = _exact_scalar($raw, 'unaligned_access', 'error', 'transfer.unaligned_access');
+        $transfer{crossing_access} = _exact_scalar($raw, 'crossing_access', 'error', 'transfer.crossing_access');
+    }
+
+    return \%transfer;
+}
+
+sub _has_ahb_subordinate_size_policy($raw) {
+    for my $field (qw(supported_size lane_order narrow_write narrow_read unaligned_access crossing_access)) {
+        return 1 if exists $raw->{$field};
+    }
+    return 0;
+}
+
+sub _normalize_supported_size_policy($raw) {
+    confess "AHB subordinate IAL2 contract transfer.supported_size is required when AHB subordinate size policy clauses are present\n"
+        unless exists $raw->{supported_size};
+
+    my @sizes = @{_required_array($raw, 'supported_size')};
+    my %seen;
+    for my $size (@sizes) {
+        my $value = _nonempty_scalar($size, 'transfer.supported_size');
+        confess "AHB subordinate IAL2 contract transfer.supported_size has duplicate '$value'\n"
+            if $seen{$value}++;
+    }
+
+    confess "AHB subordinate IAL2 contract transfer.supported_size must contain exactly byte, halfword, and word in this slice\n"
+        unless @sizes == 3 && $seen{byte} && $seen{halfword} && $seen{word};
+
+    return [qw(byte halfword word)];
 }
 
 sub _normalize_accept_when($raw) {
@@ -256,6 +293,8 @@ sub _emit_isf($contract) {
     my $reset = _reset_clause($contract->{reset});
     my $reg_data = $storage->{data}{name};
     my $internal_done = 'ahb_access_done_q';
+    my @read_drive_lines = _read_drive_lines($contract);
+    my @access_lines = _access_lines($contract);
 
     return join("\n",
         "(actor $contract->{actor_name}",
@@ -285,11 +324,7 @@ sub _emit_isf($contract) {
         "    ($bus->{response}{name} $response->{okay})",
         "    ($bus->{read_data}{name} 0))",
         "",
-        "  (drive read_hit",
-        "    ($bus->{ready_out} 1)",
-        "    ($bus->{response}{name} $response->{okay})",
-        "    ($bus->{read_data}{name} $reg_data))",
-        "",
+        @read_drive_lines,
         "  (drive write_hit",
         "    ($bus->{ready_out} 1)",
         "    ($bus->{response}{name} $response->{okay})",
@@ -314,6 +349,59 @@ sub _emit_isf($contract) {
         "      (sample $control->{wait_cycles}{name} as wait_n))",
         "    (drive enter_data_phase)",
         "    (wait wait_n)",
+        @access_lines,
+        "    (complete $internal_done)))",
+        "",
+    );
+}
+
+sub _read_drive_lines($contract) {
+    my $bus = $contract->{bus};
+    my $response = $contract->{transfer}{response};
+    my $reg_data = $contract->{storage}{register}{data}{name};
+
+    return (
+        "  (drive read_hit",
+        "    ($bus->{ready_out} 1)",
+        "    ($bus->{response}{name} $response->{okay})",
+        "    ($bus->{read_data}{name} $reg_data))",
+        "",
+    ) unless _transfer_supports_narrow_sizes($contract->{transfer});
+
+    my @drives;
+    for my $entry (
+        ['read_byte_lane0_hit',     _masked_read_expr($reg_data, 0x000000ff)],
+        ['read_byte_lane1_hit',     _masked_read_expr($reg_data, 0x0000ff00)],
+        ['read_byte_lane2_hit',     _masked_read_expr($reg_data, 0x00ff0000)],
+        ['read_byte_lane3_hit',     _masked_read_expr($reg_data, 0xff000000)],
+        ['read_halfword_lane0_hit', _masked_read_expr($reg_data, 0x0000ffff)],
+        ['read_halfword_lane1_hit', _masked_read_expr($reg_data, 0xffff0000)],
+        ['read_word_hit',           $reg_data],
+    ) {
+        my ($drive, $read_expr) = @$entry;
+        push @drives,
+            "  (drive $drive",
+            "    ($bus->{ready_out} 1)",
+            "    ($bus->{response}{name} $response->{okay})",
+            "    ($bus->{read_data}{name} $read_expr))",
+            "";
+    }
+    return @drives;
+}
+
+sub _access_lines($contract) {
+    return _narrow_access_lines($contract)
+        if _transfer_supports_narrow_sizes($contract->{transfer});
+    return _word_only_access_lines($contract);
+}
+
+sub _word_only_access_lines($contract) {
+    my $bus = $contract->{bus};
+    my $storage = $contract->{storage}{register};
+    my $transfer = $contract->{transfer};
+    my $reg_data = $storage->{data}{name};
+
+    return (
         "    (when (== trans_q $transfer->{seq})",
         "      (drive error_first)",
         "      (drive error_complete))",
@@ -328,9 +416,89 @@ sub _emit_isf($contract) {
         "      (drive write_hit))",
         "    (when (& (== trans_q $transfer->{nonseq}) (== size_q 2) (== addr_q $storage->{address}{value}) (! write_q))",
         "      (drive read_hit))",
-        "    (complete $internal_done)))",
-        "",
     );
+}
+
+sub _narrow_access_lines($contract) {
+    my $bus = $contract->{bus};
+    my $transfer = $contract->{transfer};
+    my $storage = $contract->{storage}{register};
+    my $reg_data = $storage->{data}{name};
+    my $write_data = $bus->{write_data}{name};
+    my $nonseq = "(== trans_q $transfer->{nonseq})";
+    my $byte_valid = _byte_valid_access_expr();
+    my $halfword_valid = _halfword_valid_access_expr();
+    my $word_valid = _word_valid_access_expr($storage->{address}{value});
+    my $supported_size = _supported_size_expr();
+    my $valid_access = "(| $byte_valid $halfword_valid $word_valid)";
+
+    my @lines = (
+        "    (when (== trans_q $transfer->{seq})",
+        "      (drive error_first)",
+        "      (drive error_complete))",
+        "    (when (& $nonseq (! $supported_size))",
+        "      (drive error_first)",
+        "      (drive error_complete))",
+        "    (when (& $nonseq $supported_size (! $valid_access))",
+        "      (drive error_first)",
+        "      (drive error_complete))",
+    );
+
+    for my $entry (
+        [$byte_valid,     _addr_low_expr(0x3, 0x0), 0x000000ff, 'read_byte_lane0_hit'],
+        [$byte_valid,     _addr_low_expr(0x3, 0x1), 0x0000ff00, 'read_byte_lane1_hit'],
+        [$byte_valid,     _addr_low_expr(0x3, 0x2), 0x00ff0000, 'read_byte_lane2_hit'],
+        [$byte_valid,     _addr_low_expr(0x3, 0x3), 0xff000000, 'read_byte_lane3_hit'],
+        [$halfword_valid, _addr_low_expr(0x2, 0x0), 0x0000ffff, 'read_halfword_lane0_hit'],
+        [$halfword_valid, _addr_low_expr(0x2, 0x2), 0xffff0000, 'read_halfword_lane1_hit'],
+        [$word_valid,     '(== addr_q 0)',          0xffffffff, 'read_word_hit'],
+    ) {
+        my ($valid_expr, $lane_expr, $write_mask, $read_drive) = @$entry;
+        push @lines,
+            "    (when (& $nonseq $valid_expr $lane_expr write_q)",
+            _masked_write_line($reg_data, $write_data, $write_mask),
+            "      (drive write_hit))",
+            "    (when (& $nonseq $valid_expr $lane_expr (! write_q))",
+            "      (drive $read_drive))";
+    }
+
+    return @lines;
+}
+
+sub _transfer_supports_narrow_sizes($transfer) {
+    return exists $transfer->{supported_size};
+}
+
+sub _supported_size_expr() {
+    return "(| (== size_q 0) (== size_q 1) (== size_q 2))";
+}
+
+sub _byte_valid_access_expr() {
+    return "(& (== size_q 0) (== (& addr_q 32'hfffffffc) 32'h00000000))";
+}
+
+sub _halfword_valid_access_expr() {
+    return "(& (== size_q 1) (== (& addr_q 32'hfffffffc) 32'h00000000) (== (& addr_q 32'h00000001) 32'h00000000))";
+}
+
+sub _word_valid_access_expr($address) {
+    return "(& (== size_q 2) (== addr_q $address))";
+}
+
+sub _addr_low_expr($mask, $value) {
+    return "(== (& addr_q " . _hex_literal(32, $mask) . ") " . _hex_literal(32, $value) . ")";
+}
+
+sub _masked_write_line($data_signal, $write_data, $write_mask) {
+    return "      (set $data_signal $write_data)"
+        if $write_mask == 0xffffffff;
+
+    my $preserve_mask = 0xffffffff ^ $write_mask;
+    return "      (set $data_signal (| (& $data_signal " . _hex_literal(32, $preserve_mask) . ") (& $write_data " . _hex_literal(32, $write_mask) . ")))";
+}
+
+sub _masked_read_expr($data_signal, $read_mask) {
+    return "(& $data_signal " . _hex_literal(32, $read_mask) . ")";
 }
 
 sub _build_report(%args) {
@@ -344,7 +512,27 @@ sub _build_report(%args) {
     $source_object{intent_name} = $contract->{intent_name}
         if defined($contract->{intent_name}) && length($contract->{intent_name});
 
-    return {
+    my @enforced_static_rules = (
+        'profile must be ahb and the object must be ahb-subordinate',
+        'role must be subordinate',
+        'address, write-data, read-data, and register data widths are 32 in this slice',
+        'AHB transfer width is 2, size width is 3, response width is 1, and wait-cycles width is 4 in this slice',
+        _transfer_supports_narrow_sizes($contract->{transfer})
+            ? (
+                'selected transfer support is NONSEQ byte, halfword, and word access; IDLE and BUSY remain ignored, and SEQ is an unsupported burst continuation',
+                'byte accesses require HSIZE 0 and HADDR[31:2] == 0; halfword accesses require HSIZE 1, HADDR[31:2] == 0, and HADDR[0] == 0; word accesses require HSIZE 2 and HADDR == 0',
+                'little-endian byte lanes map lane0 to bits [7:0], lane1 to bits [15:8], lane2 to bits [23:16], and lane3 to bits [31:24]',
+                'narrow writes preserve inactive register lanes and narrow reads zero-fill inactive HRDATA lanes',
+            )
+            : 'selected transfer support is NONSEQ word access only; IDLE and BUSY remain ignored, and SEQ is an unsupported burst continuation',
+        'the implemented register map contains exactly one address-0 register with reset value 0',
+        _transfer_supports_narrow_sizes($contract->{transfer})
+            ? 'unsupported transfer, unsupported size, unmapped address, unaligned access, and crossing access complete with the selected two-cycle ERROR response'
+            : 'unsupported transfer, unsupported size, and unmapped address complete with the selected two-cycle ERROR response',
+        'direct IAL2-to-IAL0 lowering is forbidden',
+    );
+
+    my %report = (
         schema => 'fsmgen.ial2.protocol_intent.ahb_subordinate.v1',
         mode   => 'subordinate',
         layering => {
@@ -392,21 +580,71 @@ sub _build_report(%args) {
                 entry_artifact => "$contract->{actor_name}.fsm",
             },
         },
-        enforced_static_rules => [
-            'profile must be ahb and the object must be ahb-subordinate',
-            'role must be subordinate',
-            'address, write-data, read-data, and register data widths are 32 in this slice',
-            'AHB transfer width is 2, size width is 3, response width is 1, and wait-cycles width is 4 in this slice',
-            'selected transfer support is NONSEQ word access only; IDLE and BUSY remain ignored, and SEQ is an unsupported burst continuation',
-            'the implemented register map contains exactly one address-0 register with reset value 0',
-            'unsupported transfer, unsupported size, and unmapped address complete with the selected two-cycle ERROR response',
-            'direct IAL2-to-IAL0 lowering is forbidden',
+        enforced_static_rules => \@enforced_static_rules,
+        unsupported_residue => _unsupported_residue($contract),
+    );
+
+    $report{narrow_transfer_policy} = _narrow_transfer_policy_report()
+        if _transfer_supports_narrow_sizes($contract->{transfer});
+
+    return \%report;
+}
+
+sub _narrow_transfer_policy_report() {
+    return {
+        supported_sizes => [
+            {
+                name => 'byte',
+                hsize => "3'b000",
+                bytes => 1,
+                address_rule => 'HADDR[31:2] == 0',
+                active_lane => 'HADDR[1:0]',
+            },
+            {
+                name => 'halfword',
+                hsize => "3'b001",
+                bytes => 2,
+                address_rule => 'HADDR[31:2] == 0 && HADDR[0] == 0',
+                active_lane => 'HADDR[1]',
+            },
+            {
+                name => 'word',
+                hsize => "3'b010",
+                bytes => 4,
+                address_rule => 'HADDR[31:2] == 0 && HADDR[1:0] == 0',
+                active_lane => 'all',
+            },
         ],
-        unsupported_residue => _unsupported_residue(),
+        lane_order => 'little-endian',
+        byte_lanes => [
+            { lane => 0, bits => '[7:0]',   mask => _hex_literal(32, 0x000000ff) },
+            { lane => 1, bits => '[15:8]',  mask => _hex_literal(32, 0x0000ff00) },
+            { lane => 2, bits => '[23:16]', mask => _hex_literal(32, 0x00ff0000) },
+            { lane => 3, bits => '[31:24]', mask => _hex_literal(32, 0xff000000) },
+        ],
+        narrow_write => {
+            policy => 'preserve-inactive-lanes',
+            effect => 'active write lanes replace storage lanes; inactive storage lanes are preserved',
+        },
+        narrow_read => {
+            policy => 'zero-fill-inactive-lanes',
+            effect => 'active storage lanes drive HRDATA in place; inactive HRDATA lanes drive zero',
+        },
+        error_policy => [
+            'unsupported-size',
+            'unsupported-transfer',
+            'unmapped-address',
+            'unaligned-access',
+            'crossing-access',
+        ],
     };
 }
 
-sub _unsupported_residue {
+sub _unsupported_residue($contract) {
+    my $optional_signal_detail = _transfer_supports_narrow_sizes($contract->{transfer})
+        ? 'HBURST, HPROT, HMASTLOCK, AHB5 optional/property-gated signals, exclusive access, and legacy two-bit HRESP compatibility remain deferred.'
+        : 'HBURST, HPROT, HMASTLOCK, AHB5 optional/property-gated signals, byte lanes, exclusive access, and legacy two-bit HRESP compatibility remain deferred.';
+
     return [
         {
             id => 'ahb_subordinate_profile_alias_deferred',
@@ -418,7 +656,7 @@ sub _unsupported_residue {
         },
         {
             id => 'ahb_subordinate_optional_signal_residue',
-            detail => 'HBURST, HPROT, HMASTLOCK, AHB5 optional/property-gated signals, byte lanes, exclusive access, and legacy two-bit HRESP compatibility remain deferred.',
+            detail => $optional_signal_detail,
         },
         {
             id => 'ahb_burst_seq_support_deferred',
@@ -595,6 +833,10 @@ sub _bool_value($value, $field) {
     confess "AHB subordinate IAL2 contract field '$field' must be boolean 0 or 1\n"
         if ref($value) || !defined($value) || ($value ne '0' && $value ne '1');
     return $value ? 1 : 0;
+}
+
+sub _hex_literal($width, $value) {
+    return sprintf("%d'h%0*x", $width, int($width / 4), $value);
 }
 
 sub _interface_line($direction, $binding) {

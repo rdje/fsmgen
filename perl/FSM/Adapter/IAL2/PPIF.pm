@@ -1074,10 +1074,15 @@ sub _parse_ahb_subordinate_transfer_block($items, $source_label, $name) {
     my %transfer = (name => $transfer_name);
     my %seen_single;
     my @ignored;
+    my @supported_sizes;
     for my $clause (@{$items}[1 .. $#$items]) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         if ($head eq 'ignored-transfer') {
             push @ignored, _parse_apb_scalar_binding(\@body, $source_label, "ahb-subordinate $name transfer $transfer_name ignored-transfer");
+            next;
+        }
+        if ($head eq 'supported-size') {
+            push @supported_sizes, _parse_apb_scalar_binding(\@body, $source_label, "ahb-subordinate $name transfer $transfer_name supported-size");
             next;
         }
 
@@ -1085,7 +1090,7 @@ sub _parse_ahb_subordinate_transfer_block($items, $source_label, $name) {
             if $seen_single{$head}++;
         if ($head eq 'accept-when') {
             $transfer{accept_when} = _parse_ahb_subordinate_accept_when(\@body, $source_label, $name, $transfer_name);
-        } elsif ($head =~ /\A(?:idle|busy|nonseq|seq|supported-transfer|wait-cycles|read|write|unmapped-address|unsupported-size|unsupported-transfer|error-completion)\z/) {
+        } elsif ($head =~ /\A(?:idle|busy|nonseq|seq|supported-transfer|wait-cycles|read|write|unmapped-address|unsupported-size|unsupported-transfer|lane-order|narrow-write|narrow-read|unaligned-access|crossing-access|error-completion)\z/) {
             my $key = $head;
             $key =~ s/-/_/g;
             $transfer{$key} = _parse_apb_scalar_binding(\@body, $source_label, "ahb-subordinate $name transfer $transfer_name $head");
@@ -1096,6 +1101,7 @@ sub _parse_ahb_subordinate_transfer_block($items, $source_label, $name) {
         }
     }
     $transfer{ignored_transfer} = \@ignored if @ignored;
+    $transfer{supported_size} = \@supported_sizes if @supported_sizes;
 
     for my $required (qw(accept_when idle busy nonseq seq supported_transfer ignored_transfer wait_cycles read write unmapped_address unsupported_size unsupported_transfer response error_completion)) {
         my $clause = $required;

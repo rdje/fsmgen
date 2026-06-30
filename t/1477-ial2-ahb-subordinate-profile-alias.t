@@ -85,8 +85,8 @@ subtest 'subordinate .ahb diagnostics stay distinct' => sub {
     ok(!$wrong_object_ok, '.ahb profile with unsupported object breadth is rejected');
     like(
         $@,
-        qr/profile ahb requires exactly one \(ahb-requester \.\.\.\) object, exactly one \(ahb-subordinate \.\.\.\) object, or the selected aggregate one-requester\/one-subordinate \(ahb-interconnect \.\.\.\) shape in this slice/,
-        '.ahb unsupported object diagnostic names the selected aggregate shape',
+        qr/profile ahb requires exactly one \(ahb-requester \.\.\.\) object, exactly one \(ahb-subordinate \.\.\.\) object, the selected aggregate one-requester\/one-subordinate \(ahb-interconnect \.\.\.\) shape, or the selected aggregate one-requester\/two-subordinate \(ahb-interconnect \.\.\.\) shape in this slice/,
+        '.ahb unsupported object diagnostic names the selected aggregate shapes',
     );
 
     my $mixed_path = File::Spec->catfile($tempdir, 'mixed.ahb');
