@@ -6201,8 +6201,11 @@ changed in `.731`; the alias remains fail-closed until `.732` implements it.
 review artifacts and HDL module `ahb_tb` as the generic source, reports
 topology `one_requester_two_subordinate_static_window_interconnect`,
 support-accounts as `intent.ahb_profile_alias_interconnect_two_subordinate`,
-and removes `ahb_aggregate_profile_alias_deferred` only from the alias report;
-the generic `.ppif` report keeps that residue as a source-surface distinction.
+and removes `ahb_aggregate_profile_alias_deferred` from the alias reports; the
+generic `.ppif` report keeps that residue as a source-surface distinction.
+`.733` now selects `.734`, a no-behavior readiness audit for the remaining AHB
+residue after the eight-entrypoint bounded AHB IAL2 surface ships, before any
+new AHB behavior owner is selected.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

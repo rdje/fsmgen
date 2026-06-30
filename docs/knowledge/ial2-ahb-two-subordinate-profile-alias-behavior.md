@@ -32,6 +32,6 @@ Support accounting is
 schema is `fsmgen.ial2.protocol_intent.ahb_interconnect.v1` and topology is
 `one_requester_two_subordinate_static_window_interconnect`.
 
-The alias report removes `ahb_aggregate_profile_alias_deferred`; the generic
+The alias reports remove `ahb_aggregate_profile_alias_deferred`; the generic
 two-subordinate `.ppif` report keeps that residue as a source-surface
 distinction. Broader AHB interconnect/decode behavior remains deferred.

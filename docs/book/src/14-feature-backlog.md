@@ -9934,8 +9934,14 @@ changed in `.731`; the alias remains deferred until `.732` implements it.
 review artifacts and HDL module `ahb_tb` as the generic source, reports
 topology `one_requester_two_subordinate_static_window_interconnect`,
 support-accounts as `intent.ahb_profile_alias_interconnect_two_subordinate`,
-and removes `ahb_aggregate_profile_alias_deferred` only from the alias report;
-the generic `.ppif` report keeps that residue as a source-surface distinction.
+and removes `ahb_aggregate_profile_alias_deferred` from the alias reports; the
+generic `.ppif` report keeps that residue as a source-surface distinction.
+`.733` selects `.734`, a no-behavior readiness audit for the remaining AHB
+residue after the eight public bounded AHB IAL2 entrypoints ship. The audit
+must decide the next exact AHB owner or prerequisite before any new parser,
+generator, source, support-accounting, manifest, test, schedule/check/semantic
+JSON, generated artifact, HDL/runtime, direct-backend, verification-output,
+backend-language variant, broader AHB, or VHDL behavior changes.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

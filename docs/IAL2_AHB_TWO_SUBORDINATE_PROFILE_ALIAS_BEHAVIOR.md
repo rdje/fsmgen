@@ -96,7 +96,7 @@ response.
 
 ## Residue
 
-The `.ahb` alias report removes only:
+The `.ahb` alias reports remove:
 
 ```text
 ahb_aggregate_profile_alias_deferred
