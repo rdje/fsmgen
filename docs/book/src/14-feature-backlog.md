@@ -10140,6 +10140,13 @@ propagation, HBURST length/wrap semantics, BUSY-in-burst parking,
 multi-word/register-bank progression, optional/property-gated AHB signals,
 broader AHB behavior, direct backend, verification-output generation,
 backend-language variants, AXI/APB, and VHDL remain deferred.
+`.755` selects `.756`, a no-behavior readiness audit for bounded AHB aggregate
+byte-lane in-word `SEQ` propagation. Current aggregate byte-lane sources still
+instantiate non-`SEQ` byte-lane subordinate children and carry
+`ahb_burst_seq_support_deferred`; `.756` must audit source family names, one-
+and two-subordinate child naming, child `transfer.seq_policy` propagation,
+aggregate report shape, residue movement, validation, rollback, and aggregate
+`.ahb` alias sequencing before any behavior change.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
