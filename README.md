@@ -5152,6 +5152,15 @@ emits HDL module `ahb_tb`, reports topology
 `one_requester_two_subordinate_static_window_interconnect`, support-accounts as
 `intent.ppif_ahb_interconnect_two_subordinate`, and keeps matching `.ahb`
 two-subordinate alias behavior deferred.
+`.731` now selects `.732`, direct implementation of that matching bounded
+public `.ahb` profile alias. The selected future source is
+`ppif/ahb_interconnect_two_subordinate.ahb`, mirroring the shipped generic
+two-subordinate `.ppif` source, preserving generated review artifacts and
+topology `one_requester_two_subordinate_static_window_interconnect`, and using
+support identity `intent.ahb_profile_alias_interconnect_two_subordinate`,
+source kind `ial2_profile_alias`, and coverage
+`ial2_ahb_profile_alias_interconnect_two_subordinate_pipeline_cli`. No behavior
+changed in `.731`; the alias remains fail-closed until `.732` implements it.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7828,6 +7837,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_MULTI_SUBORDINATE_DECODE_READINESS_AUDIT.md` — records the `.728` no-behavior readiness audit for bounded multi-subordinate AHB interconnect/decode and selects `.729`, public contract selection for a first bounded two-subordinate surface.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_CONTRACT_SELECTION.md` — records the `.729` no-behavior public contract selection for `ppif/ahb_interconnect_two_subordinate.ppif`, support identity `intent.ppif_ahb_interconnect_two_subordinate`, generated two-subordinate aggregate artifacts, and `.730` implementation owner.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_BEHAVIOR.md` — documents the `.730` shipped public generic `ppif/ahb_interconnect_two_subordinate.ppif` behavior, support accounting, generated review artifacts, report topology, validation, and remaining `.ahb` alias residue.
+- `docs/IAL2_POST_AHB_TWO_SUBORDINATE_PPIF_NEXT_SLICE_SELECTION.md` — records the `.731` no-behavior selector and selects `.732`, matching bounded public `ppif/ahb_interconnect_two_subordinate.ahb` profile-alias implementation with support identity `intent.ahb_profile_alias_interconnect_two_subordinate`.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

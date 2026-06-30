@@ -9920,6 +9920,15 @@ alias support remains deferred until after the generic `.ppif` behavior ships.
 `intent.ppif_ahb_interconnect_two_subordinate`, replaces the old
 multi-subordinate residue with `ahb_broader_interconnect_decode_deferred`, and
 keeps matching two-subordinate `.ahb` alias behavior deferred.
+`.731` selects `.732`, direct implementation of the matching bounded public
+AHB two-subordinate `.ahb` profile alias. The selected source path is
+`ppif/ahb_interconnect_two_subordinate.ahb`, mirroring the shipped generic
+two-subordinate `.ppif` source, preserving generated review artifacts and
+topology `one_requester_two_subordinate_static_window_interconnect`, using
+support identity `intent.ahb_profile_alias_interconnect_two_subordinate`,
+source kind `ial2_profile_alias`, and coverage
+`ial2_ahb_profile_alias_interconnect_two_subordinate_pipeline_cli`. No behavior
+changed in `.731`; the alias remains deferred until `.732` implements it.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

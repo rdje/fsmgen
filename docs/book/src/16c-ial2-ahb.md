@@ -223,6 +223,12 @@ replaces the old multi-subordinate residue with
 `ahb_broader_interconnect_decode_deferred` to make the remaining AHB
 interconnect/decode backlog explicit.
 
+The next selected AHB owner is that exact alias:
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.732` will add
+`ppif/ahb_interconnect_two_subordinate.ahb` as a profile alias over the shipped
+two-subordinate `.ppif` behavior. Until that implementation lands, the public
+AHB surface remains the seven entrypoints listed above.
+
 ## AHB Profile Alias
 
 Use the `.ahb` aliases when you want the source filename to advertise the AHB

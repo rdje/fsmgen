@@ -6187,6 +6187,15 @@ alias support remains deferred until after the generic `.ppif` behavior ships.
 `one_requester_two_subordinate_static_window_interconnect`, support-accounts as
 `intent.ppif_ahb_interconnect_two_subordinate`, and keeps matching
 two-subordinate `.ahb` alias behavior deferred.
+`.731` now selects `.732`, direct implementation of the matching bounded
+public AHB two-subordinate `.ahb` profile alias. The selected future source is
+`ppif/ahb_interconnect_two_subordinate.ahb`, mirroring the shipped generic
+two-subordinate `.ppif` source, preserving generated review artifacts and
+topology `one_requester_two_subordinate_static_window_interconnect`, and using
+support identity `intent.ahb_profile_alias_interconnect_two_subordinate`,
+source kind `ial2_profile_alias`, and coverage
+`ial2_ahb_profile_alias_interconnect_two_subordinate_pipeline_cli`. No behavior
+changed in `.731`; the alias remains fail-closed until `.732` implements it.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
