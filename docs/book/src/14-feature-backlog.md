@@ -9973,6 +9973,17 @@ byte-lane `.ahb` alias, aggregate byte-lane propagation, optional signals,
 burst `SEQ`, broader AHB behavior, direct backend, verification-output,
 backend-language variants, and VHDL remain deferred. `.738` selects the next
 exact AHB follow-on owner.
+`.738` selects `.739`, direct implementation of the matching bounded public
+AHB byte-lane/narrow-transfer subordinate `.ahb` profile alias, without
+behavior changes. The selected future source is
+`ppif/ahb_lite_subordinate_byte_lane.ahb`, mirroring the generic byte-lane
+`.ppif` source, preserving generated `ahb_lite_subordinate_byte_lane.isf` and
+`ahb_lite_subordinate_byte_lane.fsm`, reporting `narrow_transfer_policy`, and
+support-accounting as `intent.ahb_profile_alias_subordinate_byte_lane` with
+coverage `ial2_ahb_profile_alias_subordinate_byte_lane_pipeline_cli`. The next
+slice is source/support/docs/test work; aggregate byte-lane propagation,
+optional signals, burst `SEQ`, broader AHB behavior, direct backend,
+verification-output, backend-language variants, and VHDL remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

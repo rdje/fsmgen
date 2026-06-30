@@ -6249,6 +6249,19 @@ propagation through aggregate interconnects, optional signals, burst `SEQ`,
 broader interconnect/decode, completer/full-manager behavior, direct backend,
 verification-output generation, backend-language variants, and VHDL. `.738`
 now owns the next no-behavior AHB follow-on selector.
+`.738` now selects `.739`, direct implementation of the matching bounded
+public AHB byte-lane/narrow-transfer subordinate `.ahb` profile alias, without
+behavior changes. The selected future source is
+`ppif/ahb_lite_subordinate_byte_lane.ahb`, mirroring
+`ppif/ahb_lite_subordinate_byte_lane.ppif`, preserving generated
+`ahb_lite_subordinate_byte_lane.isf` and
+`ahb_lite_subordinate_byte_lane.fsm`, reporting `narrow_transfer_policy`, and
+support-accounting as `intent.ahb_profile_alias_subordinate_byte_lane` with
+coverage `ial2_ahb_profile_alias_subordinate_byte_lane_pipeline_cli`. An
+in-memory `.ahb` label probe confirmed current code already preserves
+byte-lane semantics and removes `ahb_subordinate_profile_alias_deferred` for
+the alias report, so `.739` is source/support/docs/test work rather than
+generator-semantics work.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
