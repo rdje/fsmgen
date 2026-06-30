@@ -9956,6 +9956,14 @@ settle byte/halfword/word `HSIZE` behavior, `HADDR` lane selection, narrow
 write/read projection, unaligned/crossing ERROR diagnostics, report/support
 identity, validation, residue movement, and VHDL deferral, and keep the
 existing word-only subordinate `.ppif` and `.ahb` sources unchanged.
+`.736` selects `.737`, direct implementation of the first bounded AHB
+byte-lane/narrow-transfer subordinate source. The selected future source is
+`ppif/ahb_lite_subordinate_byte_lane.ppif`, support-accounted as
+`intent.ppif_ahb_lite_subordinate_byte_lane`. It accepts byte, halfword, and
+word `HSIZE` encodings, uses little-endian active lanes, preserves inactive
+lanes on narrow writes, zero-fills inactive lanes on narrow reads, and keeps
+unaligned, crossing, unsupported-size, unsupported-transfer, and unmapped
+accesses on the existing two-cycle ERROR policy.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

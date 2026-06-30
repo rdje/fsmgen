@@ -5186,6 +5186,14 @@ support-accounting prerequisite before contract selection; the next leaf should
 settle a new generic subordinate `.ppif` source, likely
 `ppif/ahb_lite_subordinate_byte_lane.ppif`, while preserving the existing
 word-only `ppif/ahb_lite_subordinate.ppif` and `.ahb` alias behavior.
+`.736` now selects `.737`, direct implementation of that first bounded AHB
+byte-lane/narrow-transfer subordinate source. The selected future source is
+`ppif/ahb_lite_subordinate_byte_lane.ppif`, with intent/module
+`ahb_lite_subordinate_byte_lane`, support identity
+`intent.ppif_ahb_lite_subordinate_byte_lane`, byte/halfword/word `HSIZE`
+encodings, little-endian active lanes, inactive-lane-preserving writes,
+inactive-lane-zero-filled reads, unaligned/crossing ERROR behavior, and the
+existing word-only subordinate `.ppif`/`.ahb` sources preserved.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7867,6 +7875,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_TWO_SUBORDINATE_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.733` no-behavior selector after the eight-entrypoint AHB surface shipped and selects `.734`, remaining AHB residue readiness audit.
 - `docs/IAL2_AHB_REMAINING_RESIDUE_READINESS_AUDIT.md` — records the `.734` no-behavior audit of remaining AHB residue and selects `.735`, first bounded AHB byte-lane/narrow-transfer readiness audit.
 - `docs/IAL2_AHB_BYTE_LANE_NARROW_TRANSFER_READINESS_AUDIT.md` — records the `.735` no-behavior audit for first bounded AHB byte-lane/narrow-transfer readiness and selects `.736`, public contract selection for a new generic subordinate `.ppif` source.
+- `docs/IAL2_AHB_BYTE_LANE_NARROW_TRANSFER_CONTRACT_SELECTION.md` — records the `.736` no-behavior contract selection for `ppif/ahb_lite_subordinate_byte_lane.ppif`, support identity `intent.ppif_ahb_lite_subordinate_byte_lane`, selected byte/halfword/word lane semantics, and `.737` implementation owner.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

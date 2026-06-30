@@ -6224,6 +6224,17 @@ narrow write/read projection, unaligned/crossing ERROR diagnostics,
 report/support-accounting identity, validation gates, residue movement, and
 continued VHDL deferral while preserving the existing word-only subordinate
 `.ppif` and `.ahb` sources.
+`.736` now selects `.737`, direct implementation of the first bounded AHB
+byte-lane/narrow-transfer subordinate source. The selected source is
+`ppif/ahb_lite_subordinate_byte_lane.ppif`; the selected intent and HDL module
+are `ahb_lite_subordinate_byte_lane`; the selected support identity is
+`intent.ppif_ahb_lite_subordinate_byte_lane` with coverage
+`ial2_ppif_ahb_lite_subordinate_byte_lane_pipeline_cli`. The selected
+contract accepts byte (`HSIZE == 3'b000`), halfword (`HSIZE == 3'b001`), and
+word (`HSIZE == 3'b010`) transfers, uses little-endian active lanes, preserves
+inactive lanes on narrow writes, zero-fills inactive lanes on narrow reads,
+and returns the existing two-cycle ERROR for unsupported size, unsupported
+transfer, unmapped, unaligned, or crossing accesses.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
