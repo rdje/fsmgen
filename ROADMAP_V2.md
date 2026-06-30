@@ -6214,6 +6214,16 @@ backend-language variants, or VHDL because the imported AHB facts already
 cover active-lane behavior for narrower transfers and the shipped public AHB
 sources already carry the relevant address, size, direction, write-data, and
 read-data signals.
+`.735` now selects `.736`, public contract selection for the first bounded AHB
+byte-lane/narrow-transfer subordinate source, without behavior changes. The
+readiness audit found no lower-layer generated-IAL1/IAL0 substrate,
+source-fact, report-schema, or support-accounting prerequisite before contract
+selection. The next leaf should settle a new generic subordinate `.ppif`
+source, the byte/halfword/word `HSIZE` policy, `HADDR` lane selection,
+narrow write/read projection, unaligned/crossing ERROR diagnostics,
+report/support-accounting identity, validation gates, residue movement, and
+continued VHDL deferral while preserving the existing word-only subordinate
+`.ppif` and `.ahb` sources.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -5179,6 +5179,13 @@ backend-language variants, or VHDL because the imported AHB facts already
 cover active-lane behavior for narrower transfers and the shipped public AHB
 sources already carry the relevant address, size, direction, write-data, and
 read-data signals.
+`.735` now selects `.736`, public contract selection for the first bounded AHB
+byte-lane/narrow-transfer subordinate source, without behavior changes. The
+readiness audit found no lower-layer substrate, source-fact, report, or
+support-accounting prerequisite before contract selection; the next leaf should
+settle a new generic subordinate `.ppif` source, likely
+`ppif/ahb_lite_subordinate_byte_lane.ppif`, while preserving the existing
+word-only `ppif/ahb_lite_subordinate.ppif` and `.ahb` alias behavior.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7859,6 +7866,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.732` shipped public `ppif/ahb_interconnect_two_subordinate.ahb` profile alias, support accounting, generated review artifacts, residue movement, diagnostics, and validation.
 - `docs/IAL2_POST_AHB_TWO_SUBORDINATE_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.733` no-behavior selector after the eight-entrypoint AHB surface shipped and selects `.734`, remaining AHB residue readiness audit.
 - `docs/IAL2_AHB_REMAINING_RESIDUE_READINESS_AUDIT.md` — records the `.734` no-behavior audit of remaining AHB residue and selects `.735`, first bounded AHB byte-lane/narrow-transfer readiness audit.
+- `docs/IAL2_AHB_BYTE_LANE_NARROW_TRANSFER_READINESS_AUDIT.md` — records the `.735` no-behavior audit for first bounded AHB byte-lane/narrow-transfer readiness and selects `.736`, public contract selection for a new generic subordinate `.ppif` source.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

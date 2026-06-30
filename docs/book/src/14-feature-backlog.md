@@ -9947,6 +9947,15 @@ audit. The selected audit must settle the first bounded `HSIZE` encodings,
 `HADDR` lane selection, narrow write/read semantics, unaligned/crossing
 diagnostics, report/support-accounting expectations, validation gates, and
 residue movement before any byte-lane or narrow-transfer behavior changes.
+`.735` selects `.736`, public contract selection for the first bounded AHB
+byte-lane/narrow-transfer subordinate source, without behavior changes. The
+readiness audit finds no lower-layer substrate, source-fact, report, or
+support-accounting prerequisite before contract selection. The selected
+contract-selection path should use a new generic subordinate `.ppif` source,
+settle byte/halfword/word `HSIZE` behavior, `HADDR` lane selection, narrow
+write/read projection, unaligned/crossing ERROR diagnostics, report/support
+identity, validation, residue movement, and VHDL deferral, and keep the
+existing word-only subordinate `.ppif` and `.ahb` sources unchanged.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
