@@ -507,9 +507,11 @@ mapped-hit ownership, interconnect-owned unmapped ERROR ownership,
 reports carry both `narrow_transfer_policy` and `transfer.seq_policy`.
 
 The matching aggregate byte-lane `SEQ` `.ahb` aliases are not shipped yet.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.759` selects
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.760` to add
 `ppif/ahb_interconnect_byte_lane_seq.ahb` and
-`ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ahb` remain future
-task-tree-owned alias work.
+`ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ahb` as the next
+task-tree-owned alias implementation.
 
 ## AHB Profile Alias
 

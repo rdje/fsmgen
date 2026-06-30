@@ -6466,8 +6466,17 @@ aggregate `ahb_tb`, preserve `composition.byte_lane_propagation`, add
 wording is removed from remaining SEQ residue while HBURST length/wrap,
 BUSY-in-burst, multi-word/register-bank, matching aggregate `.ahb` aliases,
 optional signals, broader AHB, direct backend, verification-output,
-backend-language variants, AXI/APB, and VHDL remain deferred. `.759` is the
-next no-behavior AHB follow-on selector.
+backend-language variants, AXI/APB, and VHDL remain deferred.
+`.759` now selects `.760`, direct implementation of the matching aggregate
+byte-lane in-word `SEQ` `.ahb` aliases
+`ppif/ahb_interconnect_byte_lane_seq.ahb` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ahb`. The selected aliases
+will support-account as `intent.ahb_profile_alias_interconnect_byte_lane_seq`
+and `intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_seq`,
+preserve `composition.byte_lane_propagation` and
+`composition.seq_policy_propagation`, and clean alias-only child `.ahb alias
+exposure` residue while generic `.ppif` reports keep source-surface residue.
+No behavior changed in `.759`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

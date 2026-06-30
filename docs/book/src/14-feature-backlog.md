@@ -10181,8 +10181,22 @@ aggregate `ahb_tb`, preserve `composition.byte_lane_propagation`, add
 `narrow_transfer_policy` plus `transfer.seq_policy`. Matching aggregate `.ahb`
 aliases, HBURST length/wrap, BUSY-in-burst, multi-word/register-bank,
 optional signals, broader AHB, direct backend, verification-output,
-backend-language variants, AXI/APB, and VHDL remain deferred. `.759` is the
-next no-behavior AHB follow-on selector.
+backend-language variants, AXI/APB, and VHDL remain deferred.
+
+Post AHB aggregate byte-lane in-word `SEQ` PPIF selector:
+[IAL2_POST_AHB_AGGREGATE_BYTE_LANE_SEQ_PPIF_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_AGGREGATE_BYTE_LANE_SEQ_PPIF_NEXT_SLICE_SELECTION.md)
+selects `.760`, direct implementation of the matching aggregate byte-lane
+`SEQ` `.ahb` aliases
+`ppif/ahb_interconnect_byte_lane_seq.ahb` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ahb`. The selected aliases
+will support-account as `intent.ahb_profile_alias_interconnect_byte_lane_seq`
+and `intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_seq`,
+preserve `composition.byte_lane_propagation` and
+`composition.seq_policy_propagation`, and clean alias-only child `.ahb alias
+exposure` residue while generic `.ppif` reports keep source-surface residue.
+HBURST length/wrap, BUSY-in-burst, multi-word/register-bank, optional signals,
+broader AHB, direct backend, verification-output, backend-language variants,
+AXI/APB, and VHDL remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
