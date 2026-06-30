@@ -10234,6 +10234,19 @@ matching `.ahb` aliases, BUSY-in-burst, multi-word/register-bank, broader
 AHB, direct backend, verification-output, backend-language variants, AXI/APB,
 and VHDL remain deferred.
 
+AHB HBURST length/wrap `SEQ` contract selection:
+[IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_CONTRACT_SELECTION](../../IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_CONTRACT_SELECTION.md)
+selects `.764`, direct implementation of
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`. The selected generic
+endpoint source adds `(burst HBURST width 3)` and
+`(seq-policy hburst-in-word-progressive)`, support-accounts as
+`intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq`, and supports
+byte-only `WRAP4`/`INCR4` `SEQ` inside one 32-bit register word. `SINGLE`
+remains non-SEQ only; wider/indefinite bursts, halfword/word burst `SEQ`,
+BUSY-in-burst, aggregate propagation, matching `.ahb` aliases, broader AHB,
+direct backend, verification-output, backend-language variants, AXI/APB, and
+VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

@@ -1044,6 +1044,16 @@ byte-lane `SEQ` interconnects still have no subordinate-local HBURST
 forwarding, so aggregate propagation and matching `.ahb` alias exposure remain
 later owners.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.763` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.764`, direct implementation of
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`. The selected generic
+endpoint contract adds subordinate `(burst HBURST width 3)` binding and
+`(seq-policy hburst-in-word-progressive)`, then supports byte-only `WRAP4` and
+`INCR4` `SEQ` inside one 32-bit register word. `SINGLE` remains non-SEQ only,
+and wider/indefinite bursts, halfword/word burst `SEQ`, BUSY parking,
+aggregate propagation, matching `.ahb` aliases, broader AHB, backend variants,
+AXI/APB, and VHDL remain deferred.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:

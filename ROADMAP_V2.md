@@ -6507,6 +6507,18 @@ propagation remains a later owner. `.763` must settle source path, bus/policy
 syntax, supported/fail-closed HBURST modes, length/wrap windows, report and
 residue shape, support accounting, diagnostics, generated artifacts,
 validation, and rollback before behavior changes.
+`.763` now selects `.764`, direct implementation of
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`, the first generic
+endpoint-only AHB HBURST-aware byte-lane `SEQ` source. The selected source
+adds subordinate bus syntax `(burst HBURST width 3)` and transfer syntax
+`(seq-policy hburst-in-word-progressive)`, support-accounted as
+`intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq`, with generated
+review artifacts `ahb_lite_subordinate_byte_lane_hburst_seq.isf` and `.fsm`.
+The first supported `SEQ` HBURST modes are byte-only `WRAP4` and `INCR4`
+inside one 32-bit register word; `SINGLE` remains non-SEQ only, and `INCR`,
+`WRAP8`, `INCR8`, `WRAP16`, `INCR16`, halfword/word burst `SEQ`,
+BUSY-in-burst, aggregate propagation, `.ahb` alias exposure, broader AHB,
+backend variants, AXI/APB, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

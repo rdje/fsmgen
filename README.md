@@ -5451,6 +5451,18 @@ propagation remains a later owner. `.763` must settle source path, bus/policy
 syntax, supported/fail-closed HBURST modes, length/wrap windows, report and
 residue shape, support accounting, diagnostics, generated artifacts,
 validation, and rollback before behavior changes.
+`.763` now selects `.764`, direct implementation of
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`, the first generic
+endpoint-only AHB HBURST-aware byte-lane `SEQ` source. The selected source
+adds subordinate bus syntax `(burst HBURST width 3)` and transfer syntax
+`(seq-policy hburst-in-word-progressive)`, support-accounted as
+`intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq`, with generated
+review artifacts `ahb_lite_subordinate_byte_lane_hburst_seq.isf` and `.fsm`.
+The first supported `SEQ` HBURST modes are byte-only `WRAP4` and `INCR4`
+inside one 32-bit register word; `SINGLE` remains non-SEQ only, and `INCR`,
+`WRAP8`, `INCR8`, `WRAP16`, `INCR16`, halfword/word burst `SEQ`,
+BUSY-in-burst, aggregate propagation, `.ahb` alias exposure, broader AHB,
+backend variants, AXI/APB, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8159,6 +8171,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_SEQ_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.760` shipped public `ppif/ahb_interconnect_byte_lane_seq.ahb` and `ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ahb` aliases, support accounting, generated review artifacts, `composition.byte_lane_propagation`, `composition.seq_policy_propagation`, child `narrow_transfer_policy` and `transfer.seq_policy` preservation, alias-only residue cleanup, validation, and preserved generic `.ppif` source-surface residue.
 - `docs/IAL2_POST_AHB_AGGREGATE_BYTE_LANE_SEQ_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.761` no-behavior selector after aggregate byte-lane `SEQ` `.ahb` alias shipment and selects `.762`, HBURST-driven length/wrap readiness audit.
 - `docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_READINESS_AUDIT.md` — records the `.762` no-behavior readiness audit for bounded AHB HBURST-driven length/wrap `SEQ` semantics and selects `.763`, public contract selection for a new endpoint-only HBURST-aware byte-lane `SEQ` source family.
+- `docs/IAL2_AHB_HBURST_LENGTH_WRAP_SEQ_CONTRACT_SELECTION.md` — records the `.763` no-behavior public contract selection for `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`, `(burst HBURST width 3)`, `(seq-policy hburst-in-word-progressive)`, selected byte-only `WRAP4`/`INCR4` semantics, report/residue movement, validation, rollback, and `.764` implementation owner.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
