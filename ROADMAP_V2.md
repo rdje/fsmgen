@@ -6488,6 +6488,14 @@ reports keep source-surface alias residue. HBURST length/wrap,
 BUSY-in-burst, multi-word/register-bank, optional signals, broader AHB, direct
 backend, verification-output, backend-language variants, AXI/APB, and VHDL
 remain deferred.
+`.761` now selects `.762`, a no-behavior readiness audit for bounded AHB
+HBURST-driven length/wrap `SEQ` semantics. After `.760`, endpoint and
+aggregate `SEQ` alias reports have the profile-alias/source-surface cleanup
+done, leaving `ahb_burst_seq_support_deferred` as the front-most shared AHB
+`SEQ` residue. `.762` must audit HBURST source syntax/forwarding, bounded
+burst kinds, length/wrap windows, endpoint-only versus aggregate-inclusive
+scope, diagnostics, report shape, generated review artifacts, validation,
+rollback, and explicit deferrals before behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -10211,6 +10211,17 @@ HBURST length/wrap, BUSY-in-burst, multi-word/register-bank, optional signals,
 broader AHB, direct backend, verification-output, backend-language variants,
 AXI/APB, and VHDL remain deferred.
 
+Post AHB aggregate byte-lane in-word `SEQ` alias selector:
+[IAL2_POST_AHB_AGGREGATE_BYTE_LANE_SEQ_ALIAS_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_AGGREGATE_BYTE_LANE_SEQ_ALIAS_NEXT_SLICE_SELECTION.md)
+selects `.762`, a no-behavior readiness audit for bounded AHB
+HBURST-driven length/wrap `SEQ` semantics. Endpoint and aggregate `SEQ` alias
+reports have profile-alias/source-surface cleanup complete, leaving
+`ahb_burst_seq_support_deferred` as the front-most shared AHB `SEQ` residue.
+`.762` must audit HBURST source syntax/forwarding, bounded burst kinds,
+length/wrap windows, endpoint-only versus aggregate-inclusive scope,
+diagnostics, report shape, generated review artifacts, validation, rollback,
+and explicit deferrals before behavior changes.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

@@ -1034,6 +1034,11 @@ residue and child `.ahb alias exposure` wording from alias report trees while
 preserving HBURST length/wrap, BUSY-in-burst, multi-word/register-bank,
 broader backend/protocol, and VHDL residue explicitly.
 
+The next selected AHB follow-on is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.762`, a no-behavior readiness audit for
+bounded HBURST-driven length/wrap `SEQ` semantics across the shipped endpoint
+and aggregate byte-lane `SEQ` surfaces.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:
