@@ -782,6 +782,9 @@ sub _build_report(%args) {
     if (my $byte_lane_propagation = _byte_lane_propagation_report($contract, \@subordinate_results)) {
         $composition->{byte_lane_propagation} = $byte_lane_propagation;
     }
+    if (my $seq_policy_propagation = _seq_policy_propagation_report($contract, \@subordinate_results)) {
+        $composition->{seq_policy_propagation} = $seq_policy_propagation;
+    }
 
     return {
         schema => 'fsmgen.ial2.protocol_intent.ahb_interconnect.v1',
@@ -807,7 +810,7 @@ sub _build_report(%args) {
             _child_report('requester', $ic->{children}{requester}, $requester_result),
             _interconnect_child_report($contract, $interconnect),
             (map {
-                _child_report('subordinate', $ic->{children}{subordinates}[$_], $subordinate_results[$_])
+                _child_report('subordinate', $ic->{children}{subordinates}[$_], $subordinate_results[$_], $contract)
             } 0 .. $#subordinate_results),
         ],
         generated_artifacts => {
@@ -1039,7 +1042,7 @@ sub _interconnect_child_report($contract, $interconnect) {
     };
 }
 
-sub _child_report($role, $child, $result) {
+sub _child_report($role, $child, $result, $parent_contract = undef) {
     my $report = {
         role                => $role,
         instance_name       => $child->{instance_name},
@@ -1049,7 +1052,7 @@ sub _child_report($role, $child, $result) {
         bindings            => _clone_jsonish($result->{report}{bindings}),
         transfer            => _clone_jsonish($result->{report}{transfer}),
         generated_artifacts => _clone_jsonish($result->{report}{generated_artifacts}),
-        unsupported_residue => _clone_jsonish($result->{report}{unsupported_residue}),
+        unsupported_residue => _child_unsupported_residue($role, $result, $parent_contract),
     };
     $report->{generated_instance_name} = _generated_instance_name($child)
         if defined $child->{generated_instance_name};
@@ -1062,6 +1065,19 @@ sub _child_report($role, $child, $result) {
     $report->{output_defaults} = _clone_jsonish($result->{report}{output_defaults})
         if defined $result->{report}{output_defaults};
     return $report;
+}
+
+sub _child_unsupported_residue($role, $result, $parent_contract) {
+    my $residue = _clone_jsonish($result->{report}{unsupported_residue});
+    return $residue unless $role eq 'subordinate' && _all_subordinates_have_seq_policy($parent_contract);
+    for my $item (@$residue) {
+        next unless ref($item) eq 'HASH'
+            && ($item->{id} // '') eq 'ahb_burst_seq_support_deferred'
+            && defined $item->{detail};
+        $item->{detail} =~ s/,\s*aggregate propagation//;
+        $item->{detail} =~ s/aggregate propagation,\s*//;
+    }
+    return $residue;
 }
 
 sub _width_policy($contract) {
@@ -1146,6 +1162,73 @@ sub _byte_lane_propagation_report($contract, $subordinate_results) {
     };
 }
 
+sub _seq_policy_propagation_report($contract, $subordinate_results) {
+    return undef unless _all_subordinates_have_seq_policy($contract);
+    my @bindings = _subordinate_binding_entries($contract);
+    return undef unless @$subordinate_results == @bindings;
+
+    my $bus = $contract->{interconnect}{wiring}{bus};
+    my @subordinates;
+    for my $index (0 .. $#bindings) {
+        my $child_report = $subordinate_results->[$index]{report};
+        return undef unless ref($child_report->{transfer}) eq 'HASH'
+            && ref($child_report->{transfer}{seq_policy}) eq 'HASH';
+        my $seq_policy = $child_report->{transfer}{seq_policy};
+        my $binding = $bindings[$index];
+        my $endpoint = $binding->{endpoint};
+        my $sub_bus = $endpoint->{bus};
+        push @subordinates, {
+            instance_name        => $binding->{child}{instance_name},
+            object_name          => $binding->{child}{object_name},
+            address_window       => _clone_jsonish($binding->{window}),
+            transfer             => $endpoint->{transfer}{name},
+            supported_size       => _clone_jsonish($endpoint->{transfer}{supported_size}),
+            supported_seq_size   => _clone_jsonish($seq_policy->{supported_sizes}),
+            seq_policy           => _clone_jsonish($seq_policy),
+            local_address_policy => 'subtract_window_base_before_subordinate_seq_policy',
+            select_signal        => $sub_bus->{select},
+            local_address_signal => _clone_jsonish($sub_bus->{address}),
+            ready_out_signal     => $sub_bus->{ready_out},
+            response_signal      => _clone_jsonish($sub_bus->{response}),
+            read_data_signal     => _clone_jsonish($sub_bus->{read_data}),
+        };
+    }
+
+    return {
+        selected             => JSON::PP::true,
+        mode                 => 'subordinate_owned_in_word_seq_policy',
+        local_address_policy => 'subtract_window_base_before_subordinate_seq_policy',
+        mapped_hit_owner     => 'selected_subordinate',
+        unmapped_error_owner => 'interconnect',
+        request_forwarding   => {
+            address    => _clone_jsonish($bus->{address}),
+            transfer   => _clone_jsonish($bus->{transfer}),
+            write      => $bus->{write},
+            size       => _clone_jsonish($bus->{size}),
+            write_data => _clone_jsonish($bus->{write_data}),
+            ready      => $bus->{ready},
+        },
+        response_forwarding  => {
+            ready     => $bus->{ready},
+            response  => _clone_jsonish($bus->{response}),
+            read_data => _clone_jsonish($bus->{read_data}),
+            hresp_mapping => {
+                subordinate_width => 1,
+                requester_width   => $bus->{response}{width},
+                okay              => {
+                    subordinate => "1'b0",
+                    requester   => "2'b00",
+                },
+                error             => {
+                    subordinate => "1'b1",
+                    requester   => "2'b01",
+                },
+            },
+        },
+        subordinates         => \@subordinates,
+    };
+}
+
 sub _all_subordinates_have_byte_lane_policy($contract) {
     return 0 unless ref($contract) eq 'HASH';
     my @subordinates = @{$contract->{subordinates} || []};
@@ -1159,7 +1242,7 @@ sub _all_subordinates_have_byte_lane_policy($contract) {
 sub _subordinate_has_byte_lane_policy($subordinate) {
     return 0 unless ref($subordinate) eq 'HASH' && ref($subordinate->{transfer}) eq 'HASH';
     my $transfer = $subordinate->{transfer};
-    return 0 unless ($transfer->{name} // '') eq 'ahb_lite_byte_lane_access';
+    return 0 unless _is_byte_lane_transfer_name($transfer->{name});
 
     my @sizes = @{$transfer->{supported_size} || []};
     my %sizes = map { $_ => 1 } @sizes;
@@ -1172,9 +1255,41 @@ sub _subordinate_has_byte_lane_policy($subordinate) {
     return 1;
 }
 
+sub _all_subordinates_have_seq_policy($contract) {
+    return 0 unless ref($contract) eq 'HASH';
+    my @subordinates = @{$contract->{subordinates} || []};
+    return 0 unless @subordinates;
+    for my $subordinate (@subordinates) {
+        return 0 unless _subordinate_has_seq_policy($subordinate);
+    }
+    return 1;
+}
+
+sub _subordinate_has_seq_policy($subordinate) {
+    return 0 unless _subordinate_has_byte_lane_policy($subordinate);
+    my $transfer = $subordinate->{transfer};
+    return 0 unless ($transfer->{name} // '') eq 'ahb_lite_byte_lane_seq_access';
+    my $seq_policy = $transfer->{seq_policy};
+    return 0 unless defined $seq_policy;
+    return 1 if !ref($seq_policy) && $seq_policy eq 'in-word-progressive';
+    return 0 unless ref($seq_policy) eq 'HASH';
+    return 0 unless $seq_policy->{selected};
+    return 0 unless ($seq_policy->{mode} // '') eq 'in_word_progressive';
+    my @sizes = @{$seq_policy->{supported_sizes} || []};
+    my %sizes = map { $_ => 1 } @sizes;
+    return 0 unless @sizes == 2 && $sizes{byte} && $sizes{halfword};
+    return 1;
+}
+
+sub _is_byte_lane_transfer_name($name) {
+    return ($name // '') eq 'ahb_lite_byte_lane_access'
+        || ($name // '') eq 'ahb_lite_byte_lane_seq_access';
+}
+
 sub _unsupported_residue($contract = undef) {
     my $subordinate_count = ref($contract) eq 'HASH' ? scalar @{$contract->{subordinates} || []} : 1;
     my $byte_lane_selected = _all_subordinates_have_byte_lane_policy($contract);
+    my $seq_policy_selected = _all_subordinates_have_seq_policy($contract);
     my $interconnect_residue = $subordinate_count == 2
         ? {
             id     => 'ahb_broader_interconnect_decode_deferred',
@@ -1200,7 +1315,9 @@ sub _unsupported_residue($contract = undef) {
         },
         {
             id     => 'ahb_burst_seq_support_deferred',
-            detail => 'The interconnect decodes active transfers by HTRANS != IDLE and leaves burst SEQ continuation policy, wrapping/incrementing burst address progression beyond requester generation, and broader manager/subordinate behavior to future work.',
+            detail => $seq_policy_selected
+                ? 'The interconnect decodes active transfers by HTRANS != IDLE and ships subordinate-owned byte/halfword in-word SEQ continuation for selected aggregate byte-lane sources; HBURST-driven length/wrap semantics, BUSY-in-burst handling, multi-word/register-bank SEQ progression, wrapping/incrementing burst address progression beyond requester generation, and broader manager/subordinate behavior remain future work.'
+                : 'The interconnect decodes active transfers by HTRANS != IDLE and leaves burst SEQ continuation policy, wrapping/incrementing burst address progression beyond requester generation, and broader manager/subordinate behavior to future work.',
         },
         {
             id     => 'ahb_direct_backend_deferred',

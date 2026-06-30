@@ -207,8 +207,13 @@ subtest 'existing AHB aggregate and endpoint byte-lane boundaries stay unchanged
     my $endpoint_byte_lane = FSM::Adapter::IAL2::PPIF->new()->parse_file(endpoint_byte_lane_ppif_path());
     is($endpoint_byte_lane->{report}{narrow_transfer_policy}{narrow_read}{policy}, 'zero-fill-inactive-lanes', 'endpoint byte-lane PPIF keeps narrow-transfer report');
 
-    ok(!-e one_subordinate_byte_lane_alias_path(), 'matching one-subordinate aggregate byte-lane .ahb alias remains unshipped');
-    ok(!-e two_subordinate_byte_lane_alias_path(), 'matching two-subordinate aggregate byte-lane .ahb alias remains unshipped');
+    my $one_alias = run_json_command('./bin/fsmgen', '--quiet', '--emit-schedule-json', one_subordinate_byte_lane_alias_path());
+    ok($one_alias->{composition}{byte_lane_propagation}{selected}, 'matching one-subordinate aggregate byte-lane .ahb alias keeps byte-lane propagation');
+    ok(!exists $one_alias->{composition}{seq_policy_propagation}, 'matching one-subordinate aggregate byte-lane .ahb alias does not gain aggregate SEQ propagation');
+
+    my $two_alias = run_json_command('./bin/fsmgen', '--quiet', '--emit-schedule-json', two_subordinate_byte_lane_alias_path());
+    ok($two_alias->{composition}{byte_lane_propagation}{selected}, 'matching two-subordinate aggregate byte-lane .ahb alias keeps byte-lane propagation');
+    ok(!exists $two_alias->{composition}{seq_policy_propagation}, 'matching two-subordinate aggregate byte-lane .ahb alias does not gain aggregate SEQ propagation');
 };
 
 done_testing();
