@@ -6299,6 +6299,18 @@ windows, report shape, residue movement, support identities, validation, and
 `.ahb` alias sequencing. Existing word-only aggregate `.ppif`/`.ahb` behavior,
 optional signals, burst `SEQ`, broader AHB behavior, direct backend,
 verification-output, backend-language variants, and VHDL remain deferred.
+`.742` now selects `.743`, direct implementation of the combined bounded
+generic `.ppif` AHB aggregate byte-lane/narrow-transfer propagation family.
+The selected public sources are `ppif/ahb_interconnect_byte_lane.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, support-accounted as
+`intent.ppif_ahb_interconnect_byte_lane` and
+`intent.ppif_ahb_interconnect_two_subordinate_byte_lane`. The selected report
+addition is `composition.byte_lane_propagation`, with child
+`narrow_transfer_policy` propagation for embedded byte-lane subordinates and
+byte-lane residue removal only from the new selected aggregate sources.
+Matching `.ahb` aliases, optional signals, burst `SEQ`, broader AHB behavior,
+direct backend, verification-output, backend-language variants, and VHDL
+remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

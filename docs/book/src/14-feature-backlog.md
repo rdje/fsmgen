@@ -10014,6 +10014,16 @@ only from the future byte-lane aggregate sources. Likely future sources are
 `ppif/ahb_interconnect_byte_lane.ppif` and
 `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`; matching `.ahb`
 aliases stay separate follow-on work.
+`.742` selects `.743`, direct implementation of that combined bounded generic
+`.ppif` family. The selected sources are
+`ppif/ahb_interconnect_byte_lane.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`; both keep HDL entry
+`ahb_tb`, add aggregate report block `composition.byte_lane_propagation`, and
+propagate child `narrow_transfer_policy` for embedded byte-lane subordinate
+objects. The selected support identities are
+`intent.ppif_ahb_interconnect_byte_lane` and
+`intent.ppif_ahb_interconnect_two_subordinate_byte_lane`. `.ahb` aliases and
+broader AHB work remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
