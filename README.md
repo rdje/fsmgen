@@ -5303,6 +5303,15 @@ accounting, capability-manifest entries, generated `.isf`/`.fsm`, HDL/runtime
 behavior, direct backend, verification-output generation, backend-language
 variants, AXI/APB behavior, broader AHB behavior, and VHDL behavior are
 unchanged. `.749` is the next no-behavior AHB follow-on selector.
+`.749` selects `.750`, a no-behavior readiness audit for bounded AHB burst
+`SEQ` continuation. Current probes show the aggregate `.ahb` residue cleanup
+left true protocol residue only; burst `SEQ` is now the narrowest shared
+endpoint/aggregate candidate after byte-lane behavior and alias cleanup, but
+implementation remains deferred until readiness settles the first bounded
+owner and substrate needs. Optional/property-gated signals, broader
+interconnect/decode, legacy two-bit subordinate `HRESP`, scoreboards,
+full-manager behavior, direct backend, verification-output, backend-language
+variants, AXI/APB behavior, broader AHB behavior, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7997,6 +8006,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_AGGREGATE_BYTE_LANE_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.746` no-behavior selector for aggregate `.ahb` alias nested profile-alias residue cleanup and selects `.747`, public report-contract selection.
 - `docs/IAL2_AHB_AGGREGATE_ALIAS_NESTED_PROFILE_RESIDUE_CONTRACT_SELECTION.md` — records the `.747` no-behavior contract selection for aggregate `.ahb` alias nested endpoint profile-residue cleanup and selects `.748`, direct report cleanup.
 - `docs/IAL2_AHB_AGGREGATE_ALIAS_NESTED_PROFILE_RESIDUE_BEHAVIOR.md` — documents the `.748` shipped report-only cleanup for aggregate `.ahb` alias nested endpoint profile-residue and the preserved generic `.ppif` source-surface residue.
+- `docs/IAL2_POST_AHB_AGGREGATE_ALIAS_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION.md` — records the `.749` no-behavior selector after aggregate alias residue cleanup and selects `.750`, bounded AHB burst `SEQ` readiness audit.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

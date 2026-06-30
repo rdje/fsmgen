@@ -10076,6 +10076,15 @@ accounting, capability-manifest entries, generated `.isf`/`.fsm`, HDL/runtime
 behavior, direct backend, verification-output generation, backend-language
 variants, AXI/APB behavior, broader AHB behavior, and VHDL behavior are
 unchanged. `.749` is the next no-behavior AHB follow-on selector.
+`.749` selects `.750`, a no-behavior readiness audit for bounded AHB burst
+`SEQ` continuation. Current probes show the aggregate `.ahb` residue cleanup
+left true protocol residue only; burst `SEQ` is now the narrowest shared
+endpoint/aggregate candidate after byte-lane behavior and alias cleanup, but
+implementation remains deferred until readiness settles the first bounded
+owner and substrate needs. Optional/property-gated signals, broader
+interconnect/decode, legacy two-bit subordinate `HRESP`, scoreboards,
+full-manager behavior, direct backend, verification-output, backend-language
+variants, AXI/APB behavior, broader AHB behavior, and VHDL remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
