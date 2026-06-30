@@ -5265,6 +5265,21 @@ byte-lane aggregate `.ppif` sources. Existing word-only aggregate `.ppif` and
 aggregate byte-lane `.ahb` aliases, optional signals, burst `SEQ`, broader AHB
 behavior, direct backend, verification-output, backend-language variants, and
 VHDL remain deferred.
+`.744` selects `.745`, direct implementation of those matching aggregate
+byte-lane `.ahb` profile aliases. Selector probes using `.ahb` labels over the
+shipped generic aggregate byte-lane `.ppif` text confirmed the existing alias
+path already preserves `composition.byte_lane_propagation`, child
+`narrow_transfer_policy`, topology/child counts, and removal of
+`ahb_aggregate_profile_alias_deferred` for alias-labeled reports. `.745` owns
+`ppif/ahb_interconnect_byte_lane.ahb` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane.ahb`, support identities
+`intent.ahb_profile_alias_interconnect_byte_lane` and
+`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane`, source kind
+`ial2_profile_alias`, coverage keys
+`ial2_ahb_profile_alias_interconnect_byte_lane_pipeline_cli` and
+`ial2_ahb_profile_alias_interconnect_two_subordinate_byte_lane_pipeline_cli`,
+HDL module `ahb_tb`, and child counts 3 and 4. The aliases are selected next
+but not shipped yet.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7954,6 +7969,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROPAGATION_READINESS_AUDIT.md` — records the `.741` no-behavior readiness audit for AHB aggregate/interconnect byte-lane propagation and selects `.742`, public contract selection for a combined bounded generic `.ppif` aggregate byte-lane family.
 - `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROPAGATION_CONTRACT_SELECTION.md` — records the `.742` no-behavior contract selection for `ppif/ahb_interconnect_byte_lane.ppif` and `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, support identities, `composition.byte_lane_propagation`, and `.743` implementation owner.
 - `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROPAGATION_BEHAVIOR.md` — documents the `.743` shipped generic aggregate byte-lane `.ppif` behavior, generated review artifacts, support accounting, `composition.byte_lane_propagation`, child `narrow_transfer_policy` propagation, residue movement, validation, and deferred matching `.ahb` aliases.
+- `docs/IAL2_POST_AHB_AGGREGATE_BYTE_LANE_PPIF_NEXT_SLICE_SELECTION.md` — records the `.744` no-behavior selector for the matching aggregate byte-lane `.ahb` profile aliases, selected support identities, validation strategy, rollback, and `.745` implementation owner.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.
