@@ -5278,6 +5278,14 @@ local-address-before-byte-lane policy, subordinate-owned mapped-hit
 byte/halfword/word behavior, and interconnect-owned unmapped ERROR behavior.
 Alias reports remove `ahb_aggregate_profile_alias_deferred`, while the generic
 aggregate byte-lane `.ppif` reports keep that source-surface residue.
+`.746` selects `.747`, public report-contract selection for aggregate `.ahb`
+alias nested profile-alias residue cleanup, after schedule probes showed
+generated child reports inside aggregate `.ahb` aliases still carry endpoint
+`ahb_profile_alias_deferred` and `ahb_subordinate_profile_alias_deferred`
+residue. `.747` must decide the exact cleanup/preservation boundary before any
+report implementation change. Optional signals, burst `SEQ`, broader AHB
+behavior, direct backend, verification-output, backend-language variants, and
+VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -7969,6 +7977,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROPAGATION_BEHAVIOR.md` — documents the `.743` shipped generic aggregate byte-lane `.ppif` behavior, generated review artifacts, support accounting, `composition.byte_lane_propagation`, child `narrow_transfer_policy` propagation, residue movement, validation, and later `.ahb` alias handoff.
 - `docs/IAL2_POST_AHB_AGGREGATE_BYTE_LANE_PPIF_NEXT_SLICE_SELECTION.md` — records the `.744` no-behavior selector for the matching aggregate byte-lane `.ahb` profile aliases, selected support identities, validation strategy, rollback, and `.745` implementation owner.
 - `docs/IAL2_AHB_AGGREGATE_BYTE_LANE_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.745` shipped public `ppif/ahb_interconnect_byte_lane.ahb` and `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb` aliases, support accounting, generated review artifacts, `composition.byte_lane_propagation` preservation, alias-residue movement, validation, and remaining AHB residue.
+- `docs/IAL2_POST_AHB_AGGREGATE_BYTE_LANE_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.746` no-behavior selector for aggregate `.ahb` alias nested profile-alias residue cleanup and selects `.747`, public report-contract selection.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

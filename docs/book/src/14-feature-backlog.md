@@ -10051,6 +10051,14 @@ local-address-before-byte-lane policy, subordinate-owned mapped-hit
 byte/halfword/word behavior, and interconnect-owned unmapped ERROR behavior.
 Alias reports remove `ahb_aggregate_profile_alias_deferred`, while generic
 aggregate byte-lane `.ppif` reports keep that source-surface residue.
+`.746` selects `.747`, public report-contract selection for aggregate `.ahb`
+alias nested profile-alias residue cleanup, after schedule probes showed
+generated child reports inside aggregate `.ahb` aliases still carry endpoint
+`ahb_profile_alias_deferred` and `ahb_subordinate_profile_alias_deferred`
+residue. `.747` must decide the exact cleanup/preservation boundary before any
+report implementation change. Optional signals, burst `SEQ`, broader AHB
+behavior, direct backend, verification-output, backend-language variants, and
+VHDL remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
