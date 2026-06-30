@@ -6434,6 +6434,16 @@ sources still instantiate non-`SEQ` byte-lane subordinate children and carry
 and two-subordinate child naming, child `transfer.seq_policy` propagation,
 aggregate report shape, residue movement, validation, rollback, and aggregate
 `.ahb` alias sequencing before any behavior change.
+`.756` now selects `.757`, no-behavior public contract selection for a
+combined generic `.ppif` aggregate byte-lane in-word `SEQ` propagation family.
+Temporary one-subordinate and two-subordinate aggregate `SEQ` probes parse,
+strict-check, emit `ahb_tb`, and carry child `narrow_transfer_policy` plus
+`transfer.seq_policy`, so no generated-IAL1/IAL0 substrate repair is required
+before contract selection. Likely future source names are
+`ppif/ahb_interconnect_byte_lane_seq.ppif` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif`; exact support
+identities, report shape, residue movement, validation, and later aggregate
+`.ahb` alias sequencing remain for `.757`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
