@@ -6206,6 +6206,14 @@ generic `.ppif` report keeps that residue as a source-surface distinction.
 `.733` now selects `.734`, a no-behavior readiness audit for the remaining AHB
 residue after the eight-entrypoint bounded AHB IAL2 surface ships, before any
 new AHB behavior owner is selected.
+`.734` now selects `.735`, first bounded AHB byte-lane/narrow-transfer
+readiness audit. Byte-lane/narrow-transfer readiness is selected before
+optional signals, burst continuation, broader interconnect/decode,
+scoreboards, full-manager behavior, direct backend, verification-output,
+backend-language variants, or VHDL because the imported AHB facts already
+cover active-lane behavior for narrower transfers and the shipped public AHB
+sources already carry the relevant address, size, direction, write-data, and
+read-data signals.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

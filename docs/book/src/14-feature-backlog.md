@@ -9942,6 +9942,11 @@ must decide the next exact AHB owner or prerequisite before any new parser,
 generator, source, support-accounting, manifest, test, schedule/check/semantic
 JSON, generated artifact, HDL/runtime, direct-backend, verification-output,
 backend-language variant, broader AHB, or VHDL behavior changes.
+`.734` selects `.735`, first bounded AHB byte-lane/narrow-transfer readiness
+audit. The selected audit must settle the first bounded `HSIZE` encodings,
+`HADDR` lane selection, narrow write/read semantics, unaligned/crossing
+diagnostics, report/support-accounting expectations, validation gates, and
+residue movement before any byte-lane or narrow-transfer behavior changes.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
