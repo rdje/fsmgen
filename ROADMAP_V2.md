@@ -6558,6 +6558,19 @@ indefinite bursts, multi-word/register-bank progression, optional signals,
 broader AHB, backend variants, AXI/APB, and VHDL remain deferred. `.767` is
 the next no-behavior AHB follow-on selector for aggregate HBURST propagation
 readiness.
+`.767` now selects `.768`, a no-behavior readiness audit for bounded
+aggregate AHB HBURST propagation. Current aggregate byte-lane `SEQ`
+interconnect sources still strict-check as shipped and expose requester/global
+`HBURST`, but their child subordinates remain on the older
+`in_word_progressive` endpoint contract with no subordinate-local burst
+binding. Temporary one- and two-subordinate HBURST aggregate candidates lowered
+far enough to show child `hburst_in_word_progressive` reports, then failed
+strict checks closed because `regs.HBURST_REGS` or `status.HBURST_STATUS`
+was left unconnected by the composition top. `.768` must audit
+subordinate-local HBURST forwarding, top-level connection policy,
+`composition.seq_policy_propagation` recognition, candidate source names,
+support identities, report/residue movement, tests, docs, and preservation
+before any aggregate HBURST behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

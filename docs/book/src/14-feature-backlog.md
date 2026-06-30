@@ -10296,6 +10296,22 @@ HBURST propagation, BUSY-in-burst, halfword/word burst
 broader AHB, direct backend, verification-output, backend-language variants,
 AXI/APB, and VHDL remain deferred.
 
+Post AHB HBURST `SEQ` alias selector:
+[IAL2_POST_AHB_HBURST_SEQ_ALIAS_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_HBURST_SEQ_ALIAS_NEXT_SLICE_SELECTION.md)
+selects `.768`, a no-behavior readiness audit for bounded aggregate AHB
+HBURST propagation. The current aggregate byte-lane `SEQ` sources still
+strict-check as shipped and expose requester/global `HBURST`, but their child
+subordinates remain on the older `in_word_progressive` endpoint contract with
+no subordinate-local burst binding. Temporary one- and two-subordinate HBURST
+aggregate candidates lowered far enough to show child
+`hburst_in_word_progressive` reports, then failed strict checks closed because
+`regs.HBURST_REGS` or `status.HBURST_STATUS` was left unconnected by the
+composition top. Aggregate HBURST forwarding, matching aggregate aliases,
+BUSY-in-burst, halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank, optional signals, broader AHB, direct backend,
+verification-output, backend-language variants, AXI/APB, and VHDL remain
+deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

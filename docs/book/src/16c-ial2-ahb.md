@@ -1,12 +1,13 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships twenty public bounded AHB IAL2 entrypoints today:
+FSMGen ships twenty-two public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
 ppif/ahb_lite_subordinate.ppif
 ppif/ahb_lite_subordinate_byte_lane.ppif
 ppif/ahb_lite_subordinate_byte_lane_seq.ppif
+ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif
 ppif/ahb_interconnect.ppif
 ppif/ahb_interconnect_two_subordinate.ppif
 ppif/ahb_interconnect_byte_lane.ppif
@@ -17,6 +18,7 @@ ppif/ahb_requester.ahb
 ppif/ahb_lite_subordinate.ahb
 ppif/ahb_lite_subordinate_byte_lane.ahb
 ppif/ahb_lite_subordinate_byte_lane_seq.ahb
+ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb
 ppif/ahb_interconnect.ahb
 ppif/ahb_interconnect_two_subordinate.ahb
 ppif/ahb_interconnect_byte_lane.ahb
@@ -59,9 +61,11 @@ ppif/ahb_requester.ahb           -> amba_requester.isf -> amba_requester.fsm -> 
 ppif/ahb_lite_subordinate.ppif   -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
 ppif/ahb_lite_subordinate_byte_lane.ppif -> ahb_lite_subordinate_byte_lane.isf -> ahb_lite_subordinate_byte_lane.fsm -> HDL module ahb_lite_subordinate_byte_lane
 ppif/ahb_lite_subordinate_byte_lane_seq.ppif -> ahb_lite_subordinate_byte_lane_seq.isf -> ahb_lite_subordinate_byte_lane_seq.fsm -> HDL module ahb_lite_subordinate_byte_lane_seq
+ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif -> ahb_lite_subordinate_byte_lane_hburst_seq.isf -> ahb_lite_subordinate_byte_lane_hburst_seq.fsm -> HDL module ahb_lite_subordinate_byte_lane_hburst_seq
 ppif/ahb_lite_subordinate.ahb    -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
 ppif/ahb_lite_subordinate_byte_lane.ahb -> ahb_lite_subordinate_byte_lane.isf -> ahb_lite_subordinate_byte_lane.fsm -> HDL module ahb_lite_subordinate_byte_lane
 ppif/ahb_lite_subordinate_byte_lane_seq.ahb -> ahb_lite_subordinate_byte_lane_seq.isf -> ahb_lite_subordinate_byte_lane_seq.fsm -> HDL module ahb_lite_subordinate_byte_lane_seq
+ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb -> ahb_lite_subordinate_byte_lane_hburst_seq.isf -> ahb_lite_subordinate_byte_lane_hburst_seq.fsm -> HDL module ahb_lite_subordinate_byte_lane_hburst_seq
 ppif/ahb_interconnect.ppif       -> amba_requester.isf + ahb_lite_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_two_subordinate.ppif -> amba_requester.isf + ahb_status_subordinate.isf + ahb_control_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_status_subordinate.fsm + ahb_control_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_byte_lane.ppif -> amba_requester.isf + ahb_lite_subordinate_byte_lane.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate_byte_lane.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
@@ -1182,6 +1186,20 @@ remaining `ahb_burst_seq_support_deferred` detail. Aggregate HBURST
 propagation, BUSY parking, halfword/word burst `SEQ`, wider or indefinite
 bursts, multi-word/register-bank progression, optional signals, broader AHB,
 backend variants, AXI/APB, and VHDL remain deferred.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.767` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.768`, a no-behavior readiness audit for
+bounded aggregate AHB HBURST propagation. Current aggregate byte-lane `SEQ`
+interconnect sources strict-check as shipped and expose requester/global
+`HBURST`, but their child subordinates remain on the older
+`in_word_progressive` endpoint contract with no subordinate-local burst
+binding. Temporary one- and two-subordinate HBURST aggregate candidates lowered
+far enough to show child `hburst_in_word_progressive` reports, then failed
+strict checks closed because `regs.HBURST_REGS` or `status.HBURST_STATUS`
+was left unconnected by the composition top. Aggregate HBURST forwarding,
+matching aggregate aliases, BUSY parking, halfword/word burst `SEQ`, wider or
+indefinite bursts, multi-word/register-bank progression, optional signals,
+broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
 
 ## Validation Used For This Chapter
 
