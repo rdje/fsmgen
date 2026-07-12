@@ -5682,6 +5682,19 @@ delta is new aggregate stems whose child transfer uses `(parked-transfer busy)`
 plus narrowing the aggregate residue; `.781` settles the stem name(s), how many
 ship first, per-stem support identity/coverage/source kind, residue scope, tests,
 and the later matching aggregate `.ahb` alias.
+`.781` now selects `.782` and pins the aggregate BUSY-park contract: `.782` ships
+both stems (mirroring `.770`), `ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ppif`
+(support identity `intent.ppif_ahb_interconnect_byte_lane_hburst_seq_busy_park`,
+child count 3) and its two-subordinate sibling (child count 4), each a copy of the
+shipped aggregate HBURST `SEQ` source with the inlined child transfer
+`(ignored-transfer busy)` replaced by `(parked-transfer busy)`. The delta is
+source data plus residue narrowing only — no interconnect generator/parser/report
+change, because the `(parked-transfer busy)` vocabulary is child-role-shared and
+`_seq_policy_propagation_report` clones each child `seq_policy` verbatim so
+`parks_on = [busy]` surfaces automatically — and `.782` narrows only the aggregate
+HBURST residue at `AhbInterconnect.pm:1401`, adds focused `t/1496`, moves `t/248`
+to 295 protocol / 336 total, and preserves `t/1492`/`t/1493`. The matching
+aggregate `.ahb` aliases follow in a later slice.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8409,6 +8422,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif` — the `.776` shipped bounded endpoint AHB subordinate byte-lane HBURST `WRAP4`/`INCR4` in-word `SEQ` source with BUSY-in-burst parking; declares `(parked-transfer busy)` so the generated subordinate holds the burst context across an `HTRANS = BUSY` beat instead of clearing it. Focused coverage `t/1494`.
 - `docs/IAL2_POST_AHB_ENDPOINT_BUSY_PARK_NEXT_SLICE_SELECTION.md` — records the `.779` no-behavior selection of `.780`, a readiness audit for bounded aggregate AHB BUSY-parking propagation: the endpoint → aggregate cadence, the endpoint residue deferring `aggregate propagation` and the aggregate residue still listing `BUSY-in-burst handling`, the bounded mechanism (the interconnect `_seq_policy_propagation_report` clones each child `seq_policy` verbatim so a `(parked-transfer busy)` child auto-forwards `parks_on = [busy]`), the audit scope, and why requester-side BUSY insertion, halfword/word burst `SEQ`, wider/indefinite bursts, and optional AHB signals are larger and deferred.
 - `docs/IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_READINESS_AUDIT.md` — records the `.780` no-behavior readiness audit: the interconnect composes child subordinate FSMs via `AhbSubordinate->generate` (`AhbInterconnect.pm:38`–`41`) and clones each child `seq_policy` verbatim (`:1177`/`:1207`), so a `(parked-transfer busy)` child parks BUSY through the shipped endpoint machinery with no interconnect generator/parser/report change and the child `seq_ok_base` fail-closed path carries through composition; the bounded delta is new aggregate stems plus residue narrowing; selects `.781`, the public contract selection for the aggregate BUSY-park source(s).
+- `docs/IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_CONTRACT_SELECTION.md` — records the `.781` no-behavior contract selection: `.782` ships both aggregate BUSY-park `.ppif` stems `ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ppif` (support identity `intent.ppif_ahb_interconnect_byte_lane_hburst_seq_busy_park`, child count 3) and its two-subordinate sibling (child count 4), each a copy of the shipped aggregate HBURST `SEQ` source with the inlined child transfer `(ignored-transfer busy)` replaced by `(parked-transfer busy)`; the delta is source data plus narrowing only the aggregate HBURST residue at `AhbInterconnect.pm:1401` (no interconnect code change; the verbatim `seq_policy` clone forwards `parks_on = [busy]`), with focused `t/1496`, `t/248` moving to 295 protocol / 336 total, and the matching aggregate `.ahb` aliases deferred to a later slice.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

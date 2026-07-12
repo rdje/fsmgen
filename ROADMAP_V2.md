@@ -6737,6 +6737,16 @@ machinery with no interconnect generator/parser/report change and the child
 new aggregate stems plus residue narrowing; `.781` settles the stem name(s), how
 many ship first, per-stem support identity/coverage/source kind, residue scope,
 tests, and the later matching aggregate `.ahb` alias.
+`.781` now selects `.782` and pins the aggregate BUSY-park contract: `.782` ships
+both stems (mirroring `.770`) — `ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ppif`
+(child count 3) and its two-subordinate sibling (child count 4), each a copy of
+the shipped aggregate HBURST `SEQ` source with the inlined child transfer
+`(ignored-transfer busy)` replaced by `(parked-transfer busy)`. The delta is
+source data plus residue narrowing only (no interconnect code change; the
+verbatim `seq_policy` clone forwards `parks_on = [busy]`); `.782` narrows only the
+aggregate HBURST residue at `AhbInterconnect.pm:1401`, adds focused `t/1496`,
+moves `t/248` to 295 protocol / 336 total, and defers the matching aggregate
+`.ahb` aliases to a later slice.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

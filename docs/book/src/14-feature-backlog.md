@@ -10525,6 +10525,23 @@ halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank
 progression, optional signals, broader AHB, backend variants, AXI/APB, and VHDL
 remain deferred.
 
+Aggregate BUSY-park propagation contract selection:
+[IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_CONTRACT_SELECTION](../../IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_CONTRACT_SELECTION.md)
+records the `.781` no-behavior selection of `.782`, which ships both aggregate
+BUSY-park `.ppif` stems (mirroring `.770`):
+`ahb_interconnect_byte_lane_hburst_seq_busy_park` (support identity
+`intent.ppif_ahb_interconnect_byte_lane_hburst_seq_busy_park`, child count 3) and
+`ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park` (child count 4),
+each a copy of the shipped aggregate HBURST `SEQ` source with the child transfer
+`(ignored-transfer busy)` replaced by `(parked-transfer busy)`. The delta is
+source data plus narrowing only the aggregate HBURST residue at
+`AhbInterconnect.pm:1401` — no interconnect code change, since the verbatim
+`seq_policy` clone forwards `parks_on: [busy]` — with focused `t/1496`, `t/248`
+moving to 295 protocol / 336 total, and the matching aggregate `.ahb` aliases
+deferred to a later slice. Requester-side BUSY insertion, halfword/word burst
+`SEQ`, wider or indefinite bursts, multi-word/register-bank progression, optional
+signals, broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

@@ -1546,6 +1546,27 @@ later matching aggregate `.ahb` alias. Requester-side BUSY insertion,
 halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank
 progression, and optional/property-gated AHB signals remain deferred.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.781` selects
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.782` and pins the aggregate BUSY-park
+contract. `.782` ships both stems (mirroring `.770`):
+`ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ppif` (support identity
+`intent.ppif_ahb_interconnect_byte_lane_hburst_seq_busy_park`, three composed
+children) and `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ppif`
+(four composed children), each a copy of the shipped aggregate HBURST `SEQ`
+source with the inlined child subordinate transfer `(ignored-transfer busy)`
+replaced by `(parked-transfer busy)`. The behavior delta is source data plus
+residue narrowing only — no interconnect generator, parser, or report change,
+because the `(parked-transfer busy)` vocabulary is child-role-shared and
+`_seq_policy_propagation_report` clones each child `seq_policy` verbatim, so each
+child entry and `composition.seq_policy_propagation` report
+`transfer.seq_policy.parks_on: [busy]` and the BUSY-free `clears_on`
+automatically. `.782` narrows only the aggregate HBURST residue (drops
+`BUSY-in-burst handling`), adds focused
+`t/1496-ial2-ahb-interconnect-byte-lane-hburst-seq-busy-park.t`, moves `t/248` to
+295 protocol / 336 total, and preserves the shipped aggregate HBURST `SEQ`
+sources and `t/1492`/`t/1493`. The matching aggregate `.ahb` aliases,
+requester-side BUSY insertion, and larger burst work remain deferred.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:
