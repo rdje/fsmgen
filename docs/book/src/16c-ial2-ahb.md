@@ -1465,6 +1465,24 @@ The shipped `ahb_lite_subordinate_byte_lane_hburst_seq` source is unchanged (it
 still clears the burst history on BUSY). Focused coverage is
 `t/1494-ial2-ahb-subordinate-byte-lane-hburst-seq-busy-park.t`.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.777` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.778`, direct implementation of the matching
+endpoint BUSY-park `.ahb` profile alias
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb`. It mirrors the
+shipped generic BUSY-park `.ppif` source and will support-account as
+`intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park` (coverage
+`ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli`,
+`source_kind: ial2_profile_alias`), preserving the generated
+`ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.isf`/`.fsm` review
+artifacts, the HDL module, and the `parks_on: [busy]` / `clears_on` BUSY-park
+report shape. A reserved `.ahb`-label probe confirms the alias strict-checks and
+drops `ahb_subordinate_profile_alias_deferred` plus the `.ahb alias exposure`
+residue wording through the existing suffix-keyed profile-alias suppression with
+no adapter change, so `.778` is data-only: it adds the alias fixture, its
+`RegressionCorpus` entry, focused
+`t/1495-ial2-ahb-subordinate-byte-lane-hburst-seq-busy-park-profile-alias.t`, the
+`t/248` corpus bump, the `t/297` manifest, and docs.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:

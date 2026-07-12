@@ -6689,6 +6689,20 @@ shipped `ahb_lite_subordinate_byte_lane_hburst_seq` source is unchanged (BUSY
 still clears). Focused coverage is `t/1494`; `t/248` moves to 292 protocol / 333
 total supported-smoke entries. The matching `.ahb` alias, aggregate BUSY-parking,
 and requester-side BUSY insertion remain deferred.
+`.777` now selects `.778` and pins the matching endpoint BUSY-park `.ahb`
+profile-alias contract: a byte-identical mirror
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb` of the shipped
+generic BUSY-park source, support-accounted as
+`intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park` (coverage
+`ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli`,
+`source_kind: ial2_profile_alias`). A reserved `.ahb`-label probe confirms the
+alias strict-checks, preserves the generated `.isf`/`.fsm` artifacts and the
+`parks_on = [busy]` / `clears_on` BUSY-park report, and drops
+`ahb_subordinate_profile_alias_deferred` plus the `.ahb alias exposure` residue
+wording through the existing suffix-keyed suppression with no adapter change, so
+`.778` is data-only: it adds the alias fixture, its `RegressionCorpus` entry,
+focused `t/1495`, the `t/248` bump (292 → 293 protocol / 333 → 334 total) and
+`t/297` manifest, and docs.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -10454,6 +10454,27 @@ requester-side BUSY insertion, halfword/word burst `SEQ`, wider or indefinite
 bursts, multi-word/register-bank progression, optional signals, broader AHB,
 backend variants, AXI/APB, and VHDL remain deferred.
 
+AHB subordinate BUSY-park `.ahb` alias contract selection:
+[IAL2_AHB_SUBORDINATE_BUSY_PARK_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_SUBORDINATE_BUSY_PARK_ALIAS_CONTRACT_SELECTION.md)
+selects `.778`, direct implementation of the matching endpoint BUSY-park `.ahb`
+profile alias `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb`. The
+alias mirrors the shipped generic BUSY-park `.ppif` source, will support-account
+as `intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park` with
+coverage
+`ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli`,
+reports `source_kind: ial2_profile_alias`, preserves generated
+`ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.isf` / `.fsm` and the
+`parks_on: [busy]` / `clears_on` BUSY-park report shape, and removes
+`ahb_subordinate_profile_alias_deferred` plus the `.ahb alias exposure` residue
+wording only from the alias report through the existing suffix-keyed suppression.
+A reserved `.ahb`-label probe confirms the alias is data-only (no adapter
+change); `.778` adds the alias fixture, its `RegressionCorpus` entry, focused
+`t/1495`, the `t/248` bump (292 → 293 protocol / 333 → 334 total), the `t/297`
+manifest, and docs. Aggregate BUSY-parking, requester-side BUSY insertion,
+halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank
+progression, optional signals, broader AHB, backend variants, AXI/APB, and VHDL
+remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
