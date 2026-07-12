@@ -29,7 +29,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
   boundary before direct IAL2/IAL1 builder work; proposed
   `SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON` owns the beyond-read-only MCP horizon
   (write/generation/sampling/elicitation/roots/service transport), filed at
-  director request. None of these trees is currently PNT-eligible.
+  director request; proposed `TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION` owns the
+  finding that in-file secondary views (`## Current Frontier`/`## Commit Log`/
+  `## Verification Log`/`## Changelog`) lag the authoritative node list (needs a
+  maintain-vs-retire director decision). None of these trees is currently PNT-eligible.
 - Heavy broad Perl/`prove`/`fsmgen` commands must run under
   `scripts/run_with_ram_guard.sh` or equivalent monitoring; default cutoff is
   host RAM 88% / descendant RSS 4096 MiB, below the user's 90% danger zone.
