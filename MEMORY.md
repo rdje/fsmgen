@@ -26,8 +26,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - PNT autonomously; do not pause mid-flow — `docs/decisions/0003`.
 - Proposed `FSMGEN-HIR-ROADMAP-FRONTIER` owns the source-facing HIR roadmap
   phase; proposed `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` now consults that HIR
-  boundary before direct IAL2/IAL1 builder work. Neither tree is currently
-  PNT-eligible.
+  boundary before direct IAL2/IAL1 builder work; proposed
+  `SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON` owns the beyond-read-only MCP horizon
+  (write/generation/sampling/elicitation/roots/service transport), filed at
+  director request. None of these trees is currently PNT-eligible.
 - Heavy broad Perl/`prove`/`fsmgen` commands must run under
   `scripts/run_with_ram_guard.sh` or equivalent monitoring; default cutoff is
   host RAM 88% / descendant RSS 4096 MiB, below the user's 90% danger zone.
