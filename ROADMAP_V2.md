@@ -6728,6 +6728,15 @@ verbatim, so a `(parked-transfer busy)` child auto-forwards its
 report; the delta is new aggregate stems plus residue narrowing. Requester-side
 BUSY insertion, halfword/word burst `SEQ`, wider/indefinite bursts, and optional
 AHB signals are larger and remain deferred.
+`.780` audits that aggregate BUSY-park propagation is ready and selects `.781`, a
+public contract selection. The interconnect composes child subordinate FSMs via
+`AhbSubordinate->generate` per child and clones each child `seq_policy` verbatim,
+so a `(parked-transfer busy)` child parks BUSY through the shipped endpoint
+machinery with no interconnect generator/parser/report change and the child
+`seq_ok_base` fail-closed path carries through composition. The bounded delta is
+new aggregate stems plus residue narrowing; `.781` settles the stem name(s), how
+many ship first, per-stem support identity/coverage/source kind, residue scope,
+tests, and the later matching aggregate `.ahb` alias.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

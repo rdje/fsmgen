@@ -1525,6 +1525,27 @@ BUSY insertion (the requester never drives bus `HTRANS = BUSY`), halfword/word
 burst `SEQ`, wider or indefinite bursts, multi-word/register-bank progression,
 and optional/property-gated AHB signals are larger and remain deferred.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.780` audits that aggregate BUSY-park
+propagation is ready and selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.781`, a
+public contract selection. The aggregate is more ready than the endpoint was
+before its own contract selection: the interconnect composes child subordinate
+FSMs by calling `AhbSubordinate->generate` per child and composing the results
+into an `(?fsmc:...)` top, and `_seq_policy_propagation_report` clones each child
+`seq_policy` verbatim. So a child subordinate declared with `(parked-transfer
+busy)` parks BUSY through the shipped endpoint machinery with no interconnect
+generator, parser, or report change, its `transfer.seq_policy.parks_on: [busy]`
+and BUSY-free `clears_on` surface on `composition.seq_policy_propagation`
+unchanged, and the child `seq_ok_base` fail-closed path carries through the
+composition. The bounded behavior delta is new aggregate stems
+(`ahb_interconnect_byte_lane_hburst_seq_busy_park` and, if included, its
+two-subordinate sibling) whose child transfer uses `(parked-transfer busy)`, plus
+narrowing the aggregate residue. `.781` settles the stem name(s), whether one or
+both ship first, per-stem support identity / coverage key / source kind /
+generated artifact names, residue-narrowing scope, focused test shape, and the
+later matching aggregate `.ahb` alias. Requester-side BUSY insertion,
+halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank
+progression, and optional/property-gated AHB signals remain deferred.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:

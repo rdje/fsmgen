@@ -10510,6 +10510,21 @@ insertion, halfword/word burst `SEQ`, wider or indefinite bursts,
 multi-word/register-bank progression, optional signals, broader AHB, backend
 variants, AXI/APB, and VHDL remain deferred.
 
+Aggregate BUSY-park propagation readiness audit:
+[IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_READINESS_AUDIT](../../IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_READINESS_AUDIT.md)
+records the `.780` no-behavior audit finding aggregate BUSY-park propagation
+ready — the interconnect composes child subordinate FSMs via
+`AhbSubordinate->generate` and clones each child `seq_policy` verbatim, so a
+`(parked-transfer busy)` child parks BUSY through the shipped endpoint machinery
+with no interconnect generator/parser/report change and the child `seq_ok_base`
+fail-closed path carries through composition — and selects `.781`, the public
+contract selection for the aggregate BUSY-park source(s) (stem name(s), one vs
+both stems, support identity/coverage/source kind, residue scope, tests, and the
+later matching aggregate `.ahb` alias). Requester-side BUSY insertion,
+halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank
+progression, optional signals, broader AHB, backend variants, AXI/APB, and VHDL
+remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
