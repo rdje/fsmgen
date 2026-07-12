@@ -41,6 +41,11 @@ State the exact outcome this top-level task must deliver.
 
 ## Current Frontier
 
+<!-- Optional historical snapshot (decision 0019). The live frontier is the
+     eligible (active/pending, unblocked) leaves in the ## Task Tree node list
+     above; this table is not required to be maintained per-slice and may be
+     omitted. -->
+
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `<TREE-ID>.1` | `pending` | `<reason>` |
@@ -59,16 +64,27 @@ State the exact outcome this top-level task must deliver.
 
 ## Verification Log
 
+<!-- Optional historical snapshot (decision 0019). Each leaf's Verification field
+     in the ## Task Tree node list is the live record; this section is not
+     required to be maintained per-slice and may be omitted. -->
+
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `YYYY-MM-DD` | `<TREE-ID>.1` | `pending` | `pending` |
 
 ## Commit Log
 
+<!-- Optional historical snapshot (decision 0019). Each leaf's Commit field in
+     the node list and `git log --grep=<TREE-ID>` are the live record; this
+     section is not required to be maintained per-slice and may be omitted. -->
+
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `<TREE-ID>.1` | `pending` | `pending` |
 
 ## Changelog
+
+<!-- Optional historical snapshot (decision 0019). Git is the audit trail; this
+     section is not required to be maintained per-slice and may be omitted. -->
 
 - `YYYY-MM-DD`: Created task tree.

@@ -157,12 +157,12 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` | `proposed` | `IAL2 horizon exploration / authoring ergonomics` | `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.1` select the first host-language builder contract and prototype boundary | [docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md](docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md) |
 | `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT` | `proposed` | `infra/continuity` | `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1` select the corrected macOS availability formula (guard counts reclaimable inactive/purgeable as available); needs director approval to change the safety guard | [docs/tasks/AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.md](docs/tasks/AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.md) |
 | `SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON` | `proposed` | `Embedding And Public APIs / AI integration` | `SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON.1` select the smallest safe beyond-read-only MCP capability (write/generation tool, sampling, elicitation, roots, or service transport) and its trust/opt-in boundary before any implementation | [docs/tasks/SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON.md](docs/tasks/SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON.md) |
-| `TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION` | `proposed` | `infra/continuity` | `TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION.1` choose maintain-vs-retire for the in-file secondary status views (`## Current Frontier` / `## Commit Log` / `## Verification Log` / `## Changelog`) that lag the authoritative node list, then bring the affected task-tree files into compliance | [docs/tasks/TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION.md](docs/tasks/TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION.md) |
 
 ## Completed Task Trees
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION` | `done` | `infra/continuity` | complete (`.1`; decision `0019` — the node list + `docs/TASK_TREE.md` + git are the live sources, the in-file `## Current Frontier`/`## Verification Log`/`## Commit Log`/`## Changelog` are optional historical views not maintained per-slice; PNT selects from the node list; `docs/TASK_TREE.md` rules + `TEMPLATE.md` + the stale `IAL2-FEATURE-COMPLETENESS-FRONTIER.md` views updated; completed trees not swept) | [docs/tasks/TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION.md](docs/tasks/TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION.md) |
 | `ISF-LOOP-CONTINUE` | `done` | `R14` | `closed (.1–.3; (continue-when cond) skip-to-next-iteration in while/until + when-in-loop; companion to (exit-when))` | [docs/tasks/ISF-LOOP-CONTINUE.md](docs/tasks/ISF-LOOP-CONTINUE.md) |
 | `ISF-LOCAL-VARIABLES` | `done` | `R14` | `closed (.1–.5; (local NAME (width N) [(default V)/(init V)]) declared internal registers + (let NAME EXPR) named intermediates; dedicated 13m chapter)` | [docs/tasks/ISF-LOCAL-VARIABLES.md](docs/tasks/ISF-LOCAL-VARIABLES.md) |
 | `ISF-PROCEDURES` | `done` | `R14` | `closed (.1–.5; reusable (proc) callable inline (call N a) or handshake (call N a as INST), value-in + write-back-out params; dedicated 13l chapter)` | [docs/tasks/ISF-PROCEDURES.md](docs/tasks/ISF-PROCEDURES.md) |
@@ -821,14 +821,28 @@ Every top-level task file must contain:
 - Goal: the user-visible or project-visible outcome.
 - Non-goals: what this tree deliberately does not try to solve.
 - Acceptance criteria: concrete conditions that close the top-level task.
-- Task tree: all known nodes, with status and short result intent.
-- Current frontier: ordered leaf nodes that PNT may select next.
+- Task tree: all known nodes, with status and short result intent. **This node
+  list is the authoritative, live record**: each leaf's `Status` is its live
+  state and its `Verification`/`Commit` fields hold its evidence and completion
+  commit.
 - Decisions: accepted technical decisions and their rationale.
 - Open questions: unresolved questions that do not block the whole tree yet.
 - Blockers: blockers with unblock conditions.
-- Verification log: checks run for completed leaves.
-- Commit log: leaf IDs mapped to completion commit subjects.
-- Changelog: dated edits to the tree itself.
+
+The following four sections are **optional historical convenience views**, not
+required to be maintained per-slice (decision
+[0019](decisions/0019-task-tree-in-file-secondary-views-are-historical.md)); the
+live sources are the node list above, this `docs/TASK_TREE.md`, and
+`git log --grep=<TREE-ID>`. When present they may lag; treat them as historical
+and do not rely on them for the current frontier:
+
+- Current frontier: an optional ordered snapshot; the live frontier is the node
+  list's eligible (`active`/`pending`, unblocked) leaves.
+- Verification log: an optional snapshot of `Verification` fields already in the
+  node list.
+- Commit log: an optional snapshot of `Commit` fields already in the node list
+  and in git.
+- Changelog: an optional dated snapshot; git is the audit trail.
 
 ## Node Rules
 
@@ -859,20 +873,22 @@ A node with children must not be marked `done` until every child is `done`,
 
 ## Current Frontier Rules
 
-The current frontier is the only list PNT uses when selecting work from a task
-tree.
+The frontier is the set of **eligible leaf nodes in the `## Task Tree` node
+list** — leaves whose `Status` is `active` or `pending` and that are not blocked.
+The node list is authoritative; the optional `## Current Frontier` table is a
+historical snapshot only (decision
+[0019](decisions/0019-task-tree-in-file-secondary-views-are-historical.md)).
 
 Rules:
 
-- The frontier contains only leaf nodes.
-- The frontier is ordered by intended priority.
-- A container never appears in the frontier.
-- A blocked node stays out of the frontier until unblocked.
-- When a leaf is split, remove that leaf from the frontier, mark it `active`,
-  add children, and place the first executable child or children in the
-  frontier.
-- When a leaf completes, remove it from the frontier and add the next eligible
-  leaf or leaves.
+- The frontier contains only leaf nodes; a container never appears in it.
+- A blocked node is not eligible until unblocked.
+- When a leaf is split, mark it `active` and add children; the first executable
+  child or children become the eligible frontier.
+- When a leaf completes, mark it `done` and the next eligible leaf or leaves
+  become the frontier.
+- If the optional `## Current Frontier` table is present, it may lag the node
+  list; when it disagrees, the node list wins.
 
 ## PNT Selection Rules
 
@@ -880,7 +896,11 @@ When PNT is asked to continue and at least one active task tree exists:
 
 1. Read `docs/TASK_TREE.md`.
 2. Read the active task file named in the `Active Task Trees` table.
-3. Pick the first eligible leaf in that file's `Current Frontier`.
+3. Pick the first eligible leaf from that file's `## Task Tree` node list — the
+   earliest `active`/`pending`, unblocked leaf (decision
+   [0019](decisions/0019-task-tree-in-file-secondary-views-are-historical.md)).
+   The optional `## Current Frontier` table is historical and may lag; do not
+   select from it.
 4. Implement only that leaf.
 5. If the leaf is too broad, split it before implementation and commit the
    tree update as the leaf's honest outcome.

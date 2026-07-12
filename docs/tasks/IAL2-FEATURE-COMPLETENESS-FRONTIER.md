@@ -5539,6 +5539,13 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 ## Current Frontier
 
+> **Historical snapshot — not maintained per-slice (decision
+> [0019](../decisions/0019-task-tree-in-file-secondary-views-are-historical.md)).**
+> The live frontier is the earliest `active`/`pending`, unblocked leaf in the
+> `## Task Tree` node list above (currently
+> `IAL2-FEATURE-COMPLETENESS-FRONTIER.782`), mirrored in `docs/TASK_TREE.md`. This
+> table last tracked the frontier at `.773` and is kept only as a historical view.
+
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.284` | `done` | Shipped bounded scalar read-data over mixed dynamic/static read demux. |
@@ -12905,6 +12912,11 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 ## Verification Log
 
+> **Historical snapshot — not maintained per-slice (decision
+> [0019](../decisions/0019-task-tree-in-file-secondary-views-are-historical.md)).**
+> Each leaf's `Verification` field in the `## Task Tree` node list is the live
+> record; this table lagged and is kept only as a historical view.
+
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.1` | `README.md`; `MEMORY_ARCHITECTURE.md`; `COMMIT.md`; `docs/TASK_TREE.md`; decisions `0003`, `0005`, `0006`, `0007`, `0014`-`0017`; Knowledge Map IAL2/AXI fact cards; `docs/AXI_MANAGER_USER_API_BRAINSTORM.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`; `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`; `perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `bin/fsmgen`; `t/1436-ial2-ppif-parser-cli.t`; `docs/book/src/14-feature-backlog.md`; `ROADMAP_V2.md` | Selected `.2` as the next exact pre-code owner for the first AXI manager rule subset. |
@@ -14320,6 +14332,12 @@ Acceptance:
 
 ## Commit Log
 
+> **Historical snapshot — not maintained per-slice (decision
+> [0019](../decisions/0019-task-tree-in-file-secondary-views-are-historical.md)).**
+> Each leaf's `Commit` field in the `## Task Tree` node list and
+> `git log --grep=IAL2-FEATURE-COMPLETENESS-FRONTIER` are the live record; this
+> table lagged (last row `.776`) and is kept only as a historical view.
+
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.1` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.1: select next IAL2 slice` | Audited shipped IAL2 surface and moved the frontier to first AXI manager rule-subset selection. |
@@ -15060,6 +15078,11 @@ Acceptance:
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.776` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.776: ship AHB BUSY-park source` | Shipped `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`: added the `parked_transfer` parser field, gated IDLE-only `ahb_seq_idle_clear`, `parks_on=[busy]` report, and residue narrowing on the parked-busy flag; support-accounted the source, added focused `t/1494`, bumped `t/248` (292/333), synced docs/mdBook/Knowledge Map. Shipped source and existing AHB sources unchanged. Selected `.777`, the matching `.ahb` alias selector. |
 
 ## Changelog
+
+> **Historical snapshot — not maintained per-slice (decision
+> [0019](../decisions/0019-task-tree-in-file-secondary-views-are-historical.md)).**
+> `git log --grep=IAL2-FEATURE-COMPLETENESS-FRONTIER` is the audit trail; this
+> list lagged (most recent entry `.772`) and is kept only as a historical view.
 
 - `2026-07-12`: Completed `.772`, shipping the matching aggregate AHB
   HBURST-aware byte-lane `SEQ` `.ahb` profile aliases
