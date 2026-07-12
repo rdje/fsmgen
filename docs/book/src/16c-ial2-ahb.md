@@ -1420,6 +1420,23 @@ widening versus a new additive `*_busy_park` source stem, the `.ppif` "busy
 parks" keyword, the fail-closed policy for a drifting BUSY beat, and the
 report/residue changes before any behavior changes.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.775` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.776` and pinned the contract. The
+BUSY-parking behavior ships as a **new additive source stem**
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`, preserving the
+shipped `ahb_lite_subordinate_byte_lane_hburst_seq` source and its tests. The
+source replaces `(ignored-transfer busy)` with the new `(parked-transfer busy)`
+vocabulary, parallel to `(ignored-transfer idle)`. Gated on that parked-BUSY
+flag, the generated subordinate holds the burst context across a BUSY beat (the
+`ahb_seq_idle_clear` transaction fires only on IDLE, so the unassigned `seq_*`
+registers keep their values), the `SEQ`-policy report drops `busy` from
+`clears_on` and adds `parks_on: [busy]`, and the burst-`SEQ` residue drops
+BUSY-in-burst continuation. No BUSY-beat drift check is added: the existing
+`SEQ`-beat validation already fail-closes a resume whose address, size, write,
+or burst mode does not match the armed burst. `.776` ships the source,
+parser/generator/report/residue changes, support accounting, and a focused
+`NONSEQ → SEQ → BUSY → SEQ` test before any further behavior changes.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:

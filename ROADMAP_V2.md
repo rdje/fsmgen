@@ -6660,6 +6660,19 @@ requester-side BUSY insertion stays deferred. `.775` must pin the source
 path/identity, in-place widening versus a new additive `*_busy_park` source
 stem, the `.ppif` "busy parks" keyword, the fail-closed policy for a drifting
 BUSY beat, and the report/residue changes.
+`.775` now selects `.776` and pins the contract: a new additive endpoint source
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif` (preserving the
+shipped source and its `t/1491`) replacing `(ignored-transfer busy)` with the new
+`(parked-transfer busy)` vocabulary. `AhbSubordinate::_normalize_transfer` gains
+an optional `parked_transfer` field and relaxes its `{idle, busy}`-only ignored
+validation to also accept `{idle}` ignored + `{busy}` parked; gated on that flag,
+`ahb_seq_idle_clear` fires only on IDLE (a BUSY beat holds), the `SEQ`-policy
+report drops `busy` from `clears_on` and adds `parks_on = [busy]`, and the
+burst-`SEQ` residue narrows. No BUSY-beat drift check is added — the existing
+`SEQ`-beat `seq_ok_base` validation already fail-closes a mismatched resume.
+`.776` ships the source, parser/generator/report/residue changes, support
+accounting, focused `t/1494` (`NONSEQ → SEQ → BUSY → SEQ`), `t/248`/`t/297`
+accounting, and docs.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

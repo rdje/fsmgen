@@ -10420,6 +10420,20 @@ Halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank
 progression, optional signals, broader AHB, backend variants, AXI/APB, and VHDL
 remain deferred.
 
+AHB subordinate BUSY-park contract selection:
+[IAL2_AHB_SUBORDINATE_BUSY_PARK_CONTRACT_SELECTION](../../IAL2_AHB_SUBORDINATE_BUSY_PARK_CONTRACT_SELECTION.md)
+selects `.776`, the direct implementation of a new additive endpoint source
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif` (preserving the
+shipped source and its `t/1491`). The source replaces `(ignored-transfer busy)`
+with the new `(parked-transfer busy)` vocabulary; gated on that flag,
+`ahb_seq_idle_clear` fires only on IDLE so a BUSY beat holds, the report drops
+`busy` from `clears_on` and adds `parks_on: [busy]`, and the burst-`SEQ` residue
+narrows. The existing `SEQ`-beat validation is the fail-closed path for a
+drifting resume. `.776` adds focused `t/1494` (`NONSEQ → SEQ → BUSY → SEQ`) and
+bumps `t/248`/`t/297` accounting. The matching `.ahb` alias, aggregate
+BUSY-parking, requester-side BUSY insertion, and larger burst work remain
+deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
