@@ -10389,6 +10389,23 @@ halfword/word burst `SEQ`, wider or indefinite bursts,
 multi-word/register-bank progression, broader AHB, backend variants, AXI/APB,
 and VHDL remain deferred.
 
+Post AHB aggregate HBURST alias selector:
+[IAL2_POST_AHB_AGGREGATE_HBURST_ALIAS_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_AGGREGATE_HBURST_ALIAS_NEXT_SLICE_SELECTION.md)
+selects `.774`, a no-behavior readiness audit for bounded AHB subordinate
+BUSY-in-burst parking — holding the in-word `SEQ` burst context across an
+`HTRANS = BUSY` beat rather than clearing it. This is the smallest next
+burst-`SEQ` increment after the byte-only `WRAP4`/`INCR4` in-word HBURST `SEQ`
+endpoint+aggregate `.ppif`/`.ahb` family: the endpoint burst-context registers
+already exist, BUSY is currently folded into the burst-history clear alongside
+IDLE (the `ahb_seq_idle_clear` transaction fires on
+`(| (== HTRANS idle) (== HTRANS busy))` and the endpoint report `clears_on`
+lists `busy`), and the endpoint/aggregate residue already defer BUSY-in-burst
+continuation/handling, so parking is a bounded clear-versus-park decode edit
+plus report/residue narrowing inside the shipped byte-only window. Halfword/word
+burst `SEQ`, wider or indefinite bursts, multi-word/register-bank progression,
+optional/property-gated `HPROT`/`HMASTLOCK` signals, broader AHB, backend
+variants, AXI/APB, and VHDL were weighed as larger and remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

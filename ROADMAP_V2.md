@@ -6629,6 +6629,23 @@ support-accounted as
 with focused `t/1493` coverage. The matching aggregate HBURST-aware byte-lane
 `SEQ` `.ahb` alias family is now complete alongside the generic `.ppif`
 sources.
+`.773` now selects `.774`, a no-behavior readiness audit for bounded AHB
+subordinate BUSY-in-burst parking (holding the in-word `SEQ` burst context
+across an `HTRANS = BUSY` beat rather than clearing it), the smallest next
+burst-`SEQ` increment after the byte-only `WRAP4`/`INCR4` in-word HBURST `SEQ`
+endpoint+aggregate `.ppif`/`.ahb` family completed. The endpoint burst-context
+registers (`seq_valid_q`, `seq_expected_addr_q`, `seq_size_q`, `seq_write_q`,
+`seq_hburst_q`, `seq_beats_remaining_q`) already exist for the shipped
+`WRAP4`/`INCR4` path; BUSY is currently folded into the burst-history clear
+alongside IDLE (the `ahb_seq_idle_clear` transaction fires on
+`(| (== HTRANS idle) (== HTRANS busy))` and the report `clears_on` lists
+`busy`); and the endpoint/aggregate residue already defer BUSY-in-burst
+continuation/handling. Parking is therefore a bounded clear-versus-park decode
+edit plus report/residue narrowing inside the shipped byte-only window.
+Halfword/word burst `SEQ`, wider or indefinite
+`WRAP8`/`INCR8`/`WRAP16`/`INCR16`/indefinite `INCR`, multi-word/register-bank
+progression, and optional/property-gated `HPROT`/`HMASTLOCK` signals were
+rejected as larger and remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

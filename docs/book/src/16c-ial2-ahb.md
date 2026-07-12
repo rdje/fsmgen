@@ -1385,6 +1385,24 @@ BUSY parking, halfword/word burst `SEQ`, wider or indefinite bursts,
 multi-word/register-bank progression, broader AHB, backend variants, AXI/APB,
 and VHDL remain deferred.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.773` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.774`, a no-behavior readiness audit for
+bounded AHB subordinate **BUSY-in-burst parking** — holding the in-word `SEQ`
+burst context across an `HTRANS = BUSY` beat rather than clearing it. This is the
+smallest next burst-`SEQ` increment after the byte-only `WRAP4`/`INCR4` in-word
+HBURST `SEQ` endpoint and aggregate `.ppif`/`.ahb` family: the endpoint
+burst-context registers already exist for the shipped path, BUSY is currently
+folded into the burst-history clear alongside IDLE (the `ahb_seq_idle_clear`
+transaction fires on `(| (== HTRANS idle) (== HTRANS busy))`, and the endpoint
+`SEQ`-policy report lists `busy` under `clears_on`), and the endpoint/aggregate
+residue already defer BUSY-in-burst continuation/handling. `.774` audits the
+clear-versus-park decode change, fail-closed behavior for a drifting BUSY beat,
+report/residue narrowing, source-stem/`.ahb`-alias sequencing, and tests before
+any behavior changes. Halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank progression, and optional/property-gated
+`HPROT`/`HMASTLOCK` signals were weighed as larger increments and remain
+deferred.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:
