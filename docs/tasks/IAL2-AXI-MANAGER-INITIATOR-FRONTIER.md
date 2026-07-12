@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-12` (`.2` done: AW address-channel driver readiness audit written + spawned the `.3` contract selection)
+- Last updated: `2026-07-12` (`.3` done: AW address-channel driver contract selected + spawned the `.4` implementation leaf)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -82,7 +82,7 @@ It complements — does not replace — the shipped capacity/status response cor
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
   Status: `active`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
-  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`
+  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
   Status: `done`
@@ -100,9 +100,17 @@ It complements — does not replace — the shipped capacity/status response cor
   Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2: write the AW address-channel driver readiness audit`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Contract selection for the bounded AW address-channel driver: fix the exact ppif clause spelling, generator/module name, report schema, driven-vs-sampled signal naming, AWID width policy, and the first-slice AW payload set, resolving the open questions in the readiness audit.`
   Acceptance: `Resolve the open questions in docs/IAL2_AXI_MANAGER_INITIATOR_AW_DRIVER_READINESS_AUDIT.md section 8 and record the final AW-driver contract in a repo-local contract-selection note (mirroring docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_CONTRACT_SELECTION.md): the (axi-aw-driver ...) clause head + object spelling, the generator module + result kind + report schema names, whether the driven AW payload reuses sampled input names or takes distinct _out names, the AWID width parameter/pin, and whether the first slice drives awaddr+awlen only or the full burst-describing set {awaddr, awid, awlen, awsize, awburst} (audit recommends the latter). Fix the fail-closed static rules and width pins. No parser/generator/public-source/support-accounting/manifest/test/artifact/behavior change in this selection leaf; the implementation is the following leaf.`
+  Verification: `passed — no-behavior contract selection; recorded in docs/IAL2_AXI_MANAGER_INITIATOR_AW_DRIVER_CONTRACT_SELECTION.md; doctrine/continuity gates run at commit.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3: select the AW address-channel driver contract`
+  Selection: `clause (axi-aw-driver ...); contract kind axi_aw_driver; module FSM::IAL2::ProtocolIntent::AxiAwDriver; result kind protocol_intent.axi_aw_driver; schema fsmgen.ial2.protocol_intent.axi_aw_driver.v1; source ppif/axi_aw_driver.ppif (profile axi4). Distinct command inputs vs driven AW outputs (AHB-consistent): inputs aw_cmd_valid + cmd_awaddr(32)/cmd_awid(4)/cmd_awlen(8)/cmd_awsize(3)/cmd_awburst(2) + awready; outputs awvalid + awaddr(32)/awid(4)/awlen(8)/awsize(3)/awburst(2) + aw_busy/aw_done. First slice drives the FULL burst-describing set (not awaddr+awlen only). AWID pinned to width 4 (configurability deferred). Fail-closed width pins + axi4 profile. Full contract incl. target ISF + report shape + residue: docs/IAL2_AXI_MANAGER_INITIATOR_AW_DRIVER_CONTRACT_SELECTION.md.`
+
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`
+  Status: `pending`
+  Goal: `Implement the bounded AW address-channel driver generator per the .3 contract: a new FSM::IAL2::ProtocolIntent::AxiAwDriver generator that emits the fixed target ISF (accept_command/assert_aw/finish drive blocks + aw_issue transaction), lowering IAL2 -> generated .isf -> .fsm, wired into PPIF.pm dispatch, with a public ppif/axi_aw_driver.ppif source, support-accounting entry, capability-manifest boundary prose, a focused test, and a mdBook initiator section.`
+  Acceptance: `Following docs/IAL2_AXI_MANAGER_INITIATOR_AW_DRIVER_CONTRACT_SELECTION.md exactly: (1) add FSM::IAL2::ProtocolIntent::AxiAwDriver.pm (envelope + _normalize_contract fail-closed rules + _emit_isf + _build_report as fixed by the contract); (2) wire PPIF.pm (use import; axi-aw-driver clause + _parse_axi_aw_driver + accumulator + missing-intent enumeration in _contract_from_root; _is_axi_aw_driver_contract predicate + dispatch arm in parse_source before the fallthrough); (3) add ppif/axi_aw_driver.ppif; (4) add the RegressionCorpus.pm entry intent.ppif_axi_aw_driver (gated by t/248); (5) extend the LanguageSurfaceSection.pm .ppif current_boundary prose (gated by t/297); (6) add t/14xx-ial2-axi-aw-driver.t modeled on t/1473 (assert layer/kind/mode/schema + grep the generated .isf for awvalid driving + the assert_aw/finish blocks); (7) add a mdBook initiator/driving section to docs/book/src/16a-ial2-axi.md. Generated source must strict-check, lower to .isf/.fsm, and pass --verify-hdl where applicable. Run t/248, t/297, the new test, mdbook build, and scripts/check_doctrines.sh; run heavy/broad runs under scripts/run_with_ram_guard.sh. Keep every doc/spec/manifest/test surface synchronized in the same slice.`
   Verification: `pending`
   Commit: `pending`
 
@@ -117,12 +125,15 @@ It complements — does not replace — the shipped capacity/status response cor
   `docs/IAL2_AXI_MANAGER_INITIATOR_FIRST_INCREMENT_SELECTION.md`). `.2` (done)
   wrote the readiness audit
   (`docs/IAL2_AXI_MANAGER_INITIATOR_AW_DRIVER_READINESS_AUDIT.md`): the safe
-  first-slice AW interface (inputs `aw_cmd_valid`/`awready` + payload
-  `awaddr`/`awid`/`awlen`/`awsize`/`awburst`; outputs `awvalid` + driven payload
-  + `aw_busy`/`aw_done`), the target ISF shape, fail-closed rules, and the exact
-  owner map with `PPIF.pm` anchors. `.3` (pending) is the contract selection
-  that fixes the final clause/module/schema names and the first-slice payload
-  set. The AW driver reuses the existing AW valid-ready authoring shape
+  first-slice AW interface, the target ISF shape, fail-closed rules, and the
+  exact owner map with `PPIF.pm` anchors. `.3` (done) fixed the contract
+  (`docs/IAL2_AXI_MANAGER_INITIATOR_AW_DRIVER_CONTRACT_SELECTION.md`): clause
+  `(axi-aw-driver …)`, module `AxiAwDriver`, kind `axi_aw_driver`, schema
+  `…axi_aw_driver.v1`, distinct command inputs (`aw_cmd_valid` +
+  `cmd_aw*`) vs driven outputs (`awvalid` + `aw*` + `aw_busy`/`aw_done`), the
+  full burst-describing payload set, and AWID pinned to 4. `.4` (pending) is the
+  implementation leaf (the first behavior-landing slice). The AW driver reuses
+  the existing AW valid-ready authoring shape
   (`ppif/axi_aw_valid_ready.ppif`) and the `AhbRequester.pm` drive-block model,
   driven instead of observed. Plug-in surface: `perl/FSM/Adapter/IAL2/PPIF.pm`
   (dispatch), a new generator module, `perl/FSM/Support/RegressionCorpus.pm`
