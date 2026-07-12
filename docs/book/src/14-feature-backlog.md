@@ -10359,6 +10359,20 @@ BUSY-in-burst, halfword/word burst `SEQ`, wider or indefinite bursts,
 multi-word/register-bank progression, broader AHB, backend variants, AXI/APB,
 and VHDL remain deferred.
 
+AHB aggregate HBURST `SEQ` alias contract selector:
+[IAL2_AHB_AGGREGATE_HBURST_SEQ_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_AGGREGATE_HBURST_SEQ_ALIAS_CONTRACT_SELECTION.md)
+selects `.772`, direct implementation of the matching aggregate HBURST-aware
+`.ahb` profile aliases `ppif/ahb_interconnect_byte_lane_hburst_seq.ahb` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb`. They must
+support-account as `intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq`
+and
+`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq`
+with source kind `ial2_profile_alias`, and reserved `.ahb` label probes confirm
+the existing suffix-keyed suppression removes the aggregate/child alias residue
+with no adapter change, so `.772` is data-only. BUSY-in-burst, halfword/word
+burst `SEQ`, wider or indefinite bursts, multi-word/register-bank progression,
+broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

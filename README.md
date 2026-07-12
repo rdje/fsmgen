@@ -5554,6 +5554,18 @@ wider or indefinite bursts, multi-word/register-bank progression, optional
 signals, broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
 `.771` is the next no-behavior AHB follow-on selector for the matching
 aggregate HBURST-aware `.ahb` alias contract.
+`.771` now selects `.772`, direct implementation of the matching aggregate
+AHB HBURST-aware byte-lane `SEQ` `.ahb` profile aliases
+`ppif/ahb_interconnect_byte_lane_hburst_seq.ahb` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb`. They must
+mirror the shipped generic `.ppif` sources and support-account as
+`intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq` and
+`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq`
+with source kind `ial2_profile_alias`, preserving HDL entry `ahb_tb` and
+`composition.seq_policy_propagation` mode
+`subordinate_owned_hburst_in_word_seq_policy`. Reserved `.ahb` label probes
+confirm the existing suffix-keyed profile-alias suppression removes the
+aggregate/child alias residue with no adapter change, so `.772` is data-only.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8271,6 +8283,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_CONTRACT_SELECTION.md` — records the `.769` no-behavior public contract selection for bounded generic aggregate AHB HBURST propagation and selects `.770`, direct implementation of `ppif/ahb_interconnect_byte_lane_hburst_seq.ppif` and `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`.
 - `docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_BEHAVIOR.md` — documents the `.770` shipped generic aggregate HBURST-aware byte-lane `SEQ` `.ppif` sources, generated review artifacts, support accounting, child HBURST fanout, `composition.seq_policy_propagation`, residue movement, preservation checks, validation, and remaining alias/burst/backend/protocol residue.
 - `docs/IAL2_POST_AHB_AGGREGATE_HBURST_SEQ_PPIF_NEXT_SLICE_SELECTION.md` — records the `.770` no-behavior selector after generic aggregate HBURST-aware byte-lane `SEQ` `.ppif` shipment and selects `.771`, matching aggregate HBURST-aware `.ahb` profile-alias contract selection.
+- `docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_ALIAS_CONTRACT_SELECTION.md` — records the `.771` no-behavior contract selection for the matching aggregate HBURST-aware `.ahb` profile aliases and selects `.772`, direct implementation of `ppif/ahb_interconnect_byte_lane_hburst_seq.ahb` and `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb`.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

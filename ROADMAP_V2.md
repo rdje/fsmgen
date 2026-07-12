@@ -6609,6 +6609,18 @@ wider or indefinite bursts, multi-word/register-bank progression, optional
 signals, broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
 `.771` is the next no-behavior AHB follow-on selector for the matching
 aggregate HBURST-aware `.ahb` alias contract.
+`.771` now selects `.772`, direct implementation of the matching aggregate
+AHB HBURST-aware byte-lane `SEQ` `.ahb` profile aliases
+`ppif/ahb_interconnect_byte_lane_hburst_seq.ahb` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb`. They must
+mirror the shipped generic `.ppif` sources and support-account as
+`intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq` and
+`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq`
+with source kind `ial2_profile_alias`, preserving HDL entry `ahb_tb` and
+`composition.seq_policy_propagation` mode
+`subordinate_owned_hburst_in_word_seq_policy`. Reserved `.ahb` label probes
+confirm the existing suffix-keyed profile-alias suppression removes the
+aggregate/child alias residue with no adapter change, so `.772` is data-only.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
