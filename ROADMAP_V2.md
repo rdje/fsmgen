@@ -6673,6 +6673,22 @@ burst-`SEQ` residue narrows. No BUSY-beat drift check is added — the existing
 `.776` ships the source, parser/generator/report/residue changes, support
 accounting, focused `t/1494` (`NONSEQ → SEQ → BUSY → SEQ`), `t/248`/`t/297`
 accounting, and docs.
+`.776` now ships `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`,
+the bounded endpoint AHB subordinate byte-lane HBURST `WRAP4`/`INCR4` in-word
+`SEQ` source with BUSY-in-burst parking, support-accounted as
+`intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq_busy_park`
+(`source_kind: ppif`). The source declares `(ignored-transfer idle)` and the new
+`(parked-transfer busy)` clause; the `AhbSubordinate::_normalize_transfer` parser
+gains an optional `parked_transfer` field, and gated on that flag the
+`ahb_seq_idle_clear` transaction fires on IDLE only. The unassigned `seq_*`
+registers hold the in-word burst context across the BUSY beat, and the following
+`SEQ` beat resumes through the existing `seq_ok_base` validation that fail-closes
+a drifting resume. The `SEQ`-policy report drops `busy` from `clears_on` and adds
+`parks_on: [busy]`, and the residue records shipped BUSY-in-burst parking. The
+shipped `ahb_lite_subordinate_byte_lane_hburst_seq` source is unchanged (BUSY
+still clears). Focused coverage is `t/1494`; `t/248` moves to 292 protocol / 333
+total supported-smoke entries. The matching `.ahb` alias, aggregate BUSY-parking,
+and requester-side BUSY insertion remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -216,10 +216,18 @@ sub _normalize_transfer($raw, $control, $storage, $bus) {
     my $accept_when = _normalize_accept_when(_required_hash($raw, 'accept_when'));
     my @ignored = @{_required_array($raw, 'ignored_transfer')};
     my %ignored = map { _nonempty_scalar($_, 'transfer.ignored_transfer') => 1 } @ignored;
+    my @parked = exists($raw->{parked_transfer}) ? @{_required_array($raw, 'parked_transfer')} : ();
+    my %parked = map { _nonempty_scalar($_, 'transfer.parked_transfer') => 1 } @parked;
     my $has_size_policy = _has_ahb_subordinate_size_policy($raw);
 
-    confess "AHB subordinate IAL2 contract transfer.ignored_transfer must contain idle and busy in this slice\n"
-        unless keys(%ignored) == 2 && $ignored{idle} && $ignored{busy};
+    # Two accepted shapes in this slice: classic (BUSY ignored alongside IDLE,
+    # clearing the burst history) or BUSY-park (IDLE ignored, BUSY parked so the
+    # in-word SEQ burst context holds across the BUSY beat).
+    my $classic_transfer = keys(%ignored) == 2 && $ignored{idle} && $ignored{busy} && !%parked;
+    my $busy_park = keys(%ignored) == 1 && $ignored{idle}
+        && keys(%parked) == 1 && $parked{busy};
+    confess "AHB subordinate IAL2 contract transfer must either ignore {idle, busy} or ignore {idle} and park {busy} in this slice\n"
+        unless $classic_transfer || $busy_park;
     confess "AHB subordinate IAL2 contract transfer.wait_cycles must name the control.wait_cycles signal\n"
         unless _required_scalar($raw, 'wait_cycles') eq $control->{wait_cycles}{name};
     confess "AHB subordinate IAL2 contract transfer.register must name the selected storage register\n"
@@ -233,7 +241,8 @@ sub _normalize_transfer($raw, $control, $storage, $bus) {
         nonseq               => _exact_scalar($raw, 'nonseq', "2'b10", 'transfer.nonseq'),
         seq                  => _exact_scalar($raw, 'seq', "2'b11", 'transfer.seq'),
         supported_transfer   => _exact_scalar($raw, 'supported_transfer', 'nonseq', 'transfer.supported_transfer'),
-        ignored_transfer     => [qw(idle busy)],
+        ignored_transfer     => $busy_park ? [qw(idle)] : [qw(idle busy)],
+        parked_transfer      => $busy_park ? [qw(busy)] : [],
         wait_cycles          => _exact_scalar($raw, 'wait_cycles', $control->{wait_cycles}{name}, 'transfer.wait_cycles'),
         read                 => _exact_scalar($raw, 'read', 'register', 'transfer.read'),
         write                => _exact_scalar($raw, 'write', 'register', 'transfer.write'),
@@ -262,11 +271,14 @@ sub _normalize_transfer($raw, $control, $storage, $bus) {
         } elsif ($seq_policy eq 'hburst-in-word-progressive') {
             confess "AHB subordinate IAL2 contract transfer.seq_policy hburst-in-word-progressive requires bus.burst in this slice\n"
                 unless exists $bus->{burst};
-            $transfer{seq_policy} = _hburst_seq_policy_report($bus->{burst}{name});
+            $transfer{seq_policy} = _hburst_seq_policy_report($bus->{burst}{name}, $busy_park);
         } else {
             confess "AHB subordinate IAL2 contract transfer.seq_policy must be in-word-progressive or hburst-in-word-progressive in this slice\n";
         }
     }
+
+    confess "AHB subordinate IAL2 contract parked-transfer busy requires transfer.seq_policy hburst-in-word-progressive in this slice\n"
+        if $busy_park && !_transfer_selects_hburst_seq_policy(\%transfer);
 
     return \%transfer;
 }
@@ -680,6 +692,11 @@ sub _transfer_selects_hburst_seq_policy($transfer) {
         && ($transfer->{seq_policy}{mode} // '') eq 'hburst_in_word_progressive';
 }
 
+sub _transfer_parks_busy($transfer) {
+    return ref($transfer->{parked_transfer}) eq 'ARRAY'
+        && scalar(grep { $_ eq 'busy' } @{$transfer->{parked_transfer}});
+}
+
 sub _seq_policy_storage_lines($contract) {
     return () unless _transfer_selects_seq_policy($contract->{transfer});
     my @lines = (
@@ -705,9 +722,14 @@ sub _seq_policy_idle_clear_transaction_lines($contract) {
         ? _hburst_seq_clear_lines('      ')
         : _seq_clear_lines('      ');
     $clear_lines[-1] .= ')';
+    # When BUSY parks, the burst context is held across a BUSY beat, so the
+    # idle-clear transaction fires on IDLE only; otherwise BUSY clears like IDLE.
+    my $clear_when = _transfer_parks_busy($transfer)
+        ? "(== $bus->{transfer}{name} $transfer->{idle})"
+        : "(| (== $bus->{transfer}{name} $transfer->{idle}) (== $bus->{transfer}{name} $transfer->{busy}))";
     return (
         "  (transaction ahb_seq_idle_clear",
-        "    (when (& $bus->{select} $bus->{ready_in} (| (== $bus->{transfer}{name} $transfer->{idle}) (== $bus->{transfer}{name} $transfer->{busy})))",
+        "    (when (& $bus->{select} $bus->{ready_in} $clear_when)",
         @clear_lines,
         "    (complete ahb_seq_idle_done_q))",
         "",
@@ -971,8 +993,8 @@ sub _seq_policy_report() {
     };
 }
 
-sub _hburst_seq_policy_report($burst_signal) {
-    return {
+sub _hburst_seq_policy_report($burst_signal, $parks_busy = 0) {
+    my %report = (
         selected => JSON::PP::true,
         mode => 'hburst_in_word_progressive',
         base_policy => 'in_word_progressive',
@@ -986,8 +1008,16 @@ sub _hburst_seq_policy_report($burst_signal) {
         window_bytes => 4,
         address_progression => 'hburst_incr4_or_wrap4_within_word',
         control_stability => [qw(HBURST HWRITE HSIZE)],
-        clears_on => [qw(reset idle busy error new_nonseq final_beat)],
-    };
+    );
+    if ($parks_busy) {
+        # BUSY parks: the burst context is held across a BUSY beat instead of
+        # cleared, so BUSY leaves clears_on and moves to parks_on.
+        $report{clears_on} = [qw(reset idle error new_nonseq final_beat)];
+        $report{parks_on} = [qw(busy)];
+    } else {
+        $report{clears_on} = [qw(reset idle busy error new_nonseq final_beat)];
+    }
+    return \%report;
 }
 
 sub _unsupported_residue($contract) {
@@ -997,7 +1027,9 @@ sub _unsupported_residue($contract) {
         ? 'HBURST, HPROT, HMASTLOCK, AHB5 optional/property-gated signals, exclusive access, and legacy two-bit HRESP compatibility remain deferred.'
         : 'HBURST, HPROT, HMASTLOCK, AHB5 optional/property-gated signals, byte lanes, exclusive access, and legacy two-bit HRESP compatibility remain deferred.';
     my $seq_detail = _transfer_selects_hburst_seq_policy($contract->{transfer})
-        ? 'Byte-only HBURST WRAP4/INCR4 in-word SEQ is shipped for this endpoint source; indefinite INCR, WRAP8/INCR8/WRAP16/INCR16, halfword/word burst SEQ, BUSY-in-burst continuation, multi-word/register-bank progression, .ahb alias exposure, aggregate propagation, full-manager behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, broader AHB behavior, and VHDL remain future work.'
+        ? (_transfer_parks_busy($contract->{transfer})
+            ? 'Byte-only HBURST WRAP4/INCR4 in-word SEQ with BUSY-in-burst parking is shipped for this endpoint source; indefinite INCR, WRAP8/INCR8/WRAP16/INCR16, halfword/word burst SEQ, multi-word/register-bank progression, .ahb alias exposure, aggregate propagation, full-manager behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, broader AHB behavior, and VHDL remain future work.'
+            : 'Byte-only HBURST WRAP4/INCR4 in-word SEQ is shipped for this endpoint source; indefinite INCR, WRAP8/INCR8/WRAP16/INCR16, halfword/word burst SEQ, BUSY-in-burst continuation, multi-word/register-bank progression, .ahb alias exposure, aggregate propagation, full-manager behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, broader AHB behavior, and VHDL remain future work.')
         : _transfer_selects_seq_policy($contract->{transfer})
         ? 'HBURST-driven length/wrap semantics, BUSY-in-burst continuation rather than history clearing, multi-word/register-bank progression, .ahb alias exposure, aggregate propagation, full-manager behavior, direct backend behavior, verification-output generation, backend-language variants, AXI, APB, broader AHB behavior, and VHDL remain future work.'
         : 'SEQ burst continuation, wrapping/incrementing bursts, burst address progression, and broader manager/subordinate behavior remain future work.';

@@ -1117,11 +1117,16 @@ sub _parse_ahb_subordinate_transfer_block($items, $source_label, $name) {
     my %transfer = (name => $transfer_name);
     my %seen_single;
     my @ignored;
+    my @parked;
     my @supported_sizes;
     for my $clause (@{$items}[1 .. $#$items]) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         if ($head eq 'ignored-transfer') {
             push @ignored, _parse_apb_scalar_binding(\@body, $source_label, "ahb-subordinate $name transfer $transfer_name ignored-transfer");
+            next;
+        }
+        if ($head eq 'parked-transfer') {
+            push @parked, _parse_apb_scalar_binding(\@body, $source_label, "ahb-subordinate $name transfer $transfer_name parked-transfer");
             next;
         }
         if ($head eq 'supported-size') {
@@ -1144,6 +1149,7 @@ sub _parse_ahb_subordinate_transfer_block($items, $source_label, $name) {
         }
     }
     $transfer{ignored_transfer} = \@ignored if @ignored;
+    $transfer{parked_transfer} = \@parked if @parked;
     $transfer{supported_size} = \@supported_sizes if @supported_sizes;
 
     for my $required (qw(accept_when idle busy nonseq seq supported_transfer ignored_transfer wait_cycles read write unmapped_address unsupported_size unsupported_transfer response error_completion)) {

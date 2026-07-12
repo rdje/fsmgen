@@ -1,6 +1,6 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships twenty-six public bounded AHB IAL2 entrypoints today:
+FSMGen ships twenty-seven public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
@@ -8,6 +8,7 @@ ppif/ahb_lite_subordinate.ppif
 ppif/ahb_lite_subordinate_byte_lane.ppif
 ppif/ahb_lite_subordinate_byte_lane_seq.ppif
 ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif
+ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif
 ppif/ahb_interconnect.ppif
 ppif/ahb_interconnect_two_subordinate.ppif
 ppif/ahb_interconnect_byte_lane.ppif
@@ -67,6 +68,7 @@ ppif/ahb_lite_subordinate.ppif   -> ahb_lite_subordinate.isf -> ahb_lite_subordi
 ppif/ahb_lite_subordinate_byte_lane.ppif -> ahb_lite_subordinate_byte_lane.isf -> ahb_lite_subordinate_byte_lane.fsm -> HDL module ahb_lite_subordinate_byte_lane
 ppif/ahb_lite_subordinate_byte_lane_seq.ppif -> ahb_lite_subordinate_byte_lane_seq.isf -> ahb_lite_subordinate_byte_lane_seq.fsm -> HDL module ahb_lite_subordinate_byte_lane_seq
 ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif -> ahb_lite_subordinate_byte_lane_hburst_seq.isf -> ahb_lite_subordinate_byte_lane_hburst_seq.fsm -> HDL module ahb_lite_subordinate_byte_lane_hburst_seq
+ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif -> ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.isf -> ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.fsm -> HDL module ahb_lite_subordinate_byte_lane_hburst_seq_busy_park
 ppif/ahb_lite_subordinate.ahb    -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
 ppif/ahb_lite_subordinate_byte_lane.ahb -> ahb_lite_subordinate_byte_lane.isf -> ahb_lite_subordinate_byte_lane.fsm -> HDL module ahb_lite_subordinate_byte_lane
 ppif/ahb_lite_subordinate_byte_lane_seq.ahb -> ahb_lite_subordinate_byte_lane_seq.isf -> ahb_lite_subordinate_byte_lane_seq.fsm -> HDL module ahb_lite_subordinate_byte_lane_seq
@@ -103,7 +105,7 @@ and do not produce generated `.isf` or generated `.fsm` review artifacts.
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, `ppif/ahb_lite_subordinate_byte_lane.ppif`, `ppif/ahb_lite_subordinate_byte_lane_seq.ppif`, `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`, `ppif/ahb_interconnect.ppif`, `ppif/ahb_interconnect_two_subordinate.ppif`, `ppif/ahb_interconnect_byte_lane.ppif`, `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, `ppif/ahb_interconnect_byte_lane_seq.ppif`, `ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif`, `ppif/ahb_interconnect_byte_lane_hburst_seq.ppif`, `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`, `ppif/ahb_requester.ahb`, `ppif/ahb_lite_subordinate.ahb`, `ppif/ahb_lite_subordinate_byte_lane.ahb`, `ppif/ahb_lite_subordinate_byte_lane_seq.ahb`, `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb`, `ppif/ahb_interconnect.ahb`, `ppif/ahb_interconnect_two_subordinate.ahb`, `ppif/ahb_interconnect_byte_lane.ahb`, `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb`, `ppif/ahb_interconnect_byte_lane_seq.ahb`, `ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ahb`, `ppif/ahb_interconnect_byte_lane_hburst_seq.ahb`, or `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb` | Bounded AHB requester, bounded word-only AHB-Lite/common-AHB subordinate, bounded byte-lane/narrow-transfer AHB-Lite/common-AHB subordinate, bounded byte-lane in-word `SEQ` subordinate, bounded byte-lane HBURST `WRAP4`/`INCR4` `SEQ` subordinate, selected one-requester/one-subordinate static-window AHB interconnect, selected one-requester/two-subordinate static-window AHB interconnect, selected aggregate byte-lane propagation variants, selected aggregate byte-lane in-word `SEQ` propagation variants, selected aggregate HBURST-aware byte-lane `SEQ` propagation `.ppif` variants, and matching `.ahb` aliases for the selected bounded endpoint and aggregate sources including the aggregate HBURST-aware byte-lane `SEQ` aliases. |
+| Guided mode | `ppif/ahb_requester.ppif`, `ppif/ahb_lite_subordinate.ppif`, `ppif/ahb_lite_subordinate_byte_lane.ppif`, `ppif/ahb_lite_subordinate_byte_lane_seq.ppif`, `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif`, `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`, `ppif/ahb_interconnect.ppif`, `ppif/ahb_interconnect_two_subordinate.ppif`, `ppif/ahb_interconnect_byte_lane.ppif`, `ppif/ahb_interconnect_two_subordinate_byte_lane.ppif`, `ppif/ahb_interconnect_byte_lane_seq.ppif`, `ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif`, `ppif/ahb_interconnect_byte_lane_hburst_seq.ppif`, `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif`, `ppif/ahb_requester.ahb`, `ppif/ahb_lite_subordinate.ahb`, `ppif/ahb_lite_subordinate_byte_lane.ahb`, `ppif/ahb_lite_subordinate_byte_lane_seq.ahb`, `ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb`, `ppif/ahb_interconnect.ahb`, `ppif/ahb_interconnect_two_subordinate.ahb`, `ppif/ahb_interconnect_byte_lane.ahb`, `ppif/ahb_interconnect_two_subordinate_byte_lane.ahb`, `ppif/ahb_interconnect_byte_lane_seq.ahb`, `ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ahb`, `ppif/ahb_interconnect_byte_lane_hburst_seq.ahb`, or `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb` | Bounded AHB requester, bounded word-only AHB-Lite/common-AHB subordinate, bounded byte-lane/narrow-transfer AHB-Lite/common-AHB subordinate, bounded byte-lane in-word `SEQ` subordinate, bounded byte-lane HBURST `WRAP4`/`INCR4` `SEQ` subordinate, bounded byte-lane HBURST `WRAP4`/`INCR4` `SEQ` subordinate with BUSY-in-burst parking, selected one-requester/one-subordinate static-window AHB interconnect, selected one-requester/two-subordinate static-window AHB interconnect, selected aggregate byte-lane propagation variants, selected aggregate byte-lane in-word `SEQ` propagation variants, selected aggregate HBURST-aware byte-lane `SEQ` propagation `.ppif` variants, and matching `.ahb` aliases for the selected bounded endpoint and aggregate sources including the aggregate HBURST-aware byte-lane `SEQ` aliases. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs are exposed as `control`, `bus`, one-register `storage`, and `transfer` clauses, including selected byte/halfword/word `supported-size`, `lane-order`, narrow read/write, unaligned/crossing policy clauses, the selected `(seq-policy in-word-progressive)` clause on the generic byte-lane `SEQ` source and matching `.ahb` alias, and the selected `(burst HBURST width 3)` plus `(seq-policy hburst-in-word-progressive)` clauses on the generic and matching `.ahb` HBURST-aware endpoint byte-lane `SEQ` sources and selected generic aggregate HBURST-aware byte-lane `SEQ` sources. Interconnect knobs are exposed as `children`, one or two static `address-map` windows, `decode`, and `wiring` clauses. |
 | Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader AHB interconnect/decode beyond the selected one-requester/one-subordinate static-window `.ppif`/`.ahb` sources and selected one-requester/two-subordinate static-window `.ppif`/`.ahb` sources, matching aggregate HBURST `.ahb` aliases, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond the bounded byte-only `WRAP4`/`INCR4` endpoint and aggregate sources, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
@@ -1202,9 +1204,12 @@ The following are not shipped by the current AHB IAL2 surface:
   additions on the subordinate side; `HBURST` is shipped only for the selected
   endpoint and aggregate byte-lane HBURST `SEQ` sources;
 - HBURST-driven `SEQ` continuation beyond the bounded endpoint and aggregate
-  byte-only `WRAP4`/`INCR4` sources and their matching `.ahb` aliases,
-  including BUSY-in-burst parking, halfword/word burst `SEQ`, indefinite
-  `INCR`, wider fixed bursts, and multi-word/register-bank progression;
+  byte-only `WRAP4`/`INCR4` sources and their matching `.ahb` aliases, including
+  halfword/word burst `SEQ`, indefinite `INCR`, wider fixed bursts, and
+  multi-word/register-bank progression; BUSY-in-burst parking is shipped only
+  for the `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`
+  endpoint source, and its matching `.ahb` alias, aggregate BUSY-parking, and
+  requester-side BUSY insertion remain deferred;
 - legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;
@@ -1436,6 +1441,29 @@ BUSY-in-burst continuation. No BUSY-beat drift check is added: the existing
 or burst mode does not match the armed burst. `.776` ships the source,
 parser/generator/report/residue changes, support accounting, and a focused
 `NONSEQ → SEQ → BUSY → SEQ` test before any further behavior changes.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.776` shipped
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`, the bounded
+endpoint AHB subordinate byte-lane HBURST `WRAP4`/`INCR4` in-word `SEQ` source
+with BUSY-in-burst parking, support-accounted as
+`intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq_busy_park` with coverage
+`ial2_ppif_ahb_lite_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli`
+(`source_kind: ppif`). The source declares `(ignored-transfer idle)` and
+`(parked-transfer busy)`; the new `parked-transfer` clause makes the generator
+gate BUSY out of the `ahb_seq_idle_clear` transaction so it fires on IDLE only.
+Because the generated FSM leaves the `seq_*` registers unassigned during a BUSY
+beat, the in-word burst context (`seq_valid_q`, `seq_expected_addr_q`,
+`seq_size_q`, `seq_write_q`, `seq_hburst_q`, `seq_beats_remaining_q`) holds
+across the BUSY beat, and the following `SEQ` beat resumes through the same
+`seq_ok_base` validation that fail-closes a resume whose address, size, write, or
+burst mode drifts from the armed burst. The generated `SEQ`-policy report drops
+`busy` from `clears_on` and adds `parks_on: [busy]`, and the burst-`SEQ` residue
+records shipped BUSY-in-burst parking while keeping halfword/word burst `SEQ`,
+wider or indefinite bursts, multi-word/register-bank progression, the matching
+`.ahb` alias, aggregate BUSY-parking, and requester-side BUSY insertion deferred.
+The shipped `ahb_lite_subordinate_byte_lane_hburst_seq` source is unchanged (it
+still clears the burst history on BUSY). Focused coverage is
+`t/1494-ial2-ahb-subordinate-byte-lane-hburst-seq-busy-park.t`.
 
 ## Validation Used For This Chapter
 

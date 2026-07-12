@@ -10434,6 +10434,26 @@ bumps `t/248`/`t/297` accounting. The matching `.ahb` alias, aggregate
 BUSY-parking, requester-side BUSY insertion, and larger burst work remain
 deferred.
 
+AHB subordinate BUSY-park behavior:
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.776` shipped
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`,
+support-accounted as
+`intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq_busy_park` with coverage
+`ial2_ppif_ahb_lite_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli`
+(`source_kind: ppif`). The source declares `(ignored-transfer idle)` and
+`(parked-transfer busy)`; the new `parked-transfer` clause gates BUSY out of the
+`ahb_seq_idle_clear` transaction so it fires on IDLE only, and the unassigned
+`seq_*` registers hold the in-word burst context across the BUSY beat while the
+following `SEQ` beat resumes through the existing `seq_ok_base` validation. The
+`SEQ`-policy report drops `busy` from `clears_on` and adds `parks_on: [busy]`,
+and the residue records shipped BUSY-in-burst parking. The shipped
+`ahb_lite_subordinate_byte_lane_hburst_seq` source is unchanged (BUSY still
+clears). Focused coverage is `t/1494`; `t/248` moves to 292 protocol / 333 total
+supported-smoke entries. The matching `.ahb` alias, aggregate BUSY-parking,
+requester-side BUSY insertion, halfword/word burst `SEQ`, wider or indefinite
+bursts, multi-word/register-bank progression, optional signals, broader AHB,
+backend variants, AXI/APB, and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
