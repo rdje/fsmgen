@@ -6776,6 +6776,18 @@ profile-alias residue through the existing suffix-keyed suppression with no
 adapter change. `.784` adds focused `t/1497`, moves `t/248` to 297 protocol / 338
 total, and defers requester-side BUSY insertion and larger burst work. No
 behavior changed in `.783`.
+`.784` now ships both matching aggregate BUSY-park `.ahb` profile aliases
+`ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb` and its
+two-subordinate sibling, byte-identical mirrors of the shipped generic BUSY-park
+`.ppif` sources, support-accounted as
+`intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park` (child
+count 3) and `..._two_subordinate_..._busy_park` (child count 4), source kind
+`ial2_profile_alias`. The aliases produce identical generated artifacts, HDL, and
+`composition.seq_policy_propagation` reports (each child `parks_on = [busy]`,
+BUSY-free `clears_on`), differing only in the alias-only residue cleanup through
+the existing suffix-keyed suppression (no adapter change). Focused coverage is
+`t/1497`; `t/248` moved to 297 protocol / 338 total. Requester-side BUSY
+insertion and larger burst work remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

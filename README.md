@@ -5734,6 +5734,23 @@ aggregate + embedded profile-alias residue through the existing suffix-keyed
 suppression with no adapter change. `.784` adds focused `t/1497`, moves `t/248`
 to 297 protocol / 338 total, and defers requester-side BUSY insertion and larger
 burst work. No behavior changed in `.783`.
+`.784` now ships both matching aggregate BUSY-park `.ahb` profile aliases
+`ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ahb`,
+byte-identical mirrors of the shipped generic BUSY-park `.ppif` sources,
+support-accounted as
+`intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park` (child
+count 3) and
+`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park`
+(child count 4), source kind `ial2_profile_alias`, module `ahb_tb`. The aliases
+produce identical generated review artifacts, HDL, and
+`composition.seq_policy_propagation` reports (each child `parks_on = [busy]`,
+BUSY-free `clears_on`) as the generic sources, differing only in that the alias
+reports drop the aggregate + embedded profile-alias residue through the existing
+suffix-keyed suppression with no adapter change. Focused coverage is `t/1497`;
+`t/248` moved to 297 protocol / 338 total. Requester-side BUSY insertion,
+halfword/word burst `SEQ`, wider/indefinite bursts, multi-word/register-bank
+progression, and optional AHB signals remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8466,6 +8483,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ppif` — the `.782` shipped bounded one-requester/one-subordinate aggregate AHB interconnect source that composes the endpoint byte-lane HBURST `WRAP4`/`INCR4` in-word `SEQ` subordinate with BUSY-in-burst parking (child transfer declares `(parked-transfer busy)`); support identity `intent.ppif_ahb_interconnect_byte_lane_hburst_seq_busy_park`, HDL module `ahb_tb`, child count 3, focused coverage `t/1496`.
 - `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ppif` — the `.782` shipped bounded one-requester/two-subordinate sibling; both inlined status/control subordinates park BUSY through the shipped endpoint machinery; support identity `intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park`, HDL module `ahb_tb`, child count 4, focused coverage `t/1496`.
 - `docs/IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_ALIAS_CONTRACT_SELECTION.md` — records the `.783` no-behavior contract selection for the matching aggregate BUSY-park `.ahb` profile aliases `ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb` and its two-subordinate sibling (support identities `intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park`/`..._two_subordinate_..._busy_park`, coverage `..._pipeline_cli`, source kind `ial2_profile_alias`, child counts 3/4), proves the aliases are data-only via a reserved `.ahb`-label probe that keeps the aggregate topology, preserves each child `parks_on = [busy]`/BUSY-free `clears_on`, and drops the aggregate + embedded profile-alias residue through the existing suffix-keyed suppression, and selects `.784`, its direct implementation.
+- `docs/IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.784` shipped matching aggregate BUSY-park `.ahb` profile aliases `ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb` and its two-subordinate sibling, byte-identical mirrors of the generic `.ppif` sources; records support accounting (`ial2_profile_alias`, module `ahb_tb`, child counts 3/4), identical generated artifacts/HDL/`parks_on = [busy]` reports, alias-only residue cleanup through the existing suffix-keyed suppression, `t/1497` coverage, and remaining burst/backend/protocol residue.
+- `ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb` / `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ahb` — the `.784` shipped aggregate BUSY-park `.ahb` profile aliases (byte-identical mirrors of the generic `.ppif` sources); support identities `intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park` / `..._two_subordinate_..._busy_park`, HDL module `ahb_tb`, focused coverage `t/1497`.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

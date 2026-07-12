@@ -10585,6 +10585,25 @@ halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank
 progression, optional signals, broader AHB, backend variants, AXI/APB, and VHDL
 remain deferred.
 
+Aggregate BUSY-park propagation profile alias behavior:
+[IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_PROFILE_ALIAS_BEHAVIOR](../../IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_PROFILE_ALIAS_BEHAVIOR.md)
+documents the `.784` shipped matching aggregate BUSY-park `.ahb` profile aliases
+`ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb` and its
+two-subordinate sibling, byte-identical mirrors of the generic `.ppif` sources.
+They support-account as
+`intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park` (child
+count 3) and
+`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park`
+(child count 4), source kind `ial2_profile_alias`, and produce identical
+generated review artifacts, HDL, and `composition.seq_policy_propagation` reports
+(each child `parks_on: [busy]`, BUSY-free `clears_on`), differing only in that the
+alias reports drop the aggregate + embedded profile-alias residue through the
+existing suffix-keyed suppression with no adapter change. Focused coverage is
+`t/1497`; `t/248` moved to 297 protocol / 338 total. Requester-side BUSY
+insertion, halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank progression, optional signals, broader AHB, backend
+variants, AXI/APB, and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
