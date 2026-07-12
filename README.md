@@ -5719,6 +5719,21 @@ supported-smoke entries; the non-parking aggregate HBURST `t/1492`/`t/1493` and
 the endpoint BUSY-park `t/1494`/`t/1495` are preserved. The matching aggregate
 BUSY-park `.ahb` aliases and requester-side BUSY insertion remain deferred to a
 later slice.
+`.783` now selects `.784` and pins the matching aggregate BUSY-park `.ahb` alias
+contract: `.784` ships byte-identical `.ahb` mirrors of both shipped generic
+BUSY-park sources
+(`ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb` and its
+two-subordinate sibling), support-accounted as
+`intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park` (child
+count 3) and
+`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park`
+(child count 4), source kind `ial2_profile_alias`. A reserved `.ahb`-label parse
+already proves the aliases are data-only: they keep the aggregate topology,
+preserve each child `parks_on = [busy]`/BUSY-free `clears_on`, and drop the
+aggregate + embedded profile-alias residue through the existing suffix-keyed
+suppression with no adapter change. `.784` adds focused `t/1497`, moves `t/248`
+to 297 protocol / 338 total, and defers requester-side BUSY insertion and larger
+burst work. No behavior changed in `.783`.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8450,6 +8465,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_BEHAVIOR.md` — documents the `.782` shipped aggregate BUSY-park `.ppif` sources, byte-for-byte copies of the aggregate HBURST `SEQ` sources with each child transfer's `(ignored-transfer busy)` replaced by `(parked-transfer busy)`; records support accounting, the verbatim `seq_policy` clone that forwards `parks_on = [busy]`/BUSY-free `clears_on` per child with no interconnect code change, the `_all_subordinates_park_busy`-gated aggregate HBURST residue narrowing at `AhbInterconnect.pm:1401`, `t/1496` coverage, preservation checks, validation, and remaining alias/burst/backend/protocol residue.
 - `ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ppif` — the `.782` shipped bounded one-requester/one-subordinate aggregate AHB interconnect source that composes the endpoint byte-lane HBURST `WRAP4`/`INCR4` in-word `SEQ` subordinate with BUSY-in-burst parking (child transfer declares `(parked-transfer busy)`); support identity `intent.ppif_ahb_interconnect_byte_lane_hburst_seq_busy_park`, HDL module `ahb_tb`, child count 3, focused coverage `t/1496`.
 - `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ppif` — the `.782` shipped bounded one-requester/two-subordinate sibling; both inlined status/control subordinates park BUSY through the shipped endpoint machinery; support identity `intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park`, HDL module `ahb_tb`, child count 4, focused coverage `t/1496`.
+- `docs/IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_ALIAS_CONTRACT_SELECTION.md` — records the `.783` no-behavior contract selection for the matching aggregate BUSY-park `.ahb` profile aliases `ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb` and its two-subordinate sibling (support identities `intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park`/`..._two_subordinate_..._busy_park`, coverage `..._pipeline_cli`, source kind `ial2_profile_alias`, child counts 3/4), proves the aliases are data-only via a reserved `.ahb`-label probe that keeps the aggregate topology, preserves each child `parks_on = [busy]`/BUSY-free `clears_on`, and drops the aggregate + embedded profile-alias residue through the existing suffix-keyed suppression, and selects `.784`, its direct implementation.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

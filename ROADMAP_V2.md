@@ -6764,6 +6764,18 @@ Focused coverage is `t/1496`; `t/248` moved to 295 protocol / 336 total; the
 non-parking aggregate HBURST `t/1492`/`t/1493` and endpoint BUSY-park
 `t/1494`/`t/1495` are preserved. The matching aggregate BUSY-park `.ahb` aliases
 and requester-side BUSY insertion remain deferred.
+`.783` now selects `.784` and pins the matching aggregate BUSY-park `.ahb` alias
+contract: `.784` ships byte-identical `.ahb` mirrors of both shipped generic
+BUSY-park sources, support-accounted as
+`intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park` (child
+count 3) and its two-subordinate sibling (child count 4), source kind
+`ial2_profile_alias`. A reserved `.ahb`-label parse already proves the aliases
+are data-only — they keep the aggregate topology, preserve each child
+`parks_on = [busy]`/BUSY-free `clears_on`, and drop the aggregate + embedded
+profile-alias residue through the existing suffix-keyed suppression with no
+adapter change. `.784` adds focused `t/1497`, moves `t/248` to 297 protocol / 338
+total, and defers requester-side BUSY insertion and larger burst work. No
+behavior changed in `.783`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
