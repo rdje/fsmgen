@@ -1403,6 +1403,23 @@ multi-word/register-bank progression, and optional/property-gated
 `HPROT`/`HMASTLOCK` signals were weighed as larger increments and remain
 deferred.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.774` audited BUSY-parking readiness and
+selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.775`, a public contract selection
+for the endpoint BUSY-parking source. The burst-context registers already exist,
+so the minimal behavior delta is stopping the `ahb_seq_idle_clear` transaction
+from firing on BUSY — because unassigned registers hold their value, the burst
+context is preserved across the parked beat and the following `SEQ` beat resumes
+from the parked address/beat count. The endpoint source declares
+`(ignored-transfer busy)`, so a distinct "busy parks" declaration is needed. The
+shipped requester never drives `HTRANS = BUSY` on the bus (its
+`local_status.busy` output is an internal "transaction in progress" flag, not
+the AHB bus code), so BUSY-parking is a subordinate-side capability verified by
+driving `HTRANS = BUSY` stimulus into the standalone subordinate; requester-side
+BUSY insertion stays deferred. `.775` pins the source path/identity, in-place
+widening versus a new additive `*_busy_park` source stem, the `.ppif` "busy
+parks" keyword, the fail-closed policy for a drifting BUSY beat, and the
+report/residue changes before any behavior changes.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:

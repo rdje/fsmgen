@@ -6646,6 +6646,20 @@ Halfword/word burst `SEQ`, wider or indefinite
 `WRAP8`/`INCR8`/`WRAP16`/`INCR16`/indefinite `INCR`, multi-word/register-bank
 progression, and optional/property-gated `HPROT`/`HMASTLOCK` signals were
 rejected as larger and remain deferred.
+`.774` now audits BUSY-parking readiness and selects `.775`, a public contract
+selection for the endpoint BUSY-parking source. The endpoint burst-context
+registers already exist, so the minimal behavior delta is stopping the
+`ahb_seq_idle_clear` transaction (`AhbSubordinate.pm:710`) from firing on BUSY —
+unassigned registers hold their value across the parked beat. The endpoint
+source declares `(ignored-transfer busy)`, so a distinct "busy parks"
+declaration is required. The shipped requester never drives `HTRANS = BUSY` on
+the bus (its `local_status.busy` output is an internal "transaction in progress"
+flag, not the AHB bus code), so BUSY-parking is a subordinate-side capability
+verified by driving `HTRANS = BUSY` stimulus into the standalone subordinate;
+requester-side BUSY insertion stays deferred. `.775` must pin the source
+path/identity, in-place widening versus a new additive `*_busy_park` source
+stem, the `.ppif` "busy parks" keyword, the fail-closed policy for a drifting
+BUSY beat, and the report/residue changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

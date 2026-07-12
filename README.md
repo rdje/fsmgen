@@ -5587,6 +5587,19 @@ inside the shipped byte-only window. Halfword/word burst `SEQ`, wider/indefinite
 `WRAP8`/`INCR8`/`WRAP16`/`INCR16`/indefinite `INCR`, multi-word/register-bank
 progression, and optional/property-gated `HPROT`/`HMASTLOCK` signals were
 rejected as larger and remain deferred.
+`.774` now audits BUSY-parking readiness and selects `.775`, a public contract
+selection for the endpoint BUSY-parking source. The burst-context state is
+already present, so the minimal delta is stopping the `ahb_seq_idle_clear`
+transaction from firing on BUSY (unassigned registers hold their value across
+the parked beat). The endpoint source declares `(ignored-transfer busy)`, so a
+distinct "busy parks" declaration is needed. The shipped requester never drives
+`HTRANS = BUSY` on the bus (its `local_status.busy` output is an internal
+"transaction in progress" flag, not the AHB bus code), so BUSY-parking is a
+subordinate-side capability verified by driving `HTRANS = BUSY` stimulus into
+the standalone subordinate; requester-side BUSY insertion stays deferred. `.775`
+must pin the source path/identity, in-place widening versus a new additive
+`*_busy_park` source stem, the `.ppif` "busy parks" keyword, the fail-closed
+policy for a drifting BUSY beat, and the report/residue changes.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8307,6 +8320,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_ALIAS_CONTRACT_SELECTION.md` — records the `.771` no-behavior contract selection for the matching aggregate HBURST-aware `.ahb` profile aliases and selects `.772`, direct implementation of `ppif/ahb_interconnect_byte_lane_hburst_seq.ahb` and `ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb`.
 - `docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.772` shipped matching aggregate HBURST-aware byte-lane `SEQ` `.ahb` profile aliases, support accounting, alias-only residue cleanup, generated review artifacts, preservation checks, validation, and remaining burst/backend/protocol residue.
 - `docs/IAL2_POST_AHB_AGGREGATE_HBURST_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.773` no-behavior selector after the aggregate HBURST-aware `.ahb` alias family and selects `.774`, a readiness audit for bounded AHB subordinate BUSY-in-burst parking (holding the in-word `SEQ` burst context across an `HTRANS = BUSY` beat rather than clearing it), the smallest next burst-`SEQ` increment on the shipped byte-only `WRAP4`/`INCR4` substrate.
+- `docs/IAL2_AHB_SUBORDINATE_BUSY_PARK_READINESS_AUDIT.md` — records the `.774` no-behavior readiness audit for AHB subordinate BUSY-in-burst parking, finds the burst machinery ready and the behavior delta bounded (stop `ahb_seq_idle_clear` from firing on BUSY), notes the shipped requester never drives `HTRANS = BUSY`, and selects `.775`, the public contract selection for the endpoint BUSY-parking source.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.
 - `docs/book/src/16b-ial2-apb.md` — user-facing APB IAL2 tri-mode examples with `.ppif`/`.apb` alias parity, generated requester/completer/interconnect review artifacts, validation commands, and residue.

@@ -10406,6 +10406,20 @@ burst `SEQ`, wider or indefinite bursts, multi-word/register-bank progression,
 optional/property-gated `HPROT`/`HMASTLOCK` signals, broader AHB, backend
 variants, AXI/APB, and VHDL were weighed as larger and remain deferred.
 
+AHB subordinate BUSY-park readiness audit:
+[IAL2_AHB_SUBORDINATE_BUSY_PARK_READINESS_AUDIT](../../IAL2_AHB_SUBORDINATE_BUSY_PARK_READINESS_AUDIT.md)
+audits bounded AHB subordinate BUSY-in-burst parking and selects `.775`, a
+public contract selection for the endpoint BUSY-parking source. The burst-context
+registers already exist, so the minimal delta is stopping the
+`ahb_seq_idle_clear` transaction from firing on BUSY (unassigned registers hold
+their value across the parked beat). The endpoint source declares
+`(ignored-transfer busy)`, so a distinct "busy parks" declaration is needed, and
+the shipped requester never drives `HTRANS = BUSY` on the bus, so parking is a
+subordinate-side capability with requester-side BUSY insertion deferred.
+Halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank
+progression, optional signals, broader AHB, backend variants, AXI/APB, and VHDL
+remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
