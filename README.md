@@ -5642,6 +5642,20 @@ residue wording through the existing suffix-keyed suppression with no adapter
 change, so `.778` is data-only: it adds the alias fixture, its `RegressionCorpus`
 entry, focused `t/1495`, the `t/248` bump (292 → 293 protocol / 333 → 334 total)
 and `t/297` manifest, and docs.
+`.778` now ships `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb`, a
+byte-identical mirror of the generic BUSY-park `.ppif` source, support-accounted
+as `intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park`
+(`source_kind: ial2_profile_alias`, coverage
+`ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli`).
+The alias strict-checks, generates
+`ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.isf`/`.fsm` and its HDL
+module, and preserves the BUSY-park report (`parks_on = [busy]`, BUSY-free
+`clears_on`); the existing suffix-keyed suppression removes
+`ahb_subordinate_profile_alias_deferred` and the `.ahb alias exposure` residue
+wording from the alias report while the generic `.ppif` report keeps them (no
+adapter change). Focused coverage is `t/1495`; `t/248` accounting moves to 293
+protocol / 334 total supported-smoke entries. Aggregate BUSY-parking,
+requester-side BUSY insertion, and larger burst work remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8365,6 +8379,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_SUBORDINATE_BUSY_PARK_READINESS_AUDIT.md` — records the `.774` no-behavior readiness audit for AHB subordinate BUSY-in-burst parking, finds the burst machinery ready and the behavior delta bounded (stop `ahb_seq_idle_clear` from firing on BUSY), notes the shipped requester never drives `HTRANS = BUSY`, and selects `.775`, the public contract selection for the endpoint BUSY-parking source.
 - `docs/IAL2_AHB_SUBORDINATE_BUSY_PARK_CONTRACT_SELECTION.md` — records the `.775` no-behavior contract selection for the endpoint BUSY-parking source: a new additive stem `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`, the `(parked-transfer busy)` vocabulary, the `parked_transfer` parser field, IDLE-only `ahb_seq_idle_clear` firing, a `parks_on` report field, residue narrowing, and the `seq_ok_base` fail-closed path; selects `.776`, its direct implementation.
 - `docs/IAL2_AHB_SUBORDINATE_BUSY_PARK_ALIAS_CONTRACT_SELECTION.md` — records the `.777` no-behavior contract selection for the matching endpoint BUSY-park `.ahb` profile alias `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb` (support identity `intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park`, coverage `ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli`, source kind `ial2_profile_alias`), proves the alias is data-only via a reserved `.ahb`-label probe that preserves the `parks_on`/`clears_on` report and drops the endpoint profile-alias residue through the existing suffix-keyed suppression, and selects `.778`, its direct implementation.
+- `docs/IAL2_AHB_SUBORDINATE_BUSY_PARK_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.778` shipped matching endpoint BUSY-park `.ahb` profile alias `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb`, its support accounting, byte-identical mirror, generated review artifacts, preserved `parks_on`/`clears_on` BUSY-park report, alias-only residue cleanup, `t/1495` coverage, and remaining burst/backend/protocol residue.
 - `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif` — the `.776` shipped bounded endpoint AHB subordinate byte-lane HBURST `WRAP4`/`INCR4` in-word `SEQ` source with BUSY-in-burst parking; declares `(parked-transfer busy)` so the generated subordinate holds the burst context across an `HTRANS = BUSY` beat instead of clearing it. Focused coverage `t/1494`.
 - `docs/book/src/16-ial2-protocol-platform-intent.md` — user-facing IAL2 protocol/platform intent map with tri-mode authoring guidance and AXI/APB/AHB shipped-versus-deferred boundaries.
 - `docs/book/src/16a-ial2-axi.md` — user-facing AXI IAL2 tri-mode examples with generated review artifacts, validation commands, and residue.

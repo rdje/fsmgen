@@ -1206,10 +1206,11 @@ The following are not shipped by the current AHB IAL2 surface:
 - HBURST-driven `SEQ` continuation beyond the bounded endpoint and aggregate
   byte-only `WRAP4`/`INCR4` sources and their matching `.ahb` aliases, including
   halfword/word burst `SEQ`, indefinite `INCR`, wider fixed bursts, and
-  multi-word/register-bank progression; BUSY-in-burst parking is shipped only
-  for the `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`
-  endpoint source, and its matching `.ahb` alias, aggregate BUSY-parking, and
-  requester-side BUSY insertion remain deferred;
+  multi-word/register-bank progression; BUSY-in-burst parking is shipped for the
+  `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif` endpoint source
+  and its matching `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb`
+  profile alias, while aggregate BUSY-parking and requester-side BUSY insertion
+  remain deferred;
 - legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;
@@ -1482,6 +1483,25 @@ no adapter change, so `.778` is data-only: it adds the alias fixture, its
 `RegressionCorpus` entry, focused
 `t/1495-ial2-ahb-subordinate-byte-lane-hburst-seq-busy-park-profile-alias.t`, the
 `t/248` corpus bump, the `t/297` manifest, and docs.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.778` shipped
+`ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb`, a byte-identical
+mirror of the generic BUSY-park `.ppif` source, support-accounted as
+`intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park` with
+coverage
+`ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli`
+(`source_kind: ial2_profile_alias`). The alias strict-checks, generates the same
+`ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.isf`/`.fsm` review artifacts
+and HDL module as the generic source, and preserves the distinctive BUSY-park
+report (`transfer.seq_policy.parks_on: [busy]` and the BUSY-free `clears_on`). The
+alias report removes `ahb_subordinate_profile_alias_deferred` and the `.ahb alias
+exposure` residue wording through the existing suffix-keyed profile-alias
+suppression (no adapter change), while the generic `.ppif` report keeps that
+source-surface residue. Focused coverage is
+`t/1495-ial2-ahb-subordinate-byte-lane-hburst-seq-busy-park-profile-alias.t`;
+`t/248` moves to 293 protocol / 334 total supported-smoke entries. Aggregate
+BUSY-parking, requester-side BUSY insertion, and larger burst work remain
+deferred.
 
 ## Validation Used For This Chapter
 

@@ -6703,6 +6703,18 @@ wording through the existing suffix-keyed suppression with no adapter change, so
 `.778` is data-only: it adds the alias fixture, its `RegressionCorpus` entry,
 focused `t/1495`, the `t/248` bump (292 → 293 protocol / 333 → 334 total) and
 `t/297` manifest, and docs.
+`.778` now ships `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb`, a
+byte-identical mirror of the generic BUSY-park `.ppif` source, support-accounted
+as `intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park`
+(`source_kind: ial2_profile_alias`). The alias strict-checks, generates the
+BUSY-park `.isf`/`.fsm` review artifacts and HDL module, preserves the BUSY-park
+`parks_on = [busy]` / `clears_on` report, and drops
+`ahb_subordinate_profile_alias_deferred` plus the `.ahb alias exposure` residue
+wording through the existing suffix-keyed suppression while the generic `.ppif`
+report keeps them (no adapter change). Focused coverage is `t/1495`; `t/248`
+moves to 293 protocol / 334 total supported-smoke entries. Aggregate
+BUSY-parking, requester-side BUSY insertion, and larger burst work remain
+deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
