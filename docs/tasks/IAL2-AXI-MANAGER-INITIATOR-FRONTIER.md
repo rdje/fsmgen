@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-12`
+- Last updated: `2026-07-12` (`.1` done: selected the bounded AW address-channel driver + spawned the `.2` readiness audit)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -82,12 +82,20 @@ It complements — does not replace — the shipped capacity/status response cor
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
   Status: `active`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
-  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
+  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit the AXI manager initiator surface and select the smallest safe first increment + its first owner leaf.`
   Acceptance: `Read this tree's evidence, AxiManagerCapacityStatus.pm (interface/assumptions only — it is ~9,773 lines; do not read whole), ValidReadyChannel.pm, the two AW sources (ppif/axi_aw_valid_ready.ppif, ppif/axi_aw_w_valid_ready_bundle.ppif), AhbRequester.pm (the initiator model: transfer/burst tables, drive blocks, beat loop, address generation), the AXI evidence/probe task trees (AXI-VALID-READY-INTENT-PROBE, AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE, AXI-ID-ORDERING-RULE-EVIDENCE-PROBE, AXI-MANAGER-RULE-MATRIX-DESIGN-PROBE), the AXI spec reference, support accounting, language surface, mdBook, decisions 0014/0015/0016/0017/0018, and Memory. Compare candidate first increments for the initiator — e.g. a bounded AW address-channel driver (drive one AWVALID/AWADDR/AWID/AWLEN/AWSIZE/AWBURST handshake against AWREADY), then W write-data drive (WVALID/WDATA/WSTRB/WLAST), then AR read-address drive, then burst/address generation, then integration with the capacity/status core — and select the smallest safe first increment plus its first owner leaf (readiness audit or contract selection), with evidence for why the others are larger/deferred. Leaning (to confirm or revise): the AW address-channel driver mirrors how both the AHB requester and the AXI response side bootstrapped (the AXI response side started from the AW valid-ready monitor). Do not change parser, generator, public sources, support-accounting, capability manifest, tests, generated artifacts, HDL/runtime behavior, direct backend, verification-output, backend-language variants, AHB/APB, or VHDL behavior in this selector leaf.`
+  Verification: `passed — no-behavior selector; evidence read and selection recorded in docs/IAL2_AXI_MANAGER_INITIATOR_FIRST_INCREMENT_SELECTION.md; doctrine/continuity gates run at commit.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1: select the bounded AW address-channel driver as the first initiator increment`
+  Selection: `Smallest safe first increment = a bounded AW address-channel driver (drive one AWVALID + AW payload AWADDR/AWID/AWLEN/AWSIZE/AWBURST handshake against AWREADY, from a local command trigger, with done/busy status). Confirms the leaning: the authoring shape already exists (ppif/axi_aw_valid_ready.ppif), the driver model already exists (AhbRequester.pm drive-blocks + on/sample transaction), and the monitor->driver delta is minimal (ValidReadyChannel.pm observes the same single handshake). Deferred as larger: W write-data drive (adds a channel; naturally an AW+W bundle per 0017, so AW first), AR read-address drive (pulls in the R return path), burst/address generation (the AHB beat-loop + wrap/incr math), capacity-core integration (cross-generator wiring against the ~9,773-line shell), and .axi alias surfacing (relax the .axi guard). First owner leaf spawned: .2 readiness audit. Full evidence + owner map: docs/IAL2_AXI_MANAGER_INITIATOR_FIRST_INCREMENT_SELECTION.md.`
+
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`
+  Status: `pending`
+  Goal: `Readiness audit for the bounded AW address-channel driver: map the exact code/test/docs/report owners a new AW-driver generator must touch and fix the safe first-slice boundary, before any contract-selection or implementation leaf.`
+  Acceptance: `Following the AXI-IAL2-VALID-READY-READINESS-AUDIT template and the owner map in docs/IAL2_AXI_MANAGER_INITIATOR_FIRST_INCREMENT_SELECTION.md, write a repo-local audit note that (a) identifies every touch point for a new AW-driver protocol-intent kind inside perl/FSM/Adapter/IAL2/PPIF.pm (use import; new clause head + _parse_* + accumulator in _contract_from_root incl. the missing-intent error enumeration; a cardinality/return block emitting a new contract kind; a new _is_*_contract predicate; a dispatch arm in parse_source), (b) the new generator module (envelope mirroring AhbRequester.pm; report schema fsmgen.ial2.protocol_intent.axi_aw_driver.v1 or final name; lowering IAL2->generated .isf->.fsm, never IAL2->IAL0 per 0014), (c) the new public ppif source + support-accounting entry in RegressionCorpus.pm (guarded by t/248), (d) the capability-manifest current_boundary prose in LanguageSurfaceSection.pm (asserted verbatim by t/297), (e) the new t/14xx test mirroring t/1473-ial2-ahb-requester.t, (f) the mdBook initiator section in docs/book/src/16a-ial2-axi.md (coordinate with proposed IAL2-MDBOOK-COHERENCE-AXI-COVERAGE), and (g) the exact AW driver signal/port list, widths, and fail-closed rules for the safe first slice. Distinguish immediate prerequisites, generated artifacts, public/report surfaces, validation gates, and explicit deferrals. Do not change parser, generator, public sources, support-accounting, capability manifest, tests, generated artifacts, HDL/runtime behavior, direct backend, verification-output, backend-language variants, AHB/APB, or VHDL behavior in this audit leaf.`
   Verification: `pending`
   Commit: `pending`
 
@@ -97,3 +105,15 @@ It complements — does not replace — the shipped capacity/status response cor
   IAL2 work). The AHB requester BUSY-insertion implementation
   `IAL2-FEATURE-COMPLETENESS-FRONTIER.788` remains a durable **pending** leaf,
   not abandoned — resume it anytime.
+- `.1` (done) selected the **bounded AW address-channel driver** as the first
+  increment and spawned `.2` (readiness audit) as its first owner leaf. Full
+  evidence, alternative comparison, and the owner map are in
+  `docs/IAL2_AXI_MANAGER_INITIATOR_FIRST_INCREMENT_SELECTION.md`. The AW driver
+  reuses the existing AW valid-ready authoring shape
+  (`ppif/axi_aw_valid_ready.ppif`) and the `AhbRequester.pm` drive-block model,
+  driven instead of observed. A new AW-driver protocol-intent kind plugs into
+  `perl/FSM/Adapter/IAL2/PPIF.pm` (dispatch), a new generator module,
+  `perl/FSM/Support/RegressionCorpus.pm` (support accounting, gated by `t/248`),
+  `perl/FSM/Support/LanguageSurfaceSection.pm` (manifest prose, gated by
+  `t/297`), a new `t/14xx` test modeled on `t/1473-ial2-ahb-requester.t`, and an
+  initiator section in `docs/book/src/16a-ial2-axi.md`.
