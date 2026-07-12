@@ -1315,6 +1315,23 @@ sub _all_subordinates_have_hburst_seq_policy($contract) {
     return 1;
 }
 
+sub _all_subordinates_park_busy($contract) {
+    return 0 unless ref($contract) eq 'HASH';
+    my @subordinates = @{$contract->{subordinates} || []};
+    return 0 unless @subordinates;
+    for my $subordinate (@subordinates) {
+        return 0 unless _subordinate_parks_busy($subordinate);
+    }
+    return 1;
+}
+
+sub _subordinate_parks_busy($subordinate) {
+    return 0 unless ref($subordinate) eq 'HASH' && ref($subordinate->{transfer}) eq 'HASH';
+    my $parked = $subordinate->{transfer}{parked_transfer};
+    return 0 unless ref($parked) eq 'ARRAY';
+    return scalar(grep { $_ eq 'busy' } @$parked) ? 1 : 0;
+}
+
 sub _subordinate_has_seq_policy($subordinate) {
     return _subordinate_has_in_word_seq_policy($subordinate)
         || _subordinate_has_hburst_seq_policy($subordinate);
@@ -1370,6 +1387,7 @@ sub _unsupported_residue($contract = undef) {
     my $byte_lane_selected = _all_subordinates_have_byte_lane_policy($contract);
     my $seq_policy_selected = _all_subordinates_have_seq_policy($contract);
     my $hburst_seq_policy_selected = _all_subordinates_have_hburst_seq_policy($contract);
+    my $hburst_busy_park_selected = $hburst_seq_policy_selected && _all_subordinates_park_busy($contract);
     my $interconnect_residue = $subordinate_count == 2
         ? {
             id     => 'ahb_broader_interconnect_decode_deferred',
@@ -1397,7 +1415,9 @@ sub _unsupported_residue($contract = undef) {
         },
         {
             id     => 'ahb_burst_seq_support_deferred',
-            detail => $hburst_seq_policy_selected
+            detail => $hburst_busy_park_selected
+                ? 'The interconnect decodes active transfers by HTRANS != IDLE and ships subordinate-owned byte-only HBURST WRAP4/INCR4 in-word SEQ propagation with BUSY-in-burst parking for selected aggregate HBURST byte-lane sources; indefinite INCR, WRAP8/INCR8/WRAP16/INCR16, halfword/word burst SEQ, multi-word/register-bank SEQ progression, and broader manager/subordinate behavior remain future work.'
+                : $hburst_seq_policy_selected
                 ? 'The interconnect decodes active transfers by HTRANS != IDLE and ships subordinate-owned byte-only HBURST WRAP4/INCR4 in-word SEQ propagation for selected aggregate HBURST byte-lane sources; indefinite INCR, WRAP8/INCR8/WRAP16/INCR16, halfword/word burst SEQ, BUSY-in-burst handling, multi-word/register-bank SEQ progression, and broader manager/subordinate behavior remain future work.'
                 : $seq_policy_selected
                 ? 'The interconnect decodes active transfers by HTRANS != IDLE and ships subordinate-owned byte/halfword in-word SEQ continuation for selected aggregate byte-lane sources; HBURST-driven length/wrap semantics, BUSY-in-burst handling, multi-word/register-bank SEQ progression, wrapping/incrementing burst address progression beyond requester generation, and broader manager/subordinate behavior remain future work.'

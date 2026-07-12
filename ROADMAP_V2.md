@@ -6747,6 +6747,23 @@ verbatim `seq_policy` clone forwards `parks_on = [busy]`); `.782` narrows only t
 aggregate HBURST residue at `AhbInterconnect.pm:1401`, adds focused `t/1496`,
 moves `t/248` to 295 protocol / 336 total, and defers the matching aggregate
 `.ahb` aliases to a later slice.
+`.782` now ships both aggregate BUSY-park stems
+`ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ppif`
+(`intent.ppif_ahb_interconnect_byte_lane_hburst_seq_busy_park`, child count 3) and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ppif`
+(`intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park`,
+child count 4), each a byte-for-byte copy of the shipped aggregate HBURST `SEQ`
+source with the inlined child transfer `(ignored-transfer busy)` replaced by
+`(parked-transfer busy)`. Each child holds the in-word `SEQ` burst context across
+an accepted `HTRANS = BUSY` beat, so every child
+`composition.seq_policy_propagation` entry reports `parks_on = [busy]` and a
+BUSY-free `clears_on`. No interconnect code changed (the verbatim `seq_policy`
+clone forwards the park); only the aggregate HBURST residue at
+`AhbInterconnect.pm:1401` narrowed to record shipped BUSY-in-burst parking.
+Focused coverage is `t/1496`; `t/248` moved to 295 protocol / 336 total; the
+non-parking aggregate HBURST `t/1492`/`t/1493` and endpoint BUSY-park
+`t/1494`/`t/1495` are preserved. The matching aggregate BUSY-park `.ahb` aliases
+and requester-side BUSY insertion remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

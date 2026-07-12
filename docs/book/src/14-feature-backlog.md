@@ -10542,6 +10542,28 @@ deferred to a later slice. Requester-side BUSY insertion, halfword/word burst
 `SEQ`, wider or indefinite bursts, multi-word/register-bank progression, optional
 signals, broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
 
+Aggregate BUSY-park propagation behavior:
+[IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_BEHAVIOR](../../IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_BEHAVIOR.md)
+documents the `.782` shipped aggregate BUSY-park `.ppif` sources
+`ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ppif` (support identity
+`intent.ppif_ahb_interconnect_byte_lane_hburst_seq_busy_park`, child count 3) and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ppif`
+(support identity
+`intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park`,
+child count 4). Each is a byte-for-byte copy of the shipped aggregate HBURST
+`SEQ` source with every inlined child transfer's `(ignored-transfer busy)`
+replaced by `(parked-transfer busy)`, so each child holds the in-word `SEQ` burst
+context across an accepted `HTRANS = BUSY` beat and `composition.seq_policy_propagation`
+reports `parks_on: [busy]` with a BUSY-free `clears_on` per child. No interconnect
+generator/parser/report code changed (the verbatim `seq_policy` clone forwards the
+park); only the aggregate HBURST residue at `AhbInterconnect.pm:1401` narrowed to
+record shipped BUSY-in-burst parking. Focused coverage is `t/1496`; `t/248` moved
+to 295 protocol / 336 total; `t/1492`/`t/1493` and the endpoint BUSY-park
+`t/1494`/`t/1495` are preserved. The matching aggregate BUSY-park `.ahb` aliases,
+requester-side BUSY insertion, halfword/word burst `SEQ`, wider or indefinite
+bursts, multi-word/register-bank progression, optional signals, broader AHB,
+backend variants, AXI/APB, and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
