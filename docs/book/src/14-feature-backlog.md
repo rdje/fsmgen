@@ -10494,6 +10494,22 @@ halfword/word burst `SEQ`, wider or indefinite bursts, multi-word/register-bank
 progression, optional signals, broader AHB, backend variants, AXI/APB, and VHDL
 remain deferred.
 
+Post-endpoint-BUSY-park selector:
+[IAL2_POST_AHB_ENDPOINT_BUSY_PARK_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_ENDPOINT_BUSY_PARK_NEXT_SLICE_SELECTION.md)
+records the `.779` no-behavior selection of `.780`, a readiness audit for bounded
+aggregate AHB BUSY-parking propagation — holding a child subordinate's in-word
+HBURST `SEQ` burst context across an `HTRANS = BUSY` beat inside the interconnect
+aggregate propagation, mirroring the shipped endpoint BUSY-park. It is the next
+step in the endpoint → aggregate cadence: the endpoint BUSY-park residue defers
+`aggregate propagation` while the aggregate residue still lists `BUSY-in-burst
+handling` first. The interconnect `_seq_policy_propagation_report` already clones
+each child's `seq_policy` verbatim, so a `(parked-transfer busy)` child
+auto-forwards its `parks_on: [busy]` into `composition.seq_policy_propagation`;
+the delta is new aggregate stems plus residue narrowing. Requester-side BUSY
+insertion, halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank progression, optional signals, broader AHB, backend
+variants, AXI/APB, and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

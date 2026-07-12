@@ -6715,6 +6715,19 @@ report keeps them (no adapter change). Focused coverage is `t/1495`; `t/248`
 moves to 293 protocol / 334 total supported-smoke entries. Aggregate
 BUSY-parking, requester-side BUSY insertion, and larger burst work remain
 deferred.
+`.779` now selects `.780`, a no-behavior readiness audit for bounded aggregate
+AHB BUSY-parking propagation — holding a child subordinate's in-word HBURST
+`SEQ` burst context across an `HTRANS = BUSY` beat inside the interconnect
+aggregate propagation, mirroring the shipped endpoint BUSY-park. It is the next
+step in the endpoint → aggregate cadence: the endpoint BUSY-park residue defers
+`aggregate propagation` while the aggregate residue still lists `BUSY-in-burst
+handling` first among remaining burst work. The interconnect
+`_seq_policy_propagation_report` already clones each child's `seq_policy`
+verbatim, so a `(parked-transfer busy)` child auto-forwards its
+`parks_on = [busy]` into the aggregate `composition.seq_policy_propagation`
+report; the delta is new aggregate stems plus residue narrowing. Requester-side
+BUSY insertion, halfword/word burst `SEQ`, wider/indefinite bursts, and optional
+AHB signals are larger and remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

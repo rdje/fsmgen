@@ -1503,6 +1503,28 @@ source-surface residue. Focused coverage is
 BUSY-parking, requester-side BUSY insertion, and larger burst work remain
 deferred.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.779` selects
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.780`, a no-behavior readiness audit for
+bounded aggregate AHB BUSY-parking propagation — holding a child subordinate's
+in-word HBURST `SEQ` burst context across an `HTRANS = BUSY` beat inside the
+interconnect aggregate propagation, mirroring the shipped endpoint BUSY-park.
+This is the next step in the endpoint → aggregate cadence that already shipped
+byte-lane, byte-lane `SEQ`, and HBURST-aware byte-lane `SEQ` propagation: the
+endpoint BUSY-park residue now defers `aggregate propagation`, while the
+aggregate residue still lists `BUSY-in-burst handling` first among its remaining
+burst work. The mechanism is bounded — the interconnect
+`_seq_policy_propagation_report` clones each child's `seq_policy` verbatim, so a
+child subordinate declared with `(parked-transfer busy)` automatically forwards
+its `transfer.seq_policy.parks_on: [busy]` and BUSY-free `clears_on` into the
+aggregate `composition.seq_policy_propagation` report; the behavior delta is new
+aggregate stems (`ahb_interconnect_byte_lane_hburst_seq_busy_park` and its
+two-subordinate sibling) whose child transfer uses `(parked-transfer busy)`,
+plus narrowing the aggregate residue. `.780` audits whether that owner can
+implement directly or needs a public contract selection first. Requester-side
+BUSY insertion (the requester never drives bus `HTRANS = BUSY`), halfword/word
+burst `SEQ`, wider or indefinite bursts, multi-word/register-bank progression,
+and optional/property-gated AHB signals are larger and remain deferred.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:
