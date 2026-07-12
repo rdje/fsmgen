@@ -21,7 +21,7 @@ my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
 ok(@entries >= 50, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
-is(scalar(@protocol_entries), 297, 'first visible corpus slice contains the named protocol and public intent fixtures');
+is(scalar(@protocol_entries), 298, 'first visible corpus slice contains the named protocol and public intent fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
     supported_smoke
@@ -36,6 +36,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     isf_verification_output_uvm_passive_monitor_skeleton_cli
     isf_verification_output_vhdl_observation_package_skeleton_cli
     ial2_ppif_pipeline_cli
+    ial2_ppif_axi_aw_driver_pipeline_cli
     ial2_ppif_ahb_requester_pipeline_cli
     ial2_ppif_ahb_lite_subordinate_pipeline_cli
     ial2_ppif_ahb_lite_subordinate_byte_lane_pipeline_cli
@@ -364,6 +365,7 @@ my %coverage_classification = (
     isf_verification_output_uvm_passive_monitor_skeleton_cli => 'supported_smoke',
     isf_verification_output_vhdl_observation_package_skeleton_cli => 'supported_smoke',
     ial2_ppif_pipeline_cli => 'supported_smoke',
+    ial2_ppif_axi_aw_driver_pipeline_cli => 'supported_smoke',
     ial2_ppif_ahb_requester_pipeline_cli => 'supported_smoke',
     ial2_ppif_ahb_lite_subordinate_pipeline_cli => 'supported_smoke',
     ial2_ppif_ahb_lite_subordinate_byte_lane_pipeline_cli => 'supported_smoke',
@@ -1209,8 +1211,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    338,
-    'catalog now keeps three hundred thirty-eight named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, and verification-output fixtures',
+    339,
+    'catalog now keeps three hundred thirty-nine named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, and verification-output fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -1224,8 +1226,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    338,
-    'catalog now records three hundred thirty-eight positive strict-mode supported-smoke acceptance entries',
+    339,
+    'catalog now records three hundred thirty-nine positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester

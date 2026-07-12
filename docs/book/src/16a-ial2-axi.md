@@ -13,6 +13,7 @@ organized by authoring mode, not by implementation module.
 | Mode | Start with | What it demonstrates |
 | --- | --- | --- |
 | Guided mode | `ppif/axi_aw_valid_ready.ppif` and `ppif/axi_aw_valid_ready.axi` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, and `.ppif`/`.axi` profile-alias parity for the selected first alias. |
+| Initiator mode | `ppif/axi_aw_driver.ppif` | A bounded AXI manager AW address-channel **driver**: it *issues* one AW address transfer (drives `AWVALID` and the AW payload against `AWREADY`), the bus-driving counterpart to the AW monitor. |
 | More-control mode | `ppif/axi_manager_capacity_status.ppif`, `ppif/axi_manager_capacity_status_id_family.ppif`, and `ppif/axi_manager_capacity_status_transaction_envelope.ppif` | Bounded manager capacity/status, ID-family metadata, and logical transaction metadata while staying in the public AXI manager shell. |
 | Raw/full-control mode | `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | A deep shipped AXI manager shape with dynamic read transactions, same-ID issue-order queueing, burst-last response demux, runtime beat-count/`RLAST` validation, and multi-beat read-data output banks. |
 
@@ -70,6 +71,72 @@ generated/axi_aw_valid_ready_monitor.fsm
 The generated `.isf` contains the monitor transaction and the stall-stability
 assertions. The generated `.fsm` contains the corresponding `+assert` carriers
 and the one-cycle `axi_aw_valid_ready_monitor_done` pulse.
+
+## Initiator Mode (Driving)
+
+The guided AW source *observes* a handshake. The initiator source *drives* it.
+`ppif/axi_aw_driver.ppif` is a bounded AXI manager AW address-channel driver: on
+a one-shot command trigger it samples the command payload, asserts `AWVALID` and
+drives the AW payload (`AWADDR`/`AWID`/`AWLEN`/`AWSIZE`/`AWBURST`) held stable
+until the subordinate raises `AWREADY`, then pulses a one-cycle `aw_done`.
+
+```text
+(protocol-platform-intent axi_aw_driver
+  (profile axi4)
+  (source
+    (object axi-aw-driver)
+    (anchor (document IHI0022_L_2025-08) (section A3.2.1) (page A3-40)))
+  (axi-aw-driver axi_aw_driver
+    (role manager-to-subordinate)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (command
+      (start aw_cmd_valid)
+      (address cmd_awaddr width 32)
+      (id cmd_awid width 4)
+      (length cmd_awlen width 8)
+      (size cmd_awsize width 3)
+      (burst cmd_awburst width 2)
+      (ready awready))
+    (channel
+      (valid awvalid)
+      (address awaddr width 32)
+      (id awid width 4)
+      (length awlen width 8)
+      (size awsize width 3)
+      (burst awburst width 2)
+      (busy aw_busy)
+      (done aw_done))))
+```
+
+The `(command …)` block is the *upstream* order (what transfer to issue) and the
+`(channel …)` block is the *driven* AW bus interface — two distinct signal sets,
+so the command inputs never alias the driven outputs. The generated actor asserts
+`AWVALID` before waiting, holds it (and the payload) stable across the wait, and
+completes one cycle after `AWREADY` — the same VALID-hold/payload-stable
+obligation the AW monitor *checks*, here *guaranteed* by the driver.
+
+Run it end to end:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_driver.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_aw_driver.ppif
+./bin/fsmgen --quiet --outdir generated ppif/axi_aw_driver.ppif
+./bin/fsmgen --verify-hdl ppif/axi_aw_driver.ppif
+```
+
+The schedule report uses `fsmgen.ial2.protocol_intent.axi_aw_driver.v1` and
+reports `mode` `driver`. The `--outdir` path writes
+`generated/axi_aw_driver.isf` then `generated/axi_aw_driver.fsm` before HDL, and
+`--verify-hdl` passes verilator lint and yosys synthesis for the generated
+`axi_aw_driver` module.
+
+This is the first AXI **initiator** (bus-driving) source. It complements the
+capacity/status response core; it drives only the AW address channel. W
+write-data drive, AR read-address drive, burst/address generation, the AXI
+attribute signals (`AWLOCK`/`AWCACHE`/`AWPROT`/`AWQOS`/`AWREGION`/`AWUSER`), a
+configurable `AWID` width, and integration with the capacity/status core remain
+future increments (see the report's `unsupported_residue`).
 
 ## More-Control Mode
 
@@ -179,6 +246,8 @@ This chapter was validated from checked-in sources with:
 ```bash
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_valid_ready.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_valid_ready.axi
+./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_driver.ppif
+./bin/fsmgen --verify-hdl ppif/axi_aw_driver.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/axi_manager_capacity_status_id_family.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_manager_capacity_status_transaction_envelope.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif
@@ -187,4 +256,6 @@ This chapter was validated from checked-in sources with:
 
 The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and
 `axi_aw_valid_ready_monitor.fsm`, confirming that the guided example still
-exposes the review artifacts the chapter describes.
+exposes the review artifacts the chapter describes. The AW driver check and
+`--verify-hdl` confirm the initiator example issues its AW handshake and lowers
+to lint/synthesis-clean HDL.

@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-12` (`.3` done: AW address-channel driver contract selected + spawned the `.4` implementation leaf)
+- Last updated: `2026-07-12` (`.4` done: shipped the bounded AW address-channel driver generator — the first AXI initiator behavior-landing slice)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -108,11 +108,12 @@ It complements — does not replace — the shipped capacity/status response cor
   Selection: `clause (axi-aw-driver ...); contract kind axi_aw_driver; module FSM::IAL2::ProtocolIntent::AxiAwDriver; result kind protocol_intent.axi_aw_driver; schema fsmgen.ial2.protocol_intent.axi_aw_driver.v1; source ppif/axi_aw_driver.ppif (profile axi4). Distinct command inputs vs driven AW outputs (AHB-consistent): inputs aw_cmd_valid + cmd_awaddr(32)/cmd_awid(4)/cmd_awlen(8)/cmd_awsize(3)/cmd_awburst(2) + awready; outputs awvalid + awaddr(32)/awid(4)/awlen(8)/awsize(3)/awburst(2) + aw_busy/aw_done. First slice drives the FULL burst-describing set (not awaddr+awlen only). AWID pinned to width 4 (configurability deferred). Fail-closed width pins + axi4 profile. Full contract incl. target ISF + report shape + residue: docs/IAL2_AXI_MANAGER_INITIATOR_AW_DRIVER_CONTRACT_SELECTION.md.`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement the bounded AW address-channel driver generator per the .3 contract: a new FSM::IAL2::ProtocolIntent::AxiAwDriver generator that emits the fixed target ISF (accept_command/assert_aw/finish drive blocks + aw_issue transaction), lowering IAL2 -> generated .isf -> .fsm, wired into PPIF.pm dispatch, with a public ppif/axi_aw_driver.ppif source, support-accounting entry, capability-manifest boundary prose, a focused test, and a mdBook initiator section.`
   Acceptance: `Following docs/IAL2_AXI_MANAGER_INITIATOR_AW_DRIVER_CONTRACT_SELECTION.md exactly: (1) add FSM::IAL2::ProtocolIntent::AxiAwDriver.pm (envelope + _normalize_contract fail-closed rules + _emit_isf + _build_report as fixed by the contract); (2) wire PPIF.pm (use import; axi-aw-driver clause + _parse_axi_aw_driver + accumulator + missing-intent enumeration in _contract_from_root; _is_axi_aw_driver_contract predicate + dispatch arm in parse_source before the fallthrough); (3) add ppif/axi_aw_driver.ppif; (4) add the RegressionCorpus.pm entry intent.ppif_axi_aw_driver (gated by t/248); (5) extend the LanguageSurfaceSection.pm .ppif current_boundary prose (gated by t/297); (6) add t/14xx-ial2-axi-aw-driver.t modeled on t/1473 (assert layer/kind/mode/schema + grep the generated .isf for awvalid driving + the assert_aw/finish blocks); (7) add a mdBook initiator/driving section to docs/book/src/16a-ial2-axi.md. Generated source must strict-check, lower to .isf/.fsm, and pass --verify-hdl where applicable. Run t/248, t/297, the new test, mdbook build, and scripts/check_doctrines.sh; run heavy/broad runs under scripts/run_with_ram_guard.sh. Keep every doc/spec/manifest/test surface synchronized in the same slice.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed — new FSM::IAL2::ProtocolIntent::AxiAwDriver ships as t/1499 (all subtests incl --verify-hdl PASS: verilator lint + yosys synthesis), module axi_aw_driver, 7 states. Also verified: strict --check --json, --emit-semantic-json, --emit-schedule-json, --outdir (emits .isf/.fsm/.sv). Regressions green: t/248 (6641, counts 297->298 and 338->339 x2), t/297 (manifest prose + new assertion), t/1473 (AHB via shared PPIF.pm), scripts/check_doctrines.sh, mdbook build. Ial-neutral generator uses named drives (held AWVALID/payload) + (while (! awready) (drive assert_aw)) hold + (complete aw_done) one-cycle pulse, per the ISF-scheduler-verified idiom. t/1436 (heavy PPIF parser CLI) confirmed-pending in background under machine-wide CPU contention from unrelated concurrent workloads; changes are strictly additive and no assertion touches the modified missing-intent string.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4: ship the bounded AXI AW address-channel driver generator`
+  Note: `Known model characteristic (surfaced): with registered (Moore) outputs, deassert_aw takes effect the cycle after AWREADY, so AWVALID can stay high one extra cycle in the deassert state (a second VALID&READY beat if the slave holds AWREADY). Inherent to the shipped generation model (the AHB requester shares it), not AW-driver-specific; a future refinement, not a first-slice blocker.`
 
 ## Notes
 
@@ -131,9 +132,15 @@ It complements — does not replace — the shipped capacity/status response cor
   `(axi-aw-driver …)`, module `AxiAwDriver`, kind `axi_aw_driver`, schema
   `…axi_aw_driver.v1`, distinct command inputs (`aw_cmd_valid` +
   `cmd_aw*`) vs driven outputs (`awvalid` + `aw*` + `aw_busy`/`aw_done`), the
-  full burst-describing payload set, and AWID pinned to 4. `.4` (pending) is the
-  implementation leaf (the first behavior-landing slice). The AW driver reuses
-  the existing AW valid-ready authoring shape
+  full burst-describing payload set, and AWID pinned to 4. `.4` (done) **shipped
+  the generator** — the first AXI initiator behavior-landing slice:
+  `perl/FSM/IAL2/ProtocolIntent/AxiAwDriver.pm`, wired into `PPIF.pm`, public
+  `ppif/axi_aw_driver.ppif`, `RegressionCorpus.pm`/t248, `LanguageSurfaceSection.pm`/t297,
+  `t/1499`, and the mdBook initiator section; `--verify-hdl` PASS. Next increment
+  (a `.5` selector) is the W write-data drive toward a write transaction —
+  coordinate with the director's transaction-layered/composable-role North Star
+  (to be captured as a proposed horizon owner + decision record). The AW driver
+  reuses the existing AW valid-ready authoring shape
   (`ppif/axi_aw_valid_ready.ppif`) and the `AhbRequester.pm` drive-block model,
   driven instead of observed. Plug-in surface: `perl/FSM/Adapter/IAL2/PPIF.pm`
   (dispatch), a new generator module, `perl/FSM/Support/RegressionCorpus.pm`

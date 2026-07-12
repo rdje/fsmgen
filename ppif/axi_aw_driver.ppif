@@ -1,0 +1,26 @@
+(protocol-platform-intent axi_aw_driver
+  (profile axi4)
+  (source
+    (object axi-aw-driver)
+    (anchor (document IHI0022_L_2025-08) (section A3.2.1) (page A3-40)))
+  (axi-aw-driver axi_aw_driver
+    (role manager-to-subordinate)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (command
+      (start aw_cmd_valid)
+      (address cmd_awaddr width 32)
+      (id cmd_awid width 4)
+      (length cmd_awlen width 8)
+      (size cmd_awsize width 3)
+      (burst cmd_awburst width 2)
+      (ready awready))
+    (channel
+      (valid awvalid)
+      (address awaddr width 32)
+      (id awid width 4)
+      (length awlen width 8)
+      (size awsize width 3)
+      (burst awburst width 2)
+      (busy aw_busy)
+      (done aw_done))))
