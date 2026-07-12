@@ -29,7 +29,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
   boundary before direct IAL2/IAL1 builder work; proposed
   `SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON` owns the beyond-read-only MCP horizon
   (write/generation/sampling/elicitation/roots/service transport), filed at
-  director request. None of these trees is currently PNT-eligible.
+  director request. Proposed `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE` owns presenting
+  IAL2 as a coherent whole in the mdBook (one language / per-protocol profiles /
+  optional `.axi`/`.ahb`/`.apb` aliases / layered lowering, decisions
+  0014/0015/0016/0018) and backfilling the thin AXI chapter (142 `.ppif`, ~4%
+  documented) — filed from a director question, documentation-only, director-activated.
+  None of these trees is currently PNT-eligible.
 - Decision `0019` (done via `TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION`): a task tree's
   live sources are the `## Task Tree` node list + `docs/TASK_TREE.md` + git; the
   in-file `## Current Frontier`/`## Verification Log`/`## Commit Log`/`## Changelog`
