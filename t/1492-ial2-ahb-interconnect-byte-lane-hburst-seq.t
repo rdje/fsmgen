@@ -167,7 +167,7 @@ subtest 'CLI checks, semantic export, schedule report, and outdir use aggregate 
     }
 };
 
-subtest 'existing AHB aggregate boundaries and deferred aliases stay unchanged' => sub {
+subtest 'existing AHB aggregate boundaries stay unchanged and matching HBURST aliases are shipped' => sub {
     my $seq_ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(one_subordinate_seq_ppif_path());
     is($seq_ppif->{report}{composition}{seq_policy_propagation}{mode}, 'subordinate_owned_in_word_seq_policy', 'existing aggregate byte-lane SEQ PPIF keeps in-word aggregate mode');
     ok(!exists $seq_ppif->{report}{composition}{seq_policy_propagation}{request_forwarding}{burst}, 'existing aggregate byte-lane SEQ PPIF does not gain HBURST forwarding');
@@ -177,8 +177,8 @@ subtest 'existing AHB aggregate boundaries and deferred aliases stay unchanged' 
     is($endpoint_hburst->{report}{transfer}{seq_policy}{mode}, 'hburst_in_word_progressive', 'endpoint HBURST SEQ PPIF keeps endpoint policy');
     ok(!exists $endpoint_hburst->{report}{composition}, 'endpoint HBURST SEQ PPIF does not gain aggregate composition report');
 
-    ok(!-e one_subordinate_hburst_seq_alias_path(), 'matching one-subordinate aggregate HBURST SEQ .ahb alias remains deferred');
-    ok(!-e two_subordinate_hburst_seq_alias_path(), 'matching two-subordinate aggregate HBURST SEQ .ahb alias remains deferred');
+    ok(-e one_subordinate_hburst_seq_alias_path(), 'matching one-subordinate aggregate HBURST SEQ .ahb alias is now shipped');
+    ok(-e two_subordinate_hburst_seq_alias_path(), 'matching two-subordinate aggregate HBURST SEQ .ahb alias is now shipped');
 };
 
 subtest 'malformed aggregate HBURST SEQ sources fail closed' => sub {

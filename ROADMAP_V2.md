@@ -6621,6 +6621,14 @@ with source kind `ial2_profile_alias`, preserving HDL entry `ahb_tb` and
 `subordinate_owned_hburst_in_word_seq_policy`. Reserved `.ahb` label probes
 confirm the existing suffix-keyed profile-alias suppression removes the
 aggregate/child alias residue with no adapter change, so `.772` is data-only.
+`.772` now ships `ppif/ahb_interconnect_byte_lane_hburst_seq.ahb` and
+`ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb`,
+support-accounted as
+`intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq` and
+`intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq`,
+with focused `t/1493` coverage. The matching aggregate HBURST-aware byte-lane
+`SEQ` `.ahb` alias family is now complete alongside the generic `.ppif`
+sources.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
