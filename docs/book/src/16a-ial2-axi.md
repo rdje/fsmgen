@@ -13,7 +13,7 @@ organized by authoring mode, not by implementation module.
 | Mode | Start with | What it demonstrates |
 | --- | --- | --- |
 | Guided mode | `ppif/axi_aw_valid_ready.ppif` and `ppif/axi_aw_valid_ready.axi` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, and `.ppif`/`.axi` profile-alias parity for the selected first alias. |
-| Initiator mode | `ppif/axi_aw_driver.ppif` | A bounded AXI manager AW address-channel **driver**: it *issues* one AW address transfer (drives `AWVALID` and the AW payload against `AWREADY`), the bus-driving counterpart to the AW monitor. |
+| Initiator mode | `ppif/axi_aw_driver.ppif` | A bounded AXI manager AW address-channel **driver**: it drives `AWVALID` and the AW payload against `AWREADY`, the bus-driving counterpart to the AW monitor. Its currently known continuously-ready cardinality boundary is documented below. |
 | More-control mode | `ppif/axi_manager_capacity_status.ppif`, `ppif/axi_manager_capacity_status_id_family.ppif`, and `ppif/axi_manager_capacity_status_transaction_envelope.ppif` | Bounded manager capacity/status, ID-family metadata, and logical transaction metadata while staying in the public AXI manager shell. |
 | Raw/full-control mode | `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | A deep shipped AXI manager shape with dynamic read transactions, same-ID issue-order queueing, burst-last response demux, runtime beat-count/`RLAST` validation, and multi-beat read-data output banks. |
 
@@ -138,6 +138,24 @@ attribute signals (`AWLOCK`/`AWCACHE`/`AWPROT`/`AWQOS`/`AWREGION`/`AWUSER`), a
 configurable `AWID` width, and integration with the capacity/status core remain
 future increments (see the report's `unsupported_residue`).
 
+### Known single-transfer correctness boundary
+
+The generated HDL is lint- and synthesis-clean, but that does not prove how
+many bus transfers one command accepts. In the shipped schedule, if
+`AWREADY` remains high, `AWVALID` stays asserted for the edge that enters the
+separate deassert state and clears only on the following edge. A rising-edge
+counter therefore observes **two** `AWVALID && AWREADY` acceptances for one
+accepted command.
+
+Do not yet treat this bounded driver as a single-transfer transaction source
+against a continuously-ready subordinate. The next owned AXI initiator slice
+audits the generated ISF/FSM/HDL schedule and selects the narrow correction
+plus an executable transfer-cardinality regression before W-channel driving
+copies the same pattern. W remains the next functional direction: a later
+single-beat primitive will drive `WVALID`, 32-bit `WDATA`, 4-bit `WSTRB`, and
+`WLAST = 1` against `WREADY`. AW/W transaction composition and the proposed
+protocol-neutral transaction interface remain separate future owners.
+
 ## More-Control Mode
 
 Move to manager capacity/status when the user needs AXI manager-level control
@@ -257,5 +275,7 @@ This chapter was validated from checked-in sources with:
 The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and
 `axi_aw_valid_ready_monitor.fsm`, confirming that the guided example still
 exposes the review artifacts the chapter describes. The AW driver check and
-`--verify-hdl` confirm the initiator example issues its AW handshake and lowers
-to lint/synthesis-clean HDL.
+`--verify-hdl` confirm that the initiator example is accepted and lowers to
+lint/synthesis-clean HDL; they do not prove transfer cardinality. A dedicated
+rising-edge acceptance-count regression is required by the next correction
+owner.

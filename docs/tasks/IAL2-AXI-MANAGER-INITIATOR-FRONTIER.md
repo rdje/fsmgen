@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-12` (`.4` done: shipped the bounded AW address-channel driver generator — the first AXI initiator behavior-landing slice)
+- Last updated: `2026-07-23` (`.5` done: W remains the next functional direction; `.6` pending: audit the AW driver's driven Valid-Ready single-transfer correctness before W implementation)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -82,7 +82,7 @@ It complements — does not replace — the shipped capacity/status response cor
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
   Status: `active`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
-  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`
+  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
   Status: `done`
@@ -115,6 +115,21 @@ It complements — does not replace — the shipped capacity/status response cor
   Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4: ship the bounded AXI AW address-channel driver generator`
   Note: `Known model characteristic (surfaced): with registered (Moore) outputs, deassert_aw takes effect the cycle after AWREADY, so AWVALID can stay high one extra cycle in the deassert state (a second VALID&READY beat if the slave holds AWREADY). Inherent to the shipped generation model (the AHB requester shares it), not AW-driver-specific; a future refinement, not a first-slice blocker.`
 
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`
+  Status: `done`
+  Goal: `Select the next bounded AXI initiator increment after the shipped AW driver, centered on W write-data drive toward a coherent write transaction and framed under decision 0020's transaction-layered/composable-role North Star.`
+  Acceptance: `Compare a standalone bounded W-channel driver, an immediate AW+W combined writer, AR drive, burst/address generation, and capacity-core integration. Select the smallest safe next increment and its exact following owner leaf. The selection must preserve IAL2 -> generated ISF -> generated FSM -> HDL, keep the generic .ppif container, distinguish the future protocol-neutral transaction interface from the present bus-side primitive, and explicitly disposition the shipped AW driver's registered-output extra-handshake risk before any W implementation clones that timing pattern. Record the decision in a repo-local selection note and synchronize this tree, docs/TASK_TREE.md, the AXI mdBook chapter, and MEMORY.md. Do not change parser, generator, public source, support accounting, capability manifest, tests, generated artifacts, HDL/runtime behavior, direct backend, AHB/APB, verification-output, backend-language variants, or VHDL behavior in this selector leaf.`
+  Verification: `passed — no-behavior selector; W remains the next functional direction, but a generated-artifact trace plus temporary Verilator cardinality harness proved that one command produces two AWVALID && AWREADY acceptances when AWREADY remains asserted. Selection and root cause recorded in docs/IAL2_AXI_MANAGER_INITIATOR_POST_AW_NEXT_INCREMENT_SELECTION.md; durable fact card docs/knowledge/ial2-axi-aw-driver-double-handshake.md; doctrine/book/continuity gates run at commit.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5: select the single-transfer correctness prerequisite before W drive`
+  Selection: `Keep a bounded single-beat W write-data driver as the next functional increment, but first execute .6: a behavior-neutral readiness audit that selects the narrow correction owner for driven Valid-Ready single-transfer cardinality. The later W candidate drives WVALID/WDATA(32)/WSTRB(4)/WLAST=1 against WREADY from distinct command inputs with bounded busy/done status. Deferred: W implementation until the invariant is fixed, AW+W composition, multi-beat sequencing, B completion, AR, burst/address generation, capacity-core integration, and activation of decision 0020's proposed protocol-neutral transaction interface.`
+
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`
+  Status: `pending`
+  Goal: `Audit the shipped AW driver's driven Valid-Ready schedule and select the smallest lowering-clean correction that guarantees exactly one accepted AW transfer per accepted command when AWREADY remains asserted, establishing the invariant required by the later W driver.`
+  Acceptance: `Reproduce and structurally explain the continuously-ready double-transfer from checked-in ppif/axi_aw_driver.ppif; trace the generated ISF/FSM/HDL schedule; compare bounded correction candidates across generated-ISF shape, existing ISF scheduling semantics, a new bounded ISF construct, and direct-backend timing; prove at least one candidate through a temporary executable acceptance-count harness; select the exact next behavior owner and regression contract. Preserve AW payload stability while stalled and one-cycle completion status. Record the audit in a repo-local note and synchronize this tree, docs/TASK_TREE.md, the AXI mdBook chapter, and MEMORY.md. Do not change parser, generator, public source, support accounting, capability manifest, tests, generated artifacts, HDL/runtime behavior, direct backend, W source/implementation, AW+W composition, multi-beat sequencing, B response completion, profile aliases, verification-output, backend-language variants, AHB/APB, or VHDL behavior in this audit leaf.`
+  Verification: `pending`
+  Commit: `pending`
+
 ## Notes
 
 - Pivoted here from `IAL2-FEATURE-COMPLETENESS-FRONTIER` (still active for other
@@ -136,10 +151,12 @@ It complements — does not replace — the shipped capacity/status response cor
   the generator** — the first AXI initiator behavior-landing slice:
   `perl/FSM/IAL2/ProtocolIntent/AxiAwDriver.pm`, wired into `PPIF.pm`, public
   `ppif/axi_aw_driver.ppif`, `RegressionCorpus.pm`/t248, `LanguageSurfaceSection.pm`/t297,
-  `t/1499`, and the mdBook initiator section; `--verify-hdl` PASS. Next increment
-  (a `.5` selector) is the W write-data drive toward a write transaction —
-  coordinate with the director's transaction-layered/composable-role North Star
-  (to be captured as a proposed horizon owner + decision record). The AW driver
+  `t/1499`, and the mdBook initiator section; `--verify-hdl` PASS. `.5` kept W
+  write-data drive as the next functional increment, but proved that the shipped
+  AW schedule can accept twice from one command when `AWREADY` remains asserted;
+  `.6` now owns the behavior-neutral correction readiness audit before W
+  implementation. Decision `0020` frames AW/W drivers as bus-side primitives
+  beneath the proposed transaction-layered/composable-role North Star. The AW driver
   reuses the existing AW valid-ready authoring shape
   (`ppif/axi_aw_valid_ready.ppif`) and the `AhbRequester.pm` drive-block model,
   driven instead of observed. Plug-in surface: `perl/FSM/Adapter/IAL2/PPIF.pm`
