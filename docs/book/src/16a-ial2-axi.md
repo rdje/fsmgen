@@ -158,9 +158,28 @@ two one-cycle `aw_done` pulses, stable payload throughout the stall, and final
 issues, and three explicit priority resolutions; generated HDL also passes
 Verilator lint and Yosys synthesis.
 
-W remains the next functional direction: a later single-beat primitive will
-drive `WVALID`, 32-bit `WDATA`, 4-bit `WSTRB`, and `WLAST = 1` against
-`WREADY`. AW/W transaction composition and the proposed protocol-neutral
+### Audited next increment: bounded W drive (not shipped)
+
+W remains the next functional direction. Its readiness audit fixes a separate
+single-beat bus-side primitive with distinct upstream command inputs
+(`w_cmd_valid`, 32-bit `cmd_wdata`, four-bit `cmd_wstrb`, and `wready`) and
+driven outputs (`wvalid`, 32-bit `wdata`, four-bit `wstrb`, `wlast`, `w_busy`,
+and `w_done`). This is an audited future boundary, not a currently accepted
+`.ppif` clause or generated module.
+
+The future primitive must assert `WVALID` without waiting for `WREADY`, hold
+`WVALID`/`WDATA`/`WSTRB`/`WLAST` stable while stalled, drive `WLAST = 1` for its
+one valid beat, accept exactly one `WVALID && WREADY` transfer per accepted
+command, then pulse `w_done` for one cycle. With 32-bit data, `WSTRB` is four
+bits; every value is legal, including all zeroes (a transfer that writes no
+bytes).
+
+The selected schedule substrate is the corrected AW rule-pair idiom: inline
+launch, priority-winning acceptance on the handshake edge, and completion only
+after latched activity clears. The next behavior-neutral leaf selects the exact
+public syntax/schema/source/test names before implementation. AW/W transaction
+coordination, B response completion, multi-beat `WLAST` sequencing, outstanding
+writes, capacity-core integration, and the proposed protocol-neutral
 transaction interface remain separate future owners.
 
 ## More-Control Mode
