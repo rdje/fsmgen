@@ -13,7 +13,7 @@ organized by authoring mode, not by implementation module.
 | Mode | Start with | What it demonstrates |
 | --- | --- | --- |
 | Guided mode | `ppif/axi_aw_valid_ready.ppif` and `ppif/axi_aw_valid_ready.axi` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, and `.ppif`/`.axi` profile-alias parity for the selected first alias. |
-| Initiator mode | `ppif/axi_aw_driver.ppif` | A bounded AXI manager AW address-channel **driver**: it drives `AWVALID` and the AW payload against `AWREADY`, the bus-driving counterpart to the AW monitor. Its currently known continuously-ready cardinality boundary is documented below. |
+| Initiator mode | `ppif/axi_aw_driver.ppif` | A bounded AXI manager AW address-channel **driver**: it drives `AWVALID` and the AW payload against `AWREADY`, holds payload stable under backpressure, and accepts exactly one AW transfer per accepted command. |
 | More-control mode | `ppif/axi_manager_capacity_status.ppif`, `ppif/axi_manager_capacity_status_id_family.ppif`, and `ppif/axi_manager_capacity_status_transaction_envelope.ppif` | Bounded manager capacity/status, ID-family metadata, and logical transaction metadata while staying in the public AXI manager shell. |
 | Raw/full-control mode | `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | A deep shipped AXI manager shape with dynamic read transactions, same-ID issue-order queueing, burst-last response demux, runtime beat-count/`RLAST` validation, and multi-beat read-data output banks. |
 
@@ -78,7 +78,8 @@ The guided AW source *observes* a handshake. The initiator source *drives* it.
 `ppif/axi_aw_driver.ppif` is a bounded AXI manager AW address-channel driver: on
 a one-shot command trigger it samples the command payload, asserts `AWVALID` and
 drives the AW payload (`AWADDR`/`AWID`/`AWLEN`/`AWSIZE`/`AWBURST`) held stable
-until the subordinate raises `AWREADY`, then pulses a one-cycle `aw_done`.
+until the subordinate raises `AWREADY`, accepts that transfer exactly once,
+then pulses a one-cycle `aw_done`.
 
 ```text
 (protocol-platform-intent axi_aw_driver
@@ -112,9 +113,10 @@ until the subordinate raises `AWREADY`, then pulses a one-cycle `aw_done`.
 The `(command …)` block is the *upstream* order (what transfer to issue) and the
 `(channel …)` block is the *driven* AW bus interface — two distinct signal sets,
 so the command inputs never alias the driven outputs. The generated actor asserts
-`AWVALID` before waiting, holds it (and the payload) stable across the wait, and
-completes one cycle after `AWREADY` — the same VALID-hold/payload-stable
-obligation the AW monitor *checks*, here *guaranteed* by the driver.
+`AWVALID` before waiting, holds it (and the payload) stable across the wait,
+clears it on the accepted-transfer edge, and completes with a one-cycle pulse
+— the same VALID-hold/payload-stable obligation the AW monitor *checks*, here
+*guaranteed* by the driver.
 
 Run it end to end:
 
@@ -138,27 +140,28 @@ attribute signals (`AWLOCK`/`AWCACHE`/`AWPROT`/`AWQOS`/`AWREGION`/`AWUSER`), a
 configurable `AWID` width, and integration with the capacity/status core remain
 future increments (see the report's `unsupported_residue`).
 
-### Known single-transfer correctness boundary
+### Single-transfer correctness guarantee
 
-The generated HDL is lint- and synthesis-clean, but that does not prove how
-many bus transfers one command accepts. In the shipped schedule, if
-`AWREADY` remains high, `AWVALID` stays asserted for the edge that enters the
-separate deassert state and clears only on the following edge. A rising-edge
-counter therefore observes **two** `AWVALID && AWREADY` acceptances for one
-accepted command.
+The generated ISF uses a one-state inline launch handoff and two concurrent
+rules. `launch_aw` registers the sampled payload and raises `AWVALID` plus the
+active/busy state. `accept_aw`, guarded by `AWVALID && AWREADY`, clears
+`AWVALID` and the active/busy state on the same rising edge that accepts the
+transfer. Explicit `accept_aw`-over-`launch_aw` priority resolves their shared
+writes, and the transaction waits on the latched active bit rather than
+depending on a later resample of `AWREADY`.
 
-Do not yet treat this bounded driver as a single-transfer transaction source
-against a continuously-ready subordinate. The completed readiness audit
-selected an existing-ISF correction: an inline launch handoff plus explicit
-priority between a launch rule and an acceptance-edge clear rule, with control
-waiting on a latched active bit. Temporary generated HDL passes lint,
-synthesis, stalled-payload checks, and exactly-once acceptance counts, but the
-checked-in generator has not changed yet. The following owned slice implements
-that correction and its executable regression before W-channel driving copies
-the pattern. W remains the next functional direction: a later
-single-beat primitive will drive `WVALID`, 32-bit `WDATA`, 4-bit `WSTRB`, and
-`WLAST = 1` against `WREADY`. AW/W transaction composition and the proposed
-protocol-neutral transaction interface remain separate future owners.
+The focused executable regression covers both continuously-high `AWREADY` and
+a four-cycle payload stall followed by a one-cycle `AWREADY` pulse. Across two
+commands it requires exactly two rising-edge `AWVALID && AWREADY` acceptances,
+two one-cycle `aw_done` pulses, stable payload throughout the stall, and final
+`AWVALID = aw_busy = 0`. The generated schedule has six states, no compile
+issues, and three explicit priority resolutions; generated HDL also passes
+Verilator lint and Yosys synthesis.
+
+W remains the next functional direction: a later single-beat primitive will
+drive `WVALID`, 32-bit `WDATA`, 4-bit `WSTRB`, and `WLAST = 1` against
+`WREADY`. AW/W transaction composition and the proposed protocol-neutral
+transaction interface remain separate future owners.
 
 ## More-Control Mode
 
@@ -280,6 +283,6 @@ The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and
 `axi_aw_valid_ready_monitor.fsm`, confirming that the guided example still
 exposes the review artifacts the chapter describes. The AW driver check and
 `--verify-hdl` confirm that the initiator example is accepted and lowers to
-lint/synthesis-clean HDL; they do not prove transfer cardinality. A dedicated
-rising-edge acceptance-count regression is required by the pending correction
-implementation owner.
+lint/synthesis-clean HDL. The focused `t/1499-ial2-axi-aw-driver.t` generated-HDL
+simulation separately proves the transfer-cardinality, completion-pulse, and
+stalled-payload guarantees described above.

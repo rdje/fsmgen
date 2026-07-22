@@ -13,8 +13,10 @@ use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 
 # Bounded AXI manager AW address-channel driver (initiator, bus-driving side).
-# Selected by IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3; see
-# docs/IAL2_AXI_MANAGER_INITIATOR_AW_DRIVER_CONTRACT_SELECTION.md.
+# Public contract selected by IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3; the
+# exactly-once transfer schedule was selected by .6 and implemented by .7.
+# See docs/IAL2_AXI_MANAGER_INITIATOR_AW_DRIVER_CONTRACT_SELECTION.md and
+# docs/IAL2_AXI_MANAGER_INITIATOR_SINGLE_TRANSFER_CORRECTNESS_READINESS_AUDIT.md.
 #
 # It issues one AW address transfer: on a one-shot command trigger it samples
 # the command payload, asserts AWVALID and drives the AW payload held stable
@@ -193,14 +195,16 @@ sub _emit_isf($contract) {
     my $chan = $contract->{channel};
     my $reset = _reset_clause($contract->{reset});
 
-    # Structure verified against the ISF scheduler (IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4):
-    #   - `assert_aw`/`deassert_aw` are NAMED drives so AWVALID and the AW payload
-    #     lower to registered/held outputs and stay stable across the wait;
-    #   - the pre-loop `(drive assert_aw)` presents AWVALID before the first
-    #     AWREADY test, so a slave asserting AWREADY immediately is still honored;
-    #   - `(while (! awready) (drive assert_aw))` holds AWVALID until AWREADY and
-    #     generates no watchdog counter (lowers clean through --verify-hdl);
-    #   - `(complete <done>)` on the output emits the one-cycle done pulse.
+    # Exactly-once Valid-Ready schedule selected and executably proved in
+    # IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6:
+    #   - the inline launch drive is a one-state combinational handoff;
+    #   - `launch_aw` registers AWVALID, busy, and the sampled payload;
+    #   - `accept_aw` clears AWVALID/busy/active_q on the same edge that sees
+    #     AWVALID && AWREADY, preventing a second acceptance under held READY;
+    #   - explicit accept-over-launch priority resolves every shared rule write;
+    #   - the transaction waits on latched active_q, so a one-cycle READY pulse
+    #     cannot be lost while scheduled control advances;
+    #   - `(complete <done>)` still emits the one-cycle done pulse.
     return join("\n",
         "(actor $contract->{actor_name}",
         "  (clock $contract->{clock})",
@@ -223,18 +227,22 @@ sub _emit_isf($contract) {
         _interface_line('output', $chan->{busy}),
         _interface_line('output', $chan->{done}) . ")",
         "",
-        "  (drive assert_aw",
-        "    ($chan->{busy} 1)",
-        "    ($chan->{valid} 1)",
-        "    ($chan->{address}{name} addr_q)",
-        "    ($chan->{id}{name} id_q)",
-        "    ($chan->{length}{name} len_q)",
-        "    ($chan->{size}{name} size_q)",
-        "    ($chan->{burst}{name} burst_q))",
+        "  (priority accept_aw over launch_aw)",
         "",
-        "  (drive deassert_aw",
-        "    ($chan->{busy} 0)",
-        "    ($chan->{valid} 0))",
+        "  (rule launch_aw launch_aw_start",
+        "    (set active_q 1)",
+        "    (set $chan->{busy} 1)",
+        "    (set $chan->{valid} 1)",
+        "    (set $chan->{address}{name} addr_q)",
+        "    (set $chan->{id}{name} id_q)",
+        "    (set $chan->{length}{name} len_q)",
+        "    (set $chan->{size}{name} size_q)",
+        "    (set $chan->{burst}{name} burst_q))",
+        "",
+        "  (rule accept_aw (& $chan->{valid} $cmd->{ready})",
+        "    (set active_q 0)",
+        "    (set $chan->{busy} 0)",
+        "    (set $chan->{valid} 0))",
         "",
         "  (transaction aw_issue",
         "    (on $cmd->{start}",
@@ -243,10 +251,10 @@ sub _emit_isf($contract) {
         "      (sample $cmd->{length}{name} as len_q)",
         "      (sample $cmd->{size}{name} as size_q)",
         "      (sample $cmd->{burst}{name} as burst_q))",
-        "    (drive assert_aw)",
-        "    (while (! $cmd->{ready})",
-        "      (drive assert_aw))",
-        "    (drive deassert_aw)",
+        "    (drive",
+        "      (launch_aw_start 1))",
+        "    (while active_q",
+        "      (wait 1))",
         "    (complete $chan->{done})))",
         "",
     );

@@ -36,14 +36,35 @@ subtest 'adapter parses the bounded AXI AW address-channel driver PPIF shape' =>
     like($isf, qr/\(output awvalid\)/, 'generated AW driver IAL1 drives AWVALID');
     like($isf, qr/\(output awaddr \(width 32\)\)/, 'generated AW driver IAL1 drives AWADDR');
     like($isf, qr/\(output awid \(width 4\)\)/, 'generated AW driver IAL1 drives AWID');
-    like($isf, qr/\(drive assert_aw/, 'generated AW driver IAL1 has a named assert drive');
-    like($isf, qr/\(awvalid 1\)/, 'generated AW driver IAL1 asserts AWVALID high');
-    like($isf, qr/\(drive deassert_aw/, 'generated AW driver IAL1 has a named deassert drive');
-    like($isf, qr/\(awvalid 0\)/, 'generated AW driver IAL1 drops AWVALID on completion');
+    like($isf, qr/\(priority accept_aw over launch_aw\)/, 'generated AW driver IAL1 gives acceptance priority over launch');
+    like($isf, qr/\(rule launch_aw launch_aw_start\b/, 'generated AW driver IAL1 has the launch handoff rule');
+    like($isf, qr/\(rule accept_aw \(& awvalid awready\)/, 'generated AW driver IAL1 clears on the accepted-transfer predicate');
+    like($isf, qr/\(set awvalid 1\)/, 'generated AW driver IAL1 launches AWVALID high');
+    like($isf, qr/\(set awvalid 0\)/, 'generated AW driver IAL1 clears AWVALID on acceptance');
     like($isf, qr/\(on aw_cmd_valid/, 'generated AW driver IAL1 triggers on the command');
     like($isf, qr/\(sample cmd_awaddr as addr_q\)/, 'generated AW driver IAL1 samples the command address');
-    like($isf, qr/\(while \(! awready\)/, 'generated AW driver IAL1 holds AWVALID until AWREADY');
+    like($isf, qr/\(drive\s+\(launch_aw_start 1\)\)/, 'generated AW driver IAL1 emits the one-state launch handoff');
+    like($isf, qr/\(while active_q\s+\(wait 1\)\)/, 'generated AW driver IAL1 waits on latched transfer activity');
+    unlike($isf, qr/\(drive deassert_aw\b/, 'generated AW driver IAL1 has no late post-READY deassert drive');
+    unlike($isf, qr/\(while \(! awready\)/, 'generated AW driver IAL1 does not depend on resampling READY for control completion');
     like($isf, qr/\(complete aw_done\)/, 'generated AW driver IAL1 pulses aw_done on completion');
+
+    my $ial1_schedule = $result->{generated_ial1_schedule_report};
+    is($ial1_schedule->{state_count}, 6, 'corrected AW driver IAL1 schedule has six states');
+    is_deeply($ial1_schedule->{compile_issues}, [], 'corrected AW driver IAL1 schedule has no compile issues');
+    is_deeply(
+        [
+            sort map {
+                join(':', $_->{winner}, $_->{loser}, $_->{target})
+            } @{$ial1_schedule->{priority_resolutions} || []}
+        ],
+        [
+            'accept_aw:launch_aw:active_q',
+            'accept_aw:launch_aw:aw_busy',
+            'accept_aw:launch_aw:awvalid',
+        ],
+        'corrected AW driver schedule resolves the three shared rule targets in favor of acceptance',
+    );
 
     is_deeply(
         sorted([keys %{$result->{generated_ial0}{files}}]),
@@ -55,6 +76,9 @@ subtest 'adapter parses the bounded AXI AW address-channel driver PPIF shape' =>
     like($fsm, qr/\bawvalid\b/, 'generated AW driver IAL0 carries AWVALID');
     like($fsm, qr/\bawready\b/, 'generated AW driver IAL0 carries AWREADY');
     like($fsm, qr/\bawaddr\b/, 'generated AW driver IAL0 carries AWADDR');
+    like($fsm, qr/\(-launch_aw <launch_aw_start/, 'generated AW driver IAL0 contains the launch rule DT');
+    like($fsm, qr/\(-accept_aw <\(& awvalid awready\)/, 'generated AW driver IAL0 contains the acceptance-edge clear DT');
+    like($fsm, qr/\(aw_issue_while_entry_2\s+\(\?active_q/s, 'generated AW driver IAL0 waits on latched active_q');
 
     is($result->{report}{bindings}{command}{address}{name}, 'cmd_awaddr', 'report captures command address binding');
     is($result->{report}{bindings}{command}{address}{width}, 32, 'report captures command address width');
@@ -149,6 +173,150 @@ subtest 'CLI checks, semantic export, schedule report, outdir, and verify-hdl us
     like(join('', @{$verify_stdout || []}), qr/verilator_lint: PASS/, 'AXI AW driver HDL passes verilator lint');
 };
 
+subtest 'generated HDL accepts exactly one AW transfer per accepted command' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_aw_driver.sv');
+    my $testbench = File::Spec->catfile($tempdir, 'axi_aw_driver_cardinality_tb.sv');
+    my $obj_dir = File::Spec->catdir($tempdir, 'obj_cardinality');
+
+    my ($generate_ok, undef, undef, undef, $generate_stderr) = run(
+        command => [
+            './bin/fsmgen', '--quiet', '--strict', '--output', $hdl,
+            sample_aw_driver_ppif_path(),
+        ],
+    );
+    ok($generate_ok, 'public AXI AW driver source emits HDL for cardinality simulation');
+    is(join('', @{$generate_stderr || []}), '', 'cardinality HDL generation keeps stderr clean');
+
+    write_file($testbench, <<'SV');
+module axi_aw_driver_cardinality_tb;
+  logic clk = 0;
+  logic rst_n = 0;
+  logic aw_cmd_valid = 0;
+  logic [31:0] cmd_awaddr = 0;
+  logic [3:0] cmd_awid = 0;
+  logic [7:0] cmd_awlen = 0;
+  logic [2:0] cmd_awsize = 0;
+  logic [1:0] cmd_awburst = 0;
+  logic awready = 0;
+  wire awvalid;
+  wire [31:0] awaddr;
+  wire [3:0] awid;
+  wire [7:0] awlen;
+  wire [2:0] awsize;
+  wire [1:0] awburst;
+  wire aw_busy;
+  wire aw_done;
+  integer handshakes = 0;
+  integer done_pulses = 0;
+  integer wait_cycles = 0;
+
+  axi_aw_driver dut (.*);
+  always #5 clk = ~clk;
+
+  always @(posedge clk) begin
+    if (rst_n && awvalid && awready)
+      handshakes <= handshakes + 1;
+    if (rst_n && aw_done)
+      done_pulses <= done_pulses + 1;
+  end
+
+  task automatic pulse_command(
+    input logic [31:0] addr,
+    input logic [3:0] id,
+    input logic [7:0] len,
+    input logic [2:0] size,
+    input logic [1:0] burst
+  );
+    begin
+      @(negedge clk);
+      cmd_awaddr = addr;
+      cmd_awid = id;
+      cmd_awlen = len;
+      cmd_awsize = size;
+      cmd_awburst = burst;
+      aw_cmd_valid = 1;
+      @(negedge clk);
+      aw_cmd_valid = 0;
+    end
+  endtask
+
+  initial begin
+    repeat (2) @(negedge clk);
+    rst_n = 1;
+    repeat (2) @(negedge clk);
+
+    awready = 1;
+    pulse_command(32'h1020_3040, 4'h3, 8'h07, 3'h2, 2'h1);
+    repeat (12) @(negedge clk);
+    if (handshakes != 1 || done_pulses != 1)
+      $fatal(1, "continuous-ready expected one transfer/done, got %0d/%0d", handshakes, done_pulses);
+    if (awvalid || aw_busy)
+      $fatal(1, "continuous-ready did not return valid/busy low");
+
+    awready = 0;
+    pulse_command(32'h5566_7788, 4'hA, 8'h11, 3'h4, 2'h2);
+    wait_cycles = 0;
+    while (!awvalid && wait_cycles < 8) begin
+      @(negedge clk);
+      wait_cycles = wait_cycles + 1;
+    end
+    if (!awvalid)
+      $fatal(1, "stalled command never raised AWVALID");
+
+    repeat (4) begin
+      @(negedge clk);
+      if (!awvalid || !aw_busy)
+        $fatal(1, "stalled case dropped valid/busy");
+      if ({awaddr, awid, awlen, awsize, awburst} !==
+          {32'h5566_7788, 4'hA, 8'h11, 3'h4, 2'h2})
+        $fatal(1, "stalled case changed AW payload");
+    end
+
+    awready = 1;
+    @(negedge clk);
+    awready = 0;
+    repeat (12) @(negedge clk);
+    if (handshakes != 2 || done_pulses != 2)
+      $fatal(1, "one-cycle-ready expected second transfer/done, totals %0d/%0d", handshakes, done_pulses);
+    if (awvalid || aw_busy)
+      $fatal(1, "one-cycle-ready did not return valid/busy low");
+
+    $display("PASS handshakes=%0d done_pulses=%0d", handshakes, done_pulses);
+    $finish;
+  end
+
+  initial begin
+    #5000;
+    $fatal(1, "cardinality simulation timed out");
+  end
+endmodule
+SV
+
+    my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
+        command => [
+            'verilator', '--binary', '--timing', '--assert', '-Wno-fatal',
+            '-j', '1', '--top-module', 'axi_aw_driver_cardinality_tb',
+            '--Mdir', $obj_dir, $hdl, $testbench,
+        ],
+    );
+    ok($compile_ok, 'Verilator builds the generated AW cardinality harness')
+        or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
+
+    return unless $compile_ok;
+
+    my $binary = File::Spec->catfile($obj_dir, 'Vaxi_aw_driver_cardinality_tb');
+    ok(-x $binary, 'Verilator cardinality harness binary exists');
+    my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
+    ok($run_ok, 'generated AW driver cardinality simulation passes')
+        or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
+    like(
+        join('', @{$run_stdout || []}),
+        qr/PASS handshakes=2 done_pulses=2/,
+        'continuous-ready and one-cycle-ready commands each accept exactly once and complete once',
+    );
+};
+
 done_testing();
 
 sub sample_aw_driver_ppif_path {
@@ -178,6 +346,13 @@ sub slurp {
     open my $fh, '<', $path or die "Cannot read $path: $!";
     local $/;
     return <$fh>;
+}
+
+sub write_file {
+    my ($path, $text) = @_;
+    open my $fh, '>', $path or die "Cannot write $path: $!";
+    print {$fh} $text;
+    close $fh or die "Cannot close $path: $!";
 }
 
 sub sorted {
