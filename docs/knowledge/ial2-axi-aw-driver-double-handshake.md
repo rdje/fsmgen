@@ -19,6 +19,8 @@ separate deassert state, and registered `AWVALID` clears only on the following
 edge. The full root-cause trace and selected corrective audit owner are in
 `docs/IAL2_AXI_MANAGER_INITIATOR_POST_AW_NEXT_INCREMENT_SELECTION.md`.
 
-`IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6` owns the readiness audit that must
-select the correction before a W driver reuses this timing pattern. Related
-architectural context: [[ial2-axi-manager-initiator-pivot]].
+`IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6` completed the readiness audit and
+selected the correction that `.7` must implement before a W driver reuses this
+timing pattern. Related architectural context:
+[[ial2-axi-manager-initiator-pivot]]. Selected correction shape:
+[[ial2-axi-aw-single-transfer-correction-shape]].

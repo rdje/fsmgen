@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.5` done: W remains the next functional direction; `.6` pending: audit the AW driver's driven Valid-Ready single-transfer correctness before W implementation)
+- Last updated: `2026-07-23` (`.6` done: selected a priority-resolved existing-ISF correction; `.7` pending: implement and regress exactly one AW transfer per command)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -82,7 +82,7 @@ It complements — does not replace — the shipped capacity/status response cor
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
   Status: `active`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
-  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`
+  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
   Status: `done`
@@ -124,9 +124,17 @@ It complements — does not replace — the shipped capacity/status response cor
   Selection: `Keep a bounded single-beat W write-data driver as the next functional increment, but first execute .6: a behavior-neutral readiness audit that selects the narrow correction owner for driven Valid-Ready single-transfer cardinality. The later W candidate drives WVALID/WDATA(32)/WSTRB(4)/WLAST=1 against WREADY from distinct command inputs with bounded busy/done status. Deferred: W implementation until the invariant is fixed, AW+W composition, multi-beat sequencing, B completion, AR, burst/address generation, capacity-core integration, and activation of decision 0020's proposed protocol-neutral transaction interface.`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit the shipped AW driver's driven Valid-Ready schedule and select the smallest lowering-clean correction that guarantees exactly one accepted AW transfer per accepted command when AWREADY remains asserted, establishing the invariant required by the later W driver.`
   Acceptance: `Reproduce and structurally explain the continuously-ready double-transfer from checked-in ppif/axi_aw_driver.ppif; trace the generated ISF/FSM/HDL schedule; compare bounded correction candidates across generated-ISF shape, existing ISF scheduling semantics, a new bounded ISF construct, and direct-backend timing; prove at least one candidate through a temporary executable acceptance-count harness; select the exact next behavior owner and regression contract. Preserve AW payload stability while stalled and one-cycle completion status. Record the audit in a repo-local note and synchronize this tree, docs/TASK_TREE.md, the AXI mdBook chapter, and MEMORY.md. Do not change parser, generator, public source, support accounting, capability manifest, tests, generated artifacts, HDL/runtime behavior, direct backend, W source/implementation, AW+W composition, multi-beat sequencing, B response completion, profile aliases, verification-output, backend-language variants, AHB/APB, or VHDL behavior in this audit leaf.`
+  Verification: `passed — no-behavior readiness audit; reproduced the shipped two-acceptance baseline, traced named-drive next-edge timing, compared correction layers, and proved the selected existing-ISF rule-pair candidate. Candidate schedule JSON: 6 states, compile_issues empty, three priority resolutions; --verify-hdl: Verilator lint + Yosys synthesis PASS; executable Verilator harness: two commands across continuous-READY and stalled/one-cycle-READY cases produced PASS handshakes=2 done_pulses=2 with stalled payload stability and final valid/busy low. Audit: docs/IAL2_AXI_MANAGER_INITIATOR_SINGLE_TRANSFER_CORRECTNESS_READINESS_AUDIT.md; fact card: docs/knowledge/ial2-axi-aw-single-transfer-correction-shape.md; doctrine/book/continuity gates run at commit.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6: select the priority-resolved single-transfer correction`
+  Selection: `Use only shipped ISF features: transaction samples -> inline launch_aw_start drive -> launch_aw rule sets active_q/aw_busy/awvalid/payload -> accept_aw rule guarded by (& awvalid awready) clears active_q/aw_busy/awvalid on the acceptance edge -> while active_q (wait 1) -> one-cycle aw_done. Declare (priority accept_aw over launch_aw), yielding zero schedule compile issues and mechanical priority guards. No parser/scheduler/IAL0/backend change.`
+
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`
+  Status: `pending`
+  Goal: `Implement the selected priority-resolved generated-ISF schedule and an executable cardinality regression so each accepted AW command produces exactly one AWVALID && AWREADY transfer, including continuously-ready and one-cycle-ready-after-stall cases.`
+  Acceptance: `Change only AxiAwDriver.pm::_emit_isf behavior to emit (priority accept_aw over launch_aw), the launch_aw/accept_aw rules, one inline launch_aw_start drive, and a while active_q (wait 1) loop per the .6 audit. Preserve the public .ppif syntax, module/kind/schema/bindings, widths, payload, report surface, support-accounting ID, capability manifest, and residue. Update t/1499 structural checks for the exact ISF/FSM/report shape and add an executable generated-SystemVerilog regression that counts rising-edge AWVALID && AWREADY acceptances and aw_done pulses for continuously-ready plus stalled/one-cycle-ready commands, proves stalled payload stability, expects one transfer/done per command, and ends valid/busy low. Require schedule compile_issues empty with expected priority resolutions, strict check/export/report paths, --verify-hdl, mdBook sync, doctrines, and relevant regressions. Do not add W syntax/behavior, AW+W composition, multi-beat sequencing, B completion, outstanding transactions, AR, burst/address generation, capacity-core integration, profile aliases, verification-output, backend-language variants, direct backend, generic ISF semantics, AHB/APB, or VHDL behavior.`
   Verification: `pending`
   Commit: `pending`
 

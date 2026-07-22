@@ -148,10 +148,14 @@ counter therefore observes **two** `AWVALID && AWREADY` acceptances for one
 accepted command.
 
 Do not yet treat this bounded driver as a single-transfer transaction source
-against a continuously-ready subordinate. The next owned AXI initiator slice
-audits the generated ISF/FSM/HDL schedule and selects the narrow correction
-plus an executable transfer-cardinality regression before W-channel driving
-copies the same pattern. W remains the next functional direction: a later
+against a continuously-ready subordinate. The completed readiness audit
+selected an existing-ISF correction: an inline launch handoff plus explicit
+priority between a launch rule and an acceptance-edge clear rule, with control
+waiting on a latched active bit. Temporary generated HDL passes lint,
+synthesis, stalled-payload checks, and exactly-once acceptance counts, but the
+checked-in generator has not changed yet. The following owned slice implements
+that correction and its executable regression before W-channel driving copies
+the pattern. W remains the next functional direction: a later
 single-beat primitive will drive `WVALID`, 32-bit `WDATA`, 4-bit `WSTRB`, and
 `WLAST = 1` against `WREADY`. AW/W transaction composition and the proposed
 protocol-neutral transaction interface remain separate future owners.
@@ -277,5 +281,5 @@ The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and
 exposes the review artifacts the chapter describes. The AW driver check and
 `--verify-hdl` confirm that the initiator example is accepted and lowers to
 lint/synthesis-clean HDL; they do not prove transfer cardinality. A dedicated
-rising-edge acceptance-count regression is required by the next correction
-owner.
+rising-edge acceptance-count regression is required by the pending correction
+implementation owner.
