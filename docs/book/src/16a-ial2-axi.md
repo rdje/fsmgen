@@ -158,7 +158,7 @@ two one-cycle `aw_done` pulses, stable payload throughout the stall, and final
 issues, and three explicit priority resolutions; generated HDL also passes
 Verilator lint and Yosys synthesis.
 
-### Audited next increment: bounded W drive (not shipped)
+### Selected next increment: bounded W drive (not shipped)
 
 W remains the next functional direction. Its readiness audit fixes a separate
 single-beat bus-side primitive with distinct upstream command inputs
@@ -167,6 +167,31 @@ driven outputs (`wvalid`, 32-bit `wdata`, four-bit `wstrb`, `wlast`, `w_busy`,
 and `w_done`). This is an audited future boundary, not a currently accepted
 `.ppif` clause or generated module.
 
+The selected future source is `ppif/axi_w_driver.ppif`, with clause
+`(axi-w-driver axi_w_driver ...)`, generated actor/module `axi_w_driver`, and
+report schema `fsmgen.ial2.protocol_intent.axi_w_driver.v1`. These names are
+contracted but not yet accepted by the parser or present as a checked-in public
+source.
+
+```text
+(axi-w-driver axi_w_driver
+  (role manager-to-subordinate)
+  (clock clk)
+  (reset (rst_n active_low async))
+  (command
+    (start w_cmd_valid)
+    (data cmd_wdata width 32)
+    (strobe cmd_wstrb width 4)
+    (ready wready))
+  (channel
+    (valid wvalid)
+    (data wdata width 32)
+    (strobe wstrb width 4)
+    (last wlast)
+    (busy w_busy)
+    (done w_done)))
+```
+
 The future primitive must assert `WVALID` without waiting for `WREADY`, hold
 `WVALID`/`WDATA`/`WSTRB`/`WLAST` stable while stalled, drive `WLAST = 1` for its
 one valid beat, accept exactly one `WVALID && WREADY` transfer per accepted
@@ -174,13 +199,14 @@ command, then pulse `w_done` for one cycle. With 32-bit data, `WSTRB` is four
 bits; every value is legal, including all zeroes (a transfer that writes no
 bytes).
 
-The selected schedule substrate is the corrected AW rule-pair idiom: inline
+The selected schedule is the corrected AW rule-pair idiom: inline
 launch, priority-winning acceptance on the handshake edge, and completion only
-after latched activity clears. The next behavior-neutral leaf selects the exact
-public syntax/schema/source/test names before implementation. AW/W transaction
-coordination, B response completion, multi-beat `WLAST` sequencing, outstanding
-writes, capacity-core integration, and the proposed protocol-neutral
-transaction interface remain separate future owners.
+after latched activity clears. Implementation is owned by
+`IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10` and focused test
+`t/1500-ial2-axi-w-driver.t`. AW/W transaction coordination, B response
+completion, multi-beat `WLAST` sequencing, outstanding writes, capacity-core
+integration, and the proposed protocol-neutral transaction interface remain
+separate future owners.
 
 ## More-Control Mode
 

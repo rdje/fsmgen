@@ -35,3 +35,4 @@ verification output, backend variants/VHDL, and AHB/APB remain deferred.
 
 Related shipped scheduling fact:
 [[ial2-axi-aw-single-transfer-correction-shape]].
+Selected public contract: [[ial2-axi-w-driver-contract-selection]].
