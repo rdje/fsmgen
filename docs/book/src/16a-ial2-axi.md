@@ -223,6 +223,16 @@ transaction coordination, multi-beat `WLAST` sequencing, outstanding writes,
 capacity-core integration, and the proposed protocol-neutral transaction
 interface remain separate future owners.
 
+The next selected initiator direction is a standalone fixed-four full-width W
+burst driver. It must precede a fixed-four AW+W composition because this
+single-beat child hard-wires `WLAST=1`: re-arming it four times would emit four
+false final beats under `AWLEN=3`. The active readiness audit compares four
+explicit data32/strobe4 fields, packed data128/strobe16 banks, and a streaming
+producer. Its leading shape captures four tuples atomically, holds each tuple
+under WREADY backpressure, emits WLAST `0/0/0/1`, and reports beat index plus
+one final completion. No burst W behavior ships until that contract and its
+generated schedule are proven.
+
 ### Bounded one-response B write-response acceptor
 
 `ppif/axi_b_response_acceptor.ppif` is the third shipped initiator primitive.
