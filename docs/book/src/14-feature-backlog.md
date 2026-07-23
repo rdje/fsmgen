@@ -10659,6 +10659,18 @@ parked-context, resumed-SEQ, four-beat, and final-storage proof. `.793` must
 freeze the generic `.ppif` source/support/report/runtime contract; alias and
 two-subordinate siblings remain deferred.
 
+Paired AHB BUSY composition contract:
+[IAL2_AHB_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION](../../IAL2_AHB_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md)
+documents `.793`, which selects `.794` direct implementation of
+`ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif`.
+The aggregate requester child conditionally gains the existing
+`busy_insertion` block; together with propagated `parks_on = [busy]`, this is
+the selected non-duplicative paired report. Support targets are 311 protocol /
+352 supported-smoke and strict. Focused t/1513/Verilator coverage must prove
+held requester and subordinate state/storage on BUSY, resumed `SEQ`, four data
+beats, OKAY/zero remaining, and final `32'h44332211`. Generic `.ppif` ships
+first; alias and two-subordinate variants remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

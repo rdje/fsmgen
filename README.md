@@ -5793,6 +5793,18 @@ internal requester-bus/subordinate-state observation points needed to prove the
 held BUSY, parked subordinate context, resumed `SEQ`, four accepted beats, and
 final storage. `.793` must freeze exact source/support/report/test names and
 keep the first slice to one generic `.ppif`, one subordinate.
+`.793` now selects `.794`, direct implementation of
+`ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif`,
+support id
+`intent.ppif_ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park`,
+coverage
+`ial2_ppif_ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park_pipeline_cli`,
+module `ahb_tb`, semantic root `top`. `AhbInterconnect::_child_report` will
+conditionally clone requester `busy_insertion`; no duplicated top summary is
+selected. Focused t/1513 plus a Verilator harness must prove held BUSY, parked
+subordinate context/storage, resumed `SEQ`, four accepted beats, OKAY/zero
+remaining, and final `32'h44332211`. Accounting targets are 311 protocol / 352
+supported-smoke and strict. Alias and two-subordinate variants stay deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8442,6 +8454,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped requester BUSY-insertion `.ahb` alias, byte-identical generic-source parity, support accounting, alias-only residue cleanup, validation, and deferrals.
 - `docs/IAL2_POST_AHB_REQUESTER_BUSY_INSERTION_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.791` no-behavior selection of `.792`, a readiness audit for one paired BUSY-inserting-requester/BUSY-parking-subordinate aggregate; captures the already-composable endpoint/artifact shape and the aggregate child-report omission of requester `busy_insertion` that must be settled before implementation.
 - `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md` — records the `.792` no-behavior audit: the one-subordinate paired BUSY aggregate needs no parser/endpoint/wiring/top/HDL substrate repair, aggregate requester-child `busy_insertion` needs one additive conditional clone, generated `ahb_tb` has sufficient runtime observation points, and `.793` owns exact public contract selection.
+- `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md` — records the `.793` exact contract for `.794`: one additive generic `.ppif` aggregate, requester-child `busy_insertion` plus aggregate `parks_on=[busy]`, support/accounting identities, t/1513 generated-HDL proof through final `32'h44332211` storage, preservation, and deferred alias/two-subordinate variants.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

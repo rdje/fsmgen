@@ -6841,6 +6841,21 @@ resumed-SEQ/four-beat/final-storage proof. `.793` must freeze one generic
 `.ppif`, one subordinate, its source/support/report/runtime contract, with alias
 and two-subordinate siblings deferred. Decision 0020 remains inactive.
 
+`.793` selects `.794`, direct implementation of additive generic source
+`ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif`.
+Support identity is
+`intent.ppif_ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park`,
+coverage
+`ial2_ppif_ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park_pipeline_cli`,
+module `ahb_tb`, semantic root `top`, with 311 protocol / 352
+supported-smoke+strict targets. The implementation conditionally propagates
+requester-child `busy_insertion`; child insertion plus aggregate
+`parks_on=[busy]` is the canonical paired report, with no duplicated top
+summary. Focused t/1513/Verilator proof must cover the five presentations, held
+requester/subordinate state and storage on BUSY, four data beats, OKAY/zero
+remaining, and final `32'h44332211`. Generic `.ppif` ships first; alias and
+two-subordinate variants remain deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

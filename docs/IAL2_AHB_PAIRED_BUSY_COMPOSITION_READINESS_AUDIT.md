@@ -240,3 +240,13 @@ Rollback is documentation-only: remove this audit and its Knowledge Map fact,
 restore `.792` as the active frontier, and revert README, roadmap, mdBook,
 task-tree, Memory, and generated Knowledge Map entries. No runtime behavior is
 affected.
+
+## Contract Outcome
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.793` now selects `.794`, direct
+implementation of
+`ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif`.
+The selected report uses requester-child `busy_insertion` plus existing
+aggregate `parks_on = [busy]` without a duplicated top summary; focused t/1513
+and its Verilator harness own the exact end-to-end proof. The canonical contract
+is `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md`.

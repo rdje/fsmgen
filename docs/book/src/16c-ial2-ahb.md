@@ -1262,6 +1262,19 @@ public debug ports. `.793` must name and freeze that one-`.ppif`,
 one-subordinate contract before implementation; matching alias and
 two-subordinate variants remain deferred.
 
+`.793` freezes that contract for `.794`. The new generic source will be
+`ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif`,
+generating the existing `ahb_tb` top from the BUSY requester, BUSY-parking
+subordinate, and interconnect artifacts. Aggregate requester-child JSON gains
+the endpoint's `busy_insertion` block; together with existing
+`composition.seq_policy_propagation.*.parks_on = [busy]`, that is the complete
+paired report—there is no redundant top summary. Focused t/1513 and its
+Verilator harness must prove the five transfer presentations, held requester
+and subordinate state/storage on BUSY, resumed `SEQ`, four accepted data beats,
+OKAY completion, zero remaining, and final register value `32'h44332211`.
+Generic `.ppif` ships first; matching `.ahb` and the two-subordinate sibling
+remain deferred.
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB

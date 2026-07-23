@@ -35,3 +35,9 @@ selection for one generic `.ppif` one-subordinate composition, report shape,
 support identity, and exact runtime test. The alias, two-subordinate sibling,
 broader BUSY policies/status, larger bursts, optional signals, backends,
 AXI/APB, and VHDL remain deferred. Decision `0020` remains proposed/inactive.
+
+`.793` subsequently selected
+`ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif`
+for `.794` implementation. Fact
+`ial2-ahb-paired-busy-composition-contract-selection` owns the exact source,
+support, report, t/1513/runtime, accounting, and preservation contract.
