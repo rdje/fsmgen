@@ -10647,6 +10647,18 @@ optional `busy_insertion` block from aggregate JSON, so `.792` must settle
 report propagation and exact end-to-end runtime proof before implementation.
 Decision 0020 remains proposed/inactive.
 
+Paired AHB BUSY composition readiness audit:
+[IAL2_AHB_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT](../../IAL2_AHB_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md)
+documents `.792`, which confirms the one-subordinate aggregate is
+implementation-ready after contract selection and advances to `.793`. Existing
+endpoint/interconnect/top machinery generates the full composition; only an
+additive conditional aggregate-child clone of requester `busy_insertion` is
+needed. The generated top already has sufficient command/status and
+deterministic internal bus/subordinate observation points for held-BUSY,
+parked-context, resumed-SEQ, four-beat, and final-storage proof. `.793` must
+freeze the generic `.ppif` source/support/report/runtime contract; alias and
+two-subordinate siblings remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

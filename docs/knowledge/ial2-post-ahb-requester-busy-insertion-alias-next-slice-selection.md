@@ -34,3 +34,9 @@ one-subordinate source/identity boundary, and exact generated-HDL end-to-end
 proof before implementation. Larger BUSY policies, local bus-BUSY status,
 multi-word/larger bursts, optional signals, backends, AXI/APB, and VHDL remain
 deferred. Decision `0020` remains proposed/inactive.
+
+`.792` subsequently confirmed the composition path is implementation-ready
+after contract selection: no parser/endpoint/wiring/top substrate repair is
+needed, and the report omission is a narrow conditional child-field clone.
+Fact `ial2-ahb-paired-busy-composition-readiness-audit` owns that outcome and
+the `.793` contract-selection handoff.

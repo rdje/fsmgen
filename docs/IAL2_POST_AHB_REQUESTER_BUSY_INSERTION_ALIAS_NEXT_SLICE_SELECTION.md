@@ -165,3 +165,13 @@ Rollback is documentation-only: remove this selector and its Knowledge Map fact
 card, restore `.791` as the active frontier, and revert the README, roadmap,
 mdBook, task-tree, Memory, and generated Knowledge Map entries. No runtime
 behavior is affected.
+
+## Audit Outcome
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.792` confirmed the candidate composition
+needs no parser, endpoint-generator, wiring, top, or HDL substrate repair and
+selected `.793`, the public contract selection. The audit routes the narrow
+aggregate requester-child `busy_insertion` propagation delta into that contract
+and proves the generated top has sufficient command/status and deterministic
+internal observation points for an end-to-end runtime harness. The canonical
+audit is `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md`.

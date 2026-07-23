@@ -1250,6 +1250,18 @@ must settle whether and how to propagate it and freeze the exact generated-HDL
 proof that BUSY consumes no data beat, the subordinate retains burst context,
 the same `SEQ` beat resumes, and exactly four data beats complete.
 
+`.792` confirms there is no deeper substrate gap and selects `.793`, a
+no-behavior public contract selection. The source can reuse the existing
+one-subordinate aggregate shape; endpoint generation, bus wiring, and the
+`ahb_tb` structural top already compose. The required report change is a
+conditional clone of requester `busy_insertion` in the aggregate child view,
+which leaves base-requester aggregates unchanged. A generated-HDL harness can
+drive the top's existing command ports and observe its deterministic internal
+requester bus plus subordinate continuation/storage state, without adding
+public debug ports. `.793` must name and freeze that one-`.ppif`,
+one-subordinate contract before implementation; matching alias and
+two-subordinate variants remain deferred.
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB

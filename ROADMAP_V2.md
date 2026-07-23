@@ -6828,6 +6828,19 @@ aggregate `parks_on = [busy]`. It also finds a public reporting gap:
 propagation, source/support identity, and the exact end-to-end generated-HDL
 proof before implementation. Decision 0020 stays proposed/inactive.
 
+`.792` confirms that candidate is implementation-ready after a public contract
+selection and advances to `.793`. The current parser and requester/subordinate/
+interconnect/top generators already compose the endpoints and emit
+`amba_requester_busy_insert`, HBURST-aware subordinate, interconnect, and
+`ahb_tb` review artifacts. The only required code delta found is the additive
+conditional propagation of requester `busy_insertion` through
+`AhbInterconnect::_child_report`; base aggregates remain structurally
+unchanged. Generated `ahb_tb` exposes command/status ports and deterministic
+internal bus/subordinate observation points for exact held-BUSY/parked-context/
+resumed-SEQ/four-beat/final-storage proof. `.793` must freeze one generic
+`.ppif`, one subordinate, its source/support/report/runtime contract, with alias
+and two-subordinate siblings deferred. Decision 0020 remains inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
