@@ -612,6 +612,34 @@ receive policy, last/length validation, response interpretation, capacity and
 outstanding integration, back-to-back buffering, and extended R sidebands
 remain explicit future work.
 
+### Selected next read-side increment
+
+With both physical read-channel primitives shipped, the next selected bounded
+increment is a fixed-single-beat AR+R full-read composition. Its readiness
+audit is task-tree leaf `.32`; no public composition syntax or behavior ships
+yet.
+
+The selected direction will reuse the AR driver and R acceptor unchanged under
+a new coordinator and a flat three-child structural top. One aligned
+address32/ID4 command will privately drive `ARLEN=0`, `ARSIZE=2`, and
+`ARBURST=INCR`, issue one AR request, arm R only after AR acceptance, and
+retire after exactly one captured R beat. This makes the one-beat completion
+claim structurally honest without narrowing the standalone dynamic AR source.
+
+The intended completion boundary remains explicit: request-done is the AR
+handshake; transaction-done is the later owned R-beat retirement. Raw RRESP
+does not imply success. RID mismatch or missing RLAST must be visible through
+status/assertion and terminal after the consumed beat, rather than hanging for
+a replacement beat that the fixed request cannot legally produce. The
+readiness audit must prove these semantics, constant wiring, alignment guard,
+captured-result fanout, reset, and exactly-once generated-HDL behavior before a
+following public-contract leaf.
+
+Dynamic or multi-beat reads, ARLEN/RLAST counters, RRESP aggregation,
+capacity/status adapter wiring, multiple outstanding and back-to-back reads,
+ID queues/demux/interleaving, aliases, and decision 0020's protocol-neutral
+transaction interface remain separate later directions.
+
 ## More-Control Mode
 
 Move to manager capacity/status when the user needs AXI manager-level control
