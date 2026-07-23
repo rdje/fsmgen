@@ -553,8 +553,13 @@ prototype proves 13 ports, six states, three arm assignments, seven acceptance
 assignments, three accept-over-arm priorities, Verilator/Yosys validation, and
 exactly three handshakes/three done pulses across unarmed, held/delayed valid,
 busy-command, reset, and post-reset scenarios. Public spelling and schema are
-now owned by the active contract-selection leaf; none of this is shipped R
-behavior yet.
+now fixed by the selected `(axi-r-beat-acceptor ...)` contract. The planned
+public source is `ppif/axi_r_beat_acceptor.ppif`; its report schema is
+`fsmgen.ial2.protocol_intent.axi_r_beat_acceptor.v1`, and its `bounded_beat`
+block records `done_event = r_beat_accepted` plus
+`includes_read_completion = false`. The active implementation leaf owns the
+additive source, generator, accounting, t/1505, and runnable commands; none of
+this is shipped R behavior yet.
 
 The scope is deliberately one **beat**, not one full read transaction. Raw
 RLAST is captured but not assumed high; the primitive does not validate ARLEN,
