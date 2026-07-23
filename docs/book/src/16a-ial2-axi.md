@@ -465,6 +465,29 @@ profile-alias spelling remains fail-closed; this first composition surface is
 generic `.ppif` only. Decision 0020's protocol-neutral transaction interface
 also remains a director-gated future direction.
 
+### Selected next initiator increment
+
+With the bounded single-beat write path complete through B retirement, the
+next selected increment is a standalone AXI4 manager read-address (AR) driver.
+It will mirror the corrected AW-driver architecture: capture one idle local
+command, assert ARVALID independently of ARREADY, hold the selected AR payload
+stable through backpressure, transfer exactly once, and report address-request
+issue rather than read-transaction completion.
+
+The active readiness audit must still fix the exact AR payload and public
+contract before implementation. The expected comparison point is
+address32/ID4/LEN8/SIZE3/BURST2, but source anchors, extended-attribute residue,
+signal spelling, schedule reuse, and generated-HDL proof remain audit outputs.
+RREADY, RID/RDATA/RRESP/RLAST capture, ARID/RID correlation, and full read
+completion are deliberately separate later increments.
+
+This selection also keeps larger alternatives deferred. Capacity/status
+integration needs an explicit physical-to-abstract event/ID adapter and an
+outstanding policy; multi-beat or back-to-back writes need queues, counters,
+and ordering; expanding the `.axi` alias adds spelling rather than bus-driving
+behavior; and decision 0020's protocol-neutral transaction interface remains
+director-gated.
+
 ## More-Control Mode
 
 Move to manager capacity/status when the user needs AXI manager-level control
