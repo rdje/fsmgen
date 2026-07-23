@@ -612,28 +612,41 @@ receive policy, last/length validation, response interpretation, capacity and
 outstanding integration, back-to-back buffering, and extended R sidebands
 remain explicit future work.
 
-### Selected next read-side increment
+### Read-side composition ready for contract selection
 
-With both physical read-channel primitives shipped, the next selected bounded
-increment is a fixed-single-beat AR+R full-read composition. Its readiness
-audit is task-tree leaf `.32`; no public composition syntax or behavior ships
-yet.
+With both physical read-channel primitives shipped, the next bounded increment
+is a fixed-single-beat AR+R full-read composition. Its behavior-neutral
+readiness audit now passes; no public composition syntax or runtime behavior
+ships yet. Exact public-contract selection is the next task-tree leaf.
 
-The selected direction will reuse the AR driver and R acceptor unchanged under
-a new coordinator and a flat three-child structural top. One aligned
-address32/ID4 command will privately drive `ARLEN=0`, `ARSIZE=2`, and
-`ARBURST=INCR`, issue one AR request, arm R only after AR acceptance, and
-retire after exactly one captured R beat. This makes the one-beat completion
+The proven architecture reuses the AR driver and R acceptor unchanged under a
+new zero-state, seven-rule coordinator and a flat three-child C4 structural
+top. One aligned address32/ID4 command privately drives `ARLEN=0`, `ARSIZE=2`,
+and `ARBURST=INCR`, issues one AR request, arms R only after AR acceptance, and
+retires after exactly one captured R beat. This makes the one-beat completion
 claim structurally honest without narrowing the standalone dynamic AR source.
 
-The intended completion boundary remains explicit: request-done is the AR
-handshake; transaction-done is the later owned R-beat retirement. Raw RRESP
-does not imply success. RID mismatch or missing RLAST must be visible through
-status/assertion and terminal after the consumed beat, rather than hanging for
-a replacement beat that the fixed request cannot legally produce. The
-readiness audit must prove these semantics, constant wiring, alignment guard,
-captured-result fanout, reset, and exactly-once generated-HDL behavior before a
-following public-contract leaf.
+The structural probe strict-checks with 27 public signals, three generated FSM
+children, 41 nets, and 44 resolved links. Sized constants reach the AR child,
+while captured RID and RLAST safely fan out from the R child to both public
+result ports and coordinator checks. Generated SystemVerilog passes Verilator
+lint and Yosys synthesis.
+
+The completion boundary is explicit: request-done is the accepted AR request;
+transaction-done is the later owned R-beat retirement. Raw RID4/RDATA32/
+RRESP2/RLAST1 stays observable, and RRESP does not imply success. RID mismatch
+or missing RLAST sets stable match status low and trips a generated assertion,
+but remains terminal after the consumed beat instead of hanging for an
+impossible replacement.
+
+Executable generated-HDL proof covers misalignment non-launch, fixed metadata,
+stalled and continuous ARREADY, stable payload under input mutation, a busy
+command, already-high and delayed RVALID, raw non-OKAY capture, terminal RID
+and RLAST errors, reset during both a stalled AR and an armed R wait, and
+post-reset recovery. It ends idle at exact counts `AR=5`, `R=4`,
+`request-done=5`, and `transaction-done=4`; the one-count difference proves
+that reset after AR completion cancels response ownership without fabricating
+an R handshake or full completion.
 
 Dynamic or multi-beat reads, ARLEN/RLAST counters, RRESP aggregation,
 capacity/status adapter wiring, multiple outstanding and back-to-back reads,
