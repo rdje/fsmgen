@@ -147,8 +147,11 @@ supported-smoke/strict entries.
 
 ## Explicit Deferrals
 
-The matching `.ahb` alias, a two-subordinate paired sibling, policy/runtime or
-multi-BUSY insertion, a distinct local bus-BUSY status, true pipelined active
+The matching `.ahb` alias now ships as the byte-identical profile surface
+documented in
+`docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md`. A
+two-subordinate paired sibling, policy/runtime or multi-BUSY insertion, a
+distinct local bus-BUSY status, true pipelined active
 transfer admission, halfword/word burst `SEQ`, wider or indefinite bursts,
 multi-word/register-bank behavior, optional AHB signals, broader AHB manager
 behavior, direct backend, verification-output generation, backend-language

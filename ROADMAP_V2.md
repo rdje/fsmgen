@@ -6815,7 +6815,8 @@ module, and uses existing suffix-keyed cleanup to remove only
 Focused t/1512 proves source/artifact/report/CLI/support parity; t/1498 retains
 runtime proof. Current accounting is 310 protocol / 351 supported-smoke and
 strict entries. Policy/runtime/multi-beat BUSY, distinct local bus-BUSY status,
-paired composition, and larger requester behavior remain deferred.
+two-subordinate paired composition, and larger requester behavior remain
+deferred. The one-subordinate paired generic source and alias ship below.
 
 `.791` selects `.792`, a no-behavior readiness audit for the smallest paired
 requester/subordinate BUSY composition: one shipped BUSY-inserting requester
@@ -6871,23 +6872,23 @@ interconnect instance `fabric`, and omitted the zero-base unsigned lower-bound
 tautology. Public `--verify-hdl` and focused preservation pass; accounting is
 311 protocol / 352 supported-smoke and strict. Proposed inactive audits own
 true boundary-free active-transfer pipelining and cross-protocol reserved
-instance identifiers. `.795` is the next no-behavior AHB selector; decision
+instance identifiers. `.795` then selects the matching alias below; decision
 0020 remains proposed/inactive until ongoing active work dries out.
 
-`.795` selects `.796`, direct data-only implementation of matching profile
-alias
+`.795` selected `.796`; `.796` now ships matching profile alias
 `ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ahb`.
-An in-memory `.ahb`-label probe preserves the exact requester/subordinate/
+It is a byte-identical mirror of the generic source. The exact requester/subordinate/
 interconnect/top artifacts, requester-child `busy_insertion`, aggregate
-`parks_on=[busy]`, and bounded residue while current suffix handling removes
-only aggregate/requester/subordinate alias residue. The alias therefore needs
-no parser or generator change: it is a second public source surface for the
-same generated architecture. `.796` targets support identity
+`parks_on=[busy]`, and bounded residue are preserved while current suffix
+handling removes only aggregate/requester/subordinate alias residue. No parser
+or generator changed: it is a second public source surface for the same
+generated architecture. Support identity is
 `intent.ahb_profile_alias_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park`,
 coverage
 `ial2_ahb_profile_alias_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park_pipeline_cli`,
-312 protocol / 353 supported-smoke+strict entries, focused t/1514 alias proof,
-and continued t/1513 runtime proof. Two-subordinate paired behavior and broader
+with 312 protocol / 353 supported-smoke+strict entries. Focused t/1514 proves
+alias parity and public surfaces; t/1513 retains runtime proof. Two-subordinate
+paired behavior and broader
 BUSY/status/burst work remain deferred; decision 0020 and the proposed audits
 remain inactive.
 

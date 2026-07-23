@@ -5773,8 +5773,10 @@ only `ahb_profile_alias_deferred`; no adapter or generator changed. Focused
 t/1512 proves source and generated-artifact parity plus check/schedule/semantic/
 outdir/HDL/support surfaces, while t/1498 retains runtime proof. Current
 accounting is 310 protocol / 351 supported-smoke and strict entries.
-Policy/runtime/multi-beat BUSY, distinct local bus-BUSY status, paired
-composition, and larger requester behavior remain deferred.
+Policy/runtime/multi-beat BUSY, distinct local bus-BUSY status,
+two-subordinate paired composition, and larger requester behavior remain
+deferred. The one-subordinate paired generic source and matching alias are
+described below.
 `.791` selects `.792`, a no-behavior readiness audit for the smallest paired
 requester/subordinate BUSY composition: reuse the BUSY-inserting requester and
 the one-subordinate aggregate whose HBURST-aware byte-lane child parks BUSY. A
@@ -5820,8 +5822,22 @@ counted one-cycle repetitions; the generated interconnect instance is legal
 public paired source passes `--verify-hdl`; accounting is 311 protocol / 352
 supported-smoke and strict. True boundary-free active-transfer pipelining and
 cross-protocol reserved instance-name policy are durably recorded in proposed,
-inactive audits. `.795` owns the next no-behavior AHB selector; decision 0020
+inactive audits. `.795` then selects the matching alias below; decision 0020
 remains proposed/inactive until all ongoing active work dries out.
+`.795` selected `.796`; `.796` now ships
+`ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ahb`
+as a byte-identical profile-alias mirror of the generic paired source. It
+support-accounts as
+`intent.ahb_profile_alias_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park`
+with coverage
+`ial2_ahb_profile_alias_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park_pipeline_cli`,
+module `ahb_tb`, child count 3, semantic root `top`. The alias preserves the
+same IAL1/IAL0 artifacts, requester-child `busy_insertion`, aggregate
+`parks_on=[busy]`, and t/1513 runtime behavior while existing suffix handling
+removes only alias residue. Focused t/1514 proves parity, CLI/report/artifact/
+support surfaces, diagnostics, and `--verify-hdl`. Accounting is 312 protocol /
+353 supported-smoke and strict. `.ppif` and `.ahb` are two public source
+surfaces over one generator architecture, not separate generators.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8474,6 +8490,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md` — records the `.793` exact contract for `.794`: one additive generic `.ppif` aggregate, requester-child `busy_insertion` plus aggregate `parks_on=[busy]`, support/accounting identities, t/1513 generated-HDL proof through final `32'h44332211` storage, preservation, and deferred alias/two-subordinate variants.
 - `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md` — documents the `.794` shipped paired generic AHB BUSY aggregate, conditional requester-child `busy_insertion`, subordinate/aggregate `parks_on=[busy]`, generated phase-ownership prerequisites, clean public HDL verification, t/1513 runtime proof, support accounting, preservation, and explicit pipeline/alias/two-subordinate deferrals.
 - `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.795` selection of `.796`, data-only implementation of the matching paired-BUSY `.ahb` profile alias; the alias is a second public source surface for the same generated architecture, not another generator, and reuses t/1513 runtime behavior while t/1514 owns alias parity/CLI proof.
+- `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.796` shipped paired-BUSY `.ahb` profile alias, byte-identical `.ppif` parity, one shared generator/lowering architecture, support identity, alias-only residue cleanup, t/1514 public-surface proof, and retained t/1513 runtime proof.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

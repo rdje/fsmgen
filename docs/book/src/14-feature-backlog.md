@@ -10619,7 +10619,7 @@ same beat as `SEQ`. The report adds `busy_insertion` and
 beats, diagnostics, CLI/report/support surfaces, and base-requester preservation.
 `.788` closed at 309 protocol / 350 supported-smoke and strict entries. The
 matching `.ahb` alias now ships; policy/runtime/multi-beat BUSY, a distinct local
-bus-BUSY status, paired alias/two-subordinate variants, larger burst progression,
+bus-BUSY status, two-subordinate paired behavior, larger burst progression,
 optional signals, broader AHB, backend variants, AXI/APB, and VHDL remain
 deferred. The first generic paired composition now ships below.
 
@@ -10687,22 +10687,28 @@ with a concurrent rule, use width-safe counted wait cycles, select HDL-safe
 interconnect instance `fabric`, and omit the tautological zero-base lower bound.
 The public source passes `--verify-hdl`; accounting is 311 protocol / 352
 supported-smoke and strict. True boundary-free active-transfer pipelining,
-paired alias/two-subordinate variants, and broader BUSY policy remain deferred.
+two-subordinate paired behavior and broader BUSY policy remain deferred. The
+matching one-subordinate alias ships below.
 
 Paired AHB BUSY composition profile-alias contract:
 [IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md)
-documents `.795`, which selects `.796`, direct data-only implementation of the
-matching
+documents `.795`, which selected `.796`; `.796` now ships the matching
 `ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ahb`
-profile alias. An in-memory reserved-label probe preserves the exact generated
+profile alias. The byte-identical source preserves the exact generated
 IAL1/IAL0 artifacts, requester-child `busy_insertion`, subordinate/aggregate
 `parks_on = [busy]`, and bounded support residue while existing suffix handling
 removes only aggregate/requester/subordinate alias residue. The `.ppif` and
 `.ahb` files are two public source surfaces for one generator architecture,
-not two generators. `.796` targets support 312 protocol / 353 supported-smoke
-and strict, focused t/1514 alias proof, and continued t/1513 runtime proof.
+not two generators. Support is now 312 protocol / 353 supported-smoke and
+strict; focused t/1514 proves alias public surfaces and t/1513 retains runtime.
 Two-subordinate paired behavior, broader BUSY/status/burst work, proposed
 audits, and decision 0020 remain deferred or inactive.
+
+Paired AHB BUSY composition profile-alias behavior:
+[IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR](../../IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md)
+documents the `.796` shipped alias, exact source/artifact/report parity,
+support identity, alias-only residue cleanup, commands, validation, and
+explicit deferrals.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
