@@ -10,7 +10,7 @@ answers:
 date: 2026-07-23
 status: current
 tags: [ial2, ahb, requester, busy, profile-alias, contract, selector]
-evidence: docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_CONTRACT_SELECTION.md; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md; ppif/ahb_requester_busy_insert.ppif; ppif/ahb_requester.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1474-ial2-ahb-profile-alias.t; t/1498-ial2-ahb-requester-busy-insert.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
+evidence: docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_CONTRACT_SELECTION.md; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md; ppif/ahb_requester_busy_insert.ppif; ppif/ahb_requester_busy_insert.ahb; ppif/ahb_requester.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1474-ial2-ahb-profile-alias.t; t/1498-ial2-ahb-requester-busy-insert.t; t/1512-ial2-ahb-requester-busy-insert-profile-alias.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
 reverify: perl -Iperl -MFSM::Adapter::IAL2::PPIF -e 'local $/; open my $fh, "<", "ppif/ahb_requester_busy_insert.ppif" or die $!; my $r = FSM::Adapter::IAL2::PPIF->new()->parse_source(<$fh>, "ppif/ahb_requester_busy_insert.ahb"); my %x = map { $_->{id} => 1 } @{$r->{report}{unsupported_residue}}; die "alias residue\n" if $x{ahb_profile_alias_deferred}; die "missing BUSY support\n" unless $x{ahb_requester_busy_insert_support}; print "requester BUSY alias ready\n";'
 ---
 
@@ -27,8 +27,10 @@ The alias will support-account as
 removes only `ahb_profile_alias_deferred`; no adapter or generator change is
 needed.
 
-`.790` is data-only: add the alias fixture, support/language/capability/test
-entries, behavior/public docs, and closeout evidence. Paired composition,
+`.790` is data-only and now ships the alias fixture,
+support/language/capability/test entries, behavior/public docs, and closeout
+evidence. Fact `ial2-ahb-requester-busy-insertion-profile-alias-behavior` owns
+the shipped result. Paired composition,
 broader BUSY policies, runtime insertion, local bus-BUSY status, larger burst
 progression, optional signals, backend variants, AXI/APB, and VHDL remain
 deferred. Decision 0020 remains proposed/inactive.

@@ -10617,21 +10617,24 @@ same beat as `SEQ`. The report adds `busy_insertion` and
 `ial2_ppif_ahb_requester_busy_insert_pipeline_cli`. Focused t/1498 proves
 `NONSEQ(0) → SEQ(1) → BUSY(2 held) → SEQ(2 resumed) → SEQ(3)`, exact four data
 beats, diagnostics, CLI/report/support surfaces, and base-requester preservation.
-Current corpus accounting is 309 protocol / 350 supported-smoke and strict
-entries. The matching `.ahb` alias, policy/runtime/multi-beat BUSY, a distinct
-local bus-BUSY status, paired composition, larger burst progression, optional
-signals, broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
+`.788` closed at 309 protocol / 350 supported-smoke and strict entries. The
+matching `.ahb` alias now ships; policy/runtime/multi-beat BUSY, a distinct local
+bus-BUSY status, paired composition, larger burst progression, optional signals,
+broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
 
 AHB requester BUSY-insertion profile-alias contract:
 [IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_CONTRACT_SELECTION.md)
-documents `.789`, which selects `.790` to add the matching
+documents `.789`, which selected `.790`; `.790` now ships the matching
 `ppif/ahb_requester_busy_insert.ahb` alias as a byte-identical mirror of the
-generic source. The selected alias is data-only: existing `.ahb` parsing already
-preserves the BUSY report and generated artifacts while removing only
-`ahb_profile_alias_deferred`. Its selected support identity is
+generic source. Existing `.ahb` parsing preserves the BUSY report and generated
+artifacts while removing only `ahb_profile_alias_deferred`. Its support identity
+is
 `intent.ahb_profile_alias_requester_busy_insert` with coverage
 `ial2_ahb_profile_alias_requester_busy_insert_pipeline_cli`; parser/generator
-behavior remains unchanged.
+behavior remains unchanged. The canonical result is
+[IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR](../../IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR.md).
+Focused t/1512 proves alias parity/CLI/artifacts/support, t/1498 retains runtime
+proof, and current accounting is 310 protocol / 351 supported-smoke and strict.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -1217,19 +1217,22 @@ the insertion index, and the `single` bound. The source generates
 `amba_requester_busy_insert.isf`, then `.fsm`, then HDL module
 `amba_requester_busy_insert`; it is support-accounted as
 `intent.ppif_ahb_requester_busy_insert`. The base requester and its `.ahb` alias
-remain BUSY-insertion free. A matching `.ahb` alias, runtime/policy-driven or
-multi-beat BUSY throttling, a separate local bus-BUSY status output, and paired
-requester/subordinate composition remain deferred.
+remain BUSY-insertion free. The matching additive alias
+`ppif/ahb_requester_busy_insert.ahb` now ships with identical generated
+behavior. Runtime/policy-driven or multi-beat BUSY throttling, a separate local
+bus-BUSY status output, and paired requester/subordinate composition remain
+deferred.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.789` selects `.790`, direct data-only
-implementation of the matching
-`ppif/ahb_requester_busy_insert.ahb` profile alias. It will mirror the generic
-source byte-for-byte, preserve the `busy_insertion` report and generated
-`amba_requester_busy_insert.isf`/`.fsm`/HDL module, and use existing `.ahb`
-suffix handling to remove only `ahb_profile_alias_deferred`. The selected
-support identity is `intent.ahb_profile_alias_requester_busy_insert` with
-coverage `ial2_ahb_profile_alias_requester_busy_insert_pipeline_cli`; no parser
-or generator change is selected.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.789` selected `.790`, which now ships the
+matching `ppif/ahb_requester_busy_insert.ahb` profile alias. It mirrors the
+generic source byte-for-byte, preserves the `busy_insertion` report and generated
+`amba_requester_busy_insert.isf`/`.fsm`/HDL module, and uses existing `.ahb`
+suffix handling to remove only `ahb_profile_alias_deferred`. Its support
+identity is `intent.ahb_profile_alias_requester_busy_insert` with coverage
+`ial2_ahb_profile_alias_requester_busy_insert_pipeline_cli`; no parser or
+generator changed. Use the alias by substituting the `.ahb` path in the commands
+above. Focused t/1512 proves source/artifact/report/CLI/support parity, and
+t/1498 retains generated-HDL runtime proof.
 
 ## Subordinate Source Shape
 

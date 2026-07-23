@@ -181,3 +181,13 @@ Rollback is documentation-only: remove this selector and its Knowledge Map
 fact card, restore the `.789` frontier, and revert README/ROADMAP_V2/mdBook,
 task-tree, Memory, and generated Knowledge Map entries. No runtime behavior is
 affected.
+
+## Implementation Outcome
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.790` now ships the selected alias exactly at
+`ppif/ahb_requester_busy_insert.ahb`, support-accounted as
+`intent.ahb_profile_alias_requester_busy_insert`. The canonical behavior record
+is `docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR.md`; focused
+t/1512 proves byte parity, CLI/semantic/artifact/report surfaces, alias-only
+residue cleanup, and preservation, while t/1498 retains the shared
+generated-HDL runtime proof.

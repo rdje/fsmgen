@@ -76,7 +76,7 @@ busy_insertion.before_beat          = 2
 busy_insertion.beats                 = single
 ```
 
-The source also carries `ahb_requester_busy_insert_support`, recording the
+The generic source also carries `ahb_requester_busy_insert_support`, recording the
 shipped one-held-presentation subset and deferring multi-beat/policy-driven
 throttling, runtime insertion points, and broader requester BUSY behavior.
 
@@ -91,6 +91,10 @@ HDL module:      amba_requester_busy_insert
 
 The support corpus moves from 308 to 309 protocol fixtures and from 349 to 350
 supported-smoke/strict-supported entries at this slice's current baseline.
+The matching `.ahb` alias shipped later in `.790` as
+`intent.ahb_profile_alias_requester_busy_insert`, moving the current corpus to
+310 protocol / 351 supported-smoke and strict entries; its canonical alias
+record is `docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR.md`.
 
 ## Runtime Proof
 
@@ -116,11 +120,12 @@ support accounting, and preservation of the base requester.
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester_busy_insert.ppif
 ./bin/fsmgen --quiet --outdir generated/ial2-ahb-requester-busy-insert ppif/ahb_requester_busy_insert.ppif
 ./bin/fsmgen --quiet --strict --verify-hdl ppif/ahb_requester_busy_insert.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester_busy_insert.ahb
 ```
 
 ## Explicit Deferrals
 
-The matching `.ahb` alias, paired requester/subordinate composition example,
+The matching `.ahb` alias now ships. Paired requester/subordinate composition,
 multi-beat or policy-driven BUSY throttling, runtime-selected insertion point,
 distinct `local-status.bus_busy`, halfword/word burst `SEQ`, wider/indefinite
 bursts, multi-word/register-bank progression, optional AHB signals, broader AHB

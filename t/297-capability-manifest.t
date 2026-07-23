@@ -3445,6 +3445,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
+        qr/requester profile-alias family includes the base requester and the additive requester single BUSY-beat insertion source; ppif\/ahb_requester_busy_insert\.ahb mirrors ppif\/ahb_requester_busy_insert\.ppif and generates amba_requester_busy_insert/,
+        'manifest records the requester BUSY-insertion .ahb profile alias',
+    );
+    like(
+        $file_surface_by_suffix{'.ahb'}{current_boundary},
         qr/bounded public \.ahb is the AHB requester, word-only subordinate, byte-lane\/narrow-transfer subordinate, byte-lane in-word SEQ subordinate, HBURST-aware byte-lane in-word SEQ subordinate, HBURST-aware byte-lane in-word SEQ subordinate with BUSY-in-burst parking, one-requester\/one-subordinate aggregate interconnect, selected one-requester\/two-subordinate aggregate interconnect, selected one-requester\/one-subordinate aggregate byte-lane interconnect, selected one-requester\/two-subordinate aggregate byte-lane interconnect, selected one-requester\/one-subordinate aggregate byte-lane in-word SEQ interconnect, selected one-requester\/two-subordinate aggregate byte-lane in-word SEQ interconnect, selected one-requester\/one-subordinate aggregate HBURST-aware byte-lane SEQ interconnect, selected one-requester\/two-subordinate aggregate HBURST-aware byte-lane SEQ interconnect, selected one-requester\/one-subordinate aggregate HBURST-aware byte-lane SEQ interconnect with BUSY-in-burst parking, and selected one-requester\/two-subordinate aggregate HBURST-aware byte-lane SEQ interconnect with BUSY-in-burst parking profile-alias suffix/,
         'manifest describes .ahb as the bounded AHB requester, subordinate, aggregate interconnect, aggregate byte-lane, and aggregate byte-lane SEQ profile-alias suffix',
     );

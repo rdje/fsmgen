@@ -6801,19 +6801,21 @@ BUSY residue. Support identity `intent.ppif_ahb_requester_busy_insert` uses
 coverage `ial2_ppif_ahb_requester_busy_insert_pipeline_cli`; t/1498 proves the
 generated-HDL `NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`
 sequence, exact four accepted beats, diagnostics, CLI/report/support surfaces,
-and base requester preservation. Current accounting is 309 protocol / 350
-supported-smoke and strict entries. Matching `.ahb`, policy/runtime/multi-beat
-BUSY, distinct local bus-BUSY status, paired composition, and larger requester
-behavior remain deferred.
+and base requester preservation. `.788` closed at 309 protocol / 350
+supported-smoke and strict entries.
 
-`.789` selects `.790`, direct data-only implementation of the matching
-`ppif/ahb_requester_busy_insert.ahb` profile alias. The alias must mirror the
-generic requester BUSY-insertion source byte-for-byte, support-account as
+`.789` selected the matching profile alias; `.790` now ships
+`ppif/ahb_requester_busy_insert.ahb` as a byte-identical mirror of the generic
+requester BUSY-insertion source. It support-accounts as
 `intent.ahb_profile_alias_requester_busy_insert` with coverage
-`ial2_ahb_profile_alias_requester_busy_insert_pipeline_cli`, preserve the
+`ial2_ahb_profile_alias_requester_busy_insert_pipeline_cli`, preserves the
 `busy_insertion` report and `amba_requester_busy_insert` review artifacts/HDL
-module, and use existing suffix-keyed cleanup to remove only
+module, and uses existing suffix-keyed cleanup to remove only
 `ahb_profile_alias_deferred`. Parser/generator behavior does not change.
+Focused t/1512 proves source/artifact/report/CLI/support parity; t/1498 retains
+runtime proof. Current accounting is 310 protocol / 351 supported-smoke and
+strict entries. Policy/runtime/multi-beat BUSY, distinct local bus-BUSY status,
+paired composition, and larger requester behavior remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

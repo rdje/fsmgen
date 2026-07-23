@@ -11,7 +11,7 @@ answers:
 date: 2026-07-23
 status: current
 tags: [ial2, ahb, requester, busy, htrans, burst, ppif, behavior]
-evidence: ppif/ahb_requester_busy_insert.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1498-ial2-ahb-requester-busy-insert.t; t/data/ahb_requester_busy_insert_tb.svt; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
+evidence: ppif/ahb_requester_busy_insert.ppif; ppif/ahb_requester_busy_insert.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1498-ial2-ahb-requester-busy-insert.t; t/1512-ial2-ahb-requester-busy-insert-profile-alias.t; t/data/ahb_requester_busy_insert_tb.svt; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
 reverify: prove -Iperl t/1473-ial2-ahb-requester.t t/1498-ial2-ahb-requester-busy-insert.t t/248-regression-corpus-accounting.t t/297-capability-manifest.t && ./bin/fsmgen --quiet --strict --verify-hdl ppif/ahb_requester_busy_insert.ppif
 ---
 
@@ -33,6 +33,8 @@ Generated-HDL t/1498 proves the `INCR4` presentation sequence
 `NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`, unchanged
 pending fields/counters across BUSY, exactly four accepted data beats, and
 completion with zero remaining. The base requester and its `.ahb` alias remain
-BUSY-insertion free. Matching `.ahb`, policy/runtime/multi-beat BUSY, distinct
-local bus-BUSY status, paired composition, and broader requester behavior are
-deferred.
+BUSY-insertion free. The matching additive
+`ppif/ahb_requester_busy_insert.ahb` alias now ships with identical behavior;
+fact `ial2-ahb-requester-busy-insertion-profile-alias-behavior` owns its public
+surface. Policy/runtime/multi-beat BUSY, distinct local bus-BUSY status, paired
+composition, and broader requester behavior remain deferred.
