@@ -6874,6 +6874,23 @@ true boundary-free active-transfer pipelining and cross-protocol reserved
 instance identifiers. `.795` is the next no-behavior AHB selector; decision
 0020 remains proposed/inactive until ongoing active work dries out.
 
+`.795` selects `.796`, direct data-only implementation of matching profile
+alias
+`ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ahb`.
+An in-memory `.ahb`-label probe preserves the exact requester/subordinate/
+interconnect/top artifacts, requester-child `busy_insertion`, aggregate
+`parks_on=[busy]`, and bounded residue while current suffix handling removes
+only aggregate/requester/subordinate alias residue. The alias therefore needs
+no parser or generator change: it is a second public source surface for the
+same generated architecture. `.796` targets support identity
+`intent.ahb_profile_alias_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park`,
+coverage
+`ial2_ahb_profile_alias_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park_pipeline_cli`,
+312 protocol / 353 supported-smoke+strict entries, focused t/1514 alias proof,
+and continued t/1513 runtime proof. Two-subordinate paired behavior and broader
+BUSY/status/burst work remain deferred; decision 0020 and the proposed audits
+remain inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

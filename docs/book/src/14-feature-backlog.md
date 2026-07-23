@@ -10689,6 +10689,21 @@ The public source passes `--verify-hdl`; accounting is 311 protocol / 352
 supported-smoke and strict. True boundary-free active-transfer pipelining,
 paired alias/two-subordinate variants, and broader BUSY policy remain deferred.
 
+Paired AHB BUSY composition profile-alias contract:
+[IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md)
+documents `.795`, which selects `.796`, direct data-only implementation of the
+matching
+`ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ahb`
+profile alias. An in-memory reserved-label probe preserves the exact generated
+IAL1/IAL0 artifacts, requester-child `busy_insertion`, subordinate/aggregate
+`parks_on = [busy]`, and bounded support residue while existing suffix handling
+removes only aggregate/requester/subordinate alias residue. The `.ppif` and
+`.ahb` files are two public source surfaces for one generator architecture,
+not two generators. `.796` targets support 312 protocol / 353 supported-smoke
+and strict, focused t/1514 alias proof, and continued t/1513 runtime proof.
+Two-subordinate paired behavior, broader BUSY/status/burst work, proposed
+audits, and decision 0020 remain deferred or inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

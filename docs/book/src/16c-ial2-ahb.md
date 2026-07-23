@@ -1325,6 +1325,16 @@ decode emits only its upper bound, while nonzero-base windows retain both
 bounds. The paired `.ahb` alias, two-subordinate sibling, and broader BUSY/
 burst policies remain deferred.
 
+`.795` now selects `.796`, direct data-only implementation of the matching
+paired `.ahb` profile alias. The current adapter already accepts the generic
+source under the reserved alias label and preserves the same generated
+requester, subordinate, `fabric`, top, requester-child `busy_insertion`, and
+subordinate/aggregate `parks_on = [busy]`. Existing suffix handling removes
+only alias-specific residue. Thus the future `.ahb` file will not create a new
+generator or behavior; it will be a second public entrypoint into this same
+IAL2-to-IAL1-to-IAL0-to-HDL architecture. The alias is not shipped until `.796`
+completes, so the current source count and list above remain unchanged.
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB
