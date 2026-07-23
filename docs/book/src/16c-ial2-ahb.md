@@ -1479,6 +1479,25 @@ decision 0020, and the transaction-layer horizon remain deferred or inactive.
 See
 [IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION](../../IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md).
 
+> **Known requester WRAP defect (runtime-confirmed in `.1`):** the current
+> generated requester presents byte `WRAP4` addresses `3,1,2,3` for a command
+> starting at `3`, instead of required `3,0,1,2`. The request still completes
+> four transfers, but it skips the wrap-base beat.
+
+Focused t/1517 proves both the generated-state cause and the bus sequence. The
+generated IAL1/IAL0 path first writes `addr_q = wrap_base_q`, then a following
+numbered state re-evaluates the negated comparison against the mutated address
+and overwrites it with base-plus-step. `WRAP4`, `WRAP8`, and `WRAP16` share
+this path. Incrementing modes and the paired BUSY `INCR4` runtime proofs are not
+affected by this specific defect.
+
+`.2` is the selected repair owner. It will keep public sources, ports, reports,
+support counts, and artifact names stable while changing both the requester
+generator and direct seed to increment first, then replace an incremented
+`wrap_high_q` value with `wrap_base_q` before the next transfer. The audit
+commit itself changes no behavior. See
+[IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT](../../IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB

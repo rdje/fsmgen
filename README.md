@@ -5930,6 +5930,17 @@ prove or disprove it before any repair or broader AHB feature. It remains
 proposed until `.804` commits cleanly; decision 0020 and the transaction-layer
 horizon remain inactive.
 
+`IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.1` now runtime-confirms that
+defect. Focused t/1517 generates the public requester, builds it with
+Verilator, and issues byte `WRAP4` from address `3`: four transfers complete
+cleanly, but accepted addresses are `3,1,2,3` instead of required `3,0,1,2`.
+Generated IAL1 and numbered IAL0 states prove that wrap-to-base is followed by
+a re-test that overwrites base-plus-step. The common path serves
+`WRAP4`/`WRAP8`/`WRAP16`. `.2` is selected to repair both
+`AhbRequester.pm` and `fsm/amba_requester.fsm` with increment-then-wrap
+sequencing, then invert/extend t/1517 into a correctness regression. `.1`
+changes no shipped behavior or public/support/report contract.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8591,6 +8602,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.802` selection of `.803`, a byte-identical data-only `.ahb` alias with 314/355 accounting targets, t/1516 parity/public-surface proof, retained t/1515 runtime, existing alias-residue cleanup, and no new generator.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.803` shipped byte-identical `.ahb` alias, shared four-child generator architecture/runtime, exact support/artifact/report surfaces, alias-only residue cleanup, t/1516 proof, and 314/355 accounting.
 - `docs/IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md` — records the `.804` no-behavior selection of the canonical requester WRAP-progression audit, the sequential mutation/retest risk, the missing runtime WRAP4 address-sequence proof, deferred alternatives, and the clean-pivot activation boundary.
+- `docs/IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT.md` — records the `.1` generated-HDL proof that byte WRAP4 start 3 presents `3,1,2,3` instead of `3,0,1,2`, the numbered-state mutation/retest root cause shared by fixed wrapping modes, and the exact `.2` increment-then-wrap repair owner for the generator and direct seed.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

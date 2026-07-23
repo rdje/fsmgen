@@ -10792,6 +10792,17 @@ repair. Policy/multiple BUSY, distinct bus-BUSY status, larger bursts,
 boundary-free pipelining, and optional signals remain deferred. The audit is
 not activated until `.804` commits cleanly; decision 0020 remains inactive.
 
+Requester WRAP-progression runtime audit:
+[IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT](../../IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT.md)
+documents `.1`. Generated-HDL t/1517 proves byte `WRAP4` from address `3`
+presents `3,1,2,3`, not required `3,0,1,2`: a generated state writes
+`wrap_base_q`, then the next state re-tests the mutated address and overwrites
+base-plus-step. The common path serves WRAP4/8/16. `.2` owns the repair in both
+the IAL2 requester generator and direct requester seed, using increment first
+then wrap when the incremented address equals `wrap_high_q`; no public clause,
+report field, support entry, or artifact name changes. The audit itself changes
+no behavior.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
