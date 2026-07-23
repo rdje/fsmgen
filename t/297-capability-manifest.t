@@ -2901,6 +2901,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/bounded AXI manager AW\/W single-beat write-request composition source/,
+        'manifest advertises the bounded AXI manager AW/W single-beat write-request composition source',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/protocol-neutral valid-ready handshake sample/,
         'manifest advertises the protocol-neutral valid-ready handshake sample',
     );

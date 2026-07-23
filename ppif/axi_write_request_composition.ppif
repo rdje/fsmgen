@@ -1,0 +1,37 @@
+(protocol-platform-intent axi_write_request_composition
+  (profile axi4)
+  (source
+    (object axi-write-request-composition)
+    (anchor (document IHI0022_L_2025-08) (section A3.2.1) (page A3-40))
+    (anchor (document IHI0022_L_2025-08) (section A2.3) (page 29))
+    (anchor (document IHI0022_L_2025-08) (section A2.3.1) (page 30))
+    (anchor (document IHI0022_L_2025-08) (section A2.3.2.1) (page 31))
+    (anchor (document IHI0022_L_2025-08) (section A3.2.1) (page 53))
+    (anchor (document IHI0022_L_2025-08) (section A3.2.1.1) (page 54)))
+  (axi-write-request-composition axi_write_request_composition
+    (role manager-to-subordinate)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (command
+      (start write_cmd_valid)
+      (address cmd_awaddr width 32)
+      (id cmd_awid width 4)
+      (data cmd_wdata width 32)
+      (strobe cmd_wstrb width 4))
+    (aw-channel
+      (ready awready)
+      (valid awvalid)
+      (address awaddr width 32)
+      (id awid width 4)
+      (length awlen width 8)
+      (size awsize width 3)
+      (burst awburst width 2))
+    (w-channel
+      (ready wready)
+      (valid wvalid)
+      (data wdata width 32)
+      (strobe wstrb width 4)
+      (last wlast))
+    (status
+      (busy write_busy)
+      (done write_done))))

@@ -272,7 +272,9 @@ allowed only at the aggregate boundary and is mapped onto these internal pins:
     (input cmd_awid (width 4))
     (input cmd_wdata (width 32))
     (input cmd_wstrb (width 4))
+    (input aw_busy)
     (input aw_done)
+    (input w_busy)
     (input w_done)
     (output aw_cmd_valid)
     (output aw_cmd_awaddr (width 32))
@@ -292,7 +294,8 @@ allowed only at the aggregate boundary and is mapped onto these internal pins:
   (priority launch_join over clear_child_starts)
 
   (rule launch_join
-    (& (! active_q) write_cmd_valid (! cmd_awaddr[0]) (! cmd_awaddr[1]))
+    (& (! active_q) (! aw_busy) (! w_busy)
+       write_cmd_valid (! cmd_awaddr[0]) (! cmd_awaddr[1]))
     (set active_q 1)
     (set aw_seen_q 0)
     (set w_seen_q 0)
@@ -355,6 +358,14 @@ current resolution report. Indexed address bits are mandatory. The modulo
 equals-zero form is not selected because the readiness probe exposed the
 current multi-bit equality-to-zero width-warning path.
 
+Implementation-time C4 validation exposed that every realized child port must
+have a concrete sink. The coordinator therefore consumes both child busy
+outputs and defensively requires them low at launch. This is an internal-only
+refinement: child busy is already low whenever aggregate `active_q` is idle in
+the reachable schedule, so the public admission/cardinality contract and the
+six rule assignment counts are unchanged. Without these two inputs, the exact
+three-child C4 top fails closed on unconnected `aw_busy`/`w_busy` ports.
+
 ## 7. Child generation and structural top
 
 The generator invokes the existing `AxiAwDriver` and `AxiWDriver` generators
@@ -381,7 +392,8 @@ The structural top has exactly three children in this order:
 All share `clk` and `rst_n`. Exact connection families are:
 
 1. public command inputs to the coordinator inputs;
-2. AW/W child done outputs to coordinator `aw_done`/`w_done`;
+2. AW/W child busy/done outputs to coordinator `aw_busy`/`aw_done` and
+   `w_busy`/`w_done`;
 3. coordinator child-start and captured-payload outputs to the corresponding
    child command inputs;
 4. `8'd0`, `3'd2`, and `2'b01` direct actuals to AW length/size/burst;

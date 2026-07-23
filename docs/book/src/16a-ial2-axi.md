@@ -281,18 +281,17 @@ core, but does not connect that core automatically. Back-to-back buffering,
 multiple outstanding responses, extended response signaling, AW/W coordination,
 and a complete write transactor remain future work.
 
-### Selected next boundary: coordinated AW+W request issue
+### Bounded coordinated AW+W request issue
 
-With all three independent write-side channel primitives now bounded, the next
-selected increment is a single-beat AW+W write-request composition. It will
-reuse the generated `axi_aw_driver` and `axi_w_driver` child modules under a
-generated structural top and add a distinct coordinator that launches both
+FSMGen now ships a bounded single-beat AW+W write-request composition. It
+reuses the generated `axi_aw_driver` and `axi_w_driver` child modules under a
+generated structural top and adds a distinct coordinator that launches both
 once, remembers their independent completion pulses, and emits aggregate done
 only after both handshakes. The B acceptor remains separate, so aggregate done
 at this boundary means **request channels accepted**, not **write response
 accepted**.
 
-The completed readiness audit fixes that coherence rule. The aggregate accepts
+The aggregate accepts
 one idle command containing `cmd_awaddr` (32-bit byte address), `cmd_awid`
 (four bits), `cmd_wdata` (32 bits), and `cmd_wstrb` (four bits). Its generated
 coordinator captures all four fields atomically before pulsing the two child
@@ -317,20 +316,20 @@ dynamic AWSIZE.
 
 The coordinator is a rule-only generated IAL1 actor. It records whether each
 one-cycle child completion has occurred and emits one aggregate done pulse only
-when both have been seen. A scratch generated-HDL proof passed simultaneous,
-AW-first, and W-first completion, atomic payload capture, aligned assertion-
-enabled operation, and misaligned fail-closed operation, with three AW starts,
-three W starts, and three aggregate done pulses. Aggregate busy covers the
+when both have been seen. The focused generated-HDL proof passes simultaneous,
+AW-first, and W-first completion, atomic payload capture, and misaligned
+fail-closed operation, with three AW handshakes, three W handshakes, and three
+aggregate done pulses. Aggregate busy covers the
 whole join; a one-cycle command while busy is ignored and not queued.
 
-The eventual generated result will contain three IAL1 items and schedule
+The generated result contains three IAL1 items and schedule
 reports (AW child, W child, coordinator), three child IAL0 artifacts, and one
 selected structural-top IAL0/HDL entry. Child starts, payload captures, busy,
 and done events remain internal except for aggregate `write_busy` and
 `write_done` plus the physical AW/W bus ports.
 
-No public composition source is shipped yet, but the exact contract is now
-selected for the active implementation leaf. The additive source will use:
+The checked-in public source is
+`ppif/axi_write_request_composition.ppif`. Its additive object uses:
 
 ```text
 (axi-write-request-composition axi_write_request_composition
@@ -370,11 +369,24 @@ The selected generator is
 `t/1502-ial2-axi-write-request-composition.t`. The top is a three-child C4
 composition and remains the only selected HDL entry.
 
+Run the public source directly:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_write_request_composition.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_write_request_composition.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_write_request_composition.ppif
+./bin/fsmgen --verify-hdl ppif/axi_write_request_composition.ppif
+```
+
+Use `--outdir DIR` to review `axi_aw_driver.isf`, `axi_w_driver.isf`,
+`axi_write_request_coordinator.isf`, their three `.fsm` children, and the
+selected `axi_write_request_composition.fsm` structural top. The generated HDL
+contains all three child modules plus module `axi_write_request_composition`.
+
 The implementation boundary still excludes B acceptance, capacity integration,
 full transaction completion, queues, multi-beat/burst behavior, AR/R, aliases,
-and backend/VHDL changes. Until the implementation leaf lands, attempts to use
-the selected clause continue to fail as unsupported rather than partially
-generate it.
+and backend/VHDL changes. The `.axi` profile-alias spelling remains fail-closed;
+this first composition surface is generic `.ppif` only.
 
 ## More-Control Mode
 
@@ -490,6 +502,8 @@ This chapter was validated from checked-in sources with:
 ./bin/fsmgen --verify-hdl ppif/axi_w_driver.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_b_response_acceptor.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_b_response_acceptor.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/axi_write_request_composition.ppif
+./bin/fsmgen --verify-hdl ppif/axi_write_request_composition.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/axi_manager_capacity_status_id_family.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_manager_capacity_status_transaction_envelope.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif
@@ -498,11 +512,16 @@ This chapter was validated from checked-in sources with:
 
 The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and
 `axi_aw_valid_ready_monitor.fsm`, confirming that the guided example still
-exposes the review artifacts the chapter describes. The three initiator source
-checks and `--verify-hdl` runs confirm that all three primitives are accepted
-and lower to lint/synthesis-clean HDL. The focused
+exposes the review artifacts the chapter describes. The four initiator source
+checks and `--verify-hdl` runs confirm that all three primitives plus the AW/W
+composition are accepted and lower to lint/synthesis-clean HDL. The focused
 `t/1499-ial2-axi-aw-driver.t`, `t/1500-ial2-axi-w-driver.t`, and
 `t/1501-ial2-axi-b-response-acceptor.t` generated-HDL simulations separately
 prove their transfer/response cardinality, completion-pulse, and stability
 guarantees; the W test also proves the all-zero-strobe case remains legal, and
-the B test proves unarmed responses cannot handshake.
+the B test proves unarmed responses cannot handshake. The four-subtest
+`t/1502-ial2-axi-write-request-composition.t` additionally proves the complete
+public/report/fail-closed/CLI artifact contract and executes the structural top
+for misaligned no-launch, atomic capture, simultaneous-ready, AW-first, W-first,
+long-stall stability, ignored-busy-command, zero-strobe, fixed-metadata, and
+exact three-AW/three-W/three-done behavior.

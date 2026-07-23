@@ -39,4 +39,5 @@ and one selected C4 structural top. Support id is
 `t/1502-ial2-axi-write-request-composition.t` must prove aligned/misaligned
 admission, atomic capture, simultaneous/AW-first/W-first handshakes, long
 stalls, zero strobe, busy-command rejection, fixed metadata, and exact
-cardinality. `.18` owns implementation; behavior has not changed yet.
+cardinality. `.18` shipped that contract; implementation fact:
+[[ial2-axi-aw-w-request-composition-first-slice]].
