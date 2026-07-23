@@ -311,6 +311,15 @@ This source still has no address or response channel. AW launch,
 dynamic/narrow/unaligned/FIXED/WRAP bursts, queues/outstanding writes, and
 capacity-core integration remain separate owners.
 
+The selected next evolution step is an additive fixed-four AW+W
+**request** composition. Its planned boundary reuses this unchanged W burst
+driver and the unchanged AW driver under one new join coordinator and flat
+structural top, fixes LEN3/SIZE2/INCR, and admits only a four-byte-aligned
+16-byte span contained within one 4-KiB region. Planned request done means the
+AW transfer and fourth W transfer have both completed; it deliberately does
+not include B response retirement. This paragraph records the active design
+frontier, not shipped syntax or behavior.
+
 ### Bounded one-response B write-response acceptor
 
 `ppif/axi_b_response_acceptor.ppif` is the third shipped initiator primitive.
