@@ -542,6 +542,19 @@ and ordering; expanding the `.axi` alias adds spelling rather than bus-driving
 behavior; and decision 0020's protocol-neutral transaction interface remains
 director-gated.
 
+### Selected next read-side increment
+
+The next selected primitive is an explicitly armed one-transfer R channel
+acceptor. One idle arm will raise manager-owned RREADY independently of RVALID,
+own exactly one handshake, capture raw RID/RDATA/RRESP/RLAST, then pulse a
+beat-accepted done event. The readiness audit is active; exact public spelling,
+widths, schedule, report, and proof are not yet implementation claims.
+
+The scope is deliberately one **beat**, not one full read transaction. Raw
+RLAST is captured but not assumed high; the primitive does not validate ARLEN,
+match RID to ARID, interpret RRESP, or claim read completion. A later fixed-
+single-beat or multi-beat AR/R composition will own those relationships.
+
 ## More-Control Mode
 
 Move to manager capacity/status when the user needs AXI manager-level control

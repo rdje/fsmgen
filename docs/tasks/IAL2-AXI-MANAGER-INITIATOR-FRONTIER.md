@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.26` done: bounded AR driver shipped; `.27` active next-increment selector)
+- Last updated: `2026-07-23` (`.27` done: armed R-beat acceptor selected; `.28` active readiness audit)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -82,7 +82,7 @@ It complements — does not replace — the shipped capacity/status response cor
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
   Status: `active`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
-  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.16`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.17`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.18`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.19`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.20`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.21`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.22`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.23`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.24`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.25`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.26`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.27`
+  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.16`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.17`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.18`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.19`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.20`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.21`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.22`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.23`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.24`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.25`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.26`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.27`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.28`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
   Status: `done`
@@ -285,9 +285,17 @@ It complements — does not replace — the shipped capacity/status response cor
   Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.26: ship the bounded AXI AR driver`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.27`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next smallest coherent AXI manager initiator increment after the bounded AR driver ships.`
   Acceptance: `Audit the shipped AR request-only primitive and its explicit complete-manager R-beat obligation, the existing capacity/status read-data/demux capabilities, AXI read dependency and channel evidence, all shipped write-side actors/compositions, and decision 0020. Compare at least: a bounded explicitly armed single-beat R acceptor; immediate AR+R single-beat full-read composition; an AR-to-capacity/status submit adapter; request-legality/fixed-single-beat coupling; multi-beat R acceptance tied to ARLEN; multiple outstanding/back-to-back reads with ID ordering/demux; .axi alias surfacing; and the director-gated protocol-neutral transaction interface. Select exactly one smallest safe next direction and its readiness owner, state reuse versus new actors, completion semantics, and preserved deferrals. Record a repo-local selector note and synchronize task/index/book/MEMORY/Knowledge Map without changing parser, generators, public sources, support, manifest, tests, artifacts, runtime/HDL, aliases, verification output, direct/backend/VHDL, AHB, or APB behavior.`
+  Verification: `PASS — docs/IAL2_AXI_MANAGER_INITIATOR_POST_AR_NEXT_INCREMENT_SELECTION.md audits the shipped request-only AR actor, AXI R dependency, B acceptor receiver architecture, capacity/status read-data/demux depth, and decision 0020; compares armed R beat acceptance, full read, capacity adapter, request legality, multi-beat, outstanding, alias, and transaction-interface candidates; selects an explicitly armed one-transfer R acceptor with raw RID/RDATA/RRESP/RLAST and beat-only done; assigns .28 exact readiness ownership. No behavior changed.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.27: select the bounded AXI R-beat acceptor`
+  Selection: `Next = explicitly armed one-transfer R acceptor; one arm/one handshake/raw RID+RDATA+RRESP+RLAST; done means beat accepted, never implicit RLAST/ARLEN/ID/status/full-read completion. .28 audits exact contract boundary.`
+
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.28`
+  Status: `active`
+  Goal: `Audit the selected bounded explicitly armed AXI4 manager R beat acceptor and fix its safe behavior, artifact, and owner boundary before contract selection.`
+  Acceptance: `Starting from docs/IAL2_AXI_MANAGER_INITIATOR_POST_AR_NEXT_INCREMENT_SELECTION.md, inspect tracked R-channel/read-dependency/RLAST/RRESP/signal-width evidence, shipped B acceptor source/generator/report/schedule/test, shipped AR request_scope and test, capacity/status R read-data/demux seams, PPIF/support/manifest/book owners, and decisions 0014/0015/0018/0020. Fix exact one-arm/one-transfer R vocabulary and widths (likely RID4/RDATA32/RRESP2/RLAST1), role/reset, idle arm, eager RREADY independent of RVALID, unarmed/already-high/delayed/held-high behavior, raw capture/stability, beat-only busy/done, command-while-busy/reset, corrected six-state schedule reuse or justified variation, generated artifacts/report/static/residue, diagnostics, CLI/outdir/semantic/verify-HDL, executable proof, every owner, support targets, rollback, and following contract-selection leaf. Preserve shipped behavior; defer AR/R composition, fixed request coupling, transaction completion, repeated/multi-beat/ARLEN-RLAST validation, response aggregation, ID match, capacity/outstanding/queues/demux, aliases, decision-0020, verification-output, direct/backend/VHDL, AHB, and APB. No behavior change in this audit.`
   Verification: `pending`
   Commit: `pending`
 
