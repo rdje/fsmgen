@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.18` done: bounded AW+W request composition shipped; `.19` active post-composition selector)
+- Last updated: `2026-07-23` (`.19` done: bounded full-write transactor selected; `.20` active readiness audit)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -82,7 +82,7 @@ It complements — does not replace — the shipped capacity/status response cor
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
   Status: `active`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
-  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.16`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.17`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.18`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.19`
+  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.16`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.17`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.18`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.19`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.20`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
   Status: `done`
@@ -223,9 +223,17 @@ It complements — does not replace — the shipped capacity/status response cor
   Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.18: ship the bounded AXI AW W request composition`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.19`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next smallest coherent AXI manager initiator increment after the bounded AW+W request composition ships.`
   Acceptance: `Audit the shipped AW/W request composition, standalone B response acceptor, capacity/status completion and BID seams, AR/R gaps, multi-beat/burst/address-generation gaps, decision 0020 transaction-layered North Star, and current AXI mdBook. Compare at least: integrating the existing B acceptor into an AW+W+B single-beat write transactor; connecting request/response completion to the capacity/status core; a standalone AR driver; a standalone R acceptor; multi-beat W plus AW metadata/address coupling; and activating a protocol-neutral transaction interface. Select exactly one smallest safe next direction and its readiness/contract owner, including whether it reuses the shipped structural children or requires a new primitive. Preserve all shipped AW/W/B/composition behavior and IAL2 -> generated IAL1 -> generated IAL0 layering. Record a repo-local selector note and synchronize task tree/index/book/MEMORY/Knowledge Map without changing parser, generators, public sources, support accounting, manifests, tests, generated artifacts, runtime/HDL behavior, direct backend, aliases, verification output, backend variants/VHDL, AHB, or APB.`
+  Verification: `PASS — docs/IAL2_AXI_MANAGER_INITIATOR_POST_AW_W_COMPOSITION_NEXT_INCREMENT_SELECTION.md compares all required candidates and selects a bounded single-beat AW+W+B full-write transactor readiness audit. The direction reuses shipped AW/W/B channel actors, requires a new response-aware coordinator and structural top, preserves AW+W write_done as request-issued completion, and assigns .20 the nested-vs-direct C4 topology, B-arm timing, retained-AWID/BID match, BRESP/status, full-completion, report/artifact, diagnostic, and executable-proof audit. Capacity integration is deferred because its abstract events and broad ID/demux families require a separate adapter/outstanding policy; AR/R, multi-beat, and director-gated decision 0020 remain deferred. No behavior changed.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.19: select the bounded AXI full-write transactor direction`
+  Selection: `Next increment = bounded single-beat AW+W+B full-write transactor composition; reuse shipped AW/W/B channel actors unchanged, add response-aware coordination and a structural top, audit exact topology/arming/ID/response/completion contract in .20.`
+
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.20`
+  Status: `active`
+  Goal: `Audit the exact safe boundary for the selected bounded single-beat AXI AW+W+B full-write transactor composition before public contract selection.`
+  Acceptance: `Starting from docs/IAL2_AXI_MANAGER_INITIATOR_POST_AW_W_COMPOSITION_NEXT_INCREMENT_SELECTION.md, inspect the shipped AW/W request composition and B acceptor source/generator/report/schedules/tests plus real C4 structural constraints and the AXI write-dependency/B-response anchors. Decide and evidence nested request-composition versus direct AW/W/request-coordinator child reuse; define the required new response-aware coordinator and structural top without changing any shipped child actor. Resolve exact B-arm timing, request-issued versus transaction-complete event ownership, aggregate busy lifetime, retained admitted AWID versus captured BID match/mismatch behavior, BRESP/status exposure, reset/non-conforming-subordinate/simultaneous-boundary behavior, no-queue command policy, IAL1 schedules and IAL0/C4 artifact cardinality, public/report/CLI/semantic/diagnostic boundaries, source/support/manifest/test/docs owners, generated-HDL proof matrix, validation, rollback, and exact following contract-selection leaf. Preserve all shipped parser/generator/source/support/test/runtime/HDL behavior and every .19 deferral; no behavior changes in this audit.`
   Verification: `pending`
   Commit: `pending`
 

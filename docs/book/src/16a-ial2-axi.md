@@ -378,6 +378,30 @@ Run the public source directly:
 ./bin/fsmgen --verify-hdl ppif/axi_write_request_composition.ppif
 ```
 
+### Selected next write-side boundary
+
+The next bounded increment is a single-beat **full-write transactor
+composition**. It will reuse the shipped AW driver, W driver, request
+coordination, and B acceptor rather than duplicate their channel state
+machines. A new response-aware coordinator and structural top will relate one
+admitted aligned write command to its one accepted B response and one
+full-transaction completion event.
+
+This selection does not change current behavior. In particular, the shipped
+AW+W `write_done` remains request-channel issue completion. The readiness audit
+must separately define B-arm timing, retained AWID-to-BID correlation,
+BRESP/error exposure, aggregate busy lifetime, and the full-completion pulse.
+It must also prove whether the C4 top may nest the existing request composition
+or should directly instantiate its unchanged AW/W/request-coordinator children
+beside B and the new transaction coordinator.
+
+Capacity/status integration follows a different boundary: its submit and
+completion events are abstract and its optional ID/lifecycle/ordering/demux
+families require an explicit adapter and outstanding policy. AR/R and
+multi-beat write behavior also remain later increments. The protocol-neutral
+transaction interface from decision 0020 remains a director-gated future
+direction, not activated by this selection.
+
 Use `--outdir DIR` to review `axi_aw_driver.isf`, `axi_w_driver.isf`,
 `axi_write_request_coordinator.isf`, their three `.fsm` children, and the
 selected `axi_write_request_composition.fsm` structural top. The generated HDL
