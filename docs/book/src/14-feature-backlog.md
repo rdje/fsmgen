@@ -10843,6 +10843,16 @@ Audit `.1` must drive consecutive selected NONSEQ/SEQ phases, record address/
 data ownership, ready/response, acceptance, and storage exactly once, and make
 no behavior change. Decision 0020 remains inactive.
 
+AHB pipelined active-transfer runtime audit:
+[IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT](../../IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md)
+documents `.1`. Generated-HDL t/1519 proves two ready/OKAY bus acceptances for
+direct `NONSEQ` address 0 then `SEQ` address 1, but only one internal admission
+and completion; sampled address/transfer remain 0/`NONSEQ`, and the second
+lane-one write is absent from storage. An endpoint-only boundary requirement
+would deadlock or accept the held next phase, so `.2` is selected to freeze a
+bounded atomic completion-edge phase-recapture contract before implementation.
+Decision 0020 remains inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

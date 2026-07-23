@@ -7034,6 +7034,16 @@ ownership before selecting any behavior change. Policy/multiple BUSY,
 bus-BUSY status, larger bursts, optional signals, and decision 0020 remain
 deferred/inactive.
 
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1` now proves the boundary-free
+defect in generated public subordinate HDL. t/1519 observes two ready/OKAY bus
+acceptances for distinct direct `NONSEQ`/`SEQ` addresses but only one internal
+admission/completion, captured address 0/`NONSEQ`, and storage missing the
+second lane-one write. A boundary-only endpoint contract cannot safely fail
+closed because low ready deadlocks the held phase and high ready accepts it.
+`.2` is selected for no-behavior contract selection of bounded atomic
+completion-boundary phase recapture; policy/multiple BUSY, bus-BUSY status,
+larger bursts, optional signals, and decision 0020 remain deferred/inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

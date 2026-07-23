@@ -1538,6 +1538,24 @@ record address/data phase, ready/response, ownership, acceptance, and storage
 before any behavior decision. See
 [IAL2_POST_CURRENT_SURFACE_REPAIR_NEXT_OWNER_SELECTION](../../IAL2_POST_CURRENT_SURFACE_REPAIR_NEXT_OWNER_SELECTION.md).
 
+> **Boundary-free active-transfer defect confirmed by `.1`:** generated-HDL
+> t/1519 presents `NONSEQ` address 0 followed directly by held `SEQ` address 1.
+> `HREADY/HREADYOUT` stalls then accepts both active address phases with OKAY,
+> but the subordinate records only one admission/completion, retains sampled
+> address 0/`NONSEQ`, and leaves storage at `32'h00000011` instead of applying
+> the second lane-one write (`32'h00002211`).
+
+The ownership bit correctly suppresses duplicate sampling of one held phase,
+but it cannot distinguish that phase from the distinct phase accepted when the
+current data phase raises ready. Requiring the requester to insert an
+`IDLE`/`BUSY` boundary is not a safe endpoint fail-closed rule: holding ready
+low deadlocks the next stable address phase, while raising ready accepts it.
+`.1` therefore selects `.2`, no-behavior contract selection for atomic
+completion-boundary recapture of exactly one next active phase. General
+outstanding queues, multi-manager behavior, and decision 0020 remain outside
+this boundary. See the
+[runtime audit](../../IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB
