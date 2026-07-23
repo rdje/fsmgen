@@ -1,38 +1,31 @@
 ---
 id: ahb-hburst-seq-verify-hdl-widthexpand
-title: AHB HBURST SEQ subordinate family emits pre-existing Verilator WIDTHEXPAND warnings under --verify-hdl
+title: AHB HBURST SEQ subordinate wait counters are clean under --verify-hdl
 answers:
-  - "why does the AHB HBURST SEQ subordinate fail --verify-hdl?"
-  - "does the AHB BUSY-park source regress --verify-hdl versus the shipped HBURST SEQ source?"
-  - "what are the Verilator WIDTHEXPAND warnings on ahb_lite_subordinate_byte_lane_hburst_seq?"
-  - "is --verify-hdl a clean gate for the AHB HBURST SEQ family?"
-date: 2026-07-12
+  - "does the AHB HBURST SEQ subordinate pass --verify-hdl?"
+  - "how was the AHB dynamic wait WIDTHEXPAND warning resolved?"
+  - "what happened to the Verilator WIDTHEXPAND warnings on ahb_lite_subordinate_byte_lane_hburst_seq?"
+  - "is --verify-hdl a clean gate for the AHB HBURST SEQ family now?"
+date: 2026-07-23
 status: current
 tags: [ial2, ahb, hburst, seq, verify-hdl, verilator, widthexpand, finding]
 evidence: ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif; ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm
-reverify: ./bin/fsmgen --quiet --verify-hdl -o /tmp/ahb_shipped.sv ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif 2>&1 | grep -c WIDTHEXPAND; ./bin/fsmgen --quiet --verify-hdl -o /tmp/ahb_bp.sv ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif 2>&1 | grep -c WIDTHEXPAND
+reverify: ./bin/fsmgen --quiet --strict --verify-hdl ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif; ./bin/fsmgen --quiet --strict --verify-hdl ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif; ./bin/fsmgen --quiet --strict --verify-hdl ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif
 ---
 
-Running `./bin/fsmgen --verify-hdl` on the shipped
-`ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif` (and every source in the
-byte-lane HBURST `SEQ` family) emits two Verilator `WIDTHEXPAND` warnings and,
-because `--verify-hdl` treats warnings as errors, exits non-zero. The warnings
-are on the wait-cycles counter comparison, e.g.
-`ahb_lite_byte_lane_hburst_seq_access_wait_2_cnt == 1'b1`: the counter is wider
-than the `1'b1` literal, so Verilator flags `Operator EQ expects N bits on the
-RHS, but RHS's CONST '1'h1' generates 1 bits`.
+Before `IAL2-FEATURE-COMPLETENESS-FRONTIER.794`, the byte-lane HBURST `SEQ`
+family emitted two Verilator `WIDTHEXPAND` warnings on comparisons such as a
+four-bit dynamic-wait counter against `1'b1`. The base and BUSY-park sources
+had the identical warning, proving it was family-wide rather than a BUSY-park
+regression.
 
-This is a **pre-existing, family-wide** characteristic of the generated
-wait-counter logic, not a defect introduced by any one source. The `.776`
-BUSY-park source
-(`ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`) produces the
-identical two warnings — its only functional delta (BUSY excluded from the
-`ahb_seq_idle_clear` condition) does not touch the wait-counter, so BUSY-park
-introduces no `--verify-hdl` regression.
+`.794` resolved the AHB-local warning while proving the first paired
+requester/subordinate BUSY composition. Generated AHB subordinates now express
+sampled `wait_cycles` as a counted repetition of one-cycle waits. Existing
+repeat lowering keeps the runtime counter at the sampled width and terminates
+against zero, avoiding the one-bit literal comparison. Zero counts bypass the
+body and nonzero counts preserve the sampled delay.
 
-Consequence: `--verify-hdl` is not a clean gate for the AHB HBURST `SEQ` family
-today. The effective gates these sources are expected to pass are
-`--strict --check` (pipeline check) and the focused `t/149x` tests. Making
-`--verify-hdl` clean would require width-matching the generated wait-counter
-comparison literal to the counter width across the AHB subordinate family — a
-separate, family-wide cleanup outside any single BUSY/HBURST feature slice.
+`--verify-hdl` is now a clean public gate for the AHB HBURST `SEQ`, BUSY-park,
+and paired BUSY-composition sources. Generic ISF dynamic-wait lowering and APB
+wait generation were not changed by `.794`.

@@ -38,7 +38,7 @@ subtest 'adapter parses the selected AHB requester PPIF shape' => sub {
     like($isf, qr/\(storage\s+\(var ahb_request_done_q \(width 1\) \(reset 0\)\)\)/s, 'generated AHB IAL1 uses an internal completion bit');
     like($isf, qr/\(while beats_remaining_q/, 'generated AHB IAL1 loops over remaining beats');
     like($isf, qr/\(when HGRANT/, 'generated AHB IAL1 gates transfer activity on HGRANT');
-    like($isf, qr/\(when HREADY/, 'generated AHB IAL1 advances response handling on HREADY');
+    like($isf, qr/\(wait 1\)\s+\(continue-when \(! HREADY\)\)/s, 'generated AHB IAL1 separates the address phase and holds the transfer while data-phase completion is pending');
     like($isf, qr/\(complete ahb_request_done_q\)/, 'generated AHB IAL1 completes on the internal bit');
 
     is_deeply(

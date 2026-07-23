@@ -121,7 +121,7 @@ module ahb_requester_busy_insert_tb;
     cycles = 0;
     while (!done && cycles < 500) begin
       @(posedge clk);
-      if (HTRANS != 2'b00 && previous_htrans == 2'b00)
+      if (HTRANS != 2'b00 && (previous_htrans == 2'b00 || HTRANS != previous_htrans))
         check_transfer();
       if (beat_done && !previous_beat_done) begin
         if (beat_index !== beat_count[4:0])

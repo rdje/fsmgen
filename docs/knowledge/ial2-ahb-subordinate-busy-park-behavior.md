@@ -31,7 +31,7 @@ shape (any other combination fails closed; parked-busy also fail-closes unless
 the transfer selects the HBURST SEQ policy).
 
 Generator (all gated on the parked-busy flag via `_transfer_parks_busy`): the
-`ahb_seq_idle_clear` transaction fires on `(== HTRANS 2'b00)` (IDLE) only instead
+concurrent `ahb_seq_idle_clear` rule fires on `(== HTRANS 2'b00)` (IDLE) only instead
 of `(| idle busy)`, so a BUSY beat leaves the `seq_*` registers unassigned and
 the in-word burst context (`seq_valid_q`, `seq_expected_addr_q`, `seq_size_q`,
 `seq_write_q`, `seq_hburst_q`, `seq_beats_remaining_q`) holds across the BUSY
@@ -41,9 +41,10 @@ from the armed burst. `_hburst_seq_policy_report` drops `busy` from `clears_on`
 and adds `parks_on: [busy]`, and the `ahb_burst_seq_support_deferred` residue
 records shipped BUSY-in-burst parking.
 
-The shipped `ahb_lite_subordinate_byte_lane_hburst_seq` source is unchanged (BUSY
-still clears). Focused coverage: `t/1494`. Deferred: the matching `.ahb` alias,
-aggregate BUSY-parking, requester-side BUSY insertion (the shipped requester
-never drives `HTRANS=BUSY`), halfword/word burst `SEQ`, and wider bursts. See
-[[ahb-hburst-seq-verify-hdl-widthexpand]] for the pre-existing `--verify-hdl`
-lint characteristic shared with the shipped source.
+The classic non-parking `ahb_lite_subordinate_byte_lane_hburst_seq` source still
+clears on BUSY. Focused coverage: `t/1494`. The matching endpoint/aggregate
+aliases, aggregate BUSY parking, requester BUSY insertion, and the first paired
+generic aggregate have since shipped. Halfword/word burst `SEQ`, wider bursts,
+and true boundary-free active-transfer pipelining remain deferred. Fact
+[[ahb-hburst-seq-verify-hdl-widthexpand]] records that the former dynamic-wait
+`--verify-hdl` warning was resolved by `.794`'s AHB-local counted-wait form.

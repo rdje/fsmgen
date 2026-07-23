@@ -58,6 +58,13 @@ The generator adds only when `busy-before-beat` is present:
   and `HREADY`/response path;
 - the next iteration's unchanged `transfer_seq` and response advancement.
 
+The requester presents the request bus before the beat loop, waits one clock
+after driving an active transfer, and repeats that same transfer while
+`HREADY=0`. It samples `HRESP` and advances only after the selected data phase
+completes. This phase-hold behavior is common to the base and BUSY-inserting
+requesters and was runtime-corrected when the first paired aggregate exposed
+the former early-response path in `.794`.
+
 The BUSY presentation therefore cannot decrement `beats_remaining_q`, increment
 `beat_index_q`, advance `addr_q`/`wdata_q`, or consume `HREADY`/`HRESP`. A burst
 that never reaches `N` is a safe no-op. There is no new local-status bus-BUSY
@@ -125,9 +132,10 @@ support accounting, and preservation of the base requester.
 
 ## Explicit Deferrals
 
-The matching `.ahb` alias now ships. Paired requester/subordinate composition,
-multi-beat or policy-driven BUSY throttling, runtime-selected insertion point,
-distinct `local-status.bus_busy`, halfword/word burst `SEQ`, wider/indefinite
-bursts, multi-word/register-bank progression, optional AHB signals, broader AHB
-manager behavior, direct backend, verification output, backend-language
-variants, AXI/APB changes, and VHDL remain deferred.
+The matching `.ahb` alias and the first generic paired requester/subordinate
+composition now ship. Paired `.ahb`/two-subordinate variants, multi-beat or
+policy-driven BUSY throttling, runtime-selected insertion point, distinct
+`local-status.bus_busy`, halfword/word burst `SEQ`, wider/indefinite bursts,
+multi-word/register-bank progression, optional AHB signals, broader AHB manager
+behavior, direct backend, verification output, backend-language variants,
+AXI/APB changes, and VHDL remain deferred.

@@ -29,11 +29,14 @@ Support accounting identifies the sample as
 `ial2_ppif_ahb_lite_subordinate_pipeline_cli` and `source_kind` `ppif`.
 
 The shipped behavior is the bounded AHB-Lite/common-AHB single-register
-subordinate: `HSEL && HREADY` activation for `NONSEQ`/`SEQ`, ignored
-`IDLE`/`BUSY`, selected `NONSEQ` word reads/writes to address 0, runtime
+subordinate: one-transfer `ahb_access_active_q` ownership around
+`HSEL && HREADY` admission for `NONSEQ`/`SEQ`, ignored `IDLE`/`BUSY`, selected
+`NONSEQ` word reads/writes to address 0, width-safe counted runtime
 `wait_cycles`, one-bit OKAY/ERROR `HRESP`, and two-cycle ERROR for unsupported
 `SEQ`, unsupported sizes, or unmapped addresses. Generated outputs preserve
-`HREADYOUT=1`, `HRESP=0`, and `HRDATA=0` reset/default metadata.
+`HREADYOUT=1`, `HRESP=0`, and `HRDATA=0` reset/default metadata; the priority
+admission rule overrides ready low while claiming a transfer and prevents a
+held active presentation from being admitted twice.
 
 AHB subordinate `.ahb` alias exposure remains deferred. The `.ahb` profile
 alias is still requester-only in this slice.

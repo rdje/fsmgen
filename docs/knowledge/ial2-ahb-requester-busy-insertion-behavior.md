@@ -36,5 +36,9 @@ completion with zero remaining. The base requester and its `.ahb` alias remain
 BUSY-insertion free. The matching additive
 `ppif/ahb_requester_busy_insert.ahb` alias now ships with identical behavior;
 fact `ial2-ahb-requester-busy-insertion-profile-alias-behavior` owns its public
-surface. Policy/runtime/multi-beat BUSY, distinct local bus-BUSY status, paired
-composition, and broader requester behavior remain deferred.
+surface. The requester now presents an active transfer for a clock and holds it
+while `HREADY=0`, consuming `HRESP` only after data-phase completion. The first
+generic paired requester/subordinate composition now ships; fact
+`ial2-ahb-paired-busy-composition-behavior` owns it. Policy/runtime/multi-beat
+BUSY, distinct local bus-BUSY status, paired alias/two-subordinate variants,
+and broader requester behavior remain deferred.

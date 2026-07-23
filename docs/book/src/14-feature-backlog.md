@@ -10397,7 +10397,7 @@ BUSY-in-burst parking — holding the in-word `SEQ` burst context across an
 burst-`SEQ` increment after the byte-only `WRAP4`/`INCR4` in-word HBURST `SEQ`
 endpoint+aggregate `.ppif`/`.ahb` family: the endpoint burst-context registers
 already exist, BUSY is currently folded into the burst-history clear alongside
-IDLE (the `ahb_seq_idle_clear` transaction fires on
+IDLE (the then-generated `ahb_seq_idle_clear` transaction fired on
 `(| (== HTRANS idle) (== HTRANS busy))` and the endpoint report `clears_on`
 lists `busy`), and the endpoint/aggregate residue already defer BUSY-in-burst
 continuation/handling, so parking is a bounded clear-versus-park decode edit
@@ -10411,7 +10411,7 @@ AHB subordinate BUSY-park readiness audit:
 audits bounded AHB subordinate BUSY-in-burst parking and selects `.775`, a
 public contract selection for the endpoint BUSY-parking source. The burst-context
 registers already exist, so the minimal delta is stopping the
-`ahb_seq_idle_clear` transaction from firing on BUSY (unassigned registers hold
+then-generated `ahb_seq_idle_clear` transaction from firing on BUSY (unassigned registers hold
 their value across the parked beat). The endpoint source declares
 `(ignored-transfer busy)`, so a distinct "busy parks" declaration is needed, and
 the shipped requester never drives `HTRANS = BUSY` on the bus, so parking is a
@@ -10442,7 +10442,7 @@ support-accounted as
 `ial2_ppif_ahb_lite_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli`
 (`source_kind: ppif`). The source declares `(ignored-transfer idle)` and
 `(parked-transfer busy)`; the new `parked-transfer` clause gates BUSY out of the
-`ahb_seq_idle_clear` transaction so it fires on IDLE only, and the unassigned
+then-generated `ahb_seq_idle_clear` transaction so it fired on IDLE only, and the unassigned
 `seq_*` registers hold the in-word burst context across the BUSY beat while the
 following `SEQ` beat resumes through the existing `seq_ok_base` validation. The
 `SEQ`-policy report drops `busy` from `clears_on` and adds `parks_on: [busy]`,
@@ -10619,8 +10619,9 @@ same beat as `SEQ`. The report adds `busy_insertion` and
 beats, diagnostics, CLI/report/support surfaces, and base-requester preservation.
 `.788` closed at 309 protocol / 350 supported-smoke and strict entries. The
 matching `.ahb` alias now ships; policy/runtime/multi-beat BUSY, a distinct local
-bus-BUSY status, paired composition, larger burst progression, optional signals,
-broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
+bus-BUSY status, paired alias/two-subordinate variants, larger burst progression,
+optional signals, broader AHB, backend variants, AXI/APB, and VHDL remain
+deferred. The first generic paired composition now ships below.
 
 AHB requester BUSY-insertion profile-alias contract:
 [IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_CONTRACT_SELECTION.md)
@@ -10670,6 +10671,23 @@ the selected non-duplicative paired report. Support targets are 311 protocol /
 held requester and subordinate state/storage on BUSY, resumed `SEQ`, four data
 beats, OKAY/zero remaining, and final `32'h44332211`. Generic `.ppif` ships
 first; alias and two-subordinate variants remain deferred.
+
+Paired AHB BUSY composition behavior:
+[IAL2_AHB_PAIRED_BUSY_COMPOSITION_BEHAVIOR](../../IAL2_AHB_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md)
+documents `.794`, which ships the selected generic one-requester/
+one-subordinate pair. Aggregate requester-child JSON conditionally preserves
+`busy_insertion`; subordinate-child and aggregate SEQ-policy propagation keep
+`parks_on = [busy]`; there is no duplicate top summary. Generated-HDL t/1513
+proves `NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`, one
+BUSY, four byte data beats, held requester/subordinate state and storage,
+OKAY/zero completion, and final `32'h44332211` storage. The prerequisite AHB
+phase corrections make the requester hold through data-phase `HREADY`, claim
+each subordinate transfer once, replace the competing idle-clear transaction
+with a concurrent rule, use width-safe counted wait cycles, select HDL-safe
+interconnect instance `fabric`, and omit the tautological zero-base lower bound.
+The public source passes `--verify-hdl`; accounting is 311 protocol / 352
+supported-smoke and strict. True boundary-free active-transfer pipelining,
+paired alias/two-subordinate variants, and broader BUSY policy remain deferred.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

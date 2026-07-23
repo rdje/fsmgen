@@ -5606,7 +5606,7 @@ shipped source and its `t/1491`) that replaces `(ignored-transfer busy)` with th
 new `(parked-transfer busy)` vocabulary. `AhbSubordinate::_normalize_transfer`
 gains an optional `parked_transfer` field and relaxes its `{idle, busy}`-only
 ignored validation to also accept `{idle}` ignored + `{busy}` parked; gated on
-that flag, the `ahb_seq_idle_clear` transaction fires only on IDLE (so a BUSY
+that flag, the then-generated `ahb_seq_idle_clear` transaction fired only on IDLE (so a BUSY
 beat holds), the `SEQ`-policy report drops `busy` from `clears_on` and adds
 `parks_on = [busy]`, and the burst-`SEQ` residue narrows. No BUSY-beat drift
 check is added — the existing `SEQ`-beat validation already fail-closes a
@@ -5805,6 +5805,23 @@ selected. Focused t/1513 plus a Verilator harness must prove held BUSY, parked
 subordinate context/storage, resumed `SEQ`, four accepted beats, OKAY/zero
 remaining, and final `32'h44332211`. Accounting targets are 311 protocol / 352
 supported-smoke and strict. Alias and two-subordinate variants stay deferred.
+`.794` now ships that paired generic aggregate. The requester child
+conditionally exposes its endpoint `busy_insertion`; the subordinate child and
+aggregate SEQ-policy propagation retain `parks_on = [busy]`; no duplicate top
+summary is added. Generated-HDL t/1513 proves
+`NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`, one BUSY,
+four byte data beats, held requester/subordinate state and storage, OKAY/zero
+completion, and final `32'h44332211`. The proof root-caused and corrected the
+reused AHB phase path: requesters hold a presentation through data-phase
+`HREADY`; subordinates claim one active transfer in `ahb_access_active_q`;
+continuation clearing is a concurrent rule; sampled waits use width-safe
+counted one-cycle repetitions; the generated interconnect instance is legal
+`fabric`; and zero-base decode omits the unsigned `HADDR >= 0` tautology. The
+public paired source passes `--verify-hdl`; accounting is 311 protocol / 352
+supported-smoke and strict. True boundary-free active-transfer pipelining and
+cross-protocol reserved instance-name policy are durably recorded in proposed,
+inactive audits. `.795` owns the next no-behavior AHB selector; decision 0020
+remains proposed/inactive until all ongoing active work dries out.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8455,6 +8472,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_AHB_REQUESTER_BUSY_INSERTION_ALIAS_NEXT_SLICE_SELECTION.md` — records the `.791` no-behavior selection of `.792`, a readiness audit for one paired BUSY-inserting-requester/BUSY-parking-subordinate aggregate; captures the already-composable endpoint/artifact shape and the aggregate child-report omission of requester `busy_insertion` that must be settled before implementation.
 - `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md` — records the `.792` no-behavior audit: the one-subordinate paired BUSY aggregate needs no parser/endpoint/wiring/top/HDL substrate repair, aggregate requester-child `busy_insertion` needs one additive conditional clone, generated `ahb_tb` has sufficient runtime observation points, and `.793` owns exact public contract selection.
 - `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md` — records the `.793` exact contract for `.794`: one additive generic `.ppif` aggregate, requester-child `busy_insertion` plus aggregate `parks_on=[busy]`, support/accounting identities, t/1513 generated-HDL proof through final `32'h44332211` storage, preservation, and deferred alias/two-subordinate variants.
+- `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md` — documents the `.794` shipped paired generic AHB BUSY aggregate, conditional requester-child `busy_insertion`, subordinate/aggregate `parks_on=[busy]`, generated phase-ownership prerequisites, clean public HDL verification, t/1513 runtime proof, support accounting, preservation, and explicit pipeline/alias/two-subordinate deferrals.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

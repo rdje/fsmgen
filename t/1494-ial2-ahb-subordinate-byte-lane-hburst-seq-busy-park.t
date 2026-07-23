@@ -32,10 +32,11 @@ subtest 'adapter parses the BUSY-park AHB subordinate PPIF and parks BUSY' => su
     my $isf = $result->{generated_ial1}{text};
     is($result->{generated_ial1}{name}, 'ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.isf', 'generated IAL1 artifact is named');
 
-    # The BUSY-park delta: the idle-clear transaction fires on IDLE only, so a
+    # The BUSY-park delta: the concurrent idle-clear rule fires on IDLE only, so a
     # BUSY beat leaves the seq_* registers unassigned (parked) instead of cleared.
-    like($isf, qr/\(transaction ahb_seq_idle_clear\s+\(when \(& HSEL HREADY \(== HTRANS 2'b00\)\)/s, 'generated IAL1 clears continuation history on accepted IDLE only');
-    unlike($isf, qr/\(transaction ahb_seq_idle_clear\s+\(when \(& HSEL HREADY \(\| \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/s, 'generated IAL1 idle-clear no longer fires on BUSY');
+    like($isf, qr/\(rule ahb_access_release \(& ahb_access_active_q \(\| \(! HSEL\) \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/, 'generated IAL1 releases the completed active transfer at the parked BUSY boundary');
+    like($isf, qr/\(rule ahb_seq_idle_clear \(& HSEL HREADY \(== HTRANS 2'b00\)\)/s, 'generated IAL1 concurrently clears continuation history on accepted IDLE only');
+    unlike($isf, qr/\(rule ahb_seq_idle_clear \(& HSEL HREADY \(\| \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/s, 'generated IAL1 idle-clear no longer fires on BUSY');
 
     # The shipped burst machinery is preserved: BUSY still stores no register
     # write (it is neither NONSEQ nor SEQ), the WRAP4/INCR4 arm/advance path is
@@ -121,7 +122,7 @@ subtest 'the shipped HBURST SEQ source and its clear-on-BUSY behavior stay uncha
     is($shipped->{report}{source_object}{intent_name}, 'ahb_lite_subordinate_byte_lane_hburst_seq', 'shipped source intent name is unchanged');
     is_deeply($shipped->{report}{transfer}{seq_policy}{clears_on}, [qw(reset idle busy error new_nonseq final_beat)], 'shipped source still clears on BUSY');
     ok(!exists $shipped->{report}{transfer}{seq_policy}{parks_on}, 'shipped source has no parks_on field');
-    like($shipped->{generated_ial1}{text}, qr/\(transaction ahb_seq_idle_clear\s+\(when \(& HSEL HREADY \(\| \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/s, 'shipped source idle-clear still fires on IDLE or BUSY');
+    like($shipped->{generated_ial1}{text}, qr/\(rule ahb_seq_idle_clear \(& HSEL HREADY \(\| \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/s, 'shipped source idle-clear still fires on IDLE or BUSY');
     my %residue = map { $_->{id} => $_->{detail} } @{$shipped->{report}{unsupported_residue}};
     like($residue{ahb_burst_seq_support_deferred}, qr/BUSY-in-burst continuation/, 'shipped source still defers BUSY-in-burst continuation');
 };

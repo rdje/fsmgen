@@ -264,7 +264,7 @@ sub _assign_generated_instance_names($contract) {
     }
 
     $interconnect->{generated_interconnect_instance_name} = _unique_generated_instance_name(
-        'interconnect',
+        'fabric',
         'interconnect',
         \%reserved,
     );
@@ -342,7 +342,7 @@ sub _build_ahb_interconnect_artifacts($contract) {
 
     return {
         object_name    => 'ahb_interconnect',
-        instance_name  => $contract->{interconnect}{generated_interconnect_instance_name} // 'interconnect',
+        instance_name  => $contract->{interconnect}{generated_interconnect_instance_name} // 'fabric',
         role           => 'interconnect',
         ial1_name      => $isf_name,
         ial1_text      => $isf_text,
@@ -442,7 +442,10 @@ sub _build_ahb_interconnect_fsm($contract) {
     my $transfer = $bus->{transfer}{name};
     my $active_transfer = "(! (== $transfer 2'b00))";
     my @window_matches = map {
-        "(& (>= $address $_->{window}{base}{default}) (< $address $_->{window}{limit}))"
+        my $base = $_->{window}{base}{default};
+        $base == 0
+            ? "(< $address $_->{window}{limit})"
+            : "(& (>= $address $base) (< $address $_->{window}{limit}))";
     } @subordinates;
     my $any_window_match = @window_matches == 1
         ? $window_matches[0]
@@ -1072,6 +1075,8 @@ sub _child_report($role, $child, $result, $parent_contract = undef) {
         if defined $result->{report}{narrow_transfer_policy};
     $report->{burst} = _clone_jsonish($result->{report}{burst})
         if defined $result->{report}{burst};
+    $report->{busy_insertion} = _clone_jsonish($result->{report}{busy_insertion})
+        if defined $result->{report}{busy_insertion};
     $report->{response} = _clone_jsonish($result->{report}{response})
         if defined $result->{report}{response};
     $report->{output_defaults} = _clone_jsonish($result->{report}{output_defaults})

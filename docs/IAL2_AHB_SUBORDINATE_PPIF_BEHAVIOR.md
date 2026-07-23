@@ -143,7 +143,7 @@ idle output default assignments in the transaction entry state:
 (HRDATA 32 (reset 0))
 
 (<- (HRDATA> 0))
-(<- (HREADYOUT> 1))
+(<- (HREADYOUT> 1) <not-admitting-an-active-transfer>)
 (<- (HRESP> 0))
 ```
 
@@ -152,14 +152,23 @@ shipped by `IAL2-FEATURE-COMPLETENESS-FRONTIER.714`.
 
 ## Transfer Behavior
 
-The generated subordinate starts a transaction only when:
+The generated subordinate starts a transaction only when it does not already
+own the currently presented transfer:
 
 ```text
-HSEL && HREADY && (HTRANS == NONSEQ || HTRANS == SEQ)
+!ahb_access_active_q && HSEL && HREADY
+  && (HTRANS == NONSEQ || HTRANS == SEQ)
 ```
 
+The priority `ahb_access_admit` rule claims one active presentation in
+`ahb_access_active_q` and drives `HREADYOUT=0` before the scheduled transaction
+samples it. The latch prevents the same held `HTRANS` from being re-admitted
+after completion and releases on an unselected, `IDLE`, or `BUSY` boundary.
+This proves the shipped requester's boundary-producing behavior; true
+boundary-free pipelining remains a separate audit.
+
 `IDLE` and `BUSY` are ignored by not starting the transaction; output defaults
-therefore keep zero-wait OKAY:
+therefore keep zero-wait OKAY when no admission overrides them:
 
 ```text
 HREADYOUT = 1
@@ -169,7 +178,9 @@ HRDATA    = 0
 
 For accepted transfers, generated IAL1 samples `HADDR`, `HWRITE`, `HSIZE`,
 `HTRANS`, and `wait_cycles`, drives a pending data phase with `HREADYOUT=0`,
-waits the sampled count, then resolves the transfer:
+repeats a one-cycle wait for the sampled count, then resolves the transfer.
+The counted-repeat form preserves zero bypass and nonzero delay while keeping
+generated HDL comparison widths lint-clean:
 
 - selected `NONSEQ` word writes to address `0` update `reg_data_q` from
   `HWDATA` and complete with OKAY;

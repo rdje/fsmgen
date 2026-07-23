@@ -56,7 +56,7 @@ subtest 'adapter parses the selected AHB interconnect PPIF shape' => sub {
     like($interconnect_fsm, qr/\(\?fsm:ahb_interconnect\b/, 'generated interconnect IAL0 names the fabric FSM');
     like($interconnect_fsm, qr/\(HGRANT 1 \(reset 1\)\)/, 'generated interconnect IAL0 carries HGRANT reset metadata');
     like($interconnect_fsm, qr/\(HREADY 1 \(reset 1\)\)/, 'generated interconnect IAL0 carries HREADY reset metadata');
-    like($interconnect_fsm, qr/\(<\(& \(! \(== HTRANS 2'b00\)\) \(& \(>= HADDR 0\) \(< HADDR 4\)\)\)/, 'generated interconnect IAL0 decodes active transfers against the static window');
+    like($interconnect_fsm, qr/\(<\(& \(! \(== HTRANS 2'b00\)\) \(< HADDR 4\)\)/, 'generated interconnect IAL0 omits the tautological lower-bound comparison for a zero-base static window');
     like($interconnect_fsm, qr/\(= \(HSEL_REGS> 1\)\)/, 'generated interconnect IAL0 asserts subordinate select on hits');
     like($interconnect_fsm, qr/\(= \(HADDR_REGS> HADDR\)\)/, 'generated interconnect IAL0 emits local address for the zero-base window');
     like($interconnect_fsm, qr/\(<HRESP_REGS\s+\(= \(HRESP> 2'b01\)\)/s, 'generated interconnect IAL0 maps one-bit subordinate ERROR to two-bit requester ERROR');
@@ -66,16 +66,16 @@ subtest 'adapter parses the selected AHB interconnect PPIF shape' => sub {
     my $top = $result->{generated_ial0}{files}{'ahb_tb.fsm'};
     like($top, qr/\A\(\?top:ahb_tb\b/, 'generated top starts with the AHB composition root');
     like($top, qr/\(\?fsmc:requester amba_requester\)/, 'generated top instantiates the requester child');
-    like($top, qr/\(\?fsmc:interconnect ahb_interconnect\)/, 'generated top instantiates the interconnect child');
+    like($top, qr/\(\?fsmc:fabric ahb_interconnect\)/, 'generated top instantiates the interconnect child with a legal HDL instance name');
     like($top, qr/\(\?fsmc:regs ahb_lite_subordinate\)/, 'generated top instantiates the subordinate child');
-    like($top, qr/\(requester\.HADDR interconnect\.HADDR\)/, 'generated top wires requester address into interconnect');
-    like($top, qr/\(interconnect\.HGRANT requester\.HGRANT\)/, 'generated top wires fixed grant back to requester');
-    like($top, qr/\(interconnect\.HREADY requester\.HREADY\)/, 'generated top wires global ready to requester');
-    like($top, qr/\(interconnect\.HREADY regs\.HREADY\)/, 'generated top wires global ready to subordinate');
-    like($top, qr/\(interconnect\.HSEL_REGS regs\.HSEL_REGS\)/, 'generated top wires decoded select to subordinate');
-    like($top, qr/\(interconnect\.HADDR_REGS regs\.HADDR_REGS\)/, 'generated top wires local address to subordinate');
+    like($top, qr/\(requester\.HADDR fabric\.HADDR\)/, 'generated top wires requester address into interconnect');
+    like($top, qr/\(fabric\.HGRANT requester\.HGRANT\)/, 'generated top wires fixed grant back to requester');
+    like($top, qr/\(fabric\.HREADY requester\.HREADY\)/, 'generated top wires global ready to requester');
+    like($top, qr/\(fabric\.HREADY regs\.HREADY\)/, 'generated top wires global ready to subordinate');
+    like($top, qr/\(fabric\.HSEL_REGS regs\.HSEL_REGS\)/, 'generated top wires decoded select to subordinate');
+    like($top, qr/\(fabric\.HADDR_REGS regs\.HADDR_REGS\)/, 'generated top wires local address to subordinate');
     like($top, qr/\(requester\.HTRANS regs\.HTRANS\)/, 'generated top passes HTRANS to subordinate');
-    like($top, qr/\(regs\.HRESP_REGS interconnect\.HRESP_REGS\)/, 'generated top wires subordinate response into interconnect');
+    like($top, qr/\(regs\.HRESP_REGS fabric\.HRESP_REGS\)/, 'generated top wires subordinate response into interconnect');
 
     is($result->{report}{composition}{name}, 'ahb_tb', 'report captures top name');
     is($result->{report}{composition}{topology}, 'one_requester_one_subordinate_static_window_interconnect', 'report captures selected topology');
@@ -87,6 +87,7 @@ subtest 'adapter parses the selected AHB interconnect PPIF shape' => sub {
     is($result->{report}{composition}{generated_interconnect}{ial0_artifact}, 'ahb_interconnect.fsm', 'report captures generated interconnect artifact');
     is($result->{report}{children}[0]{role}, 'requester', 'report carries requester child first');
     is($result->{report}{children}[1]{role}, 'interconnect', 'report carries interconnect child second');
+    is($result->{report}{children}[1]{instance_name}, 'fabric', 'report gives the interconnect child a legal generated HDL instance name');
     is($result->{report}{children}[2]{role}, 'subordinate', 'report carries subordinate child third');
     is($result->{report}{generated_artifacts}{hdl_entry}{entry_artifact}, 'ahb_tb.fsm', 'report selects generated AHB top as HDL entry');
     is_deeply(

@@ -110,8 +110,8 @@ sub _normalize_contract($raw) {
     my $storage = _normalize_storage(_required_hash($raw, 'storage'), $bus);
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'), $control, $storage, $bus);
 
-    my @internal_signals = qw(addr_q write_q size_q trans_q wait_n ahb_access_done_q);
-    push @internal_signals, qw(seq_valid_q seq_expected_addr_q seq_size_q seq_write_q ahb_seq_idle_done_q)
+    my @internal_signals = qw(addr_q write_q size_q trans_q wait_n ahb_access_done_q ahb_access_active_q);
+    push @internal_signals, qw(seq_valid_q seq_expected_addr_q seq_size_q seq_write_q)
         if _transfer_selects_seq_policy($transfer);
     push @internal_signals, qw(burst_q seq_hburst_q seq_beats_remaining_q)
         if _transfer_selects_hburst_seq_policy($transfer);
@@ -332,7 +332,7 @@ sub _emit_isf($contract) {
     my $reg_data = $storage->{data}{name};
     my $internal_done = 'ahb_access_done_q';
     my @seq_storage_lines = _seq_policy_storage_lines($contract);
-    my @seq_idle_clear_lines = _seq_policy_idle_clear_transaction_lines($contract);
+    my @seq_idle_clear_lines = _seq_policy_idle_clear_rule_lines($contract);
     my @read_drive_lines = _read_drive_lines($contract);
     my @access_lines = _access_lines($contract);
     my @burst_interface_lines = exists($bus->{burst}) ? _interface_line('input', $bus->{burst}) : ();
@@ -361,6 +361,7 @@ sub _emit_isf($contract) {
         "  (storage",
         "    (var $reg_data (width $storage->{data}{width}) (reset $storage->{data}{reset}))",
         "    (var $internal_done (width 1) (reset 0))",
+        "    (var ahb_access_active_q (width 1) (reset 0))",
         @seq_storage_lines,
         "  )",
         "",
@@ -385,9 +386,18 @@ sub _emit_isf($contract) {
         "    ($bus->{response}{name} $response->{error})",
         "    ($bus->{read_data}{name} 0))",
         "",
+        "  (priority ahb_access_admit over $transfer->{name})",
+        "",
+        "  (rule ahb_access_admit (& (! ahb_access_active_q) $bus->{select} $bus->{ready_in} (| (== $bus->{transfer}{name} $transfer->{nonseq}) (== $bus->{transfer}{name} $transfer->{seq})))",
+        "    (set ahb_access_active_q 1)",
+        "    (set $bus->{ready_out} 0))",
+        "",
+        "  (rule ahb_access_release (& ahb_access_active_q (| (! $bus->{select}) (== $bus->{transfer}{name} $transfer->{idle}) (== $bus->{transfer}{name} $transfer->{busy})))",
+        "    (set ahb_access_active_q 0))",
+        "",
         @seq_idle_clear_lines,
         "  (transaction $transfer->{name}",
-        "    (when (& $bus->{select} $bus->{ready_in} (| (== $bus->{transfer}{name} $transfer->{nonseq}) (== $bus->{transfer}{name} $transfer->{seq})))",
+        "    (when (& (! ahb_access_active_q) $bus->{select} $bus->{ready_in} (| (== $bus->{transfer}{name} $transfer->{nonseq}) (== $bus->{transfer}{name} $transfer->{seq})))",
         "      (sample $bus->{address}{name} as addr_q)",
         "      (sample $bus->{write} as write_q)",
         "      (sample $bus->{size}{name} as size_q)",
@@ -395,7 +405,8 @@ sub _emit_isf($contract) {
         @burst_sample_lines,
         "      (sample $control->{wait_cycles}{name} as wait_n))",
         "    (drive enter_data_phase)",
-        "    (wait wait_n)",
+        "    (repeat wait_n",
+        "      (wait 1))",
         @access_lines,
         "    (complete $internal_done)))",
         "",
@@ -709,11 +720,10 @@ sub _seq_policy_storage_lines($contract) {
         "    (var seq_hburst_q (width 3) (reset 0))",
         "    (var seq_beats_remaining_q (width 2) (reset 0))"
         if _transfer_selects_hburst_seq_policy($contract->{transfer});
-    push @lines, "    (var ahb_seq_idle_done_q (width 1) (reset 0))";
     return @lines;
 }
 
-sub _seq_policy_idle_clear_transaction_lines($contract) {
+sub _seq_policy_idle_clear_rule_lines($contract) {
     return () unless _transfer_selects_seq_policy($contract->{transfer});
 
     my $bus = $contract->{bus};
@@ -721,17 +731,17 @@ sub _seq_policy_idle_clear_transaction_lines($contract) {
     my @clear_lines = _transfer_selects_hburst_seq_policy($transfer)
         ? _hburst_seq_clear_lines('      ')
         : _seq_clear_lines('      ');
-    $clear_lines[-1] .= ')';
     # When BUSY parks, the burst context is held across a BUSY beat, so the
-    # idle-clear transaction fires on IDLE only; otherwise BUSY clears like IDLE.
+    # idle-clear rule fires on IDLE only; otherwise BUSY clears like IDLE.
     my $clear_when = _transfer_parks_busy($transfer)
         ? "(== $bus->{transfer}{name} $transfer->{idle})"
         : "(| (== $bus->{transfer}{name} $transfer->{idle}) (== $bus->{transfer}{name} $transfer->{busy}))";
     return (
-        "  (transaction ahb_seq_idle_clear",
-        "    (when (& $bus->{select} $bus->{ready_in} $clear_when)",
+        "  (priority ahb_seq_idle_clear over $transfer->{name})",
+        "",
+        "  (rule ahb_seq_idle_clear (& $bus->{select} $bus->{ready_in} $clear_when)",
         @clear_lines,
-        "    (complete ahb_seq_idle_done_q))",
+        "  )",
         "",
     );
 }

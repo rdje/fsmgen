@@ -39,8 +39,12 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
     like($isf, qr/\(output HREADYOUT \(reset 1\) \(default 1\)\)/, 'generated AHB subordinate IAL1 records HREADYOUT reset/default');
     like($isf, qr/\(output HRESP \(reset 0\) \(default 0\)\)/, 'generated AHB subordinate IAL1 records HRESP reset/default');
     like($isf, qr/\(output HRDATA \(width 32\) \(reset 0\) \(default 0\)\)/, 'generated AHB subordinate IAL1 records HRDATA reset/default');
-    like($isf, qr/\(when \(& HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated AHB subordinate IAL1 gates access on selected active transfers');
-    like($isf, qr/\(wait wait_n\)/, 'generated AHB subordinate IAL1 uses sampled wait cycles');
+    like($isf, qr/\(var ahb_access_active_q \(width 1\) \(reset 0\)\)/, 'generated AHB subordinate IAL1 stores bounded address/data-phase ownership');
+    like($isf, qr/\(priority ahb_access_admit over ahb_lite_access\)/, 'generated AHB subordinate IAL1 admits a transfer before the transaction scheduler observes it');
+    like($isf, qr/\(rule ahb_access_admit \(& \(! ahb_access_active_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated AHB subordinate IAL1 claims one selected active transfer');
+    like($isf, qr/\(rule ahb_access_release \(& ahb_access_active_q \(\| \(! HSEL\) \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/, 'generated AHB subordinate IAL1 releases phase ownership at a transfer boundary');
+    like($isf, qr/\(when \(& \(! ahb_access_active_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated AHB subordinate IAL1 admits each held active transfer only once');
+    like($isf, qr/\(repeat wait_n\s+\(wait 1\)\)/s, 'generated AHB subordinate IAL1 repeats one-cycle waits from the sampled runtime count');
     like($isf, qr/\(when \(== trans_q 2'b11\)\s+\(drive error_first\)\s+\(drive error_complete\)\)/s, 'generated AHB subordinate IAL1 routes SEQ to two-cycle ERROR');
     like($isf, qr/\(set reg_data_q HWDATA\)/, 'generated AHB subordinate IAL1 writes the selected register from HWDATA');
     like($isf, qr/\(drive read_hit\)/, 'generated AHB subordinate IAL1 has a read-hit drive');
@@ -55,8 +59,8 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
     like($fsm, qr/\(HREADYOUT 1 \(reset 1\)\)/, 'generated AHB subordinate IAL0 carries HREADYOUT reset metadata');
     like($fsm, qr/\(HRESP 1 \(reset 0\)\)/, 'generated AHB subordinate IAL0 carries HRESP reset metadata');
     like($fsm, qr/\(HRDATA 32 \(reset 0\)\)/, 'generated AHB subordinate IAL0 carries HRDATA reset metadata');
-    like($fsm, qr/\(ahb_lite_access_idle_0\s+\(<- \(HRDATA> 0\)\)\s+\(<- \(HREADYOUT> 1\)\)\s+\(<- \(HRESP> 0\)\)/s,
-        'generated AHB subordinate IAL0 drives idle output defaults');
+    like($fsm, qr/\(ahb_lite_access_idle_0\s+\(<- \(HRDATA> 0\)\)\s+\(<- \(HREADYOUT> 1\) <\(! \(& \(! ahb_access_active_q\).*?\)\)\s+\(<- \(HRESP> 0\)\)/s,
+        'generated AHB subordinate IAL0 keeps the ready default priority-safe during admission');
     like($fsm, qr/\(<- \(reg_data_q HWDATA\)\)/, 'generated AHB subordinate IAL0 writes storage on mapped writes');
     like($fsm, qr/\(<- \(HRDATA> reg_data_q\) <read_hit_start\)/, 'generated AHB subordinate IAL0 drives read data on mapped reads');
     like($fsm, qr/\(<- \(HRESP> 1'b1\) <error_first_start\)/, 'generated AHB subordinate IAL0 drives first ERROR response');
@@ -109,7 +113,7 @@ subtest 'malformed AHB subordinate PPIF sources fail closed' => sub {
                 $source =~ s/\n      \(ignored-transfer busy\)//;
                 return $source;
             },
-            qr/transfer\.ignored_transfer must contain idle and busy/,
+            qr/transfer must either ignore \{idle, busy\} or ignore \{idle\} and park \{busy\}/,
         ],
         [
             'unsupported selected transfer',

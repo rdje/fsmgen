@@ -6637,7 +6637,7 @@ endpoint+aggregate `.ppif`/`.ahb` family completed. The endpoint burst-context
 registers (`seq_valid_q`, `seq_expected_addr_q`, `seq_size_q`, `seq_write_q`,
 `seq_hburst_q`, `seq_beats_remaining_q`) already exist for the shipped
 `WRAP4`/`INCR4` path; BUSY is currently folded into the burst-history clear
-alongside IDLE (the `ahb_seq_idle_clear` transaction fires on
+alongside IDLE (the then-generated `ahb_seq_idle_clear` transaction fired on
 `(| (== HTRANS idle) (== HTRANS busy))` and the report `clears_on` lists
 `busy`); and the endpoint/aggregate residue already defer BUSY-in-burst
 continuation/handling. Parking is therefore a bounded clear-versus-park decode
@@ -6649,7 +6649,7 @@ rejected as larger and remain deferred.
 `.774` now audits BUSY-parking readiness and selects `.775`, a public contract
 selection for the endpoint BUSY-parking source. The endpoint burst-context
 registers already exist, so the minimal behavior delta is stopping the
-`ahb_seq_idle_clear` transaction (`AhbSubordinate.pm:710`) from firing on BUSY —
+then-generated `ahb_seq_idle_clear` transaction (`AhbSubordinate.pm:710`) from firing on BUSY —
 unassigned registers hold their value across the parked beat. The endpoint
 source declares `(ignored-transfer busy)`, so a distinct "busy parks"
 declaration is required. The shipped requester never drives `HTRANS = BUSY` on
@@ -6680,7 +6680,7 @@ the bounded endpoint AHB subordinate byte-lane HBURST `WRAP4`/`INCR4` in-word
 (`source_kind: ppif`). The source declares `(ignored-transfer idle)` and the new
 `(parked-transfer busy)` clause; the `AhbSubordinate::_normalize_transfer` parser
 gains an optional `parked_transfer` field, and gated on that flag the
-`ahb_seq_idle_clear` transaction fires on IDLE only. The unassigned `seq_*`
+then-generated `ahb_seq_idle_clear` transaction fired on IDLE only. The unassigned `seq_*`
 registers hold the in-word burst context across the BUSY beat, and the following
 `SEQ` beat resumes through the existing `seq_ok_base` validation that fail-closes
 a drifting resume. The `SEQ`-policy report drops `busy` from `clears_on` and adds
@@ -6855,6 +6855,24 @@ summary. Focused t/1513/Verilator proof must cover the five presentations, held
 requester/subordinate state and storage on BUSY, four data beats, OKAY/zero
 remaining, and final `32'h44332211`. Generic `.ppif` ships first; alias and
 two-subordinate variants remain deferred.
+
+`.794` now ships the selected generic paired AHB BUSY aggregate at
+`ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif`.
+The aggregate requester child conditionally clones the endpoint
+`busy_insertion` block, while the subordinate child and aggregate SEQ-policy
+propagation retain `parks_on=[busy]`; no duplicate top summary is added.
+Generated-HDL t/1513 proves the five non-IDLE presentations, one BUSY, four
+byte data beats, held requester/subordinate state and storage, OKAY/zero
+completion, and final `32'h44332211`. Runtime proof also corrected bounded AHB
+phase ownership (requester HREADY hold plus one-transfer subordinate latch),
+replaced the competing idle-clear transaction with a concurrent rule, moved
+sampled waits to width-safe counted one-cycle repetitions, selected legal
+interconnect instance `fabric`, and omitted the zero-base unsigned lower-bound
+tautology. Public `--verify-hdl` and focused preservation pass; accounting is
+311 protocol / 352 supported-smoke and strict. Proposed inactive audits own
+true boundary-free active-transfer pipelining and cross-protocol reserved
+instance identifiers. `.795` is the next no-behavior AHB selector; decision
+0020 remains proposed/inactive until ongoing active work dries out.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

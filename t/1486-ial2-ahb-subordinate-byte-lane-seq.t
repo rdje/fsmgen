@@ -32,8 +32,9 @@ subtest 'adapter parses selected AHB subordinate byte-lane SEQ PPIF shape' => su
     like($isf, qr/\(var seq_expected_addr_q \(width 32\) \(reset 0\)\)/, 'generated IAL1 stores the expected next in-word address');
     like($isf, qr/\(var seq_size_q \(width 3\) \(reset 0\)\)/, 'generated IAL1 stores the prior HSIZE for SEQ control stability');
     like($isf, qr/\(var seq_write_q \(width 1\) \(reset 0\)\)/, 'generated IAL1 stores the prior HWRITE for SEQ control stability');
-    like($isf, qr/\(transaction ahb_seq_idle_clear\s+\(when \(& HSEL HREADY \(\| \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/s, 'generated IAL1 clears continuation history on accepted IDLE/BUSY');
-    like($isf, qr/\(when \(& HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated IAL1 admits active NONSEQ/SEQ transfer phases');
+    like($isf, qr/\(var ahb_access_active_q \(width 1\) \(reset 0\)\)/, 'generated IAL1 stores bounded transfer-phase ownership');
+    like($isf, qr/\(rule ahb_seq_idle_clear \(& HSEL HREADY \(\| \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/s, 'generated IAL1 concurrently clears continuation history on accepted IDLE/BUSY');
+    like($isf, qr/\(when \(& \(! ahb_access_active_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated IAL1 admits each active NONSEQ/SEQ transfer phase only once');
     unlike($isf, qr/\(when \(== trans_q 2'b11\)\s+\(drive error_first\)\s+\(drive error_complete\)\)/s, 'generated IAL1 does not keep the unconditional SEQ error path');
     like($isf, qr/\(when \(& \(== trans_q 2'b11\) \(! \(& \(& seq_valid_q \(== addr_q seq_expected_addr_q\) \(== size_q seq_size_q\) \(== write_q seq_write_q\)\)/, 'generated IAL1 rejects standalone or mismatched SEQ transfers');
     like($isf, qr/\(when \(& \(== trans_q 2'b10\).*32'h00000000.*write_q\)\s+\(set reg_data_q.*32'h000000ff.*\)\s+\(set seq_valid_q 1\)\s+\(set seq_expected_addr_q 32'h00000001\)/s, 'NONSEQ byte lane 0 arms byte SEQ address 1');
