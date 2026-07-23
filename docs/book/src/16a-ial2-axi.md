@@ -465,7 +465,7 @@ profile-alias spelling remains fail-closed; this first composition surface is
 generic `.ppif` only. Decision 0020's protocol-neutral transaction interface
 also remains a director-gated future direction.
 
-### Selected next initiator increment
+### Audited next initiator increment
 
 With the bounded single-beat write path complete through B retirement, the
 next selected increment is a standalone AXI4 manager read-address (AR) driver.
@@ -474,12 +474,27 @@ command, assert ARVALID independently of ARREADY, hold the selected AR payload
 stable through backpressure, transfer exactly once, and report address-request
 issue rather than read-transaction completion.
 
-The active readiness audit must still fix the exact AR payload and public
-contract before implementation. The expected comparison point is
-address32/ID4/LEN8/SIZE3/BURST2, but source anchors, extended-attribute residue,
-signal spelling, schedule reuse, and generated-HDL proof remain audit outputs.
-RREADY, RID/RDATA/RRESP/RLAST capture, ARID/RID correlation, and full read
-completion are deliberately separate later increments.
+The completed readiness audit fixes the core request payload at address32,
+ID4, LEN8, SIZE3, and BURST2. It selects manager-to-subordinate direction,
+explicit active-low asynchronous reset, idle-only atomic command capture, and
+the corrected AW rule-pair architecture renamed for AR. The expected generated
+schedule has six states and exactly three accept-over-launch priority
+resolutions for active, busy, and ARVALID; its review artifacts are one
+generated `.isf` and one generated `.fsm` before HDL.
+
+The next contract-selection leaf must freeze the exact additive public
+spelling, report identity, diagnostics, and four-subtest generated-HDL proof
+before implementation. The audited baseline uses `ar_cmd_valid`,
+`cmd_araddr`/`cmd_arid`/`cmd_arlen`/`cmd_arsize`/`cmd_arburst`, `arready`, and
+driven `arvalid`/`araddr`/`arid`/`arlen`/`arsize`/`arburst` plus `ar_busy` and
+`ar_done`.
+
+This remains a request-channel primitive, not a complete AXI manager.
+`ar_done` means one AR request was accepted; it does not mean any R beat
+arrived or the read completed. RREADY, RID/RDATA/RRESP/RLAST capture, ARID/RID
+correlation, response-beat accounting, and full read completion are deliberately
+separate later increments. Legal address/length/size/burst combinations and
+extended AR attributes also remain explicit residue.
 
 This selection also keeps larger alternatives deferred. Capacity/status
 integration needs an explicit physical-to-abstract event/ID adapter and an
