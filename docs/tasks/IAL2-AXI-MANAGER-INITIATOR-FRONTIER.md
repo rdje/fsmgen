@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.43` done: fixed-four AW+W request composition selected; `.44` active readiness audit)
+- Last updated: `2026-07-23` (`.46` done: fixed-four AW+W request composition shipped; tree exhausted)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -80,7 +80,7 @@ It complements — does not replace — the shipped capacity/status response cor
 ## Task Tree
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
-  Status: `active`
+  Status: `done`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
   Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.16`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.17`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.18`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.19`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.20`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.21`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.22`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.23`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.24`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.25`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.26`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.27`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.28`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.29`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.30`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.31`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.32`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.33`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.34`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.35`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.36`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.37`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.38`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.39`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.40`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.41`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.42`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.43`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.44`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.45`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.46`
 
@@ -429,11 +429,11 @@ It complements — does not replace — the shipped capacity/status response cor
   Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.45: select the fixed-four AXI write request contract`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.46`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected fixed-four AXI4 AW+W write-request composition end to end.`
   Acceptance: `After .45 freezes the contract, implement it atomically: add AxiWriteBurst4RequestComposition with defensive normalization, unchanged AW/W-burst4 child generation, the exact safe legality predicate/coordinator schedule, measured flat C4 top, report/artifacts, and selected HDL entry; wire additive PPIF parser/dispatch/cardinality/mixing/predicate/missing-intent and .axi rejection; add the exact public source; add RegressionCorpus/LanguageSurface support at 308/349/349; add exact four-subtest t/1509 plus tracked .svt with assertion-disabled and assertion-enabled 5/18/18/4 proof; update mdBook, behavior fact, task/index/MEMORY/Knowledge Map; remove probes; run syntax, focused preservation/accounting/public CLI/HDL/book/continuity/whitespace/doctrine gates under RAM policy; preserve every .45 deferral and all existing behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `PASS — additive AxiWriteBurst4RequestComposition + PPIF parser/dispatch + exact eleven-anchor public source ship. The flat C4 top reuses unchanged AW and W-burst4 children under the selected 29-port/57-signal zero-state six-rule coordinator, fixes LEN3/SIZE2/INCR, uses the renderer-safe aligned 16-byte/4-KiB predicate, exposes direct W beat event/index, and completes only after AW plus final W. Exact four-subtest t/1509 passes report/static/residue/schedule, 36 fail-closed diagnostic cases, support/strict/schedule/semantic/outdir/Verilator/Yosys, and assertion-disabled plus assertion-enabled generated-HDL proof at AW/W/beat/done=5/18/18/4 with illegal=2, busy_ignored=1, reset_abort=1. t/1499-t/1509 preservation PASS (Files=11 Tests=44 across the two resource-safe chunks); t/248+t/297 PASS (6745 tests); accounting is 308/349/349. Syntax, public strict/HDL, mdBook, Knowledge Map 946/4778, docs paths, whitespace, continuity, and doctrines PASS. The default RAM guard reproduced its tracked macOS false-high (96.9% versus memory_pressure 64-67% free); focused regressions ran directly in two bounded chunks after real-pressure verification. Generated temporary artifacts were cleaned. The AXI initiator tree is exhausted; PNT returns to active IAL2-FEATURE-COMPLETENESS-FRONTIER.788 while decision 0020 stays proposed and inactive.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.46: ship the fixed-four AXI write request composition`
 
 ## Notes
 

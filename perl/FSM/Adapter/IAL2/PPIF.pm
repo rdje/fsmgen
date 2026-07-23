@@ -25,6 +25,7 @@ use FSM::IAL2::ProtocolIntent::AxiReadBurst4TransactionComposition;
 use FSM::IAL2::ProtocolIntent::AxiReadTransactionComposition;
 use FSM::IAL2::ProtocolIntent::AxiWBurst4Driver;
 use FSM::IAL2::ProtocolIntent::AxiWDriver;
+use FSM::IAL2::ProtocolIntent::AxiWriteBurst4RequestComposition;
 use FSM::IAL2::ProtocolIntent::AxiWriteRequestComposition;
 use FSM::IAL2::ProtocolIntent::AxiWriteTransactionComposition;
 use FSM::IAL2::ProtocolIntent::ValidReadyChannel;
@@ -120,6 +121,8 @@ sub parse_source($self, @args) {
         if _is_axi_read_burst4_transaction_composition_contract($contract);
     return FSM::IAL2::ProtocolIntent::AxiReadTransactionComposition->new(debug => $self->{debug})->generate($contract)
         if _is_axi_read_transaction_composition_contract($contract);
+    return FSM::IAL2::ProtocolIntent::AxiWriteBurst4RequestComposition->new(debug => $self->{debug})->generate($contract)
+        if _is_axi_write_burst4_request_composition_contract($contract);
     return FSM::IAL2::ProtocolIntent::AxiWriteRequestComposition->new(debug => $self->{debug})->generate($contract)
         if _is_axi_write_request_composition_contract($contract);
     return FSM::IAL2::ProtocolIntent::AxiWriteTransactionComposition->new(debug => $self->{debug})->generate($contract)
@@ -306,6 +309,9 @@ sub _validate_profile_alias_contract($source_label, $contract) {
     confess "Error: .axi source '$source_label' (axi-write-request-composition ...) remains unsupported for the first profile-alias implementation\n"
         if _is_axi_write_request_composition_contract($contract);
 
+    confess "Error: .axi source '$source_label' (axi-write-burst4-request-composition ...) remains unsupported for the first profile-alias implementation\n"
+        if _is_axi_write_burst4_request_composition_contract($contract);
+
     confess "Error: .axi source '$source_label' (axi-write-transaction-composition ...) remains unsupported for the first profile-alias implementation\n"
         if _is_axi_write_transaction_composition_contract($contract);
 
@@ -325,6 +331,7 @@ sub _contract_from_root($root, $source_label) {
     my @axi_ar_drivers;
     my @axi_w_drivers;
     my @axi_w_burst4_drivers;
+    my @axi_write_burst4_request_compositions;
     my @axi_b_response_acceptors;
     my @axi_r_beat_acceptors;
     my @axi_read_burst4_transaction_compositions;
@@ -361,6 +368,9 @@ sub _contract_from_root($root, $source_label) {
             push @axi_w_drivers, _parse_axi_w_driver(\@body, $source_label);
         } elsif ($head eq 'axi-w-burst4-driver') {
             push @axi_w_burst4_drivers, _parse_axi_w_burst4_driver(\@body, $source_label);
+        } elsif ($head eq 'axi-write-burst4-request-composition') {
+            push @axi_write_burst4_request_compositions,
+                _parse_axi_write_burst4_request_composition(\@body, $source_label);
         } elsif ($head eq 'axi-b-response-acceptor') {
             push @axi_b_response_acceptors, _parse_axi_b_response_acceptor(\@body, $source_label);
         } elsif ($head eq 'axi-r-beat-acceptor') {
@@ -394,8 +404,24 @@ sub _contract_from_root($root, $source_label) {
         unless defined $profile;
     confess "Error: $surface source '$source_label' is missing required (source ...) clause\n"
         unless defined $source;
-    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), (axi-aw-driver ...), (axi-ar-driver ...), (axi-w-driver ...), (axi-w-burst4-driver ...), (axi-b-response-acceptor ...), (axi-r-beat-acceptor ...), (axi-read-burst4-transaction-composition ...), (axi-read-transaction-composition ...), (axi-write-request-composition ...), (axi-write-transaction-composition ...), (apb-requester ...), (apb-completer ...), (apb-composition ...), (ahb-requester ...), (ahb-subordinate ...), or (ahb-interconnect ...)\n"
-        unless @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_w_burst4_drivers || @axi_b_response_acceptors || @axi_r_beat_acceptors || @axi_read_burst4_transaction_compositions || @axi_read_transaction_compositions || @axi_write_request_compositions || @axi_write_transaction_compositions || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), (axi-aw-driver ...), (axi-ar-driver ...), (axi-w-driver ...), (axi-w-burst4-driver ...), (axi-write-burst4-request-composition ...), (axi-b-response-acceptor ...), (axi-r-beat-acceptor ...), (axi-read-burst4-transaction-composition ...), (axi-read-transaction-composition ...), (axi-write-request-composition ...), (axi-write-transaction-composition ...), (apb-requester ...), (apb-completer ...), (apb-composition ...), (ahb-requester ...), (ahb-subordinate ...), or (ahb-interconnect ...)\n"
+        unless @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_w_burst4_drivers || @axi_write_burst4_request_compositions || @axi_b_response_acceptors || @axi_r_beat_acceptors || @axi_read_burst4_transaction_compositions || @axi_read_transaction_compositions || @axi_write_request_compositions || @axi_write_transaction_compositions || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+
+    if (@axi_write_burst4_request_compositions) {
+        confess "Error: $surface source '$source_label' profile '$profile' does not match (axi-write-burst4-request-composition ...); expected an AXI-family profile (axi, axi3, axi4, or axi5)\n"
+            unless _is_axi_family_profile($profile);
+        confess "Error: $surface source '$source_label' supports exactly one (axi-write-burst4-request-composition ...) object in this slice\n"
+            if @axi_write_burst4_request_compositions > 1;
+        confess "Error: $surface source '$source_label' cannot mix (axi-write-burst4-request-composition ...) with other intent objects in this slice\n"
+            if @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_w_burst4_drivers || @axi_b_response_acceptors || @axi_r_beat_acceptors || @axi_read_burst4_transaction_compositions || @axi_read_transaction_compositions || @axi_write_request_compositions || @axi_write_transaction_compositions || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+
+        return {
+            %{$axi_write_burst4_request_compositions[0]},
+            intent_name => $intent_name,
+            protocol    => $profile,
+            source      => $source,
+        };
+    }
 
     if (@axi_w_burst4_drivers) {
         confess "Error: $surface source '$source_label' profile '$profile' does not match (axi-w-burst4-driver ...); expected an AXI-family profile (axi, axi3, axi4, or axi5)\n"
@@ -1406,6 +1432,121 @@ sub _parse_axi_w_burst4_driver_channel_block($items, $source_label, $name) {
             'beat-index' => 'width',
         },
         [qw(valid data strobe last busy beat-done done beat-index)],
+    );
+}
+
+sub _parse_axi_write_burst4_request_composition($body, $source_label) {
+    confess "Error: .ppif (axi-write-burst4-request-composition ...) requires a scalar object name\n"
+        unless @$body >= 1 && !ref($body->[0]) && length($body->[0]);
+
+    my $name = $body->[0];
+    my %contract = (
+        kind => 'axi_write_burst4_request_composition',
+        name => $name,
+    );
+    my %seen;
+    for my $clause (@{$body}[1 .. $#$body]) {
+        my ($head, @items) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (axi-write-burst4-request-composition $name ...) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+
+        if ($head =~ /\A(?:role|clock)\z/) {
+            confess "Error: .ppif (axi-write-burst4-request-composition $name ($head ...)) requires exactly one scalar value\n"
+                unless @items == 1 && !ref($items[0]);
+            $contract{$head} = $items[0];
+        } elsif ($head eq 'reset') {
+            $contract{reset} = _parse_reset(\@items, $source_label);
+        } elsif ($head eq 'command') {
+            $contract{command} = _parse_axi_write_burst4_request_command_block(\@items, $source_label, $name);
+        } elsif ($head eq 'aw-channel') {
+            $contract{aw_channel} = _parse_axi_write_burst4_request_aw_channel_block(\@items, $source_label, $name);
+        } elsif ($head eq 'w-channel') {
+            $contract{w_channel} = _parse_axi_write_burst4_request_w_channel_block(\@items, $source_label, $name);
+        } elsif ($head eq 'status') {
+            $contract{status} = _parse_axi_write_burst4_request_status_block(\@items, $source_label, $name);
+        } else {
+            confess "Error: .ppif (axi-write-burst4-request-composition $name ...) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(role clock reset command aw_channel w_channel status)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (axi-write-burst4-request-composition $name ...) is missing required ($clause ...) clause\n"
+            unless exists $contract{$required};
+    }
+
+    return \%contract;
+}
+
+sub _parse_axi_write_burst4_request_command_block($items, $source_label, $name) {
+    return _parse_ahb_binding_block(
+        $items,
+        $source_label,
+        "axi-write-burst4-request-composition $name command",
+        {
+            start   => 'scalar',
+            address => 'width',
+            id      => 'width',
+            data0   => 'width',
+            data1   => 'width',
+            data2   => 'width',
+            data3   => 'width',
+            strobe0 => 'width',
+            strobe1 => 'width',
+            strobe2 => 'width',
+            strobe3 => 'width',
+        },
+        [qw(start address id data0 data1 data2 data3 strobe0 strobe1 strobe2 strobe3)],
+    );
+}
+
+sub _parse_axi_write_burst4_request_aw_channel_block($items, $source_label, $name) {
+    return _parse_ahb_binding_block(
+        $items,
+        $source_label,
+        "axi-write-burst4-request-composition $name aw-channel",
+        {
+            ready   => 'scalar',
+            valid   => 'scalar',
+            address => 'width',
+            id      => 'width',
+            length  => 'width',
+            size    => 'width',
+            burst   => 'width',
+        },
+        [qw(ready valid address id length size burst)],
+    );
+}
+
+sub _parse_axi_write_burst4_request_w_channel_block($items, $source_label, $name) {
+    return _parse_ahb_binding_block(
+        $items,
+        $source_label,
+        "axi-write-burst4-request-composition $name w-channel",
+        {
+            ready  => 'scalar',
+            valid  => 'scalar',
+            data   => 'width',
+            strobe => 'width',
+            last   => 'scalar',
+        },
+        [qw(ready valid data strobe last)],
+    );
+}
+
+sub _parse_axi_write_burst4_request_status_block($items, $source_label, $name) {
+    return _parse_ahb_binding_block(
+        $items,
+        $source_label,
+        "axi-write-burst4-request-composition $name status",
+        {
+            busy         => 'scalar',
+            'beat-done'  => 'scalar',
+            done         => 'scalar',
+            'beat-index' => 'width',
+        },
+        [qw(busy beat-done done beat-index)],
     );
 }
 
@@ -4019,6 +4160,11 @@ sub _is_axi_read_burst4_transaction_composition_contract($contract) {
 sub _is_axi_write_request_composition_contract($contract) {
     return ref($contract) eq 'HASH'
         && ($contract->{kind} // '') eq 'axi_write_request_composition';
+}
+
+sub _is_axi_write_burst4_request_composition_contract($contract) {
+    return ref($contract) eq 'HASH'
+        && ($contract->{kind} // '') eq 'axi_write_burst4_request_composition';
 }
 
 sub _is_axi_write_transaction_composition_contract($contract) {
