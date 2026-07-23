@@ -2044,6 +2044,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_axi_ar_driver',
+        relpath => 'ppif/axi_ar_driver.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_axi_ar_driver_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'axi_ar_driver',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ppif_axi_w_driver',
         relpath => 'ppif/axi_w_driver.ppif',
         family => 'protocol_fixture',

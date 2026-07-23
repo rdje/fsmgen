@@ -465,39 +465,68 @@ profile-alias spelling remains fail-closed; this first composition surface is
 generic `.ppif` only. Decision 0020's protocol-neutral transaction interface
 also remains a director-gated future direction.
 
-### Audited next initiator increment
+### Bounded AR read-address driver
 
-With the bounded single-beat write path complete through B retirement, the
-next selected increment is a standalone AXI4 manager read-address (AR) driver.
-It will mirror the corrected AW-driver architecture: capture one idle local
-command, assert ARVALID independently of ARREADY, hold the selected AR payload
-stable through backpressure, transfer exactly once, and report address-request
-issue rather than read-transaction completion.
+`ppif/axi_ar_driver.ppif` is the shipped standalone AXI4 manager read-address
+primitive. It captures one idle local command, asserts ARVALID independently
+of ARREADY, holds the complete core AR request payload through backpressure,
+accepts exactly once, and reports address-request issue rather than read-
+transaction completion.
 
-The completed readiness audit fixes the core request payload at address32,
-ID4, LEN8, SIZE3, and BURST2. It selects manager-to-subordinate direction,
-explicit active-low asynchronous reset, idle-only atomic command capture, and
-the corrected AW rule-pair architecture renamed for AR. The expected generated
-schedule has six states and exactly three accept-over-launch priority
-resolutions for active, busy, and ARVALID; its review artifacts are one
-generated `.isf` and one generated `.fsm` before HDL.
+```text
+(axi-ar-driver axi_ar_driver
+  (role manager-to-subordinate)
+  (clock clk)
+  (reset (rst_n active_low async))
+  (command
+    (start ar_cmd_valid)
+    (address cmd_araddr width 32)
+    (id cmd_arid width 4)
+    (length cmd_arlen width 8)
+    (size cmd_arsize width 3)
+    (burst cmd_arburst width 2)
+    (ready arready))
+  (channel
+    (valid arvalid)
+    (address araddr width 32)
+    (id arid width 4)
+    (length arlen width 8)
+    (size arsize width 3)
+    (burst arburst width 2)
+    (busy ar_busy)
+    (done ar_done)))
+```
 
-The exact implementation contract is now selected. The additive object is
-`(axi-ar-driver axi_ar_driver ...)`; its generator will be
-`FSM::IAL2::ProtocolIntent::AxiArDriver`, its report schema
-`fsmgen.ial2.protocol_intent.axi_ar_driver.v1`, and its public source
-`ppif/axi_ar_driver.ppif`. The source will use `ar_cmd_valid`,
-`cmd_araddr`/`cmd_arid`/`cmd_arlen`/`cmd_arsize`/`cmd_arburst`, `arready`, and
-driven `arvalid`/`araddr`/`arid`/`arlen`/`arsize`/`arburst` plus `ar_busy` and
-`ar_done`. Implementation and the exact four-subtest generated-HDL proof are
-the next owned slice; the source is not shipped yet.
+The generator is `FSM::IAL2::ProtocolIntent::AxiArDriver`; the report schema is
+`fsmgen.ial2.protocol_intent.axi_ar_driver.v1`. Run every shipped review and
+validation surface directly:
 
-The selected report includes a machine-readable `request_scope` with the five
-widths, `done_event = ar_request_accepted`, and
-`includes_read_response = false`. The generated review path is fixed as one
-`axi_ar_driver.isf`, one `axi_ar_driver.fsm`, then HDL. Support accounting will
-move to 303 protocol fixtures and 344 supported/strict-supported fixtures when
-the implementation lands.
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_ar_driver.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_ar_driver.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_ar_driver.ppif
+./bin/fsmgen --quiet --outdir generated ppif/axi_ar_driver.ppif
+./bin/fsmgen --verify-hdl ppif/axi_ar_driver.ppif
+```
+
+The review path emits `axi_ar_driver.isf`, then `axi_ar_driver.fsm`, then the
+selected HDL module. The generated schedule has 15 interface ports, six exact
+transaction states, eight launch assignments, three acceptance assignments,
+no compile issues, and three acceptance-over-launch priority resolutions for
+the active bit, busy, and ARVALID.
+
+The report's machine-readable `request_scope` records widths 32/4/8/3/2,
+`done_event = ar_request_accepted`, and
+`includes_read_response = false`. Support accounting identifies the source as
+`intent.ppif_axi_ar_driver`; the corpus now has 303 protocol fixtures and 344
+supported/strict-supported fixtures.
+
+The focused generated-HDL proof covers continuously asserted ARREADY, a
+four-cycle stall while every upstream command field changes, a command offered
+while busy, a one-cycle READY pulse, reset while idle and while stalled, and a
+fresh post-reset request. It requires exact totals of three AR handshakes and
+three one-cycle done pulses, verifies the captured five-field payload at every
+acceptance, ends idle, and passes both Verilator lint and Yosys synthesis.
 
 This remains a request-channel primitive, not a complete AXI manager.
 `ar_done` means one AR request was accepted; it does not mean any R beat
@@ -506,7 +535,7 @@ correlation, response-beat accounting, and full read completion are deliberately
 separate later increments. Legal address/length/size/burst combinations and
 extended AR attributes also remain explicit residue.
 
-This selection also keeps larger alternatives deferred. Capacity/status
+The larger alternatives remain deferred. Capacity/status
 integration needs an explicit physical-to-abstract event/ID adapter and an
 outstanding policy; multi-beat or back-to-back writes need queues, counters,
 and ordering; expanding the `.axi` alias adds spelling rather than bus-driving
