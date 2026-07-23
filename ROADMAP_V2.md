@@ -6892,6 +6892,18 @@ paired behavior and broader
 BUSY/status/burst work remain deferred; decision 0020 and the proposed audits
 remain inactive.
 
+`.797` now selects `.798`, a no-behavior readiness audit for the bounded
+two-subordinate paired AHB BUSY composition. The in-memory candidate reuses the
+shipped BUSY requester and status/control BUSY-parking subordinates, reports
+four children, preserves requester `busy_insertion` and both propagated
+`parks_on=[busy]` policies, and generates the expected IAL1/IAL0/top artifacts.
+The audit must freeze a generated-HDL proof through both the zero-base status
+window and nonzero-base control window. It must also select a report-only repair
+for the pre-existing contradiction where `ahb_broader_interconnect_decode_deferred`
+still calls BUSY continuation deferred while `ahb_burst_seq_support_deferred`
+correctly says BUSY parking ships. No behavior changed in `.797`; broader
+BUSY/status/burst work, decision 0020, and proposed audits remain inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

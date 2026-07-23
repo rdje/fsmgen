@@ -5838,6 +5838,16 @@ removes only alias residue. Focused t/1514 proves parity, CLI/report/artifact/
 support surfaces, diagnostics, and `--verify-hdl`. Accounting is 312 protocol /
 353 supported-smoke and strict. `.ppif` and `.ahb` are two public source
 surfaces over one generator architecture, not separate generators.
+`.797` now selects `.798`, a no-behavior readiness audit for the bounded
+two-subordinate paired BUSY sibling. An in-memory candidate already composes
+the shipped BUSY requester with status/control BUSY-parking subordinates,
+reports four children, propagates requester `busy_insertion`, preserves both
+`parks_on=[busy]` policies, and generates the expected requester/status/control/
+interconnect/top review artifacts. Direct implementation waits for `.798` to
+freeze the two-window generated-HDL proof and resolve a pre-existing report
+contradiction: the broader two-subordinate residue still calls BUSY continuation
+deferred while the dedicated burst residue correctly says BUSY parking ships.
+Decision 0020 and proposed audits remain inactive.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8491,6 +8501,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md` — documents the `.794` shipped paired generic AHB BUSY aggregate, conditional requester-child `busy_insertion`, subordinate/aggregate `parks_on=[busy]`, generated phase-ownership prerequisites, clean public HDL verification, t/1513 runtime proof, support accounting, preservation, and explicit pipeline/alias/two-subordinate deferrals.
 - `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.795` selection of `.796`, data-only implementation of the matching paired-BUSY `.ahb` profile alias; the alias is a second public source surface for the same generated architecture, not another generator, and reuses t/1513 runtime behavior while t/1514 owns alias parity/CLI proof.
 - `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.796` shipped paired-BUSY `.ahb` profile alias, byte-identical `.ppif` parity, one shared generator/lowering architecture, support identity, alias-only residue cleanup, t/1514 public-surface proof, and retained t/1513 runtime proof.
+- `docs/IAL2_POST_AHB_PAIRED_BUSY_FAMILY_NEXT_SLICE_SELECTION.md` — records the `.797` no-behavior selection of `.798`, two-subordinate paired BUSY readiness; captures the successful four-child in-memory composition probe, the required status/control-window runtime proof, and the contradictory broader-versus-burst BUSY residue that the audit must resolve before implementation.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

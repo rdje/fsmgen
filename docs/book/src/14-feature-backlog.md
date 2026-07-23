@@ -10710,6 +10710,16 @@ documents the `.796` shipped alias, exact source/artifact/report parity,
 support identity, alias-only residue cleanup, commands, validation, and
 explicit deferrals.
 
+Post paired AHB BUSY family selector:
+[IAL2_POST_AHB_PAIRED_BUSY_FAMILY_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_PAIRED_BUSY_FAMILY_NEXT_SLICE_SELECTION.md)
+documents `.797`, which selects `.798`, a no-behavior readiness audit for the
+two-subordinate paired BUSY sibling. The existing four-child generator path
+already composes requester `busy_insertion` with both status/control
+`parks_on=[busy]` policies. The audit must freeze the two-window runtime proof
+and resolve contradictory residue that simultaneously calls BUSY continuation
+deferred and BUSY parking shipped. Decision 0020 and proposed audits remain
+inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

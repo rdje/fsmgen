@@ -1344,6 +1344,25 @@ CLI/report/artifact/support surfaces, diagnostics, and `--verify-hdl`; t/1513
 retains the shared runtime proof. See
 [IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR](../../IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md).
 
+`.797` now selects `.798`, a no-behavior readiness audit for the
+two-subordinate paired sibling. A current in-memory candidate replaces the
+shipped two-subordinate BUSY-park aggregate's requester with
+`amba_requester_busy_insert` and already reports four children, requester
+`busy_insertion`, and `parks_on=[busy]` for both status/control child policies
+and both aggregate-propagated policies. It generates the expected requester,
+status, control, interconnect, and `ahb_tb` review artifacts.
+
+The audit comes before implementation for two reasons. First, generated-HDL
+proof must cover both the zero-base status window and the control window whose
+local address is `HADDR - 4`, including selected-child parking and unselected-
+child non-interference. Second, the live shipped two-subordinate BUSY-park
+report is contradictory: `ahb_broader_interconnect_decode_deferred` still lists
+BUSY-in-burst continuation as future work while
+`ahb_burst_seq_support_deferred` correctly says BUSY parking ships. `.798` must
+select a report-only repair that preserves BUSY deferral on non-parking sources
+before choosing the public paired source contract. See
+[IAL2_POST_AHB_PAIRED_BUSY_FAMILY_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_PAIRED_BUSY_FAMILY_NEXT_SLICE_SELECTION.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB
