@@ -226,12 +226,18 @@ interface remain separate future owners.
 The next selected initiator direction is a standalone fixed-four full-width W
 burst driver. It must precede a fixed-four AW+W composition because this
 single-beat child hard-wires `WLAST=1`: re-arming it four times would emit four
-false final beats under `AWLEN=3`. The active readiness audit compares four
-explicit data32/strobe4 fields, packed data128/strobe16 banks, and a streaming
-producer. Its leading shape captures four tuples atomically, holds each tuple
-under WREADY backpressure, emits WLAST `0/0/0/1`, and reports beat index plus
-one final completion. No burst W behavior ships until that contract and its
-generated schedule are proven.
+false final beats under `AWLEN=3`. The completed readiness audit selects four
+explicit data32/strobe4 fields over packed data128/strobe16 banks and a
+streaming producer, and requires a new additive `AxiWBurst4Driver` so this
+single-beat source remains unchanged. The selected boundary atomically captures
+all four tuples, keeps WVALID asserted across consecutive beats, holds the
+presented tuple under WREADY backpressure, emits WLAST `0/0/0/1`, reports one
+event with index `0/1/2/3` for every accepted beat, and retires once with the
+fourth event. Its proven target is an 18-port, zero-state, seven-rule actor with
+assignment counts `13/6/6/6/6/1/1` and five explicit event-clear priorities;
+temporary strict, schedule, Verilator, Yosys, and generated-HDL checks all
+pass. Exact public-contract selection is active. No burst W behavior ships
+until that contract and its separate implementation land.
 
 ### Bounded one-response B write-response acceptor
 
