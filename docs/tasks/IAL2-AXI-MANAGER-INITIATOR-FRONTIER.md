@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.40` done: fixed-four W burst driver audited; `.41` active contract selection)
+- Last updated: `2026-07-23` (`.41` done: fixed-four W burst driver contract selected; `.42` active implementation)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -392,13 +392,15 @@ It complements — does not replace — the shipped capacity/status response cor
   Selection: `Additive AxiWBurst4Driver with four explicit data32/strobe4 command tuples, WLAST 0/0/0/1, continuous WVALID, accepted-beat event/index2 plus final done, exact 18-port zero-state seven-rule schedule, t/1508, support 307/348/348; .41 contract selection.`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.41`
-  Status: `active`
+  Status: `done`
   Goal: `Select the exact additive public contract for the ready fixed-four full-width AXI4 manager W burst driver.`
   Acceptance: `Starting from docs/IAL2_AXI_MANAGER_INITIATOR_W_BURST4_DRIVER_READINESS_AUDIT.md, freeze exactly one (axi-w-burst4-driver ...) object and all parser/result/mode/AxiWBurst4Driver/schema/source/actor/support/t1508 identities; the exact seven anchors; manager-to-subordinate/shared async-active-low reset; four explicit data32/strobe4 command tuples plus WREADY; WVALID/WDATA/WSTRB/WLAST/busy/beat-done/done/beat-index2 outputs; atomic beat-zero-in-output plus trailing private capture; continuous WVALID and stable stalled tuple; WLAST 0/0/0/1; exactly four accepted transfers; consecutive event-level semantics and terminal done; reset/busy-command behavior; exact 18-port zero-state seven-rule 13/6/6/6/6/1/1 schedule with seven declared storage registers, inferred active/can-accept, five exact priorities, compatible fan-in and assertion; one-IAL1/one-IAL0 selected-HDL artifacts; report sections, thirteen static strings, thirteen residue IDs/details, diagnostics, 307/348/348 accounting, exact four-subtest and 14/14/3 HDL proof, implementation owners, validation, rollback, and atomic .42 owner. Preserve AxiWDriver and every current composition plus all audit deferrals. No parser/generator/source/support/manifest/test/artifact/runtime/HDL behavior changes in this selector.`
-  Verification: `pending`
+  Verification: `PASS — docs/IAL2_AXI_MANAGER_INITIATOR_W_BURST4_DRIVER_CONTRACT_SELECTION.md freezes additive (axi-w-burst4-driver ...), axi_w_burst4_driver/AxiWBurst4Driver/result/mode/schema/source/actor/artifact/support/t1508 identities; seven ordered anchors; exact 18-port explicit tuple/channel vocabulary; atomic capture, continuous WVALID, stable stall, WLAST 0/0/0/1, exact four-transfer/event/index/final/reset/busy lifecycle; zero-state seven-rule 13/6/6/6/6/1/1 actor with seven declared private registers, five exact priorities, compatible fan-in, WLAST assertion, and one ISF/FSM entry; exact report policies, thirteen enforced strings, thirteen residue entries/details, diagnostics, 307/348/348 accounting, four-subtest t/1508 exact 14/14/3 proof, .42 owners, validation, and rollback. No behavior changed.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.41: select the fixed-four AXI W burst contract`
+  Selection: `(axi-w-burst4-driver ...) / AxiWBurst4Driver / schema v1; four explicit data32/strobe4 tuples; continuous WVALID; WLAST 0/0/0/1; beat event/index2 and final done; 18-port zero-state seven-rule actor; one ISF/FSM; t/1508 exact 14/14/3; support 307/348/348; implementation .42.`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.42`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement the selected fixed-four full-width AXI4 manager W burst driver end to end.`
   Acceptance: `After .41 freezes the contract, implement it atomically: add AxiWBurst4Driver with defensive normalization and the exact generated IAL1/IAL0/report/artifact boundary while leaving AxiWDriver unchanged; wire additive PPIF import/dispatch/root/object/block/cardinality/mixing/predicate/missing-intent and .axi rejection; add the exact seven-anchor public source; add RegressionCorpus support at 307/348/348 and LanguageSurfaceSection wording; add exact four-subtest t/1508 plus tracked .svt fixture with the selected 14/14/3 executable proof; update shipped mdBook, behavior fact, task/index/MEMORY/Knowledge Map; remove generated probes; run syntax, focused t/1500+t/1502+t/1503+t/1507+t/1508+t/248+t/297, public CLI/HDL, mdBook, continuity, whitespace, and doctrines under RAM policy. Preserve every .41 deferral and all existing behavior.`
   Verification: `pending`

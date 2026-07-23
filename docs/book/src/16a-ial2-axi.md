@@ -236,8 +236,13 @@ event with index `0/1/2/3` for every accepted beat, and retires once with the
 fourth event. Its proven target is an 18-port, zero-state, seven-rule actor with
 assignment counts `13/6/6/6/6/1/1` and five explicit event-clear priorities;
 temporary strict, schedule, Verilator, Yosys, and generated-HDL checks all
-pass. Exact public-contract selection is active. No burst W behavior ships
-until that contract and its separate implementation land.
+pass. The selected additive public contract is
+`(axi-w-burst4-driver axi_w_burst4_driver ...)`, lowering through one generated
+`axi_w_burst4_driver.isf` and one `axi_w_burst4_driver.fsm`. Its exact source
+has seven Issue L anchors, ten inputs/eight outputs, and explicit per-beat
+payload fields; planned support accounting is 307/348/348 and t/1508 must prove
+exact `handshakes=14 beat=14 done=3` across completed and reset-aborted bursts.
+Atomic implementation is active. No burst W behavior ships until it lands.
 
 ### Bounded one-response B write-response acceptor
 
