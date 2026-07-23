@@ -60,6 +60,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_ahb_requester_busy_insert',
+        relpath => 'ppif/ahb_requester_busy_insert.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_ahb_requester_busy_insert_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'amba_requester_busy_insert',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ppif_ahb_lite_subordinate',
         relpath => 'ppif/ahb_lite_subordinate.ppif',
         family => 'protocol_fixture',

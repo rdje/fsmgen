@@ -1106,6 +1106,7 @@ sub _parse_ahb_requester($body, $source_label) {
                 $source_label,
                 "ahb-requester $name transfer",
                 [qw(idle nonseq seq first-beat later-beats advance-on)],
+                [qw(busy busy-before-beat)],
             );
         } elsif ($head eq 'response') {
             $contract{response} = _parse_ahb_literal_block(
@@ -2251,13 +2252,14 @@ sub _parse_ahb_binding_block($items, $source_label, $context, $shape, $required)
     return \%parsed;
 }
 
-sub _parse_ahb_literal_block($items, $source_label, $context, $required) {
+sub _parse_ahb_literal_block($items, $source_label, $context, $required, $optional = []) {
     my %parsed;
     my %required = map { $_ => 1 } @$required;
+    my %allowed = (%required, map { $_ => 1 } @$optional);
     for my $clause (@$items) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         confess "Error: .ppif ($context ...) has unsupported clause '($head ...)'\n"
-            unless $required{$head};
+            unless $allowed{$head};
         my $key = $head;
         $key =~ s/-/_/g;
         confess "Error: .ppif ($context ...) has duplicate ($head ...) clause\n"

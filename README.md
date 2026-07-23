@@ -5751,6 +5751,21 @@ suffix-keyed suppression with no adapter change. Focused coverage is `t/1497`;
 `t/248` moved to 297 protocol / 338 total. Requester-side BUSY insertion,
 halfword/word burst `SEQ`, wider/indefinite bursts, multi-word/register-bank
 progression, and optional AHB signals remain deferred.
+`.785`-`.787` selected, audited, and froze the additive bounded requester-side
+BUSY-insertion contract. `.788` now ships
+`ppif/ahb_requester_busy_insert.ppif` (actor/module
+`amba_requester_busy_insert`) with `(busy 2'b01)` and
+`(busy-before-beat 2)`: one `transfer_busy` presentation holds the pending
+address/control/data and counters, then the same index-two beat resumes as
+`SEQ`. Schedule JSON adds `busy_insertion`; support identity
+`intent.ppif_ahb_requester_busy_insert` uses coverage
+`ial2_ppif_ahb_requester_busy_insert_pipeline_cli`. Focused t/1498 proves the
+generated-HDL `NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`
+sequence, exact four accepted beats, fail-closed source diagnostics, and base
+requester preservation. Current support accounting is 309 protocol / 350
+supported-smoke and strict entries. Matching `.ahb`, policy/runtime/multi-beat
+BUSY, distinct local bus-BUSY status, paired composition, and larger requester
+behavior remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8394,6 +8409,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_SOURCE_SHAPE_READINESS_AUDIT.md` — selects AHB requester `.ppif` public contract selection before any AHB implementation or `.ahb` alias support.
 - `docs/IAL2_AHB_REQUESTER_PPIF_PUBLIC_CONTRACT_SELECTION.md` — selects the first AHB requester generic `.ppif` public contract and the follow-on implementation owner.
 - `docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md` — documents the shipped bounded AHB requester generic `.ppif` behavior, generated `.isf`/`.fsm` review artifacts, support accounting, diagnostics, validation, and broader-AHB residue.
+- `docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_CONTRACT_SELECTION.md` — selects the additive bounded requester-side single-BUSY public source contract while preserving the base requester and its `.ahb` alias.
+- `docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md` — documents the shipped bounded requester-side single-BUSY insertion behavior, held pending transfer, resumed `SEQ`, report/support surfaces, diagnostics, and remaining broader-BUSY residue.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

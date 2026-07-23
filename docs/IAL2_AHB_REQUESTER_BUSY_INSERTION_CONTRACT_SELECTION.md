@@ -205,8 +205,11 @@ indicator is deferred to a future slice if a downstream consumer needs it.
   non-literal `N` / missing `busy` encoding / duplicate clause, CLI
   check/schedule/outdir, and preservation of `ppif/ahb_requester.ppif` and
   `t/1473`;
-- extend `t/248` corpus accounting (protocol entries 297 → 298, total
-  338 → 339) and the `t/297` capability manifest;
+- extend `t/248` corpus accounting and the `t/297` capability manifest. The
+  original selection projected 297 → 298 protocol / 338 → 339 total; intervening
+  AXI shipments moved the implementation baseline, so `.788` closes at the
+  measured current 308 → 309 protocol / 349 → 350 supported-smoke and strict
+  entries;
 - add the language-surface entry and mdBook example/residue update;
 - Knowledge Map, task tree, Memory, README, ROADMAP_V2 sync, and closeout
   validation (including `--verify-hdl` on the generated module).
@@ -221,6 +224,15 @@ optional/property-gated AHB signals, legacy two-bit subordinate `HRESP`, broader
 interconnect/decode, scoreboards, full-manager behavior, direct backend
 behavior, verification-output generation, backend-language variants, AXI/APB
 behavior, broader AHB behavior, and VHDL remain deferred.
+
+## Implementation Outcome
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.788` now ships the selected contract exactly
+through `ppif/ahb_requester_busy_insert.ppif`. The canonical runtime/report/
+support record is `docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md`; focused
+t/1498 proves the held BUSY presentation, unchanged pending fields/counters,
+resumed `SEQ`, exact four accepted `INCR4` data beats, diagnostics, and base
+requester preservation.
 
 ## Validation
 

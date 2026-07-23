@@ -10604,6 +10604,24 @@ insertion, halfword/word burst `SEQ`, wider or indefinite bursts,
 multi-word/register-bank progression, optional signals, broader AHB, backend
 variants, AXI/APB, and VHDL remain deferred.
 
+AHB requester BUSY-insertion behavior:
+[IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR](../../IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md)
+documents `.788`, the shipped additive
+`ppif/ahb_requester_busy_insert.ppif` source. It adds `(busy 2'b01)` and
+`(busy-before-beat 2)` to the requester transfer block, generates a
+`transfer_busy` drive plus one-bit `busy_inserted_q` one-shot, holds the pending
+address/control/data and counters across the BUSY presentation, then resumes the
+same beat as `SEQ`. The report adds `busy_insertion` and
+`ahb_requester_busy_insert_support`; support identity is
+`intent.ppif_ahb_requester_busy_insert` with coverage
+`ial2_ppif_ahb_requester_busy_insert_pipeline_cli`. Focused t/1498 proves
+`NONSEQ(0) → SEQ(1) → BUSY(2 held) → SEQ(2 resumed) → SEQ(3)`, exact four data
+beats, diagnostics, CLI/report/support surfaces, and base-requester preservation.
+Current corpus accounting is 309 protocol / 350 supported-smoke and strict
+entries. The matching `.ahb` alias, policy/runtime/multi-beat BUSY, a distinct
+local bus-BUSY status, paired composition, larger burst progression, optional
+signals, broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

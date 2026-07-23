@@ -112,13 +112,17 @@ sub _normalize_contract($raw) {
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'));
     my $response = _normalize_response(_required_hash($raw, 'response'));
 
+    my @internal_signal_names = qw(addr_step_q ahb_request_done_q beat_index_q beats_remaining_q beats_total_q burst_active_q last_error_q last_read_data_q last_resp_q last_retry_q last_split_q wrap_base_q wrap_high_q wrap_mode_q wrap_span_q);
+    push @internal_signal_names, 'busy_inserted_q'
+        if defined($transfer->{busy_before_beat});
+
     _reject_duplicate_signal_names(
         $clock,
         $reset->{signal},
         _binding_names($local_command),
         _binding_names($local_status),
         _binding_names($bus),
-        qw(addr_step_q ahb_request_done_q beat_index_q beats_remaining_q beats_total_q burst_active_q last_error_q last_read_data_q last_resp_q last_retry_q last_split_q wrap_base_q wrap_high_q wrap_mode_q wrap_span_q),
+        @internal_signal_names,
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -223,14 +227,29 @@ sub _normalize_burst($raw) {
 }
 
 sub _normalize_transfer($raw) {
-    return {
+    confess "AHB requester transfer.busy_before_beat requires transfer.busy 2'b01\n"
+        if exists($raw->{busy_before_beat}) && !exists($raw->{busy});
+
+    my %transfer = (
         idle       => _exact_scalar($raw, 'idle', "2'b00", 'transfer.idle'),
         nonseq     => _exact_scalar($raw, 'nonseq', "2'b10", 'transfer.nonseq'),
         seq        => _exact_scalar($raw, 'seq', "2'b11", 'transfer.seq'),
         first_beat => _exact_scalar($raw, 'first_beat', 'nonseq', 'transfer.first_beat'),
         later_beats => _exact_scalar($raw, 'later_beats', 'seq', 'transfer.later_beats'),
         advance_on => _exact_scalar($raw, 'advance_on', 'ready', 'transfer.advance_on'),
-    };
+    );
+
+    $transfer{busy} = _exact_scalar($raw, 'busy', "2'b01", 'transfer.busy')
+        if exists($raw->{busy});
+
+    if (exists($raw->{busy_before_beat})) {
+        my $value = $raw->{busy_before_beat};
+        confess "AHB requester transfer.busy_before_beat must be a literal integer in 1..15\n"
+            if ref($value) || !defined($value) || $value !~ /\A(?:[1-9]|1[0-5])\z/;
+        $transfer{busy_before_beat} = 0 + $value;
+    }
+
+    return \%transfer;
 }
 
 sub _normalize_response($raw) {
@@ -255,6 +274,37 @@ sub _emit_isf($contract) {
     my $response = $contract->{response};
     my $reset = _reset_clause($contract->{reset});
     my $internal_done = 'ahb_request_done_q';
+    my $busy_before_beat = $transfer->{busy_before_beat};
+    my @transfer_busy_drive = defined($busy_before_beat)
+        ? (
+            "  (drive transfer_busy",
+            _status_drive_lines($status),
+            "    ($bus->{request} 1)",
+            "    ($bus->{lock} lock_q)",
+            "    ($bus->{address}{name} addr_q)",
+            "    ($bus->{transfer}{name} $transfer->{busy})",
+            "    ($bus->{write} write_q)",
+            "    ($bus->{size}{name} size_q)",
+            "    ($bus->{burst}{name} burst_q)",
+            "    ($bus->{protection}{name} prot_q)",
+            "    ($bus->{write_data}{name} wdata_q))",
+            "",
+        )
+        : ();
+    my @busy_local = defined($busy_before_beat)
+        ? "    (local busy_inserted_q (width 1))"
+        : ();
+    my @busy_init = defined($busy_before_beat)
+        ? "    (set busy_inserted_q 0)"
+        : ();
+    my @busy_insertion = defined($busy_before_beat)
+        ? (
+            "        (when (& (== beat_index_q $busy_before_beat) (== busy_inserted_q 0))",
+            "          (drive transfer_busy)",
+            "          (set busy_inserted_q 1)",
+            "          (continue-when (== busy_inserted_q 1)))",
+        )
+        : ();
 
     return join("\n",
         "(actor $contract->{actor_name}",
@@ -347,6 +397,7 @@ sub _emit_isf($contract) {
         "    ($bus->{protection}{name} prot_q)",
         "    ($bus->{write_data}{name} wdata_q))",
         "",
+        @transfer_busy_drive,
         "  (drive okay_beat",
         _status_drive_lines($status, beat_done => 1, read_data => $bus->{read_data}{name}, response => $response->{okay}),
         "    ($bus->{request} 1)",
@@ -390,6 +441,7 @@ sub _emit_isf($contract) {
         "    (local beats_remaining_q (width 5))",
         "    (local beats_total_q (width 5))",
         "    (local burst_active_q (width 1))",
+        @busy_local,
         "    (local last_error_q (width 1))",
         "    (local last_read_data_q (width 32))",
         "    (local last_resp_q (width 2))",
@@ -400,6 +452,7 @@ sub _emit_isf($contract) {
         "    (local wrap_mode_q (width 1))",
         "    (local wrap_span_q (width 32))",
         "    (set beat_index_q 0)",
+        @busy_init,
         "    (set last_error_q 0)",
         "    (set last_retry_q 0)",
         "    (set last_split_q 0)",
@@ -430,6 +483,7 @@ sub _emit_isf($contract) {
         "    (while beats_remaining_q",
         "      (drive request_bus)",
         "      (when $bus->{grant}",
+        @busy_insertion,
         "        (when (== beat_index_q 0)",
         "          (drive transfer_nonseq))",
         "        (when (! (== beat_index_q 0))",
@@ -509,7 +563,7 @@ sub _build_report(%args) {
     $source_object{intent_name} = $contract->{intent_name}
         if defined($contract->{intent_name}) && length($contract->{intent_name});
 
-    return {
+    my $report = {
         schema => 'fsmgen.ial2.protocol_intent.ahb_requester.v1',
         mode   => 'requester',
         layering => {
@@ -561,14 +615,28 @@ sub _build_report(%args) {
             'AHB protection width is 4 in this slice',
             'AHB transfer and response widths are 2 in this slice',
             'local length, beat-index, and beats-remaining widths are 5 in this slice',
+            (defined($contract->{transfer}{busy_before_beat})
+                ? 'BUSY insertion requires HTRANS BUSY 2\'b01 and a literal before-beat index in 1..15'
+                : ()),
             'direct IAL2-to-IAL0 lowering is forbidden',
         ],
-        unsupported_residue => _unsupported_residue(),
+        unsupported_residue => _unsupported_residue($contract),
     };
+
+    if (defined($contract->{transfer}{busy_before_beat})) {
+        $report->{busy_insertion} = {
+            generated_behavior   => JSON::PP::true,
+            htrans_busy_encoding => $contract->{transfer}{busy},
+            before_beat          => $contract->{transfer}{busy_before_beat},
+            beats                => 'single',
+        };
+    }
+
+    return $report;
 }
 
-sub _unsupported_residue {
-    return [
+sub _unsupported_residue($contract) {
+    my @residue = (
         {
             id => 'ahb_profile_alias_deferred',
             detail => '.ahb remains an unsupported IAL2 profile alias candidate; this slice supports only generic .ppif.',
@@ -589,7 +657,14 @@ sub _unsupported_residue {
             id => 'ahb_verification_output_deferred',
             detail => 'Verification-output generation and backend-language variants remain deferred.',
         },
-    ];
+    );
+
+    push @residue, {
+        id => 'ahb_requester_busy_insert_support',
+        detail => 'Bounded single held requester HTRANS BUSY insertion before one literal SEQ beat is shipped; multi-beat or policy-driven BUSY throttling, runtime-driven insertion points, and requester BUSY beyond one held beat remain future work.',
+    } if defined($contract->{transfer}{busy_before_beat});
+
+    return \@residue;
 }
 
 sub _required_scalar($raw, $field) {

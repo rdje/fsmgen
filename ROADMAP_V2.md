@@ -6789,6 +6789,23 @@ the existing suffix-keyed suppression (no adapter change). Focused coverage is
 `t/1497`; `t/248` moved to 297 protocol / 338 total. Requester-side BUSY
 insertion and larger burst work remain deferred.
 
+`.785` selected bounded requester-side AHB single BUSY-beat insertion, `.786`
+audited the existing requester and receiving BUSY-park substrate, and `.787`
+froze the additive source contract. `.788` now ships
+`ppif/ahb_requester_busy_insert.ppif` with actor/module
+`amba_requester_busy_insert`, `(busy 2'b01)`, and `(busy-before-beat 2)`.
+Generated behavior adds `transfer_busy` plus one-bit `busy_inserted_q`, holds
+the pending address/control/data and counters for the BUSY presentation, and
+resumes the same beat as `SEQ`; report JSON adds `busy_insertion` and bounded
+BUSY residue. Support identity `intent.ppif_ahb_requester_busy_insert` uses
+coverage `ial2_ppif_ahb_requester_busy_insert_pipeline_cli`; t/1498 proves the
+generated-HDL `NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`
+sequence, exact four accepted beats, diagnostics, CLI/report/support surfaces,
+and base requester preservation. Current accounting is 309 protocol / 350
+supported-smoke and strict entries. Matching `.ahb`, policy/runtime/multi-beat
+BUSY, distinct local bus-BUSY status, paired composition, and larger requester
+behavior remain deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

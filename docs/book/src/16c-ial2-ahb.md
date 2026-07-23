@@ -825,9 +825,10 @@ For these aggregate BUSY-park sources the top-level
 `ahb_burst_seq_support_deferred` residue narrows to record that byte-only
 `WRAP4`/`INCR4` aggregate HBURST propagation *with BUSY-in-burst parking* is
 shipped. The non-parking aggregate HBURST sources keep BUSY-in-burst handling
-deferred. Halfword/word burst `SEQ`, wider or indefinite bursts,
-multi-word/register-bank progression, and requester-side BUSY insertion remain
-deferred to future task-tree-owned work.
+deferred. Halfword/word burst `SEQ`, wider or indefinite bursts, and
+multi-word/register-bank progression remain deferred. At that aggregate
+slice's closeout requester-side BUSY insertion was also deferred; the additive
+requester source documented below now ships it independently.
 
 The matching aggregate BUSY-park `.ahb` profile aliases
 `ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb` and
@@ -1171,6 +1172,55 @@ therefore proves both ends of the bounded contract: `SINGLE` produces exactly
 one accepted beat, while `INCR4` produces exactly four at indices `0..3`,
 finishes with zero remaining, and never underflows to the five-bit value `31`.
 
+## Requester BUSY Insertion
+
+Use the additive requester BUSY-insertion source when a bounded burst should
+present one held AHB BUSY transfer before a selected later beat:
+
+```text
+(protocol-platform-intent ahb_requester_busy_insert
+  (profile ahb)
+  ...
+  (ahb-requester amba_requester_busy_insert
+    ...
+    (transfer
+      (idle 2'b00)
+      (busy 2'b01)
+      (nonseq 2'b10)
+      (seq 2'b11)
+      (first-beat nonseq)
+      (later-beats seq)
+      (advance-on ready)
+      (busy-before-beat 2))
+    ...))
+```
+
+Run the checked-in example:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester_busy_insert.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester_busy_insert.ppif
+./bin/fsmgen --quiet --outdir generated/ial2-ahb-requester-busy-insert ppif/ahb_requester_busy_insert.ppif
+```
+
+The source keeps the base requester command/status/bus interface. At beat index
+two it presents the pending address, control, and write data with
+`HTRANS = 2'b01`, holds the beat index and remaining count, and skips response
+advancement. The following presentation is the same pending beat as `SEQ`; an
+`INCR4` therefore presents `NONSEQ(0) → SEQ(1) → BUSY(2 held) → SEQ(2 resumed)
+→ SEQ(3)` while accepting exactly four data beats.
+
+`busy-before-beat` is a literal in `1..15` and requires `(busy 2'b01)`.
+Malformed, missing, duplicate, or out-of-range declarations fail closed. The
+report's `busy_insertion` block records generated behavior, the BUSY encoding,
+the insertion index, and the `single` bound. The source generates
+`amba_requester_busy_insert.isf`, then `.fsm`, then HDL module
+`amba_requester_busy_insert`; it is support-accounted as
+`intent.ppif_ahb_requester_busy_insert`. The base requester and its `.ahb` alias
+remain BUSY-insertion free. A matching `.ahb` alias, runtime/policy-driven or
+multi-beat BUSY throttling, a separate local bus-BUSY status output, and paired
+requester/subordinate composition remain deferred.
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB
@@ -1333,8 +1383,9 @@ The following are not shipped by the current AHB IAL2 surface:
   multi-word/register-bank progression; BUSY-in-burst parking is shipped for the
   `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif` endpoint source
   and its matching `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb`
-  profile alias, while aggregate BUSY-parking and requester-side BUSY insertion
-  remain deferred;
+  profile alias; aggregate BUSY-parking and additive requester-side single-BUSY
+  insertion now ship independently, while broader BUSY policy/throttling
+  remains deferred;
 - legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;
@@ -1585,7 +1636,9 @@ burst mode drifts from the armed burst. The generated `SEQ`-policy report drops
 `busy` from `clears_on` and adds `parks_on: [busy]`, and the burst-`SEQ` residue
 records shipped BUSY-in-burst parking while keeping halfword/word burst `SEQ`,
 wider or indefinite bursts, multi-word/register-bank progression, the matching
-`.ahb` alias, aggregate BUSY-parking, and requester-side BUSY insertion deferred.
+`.ahb` alias, aggregate BUSY-parking, and requester-side BUSY insertion deferred
+at that slice's closeout. The independent requester BUSY-insertion source now
+ships as described above.
 The shipped `ahb_lite_subordinate_byte_lane_hburst_seq` source is unchanged (it
 still clears the burst history on BUSY). Focused coverage is
 `t/1494-ial2-ahb-subordinate-byte-lane-hburst-seq-busy-park.t`.
@@ -1624,8 +1677,9 @@ suppression (no adapter change), while the generic `.ppif` report keeps that
 source-surface residue. Focused coverage is
 `t/1495-ial2-ahb-subordinate-byte-lane-hburst-seq-busy-park-profile-alias.t`;
 `t/248` moves to 293 protocol / 334 total supported-smoke entries. Aggregate
-BUSY-parking, requester-side BUSY insertion, and larger burst work remain
-deferred.
+BUSY-parking, requester-side BUSY insertion, and larger burst work were deferred
+at that slice's closeout; the additive requester source now ships the bounded
+single-BUSY subset independently.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.779` selects
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.780`, a no-behavior readiness audit for
@@ -1689,7 +1743,9 @@ automatically. `.782` narrows only the aggregate HBURST residue (drops
 `t/1496-ial2-ahb-interconnect-byte-lane-hburst-seq-busy-park.t`, moves `t/248` to
 295 protocol / 336 total, and preserves the shipped aggregate HBURST `SEQ`
 sources and `t/1492`/`t/1493`. The matching aggregate `.ahb` aliases,
-requester-side BUSY insertion, and larger burst work remain deferred.
+requester-side BUSY insertion, and larger burst work were deferred at that
+slice's closeout; both the aliases and the additive bounded requester
+single-BUSY source now ship independently.
 
 ## Validation Used For This Chapter
 
