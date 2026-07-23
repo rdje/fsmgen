@@ -236,8 +236,14 @@ selects an explicit one-response arm, `BREADY` assertion without waiting for
 retirement on exactly one handshake, stable captured outputs, and one later
 done pulse. A temporary six-state existing-ISF prototype and generated-HDL
 simulation proved two arms produce exactly two handshakes and two done pulses.
-Exact public syntax remains under contract selection; no B acceptor source or
-behavior is shipped yet.
+Exact public syntax is now selected for the next implementation slice, but no
+B acceptor source or behavior is shipped yet: `(axi-b-response-acceptor ...)`, with
+`(arm b_accept_cmd_valid)`, bus `bvalid`/`bready`/four-bit `bid`/two-bit
+`bresp`, distinct captured `response_bid`/`response_bresp`, and
+`b_busy`/`b_done`. The future source/module will be
+`ppif/axi_b_response_acceptor.ppif` / `axi_b_response_acceptor`; until that
+implementation lands, these names describe the selected boundary rather than
+an available command.
 
 This is smaller than composing AW and W immediately because a write-request
 composition must launch two children that can stall independently, remember

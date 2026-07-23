@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.12` done: B response acceptor readiness audited; `.13` active contract selection)
+- Last updated: `2026-07-23` (`.13` done: B response acceptor contract selected; `.14` active implementation)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -82,7 +82,7 @@ It complements — does not replace — the shipped capacity/status response cor
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
   Status: `active`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
-  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`
+  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
   Status: `done`
@@ -177,9 +177,17 @@ It complements — does not replace — the shipped capacity/status response cor
   Selection: `Safe first slice = explicitly armed one-response manager receiver; assert BREADY without waiting BVALID, capture BID width4 + BRESP width2 and clear ready/busy on exactly one handshake, hold captured payload, then emit one later one-cycle done. Continuously-ready is rejected because it can accept unowned responses and needs buffering for safe back-to-back payloads. Candidate source ppif/axi_b_response_acceptor.ppif, generator AxiBResponseAcceptor, support counts 300/341/341, and t/1501 are owner recommendations subject to .13 exact spelling. .13 is the public contract selector.`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`
-  Status: `active`
+  Status: `done`
   Goal: `Select the exact public contract for the audited explicitly armed, fixed-width, one-response AXI manager B response acceptor before behavior changes.`
   Acceptance: `Use docs/IAL2_AXI_MANAGER_INITIATOR_B_RESPONSE_ACCEPTOR_READINESS_AUDIT.md to fix the clause/object spelling, parser kind, generator/result kind, report schema, public source path, actor/module, support-accounting id/coverage, and t/1501 owner; fix the explicit arm plus channel/captured-response vocabulary and exact signal names for scalar arm/BVALID/BREADY/busy/done, 4-bit bus/captured BID, and 2-bit bus/captured BRESP; pin the six source anchors, six-state accept_b-over-arm_b generated-ISF target, handshake-edge capture versus later done timing, admission/cardinality/stability rules, fail-closed profile/role/width/cardinality/mixing/duplicate-name diagnostics, report bounded-response/static/residue contract, generated-HDL scenarios, validation, rollback, and the exact behavior implementation leaf. Preserve all .12 deferrals and change no parser, generator, public source, test, manifest, support-accounting entry, generated artifact, runtime behavior, or HDL behavior. Record a repo-local contract-selection note and synchronize task tree/index/book/MEMORY/Knowledge Map.`
+  Verification: `PASS — docs/IAL2_AXI_MANAGER_INITIATOR_B_RESPONSE_ACCEPTOR_CONTRACT_SELECTION.md fixes clause/object axi-b-response-acceptor, kind axi_b_response_acceptor, AxiBResponseAcceptor module, protocol_intent.axi_b_response_acceptor result, ...axi_b_response_acceptor.v1 schema, ppif/axi_b_response_acceptor.ppif, axi_b_response_acceptor actor/module, support/coverage, t/1501, exact command/channel bindings, six anchors, six-state accept-over-arm schedule, handshake capture/later-done semantics, diagnostics, bounded_response/static/residue contract, 300/341/341 accounting targets, executable scenarios, .14 owner, deferrals, and rollback. Knowledge Map, mdBook, memory, docs-path, whitespace, and doctrines PASS; no behavior changed.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13: select the bounded AXI B response acceptor contract`
+  Selection: `New additive (axi-b-response-acceptor ...) object; parser kind axi_b_response_acceptor; FSM::IAL2::ProtocolIntent::AxiBResponseAcceptor; result protocol_intent.axi_b_response_acceptor; schema fsmgen.ial2.protocol_intent.axi_b_response_acceptor.v1; source/actor/module axi_b_response_acceptor; support intent.ppif_axi_b_response_acceptor; t/1501. Syntax: command.arm=b_accept_cmd_valid; channel bvalid/bready/bid4/bresp2/captured response_bid4/response_bresp2/b_busy/b_done. Six-state accept_b-over-arm_b schedule; implementation .14.`
+
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`
+  Status: `active`
+  Goal: `Implement the selected additive bounded AXI manager B response acceptor end to end, including executable exactly-one response capture proof.`
+  Acceptance: `Implement docs/IAL2_AXI_MANAGER_INITIATOR_B_RESPONSE_ACCEPTOR_CONTRACT_SELECTION.md exactly: add FSM::IAL2::ProtocolIntent::AxiBResponseAcceptor with defensive normalization, the six-state accept_b-over-arm_b generated-ISF schedule, IAL2->generated .isf->generated .fsm lowering, exact schema/acceptor/bindings/bounded_response/static/residue report; wire PPIF.pm import/dispatch/B-only .axi rejection/root accumulator+clause+missing enumeration+cardinality+mixing+return/object parser/arm+channel binding parsers/predicate; add the exact six-anchor ppif/axi_b_response_acceptor.ppif source; add intent.ppif_axi_b_response_acceptor/ial2_ppif_axi_b_response_acceptor_pipeline_cli support accounting and t/248 299->300 protocol plus 340->341 supported/strict; update LanguageSurfaceSection.pm + t/297; add t/1501 with four subtests for adapter/report/schedule, fail-closed rules, CLI/semantic/schedule/outdir/--verify-hdl, and generated-HDL proof covering unarmed BVALID, already-high held BVALID, four-cycle post-arm wait, BID/BRESP capture/stability, exactly two handshakes/two done pulses, final ready/busy low; update the AXI mdBook to shipped status and synchronize task tree/index/MEMORY/Knowledge Map. Require Perl syntax, strict source check, Verilator/Yosys, focused/guarded regressions, mdBook, docs/memory/Knowledge Map/whitespace/doctrine gates. Preserve all .13 deferrals and do not change AW/W, capacity core, other protocol behavior, direct backend, aliases, verification output, backend variants, or VHDL.`
   Verification: `pending`
   Commit: `pending`
 
@@ -218,8 +226,9 @@ It complements — does not replace — the shipped capacity/status response cor
   response core without first adding cross-channel coordination. `.12`
   completed its behavior-neutral readiness audit and selected explicit one-response
   arming, eager post-arm `BREADY`, fixed `BID` width 4 / `BRESP` width 2
-  capture, and a proven six-state accept-over-arm schedule; `.13` now owns the
-  exact public contract. A later AW+W composition must
+  capture, and a proven six-state accept-over-arm schedule. `.13` selected the
+  exact `(axi-b-response-acceptor ...)` public/generator/report/source/test
+  contract; `.14` now owns its atomic behavior implementation. A later AW+W composition must
   reuse the generated AW/W child modules under a generated structural top and
   add a distinct coordinator, not duplicate those state machines. Decision `0020` frames AW/W drivers as bus-side primitives
   beneath the proposed transaction-layered/composable-role North Star. The AW driver
