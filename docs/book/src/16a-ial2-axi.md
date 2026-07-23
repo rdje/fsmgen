@@ -716,8 +716,9 @@ aligned 16-byte span contained within one 4-KiB region. The proposed additive
 composition reuses the unchanged AR driver and explicitly re-arms the
 unchanged one-beat R acceptor four times under a new two-bit-index coordinator.
 
-The proposed public event stream keeps the physical boundary raw:
-`read_beat_done` and `response_beat_index` identify each newly captured
+The selected additive public contract is
+`(axi-read-burst4-transaction-composition ...)`. Its event stream keeps the
+physical boundary raw: `read_beat_done` and `response_beat_index` identify each newly captured
 RID/RDATA/RRESP/RLAST tuple. RID match and the expected RLAST sequence are
 sticky across the burst. Beat count is authoritative, so early RLAST, RID
 mismatch, and non-OKAY RRESP drain all four accepted transfers; missing final
@@ -725,8 +726,9 @@ RLAST retires on the fourth beat with last-match low. RRESP aggregation and
 four-entry output banks remain capacity/status responsibilities. A temporary
 generated-HDL proof passed continuous and delayed RVALID, the ready-low re-arm
 bubble, address rejection, error drain, reset abort, and recovery at exact
-AR/R/request/beat/transaction counts `4/13/4/13/3`. Exact public-contract
-selection is next; no multi-beat composition behavior ships yet.
+AR/R/request/beat/transaction counts `4/13/4/13/3`. The parser/generator/
+source/support/test implementation is the active next slice; no multi-beat
+composition behavior ships yet.
 
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and

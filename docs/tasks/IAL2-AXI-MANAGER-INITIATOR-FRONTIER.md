@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.36` done: fixed-four read composition ready; `.37` active contract selection)
+- Last updated: `2026-07-23` (`.37` done: fixed-four read contract selected; `.38` active implementation)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -361,15 +361,15 @@ It complements — does not replace — the shipped capacity/status response cor
   Selection: `Fixed four-beat full-width INCR: additive burst4 object, LEN3/SIZE2/INCR, aligned 16-byte 4-KiB guard, unchanged AR/R children, public raw beat event+index, sticky RID and RLAST-sequence status, count-authoritative drain/retirement, 29-port/three-child C4, t/1507; .37 contract selection.`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.37`
-  Status: `active`
+  Status: `done`
   Goal: `Select the exact additive public contract for the ready fixed-four full-width INCR AXI4 manager read transaction composition.`
   Acceptance: `Starting from docs/IAL2_AXI_MANAGER_INITIATOR_BURST4_READ_TRANSACTION_COMPOSITION_READINESS_AUDIT.md, freeze exactly one (axi-read-burst4-transaction-composition ...) object and all parser/result/mode/generator/schema/source/top/coordinator/support/t1507 identities; the exact thirteen anchors; manager/shared async-active-low-reset/address32/ID4 command; AR/raw-R/result/status vocabulary including beat-done and beat-index2; fixed LEN3/SIZE2/INCR and exact aligned 16-byte 4-KiB admission/assertion predicate; unchanged AR/R child generation and explicit four-arm reuse; exact 20-port zero-state ten-rule 10/1/3/2/1/1/6/8/1/1 coordinator with ten authored/eight realized priorities and three assertions; count-authoritative four-beat completion, raw per-beat RRESP, sticky RID and RLAST-sequence status, full drain on early RLAST/RID mismatch/non-OKAY, terminal missing final RLAST at count, busy/reset/busy-command behavior; exact 29-port three-child C4 48-net/46-link topology, three-IAL1/four-IAL0 artifacts, report sections, fifteen static strings, fourteen residue IDs/details, diagnostics, 306/347/347 accounting, exact four-subtest and 4/13/4/13/3 HDL proof, validation, rollback, and atomic .38 owner. Preserve the fixed-single source and all audit deferrals. No parser/generator/source/support/manifest/test/artifact/runtime/HDL behavior changes in this selector.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `PASS — docs/IAL2_AXI_MANAGER_INITIATOR_BURST4_READ_TRANSACTION_COMPOSITION_CONTRACT_SELECTION.md freezes the additive clause/parser/result/mode/AxiReadBurst4TransactionComposition/schema/source/top/coordinator/support/t1507 identities; exact thirteen anchors; manager/address32/ID4/full-AR/raw-R/request+beat+transaction/index2/sticky-match vocabulary; aligned 16-byte 4-KiB predicate; LEN3/SIZE2/INCR; unchanged AR and explicitly re-armed unchanged R; exact 20-port zero-state ten-rule 10/1/3/2/1/1/6/8/1/1 coordinator, ten authored/eight realized priorities, and three assertions; count-authoritative mismatch/non-OKAY drain and missing-final retirement; 29-port three-child C4 at 48 nets/46 links; three-IAL1/four-IAL0 report/artifacts; fifteen exact static rules, fourteen exact residue entries, diagnostics, 306/347/347 accounting, four-subtest t/1507 exact 4/13/4/13/3 proof, atomic .38 owners, validation, and rollback. No behavior changed.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.37: select the fixed-four AXI read contract`
+  Selection: `(axi-read-burst4-transaction-composition ...) / AxiReadBurst4TransactionComposition / schema v1; fixed LEN3/SIZE2/INCR with aligned 16-byte 4-KiB guard; unchanged AR/R under 20-port ten-rule coordinator and 29-port C4; raw event/index plus sticky RID/RLAST sequence; count-authoritative drain; t/1507; support 306/347/347; implementation .38.`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.38`
-  Status: `pending`
-  Blocked by: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.37`
+  Status: `active`
   Goal: `Implement the selected fixed-four full-width INCR AXI4 manager read transaction composition end to end.`
   Acceptance: `After .37 freezes the contract, implement it atomically: add AxiReadBurst4TransactionComposition with defensive normalization, unchanged AxiArDriver/AxiRBeatAcceptor reuse, the exact burst4 coordinator and flat top, report/schedules/artifacts; wire additive PPIF import/dispatch/root/object/block/cardinality/mixing/predicate/missing-intent and .axi rejection; add the exact thirteen-anchor public source; add RegressionCorpus support at 306/347/347 and LanguageSurfaceSection wording; add exact four-subtest t/1507 plus tracked .svt fixture with the selected 4/13/4/13/3 executable proof; update shipped mdBook, behavior fact, task/index/MEMORY/Knowledge Map; remove generated probes; run syntax, focused t/1499-t/1507+t248+t297, public CLI/HDL, mdBook, continuity, whitespace, and doctrines under RAM policy. Preserve every .37 deferral and all existing behavior.`
   Verification: `pending`
