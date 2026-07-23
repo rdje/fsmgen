@@ -281,13 +281,29 @@ core, but does not connect that core automatically. Back-to-back buffering,
 multiple outstanding responses, extended response signaling, AW/W coordination,
 and a complete write transactor remain future work.
 
-This is smaller than composing AW and W immediately because a write-request
-composition must launch two children that can stall independently, remember
-both completion events, and define aggregate busy/done and HDL-entry behavior.
-When selected later, that composition is expected to reuse the generated
-`axi_aw_driver` and `axi_w_driver` child modules under a generated structural
-top, adding a distinct coordination actor rather than duplicating their
-exactly-once state machines.
+### Selected next boundary: coordinated AW+W request issue
+
+With all three independent write-side channel primitives now bounded, the next
+selected increment is a single-beat AW+W write-request composition. It will
+reuse the generated `axi_aw_driver` and `axi_w_driver` child modules under a
+generated structural top and add a distinct coordinator that launches both
+once, remembers their independent completion pulses, and emits aggregate done
+only after both handshakes. The B acceptor remains separate, so aggregate done
+at this boundary means **request channels accepted**, not **write response
+accepted**.
+
+One important coherence rule must be fixed before implementation. The AW child
+can currently carry arbitrary `AWLEN`/`AWSIZE`/`AWBURST`, while the W child
+emits exactly one beat with `WLAST = 1`. Because the number of beats is
+`AWLEN + 1`, the composition must use a bounded legal single-beat address
+policy (for example, fixed `AWLEN = 0` plus matching full-width size/burst
+semantics) or fail closed outside an equally proven subset. It must never
+announce a multi-beat AW request while providing one final W beat.
+
+No public composition source is shipped yet. The active readiness audit owns
+the exact aggregate command/status vocabulary, metadata policy, coordinator
+schedule, structural artifact/report contract, and simultaneous/AW-first/
+W-first generated-HDL proof before any syntax is selected.
 
 ## More-Control Mode
 

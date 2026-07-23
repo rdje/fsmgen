@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.14` done: B response acceptor shipped; `.15` active post-B selection)
+- Last updated: `2026-07-23` (`.15` done: AW+W request composition selected; `.16` active readiness audit)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -82,7 +82,7 @@ It complements — does not replace — the shipped capacity/status response cor
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
   Status: `active`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
-  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15`
+  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.16`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
   Status: `done`
@@ -192,9 +192,17 @@ It complements — does not replace — the shipped capacity/status response cor
   Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14: ship the bounded AXI B response acceptor`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next bounded AXI manager initiator increment after the shipped independent AW, W, and B channel primitives.`
   Acceptance: `Audit the shipped AW/W/B public sources, generators, six-state schedules, reports, executable invariants, current AXI mdBook, capacity/status integration seams, decisions 0014/0017/0020, and existing composition infrastructure. Compare at least: an AW+W coordinated write-request composition that reuses both generated children plus a coordinator; B-acceptor integration into the capacity/status core; a complete AW+W+B single-beat write transactor; AR drive; R response acceptance; multi-beat W/burst/address coupling; and protocol-neutral transaction-interface activation. Select exactly one smallest safe next direction and its readiness/contract owner, including whether structural child reuse or a new primitive is required. Preserve all shipped AW/W/B behavior and IAL2->generated .isf->generated .fsm layering. Record a repo-local selection note and synchronize task tree/index/book/MEMORY/Knowledge Map without changing parser, generators, public sources, support accounting, manifests, tests, generated artifacts, runtime/HDL behavior, direct backend, aliases, verification output, backend variants/VHDL, AHB, or APB.`
+  Verification: `PASS — docs/IAL2_AXI_MANAGER_INITIATOR_POST_B_NEXT_INCREMENT_SELECTION.md audits the live AW/W/B sources, reports, six-state executable invariants, capacity response seam, generated composition patterns, decisions 0014/0017/0020, and AXI book. It selects a bounded single-beat AW+W request composition using unchanged generated AW/W children plus a distinct generated coordinator and structural top; B stays separate, so aggregate done means request issue rather than response completion. It identifies and gates the latent metadata mismatch: arbitrary AWLEN means AWLEN+1 beats while W emits one beat with WLAST=1, so .16 must select a legal single-beat AWLEN/AWSIZE/AWBURST/lane policy before syntax. Candidate comparison, exact .16 audit scope, preservation, validation, and rollback are durable. Live report probes confirmed all three current primitives retain one generated ISF/FSM and selected child HDL entry. Knowledge Map, mdBook, memory, docs-path, whitespace, and doctrines PASS; no behavior changed.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15: select the bounded AXI AW W request composition`
+  Selection: `Next increment = bounded single-beat AW+W request composition. Reuse AxiAwDriver + AxiWDriver generated children; add a generated launch/join coordinator that remembers independent done pulses; select a generated structural top. Keep B separate. .16 must audit command admission, fixed/fail-closed coherent AWLEN=0-equivalent metadata and lane policy, coordinator schedule, structural artifacts/report, fail-closed rules, proof scenarios, and exact owners.`
+
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.16`
+  Status: `active`
+  Goal: `Audit the selected bounded single-beat AXI AW+W write-request composition and fix its safe behavior, artifact, and owner boundary before contract selection.`
+  Acceptance: `Read docs/IAL2_AXI_MANAGER_INITIATOR_POST_B_NEXT_INCREMENT_SELECTION.md, the shipped AW/W sources/generators/reports/six-state schedules/tests, the B separation boundary, tracked AXI transport/write-dependency/AW/W/burst metadata anchors, decisions 0014/0017/0020, PPIF parser/support/manifest owners, APB/AHB/Valid-Ready generated-composition patterns, ISF scheduler/top syntax, and the AXI mdBook. Audit an idle-admitted one-shot aggregate command that launches the unchanged AxiAwDriver and AxiWDriver children once; select exact 32-bit single-beat AWLEN/AWSIZE/AWBURST/alignment/strobe policy consistent with WLAST=1; fix shared clock/reset, child port/wiring and instance policy, a generated coordinator ISF that remembers independent aw_done/w_done (including simultaneous completion), aggregate busy/done semantics, generated IAL1/IAL0 item and schedule-report arrays, structural top HDL entry, report/residue, fail-closed rules, CLI/outdir/semantic behavior, executable simultaneous/AW-first/W-first/long-stall proof, and every implementation owner. Preserve standalone AW/W/B behavior and keep B/capacity/full transactor/multi-beat/AR/R/transaction-interface/aliases/verification-output/backend/VHDL/AHB/APB/direct behavior deferred. Select the exact following contract-selection leaf; change no parser, generator, public source, support entry, manifest, test, generated artifact, runtime behavior, or HDL behavior in the audit.`
   Verification: `pending`
   Commit: `pending`
 
@@ -236,10 +244,12 @@ It complements — does not replace — the shipped capacity/status response cor
   capture, and a proven six-state accept-over-arm schedule. `.13` selected the
   exact `(axi-b-response-acceptor ...)` public/generator/report/source/test
   contract; `.14` shipped it with an executable unarmed/already-high/delayed-
-  `BVALID` capture/cardinality proof. `.15` now selects the next bounded
-  increment. A later AW+W composition must
-  reuse the generated AW/W child modules under a generated structural top and
-  add a distinct coordinator, not duplicate those state machines. Decision `0020` frames AW/W drivers as bus-side primitives
+  `BVALID` capture/cardinality proof. `.15` selected a bounded single-beat
+  AW+W request composition and identified the mandatory AWLEN/AWSIZE/AWBURST
+  coherence gate against the one-beat W child. `.16` now audits its exact safe
+  boundary. The composition must reuse the generated AW/W child modules under
+  a generated structural top and add a distinct coordinator, not duplicate
+  those state machines. Decision `0020` frames AW/W drivers as bus-side primitives
   beneath the proposed transaction-layered/composable-role North Star. The AW driver
   reuses the existing AW valid-ready authoring shape
   (`ppif/axi_aw_valid_ready.ppif`) and the `AhbRequester.pm` drive-block model,
