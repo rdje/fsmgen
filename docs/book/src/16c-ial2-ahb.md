@@ -1511,6 +1511,16 @@ completes cleanly. See the historical
 and the current
 [repair record](../../IAL2_AHB_REQUESTER_WRAP_PROGRESSION_REPAIR.md).
 
+`.805` next found a current-documentation contradiction before selecting more
+AHB behavior: all six selected aggregate/paired `.ahb` aliases exist and have
+focused parity tests, and the inventory above lists them, but the protocol
+navigation/current mode text and three canonical behavior/fact pairs still
+defer one or more aliases. `.806` is selected to repair those current surfaces,
+preserve historical time-local records, and add t/1518 drift coverage. The
+boundary-free active-transfer audit remains proposed behind that prerequisite.
+See
+[IAL2_POST_REQUESTER_WRAP_REPAIR_NEXT_OWNER_SELECTION](../../IAL2_POST_REQUESTER_WRAP_REPAIR_NEXT_OWNER_SELECTION.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB

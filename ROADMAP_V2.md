@@ -7006,6 +7006,16 @@ non-wrap progression, and paired BUSY INCR4 behavior remain stable. This closes
 the correctness tree without activating broader burst/BUSY/optional-signal
 work or decision 0020's proposed transaction-layer horizon.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.805` now selects `.806`, a bounded
+current-surface truthfulness repair. All six aggregate HBURST, aggregate
+BUSY-park, and paired BUSY `.ahb` aliases ship with focused parity coverage,
+yet the current mdBook navigation/mode surfaces and three antecedent
+behavior/fact pairs still defer one or more of them. `.806` will align current
+truth with the existing thirty-eight-source inventory, preserve time-local
+historical records, and add t/1518 drift coverage before any new AHB behavior.
+The canonical boundary-free active-transfer audit and decision 0020 remain
+proposed/inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

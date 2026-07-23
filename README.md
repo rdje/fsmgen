@@ -5951,6 +5951,16 @@ representative sequences are `3,0,1,2`, `6,0,2,4`, `12,0,4,8`,
 support accounting, artifacts, non-wrap behavior, and the paired BUSY `INCR4`
 architecture remain unchanged.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.805` selects `.806`, a current-surface
+truthfulness repair, before another AHB behavior audit. Six aggregate/paired
+`.ahb` aliases already ship with focused parity coverage, but the current
+mdBook navigation/mode text and three antecedent behavior/fact pairs still
+defer one or more of them. `.806` will align those current surfaces with the
+book's own thirty-eight-source inventory, preserve historical time-local
+records, and add focused t/1518 drift coverage. The canonical boundary-free
+active-transfer audit remains proposed behind this prerequisite; decision
+0020 remains inactive.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8614,6 +8624,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md` — records the `.804` no-behavior selection of the canonical requester WRAP-progression audit, the sequential mutation/retest risk, the missing runtime WRAP4 address-sequence proof, deferred alternatives, and the clean-pivot activation boundary.
 - `docs/IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT.md` — preserves the `.1` generated-HDL proof that pre-repair byte WRAP4 start 3 presented `3,1,2,3` instead of `3,0,1,2`, the numbered-state mutation/retest root cause shared by fixed wrapping modes, and the selected `.2` increment-then-wrap repair.
 - `docs/IAL2_AHB_REQUESTER_WRAP_PROGRESSION_REPAIR.md` — records the `.2` generated/direct requester increment-then-wrap repair, exact WRAP4/8/16 address sequences, public-contract stability, preservation gates, scope boundaries, and rollback rule.
+- `docs/IAL2_POST_REQUESTER_WRAP_REPAIR_NEXT_OWNER_SELECTION.md` — records the `.805` proof that six shipped aggregate/paired AHB `.ahb` aliases contradict stale current mdBook/behavior/fact deferrals, selects `.806` current-surface truthfulness repair with t/1518, preserves historical records, and keeps the boundary-free audit plus decision 0020 inactive.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

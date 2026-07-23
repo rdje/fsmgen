@@ -10815,6 +10815,16 @@ progression, and paired BUSY INCR4 behavior remain unchanged. Broader bursts,
 BUSY policy/status, optional AHB signals, and decision 0020 remain deferred or
 inactive.
 
+Post-requester-WRAP next-owner selection:
+[IAL2_POST_REQUESTER_WRAP_REPAIR_NEXT_OWNER_SELECTION](../../IAL2_POST_REQUESTER_WRAP_REPAIR_NEXT_OWNER_SELECTION.md)
+documents `.805`. Six aggregate/paired AHB `.ahb` aliases ship with t1493,
+t1497, t1514, and t1516 parity ownership, but current mdBook navigation/mode
+text and three canonical behavior/fact pairs still defer one or more aliases.
+`.806` owns a current-truth-only repair plus t1518 drift coverage, preserving
+historical time-local statements and all code/source/support/runtime behavior.
+The boundary-free active-transfer audit and decision 0020 stay proposed and
+inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
