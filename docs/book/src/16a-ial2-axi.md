@@ -230,9 +230,14 @@ bounded manager-side B write-response-channel acceptor. The shipped
 capacity/status core already consumes an abstract accepted-write-response event
 and `BID`, but it does not drive `BREADY` or define that event as the physical
 `BVALID && BREADY` handshake. The selected primitive will fill that seam by
-driving READY and capturing the response payload; its readiness audit must
-first choose the exact arm/ready policy, fixed AXI4 widths, capture timing, and
-event-cardinality rule. No B acceptor syntax or behavior is shipped yet.
+driving READY and capturing the response payload. Its completed readiness audit
+selects an explicit one-response arm, `BREADY` assertion without waiting for
+`BVALID`, fixed four-bit `BID` and two-bit `BRESP`, capture and ready/busy
+retirement on exactly one handshake, stable captured outputs, and one later
+done pulse. A temporary six-state existing-ISF prototype and generated-HDL
+simulation proved two arms produce exactly two handshakes and two done pulses.
+Exact public syntax remains under contract selection; no B acceptor source or
+behavior is shipped yet.
 
 This is smaller than composing AW and W immediately because a write-request
 composition must launch two children that can stall independently, remember
