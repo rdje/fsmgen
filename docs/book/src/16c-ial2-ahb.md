@@ -1221,6 +1221,16 @@ remain BUSY-insertion free. A matching `.ahb` alias, runtime/policy-driven or
 multi-beat BUSY throttling, a separate local bus-BUSY status output, and paired
 requester/subordinate composition remain deferred.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.789` selects `.790`, direct data-only
+implementation of the matching
+`ppif/ahb_requester_busy_insert.ahb` profile alias. It will mirror the generic
+source byte-for-byte, preserve the `busy_insertion` report and generated
+`amba_requester_busy_insert.isf`/`.fsm`/HDL module, and use existing `.ahb`
+suffix handling to remove only `ahb_profile_alias_deferred`. The selected
+support identity is `intent.ahb_profile_alias_requester_busy_insert` with
+coverage `ial2_ahb_profile_alias_requester_busy_insert_pipeline_cli`; no parser
+or generator change is selected.
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB

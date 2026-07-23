@@ -5766,6 +5766,13 @@ requester preservation. Current support accounting is 309 protocol / 350
 supported-smoke and strict entries. Matching `.ahb`, policy/runtime/multi-beat
 BUSY, distinct local bus-BUSY status, paired composition, and larger requester
 behavior remain deferred.
+`.789` now selects `.790`, direct data-only implementation of the matching
+`ppif/ahb_requester_busy_insert.ahb` profile alias. The alias will mirror the
+generic source byte-for-byte, support-account as
+`intent.ahb_profile_alias_requester_busy_insert` with coverage
+`ial2_ahb_profile_alias_requester_busy_insert_pipeline_cli`, preserve the BUSY
+report/artifacts/module, and rely on existing suffix handling to remove only
+`ahb_profile_alias_deferred`; no adapter or generator change is selected.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8411,6 +8418,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md` — documents the shipped bounded AHB requester generic `.ppif` behavior, generated `.isf`/`.fsm` review artifacts, support accounting, diagnostics, validation, and broader-AHB residue.
 - `docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_CONTRACT_SELECTION.md` — selects the additive bounded requester-side single-BUSY public source contract while preserving the base requester and its `.ahb` alias.
 - `docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md` — documents the shipped bounded requester-side single-BUSY insertion behavior, held pending transfer, resumed `SEQ`, report/support surfaces, diagnostics, and remaining broader-BUSY residue.
+- `docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects direct data-only implementation of the matching requester BUSY-insertion `.ahb` profile alias with unchanged generated behavior.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

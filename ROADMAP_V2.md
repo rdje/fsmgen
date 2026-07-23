@@ -6806,6 +6806,15 @@ supported-smoke and strict entries. Matching `.ahb`, policy/runtime/multi-beat
 BUSY, distinct local bus-BUSY status, paired composition, and larger requester
 behavior remain deferred.
 
+`.789` selects `.790`, direct data-only implementation of the matching
+`ppif/ahb_requester_busy_insert.ahb` profile alias. The alias must mirror the
+generic requester BUSY-insertion source byte-for-byte, support-account as
+`intent.ahb_profile_alias_requester_busy_insert` with coverage
+`ial2_ahb_profile_alias_requester_busy_insert_pipeline_cli`, preserve the
+`busy_insertion` report and `amba_requester_busy_insert` review artifacts/HDL
+module, and use existing suffix-keyed cleanup to remove only
+`ahb_profile_alias_deferred`. Parser/generator behavior does not change.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

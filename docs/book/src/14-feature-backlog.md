@@ -10622,6 +10622,17 @@ entries. The matching `.ahb` alias, policy/runtime/multi-beat BUSY, a distinct
 local bus-BUSY status, paired composition, larger burst progression, optional
 signals, broader AHB, backend variants, AXI/APB, and VHDL remain deferred.
 
+AHB requester BUSY-insertion profile-alias contract:
+[IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_CONTRACT_SELECTION.md)
+documents `.789`, which selects `.790` to add the matching
+`ppif/ahb_requester_busy_insert.ahb` alias as a byte-identical mirror of the
+generic source. The selected alias is data-only: existing `.ahb` parsing already
+preserves the BUSY report and generated artifacts while removing only
+`ahb_profile_alias_deferred`. Its selected support identity is
+`intent.ahb_profile_alias_requester_busy_insert` with coverage
+`ial2_ahb_profile_alias_requester_busy_insert_pipeline_cli`; parser/generator
+behavior remains unchanged.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
