@@ -223,6 +223,25 @@ transaction coordination, B response completion, multi-beat `WLAST`
 sequencing, outstanding writes, capacity-core integration, and the proposed
 protocol-neutral transaction interface remain separate future owners.
 
+### Selected next boundary: B write-response acceptance
+
+The next selected direction is another independent bus-side primitive: a
+bounded manager-side B write-response-channel acceptor. The shipped
+capacity/status core already consumes an abstract accepted-write-response event
+and `BID`, but it does not drive `BREADY` or define that event as the physical
+`BVALID && BREADY` handshake. The selected primitive will fill that seam by
+driving READY and capturing the response payload; its readiness audit must
+first choose the exact arm/ready policy, fixed AXI4 widths, capture timing, and
+event-cardinality rule. No B acceptor syntax or behavior is shipped yet.
+
+This is smaller than composing AW and W immediately because a write-request
+composition must launch two children that can stall independently, remember
+both completion events, and define aggregate busy/done and HDL-entry behavior.
+When selected later, that composition is expected to reuse the generated
+`axi_aw_driver` and `axi_w_driver` child modules under a generated structural
+top, adding a distinct coordination actor rather than duplicating their
+exactly-once state machines.
+
 ## More-Control Mode
 
 Move to manager capacity/status when the user needs AXI manager-level control

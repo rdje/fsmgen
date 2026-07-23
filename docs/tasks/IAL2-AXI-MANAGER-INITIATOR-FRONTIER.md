@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.10` done: bounded W driver shipped; `.11` pending post-W selection)
+- Last updated: `2026-07-23` (`.11` done: B response acceptor selected; `.12` active readiness audit)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -82,7 +82,7 @@ It complements — does not replace — the shipped capacity/status response cor
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
   Status: `active`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
-  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`
+  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
   Status: `done`
@@ -161,9 +161,17 @@ It complements — does not replace — the shipped capacity/status response cor
   Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10: ship the bounded AXI W write-data driver`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the smallest safe AXI initiator increment after the shipped independent AW and single-beat W primitives.`
   Acceptance: `Audit the shipped AW/W public sources, generators, exact six-state schedules, t/1499+t/1500 executable invariants, decision 0017 monitor-bundle boundary, decision 0020 transaction-layered North Star, write-dependency source anchors, B response/capacity core, PPIF composition infrastructure, support/manifests, and AXI mdBook. Compare at least: an explicit coordinated single-beat AW+W write-request primitive/composition, B response acceptance/completion, an immediate AW+W+B complete write transactor, AR drive, multi-beat W sequencing, burst/address coupling, and capacity-core integration. Select exactly one smallest safe next direction and its readiness/contract owner; state whether composition should reuse generated child modules or generate a new actor and why. Preserve IAL2->generated .isf->generated .fsm, keep the two shipped primitives and tests unchanged, and explicitly defer unselected channels/transaction interface/profile aliases/verification-output/backend variants/VHDL/AHB/APB/direct backend. Record a repo-local selection note and synchronize task tree/index/book/MEMORY/Knowledge Map without changing parser, generators, public sources, tests, manifests, support accounting, generated artifacts, runtime behavior, or HDL behavior.`
+  Verification: `PASS — tracked Arm AXI Issue L pages for A3.3/A3.3.1 were text-extracted, rendered, and visually inspected; AW/W sources/generators/schedules/tests, response-demux seam, decisions 0017/0020, and APB/AHB generated-child composition infrastructure were audited. docs/IAL2_AXI_MANAGER_INITIATOR_POST_W_NEXT_INCREMENT_SELECTION.md compares all required candidates and selects the bounded B write-response-channel acceptor plus .12 readiness audit. Knowledge Map, mdBook, memory, docs-path, whitespace, and doctrines PASS; no behavior changed.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11: select the bounded AXI B response acceptor direction`
+  Selection: `Smallest safe direction = one bus-side B write-response-channel acceptor that drives BREADY, observes BVALID, captures the response payload on acceptance, and can later supply the capacity/status core's abstract write_complete+BID seam. .12 must audit arm-vs-bounded-continuously-ready policy, BID/BRESP width and capture timing, event cardinality, generated schedule/test, owners, and integration seam before contract selection. AW+W composition is viable but larger: it must reuse generated axi_aw_driver + axi_w_driver child modules under a generated structural top and add a distinct coordinator for independent child completion; a monolithic duplicate actor is rejected. Full AW+W+B, multi-beat/burst coupling, AR/R, capacity integration, transaction-interface activation, aliases, verification output, backend variants/VHDL, AHB/APB, and direct backend remain deferred.`
+
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`
+  Status: `active`
+  Goal: `Write the readiness audit for the bounded AXI manager B write-response-channel acceptor selected by .11, fixing its safe first-slice behavior boundary and exact owner map before contract selection.`
+  Acceptance: `Read docs/IAL2_AXI_MANAGER_INITIATOR_POST_W_NEXT_INCREMENT_SELECTION.md, the tracked AXI A2.3/A2.3.1/A2.3.2.1 and A3.3/A3.3.1 response anchors (render any newly relied-upon pages), the shipped AW/W driver schedules and executable invariants, the AXI valid-ready monitor receiver model, the capacity/status write_complete+BID response-demux seam, decisions 0014/0017/0020, PPIF parser/generator/support/manifest owners, and the AXI mdBook. Compare explicit one-response arming against bounded continuously-ready acceptance; fix the safe manager-driven BREADY and sampled BVALID/BID/BRESP first-slice boundary, AXI4 width/profile policy, response capture and event-cardinality invariant, generated IAL1->IAL0 schedule/proof strategy, report/residue, fail-closed rules, and exact parser/generator/source/support/manifest/test/book owners. Explicitly disposition optional/extended BRESP, BCOMP/BUSER, back-to-back/outstanding responses, AW/W coordination, full transactor behavior, capacity integration, multi-beat/burst coupling, AR/R, transaction-interface activation, aliases, verification output, backend variants/VHDL, AHB/APB, and direct backend. Select the exact following contract-selection leaf; change no parser, generator, public source, test, manifest, support accounting, generated artifact, runtime behavior, or HDL behavior in the audit.`
   Verification: `pending`
   Commit: `pending`
 
@@ -196,7 +204,13 @@ It complements — does not replace — the shipped capacity/status response cor
   single-beat W-driver readiness audit. `.9` fixed the exact additive
   `(axi-w-driver ...)` public/generator/report/test contract. `.10` shipped it
   with the same exactly-once rule-pair and a generated-HDL zero-strobe/stall
-  regression. `.11` now owns the post-W direction selection. Decision `0020` frames AW/W drivers as bus-side primitives
+  regression. `.11` selected the bounded B write-response-channel acceptor as
+  the next direction because it fills the missing physical
+  `BVALID && BREADY` seam into the existing abstract `write_complete` + `BID`
+  response core without first adding cross-channel coordination. `.12` now
+  owns its behavior-neutral readiness audit. A later AW+W composition must
+  reuse the generated AW/W child modules under a generated structural top and
+  add a distinct coordinator, not duplicate those state machines. Decision `0020` frames AW/W drivers as bus-side primitives
   beneath the proposed transaction-layered/composable-role North Star. The AW driver
   reuses the existing AW valid-ready authoring shape
   (`ppif/axi_aw_valid_ready.ppif`) and the `AhbRequester.pm` drive-block model,
