@@ -545,10 +545,16 @@ director-gated.
 ### Selected next read-side increment
 
 The next selected primitive is an explicitly armed one-transfer R channel
-acceptor. One idle arm will raise manager-owned RREADY independently of RVALID,
-own exactly one handshake, capture raw RID/RDATA/RRESP/RLAST, then pulse a
-beat-accepted done event. The readiness audit is active; exact public spelling,
-widths, schedule, report, and proof are not yet implementation claims.
+acceptor, and its behavior-neutral readiness audit is complete. The bounded
+baseline is fixed at RID4/RDATA32/RRESP2/RLAST1: one idle arm raises
+manager-owned RREADY independently of RVALID, owns exactly one handshake,
+captures the raw tuple, then emits a later beat-accepted pulse. A direct IAL1
+prototype proves 13 ports, six states, three arm assignments, seven acceptance
+assignments, three accept-over-arm priorities, Verilator/Yosys validation, and
+exactly three handshakes/three done pulses across unarmed, held/delayed valid,
+busy-command, reset, and post-reset scenarios. Public spelling and schema are
+now owned by the active contract-selection leaf; none of this is shipped R
+behavior yet.
 
 The scope is deliberately one **beat**, not one full read transaction. Raw
 RLAST is captured but not assumed high; the primitive does not validate ARLEN,
