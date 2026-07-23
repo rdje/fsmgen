@@ -13,7 +13,7 @@ organized by authoring mode, not by implementation module.
 | Mode | Start with | What it demonstrates |
 | --- | --- | --- |
 | Guided mode | `ppif/axi_aw_valid_ready.ppif` and `ppif/axi_aw_valid_ready.axi` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, and `.ppif`/`.axi` profile-alias parity for the selected first alias. |
-| Initiator mode | `ppif/axi_aw_driver.ppif`, `ppif/axi_w_driver.ppif`, `ppif/axi_b_response_acceptor.ppif`, `ppif/axi_write_request_composition.ppif`, `ppif/axi_write_transaction_composition.ppif`, `ppif/axi_ar_driver.ppif`, `ppif/axi_r_beat_acceptor.ppif`, and `ppif/axi_read_transaction_composition.ppif` | Bounded AXI manager AW/W/AR channel **drivers**, explicitly armed B-response and R-beat **acceptors**, and fixed-single-beat request/full-transaction **compositions**. |
+| Initiator mode | `ppif/axi_aw_driver.ppif`, `ppif/axi_w_driver.ppif`, `ppif/axi_b_response_acceptor.ppif`, `ppif/axi_write_request_composition.ppif`, `ppif/axi_write_transaction_composition.ppif`, `ppif/axi_ar_driver.ppif`, `ppif/axi_r_beat_acceptor.ppif`, `ppif/axi_read_transaction_composition.ppif`, and `ppif/axi_read_burst4_transaction_composition.ppif` | Bounded AXI manager AW/W/AR channel **drivers**, explicitly armed B-response and R-beat **acceptors**, and fixed-single-beat plus fixed-four-beat request/full-transaction **compositions**. |
 | More-control mode | `ppif/axi_manager_capacity_status.ppif`, `ppif/axi_manager_capacity_status_id_family.ppif`, and `ppif/axi_manager_capacity_status_transaction_envelope.ppif` | Bounded manager capacity/status, ID-family metadata, and logical transaction metadata while staying in the public AXI manager shell. |
 | Raw/full-control mode | `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | A deep shipped AXI manager shape with dynamic read transactions, same-ID issue-order queueing, burst-last response demux, runtime beat-count/`RLAST` validation, and multi-beat read-data output banks. |
 
@@ -662,8 +662,8 @@ The reference generator is
 `FSM::IAL2::ProtocolIntent::AxiReadTransactionComposition`, report schema
 `fsmgen.ial2.protocol_intent.axi_read_transaction_composition.v1`, support id
 `intent.ppif_axi_read_transaction_composition`, and focused test
-`t/1506-ial2-axi-read-transaction-composition.t`. Support accounting is 305
-protocol fixtures and 346 supported/strict-supported fixtures. Run every
+`t/1506-ial2-axi-read-transaction-composition.t`. Support accounting is 306
+protocol fixtures and 347 supported/strict-supported fixtures. Run every
 public review and validation surface directly:
 
 ```bash
@@ -709,26 +709,92 @@ post-reset recovery. It ends idle at exact counts `AR=5`, `R=4`,
 that reset after AR completion cancels response ownership without fabricating
 an R handshake or full completion.
 
-The completed behavior-neutral readiness audit selects the first multi-beat
-physical read boundary: a fixed-four, full-width INCR composition with
-`ARLEN=3`, `ARSIZE=2`, and `ARBURST=INCR`. Admission requires a four-byte-
-aligned 16-byte span contained within one 4-KiB region. The proposed additive
-composition reuses the unchanged AR driver and explicitly re-arms the
-unchanged one-beat R acceptor four times under a new two-bit-index coordinator.
+### Bounded fixed-four-beat full-read composition
 
-The selected additive public contract is
-`(axi-read-burst4-transaction-composition ...)`. Its event stream keeps the
-physical boundary raw: `read_beat_done` and `response_beat_index` identify each newly captured
-RID/RDATA/RRESP/RLAST tuple. RID match and the expected RLAST sequence are
-sticky across the burst. Beat count is authoritative, so early RLAST, RID
-mismatch, and non-OKAY RRESP drain all four accepted transfers; missing final
-RLAST retires on the fourth beat with last-match low. RRESP aggregation and
-four-entry output banks remain capacity/status responsibilities. A temporary
-generated-HDL proof passed continuous and delayed RVALID, the ready-low re-arm
-bubble, address rejection, error drain, reset abort, and recovery at exact
-AR/R/request/beat/transaction counts `4/13/4/13/3`. The parser/generator/
-source/support/test implementation is the active next slice; no multi-beat
-composition behavior ships yet.
+`ppif/axi_read_burst4_transaction_composition.ppif` ships the first multi-beat
+physical read boundary: a fixed-four, full-width INCR composition with
+`ARLEN=3`, `ARSIZE=2`, and `ARBURST=INCR`. Its additive public object uses the
+same command/AR/R vocabulary as the fixed-single source and extends status
+with a raw beat event and index:
+
+```text
+(axi-read-burst4-transaction-composition axi_read_burst4_transaction_composition
+  (role manager)
+  (clock clk)
+  (reset (rst_n active_low async))
+  (command
+    (start read_cmd_valid)
+    (address cmd_read_addr width 32)
+    (id cmd_read_id width 4))
+  (ar-channel
+    (ready arready)
+    (valid arvalid)
+    (address araddr width 32)
+    (id arid width 4)
+    (length arlen width 8)
+    (size arsize width 3)
+    (burst arburst width 2))
+  (r-channel
+    (valid rvalid)
+    (ready rready)
+    (id rid width 4)
+    (data rdata width 32)
+    (response rresp width 2)
+    (last rlast)
+    (captured-id response_rid width 4)
+    (captured-data response_rdata width 32)
+    (captured-response response_rresp width 2)
+    (captured-last response_rlast))
+  (status
+    (busy read_busy)
+    (request-done read_request_done)
+    (beat-done read_beat_done)
+    (transaction-done read_transaction_done)
+    (response-beat-index response_beat_index width 2)
+    (response-id-match response_id_match)
+    (response-last-match response_last_match)))
+```
+
+Admission requires a four-byte-aligned 16-byte span contained within one
+4-KiB region. Consequently, an address ending in `...ff0` is legal, while
+`...ff4`, `...ff8`, `...ffc`, and misaligned addresses do not launch AR. The
+composition reuses the unchanged AR driver and explicitly re-arms one unchanged
+one-beat R acceptor four times under a two-bit-index coordinator. This creates
+an intentional ready-low bubble between accepted R beats; a subordinate may
+hold `RVALID` and its current payload stable across that bubble.
+
+The event stream stays raw. `read_request_done` marks the owned AR handshake;
+each `read_beat_done` exposes the newly captured RID/RDATA/RRESP/RLAST tuple and
+its `response_beat_index` from zero through three; `read_transaction_done`
+retires ownership with the fourth accepted beat. `response_id_match` and
+`response_last_match` are sticky across the burst. Beat count is authoritative,
+so early RLAST, RID mismatch, and non-OKAY RRESP still drain four transfers;
+missing final RLAST retires on the fourth beat with last-match low. RRESP is the
+raw current-beat code, not a success bit and not a burst aggregate.
+
+The reference generator is
+`FSM::IAL2::ProtocolIntent::AxiReadBurst4TransactionComposition`, report schema
+`fsmgen.ial2.protocol_intent.axi_read_burst4_transaction_composition.v1`,
+support id `intent.ppif_axi_read_burst4_transaction_composition`, and focused
+test `t/1507-ial2-axi-read-burst4-transaction-composition.t`. The structural
+top has 29 public signals, three generated children, 48 nets, and 46 resolved
+links. Its coordinator has 20 ports, zero procedural states, ten rule decision
+trees, and eight realized priorities. Run all public surfaces with:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_read_burst4_transaction_composition.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_read_burst4_transaction_composition.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_read_burst4_transaction_composition.ppif
+./bin/fsmgen --quiet --outdir generated ppif/axi_read_burst4_transaction_composition.ppif
+./bin/fsmgen --verify-hdl ppif/axi_read_burst4_transaction_composition.ppif
+```
+
+The generated-HDL proof covers two illegal addresses, stalled AR plus a busy
+command, already-high continuous RVALID, per-beat non-OKAY capture, RID
+mismatch, early and missing RLAST, a complete four-beat error drain, delayed
+clean beats, reset after one accepted beat, and post-reset recovery. It ends
+idle at exact AR/R/request/beat/transaction counts `4/13/4/13/3`; Verilator and
+Yosys both pass.
 
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and

@@ -1,0 +1,276 @@
+module axi_read_burst4_transaction_composition_tb;
+  logic clk = 0;
+  logic rst_n = 0;
+  logic read_cmd_valid = 0;
+  logic [31:0] cmd_read_addr = 0;
+  logic [3:0] cmd_read_id = 0;
+  logic arready = 0;
+  logic rvalid = 0;
+  logic [3:0] rid = 0;
+  logic [31:0] rdata = 0;
+  logic [1:0] rresp = 0;
+  logic rlast = 0;
+
+  wire arvalid;
+  wire [31:0] araddr;
+  wire [3:0] arid;
+  wire [7:0] arlen;
+  wire [2:0] arsize;
+  wire [1:0] arburst;
+  wire rready;
+  wire [3:0] response_rid;
+  wire [31:0] response_rdata;
+  wire [1:0] response_rresp;
+  wire response_rlast;
+  wire read_busy;
+  wire read_request_done;
+  wire read_beat_done;
+  wire read_transaction_done;
+  wire [1:0] response_beat_index;
+  wire response_id_match;
+  wire response_last_match;
+
+  integer ar_handshakes = 0;
+  integer r_handshakes = 0;
+  integer request_pulses = 0;
+  integer beat_pulses = 0;
+  integer transaction_pulses = 0;
+  integer illegal_rejections = 0;
+  integer busy_ignored = 0;
+  integer observed_nonokay = 0;
+  integer error_drain = 0;
+  integer reset_abort = 0;
+  integer cycles = 0;
+
+  axi_read_burst4_transaction_composition dut (.*);
+
+  always #5 clk = ~clk;
+
+  always @(posedge clk) if (rst_n) begin
+    if (arvalid && {arlen, arsize, arburst} !== {8'd3, 3'd2, 2'b01})
+      $fatal(1, "fixed AR metadata mismatch");
+    if (arvalid && arready) begin
+      case (ar_handshakes)
+        0: if ({araddr, arid} !== {32'h00000ff0, 4'h1}) $fatal(1, "AR1");
+        1: if ({araddr, arid} !== {32'h00002000, 4'h3}) $fatal(1, "AR2");
+        2: if ({araddr, arid} !== {32'h00003000, 4'h4}) $fatal(1, "AR3");
+        3: if ({araddr, arid} !== {32'h00004000, 4'h5}) $fatal(1, "AR4");
+        default: $fatal(1, "extra AR");
+      endcase
+      ar_handshakes <= ar_handshakes + 1;
+    end
+    if (rvalid && rready) begin
+      r_handshakes <= r_handshakes + 1;
+      if (rresp != 2'b00) observed_nonokay <= observed_nonokay + 1;
+    end
+    if (read_request_done) request_pulses <= request_pulses + 1;
+    if (read_beat_done) beat_pulses <= beat_pulses + 1;
+    if (read_transaction_done) transaction_pulses <= transaction_pulses + 1;
+  end
+
+  task automatic command(input [31:0] address, input [3:0] id);
+    begin
+      @(negedge clk);
+      cmd_read_addr = address;
+      cmd_read_id = id;
+      read_cmd_valid = 1;
+      @(negedge clk);
+      read_cmd_valid = 0;
+    end
+  endtask
+
+  task automatic wait_request(input integer count);
+    begin
+      cycles = 0;
+      while ((request_pulses < count || !rready) && cycles < 120) begin
+        @(negedge clk);
+        cycles = cycles + 1;
+      end
+      if (request_pulses != count || !rready || !read_busy)
+        $fatal(1, "request wait count=%0d", count);
+    end
+  endtask
+
+  task automatic wait_beat(
+    input integer count,
+    input [1:0] index,
+    input [3:0] expected_id,
+    input [31:0] expected_data,
+    input [1:0] expected_resp,
+    input bit expected_last,
+    input bit expected_id_match,
+    input bit expected_last_match
+  );
+    begin
+      cycles = 0;
+      while (beat_pulses < count && cycles < 120) begin
+        @(negedge clk);
+        cycles = cycles + 1;
+      end
+      if (beat_pulses != count) $fatal(1, "beat wait count=%0d", count);
+      if (response_beat_index !== index) $fatal(1, "beat index count=%0d", count);
+      if ({response_rid, response_rdata, response_rresp, response_rlast}
+          !== {expected_id, expected_data, expected_resp, expected_last})
+        $fatal(1, "raw capture count=%0d", count);
+      if ({response_id_match, response_last_match}
+          !== {expected_id_match, expected_last_match})
+        $fatal(1, "sticky status count=%0d", count);
+    end
+  endtask
+
+  task automatic send_beat(
+    input [3:0] id,
+    input [31:0] data,
+    input [1:0] code,
+    input bit last,
+    input integer handshake_count,
+    input integer beat_count,
+    input [1:0] index,
+    input bit id_ok,
+    input bit last_ok
+  );
+    begin
+      @(negedge clk);
+      rid = id;
+      rdata = data;
+      rresp = code;
+      rlast = last;
+      rvalid = 1;
+      cycles = 0;
+      while (r_handshakes < handshake_count && cycles < 120) begin
+        @(negedge clk);
+        cycles = cycles + 1;
+      end
+      if (r_handshakes != handshake_count) $fatal(1, "R handshake count=%0d", handshake_count);
+      rvalid = 0;
+      wait_beat(beat_count, index, id, data, code, last, id_ok, last_ok);
+    end
+  endtask
+
+  initial begin
+    repeat (2) @(negedge clk);
+    rst_n = 1;
+    repeat (2) @(negedge clk);
+
+    arready = 1;
+    command(32'h00001002, 4'he);
+    repeat (5) @(negedge clk);
+    if (arvalid || rready || read_busy || ar_handshakes != 0) $fatal(1, "misaligned admission");
+    illegal_rejections = illegal_rejections + 1;
+
+    command(32'h00000ff4, 4'he);
+    repeat (5) @(negedge clk);
+    if (arvalid || rready || read_busy || ar_handshakes != 0) $fatal(1, "4-KiB crossing admission");
+    illegal_rejections = illegal_rejections + 1;
+
+    arready = 0;
+    rid = 4'h1;
+    rdata = 32'h11110000;
+    rresp = 2'b00;
+    rlast = 0;
+    rvalid = 1;
+    command(32'h00000ff0, 4'h1);
+    cycles = 0;
+    while (!arvalid && cycles < 80) begin @(negedge clk); cycles = cycles + 1; end
+    if (!arvalid || !read_busy) $fatal(1, "first AR did not stall");
+    repeat (3) begin
+      @(negedge clk);
+      if (!arvalid || {araddr, arid, arlen, arsize, arburst}
+          !== {32'h00000ff0, 4'h1, 8'd3, 3'd2, 2'b01})
+        $fatal(1, "stalled AR changed");
+    end
+
+    command(32'h00001800, 4'hf);
+    if (ar_handshakes != 0) $fatal(1, "busy command altered stalled request");
+    busy_ignored = busy_ignored + 1;
+    arready = 1;
+    wait_request(1);
+
+    cycles = 0;
+    while (r_handshakes < 1 && cycles < 120) begin @(negedge clk); cycles = cycles + 1; end
+    if (r_handshakes != 1) $fatal(1, "already-high first R beat");
+    wait_beat(1, 2'd0, 4'h1, 32'h11110000, 2'b00, 0, 1, 1);
+
+    rid = 4'h2;
+    rdata = 32'h11110001;
+    rresp = 2'b10;
+    rlast = 1;
+    cycles = 0;
+    while (r_handshakes < 2 && cycles < 120) begin @(negedge clk); cycles = cycles + 1; end
+    if (r_handshakes != 2) $fatal(1, "continuous-valid second R beat");
+    wait_beat(2, 2'd1, 4'h2, 32'h11110001, 2'b10, 1, 0, 0);
+
+    rid = 4'h1;
+    rdata = 32'h11110002;
+    rresp = 2'b00;
+    rlast = 0;
+    cycles = 0;
+    while (r_handshakes < 3 && cycles < 120) begin @(negedge clk); cycles = cycles + 1; end
+    if (r_handshakes != 3) $fatal(1, "continuous-valid third R beat");
+    wait_beat(3, 2'd2, 4'h1, 32'h11110002, 2'b00, 0, 0, 0);
+
+    rid = 4'h1;
+    rdata = 32'h11110003;
+    rresp = 2'b01;
+    rlast = 0;
+    cycles = 0;
+    while (r_handshakes < 4 && cycles < 120) begin @(negedge clk); cycles = cycles + 1; end
+    if (r_handshakes != 4) $fatal(1, "continuous-valid fourth R beat");
+    rvalid = 0;
+    wait_beat(4, 2'd3, 4'h1, 32'h11110003, 2'b01, 0, 0, 0);
+    cycles = 0;
+    while (transaction_pulses < 1 && cycles < 80) begin @(negedge clk); cycles = cycles + 1; end
+    if (transaction_pulses != 1 || read_busy) $fatal(1, "error burst retirement");
+    error_drain = 4;
+
+    command(32'h00002000, 4'h3);
+    wait_request(2);
+    send_beat(4'h3, 32'h22220000, 2'b00, 0, 5, 5, 2'd0, 1, 1);
+    send_beat(4'h3, 32'h22220001, 2'b00, 0, 6, 6, 2'd1, 1, 1);
+    send_beat(4'h3, 32'h22220002, 2'b00, 0, 7, 7, 2'd2, 1, 1);
+    send_beat(4'h3, 32'h22220003, 2'b00, 1, 8, 8, 2'd3, 1, 1);
+    cycles = 0;
+    while (transaction_pulses < 2 && cycles < 80) begin @(negedge clk); cycles = cycles + 1; end
+    if (transaction_pulses != 2 || read_busy) $fatal(1, "clean burst retirement");
+
+    command(32'h00003000, 4'h4);
+    wait_request(3);
+    send_beat(4'h4, 32'h33330000, 2'b00, 0, 9, 9, 2'd0, 1, 1);
+    @(negedge clk);
+    rst_n = 0;
+    #1;
+    if (arvalid || rready || read_busy || read_request_done || read_beat_done || read_transaction_done)
+      $fatal(1, "reset did not abort in-flight burst");
+    reset_abort = reset_abort + 1;
+    repeat (2) @(negedge clk);
+    rst_n = 1;
+    repeat (2) @(negedge clk);
+
+    command(32'h00004000, 4'h5);
+    wait_request(4);
+    send_beat(4'h5, 32'h44440000, 2'b00, 0, 10, 10, 2'd0, 1, 1);
+    send_beat(4'h5, 32'h44440001, 2'b00, 0, 11, 11, 2'd1, 1, 1);
+    send_beat(4'h5, 32'h44440002, 2'b00, 0, 12, 12, 2'd2, 1, 1);
+    send_beat(4'h5, 32'h44440003, 2'b00, 1, 13, 13, 2'd3, 1, 1);
+    cycles = 0;
+    while (transaction_pulses < 3 && cycles < 80) begin @(negedge clk); cycles = cycles + 1; end
+    repeat (5) @(negedge clk);
+
+    if (ar_handshakes != 4 || r_handshakes != 13 || request_pulses != 4
+        || beat_pulses != 13 || transaction_pulses != 3)
+      $fatal(1, "final cardinality");
+    if (illegal_rejections != 2 || busy_ignored != 1 || observed_nonokay != 2
+        || error_drain != 4 || reset_abort != 1)
+      $fatal(1, "scenario accounting");
+    if (arvalid || rready || read_busy || read_request_done || read_beat_done || read_transaction_done)
+      $fatal(1, "final idle");
+
+    $display("PASS ar=4 r=13 request=4 beat=13 transaction=3 illegal=2 busy_ignored=1 error_drain=4 reset_abort=1");
+    $finish;
+  end
+
+  initial begin
+    #80000;
+    $fatal(1, "timeout");
+  end
+endmodule
