@@ -482,12 +482,22 @@ schedule has six states and exactly three accept-over-launch priority
 resolutions for active, busy, and ARVALID; its review artifacts are one
 generated `.isf` and one generated `.fsm` before HDL.
 
-The next contract-selection leaf must freeze the exact additive public
-spelling, report identity, diagnostics, and four-subtest generated-HDL proof
-before implementation. The audited baseline uses `ar_cmd_valid`,
+The exact implementation contract is now selected. The additive object is
+`(axi-ar-driver axi_ar_driver ...)`; its generator will be
+`FSM::IAL2::ProtocolIntent::AxiArDriver`, its report schema
+`fsmgen.ial2.protocol_intent.axi_ar_driver.v1`, and its public source
+`ppif/axi_ar_driver.ppif`. The source will use `ar_cmd_valid`,
 `cmd_araddr`/`cmd_arid`/`cmd_arlen`/`cmd_arsize`/`cmd_arburst`, `arready`, and
 driven `arvalid`/`araddr`/`arid`/`arlen`/`arsize`/`arburst` plus `ar_busy` and
-`ar_done`.
+`ar_done`. Implementation and the exact four-subtest generated-HDL proof are
+the next owned slice; the source is not shipped yet.
+
+The selected report includes a machine-readable `request_scope` with the five
+widths, `done_event = ar_request_accepted`, and
+`includes_read_response = false`. The generated review path is fixed as one
+`axi_ar_driver.isf`, one `axi_ar_driver.fsm`, then HDL. Support accounting will
+move to 303 protocol fixtures and 344 supported/strict-supported fixtures when
+the implementation lands.
 
 This remains a request-channel primitive, not a complete AXI manager.
 `ar_done` means one AR request was accepted; it does not mean any R beat
