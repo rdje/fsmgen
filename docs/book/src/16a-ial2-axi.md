@@ -292,18 +292,48 @@ only after both handshakes. The B acceptor remains separate, so aggregate done
 at this boundary means **request channels accepted**, not **write response
 accepted**.
 
-One important coherence rule must be fixed before implementation. The AW child
-can currently carry arbitrary `AWLEN`/`AWSIZE`/`AWBURST`, while the W child
-emits exactly one beat with `WLAST = 1`. Because the number of beats is
-`AWLEN + 1`, the composition must use a bounded legal single-beat address
-policy (for example, fixed `AWLEN = 0` plus matching full-width size/burst
-semantics) or fail closed outside an equally proven subset. It must never
-announce a multi-beat AW request while providing one final W beat.
+The completed readiness audit fixes that coherence rule. The aggregate accepts
+one idle command containing `cmd_awaddr` (32-bit byte address), `cmd_awid`
+(four bits), `cmd_wdata` (32 bits), and `cmd_wstrb` (four bits). Its generated
+coordinator captures all four fields atomically before pulsing the two child
+starts; direct payload wiring would be unsafe because those registered start
+pulses reach the children after a one-shot caller may have changed its inputs.
 
-No public composition source is shipped yet. The active readiness audit owns
-the exact aggregate command/status vocabulary, metadata policy, coordinator
-schedule, structural artifact/report contract, and simultaneous/AW-first/
-W-first generated-HDL proof before any syntax is selected.
+The structural top supplies fixed AW metadata instead of exposing it as
+dynamic aggregate input:
+
+| AW field | Fixed value | Single-beat meaning |
+| --- | --- | --- |
+| `AWLEN` | `8'd0` | one beat (`AWLEN + 1`) |
+| `AWSIZE` | `3'd2` | four bytes per beat |
+| `AWBURST` | `2'b01` | INCR encoding |
+
+Admission requires address bits `[1:0]` to be zero. The coordinator both guards
+child launch and emits a generated assertion, so a misaligned command launches
+neither child when assertions are disabled and is visible as a verification
+failure when assertions are enabled. WSTRB remains arbitrary, including the
+already-supported all-zero value; narrow/unaligned placement is deferred with
+dynamic AWSIZE.
+
+The coordinator is a rule-only generated IAL1 actor. It records whether each
+one-cycle child completion has occurred and emits one aggregate done pulse only
+when both have been seen. A scratch generated-HDL proof passed simultaneous,
+AW-first, and W-first completion, atomic payload capture, aligned assertion-
+enabled operation, and misaligned fail-closed operation, with three AW starts,
+three W starts, and three aggregate done pulses. Aggregate busy covers the
+whole join; a one-cycle command while busy is ignored and not queued.
+
+The eventual generated result will contain three IAL1 items and schedule
+reports (AW child, W child, coordinator), three child IAL0 artifacts, and one
+selected structural-top IAL0/HDL entry. Child starts, payload captures, busy,
+and done events remain internal except for aggregate `write_busy` and
+`write_done` plus the physical AW/W bus ports.
+
+No public composition source is shipped yet. The active contract-selection
+leaf owns exact syntax, schema/report identifiers, diagnostics, artifact names,
+and the implementation owner. The selected behavior boundary already excludes
+B acceptance, capacity integration, full transaction completion, queues,
+multi-beat/burst behavior, AR/R, aliases, and backend/VHDL changes.
 
 ## More-Control Mode
 
