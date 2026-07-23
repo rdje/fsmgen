@@ -11,8 +11,8 @@ answers:
 date: 2026-07-23
 status: current
 tags: [isf, while, until, loop, truthiness, lowering, ahb, regression]
-evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1245-isf-transaction-loop-lowering.t; t/1510-isf-multibit-loop-predicate-truthiness.t; t/data/isf_multibit_loop_predicate_truthiness_tb.svt; t/data/ahb_requester_loop_entry_truthiness_tb.svt; docs/ISF_SPEC.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md; docs/book/src/13d-control-flow.md; docs/book/src/13h-lowering-reference.md
-reverify: prove -Iperl t/1245-isf-transaction-loop-lowering.t t/1510-isf-multibit-loop-predicate-truthiness.t
+evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; t/1245-isf-transaction-loop-lowering.t; t/1510-isf-multibit-loop-predicate-truthiness.t; t/1511-ial2-ahb-requester-burst-completion.t; t/data/isf_multibit_loop_predicate_truthiness_tb.svt; t/data/ahb_requester_loop_entry_truthiness_tb.svt; t/data/ahb_requester_burst_completion_tb.svt; docs/ISF_SPEC.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md; docs/book/src/13d-control-flow.md; docs/book/src/13h-lowering-reference.md
+reverify: prove -Iperl t/1245-isf-transaction-loop-lowering.t t/1510-isf-multibit-loop-predicate-truthiness.t t/1511-ial2-ahb-requester-burst-completion.t
 ---
 
 Bare `while` and `until` conditions with a known width greater than one lower
@@ -32,7 +32,8 @@ three-bit input value and prove the public requester advances from remaining
 count `4` to `3` instead of stalling at loop entry.
 
 That first repair also exposed an independent pre-existing requester terminal
-beat defect: sequential complementary `when` clauses can turn remaining count
-`1` into `0` and then `31`. It is owned by
-`ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR.2`; this fact does not claim
-full requester `INCR4` completion until that leaf closes.
+beat defect: sequential complementary `when` clauses turned remaining count
+`1` into `0` and then `31`. The completed prerequisite `.2` changed the
+non-terminal guard to strict `> 1`; t/1511 now proves complete `SINGLE` and
+`INCR4` generated-HDL execution. The separate requester completion fact owns
+the durable details of that correction.

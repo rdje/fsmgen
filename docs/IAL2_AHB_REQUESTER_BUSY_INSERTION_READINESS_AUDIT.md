@@ -82,12 +82,20 @@ The beat loop (`AhbRequester.pm:430`–`466`) is:
       (when (== HRESP okay)
         (drive okay_beat)
         (when (== beats_remaining_q 1) (set beats_remaining_q 0) ...)
-        (when (! (== beats_remaining_q 1))
+        (when (> beats_remaining_q 1)
           (set beats_remaining_q (- beats_remaining_q 1))
           (set beat_index_q (+ beat_index_q 1))
           ...address progression...))
       ...error/retry/split...)))
 ```
+
+Current-baseline note (2026-07-23): the audit originally observed a logically
+complementary `when (! (== beats_remaining_q 1))` decrement guard. Generated
+HDL testing later proved that sequential FSM states re-read the terminal
+state's newly written zero and underflowed to `31`; prerequisite
+`ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR.2` corrected the current
+generator to the strict `> 1` guard shown above. This does not alter the BUSY
+insertion contract selected after this audit.
 
 `local_status.busy` (`AhbRequester.pm:175`, driven with default `1` in
 `_status_drive_lines` at `:474`) is an internal "transaction in progress"

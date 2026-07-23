@@ -442,7 +442,7 @@ sub _emit_isf($contract) {
         "            (when (== beats_remaining_q 1)",
         "              (set beats_remaining_q 0)",
         "              (set burst_active_q 0))",
-        "            (when (! (== beats_remaining_q 1))",
+        "            (when (> beats_remaining_q 1)",
         "              (set beats_remaining_q (- beats_remaining_q 1))",
         "              (set beat_index_q (+ beat_index_q 1))",
         "              (when write_q (set wdata_q (+ wdata_q wdata_step_q)))",

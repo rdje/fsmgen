@@ -1161,6 +1161,16 @@ The selected requester transfer behavior is:
 - `ERROR` completes with error status;
 - `RETRY` and `SPLIT` keep the request active for re-request behavior.
 
+On an accepted `OKAY` beat, remaining count `1` is the terminal path: the
+requester writes the count to zero and leaves the active burst. Only a count
+strictly greater than `1` takes the non-terminal path that decrements the
+count and advances the beat index, address, and stepped write data. Keeping
+those guards structurally exclusive is important after lowering because the
+two clauses execute as sequential FSM states. The generated-HDL regression
+therefore proves both ends of the bounded contract: `SINGLE` produces exactly
+one accepted beat, while `INCR4` produces exactly four at indices `0..3`,
+finishes with zero remaining, and never underflows to the five-bit value `31`.
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB

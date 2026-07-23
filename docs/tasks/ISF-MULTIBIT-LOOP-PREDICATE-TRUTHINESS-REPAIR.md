@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14 / ISF lowering correctness`
 - Created: `2026-07-23`
 - Last updated: `2026-07-23`
@@ -41,7 +41,7 @@ BUSY-insertion source.
 ## Task Tree
 
 - ID: `ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR`
-  Status: `active`
+  Status: `done`
   Goal: `Restore nonzero truthiness for bare multi-bit ISF loop predicates.`
   Children: `ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR.1`, `ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR.2`
 
@@ -53,11 +53,11 @@ BUSY-insertion source.
   Commit: `ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR.1: restore nonzero loop truthiness`
 
 - ID: `ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repair the AHB requester terminal-beat decrement ordering exposed after loop truthiness was restored.`
   Acceptance: `Root-cause and minimally repair the generated requester beat-loop sequence in which the beats_remaining_q==1 clause sets zero and the following logically complementary clause re-reads zero and decrements it to 31; preserve single and non-terminal burst behavior; add a generated-HDL INCR4 regression proving exactly four beat completions and request completion; synchronize AHB docs, a Knowledge Map fact, task/index/Memory, run focused and relevant broad gates, and commit before resuming .788.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `AhbRequester syntax passed. New t/1511 passed structural IAL1/FSM checks and generated-HDL Verilator execution: the public requester completed SINGLE with exactly one accepted beat and INCR4 with exactly four at indices 0..3, left beats_remaining_q at zero, and never visited 31. t/1473, t/1510, direct strict checking of the unchanged .ahb alias, and guarded --verify-hdl passed. The combined focused run independently exposed a pre-existing t/1474 stale diagnostic regex; unchanged HEAD already expects only the one-subordinate aggregate while the unchanged parser already reports the shipped two-subordinate aggregate, and the alias source itself strict-checks. Behavior/readiness/contract docs, mdBook, Knowledge Map fact/map, task/index, and Memory were synchronized. mdBook, Knowledge Map, memory architecture, whitespace, and doctrine gates passed. Public source/ports, parser, report, support accounting, capability manifest, and alias behavior are unchanged.`
+  Commit: `ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR.2: fix AHB terminal burst completion`
 
 ## Decisions
 
@@ -92,19 +92,32 @@ BUSY-insertion source.
   the older missing test range or public-key repair. Both need a dedicated
   public-contract/spec-index drift owner after this prerequisite tree dries
   out.
+- `2026-07-23`: Make the non-terminal accepted-beat guard strictly
+  `beats_remaining_q > 1`. This is the smallest mutation-independent contract:
+  remaining count `1` owns terminal zero/clear, values above `1` own decrement
+  and progression, and zero owns neither path.
+- `2026-07-23`: The `.2` preservation run exposed an additional pre-existing
+  t/1474 diagnostic-regex drift. Route it with t/1131 and t/1250 to proposed,
+  inactive `PUBLIC-SYNC-TEST-DRIFT-REPAIR`; do not mix unrelated sync changes
+  into this runtime repair.
+- `2026-07-23`: Source inspection found a latent, not yet runtime-proven,
+  analogous sequential-clause risk in WRAP address progression. Route a
+  generated-HDL proof/audit to proposed, inactive
+  `IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT`; do not widen `.2` or `.788`.
 
 ## Open Questions
 
-- Whether the smallest correct owner is loop-state condition normalization or
-  computed-test selector emission will be settled by `.1` using direct IR/FSM
-  evidence; the public semantics remain nonzero=true and zero=false.
+- None. The two accepted leaves are complete; proposed follow-up risks remain
+  inactive and independently owned.
 
 ## Blockers
 
-- None for `.1`; `.2` follows it before this tree can unblock
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.788`.
+- None. The prerequisite tree is complete and
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.788` is unblocked.
 
 ## Changelog
 
 - `2026-07-23`: Created after runtime probing exposed the multi-bit loop-entry
   stall while implementing the AHB requester BUSY-insertion source.
+- `2026-07-23`: Completed `.2`; the public requester now proves exact SINGLE
+  and INCR4 generated-HDL completion, and `.788` resumes.

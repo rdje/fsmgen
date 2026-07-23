@@ -1,0 +1,104 @@
+module ahb_requester_burst_completion_tb;
+  logic clk = 0;
+  logic rst_n = 0;
+  logic HGRANT = 1;
+  logic [31:0] HRDATA = 0;
+  logic HREADY = 1;
+  logic [1:0] HRESP = 0;
+  logic [31:0] cmd_addr = 32'h00000100;
+  logic [2:0] cmd_burst = 3'b000;
+  logic [4:0] cmd_len = 1;
+  logic cmd_lock = 0;
+  logic [3:0] cmd_prot = 0;
+  logic [2:0] cmd_size = 0;
+  logic cmd_valid = 0;
+  logic [31:0] cmd_wdata = 32'h11110000;
+  logic [31:0] cmd_wdata_step = 1;
+  logic cmd_write = 1;
+  wire [31:0] HADDR;
+  wire [2:0] HBURST;
+  wire HBUSREQ;
+  wire HLOCK;
+  wire [3:0] HPROT;
+  wire [2:0] HSIZE;
+  wire [1:0] HTRANS;
+  wire [31:0] HWDATA;
+  wire HWRITE;
+  wire [31:0] active_addr;
+  wire [2:0] active_hburst;
+  wire beat_done;
+  wire [4:0] beat_index;
+  wire [4:0] beats_remaining;
+  wire burst_active;
+  wire busy;
+  wire cmd_ready;
+  wire done;
+  wire last_error;
+  wire [31:0] last_read_data;
+  wire [1:0] last_resp;
+  wire last_retry;
+  wire last_split;
+  wire wrap_active;
+
+  amba_requester dut (.*);
+  always #5 clk = ~clk;
+
+  task automatic run_command(
+    input logic [2:0] burst_value,
+    input logic [4:0] length_value,
+    input integer expected_beats,
+    output integer observed_beats
+  );
+    integer cycles;
+    logic previous_beat_done;
+    begin
+      @(negedge clk);
+      cmd_burst = burst_value;
+      cmd_len = length_value;
+      cmd_valid = 1;
+      @(negedge clk);
+      cmd_valid = 0;
+
+      cycles = 0;
+      while (done && cycles < 80) begin
+        @(posedge clk);
+        cycles = cycles + 1;
+      end
+      if (done)
+        $fatal(1, "request completion did not clear for a new command");
+
+      observed_beats = 0;
+      previous_beat_done = beat_done;
+      while (!done && cycles < 400) begin
+        @(posedge clk);
+        if (beat_done && !previous_beat_done) begin
+          if (beat_index !== observed_beats[4:0])
+            $fatal(1, "beat index=%0d expected=%0d", beat_index, observed_beats);
+          observed_beats = observed_beats + 1;
+        end
+        previous_beat_done = beat_done;
+        if (dut.beats_remaining_q == 5'd31)
+          $fatal(1, "terminal beat underflowed remaining count to 31");
+        cycles = cycles + 1;
+      end
+
+      if (!done)
+        $fatal(1, "request did not complete");
+      if (observed_beats != expected_beats)
+        $fatal(1, "observed beats=%0d expected=%0d", observed_beats, expected_beats);
+      if (dut.beats_remaining_q != 0)
+        $fatal(1, "completion left remaining count=%0d", dut.beats_remaining_q);
+    end
+  endtask
+
+  integer single_beats;
+  integer incr4_beats;
+  initial begin
+    repeat (3) @(negedge clk);
+    rst_n = 1;
+    run_command(3'b000, 5'd1, 1, single_beats);
+    run_command(3'b011, 5'd4, 4, incr4_beats);
+    $display("PASS single_beats=%0d incr4_beats=%0d", single_beats, incr4_beats);
+    $finish;
+  end
+endmodule

@@ -104,6 +104,33 @@ Generated IAL1 uses an internal completion bit:
 The public `done` output remains a status output, not the transaction
 completion pulse.
 
+## Burst Completion
+
+The generated request loop treats the terminal and non-terminal accepted
+`OKAY` beat paths as mutually exclusive:
+
+```text
+(when (== beats_remaining_q 1)
+  (set beats_remaining_q 0)
+  (set burst_active_q 0))
+(when (> beats_remaining_q 1)
+  (set beats_remaining_q (- beats_remaining_q 1))
+  (set beat_index_q (+ beat_index_q 1))
+  ...)
+```
+
+The strict `> 1` guard matters because the two `when` clauses become
+sequential FSM states. A negated equality in the second state would re-read
+the zero written by the terminal state and decrement it to width-five `31`.
+`ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR.2` corrected that pre-existing
+requester defect without changing the public source, ports, report, support
+accounting, or `.ahb` alias contract.
+
+Generated-HDL regression `t/1511-ial2-ahb-requester-burst-completion.t` proves
+that the public requester completes `SINGLE` with exactly one accepted beat
+and `INCR4` with exactly four accepted beats at indices `0..3`, leaving
+`beats_remaining_q = 0` and never visiting `31`.
+
 ## Support Accounting
 
 The public sample is support-accounted as:
@@ -187,3 +214,11 @@ The `.ppif` probes passed, support accounting matched
 `intent.ppif_ahb_requester`, and the `.ahb` probe failed closed with the known
 unsupported-alias diagnostic at `.697` closeout. Current `.ahb` behavior is
 documented in `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md`.
+
+The current terminal-beat correction is additionally validated with:
+
+```bash
+prove -v t/1473-ial2-ahb-requester.t \
+  t/1511-ial2-ahb-requester-burst-completion.t
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ahb
+```

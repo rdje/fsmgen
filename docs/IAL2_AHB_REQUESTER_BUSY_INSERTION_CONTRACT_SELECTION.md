@@ -122,6 +122,13 @@ shipped `idle`/`nonseq`/`seq` and no behavior changes.
 
 ### Generator change (`transfer_busy` drive block + beat-loop insertion)
 
+Current-baseline note (2026-07-23): before `.788` implementation resumed,
+prerequisite `ISF-MULTIBIT-LOOP-PREDICATE-TRUTHINESS-REPAIR.2` made the
+existing accepted-beat terminal and non-terminal updates mutually exclusive:
+remaining count `1` takes the terminal zero/clear path, while only values
+strictly greater than `1` decrement and advance. This baseline correctness
+repair changes none of the selected BUSY-insertion surface below.
+
 When `busy_before_beat` is set, the generator adds one drive block and one
 bounded one-shot insertion into the existing beat loop:
 
