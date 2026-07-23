@@ -6904,6 +6904,18 @@ still calls BUSY continuation deferred while `ahb_burst_seq_support_deferred`
 correctly says BUSY parking ships. No behavior changed in `.797`; broader
 BUSY/status/burst work, decision 0020, and proposed audits remain inactive.
 
+`.798` now confirms the two-subordinate paired candidate is generation-ready.
+Temporary public check/schedule/semantic/outdir/SystemVerilog probes report
+`ahb_tb`, four children, 29 signals, exact status/control windows, four IAL1
+and five IAL0 artifacts, requester `busy_insertion`, both child/propagated
+`parks_on=[busy]`, semantic root `top`, and 21,656-line HDL that passes Yosys.
+No parser, endpoint, interconnect, phase, decode, mux, top, or HDL prerequisite
+was found. The audit selects `.799`, a smaller report-only fix so parked
+two-subordinate sources stop contradictorily deferring BUSY continuation while
+non-parking sources retain that deferral. `.800` then owns the paired public
+contract and exact status/control-window runtime proof. No behavior changed in
+`.798`; decision 0020 and proposed audits remain inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

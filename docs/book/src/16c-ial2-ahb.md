@@ -1363,6 +1363,24 @@ select a report-only repair that preserves BUSY deferral on non-parking sources
 before choosing the public paired source contract. See
 [IAL2_POST_AHB_PAIRED_BUSY_FAMILY_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_PAIRED_BUSY_FAMILY_NEXT_SLICE_SELECTION.md).
 
+`.798` confirms the candidate across public check, schedule, semantic,
+review-artifact, SystemVerilog, and Yosys surfaces. It reports module `ahb_tb`,
+four children, 29 signals, status `[0,4)`, control `[4,8)`, four IAL1/five IAL0
+artifacts, requester `busy_insertion`, both child/propagated
+`parks_on=[busy]`, semantic root `top`, and clean 21,656-line generated HDL.
+The top exposes status/control select and local-address signals plus each
+child's `seq_*` state and storage, so a future two-command harness can prove
+status-base-0 and control-base-4 BUSY parking, non-interference, local address
+subtraction, completion, and distinct storage results without new ports.
+
+Before that public contract, `.799` repairs the already-shipped report
+contradiction. The two-subordinate broader residue must use the existing
+BUSY-park predicate: parked sources say BUSY parking ships and no longer defer
+BUSY continuation; non-parking sources keep the deferral. This is report text
+only—no transfer behavior or support count changes. `.800` then owns the paired
+source contract. See
+[IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_READINESS_AUDIT](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_READINESS_AUDIT.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB
