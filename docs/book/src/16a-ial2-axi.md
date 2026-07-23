@@ -13,7 +13,7 @@ organized by authoring mode, not by implementation module.
 | Mode | Start with | What it demonstrates |
 | --- | --- | --- |
 | Guided mode | `ppif/axi_aw_valid_ready.ppif` and `ppif/axi_aw_valid_ready.axi` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, and `.ppif`/`.axi` profile-alias parity for the selected first alias. |
-| Initiator mode | `ppif/axi_aw_driver.ppif`, `ppif/axi_w_driver.ppif`, `ppif/axi_b_response_acceptor.ppif`, `ppif/axi_ar_driver.ppif`, and `ppif/axi_r_beat_acceptor.ppif` | Bounded AXI manager AW/W/AR channel **drivers** plus explicitly armed B-response and R-beat **acceptors**. Each driver accepts exactly one transfer per command; each acceptor captures exactly one response or beat per arm. |
+| Initiator mode | `ppif/axi_aw_driver.ppif`, `ppif/axi_w_driver.ppif`, `ppif/axi_b_response_acceptor.ppif`, `ppif/axi_write_request_composition.ppif`, `ppif/axi_write_transaction_composition.ppif`, `ppif/axi_ar_driver.ppif`, `ppif/axi_r_beat_acceptor.ppif`, and `ppif/axi_read_transaction_composition.ppif` | Bounded AXI manager AW/W/AR channel **drivers**, explicitly armed B-response and R-beat **acceptors**, and fixed-single-beat request/full-transaction **compositions**. |
 | More-control mode | `ppif/axi_manager_capacity_status.ppif`, `ppif/axi_manager_capacity_status_id_family.ppif`, and `ppif/axi_manager_capacity_status_transaction_envelope.ppif` | Bounded manager capacity/status, ID-family metadata, and logical transaction metadata while staying in the public AXI manager shell. |
 | Raw/full-control mode | `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | A deep shipped AXI manager shape with dynamic read transactions, same-ID issue-order queueing, burst-last response demux, runtime beat-count/`RLAST` validation, and multi-beat read-data output banks. |
 
@@ -531,9 +531,10 @@ acceptance, ends idle, and passes both Verilator lint and Yosys synthesis.
 This remains a request-channel primitive, not a complete AXI manager.
 `ar_done` means one AR request was accepted; it does not mean any R beat
 arrived or the read completed. The separately shipped bounded R acceptor below
-owns raw RREADY/RID/RDATA/RRESP/RLAST capture, but AR/R coordination, ARID/RID
-correlation, response-beat accounting, and full read completion remain future
-composition work. Legal address/length/size/burst combinations and extended AR
+owns raw RREADY/RID/RDATA/RRESP/RLAST capture. The fixed-single-beat full-read
+composition now coordinates the two primitives and checks ARID/RID plus
+RLAST; broader dynamic legality, repeated beats, and burst completion remain
+future work. Legal address/length/size/burst combinations and extended AR
 attributes also remain explicit residue.
 
 The larger alternatives remain deferred. Capacity/status
@@ -607,47 +608,86 @@ done pulses with exact raw captures, and passes both Verilator and Yosys.
 
 The scope is deliberately one **beat**, not one complete read transaction.
 `r_beat_done` does not imply RLAST, successful RRESP, RID/ARID match, ARLEN
-satisfaction, or read completion. AR coordination, repeated or multi-beat
-receive policy, last/length validation, response interpretation, capacity and
+satisfaction, or read completion. The full-read composition below supplies the
+first bounded AR coordination, ID match, fixed-one-beat RLAST check, and
+transaction completion boundary. Repeated or multi-beat receive policy,
+general last/length validation, response interpretation, capacity and
 outstanding integration, back-to-back buffering, and extended R sidebands
 remain explicit future work.
 
-### Selected read-side composition contract
+### Bounded fixed-single-beat full-read composition
 
-With both physical read-channel primitives shipped, the next bounded increment
-is a fixed-single-beat AR+R full-read composition. Its readiness audit and exact
-public-contract selection now pass; implementation is the next task-tree leaf.
-No public composition source or runtime behavior ships yet.
-
-The selected additive object is
-`(axi-read-transaction-composition axi_read_transaction_composition ...)`,
-with aggregate role `manager`, asynchronous active-low reset, and thirteen
-ordered Issue L source anchors. Its public shape is fixed as:
+`ppif/axi_read_transaction_composition.ppif` is the shipped AR+R transaction
+surface. The additive object has aggregate role `manager`, asynchronous
+active-low reset, and thirteen ordered Issue L source anchors. Its exact public
+object is:
 
 ```text
-command:    read_cmd_valid + cmd_read_addr32 + cmd_read_id4
-AR bus:     arready/arvalid + araddr32/arid4/arlen8/arsize3/arburst2
-R bus:      rvalid/rready + rid4/rdata32/rresp2/rlast
-raw result: response_rid4/response_rdata32/response_rresp2/response_rlast
-status:     read_busy + read_request_done + read_transaction_done
-            + response_id_match + response_last_match
+(axi-read-transaction-composition axi_read_transaction_composition
+  (role manager)
+  (clock clk)
+  (reset (rst_n active_low async))
+  (command
+    (start read_cmd_valid)
+    (address cmd_read_addr width 32)
+    (id cmd_read_id width 4))
+  (ar-channel
+    (ready arready)
+    (valid arvalid)
+    (address araddr width 32)
+    (id arid width 4)
+    (length arlen width 8)
+    (size arsize width 3)
+    (burst arburst width 2))
+  (r-channel
+    (valid rvalid)
+    (ready rready)
+    (id rid width 4)
+    (data rdata width 32)
+    (response rresp width 2)
+    (last rlast)
+    (captured-id response_rid width 4)
+    (captured-data response_rdata width 32)
+    (captured-response response_rresp width 2)
+    (captured-last response_rlast))
+  (status
+    (busy read_busy)
+    (request-done read_request_done)
+    (transaction-done read_transaction_done)
+    (response-id-match response_id_match)
+    (response-last-match response_last_match)))
 ```
 
-The selected reference generator is
+The reference generator is
 `FSM::IAL2::ProtocolIntent::AxiReadTransactionComposition`, report schema
 `fsmgen.ial2.protocol_intent.axi_read_transaction_composition.v1`, support id
 `intent.ppif_axi_read_transaction_composition`, and focused test
-`t/1506-ial2-axi-read-transaction-composition.t`. The implementation will add
-one PPIF fixture and move support accounting from 304/345/345 to 305/346/346.
+`t/1506-ial2-axi-read-transaction-composition.t`. Support accounting is 305
+protocol fixtures and 346 supported/strict-supported fixtures. Run every
+public review and validation surface directly:
 
-The proven architecture reuses the AR driver and R acceptor unchanged under a
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_read_transaction_composition.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_read_transaction_composition.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_read_transaction_composition.ppif
+./bin/fsmgen --quiet --outdir generated ppif/axi_read_transaction_composition.ppif
+./bin/fsmgen --verify-hdl ppif/axi_read_transaction_composition.ppif
+```
+
+The shipped architecture reuses the AR driver and R acceptor unchanged under a
 new zero-state, seven-rule coordinator and a flat three-child C4 structural
 top. One aligned address32/ID4 command privately drives `ARLEN=0`, `ARSIZE=2`,
 and `ARBURST=INCR`, issues one AR request, arms R only after AR acceptance, and
 retires after exactly one captured R beat. This makes the one-beat completion
 claim structurally honest without narrowing the standalone dynamic AR source.
 
-The structural probe strict-checks with 27 public signals, three generated FSM
+The review path emits three IAL1 artifacts (`axi_ar_driver.isf`,
+`axi_r_beat_acceptor.isf`, and `axi_read_transaction_coordinator.isf`), their
+three leaf FSMs, and selected top
+`axi_read_transaction_composition.fsm`. All three schedules are lowering-clean.
+The coordinator has 18 ports, zero procedural states, seven rule decision
+trees with assignment counts 6/1/3/1/1/6/1, and four realized pulse-priority
+resolutions. Semantic JSON reports 27 public signals, three generated FSM
 children, 41 nets, and 44 resolved links. Sized constants reach the AR child,
 while captured RID and RLAST safely fan out from the R child to both public
 result ports and coordinator checks. Generated SystemVerilog passes Verilator
@@ -660,10 +700,10 @@ or missing RLAST sets stable match status low and trips a generated assertion,
 but remains terminal after the consumed beat instead of hanging for an
 impossible replacement.
 
-The required executable generated-HDL proof covers misalignment non-launch, fixed metadata,
-stalled and continuous ARREADY, stable payload under input mutation, a busy
-command, already-high and delayed RVALID, raw non-OKAY capture, terminal RID
-and RLAST errors, reset during both a stalled AR and an armed R wait, and
+The executable generated-HDL proof covers misalignment non-launch, fixed
+metadata, stalled and continuous ARREADY, stable payload under input mutation,
+a busy command, already-high and delayed RVALID, raw non-OKAY capture, terminal
+RID and RLAST errors, reset during both a stalled AR and an armed R wait, and
 post-reset recovery. It ends idle at exact counts `AR=5`, `R=4`,
 `request-done=5`, and `transaction-done=4`; the one-count difference must prove
 that reset after AR completion cancels response ownership without fabricating
