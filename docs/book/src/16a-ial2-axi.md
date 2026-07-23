@@ -709,10 +709,18 @@ post-reset recovery. It ends idle at exact counts `AR=5`, `R=4`,
 that reset after AR completion cancels response ownership without fabricating
 an R handshake or full completion.
 
-Dynamic or multi-beat reads, ARLEN/RLAST counters, RRESP aggregation,
-capacity/status adapter wiring, multiple outstanding and back-to-back reads,
-ID queues/demux/interleaving, aliases, and decision 0020's protocol-neutral
-transaction interface remain separate later directions.
+The selected next functional direction is a bounded full-width INCR multi-beat
+read composition. Its behavior-neutral readiness audit will compare an
+authored bounded length with the leading fixed-four-beat shape
+(`ARLEN=3`/`ARSIZE=2`/`ARBURST=INCR`), prove repeated R-child ownership and a
+per-beat observation event, and select exact count/`RLAST`/RID/error/reset and
+4-KiB-boundary behavior before any public contract changes. No multi-beat
+composition behavior ships yet.
+
+General dynamic bursts, RRESP/output-bank aggregation, capacity/status adapter
+wiring, multiple outstanding and back-to-back reads, ID queues/demux/
+interleaving, aliases, and decision 0020's protocol-neutral transaction
+interface remain separate later directions.
 
 ## More-Control Mode
 
