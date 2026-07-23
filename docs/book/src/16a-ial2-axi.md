@@ -612,12 +612,33 @@ receive policy, last/length validation, response interpretation, capacity and
 outstanding integration, back-to-back buffering, and extended R sidebands
 remain explicit future work.
 
-### Read-side composition ready for contract selection
+### Selected read-side composition contract
 
 With both physical read-channel primitives shipped, the next bounded increment
-is a fixed-single-beat AR+R full-read composition. Its behavior-neutral
-readiness audit now passes; no public composition syntax or runtime behavior
-ships yet. Exact public-contract selection is the next task-tree leaf.
+is a fixed-single-beat AR+R full-read composition. Its readiness audit and exact
+public-contract selection now pass; implementation is the next task-tree leaf.
+No public composition source or runtime behavior ships yet.
+
+The selected additive object is
+`(axi-read-transaction-composition axi_read_transaction_composition ...)`,
+with aggregate role `manager`, asynchronous active-low reset, and thirteen
+ordered Issue L source anchors. Its public shape is fixed as:
+
+```text
+command:    read_cmd_valid + cmd_read_addr32 + cmd_read_id4
+AR bus:     arready/arvalid + araddr32/arid4/arlen8/arsize3/arburst2
+R bus:      rvalid/rready + rid4/rdata32/rresp2/rlast
+raw result: response_rid4/response_rdata32/response_rresp2/response_rlast
+status:     read_busy + read_request_done + read_transaction_done
+            + response_id_match + response_last_match
+```
+
+The selected reference generator is
+`FSM::IAL2::ProtocolIntent::AxiReadTransactionComposition`, report schema
+`fsmgen.ial2.protocol_intent.axi_read_transaction_composition.v1`, support id
+`intent.ppif_axi_read_transaction_composition`, and focused test
+`t/1506-ial2-axi-read-transaction-composition.t`. The implementation will add
+one PPIF fixture and move support accounting from 304/345/345 to 305/346/346.
 
 The proven architecture reuses the AR driver and R acceptor unchanged under a
 new zero-state, seven-rule coordinator and a flat three-child C4 structural
@@ -639,12 +660,12 @@ or missing RLAST sets stable match status low and trips a generated assertion,
 but remains terminal after the consumed beat instead of hanging for an
 impossible replacement.
 
-Executable generated-HDL proof covers misalignment non-launch, fixed metadata,
+The required executable generated-HDL proof covers misalignment non-launch, fixed metadata,
 stalled and continuous ARREADY, stable payload under input mutation, a busy
 command, already-high and delayed RVALID, raw non-OKAY capture, terminal RID
 and RLAST errors, reset during both a stalled AR and an armed R wait, and
 post-reset recovery. It ends idle at exact counts `AR=5`, `R=4`,
-`request-done=5`, and `transaction-done=4`; the one-count difference proves
+`request-done=5`, and `transaction-done=4`; the one-count difference must prove
 that reset after AR completion cancels response ownership without fabricating
 an R handshake or full completion.
 

@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.32` done: full-read composition readiness proved; `.33` active contract selection)
+- Last updated: `2026-07-23` (`.33` done: exact full-read composition contract selected; `.34` active implementation)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -330,14 +330,15 @@ It complements — does not replace — the shipped capacity/status response cor
   Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.32: audit the bounded AXI full-read composition`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.33`
-  Status: `active`
+  Status: `done`
   Goal: `Select the exact public contract for the ready bounded fixed-single-beat AXI4 manager full-read composition.`
   Acceptance: `Starting from docs/IAL2_AXI_MANAGER_INITIATOR_FULL_READ_TRANSACTION_COMPOSITION_READINESS_AUDIT.md, freeze exactly one (axi-read-transaction-composition ...) public object; protocol_intent.axi_read_transaction_composition/read-transaction-composition/AxiReadTransactionComposition/schema-v1 identities; ppif/axi_read_transaction_composition.ppif, axi_read_transaction_composition top, axi_read_transaction_coordinator, support and t/1506 owners; exact thirteen anchors; aggregate manager role/shared async active-low reset; address32/ID4 command; AR and raw RID4/RDATA32/RRESP2/RLAST1 result/status bindings; four-byte guard and LEN0/SIZE2/INCR constants; unchanged AR/R children and exact private links/fanout; 18-port zero-state seven-rule 6/1/3/1/1/6/1 coordinator with six authored/four realized priorities and three assertions; request/R/transaction causal timing, busy/reset/busy-command policy, terminal ID/last mismatch and raw non-OKAY policy; flat 27-port three-child C4 41-net/44-link topology; exact three-IAL1/three-leaf-plus-top artifacts, twelve static rules, thirteen residue IDs, diagnostics, 305/346/346 accounting, four-subtest executable proof, validation, rollback, and atomic .34 owner. Preserve all audit deferrals and every shipped behavior. No parser/generator/source/support/manifest/test/artifact/HDL/runtime/alias/verification-output/direct/backend/VHDL/AHB/APB behavior changes in this selector.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `PASS — docs/IAL2_AXI_MANAGER_INITIATOR_FULL_READ_TRANSACTION_COMPOSITION_CONTRACT_SELECTION.md freezes (axi-read-transaction-composition ...), normalized parser kind versus protocol_intent result kind, AxiReadTransactionComposition/schema/source/top/coordinator/support/t1506 identities, exact thirteen-anchor manager/address32/ID4/AR/raw-R/result/status source, unchanged child calls, 27-port flat three-child C4 41-net/44-link wiring/fanout, exact 18-port zero-state seven-rule coordinator and assertions, lifecycle/reset/terminal ID+last/raw-status behavior, three-IAL1/four-IAL0 artifact/report contract, twelve literal static rules, thirteen literal residue entries, fail-closed diagnostics, 305/346/346 accounting, exact four-subtest 5/4/5/4 generated-HDL matrix, atomic .34 owner, validation, and rollback. No behavior changed.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.33: select the bounded AXI full-read contract`
+  Selection: `(axi-read-transaction-composition ...) / AxiReadTransactionComposition / schema v1; thirteen anchors; aligned address32/ID4 and private LEN0/SIZE2/INCR; unchanged AR/R plus exact coordinator under 27-port three-child C4; raw RID4/RDATA32/RRESP2/RLAST1 and stable ID/last status; t/1506; support 305/346/346; implementation .34.`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.34`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement the selected bounded AXI4 manager fixed-single-beat full-read composition end to end.`
   Acceptance: `After .33 freezes the contract, implement it atomically: add AxiReadTransactionComposition with defensive APIs/normalization, reuse unchanged AxiArDriver/AxiRBeatAcceptor results, generate only the new exact coordinator and flat three-child top, and expose the exact report/schedules/artifacts; wire additive PPIF import/dispatch/root/object/block/cardinality/mixing/predicate/missing-intent and .axi rejection; add the exact thirteen-anchor public source; add RegressionCorpus support at 305/346/346 and LanguageSurfaceSection wording; add exact four-subtest t/1506 adapter/fail-closed/CLI+semantic+schedule+outdir+Verilator+Yosys/generated-HDL proof with audit cardinalities and policies; update shipped mdBook, behavior fact, task/index/MEMORY/Knowledge Map; remove generated probes; run syntax, focused t/1499-t/1506+t248+t297, public CLI/HDL, mdBook, continuity, whitespace, and doctrines under RAM policy. Preserve every .33 deferral and all existing behavior.`
   Verification: `pending`
