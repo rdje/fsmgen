@@ -5895,6 +5895,17 @@ child non-interference, control local-address subtraction, clean completion,
 and final status/control storage `44332211`/`88776655`. The matching `.ahb`
 alias remains a later slice; decision 0020 and proposed audits remain inactive.
 
+`.802` now selects `.803`, direct data-only implementation of the matching
+`ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ahb`
+profile alias. An in-memory reserved-label probe preserves four children, the
+exact four IAL1/five IAL0 artifacts, requester `busy_insertion`, both
+status/control `parks_on=[busy]`, and removes only aggregate/requester/both-
+subordinate alias residue plus alias-exposure wording. The future alias is a
+byte-identical second source surface over the same generator architecture; it
+targets 314 protocol / 355 supported-smoke+strict entries. t/1516 will own
+alias parity and public surfaces while t/1515 remains the shared runtime proof.
+Decision 0020 and proposed audits remain inactive.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8553,6 +8564,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_TWO_SUBORDINATE_BUSY_REPORT_REPAIR.md` — records the `.799` report-only truthfulness repair: parked two-subordinate generic/alias surfaces claim shipped BUSY parking consistently, non-parking surfaces retain BUSY-continuation deferral, and sources/artifacts/support/HDL behavior stay unchanged before `.800` contract selection.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_CONTRACT_SELECTION.md` — records the `.800` exact generic source/support/report/artifact contract, t/1515 two-command status/control runtime proof, 313/354 accounting target, preservation/diagnostics/resource/rollback boundaries, later alias sequencing, and `.801` direct implementation owner.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md` — documents the `.801` shipped generic four-child paired-BUSY aggregate, one existing generator architecture, exact report/artifact/support surfaces, and generated-HDL status/control proof through retained `32'h44332211`/`32'h88776655` storage.
+- `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.802` selection of `.803`, a byte-identical data-only `.ahb` alias with 314/355 accounting targets, t/1516 parity/public-surface proof, retained t/1515 runtime, existing alias-residue cleanup, and no new generator.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

@@ -1429,6 +1429,19 @@ storage is `32'h44332211`/`32'h88776655`. No parser or generator algorithm
 changed; the matching `.ahb` alias remains a separate later slice. See
 [IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 
+`.802` selects `.803`, the matching two-subordinate paired `.ahb` profile
+alias. A current in-memory adapter probe parses the `.801` source under the
+reserved future `.ahb` label and preserves four children, the exact four
+IAL1/five IAL0 artifacts, requester `busy_insertion`, and both status/control
+`parks_on=[busy]` policies. Existing suffix handling removes only aggregate,
+requester, and both subordinate alias residue families plus alias-exposure
+wording. Therefore `.803` is a byte-identical source/support/parity-test
+slice, not another generator or behavior implementation. It targets 314
+protocol fixtures and 355 supported-smoke/strict entries; t/1516 will prove
+alias parity and public surfaces while t/1515 remains the shared generated-HDL
+runtime proof. See
+[IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB

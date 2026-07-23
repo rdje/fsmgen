@@ -10758,6 +10758,17 @@ subtraction, and retained `44332211`/`88776655` storage. No generator
 algorithm changed; the matching alias, decision 0020, and proposed audits
 remain inactive.
 
+Two-subordinate paired AHB BUSY profile-alias contract:
+[IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md)
+documents `.802`, which selects `.803`. The future `.ahb` file is a
+byte-identical mirror of the `.801` generic source and reuses the same
+four-child generator architecture. An in-memory reserved-label probe preserves
+all four IAL1/five IAL0 artifacts, requester `busy_insertion`, both
+status/control `parks_on=[busy]` policies, and removes only alias residue.
+t/1516 will prove parity/public surfaces; t/1515 retains runtime proof. Targets
+are 314 protocol / 355 supported-smoke+strict. Decision 0020 and proposed
+audits remain inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

@@ -33,3 +33,6 @@ requester-child `busy_insertion`, subordinate/aggregate `parks_on=[busy]`, and
 t/1513 runtime behavior. Existing suffix handling removes only profile-alias
 residue. t/1514 proves parity, public CLI/report/artifact/support surfaces,
 diagnostics, and clean `--verify-hdl`.
+
+The generic two-subordinate paired source now ships through `.801`; `.802`
+selects its matching `.ahb` alias as the next data-only source-surface slice.

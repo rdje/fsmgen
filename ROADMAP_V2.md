@@ -6951,6 +6951,17 @@ and final `44332211`/`88776655` storage after two exact
 `NONSEQ,SEQ,BUSY,SEQ,SEQ` commands. Matching `.ahb` alias selection remains a
 later slice; decision 0020 and proposed audits stay inactive.
 
+`.802` now selects `.803`, direct data-only implementation of the matching
+two-subordinate paired `.ahb` profile alias. A current in-memory reserved-label
+probe preserves the exact four-child/four-IAL1/five-IAL0 architecture,
+requester `busy_insertion`, both status/control `parks_on=[busy]` policies, and
+removes only aggregate/requester/both-subordinate alias residue plus alias-
+exposure wording. The future byte-identical alias is a second public source
+surface, not another generator; it targets 314 protocol / 355
+supported-smoke+strict entries. t/1516 will prove parity/public surfaces while
+t/1515 retains the shared generated-HDL runtime proof. Decision 0020 and
+proposed audits stay inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
