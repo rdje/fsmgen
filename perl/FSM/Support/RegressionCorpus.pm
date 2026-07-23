@@ -2077,6 +2077,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_axi_r_beat_acceptor',
+        relpath => 'ppif/axi_r_beat_acceptor.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_axi_r_beat_acceptor_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'axi_r_beat_acceptor',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ppif_axi_write_request_composition',
         relpath => 'ppif/axi_write_request_composition.ppif',
         family => 'protocol_fixture',

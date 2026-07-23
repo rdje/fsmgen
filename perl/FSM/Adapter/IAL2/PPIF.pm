@@ -20,6 +20,7 @@ use FSM::IAL2::ProtocolIntent::AxiArDriver;
 use FSM::IAL2::ProtocolIntent::AxiAwDriver;
 use FSM::IAL2::ProtocolIntent::AxiBResponseAcceptor;
 use FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus;
+use FSM::IAL2::ProtocolIntent::AxiRBeatAcceptor;
 use FSM::IAL2::ProtocolIntent::AxiWDriver;
 use FSM::IAL2::ProtocolIntent::AxiWriteRequestComposition;
 use FSM::IAL2::ProtocolIntent::AxiWriteTransactionComposition;
@@ -108,6 +109,8 @@ sub parse_source($self, @args) {
         if _is_axi_w_driver_contract($contract);
     return FSM::IAL2::ProtocolIntent::AxiBResponseAcceptor->new(debug => $self->{debug})->generate($contract)
         if _is_axi_b_response_acceptor_contract($contract);
+    return FSM::IAL2::ProtocolIntent::AxiRBeatAcceptor->new(debug => $self->{debug})->generate($contract)
+        if _is_axi_r_beat_acceptor_contract($contract);
     return FSM::IAL2::ProtocolIntent::AxiWriteRequestComposition->new(debug => $self->{debug})->generate($contract)
         if _is_axi_write_request_composition_contract($contract);
     return FSM::IAL2::ProtocolIntent::AxiWriteTransactionComposition->new(debug => $self->{debug})->generate($contract)
@@ -279,6 +282,9 @@ sub _validate_profile_alias_contract($source_label, $contract) {
     confess "Error: .axi source '$source_label' (axi-b-response-acceptor ...) remains unsupported for the first profile-alias implementation\n"
         if _is_axi_b_response_acceptor_contract($contract);
 
+    confess "Error: .axi source '$source_label' (axi-r-beat-acceptor ...) remains unsupported for the first profile-alias implementation\n"
+        if _is_axi_r_beat_acceptor_contract($contract);
+
     confess "Error: .axi source '$source_label' (axi-write-request-composition ...) remains unsupported for the first profile-alias implementation\n"
         if _is_axi_write_request_composition_contract($contract);
 
@@ -301,6 +307,7 @@ sub _contract_from_root($root, $source_label) {
     my @axi_ar_drivers;
     my @axi_w_drivers;
     my @axi_b_response_acceptors;
+    my @axi_r_beat_acceptors;
     my @axi_write_request_compositions;
     my @axi_write_transaction_compositions;
     my @apb_requesters;
@@ -333,6 +340,8 @@ sub _contract_from_root($root, $source_label) {
             push @axi_w_drivers, _parse_axi_w_driver(\@body, $source_label);
         } elsif ($head eq 'axi-b-response-acceptor') {
             push @axi_b_response_acceptors, _parse_axi_b_response_acceptor(\@body, $source_label);
+        } elsif ($head eq 'axi-r-beat-acceptor') {
+            push @axi_r_beat_acceptors, _parse_axi_r_beat_acceptor(\@body, $source_label);
         } elsif ($head eq 'axi-write-request-composition') {
             push @axi_write_request_compositions, _parse_axi_write_request_composition(\@body, $source_label);
         } elsif ($head eq 'axi-write-transaction-composition') {
@@ -358,15 +367,15 @@ sub _contract_from_root($root, $source_label) {
         unless defined $profile;
     confess "Error: $surface source '$source_label' is missing required (source ...) clause\n"
         unless defined $source;
-    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), (axi-aw-driver ...), (axi-ar-driver ...), (axi-w-driver ...), (axi-b-response-acceptor ...), (axi-write-request-composition ...), (axi-write-transaction-composition ...), (apb-requester ...), (apb-completer ...), (apb-composition ...), (ahb-requester ...), (ahb-subordinate ...), or (ahb-interconnect ...)\n"
-        unless @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_b_response_acceptors || @axi_write_request_compositions || @axi_write_transaction_compositions || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), (axi-aw-driver ...), (axi-ar-driver ...), (axi-w-driver ...), (axi-b-response-acceptor ...), (axi-r-beat-acceptor ...), (axi-write-request-composition ...), (axi-write-transaction-composition ...), (apb-requester ...), (apb-completer ...), (apb-composition ...), (ahb-requester ...), (ahb-subordinate ...), or (ahb-interconnect ...)\n"
+        unless @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_b_response_acceptors || @axi_r_beat_acceptors || @axi_write_request_compositions || @axi_write_transaction_compositions || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
     if (@axi_write_transaction_compositions) {
         confess "Error: $surface source '$source_label' profile '$profile' does not match (axi-write-transaction-composition ...); expected an AXI-family profile (axi, axi3, axi4, or axi5)\n"
             unless _is_axi_family_profile($profile);
         confess "Error: $surface source '$source_label' supports exactly one (axi-write-transaction-composition ...) object in this slice\n"
             if @axi_write_transaction_compositions > 1;
         confess "Error: $surface source '$source_label' cannot mix (axi-write-transaction-composition ...) with other intent objects in this slice\n"
-            if @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_b_response_acceptors || @axi_write_request_compositions || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+            if @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_b_response_acceptors || @axi_r_beat_acceptors || @axi_write_request_compositions || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
 
         return {
             %{$axi_write_transaction_compositions[0]},
@@ -381,7 +390,7 @@ sub _contract_from_root($root, $source_label) {
         confess "Error: $surface source '$source_label' supports exactly one (axi-write-request-composition ...) object in this slice\n"
             if @axi_write_request_compositions > 1;
         confess "Error: $surface source '$source_label' cannot mix (axi-write-request-composition ...) with other intent objects in this slice\n"
-            if @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_b_response_acceptors || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+            if @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_b_response_acceptors || @axi_r_beat_acceptors || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
 
         return {
             %{$axi_write_request_compositions[0]},
@@ -396,10 +405,25 @@ sub _contract_from_root($root, $source_label) {
         confess "Error: $surface source '$source_label' supports exactly one (axi-b-response-acceptor ...) object in this slice\n"
             if @axi_b_response_acceptors > 1;
         confess "Error: $surface source '$source_label' cannot mix (axi-b-response-acceptor ...) with other intent objects in this slice\n"
-            if @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+            if @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_r_beat_acceptors || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
 
         return {
             %{$axi_b_response_acceptors[0]},
+            intent_name => $intent_name,
+            protocol    => $profile,
+            source      => $source,
+        };
+    }
+    if (@axi_r_beat_acceptors) {
+        confess "Error: $surface source '$source_label' profile '$profile' does not match (axi-r-beat-acceptor ...); expected an AXI-family profile (axi, axi3, axi4, or axi5)\n"
+            unless _is_axi_family_profile($profile);
+        confess "Error: $surface source '$source_label' supports exactly one (axi-r-beat-acceptor ...) object in this slice\n"
+            if @axi_r_beat_acceptors > 1;
+        confess "Error: $surface source '$source_label' cannot mix (axi-r-beat-acceptor ...) with other intent objects in this slice\n"
+            if @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_w_drivers || @axi_b_response_acceptors || @axi_write_request_compositions || @axi_write_transaction_compositions || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+
+        return {
+            %{$axi_r_beat_acceptors[0]},
             intent_name => $intent_name,
             protocol    => $profile,
             source      => $source,
@@ -411,7 +435,7 @@ sub _contract_from_root($root, $source_label) {
         confess "Error: $surface source '$source_label' supports exactly one (axi-w-driver ...) object in this slice\n"
             if @axi_w_drivers > 1;
         confess "Error: $surface source '$source_label' cannot mix (axi-w-driver ...) with other intent objects in this slice\n"
-            if @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_b_response_acceptors || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+            if @channels || @managers || @axi_aw_drivers || @axi_ar_drivers || @axi_b_response_acceptors || @axi_r_beat_acceptors || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
 
         return {
             %{$axi_w_drivers[0]},
@@ -426,7 +450,7 @@ sub _contract_from_root($root, $source_label) {
         confess "Error: $surface source '$source_label' supports exactly one (axi-ar-driver ...) object in this slice\n"
             if @axi_ar_drivers > 1;
         confess "Error: $surface source '$source_label' cannot mix (axi-ar-driver ...) with other intent objects in this slice\n"
-            if @channels || @managers || @axi_aw_drivers || @axi_w_drivers || @axi_b_response_acceptors || @axi_write_request_compositions || @axi_write_transaction_compositions || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+            if @channels || @managers || @axi_aw_drivers || @axi_w_drivers || @axi_b_response_acceptors || @axi_r_beat_acceptors || @axi_write_request_compositions || @axi_write_transaction_compositions || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
 
         return {
             %{$axi_ar_drivers[0]},
@@ -441,7 +465,7 @@ sub _contract_from_root($root, $source_label) {
         confess "Error: $surface source '$source_label' supports exactly one (axi-aw-driver ...) object in this slice\n"
             if @axi_aw_drivers > 1;
         confess "Error: $surface source '$source_label' cannot mix (axi-aw-driver ...) with other intent objects in this slice\n"
-            if @channels || @managers || @axi_ar_drivers || @axi_w_drivers || @axi_b_response_acceptors || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
+            if @channels || @managers || @axi_ar_drivers || @axi_w_drivers || @axi_b_response_acceptors || @axi_r_beat_acceptors || @apb_requesters || @apb_completers || @apb_compositions || @ahb_requesters || @ahb_subordinates || @ahb_interconnects;
 
         return {
             %{$axi_aw_drivers[0]},
@@ -1527,6 +1551,79 @@ sub _parse_axi_b_response_acceptor_channel_block($items, $source_label, $name) {
             done                => 'scalar',
         },
         [qw(valid ready id response captured-id captured-response busy done)],
+    );
+}
+
+sub _parse_axi_r_beat_acceptor($body, $source_label) {
+    confess "Error: .ppif (axi-r-beat-acceptor ...) requires a scalar object name\n"
+        unless @$body >= 1 && !ref($body->[0]) && length($body->[0]);
+
+    my $name = $body->[0];
+    my %contract = (
+        kind => 'axi_r_beat_acceptor',
+        name => $name,
+    );
+    my %seen;
+    for my $clause (@{$body}[1 .. $#$body]) {
+        my ($head, @items) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (axi-r-beat-acceptor $name ...) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+
+        if ($head =~ /\A(?:role|clock)\z/) {
+            confess "Error: .ppif (axi-r-beat-acceptor $name ($head ...)) requires exactly one scalar value\n"
+                unless @items == 1 && !ref($items[0]);
+            $contract{$head} = $items[0];
+        } elsif ($head eq 'reset') {
+            $contract{reset} = _parse_reset(\@items, $source_label);
+        } elsif ($head eq 'command') {
+            $contract{command} = _parse_axi_r_beat_acceptor_command_block(\@items, $source_label, $name);
+        } elsif ($head eq 'channel') {
+            $contract{channel} = _parse_axi_r_beat_acceptor_channel_block(\@items, $source_label, $name);
+        } else {
+            confess "Error: .ppif (axi-r-beat-acceptor $name ...) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(role clock reset command channel)) {
+        confess "Error: .ppif (axi-r-beat-acceptor $name ...) is missing required ($required ...) clause\n"
+            unless exists $contract{$required};
+    }
+
+    return \%contract;
+}
+
+sub _parse_axi_r_beat_acceptor_command_block($items, $source_label, $name) {
+    return _parse_ahb_binding_block(
+        $items,
+        $source_label,
+        "axi-r-beat-acceptor $name command",
+        {
+            arm => 'scalar',
+        },
+        [qw(arm)],
+    );
+}
+
+sub _parse_axi_r_beat_acceptor_channel_block($items, $source_label, $name) {
+    return _parse_ahb_binding_block(
+        $items,
+        $source_label,
+        "axi-r-beat-acceptor $name channel",
+        {
+            valid               => 'scalar',
+            ready               => 'scalar',
+            id                  => 'width',
+            data                => 'width',
+            response            => 'width',
+            last                => 'scalar',
+            'captured-id'       => 'width',
+            'captured-data'     => 'width',
+            'captured-response' => 'width',
+            'captured-last'     => 'scalar',
+            busy                => 'scalar',
+            done                => 'scalar',
+        },
+        [qw(valid ready id data response last captured-id captured-data captured-response captured-last busy done)],
     );
 }
 
@@ -3510,6 +3607,11 @@ sub _is_axi_w_driver_contract($contract) {
 sub _is_axi_b_response_acceptor_contract($contract) {
     return ref($contract) eq 'HASH'
         && ($contract->{kind} // '') eq 'axi_b_response_acceptor';
+}
+
+sub _is_axi_r_beat_acceptor_contract($contract) {
+    return ref($contract) eq 'HASH'
+        && ($contract->{kind} // '') eq 'axi_r_beat_acceptor';
 }
 
 sub _is_axi_write_request_composition_contract($contract) {

@@ -1,0 +1,31 @@
+(protocol-platform-intent axi_r_beat_acceptor
+  (profile axi4)
+  (source
+    (object axi-r-beat-acceptor)
+    (anchor (document IHI0022_L_2025-08) (section A2.3) (page 29))
+    (anchor (document IHI0022_L_2025-08) (section A2.3.1) (page 30))
+    (anchor (document IHI0022_L_2025-08) (section A2.3.2.2) (page 32))
+    (anchor (document IHI0022_L_2025-08) (section A2.6) (page 41))
+    (anchor (document IHI0022_L_2025-08) (section A3.2.2) (page 55))
+    (anchor (document IHI0022_L_2025-08) (section A3.3.2) (page 62))
+    (anchor (document IHI0022_L_2025-08) (section A5.1.1) (page 90))
+    (anchor (document IHI0022_L_2025-08) (section B1.2.2) (page 281)))
+  (axi-r-beat-acceptor axi_r_beat_acceptor
+    (role subordinate-to-manager)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (command
+      (arm r_accept_cmd_valid))
+    (channel
+      (valid rvalid)
+      (ready rready)
+      (id rid width 4)
+      (data rdata width 32)
+      (response rresp width 2)
+      (last rlast)
+      (captured-id response_rid width 4)
+      (captured-data response_rdata width 32)
+      (captured-response response_rresp width 2)
+      (captured-last response_rlast)
+      (busy r_busy)
+      (done r_beat_done))))

@@ -13,7 +13,7 @@ organized by authoring mode, not by implementation module.
 | Mode | Start with | What it demonstrates |
 | --- | --- | --- |
 | Guided mode | `ppif/axi_aw_valid_ready.ppif` and `ppif/axi_aw_valid_ready.axi` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, and `.ppif`/`.axi` profile-alias parity for the selected first alias. |
-| Initiator mode | `ppif/axi_aw_driver.ppif`, `ppif/axi_w_driver.ppif`, and `ppif/axi_b_response_acceptor.ppif` | Bounded AXI manager AW address-channel and single-beat W write-data-channel **drivers**, plus an explicitly armed one-response B-channel **acceptor**. The drivers accept exactly one transfer per command; the acceptor captures exactly one response per arm. |
+| Initiator mode | `ppif/axi_aw_driver.ppif`, `ppif/axi_w_driver.ppif`, `ppif/axi_b_response_acceptor.ppif`, `ppif/axi_ar_driver.ppif`, and `ppif/axi_r_beat_acceptor.ppif` | Bounded AXI manager AW/W/AR channel **drivers** plus explicitly armed B-response and R-beat **acceptors**. Each driver accepts exactly one transfer per command; each acceptor captures exactly one response or beat per arm. |
 | More-control mode | `ppif/axi_manager_capacity_status.ppif`, `ppif/axi_manager_capacity_status_id_family.ppif`, and `ppif/axi_manager_capacity_status_transaction_envelope.ppif` | Bounded manager capacity/status, ID-family metadata, and logical transaction metadata while staying in the public AXI manager shell. |
 | Raw/full-control mode | `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | A deep shipped AXI manager shape with dynamic read transactions, same-ID issue-order queueing, burst-last response demux, runtime beat-count/`RLAST` validation, and multi-beat read-data output banks. |
 
@@ -518,8 +518,8 @@ the active bit, busy, and ARVALID.
 The report's machine-readable `request_scope` records widths 32/4/8/3/2,
 `done_event = ar_request_accepted`, and
 `includes_read_response = false`. Support accounting identifies the source as
-`intent.ppif_axi_ar_driver`; the corpus now has 303 protocol fixtures and 344
-supported/strict-supported fixtures.
+`intent.ppif_axi_ar_driver`; after adding the standalone R-beat source, the
+corpus has 304 protocol fixtures and 345 supported/strict-supported fixtures.
 
 The focused generated-HDL proof covers continuously asserted ARREADY, a
 four-cycle stall while every upstream command field changes, a command offered
@@ -530,10 +530,11 @@ acceptance, ends idle, and passes both Verilator lint and Yosys synthesis.
 
 This remains a request-channel primitive, not a complete AXI manager.
 `ar_done` means one AR request was accepted; it does not mean any R beat
-arrived or the read completed. RREADY, RID/RDATA/RRESP/RLAST capture, ARID/RID
-correlation, response-beat accounting, and full read completion are deliberately
-separate later increments. Legal address/length/size/burst combinations and
-extended AR attributes also remain explicit residue.
+arrived or the read completed. The separately shipped bounded R acceptor below
+owns raw RREADY/RID/RDATA/RRESP/RLAST capture, but AR/R coordination, ARID/RID
+correlation, response-beat accounting, and full read completion remain future
+composition work. Legal address/length/size/burst combinations and extended AR
+attributes also remain explicit residue.
 
 The larger alternatives remain deferred. Capacity/status
 integration needs an explicit physical-to-abstract event/ID adapter and an
@@ -542,29 +543,74 @@ and ordering; expanding the `.axi` alias adds spelling rather than bus-driving
 behavior; and decision 0020's protocol-neutral transaction interface remains
 director-gated.
 
-### Selected next read-side increment
+### Bounded R read-data beat acceptor
 
-The next selected primitive is an explicitly armed one-transfer R channel
-acceptor, and its behavior-neutral readiness audit is complete. The bounded
-baseline is fixed at RID4/RDATA32/RRESP2/RLAST1: one idle arm raises
-manager-owned RREADY independently of RVALID, owns exactly one handshake,
-captures the raw tuple, then emits a later beat-accepted pulse. A direct IAL1
-prototype proves 13 ports, six states, three arm assignments, seven acceptance
-assignments, three accept-over-arm priorities, Verilator/Yosys validation, and
-exactly three handshakes/three done pulses across unarmed, held/delayed valid,
-busy-command, reset, and post-reset scenarios. Public spelling and schema are
-now fixed by the selected `(axi-r-beat-acceptor ...)` contract. The planned
-public source is `ppif/axi_r_beat_acceptor.ppif`; its report schema is
-`fsmgen.ial2.protocol_intent.axi_r_beat_acceptor.v1`, and its `bounded_beat`
-block records `done_event = r_beat_accepted` plus
-`includes_read_completion = false`. The active implementation leaf owns the
-additive source, generator, accounting, t/1505, and runnable commands; none of
-this is shipped R behavior yet.
+`ppif/axi_r_beat_acceptor.ppif` is the shipped standalone AXI4 manager-side
+read-data primitive. It explicitly arms one ownership window, raises RREADY
+without waiting for RVALID, captures exactly one raw R beat, then returns idle
+and emits a later one-cycle beat-done pulse.
 
-The scope is deliberately one **beat**, not one full read transaction. Raw
-RLAST is captured but not assumed high; the primitive does not validate ARLEN,
-match RID to ARID, interpret RRESP, or claim read completion. A later fixed-
-single-beat or multi-beat AR/R composition will own those relationships.
+```text
+(axi-r-beat-acceptor axi_r_beat_acceptor
+  (role subordinate-to-manager)
+  (clock clk)
+  (reset (rst_n active_low async))
+  (command
+    (arm r_accept_cmd_valid))
+  (channel
+    (valid rvalid)
+    (ready rready)
+    (id rid width 4)
+    (data rdata width 32)
+    (response rresp width 2)
+    (last rlast)
+    (captured-id response_rid width 4)
+    (captured-data response_rdata width 32)
+    (captured-response response_rresp width 2)
+    (captured-last response_rlast)
+    (busy r_busy)
+    (done r_beat_done)))
+```
+
+The generator is `FSM::IAL2::ProtocolIntent::AxiRBeatAcceptor`; the report
+schema is `fsmgen.ial2.protocol_intent.axi_r_beat_acceptor.v1`, and support
+accounting uses `intent.ppif_axi_r_beat_acceptor`. Run all public surfaces
+directly:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_r_beat_acceptor.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_r_beat_acceptor.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_r_beat_acceptor.ppif
+./bin/fsmgen --quiet --outdir generated ppif/axi_r_beat_acceptor.ppif
+./bin/fsmgen --verify-hdl ppif/axi_r_beat_acceptor.ppif
+```
+
+The mandatory review path emits `axi_r_beat_acceptor.isf`, then
+`axi_r_beat_acceptor.fsm`, then the selected HDL module. The generated schedule
+has 13 interface ports, six transaction states, three arm assignments, seven
+acceptance assignments, no compile issues, and three acceptance-over-arm
+priority resolutions for the active bit, busy, and RREADY.
+
+An idle `r_accept_cmd_valid` arms exactly one beat. While armed, `r_busy` and
+RREADY remain high for any number of cycles until `RVALID && RREADY`. That
+handshake captures RID4/RDATA32/RRESP2/RLAST1 raw, clears busy/ready, holds the
+captured tuple until another accepted beat replaces it, and produces one later
+`r_beat_done` pulse. RVALID before arm cannot handshake; holding RVALID high
+after the owned handshake cannot cause a second acceptance. A second arm while
+busy is ignored rather than queued.
+
+The focused `t/1505-ial2-axi-r-beat-acceptor.t` proof covers unarmed,
+already-high and held-high valid, post-accept input mutation, four-cycle
+delayed valid, busy-command ignore, idle and active reset, post-reset recovery,
+and a one-cycle valid pulse. It requires exactly three handshakes and three
+done pulses with exact raw captures, and passes both Verilator and Yosys.
+
+The scope is deliberately one **beat**, not one complete read transaction.
+`r_beat_done` does not imply RLAST, successful RRESP, RID/ARID match, ARLEN
+satisfaction, or read completion. AR coordination, repeated or multi-beat
+receive policy, last/length validation, response interpretation, capacity and
+outstanding integration, back-to-back buffering, and extended R sidebands
+remain explicit future work.
 
 ## More-Control Mode
 
@@ -680,6 +726,10 @@ This chapter was validated from checked-in sources with:
 ./bin/fsmgen --verify-hdl ppif/axi_w_driver.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_b_response_acceptor.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_b_response_acceptor.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/axi_ar_driver.ppif
+./bin/fsmgen --verify-hdl ppif/axi_ar_driver.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/axi_r_beat_acceptor.ppif
+./bin/fsmgen --verify-hdl ppif/axi_r_beat_acceptor.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_write_request_composition.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_write_request_composition.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_write_transaction_composition.ppif
@@ -692,14 +742,17 @@ This chapter was validated from checked-in sources with:
 
 The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and
 `axi_aw_valid_ready_monitor.fsm`, confirming that the guided example still
-exposes the review artifacts the chapter describes. The four initiator source
-checks and `--verify-hdl` runs confirm that all three primitives plus the AW/W
-composition are accepted and lower to lint/synthesis-clean HDL. The focused
-`t/1499-ial2-axi-aw-driver.t`, `t/1500-ial2-axi-w-driver.t`, and
-`t/1501-ial2-axi-b-response-acceptor.t` generated-HDL simulations separately
-prove their transfer/response cardinality, completion-pulse, and stability
-guarantees; the W test also proves the all-zero-strobe case remains legal, and
-the B test proves unarmed responses cannot handshake. The four-subtest
+exposes the review artifacts the chapter describes. The seven initiator source
+checks and `--verify-hdl` runs confirm that five channel primitives plus the
+two write compositions are accepted and lower to lint/synthesis-clean HDL. The
+focused `t/1499-ial2-axi-aw-driver.t`, `t/1500-ial2-axi-w-driver.t`,
+`t/1501-ial2-axi-b-response-acceptor.t`, `t/1504-ial2-axi-ar-driver.t`, and
+`t/1505-ial2-axi-r-beat-acceptor.t` generated-HDL simulations separately prove
+their transfer/response cardinality, completion-pulse, reset, and stability
+guarantees; the W test also proves the all-zero-strobe case remains legal, the
+B test proves unarmed responses cannot handshake, and the R test proves exact
+raw beat capture across held/delayed valid, busy arm, and active reset. The
+four-subtest
 `t/1502-ial2-axi-write-request-composition.t` additionally proves the complete
 public/report/fail-closed/CLI artifact contract and executes the structural top
 for misaligned no-launch, atomic capture, simultaneous-ready, AW-first, W-first,
