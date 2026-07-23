@@ -76,11 +76,13 @@ subtest 'whole-signal assignment widths reconcile after later selector inference
     );
 };
 
-subtest 'intermediate arithmetic width follows assignment-analysis signal widths' => sub {
+subtest 'AMBA wrap arithmetic follows repaired direct-seed widths and grouping' => sub {
     my $hdl = generate_sv('fsm/amba_requester.fsm');
 
-    like($hdl, qr/\bwire\s+\[31:0\]\s+addr_q_plus_addr_step_q\b/, 'arithmetic intermediate keeps 32-bit result width');
-    unlike($hdl, qr/\bwire\s+addr_q_plus_addr_step_q\s*;/, 'arithmetic intermediate is not silently collapsed to 1 bit');
+    like($hdl, qr/\baddr_q_next\s*=\s*addr_q\s*\+\s*addr_step_q\s*;/, 'wrap progression increments through the 32-bit address assignment');
+    like($hdl, qr/\bwire\s+addr_q_eq_wrap_high_q\s*;/, 'post-increment wrap comparison remains a one-bit condition');
+    like($hdl, qr/\bassign\s+addr_q_eq_wrap_high_q\s*=\s*addr_q\s*==\s*wrap_high_q\s*;/, 'post-increment wrap condition compares the registered address with the high boundary');
+    unlike($hdl, qr/\baddr_q_plus_addr_step_q\b/, 'obsolete pre-increment comparison helper is absent');
     like($hdl, qr/\bwrap_base_q_next\s*=\s*addr_q\s*-\s*addr_q\s*%\s*\(beats_total_q\s*\*\s*addr_step_q\)\s*;/, 'runtime modulo RHS product keeps authored grouping');
     like($hdl, qr/\bwrap_high_q_next\s*=\s*addr_q\s*-\s*addr_q\s*%\s*\(beats_total_q\s*\*\s*addr_step_q\)\s*\+\s*beats_total_q\s*\*\s*addr_step_q\s*;/, 'runtime modulo grouping is preserved inside wider arithmetic expressions');
     unlike($hdl, qr/addr_q\s*%\s*beats_total_q\s*\*\s*addr_step_q/, 'runtime modulo is not flattened into left-associative MOD/MUL text');

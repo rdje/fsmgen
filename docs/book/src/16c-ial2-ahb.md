@@ -1479,24 +1479,37 @@ decision 0020, and the transaction-layer horizon remain deferred or inactive.
 See
 [IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION](../../IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md).
 
-> **Known requester WRAP defect (runtime-confirmed in `.1`):** the current
-> generated requester presents byte `WRAP4` addresses `3,1,2,3` for a command
-> starting at `3`, instead of required `3,0,1,2`. The request still completes
-> four transfers, but it skips the wrap-base beat.
+> **Requester WRAP defect resolved in `.2`:** the pre-repair requester
+> presented byte `WRAP4` addresses `3,1,2,3` for a command starting at `3`,
+> instead of required `3,0,1,2`. The generated requester and direct seed now
+> increment first and wrap the incremented high-boundary value to the base
+> before the next transfer.
 
-Focused t/1517 proves both the generated-state cause and the bus sequence. The
-generated IAL1/IAL0 path first writes `addr_q = wrap_base_q`, then a following
-numbered state re-evaluates the negated comparison against the mutated address
-and overwrites it with base-plus-step. `WRAP4`, `WRAP8`, and `WRAP16` share
-this path. Incrementing modes and the paired BUSY `INCR4` runtime proofs are not
-affected by this specific defect.
+At audit commit `ec9fa2ee3`, focused t/1517 proved both the generated-state
+cause and the historical bad bus sequence. The pre-repair IAL1/IAL0 path first
+wrote `addr_q = wrap_base_q`, then a following numbered state re-evaluated the
+negated comparison against the mutated address and overwrote it with
+base-plus-step. `WRAP4`, `WRAP8`, and `WRAP16` shared this path. Incrementing
+modes and the paired BUSY `INCR4` runtime proofs were not affected by this
+specific defect.
 
-`.2` is the selected repair owner. It will keep public sources, ports, reports,
-support counts, and artifact names stable while changing both the requester
-generator and direct seed to increment first, then replace an incremented
-`wrap_high_q` value with `wrap_base_q` before the next transfer. The audit
-commit itself changes no behavior. See
-[IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT](../../IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT.md).
+`.2` implements that repair while keeping public sources, ports, reports,
+support counts, artifact names, and non-wrap behavior stable. Generated-HDL
+t/1517 proves these representative accepted-address sequences:
+
+```text
+WRAP4 byte, start 3:      3, 0, 1, 2
+WRAP4 halfword, start 6:  6, 0, 2, 4
+WRAP4 word, start 12:    12, 0, 4, 8
+WRAP8 byte, start 7:      7, 0, 1, 2, 3, 4, 5, 6
+WRAP16 byte, start 15:   15, 0, 1, ..., 14
+```
+
+Each command uses one `NONSEQ` followed by the required `SEQ` transfers and
+completes cleanly. See the historical
+[runtime audit](../../IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT.md)
+and the current
+[repair record](../../IAL2_AHB_REQUESTER_WRAP_PROGRESSION_REPAIR.md).
 
 ## Subordinate Source Shape
 

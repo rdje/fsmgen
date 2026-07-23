@@ -392,11 +392,9 @@
               (<- (wdata_q (+ wdata_q wdata_step_q)))
             )
             (<wrap_mode_q
-              (<(== (+ addr_q addr_step_q) wrap_high_q)
+              (<- (addr_q (+ addr_q addr_step_q)))
+              (<(== addr_q wrap_high_q)
                 (<- (addr_q wrap_base_q))
-              )
-              (<!(== (+ addr_q addr_step_q) wrap_high_q)
-                (<- (addr_q (+ addr_q addr_step_q)))
               )
             )
             (<!wrap_mode_q
@@ -467,11 +465,9 @@
               (<- (wdata_q (+ wdata_q wdata_step_q)))
             )
             (<wrap_mode_q
-              (<(== (+ addr_q addr_step_q) wrap_high_q)
+              (<- (addr_q (+ addr_q addr_step_q)))
+              (<(== addr_q wrap_high_q)
                 (<- (addr_q wrap_base_q))
-              )
-              (<!(== (+ addr_q addr_step_q) wrap_high_q)
-                (<- (addr_q (+ addr_q addr_step_q)))
               )
             )
             (<!wrap_mode_q

@@ -6,30 +6,35 @@ Date: 2026-07-23
 
 ## Outcome
 
-The suspected AHB requester WRAP progression defect is runtime-confirmed in
-generated SystemVerilog. A byte `WRAP4` command starting at address `3` must
+This record preserves the `.1` runtime proof of the pre-repair AHB requester
+WRAP progression defect. The defect was repaired by
+`IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.2`; current behavior and
+verification are documented in
+`docs/IAL2_AHB_REQUESTER_WRAP_PROGRESSION_REPAIR.md`.
+
+Before `.2`, a byte `WRAP4` command starting at address `3` had to
 present accepted addresses:
 
 ```text
 3, 0, 1, 2
 ```
 
-The shipped requester instead presents:
+The pre-repair requester instead presented:
 
 ```text
 3, 1, 2, 3
 ```
 
-The first wrap-to-base address is skipped. This audit changes no generator,
+The first wrap-to-base address was skipped. The `.1` audit changed no generator,
 public source, support accounting, report schema, generated artifact contract,
-or runtime behavior. It selects
+or runtime behavior. It selected
 `IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.2` as the exact repair owner.
 
 ## Generated-State Root Cause
 
 The public `ppif/ahb_requester.ppif` source lowers through
 `AhbRequester.pm` to generated IAL1 and then generated IAL0. After a successful
-non-final beat, the generated IAL1 currently contains:
+non-final beat, the pre-repair generated IAL1 contained:
 
 ```text
 when wrap_mode_q:
@@ -39,7 +44,7 @@ when wrap_mode_q:
     addr_q = addr_q + addr_step_q
 ```
 
-The scheduler emits those as distinct numbered decision/set states. At the
+The scheduler emitted those as distinct numbered decision/set states. At the
 boundary for start address `3`, byte step `1`, base `0`, and high `4`:
 
 1. the first decision sees `3 + 1 == 4`;
@@ -47,13 +52,14 @@ boundary for start address `3`, byte step `1`, base `0`, and high `4`:
 3. the following decision re-evaluates `!(0 + 1 == 4)` as true; and
 4. its set state overwrites `addr_q = 1`.
 
-The next bus presentation therefore skips address `0`. The checked-in direct
-seed `fsm/amba_requester.fsm` contains the same sequential pattern in both of
-its successful-response progression paths.
+The next bus presentation therefore skipped address `0`. The pre-repair
+checked-in direct seed `fsm/amba_requester.fsm` contained the same sequential
+pattern in both of its successful-response progression paths.
 
 ## Runtime Proof
 
-Focused audit `t/1517-ial2-ahb-requester-wrap-progression-audit.t`:
+At commit `ec9fa2ee3`, focused audit
+`t/1517-ial2-ahb-requester-wrap-progression-audit.t`:
 
 - parses the public requester and proves the exact generated IAL1 mutation
   shape;
@@ -66,26 +72,26 @@ Focused audit `t/1517-ial2-ahb-requester-wrap-progression-audit.t`:
 - records and checks the observed `3,1,2,3` address sequence against the
   required `3,0,1,2` sequence.
 
-The test passes as a defect-reproduction audit. The repair leaf must invert it
-into a correctness regression; it must not preserve the bad sequence as a
-supported contract.
+The current test is intentionally inverted and extended into a correctness
+regression. It must never preserve the historical bad sequence as a supported
+contract.
 
 ## Affected Scope
 
-The runtime probe is deliberately the smallest `WRAP4` reproduction. The same
-generated progression block is shared by `WRAP4`, `WRAP8`, and `WRAP16`, so
-the root cause structurally affects every fixed wrapping mode when an accepted
-beat reaches the calculated high boundary. `SINGLE`, `INCR`, `INCR4`, `INCR8`,
-and `INCR16` take the non-wrap path and are not affected by this specific
-defect.
+The runtime probe was deliberately the smallest `WRAP4` reproduction. The same
+pre-repair progression block was shared by `WRAP4`, `WRAP8`, and `WRAP16`, so
+the root cause structurally affected every fixed wrapping mode when an
+accepted beat reached the calculated high boundary. `SINGLE`, `INCR`, `INCR4`,
+`INCR8`, and `INCR16` took the non-wrap path and were not affected by this
+specific defect.
 
 The one-/two-subordinate paired BUSY proofs use `INCR4`; their shipped results
 remain valid. The subordinate-side byte-only WRAP policy computes its own
 expected address and is not the source of this requester defect.
 
-## Selected `.2` Repair
+## Implemented `.2` Repair
 
-`.2` must replace mutation/retest with an intentionally sequential but safe
+`.2` replaces mutation/retest with an intentionally sequential but safe
 wrap update in both `AhbRequester.pm` and both corresponding paths in
 `fsm/amba_requester.fsm`:
 
@@ -102,13 +108,11 @@ non-boundary address retains its increment; a boundary address first reaches
 new local, public port, source clause, report field, support entry, or artifact
 name is required.
 
-The repair must update t/1517 to require the corrected generated states and
-address sequence, widen runtime coverage across the shared fixed-wrap path as
-warranted, preserve t/1511 `SINGLE`/`INCR4`, t/1498 BUSY insertion,
-t/1513/t1515 paired compositions, direct-seed SystemVerilog/VHDL lowering, and
-all public/support/report contracts. It must run public requester
-`--verify-hdl`, focused tests, docs/Knowledge Map/memory gates, and doctrine
-checks under the documented resource monitor.
+Current t/1517 requires corrected generated states and exact WRAP4/8/16
+address sequences across representative byte/halfword/word steps. Focused
+preservation retains t/1511 `SINGLE`/`INCR4`, t/1498 BUSY insertion, paired
+compositions, direct-seed SystemVerilog/VHDL lowering, and all
+public/support/report contracts. See the repair record for the full result.
 
 ## Rollback
 

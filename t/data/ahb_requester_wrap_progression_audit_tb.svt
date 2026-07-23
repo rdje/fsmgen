@@ -43,53 +43,110 @@ module ahb_requester_wrap_progression_audit_tb;
   amba_requester dut (.*);
   always #5 clk = ~clk;
 
-  integer cycles;
-  integer transfer_count;
-  logic previous_active;
-  logic [31:0] accepted_addr [0:3];
-  logic [1:0] accepted_trans [0:3];
+  logic [31:0] accepted_addr [0:15];
+  logic [1:0] accepted_trans [0:15];
+
+  task automatic run_wrap_command(
+    input string label,
+    input logic [31:0] start_addr,
+    input logic [2:0] burst_value,
+    input logic [2:0] size_value,
+    input integer expected_beats
+  );
+    integer cycles;
+    integer transfer_count;
+    integer index;
+    integer step;
+    logic previous_active;
+    logic [31:0] expected_addr;
+    logic [31:0] wrap_base;
+    logic [31:0] wrap_high;
+    begin
+      @(negedge clk);
+      cmd_addr = start_addr;
+      cmd_burst = burst_value;
+      cmd_len = expected_beats[4:0];
+      cmd_size = size_value;
+      cmd_valid = 1;
+      @(negedge clk);
+      cmd_valid = 0;
+
+      cycles = 0;
+      while (done && cycles < 100) begin
+        @(posedge clk);
+        cycles = cycles + 1;
+      end
+      if (done)
+        $fatal(1, "%s completion did not clear for the new command", label);
+
+      transfer_count = 0;
+      previous_active = HTRANS[1];
+      while (!done && cycles < 1200) begin
+        @(posedge clk);
+        if (HTRANS[1] && !previous_active) begin
+          if (transfer_count >= expected_beats)
+            $fatal(1, "%s produced an extra active transfer", label);
+          accepted_addr[transfer_count] = HADDR;
+          accepted_trans[transfer_count] = HTRANS;
+          if (HBURST !== burst_value || HSIZE !== size_value || HWRITE !== 1'b1)
+            $fatal(1, "%s transfer %0d lost wrap-write control", label, transfer_count);
+          transfer_count = transfer_count + 1;
+        end
+        previous_active = HTRANS[1];
+        cycles = cycles + 1;
+      end
+
+      if (!done)
+        $fatal(1, "%s request did not complete", label);
+      if (transfer_count != expected_beats)
+        $fatal(1, "%s transfer count=%0d expected=%0d", label, transfer_count, expected_beats);
+      if (accepted_trans[0] !== 2'b10)
+        $fatal(1, "%s first transfer was not NONSEQ", label);
+      for (index = 1; index < expected_beats; index = index + 1) begin
+        if (accepted_trans[index] !== 2'b11)
+          $fatal(1, "%s transfer %0d was not SEQ", label, index);
+      end
+      if (beats_remaining != 0 || last_resp != 0 || last_error || last_retry || last_split)
+        $fatal(1, "%s request did not finish cleanly", label);
+
+      step = 1 << size_value;
+      wrap_base = start_addr - (start_addr % (expected_beats * step));
+      wrap_high = wrap_base + expected_beats * step;
+      expected_addr = start_addr;
+      for (index = 0; index < expected_beats; index = index + 1) begin
+        if (accepted_addr[index] !== expected_addr)
+          $fatal(
+            1,
+            "%s address[%0d]=%08x expected=%08x",
+            label,
+            index,
+            accepted_addr[index],
+            expected_addr
+          );
+        expected_addr = expected_addr + step;
+        if (expected_addr == wrap_high)
+          expected_addr = wrap_base;
+      end
+
+      $write("PASS_%s addresses=", label);
+      for (index = 0; index < expected_beats; index = index + 1) begin
+        if (index != 0)
+          $write(",");
+        $write("%08x", accepted_addr[index]);
+      end
+      $display("");
+    end
+  endtask
 
   initial begin
-    transfer_count = 0;
-    previous_active = 0;
-
     repeat (3) @(negedge clk);
     rst_n = 1;
-    @(negedge clk);
-    cmd_valid = 1;
-    @(negedge clk);
-    cmd_valid = 0;
 
-    cycles = 0;
-    while (!done && cycles < 500) begin
-      @(posedge clk);
-      if (HTRANS[1] && !previous_active) begin
-        if (transfer_count >= 4)
-          $fatal(1, "unexpected extra active transfer");
-        accepted_addr[transfer_count] = HADDR;
-        accepted_trans[transfer_count] = HTRANS;
-        if (HBURST !== 3'b010 || HSIZE !== 3'b000 || HWRITE !== 1'b1)
-          $fatal(1, "transfer %0d lost WRAP4 byte-write control", transfer_count);
-        transfer_count = transfer_count + 1;
-      end
-      previous_active = HTRANS[1];
-      cycles = cycles + 1;
-    end
-
-    if (!done)
-      $fatal(1, "WRAP4 request did not complete");
-    if (transfer_count != 4)
-      $fatal(1, "active transfer count=%0d expected=4", transfer_count);
-    if (accepted_trans[0] !== 2'b10 || accepted_trans[1] !== 2'b11 ||
-        accepted_trans[2] !== 2'b11 || accepted_trans[3] !== 2'b11)
-      $fatal(1, "expected NONSEQ followed by three SEQ transfers");
-    if (beats_remaining != 0 || last_resp != 0 || last_error || last_retry || last_split)
-      $fatal(1, "WRAP4 request did not finish cleanly");
-
-    $display(
-      "OBSERVED_WRAP4 addresses=%08x,%08x,%08x,%08x",
-      accepted_addr[0], accepted_addr[1], accepted_addr[2], accepted_addr[3]
-    );
+    run_wrap_command("WRAP4_BYTE",     32'h00000003, 3'b010, 3'b000, 4);
+    run_wrap_command("WRAP4_HALFWORD", 32'h00000006, 3'b010, 3'b001, 4);
+    run_wrap_command("WRAP4_WORD",     32'h0000000c, 3'b010, 3'b010, 4);
+    run_wrap_command("WRAP8_BYTE",     32'h00000007, 3'b100, 3'b000, 8);
+    run_wrap_command("WRAP16_BYTE",    32'h0000000f, 3'b110, 3'b000, 16);
     $finish;
   end
 endmodule

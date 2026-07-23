@@ -10794,14 +10794,26 @@ not activated until `.804` commits cleanly; decision 0020 remains inactive.
 
 Requester WRAP-progression runtime audit:
 [IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT](../../IAL2_AHB_REQUESTER_WRAP_PROGRESSION_RUNTIME_AUDIT.md)
-documents `.1`. Generated-HDL t/1517 proves byte `WRAP4` from address `3`
-presents `3,1,2,3`, not required `3,0,1,2`: a generated state writes
-`wrap_base_q`, then the next state re-tests the mutated address and overwrites
-base-plus-step. The common path serves WRAP4/8/16. `.2` owns the repair in both
-the IAL2 requester generator and direct requester seed, using increment first
+documents `.1`. At audit commit `ec9fa2ee3`, generated-HDL t/1517 proved byte
+`WRAP4` from address `3` presented `3,1,2,3`, not required `3,0,1,2`: a
+generated state wrote `wrap_base_q`, then the next state re-tested the mutated
+address and overwrote base-plus-step. The common path serves WRAP4/8/16. `.2`
+was selected to repair both the IAL2 requester generator and direct requester
+seed, using increment first
 then wrap when the incremented address equals `wrap_high_q`; no public clause,
 report field, support entry, or artifact name changes. The audit itself changes
 no behavior.
+
+Requester WRAP-progression repair:
+[IAL2_AHB_REQUESTER_WRAP_PROGRESSION_REPAIR](../../IAL2_AHB_REQUESTER_WRAP_PROGRESSION_REPAIR.md)
+documents `.2`. The generated requester and both direct-seed success paths now
+increment first and then replace an incremented `wrap_high_q` value with
+`wrap_base_q`. Generated-HDL t/1517 proves byte/halfword/word WRAP4 plus byte
+WRAP8/WRAP16, including required byte WRAP4 start `3` addresses `3,0,1,2`.
+Public syntax, ports, reports, support accounting, artifacts, non-wrap
+progression, and paired BUSY INCR4 behavior remain unchanged. Broader bursts,
+BUSY policy/status, optional AHB signals, and decision 0020 remain deferred or
+inactive.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

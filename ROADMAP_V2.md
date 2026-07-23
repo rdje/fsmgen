@@ -6985,17 +6985,26 @@ remains proposed until `.804` commits and the repository is clean; broader
 BUSY policy/status, larger bursts, boundary-free pipelining, optional signals,
 decision 0020, and the transaction-layer horizon remain inactive or deferred.
 
-`IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.1` now runtime-confirms the
-suspected defect without changing behavior. Generated-HDL t/1517 issues byte
-`WRAP4` at address `3` and records four clean accepted transfers at
-`3,1,2,3`, proving the required wrap-base address `0` is skipped (correct
+`IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.1` runtime-confirmed the
+pre-repair defect without changing behavior. Its generated-HDL t/1517 issued
+byte `WRAP4` at address `3` and recorded four clean accepted transfers at
+`3,1,2,3`, proving the required wrap-base address `0` was skipped (correct
 sequence `3,0,1,2`). Generated IAL1/IAL0 state evidence ties the result to the
 base write followed by mutated-address re-test. Because WRAP4/8/16 share that
-path, `.2` is selected to update both the IAL2 generator and direct requester
+path, `.2` was selected to update both the IAL2 generator and direct requester
 seed to increment first then replace an incremented `wrap_high_q` with
 `wrap_base_q`; t/1517 becomes the correctness regression. Public syntax,
 reports, support counts, artifacts, and the valid paired BUSY INCR4 proofs stay
 unchanged.
+
+`IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.2` now repairs the shared generated
+requester/direct-seed path with the selected increment-then-wrap algorithm.
+Generated-HDL t/1517 proves exact byte/halfword/word WRAP4 plus byte WRAP8 and
+WRAP16 accepted-address sequences, including byte WRAP4 start `3` ->
+`3,0,1,2`. Public syntax, ports, reports, support accounting, artifacts,
+non-wrap progression, and paired BUSY INCR4 behavior remain stable. This closes
+the correctness tree without activating broader burst/BUSY/optional-signal
+work or decision 0020's proposed transaction-layer horizon.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

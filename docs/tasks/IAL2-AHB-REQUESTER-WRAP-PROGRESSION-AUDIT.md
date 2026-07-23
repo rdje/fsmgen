@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `IAL2 / AHB requester correctness`
 - Created: `2026-07-23`
 - Last updated: `2026-07-23`
@@ -12,8 +12,9 @@
 ## Goal
 
 Determine whether the generated AHB requester advances a wrapping burst to
-`wrap_base_q + addr_step_q` instead of `wrap_base_q` at the wrap boundary, and
-select the smallest proven repair if runtime evidence confirms the risk.
+`wrap_base_q + addr_step_q` instead of `wrap_base_q` at the wrap boundary, then
+repair the generated requester and direct seed together if runtime evidence
+confirms the risk.
 
 ## Origin And Evidence
 
@@ -24,10 +25,12 @@ underflow. Inside `when wrap_mode_q`, the first clause compares
 the following negated-equality clause can then re-evaluate using the newly
 written address and write `addr_q = addr_q + addr_step_q`.
 
-This is a latent risk established by source/FSM semantics, not yet a
-runtime-proven defect. It is recorded rather than folded into the terminal
-counter repair because `.2` owns only `SINGLE`/`INCR4` completion and the
-pending BUSY-insertion slice must not expand into unselected WRAP behavior.
+At tree creation this was a latent risk established by source/FSM semantics,
+not a runtime-proven defect. It was recorded rather than folded into the
+terminal-counter repair because that slice owned only `SINGLE`/`INCR4`
+completion and the then-pending BUSY-insertion slice could not expand into
+unselected WRAP behavior. `.1` later runtime-confirmed the risk, allowing `.2`
+to own the exact repair.
 
 ## Non-Goals
 
@@ -37,7 +40,7 @@ pending BUSY-insertion slice must not expand into unselected WRAP behavior.
   generated-HDL reproduction and selected contract.
 - Do not alter non-wrap address progression.
 
-## Acceptance Criteria (when activated)
+## Acceptance Criteria
 
 - Add a generated-HDL `WRAP4` boundary probe that records every accepted-beat
   address and distinguishes `wrap_base_q` from `wrap_base_q + addr_step_q`.
@@ -51,7 +54,7 @@ pending BUSY-insertion slice must not expand into unselected WRAP behavior.
 ## Task Tree
 
 - ID: `IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT`
-  Status: `active`
+  Status: `done`
   Goal: `Runtime-prove or disprove the suspected sequential WRAP address-update defect before selecting any repair.`
   Children: `IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.1, IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.2`
 
@@ -63,11 +66,11 @@ pending BUSY-insertion slice must not expand into unselected WRAP behavior.
   Commit: `IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.1: prove WRAP boundary skip`
 
 - ID: `IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair requester fixed-wrap address progression without changing public contracts.`
   Acceptance: `Implement exactly the .1-selected repair. In AhbRequester.pm, replace the successful non-final wrap-mode pair (boundary equality -> set base; negated equality -> increment) with one unconditional addr_q increment inside wrap_mode_q followed by a guard that sets addr_q=wrap_base_q when the incremented addr_q equals wrap_high_q. Apply the same safe sequential algorithm to both corresponding successful-response paths in fsm/amba_requester.fsm so the generated IAL2 requester and direct seed remain aligned. Keep the non-wrap increment unchanged. Update t1517 from defect reproduction to correctness proof and extend its single generated-HDL binary across the shared WRAP4/WRAP8/WRAP16 path and representative byte/halfword/word step behavior as warranted; require wrap-to-base before the next transfer. Preserve t1511 SINGLE/INCR4, t1498 BUSY insertion, t1513/t1515 paired INCR4 behavior, public source syntax, report/support accounting and schemas, artifact names, ports, diagnostics, subordinate/interconnect behavior, direct-seed SystemVerilog/VHDL lowering, decision 0020 inactivity, backends beyond the existing seed proof, AXI/APB, and VHDL behavior beyond the aligned direct seed. Sync behavior docs, README, ROADMAP_V2, mdBook, Knowledge Map, task tree, and Memory; run focused syntax/runtime/verify and doctrine gates under resource monitoring.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Implemented the exact .1-selected repair in AhbRequester.pm and both corresponding successful-response paths in fsm/amba_requester.fsm: wrap mode increments addr_q once, then replaces the incremented wrap_high_q value with wrap_base_q; the non-wrap increment is unchanged. t1517 now proves generated IAL1/IAL0 ordering, both direct-seed repair sites, absence of the old mutation/retest pair, and one generated-HDL binary across byte WRAP4 start 3 -> 3,0,1,2; halfword WRAP4 start 6 -> 6,0,2,4; word WRAP4 start 12 -> 12,0,4,8; byte WRAP8 start 7 -> 7,0..6; and byte WRAP16 start 15 -> 15,0..14, with exact NONSEQ/SEQ controls, beat counts, and clean completion. Perl syntax passed for AhbRequester.pm, t1517, and the updated t310 direct-SV expectation. Strict direct seed check passed (amba_requester, 38 signals, 7 states); strict public .ahb check passed (54 signals, 102 states, exact support identity); public requester --verify-hdl passed Verilator/Yosys. Focused preservation passed t1473 (1 file/4 tests), t1498+t1511+t1517+t310 (4 files/14 tests), direct VHDL t1420 (1 file/64 tests), and paired generated-HDL t1513+t1515 (2 files/7 tests, 774 seconds) under the 4096-MiB descendant guard. Direct memory remained healthy at 81% free; the guard's known macOS host percentage remained non-authoritative. The initial broad suite also reproduced only the already-durable t1474 stale wrong-object regex drift while direct strict alias checking passed; that proposed PUBLIC-SYNC-TEST-DRIFT-REPAIR concern was not mixed into this slice. Added repair record/fact; converted the .1 audit/fact to historical context; synced README, ROADMAP_V2, mdBook current behavior/examples, task tree, Memory, and Knowledge Map. mdBook build, Knowledge Map validation, memory architecture, document paths, diff/whitespace, and doctrine gates passed; disposable book output was removed. Public clauses, ports, schemas, support counts, artifact identities, SINGLE/INCR*, BUSY insertion/compositions, subordinate/interconnect behavior, AXI/APB, decision 0020 inactivity, and all out-of-scope backends remain unchanged.`
+  Commit: `IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT.2: repair fixed-wrap progression`
 
 ## Decisions
 
@@ -84,7 +87,12 @@ pending BUSY-insertion slice must not expand into unselected WRAP behavior.
   `3,1,2,3` instead of `3,0,1,2`. Selected `.2` to increment first and then
   wrap the incremented address on equality with `wrap_high_q`, updating the
   generated requester and direct seed together.
+- `2026-07-23`: Activated `.2` from clean audit commit `ec9fa2ee3`.
+- `2026-07-23`: `.2` repaired the generated requester and both direct-seed
+  success paths with increment-then-wrap sequencing; generated-HDL coverage now
+  proves representative WRAP4/8/16 byte/halfword/word progressions and all
+  focused preservation gates pass. The correctness tree is complete.
 
 ## Blockers
 
-- None for `.1` closeout or the selected `.2` repair.
+- None.
