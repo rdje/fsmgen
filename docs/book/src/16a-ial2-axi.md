@@ -13,7 +13,7 @@ organized by authoring mode, not by implementation module.
 | Mode | Start with | What it demonstrates |
 | --- | --- | --- |
 | Guided mode | `ppif/axi_aw_valid_ready.ppif` and `ppif/axi_aw_valid_ready.axi` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, and `.ppif`/`.axi` profile-alias parity for the selected first alias. |
-| Initiator mode | `ppif/axi_aw_driver.ppif` and `ppif/axi_w_driver.ppif` | Bounded AXI manager AW address-channel and single-beat W write-data-channel **drivers**. Each holds its payload stable under backpressure and accepts exactly one transfer per accepted command. |
+| Initiator mode | `ppif/axi_aw_driver.ppif`, `ppif/axi_w_driver.ppif`, and `ppif/axi_b_response_acceptor.ppif` | Bounded AXI manager AW address-channel and single-beat W write-data-channel **drivers**, plus an explicitly armed one-response B-channel **acceptor**. The drivers accept exactly one transfer per command; the acceptor captures exactly one response per arm. |
 | More-control mode | `ppif/axi_manager_capacity_status.ppif`, `ppif/axi_manager_capacity_status_id_family.ppif`, and `ppif/axi_manager_capacity_status_transaction_envelope.ppif` | Bounded manager capacity/status, ID-family metadata, and logical transaction metadata while staying in the public AXI manager shell. |
 | Raw/full-control mode | `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | A deep shipped AXI manager shape with dynamic read transactions, same-ID issue-order queueing, burst-last response demux, runtime beat-count/`RLAST` validation, and multi-beat read-data output banks. |
 
@@ -219,31 +219,67 @@ READY pulse. It observes exactly two handshakes and two done pulses and ends
 with valid/busy low.
 
 This remains a channel primitive, not a complete write transactor. AW/W
-transaction coordination, B response completion, multi-beat `WLAST`
-sequencing, outstanding writes, capacity-core integration, and the proposed
-protocol-neutral transaction interface remain separate future owners.
+transaction coordination, multi-beat `WLAST` sequencing, outstanding writes,
+capacity-core integration, and the proposed protocol-neutral transaction
+interface remain separate future owners.
 
-### Selected next boundary: B write-response acceptance
+### Bounded one-response B write-response acceptor
 
-The next selected direction is another independent bus-side primitive: a
-bounded manager-side B write-response-channel acceptor. The shipped
-capacity/status core already consumes an abstract accepted-write-response event
-and `BID`, but it does not drive `BREADY` or define that event as the physical
-`BVALID && BREADY` handshake. The selected primitive will fill that seam by
-driving READY and capturing the response payload. Its completed readiness audit
-selects an explicit one-response arm, `BREADY` assertion without waiting for
-`BVALID`, fixed four-bit `BID` and two-bit `BRESP`, capture and ready/busy
-retirement on exactly one handshake, stable captured outputs, and one later
-done pulse. A temporary six-state existing-ISF prototype and generated-HDL
-simulation proved two arms produce exactly two handshakes and two done pulses.
-Exact public syntax is now selected for the next implementation slice, but no
-B acceptor source or behavior is shipped yet: `(axi-b-response-acceptor ...)`, with
-`(arm b_accept_cmd_valid)`, bus `bvalid`/`bready`/four-bit `bid`/two-bit
-`bresp`, distinct captured `response_bid`/`response_bresp`, and
-`b_busy`/`b_done`. The future source/module will be
-`ppif/axi_b_response_acceptor.ppif` / `axi_b_response_acceptor`; until that
-implementation lands, these names describe the selected boundary rather than
-an available command.
+`ppif/axi_b_response_acceptor.ppif` is the third shipped initiator primitive.
+It is a manager-side receiver: a one-shot upstream arm requests acceptance of
+one write response, then the generated actor raises `BREADY` without waiting
+for `BVALID`. Exactly one `BVALID && BREADY` handshake captures the four-bit
+`BID` and two-bit `BRESP`, clears ready/busy, and leads to one later `b_done`
+pulse. An unarmed response is not accepted, and the captured outputs remain
+stable until a later accepted response replaces them.
+
+```text
+(axi-b-response-acceptor axi_b_response_acceptor
+  (role subordinate-to-manager)
+  (clock clk)
+  (reset (rst_n active_low async))
+  (command
+    (arm b_accept_cmd_valid))
+  (channel
+    (valid bvalid)
+    (ready bready)
+    (id bid width 4)
+    (response bresp width 2)
+    (captured-id response_bid width 4)
+    (captured-response response_bresp width 2)
+    (busy b_busy)
+    (done b_done)))
+```
+
+Run the acceptor through the same public review stages:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_b_response_acceptor.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_b_response_acceptor.ppif
+./bin/fsmgen --quiet --outdir generated ppif/axi_b_response_acceptor.ppif
+./bin/fsmgen --verify-hdl ppif/axi_b_response_acceptor.ppif
+```
+
+The report schema is
+`fsmgen.ial2.protocol_intent.axi_b_response_acceptor.v1`, its mode is
+`acceptor`, and its `bounded_response` block records one response per arm,
+`BID` width 4, `BRESP` width 2, eager ready-after-arm behavior, handshake-edge
+capture, stable captured outputs, and the later one-cycle completion pulse.
+The outdir contains `generated/axi_b_response_acceptor.isf` and
+`generated/axi_b_response_acceptor.fsm` before HDL.
+
+The generated schedule has six states, no compile issues, and exactly three
+`accept_b`-over-`arm_b` priority resolutions (`active_q`, `b_busy`, and
+`bready`). Its focused generated-HDL regression first proves that unarmed
+`BVALID` cannot handshake, then covers an already-high held `BVALID` response
+and a second response delayed for four cycles after arming. It requires exactly
+two handshakes and two done pulses, correct/stable captured `BID` and `BRESP`,
+and final ready/busy low.
+
+This fills the physical B-channel acceptance seam beneath the capacity/status
+core, but does not connect that core automatically. Back-to-back buffering,
+multiple outstanding responses, extended response signaling, AW/W coordination,
+and a complete write transactor remain future work.
 
 This is smaller than composing AW and W immediately because a write-request
 composition must launch two children that can stall independently, remember
@@ -365,6 +401,8 @@ This chapter was validated from checked-in sources with:
 ./bin/fsmgen --verify-hdl ppif/axi_aw_driver.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_w_driver.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_w_driver.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/axi_b_response_acceptor.ppif
+./bin/fsmgen --verify-hdl ppif/axi_b_response_acceptor.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/axi_manager_capacity_status_id_family.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_manager_capacity_status_transaction_envelope.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif
@@ -373,9 +411,11 @@ This chapter was validated from checked-in sources with:
 
 The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and
 `axi_aw_valid_ready_monitor.fsm`, confirming that the guided example still
-exposes the review artifacts the chapter describes. The AW driver check and
-`--verify-hdl` confirm that both initiator examples are accepted and lower to
-lint/synthesis-clean HDL. The focused `t/1499-ial2-axi-aw-driver.t` and
-`t/1500-ial2-axi-w-driver.t` generated-HDL simulations separately prove their
-transfer-cardinality, completion-pulse, and stalled-payload guarantees; the W
-test also proves the all-zero-strobe case remains legal.
+exposes the review artifacts the chapter describes. The three initiator source
+checks and `--verify-hdl` runs confirm that all three primitives are accepted
+and lower to lint/synthesis-clean HDL. The focused
+`t/1499-ial2-axi-aw-driver.t`, `t/1500-ial2-axi-w-driver.t`, and
+`t/1501-ial2-axi-b-response-acceptor.t` generated-HDL simulations separately
+prove their transfer/response cardinality, completion-pulse, and stability
+guarantees; the W test also proves the all-zero-strobe case remains legal, and
+the B test proves unarmed responses cannot handshake.

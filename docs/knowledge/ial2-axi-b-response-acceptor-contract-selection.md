@@ -32,7 +32,7 @@ and `b_busy`/`b_done`.
 The generated six-state ISF uses `accept_b over arm_b`. One arm raises BREADY
 without waiting for BVALID; exactly one handshake captures ID/status and clears
 ready/busy; captured outputs remain stable; one later done pulse retires the
-operation. `.14` owns the atomic parser/generator/source/support/manifest/test/
-book implementation. All composition, capacity, outstanding/extended response,
-read, alias, verification-output, direct/backend/VHDL, AHB, and APB work stays
-deferred.
+operation. `.14` shipped the atomic parser/generator/source/support/manifest/
+test/book implementation; see [[ial2-axi-b-response-acceptor-first-slice]]. All
+composition, capacity, outstanding/extended response, read, alias,
+verification-output, direct/backend/VHDL, AHB, and APB work stays deferred.
