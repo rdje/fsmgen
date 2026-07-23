@@ -13,7 +13,7 @@ organized by authoring mode, not by implementation module.
 | Mode | Start with | What it demonstrates |
 | --- | --- | --- |
 | Guided mode | `ppif/axi_aw_valid_ready.ppif` and `ppif/axi_aw_valid_ready.axi` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, and `.ppif`/`.axi` profile-alias parity for the selected first alias. |
-| Initiator mode | `ppif/axi_aw_driver.ppif`, `ppif/axi_w_driver.ppif`, `ppif/axi_b_response_acceptor.ppif`, `ppif/axi_write_request_composition.ppif`, `ppif/axi_write_transaction_composition.ppif`, `ppif/axi_ar_driver.ppif`, `ppif/axi_r_beat_acceptor.ppif`, `ppif/axi_read_transaction_composition.ppif`, and `ppif/axi_read_burst4_transaction_composition.ppif` | Bounded AXI manager AW/W/AR channel **drivers**, explicitly armed B-response and R-beat **acceptors**, and fixed-single-beat plus fixed-four-beat request/full-transaction **compositions**. |
+| Initiator mode | `ppif/axi_aw_driver.ppif`, `ppif/axi_w_driver.ppif`, `ppif/axi_w_burst4_driver.ppif`, `ppif/axi_b_response_acceptor.ppif`, `ppif/axi_write_request_composition.ppif`, `ppif/axi_write_transaction_composition.ppif`, `ppif/axi_ar_driver.ppif`, `ppif/axi_r_beat_acceptor.ppif`, `ppif/axi_read_transaction_composition.ppif`, and `ppif/axi_read_burst4_transaction_composition.ppif` | Bounded AXI manager AW/W/AR channel **drivers**, including fixed-four W payload progression, explicitly armed B-response and R-beat **acceptors**, and fixed-single-beat plus fixed-four-beat request/full-transaction **compositions**. |
 | More-control mode | `ppif/axi_manager_capacity_status.ppif`, `ppif/axi_manager_capacity_status_id_family.ppif`, and `ppif/axi_manager_capacity_status_transaction_envelope.ppif` | Bounded manager capacity/status, ID-family metadata, and logical transaction metadata while staying in the public AXI manager shell. |
 | Raw/full-control mode | `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | A deep shipped AXI manager shape with dynamic read transactions, same-ID issue-order queueing, burst-last response demux, runtime beat-count/`RLAST` validation, and multi-beat read-data output banks. |
 
@@ -223,26 +223,93 @@ transaction coordination, multi-beat `WLAST` sequencing, outstanding writes,
 capacity-core integration, and the proposed protocol-neutral transaction
 interface remain separate future owners.
 
-The next selected initiator direction is a standalone fixed-four full-width W
-burst driver. It must precede a fixed-four AW+W composition because this
-single-beat child hard-wires `WLAST=1`: re-arming it four times would emit four
-false final beats under `AWLEN=3`. The completed readiness audit selects four
-explicit data32/strobe4 fields over packed data128/strobe16 banks and a
-streaming producer, and requires a new additive `AxiWBurst4Driver` so this
-single-beat source remains unchanged. The selected boundary atomically captures
-all four tuples, keeps WVALID asserted across consecutive beats, holds the
-presented tuple under WREADY backpressure, emits WLAST `0/0/0/1`, reports one
-event with index `0/1/2/3` for every accepted beat, and retires once with the
-fourth event. Its proven target is an 18-port, zero-state, seven-rule actor with
-assignment counts `13/6/6/6/6/1/1` and five explicit event-clear priorities;
-temporary strict, schedule, Verilator, Yosys, and generated-HDL checks all
-pass. The selected additive public contract is
-`(axi-w-burst4-driver axi_w_burst4_driver ...)`, lowering through one generated
-`axi_w_burst4_driver.isf` and one `axi_w_burst4_driver.fsm`. Its exact source
-has seven Issue L anchors, ten inputs/eight outputs, and explicit per-beat
-payload fields; planned support accounting is 307/348/348 and t/1508 must prove
-exact `handshakes=14 beat=14 done=3` across completed and reset-aborted bursts.
-Atomic implementation is active. No burst W behavior ships until it lands.
+### Bounded fixed-four-beat W burst driver
+
+`ppif/axi_w_burst4_driver.ppif` ships the first multi-beat physical write-data
+primitive. It is additive to the single-beat driver because that earlier
+source correctly hard-wires `WLAST=1`; re-arming it four times under a future
+`AWLEN=3` request would falsely mark every transfer final.
+
+The burst4 driver receives four explicit full-width tuples in one atomic
+command. Explicit fields keep beat order and width diagnostics visible in PPIF;
+packed data128/strobe16 banks and a streaming producer handshake remain future
+generalization points.
+
+```text
+(axi-w-burst4-driver axi_w_burst4_driver
+  (role manager-to-subordinate)
+  (clock clk)
+  (reset (rst_n active_low async))
+  (command
+    (start w_cmd_valid)
+    (data0 cmd_wdata0 width 32)
+    (data1 cmd_wdata1 width 32)
+    (data2 cmd_wdata2 width 32)
+    (data3 cmd_wdata3 width 32)
+    (strobe0 cmd_wstrb0 width 4)
+    (strobe1 cmd_wstrb1 width 4)
+    (strobe2 cmd_wstrb2 width 4)
+    (strobe3 cmd_wstrb3 width 4)
+    (ready wready))
+  (channel
+    (valid wvalid)
+    (data wdata width 32)
+    (strobe wstrb width 4)
+    (last wlast)
+    (busy w_busy)
+    (beat-done w_beat_done)
+    (done w_done)
+    (beat-index w_beat_index width 2)))
+```
+
+On an idle command, beat zero is captured into the driven WDATA/WSTRB
+registers and beats one through three into private registers. Later changes to
+any command input cannot affect the active burst. WVALID asserts independently
+of WREADY and remains high until the fourth transfer. While WREADY is low,
+WVALID, WDATA, WSTRB, WLAST, and the current private index remain stable.
+
+Each rising-edge `WVALID && WREADY` accepts one tuple. Non-final acceptance
+changes the driven tuple without inserting a WVALID bubble; held-high WREADY
+therefore produces four transfers on consecutive cycles. WLAST is low for
+presented indices 0, 1, and 2 and high only for index 3. An all-zero strobe is
+legal on any beat and still counts toward the required four transfers.
+
+`w_beat_done` is high in every accepted event cycle and `w_beat_index` names
+the accepted tuple. Under continuous READY, beat done can remain high for four
+adjacent cycles while the index changes `0,1,2,3`; consume it as a per-cycle
+event, not with a low-to-high edge detector. `w_done` coincides with the final
+beat event/index 3, and WVALID/busy clear. A one-cycle command while busy is
+ignored. Asynchronous reset aborts at any index without fabricating a beat or
+final event; a later command restarts at index zero.
+
+Run every public inspection and HDL gate:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_w_burst4_driver.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_w_burst4_driver.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_w_burst4_driver.ppif
+./bin/fsmgen --quiet --outdir generated ppif/axi_w_burst4_driver.ppif
+./bin/fsmgen --verify-hdl ppif/axi_w_burst4_driver.ppif
+```
+
+The outdir contains `generated/axi_w_burst4_driver.isf` and
+`generated/axi_w_burst4_driver.fsm` before HDL. The generated actor has ten
+inputs, eight outputs, zero procedural states, and seven rules with assignment
+counts `13/6/6/6/6/1/1`. Five exact priorities preserve one beat event per
+accepted cycle and the final done event. The generated WLAST assertion requires
+it to be high exactly when the active presented index is three.
+
+The four-subtest `t/1508-ial2-axi-w-burst4-driver.t` checks the exact report,
+source anchors, storage/schedule, fail-closed contracts, support matching,
+strict/schedule/semantic/outdir paths, Verilator, Yosys, and executable HDL.
+The behavior proof observes three completed bursts plus two transfers from a
+reset-aborted burst: exactly 14 handshakes, 14 beat events, three final done
+events, one ignored busy command, and one reset abort.
+
+This source still has no address or response channel. AW launch,
+`AWLEN=3`/`AWSIZE=2`/INCR and 4-KiB coupling, AW/W joining, B completion,
+dynamic/narrow/unaligned/FIXED/WRAP bursts, queues/outstanding writes, and
+capacity-core integration remain separate owners.
 
 ### Bounded one-response B write-response acceptor
 
@@ -934,6 +1001,8 @@ This chapter was validated from checked-in sources with:
 ./bin/fsmgen --verify-hdl ppif/axi_aw_driver.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_w_driver.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_w_driver.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/axi_w_burst4_driver.ppif
+./bin/fsmgen --verify-hdl ppif/axi_w_burst4_driver.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_b_response_acceptor.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_b_response_acceptor.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_ar_driver.ppif
@@ -952,9 +1021,9 @@ This chapter was validated from checked-in sources with:
 
 The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and
 `axi_aw_valid_ready_monitor.fsm`, confirming that the guided example still
-exposes the review artifacts the chapter describes. The seven initiator source
-checks and `--verify-hdl` runs confirm that five channel primitives plus the
-two write compositions are accepted and lower to lint/synthesis-clean HDL. The
+exposes the review artifacts the chapter describes. The eight listed initiator
+source checks and `--verify-hdl` runs confirm that six channel primitives plus
+the two write compositions are accepted and lower to lint/synthesis-clean HDL. The
 focused `t/1499-ial2-axi-aw-driver.t`, `t/1500-ial2-axi-w-driver.t`,
 `t/1501-ial2-axi-b-response-acceptor.t`, `t/1504-ial2-axi-ar-driver.t`, and
 `t/1505-ial2-axi-r-beat-acceptor.t` generated-HDL simulations separately prove
@@ -968,6 +1037,13 @@ public/report/fail-closed/CLI artifact contract and executes the structural top
 for misaligned no-launch, atomic capture, simultaneous-ready, AW-first, W-first,
 long-stall stability, ignored-busy-command, zero-strobe, fixed-metadata, and
 exact three-AW/three-W/three-done behavior.
+
+The four-subtest `t/1508-ial2-axi-w-burst4-driver.t` proves the additive
+fixed-four W path independently: exact report/schedule and fail-closed
+contracts, support-accounted CLI/artifact/Verilator/Yosys surfaces, atomic
+payload capture, continuous and stalled READY behavior, legal zero strobes,
+WLAST `0/0/0/1`, ignored busy command, reset abort/recovery, and exact
+14-handshake/14-beat-event/three-completion cardinality.
 
 The four-subtest `t/1503-ial2-axi-write-transaction-composition.t` extends that
 proof through B retirement. It checks the exact report and fail-closed grammar,

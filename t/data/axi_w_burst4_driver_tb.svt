@@ -1,0 +1,262 @@
+module axi_w_burst4_driver_tb;
+  logic clk = 0;
+  logic rst_n = 0;
+  logic w_cmd_valid = 0;
+  logic [31:0] cmd_wdata0 = 0;
+  logic [31:0] cmd_wdata1 = 0;
+  logic [31:0] cmd_wdata2 = 0;
+  logic [31:0] cmd_wdata3 = 0;
+  logic [3:0] cmd_wstrb0 = 0;
+  logic [3:0] cmd_wstrb1 = 0;
+  logic [3:0] cmd_wstrb2 = 0;
+  logic [3:0] cmd_wstrb3 = 0;
+  logic wready = 0;
+
+  wire wvalid;
+  wire [31:0] wdata;
+  wire [3:0] wstrb;
+  wire wlast;
+  wire w_busy;
+  wire w_beat_done;
+  wire w_done;
+  wire [1:0] w_beat_index;
+
+  integer handshakes = 0;
+  integer beat_pulses = 0;
+  integer done_pulses = 0;
+  integer busy_ignored = 0;
+  integer reset_abort = 0;
+  integer cycles = 0;
+
+  axi_w_burst4_driver dut (.*);
+
+  always #5 clk = ~clk;
+
+  function automatic [1:0] expected_event_index(input integer event_number);
+    begin
+      case (event_number)
+        0, 4, 8, 10: expected_event_index = 2'd0;
+        1, 5, 9, 11: expected_event_index = 2'd1;
+        2, 6, 12: expected_event_index = 2'd2;
+        3, 7, 13: expected_event_index = 2'd3;
+        default: expected_event_index = 2'bxx;
+      endcase
+    end
+  endfunction
+
+  task automatic check_transfer(input integer transfer_number);
+    begin
+      case (transfer_number)
+        0:  if ({wdata, wstrb, wlast} !== {32'h00001000, 4'h0, 1'b0}) $fatal(1, "transfer 0");
+        1:  if ({wdata, wstrb, wlast} !== {32'h00001001, 4'h1, 1'b0}) $fatal(1, "transfer 1");
+        2:  if ({wdata, wstrb, wlast} !== {32'h00001002, 4'h5, 1'b0}) $fatal(1, "transfer 2");
+        3:  if ({wdata, wstrb, wlast} !== {32'h00001003, 4'hf, 1'b1}) $fatal(1, "transfer 3");
+        4:  if ({wdata, wstrb, wlast} !== {32'h00002000, 4'hf, 1'b0}) $fatal(1, "transfer 4");
+        5:  if ({wdata, wstrb, wlast} !== {32'h00002001, 4'h3, 1'b0}) $fatal(1, "transfer 5");
+        6:  if ({wdata, wstrb, wlast} !== {32'h00002002, 4'hc, 1'b0}) $fatal(1, "transfer 6");
+        7:  if ({wdata, wstrb, wlast} !== {32'h00002003, 4'h0, 1'b1}) $fatal(1, "transfer 7");
+        8:  if ({wdata, wstrb, wlast} !== {32'h00003000, 4'ha, 1'b0}) $fatal(1, "transfer 8");
+        9:  if ({wdata, wstrb, wlast} !== {32'h00003001, 4'hb, 1'b0}) $fatal(1, "transfer 9");
+        10: if ({wdata, wstrb, wlast} !== {32'h00004000, 4'h1, 1'b0}) $fatal(1, "transfer 10");
+        11: if ({wdata, wstrb, wlast} !== {32'h00004001, 4'h2, 1'b0}) $fatal(1, "transfer 11");
+        12: if ({wdata, wstrb, wlast} !== {32'h00004002, 4'h4, 1'b0}) $fatal(1, "transfer 12");
+        13: if ({wdata, wstrb, wlast} !== {32'h00004003, 4'h8, 1'b1}) $fatal(1, "transfer 13");
+        default: $fatal(1, "unexpected transfer %0d", transfer_number);
+      endcase
+    end
+  endtask
+
+  always @(posedge clk) if (rst_n) begin
+    if (wvalid && wready) begin
+      check_transfer(handshakes);
+      handshakes <= handshakes + 1;
+    end
+    if (w_beat_done) begin
+      if (w_beat_index !== expected_event_index(beat_pulses))
+        $fatal(1, "event index %0d got %0d", beat_pulses, w_beat_index);
+      beat_pulses <= beat_pulses + 1;
+    end
+    if (w_done) begin
+      if (!w_beat_done || w_beat_index !== 2'd3)
+        $fatal(1, "final done without final beat event");
+      done_pulses <= done_pulses + 1;
+    end
+  end
+
+  task automatic command(
+    input [31:0] data0,
+    input [31:0] data1,
+    input [31:0] data2,
+    input [31:0] data3,
+    input [3:0] strb0,
+    input [3:0] strb1,
+    input [3:0] strb2,
+    input [3:0] strb3
+  );
+    begin
+      @(negedge clk);
+      cmd_wdata0 = data0;
+      cmd_wdata1 = data1;
+      cmd_wdata2 = data2;
+      cmd_wdata3 = data3;
+      cmd_wstrb0 = strb0;
+      cmd_wstrb1 = strb1;
+      cmd_wstrb2 = strb2;
+      cmd_wstrb3 = strb3;
+      w_cmd_valid = 1;
+      @(negedge clk);
+      w_cmd_valid = 0;
+      cmd_wdata0 = 32'hdead0000;
+      cmd_wdata1 = 32'hdead0001;
+      cmd_wdata2 = 32'hdead0002;
+      cmd_wdata3 = 32'hdead0003;
+      cmd_wstrb0 = 4'h6;
+      cmd_wstrb1 = 4'h6;
+      cmd_wstrb2 = 4'h6;
+      cmd_wstrb3 = 4'h6;
+    end
+  endtask
+
+  task automatic wait_counts(
+    input integer expected_handshakes,
+    input integer expected_beats,
+    input integer expected_done
+  );
+    begin
+      cycles = 0;
+      while ((handshakes < expected_handshakes
+              || beat_pulses < expected_beats
+              || done_pulses < expected_done)
+             && cycles < 120) begin
+        @(negedge clk);
+        cycles = cycles + 1;
+      end
+      if (handshakes != expected_handshakes
+          || beat_pulses != expected_beats
+          || done_pulses != expected_done)
+        $fatal(1, "count wait expected %0d/%0d/%0d got %0d/%0d/%0d",
+          expected_handshakes, expected_beats, expected_done,
+          handshakes, beat_pulses, done_pulses);
+    end
+  endtask
+
+  task automatic accept_one(input integer expected_handshakes);
+    begin
+      @(negedge clk);
+      wready = 1;
+      cycles = 0;
+      while (handshakes < expected_handshakes && cycles < 40) begin
+        @(negedge clk);
+        cycles = cycles + 1;
+      end
+      if (handshakes != expected_handshakes)
+        $fatal(1, "pulsed WREADY did not accept transfer %0d", expected_handshakes);
+      wready = 0;
+    end
+  endtask
+
+  initial begin
+    repeat (2) @(negedge clk);
+    rst_n = 1;
+    repeat (2) @(negedge clk);
+
+    wready = 1;
+    command(
+      32'h00001000, 32'h00001001, 32'h00001002, 32'h00001003,
+      4'h0, 4'h1, 4'h5, 4'hf
+    );
+    wait_counts(4, 4, 1);
+    if (wvalid || w_busy) $fatal(1, "continuous-ready burst did not retire");
+
+    wready = 0;
+    command(
+      32'h00002000, 32'h00002001, 32'h00002002, 32'h00002003,
+      4'hf, 4'h3, 4'hc, 4'h0
+    );
+    cycles = 0;
+    while (!wvalid && cycles < 40) begin
+      @(negedge clk);
+      cycles = cycles + 1;
+    end
+    if (!wvalid || !w_busy) $fatal(1, "stalled burst did not present beat zero");
+    repeat (3) begin
+      @(negedge clk);
+      if (!wvalid || !w_busy
+          || {wdata, wstrb, wlast} !== {32'h00002000, 4'hf, 1'b0})
+        $fatal(1, "stalled beat zero changed");
+    end
+
+    command(
+      32'hbad00000, 32'hbad00001, 32'hbad00002, 32'hbad00003,
+      4'h1, 4'h2, 4'h4, 4'h8
+    );
+    busy_ignored = busy_ignored + 1;
+    if ({wdata, wstrb, wlast} !== {32'h00002000, 4'hf, 1'b0})
+      $fatal(1, "busy command corrupted active payload");
+
+    accept_one(5);
+    repeat (2) begin
+      @(negedge clk);
+      if ({wdata, wstrb, wlast} !== {32'h00002001, 4'h3, 1'b0})
+        $fatal(1, "stalled beat one changed");
+    end
+    accept_one(6);
+    repeat (2) begin
+      @(negedge clk);
+      if ({wdata, wstrb, wlast} !== {32'h00002002, 4'hc, 1'b0})
+        $fatal(1, "stalled beat two changed");
+    end
+    accept_one(7);
+    repeat (2) begin
+      @(negedge clk);
+      if ({wdata, wstrb, wlast} !== {32'h00002003, 4'h0, 1'b1})
+        $fatal(1, "stalled final beat changed");
+    end
+    accept_one(8);
+    wait_counts(8, 8, 2);
+    if (wvalid || w_busy) $fatal(1, "pulsed-ready burst did not retire");
+
+    wready = 1;
+    command(
+      32'h00003000, 32'h00003001, 32'h00003002, 32'h00003003,
+      4'ha, 4'hb, 4'hd, 4'he
+    );
+    cycles = 0;
+    while (handshakes < 10 && cycles < 80) begin
+      @(negedge clk);
+      cycles = cycles + 1;
+    end
+    if (handshakes != 10) $fatal(1, "reset burst did not accept two beats");
+    wready = 0;
+    wait_counts(10, 10, 2);
+    @(negedge clk);
+    rst_n = 0;
+    #1;
+    if (wvalid || w_busy || w_beat_done || w_done)
+      $fatal(1, "reset did not abort active burst");
+    reset_abort = reset_abort + 1;
+    repeat (2) @(negedge clk);
+    rst_n = 1;
+    repeat (2) @(negedge clk);
+
+    wready = 1;
+    command(
+      32'h00004000, 32'h00004001, 32'h00004002, 32'h00004003,
+      4'h1, 4'h2, 4'h4, 4'h8
+    );
+    wait_counts(14, 14, 3);
+    repeat (3) @(negedge clk);
+    if (wvalid || w_busy || w_beat_done || w_done)
+      $fatal(1, "final idle");
+    if (busy_ignored != 1 || reset_abort != 1)
+      $fatal(1, "scenario accounting");
+
+    $display("PASS handshakes=14 beat=14 done=3 busy_ignored=1 reset_abort=1");
+    $finish;
+  end
+
+  initial begin
+    #10000;
+    $fatal(1, "timeout");
+  end
+endmodule

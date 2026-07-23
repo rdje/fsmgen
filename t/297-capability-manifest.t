@@ -2916,6 +2916,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/bounded AXI manager fixed-four W write-data-channel burst driver source/,
+        'manifest advertises the bounded AXI manager fixed-four W burst driver source',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/bounded AXI manager B write-response acceptor source/,
         'manifest advertises the bounded AXI manager B write-response acceptor source',
     );
