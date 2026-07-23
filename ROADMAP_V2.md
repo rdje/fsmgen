@@ -6972,6 +6972,19 @@ surfaces, diagnostics, and clean `--verify-hdl`; accounting is now 314
 protocol / 355 supported-smoke+strict. No parser or generator algorithm
 changed; decision 0020 and proposed audits stay inactive.
 
+`.804` now selects the existing
+`IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT` as the next exact AHB owner. The
+paired BUSY family is complete, and the next smallest correctness question is
+already visible in the shipped requester generator and emitted IAL0 FSM: one
+wrap-mode clause may write `addr_q = wrap_base_q`, after which a second
+sequential negated clause may re-evaluate the mutated address and overwrite it
+with `wrap_base_q + addr_step_q`. Current runtime coverage does not record a
+requester `WRAP4` accepted-address sequence through that boundary, so the
+selected audit must prove or disprove the risk before any repair. The audit
+remains proposed until `.804` commits and the repository is clean; broader
+BUSY policy/status, larger bursts, boundary-free pipelining, optional signals,
+decision 0020, and the transaction-layer horizon remain inactive or deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

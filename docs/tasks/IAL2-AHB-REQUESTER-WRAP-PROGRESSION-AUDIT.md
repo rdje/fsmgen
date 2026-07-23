@@ -67,6 +67,10 @@ pending BUSY-insertion slice must not expand into unselected WRAP behavior.
 - `2026-07-23`: Keep this tree proposed and inactive. It is a distinct
   unproven WRAP concern, not part of the terminal-count prerequisite or the
   already-selected requester BUSY-insertion contract.
+- `2026-07-23`: `IAL2-FEATURE-COMPLETENESS-FRONTIER.804` selected this
+  canonical audit as the next exact AHB owner after the complete paired BUSY
+  family. It remains proposed until `.804` commits and the repository is clean;
+  `.1` then owns activation plus runtime proof/disproof before any repair.
 
 ## Blockers
 

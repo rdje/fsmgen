@@ -5917,6 +5917,19 @@ diagnostics, and clean `--verify-hdl`. Accounting is now 314 protocol fixtures
 and 355 supported-smoke/strict entries; no parser or generator algorithm
 changed. Decision 0020 and proposed audits remain inactive.
 
+`.804` now selects the existing
+`IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT` as the next exact AHB owner after
+the one- and two-subordinate paired BUSY `.ppif`/`.ahb` family completed. The
+requester generator and emitted IAL0 FSM use two sequential wrap-mode clauses:
+one may write `addr_q = wrap_base_q`, then the following negated comparison may
+re-evaluate the mutated address and overwrite it with
+`wrap_base_q + addr_step_q`. No current generated-HDL requester test records a
+`WRAP4` accepted-address sequence through that boundary, so this remains a
+concrete source/FSM risk rather than a proven defect. The selected audit must
+prove or disprove it before any repair or broader AHB feature. It remains
+proposed until `.804` commits cleanly; decision 0020 and the transaction-layer
+horizon remain inactive.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8577,6 +8590,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md` — documents the `.801` shipped generic four-child paired-BUSY aggregate, one existing generator architecture, exact report/artifact/support surfaces, and generated-HDL status/control proof through retained `32'h44332211`/`32'h88776655` storage.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.802` selection of `.803`, a byte-identical data-only `.ahb` alias with 314/355 accounting targets, t/1516 parity/public-surface proof, retained t/1515 runtime, existing alias-residue cleanup, and no new generator.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.803` shipped byte-identical `.ahb` alias, shared four-child generator architecture/runtime, exact support/artifact/report surfaces, alias-only residue cleanup, t/1516 proof, and 314/355 accounting.
+- `docs/IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md` — records the `.804` no-behavior selection of the canonical requester WRAP-progression audit, the sequential mutation/retest risk, the missing runtime WRAP4 address-sequence proof, deferred alternatives, and the clean-pivot activation boundary.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

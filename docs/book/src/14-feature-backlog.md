@@ -10779,6 +10779,19 @@ removes only alias residue. t/1516 proves parity/public surfaces, diagnostics,
 and `--verify-hdl`; accounting is 314 protocol / 355 supported-smoke+strict.
 Decision 0020 and proposed audits remain inactive.
 
+Post-paired-BUSY-family next-owner selection:
+[IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION](../../IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md)
+documents `.804`. It selects the existing requester WRAP-progression audit as
+the next exact AHB owner because the shipped generator and emitted IAL0 FSM
+contain a concrete sequential mutation/retest hazard: a wrap-boundary clause
+may write `addr_q = wrap_base_q`, then the following negated clause may
+re-evaluate the mutated address and overwrite it with base-plus-step. No
+current requester generated-HDL test records accepted `WRAP4` addresses through
+the boundary, so the audit must prove or disprove the risk before selecting any
+repair. Policy/multiple BUSY, distinct bus-BUSY status, larger bursts,
+boundary-free pipelining, and optional signals remain deferred. The audit is
+not activated until `.804` commits cleanly; decision 0020 remains inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

@@ -1456,6 +1456,29 @@ diagnostics, and clean `--verify-hdl`. Accounting is now 314 protocol fixtures
 and 355 supported-smoke/strict entries. See
 [IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md).
 
+`.804` selects the existing
+`IAL2-AHB-REQUESTER-WRAP-PROGRESSION-AUDIT` as the next exact AHB owner. This
+is a correctness audit, not another generator or feature implementation. The
+requester generator and emitted IAL0 FSM currently express wrapping progression
+as two sequential clauses:
+
+```text
+when next address reaches wrap_high_q: addr_q = wrap_base_q
+when next address does not reach wrap_high_q: addr_q = addr_q + addr_step_q
+```
+
+Because the second predicate may observe the first clause's write, the
+wrap-to-base result may be overwritten by base-plus-step. No current public
+requester generated-HDL test records accepted `WRAP4` addresses through the
+boundary, so this is a source/FSM risk, not yet a runtime-proven defect. After
+`.804` commits cleanly, the selected audit must record a deterministic
+four-beat address sequence, correlate it with generated IAL1/IAL0 states, and
+either close the concern or select a separate bounded repair leaf. Broader BUSY
+policy/status, larger bursts, boundary-free pipelining, optional signals,
+decision 0020, and the transaction-layer horizon remain deferred or inactive.
+See
+[IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION](../../IAL2_POST_TWO_SUBORDINATE_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB
