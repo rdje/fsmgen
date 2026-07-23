@@ -6817,6 +6817,17 @@ runtime proof. Current accounting is 310 protocol / 351 supported-smoke and
 strict entries. Policy/runtime/multi-beat BUSY, distinct local bus-BUSY status,
 paired composition, and larger requester behavior remain deferred.
 
+`.791` selects `.792`, a no-behavior readiness audit for the smallest paired
+requester/subordinate BUSY composition: one shipped BUSY-inserting requester
+plus the shipped one-subordinate aggregate with HBURST-aware byte-lane BUSY
+parking. A current construction probe already generates the requester,
+subordinate, interconnect, and top artifacts and preserves subordinate/
+aggregate `parks_on = [busy]`. It also finds a public reporting gap:
+`AhbInterconnect::_child_report` does not propagate the optional requester
+`busy_insertion` block into aggregate JSON. `.792` must settle report
+propagation, source/support identity, and the exact end-to-end generated-HDL
+proof before implementation. Decision 0020 stays proposed/inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

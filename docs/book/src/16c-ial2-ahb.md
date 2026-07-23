@@ -1234,6 +1234,22 @@ generator changed. Use the alias by substituting the `.ahb` path in the commands
 above. Focused t/1512 proves source/artifact/report/CLI/support parity, and
 t/1498 retains generated-HDL runtime proof.
 
+The next bounded step is an end-to-end composition, not a broader BUSY policy.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.791` selects `.792`, a no-behavior
+readiness audit for one aggregate that combines the BUSY-inserting requester
+with the HBURST-aware byte-lane subordinate that parks BUSY. The current
+aggregate generator already accepts that endpoint combination and emits the
+requester, subordinate, interconnect, and top review artifacts. Its subordinate
+and propagation reports preserve `parks_on = [busy]`.
+
+The audit comes before implementation because aggregate requester-child JSON is
+not yet complete for this behavior: the standalone requester exposes
+`busy_insertion`, while `AhbInterconnect::_child_report` currently copies the
+child's `transfer`, artifacts, and residue but not that optional block. `.792`
+must settle whether and how to propagate it and freeze the exact generated-HDL
+proof that BUSY consumes no data beat, the subordinate retains burst context,
+the same `SEQ` beat resumes, and exactly four data beats complete.
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB

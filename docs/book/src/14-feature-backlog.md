@@ -10636,6 +10636,17 @@ behavior remains unchanged. The canonical result is
 Focused t/1512 proves alias parity/CLI/artifacts/support, t/1498 retains runtime
 proof, and current accounting is 310 protocol / 351 supported-smoke and strict.
 
+Post-requester-BUSY-alias selector:
+[IAL2_POST_AHB_REQUESTER_BUSY_INSERTION_ALIAS_NEXT_SLICE_SELECTION](../../IAL2_POST_AHB_REQUESTER_BUSY_INSERTION_ALIAS_NEXT_SLICE_SELECTION.md)
+documents `.791`, which selects `.792`, a no-behavior readiness audit for one
+paired BUSY-inserting-requester/BUSY-parking-subordinate aggregate. A
+current-state construction probe already composes the endpoint behaviors and
+generated artifacts, with subordinate and aggregate `parks_on = [busy]`. The
+probe also finds that `AhbInterconnect::_child_report` omits the requester's
+optional `busy_insertion` block from aggregate JSON, so `.792` must settle
+report propagation and exact end-to-end runtime proof before implementation.
+Decision 0020 remains proposed/inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect
