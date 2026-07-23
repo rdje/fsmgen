@@ -32,7 +32,8 @@ composition_child_count: 4
 
 Matching aggregate `.ahb` aliases are not shipped by `.770`. They are routed
 to `IAL2-FEATURE-COMPLETENESS-FRONTIER.771`, a no-behavior public contract
-selection owner.
+selection owner. They now ship through `.772` as documented in
+[IAL2_AHB_AGGREGATE_HBURST_SEQ_PROFILE_ALIAS_BEHAVIOR](IAL2_AHB_AGGREGATE_HBURST_SEQ_PROFILE_ALIAS_BEHAVIOR.md).
 
 ## Public Source Contract
 
@@ -184,11 +185,12 @@ Child reports for embedded HBURST-aware byte-lane `SEQ` subordinates carry
 
 For these aggregate HBURST sources, top-level residue now states that
 selected byte-only `WRAP4`/`INCR4` aggregate HBURST propagation is shipped.
-True remaining residue includes matching aggregate `.ahb` aliases,
-BUSY-in-burst handling, halfword/word burst `SEQ`, wider or indefinite bursts,
-multi-word/register-bank progression, optional/property-gated AHB signals,
-broader AHB behavior, direct backend behavior, verification-output generation,
-backend-language variants, AXI/APB behavior, and VHDL.
+The matching aggregate aliases now ship. True remaining residue includes
+BUSY-in-burst handling beyond the selected parking variants, halfword/word
+burst `SEQ`, wider or indefinite bursts, multi-word/register-bank progression,
+optional/property-gated AHB signals, broader AHB behavior, direct backend
+behavior, verification-output generation, backend-language variants, AXI/APB
+behavior, and VHDL.
 
 Existing word-only aggregate, non-SEQ byte-lane aggregate, in-word `SEQ`
 aggregate, endpoint HBURST `SEQ`, requester, interconnect, and shipped `.ahb`

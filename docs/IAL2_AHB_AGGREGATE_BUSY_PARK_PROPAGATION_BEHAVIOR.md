@@ -34,7 +34,8 @@ composition_child_count: 4
 Both stems ship in one slice, mirroring `.770`, which shipped both non-parking
 aggregate HBURST `SEQ` stems. The matching aggregate BUSY-park `.ahb` aliases are
 not shipped by `.782`; they are routed to a later slice, as `.771`/`.772` routed
-the aggregate HBURST aliases.
+the aggregate HBURST aliases. They now ship through `.784` as documented in
+[IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_PROFILE_ALIAS_BEHAVIOR](IAL2_AHB_AGGREGATE_BUSY_PARK_PROPAGATION_PROFILE_ALIAS_BEHAVIOR.md).
 
 ## Public Source Contract
 
@@ -155,11 +156,13 @@ residue. Two-subordinate non-parking HBURST sources retain their existing
 `BUSY-in-burst continuation` deferral, and one-subordinate topology residue is
 unchanged.
 
-True remaining residue includes the matching aggregate BUSY-park `.ahb` aliases,
-requester-side BUSY insertion, halfword/word burst `SEQ`, wider or indefinite
-bursts, multi-word/register-bank progression, optional/property-gated AHB
-signals, broader AHB behavior, direct backend behavior, verification-output
-generation, backend-language variants, AXI/APB behavior, and VHDL.
+The matching aggregate aliases, bounded requester-side BUSY insertion, and
+selected paired BUSY compositions now ship through later slices. True
+remaining residue includes policy/runtime or multiple BUSY insertion, distinct
+bus-BUSY status, halfword/word burst `SEQ`, wider or indefinite bursts,
+multi-word/register-bank progression, optional/property-gated AHB signals,
+broader AHB behavior, direct backend behavior, verification-output generation,
+backend-language variants, AXI/APB behavior, and VHDL.
 
 ## Preservation
 

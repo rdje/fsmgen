@@ -10825,6 +10825,15 @@ historical time-local statements and all code/source/support/runtime behavior.
 The boundary-free active-transfer audit and decision 0020 stay proposed and
 inactive.
 
+AHB current-surface alias truthfulness repair:
+[IAL2_AHB_CURRENT_SURFACE_ALIAS_TRUTHFULNESS_REPAIR](../../IAL2_AHB_CURRENT_SURFACE_ALIAS_TRUTHFULNESS_REPAIR.md)
+documents `.806`. Current protocol navigation, AHB mode/requester guidance,
+and the aggregate HBURST, aggregate BUSY-park, and paired BUSY behavior/fact
+pairs now acknowledge six shipped aliases while preserving historical
+time-local statements. t/1518 locks the paths and current claims. No
+code/source/support/report/artifact/HDL/runtime behavior changes; the
+boundary-free audit and decision 0020 remain proposed/inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

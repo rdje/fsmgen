@@ -9,7 +9,7 @@ answers:
 date: 2026-06-30
 status: current
 tags: [ial2, ahb, hburst, seq, aggregate, interconnect, behavior]
-evidence: docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_BEHAVIOR.md; ppif/ahb_interconnect_byte_lane_hburst_seq.ppif; ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1492-ial2-ahb-interconnect-byte-lane-hburst-seq.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
+evidence: docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_BEHAVIOR.md; docs/IAL2_AHB_AGGREGATE_HBURST_SEQ_PROFILE_ALIAS_BEHAVIOR.md; ppif/ahb_interconnect_byte_lane_hburst_seq.ppif; ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif; ppif/ahb_interconnect_byte_lane_hburst_seq.ahb; ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1492-ial2-ahb-interconnect-byte-lane-hburst-seq.t; t/1493-ial2-ahb-interconnect-byte-lane-hburst-seq-profile-alias.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
 reverify: prove -Iperl t/1492-ial2-ahb-interconnect-byte-lane-hburst-seq.t && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect_byte_lane_hburst_seq.ppif && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif && ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect_byte_lane_hburst_seq.ppif && ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif
 ---
 
@@ -33,5 +33,8 @@ request-forwarding `burst`, child `bindings.bus.burst`, child
 `transfer.seq_policy`, `supported_hburst_modes`, and fail-closed HBURST mode
 metadata.
 
-Matching aggregate `.ahb` aliases remain deferred after `.770` and are routed
-to `IAL2-FEATURE-COMPLETENESS-FRONTIER.771`.
+The matching aggregate `.ahb` aliases now ship through `.772`; current alias
+behavior is documented in
+`IAL2_AHB_AGGREGATE_HBURST_SEQ_PROFILE_ALIAS_BEHAVIOR`. Remaining burst work
+starts beyond the selected byte-only aggregate HBURST and BUSY-parking
+variants, not at alias exposure.

@@ -133,8 +133,8 @@ and do not produce generated `.isf` or generated `.fsm` review artifacts.
 | Mode | Current source | Boundary |
 | --- | --- | --- |
 | Guided mode | The thirty-eight public AHB sources listed above, including paired one- and two-subordinate `.ppif`/`.ahb` source pairs | Bounded requester/subordinate/interconnect sources, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, and paired BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows. |
-| More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs are exposed as `control`, `bus`, one-register `storage`, and `transfer` clauses, including selected byte/halfword/word `supported-size`, `lane-order`, narrow read/write, unaligned/crossing policy clauses, the selected `(seq-policy in-word-progressive)` clause on the generic byte-lane `SEQ` source and matching `.ahb` alias, and the selected `(burst HBURST width 3)` plus `(seq-policy hburst-in-word-progressive)` clauses on the generic and matching `.ahb` HBURST-aware endpoint byte-lane `SEQ` sources and selected generic aggregate HBURST-aware byte-lane `SEQ` sources. Interconnect knobs are exposed as `children`, one or two static `address-map` windows, `decode`, and `wiring` clauses. |
-| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader AHB interconnect/decode beyond the selected one-requester/one-subordinate static-window `.ppif`/`.ahb` sources and selected one-requester/two-subordinate static-window `.ppif`/`.ahb` sources, matching aggregate HBURST `.ahb` aliases, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond the bounded byte-only `WRAP4`/`INCR4` endpoint and aggregate sources, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs cover selected byte/halfword/word lanes, in-word `SEQ`, HBURST `WRAP4`/`INCR4`, and BUSY parking. The selected generic and matching `.ahb` aggregate HBURST-aware byte-lane `SEQ` sources include non-parking and BUSY-park variants, plus paired BUSY-inserting-requester compositions across one or two static windows. Interconnect knobs are exposed as `children`, static `address-map` windows, `decode`, and `wiring` clauses. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, policy/runtime or multiple BUSY insertion, distinct bus-BUSY status, boundary-free active-transfer pipelining, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -379,10 +379,11 @@ Fail-closed cases include standalone `SEQ`, `SEQ` after `SINGLE`,
 `IDLE`/`BUSY`/reset/ERROR, changed `HBURST`/`HWRITE`/`HSIZE`, unexpected
 address progression, non-lane0 `INCR4` starts, unsupported HBURST modes,
 halfword/word burst `SEQ`, unsupported sizes, unmapped/unaligned/crossing
-accesses, and multi-word/register-bank progression. This generic source does
-now has a matching endpoint `.ahb` alias. Aggregate HBURST propagation is
-shipped through the selected generic aggregate `.ppif` sources later in this
-chapter; matching aggregate HBURST `.ahb` aliases remain deferred.
+accesses, and multi-word/register-bank progression. This generic source now
+has a matching endpoint `.ahb` alias. Aggregate HBURST propagation ships
+through selected generic aggregate `.ppif` sources later in this chapter, and
+matching aggregate HBURST `.ahb` aliases ship through their selected profile
+surfaces.
 
 ## Guided PPIF Interconnect
 
@@ -1520,6 +1521,13 @@ preserve historical time-local records, and add t/1518 drift coverage. The
 boundary-free active-transfer audit remains proposed behind that prerequisite.
 See
 [IAL2_POST_REQUESTER_WRAP_REPAIR_NEXT_OWNER_SELECTION](../../IAL2_POST_REQUESTER_WRAP_REPAIR_NEXT_OWNER_SELECTION.md).
+
+`.806` now completes that repair. Current navigation/mode text and the three
+canonical behavior/fact pairs link the later alias owners, while historical
+"not shipped in this slice" records remain intact. Focused t/1518 requires all
+six alias paths and the positive current claims and rejects the stale current
+deferrals. No generated or runtime behavior changes. See
+[IAL2_AHB_CURRENT_SURFACE_ALIAS_TRUTHFULNESS_REPAIR](../../IAL2_AHB_CURRENT_SURFACE_ALIAS_TRUTHFULNESS_REPAIR.md).
 
 ## Subordinate Source Shape
 

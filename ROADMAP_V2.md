@@ -7016,6 +7016,14 @@ historical records, and add t/1518 drift coverage before any new AHB behavior.
 The canonical boundary-free active-transfer audit and decision 0020 remain
 proposed/inactive.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.806` now completes that current-surface
+repair. The protocol-navigation row, AHB mode/requester guidance, and three
+canonical behavior/fact pairs acknowledge the shipped aggregate HBURST,
+aggregate BUSY-park, and paired BUSY aliases while preserving historical
+time-local statements. t/1518 locks the six paths and exact current claims.
+No code/source/support/report/artifact/HDL/runtime behavior changed; the
+boundary-free audit and decision 0020 remain proposed/inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
