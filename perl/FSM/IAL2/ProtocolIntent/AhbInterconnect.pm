@@ -1396,7 +1396,9 @@ sub _unsupported_residue($contract = undef) {
     my $interconnect_residue = $subordinate_count == 2
         ? {
             id     => 'ahb_broader_interconnect_decode_deferred',
-            detail => $hburst_seq_policy_selected
+            detail => $hburst_busy_park_selected
+                ? 'The first one-requester/two-subordinate static-window AHB interconnect/decode source ships with subordinate-owned byte/halfword/word narrow transfers and byte-only HBURST WRAP4/INCR4 in-word SEQ propagation with BUSY-in-burst parking; broader subordinate cardinality, multiple requesters, arbitration, bus matrices, programmable or dynamic windows, optional AHB signals, halfword/word burst SEQ, wider bursts, direct backend, verification-output, backend-language variants, AXI/APB behavior, and VHDL remain future work.'
+                : $hburst_seq_policy_selected
                 ? 'The first one-requester/two-subordinate static-window AHB interconnect/decode source ships with subordinate-owned byte/halfword/word narrow transfers and byte-only HBURST WRAP4/INCR4 in-word SEQ propagation; broader subordinate cardinality, multiple requesters, arbitration, bus matrices, programmable or dynamic windows, optional AHB signals, BUSY-in-burst continuation, halfword/word burst SEQ, wider bursts, direct backend, verification-output, backend-language variants, AXI/APB behavior, and VHDL remain future work.'
                 : $byte_lane_selected
                 ? 'The first one-requester/two-subordinate static-window AHB interconnect/decode source ships with subordinate-owned byte/halfword/word narrow transfers; broader subordinate cardinality, multiple requesters, arbitration, bus matrices, programmable or dynamic windows, optional AHB signals, burst continuation, direct backend, verification-output, backend-language variants, AXI/APB behavior, and VHDL remain future work.'

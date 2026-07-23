@@ -6916,6 +6916,16 @@ non-parking sources retain that deferral. `.800` then owns the paired public
 contract and exact status/control-window runtime proof. No behavior changed in
 `.798`; decision 0020 and proposed audits remain inactive.
 
+`.799` now completes the report-only prerequisite. The two-subordinate broader
+interconnect residue branches first on the existing all-children BUSY-park
+predicate: parked `.ppif`/`.ahb` reports positively record shipped byte-only
+`WRAP4`/`INCR4` in-word `SEQ` propagation with BUSY parking and no longer defer
+BUSY continuation. Non-parking two-subordinate sources preserve their BUSY
+deferral; one-subordinate reports, residue ids/shape, source/artifact/support
+surfaces, and HDL/runtime behavior remain unchanged. Focused t/1492, t/1493,
+t/1496, and t/1497 pass. `.800` is active for paired public contract selection;
+decision 0020 and proposed audits remain inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

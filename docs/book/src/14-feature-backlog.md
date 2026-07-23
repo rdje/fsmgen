@@ -10729,6 +10729,14 @@ status/control windows, requester `busy_insertion`, and both propagated
 without behavior change; `.800` then selects the paired public contract and
 two-window runtime proof. Decision 0020 and proposed audits remain inactive.
 
+Two-subordinate AHB BUSY report repair:
+[IAL2_AHB_TWO_SUBORDINATE_BUSY_REPORT_REPAIR](../../IAL2_AHB_TWO_SUBORDINATE_BUSY_REPORT_REPAIR.md)
+documents `.799`. Parked two-subordinate generic/alias reports now say shipped
+BUSY parking consistently in both broader-interconnect and burst residue,
+while non-parking reports keep BUSY-continuation deferral. No source, artifact,
+support count, or HDL/runtime behavior changed. `.800` is active for paired
+public contract selection; decision 0020 and proposed audits remain inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

@@ -251,6 +251,10 @@ sub assert_aggregate_hburst_seq_residue {
     unlike($residue{ahb_burst_seq_support_deferred}, qr/HBURST-driven length\/wrap semantics/, "$label top residue no longer says all HBURST length/wrap is deferred");
     like($residue{ahb_burst_seq_support_deferred}, qr/halfword\/word burst SEQ/, "$label top residue keeps larger-size burst SEQ deferred");
     like($residue{ahb_burst_seq_support_deferred}, qr/BUSY-in-burst/, "$label top residue keeps BUSY-in-burst residue");
+    if (@$child_indices == 2) {
+        like($residue{ahb_broader_interconnect_decode_deferred}, qr/BUSY-in-burst continuation/, "$label broader topology residue still defers BUSY continuation");
+        unlike($residue{ahb_broader_interconnect_decode_deferred}, qr/with BUSY-in-burst parking/, "$label broader topology residue does not claim unselected BUSY parking");
+    }
 
     for my $child_index (@$child_indices) {
         my %child_residue = map { $_->{id} => $_->{detail} } @{$report->{children}[$child_index]{unsupported_residue}};

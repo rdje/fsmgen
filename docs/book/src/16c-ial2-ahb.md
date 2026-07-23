@@ -1381,6 +1381,16 @@ only—no transfer behavior or support count changes. `.800` then owns the paire
 source contract. See
 [IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_READINESS_AUDIT](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_READINESS_AUDIT.md).
 
+`.799` now ships that report-only repair. On two-subordinate HBURST sources
+whose children all park BUSY, `ahb_broader_interconnect_decode_deferred`
+records byte-only `WRAP4`/`INCR4` in-word `SEQ` propagation with BUSY-in-burst
+parking as shipped and no longer lists BUSY continuation as deferred. The
+non-parking generic and alias sources still defer BUSY continuation. Report ids
+and structure, sources, generated artifacts, support accounting, and HDL/runtime
+behavior are unchanged; focused t/1492, t/1493, t/1496, and t/1497 pass. `.800`
+now owns the paired public contract. See
+[IAL2_AHB_TWO_SUBORDINATE_BUSY_REPORT_REPAIR](../../IAL2_AHB_TWO_SUBORDINATE_BUSY_REPORT_REPAIR.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB

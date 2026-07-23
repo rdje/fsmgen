@@ -54,12 +54,23 @@ The generic `.ppif` reports keep all three. The narrowed aggregate
 `ahb_burst_seq_support_deferred` residue (shipped BUSY-in-burst parking) carries
 through unchanged on both surfaces.
 
+After `.799`, the two-subordinate alias and generic surfaces also agree in
+`ahb_broader_interconnect_decode_deferred`: parked sources record byte-only
+`WRAP4`/`INCR4` in-word `SEQ` propagation with BUSY-in-burst parking as shipped
+and do not defer BUSY continuation. The corresponding non-parking `.ahb` and
+`.ppif` sources still defer BUSY continuation. Alias cleanup remains limited to
+alias-specific residue; it does not rewrite this topology detail.
+
 ## Preservation
 
 `.784` preserves the shipped aggregate BUSY-park `.ppif` sources and their
 `t/1496` assertions, the non-parking aggregate HBURST `.ahb` aliases and
 `t/1493` (they keep `BUSY-in-burst handling` deferred and gain no `parks_on`),
 the endpoint BUSY-park `.ahb` alias and `t/1495`, and all shipped AHB behavior.
+
+`.799` adds paired generic/alias wording checks in `t/1496`/`t/1497` and
+non-parking preservation checks in `t/1492`/`t/1493`; it changes no source,
+artifact, support identity/count, or HDL behavior.
 
 ## Focused Test And Accounting
 

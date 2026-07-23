@@ -145,6 +145,16 @@ Each embedded subordinate child residue flows through the shipped
 shipped` (with `aggregate propagation` stripped by the interconnect's child
 residue projection).
 
+`.799` also makes the two-subordinate topology residue agree with that shipped
+policy. When all HBURST children park BUSY,
+`ahb_broader_interconnect_decode_deferred` now records byte-only
+`WRAP4`/`INCR4` in-word `SEQ` propagation **with BUSY-in-burst parking** as
+shipped and no longer lists BUSY continuation as deferred. The branch uses the
+same `_all_subordinates_park_busy($contract)` predicate as the dedicated burst
+residue. Two-subordinate non-parking HBURST sources retain their existing
+`BUSY-in-burst continuation` deferral, and one-subordinate topology residue is
+unchanged.
+
 True remaining residue includes the matching aggregate BUSY-park `.ahb` aliases,
 requester-side BUSY insertion, halfword/word burst `SEQ`, wider or indefinite
 bursts, multi-word/register-bank progression, optional/property-gated AHB
@@ -158,6 +168,10 @@ generation, backend-language variants, AXI/APB behavior, and VHDL.
 endpoint BUSY-park `.ppif`/`.ahb` sources and `t/1494`/`t/1495`, and all shipped
 AHB requester/subordinate/interconnect/byte-lane/`SEQ`/HBURST/BUSY-park/aggregate/
 `.ahb` behavior, including the base non-HBURST aggregate `SEQ` residue.
+
+`.799` is report-only. Focused `t/1496` locks the corrected parked generic
+wording, `t/1497` locks the matching alias wording, and `t/1492`/`t/1493` lock
+the unchanged non-parking generic/alias deferral.
 
 ## Validation
 

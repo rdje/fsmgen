@@ -213,6 +213,10 @@ sub assert_aggregate_busy_park_residue {
     like($residue{ahb_burst_seq_support_deferred}, qr/byte-only HBURST WRAP4\/INCR4 in-word SEQ propagation with BUSY-in-burst parking/, "$label top residue records shipped BUSY-in-burst parking");
     unlike($residue{ahb_burst_seq_support_deferred}, qr/BUSY-in-burst handling/, "$label top residue no longer defers BUSY-in-burst handling");
     like($residue{ahb_burst_seq_support_deferred}, qr/halfword\/word burst SEQ/, "$label top residue keeps larger-size burst SEQ deferred");
+    if (@$child_indices == 2) {
+        like($residue{ahb_broader_interconnect_decode_deferred}, qr/byte-only HBURST WRAP4\/INCR4 in-word SEQ propagation with BUSY-in-burst parking/, "$label broader topology residue records shipped BUSY parking");
+        unlike($residue{ahb_broader_interconnect_decode_deferred}, qr/BUSY-in-burst continuation/, "$label broader topology residue no longer defers BUSY continuation");
+    }
 
     for my $child_index (@$child_indices) {
         my %child_residue = map { $_->{id} => $_->{detail} } @{$report->{children}[$child_index]{unsupported_residue}};

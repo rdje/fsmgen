@@ -5858,6 +5858,16 @@ two-subordinate sources must stop calling BUSY continuation deferred, while
 non-parking sources keep that deferral. `.800` then owns the paired public
 contract and exact two-window runtime proof. No behavior changed in `.798`;
 decision 0020 and proposed audits remain inactive.
+`.799` now repairs the shipped report contradiction without changing bus
+behavior. For two-subordinate HBURST sources whose children all park BUSY,
+`ahb_broader_interconnect_decode_deferred` uses the existing BUSY-park
+predicate, states that byte-only `WRAP4`/`INCR4` in-word `SEQ` propagation with
+BUSY-in-burst parking ships, and drops only BUSY continuation from its deferred
+list. Non-parking two-subordinate `.ppif`/`.ahb` sources retain that deferral;
+one-subordinate reports, residue ids/shape, sources, artifacts, support counts,
+and HDL/runtime behavior are unchanged. Focused t/1492, t/1493, t/1496, and
+t/1497 pass. `.800` is now active for paired public contract selection;
+decision 0020 and proposed audits remain inactive.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8513,6 +8523,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.796` shipped paired-BUSY `.ahb` profile alias, byte-identical `.ppif` parity, one shared generator/lowering architecture, support identity, alias-only residue cleanup, t/1514 public-surface proof, and retained t/1513 runtime proof.
 - `docs/IAL2_POST_AHB_PAIRED_BUSY_FAMILY_NEXT_SLICE_SELECTION.md` — records the `.797` no-behavior selection of `.798`, two-subordinate paired BUSY readiness; captures the successful four-child in-memory composition probe, the required status/control-window runtime proof, and the contradictory broader-versus-burst BUSY residue that the audit must resolve before implementation.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_READINESS_AUDIT.md` — records the `.798` candidate proof across check/schedule/semantic/artifact/SystemVerilog/Yosys surfaces, exact future status/control runtime observation plan, absence of generator prerequisites, and selection of `.799` report-only BUSY-residue repair before `.800` paired public contract selection.
+- `docs/IAL2_AHB_TWO_SUBORDINATE_BUSY_REPORT_REPAIR.md` — records the `.799` report-only truthfulness repair: parked two-subordinate generic/alias surfaces claim shipped BUSY parking consistently, non-parking surfaces retain BUSY-continuation deferral, and sources/artifacts/support/HDL behavior stay unchanged before `.800` contract selection.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

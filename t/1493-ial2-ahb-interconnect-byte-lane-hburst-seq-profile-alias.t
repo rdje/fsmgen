@@ -75,7 +75,8 @@ subtest 'adapter accepts selected AHB aggregate HBURST byte-lane SEQ .ahb profil
             );
         }
 
-        my %alias_residue = map { $_->{id} => 1 } @{$alias->{report}{unsupported_residue}};
+        my %alias_residue_detail = map { $_->{id} => $_->{detail} } @{$alias->{report}{unsupported_residue}};
+        my %alias_residue = map { $_ => 1 } keys %alias_residue_detail;
         ok(!$alias_residue{ahb_aggregate_profile_alias_deferred}, "$case->{label} .ahb removes aggregate profile-alias residue");
         ok(!residue_id_occurs($alias->{report}, 'ahb_aggregate_profile_alias_deferred'), "$case->{label} .ahb removes aggregate profile-alias residue from nested reports");
         ok(!residue_id_occurs($alias->{report}, 'ahb_profile_alias_deferred'), "$case->{label} .ahb removes requester profile-alias residue from nested reports");
@@ -86,6 +87,10 @@ subtest 'adapter accepts selected AHB aggregate HBURST byte-lane SEQ .ahb profil
         ok($alias_residue{ahb_burst_seq_support_deferred}, "$case->{label} .ahb keeps remaining burst/SEQ residue");
         ok($alias_residue{ahb_direct_backend_deferred}, "$case->{label} .ahb keeps direct-backend residue");
         ok($alias_residue{ahb_verification_output_deferred}, "$case->{label} .ahb keeps verification/backend residue");
+        if ($case->{child_count} == 4) {
+            like($alias_residue_detail{ahb_broader_interconnect_decode_deferred}, qr/BUSY-in-burst continuation/, "$case->{label} .ahb broader topology residue still defers BUSY continuation");
+            unlike($alias_residue_detail{ahb_broader_interconnect_decode_deferred}, qr/with BUSY-in-burst parking/, "$case->{label} .ahb broader topology residue does not claim unselected BUSY parking");
+        }
 
         my %ppif_residue = map { $_->{id} => 1 } @{$ppif->{report}{unsupported_residue}};
         ok($ppif_residue{ahb_aggregate_profile_alias_deferred}, "$case->{label} generic PPIF keeps aggregate profile-alias residue");

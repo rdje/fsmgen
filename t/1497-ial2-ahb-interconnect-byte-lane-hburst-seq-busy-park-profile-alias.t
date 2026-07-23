@@ -54,7 +54,8 @@ subtest 'adapter accepts selected aggregate BUSY-park .ahb profile aliases and p
             is_deeply($child->{transfer}{seq_policy}{clears_on}, [qw(reset idle error new_nonseq final_beat)], "$case->{label} .ahb child $child_index drops BUSY from clears_on");
         }
 
-        my %alias_residue = map { $_->{id} => 1 } @{$alias->{report}{unsupported_residue}};
+        my %alias_residue_detail = map { $_->{id} => $_->{detail} } @{$alias->{report}{unsupported_residue}};
+        my %alias_residue = map { $_ => 1 } keys %alias_residue_detail;
         ok(!$alias_residue{ahb_aggregate_profile_alias_deferred}, "$case->{label} .ahb removes aggregate profile-alias residue");
         ok(!residue_id_occurs($alias->{report}, 'ahb_aggregate_profile_alias_deferred'), "$case->{label} .ahb removes aggregate profile-alias residue from nested reports");
         ok(!residue_id_occurs($alias->{report}, 'ahb_subordinate_profile_alias_deferred'), "$case->{label} .ahb removes subordinate profile-alias residue from nested reports");
@@ -62,6 +63,10 @@ subtest 'adapter accepts selected aggregate BUSY-park .ahb profile aliases and p
         ok($alias_residue{$case->{topology_residue}}, "$case->{label} .ahb keeps topology residue");
         ok($alias_residue{ahb_burst_seq_support_deferred}, "$case->{label} .ahb keeps remaining burst/SEQ residue");
         like($alias_residue{ahb_burst_seq_support_deferred} ? residue_detail($alias->{report}, 'ahb_burst_seq_support_deferred') : '', qr/with BUSY-in-burst parking/, "$case->{label} .ahb top residue records shipped BUSY-in-burst parking");
+        if ($case->{child_count} == 4) {
+            like($alias_residue_detail{ahb_broader_interconnect_decode_deferred}, qr/byte-only HBURST WRAP4\/INCR4 in-word SEQ propagation with BUSY-in-burst parking/, "$case->{label} .ahb broader topology residue records shipped BUSY parking");
+            unlike($alias_residue_detail{ahb_broader_interconnect_decode_deferred}, qr/BUSY-in-burst continuation/, "$case->{label} .ahb broader topology residue no longer defers BUSY continuation");
+        }
 
         my %ppif_residue = map { $_->{id} => 1 } @{$ppif->{report}{unsupported_residue}};
         ok($ppif_residue{ahb_aggregate_profile_alias_deferred}, "$case->{label} generic PPIF keeps aggregate profile-alias residue");
