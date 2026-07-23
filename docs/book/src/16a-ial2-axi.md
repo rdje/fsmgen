@@ -709,18 +709,29 @@ post-reset recovery. It ends idle at exact counts `AR=5`, `R=4`,
 that reset after AR completion cancels response ownership without fabricating
 an R handshake or full completion.
 
-The selected next functional direction is a bounded full-width INCR multi-beat
-read composition. Its behavior-neutral readiness audit will compare an
-authored bounded length with the leading fixed-four-beat shape
-(`ARLEN=3`/`ARSIZE=2`/`ARBURST=INCR`), prove repeated R-child ownership and a
-per-beat observation event, and select exact count/`RLAST`/RID/error/reset and
-4-KiB-boundary behavior before any public contract changes. No multi-beat
-composition behavior ships yet.
+The completed behavior-neutral readiness audit selects the first multi-beat
+physical read boundary: a fixed-four, full-width INCR composition with
+`ARLEN=3`, `ARSIZE=2`, and `ARBURST=INCR`. Admission requires a four-byte-
+aligned 16-byte span contained within one 4-KiB region. The proposed additive
+composition reuses the unchanged AR driver and explicitly re-arms the
+unchanged one-beat R acceptor four times under a new two-bit-index coordinator.
 
-General dynamic bursts, RRESP/output-bank aggregation, capacity/status adapter
-wiring, multiple outstanding and back-to-back reads, ID queues/demux/
-interleaving, aliases, and decision 0020's protocol-neutral transaction
-interface remain separate later directions.
+The proposed public event stream keeps the physical boundary raw:
+`read_beat_done` and `response_beat_index` identify each newly captured
+RID/RDATA/RRESP/RLAST tuple. RID match and the expected RLAST sequence are
+sticky across the burst. Beat count is authoritative, so early RLAST, RID
+mismatch, and non-OKAY RRESP drain all four accepted transfers; missing final
+RLAST retires on the fourth beat with last-match low. RRESP aggregation and
+four-entry output banks remain capacity/status responsibilities. A temporary
+generated-HDL proof passed continuous and delayed RVALID, the ready-low re-arm
+bubble, address rejection, error drain, reset abort, and recovery at exact
+AR/R/request/beat/transaction counts `4/13/4/13/3`. Exact public-contract
+selection is next; no multi-beat composition behavior ships yet.
+
+General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
+timeout/recovery, capacity/status adapter wiring, multiple outstanding and
+back-to-back reads, ID queues/demux/interleaving, aliases, and decision 0020's
+protocol-neutral transaction interface remain separate later directions.
 
 ## More-Control Mode
 
