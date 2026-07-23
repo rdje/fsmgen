@@ -388,12 +388,10 @@ admitted aligned write command to its one accepted B response and one
 full-transaction completion event.
 
 This selection does not change current behavior. In particular, the shipped
-AW+W `write_done` remains request-channel issue completion. The readiness audit
-must separately define B-arm timing, retained AWID-to-BID correlation,
-BRESP/error exposure, aggregate busy lifetime, and the full-completion pulse.
-It must also prove whether the C4 top may nest the existing request composition
-or should directly instantiate its unchanged AW/W/request-coordinator children
-beside B and the new transaction coordinator.
+AW+W `write_done` remains request-channel issue completion. The completed
+readiness audit keeps that event distinct from full transaction completion and
+fixes B-arm timing, retained AWID-to-BID correlation, raw BRESP exposure, and
+aggregate busy lifetime before exact public-contract spelling.
 
 Capacity/status integration follows a different boundary: its submit and
 completion events are abstract and its optional ID/lifecycle/ordering/demux
@@ -401,6 +399,25 @@ families require an explicit adapter and outstanding policy. AR/R and
 multi-beat write behavior also remain later increments. The protocol-neutral
 transaction interface from decision 0020 remains a director-gated future
 direction, not activated by this selection.
+
+The readiness audit has now fixed the safe implementation architecture. The
+full-write top must be a flat five-child C4 composition: AW driver, W driver,
+the existing request coordinator, B acceptor, and a new transaction
+coordinator. The current composition compiler intentionally rejects a
+`?top`-rooted request composition as a `?fsmc` child, so the full generator
+reuses the request generator's three leaf actors through private internal
+bindings and selects a new structural top.
+
+The transaction coordinator captures the aligned public request and AWID,
+keeps aggregate busy high through response retirement, and arms B only after
+both AW and W have transferred. It exposes request completion separately from
+full transaction completion. Captured BID is compared with the retained AWID;
+a mismatch is assertion-visible and reports match status false, but the
+already-consumed response still terminally completes. Captured BRESP remains a
+raw two-bit transaction result—full completion does not imply an OKAY response.
+
+Exact public grammar and names remain the next contract-selection step; no
+new full-write source is shipped yet.
 
 Use `--outdir DIR` to review `axi_aw_driver.isf`, `axi_w_driver.isf`,
 `axi_write_request_coordinator.isf`, their three `.fsm` children, and the
