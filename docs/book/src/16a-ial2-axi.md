@@ -378,35 +378,21 @@ Run the public source directly:
 ./bin/fsmgen --verify-hdl ppif/axi_write_request_composition.ppif
 ```
 
-### Selected next write-side boundary
+### Full-write transaction composition
 
-The next bounded increment is a single-beat **full-write transactor
-composition**. It will reuse the shipped AW driver, W driver, request
-coordination, and B acceptor rather than duplicate their channel state
-machines. A new response-aware coordinator and structural top will relate one
-admitted aligned write command to its one accepted B response and one
-full-transaction completion event.
+FSMGen now ships the bounded single-beat AW+W+B full-write source
+`ppif/axi_write_transaction_composition.ppif`. It reuses the shipped AW driver,
+W driver, request coordinator, and B acceptor rather than duplicating their
+channel state machines. A new response-aware transaction coordinator and
+structural top relate one admitted aligned command to exactly one accepted B
+response and one full-transaction completion event.
 
-This selection does not change current behavior. In particular, the shipped
-AW+W `write_done` remains request-channel issue completion. The completed
-readiness audit keeps that event distinct from full transaction completion and
-fixes B-arm timing, retained AWID-to-BID correlation, raw BRESP exposure, and
-aggregate busy lifetime before exact public-contract spelling.
-
-Capacity/status integration follows a different boundary: its submit and
-completion events are abstract and its optional ID/lifecycle/ordering/demux
-families require an explicit adapter and outstanding policy. AR/R and
-multi-beat write behavior also remain later increments. The protocol-neutral
-transaction interface from decision 0020 remains a director-gated future
-direction, not activated by this selection.
-
-The readiness audit has now fixed the safe implementation architecture. The
-full-write top must be a flat five-child C4 composition: AW driver, W driver,
-the existing request coordinator, B acceptor, and a new transaction
-coordinator. The current composition compiler intentionally rejects a
-`?top`-rooted request composition as a `?fsmc` child, so the full generator
-reuses the request generator's three leaf actors through private internal
-bindings and selects a new structural top.
+The generated top is a flat five-child C4 composition: AW driver, W driver,
+the request coordinator extracted from the existing request-composition
+generator, B acceptor, and transaction coordinator. The private nested request
+top is intentionally omitted because a `?top` root is not a legal `?fsmc`
+child in this lane. The result contains five generated IAL1 review sources and
+schedules, five leaf FSMs, and one selected structural-top FSM.
 
 The transaction coordinator captures the aligned public request and AWID,
 keeps aggregate busy high through response retirement, and arms B only after
@@ -416,10 +402,7 @@ a mismatch is assertion-visible and reports match status false, but the
 already-consumed response still terminally completes. Captured BRESP remains a
 raw two-bit transaction result—full completion does not imply an OKAY response.
 
-The readiness audit itself shipped no full-write source.
-
-That exact contract is now selected, while implementation remains the next
-step. The additive public object is:
+The additive public object is:
 
 ```text
 (axi-write-transaction-composition axi_write_transaction_composition
@@ -447,30 +430,40 @@ step. The additive public object is:
     (response-id-match response_id_match)))
 ```
 
-The selected source path is
-`ppif/axi_write_transaction_composition.ppif`; it is not checked in until the
-implementation slice. The generator will be
+The generator is
 `FSM::IAL2::ProtocolIntent::AxiWriteTransactionComposition`, with report schema
 `fsmgen.ial2.protocol_intent.axi_write_transaction_composition.v1`, selected
 top `axi_write_transaction_composition`, five generated IAL1 schedules, five
-leaf FSMs plus the structural top, and focused proof owner `t/1503`.
+leaf FSMs plus the structural top, and focused proof owner
+`t/1503-ial2-axi-write-transaction-composition.t`.
 
-The contract keeps the public request vocabulary familiar while using private
+The source keeps the public request vocabulary familiar while using private
 request/B handoff names inside C4. It arms B at request completion, holds busy
 through B retirement, and records ID match from captured BID versus admitted
 AWID. A mismatch remains assertion-visible but terminal; raw BRESP determines
-the transaction result. No parser, source, or HDL behavior has shipped from
-this contract-selection step alone.
+the transaction result and full completion does not imply an OKAY response.
 
-Use `--outdir DIR` to review `axi_aw_driver.isf`, `axi_w_driver.isf`,
-`axi_write_request_coordinator.isf`, their three `.fsm` children, and the
-selected `axi_write_request_composition.fsm` structural top. The generated HDL
-contains all three child modules plus module `axi_write_request_composition`.
+Run and inspect the public source directly:
 
-The implementation boundary still excludes B acceptance, capacity integration,
-full transaction completion, queues, multi-beat/burst behavior, AR/R, aliases,
-and backend/VHDL changes. The `.axi` profile-alias spelling remains fail-closed;
-this first composition surface is generic `.ppif` only.
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_write_transaction_composition.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_write_transaction_composition.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_write_transaction_composition.ppif
+./bin/fsmgen --verify-hdl ppif/axi_write_transaction_composition.ppif
+./bin/fsmgen --quiet --strict --outdir /tmp/fsmgen-axi-full-write-out ppif/axi_write_transaction_composition.ppif
+```
+
+The outdir contains the five `.isf` review sources, five leaf `.fsm` files,
+and `axi_write_transaction_composition.fsm`; it does not contain the private
+`axi_write_request_private.fsm` top.
+
+The bounded implementation still excludes capacity integration, queues,
+multiple outstanding transactions, dynamic ID allocation/ordering, multi-beat
+or narrow/unaligned behavior, extended AXI attributes, AR/R, aliases,
+verification-output generation, and backend/VHDL variants. The `.axi`
+profile-alias spelling remains fail-closed; this first composition surface is
+generic `.ppif` only. Decision 0020's protocol-neutral transaction interface
+also remains a director-gated future direction.
 
 ## More-Control Mode
 
@@ -588,6 +581,8 @@ This chapter was validated from checked-in sources with:
 ./bin/fsmgen --verify-hdl ppif/axi_b_response_acceptor.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_write_request_composition.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_write_request_composition.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/axi_write_transaction_composition.ppif
+./bin/fsmgen --verify-hdl ppif/axi_write_transaction_composition.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/axi_manager_capacity_status_id_family.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_manager_capacity_status_transaction_envelope.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif
@@ -609,3 +604,13 @@ public/report/fail-closed/CLI artifact contract and executes the structural top
 for misaligned no-launch, atomic capture, simultaneous-ready, AW-first, W-first,
 long-stall stability, ignored-busy-command, zero-strobe, fixed-metadata, and
 exact three-AW/three-W/three-done behavior.
+
+The four-subtest `t/1503-ial2-axi-write-transaction-composition.t` extends that
+proof through B retirement. It checks the exact report and fail-closed grammar,
+support-accounted strict/schedule/semantic/outdir/Verilator/Yosys surfaces, and
+executes the generated five-child top for misaligned no-launch, atomic capture,
+simultaneous/AW-first/W-first request completion, already-high and delayed
+BVALID, aggregate busy,
+ignored busy command, raw non-OKAY BRESP capture, matched BID, terminal
+mismatched BID, exact 3/3/3 AW/W/B handshakes, distinct request/transaction
+pulses, and final idle.

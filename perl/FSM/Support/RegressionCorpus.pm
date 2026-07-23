@@ -2085,6 +2085,27 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'top',
     },
     {
+        id => 'intent.ppif_axi_write_transaction_composition',
+        relpath => 'ppif/axi_write_transaction_composition.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_axi_write_transaction_composition_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'axi_write_transaction_composition',
+        expected_top_name => 'axi_write_transaction_composition',
+        expected_lane => 'C4',
+        expected_instance_count => 5,
+        expected_child_modules => [qw(
+            axi_aw_driver
+            axi_w_driver
+            axi_write_request_coordinator
+            axi_b_response_acceptor
+            axi_write_transaction_coordinator
+        )],
+        expected_semantic_source_root_kind => 'top',
+    },
+    {
         id => 'intent.ppif_valid_ready_handshake',
         relpath => 'ppif/valid_ready_handshake.ppif',
         family => 'protocol_fixture',
