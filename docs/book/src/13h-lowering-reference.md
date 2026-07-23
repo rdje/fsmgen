@@ -1822,6 +1822,29 @@ and repeated condition sampling are both explicit in the scheduled artifact.
 both forms, the condition is sampled only in the generated decision state; it
 is not a continuous guard over the body.
 
+The example uses one-bit conditions, so its compact `?keep` and `?done_seen`
+selectors are unchanged. A bare known-width condition wider than one bit is
+made Boolean before the selector is emitted. For example, a three-bit counter
+uses the same normalized predicate at `while` entry and retest:
+
+```lisp
+(main_while_entry_1
+  (?(!= count 3'd0)
+    (=1 (-> main_body_2))
+    (=0 (-> main_done_5))))
+
+(main_while_check_4
+  (?(!= count 3'd0)
+    (=1 (-> main_body_2))
+    (=0 (-> main_done_5))))
+```
+
+This is a nonzero truth test: every value `1` through `7` takes the true edge,
+and only `0` takes the false edge. A multi-bit bare `until` condition uses the
+same predicate, with its true and false destinations reversed according to
+body-first `until` semantics. Reports still publish the source spelling such
+as `count`, not the internal width-derived comparison.
+
 Schedule reports expose the loop through `transaction_loops[]`, including
 `transaction`, `kind`, `condition`, `entry_state`, `decision_states`,
 `body_start`, `body_states`, `exit_state`, and `body_clause_count`.

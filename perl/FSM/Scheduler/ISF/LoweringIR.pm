@@ -8348,13 +8348,14 @@ sub _ir_dynamic_wait {
 sub _ir_while {
     my ($cl, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses, $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref) = @_;
     my $condition = $cl->[1];
+    my $lowered_condition = _normalize_bare_loop_condition($condition, $widths, $counters);
     my @body_clauses = @{$cl}[2 .. $#$cl];
     my @entry_assignments = _sample_assignments($pending_samples || []);
     my $loop_id = $$ir;
     my $entry = {
         name        => "${tn}_while_entry_" . $$ir++,
         kind        => 'loop_while',
-        condition   => $condition,
+        condition   => $lowered_condition,
         assignments => \@entry_assignments,
         transitions => [],
         loop_entry  => 1,
@@ -8372,7 +8373,7 @@ sub _ir_while {
     my $back = {
         name        => "${tn}_while_check_" . $$ir++,
         kind        => 'loop_while',
-        condition   => $condition,
+        condition   => $lowered_condition,
         assignments => [],
         transitions => [],
         loop_id     => $loop_id,
@@ -8395,6 +8396,7 @@ sub _ir_while {
 sub _ir_until {
     my ($cl, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses, $spawn_refs, $constant_values, $generated_children, $repeat_do_ordinal_ref) = @_;
     my $condition = $cl->[1];
+    my $lowered_condition = _normalize_bare_loop_condition($condition, $widths, $counters);
     my @body_clauses = @{$cl}[2 .. $#$cl];
     my $loop_id = $$ir;
     my $body_states = _expand_loop_body(
@@ -8406,7 +8408,7 @@ sub _ir_until {
     my $check = {
         name        => "${tn}_until_check_" . $$ir++,
         kind        => 'loop_until',
-        condition   => $condition,
+        condition   => $lowered_condition,
         assignments => [],
         transitions => [],
         loop_entry  => 1,
@@ -8421,6 +8423,20 @@ sub _ir_until {
     $check->{loop_decision_state_names} = [$check->{name}];
 
     return [@$body_states, $check];
+}
+
+sub _normalize_bare_loop_condition {
+    my ($condition, $widths, $local_widths) = @_;
+    return $condition if ref($condition);
+
+    my $width = _known_expr_width($condition, $widths);
+    $width = $local_widths->{$condition}
+        if !defined($width)
+            && ref($local_widths) eq 'HASH'
+            && exists($local_widths->{$condition});
+    return $condition unless defined($width) && $width > 1;
+
+    return ['!=', $condition, "${width}'d0"];
 }
 
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1',source_kind=>'complete_pulse'}],transitions=>[]} }

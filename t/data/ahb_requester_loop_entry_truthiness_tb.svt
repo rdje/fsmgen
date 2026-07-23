@@ -1,0 +1,65 @@
+module ahb_requester_loop_entry_truthiness_tb;
+  logic clk = 0;
+  logic rst_n = 0;
+  logic HGRANT = 1;
+  logic [31:0] HRDATA = 0;
+  logic HREADY = 1;
+  logic [1:0] HRESP = 0;
+  logic [31:0] cmd_addr = 32'h00000100;
+  logic [2:0] cmd_burst = 3'b011;
+  logic [4:0] cmd_len = 4;
+  logic cmd_lock = 0;
+  logic [3:0] cmd_prot = 0;
+  logic [2:0] cmd_size = 0;
+  logic cmd_valid = 0;
+  logic [31:0] cmd_wdata = 32'h11110000;
+  logic [31:0] cmd_wdata_step = 1;
+  logic cmd_write = 1;
+  wire [31:0] HADDR;
+  wire [2:0] HBURST;
+  wire HBUSREQ;
+  wire HLOCK;
+  wire [3:0] HPROT;
+  wire [2:0] HSIZE;
+  wire [1:0] HTRANS;
+  wire [31:0] HWDATA;
+  wire HWRITE;
+  wire [31:0] active_addr;
+  wire [2:0] active_hburst;
+  wire beat_done;
+  wire [4:0] beat_index;
+  wire [4:0] beats_remaining;
+  wire burst_active;
+  wire busy;
+  wire cmd_ready;
+  wire done;
+  wire last_error;
+  wire [31:0] last_read_data;
+  wire [1:0] last_resp;
+  wire last_retry;
+  wire last_split;
+  wire wrap_active;
+
+  amba_requester dut (.*);
+  always #5 clk = ~clk;
+
+  integer cycles = 0;
+  always @(posedge clk) begin
+    cycles <= cycles + 1;
+    if (beats_remaining == 3 && beat_index == 1) begin
+      $display("PASS remaining=%0d index=%0d", beats_remaining, beat_index);
+      $finish;
+    end
+    if (cycles > 120)
+      $fatal(1, "INCR4 did not advance beyond remaining count four");
+  end
+
+  initial begin
+    repeat (3) @(negedge clk);
+    rst_n = 1;
+    @(negedge clk);
+    cmd_valid = 1;
+    @(negedge clk);
+    cmd_valid = 0;
+  end
+endmodule

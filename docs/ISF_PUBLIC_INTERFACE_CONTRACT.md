@@ -937,7 +937,12 @@ so top-level transaction `(while cond body...)` lowers as a pre-test
 zero-or-more loop, `(until cond body...)` lowers as a body-first one-or-more
 loop, conditions are sampled in generated decision states, successful reports
 expose `transaction_loops[]`, and unsupported loop body combinations fail
-closed.
+closed. The multi-bit truthiness boundary is checked by
+[t/1510-isf-multibit-loop-predicate-truthiness.t](../t/1510-isf-multibit-loop-predicate-truthiness.t):
+bare known-width loop conditions wider than one bit lower through an explicit
+width-matched nonzero comparison at every decision, one-bit loop conditions
+retain their existing compact selector, and schedule reports retain the
+authored condition text.
 The transaction-name boundary is checked by
 [t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
 so duplicate transaction names fail before actor-shell return and downstream

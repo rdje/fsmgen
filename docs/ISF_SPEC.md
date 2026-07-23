@@ -3393,6 +3393,15 @@ generated decision state. It is not a continuous guard over every state inside
 a multi-cycle body; once the body starts, body states run according to their
 own scheduled control flow until they reach the loop check or exit path.
 
+For a bare `while`/`until` condition whose width is known and greater than one,
+truth means **nonzero**, not exactly one. Lowering makes that rule explicit in
+the review artifact: for example, a three-bit `(while count ...)` condition is
+emitted as `?(!= count 3'd0)` at both the entry and back-edge decisions. A
+one-bit bare condition keeps the compact `?flag` form, and authored expression
+conditions keep their expression shape. `transaction_loops[].condition`
+continues to report the authored condition rather than this width-derived
+internal normalization.
+
 The shipped `while`/`until` loop source position is top-level inside a
 transaction body. `while`/`until` loop bodies accept the current inline body
 subset: named drive calls, `await`, `sample`, `complete`, `repeat`, `update`,
@@ -5988,6 +5997,7 @@ Focused tests:
 - [t/1433-isf-until-pending-spawn-local-do-effect-widening.t](../t/1433-isf-until-pending-spawn-local-do-effect-widening.t)
 - [t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t](../t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t)
 - [t/1453-isf-storage-field-metadata.t](../t/1453-isf-storage-field-metadata.t)
+- [t/1510-isf-multibit-loop-predicate-truthiness.t](../t/1510-isf-multibit-loop-predicate-truthiness.t)
 
 ## 12. Explicitly Deferred
 

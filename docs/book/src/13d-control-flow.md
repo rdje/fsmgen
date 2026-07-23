@@ -1900,6 +1900,11 @@ cycles, then the guard is re-evaluated. The body runs zero or more
 times. There is no implicit counter; the loop terminates only
 when `cond` becomes zero.
 
+For a bare condition wider than one bit, "true" means any nonzero value. For
+example, if `cond` is three bits wide, `3'd4`, `3'd2`, and `3'd1` all enter or
+repeat the body, while `3'd0` exits. The reviewable `.fsm` makes this explicit
+as `?(!= cond 3'd0)`. A one-bit condition retains the shorter `?cond` selector.
+
 ### `(until ...)` post-test loop
 
 ```lisp
@@ -1921,4 +1926,5 @@ when `cond` becomes zero.
 the body runs *first*, then the guard `cond` is checked. The body
 therefore runs at least once. Iterations stop when `cond` is
 asserted at the end of a body iteration. Same shape as `while`
-otherwise.
+otherwise. Bare multi-bit conditions use the same nonzero rule as `while`:
+zero repeats the body and any nonzero value exits.

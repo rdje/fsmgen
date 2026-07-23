@@ -1288,6 +1288,15 @@ Loops:
   body...)
 ```
 
+Bare known-width `while`/`until` conditions use scalar nonzero truthiness. A
+condition wider than one bit is normalized before scheduled emission to an
+explicit width-matched zero comparison, so values such as three-bit `4` take
+the true edge and zero takes the false edge. The generated `.fsm` therefore
+shows `?(!= count 3'd0)` at a three-bit `while` entry/retest or `until` check,
+while a one-bit condition retains `?flag`. Expression conditions are not
+rewritten by this rule, and `transaction_loops[].condition` preserves the
+authored condition text.
+
 Repeat:
 
 ```lisp
