@@ -10737,6 +10737,15 @@ while non-parking reports keep BUSY-continuation deferral. No source, artifact,
 support count, or HDL/runtime behavior changed. `.800` is active for paired
 public contract selection; decision 0020 and proposed audits remain inactive.
 
+Two-subordinate paired AHB BUSY contract selection:
+[IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_CONTRACT_SELECTION](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_CONTRACT_SELECTION.md)
+documents `.800` and selects `.801`. The exact generic source reuses the
+existing four-child generator, adds one support entry for 313 protocol / 354
+supported-smoke+strict, and requires t/1515 to prove status-base-0 and
+control-base-4 `INCR4` BUSY parking with local-address subtraction,
+non-interference, and `44332211`/`88776655` storage. The alias remains later;
+decision 0020 and proposed audits remain inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

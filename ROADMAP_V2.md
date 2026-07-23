@@ -6926,6 +6926,18 @@ surfaces, and HDL/runtime behavior remain unchanged. Focused t/1492, t/1493,
 t/1496, and t/1497 pass. `.800` is active for paired public contract selection;
 decision 0020 and proposed audits remain inactive.
 
+`.800` now selects `.801`, direct implementation of additive generic
+`ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ppif`.
+The contract changes only source identity/anchor plus the shipped BUSY requester
+selection; it freezes module `ahb_tb`, four children, 29 signals, four IAL1/five
+IAL0 artifacts, semantic root `top`, both BUSY-parking policies, status `[0,4)`
+and control `[4,8)`, and one support entry targeting 313 protocol / 354
+supported-smoke+strict. t/1515 must issue status-base-0 then control-base-4
+byte `INCR4` writes and prove the exact held BUSY sequence, selected-child
+parking, unselected-child non-interference, control local address `0,1,2,2,3`,
+clean completion, and retained `44332211`/`88776655` storage. Matching `.ahb`
+alias selection remains later; decision 0020 and proposed audits stay inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

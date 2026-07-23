@@ -1391,6 +1391,22 @@ behavior are unchanged; focused t/1492, t/1493, t/1496, and t/1497 pass. `.800`
 now owns the paired public contract. See
 [IAL2_AHB_TWO_SUBORDINATE_BUSY_REPORT_REPAIR](../../IAL2_AHB_TWO_SUBORDINATE_BUSY_REPORT_REPAIR.md).
 
+`.800` selects `.801`, the generic two-subordinate paired source. It is an
+additive copy of the shipped two-subordinate BUSY-park aggregate with only
+identity/anchor changes and the requester replaced by
+`amba_requester_busy_insert`. The frozen surface is module `ahb_tb`, four
+children, 29 signals, status `[0,4)`, control `[4,8)`, four IAL1/five IAL0
+artifacts, and one support entry taking accounting to 313 protocol / 354
+supported-smoke+strict.
+
+The decisive generated-HDL example runs two byte `INCR4` writes. Status at base
+0 must finish as `32'h44332211`; control at base 4 must see local addresses
+`0,1,2,2,3` across `NONSEQ,SEQ,BUSY,SEQ,SEQ` and finish as
+`32'h88776655`, while status remains unchanged. Each command proves selected-
+child BUSY parking and unselected-child non-interference. The matching `.ahb`
+alias remains a later slice. See
+[IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_CONTRACT_SELECTION](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_CONTRACT_SELECTION.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB
