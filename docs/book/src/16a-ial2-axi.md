@@ -416,8 +416,51 @@ a mismatch is assertion-visible and reports match status false, but the
 already-consumed response still terminally completes. Captured BRESP remains a
 raw two-bit transaction result—full completion does not imply an OKAY response.
 
-Exact public grammar and names remain the next contract-selection step; no
-new full-write source is shipped yet.
+The readiness audit itself shipped no full-write source.
+
+That exact contract is now selected, while implementation remains the next
+step. The additive public object is:
+
+```text
+(axi-write-transaction-composition axi_write_transaction_composition
+  (role manager)
+  (clock clk)
+  (reset (rst_n active_low async))
+  (command
+    (start write_cmd_valid)
+    (address cmd_awaddr width 32)
+    (id cmd_awid width 4)
+    (data cmd_wdata width 32)
+    (strobe cmd_wstrb width 4))
+  ...
+  (b-channel
+    (valid bvalid)
+    (ready bready)
+    (id bid width 4)
+    (response bresp width 2)
+    (captured-id response_bid width 4)
+    (captured-response response_bresp width 2))
+  (status
+    (busy write_busy)
+    (request-done write_request_done)
+    (transaction-done write_transaction_done)
+    (response-id-match response_id_match)))
+```
+
+The selected source path is
+`ppif/axi_write_transaction_composition.ppif`; it is not checked in until the
+implementation slice. The generator will be
+`FSM::IAL2::ProtocolIntent::AxiWriteTransactionComposition`, with report schema
+`fsmgen.ial2.protocol_intent.axi_write_transaction_composition.v1`, selected
+top `axi_write_transaction_composition`, five generated IAL1 schedules, five
+leaf FSMs plus the structural top, and focused proof owner `t/1503`.
+
+The contract keeps the public request vocabulary familiar while using private
+request/B handoff names inside C4. It arms B at request completion, holds busy
+through B retirement, and records ID match from captured BID versus admitted
+AWID. A mismatch remains assertion-visible but terminal; raw BRESP determines
+the transaction result. No parser, source, or HDL behavior has shipped from
+this contract-selection step alone.
 
 Use `--outdir DIR` to review `axi_aw_driver.isf`, `axi_w_driver.isf`,
 `axi_write_request_coordinator.isf`, their three `.fsm` children, and the
