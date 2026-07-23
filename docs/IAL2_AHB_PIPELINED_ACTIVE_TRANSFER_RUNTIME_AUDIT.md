@@ -4,6 +4,10 @@ Task-tree owner: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`
 
 Date: 2026-07-23
 
+Later selection: `.2` freezes a depth-one accepted address/control phase bank
+at the bus-visible ready/completion edge and assigns implementation to `.3`.
+See `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md`.
+
 ## Outcome
 
 Generated-HDL audit t/1519 proves that the current public AHB subordinate can

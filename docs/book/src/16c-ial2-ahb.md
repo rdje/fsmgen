@@ -2088,6 +2088,42 @@ requester-side BUSY insertion, and larger burst work were deferred at that
 slice's closeout; both the aliases and the additive bounded requester
 single-BUSY source now ship independently.
 
+## Boundary-Free Active Address Phases
+
+The current generated subordinate has a runtime-proven phase-retention defect
+pending implementation in `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`. If a
+selected `SEQ` address phase directly follows a completing `NONSEQ` with no
+IDLE/BUSY/unselected boundary, the bus-visible interface accepts both phases
+but the pre-repair generator retains and completes only the first.
+
+The selected repair is deliberately bounded. The subordinate will hold one
+current phase plus exactly one bus-accepted next address/control phase:
+
+```text
+current completes with HREADY high
+  + selected active next HTRANS
+  -> capture next HADDR/HTRANS/(HBURST)/HWRITE/HSIZE/wait_cycles
+  -> drive the next data phase HREADYOUT low
+  -> finish the current generated FSM tail
+  -> relaunch the captured phase without accepting it a second time
+```
+
+`HWDATA` is not captured with that address/control phase. On the acceptance
+edge it still belongs to the completing write; the next write data is then
+held live by the manager while ready is low. Sequence history from the current
+transfer commits before the captured phase is evaluated. After final ERROR,
+`IDLE` cancels the presented next phase, while an active `NONSEQ`/`SEQ` is
+captured and later evaluated normally (including an independent error for an
+invalid continuation).
+
+The full contract, report shape, proof obligations, and exclusions are in
+[IAL2 AHB Pipelined Active-Transfer Contract Selection](../../IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md).
+Until `.3` ships, users must treat boundary-free generated subordinate
+pipelining as known-broken rather than supported. The shipped paired requester
+remains safe because it supplies the boundary used by its existing proofs.
+This repair is not a general outstanding queue and does not activate the
+protocol-neutral transaction-layer horizon.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:
@@ -2114,6 +2150,7 @@ prove -v t/1490-ial2-ahb-subordinate-byte-lane-hburst-seq.t
 prove -v t/1491-ial2-ahb-subordinate-byte-lane-hburst-seq-profile-alias.t
 prove -v t/1492-ial2-ahb-interconnect-byte-lane-hburst-seq.t
 prove -v t/1493-ial2-ahb-interconnect-byte-lane-hburst-seq-profile-alias.t
+prove -v t/1519-ial2-ahb-pipelined-active-transfer-audit.t
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ppif

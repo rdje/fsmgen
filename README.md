@@ -5988,6 +5988,19 @@ so `.2` is selected to freeze atomic completion-boundary recapture of exactly
 one next active phase before implementation. No shipped behavior changes in
 the audit; decision 0020 remains inactive.
 
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2` now freezes the repair contract
+without changing behavior. The second address phase is accepted at cycle 37,
+while generated `ahb_access_done_q` arrives at cycle 48, so the completion
+event must be captured at the bus-visible `HSEL && HREADY && active HTRANS`
+edge. The selected shared-generator architecture banks exactly one accepted
+next HADDR/HTRANS/optional HBURST/HWRITE/HSIZE/wait_cycles phase, never
+address-phase-captures data-phase HWDATA, drives the following data phase
+not-ready, and relaunches it after the current FSM tail. Final ERROR plus IDLE
+cancels; final ERROR plus an active phase captures it for later independent
+evaluation. `.3` owns implementation and additive `phase_pipeline` reporting;
+`.4` later audits the separate direct `.fsm` seed. General queues and decision
+0020 remain inactive.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8655,6 +8668,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_CURRENT_SURFACE_ALIAS_TRUTHFULNESS_REPAIR.md` — records the `.806` current mdBook/behavior/fact repair for six shipped aggregate/paired AHB aliases, the historical-record boundary, focused t/1518 regression lock, unchanged runtime/public contracts, remaining frontier, and rollback.
 - `docs/IAL2_POST_CURRENT_SURFACE_REPAIR_NEXT_OWNER_SELECTION.md` — records the `.807` selection of the canonical boundary-free AHB active-transfer audit, the current admit/release gap and bounded paired-requester proof, exact generated-HDL audit contract, deferred alternatives, clean-pivot boundary, preservation, and rollback.
 - `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md` — records the `.1` generated-HDL proof that two direct ready/OKAY NONSEQ/SEQ address phases produce only one internal admission/completion and one storage effect, why an endpoint-only boundary contract cannot fail closed safely, and selection of `.2` completion-boundary phase-recapture contract work.
+- `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md` — freezes the `.2` depth-one accepted address/control bank at the bus-visible ready/completion edge, data-phase HWDATA ownership, sequence/error ordering, additive report contract, `.3` implementation gates, and `.4` direct-seed audit boundary.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

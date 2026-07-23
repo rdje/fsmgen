@@ -10853,6 +10853,18 @@ would deadlock or accept the held next phase, so `.2` is selected to freeze a
 bounded atomic completion-edge phase-recapture contract before implementation.
 Decision 0020 remains inactive.
 
+AHB pipelined active-transfer contract selection:
+[IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION](../../IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md)
+documents `.2`. The bus accepts the next active address phase at cycle 37,
+eleven cycles before generated internal done, so `.3` must capture exactly one
+next address/control phase at the ready/completion edge. The bank contains
+HADDR/HTRANS/optional HBURST/HWRITE/HSIZE/wait_cycles, not data-phase HWDATA;
+it drives the following data phase not-ready and relaunches after the current
+FSM tail. Sequence history commits before queued evaluation. Final ERROR plus
+IDLE cancels, while final ERROR plus active HTRANS captures. The report gains
+an additive `phase_pipeline` policy; `.4` separately audits the direct `.fsm`
+seed. General queues and decision 0020 remain inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

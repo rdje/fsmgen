@@ -7044,6 +7044,18 @@ closed because low ready deadlocks the held phase and high ready accepts it.
 completion-boundary phase recapture; policy/multiple BUSY, bus-BUSY status,
 larger bursts, optional signals, and decision 0020 remain deferred/inactive.
 
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2` selects the exact no-behavior
+repair contract. Generated timing accepts the next active phase at cycle 37
+but does not pulse `ahb_access_done_q` until cycle 48, so `.3` must bank one
+next accepted HADDR/HTRANS/optional HBURST/HWRITE/HSIZE/wait_cycles phase on
+the bus-visible ready edge, not on internal done. HWDATA remains live
+data-phase state; ready goes low after capture; queued evaluation follows
+current sequence-history commit; final ERROR+IDLE cancels while final
+ERROR+active captures. The additive `phase_pipeline` report and focused
+generated-HDL/preservation gates are selected. `.4` later audits the separate
+direct lower-layer `.fsm` seed; general queues, broader bursts, AXI/APB/VHDL,
+and decision 0020 remain deferred/inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

@@ -49,7 +49,7 @@ replace one accepted active address phase directly with another.
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT`
   Status: `active`
   Goal: `Runtime-prove and select the boundary-free active-transfer phase contract.`
-  Children: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`
+  Children: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`
   Status: `done`
@@ -59,9 +59,23 @@ replace one accepted active address phase directly with another.
   Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1: prove dropped active phase`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the exact bounded completion-boundary phase-recapture contract before implementation.`
   Acceptance: `Starting only after .1 commits cleanly, reconcile t/1519 timing with the generated IAL1/IAL0 schedule and freeze the smallest one-next-phase contract: exact current-completion/new-address-acceptance event, atomic HADDR/HTRANS/HBURST/HWRITE/HSIZE/wait_cycles capture, current-versus-next HWDATA ownership, held-phase suppression, ready/response timing, SEQ continuity, error paths, one completion per bus acceptance, state/report/doc effects, implementation/test owners, preservation, resource boundary, and rollback. Make no behavior change. Do not expand into general queues/outstanding transfers, multiple managers, broader burst policy, AXI/APB, VHDL, or decision 0020.`
+  Verification: `Reconciled the generated IAL1/IAL0/HDL schedule with t1519: the second ready/OKAY bus acceptance occurs at cycle 37 while ahb_access_done_q appears only at cycle 48, proving the delayed internal done pulse cannot recover that phase. Selected a one-slot accepted address/control bank captured on HSEL && HREADY && active HTRANS while current drains; it atomically stores HADDR/HTRANS/optional HBURST/HWRITE/HSIZE/wait_cycles, never HWDATA, then drives the following data phase not-ready and relaunches without a second bus acceptance. Existing sequence history commits before queued evaluation. Final ERROR+IDLE cancels; final ERROR+active captures for independent evaluation. Selected an additive phase_pipeline report, exact runtime/preservation/resource/rollback gates, .3 implementation, and .4 separate direct-seed audit. Source PDF pages 5-60/5-61 were rendered and visually checked under the PDF workflow. The RAM-guarded t1519 recheck passes 2/2 top-level tests in 42 seconds; live macOS pressure reported 81% free and peak observed generator RSS was about 1.39 GiB, below the 4-GiB cap. Knowledge Map generation/check passes at 972 facts/4921 question keys; mdBook, memory, docs-path, diff, and doctrine gates pass; disposable book output was removed. No behavior changed.`
+  Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2: select one-slot phase recapture`
+
+- ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`
+  Status: `pending`
+  Goal: `Implement one-slot accepted address/control phase recapture in the shared generated AHB subordinate family.`
+  Acceptance: `Starting only after .2 commits cleanly, update AhbSubordinate generated IAL1/state/report behavior so every HSEL && HREADY && active HTRANS phase is retained exactly once: direct-admit current when idle, otherwise capture exactly one next HADDR/HTRANS/optional HBURST/HWRITE/HSIZE/wait_cycles bank, never capture HWDATA, reassert HREADYOUT low after the acceptance edge, relaunch after the current generated FSM tail without a second bus acceptance, and complete every accepted phase exactly once. Preserve current-response ownership, wait states, storage side effects, IDLE/BUSY/selection handling, sequence/HBURST/BUSY-park policies, and two-cycle ERROR semantics including IDLE cancellation versus active continuation. Add the selected additive phase_pipeline report and update current docs/book/facts. Extend t1519 to prove two acceptances/admissions/completions and storage 0x00002211 plus held-phase/error cases; run affected subordinate/aggregate/paired preservation, support/accounting, mdBook, Knowledge Map, memory/path/diff/doctrine gates under the 4-GiB descendant cap. Do not change public syntax/ports/source or support IDs/artifact names, direct fsm/ahb_lite_subordinate.fsm, broader burst policy, AXI/APB/VHDL, general queues/outstanding transfers, or decision 0020.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`
+  Status: `pending`
+  Goal: `Audit the separate direct lower-layer AHB subordinate seed for consecutive active-phase retention after the generated-family repair.`
+  Acceptance: `Starting only after .3 commits cleanly, runtime-probe fsm/ahb_lite_subordinate.fsm with consecutive selected active phases at a ready completion edge, distinguish its direct-FSM behavior from the shared IAL2 generator, and either prove correct retention or select a separate exact repair leaf. Make no seed behavior change in the audit.`
   Verification: `pending`
   Commit: `pending`
 
@@ -73,9 +87,14 @@ and documented in
 `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md` plus fact
 `ial2-ahb-pipelined-active-transfer-runtime-audit`.
 
-The selected next step is contract selection for atomic completion-boundary
-recapture of exactly one next phase. `.2` remains pending until `.1` commits
-cleanly. No behavior repair is mixed into this audit leaf.
+`.2` selects a depth-one accepted address/control phase bank at the bus-visible
+ready/completion edge, not the eleven-cycles-later internal done pulse. It
+captures phase control but not data-phase `HWDATA`, preserves active
+continuation after final ERROR unless the manager presents `IDLE`, and assigns
+the shared-generator/report/runtime repair to `.3`. The distinct direct `.fsm`
+seed remains unchanged for a separate `.4` audit. `.2` activated only after
+`.1` committed cleanly at `5cbed61cc`; no behavior repair is mixed into the
+contract-selection leaf.
 
 ## Blockers
 
