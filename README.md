@@ -5906,6 +5906,17 @@ targets 314 protocol / 355 supported-smoke+strict entries. t/1516 will own
 alias parity and public surfaces while t/1515 remains the shared runtime proof.
 Decision 0020 and proposed audits remain inactive.
 
+`.803` now ships that byte-identical `.ahb` profile alias. It reuses the exact
+four-child IAL2-to-IAL1-to-IAL0-to-HDL architecture and preserves requester
+`busy_insertion`, both status/control child and propagated
+`parks_on=[busy]`, exact windows/artifacts, and t/1515 runtime behavior.
+Existing suffix handling removes only aggregate/requester/both-subordinate
+alias residue plus alias-exposure wording. t/1516 proves byte parity, public
+check/schedule/semantic/artifact/HDL/support/report surfaces, malformed-profile
+diagnostics, and clean `--verify-hdl`. Accounting is now 314 protocol fixtures
+and 355 supported-smoke/strict entries; no parser or generator algorithm
+changed. Decision 0020 and proposed audits remain inactive.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8565,6 +8576,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_CONTRACT_SELECTION.md` — records the `.800` exact generic source/support/report/artifact contract, t/1515 two-command status/control runtime proof, 313/354 accounting target, preservation/diagnostics/resource/rollback boundaries, later alias sequencing, and `.801` direct implementation owner.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md` — documents the `.801` shipped generic four-child paired-BUSY aggregate, one existing generator architecture, exact report/artifact/support surfaces, and generated-HDL status/control proof through retained `32'h44332211`/`32'h88776655` storage.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records the `.802` selection of `.803`, a byte-identical data-only `.ahb` alias with 314/355 accounting targets, t/1516 parity/public-surface proof, retained t/1515 runtime, existing alias-residue cleanup, and no new generator.
+- `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.803` shipped byte-identical `.ahb` alias, shared four-child generator architecture/runtime, exact support/artifact/report surfaces, alias-only residue cleanup, t/1516 proof, and 314/355 accounting.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

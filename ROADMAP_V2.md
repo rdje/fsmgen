@@ -6962,6 +6962,16 @@ supported-smoke+strict entries. t/1516 will prove parity/public surfaces while
 t/1515 retains the shared generated-HDL runtime proof. Decision 0020 and
 proposed audits stay inactive.
 
+`.803` now ships that matching byte-identical `.ahb` alias through the same
+four-child generator architecture. It preserves exact artifacts/windows,
+requester `busy_insertion`, both status/control child and propagated
+`parks_on=[busy]`, and t/1515 runtime behavior. Existing suffix handling
+removes only aggregate/requester/both-subordinate alias residue plus alias-
+exposure wording. t/1516 proves parity, public CLI/report/artifact/HDL/support
+surfaces, diagnostics, and clean `--verify-hdl`; accounting is now 314
+protocol / 355 supported-smoke+strict. No parser or generator algorithm
+changed; decision 0020 and proposed audits stay inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

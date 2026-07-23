@@ -35,5 +35,5 @@ commands. Each proves
 four completed data beats, selected-child parking, unselected-child
 non-interference, correct control local-address subtraction, OKAY/zero
 completion, and final status/control storage `32'h44332211`/`32'h88776655`.
-The matching `.ahb` alias and broader BUSY/status/burst behavior remain
-deferred.
+The matching `.ahb` alias now ships through `.803`; broader BUSY/status/burst
+behavior remains deferred.

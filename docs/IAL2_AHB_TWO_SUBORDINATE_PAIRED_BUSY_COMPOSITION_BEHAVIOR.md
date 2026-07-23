@@ -131,8 +131,9 @@ HDL generator algorithms. The one-subordinate paired `.ppif`/`.ahb` family,
 parked two-subordinate family, and non-parking two-subordinate family retain
 their existing behavior and reports.
 
-A matching `.ahb` profile alias remains a separate later slice. Policy-driven
-or multiple BUSY insertion, distinct local bus-BUSY status, true boundary-free
+A matching `.ahb` profile alias now ships as documented in
+`docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md`.
+Policy-driven or multiple BUSY insertion, distinct local bus-BUSY status, true boundary-free
 active-transfer pipelining, halfword/word or wider/indefinite burst
 progression, multi-word/register-bank behavior, optional AHB signals, broader
 AHB manager behavior, direct backend, verification-output generation,

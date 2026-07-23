@@ -10769,6 +10769,16 @@ t/1516 will prove parity/public surfaces; t/1515 retains runtime proof. Targets
 are 314 protocol / 355 supported-smoke+strict. Decision 0020 and proposed
 audits remain inactive.
 
+Two-subordinate paired AHB BUSY profile-alias behavior:
+[IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md)
+documents `.803`. The shipped `.ahb` alias is byte-identical to the `.801`
+generic source and reuses one four-child generator path. It preserves exact
+artifacts/windows, requester `busy_insertion`, both status/control
+`parks_on=[busy]`, and t/1515 runtime behavior while existing suffix handling
+removes only alias residue. t/1516 proves parity/public surfaces, diagnostics,
+and `--verify-hdl`; accounting is 314 protocol / 355 supported-smoke+strict.
+Decision 0020 and proposed audits remain inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

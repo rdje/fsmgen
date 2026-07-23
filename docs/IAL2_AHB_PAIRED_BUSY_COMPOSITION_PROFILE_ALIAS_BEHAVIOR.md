@@ -152,9 +152,10 @@ requester-only and aggregate-BUSY-park alias families.
 
 ## Explicit Deferrals
 
-The generic two-subordinate paired source now ships as documented in
-`docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`; `.802`
-selects its matching `.ahb` alias as the next data-only slice. Multi-beat/
+The generic two-subordinate paired source and its matching `.ahb` alias now
+ship as documented in
+`docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md`.
+Multi-beat/
 policy/runtime BUSY, a distinct local bus-BUSY status, true boundary-free active-transfer pipelining,
 halfword/word or wider/indefinite burst progression, multi-word/register-bank
 behavior, optional AHB signals, legacy two-bit subordinate `HRESP`, broader

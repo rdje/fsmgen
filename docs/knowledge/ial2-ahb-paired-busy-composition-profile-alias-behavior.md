@@ -34,5 +34,5 @@ t/1513 runtime behavior. Existing suffix handling removes only profile-alias
 residue. t/1514 proves parity, public CLI/report/artifact/support surfaces,
 diagnostics, and clean `--verify-hdl`.
 
-The generic two-subordinate paired source now ships through `.801`; `.802`
-selects its matching `.ahb` alias as the next data-only source-surface slice.
+The generic two-subordinate paired source and matching `.ahb` alias now ship
+through `.801`/`.803` as one shared generator architecture.

@@ -1,6 +1,6 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships thirty-seven public bounded AHB IAL2 entrypoints today:
+FSMGen ships thirty-eight public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
@@ -40,6 +40,7 @@ ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb
 ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb
 ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ahb
 ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ahb
+ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ahb
 ```
 
 The `.ppif` sources are generic Protocol/Platform Intent files. They cover the
@@ -70,7 +71,7 @@ aggregate byte-lane in-word `SEQ` propagation variants, or the selected
 aggregate one-requester/two-subordinate interconnect shape, including the
 selected two-subordinate aggregate byte-lane and aggregate byte-lane in-word
 `SEQ` propagation variants, or the selected paired BUSY-inserting-requester/
-BUSY-parking-subordinate aggregate,
+BUSY-parking-subordinate aggregates with one or two subordinate windows,
 `(ahb-interconnect ahb_tb ...)`.
 
 All public AHB IAL2 sources lower through generated review artifacts before
@@ -114,6 +115,7 @@ ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb -> amba_requester
 ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb -> amba_requester.isf + ahb_lite_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ahb -> amba_requester.isf + ahb_status_subordinate_byte_lane_hburst_seq.isf + ahb_control_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_status_subordinate_byte_lane_hburst_seq.fsm + ahb_control_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ahb -> amba_requester_busy_insert.isf + ahb_lite_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester_busy_insert.fsm + ahb_lite_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
+ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ahb -> amba_requester_busy_insert.isf + ahb_status_subordinate_byte_lane_hburst_seq.isf + ahb_control_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester_busy_insert.fsm + ahb_status_subordinate_byte_lane_hburst_seq.fsm + ahb_control_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ```
 
 FSMGen also keeps direct lower-layer `.fsm` seeds:
@@ -130,7 +132,7 @@ and do not produce generated `.isf` or generated `.fsm` review artifacts.
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | The thirty-seven public AHB sources listed above, including the paired one-subordinate `.ppif`/`.ahb` source pair and generic two-subordinate paired `.ppif` source | Bounded requester/subordinate/interconnect sources, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, and paired BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows. |
+| Guided mode | The thirty-eight public AHB sources listed above, including paired one- and two-subordinate `.ppif`/`.ahb` source pairs | Bounded requester/subordinate/interconnect sources, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, and paired BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs are exposed as `control`, `bus`, one-register `storage`, and `transfer` clauses, including selected byte/halfword/word `supported-size`, `lane-order`, narrow read/write, unaligned/crossing policy clauses, the selected `(seq-policy in-word-progressive)` clause on the generic byte-lane `SEQ` source and matching `.ahb` alias, and the selected `(burst HBURST width 3)` plus `(seq-policy hburst-in-word-progressive)` clauses on the generic and matching `.ahb` HBURST-aware endpoint byte-lane `SEQ` sources and selected generic aggregate HBURST-aware byte-lane `SEQ` sources. Interconnect knobs are exposed as `children`, one or two static `address-map` windows, `decode`, and `wiring` clauses. |
 | Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader AHB interconnect/decode beyond the selected one-requester/one-subordinate static-window `.ppif`/`.ahb` sources and selected one-requester/two-subordinate static-window `.ppif`/`.ahb` sources, matching aggregate HBURST `.ahb` aliases, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond the bounded byte-only `WRAP4`/`INCR4` endpoint and aggregate sources, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
@@ -1441,6 +1443,18 @@ protocol fixtures and 355 supported-smoke/strict entries; t/1516 will prove
 alias parity and public surfaces while t/1515 remains the shared generated-HDL
 runtime proof. See
 [IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md).
+
+`.803` now ships that matching alias as a byte-identical mirror of the generic
+source. The `.ppif` and `.ahb` paths are two public IAL2 surfaces over one
+four-child generator architecture. The alias preserves requester
+`busy_insertion`, both status/control child and propagated
+`parks_on=[busy]`, exact artifacts/windows, and t/1515 runtime behavior;
+existing suffix handling removes only aggregate/requester/both-subordinate
+alias residue plus alias-exposure wording. t/1516 proves parity, public
+check/schedule/semantic/artifact/HDL/support/report surfaces, malformed-profile
+diagnostics, and clean `--verify-hdl`. Accounting is now 314 protocol fixtures
+and 355 supported-smoke/strict entries. See
+[IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md).
 
 ## Subordinate Source Shape
 
