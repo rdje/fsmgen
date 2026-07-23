@@ -13,7 +13,7 @@ organized by authoring mode, not by implementation module.
 | Mode | Start with | What it demonstrates |
 | --- | --- | --- |
 | Guided mode | `ppif/axi_aw_valid_ready.ppif` and `ppif/axi_aw_valid_ready.axi` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, and `.ppif`/`.axi` profile-alias parity for the selected first alias. |
-| Initiator mode | `ppif/axi_aw_driver.ppif` | A bounded AXI manager AW address-channel **driver**: it drives `AWVALID` and the AW payload against `AWREADY`, holds payload stable under backpressure, and accepts exactly one AW transfer per accepted command. |
+| Initiator mode | `ppif/axi_aw_driver.ppif` and `ppif/axi_w_driver.ppif` | Bounded AXI manager AW address-channel and single-beat W write-data-channel **drivers**. Each holds its payload stable under backpressure and accepts exactly one transfer per accepted command. |
 | More-control mode | `ppif/axi_manager_capacity_status.ppif`, `ppif/axi_manager_capacity_status_id_family.ppif`, and `ppif/axi_manager_capacity_status_transaction_envelope.ppif` | Bounded manager capacity/status, ID-family metadata, and logical transaction metadata while staying in the public AXI manager shell. |
 | Raw/full-control mode | `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | A deep shipped AXI manager shape with dynamic read transactions, same-ID issue-order queueing, burst-last response demux, runtime beat-count/`RLAST` validation, and multi-beat read-data output banks. |
 
@@ -133,12 +133,13 @@ reports `mode` `driver`. The `--outdir` path writes
 `--verify-hdl` passes verilator lint and yosys synthesis for the generated
 `axi_aw_driver` module.
 
-This is the first AXI **initiator** (bus-driving) source. It complements the
-capacity/status response core; it drives only the AW address channel. W
-write-data drive, AR read-address drive, burst/address generation, the AXI
-attribute signals (`AWLOCK`/`AWCACHE`/`AWPROT`/`AWQOS`/`AWREGION`/`AWUSER`), a
-configurable `AWID` width, and integration with the capacity/status core remain
-future increments (see the report's `unsupported_residue`).
+This was the first AXI **initiator** (bus-driving) source. It complements the
+capacity/status response core and drives only the AW address channel; the W
+primitive below is deliberately separate. AW/W coordination, AR read-address
+drive, burst/address generation, the AXI attribute signals (`AWLOCK`/`AWCACHE`/
+`AWPROT`/`AWQOS`/`AWREGION`/`AWUSER`), a configurable `AWID` width, and
+integration with the capacity/status core remain future increments (see the
+report's `unsupported_residue`).
 
 ### Single-transfer correctness guarantee
 
@@ -158,20 +159,15 @@ two one-cycle `aw_done` pulses, stable payload throughout the stall, and final
 issues, and three explicit priority resolutions; generated HDL also passes
 Verilator lint and Yosys synthesis.
 
-### Selected next increment: bounded W drive (not shipped)
+### Bounded single-beat W write-data driver
 
-W remains the next functional direction. Its readiness audit fixes a separate
-single-beat bus-side primitive with distinct upstream command inputs
+`ppif/axi_w_driver.ppif` is the second shipped initiator primitive: a separate
+single-beat W bus-side driver with distinct upstream command inputs
 (`w_cmd_valid`, 32-bit `cmd_wdata`, four-bit `cmd_wstrb`, and `wready`) and
 driven outputs (`wvalid`, 32-bit `wdata`, four-bit `wstrb`, `wlast`, `w_busy`,
-and `w_done`). This is an audited future boundary, not a currently accepted
-`.ppif` clause or generated module.
-
-The selected future source is `ppif/axi_w_driver.ppif`, with clause
-`(axi-w-driver axi_w_driver ...)`, generated actor/module `axi_w_driver`, and
-report schema `fsmgen.ial2.protocol_intent.axi_w_driver.v1`. These names are
-contracted but not yet accepted by the parser or present as a checked-in public
-source.
+and `w_done`). The public clause is `(axi-w-driver axi_w_driver ...)`; its
+generated actor/module is `axi_w_driver` and its report schema is
+`fsmgen.ial2.protocol_intent.axi_w_driver.v1`.
 
 ```text
 (axi-w-driver axi_w_driver
@@ -192,21 +188,40 @@ source.
     (done w_done)))
 ```
 
-The future primitive must assert `WVALID` without waiting for `WREADY`, hold
-`WVALID`/`WDATA`/`WSTRB`/`WLAST` stable while stalled, drive `WLAST = 1` for its
+The driver asserts `WVALID` without waiting for `WREADY`, holds
+`WVALID`/`WDATA`/`WSTRB`/`WLAST` stable while stalled, drives `WLAST = 1` for its
 one valid beat, accept exactly one `WVALID && WREADY` transfer per accepted
 command, then pulse `w_done` for one cycle. With 32-bit data, `WSTRB` is four
 bits; every value is legal, including all zeroes (a transfer that writes no
 bytes).
 
-The selected schedule is the corrected AW rule-pair idiom: inline
+Run it through every shipped review stage and external HDL validation:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_w_driver.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_w_driver.ppif
+./bin/fsmgen --quiet --outdir generated ppif/axi_w_driver.ppif
+./bin/fsmgen --verify-hdl ppif/axi_w_driver.ppif
+```
+
+The outdir contains `generated/axi_w_driver.isf` and
+`generated/axi_w_driver.fsm` before HDL. The schedule has six states, no compile
+issues, and exactly three priority resolutions (`active_q`, `w_busy`, and
+`wvalid`). The report's `single_beat` block records data width 32, strobe width
+4, last value 1, and legal all-zero strobe behavior.
+
+The schedule uses the corrected AW rule-pair idiom: inline
 launch, priority-winning acceptance on the handshake edge, and completion only
-after latched activity clears. Implementation is owned by
-`IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10` and focused test
-`t/1500-ial2-axi-w-driver.t`. AW/W transaction coordination, B response
-completion, multi-beat `WLAST` sequencing, outstanding writes, capacity-core
-integration, and the proposed protocol-neutral transaction interface remain
-separate future owners.
+after latched activity clears. The focused generated-HDL regression in
+`t/1500-ial2-axi-w-driver.t` covers continuously-high `WREADY` with legal
+`WSTRB = 0000` and a four-cycle data/strobe/last stall followed by a one-cycle
+READY pulse. It observes exactly two handshakes and two done pulses and ends
+with valid/busy low.
+
+This remains a channel primitive, not a complete write transactor. AW/W
+transaction coordination, B response completion, multi-beat `WLAST`
+sequencing, outstanding writes, capacity-core integration, and the proposed
+protocol-neutral transaction interface remain separate future owners.
 
 ## More-Control Mode
 
@@ -318,6 +333,8 @@ This chapter was validated from checked-in sources with:
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_valid_ready.axi
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_driver.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_aw_driver.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/axi_w_driver.ppif
+./bin/fsmgen --verify-hdl ppif/axi_w_driver.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/axi_manager_capacity_status_id_family.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_manager_capacity_status_transaction_envelope.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif
@@ -327,7 +344,8 @@ This chapter was validated from checked-in sources with:
 The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and
 `axi_aw_valid_ready_monitor.fsm`, confirming that the guided example still
 exposes the review artifacts the chapter describes. The AW driver check and
-`--verify-hdl` confirm that the initiator example is accepted and lowers to
-lint/synthesis-clean HDL. The focused `t/1499-ial2-axi-aw-driver.t` generated-HDL
-simulation separately proves the transfer-cardinality, completion-pulse, and
-stalled-payload guarantees described above.
+`--verify-hdl` confirm that both initiator examples are accepted and lower to
+lint/synthesis-clean HDL. The focused `t/1499-ial2-axi-aw-driver.t` and
+`t/1500-ial2-axi-w-driver.t` generated-HDL simulations separately prove their
+transfer-cardinality, completion-pulse, and stalled-payload guarantees; the W
+test also proves the all-zero-strobe case remains legal.

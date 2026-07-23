@@ -38,3 +38,4 @@ writes, capacity integration, transaction-interface activation, aliases,
 verification output, backend variants/VHDL, and AHB/APB remain deferred.
 
 Readiness evidence: [[ial2-axi-w-driver-readiness-audit]].
+Shipped implementation: [[ial2-axi-w-driver-first-slice]].
