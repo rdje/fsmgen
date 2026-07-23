@@ -35,6 +35,7 @@ one active transfer through `ahb_access_active_q`; continuation clearing is a
 concurrent rule rather than a competing transaction; runtime wait cycles use
 width-safe counted repeats; the interconnect child instance is `fabric`; and a
 zero-base decode omits `HADDR >= 0`. The paired source passes public
-`--verify-hdl`. True pipelined active transfers without an IDLE/BUSY/unselected
-boundary, the paired `.ahb` alias, and a two-subordinate paired sibling remain
-deferred.
+`--verify-hdl`. The paired `.ahb` alias and generic two-subordinate paired
+sibling now ship through later task-tree slices. True pipelined active
+transfers without an IDLE/BUSY/unselected boundary and the matching
+two-subordinate `.ahb` alias remain deferred.

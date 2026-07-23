@@ -6855,7 +6855,8 @@ requester-child `busy_insertion`; child insertion plus aggregate
 summary. Focused t/1513/Verilator proof must cover the five presentations, held
 requester/subordinate state and storage on BUSY, four data beats, OKAY/zero
 remaining, and final `32'h44332211`. Generic `.ppif` ships first; alias and
-two-subordinate variants remain deferred.
+two-subordinate variants were deferred by `.793` and ship in later
+`.796`/`.801` slices.
 
 `.794` now ships the selected generic paired AHB BUSY aggregate at
 `ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif`.
@@ -6937,6 +6938,18 @@ byte `INCR4` writes and prove the exact held BUSY sequence, selected-child
 parking, unselected-child non-interference, control local address `0,1,2,2,3`,
 clean completion, and retained `44332211`/`88776655` storage. Matching `.ahb`
 alias selection remains later; decision 0020 and proposed audits stay inactive.
+
+`.801` now ships that generic two-subordinate paired source through the
+existing four-child generator path. The additive source/support/test surface
+moves accounting to 313 protocol fixtures and 354 supported-smoke/strict
+entries; no parser or generator algorithm changes. Strict, schedule, semantic,
+review-artifact, `--verify-hdl`, and generated-HDL runtime proof agree on
+`ahb_tb`, four children, requester `busy_insertion`, both status/control
+`parks_on=[busy]` policies, exact `[0,4)`/`[4,8)` windows, selected-child
+parking, unselected-child non-interference, control local-address subtraction,
+and final `44332211`/`88776655` storage after two exact
+`NONSEQ,SEQ,BUSY,SEQ,SEQ` commands. Matching `.ahb` alias selection remains a
+later slice; decision 0020 and proposed audits stay inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

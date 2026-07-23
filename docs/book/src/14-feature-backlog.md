@@ -10658,7 +10658,7 @@ needed. The generated top already has sufficient command/status and
 deterministic internal bus/subordinate observation points for held-BUSY,
 parked-context, resumed-SEQ, four-beat, and final-storage proof. `.793` must
 freeze the generic `.ppif` source/support/report/runtime contract; alias and
-two-subordinate siblings remain deferred.
+two-subordinate siblings were deferred by that audit and ship in later slices.
 
 Paired AHB BUSY composition contract:
 [IAL2_AHB_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION](../../IAL2_AHB_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md)
@@ -10670,7 +10670,7 @@ the selected non-duplicative paired report. Support targets are 311 protocol /
 352 supported-smoke and strict. Focused t/1513/Verilator coverage must prove
 held requester and subordinate state/storage on BUSY, resumed `SEQ`, four data
 beats, OKAY/zero remaining, and final `32'h44332211`. Generic `.ppif` ships
-first; alias and two-subordinate variants remain deferred.
+first; the alias and generic two-subordinate variant ship in later slices.
 
 Paired AHB BUSY composition behavior:
 [IAL2_AHB_PAIRED_BUSY_COMPOSITION_BEHAVIOR](../../IAL2_AHB_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md)
@@ -10686,9 +10686,9 @@ each subordinate transfer once, replace the competing idle-clear transaction
 with a concurrent rule, use width-safe counted wait cycles, select HDL-safe
 interconnect instance `fabric`, and omit the tautological zero-base lower bound.
 The public source passes `--verify-hdl`; accounting is 311 protocol / 352
-supported-smoke and strict. True boundary-free active-transfer pipelining,
-two-subordinate paired behavior and broader BUSY policy remain deferred. The
-matching one-subordinate alias ships below.
+supported-smoke and strict. True boundary-free active-transfer pipelining and
+broader BUSY policy remain deferred. The matching one-subordinate alias and
+generic two-subordinate paired behavior ship below.
 
 Paired AHB BUSY composition profile-alias contract:
 [IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md)
@@ -10745,6 +10745,18 @@ supported-smoke+strict, and requires t/1515 to prove status-base-0 and
 control-base-4 `INCR4` BUSY parking with local-address subtraction,
 non-interference, and `44332211`/`88776655` storage. The alias remains later;
 decision 0020 and proposed audits remain inactive.
+
+Two-subordinate paired AHB BUSY behavior:
+[IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR](../../IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md)
+documents `.801`. The shipped generic `.ppif` source reuses the existing
+four-child generator path, support-accounts at 313 protocol / 354
+supported-smoke+strict, and exposes requester `busy_insertion` plus both
+status/control `parks_on=[busy]` policies. Generated-HDL t/1515 proves exact
+status-base-0 and control-base-4 `NONSEQ,SEQ,BUSY,SEQ,SEQ` flows, selected-
+child parking, unselected-child non-interference, control local-address
+subtraction, and retained `44332211`/`88776655` storage. No generator
+algorithm changed; the matching alias, decision 0020, and proposed audits
+remain inactive.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

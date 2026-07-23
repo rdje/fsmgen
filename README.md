@@ -5806,7 +5806,8 @@ conditionally clone requester `busy_insertion`; no duplicated top summary is
 selected. Focused t/1513 plus a Verilator harness must prove held BUSY, parked
 subordinate context/storage, resumed `SEQ`, four accepted beats, OKAY/zero
 remaining, and final `32'h44332211`. Accounting targets are 311 protocol / 352
-supported-smoke and strict. Alias and two-subordinate variants stay deferred.
+supported-smoke and strict. Alias and two-subordinate variants were deferred
+by `.793` and ship in the later `.796`/`.801` slices below.
 `.794` now ships that paired generic aggregate. The requester child
 conditionally exposes its endpoint `busy_insertion`; the subordinate child and
 aggregate SEQ-policy propagation retain `parks_on = [busy]`; no duplicate top
@@ -5880,6 +5881,20 @@ must run status-base-0 then control-base-4 byte `INCR4` writes, prove
 non-interference, control local-address subtraction, clean completion, and
 final status/control storage `44332211`/`88776655`. The `.ahb` alias remains a
 later slice; decision 0020 and proposed audits remain inactive.
+
+`.801` now ships that generic two-subordinate paired source through the
+existing four-child IAL2-to-IAL1-to-IAL0-to-HDL generator path. It adds exactly
+one supported source, taking accounting to 313 protocol fixtures and 354
+supported-smoke/strict entries, without changing parser or generator
+algorithms. Strict/schedule/semantic/artifact/`--verify-hdl` surfaces expose
+`ahb_tb`, four children, 29 signals, requester `busy_insertion`, both child and
+propagated `parks_on=[busy]`, and unchanged status `[0,4)` / control `[4,8)`
+windows. Generated-HDL t/1515 runs both windows and proves exact
+`NONSEQ,SEQ,BUSY,SEQ,SEQ` presentation, selected-child parking, unselected-
+child non-interference, control local-address subtraction, clean completion,
+and final status/control storage `44332211`/`88776655`. The matching `.ahb`
+alias remains a later slice; decision 0020 and proposed audits remain inactive.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8537,6 +8552,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_READINESS_AUDIT.md` — records the `.798` candidate proof across check/schedule/semantic/artifact/SystemVerilog/Yosys surfaces, exact future status/control runtime observation plan, absence of generator prerequisites, and selection of `.799` report-only BUSY-residue repair before `.800` paired public contract selection.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_BUSY_REPORT_REPAIR.md` — records the `.799` report-only truthfulness repair: parked two-subordinate generic/alias surfaces claim shipped BUSY parking consistently, non-parking surfaces retain BUSY-continuation deferral, and sources/artifacts/support/HDL behavior stay unchanged before `.800` contract selection.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_CONTRACT_SELECTION.md` — records the `.800` exact generic source/support/report/artifact contract, t/1515 two-command status/control runtime proof, 313/354 accounting target, preservation/diagnostics/resource/rollback boundaries, later alias sequencing, and `.801` direct implementation owner.
+- `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md` — documents the `.801` shipped generic four-child paired-BUSY aggregate, one existing generator architecture, exact report/artifact/support surfaces, and generated-HDL status/control proof through retained `32'h44332211`/`32'h88776655` storage.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

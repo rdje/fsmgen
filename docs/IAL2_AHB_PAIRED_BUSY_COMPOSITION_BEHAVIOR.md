@@ -149,8 +149,10 @@ supported-smoke/strict entries.
 
 The matching `.ahb` alias now ships as the byte-identical profile surface
 documented in
-`docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md`. A
-two-subordinate paired sibling, policy/runtime or multi-BUSY insertion, a
+`docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md`. The generic
+two-subordinate paired sibling now ships as documented in
+`docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`; its
+matching `.ahb` alias remains later. Policy/runtime or multi-BUSY insertion, a
 distinct local bus-BUSY status, true pipelined active
 transfer admission, halfword/word burst `SEQ`, wider or indefinite bursts,
 multi-word/register-bank behavior, optional AHB signals, broader AHB manager

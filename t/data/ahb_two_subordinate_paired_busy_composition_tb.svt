@@ -1,0 +1,288 @@
+module ahb_two_subordinate_paired_busy_composition_tb;
+  logic clk = 0;
+  logic rst_n = 0;
+  logic [31:0] cmd_addr = 0;
+  logic [2:0] cmd_burst = 3'b011;
+  logic [4:0] cmd_len = 4;
+  logic cmd_lock = 0;
+  logic [3:0] cmd_prot = 0;
+  logic [2:0] cmd_size = 0;
+  logic cmd_valid = 0;
+  logic [31:0] cmd_wdata = 0;
+  logic [31:0] cmd_wdata_step = 32'h11111111;
+  logic cmd_write = 1;
+  logic [3:0] status_wait_cycles = 0;
+  logic [3:0] control_wait_cycles = 0;
+  wire [31:0] active_addr;
+  wire [2:0] active_hburst;
+  wire beat_done;
+  wire [4:0] beat_index;
+  wire [4:0] beats_remaining;
+  wire burst_active;
+  wire busy;
+  wire cmd_ready;
+  wire done;
+  wire last_error;
+  wire [31:0] last_read_data;
+  wire [1:0] last_resp;
+  wire last_retry;
+  wire last_split;
+  wire wrap_active;
+
+  ahb_tb dut (.*);
+  always #5 clk = ~clk;
+
+  integer cycles;
+  integer current_command;
+  integer transfer_count;
+  integer beat_count;
+  integer busy_count;
+  integer total_transfer_count;
+  integer total_beat_count;
+  integer total_busy_count;
+  logic previous_beat_done;
+  logic previous_active;
+  logic [1:0] previous_htrans;
+  logic [31:0] previous_addr;
+  logic [4:0] previous_index;
+  logic [4:0] previous_remaining;
+  logic [31:0] command_base;
+  logic [31:0] other_storage;
+  logic other_seq_valid;
+  logic [31:0] other_seq_expected_addr;
+  logic [1:0] other_seq_beats_remaining;
+  logic [31:0] busy_addr;
+  logic busy_write;
+  logic [2:0] busy_size;
+  logic [2:0] busy_burst;
+  logic [3:0] busy_prot;
+  logic [31:0] busy_wdata;
+  logic [4:0] busy_index;
+  logic [4:0] busy_remaining;
+  logic busy_seq_valid;
+  logic [31:0] busy_seq_expected_addr;
+  logic [1:0] busy_seq_beats_remaining;
+  logic [31:0] busy_storage;
+
+  task automatic check_other_child_unchanged;
+    begin
+      if (current_command == 0) begin
+        if (dut.control.seq_valid_q !== other_seq_valid ||
+            dut.control.seq_expected_addr_q !== other_seq_expected_addr ||
+            dut.control.seq_beats_remaining_q !== other_seq_beats_remaining ||
+            dut.control.control_data_q !== other_storage)
+          $fatal(1, "control child changed during status command");
+      end else begin
+        if (dut.status.seq_valid_q !== other_seq_valid ||
+            dut.status.seq_expected_addr_q !== other_seq_expected_addr ||
+            dut.status.seq_beats_remaining_q !== other_seq_beats_remaining ||
+            dut.status.status_data_q !== other_storage)
+          $fatal(1, "status child changed during control command");
+      end
+    end
+  endtask
+
+  task automatic check_selected_child_hold;
+    begin
+      if (current_command == 0) begin
+        if (dut.status.seq_valid_q !== busy_seq_valid ||
+            dut.status.seq_expected_addr_q !== busy_seq_expected_addr ||
+            dut.status.seq_beats_remaining_q !== busy_seq_beats_remaining ||
+            dut.status.status_data_q !== busy_storage)
+          $fatal(1, "status child state/storage changed while BUSY was parked");
+      end else begin
+        if (dut.control.seq_valid_q !== busy_seq_valid ||
+            dut.control.seq_expected_addr_q !== busy_seq_expected_addr ||
+            dut.control.seq_beats_remaining_q !== busy_seq_beats_remaining ||
+            dut.control.control_data_q !== busy_storage)
+          $fatal(1, "control child state/storage changed while BUSY was parked");
+      end
+    end
+  endtask
+
+  task automatic capture_selected_child_hold;
+    begin
+      if (current_command == 0) begin
+        busy_seq_valid = dut.status.seq_valid_q;
+        busy_seq_expected_addr = dut.status.seq_expected_addr_q;
+        busy_seq_beats_remaining = dut.status.seq_beats_remaining_q;
+        busy_storage = dut.status.status_data_q;
+      end else begin
+        busy_seq_valid = dut.control.seq_valid_q;
+        busy_seq_expected_addr = dut.control.seq_expected_addr_q;
+        busy_seq_beats_remaining = dut.control.seq_beats_remaining_q;
+        busy_storage = dut.control.control_data_q;
+      end
+    end
+  endtask
+
+  task automatic check_transfer;
+    logic [31:0] expected_local;
+    logic [1:0] expected_htrans;
+    begin
+      if (!dut.comp_link_requester_HBUSREQ)
+        $fatal(1, "command %0d non-IDLE transfer did not hold HBUSREQ", current_command);
+
+      case (transfer_count)
+        0: begin expected_local = 0; expected_htrans = 2'b10; end
+        1: begin expected_local = 1; expected_htrans = 2'b11; end
+        2: begin expected_local = 2; expected_htrans = 2'b01; end
+        3: begin expected_local = 2; expected_htrans = 2'b11; end
+        4: begin expected_local = 3; expected_htrans = 2'b11; end
+        default: $fatal(1, "command %0d unexpected extra transfer presentation", current_command);
+      endcase
+
+      if (dut.comp_link_requester_HTRANS !== expected_htrans)
+        $fatal(1, "command %0d transfer %0d HTRANS=%b expected=%b", current_command, transfer_count, dut.comp_link_requester_HTRANS, expected_htrans);
+      if (dut.comp_link_requester_HADDR !== command_base + expected_local)
+        $fatal(1, "command %0d transfer %0d HADDR=%h expected=%h", current_command, transfer_count, dut.comp_link_requester_HADDR, command_base + expected_local);
+
+      if (current_command == 0) begin
+        if (!dut.comp_link_fabric_HSEL_STATUS || dut.comp_link_fabric_HSEL_CONTROL)
+          $fatal(1, "status command selected wrong subordinate");
+        if (dut.comp_link_fabric_HADDR_STATUS !== expected_local || dut.comp_link_fabric_HADDR_CONTROL !== 0)
+          $fatal(1, "status command local addresses status=%h control=%h expected=%h/0", dut.comp_link_fabric_HADDR_STATUS, dut.comp_link_fabric_HADDR_CONTROL, expected_local);
+      end else begin
+        if (dut.comp_link_fabric_HSEL_STATUS || !dut.comp_link_fabric_HSEL_CONTROL)
+          $fatal(1, "control command selected wrong subordinate");
+        if (dut.comp_link_fabric_HADDR_STATUS !== 0 || dut.comp_link_fabric_HADDR_CONTROL !== expected_local)
+          $fatal(1, "control command local addresses status=%h control=%h expected=0/%h", dut.comp_link_fabric_HADDR_STATUS, dut.comp_link_fabric_HADDR_CONTROL, expected_local);
+      end
+
+      if (transfer_count == 2) begin
+        busy_count = busy_count + 1;
+        busy_addr = dut.comp_link_requester_HADDR;
+        busy_write = dut.comp_link_requester_HWRITE;
+        busy_size = dut.comp_link_requester_HSIZE;
+        busy_burst = dut.comp_link_requester_HBURST;
+        busy_prot = dut.comp_link_requester_HPROT;
+        busy_wdata = dut.comp_link_requester_HWDATA;
+        busy_index = beat_index;
+        busy_remaining = beats_remaining;
+        capture_selected_child_hold();
+      end
+
+      if (transfer_count == 3) begin
+        if (dut.comp_link_requester_HADDR !== busy_addr ||
+            dut.comp_link_requester_HWRITE !== busy_write ||
+            dut.comp_link_requester_HSIZE !== busy_size ||
+            dut.comp_link_requester_HBURST !== busy_burst ||
+            dut.comp_link_requester_HPROT !== busy_prot ||
+            dut.comp_link_requester_HWDATA !== busy_wdata)
+          $fatal(1, "command %0d BUSY did not hold pending SEQ address/control/data", current_command);
+        if (beat_index !== busy_index || beats_remaining !== busy_remaining)
+          $fatal(1, "command %0d BUSY advanced requester counters", current_command);
+        check_selected_child_hold();
+      end
+
+      transfer_count = transfer_count + 1;
+    end
+  endtask
+
+  task automatic issue_and_check(
+    input integer command_index,
+    input logic [31:0] base_addr,
+    input logic [31:0] first_data,
+    input logic [31:0] expected_status,
+    input logic [31:0] expected_control
+  );
+    begin
+      current_command = command_index;
+      command_base = base_addr;
+      transfer_count = 0;
+      beat_count = 0;
+      busy_count = 0;
+      previous_beat_done = 0;
+      previous_active = 0;
+      previous_htrans = 0;
+      previous_addr = 0;
+      previous_index = 0;
+      previous_remaining = 0;
+
+      if (current_command == 0) begin
+        other_seq_valid = dut.control.seq_valid_q;
+        other_seq_expected_addr = dut.control.seq_expected_addr_q;
+        other_seq_beats_remaining = dut.control.seq_beats_remaining_q;
+        other_storage = dut.control.control_data_q;
+      end else begin
+        other_seq_valid = dut.status.seq_valid_q;
+        other_seq_expected_addr = dut.status.seq_expected_addr_q;
+        other_seq_beats_remaining = dut.status.seq_beats_remaining_q;
+        other_storage = dut.status.status_data_q;
+      end
+
+      @(negedge clk);
+      cmd_addr = base_addr;
+      cmd_wdata = first_data;
+      cmd_valid = 1;
+      @(negedge clk);
+      cmd_valid = 0;
+
+      cycles = 0;
+      while (done && cycles < 80) begin
+        @(posedge clk);
+        cycles = cycles + 1;
+      end
+      if (done)
+        $fatal(1, "command %0d prior completion did not clear for new admission", current_command);
+
+      while (!done && cycles < 500) begin
+        @(posedge clk);
+        check_other_child_unchanged();
+        if (dut.comp_link_requester_HTRANS != 2'b00 &&
+            (!previous_active ||
+             dut.comp_link_requester_HTRANS != previous_htrans ||
+             dut.comp_link_requester_HADDR != previous_addr ||
+             beat_index != previous_index ||
+             beats_remaining != previous_remaining))
+          check_transfer();
+        if (beat_done && !previous_beat_done) begin
+          if (beat_index !== beat_count[4:0])
+            $fatal(1, "command %0d accepted beat index=%0d expected=%0d", current_command, beat_index, beat_count);
+          beat_count = beat_count + 1;
+        end
+        previous_beat_done = beat_done;
+        previous_active = dut.comp_link_requester_HTRANS != 2'b00;
+        previous_htrans = dut.comp_link_requester_HTRANS;
+        previous_addr = dut.comp_link_requester_HADDR;
+        previous_index = beat_index;
+        previous_remaining = beats_remaining;
+        cycles = cycles + 1;
+      end
+
+      if (!done)
+        $fatal(1, "command %0d did not complete", current_command);
+      check_other_child_unchanged();
+      if (transfer_count != 5 || beat_count != 4 || busy_count != 1)
+        $fatal(1, "command %0d counts transfers=%0d beats=%0d busy=%0d", current_command, transfer_count, beat_count, busy_count);
+      if (beats_remaining != 0)
+        $fatal(1, "command %0d completion left remaining=%0d", current_command, beats_remaining);
+      if (last_resp !== 2'b00 || last_error || last_retry || last_split)
+        $fatal(1, "command %0d completion resp=%b error=%b retry=%b split=%b", current_command, last_resp, last_error, last_retry, last_split);
+      if (dut.status.status_data_q !== expected_status || dut.control.control_data_q !== expected_control)
+        $fatal(1, "command %0d storage status=%h control=%h expected=%h/%h", current_command, dut.status.status_data_q, dut.control.control_data_q, expected_status, expected_control);
+
+      total_transfer_count = total_transfer_count + transfer_count;
+      total_beat_count = total_beat_count + beat_count;
+      total_busy_count = total_busy_count + busy_count;
+    end
+  endtask
+
+  initial begin
+    total_transfer_count = 0;
+    total_beat_count = 0;
+    total_busy_count = 0;
+
+    repeat (3) @(negedge clk);
+    rst_n = 1;
+    @(negedge clk);
+
+    issue_and_check(0, 32'h00000000, 32'h11111111, 32'h44332211, 32'h00000000);
+    issue_and_check(1, 32'h00000004, 32'h55555555, 32'h44332211, 32'h88776655);
+
+    if (total_transfer_count != 10 || total_beat_count != 8 || total_busy_count != 2)
+      $fatal(1, "totals transfers=%0d beats=%0d busy=%0d", total_transfer_count, total_beat_count, total_busy_count);
+    $display("PASS commands=2 transfers=%0d beats=%0d busy=%0d status=%h control=%h", total_transfer_count, total_beat_count, total_busy_count, dut.status.status_data_q, dut.control.control_data_q);
+    $finish;
+  end
+endmodule
