@@ -311,8 +311,8 @@ This source still has no address or response channel. AW launch,
 dynamic/narrow/unaligned/FIXED/WRAP bursts, queues/outstanding writes, and
 capacity-core integration remain separate owners.
 
-The audited next evolution step is an additive fixed-four AW+W **request**
-composition. Its ready contract direction reuses this unchanged W burst
+The selected next evolution contract is an additive fixed-four AW+W **request**
+composition. Its exact direction reuses this unchanged W burst
 driver and the unchanged AW driver under one new join coordinator and flat
 structural top, fixes LEN3/SIZE2/INCR, and admits only a four-byte-aligned
 16-byte span contained within one 4-KiB region. The public boundary retains
@@ -328,9 +328,12 @@ Assertion-disabled and assertion-enabled generated-HDL runs both completed
 four requests plus one reset-aborted request at exact counts `AW=5`, `W=18`,
 `beat=18`, and `request-done=4`; they include AW-first, W-first, stalls, an
 ignored busy command, legal address `0x00000004`, reset, and recovery. The
-future source must use the audited renderer-safe 4-KiB predicate. This records
-the `.44` readiness result and `.45` contract frontier, not shipped syntax or
-behavior.
+future source must use the audited renderer-safe 4-KiB predicate. Its selected
+identity is `(axi-write-burst4-request-composition ...)`, generator
+`AxiWriteBurst4RequestComposition`, and future support/test owners
+`intent.ppif_axi_write_burst4_request_composition` plus t/1509 at target totals
+308/349/349. This records the completed `.45` contract and active `.46`
+implementation frontier, not shipped syntax or behavior.
 
 ### Bounded one-response B write-response acceptor
 
