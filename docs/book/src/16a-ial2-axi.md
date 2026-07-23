@@ -329,11 +329,52 @@ selected structural-top IAL0/HDL entry. Child starts, payload captures, busy,
 and done events remain internal except for aggregate `write_busy` and
 `write_done` plus the physical AW/W bus ports.
 
-No public composition source is shipped yet. The active contract-selection
-leaf owns exact syntax, schema/report identifiers, diagnostics, artifact names,
-and the implementation owner. The selected behavior boundary already excludes
-B acceptance, capacity integration, full transaction completion, queues,
-multi-beat/burst behavior, AR/R, aliases, and backend/VHDL changes.
+No public composition source is shipped yet, but the exact contract is now
+selected for the active implementation leaf. The additive source will use:
+
+```text
+(axi-write-request-composition axi_write_request_composition
+  (role manager-to-subordinate)
+  (clock clk)
+  (reset (rst_n active_low async))
+  (command
+    (start write_cmd_valid)
+    (address cmd_awaddr width 32)
+    (id cmd_awid width 4)
+    (data cmd_wdata width 32)
+    (strobe cmd_wstrb width 4))
+  (aw-channel
+    (ready awready)
+    (valid awvalid)
+    (address awaddr width 32)
+    (id awid width 4)
+    (length awlen width 8)
+    (size awsize width 3)
+    (burst awburst width 2))
+  (w-channel
+    (ready wready)
+    (valid wvalid)
+    (data wdata width 32)
+    (strobe wstrb width 4)
+    (last wlast))
+  (status
+    (busy write_busy)
+    (done write_done)))
+```
+
+The selected generator is
+`FSM::IAL2::ProtocolIntent::AxiWriteRequestComposition`; schema
+`fsmgen.ial2.protocol_intent.axi_write_request_composition.v1`; structural top
+`axi_write_request_composition`; coordinator
+`axi_write_request_coordinator`; and focused executable owner
+`t/1502-ial2-axi-write-request-composition.t`. The top is a three-child C4
+composition and remains the only selected HDL entry.
+
+The implementation boundary still excludes B acceptance, capacity integration,
+full transaction completion, queues, multi-beat/burst behavior, AR/R, aliases,
+and backend/VHDL changes. Until the implementation leaf lands, attempts to use
+the selected clause continue to fail as unsupported rather than partially
+generate it.
 
 ## More-Control Mode
 

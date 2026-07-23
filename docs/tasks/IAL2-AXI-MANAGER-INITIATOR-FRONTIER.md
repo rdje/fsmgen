@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `IAL2 / SV-backed feature completeness / AXI initiator`
 - Created: `2026-07-12`
-- Last updated: `2026-07-23` (`.16` done: AW+W request composition readiness proven; `.17` active contract selection)
+- Last updated: `2026-07-23` (`.17` done: AW+W request composition contract selected; `.18` active implementation)
 - Owner: repo-local workflow
 
 ## Origin — director-directed pivot
@@ -82,7 +82,7 @@ It complements — does not replace — the shipped capacity/status response cor
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER`
   Status: `active`
   Goal: `Grow a coherent AXI manager initiator profile that drives AXI transactions, modeled on the AHB requester, through the shared IAL2->IAL1->IAL0->HDL pipeline.`
-  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.16`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.17`
+  Children: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.2`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.3`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.5`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.6`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.7`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.8`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.9`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.10`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.11`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.12`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.13`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.14`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.15`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.16`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.17`, `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.18`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.1`
   Status: `done`
@@ -208,9 +208,17 @@ It complements — does not replace — the shipped capacity/status response cor
   Selection: `Safe first slice = one idle-admitted command carrying aligned address32/AWID4/WDATA32/WSTRB4, atomically captured by a generated rule-only coordinator; fixed structural AW literals LEN=0/SIZE=2/BURST=INCR; unchanged AW/W children each start once; remembered independent done pulses join into busy clear + one done; B absent. Public aggregate grammar avoids nested authored child objects. Recommended AxiWriteRequestComposition/source/t1502 family is subject to exact .17 selection.`
 
 - ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.17`
-  Status: `active`
+  Status: `done`
   Goal: `Select the exact public contract for the audited bounded single-beat AXI AW+W write-request composition before behavior changes.`
   Acceptance: `Use docs/IAL2_AXI_MANAGER_INITIATOR_AW_W_REQUEST_COMPOSITION_READINESS_AUDIT.md to freeze the exact aggregate clause/object grammar, parser kind, generator/result kind, report schema, public source, actor/coordinator/top/instance names, support-accounting id/coverage, and focused test owner; freeze command/address/id/data/strobe, AW/W bus, aggregate busy/done signal names and widths; freeze AWLEN=8'd0/AWSIZE=3'd2/AWBURST=2'b01 exact literals, aligned-byte-address admission guard+assertion, arbitrary WSTRB including zero, atomic payload capture, rule-only coordinator interface/rules/priorities, idle/busy admission semantics, shared clock/reset, child wiring/internal statuses, three IAL1 items+schedules, three child IAL0 artifacts+selected structural top, report/static/residue, CLI/outdir/semantic behavior, diagnostics, generated-HDL proof matrix, validation/rollback, and the exact following behavior implementation leaf. Preserve standalone AW/W/B and every .16 deferral; change no parser, generator, public source, support entry, manifest, test, generated artifact, runtime behavior, or HDL behavior.`
+  Verification: `PASS — docs/IAL2_AXI_MANAGER_INITIATOR_AW_W_REQUEST_COMPOSITION_CONTRACT_SELECTION.md freezes clause/object axi-write-request-composition, kind axi_write_request_composition, AxiWriteRequestComposition generator, protocol_intent.axi_write_request_composition result, ...axi_write_request_composition.v1 schema, ppif/axi_write_request_composition.ppif, top/coordinator/artifact names, exact six-anchor source grammar, rebindable public bindings with pinned widths, LEN=0/SIZE=2/BURST=INCR, alignment guard+assertion, full rule-only coordinator and schedule, three-child C4 wiring, three IAL1 schedules/three child FSMs/one selected top, report/static/residue, parser/generator diagnostics, 301/342/342 accounting target, t/1502 four-subtest proof, .18 owner, deferrals, validation, and rollback. Knowledge Map, mdBook, memory, docs-path, whitespace, and doctrines PASS; no behavior changed.`
+  Commit: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.17: select the bounded AXI AW W request composition contract`
+  Selection: `New additive (axi-write-request-composition ...) aggregate; AxiWriteRequestComposition; source/top axi_write_request_composition; coordinator axi_write_request_coordinator; support intent.ppif_axi_write_request_composition; t/1502. Atomic aligned address32/AWID4/WDATA32/WSTRB4; fixed LEN0/SIZE2/INCR; unchanged AW/W children under a C4 structural top; request-only completion. Implementation .18.`
+
+- ID: `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.18`
+  Status: `active`
+  Goal: `Implement the selected bounded AXI manager single-beat AW+W write-request composition end to end, including generated structural-top cardinality and payload proofs.`
+  Acceptance: `Implement docs/IAL2_AXI_MANAGER_INITIATOR_AW_W_REQUEST_COMPOSITION_CONTRACT_SELECTION.md exactly: add FSM::IAL2::ProtocolIntent::AxiWriteRequestComposition with defensive normalization, unchanged AxiAwDriver/AxiWDriver child generation, exact rule-only axi_write_request_coordinator IAL1/schedule, atomic payload capture, aligned admission guard+assertion, fixed AW literals LEN=8'd0/SIZE=3'd2/BURST=2'b01, arbitrary WSTRB including zero, three-child C4 explicit structural wiring, three IAL1 items/full schedules, three child IAL0 artifacts plus selected axi_write_request_composition.fsm top, exact schema/composition/bindings/single_beat_policy/coordinator/children/generated_schedules/artifacts/static/residue report; wire PPIF.pm import/dispatch/accumulator+clause/cardinality+mixing/missing enumeration/object+block parsers/predicate/.axi rejection; add exact six-anchor ppif/axi_write_request_composition.ppif; add RegressionCorpus support/coverage and t/248 counts 300->301/341->342; update LanguageSurfaceSection.pm+t/297; add t/1502 four-subtest adapter/fail-closed/CLI+semantic+schedule+outdir+verify-HDL/generated-top proof covering misaligned no-launch, assertion, atomic capture, simultaneous/AW-first/W-first, long stalls, zero strobe, busy pulse ignored, fixed metadata, exactly three AW/W handshakes and done pulses, final low; update mdBook to shipped and synchronize task/index/MEMORY/Knowledge Map. Require Perl syntax, focused existing-child regressions, Verilator/Yosys, public CLI surfaces, accounting/manifest, mdBook, docs/memory/Knowledge Map/whitespace/doctrine gates under the documented RAM policy. Preserve standalone AW/W/B, capacity, all .17 deferrals, aliases, direct backend, AHB/APB, and VHDL.`
   Verification: `pending`
   Commit: `pending`
 
@@ -255,8 +263,8 @@ It complements — does not replace — the shipped capacity/status response cor
   `BVALID` capture/cardinality proof. `.15` selected a bounded single-beat
   AW+W request composition and identified the mandatory AWLEN/AWSIZE/AWBURST
   coherence gate against the one-beat W child. `.16` proved the exact safe
-  boundary and `.17` now selects its public contract. The composition must
-  reuse the generated AW/W child modules under
+  boundary and `.17` selected its public contract. `.18` now implements it.
+  The composition must reuse the generated AW/W child modules under
   a generated structural top and add a distinct coordinator, not duplicate
   those state machines. Decision `0020` frames AW/W drivers as bus-side primitives
   beneath the proposed transaction-layered/composable-role North Star. The AW driver
