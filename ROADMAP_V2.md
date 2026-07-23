@@ -7024,6 +7024,16 @@ time-local statements. t/1518 locks the six paths and exact current claims.
 No code/source/support/report/artifact/HDL/runtime behavior changed; the
 boundary-free audit and decision 0020 remain proposed/inactive.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.807` now selects the existing
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT`. Current generated subordinate
+ownership admits only when `ahb_access_active_q` is clear and releases on an
+unselected/IDLE/BUSY boundary; t1513/t1515 prove the shipped requester shape
+that supplies such a boundary, not direct active-to-active replacement. Audit
+`.1` will runtime-record consecutive selected NONSEQ/SEQ address/data phase
+ownership before selecting any behavior change. Policy/multiple BUSY,
+bus-BUSY status, larger bursts, optional signals, and decision 0020 remain
+deferred/inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

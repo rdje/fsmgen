@@ -10834,6 +10834,15 @@ time-local statements. t/1518 locks the paths and current claims. No
 code/source/support/report/artifact/HDL/runtime behavior changes; the
 boundary-free audit and decision 0020 remain proposed/inactive.
 
+Post-current-surface-repair next-owner selection:
+[IAL2_POST_CURRENT_SURFACE_REPAIR_NEXT_OWNER_SELECTION](../../IAL2_POST_CURRENT_SURFACE_REPAIR_NEXT_OWNER_SELECTION.md)
+documents `.807`. It selects the existing boundary-free AHB active-transfer
+audit because generated subordinate ownership releases only on an unselected,
+`IDLE`, or `BUSY` boundary and existing paired runtime supplies that boundary.
+Audit `.1` must drive consecutive selected NONSEQ/SEQ phases, record address/
+data ownership, ready/response, acceptance, and storage exactly once, and make
+no behavior change. Decision 0020 remains inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

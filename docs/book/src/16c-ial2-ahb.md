@@ -1529,6 +1529,15 @@ six alias paths and the positive current claims and rejects the stale current
 deferrals. No generated or runtime behavior changes. See
 [IAL2_AHB_CURRENT_SURFACE_ALIAS_TRUTHFULNESS_REPAIR](../../IAL2_AHB_CURRENT_SURFACE_ALIAS_TRUTHFULNESS_REPAIR.md).
 
+`.807` now selects the canonical boundary-free active-transfer audit. Current
+subordinate ownership admits only when `ahb_access_active_q` is clear and
+releases on unselected/`IDLE`/`BUSY`; the shipped paired requester and its
+runtime proofs intentionally provide that boundary. Audit `.1` will drive
+generated public subordinate HDL with consecutive selected active phases and
+record address/data phase, ready/response, ownership, acceptance, and storage
+before any behavior decision. See
+[IAL2_POST_CURRENT_SURFACE_REPAIR_NEXT_OWNER_SELECTION](../../IAL2_POST_CURRENT_SURFACE_REPAIR_NEXT_OWNER_SELECTION.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB

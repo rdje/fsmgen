@@ -5969,6 +5969,15 @@ t/1518 binds the six alias paths to positive current claims and rejects the
 exact stale deferrals; no code, source, support, report, artifact, or runtime
 contract changes.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.807` now selects the existing
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT`. The generated subordinate admits
+only while `ahb_access_active_q` is clear and releases on an unselected,
+`IDLE`, or `BUSY` boundary; the shipped paired requester supplies that
+boundary, so current runtime does not prove direct active-to-active address-
+phase replacement. Audit `.1` will use generated public subordinate HDL to
+record phase ownership, ready/response timing, acceptance, and storage exactly
+once before any behavior decision. Decision 0020 remains inactive.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8634,6 +8643,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_REQUESTER_WRAP_PROGRESSION_REPAIR.md` — records the `.2` generated/direct requester increment-then-wrap repair, exact WRAP4/8/16 address sequences, public-contract stability, preservation gates, scope boundaries, and rollback rule.
 - `docs/IAL2_POST_REQUESTER_WRAP_REPAIR_NEXT_OWNER_SELECTION.md` — records the `.805` proof that six shipped aggregate/paired AHB `.ahb` aliases contradict stale current mdBook/behavior/fact deferrals, selects `.806` current-surface truthfulness repair with t/1518, preserves historical records, and keeps the boundary-free audit plus decision 0020 inactive.
 - `docs/IAL2_AHB_CURRENT_SURFACE_ALIAS_TRUTHFULNESS_REPAIR.md` — records the `.806` current mdBook/behavior/fact repair for six shipped aggregate/paired AHB aliases, the historical-record boundary, focused t/1518 regression lock, unchanged runtime/public contracts, remaining frontier, and rollback.
+- `docs/IAL2_POST_CURRENT_SURFACE_REPAIR_NEXT_OWNER_SELECTION.md` — records the `.807` selection of the canonical boundary-free AHB active-transfer audit, the current admit/release gap and bounded paired-requester proof, exact generated-HDL audit contract, deferred alternatives, clean-pivot boundary, preservation, and rollback.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.
