@@ -311,14 +311,26 @@ This source still has no address or response channel. AW launch,
 dynamic/narrow/unaligned/FIXED/WRAP bursts, queues/outstanding writes, and
 capacity-core integration remain separate owners.
 
-The selected next evolution step is an additive fixed-four AW+W
-**request** composition. Its planned boundary reuses this unchanged W burst
+The audited next evolution step is an additive fixed-four AW+W **request**
+composition. Its ready contract direction reuses this unchanged W burst
 driver and the unchanged AW driver under one new join coordinator and flat
 structural top, fixes LEN3/SIZE2/INCR, and admits only a four-byte-aligned
-16-byte span contained within one 4-KiB region. Planned request done means the
-AW transfer and fourth W transfer have both completed; it deliberately does
-not include B response retirement. This paragraph records the active design
-frontier, not shipped syntax or behavior.
+16-byte span contained within one 4-KiB region. The public boundary retains
+four explicit data/strobe tuples, exposes the unchanged W child's beat event
+and two-bit index directly, and defines request done only after both the AW
+transfer and fourth W transfer complete. B response retirement is not part of
+that event.
+
+The behavior-neutral readiness probe measured a 29-signal, three-child C4 top
+at 66 nets, 46 declared links, and 52 resolved links. Its zero-state join
+coordinator has 29 ports, 57 signals, six rules, and five realized priorities.
+Assertion-disabled and assertion-enabled generated-HDL runs both completed
+four requests plus one reset-aborted request at exact counts `AW=5`, `W=18`,
+`beat=18`, and `request-done=4`; they include AW-first, W-first, stalls, an
+ignored busy command, legal address `0x00000004`, reset, and recovery. The
+future source must use the audited renderer-safe 4-KiB predicate. This records
+the `.44` readiness result and `.45` contract frontier, not shipped syntax or
+behavior.
 
 ### Bounded one-response B write-response acceptor
 
