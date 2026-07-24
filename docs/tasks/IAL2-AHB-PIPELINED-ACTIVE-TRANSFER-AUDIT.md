@@ -49,7 +49,7 @@ replace one accepted active address phase directly with another.
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT`
   Status: `active`
   Goal: `Runtime-prove and select the boundary-free active-transfer phase contract.`
-  Children: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.6`
+  Children: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.6`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.7`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.8`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`
   Status: `done`
@@ -87,9 +87,23 @@ replace one accepted active address phase directly with another.
   Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5: select direct seed phase contract`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.6`
+  Status: `done`
+  Goal: `Audit the failed direct-state repair against actual register-input lowering semantics before any replacement implementation.`
+  Acceptance: `Starting only after .5 commits cleanly, attempt the selected existing-register completion-edge capture exactly far enough to establish feasibility. If emitted HDL couples next-phase capture into the completing current phase, fail closed: preserve the failed runtime as evidence, root-cause the emitted enable/mux graph, restore the seed and t1520 runtime expectations byte-for-byte, add a no-behavior structural regression for the lowering constraint, invalidate the infeasible .5 internal contract, synchronize a canonical audit/fact/current docs/book/task/Memory, and select a separate corrected-contract leaf. Make no shipped seed/source/support/report/artifact/HDL/runtime behavior change. Do not implement a replacement architecture, change generated IAL2 roles, or widen into broader AHB, queues/outstanding transfers, AXI/APB/VHDL, or decision 0020.`
+  Verification: `Attempted the .5 existing-register dispatcher in successful ACCESS and final ERROR_COMPLETE, then failed closed on the first guarded repaired t1520 runtime: the success case reported sampled_write=0 storage=00000000 instead of retaining 0x11111111. Emitted HDL proves the cause: write_q is a combinational register-input mux overridden by enabled live HWRITE capture, while access_reg_data_q_hwdata_en reads that mux output to decide the completing current write. The following read's HWRITE=0 therefore suppressed the current write before the edge. addr_q/size_q have the same mux/current-predicate coupling risk. Restored fsm/ahb_lite_subordinate.fsm, t1520 runtime expectations, and its harness exactly to clean commit 01d722bd6; no failed behavior remains. Added two t1520 structural assertions locking the current-write predicate and write_q mux relationship. Guarded t1520 passes 2/2 top-level tests in 5 seconds; guarded t1518 current mdBook truth passes 4/4 after preserving historical .5 and requiring current .6/.7/.8 routing. Direct strict/check JSON remains success with protocol.ahb_lite_subordinate matched, 4 states, and 11 signals; both Perl files compile. Added canonical audit/fact ial2-ahb-direct-subordinate-completion-capture-substrate-audit, marked the .5 contract fact superseded, and synchronized runtime/seed facts, README, ROADMAP_V2, mdBook, task, and Memory. Knowledge Map generation/check passes at 976 facts/4943 question keys; mdBook build, git diff check, memory architecture, relative paths, and all doctrine gates pass; disposable book output was removed. Direct memory pressure was 69% free before focused validation; guard host observations were 72.1-72.3% used and descendants remained below 4 GiB. No seed/generated source/support/report/artifact/port/HDL/runtime/backend/AXI/APB/VHDL behavior or decision-0020 activity changed. Selected .7 corrected contract selection and .8 later implementation.`
+  Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.6: audit direct capture lowering`
+
+- ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.7`
   Status: `pending`
-  Goal: `Implement the selected direct lower-layer AHB subordinate phase-retention repair.`
-  Acceptance: `Starting only after .5 commits cleanly, implement exactly the selected direct-seed completion-edge phase-retention contract, convert t1520 from defect evidence to the exact repair regression, preserve support/source/artifact identities and all generated-family behavior, synchronize current docs/book/facts/task/Memory, and run focused/broad gates under the resource cap. Do not widen into broader AHB, general queues/outstanding transfers, AXI/APB/VHDL, or decision 0020.`
+  Goal: `Select a lowering-safe direct subordinate completion-edge phase-retention contract without behavior changes.`
+  Acceptance: `Starting only after .6 commits cleanly, reconcile the .6 register-input mux evidence with the external AHB acceptance rule and select the smallest separated current/next phase-bank and relaunch state contract. Freeze exact fields, capture edge, HWDATA ownership, success/final-ERROR/IDLE/SEQ behavior, ready/response timing including any bounded relaunch stall, exactly-once guarantees, state/support/artifact effects, validation, preservation, implementation owner, and rollback. Make no behavior change; do not reuse a next-phase register in a predicate/effect for the completing current phase. Do not change generated roles or widen into general queues/outstanding transfers, broader AHB, AXI/APB/VHDL, or decision 0020.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.8`
+  Status: `pending`
+  Goal: `Implement the selected lowering-safe direct subordinate phase-retention repair.`
+  Acceptance: `Starting only after .7 commits cleanly, implement exactly its separated current/next-bank and relaunch contract in fsm/ahb_lite_subordinate.fsm, convert t1520 from defect evidence to exact success/final-ERROR retention proof, preserve support/source/artifact identities and all generated-family behavior, synchronize current docs/book/facts/task/Memory, and run focused/broad gates under the resource cap. Do not widen into broader AHB, general queues/outstanding transfers, AXI/APB/VHDL, or decision 0020.`
   Verification: `pending`
   Commit: `pending`
 
@@ -143,9 +157,11 @@ the second read is never evaluated and storage remains the first write value
 edge, the bus again records two acceptances but one capture/completion, exactly
 two ERROR cycles, and storage remains zero. `ACCESS` and `ERROR_COMPLETE`
 inspect no HSEL/HADDR/HTRANS and unconditionally return to `IDLE`, so the ready
-edge accepts a phase that cannot be sampled on the following cycle. `.4`
-selects `.5` no-behavior direct-seed contract selection; `.6` is the later
-implementation owner. The generated family remains repaired and unchanged.
+edge accepts a phase that cannot be sampled on the following cycle. At `.4`
+closeout, `.5` was the no-behavior direct-seed contract selector and `.6` the
+planned implementation owner; `.6` later invalidated that internal
+realization as recorded below. The generated family remains repaired and
+unchanged.
 
 The canonical `.4` result is
 `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md`
@@ -159,11 +175,26 @@ scope is the direct lower-layer seed contract: no seed, generator, source,
 support, report, artifact, HDL/runtime, backend, protocol, or decision-0020
 behavior may change before the selected contract commits.
 
-`.5` now freezes the atomic direct-state contract in
+At `.5` closeout, the atomic direct-state contract was frozen in
 `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md`
 and fact `ial2-ahb-direct-subordinate-pipelined-active-transfer-contract-selection`.
 `.6` may activate only after the `.5` closeout commit leaves the repository
 clean.
+
+`.6` activated only after `.5` committed cleanly at `01d722bd6`. Its behavior
+attempt exposed a lowering-substrate conflict before any repair could ship:
+the direct register-input form is a combinational mux feeding a storage flop,
+and its mux output is also read by current-state predicates/effects. Capturing
+the following phase's `HWRITE=0` during successful completion therefore made
+the current write predicate false and changed expected storage from
+`0x11111111` to zero. `.6` now owns the fail-closed no-behavior audit,
+restoration, and structural regression; `.7` owns a corrected separated-bank
+contract and `.8` later implementation. The generated IAL2 family and all
+other direct seeds remain unchanged preservation authorities.
+
+`.7` may activate only after the `.6` closeout commit leaves the repository
+clean. It must select the exact separated-bank/relaunch contract before `.8`
+changes the seed.
 
 Implementation finding: direct t1519 proves the one-slot subordinate and
 two-cycle ERROR retirement, while paired t1513/t1515 time out because the

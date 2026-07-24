@@ -4,9 +4,11 @@ Task-tree owner: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`
 
 Date: 2026-07-23
 
-Later selection: `.5` freezes atomic direct-state completion-edge capture and
-dispatch through the existing phase registers; `.6` owns implementation. See
-`docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md`.
+Later finding: `.5` selected atomic direct-state completion-edge capture through
+the existing phase registers, but `.6` proved that internal realization unsafe
+under register-input mux lowering and restored the failed attempt. `.7` owns a
+separated-bank contract and `.8` later implementation. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md`.
 
 ## Outcome
 
@@ -21,9 +23,8 @@ raise ready and return to `IDLE` without sampling the simultaneously accepted
 next phase.
 
 The audit makes no seed, support, artifact, port, generated-HDL, or runtime
-behavior change. It selects `.5`, a no-behavior direct-seed contract-selection
-leaf. `.6` is reserved for later implementation after that contract commits
-cleanly.
+behavior change. It historically selected `.5`; `.6` later invalidated that
+leaf's internal no-bank realization without changing shipped behavior.
 
 ## Successful-Completion Probe
 
@@ -101,7 +102,7 @@ protocol contract without assuming identical internal syntax. It must freeze:
 - preservation of the direct seed's bounded word-only/unsupported-SEQ policy,
   support identity `protocol.ahb_lite_subordinate`, ports, artifact name, and
   generated-family behavior; and
-- `.6` implementation/regression ownership and rollback.
+- a later lowering-safe contract, implementation/regression ownership, and rollback.
 
 This is depth-one protocol bookkeeping, not general queueing, multiple
 outstanding transfers, broader manager/interconnect behavior, or activation of
@@ -128,7 +129,7 @@ subtests in four seconds with the 4-GiB descendant limit active.
 ## Rollback
 
 Rollback removes t/1520, its testbench, this audit record/fact, the historical
-Knowledge Map routing correction, and the selected `.5`/`.6` leaves, then
+Knowledge Map routing correction, and the later repair leaves, then
 restores `.4` to pending. It does not repair the direct seed. Any later repair
 rollback must restore seed behavior, t/1520 expectations, current seed docs,
 task state, and user-facing book statements together.

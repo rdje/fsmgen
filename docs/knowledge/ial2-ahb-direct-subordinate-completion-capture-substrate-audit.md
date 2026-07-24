@@ -1,0 +1,31 @@
+---
+id: ial2-ahb-direct-subordinate-completion-capture-substrate-audit
+title: Direct AHB completion capture needs separated current and next phase storage
+answers:
+  - "why was the direct AHB subordinate no-bank completion dispatcher rejected?"
+  - "can direct FSM register_in storage capture the next AHB phase while completing the current phase?"
+  - "why did the attempted direct AHB completion repair suppress the current write?"
+  - "what lowering constraint applies to the direct AHB subordinate phase repair?"
+  - "which task now owns the direct AHB subordinate repair contract?"
+  - "is the direct AHB subordinate completion-edge defect repaired now?"
+date: 2026-07-23
+status: current
+tags: [ahb, subordinate, direct-seed, pipeline, phase, lowering, register-in, correctness, audit]
+evidence: docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md; docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md; fsm/ahb_lite_subordinate.fsm; t/1520-ahb-direct-subordinate-pipelined-active-transfer-audit.t; docs/tasks/IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; docs/TASK_TREE.md; MEMORY.md
+reverify: prove -Iperl t/1520-ahb-direct-subordinate-pipelined-active-transfer-audit.t && rg -n 'Emitted-HDL Root Cause|sampled_write=0|separated current and next|IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.7' docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md
+---
+
+The `.5` external exactly-once goal remains valid, but its no-bank internal
+realization is infeasible under current direct-FSM lowering. `write_q` is the
+output of a combinational register-input mux and is also read by the current
+write-completion enable. Capturing the following read's `HWRITE=0` during the
+completing write therefore drove `write_q=0` immediately and suppressed the
+current storage update; the guarded attempt reported
+`sampled_write=0 storage=00000000`.
+
+The failed behavior was fully restored. t/1520 still proves the current seed's
+completion-edge loss and now also locks the mux coupling structurally. `.7`
+owns a no-behavior lowering-safe contract with separated current/next phase
+storage and an explicit relaunch boundary; `.8` later owns implementation.
+The direct seed is not repaired yet, and generated IAL2 behavior plus decision
+0020 remain unchanged.

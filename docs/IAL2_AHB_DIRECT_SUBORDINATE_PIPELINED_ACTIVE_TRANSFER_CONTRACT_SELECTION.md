@@ -4,7 +4,14 @@ Task-tree owner: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5`
 
 Date: 2026-07-23
 
-## Outcome
+Superseded internal realization: `.6` proved that the existing-register,
+no-relaunch implementation selected below is unsafe under direct-FSM
+`register_in` lowering. The external exactly-once/HWDATA requirements remain
+valid, but `.7` must select separated current/next phase storage before `.8`
+implementation. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md`.
+
+## Historical Outcome
 
 The selected repair for the direct lower-layer
 `fsm/ahb_lite_subordinate.fsm` seed is atomic completion-edge capture and
@@ -22,7 +29,7 @@ immediately after the edge. State selection itself retains the only HTRANS
 distinction used by this seed: NONSEQ routes to `ACCESS`, SEQ routes to
 `UNSUPPORTED`.
 
-The implementation owner is `.6`. `.5` changes no seed, support identity,
+The originally selected implementation owner was `.6`. `.5` changed no seed, support identity,
 artifact, port, generated HDL, runtime behavior, generated IAL2 role, backend,
 AXI/APB/VHDL behavior, or decision `0020`.
 
@@ -133,7 +140,7 @@ ERROR continuation:
 
 ## Preservation And Implementation Boundary
 
-`.6` may edit only the direct seed, t/1520/harness expectations, current direct-
+The superseded `.5` plan allowed `.6` to edit only the direct seed, t/1520/harness expectations, current direct-
 seed docs/book/facts, task/Memory, and directly affected validation evidence.
 It must preserve:
 
@@ -155,7 +162,8 @@ paths, diff, and doctrine gates under the 4-GiB descendant cap where heavy.
 
 ## Rollback
 
-Rollback removes this selection record/fact and restores `.5` to pending; it
-does not change the proven defect. A later `.6` rollback must restore the seed
-and t/1520 together, return the current docs to audit-only truth, and must not
-leave a ready edge that advertises acceptance without phase retention.
+This record is retained as historical selection evidence. `.6` has already
+performed the behavior rollback: the seed and t/1520 runtime expectations are
+back at the `.5` baseline, with no ready edge claiming new retention. Removing
+the supersession requires first disproving the emitted mux evidence; otherwise
+`.7`/`.8` remain the only valid forward route.

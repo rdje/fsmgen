@@ -42,6 +42,18 @@ subtest 'direct generated HDL drops active phases accepted on completion edges' 
         or diag(join('', @{$generate_stdout || []}), join('', @{$generate_stderr || []}));
     return unless $generate_ok;
 
+    my $emitted = slurp($hdl);
+    like(
+        $emitted,
+        qr/assign access_reg_data_q_hwdata_en = access_en & .*write_q;/,
+        'current write completion reads the register-input mux output',
+    );
+    like(
+        $emitted,
+        qr/always_comb begin\s+write_q = write_q_q;.*?if \(write_q_hwrite_en\) begin\s+write_q = HWRITE;/s,
+        'write_q capture is a combinational register-input mux before its storage flop',
+    );
+
     my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
         command => [
             'verilator', '--binary', '--timing', '--no-assert', '-Wno-fatal',

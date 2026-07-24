@@ -6022,20 +6022,30 @@ acceptances but one internal capture/completion in both cases: the success
 case retains only storage `0x11111111`; the ERROR case preserves exactly two
 ERROR cycles but leaves storage zero. `ACCESS`/`ERROR_COMPLETE` return to
 `IDLE` without sampling HSEL/HADDR/HTRANS. No seed behavior changes in the
-audit. `.5` owns exact direct-seed contract selection and `.6` later
-implementation; the generated family remains repaired, and decision 0020
+audit. `.5` historically owned direct-seed contract selection; `.6` later
+invalidated its no-bank realization, and `.7`/`.8` now own corrected selection/
+implementation. The generated family remains repaired, and decision 0020
 remains inactive.
 
 `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5` now selects the direct-seed
-repair contract without changing behavior. On successful or final-ERROR ready
+external repair goal without changing behavior. On successful or final-ERROR ready
 edges, selected NONSEQ atomically loads existing HADDR/HWRITE/HSIZE/wait state
 and enters `ACCESS`; selected SEQ loads its wait and enters `UNSUPPORTED`;
-IDLE/BUSY/unselected input returns to `IDLE`. No pending queue or HWDATA capture
-is needed: the direct state completes on that edge, and the completing write
-still consumes its current live data. `.6` owns implementation and t/1520
-conversion to two acceptances/captures/completions. Generated-family behavior,
-public/support/artifact identities, general queues, and decision 0020 remain
-unchanged/inactive.
+IDLE/BUSY/unselected input returns to `IDLE`. Its selected no-bank internal
+realization is now historical: `.6` proved that direct `register_in` names are
+combinational mux outputs, so capturing the next read's `HWRITE=0` in
+`ACCESS` immediately suppressed the completing current write and produced
+storage zero. The failed attempt was restored without behavior change. `.7`
+now owns a lowering-safe separated-bank/relaunch contract and `.8` later
+implementation. Generated-family behavior, public/support/artifact identities,
+general queues, and decision 0020 remain unchanged/inactive.
+
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.6` records that substrate finding.
+t/1520 still proves the shipped completion-edge loss and now also locks the
+emitted mux coupling: current write completion reads `write_q`, while
+`write_q` is the combinational register-input mux overridden by an enabled
+live `HWRITE` capture. The direct seed and runtime expectations were restored
+exactly; `.6` changes no shipped behavior.
 
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
@@ -8707,7 +8717,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md` — freezes the `.2` depth-one accepted address/control bank at the bus-visible ready/completion edge, data-phase HWDATA ownership, sequence/error ordering, additive report contract, `.3` implementation gates, and `.4` direct-seed audit boundary.
 - `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md` — records the `.3` coupled generated subordinate/requester/interconnect phase repair, additive phase/data-owner reports, exact t/1519 and paired runtime proofs, stable public identities, depth-one boundary, and `.4` direct-seed handoff.
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md` — records the `.4` generated-HDL proof that the distinct direct subordinate seed drops active phases accepted on successful/final-ERROR completion edges, the IDLE-only capture root cause, unchanged behavior, and `.5`/`.6` handoff.
-- `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md` — freezes the `.5` direct-state atomic completion-edge NONSEQ/SEQ capture/dispatch contract, live-HWDATA ownership, exactly-once/capacity boundary, `.6` implementation gates, and rollback.
+- `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md` — preserves the superseded `.5` no-bank completion-edge dispatch selection, its still-valid external exactly-once/HWDATA goals, and the `.6` lowering-evidence supersession route.
+- `docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md` — records the `.6` emitted-HDL proof that direct register-input mux reuse lets next control alter current completion, the deterministic suppressed-write failure, full behavior restoration, and `.7`/`.8` separated-bank handoff.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

@@ -7080,15 +7080,19 @@ artifact/HDL/runtime behavior changes in the audit. `.5` is selected for exact
 no-behavior direct-seed contract work and `.6` for later implementation. The
 generated family and decision 0020 remain unchanged/inactive.
 
-`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5` now freezes the no-behavior
-direct-seed repair contract. Successful and final-ERROR ready edges dispatch a
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5` historically froze a no-behavior
+direct-seed repair contract. Successful and final-ERROR ready edges would dispatch a
 selected accepted NONSEQ by loading the existing addr/write/size/wait registers
 and entering `ACCESS`, or a selected SEQ by loading wait and entering
-`UNSUPPORTED`; IDLE/BUSY/unselected input returns to `IDLE`. HWDATA remains
-live current-data-phase state, and the direct state boundary needs no pending
-queue. `.6` owns implementation and repaired t1520 expectations. No seed/
-generated/source/support/artifact/HDL/runtime behavior changes; general queues,
-broader AHB, and decision 0020 remain deferred/inactive.
+`UNSUPPORTED`; IDLE/BUSY/unselected input would return to `IDLE`. `.6` proved
+that no-bank internal realization infeasible under current direct-FSM lowering:
+the existing register-input names are combinational mux outputs, and capturing
+the next read's `HWRITE=0` immediately suppresses the completing current write.
+The failed attempt was restored. t1520 now locks the mux substrate while
+retaining its current loss proof. `.7` selects a lowering-safe separated
+current/next bank plus relaunch contract, and `.8` later implements it. No
+shipped seed/generated/source/support/artifact/HDL/runtime behavior changed;
+general queues, broader AHB, and decision 0020 remain deferred/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

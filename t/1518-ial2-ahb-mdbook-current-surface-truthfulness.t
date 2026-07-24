@@ -166,8 +166,18 @@ subtest 'current AHB surfaces describe the shipped depth-one phase pipeline' => 
     );
     like(
         $direct_section,
-        qr/selected direct contract.*?selected NONSEQ.*?ACCESS.*?selected SEQ.*?UNSUPPORTED/s,
-        'AHB direct-seed section records the selected completion-edge dispatch contract',
+        qr/\.5.*?originally selected.*?selected NONSEQ.*?ACCESS.*?selected SEQ.*?UNSUPPORTED/s,
+        'AHB direct-seed section preserves the historical completion-edge dispatch selection',
+    );
+    like(
+        $direct_section,
+        qr/register-input\s+mux.*?suppressed the\s+write.*?IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT/s,
+        'AHB direct-seed section records and links the current lowering-substrate finding',
+    );
+    like(
+        $direct_section,
+        qr/\.7.*?separate current\/next.*?relaunch.*?\.8.*?implementation/s,
+        'AHB direct-seed section routes corrected contract selection before implementation',
     );
     unlike(
         $direct_section,

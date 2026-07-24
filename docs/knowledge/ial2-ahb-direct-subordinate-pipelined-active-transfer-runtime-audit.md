@@ -10,7 +10,7 @@ answers:
 date: 2026-07-23
 status: current
 tags: [ahb, subordinate, direct-seed, pipeline, phase, generated-hdl, correctness, bug, audit]
-evidence: docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md; fsm/ahb_lite_subordinate.fsm; t/1520-ahb-direct-subordinate-pipelined-active-transfer-audit.t; t/data/ahb_direct_subordinate_pipelined_active_transfer_audit_tb.svt; docs/tasks/IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; docs/TASK_TREE.md; MEMORY.md
+evidence: docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md; docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md; fsm/ahb_lite_subordinate.fsm; t/1520-ahb-direct-subordinate-pipelined-active-transfer-audit.t; t/data/ahb_direct_subordinate_pipelined_active_transfer_audit_tb.svt; docs/tasks/IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.md; docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; docs/TASK_TREE.md; MEMORY.md
 reverify: prove -Iperl t/1520-ahb-direct-subordinate-pipelined-active-transfer-audit.t
 ---
 
@@ -23,6 +23,7 @@ The success case records two bus acceptances, one internal capture/completion,
 no error, and only the first write value `0x11111111`. The final-ERROR case
 records two acceptances, one capture/completion, exactly two ERROR cycles, and
 zero storage. This direct seed is separate from the generated IAL2 family
-repaired by `.3`. `.5` now selects atomic direct-state capture/dispatch through
-the existing registers, and `.6` owns implementation. Decision 0020 remains
-inactive.
+repaired by `.3`. `.6` later proved the `.5` existing-register realization
+unsafe under register-input mux lowering and restored the failed attempt. `.7`
+owns a separated-bank contract and `.8` later implementation. Decision 0020
+remains inactive.

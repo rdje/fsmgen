@@ -10887,18 +10887,24 @@ bus but captures/completes only one when the second lands on either successful
 or final-ERROR completion. `ACCESS` and `ERROR_COMPLETE` return to `IDLE`
 without sampling the accepted phase. The success case retains storage
 `0x11111111`; the ERROR case keeps exactly two ERROR cycles and zero storage.
-No behavior changes. `.5` owns exact direct-seed contract selection and `.6`
-later implementation; the generated family and decision 0020 remain
-unchanged/inactive.
+No behavior changes. `.5` historically owned exact direct-seed contract
+selection; `.6` later invalidated its no-bank realization, and `.7`/`.8` now
+own corrected selection/implementation. The generated family and decision
+0020 remain unchanged/inactive.
 
 Direct AHB subordinate pipelined active-transfer contract selection:
 [IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION](../../IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md)
-documents `.5`. The selected no-queue direct-state contract atomically
+documents `.5`. The historical no-queue direct-state contract atomically
 dispatches selected accepted NONSEQ from successful/final-ERROR completion by
 loading existing addr/write/size/wait registers and entering `ACCESS`; selected
 SEQ loads wait and enters `UNSUPPORTED`; IDLE/BUSY/unselected returns to
-`IDLE`. HWDATA remains live data-phase state. `.6` owns implementation and
-t1520 repair expectations. No behavior changes; generated roles, public/
+`IDLE`. `.6` proved that realization unsafe because direct register-input mux
+outputs also feed current completion predicates: capturing the following
+read's `HWRITE=0` suppressed the completing write and produced storage zero.
+The failed attempt was restored. The
+[completion-capture substrate audit](../../IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md)
+records the evidence; `.7` owns a separated-bank/relaunch contract and `.8`
+later implementation. No shipped behavior changes; generated roles, public/
 support/artifact identities, broader AHB, and decision 0020 remain unchanged.
 
 Post APB surface-sync selector:
