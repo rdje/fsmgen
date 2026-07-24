@@ -93,7 +93,7 @@ implementation.
   Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: prove exact-two paired BUSY readiness`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the first public one-subordinate exact-two paired BUSY composition contract.`
   Acceptance: `Starting only after .1 commits cleanly, freeze one generic .ppif source before any matching .ahb alias: exact source/intent/source-object/anchor/requester/support/coverage/test names, unchanged three-child ahb_tb architecture and generated IAL1/IAL0 set, numeric requester-child busy_insertion.beats=2, subordinate and propagated parks_on=[busy], truthful residue, support/accounting/capability/language surfaces, diagnostics, and rollback. Freeze a generated-HDL proof with one BUSY episode/two qualified BUSY events/stable requester-subordinate-interconnect ownership/no BUSY data completion/one resumed SEQ/four byte data beats/clean status/final 44332211, retain the paired --no-assert and standalone assertion-enabled boundaries, and preserve base/exact-one paired/standalone exact-two/aliases/two-subordinate exact-one. Require strict check, schedule, normalized semantic JSON, and existing read-only fsmgen_semantic_introspect MCP parity without a feature-specific API or raw private internals. Make no shipped behavior change. Keep the matching alias, two-subordinate exact-two sibling, broader counts/policy/status/bursts/signals/queues/managers/backends/protocols, separate selector repairs, and decision 0020 deferred.`
   Verification: `pending`
@@ -107,8 +107,9 @@ parser, generator, support, test, artifact, semantic/MCP API, HDL, or runtime
 behavior changes in the activation slice.
 
 `.1` completed the disposable static and generated-HDL runtime audit and
-selected proposed `.2` public contract work. `.2` cannot activate until `.1`
-commits cleanly.
+selected `.2` public contract work. Activation condition satisfied: `.1`
+committed cleanly at `6fd06dc9e`; `.2` is active. This activation changes only
+task/index/Memory state.
 
 ## Rollback
 
