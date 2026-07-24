@@ -7104,6 +7104,17 @@ support/artifact/HDL/runtime behavior changed; public/support identities and
 the generated family remain stable, while general queues, broader AHB, and
 decision 0020 remain deferred/inactive.
 
+`.808` selects the proposed
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT` after the generated
+and direct completion-edge phase repairs close. Current requester behavior is
+still one literal BUSY presentation, implemented by `busy-before-beat` plus a
+one-bit `busy_inserted_q` and reported as `busy_insertion.beats=single`. The
+audit must settle ready-accepted BUSY presentation counting versus ready-low
+holding, generated counter feasibility, unchanged data-beat/address/response
+ownership, and source/alias/paired sequencing before any behavior selection.
+Runtime-selected throttling, local bus-BUSY status, larger bursts, optional
+signals, and decision 0020 remain deferred/inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

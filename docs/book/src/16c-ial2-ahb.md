@@ -1775,6 +1775,16 @@ the [lowering-substrate audit](../../IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPT
 the [Q-named contract](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md),
 and the current [repair record](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md).
 
+After both generated and direct phase repairs, `.808` selects the proposed
+[`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
+The shipped requester still inserts exactly one literal BUSY presentation with
+`busy-before-beat`, one `busy_inserted_q` bit, and report
+`busy_insertion.beats=single`. The audit must determine whether more than one
+bounded presentation counts only on a ready acceptance while `HREADY=0` holds
+the current BUSY value, and whether a counter lowers without consuming the
+pending data beat or response. It selects no syntax or behavior yet. See the
+[selector record](../../IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md).
+
 Use the direct seeds when you need to inspect explicit cycle-level state
 transitions. Use the public IAL2 sources when you need source identity, source
 anchors, generated `.isf` review artifacts, generated `.fsm` review artifacts,

@@ -10914,6 +10914,17 @@ with Q-named four-state dispatch, one capture/completion per acceptance, and no
 pending/relaunch. Generated roles, public/support/artifact identities, broader
 AHB, and decision 0020 remain unchanged.
 
+Post AHB phase-repair selector:
+[IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION](../../IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md)
+records `.808` selection of the proposed
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`. Current behavior
+remains one literal BUSY presentation (`busy-before-beat`, one-bit insertion
+flag, report `beats=single`). The audit must establish ready-accepted BUSY
+counting versus ready-low holding and lowering-safe bounded counter ownership
+before any syntax or behavior change. Runtime-selected throttling, local
+bus-BUSY status, larger bursts, optional signals, and decision 0020 remain
+deferred/inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

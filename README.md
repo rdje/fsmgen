@@ -6065,6 +6065,16 @@ acceptance, live HWDATA, exactly two ERROR cycles, and warning-clean HDL.
 Public/support/artifact identities and the generated IAL2 family are unchanged;
 decision 0020 remains inactive.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.808` now selects the proposed
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT` as the next exact
+owner. The current requester remains bounded to one literal BUSY presentation:
+`busy-before-beat`, one `busy_inserted_q` bit, and report value
+`busy_insertion.beats=single`. The audit must distinguish ready-accepted BUSY
+presentations from a BUSY value held while ready is low, then decide whether a
+bounded literal count is lowering-safe before any syntax or behavior changes.
+Runtime-selected throttling, local bus-BUSY status, larger bursts, optional
+signals, and decision 0020 remain deferred/inactive.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8739,6 +8749,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md` — records the `.6` emitted-HDL proof that direct register-input mux reuse lets next control alter current completion, the deterministic suppressed-write failure, full behavior restoration, and corrected-contract handoff.
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md` — freezes the `.7` Q-named `<-` four-state completion dispatcher, warning-clean four-scenario feasibility proof, rejected UNOPTFLAT bank/relaunch alternative, `.8` gates, and rollback.
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md` — records the `.8` shipped Q-named four-state direct-seed repair, exact t1520 success/ERROR/SEQ/IDLE proof, stable support/public boundaries, and rollback.
+- `docs/IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md` — records `.808` selection of a no-behavior readiness audit for bounded multiple requester BUSY presentations, including the ready-acceptance question and larger deferred alternatives.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.
