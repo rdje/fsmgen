@@ -128,7 +128,7 @@ implementation.
   Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.6: prove two-subordinate exact-two readiness`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.7`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the exact generic public contract for the two-subordinate exact-two paired BUSY composition without changing behavior.`
   Acceptance: `Activate only after .6 commits cleanly. Reconcile the completed .6 static/semantic/MCP/generated-HDL audit, shipped one-subordinate exact-two generic/alias, shipped two-subordinate exact-one generic/alias, current PPIF/AHB naming and suffix conventions, exact four-child artifacts/windows/phase and data ownership, requester numeric before_beat=2/beats=2, both child/propagated parks_on=[busy], residue, support/language/capability/current docs, normalized semantic/read-only MCP contracts, diagnostics, Memory, Knowledge Map, selector-gap owners, and decision 0020. Select one unambiguous generic .ppif intent/source-object/filename, support id, coverage key, focused test/runtime contract, projected accounting, preservation, resource, documentation, rollback, and a separate later alias boundary. Require strict check, schedule JSON, normalized semantic JSON, and real read-only fsmgen_semantic_introspect parity through the existing API. Select at most one implementation leaf and make no shipped behavior change. Do not add the source/support/test, parser/generator/API change, matching alias, second runtime, generalized BUSY count/policy, broader fabric/protocol/backend/VHDL/transaction layer, selector repair, or activate decision 0020.`
   Verification: `pending`
@@ -182,6 +182,10 @@ source, support entry, test, parser/generator/API, HDL, or runtime behavior.
 successful disposable static, semantic/MCP, and generated-HDL evidence. `.7`
 must remain proposed until `.6` commits cleanly; activating it earlier would
 violate the clean-tree pivot rule.
+
+Activation condition satisfied: `.6` committed cleanly at `574620e12`; `.7`
+is active. This activation changes only task/index/Memory state and adds no
+source, support entry, test, parser/generator/API, HDL, or runtime behavior.
 
 ## Rollback
 
