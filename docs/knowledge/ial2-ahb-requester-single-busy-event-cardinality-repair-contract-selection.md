@@ -26,8 +26,9 @@ an outer ready/BUSY loop gate. Existing `busy_inserted_q`, the registered BUSY
 output, the pre-existing no-grant gate, and address-pending state own the full
 single-event lifecycle.
 
-Assertion-enabled disposable proofs pass continuously-ready, 32-clock
+Assertion-enabled disposable proofs passed continuously-ready, 32-clock
 ready-low, and 32-clock grant-low scenarios with exactly one qualified BUSY
 event, one resumed SEQ, four data beats, stable pending fields/counters, and no
-selector conflict. `.2` selects `.3` implementation; multiple-BUSY syntax,
-counter behavior, and policy remain deferred.
+requester selector conflict. `.3` now ships the selected contract; fact
+`ial2-ahb-requester-single-busy-event-cardinality-repair` owns current runtime
+behavior. Multiple-BUSY syntax, counter behavior, and policy remain deferred.

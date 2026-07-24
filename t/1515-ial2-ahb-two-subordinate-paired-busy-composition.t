@@ -159,8 +159,8 @@ subtest 'generated HDL pairs requester BUSY with both subordinate windows' => su
         or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
     like(
         join('', @{$run_stdout || []}),
-        qr/PASS commands=2 transfers=10 beats=8 busy=2 status=44332211 control=88776655/,
-        'runtime proves both windows, held BUSY, and final storage',
+        qr/PASS commands=2 transfers=10 beats=8 busy=2 qualified_busy=2 status=44332211 control=88776655/,
+        'runtime proves one qualified BUSY event per command, both windows, and final storage',
     );
 };
 

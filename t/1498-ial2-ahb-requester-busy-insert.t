@@ -33,6 +33,17 @@ subtest 'adapter parses the bounded requester BUSY-insertion source' => sub {
     like($isf, qr/\(drive transfer_busy\b.*?\(HADDR addr_q\).*?\(HTRANS 2'b01\).*?\(HWDATA wdata_q\)/s, 'BUSY drive holds the armed request fields and drives HTRANS BUSY');
     like($isf, qr/\(local busy_inserted_q \(width 1\)\)/, 'generated IAL1 declares one bounded insertion flag');
     like($isf, qr/\(when \(& \(== beat_index_q 2\) \(== busy_inserted_q 0\)\)\s+\(drive transfer_busy\)\s+\(set busy_inserted_q 1\)\s+\(continue-when \(== busy_inserted_q 1\)\)\)/s, 'BUSY insertion skips normal transfer and response advancement with a one-bit continue condition');
+    like($isf, qr/\(priority ahb_busy_accept over ahb_request\)/, 'BUSY acceptance has priority over requester transaction output selection');
+    like(
+        $isf,
+        qr/\(rule ahb_busy_accept \(& HGRANT HREADY \(== HTRANS 2'b01\)\)\s+\(set ahb_address_pending_q 1\)\s+\(set HTRANS 2'b11\)\)/s,
+        'one qualified BUSY event hands the same transfer to existing pending SEQ ownership',
+    );
+    like(
+        $isf,
+        qr/\(continue-when \(& \(! HREADY\) \(== HTRANS 2'b01\)\)\)/,
+        'ready-low BUSY remains pending instead of advancing the requester transaction',
+    );
 
     is($result->{report}{transfer}{busy}, "2'b01", 'report records the BUSY encoding');
     is($result->{report}{transfer}{busy_before_beat}, 2, 'report records the insertion index');
@@ -93,7 +104,7 @@ subtest 'CLI, support accounting, and report surfaces agree' => sub {
     like(slurp($hdl), qr/\bmodule\s+amba_requester_busy_insert\b/, 'generated HDL contains the selected module');
 };
 
-subtest 'generated HDL inserts one held BUSY beat and resumes SEQ' => sub {
+subtest 'generated HDL retires exactly one qualified BUSY event and resumes SEQ' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $hdl = File::Spec->catfile($tempdir, 'amba_requester_busy_insert.sv');
     my $objdir = File::Spec->catdir($tempdir, 'obj');
@@ -106,7 +117,7 @@ subtest 'generated HDL inserts one held BUSY beat and resumes SEQ' => sub {
 
     my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
         command => [
-            'verilator', '--binary', '--timing', '--no-assert', '-Wno-fatal',
+            'verilator', '--binary', '--timing', '-Wno-fatal',
             '-j', '1', '--top-module', 'ahb_requester_busy_insert_tb',
             '--Mdir', $objdir, $hdl, testbench_path(),
         ],
@@ -116,14 +127,24 @@ subtest 'generated HDL inserts one held BUSY beat and resumes SEQ' => sub {
     return unless $compile_ok;
 
     my $binary = File::Spec->catfile($objdir, 'Vahb_requester_busy_insert_tb');
-    my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
-    ok($run_ok, 'generated-HDL requester BUSY insertion passes')
-        or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
-    like(
-        join('', @{$run_stdout || []}),
-        qr/PASS transfers=5 beats=4 busy=1/,
-        'runtime observes NONSEQ, SEQ, BUSY, resumed SEQ, final SEQ and four accepted beats',
+    my @scenarios = (
+        ['continuously qualified', 0, 0],
+        ['32-clock ready-low hold', 1, 32],
+        ['32-clock grant-low hold', 2, 32],
     );
+    for my $scenario (@scenarios) {
+        my ($label, $mode, $stall_clocks) = @{$scenario};
+        my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(
+            command => [$binary, "+STALL_MODE=$mode"],
+        );
+        ok($run_ok, "$label generated-HDL requester BUSY insertion passes")
+            or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
+        like(
+            join('', @{$run_stdout || []}),
+            qr/PASS transfers=5 beats=4 busy=1 qualified_busy=1 stall_mode=$mode stall_clocks=$stall_clocks/,
+            "$label retires one qualified BUSY event, resumes SEQ, and completes four data beats",
+        );
+    }
 };
 
 subtest 'the shipped requester source remains BUSY-insertion free' => sub {
@@ -131,7 +152,7 @@ subtest 'the shipped requester source remains BUSY-insertion free' => sub {
     ok(!exists($base->{report}{transfer}{busy}), 'base requester transfer report has no BUSY encoding');
     ok(!exists($base->{report}{transfer}{busy_before_beat}), 'base requester report has no insertion index');
     ok(!exists($base->{report}{busy_insertion}), 'base requester has no BUSY-insertion report block');
-    unlike($base->{generated_ial1}{text}, qr/transfer_busy|busy_inserted_q/, 'base requester generated IAL1 has no BUSY-insertion machinery');
+    unlike($base->{generated_ial1}{text}, qr/transfer_busy|busy_inserted_q|ahb_busy_accept/, 'base requester generated IAL1 has no BUSY-insertion machinery');
     my %residue = map { $_->{id} => 1 } @{$base->{report}{unsupported_residue}};
     ok(!$residue{ahb_requester_busy_insert_support}, 'base requester residue is unchanged');
 };

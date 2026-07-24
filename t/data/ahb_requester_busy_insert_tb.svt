@@ -47,6 +47,10 @@ module ahb_requester_busy_insert_tb;
   integer transfer_count;
   integer beat_count;
   integer busy_count;
+  integer qualified_busy_count;
+  integer stall_mode;
+  integer stall_clocks;
+  logic stall_injected;
   logic previous_beat_done;
   logic [1:0] previous_htrans;
   logic [31:0] busy_addr;
@@ -105,9 +109,31 @@ module ahb_requester_busy_insert_tb;
   endtask
 
   initial begin
+    stall_mode = 0;
+    void'($value$plusargs("STALL_MODE=%d", stall_mode));
+    stall_injected = 0;
+    forever begin
+      @(negedge clk);
+      if (rst_n && !stall_injected && stall_mode != 0 && HTRANS === 2'b01) begin
+        stall_injected = 1;
+        case (stall_mode)
+          1: HREADY = 0;
+          2: HGRANT = 0;
+          default: $fatal(1, "unsupported STALL_MODE=%0d", stall_mode);
+        endcase
+        repeat (32) @(negedge clk);
+        HREADY = 1;
+        HGRANT = 1;
+      end
+    end
+  end
+
+  initial begin
     transfer_count = 0;
     beat_count = 0;
     busy_count = 0;
+    qualified_busy_count = 0;
+    stall_clocks = 0;
     previous_beat_done = 0;
     previous_htrans = 0;
 
@@ -123,6 +149,22 @@ module ahb_requester_busy_insert_tb;
       @(posedge clk);
       if (HTRANS != 2'b00 && (previous_htrans == 2'b00 || HTRANS != previous_htrans))
         check_transfer();
+      if (HTRANS == 2'b01) begin
+        if (HGRANT && HREADY)
+          qualified_busy_count = qualified_busy_count + 1;
+        else
+          stall_clocks = stall_clocks + 1;
+        if (beat_done)
+          $fatal(1, "BUSY presentation completed a data beat");
+        if (busy_count != 0) begin
+          if (HADDR !== busy_addr || HWRITE !== busy_write ||
+              HSIZE !== busy_size || HBURST !== busy_burst ||
+              HPROT !== busy_prot || HWDATA !== busy_wdata)
+            $fatal(1, "BUSY stall changed pending address/control/data");
+          if (beat_index !== busy_index || beats_remaining !== busy_remaining)
+            $fatal(1, "BUSY stall changed pending beat counters");
+        end
+      end
       if (beat_done && !previous_beat_done) begin
         if (beat_index !== beat_count[4:0])
           $fatal(1, "accepted beat index=%0d expected=%0d", beat_index, beat_count);
@@ -135,11 +177,14 @@ module ahb_requester_busy_insert_tb;
 
     if (!done)
       $fatal(1, "BUSY-insertion request did not complete");
-    if (transfer_count != 5 || beat_count != 4 || busy_count != 1)
-      $fatal(1, "counts transfers=%0d beats=%0d busy=%0d", transfer_count, beat_count, busy_count);
+    if (transfer_count != 5 || beat_count != 4 || busy_count != 1 || qualified_busy_count != 1)
+      $fatal(1, "counts transfers=%0d beats=%0d busy=%0d qualified_busy=%0d", transfer_count, beat_count, busy_count, qualified_busy_count);
+    if ((stall_mode == 0 && (stall_injected || stall_clocks != 0)) ||
+        (stall_mode != 0 && (!stall_injected || stall_clocks != 32)))
+      $fatal(1, "stall mode=%0d injected=%0d clocks=%0d", stall_mode, stall_injected, stall_clocks);
     if (beats_remaining != 0)
       $fatal(1, "completion left remaining count=%0d", beats_remaining);
-    $display("PASS transfers=%0d beats=%0d busy=%0d", transfer_count, beat_count, busy_count);
+    $display("PASS transfers=%0d beats=%0d busy=%0d qualified_busy=%0d stall_mode=%0d stall_clocks=%0d", transfer_count, beat_count, busy_count, qualified_busy_count, stall_mode, stall_clocks);
     $finish;
   end
 endmodule

@@ -35,6 +35,7 @@ module ahb_paired_busy_composition_tb;
   integer transfer_count;
   integer beat_count;
   integer busy_count;
+  integer qualified_busy_count;
   logic previous_beat_done;
   logic [1:0] previous_htrans;
   logic [31:0] busy_addr;
@@ -113,6 +114,7 @@ module ahb_paired_busy_composition_tb;
     transfer_count = 0;
     beat_count = 0;
     busy_count = 0;
+    qualified_busy_count = 0;
     previous_beat_done = 0;
     previous_htrans = 0;
 
@@ -129,6 +131,9 @@ module ahb_paired_busy_composition_tb;
       if (dut.comp_link_requester_HTRANS != 2'b00 &&
           (previous_htrans == 2'b00 || dut.comp_link_requester_HTRANS != previous_htrans))
         check_transfer();
+      if (dut.comp_link_requester_HTRANS == 2'b01 &&
+          dut.comp_link_fabric_HGRANT && dut.comp_link_fabric_HREADY)
+        qualified_busy_count = qualified_busy_count + 1;
       if (beat_done && !previous_beat_done) begin
         if (beat_index !== beat_count[4:0])
           $fatal(1, "accepted beat index=%0d expected=%0d", beat_index, beat_count);
@@ -141,15 +146,15 @@ module ahb_paired_busy_composition_tb;
 
     if (!done)
       $fatal(1, "paired BUSY aggregate request did not complete");
-    if (transfer_count != 5 || beat_count != 4 || busy_count != 1)
-      $fatal(1, "counts transfers=%0d beats=%0d busy=%0d", transfer_count, beat_count, busy_count);
+    if (transfer_count != 5 || beat_count != 4 || busy_count != 1 || qualified_busy_count != 1)
+      $fatal(1, "counts transfers=%0d beats=%0d busy=%0d qualified_busy=%0d", transfer_count, beat_count, busy_count, qualified_busy_count);
     if (beats_remaining != 0)
       $fatal(1, "completion left remaining count=%0d", beats_remaining);
     if (last_resp !== 2'b00 || last_error || last_retry || last_split)
       $fatal(1, "completion status resp=%b error=%b retry=%b split=%b", last_resp, last_error, last_retry, last_split);
     if (dut.regs.reg_data_q !== 32'h44332211)
       $fatal(1, "final storage=%h expected=44332211", dut.regs.reg_data_q);
-    $display("PASS transfers=%0d beats=%0d busy=%0d storage=%h", transfer_count, beat_count, busy_count, dut.regs.reg_data_q);
+    $display("PASS transfers=%0d beats=%0d busy=%0d qualified_busy=%0d storage=%h", transfer_count, beat_count, busy_count, qualified_busy_count, dut.regs.reg_data_q);
     $finish;
   end
 endmodule

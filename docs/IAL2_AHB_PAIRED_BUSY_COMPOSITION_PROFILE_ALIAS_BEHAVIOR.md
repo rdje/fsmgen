@@ -2,7 +2,7 @@
 
 Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.796`
 
-Date: 2026-07-23
+Date: 2026-07-24
 
 ## Outcome
 
@@ -62,13 +62,11 @@ t/1513 remains the shared generated-HDL runtime proof. It observes:
 NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)
 ```
 
-and proves one BUSY transition episode, four data beats, held requester/
-subordinate state and storage, OKAY completion, zero remaining beats, and final
-register value `32'h44332211`. It does not count every ready-qualified BUSY
-edge; the alias inherits the current requester `beats=single` cardinality
-contradiction recorded by
-`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1` until the selected
-single-event repair ships.
+and proves one BUSY transition episode, exactly one ready-and-grant-qualified
+BUSY event, four data beats, held requester/subordinate state and storage,
+OKAY completion, zero remaining beats, and final register value
+`32'h44332211`. t/1514 now runs the same public harness against alias-generated
+HDL and independently requires that exact one-event result.
 
 ## Alias-Only Difference
 
@@ -149,7 +147,8 @@ appropriate. The generated module and bus behavior are identical.
 t/1514 proves byte parity; parse, strict check, schedule JSON, semantic JSON,
 outdir, HDL, and support surfaces; generated IAL1/IAL0 parity; BUSY insertion
 and parking reports; alias-only residue cleanup; malformed profile diagnostics;
-and clean alias `--verify-hdl`.
+clean alias `--verify-hdl`; and one qualified BUSY event in generated alias
+HDL.
 
 t/1513 retains the shared runtime proof, while t/1512 and t/1497 preserve the
 requester-only and aggregate-BUSY-park alias families.

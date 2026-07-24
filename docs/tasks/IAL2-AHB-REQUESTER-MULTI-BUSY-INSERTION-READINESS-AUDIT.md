@@ -60,7 +60,7 @@ insertion points.
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`
   Status: `active`
   Goal: `Audit bounded multiple requester BUSY presentations before selecting behavior.`
-  Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3`
+  Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.4`
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`
   Status: `done`
@@ -77,9 +77,16 @@ insertion points.
   Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2: select single-BUSY event repair`
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement exact one-event requester BUSY retirement and lock every generic/alias/paired embedding to ready-qualified cardinality.`
   Acceptance: `Starting only after .2 commits cleanly, implement exactly the selected conditional AhbRequester generated-IAL1 delta: priority ahb_busy_accept over ahb_request, rule guarded by HGRANT && HREADY && HTRANS==BUSY that sets ahb_address_pending_q=1 and HTRANS=SEQ, and the outer !HREADY && HTRANS==BUSY continue gate. Preserve transfer_busy, one-bit busy_inserted_q, all public syntax/diagnostics/ports/report/support/source/artifact/module identities, base requester output, address/data/response ownership, burst/address/data progression, status, and residue. Extend t1498 structural checks and assertion-enabled generated-HDL runtime using public first-visible BUSY stall injection for continuously-qualified, 32-clock ready-low, and 32-clock grant-low scenarios; require exactly one qualified BUSY event, stable fields/counters, the same resumed SEQ, exactly four data beats, and zero remaining. Update paired one-/two-subordinate generic/alias harnesses t1513-t1516 to count one ready-qualified embedded BUSY event per command while preserving parking/mapping/storage/status. Run requester/base/alias/paired/current-surface/phase preservation, t248/t297, strict/report/artifact/verify gates, mdBook/README/roadmap/current behavior/facts/task/Memory/Knowledge Map sync, diff/docs/doctrine gates, and 4-GiB resource cap. Do not add multiple-BUSY syntax/counter/report, runtime/policy throttling, local bus-BUSY status, broader bursts/signals/managers, queues, direct seeds/backends, AXI/APB/VHDL, general output-priority work, or decision 0020.`
+  Verification: `AhbRequester.pm conditionally emits priority ahb_busy_accept over ahb_request, a HGRANT && HREADY && HTRANS==BUSY accept rule that arms existing ahb_address_pending_q and drives SEQ, and the selected ready-low BUSY continue gate; base requester generated IAL1 remains free of all BUSY machinery. Assertion-enabled t1498 passes five subtests, including continuous, 32-clock ready-low, and 32-clock grant-low runs, each exact transfers=5/beats=4/busy=1/qualified_busy=1 with stable pending fields/counters and no BUSY data completion. Generic/alias paired t1513/t1514 pass four/five subtests with exact one qualified event, four beats, and storage 44332211; two-window generic/alias t1515/t1516 pass three/five subtests with exact two qualified events, eight beats, and status/control 44332211/88776655. Paired tests retain their prior --no-assert boundary because enabling assertions exposed an unchanged interconnect default-plus-mapped HADDR selector conflict; proposed inactive IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION and fact ial2-ahb-interconnect-default-decode-output-arbitration-gap own it, while requester-only assertions pass. Guarded t1510/t1511/t1512/t1518/t1519 preservation passes 15/15; t248/t297 pass 6815/6815. Final t1518 passes 4/4. Modified Perl sources/tests are syntax-clean; mdBook build, Knowledge Map generation/check at 984 facts/4984 question keys, memory architecture, relative-doc paths, diff, and doctrine gates pass. Generated book output and disposable inspection artifacts were removed. Canonical record docs/IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md and fact ial2-ahb-requester-single-busy-event-cardinality-repair.`
+  Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3: enforce single-BUSY event cardinality`
+
+- ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.4`
+  Status: `pending`
+  Goal: `Select the smallest public exact-two requester BUSY event contract after the single-event substrate repair.`
+  Acceptance: `Starting only after .3 commits cleanly, reconcile the exact-two disposable candidate from .1 with the now-shipped single-event accept/hold substrate and select one bounded literal public contract. Freeze syntax and diagnostics, whether count extends busy-before-beat or uses a separate clause, minimum/maximum and width, per-qualified-event meaning through ready/grant stalls, counter initialization/retirement, address-pending SEQ handoff, report/support/residue changes, base/single preservation, generic/alias/paired generated-HDL gates, assertion boundary, resource cap, validation, and rollback. Make no shipped behavior change in contract selection. Keep runtime/policy/random throttling, multiple insertion points, local bus-BUSY status, broader bursts/signals/managers, queues/outstanding transfers, direct seeds/backends, AXI/APB/VHDL, separate output-selector repairs, and decision 0020 deferred.`
   Verification: `pending`
   Commit: `pending`
 
@@ -94,7 +101,10 @@ Activation condition satisfied: `.808` committed cleanly at `5d0effaca`.
 `.1` completed the no-behavior ready/acceptance and lowering-feasibility audit
 and selected `.2`. Activation condition satisfied: `.1` committed cleanly at
 `512e65b7e`; `.2` completed the no-behavior repair contract selection and
-selected `.3`, which cannot activate until `.2` commits cleanly.
+selected `.3`. Activation condition satisfied: `.2` committed cleanly at
+`41cab81fb`; `.3` completed the exact-one requester BUSY repair and its
+generic/alias paired regression locks. `.4` remains pending until `.3` commits
+cleanly, then owns exact-two public contract selection.
 
 ## Rollback
 

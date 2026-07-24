@@ -7,7 +7,7 @@ answers:
   - "what shipped in IAL2-FEATURE-COMPLETENESS-FRONTIER.790?"
   - "what support id covers the requester BUSY-insertion .ahb alias?"
   - "does the BUSY-insertion .ahb alias change generated HDL?"
-date: 2026-07-23
+date: 2026-07-24
 status: current
 tags: [ial2, ahb, requester, busy, profile-alias, behavior]
 evidence: ppif/ahb_requester_busy_insert.ahb; ppif/ahb_requester_busy_insert.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1512-ial2-ahb-requester-busy-insert-profile-alias.t; t/1498-ial2-ahb-requester-busy-insert.t; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
@@ -17,12 +17,11 @@ reverify: prove -Iperl t/1512-ial2-ahb-requester-busy-insert-profile-alias.t t/1
 FSMGen ships `ppif/ahb_requester_busy_insert.ahb` as a byte-identical profile
 alias of `ppif/ahb_requester_busy_insert.ppif`. Both lower through generated
 `amba_requester_busy_insert.isf` and `.fsm`, then generate HDL module
-`amba_requester_busy_insert` with the same intended single BUSY episode and
-resumed `SEQ` behavior. Current audit
-`ial2-ahb-requester-multi-busy-insertion-readiness-audit` proves both suffixes
-inherit the same present cardinality contradiction: one transition episode but
-ten continuously-ready qualified BUSY edges despite report `beats=single`.
-Exact single-event repair is selected first.
+`amba_requester_busy_insert` with the same exact single BUSY event and resumed
+`SEQ` behavior. Both suffixes retire exactly one event with
+`HGRANT && HREADY && HTRANS==BUSY`, keep BUSY pending through qualifier stalls,
+and resume the same SEQ. Fact
+`ial2-ahb-requester-single-busy-event-cardinality-repair` owns the repair.
 
 The alias support identity is
 `intent.ahb_profile_alias_requester_busy_insert`, coverage

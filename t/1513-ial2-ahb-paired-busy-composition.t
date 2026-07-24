@@ -151,8 +151,8 @@ subtest 'generated HDL pairs one requester BUSY presentation with subordinate pa
         or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
     like(
         join('', @{$run_stdout || []}),
-        qr/PASS transfers=5 beats=4 busy=1 storage=44332211/,
-        'runtime observes paired BUSY parking and the four byte writes',
+        qr/PASS transfers=5 beats=4 busy=1 qualified_busy=1 storage=44332211/,
+        'runtime observes one qualified paired BUSY event, parking, and four byte writes',
     );
 };
 

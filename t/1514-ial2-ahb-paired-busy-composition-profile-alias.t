@@ -90,7 +90,9 @@ subtest 'alias emits the shared artifacts and clean HDL' => sub {
     )) {
         ok(-f File::Spec->catfile($outdir, $artifact), "outdir contains $artifact");
     }
-    like(slurp(File::Spec->catfile($outdir, 'amba_requester_busy_insert.isf')), qr/\(drive transfer_busy\b/, 'requester IAL1 keeps BUSY drive');
+    my $requester_isf = slurp(File::Spec->catfile($outdir, 'amba_requester_busy_insert.isf'));
+    like($requester_isf, qr/\(drive transfer_busy\b/, 'requester IAL1 keeps BUSY drive');
+    like($requester_isf, qr/\(rule ahb_busy_accept \(& HGRANT HREADY \(== HTRANS 2'b01\)\)/, 'alias requester IAL1 keeps qualified BUSY acceptance');
     like(slurp(File::Spec->catfile($outdir, 'ahb_lite_subordinate_byte_lane_hburst_seq.isf')), qr/ahb_phase_pending_q/, 'subordinate IAL1 keeps one accepted next phase');
     like(slurp($hdl), qr/\bmodule\s+ahb_tb\b/, 'generated HDL contains aggregate module');
     like(slurp($hdl), qr/\bahb_interconnect\s+fabric\b/, 'generated HDL keeps legal fabric instance');
@@ -100,6 +102,39 @@ subtest 'alias emits the shared artifacts and clean HDL' => sub {
     );
     ok($verify_ok, 'public verify-hdl accepts the alias')
         or diag(join('', @{$verify_stdout || []}), join('', @{$verify_stderr || []}));
+};
+
+subtest 'alias generated HDL retires one qualified paired BUSY event' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'ahb_tb.sv');
+    my $objdir = File::Spec->catdir($tempdir, 'obj');
+    my ($generate_ok, undef, undef, $generate_stdout, $generate_stderr) = run(
+        command => ['./bin/fsmgen', '--quiet', '--strict', '--output', $hdl, alias_path()],
+    );
+    ok($generate_ok, 'paired BUSY alias emits generated HDL for runtime proof')
+        or diag(join('', @{$generate_stdout || []}), join('', @{$generate_stderr || []}));
+    return unless $generate_ok;
+
+    my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
+        command => [
+            'verilator', '--binary', '--timing', '--no-assert', '-Wno-fatal',
+            '-j', '1', '--top-module', 'ahb_paired_busy_composition_tb',
+            '--Mdir', $objdir, $hdl, testbench_path(),
+        ],
+    );
+    ok($compile_ok, 'Verilator builds the paired BUSY alias harness')
+        or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
+    return unless $compile_ok;
+
+    my $binary = File::Spec->catfile($objdir, 'Vahb_paired_busy_composition_tb');
+    my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
+    ok($run_ok, 'generated-HDL paired BUSY alias proof passes')
+        or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
+    like(
+        join('', @{$run_stdout || []}),
+        qr/PASS transfers=5 beats=4 busy=1 qualified_busy=1 storage=44332211/,
+        'alias runtime observes one qualified BUSY event, parking, and four byte writes',
+    );
 };
 
 subtest 'malformed profile aliases fail closed' => sub {
@@ -131,6 +166,10 @@ sub ppif_path {
 
 sub valid_ready_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'valid_ready_handshake.ppif');
+}
+
+sub testbench_path {
+    return File::Spec->catfile($FindBin::Bin, 'data', 'ahb_paired_busy_composition_tb.svt');
 }
 
 sub support_id {

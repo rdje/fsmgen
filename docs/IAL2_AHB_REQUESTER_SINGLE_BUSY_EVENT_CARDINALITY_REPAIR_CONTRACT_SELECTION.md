@@ -28,6 +28,10 @@ until `.3` commits cleanly.
 This contract-selection slice makes no parser, generator, source, test,
 artifact, HDL, runtime, backend, AXI, APB, or VHDL behavior change.
 
+Implementation outcome: `.3` now ships this contract exactly. See
+`docs/IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md` for the
+generated IAL1 delta and requester/generic/alias/paired runtime evidence.
+
 ## Selected Meaning Of `single`
 
 The current report value is retained:

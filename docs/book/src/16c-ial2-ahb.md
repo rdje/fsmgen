@@ -1252,25 +1252,22 @@ behavior. Runtime/policy-driven or multi-beat BUSY throttling and a separate
 local bus-BUSY status output remain deferred. The one-subordinate paired
 generic/alias and two-subordinate paired generic sources are described below.
 
-> **Current cardinality limitation:** the public report intends
-> `busy_insertion.beats=single`, but the current generated requester holds one
-> BUSY transition episode across ten `HGRANT && HREADY` clock edges when the
-> bus is continuously ready. Existing t/1498 and paired harnesses count
-> transfer-type changes, so they prove one episode and four data beats, not one
-> accepted BUSY edge. The repo-local Arm AHB specification permits
-> fixed-length BUSY-to-SEQ changes while `HREADY=0`; the defect is the
-> continuously-ready cardinality mismatch. The
+> **Exact single-event cardinality:** `busy_insertion.beats=single` now means
+> exactly one rising edge with `HGRANT && HREADY && HTRANS == BUSY`. BUSY
+> remains a pending presentation while either qualifier is low; its address,
+> control, write data, beat index, and remaining count stay stable. A
+> conditional acceptance rule then reuses existing address-pending ownership
+> to present the same transfer as `SEQ`, without new syntax, report fields,
+> storage, or a counter. Assertion-enabled t/1498 proves continuously-qualified,
+> 32-clock ready-low, and 32-clock grant-low cases, each with one qualified BUSY
+> event and four data beats. Generic and `.ahb` paired tests t/1513-t/1516 count
+> one qualified event per command. The historical
 > [multiple-BUSY readiness audit](../../IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md)
-> proves assertion-enabled exact-one and exact-two event candidates. The
-> [single-event repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md)
-> now freezes `single` as exactly one rising edge with
-> `HGRANT && HREADY && HTRANS == BUSY`. BUSY remains a pending presentation
-> while either qualifier is low; the selected conditional accept rule and
-> ready/BUSY loop gate then reuse existing address-pending state to present the
-> same transfer as `SEQ`, without new syntax, report fields, or a counter. `.3`
-> owns implementation before any public multiple-BUSY extension. Until that
-> repair ships, treat `beats=single` as intended rather than a current
-> clock-edge guarantee.
+> records the former ten-edge mismatch; the
+> [single-event repair](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md)
+> records the shipped correction. Paired aggregate tests retain `--no-assert`
+> because a separate proposed AHB interconnect task owns the pre-existing
+> default/decode selector overlap; their qualified BUSY counts remain explicit.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.789` selected `.790`, which now ships the
 matching `ppif/ahb_requester_busy_insert.ahb` profile alias. It mirrors the
@@ -1797,9 +1794,9 @@ and the current [repair record](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPU
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
-`.1` has now proved that the current one-bit procedural flag yields ten
+`.1` proved that the pre-repair one-bit procedural flag yielded ten
 ready-qualified BUSY edges under continuously-ready operation despite report
-`busy_insertion.beats=single`; the prior tests count only one transition
+`busy_insertion.beats=single`; the prior tests counted only one transition
 episode. The repo-local Arm specification also corrected the ready-low premise:
 fixed-length BUSY may change to SEQ while ready is low, provided SEQ then holds.
 Assertion-enabled disposable candidates prove exact one- and two-event
@@ -1809,12 +1806,14 @@ four data beats. `.2` now selects exact one-event retirement on
 stalls, an `ahb_busy_accept` handoff into existing address-pending ownership,
 and no new public syntax or counter. Assertion-enabled public 32-clock
 ready-low and grant-low probes both complete with one qualified BUSY event and
-four data beats. `.3` owns implementation before multiple-BUSY
-syntax/behavior. See the
+four data beats. `.3` now ships that rule/gate repair. t/1498 preserves all
+three assertion-enabled requester scenarios, and t/1513-t/1516 count one
+qualified BUSY event per generic/alias paired command. See the
 [selector record](../../IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md) and
 the [runtime audit](../../IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md),
 then the
-[selected repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md).
+[selected repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md)
+and [shipped repair](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md).
 
 Use the direct seeds when you need to inspect explicit cycle-level state
 transitions. Use the public IAL2 sources when you need source identity, source

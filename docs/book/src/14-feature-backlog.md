@@ -10916,11 +10916,11 @@ AHB, and decision 0020 remain unchanged.
 
 Post AHB phase-repair selector:
 [IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION](../../IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md)
-records `.808` selection of the proposed
-`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`. `.1` now proves the
-current one-bit procedural insertion exposes ten ready-qualified BUSY edges
-under continuously-ready operation even though report JSON says
-`beats=single`; existing requester/paired tests count only one HTRANS episode.
+records `.808` selection of
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`. `.1` proved the
+pre-repair one-bit procedural insertion exposed ten ready-qualified BUSY edges
+under continuously-ready operation even though report JSON said
+`beats=single`; the former requester/paired tests counted only one HTRANS episode.
 The imported Arm specification permits fixed-length BUSY-to-SEQ changes while
 ready is low, so the defect is accepted-edge cardinality rather than that
 transition. Assertion-enabled single/count-two candidates pass continuously-
@@ -10931,10 +10931,17 @@ same transfer into existing address-pending `SEQ` ownership, and a ready/BUSY
 gate keeps BUSY pending through ready or grant stalls; no new public syntax,
 report field, storage, or counter is needed. Assertion-enabled public
 32-clock ready-low and grant-low probes each pass with one qualified BUSY event
-and four data beats. `.3` owns implementation before multiple-BUSY syntax or
-behavior. Runtime-selected throttling, local bus-BUSY status, larger bursts,
-optional signals, and decision 0020 remain deferred/inactive. See the
-[selected repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md).
+and four data beats. `.3` now ships that conditional rule/gate repair. t/1498
+keeps assertions enabled and proves continuously-qualified plus both 32-clock
+stall scenarios; t/1513-t/1516 require one qualified embedded BUSY event per
+generic/alias paired command. Public syntax/report/support/artifacts remain
+unchanged. A separate proposed interconnect owner tracks the pre-existing
+default/decode selector conflict that keeps paired runtimes on `--no-assert`.
+Multiple-BUSY syntax/behavior, runtime-selected throttling, local bus-BUSY
+status, larger bursts, optional signals, and decision 0020 remain
+deferred/inactive. See the
+[selected repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md)
+and [shipped repair](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

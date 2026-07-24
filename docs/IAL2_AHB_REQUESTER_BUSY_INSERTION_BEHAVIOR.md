@@ -2,12 +2,13 @@
 
 Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.788`
 
-Date: 2026-07-23
+Date: 2026-07-24
 
 ## Outcome
 
 FSMGen ships an additive bounded AHB requester source whose public contract
-requests one held `HTRANS = BUSY` presentation before a selected `SEQ` beat:
+requests exactly one grant-and-ready-qualified `HTRANS = BUSY` event before a
+selected `SEQ` beat:
 
 ```text
 ppif/ahb_requester_busy_insert.ppif
@@ -37,8 +38,9 @@ inside the existing `transfer` block:
 
 `busy-before-beat N` means: immediately before the `SEQ` transfer whose
 zero-based `beat_index` is `N`, present the pending address/control/write-data
-with `HTRANS = BUSY` once, do not advance address or counters, then resume that
-same pending beat as `SEQ`. The bounded public source selects `N = 2`.
+with `HTRANS = BUSY`, retire exactly one BUSY event when `HGRANT && HREADY` is
+true, do not advance address or counters, then resume that same pending beat as
+`SEQ`. The bounded public source selects `N = 2`.
 
 `N` must be a literal in `1..15`: beat zero is the initial `NONSEQ`, and the
 requester supports at most sixteen beats. The parser fails closed for a missing
@@ -56,7 +58,12 @@ The generator adds only when `busy-before-beat` is present:
 - an insertion guard at `beat_index_q == N` that drives BUSY, marks the
   one-shot, and continues to the next loop iteration before the normal transfer
   and `HREADY`/response path;
-- the next iteration's unchanged `transfer_seq` and response advancement.
+- a conditional `ahb_busy_accept` rule that, on
+  `HGRANT && HREADY && HTRANS == BUSY`, arms existing
+  `ahb_address_pending_q` and drives the same transfer as `SEQ`;
+- a ready-low BUSY loop gate, complementing the existing no-grant gate, so the
+  pending BUSY remains stable while either qualifier is low; and
+- the unchanged `transfer_seq` and response advancement after acceptance.
 
 The requester presents the request bus before the beat loop, waits one clock
 after driving an active data transfer, and retains that transfer while its
@@ -66,10 +73,11 @@ and BUSY-inserting requesters and was runtime-corrected when the first paired
 aggregate exposed the former early-response path in `.794`.
 
 The BUSY episode therefore cannot decrement `beats_remaining_q`, increment
-`beat_index_q`, advance `addr_q`/`wdata_q`, or consume `HREADY`/`HRESP`. A burst
-that never reaches `N` is a safe no-op. There is no new local-status bus-BUSY
-output; users observe it directly on `HTRANS`, while `local-status.busy` keeps
-its existing transaction-in-progress meaning.
+`beat_index_q`, advance `addr_q`/`wdata_q`, or consume `HRESP` or a data beat.
+Only one `HGRANT && HREADY` BUSY event retires. A burst that never reaches `N`
+is a safe no-op. There is no new local-status bus-BUSY output; users observe it
+directly on `HTRANS`, while `local-status.busy` keeps its existing
+transaction-in-progress meaning.
 
 ## Reports And Support Accounting
 
@@ -114,42 +122,39 @@ NONSEQ(index 0) -> SEQ(index 1) -> BUSY(index 2 held)
                  -> SEQ(index 2 resumed) -> SEQ(index 3)
 ```
 
-The proof requires one contiguous BUSY transition episode, unchanged
-address/control/write-data and unchanged beat index/remaining count from BUSY
-to resumed SEQ, exactly four accepted data beats, and request completion with
-zero remaining. It does not count every ready-qualified BUSY clock edge. It
-also covers report shape, diagnostics, CLI check/schedule/outdir behavior,
-support accounting, and preservation of the base requester.
+The proof counts every ready-and-grant-qualified BUSY clock edge and requires
+exactly one. It runs continuously-qualified, 32-clock ready-low, and 32-clock
+grant-low scenarios with generated selector assertions enabled. Every scenario
+requires one contiguous BUSY transition episode, unchanged address/control/
+write-data and beat index/remaining count through the hold, the same resumed
+SEQ, exactly four accepted data beats, and request completion with zero
+remaining. It also covers report shape, diagnostics, CLI check/schedule/outdir
+behavior, support accounting, and preservation of the base requester.
 
-## Current Cardinality Audit
+## Single-Event Cardinality Repair
 
-`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1` found a current
-runtime/report contradiction. With `HGRANT=1` and `HREADY=1` continuously, the
-generated requester exposes one BUSY transition episode spanning **ten**
-ready-qualified BUSY edges, while the report says
-`busy_insertion.beats=single`. The one-bit flag records that the procedural
-drive was scheduled, not that one bus event retired; generated microstates
-keep the registered BUSY output active in between.
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1` found that the
+pre-repair requester exposed one BUSY transition episode spanning ten
+ready-qualified BUSY edges despite report `busy_insertion.beats=single`.
+Contract slice `.2` froze `single` as exactly one rising edge with
+`HGRANT && HREADY && HTRANS == BUSY`.
 
 The repo-local Arm AHB specification permits a fixed-length BUSY-to-SEQ change
 while `HREADY=0`, so that transition is not itself the defect. The defect is
-the continuously-ready event cardinality. The audit proved assertion-enabled
-single- and two-event candidate shapes. Contract slice `.2` now freezes
-`single` as exactly one rising edge with
-`HGRANT && HREADY && HTRANS == BUSY`: BUSY holds without retiring while either
-qualifier is low, then hands the same pending transfer to `SEQ`. The selected
-repair adds a conditional `ahb_busy_accept` rule and ready/BUSY loop gate,
-reuses existing address-pending state, and adds no public syntax, report field,
-or counter. `.3` owns implementation before any public multiple-BUSY
-extension. Until `.3` ships, read `beats=single` as the intended contract, not
-as a current clock-edge guarantee. The generic/alias paired requester families
-inherit this same current limitation.
+the historical continuously-ready event cardinality. `.3` now ships the
+selected conditional `ahb_busy_accept` rule and ready/BUSY loop gate, reuses
+existing address-pending state, and adds no public syntax, report field, or
+counter. BUSY holds without retiring while either qualifier is low, then hands
+the same pending transfer to `SEQ` after exactly one qualified event. The
+generic/alias paired requester families inherit the corrected cardinality and
+now count one qualified BUSY event per command.
 
 See
 `docs/IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md` for the exact
 source-backed timing distinction and candidate matrix, and
 `docs/IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md`
-for the selected repair and regression contract.
+for the selected contract. Current implementation evidence is in
+`docs/IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md`.
 
 ## Run It
 

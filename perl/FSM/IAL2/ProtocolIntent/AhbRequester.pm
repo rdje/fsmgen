@@ -305,6 +305,20 @@ sub _emit_isf($contract) {
             "          (continue-when (== busy_inserted_q 1)))",
         )
         : ();
+    my @busy_priority = defined($busy_before_beat)
+        ? "  (priority ahb_busy_accept over ahb_request)"
+        : ();
+    my @busy_accept_rule = defined($busy_before_beat)
+        ? (
+            "  (rule ahb_busy_accept (& $bus->{grant} $bus->{ready} (== $bus->{transfer}{name} $transfer->{busy}))",
+            "    (set ahb_address_pending_q 1)",
+            "    (set $bus->{transfer}{name} $transfer->{seq}))",
+            "",
+        )
+        : ();
+    my @busy_hold = defined($busy_before_beat)
+        ? "      (continue-when (& (! $bus->{ready}) (== $bus->{transfer}{name} $transfer->{busy})))"
+        : ();
 
     return join("\n",
         "(actor $contract->{actor_name}",
@@ -363,12 +377,14 @@ sub _emit_isf($contract) {
         "  (priority ahb_address_accept over ahb_request)",
         "  (priority ahb_address_accept over ahb_response_capture)",
         "  (priority ahb_response_capture over ahb_request)",
+        @busy_priority,
         "",
         "  (rule ahb_address_accept (& ahb_address_pending_q $bus->{grant} $bus->{ready} (| (== $bus->{transfer}{name} $transfer->{nonseq}) (== $bus->{transfer}{name} $transfer->{seq})))",
         "    (set ahb_address_pending_q 0)",
         "    (set ahb_data_pending_q 1)",
         "    (set $bus->{transfer}{name} $transfer->{idle}))",
         "",
+        @busy_accept_rule,
         "  (rule ahb_response_capture (& ahb_data_pending_q $bus->{ready})",
         "    (set ahb_data_pending_q 0)",
         "    (set ahb_response_pending_q 1)",
@@ -507,6 +523,7 @@ sub _emit_isf($contract) {
         "    (while beats_remaining_q",
         "      (continue-when (& (! $bus->{grant}) (! ahb_address_pending_q) (! ahb_data_pending_q) (! ahb_response_pending_q)))",
         @busy_insertion,
+        @busy_hold,
         "      (when (& (! ahb_address_pending_q) (! ahb_data_pending_q) (! ahb_response_pending_q))",
         "        (set ahb_address_pending_q 1)",
         "        (when (== beat_index_q 0)",

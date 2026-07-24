@@ -7104,10 +7104,10 @@ support/artifact/HDL/runtime behavior changed; public/support identities and
 the generated family remain stable, while general queues, broader AHB, and
 decision 0020 remain deferred/inactive.
 
-`.808` selects the proposed
+`.808` selected
 `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT` after the generated
-and direct completion-edge phase repairs close. `.1` now proves current
-`busy-before-beat` produces one BUSY transition episode but ten
+and direct completion-edge phase repairs closed. `.1` proved pre-repair
+`busy-before-beat` produced one BUSY transition episode but ten
 `HGRANT && HREADY` BUSY edges with a continuously-ready bus, contradicting
 report `busy_insertion.beats=single`; current requester/paired tests count only
 transitions. Source-backed correction: fixed-length AHB permits BUSY-to-SEQ
@@ -7119,10 +7119,16 @@ scenarios with unchanged address/data/response ownership and four data beats.
 qualifier stall; a conditional accept rule hands the same transfer to existing
 address-pending `SEQ` ownership, with no new public syntax, report field,
 storage, or counter. Assertion-enabled public 32-clock ready-low and grant-low
-probes both pass with one qualified BUSY event and four data beats. `.3` owns
-implementation before any multiple-BUSY syntax/behavior. Runtime-selected
-throttling, local bus-BUSY status, larger bursts, optional signals, and
-decision 0020 remain deferred/inactive.
+probes both pass with one qualified BUSY event and four data beats. `.3` now
+ships the selected conditional acceptance rule and hold gate.
+Assertion-enabled t/1498 proves continuous plus both 32-clock stalls, and
+t/1513-t/1516 count exactly one qualified BUSY event per generic/alias paired
+command. Public syntax/report/support/artifacts stay unchanged. The paired
+`--no-assert` boundary remains because a separate proposed interconnect owner
+tracks the independently exposed default/decode selector overlap.
+Multiple-BUSY syntax/behavior, runtime-selected throttling, local bus-BUSY
+status, larger bursts, optional signals, and decision 0020 remain
+deferred/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

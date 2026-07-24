@@ -2,7 +2,7 @@
 
 Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.803`
 
-Date: 2026-07-23
+Date: 2026-07-24
 
 ## Outcome
 
@@ -50,13 +50,10 @@ presentation.
 Both status/control child SEQ policies and both propagated composition entries
 retain `parks_on = [busy]`. There is no duplicate top-level `busy_flow`.
 
-Current cardinality qualification: the alias mirrors the generic embedded
-requester and inherits the contradiction recorded by
-`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`. Existing runtime
-proof counts one BUSY transition episode per command, while continuously-ready
-requester HDL currently spans ten ready-qualified BUSY edges despite
-`beats=single`. Exact single-event repair is selected before multiple-BUSY
-behavior.
+Current cardinality: the alias mirrors the generic embedded requester and now
+retires exactly one ready-and-grant-qualified BUSY event per command.
+`beats=single` is exact for both status and control transactions;
+multiple-BUSY behavior remains deferred.
 
 t/1515 remains the shared generated-HDL runtime proof. It drives status-base-0
 and control-base-4 byte `INCR4` commands, each observing:
@@ -107,8 +104,9 @@ bounded IAL2 source paths.
 
 t/1516 proves byte parity, check/schedule/semantic/outdir/HDL/support/report
 surfaces, exact artifacts/windows/BUSY metadata, alias-only residue cleanup,
-malformed profile diagnostics, generic-source preservation, and clean public
-alias `--verify-hdl`.
+malformed profile diagnostics, generic-source preservation, clean public alias
+`--verify-hdl`, and exactly one qualified BUSY event for each of its two
+generated-HDL commands.
 
 ```bash
 ./bin/fsmgen --quiet --strict --check --json \
