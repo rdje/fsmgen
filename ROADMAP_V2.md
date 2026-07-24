@@ -7114,10 +7114,15 @@ transitions. Source-backed correction: fixed-length AHB permits BUSY-to-SEQ
 while ready is low, after which SEQ must hold. Assertion-enabled exact-one and
 width-two count candidates pass continuously-ready and 32-clock ready-low
 scenarios with unchanged address/data/response ownership and four data beats.
-`.1` selects `.2`, exact single-event repair contract selection, before any
-multiple-BUSY syntax/behavior. Runtime-selected throttling, local bus-BUSY
-status, larger bursts, optional signals, and decision 0020 remain
-deferred/inactive.
+`.2` now selects `single` as exactly one rising
+`HGRANT && HREADY && HTRANS == BUSY` event. BUSY holds pending through either
+qualifier stall; a conditional accept rule hands the same transfer to existing
+address-pending `SEQ` ownership, with no new public syntax, report field,
+storage, or counter. Assertion-enabled public 32-clock ready-low and grant-low
+probes both pass with one qualified BUSY event and four data beats. `.3` owns
+implementation before any multiple-BUSY syntax/behavior. Runtime-selected
+throttling, local bus-BUSY status, larger bursts, optional signals, and
+decision 0020 remain deferred/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

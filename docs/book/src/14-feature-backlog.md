@@ -10924,11 +10924,17 @@ under continuously-ready operation even though report JSON says
 The imported Arm specification permits fixed-length BUSY-to-SEQ changes while
 ready is low, so the defect is accepted-edge cardinality rather than that
 transition. Assertion-enabled single/count-two candidates pass continuously-
-ready and 32-clock ready-low cases with four unchanged data beats. `.1` selects
-`.2`, exact single-BUSY event-cardinality repair contract selection, before
-multiple-BUSY syntax or behavior. Runtime-selected throttling, local bus-BUSY
-status, larger bursts, optional signals, and decision 0020 remain
-deferred/inactive.
+ready and 32-clock ready-low cases with four unchanged data beats. `.2` now
+selects `single` as exactly one rising
+`HGRANT && HREADY && HTRANS == BUSY` event. A conditional accept rule hands the
+same transfer into existing address-pending `SEQ` ownership, and a ready/BUSY
+gate keeps BUSY pending through ready or grant stalls; no new public syntax,
+report field, storage, or counter is needed. Assertion-enabled public
+32-clock ready-low and grant-low probes each pass with one qualified BUSY event
+and four data beats. `.3` owns implementation before multiple-BUSY syntax or
+behavior. Runtime-selected throttling, local bus-BUSY status, larger bursts,
+optional signals, and decision 0020 remain deferred/inactive. See the
+[selected repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

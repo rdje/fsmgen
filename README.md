@@ -6074,10 +6074,14 @@ and the paired harnesses count only transitions. The imported Arm
 specification permits fixed-length BUSY-to-SEQ changes while `HREADY=0`, so
 that transition is not the defect. Assertion-enabled exact-one and exact-two
 event candidates pass continuously-ready and 32-clock ready-low scenarios with
-the same resumed SEQ and four data beats. `.1` selects `.2`, exact current
-single-event repair contract selection, before multiple-BUSY syntax/behavior.
-Runtime-selected throttling, local bus-BUSY status, larger bursts, optional
-signals, and decision 0020 remain deferred/inactive.
+the same resumed SEQ and four data beats. `.2` now selects `single` as exactly
+one rising `HGRANT && HREADY && HTRANS == BUSY` event, held pending through
+ready/grant stalls and handed to the existing address-pending `SEQ` owner by a
+conditional accept rule. It adds no public syntax, report field, storage, or
+counter; public ready-low and grant-low probes pass for 32 clocks. `.3` owns
+implementation before multiple-BUSY syntax/behavior. Runtime-selected
+throttling, local bus-BUSY status, larger bursts, optional signals, and
+decision 0020 remain deferred/inactive.
 
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
@@ -8755,6 +8759,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md` — records the `.8` shipped Q-named four-state direct-seed repair, exact t1520 success/ERROR/SEQ/IDLE proof, stable support/public boundaries, and rollback.
 - `docs/IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md` — records `.808` selection of a no-behavior readiness audit for bounded multiple requester BUSY presentations, including the ready-acceptance question and larger deferred alternatives.
 - `docs/IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md` — records the `.1` source-backed/runtime finding that current `beats=single` spans ten ready-qualified BUSY edges, corrects the fixed-length ready-low BUSY-to-SEQ premise, proves assertion-enabled exact-one/exact-two candidates, selects `.2` current single-event repair contract work, and routes a separate output-priority lowering gap.
+- `docs/IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md` — records `.2` selection of exactly one grant-and-ready-qualified BUSY event, stable pending BUSY across ready/grant stalls, the existing address-pending `SEQ` handoff, assertion-enabled public stall proofs, unchanged public/report surfaces, `.3` implementation gates, and multiple-BUSY deferral.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

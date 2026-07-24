@@ -60,7 +60,7 @@ insertion points.
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`
   Status: `active`
   Goal: `Audit bounded multiple requester BUSY presentations before selecting behavior.`
-  Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`
+  Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3`
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`
   Status: `done`
@@ -70,9 +70,16 @@ insertion points.
   Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1: prove current single-BUSY cardinality`
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the exact current single-BUSY ready/grant-qualified event-cardinality repair contract before multiple-BUSY work resumes.`
   Acceptance: `Starting only after .1 commits cleanly, freeze busy_insertion.beats=single as exactly one HGRANT && HREADY && HTRANS==BUSY event rather than one signal-transition episode or generated-microstate duration. Select the smallest BUSY pending/remaining ownership state, acceptance rule, outer-loop gate, priority, reset/command initialization, ready-low policy, and address-pending SEQ handoff using assertion-enabled generated-HDL evidence. Freeze tracked t1498 continuously-ready edge count plus ready-low scenario, .ahb alias and every paired generic/alias one-/two-subordinate preservation path, report/support/artifact/public syntax stability, current docs/facts correction, resource cap, validation, and rollback. Make no shipped behavior change in contract selection. Multiple-BUSY syntax/count behavior remains deferred until the repair implementation commits cleanly.`
+  Verification: `Selected beats=single as exactly one rising HGRANT && HREADY && HTRANS==BUSY event. Conditional generated IAL1 adds priority ahb_busy_accept over ahb_request, a BUSY accept rule that arms existing ahb_address_pending_q and drives the same pending transfer as SEQ for the following clock, and an outer continue-when (!HREADY && HTRANS==BUSY) gate; the existing no-grant gate, registered BUSY output, and one-bit busy_inserted_q complete ownership with no new counter/storage/public field. Selected the stronger legal stable-BUSY-until-qualified policy. Assertion-enabled disposable continuously-ready and 32-clock ready-low proofs from .1 pass exact one event/four data beats; .2 adds public first-visible-BUSY 32-clock grant-low and ready-low proofs, both exact one/four with no generated state-number dependency or selector assertion. Selected t1498 structural and three-scenario edge-count/stability proof, t1512 parity, t1513-t1516 embedded qualified-edge counts, t1518/t1519 preservation, accounting/capability/strict/verify/docs/KM/doctrine gates, 4-GiB cap, and rollback. Public syntax/report/support/ports/artifacts and broader residue remain unchanged. Guarded t1518 passes 4/4; mdBook build, Knowledge Map generation/check at 982 facts/4974 question keys, memory architecture, docs paths, diff, and doctrine gates pass. Generated book output and the 7.7-MB disposable candidate directory were removed. Selected .3 implementation; multiple count remains deferred. Canonical record docs/IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md and fact ial2-ahb-requester-single-busy-event-cardinality-repair-contract-selection.`
+  Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2: select single-BUSY event repair`
+
+- ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3`
+  Status: `pending`
+  Goal: `Implement exact one-event requester BUSY retirement and lock every generic/alias/paired embedding to ready-qualified cardinality.`
+  Acceptance: `Starting only after .2 commits cleanly, implement exactly the selected conditional AhbRequester generated-IAL1 delta: priority ahb_busy_accept over ahb_request, rule guarded by HGRANT && HREADY && HTRANS==BUSY that sets ahb_address_pending_q=1 and HTRANS=SEQ, and the outer !HREADY && HTRANS==BUSY continue gate. Preserve transfer_busy, one-bit busy_inserted_q, all public syntax/diagnostics/ports/report/support/source/artifact/module identities, base requester output, address/data/response ownership, burst/address/data progression, status, and residue. Extend t1498 structural checks and assertion-enabled generated-HDL runtime using public first-visible BUSY stall injection for continuously-qualified, 32-clock ready-low, and 32-clock grant-low scenarios; require exactly one qualified BUSY event, stable fields/counters, the same resumed SEQ, exactly four data beats, and zero remaining. Update paired one-/two-subordinate generic/alias harnesses t1513-t1516 to count one ready-qualified embedded BUSY event per command while preserving parking/mapping/storage/status. Run requester/base/alias/paired/current-surface/phase preservation, t248/t297, strict/report/artifact/verify gates, mdBook/README/roadmap/current behavior/facts/task/Memory/Knowledge Map sync, diff/docs/doctrine gates, and 4-GiB resource cap. Do not add multiple-BUSY syntax/counter/report, runtime/policy throttling, local bus-BUSY status, broader bursts/signals/managers, queues, direct seeds/backends, AXI/APB/VHDL, general output-priority work, or decision 0020.`
   Verification: `pending`
   Commit: `pending`
 
@@ -85,7 +92,9 @@ and selects an exact owner.
 
 Activation condition satisfied: `.808` committed cleanly at `5d0effaca`.
 `.1` completed the no-behavior ready/acceptance and lowering-feasibility audit
-and selected `.2`; `.2` cannot activate until `.1` commits cleanly.
+and selected `.2`. Activation condition satisfied: `.1` committed cleanly at
+`512e65b7e`; `.2` completed the no-behavior repair contract selection and
+selected `.3`, which cannot activate until `.2` commits cleanly.
 
 ## Rollback
 

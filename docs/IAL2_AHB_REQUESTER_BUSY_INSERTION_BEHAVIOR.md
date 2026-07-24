@@ -134,15 +134,22 @@ keep the registered BUSY output active in between.
 The repo-local Arm AHB specification permits a fixed-length BUSY-to-SEQ change
 while `HREADY=0`, so that transition is not itself the defect. The defect is
 the continuously-ready event cardinality. The audit proved assertion-enabled
-single- and two-event candidate shapes, then selected exact single-event repair
-contract work before any public multiple-BUSY extension. Until that repair
-ships, read `beats=single` as the intended contract, not as a current
-clock-edge guarantee. The generic/alias paired requester families inherit this
-same current limitation.
+single- and two-event candidate shapes. Contract slice `.2` now freezes
+`single` as exactly one rising edge with
+`HGRANT && HREADY && HTRANS == BUSY`: BUSY holds without retiring while either
+qualifier is low, then hands the same pending transfer to `SEQ`. The selected
+repair adds a conditional `ahb_busy_accept` rule and ready/BUSY loop gate,
+reuses existing address-pending state, and adds no public syntax, report field,
+or counter. `.3` owns implementation before any public multiple-BUSY
+extension. Until `.3` ships, read `beats=single` as the intended contract, not
+as a current clock-edge guarantee. The generic/alias paired requester families
+inherit this same current limitation.
 
 See
 `docs/IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md` for the exact
-source-backed timing distinction and candidate matrix.
+source-backed timing distinction and candidate matrix, and
+`docs/IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md`
+for the selected repair and regression contract.
 
 ## Run It
 

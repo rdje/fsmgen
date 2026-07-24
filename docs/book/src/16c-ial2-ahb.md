@@ -1261,8 +1261,14 @@ generic/alias and two-subordinate paired generic sources are described below.
 > fixed-length BUSY-to-SEQ changes while `HREADY=0`; the defect is the
 > continuously-ready cardinality mismatch. The
 > [multiple-BUSY readiness audit](../../IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md)
-> proves assertion-enabled exact-one and exact-two event candidates and selects
-> the exact-one repair before any public multiple-BUSY extension. Until that
+> proves assertion-enabled exact-one and exact-two event candidates. The
+> [single-event repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md)
+> now freezes `single` as exactly one rising edge with
+> `HGRANT && HREADY && HTRANS == BUSY`. BUSY remains a pending presentation
+> while either qualifier is low; the selected conditional accept rule and
+> ready/BUSY loop gate then reuse existing address-pending state to present the
+> same transfer as `SEQ`, without new syntax, report fields, or a counter. `.3`
+> owns implementation before any public multiple-BUSY extension. Until that
 > repair ships, treat `beats=single` as intended rather than a current
 > clock-edge guarantee.
 
@@ -1798,10 +1804,17 @@ episode. The repo-local Arm specification also corrected the ready-low premise:
 fixed-length BUSY may change to SEQ while ready is low, provided SEQ then holds.
 Assertion-enabled disposable candidates prove exact one- and two-event
 ownership, including a 32-clock ready-low stretch, with unchanged fields and
-four data beats. `.1` selects `.2`, exact single-event repair contract
-selection, before multiple-BUSY syntax/behavior. See the
+four data beats. `.2` now selects exact one-event retirement on
+`HGRANT && HREADY && HTRANS == BUSY`, stable pending BUSY through ready/grant
+stalls, an `ahb_busy_accept` handoff into existing address-pending ownership,
+and no new public syntax or counter. Assertion-enabled public 32-clock
+ready-low and grant-low probes both complete with one qualified BUSY event and
+four data beats. `.3` owns implementation before multiple-BUSY
+syntax/behavior. See the
 [selector record](../../IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md) and
-the [runtime audit](../../IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md).
+the [runtime audit](../../IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md),
+then the
+[selected repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md).
 
 Use the direct seeds when you need to inspect explicit cycle-level state
 transitions. Use the public IAL2 sources when you need source identity, source
