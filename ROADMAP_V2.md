@@ -7200,6 +7200,15 @@ verifier and two-command runtime contract; no parser, generator, semantic
 model, or MCP API changed. The matching alias and decision 0020 remain
 separate/inactive. See
 `docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
+Parent selector `.810` now chooses proposed `.811` direct data-only
+implementation of the byte-identical matching `.ahb` alias. Existing suffix
+handling preserves four children, exact artifacts/windows/owner policy,
+numeric requester `beats=2`, both BUSY parks, normalized semantic root `top`,
+and real read-only MCP parity while removing only alias residue. Projected
+accounting is 320/361/44 split 22 generic/22 aliases; focused t1526 will add no
+second runtime and t1525 remains shared. `.810` changes no behavior; decision
+0020 remains inactive. See
+`docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

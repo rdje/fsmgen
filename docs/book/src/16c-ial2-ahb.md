@@ -2045,7 +2045,16 @@ The MCP tool `fsmgen_semantic_introspect` exposes the same normalized report
 through its stable read-only, shell-disabled adapter. This parity is ongoing:
 new support-accounted semantics extend the common introspection model instead
 of adding feature-specific MCP methods or exposing raw private internals. The
-matching two-subordinate exact-two `.ahb` alias remains separate.
+matching two-subordinate exact-two `.ahb` alias remains separate from shipped
+behavior. Parent selector `.810` now chooses proposed `.811` direct data-only
+implementation of that byte-identical alias. A reserved-suffix strict/schedule/
+normalized-semantic/real read-only MCP probe preserves the four-child
+artifacts, windows, exact-two requester, both BUSY parks, retained owner, and
+substantive residue while existing suffix handling removes only profile-alias
+residue. Projected accounting is 320/361/44, evenly split 22 `.ppif`/22 `.ahb`.
+Focused t1526 will prove parity without a second runtime; t1525 remains shared.
+See the
+[selected alias contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md).
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that

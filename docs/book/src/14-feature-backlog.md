@@ -11034,6 +11034,16 @@ resumed `SEQ` events, eight data beats, and final status/control storage
 `.ahb`. See the
 [shipped behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 The matching alias and decision 0020 remain separate.
+Parent selector `.810` now chooses proposed `.811` direct data-only
+implementation of that byte-identical matching `.ahb` alias. Existing suffix
+handling preserves the exact four-child report/artifact/window/owner contract,
+numeric requester `beats=2`, both BUSY parks, normalized semantic root `top`,
+and real read-only MCP parity while removing only profile-alias residue. The
+projected checkpoint is 320/361/44 with 22 `.ppif` and 22 `.ahb`; focused
+t1526 will prove byte/report/artifact/strict/semantic/MCP/outdir/verifier/
+diagnostic parity without a second simulation, with t1525 shared. See the
+[selected alias contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md).
+No behavior changes in `.810`; broader AHB and decision 0020 remain separate.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
