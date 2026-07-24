@@ -11003,6 +11003,20 @@ root `top` while removing only alias residue. Projected accounting is
 with t1523 shared. No alias ships from `.4`; two-subordinate exact-two and
 decision 0020 remain separate/inactive. See the
 [selected alias contract](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md).
+`.5` now ships that byte-identical alias at current 318/359/42 accounting;
+t1524 proves strict/schedule/normalized-semantic/real read-only MCP parity and
+t1523 remains the shared runtime. Follow-on `.6` ships no source, but its
+[two-subordinate exact-two readiness audit](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md)
+proves the existing four-child architecture across both windows. Two commands
+produce exactly four qualified BUSY events, two resumed `SEQ` events, eight
+data beats, stable selected/unselected subordinate and interconnect ownership,
+clean status, and final status/control storage
+`32'h44332211`/`32'h88776655`. Strict check, normalized semantic JSON, and a
+real read-only MCP call agree on `ahb_tb`/root `top`/four children; support is
+truthfully unmatched for the disposable candidate. No substrate or API repair
+is required, so proposed `.7` owns no-behavior generic public-contract
+selection. No two-subordinate exact-two public source ships yet, and decision
+0020 remains inactive.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

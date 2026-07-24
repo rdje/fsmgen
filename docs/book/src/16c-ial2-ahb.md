@@ -1342,8 +1342,9 @@ canonical exact-one form; zero, one, values above two, non-literals, missing
 prerequisites, and duplicates fail closed. The exact-two `.ahb` requester alias
 now ships through `.7`, and the first generic one-subordinate exact-two paired
 composition now ships through the paired tree's `.3`; its matching aggregate
-alias now ships through `.5`, while the two-subordinate exact-two sibling
-remains future work. See the
+alias now ships through `.5`. The two-subordinate exact-two sibling does not
+ship yet; `.6` has proved its current four-child composition ready and selected
+separate public-contract work. See the
 [selected contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md)
 and [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md).
 
@@ -1946,8 +1947,9 @@ The following are not shipped by the current AHB IAL2 surface:
   plus generic and matching `.ahb` exact-two BUSY insertion now ship. The
   generic and matching `.ahb` one-subordinate exact-two pairing also ship,
   while counts beyond two, policy/runtime/random throttling, multiple
-  insertion points, and the two-subordinate exact-two pairing remain outside
-  the shipped surface;
+  insertion points remain outside the shipped surface. The two-subordinate
+  exact-two pairing also remains unshipped, although its disposable static,
+  semantic/MCP, and generated-HDL readiness proof now passes;
 - legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;
@@ -1987,6 +1989,25 @@ real read-only MCP, artifact, verifier, diagnostic, and preservation parity;
 t1523 remains the shared runtime. See the
 [selected alias contract](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md)
 and [shipped alias behavior](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md).
+
+The follow-on
+[two-subordinate exact-two readiness audit](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md)
+changes no public source or behavior. It substitutes the existing exact-two
+requester into the shipped two-subordinate exact-one aggregate and proves the
+unchanged four-child `ahb_tb`, status `[0,4)` and control `[4,8)` windows, exact
+IAL1/IAL0 artifacts, numeric requester `beats=2`, both child and propagated
+`parks_on=[busy]`, and retained one-hot response ownership. Strict check,
+normalized semantic JSON, and real read-only MCP introspection agree on module
+`ahb_tb`, semantic root `top`, and four children; the disposable source
+truthfully reports unmatched support.
+
+Generated HDL runs one `INCR4` byte command through each window. Each command
+has exactly two qualified BUSY events, one resumed pending `SEQ`, four data
+beats, stable selected and unselected subordinate continuation/storage, stable
+interconnect owner bits, no BUSY data completion, and clean status. Final
+status/control storage is `32'h44332211`/`32'h88776655`. No generator or
+semantic/MCP repair is needed. Proposed `.7` owns public-contract selection;
+no two-subordinate exact-two source is part of the current 318/359/42 surface.
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that

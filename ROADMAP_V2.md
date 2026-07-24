@@ -7173,6 +7173,18 @@ and normalized semantic root `top` through existing suffix cleanup. Projected
 accounting is 318/359/42; focused t1524 must prove real read-only MCP parity
 without a second runtime, while t1523 remains shared. No behavior changes in
 `.4`; the two-subordinate exact-two shape and decision 0020 remain separate.
+`.5` now ships that byte-identical alias at 318/359/42 with t1524 normalized
+semantic/read-only MCP parity and shared t1523 runtime. `.6` then proves, still
+without public behavior, that `amba_requester_busy_insert_two` composes with
+both existing BUSY-parking status/control windows through the four-child
+`ahb_tb`: two commands observe four total qualified BUSY events, two resumed
+SEQ events, eight data beats, stable selected/unselected subordinate state and
+both retained data-owner bits, clean completion, and final
+`44332211`/`88776655`. Static schedule, strict check, normalized semantic JSON,
+and a real read-only MCP call agree on four children and truthfully unmatched
+disposable support. No parser/generator/semantic-MCP repair is required;
+proposed `.7` owns generic public-contract selection after clean `.6`.
+Decision 0020 remains proposed/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
