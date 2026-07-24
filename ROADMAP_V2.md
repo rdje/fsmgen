@@ -7070,6 +7070,16 @@ artifact identities and direct seeds are unchanged. `.4` owns the direct-seed
 audit; general queues, multiple outstanding transfers, and decision 0020
 remain inactive/deferred.
 
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4` now proves the separate direct
+`fsm/ahb_lite_subordinate.fsm` seed still loses completion-edge active phases.
+t/1520 records two bus acceptances but one internal capture/completion after a
+successful write and after a final two-cycle ERROR; storage remains respectively
+`0x11111111` and zero. The direct `ACCESS`/`ERROR_COMPLETE` states raise ready
+and return to `IDLE` without sampling HSEL/HADDR/HTRANS. No seed/source/support/
+artifact/HDL/runtime behavior changes in the audit. `.5` is selected for exact
+no-behavior direct-seed contract work and `.6` for later implementation. The
+generated family and decision 0020 remain unchanged/inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

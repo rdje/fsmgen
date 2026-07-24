@@ -6015,6 +6015,17 @@ identities and direct seeds are unchanged. General/deeper queues, multiple
 outstanding transfers, `.4` direct-seed audit work, and decision 0020 remain
 outside this leaf.
 
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4` now runtime-confirms the distinct
+direct `fsm/ahb_lite_subordinate.fsm` seed still drops an active address phase
+accepted on successful or final-ERROR completion. t/1520 observes two bus
+acceptances but one internal capture/completion in both cases: the success
+case retains only storage `0x11111111`; the ERROR case preserves exactly two
+ERROR cycles but leaves storage zero. `ACCESS`/`ERROR_COMPLETE` return to
+`IDLE` without sampling HSEL/HADDR/HTRANS. No seed behavior changes in the
+audit. `.5` owns exact direct-seed contract selection and `.6` later
+implementation; the generated family remains repaired, and decision 0020
+remains inactive.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8684,6 +8695,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md` — records the `.1` generated-HDL proof that two direct ready/OKAY NONSEQ/SEQ address phases produce only one internal admission/completion and one storage effect, why an endpoint-only boundary contract cannot fail closed safely, and selection of `.2` completion-boundary phase-recapture contract work.
 - `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md` — freezes the `.2` depth-one accepted address/control bank at the bus-visible ready/completion edge, data-phase HWDATA ownership, sequence/error ordering, additive report contract, `.3` implementation gates, and `.4` direct-seed audit boundary.
 - `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md` — records the `.3` coupled generated subordinate/requester/interconnect phase repair, additive phase/data-owner reports, exact t/1519 and paired runtime proofs, stable public identities, depth-one boundary, and `.4` direct-seed handoff.
+- `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md` — records the `.4` generated-HDL proof that the distinct direct subordinate seed drops active phases accepted on successful/final-ERROR completion edges, the IDLE-only capture root cause, unchanged behavior, and `.5`/`.6` handoff.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

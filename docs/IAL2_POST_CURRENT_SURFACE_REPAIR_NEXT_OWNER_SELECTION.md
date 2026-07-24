@@ -4,6 +4,12 @@ Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.807`
 
 Date: 2026-07-23
 
+Current resolution: the selected audit proved the generated-family defect and
+`.3` repaired it as documented in
+`docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md`. The selector below is
+time-local pre-repair evidence; the direct lower-layer seed remains distinct
+and is audited by `.4`.
+
 ## Outcome
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.807` selects the existing canonical

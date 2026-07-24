@@ -100,6 +100,19 @@ When `wait_ctr` reaches zero:
 and two-cycle ERROR response policy. The seed performs no write update on
 ERROR.
 
+Current phase boundary: generated-HDL t/1520 now proves that this direct seed
+samples address/control only in `idle`. A selected active phase accepted on a
+successful `access` completion or final `error_complete` ready edge is not
+captured before the state returns to `idle`, so the direct seed silently drops
+that phase. The success probe records two bus acceptances but one internal
+capture/completion and storage `0x11111111`; the final-ERROR probe records two
+acceptances, one capture/completion, exactly two ERROR cycles, and zero
+storage. This limitation does not apply to the generated public IAL2 family,
+which was repaired separately by `.3`. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md`;
+`.5` owns no-behavior direct-seed contract selection and `.6` owns later
+implementation.
+
 ## Support Accounting
 
 `perl/FSM/Support/RegressionCorpus.pm` now includes:
@@ -174,6 +187,15 @@ the required 88% guard cutoff, so the RAM guard terminated the command before
 Closeout also reruns Knowledge Map, mdBook, memory, diff-hygiene, and doctrine
 gates.
 
+Later focused validation adds:
+
+```bash
+prove -Iperl t/1520-ahb-direct-subordinate-pipelined-active-transfer-audit.t
+```
+
+That no-behavior audit locks the current completion-edge loss until its
+separate direct-seed repair owner ships.
+
 ## Explicit Residue
 
 The following remain future task-tree-owned work:
@@ -190,6 +212,8 @@ The following remain future task-tree-owned work:
   parity/check signals, exclusive access, and multi-manager identity signals;
 - narrow transfer byte-lane behavior, write strobes, alignment policy, and
   register banks beyond the single selected word register;
+- completion-edge retention of one accepted next active address/control phase
+  in this direct seed (selected for `.5` contract work and `.6` implementation);
 - legacy two-bit `HRESP` RETRY/SPLIT compatibility;
 - direct backend behavior, backend-language variants, AXI, APB, and VHDL.
 

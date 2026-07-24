@@ -149,6 +149,27 @@ subtest 'current AHB surfaces describe the shipped depth-one phase pipeline' => 
         'AHB chapter contains no pre-repair current-status wording',
     );
 
+    my $direct_section = section_between(
+        $ahb_chapter,
+        '## Direct FSM Seeds',
+        '## Residue',
+    );
+    like(
+        $direct_section,
+        qr/t\/1520.*?bus accepts 2, seed captures\/completes 1/s,
+        'AHB direct-seed section records the distinct current phase-retention defect',
+    );
+    like(
+        $direct_section,
+        qr/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT/,
+        'AHB direct-seed section links the canonical runtime audit',
+    );
+    unlike(
+        $direct_section,
+        qr/direct subordinate.*shares? the generated.*phase bank/is,
+        'AHB chapter does not conflate direct and generated subordinate phase behavior',
+    );
+
     for my $relative_path (
         'docs/IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md',
         'docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md',
@@ -162,6 +183,18 @@ subtest 'current AHB surfaces describe the shipped depth-one phase pipeline' => 
             $text,
             qr/true boundary-free active-transfer pipelining.*remain(?:s)? deferred/s,
             "$relative_path no longer defers the shipped depth-one pipeline",
+        );
+    }
+
+    for my $relative_path (
+        'docs/IAL2_AHB_SUBORDINATE_SEED_BEHAVIOR.md',
+        'docs/knowledge/ial2-ahb-subordinate-seed-behavior.md',
+    ) {
+        my $text = slurp($relative_path);
+        like(
+            $text,
+            qr/t\/1520.*?two bus acceptances.*?one\s+internal\s+capture\/completion/s,
+            "$relative_path records the direct-seed completion-edge loss",
         );
     }
 };

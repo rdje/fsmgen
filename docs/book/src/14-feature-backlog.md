@@ -10879,6 +10879,18 @@ support, artifact, and direct-seed identities are unchanged. General/deeper
 queues, multiple outstanding transfers, `.4` direct-seed audit work, and
 decision 0020 remain outside this leaf.
 
+Direct AHB subordinate pipelined active-transfer runtime audit:
+[IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT](../../IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md)
+documents `.4`. Generated-HDL t/1520 proves the unchanged direct
+`fsm/ahb_lite_subordinate.fsm` seed accepts two active address phases at the
+bus but captures/completes only one when the second lands on either successful
+or final-ERROR completion. `ACCESS` and `ERROR_COMPLETE` return to `IDLE`
+without sampling the accepted phase. The success case retains storage
+`0x11111111`; the ERROR case keeps exactly two ERROR cycles and zero storage.
+No behavior changes. `.5` owns exact direct-seed contract selection and `.6`
+later implementation; the generated family and decision 0020 remain
+unchanged/inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

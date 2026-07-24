@@ -1,0 +1,192 @@
+module ahb_direct_subordinate_pipelined_active_transfer_audit_tb;
+  logic clk = 0;
+  logic rst_n = 0;
+  logic [31:0] HADDR = 0;
+  wire HREADY;
+  logic HSEL = 0;
+  logic [2:0] HSIZE = 3'b010;
+  logic [1:0] HTRANS = 2'b00;
+  logic [31:0] HWDATA = 0;
+  logic HWRITE = 0;
+  logic [3:0] wait_cycles = 0;
+  wire [31:0] HRDATA;
+  wire HREADYOUT;
+  wire HRESP;
+
+  assign HREADY = HREADYOUT;
+
+  ahb_lite_subordinate dut (.*);
+  always #5 clk = ~clk;
+
+  task automatic reset_dut;
+    begin
+      rst_n = 0;
+      HSEL = 0;
+      HADDR = 0;
+      HTRANS = 2'b00;
+      HWRITE = 0;
+      HSIZE = 3'b010;
+      HWDATA = 0;
+      wait_cycles = 0;
+      repeat (3) @(negedge clk);
+      rst_n = 1;
+      @(negedge clk);
+    end
+  endtask
+
+  task automatic run_success_completion_active_drop;
+    integer cycles;
+    integer bus_accept_count;
+    integer internal_capture_count;
+    integer internal_completion_count;
+    integer ready_low_cycles;
+    integer response_error_cycles;
+    logic second_phase_presented;
+    begin
+      reset_dut();
+      cycles = 0;
+      bus_accept_count = 0;
+      internal_capture_count = 0;
+      internal_completion_count = 0;
+      ready_low_cycles = 0;
+      response_error_cycles = 0;
+      second_phase_presented = 0;
+
+      HSEL = 1;
+      HADDR = 32'h00000000;
+      HTRANS = 2'b10;
+      HWRITE = 1;
+      HSIZE = 3'b010;
+      HWDATA = 32'h11111111;
+      wait_cycles = 2;
+
+      repeat (30) begin
+        @(posedge clk);
+        if (HSEL && HREADY && HTRANS[1]) begin
+          bus_accept_count = bus_accept_count + 1;
+          if (bus_accept_count == 1 && HWRITE !== 1'b1)
+            $fatal(1, "first accepted phase is not the write");
+          if (bus_accept_count == 2 && HWRITE !== 1'b0)
+            $fatal(1, "second accepted phase is not the distinct read");
+          if (bus_accept_count > 2)
+            $fatal(1, "unexpected extra active acceptance");
+        end
+        if (dut.idle_wait_ctr_wait_cycles_en)
+          internal_capture_count = internal_capture_count + 1;
+        if (dut.access_next_state_idle_en)
+          internal_completion_count = internal_completion_count + 1;
+        if (!HREADYOUT)
+          ready_low_cycles = ready_low_cycles + 1;
+        if (HRESP)
+          response_error_cycles = response_error_cycles + 1;
+
+        @(negedge clk);
+        if (bus_accept_count == 1 && !second_phase_presented) begin
+          // The next NONSEQ read is a distinct address/control phase. Hold it
+          // while the first write's HWDATA remains live through its data phase.
+          HWRITE = 0;
+          second_phase_presented = 1;
+        end
+        if (bus_accept_count == 2 && HTRANS == 2'b10)
+          HTRANS = 2'b00;
+        cycles = cycles + 1;
+      end
+
+      if (bus_accept_count != 2 || internal_capture_count != 1 || internal_completion_count != 1)
+        $fatal(1, "success-drop counts bus=%0d captures=%0d completions=%0d", bus_accept_count, internal_capture_count, internal_completion_count);
+      if (!second_phase_presented || ready_low_cycles == 0 || response_error_cycles != 0)
+        $fatal(1, "success-drop timing presented=%0d ready_low=%0d errors=%0d", second_phase_presented, ready_low_cycles, response_error_cycles);
+      if (dut.write_q !== 1'b1 || dut.reg_data_q !== 32'h11111111)
+        $fatal(1, "success-drop sampled_write=%b storage=%h", dut.write_q, dut.reg_data_q);
+
+      $display(
+        "DIRECT_SUCCESS_ACTIVE_DROP bus_accepts=%0d internal_captures=%0d internal_completions=%0d ready_low_cycles=%0d response_error_cycles=%0d second_write=0 sampled_write=%0d storage=%08x",
+        bus_accept_count,
+        internal_capture_count,
+        internal_completion_count,
+        ready_low_cycles,
+        response_error_cycles,
+        dut.write_q,
+        dut.reg_data_q
+      );
+    end
+  endtask
+
+  task automatic run_error_completion_active_drop;
+    integer cycles;
+    integer bus_accept_count;
+    integer internal_capture_count;
+    integer internal_completion_count;
+    integer response_error_cycles;
+    logic next_phase_presented;
+    begin
+      reset_dut();
+      cycles = 0;
+      bus_accept_count = 0;
+      internal_capture_count = 0;
+      internal_completion_count = 0;
+      response_error_cycles = 0;
+      next_phase_presented = 0;
+
+      HSEL = 1;
+      HADDR = 32'h00000000;
+      HTRANS = 2'b11;
+      HWRITE = 0;
+      HSIZE = 3'b010;
+      HWDATA = 0;
+      wait_cycles = 1;
+
+      repeat (30) begin
+        @(posedge clk);
+        if (HSEL && HREADY && HTRANS[1]) begin
+          bus_accept_count = bus_accept_count + 1;
+          if (bus_accept_count == 1 && HTRANS !== 2'b11)
+            $fatal(1, "first ERROR phase is not SEQ");
+          if (bus_accept_count == 2 && HTRANS !== 2'b10)
+            $fatal(1, "post-ERROR accepted phase is not NONSEQ");
+          if (bus_accept_count > 2)
+            $fatal(1, "unexpected extra ERROR-case active acceptance");
+        end
+        if (dut.idle_wait_ctr_wait_cycles_en)
+          internal_capture_count = internal_capture_count + 1;
+        if (dut.error_complete_next_state_idle_en)
+          internal_completion_count = internal_completion_count + 1;
+        if (HRESP)
+          response_error_cycles = response_error_cycles + 1;
+
+        @(negedge clk);
+        if (bus_accept_count == 1 && !next_phase_presented) begin
+          HTRANS = 2'b10;
+          HWRITE = 1;
+          HWDATA = 32'haaaaaaaa;
+          next_phase_presented = 1;
+        end
+        if (bus_accept_count == 2 && HTRANS == 2'b10)
+          HTRANS = 2'b00;
+        cycles = cycles + 1;
+      end
+
+      if (bus_accept_count != 2 || internal_capture_count != 1 || internal_completion_count != 1)
+        $fatal(1, "ERROR-drop counts bus=%0d captures=%0d completions=%0d", bus_accept_count, internal_capture_count, internal_completion_count);
+      if (!next_phase_presented || response_error_cycles != 2)
+        $fatal(1, "ERROR-drop presented=%0d error_cycles=%0d", next_phase_presented, response_error_cycles);
+      if (dut.reg_data_q !== 32'h00000000)
+        $fatal(1, "ERROR-drop storage=%h expected no captured continuation", dut.reg_data_q);
+
+      $display(
+        "DIRECT_ERROR_ACTIVE_DROP bus_accepts=%0d internal_captures=%0d internal_completions=%0d response_error_cycles=%0d storage=%08x",
+        bus_accept_count,
+        internal_capture_count,
+        internal_completion_count,
+        response_error_cycles,
+        dut.reg_data_q
+      );
+    end
+  endtask
+
+  initial begin
+    run_success_completion_active_drop();
+    run_error_completion_active_drop();
+    $finish;
+  end
+endmodule

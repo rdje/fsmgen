@@ -126,7 +126,10 @@ fsm/ahb_lite_subordinate.fsm
 ```
 
 These direct seeds remain useful cycle-level coverage, but they are not IAL2
-and do not produce generated `.isf` or generated `.fsm` review artifacts.
+and do not produce generated `.isf` or generated `.fsm` review artifacts. The
+direct subordinate currently does not share the generated family's repaired
+phase bank: t/1520 proves it drops an active phase accepted on a successful or
+final-ERROR completion edge. See the direct-seed audit below.
 
 ## Mode Map
 
@@ -134,7 +137,7 @@ and do not produce generated `.isf` or generated `.fsm` review artifacts.
 | --- | --- | --- |
 | Guided mode | The thirty-eight public AHB sources listed above, including paired one- and two-subordinate `.ppif`/`.ahb` source pairs | Bounded requester/subordinate/interconnect sources, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, and paired BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs cover selected byte/halfword/word lanes, in-word `SEQ`, HBURST `WRAP4`/`INCR4`, and BUSY parking. The selected generic and matching `.ahb` aggregate HBURST-aware byte-lane `SEQ` sources include non-parking and BUSY-park variants, plus paired BUSY-inserting-requester compositions across one or two static windows. Interconnect knobs are exposed as `children`, static `address-map` windows, `decode`, and `wiring` clauses. |
-| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, and retained one-hot interconnect data ownership. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, policy/runtime or multiple BUSY insertion, distinct bus-BUSY status, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, and retained one-hot interconnect data ownership. The separate direct subordinate seed still drops active phases accepted on completion edges pending `.5`/`.6`. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, policy/runtime or multiple BUSY insertion, distinct bus-BUSY status, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -1715,6 +1718,23 @@ coverage: direct_root_pipeline_cli
 module_name: ahb_lite_subordinate
 ```
 
+Unlike the generated IAL2 subordinate family, this direct seed currently
+samples new address/control only in `IDLE`. Generated-HDL t/1520 presents a
+distinct active phase through a not-ready data phase and observes its
+acceptance on both kinds of ready completion edge:
+
+```text
+successful completion: bus accepts 2, seed captures/completes 1,
+                       storage = 0x11111111
+final ERROR:           bus accepts 2, seed captures/completes 1,
+                       ERROR cycles = 2, storage = 0
+```
+
+`ACCESS` and `ERROR_COMPLETE` return to `IDLE` without sampling the phase
+accepted on that edge. Treat boundary-free direct-seed use as known-broken
+until `.5` selects and `.6` implements its separate contract. The exact audit
+is [IAL2 AHB Direct Subordinate Pipelined Active-Transfer Runtime Audit](../../IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md).
+
 Use the direct seeds when you need to inspect explicit cycle-level state
 transitions. Use the public IAL2 sources when you need source identity, source
 anchors, generated `.isf` review artifacts, generated `.fsm` review artifacts,
@@ -2148,6 +2168,11 @@ This is protocol bookkeeping with capacity one, not a general outstanding
 queue, multi-manager fabric, or activation of the protocol-neutral
 transaction-layer horizon.
 
+That repaired contract applies to generated public IAL2 roles. The separate
+direct `fsm/ahb_lite_subordinate.fsm` seed remains at the pre-bank state shape;
+t/1520 proves its completion-edge loss and selects `.5` contract work before
+`.6` implementation.
+
 ## Validation Used For This Chapter
 
 This chapter was validated with:
@@ -2175,6 +2200,7 @@ prove -v t/1491-ial2-ahb-subordinate-byte-lane-hburst-seq-profile-alias.t
 prove -v t/1492-ial2-ahb-interconnect-byte-lane-hburst-seq.t
 prove -v t/1493-ial2-ahb-interconnect-byte-lane-hburst-seq-profile-alias.t
 prove -v t/1519-ial2-ahb-pipelined-active-transfer-audit.t
+prove -v t/1520-ahb-direct-subordinate-pipelined-active-transfer-audit.t
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester.ppif

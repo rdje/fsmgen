@@ -49,7 +49,7 @@ replace one accepted active address phase directly with another.
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT`
   Status: `active`
   Goal: `Runtime-prove and select the boundary-free active-transfer phase contract.`
-  Children: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`
+  Children: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.6`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`
   Status: `done`
@@ -73,9 +73,23 @@ replace one accepted active address phase directly with another.
   Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3: repair generated AHB phase pipeline`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit the separate direct lower-layer AHB subordinate seed for consecutive active-phase retention after the generated-family repair.`
   Acceptance: `Starting only after .3 commits cleanly, runtime-probe fsm/ahb_lite_subordinate.fsm with consecutive selected active phases at a ready completion edge, distinguish its direct-FSM behavior from the shared IAL2 generator, and either prove correct retention or select a separate exact repair leaf. Make no seed behavior change in the audit.`
+  Verification: `Startup Knowledge Map consultation exposed and this leaf corrected the stale present-tense question on historical .807 selector fact ial2-post-current-surface-repair-next-owner-selection; current generated behavior now routes only to ial2-ahb-pipelined-active-transfer-repair, while the direct result routes to new fact ial2-ahb-direct-subordinate-pipelined-active-transfer-runtime-audit. Added no-behavior t1520 plus a direct-seed Verilator harness. Structural proof shows only IDLE samples active address/control; ACCESS and ERROR_COMPLETE contain no HSEL/HADDR/HTRANS capture path. Runtime success case presents a word write then distinct NONSEQ read: bus_accepts=2, internal_captures=1, internal_completions=1, response_error_cycles=0, sampled_write=1, storage=0x11111111. Runtime ERROR case presents unsupported SEQ then active NONSEQ on final ERROR: bus_accepts=2, internal_captures=1, internal_completions=1, response_error_cycles=2, storage=0. The guarded t1520 run passes 2/2 top-level tests in 4 seconds under the 4-GiB descendant cap. t1518 current-doc truth passes 4/4 top-level tests after locking the generated-versus-direct distinction. Direct strict HDL generation, Perl syntax, mdBook build, Knowledge Map generation/check at 974 facts/4934 question keys, memory architecture, docs paths, diff, and doctrine gates pass. Added the canonical runtime-audit record/fact and synchronized the current direct-seed behavior/fact, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. Removed disposable outputs. No direct seed, generated family, public source/support/report/artifact/port/HDL/runtime, backend, AXI/APB/VHDL, or decision-0020 behavior changed. Selected .5 no-behavior direct-seed contract selection and .6 later implementation.`
+  Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4: prove direct seed drops active phase`
+
+- ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5`
+  Status: `pending`
+  Goal: `Select the exact direct lower-layer AHB subordinate completion-edge phase-retention contract without behavior changes.`
+  Acceptance: `Starting only after .4 commits cleanly, reconcile the direct seed's IDLE/ACCESS/UNSUPPORTED/ERROR_COMPLETE schedule and t1520 timing with the generated-family .2/.3 contract. Freeze the smallest direct-FSM state/capture/relaunch contract for successful and final-ERROR completion edges, address/control versus live HWDATA ownership, held-phase suppression, ready/response timing, one completion per acceptance, preservation, validation, docs/fact effects, implementation owner, and rollback. Make no seed/source/support/report/artifact/HDL/runtime behavior change. Do not change generated IAL2 roles, requesters/interconnects, broader burst policy, general queues/outstanding transfers, AXI/APB/VHDL, or decision 0020.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.6`
+  Status: `pending`
+  Goal: `Implement the selected direct lower-layer AHB subordinate phase-retention repair.`
+  Acceptance: `Starting only after .5 commits cleanly, implement exactly the selected direct-seed completion-edge phase-retention contract, convert t1520 from defect evidence to the exact repair regression, preserve support/source/artifact identities and all generated-family behavior, synchronize current docs/book/facts/task/Memory, and run focused/broad gates under the resource cap. Do not widen into broader AHB, general queues/outstanding transfers, AXI/APB/VHDL, or decision 0020.`
   Verification: `pending`
   Commit: `pending`
 
@@ -108,6 +122,37 @@ record is `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md`, with Knowledge
 Map fact `ial2-ahb-pipelined-active-transfer-repair`. The direct lower-layer
 seeds remain unchanged; `.4` may activate only after the `.3` closeout commit
 leaves the repository clean.
+
+`.4` activated only after `.3` committed cleanly at `3e1dcc930`. Startup
+Knowledge Map consultation exposed a current-answer collision: historical
+selector fact `ial2-post-current-surface-repair-next-owner-selection` still
+answers a present-tense current-subordinate question with the pre-`.3`
+`ahb_access_active_q` behavior, while current repair fact
+`ial2-ahb-pipelined-active-transfer-repair` answers with the shipped generated
+phase bank. `.4` owns the prerequisite fact-routing correction to make the old
+question/body explicitly pre-repair before using the map to distinguish the
+unchanged direct seed from the repaired generated family. This changes no
+source, support, artifact, HDL, or runtime behavior.
+
+Direct generated-HDL t1520 now proves the unchanged seed has the analogous
+completion-edge loss in both selected response paths. For a successful word
+write followed by a distinct active NONSEQ read, the bus records two accepted
+phases but the seed records one idle-state capture and one access completion;
+the second read is never evaluated and storage remains the first write value
+`0x11111111`. For unsupported SEQ followed by active NONSEQ on the final ERROR
+edge, the bus again records two acceptances but one capture/completion, exactly
+two ERROR cycles, and storage remains zero. `ACCESS` and `ERROR_COMPLETE`
+inspect no HSEL/HADDR/HTRANS and unconditionally return to `IDLE`, so the ready
+edge accepts a phase that cannot be sampled on the following cycle. `.4`
+selects `.5` no-behavior direct-seed contract selection; `.6` is the later
+implementation owner. The generated family remains repaired and unchanged.
+
+The canonical `.4` result is
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md`
+plus fact
+`ial2-ahb-direct-subordinate-pipelined-active-transfer-runtime-audit`.
+`.5` may activate only after the `.4` closeout commit leaves the repository
+clean.
 
 Implementation finding: direct t1519 proves the one-slot subordinate and
 two-cycle ERROR retirement, while paired t1513/t1515 time out because the
