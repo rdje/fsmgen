@@ -156,8 +156,8 @@ subtest 'current AHB surfaces describe the shipped depth-one phase pipeline' => 
     );
     like(
         $direct_section,
-        qr/t\/1520.*?bus accepts 2, seed captures\/completes 1/s,
-        'AHB direct-seed section records the distinct current phase-retention defect',
+        qr/Before `\.8`.*?returned to `IDLE` without sampling.*?historical runtime evidence/s,
+        'AHB direct-seed section preserves the distinct historical phase-retention evidence',
     );
     like(
         $direct_section,
@@ -176,8 +176,8 @@ subtest 'current AHB surfaces describe the shipped depth-one phase pipeline' => 
     );
     like(
         $direct_section,
-        qr/\.7.*?Q-named.*?<\-.*?four states.*?no\s+pending bank.*?relaunch.*?\.8.*?implementation/s,
-        'AHB direct-seed section records the selected register-output contract before implementation',
+        qr/Q-named.*?<\-.*?four states.*?no\s+pending bank.*?relaunch.*?\.8.*?ships.*?t\/1520.*?proves/s,
+        'AHB direct-seed section records the shipped register-output completion repair',
     );
     unlike(
         $direct_section,
@@ -208,8 +208,8 @@ subtest 'current AHB surfaces describe the shipped depth-one phase pipeline' => 
         my $text = slurp($relative_path);
         like(
             $text,
-            qr/t\/1520.*?two bus acceptances.*?one\s+internal\s+capture\/completion/s,
-            "$relative_path records the direct-seed completion-edge loss",
+            qr/(?=.*(?:Current phase boundary|Current completion boundary))(?=.*t\/1520)(?=.*Q-named `<-`)(?=.*(?:exactly once|one capture\/completion per\s+acceptance))/s,
+            "$relative_path records the repaired direct-seed completion boundary",
         );
     }
 };

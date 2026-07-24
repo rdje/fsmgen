@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `IAL2 / AHB endpoint phase correctness`
 - Created: `2026-07-23`
 - Last updated: `2026-07-23`
@@ -47,7 +47,7 @@ replace one accepted active address phase directly with another.
 ## Task Tree
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT`
-  Status: `active`
+  Status: `done`
   Goal: `Runtime-prove and select the boundary-free active-transfer phase contract.`
   Children: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.1`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.6`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.7`, `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.8`
 
@@ -101,15 +101,15 @@ replace one accepted active address phase directly with another.
   Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.7: select Q-named direct dispatcher`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.8`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement the selected lowering-safe direct subordinate phase-retention repair.`
   Acceptance: `Starting only after .7 commits cleanly, implement exactly its selected lowering-safe assignment/state contract in fsm/ahb_lite_subordinate.fsm, convert t1520 from defect evidence to exact success/final-ERROR/IDLE/SEQ retention proof, preserve support/source/artifact identities and all generated-family behavior, synchronize current docs/book/facts/task/Memory, and run focused/broad gates under the resource cap. Do not widen into broader AHB, general queues/outstanding transfers, AXI/APB/VHDL, or decision 0020.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Implemented the selected Q-named four-state repair in fsm/ahb_lite_subordinate.fsm: all explicit addr_q/write_q/size_q/wait_ctr/reg_data_q persistent loads use <-, and successful ACCESS/final ERROR_COMPLETE ready edges dispatch selected NONSEQ to ACCESS or SEQ to UNSUPPORTED while IDLE/BUSY/unselected cancels. Converted t1520 from loss evidence to structural register_out/*_next/no-bank/no-relaunch/no-UNOPTFLAT proof plus four exact generated-HDL scenarios: success+NONSEQ 2 accepts/captures/completions, ready-low4, no errors, sampled_write0, storage0x11111111; final ERROR+NONSEQ 2/2/2, errors2, storage0xaaaaaaaa; success+SEQ 2/2/2, independent errors2, storage0x55555555; final ERROR+IDLE 1/1/1, errors2, storage0. Guarded t1518+t1520 pass 2 files/6 tests in 5 seconds after current truth assertions were converted from historical loss to repair ownership. Direct strict/check JSON succeeds with module ahb_lite_subordinate, 4 states, 11 signals, and matched protocol.ahb_lite_subordinate support. Guarded generated-family t1519 preservation passes 2/2 tests in 42 seconds; guarded t248+t297 pass 6815 assertions with unchanged accounting. Added repair record/fact ial2-ahb-direct-subordinate-register-output-completion-repair; marked the old runtime audit historical and synchronized seed/audit/contract facts, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. Perl syntax, mdBook build, Knowledge Map generation/check at 978 facts/4953 question keys, memory architecture, paths, diff, and doctrine gates pass; disposable book output was removed. Direct memory pressure was 73% free before the generated-family gate; the guard's known-bad macOS host estimate varied independently, while all descendants remained below 4 GiB. No public/generated source/support/report/artifact/port/backend/AXI/APB/VHDL behavior or decision-0020 activity changed.`
+  Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.8: repair direct completion capture`
 
 ## Audit Result And Selection
 
-The current generated public subordinate silently drops the second of two
+At `.1`, the generated public subordinate silently dropped the second of two
 boundary-free ready/OKAY active address phases. The defect is runtime-confirmed
 and documented in
 `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md` plus fact
@@ -188,8 +188,8 @@ and its mux output is also read by current-state predicates/effects. Capturing
 the following phase's `HWRITE=0` during successful completion therefore made
 the current write predicate false and changed expected storage from
 `0x11111111` to zero. `.6` now owns the fail-closed no-behavior audit,
-restoration, and structural regression; `.7` owns corrected contract selection
-and `.8` later implementation. The generated IAL2 family and all
+restoration, and structural regression; `.7` owns corrected contract selection,
+and `.8` now ships that implementation. The generated IAL2 family and all
 other direct seeds remain unchanged preservation authorities.
 
 `.7` may activate only after the `.6` closeout commit leaves the repository
@@ -214,6 +214,22 @@ support/artifact behavior remain unchanged until the `.7` closeout commit.
 `.8` may activate only after the `.7` closeout commit leaves the repository
 clean. It must implement the selected Q-named four-state source/test contract
 exactly; the rejected pending bank/relaunch must not reappear.
+
+`.8` activated only after `.7` committed cleanly at `2738733ea`. Its behavior
+boundary is the direct `fsm/ahb_lite_subordinate.fsm`, t1520/harness, and
+current direct-seed user/fact surfaces. Generated IAL2 roles, all other direct
+seeds, public/support/artifact identities, broader protocols, and decision 0020
+remain preservation authorities.
+
+`.8` now ships the selected Q-named four-state repair. Completion reads the
+registered current phase while same-edge capture writes separate generated
+`*_next` values; successful and final-ERROR ready edges therefore retain
+accepted NONSEQ/SEQ exactly once without a pending bank, relaunch, captured
+HWDATA, or added latency. Current behavior is recorded in
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md` and fact
+`ial2-ahb-direct-subordinate-register-output-completion-repair`. This closes
+the audit tree; the next PNT step returns to the parent feature-completeness
+frontier for a clean-tree selector. Decision 0020 remains proposed/inactive.
 
 Implementation finding: direct t1519 proves the one-slot subordinate and
 two-cycle ERROR retirement, while paired t1513/t1515 time out because the

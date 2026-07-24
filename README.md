@@ -6015,17 +6015,18 @@ identities and direct seeds are unchanged. General/deeper queues, multiple
 outstanding transfers, `.4` direct-seed audit work, and decision 0020 remain
 outside this leaf.
 
-`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4` now runtime-confirms the distinct
-direct `fsm/ahb_lite_subordinate.fsm` seed still drops an active address phase
-accepted on successful or final-ERROR completion. t/1520 observes two bus
-acceptances but one internal capture/completion in both cases: the success
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4` runtime-confirmed that, before the
+`.8` repair, the distinct direct `fsm/ahb_lite_subordinate.fsm` seed dropped an
+active address phase accepted on successful or final-ERROR completion. Its
+historical t/1520 evidence observed two bus acceptances but one internal
+capture/completion in both cases: the success
 case retains only storage `0x11111111`; the ERROR case preserves exactly two
 ERROR cycles but leaves storage zero. `ACCESS`/`ERROR_COMPLETE` return to
 `IDLE` without sampling HSEL/HADDR/HTRANS. No seed behavior changes in the
 audit. `.5` historically owned direct-seed contract selection; `.6` later
 invalidated its no-bank realization, and `.7`/`.8` now own corrected selection/
-implementation. The generated family remains repaired, and decision 0020
-remains inactive.
+implementation; `.8` has now shipped it. The generated family remains repaired,
+and decision 0020 remains inactive.
 
 `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5` historically selected the direct-seed
 external repair goal without changing behavior. On successful or final-ERROR ready
@@ -6038,23 +6039,31 @@ combinational mux outputs, so capturing the next read's `HWRITE=0` in
 storage zero. The failed attempt was restored without behavior change. `.7`
 now selects the lowering-safe realization: express persistent phase/storage
 loads with Q-named `<-`, so current predicates read the registered value while
-same-edge capture writes a separate generated `*_next` signal. `.8` owns later
-implementation. Generated-family behavior, public/support/artifact identities,
-general queues, and decision 0020 remain unchanged/inactive.
+same-edge capture writes a separate generated `*_next` signal. `.8` now ships
+that selected implementation. Generated-family behavior, public/support/
+artifact identities, general queues, and decision 0020 remain unchanged/inactive.
 
 `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.6` records that substrate finding.
-t/1520 still proves the shipped completion-edge loss and now also locks the
-emitted mux coupling: current write completion reads `write_q`, while
-`write_q` is the combinational register-input mux overridden by an enabled
+At its closeout, t/1520 still proved the pre-repair completion-edge loss and
+also locked the emitted mux coupling: current write completion reads `write_q`,
+while `write_q` is the combinational register-input mux overridden by an enabled
 live `HWRITE` capture. The direct seed and runtime expectations were restored
 exactly; `.6` changes no shipped behavior.
 
-`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.7` selects that Q-named four-state
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.7` selected that Q-named four-state
 contract without changing behavior. A warning-clean disposable candidate
-passes exact success+NONSEQ, final-ERROR+NONSEQ, success+SEQ, and final-ERROR+
+passed exact success+NONSEQ, final-ERROR+NONSEQ, success+SEQ, and final-ERROR+
 IDLE scenarios. A separated D-input-named bank/relaunch candidate was rejected
-for cross-state `UNOPTFLAT` and one avoidable ready-low cycle. `.8` implements
-the selected no-bank/no-relaunch contract.
+for cross-state `UNOPTFLAT` and one avoidable ready-low cycle.
+
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.8` now ships the selected no-bank,
+no-relaunch repair. The direct seed uses Q-named `<-` persistent loads and
+dispatches accepted completion-edge NONSEQ/SEQ directly through its existing
+four states. t/1520 proves exact success+NONSEQ, final-ERROR+NONSEQ,
+success+SEQ, and final-ERROR+IDLE outcomes with one capture/completion per
+acceptance, live HWDATA, exactly two ERROR cycles, and warning-clean HDL.
+Public/support/artifact identities and the generated IAL2 family are unchanged;
+decision 0020 remains inactive.
 
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
@@ -8729,6 +8738,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md` — preserves the superseded `.5` no-bank completion-edge dispatch selection, its still-valid external exactly-once/HWDATA goals, and the `.6` lowering-evidence supersession route.
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md` — records the `.6` emitted-HDL proof that direct register-input mux reuse lets next control alter current completion, the deterministic suppressed-write failure, full behavior restoration, and corrected-contract handoff.
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md` — freezes the `.7` Q-named `<-` four-state completion dispatcher, warning-clean four-scenario feasibility proof, rejected UNOPTFLAT bank/relaunch alternative, `.8` gates, and rollback.
+- `docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md` — records the `.8` shipped Q-named four-state direct-seed repair, exact t1520 success/ERROR/SEQ/IDLE proof, stable support/public boundaries, and rollback.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

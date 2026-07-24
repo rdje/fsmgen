@@ -9,8 +9,8 @@ no-relaunch implementation selected below is unsafe under direct-FSM
 `register_in` lowering. The external exactly-once/HWDATA requirements remain
 valid. `.7` later selects the same four-state dispatcher with Q-named `<-`
 loads, which provide separate generated `*_next` storage without a pending
-bank/relaunch. See
-`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md`.
+bank/relaunch, and `.8` now ships it. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md`.
 
 ## Historical Outcome
 

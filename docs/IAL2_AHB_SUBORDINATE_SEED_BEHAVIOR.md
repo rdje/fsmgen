@@ -101,21 +101,16 @@ and two-cycle ERROR response policy. The seed performs no write update on
 ERROR.
 
 Current phase boundary: generated-HDL t/1520 now proves that this direct seed
-samples address/control only in `idle`. A selected active phase accepted on a
-successful `access` completion or final `error_complete` ready edge is not
-captured before the state returns to `idle`, so the direct seed silently drops
-that phase. The success probe records two bus acceptances but one internal
-capture/completion and storage `0x11111111`; the final-ERROR probe records two
-acceptances, one capture/completion, exactly two ERROR cycles, and zero
-storage. This limitation does not apply to the generated public IAL2 family,
-which was repaired separately by `.3`. See
-`docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md`;
-`.5` historically selected no-queue capture through the existing direct phase
-registers, but `.6` proved that register-input mux reuse suppresses the current
-write when the following phase is a read. The failed attempt was restored.
-`.7` now selects explicit Q-named `<-` loads for the existing four-state
-registers, with no pending bank/relaunch or extra stall; `.8` owns later
-implementation.
+retains selected active NONSEQ or SEQ accepted on successful `access` or final
+`error_complete` ready edges. Persistent loads use Q-named `<-`; current
+completion reads registered state while same-edge capture writes generated
+`*_next` values. The four-state repair adds no pending bank/relaunch, HWDATA
+capture, or extra stall. Exact success+NONSEQ, final-ERROR+NONSEQ,
+success+SEQ, and final-ERROR+IDLE scenarios prove one capture/completion per
+acceptance, live current-write HWDATA, independent two-cycle SEQ ERROR, and
+IDLE cancellation. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md`.
+The generated public IAL2 family remains separately repaired by `.3`.
 
 ## Support Accounting
 
@@ -197,8 +192,8 @@ Later focused validation adds:
 prove -Iperl t/1520-ahb-direct-subordinate-pipelined-active-transfer-audit.t
 ```
 
-That no-behavior audit locks the current completion-edge loss until its
-separate direct-seed repair owner ships.
+That regression now locks the `.8` Q-named completion-edge repair and its four
+exact continuation/cancellation scenarios.
 
 ## Explicit Residue
 
@@ -216,8 +211,6 @@ The following remain future task-tree-owned work:
   parity/check signals, exclusive access, and multi-manager identity signals;
 - narrow transfer byte-lane behavior, write strobes, alignment policy, and
   register banks beyond the single selected word register;
-- completion-edge retention of one accepted next active address/control phase
-  in this direct seed (Q-named four-state contract selected by `.7`, implementation by `.8`);
 - legacy two-bit `HRESP` RETRY/SPLIT compatibility;
 - direct backend behavior, backend-language variants, AXI, APB, and VHDL.
 

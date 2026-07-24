@@ -6,14 +6,15 @@ Date: 2026-07-23
 
 Later finding: `.5` selected atomic direct-state completion-edge capture through
 the existing phase registers, but `.6` proved that internal realization unsafe
-under register-input mux lowering and restored the failed attempt. `.7` owns a
-Q-named `<-` four-state contract without pending/relaunch, and `.8` later
-implementation. See
-`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md`.
+under register-input mux lowering and restored the failed attempt. `.7` selected
+a Q-named `<-` four-state contract without pending/relaunch, and `.8`
+implemented it. This document is historical pre-repair evidence; current
+behavior is in
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md`.
 
 ## Outcome
 
-Generated-HDL t/1520 proves that the unchanged direct lower-layer seed
+Before `.8`, generated-HDL t/1520 proved that the direct lower-layer seed
 `fsm/ahb_lite_subordinate.fsm` silently drops a selected active address phase
 accepted on either a successful or final-ERROR completion edge.
 
@@ -23,9 +24,9 @@ separate hand-authored `?fsm` source whose `ACCESS` and `ERROR_COMPLETE` states
 raise ready and return to `IDLE` without sampling the simultaneously accepted
 next phase.
 
-The audit makes no seed, support, artifact, port, generated-HDL, or runtime
+The `.4` audit made no seed, support, artifact, port, generated-HDL, or runtime
 behavior change. It historically selected `.5`; `.6` later invalidated that
-leaf's internal no-bank realization without changing shipped behavior.
+leaf's D-input realization, and `.8` has since repaired the seed.
 
 ## Successful-Completion Probe
 

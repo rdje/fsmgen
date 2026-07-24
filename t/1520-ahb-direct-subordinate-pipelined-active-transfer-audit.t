@@ -7,7 +7,7 @@ use File::Temp qw(tempdir);
 use FindBin;
 use IPC::Cmd qw(run);
 
-subtest 'direct seed samples active address phases only in idle' => sub {
+subtest 'direct seed uses Q-named completion-edge phase dispatch' => sub {
     my $seed = slurp(seed_path());
     my ($access) = $seed =~ /\n  \(access\n(.*?)\n  \)\n\n  \(unsupported/s;
     my ($error_complete) = $seed =~ /\n  \(error_complete\n(.*?)\n  \)\n\)/s;
@@ -16,22 +16,32 @@ subtest 'direct seed samples active address phases only in idle' => sub {
     ok(defined($error_complete), 'direct seed exposes the final ERROR state for audit');
     like(
         $seed,
-        qr/\(idle.*?\(<HSEL\s+\(<HREADY\s+\(\?HTRANS.*?\(=2'b10\s+\(<= \(addr_q HADDR\)\).*?\(-> access\).*?\(=2'b11\s+\(<= \(wait_ctr wait_cycles\)\)\s+\(-> unsupported\)/s,
-        'direct seed accepts NONSEQ or unsupported SEQ only in idle',
+        qr/\(idle.*?\(<HSEL\s+\(<HREADY\s+\(\?HTRANS.*?\(=2'b10\s+\(<- \(addr_q HADDR\)\).*?\(-> access\).*?\(=2'b11\s+\(<- \(wait_ctr wait_cycles\)\)\s+\(-> unsupported\)/s,
+        'direct seed admits NONSEQ or unsupported SEQ with Q-named loads in idle',
     );
-    unlike(
+    like(
         $access // '',
-        qr/\b(?:HSEL|HADDR|HTRANS)\b/,
-        'successful completion state has no next-address capture path',
+        completion_dispatch_re(),
+        'successful completion atomically captures and dispatches the next active phase',
+    );
+    like(
+        $error_complete // '',
+        completion_dispatch_re(),
+        'final ERROR atomically captures and dispatches the next active phase',
     );
     unlike(
-        $error_complete // '',
-        qr/\b(?:HSEL|HADDR|HTRANS)\b/,
-        'final ERROR completion state has no next-address capture path',
+        $seed,
+        qr/\(<=\s+\((?:addr_q|write_q|size_q|wait_ctr|reg_data_q)\b/,
+        'persistent direct state has no D-input-named assignment',
+    );
+    unlike(
+        $seed,
+        qr/\((?:relaunch|next_addr_q|next_write_q|next_size_q|next_wait_ctr|next_seq_q)\b/,
+        'selected repair adds no pending bank or relaunch state',
     );
 };
 
-subtest 'direct generated HDL drops active phases accepted on completion edges' => sub {
+subtest 'direct generated HDL retains active phases accepted on completion edges' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $hdl = File::Spec->catfile($tempdir, 'ahb_lite_subordinate.sv');
     my $objdir = File::Spec->catdir($tempdir, 'obj');
@@ -46,12 +56,17 @@ subtest 'direct generated HDL drops active phases accepted on completion edges' 
     like(
         $emitted,
         qr/assign access_reg_data_q_hwdata_en = access_en & .*write_q;/,
-        'current write completion reads the register-input mux output',
+        'current write completion reads registered write_q',
     );
     like(
         $emitted,
-        qr/always_comb begin\s+write_q = write_q_q;.*?if \(write_q_hwrite_en\) begin\s+write_q = HWRITE;/s,
-        'write_q capture is a combinational register-input mux before its storage flop',
+        qr/Unified flop with mux for: write_q \(register_out assignment\).*?always_comb begin\s+write_q_next = write_q;.*?if \(write_q_hwrite_en\) begin\s+write_q_next = HWRITE;/s,
+        'write_q capture writes a separate next-value mux while predicates read Q',
+    );
+    unlike(
+        $emitted,
+        qr/localparam\s+RELAUNCH|next_(?:addr|write|size|wait|seq)_q/,
+        'emitted repair retains four states with no pending bank',
     );
 
     my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
@@ -64,6 +79,11 @@ subtest 'direct generated HDL drops active phases accepted on completion edges' 
     ok($compile_ok, 'Verilator builds the direct-seed active-transfer audit harness')
         or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
     return unless $compile_ok;
+    unlike(
+        join('', @{$compile_stdout || []}, @{$compile_stderr || []}),
+        qr/UNOPTFLAT/,
+        'selected Q-named repair emits no combinational-loop warning',
+    );
 
     my $binary = File::Spec->catfile(
         $objdir,
@@ -77,13 +97,23 @@ subtest 'direct generated HDL drops active phases accepted on completion edges' 
     my $stdout = join('', @{$run_stdout || []});
     like(
         $stdout,
-        qr/DIRECT_SUCCESS_ACTIVE_DROP bus_accepts=2 internal_captures=1 internal_completions=1 ready_low_cycles=\d+ response_error_cycles=0 second_write=0 sampled_write=1 storage=11111111/,
-        'success completion accepts but does not capture or complete the distinct next active phase',
+        qr/DIRECT_SUCCESS_ACTIVE_REPAIRED bus_accepts=2 internal_captures=2 internal_completions=2 ready_low_cycles=4 response_error_cycles=0 second_write=0 sampled_write=0 storage=11111111/,
+        'success completion captures and completes the distinct next NONSEQ read exactly once',
     );
     like(
         $stdout,
-        qr/DIRECT_ERROR_ACTIVE_DROP bus_accepts=2 internal_captures=1 internal_completions=1 response_error_cycles=2 storage=00000000/,
-        'final ERROR accepts but does not capture or complete the next active phase',
+        qr/DIRECT_ERROR_ACTIVE_REPAIRED bus_accepts=2 internal_captures=2 internal_completions=2 response_error_cycles=2 storage=aaaaaaaa/,
+        'final ERROR captures and completes the next NONSEQ write after exactly two ERROR cycles',
+    );
+    like(
+        $stdout,
+        qr/DIRECT_SUCCESS_SEQ_REPAIRED bus_accepts=2 internal_captures=2 internal_completions=2 response_error_cycles=2 storage=55555555/,
+        'success completion captures accepted SEQ for an independent two-cycle ERROR',
+    );
+    like(
+        $stdout,
+        qr/DIRECT_ERROR_IDLE_CANCEL bus_accepts=1 internal_captures=1 internal_completions=1 response_error_cycles=2 storage=00000000/,
+        'final ERROR followed by IDLE cancels without a phantom continuation',
     );
 };
 
@@ -99,6 +129,25 @@ sub testbench_path {
         'data',
         'ahb_direct_subordinate_pipelined_active_transfer_audit_tb.svt',
     );
+}
+
+sub completion_dispatch_re {
+    return qr/
+        <HSEL
+        .*?<HREADY
+        .*?\?HTRANS
+        .*?=2'b00\s+\(->\s+idle\)
+        .*?=2'b01\s+\(->\s+idle\)
+        .*?=2'b10
+        .*?<-\s+\(addr_q\s+HADDR\)
+        .*?<-\s+\(write_q\s+HWRITE\)
+        .*?<-\s+\(size_q\s+HSIZE\)
+        .*?<-\s+\(wait_ctr\s+wait_cycles\)
+        .*?->\s+access
+        .*?=2'b11
+        .*?<-\s+\(wait_ctr\s+wait_cycles\)
+        .*?->\s+unsupported
+    /sx;
 }
 
 sub slurp {

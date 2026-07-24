@@ -49,14 +49,14 @@
       (<HREADY
         (?HTRANS
           (=2'b10
-            (<= (addr_q HADDR))
-            (<= (write_q HWRITE))
-            (<= (size_q HSIZE))
-            (<= (wait_ctr wait_cycles))
+            (<- (addr_q HADDR))
+            (<- (write_q HWRITE))
+            (<- (size_q HSIZE))
+            (<- (wait_ctr wait_cycles))
             (-> access)
           )
           (=2'b11
-            (<= (wait_ctr wait_cycles))
+            (<- (wait_ctr wait_cycles))
             (-> unsupported)
           )
         )
@@ -89,9 +89,37 @@
             (= (HRDATA> reg_data_q))
           )
           (<write_q
-            (<= (reg_data_q HWDATA))
+            (<- (reg_data_q HWDATA))
           )
-          (-> idle)
+          (<!HSEL
+            (-> idle)
+          )
+          (<HSEL
+            (<!HREADY
+              (-> idle)
+            )
+            (<HREADY
+              (?HTRANS
+                (=2'b00
+                  (-> idle)
+                )
+                (=2'b01
+                  (-> idle)
+                )
+                (=2'b10
+                  (<- (addr_q HADDR))
+                  (<- (write_q HWRITE))
+                  (<- (size_q HSIZE))
+                  (<- (wait_ctr wait_cycles))
+                  (-> access)
+                )
+                (=2'b11
+                  (<- (wait_ctr wait_cycles))
+                  (-> unsupported)
+                )
+              )
+            )
+          )
         )
       )
     )
@@ -116,6 +144,34 @@
     (= (HREADYOUT> 1))
     (= (HRESP> 1))
     (= (HRDATA> 32'h00000000))
-    (-> idle)
+    (<!HSEL
+      (-> idle)
+    )
+    (<HSEL
+      (<!HREADY
+        (-> idle)
+      )
+      (<HREADY
+        (?HTRANS
+          (=2'b00
+            (-> idle)
+          )
+          (=2'b01
+            (-> idle)
+          )
+          (=2'b10
+            (<- (addr_q HADDR))
+            (<- (write_q HWRITE))
+            (<- (size_q HSIZE))
+            (<- (wait_ctr wait_cycles))
+            (-> access)
+          )
+          (=2'b11
+            (<- (wait_ctr wait_cycles))
+            (-> unsupported)
+          )
+        )
+      )
+    )
   )
 )

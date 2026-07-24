@@ -34,7 +34,7 @@ module ahb_direct_subordinate_pipelined_active_transfer_audit_tb;
     end
   endtask
 
-  task automatic run_success_completion_active_drop;
+  task automatic run_success_completion_active_repaired;
     integer cycles;
     integer bus_accept_count;
     integer internal_capture_count;
@@ -71,9 +71,9 @@ module ahb_direct_subordinate_pipelined_active_transfer_audit_tb;
           if (bus_accept_count > 2)
             $fatal(1, "unexpected extra active acceptance");
         end
-        if (dut.idle_wait_ctr_wait_cycles_en)
+        if (dut.idle_wait_ctr_wait_cycles_en || dut.access_wait_ctr_wait_cycles_en || dut.error_complete_wait_ctr_wait_cycles_en)
           internal_capture_count = internal_capture_count + 1;
-        if (dut.access_next_state_idle_en)
+        if (dut.access_hreadyout_1_en)
           internal_completion_count = internal_completion_count + 1;
         if (!HREADYOUT)
           ready_low_cycles = ready_low_cycles + 1;
@@ -92,15 +92,17 @@ module ahb_direct_subordinate_pipelined_active_transfer_audit_tb;
         cycles = cycles + 1;
       end
 
-      if (bus_accept_count != 2 || internal_capture_count != 1 || internal_completion_count != 1)
-        $fatal(1, "success-drop counts bus=%0d captures=%0d completions=%0d", bus_accept_count, internal_capture_count, internal_completion_count);
+      if (bus_accept_count != 2 || internal_capture_count != 2 || internal_completion_count != 2)
+        $fatal(1, "success-repair counts bus=%0d captures=%0d completions=%0d", bus_accept_count, internal_capture_count, internal_completion_count);
       if (!second_phase_presented || ready_low_cycles == 0 || response_error_cycles != 0)
-        $fatal(1, "success-drop timing presented=%0d ready_low=%0d errors=%0d", second_phase_presented, ready_low_cycles, response_error_cycles);
-      if (dut.write_q !== 1'b1 || dut.reg_data_q !== 32'h11111111)
-        $fatal(1, "success-drop sampled_write=%b storage=%h", dut.write_q, dut.reg_data_q);
+        $fatal(1, "success-repair timing presented=%0d ready_low=%0d errors=%0d", second_phase_presented, ready_low_cycles, response_error_cycles);
+      if (ready_low_cycles != 4)
+        $fatal(1, "success-repair ready-low cycles=%0d expected exact no-relaunch timing", ready_low_cycles);
+      if (dut.write_q !== 1'b0 || dut.reg_data_q !== 32'h11111111)
+        $fatal(1, "success-repair sampled_write=%b storage=%h", dut.write_q, dut.reg_data_q);
 
       $display(
-        "DIRECT_SUCCESS_ACTIVE_DROP bus_accepts=%0d internal_captures=%0d internal_completions=%0d ready_low_cycles=%0d response_error_cycles=%0d second_write=0 sampled_write=%0d storage=%08x",
+        "DIRECT_SUCCESS_ACTIVE_REPAIRED bus_accepts=%0d internal_captures=%0d internal_completions=%0d ready_low_cycles=%0d response_error_cycles=%0d second_write=0 sampled_write=%0d storage=%08x",
         bus_accept_count,
         internal_capture_count,
         internal_completion_count,
@@ -112,7 +114,7 @@ module ahb_direct_subordinate_pipelined_active_transfer_audit_tb;
     end
   endtask
 
-  task automatic run_error_completion_active_drop;
+  task automatic run_error_completion_active_repaired;
     integer cycles;
     integer bus_accept_count;
     integer internal_capture_count;
@@ -147,9 +149,9 @@ module ahb_direct_subordinate_pipelined_active_transfer_audit_tb;
           if (bus_accept_count > 2)
             $fatal(1, "unexpected extra ERROR-case active acceptance");
         end
-        if (dut.idle_wait_ctr_wait_cycles_en)
+        if (dut.idle_wait_ctr_wait_cycles_en || dut.access_wait_ctr_wait_cycles_en || dut.error_complete_wait_ctr_wait_cycles_en)
           internal_capture_count = internal_capture_count + 1;
-        if (dut.error_complete_next_state_idle_en)
+        if (dut.error_complete_hreadyout_1_en || dut.access_hreadyout_1_en)
           internal_completion_count = internal_completion_count + 1;
         if (HRESP)
           response_error_cycles = response_error_cycles + 1;
@@ -166,15 +168,129 @@ module ahb_direct_subordinate_pipelined_active_transfer_audit_tb;
         cycles = cycles + 1;
       end
 
-      if (bus_accept_count != 2 || internal_capture_count != 1 || internal_completion_count != 1)
-        $fatal(1, "ERROR-drop counts bus=%0d captures=%0d completions=%0d", bus_accept_count, internal_capture_count, internal_completion_count);
+      if (bus_accept_count != 2 || internal_capture_count != 2 || internal_completion_count != 2)
+        $fatal(1, "ERROR-repair counts bus=%0d captures=%0d completions=%0d", bus_accept_count, internal_capture_count, internal_completion_count);
       if (!next_phase_presented || response_error_cycles != 2)
-        $fatal(1, "ERROR-drop presented=%0d error_cycles=%0d", next_phase_presented, response_error_cycles);
-      if (dut.reg_data_q !== 32'h00000000)
-        $fatal(1, "ERROR-drop storage=%h expected no captured continuation", dut.reg_data_q);
+        $fatal(1, "ERROR-repair presented=%0d error_cycles=%0d", next_phase_presented, response_error_cycles);
+      if (dut.reg_data_q !== 32'haaaaaaaa)
+        $fatal(1, "ERROR-repair storage=%h expected captured continuation", dut.reg_data_q);
 
       $display(
-        "DIRECT_ERROR_ACTIVE_DROP bus_accepts=%0d internal_captures=%0d internal_completions=%0d response_error_cycles=%0d storage=%08x",
+        "DIRECT_ERROR_ACTIVE_REPAIRED bus_accepts=%0d internal_captures=%0d internal_completions=%0d response_error_cycles=%0d storage=%08x",
+        bus_accept_count,
+        internal_capture_count,
+        internal_completion_count,
+        response_error_cycles,
+        dut.reg_data_q
+      );
+    end
+  endtask
+
+  task automatic run_success_completion_seq_repaired;
+    integer bus_accept_count;
+    integer internal_capture_count;
+    integer internal_completion_count;
+    integer response_error_cycles;
+    logic seq_presented;
+    begin
+      reset_dut();
+      bus_accept_count = 0;
+      internal_capture_count = 0;
+      internal_completion_count = 0;
+      response_error_cycles = 0;
+      seq_presented = 0;
+
+      HSEL = 1;
+      HADDR = 32'h00000000;
+      HTRANS = 2'b10;
+      HWRITE = 1;
+      HSIZE = 3'b010;
+      HWDATA = 32'h55555555;
+      wait_cycles = 1;
+
+      repeat (35) begin
+        @(posedge clk);
+        if (HSEL && HREADY && HTRANS[1])
+          bus_accept_count = bus_accept_count + 1;
+        if (dut.idle_wait_ctr_wait_cycles_en || dut.access_wait_ctr_wait_cycles_en || dut.error_complete_wait_ctr_wait_cycles_en)
+          internal_capture_count = internal_capture_count + 1;
+        if (dut.access_hreadyout_1_en || dut.error_complete_hreadyout_1_en)
+          internal_completion_count = internal_completion_count + 1;
+        if (HRESP)
+          response_error_cycles = response_error_cycles + 1;
+
+        @(negedge clk);
+        if (bus_accept_count == 1 && !seq_presented) begin
+          HTRANS = 2'b11;
+          HWRITE = 0;
+          wait_cycles = 0;
+          seq_presented = 1;
+        end
+        if (bus_accept_count == 2 && HTRANS == 2'b11)
+          HTRANS = 2'b00;
+      end
+
+      if (bus_accept_count != 2 || internal_capture_count != 2 || internal_completion_count != 2)
+        $fatal(1, "success-SEQ counts bus=%0d captures=%0d completions=%0d", bus_accept_count, internal_capture_count, internal_completion_count);
+      if (!seq_presented || response_error_cycles != 2 || dut.reg_data_q !== 32'h55555555)
+        $fatal(1, "success-SEQ presented=%0d errors=%0d storage=%h", seq_presented, response_error_cycles, dut.reg_data_q);
+      $display(
+        "DIRECT_SUCCESS_SEQ_REPAIRED bus_accepts=%0d internal_captures=%0d internal_completions=%0d response_error_cycles=%0d storage=%08x",
+        bus_accept_count,
+        internal_capture_count,
+        internal_completion_count,
+        response_error_cycles,
+        dut.reg_data_q
+      );
+    end
+  endtask
+
+  task automatic run_error_completion_idle_cancel;
+    integer bus_accept_count;
+    integer internal_capture_count;
+    integer internal_completion_count;
+    integer response_error_cycles;
+    logic idle_presented;
+    begin
+      reset_dut();
+      bus_accept_count = 0;
+      internal_capture_count = 0;
+      internal_completion_count = 0;
+      response_error_cycles = 0;
+      idle_presented = 0;
+
+      HSEL = 1;
+      HADDR = 32'h00000000;
+      HTRANS = 2'b11;
+      HWRITE = 0;
+      HSIZE = 3'b010;
+      HWDATA = 0;
+      wait_cycles = 1;
+
+      repeat (30) begin
+        @(posedge clk);
+        if (HSEL && HREADY && HTRANS[1])
+          bus_accept_count = bus_accept_count + 1;
+        if (dut.idle_wait_ctr_wait_cycles_en || dut.access_wait_ctr_wait_cycles_en || dut.error_complete_wait_ctr_wait_cycles_en)
+          internal_capture_count = internal_capture_count + 1;
+        if (dut.error_complete_hreadyout_1_en)
+          internal_completion_count = internal_completion_count + 1;
+        if (HRESP)
+          response_error_cycles = response_error_cycles + 1;
+
+        @(negedge clk);
+        if (bus_accept_count == 1 && !idle_presented) begin
+          HTRANS = 2'b00;
+          idle_presented = 1;
+        end
+      end
+
+      if (bus_accept_count != 1 || internal_capture_count != 1 || internal_completion_count != 1)
+        $fatal(1, "ERROR-IDLE counts bus=%0d captures=%0d completions=%0d", bus_accept_count, internal_capture_count, internal_completion_count);
+      if (!idle_presented || response_error_cycles != 2 || dut.reg_data_q !== 32'h00000000)
+        $fatal(1, "ERROR-IDLE presented=%0d errors=%0d storage=%h", idle_presented, response_error_cycles, dut.reg_data_q);
+      $display(
+        "DIRECT_ERROR_IDLE_CANCEL bus_accepts=%0d internal_captures=%0d internal_completions=%0d response_error_cycles=%0d storage=%08x",
         bus_accept_count,
         internal_capture_count,
         internal_completion_count,
@@ -185,8 +301,10 @@ module ahb_direct_subordinate_pipelined_active_transfer_audit_tb;
   endtask
 
   initial begin
-    run_success_completion_active_drop();
-    run_error_completion_active_drop();
+    run_success_completion_active_repaired();
+    run_error_completion_active_repaired();
+    run_success_completion_seq_repaired();
+    run_error_completion_idle_cancel();
     $finish;
   end
 endmodule

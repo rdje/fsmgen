@@ -23,8 +23,8 @@ generated-family behavior change.
 Later `.7` finding: the documented Q-named `<-` assignment form provides the
 required current/next separation inside each existing register. `.7` selects
 that warning-clean four-state realization without a pending bank/relaunch;
-`.8` is reserved for implementation after `.7` commits cleanly. See
-`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md`.
+`.8` now ships it. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md`.
 
 ## Attempt And Deterministic Failure
 
@@ -112,6 +112,7 @@ realization is to use Q-named `<-` for the existing phase/storage registers:
 lowering generates a distinct `*_next` mux while source reads keep seeing Q.
 A D-input-named pending bank/relaunch probe was functionally correct but
 rejected for a cross-state `UNOPTFLAT` loop and an avoidable ready-low cycle.
+`.8` now implements the selected Q-named path.
 
 This remains capacity-one protocol bookkeeping, not a general queue or
 multiple-outstanding architecture.

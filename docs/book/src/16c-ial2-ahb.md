@@ -128,11 +128,9 @@ fsm/ahb_lite_subordinate.fsm
 These direct seeds remain useful cycle-level coverage, but they are not IAL2
 and do not produce generated `.isf` or generated `.fsm` review artifacts. The
 direct subordinate currently does not share the generated family's repaired
-phase bank: t/1520 proves it drops an active phase accepted on a successful or
-final-ERROR completion edge. `.6` invalidated the `.5` no-bank realization
-after emitted mux evidence; `.7` now selects a Q-named `<-` four-state contract
-without a pending bank/relaunch, and `.8` later implements it. See the direct-
-seed audit below.
+phase bank because it uses a smaller direct-state repair. `.8` now retains
+completion-edge active phases through Q-named `<-` loads in its existing four
+states, without a pending bank/relaunch. See the direct-seed section below.
 
 ## Mode Map
 
@@ -140,7 +138,7 @@ seed audit below.
 | --- | --- | --- |
 | Guided mode | The thirty-eight public AHB sources listed above, including paired one- and two-subordinate `.ppif`/`.ahb` source pairs | Bounded requester/subordinate/interconnect sources, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, and paired BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs cover selected byte/halfword/word lanes, in-word `SEQ`, HBURST `WRAP4`/`INCR4`, and BUSY parking. The selected generic and matching `.ahb` aggregate HBURST-aware byte-lane `SEQ` sources include non-parking and BUSY-park variants, plus paired BUSY-inserting-requester compositions across one or two static windows. Interconnect knobs are exposed as `children`, static `address-map` windows, `decode`, and `wiring` clauses. |
-| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, and retained one-hot interconnect data ownership. The separate direct subordinate seed still drops active phases accepted on completion edges; `.7` selects a Q-named `<-` four-state repair without pending/relaunch, and `.8` owns implementation. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, policy/runtime or multiple BUSY insertion, distinct bus-BUSY status, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, and retained one-hot interconnect data ownership. The separate direct subordinate seed now retains completion-edge active NONSEQ/SEQ through Q-named `<-` loads in its existing four states, without pending/relaunch. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, policy/runtime or multiple BUSY insertion, distinct bus-BUSY status, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -1733,9 +1731,8 @@ final ERROR:           bus accepts 2, seed captures/completes 1,
                        ERROR cycles = 2, storage = 0
 ```
 
-`ACCESS` and `ERROR_COMPLETE` return to `IDLE` without sampling the phase
-accepted on that edge. Treat boundary-free direct-seed use as known-broken
-until a later repair ships. The exact runtime audit is
+Before `.8`, `ACCESS` and `ERROR_COMPLETE` returned to `IDLE` without sampling
+the phase accepted on that edge. The historical runtime evidence is
 [IAL2 AHB Direct Subordinate Pipelined Active-Transfer Runtime Audit](../../IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md).
 
 `.5` originally selected direct dispatch through the existing phase registers:
@@ -1753,20 +1750,30 @@ mux and the current write enable reads it. Enabling capture of the following
 read's `HWRITE=0` immediately changed the current predicate and suppressed the
 write, producing `sampled_write=0 storage=00000000`.
 
-The failed dispatcher was fully restored. t/1520 still locks the current loss
-and now also locks that mux structure. `.7` selects the smaller correction:
+The failed D-input dispatcher was fully restored before `.7` selected the smaller correction:
 change persistent phase/storage loads to Q-named `<-`. Current completion then
 reads the registered Q value while same-edge capture writes a separate
 generated `*_next` value. The existing four states dispatch directly with no
 pending bank, relaunch state, or extra stall.
 
-A disposable candidate passes success+NONSEQ, final-ERROR+NONSEQ, success+SEQ,
-and final-ERROR+IDLE exactly and emits no Verilator warning. The first D-input-
+A disposable candidate passed success+NONSEQ, final-ERROR+NONSEQ, success+SEQ,
+and final-ERROR+IDLE exactly and emitted no Verilator warning. The first D-input-
 named bank/relaunch candidate was rejected for cross-state `UNOPTFLAT` and one
-avoidable ready-low cycle. `.8` owns implementation. See the historical
-[direct contract selection](../../IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md)
+avoidable ready-low cycle. `.8` now ships the Q-named contract. Current t/1520
+proves:
+
+```text
+success + active NONSEQ: accepts/captures/completes = 2/2/2, storage 0x11111111
+final ERROR + NONSEQ:    accepts/captures/completes = 2/2/2, errors 2, storage 0xaaaaaaaa
+success + active SEQ:    accepts/captures/completes = 2/2/2, errors 2, storage 0x55555555
+final ERROR + IDLE:      accepts/captures/completes = 1/1/1, errors 2, storage 0
+```
+
+See the historical
+[direct contract selection](../../IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md),
 the [lowering-substrate audit](../../IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md),
-and the current [Q-named contract](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md).
+the [Q-named contract](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md),
+and the current [repair record](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md).
 
 Use the direct seeds when you need to inspect explicit cycle-level state
 transitions. Use the public IAL2 sources when you need source identity, source
@@ -2202,10 +2209,9 @@ queue, multi-manager fabric, or activation of the protocol-neutral
 transaction-layer horizon.
 
 That repaired contract applies to generated public IAL2 roles. The separate
-direct `fsm/ahb_lite_subordinate.fsm` seed remains at the pre-bank state shape;
-t/1520 proves its completion-edge loss, while `.6` proves the `.5` no-bank
-register-input realization unsafe. `.7` selects a Q-named `<-` four-state
-repair without pending/relaunch, and `.8` later implements it.
+direct `fsm/ahb_lite_subordinate.fsm` seed uses a different but equivalent
+capacity-one realization: `.8` ships Q-named `<-` loads and direct four-state
+completion dispatch without pending/relaunch. t/1520 proves exact retention.
 
 ## Validation Used For This Chapter
 

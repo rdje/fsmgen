@@ -24,4 +24,6 @@ Capturing the next read's `HWRITE=0` immediately suppressed the completing
 current write. The failed behavior was restored. Current routing belongs to
 facts `ial2-ahb-direct-subordinate-completion-capture-substrate-audit` and
 `ial2-ahb-direct-subordinate-register-output-completion-contract-selection`;
-`.7` selects the Q-named `<-` correction and `.8` later implements it.
+`.7` selected the Q-named `<-` correction and `.8` now implements it; current
+behavior routes to fact
+`ial2-ahb-direct-subordinate-register-output-completion-repair`.

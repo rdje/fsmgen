@@ -4,6 +4,9 @@ Task-tree owner: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.7`
 
 Date: 2026-07-23
 
+Implementation status: `.8` now ships this exact contract. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md`.
+
 ## Outcome
 
 The selected direct-seed repair keeps the existing four states and existing
@@ -15,8 +18,8 @@ state, extra ready-low cycle, or combinational alias.
 
 This is smaller and cleaner than the separated register-input bank considered
 after `.6`. A disposable strict-lowering and four-scenario Verilator probe
-proves the Q-named shape is warning-clean and behaviorally exact. `.8` owns
-implementation. `.7` changes no seed, generated HDL, runtime, support,
+proves the Q-named shape is warning-clean and behaviorally exact. `.8` now owns
+and ships implementation. `.7` changed no seed, generated HDL, runtime, support,
 artifact, port, generated IAL2 role, backend, AXI/APB/VHDL behavior, or
 decision `0020` activity.
 

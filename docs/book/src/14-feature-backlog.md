@@ -10907,8 +10907,12 @@ records the evidence. The
 [register-output completion contract](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md)
 records `.7`'s selected Q-named `<-` four-state correction and its warning-clean
 four-scenario probe; the D-input bank/relaunch fallback was rejected for
-`UNOPTFLAT` and extra latency. `.8` owns later implementation. No shipped behavior changes; generated roles, public/
-support/artifact identities, broader AHB, and decision 0020 remain unchanged.
+`UNOPTFLAT` and extra latency. The
+[register-output completion repair](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md)
+now records `.8` shipment: t1520 proves exact success/ERROR/SEQ/IDLE retention
+with Q-named four-state dispatch, one capture/completion per acceptance, and no
+pending/relaunch. Generated roles, public/support/artifact identities, broader
+AHB, and decision 0020 remain unchanged.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -7088,16 +7088,21 @@ and entering `ACCESS`, or a selected SEQ by loading wait and entering
 that no-bank internal realization infeasible under current direct-FSM lowering:
 the existing register-input names are combinational mux outputs, and capturing
 the next read's `HWRITE=0` immediately suppresses the completing current write.
-The failed attempt was restored. t1520 now locks the mux substrate while
-retaining its current loss proof. `.7` now selects Q-named `<-` assignment for
-the existing four-state phase/storage registers: current predicates read the
+The failed attempt was restored. At `.6` closeout, t1520 locked the mux
+substrate while retaining the pre-repair loss proof. `.7` then selected Q-named
+`<-` assignment for the existing four-state phase/storage registers: current predicates read the
 registered Q while same-edge capture writes separate generated `*_next`
-signals. A warning-clean disposable candidate passes four exact continuation/
+signals. A warning-clean disposable candidate passed four exact continuation/
 cancellation scenarios; a D-input-named bank/relaunch candidate was rejected
-for `UNOPTFLAT` and extra latency. `.8` later implements the selected no-bank,
-no-relaunch contract. No
-shipped seed/generated/source/support/artifact/HDL/runtime behavior changed;
-general queues, broader AHB, and decision 0020 remain deferred/inactive.
+for `UNOPTFLAT` and extra latency. `.8` now ships the selected no-bank,
+no-relaunch contract: persistent loads use Q-named `<-`,
+successful/final-ERROR completion dispatches accepted NONSEQ/SEQ through the
+existing four states, and t1520 proves exact success/ERROR/SEQ/IDLE outcomes
+with one capture/completion per acceptance, live HWDATA, two-cycle ERROR, and
+warning-clean HDL. Outside that direct repair, no shipped generated/source/
+support/artifact/HDL/runtime behavior changed; public/support identities and
+the generated family remain stable, while general queues, broader AHB, and
+decision 0020 remain deferred/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
