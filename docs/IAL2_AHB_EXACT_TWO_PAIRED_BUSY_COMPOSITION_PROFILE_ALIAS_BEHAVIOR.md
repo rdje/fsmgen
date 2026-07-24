@@ -67,9 +67,9 @@ HDL module:      ahb_tb
 ```
 
 The additive alias established the 318 protocol / 359 supported-smoke+strict /
-42 AHB-path checkpoint. Follow-on `.8` now moves current accounting to
-319/360/43, split between twenty-two `.ppif` sources and twenty-one `.ahb`
-aliases.
+42 AHB-path checkpoint. Follow-on `.8` established 319/360/43; the matching
+two-subordinate alias now moves current accounting to 320/361/44, split
+between twenty-two `.ppif` sources and twenty-two `.ahb` aliases.
 
 Strict check, schedule JSON, normalized semantic JSON, and the real read-only
 `fsmgen_semantic_introspect` MCP tool expose the same alias support identity,

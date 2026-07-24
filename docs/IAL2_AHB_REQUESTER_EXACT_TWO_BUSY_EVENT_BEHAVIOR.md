@@ -140,8 +140,9 @@ supported-smoke/strict-supported fixtures. Follow-on alias `.7` moved that
 checkpoint to 316/357 and 40 AHB paths. The generic one-subordinate exact-two
 paired composition established 317/358/41; its matching alias moved the next
 checkpoint to 318/359/42. The generic two-subordinate exact-two composition
-now moves current accounting to 319/360 and 43 AHB paths: twenty-two generic
-`.ppif` sources and twenty-one `.ahb` aliases.
+established 319/360/43; its matching alias now moves current accounting to
+320/361 and 44 AHB paths: twenty-two generic `.ppif` sources and twenty-two
+`.ahb` aliases.
 
 ## Generated-HDL Proof
 

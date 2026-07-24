@@ -69,9 +69,10 @@ semantic root: top
 
 This generic source established the 317 protocol / 358 supported-smoke+strict
 checkpoint and a 41-path AHB inventory. Follow-on `.5` shipped the matching
-alias at the 318/359/42 checkpoint. Follow-on `.8` now moves current accounting
-to 319/360 and 43 AHB paths, split between twenty-two `.ppif` sources and
-twenty-one `.ahb` aliases. See the
+alias at the 318/359/42 checkpoint. Follow-on `.8` established 319/360/43, and
+the matching two-subordinate alias now moves current accounting to 320/361 and
+44 AHB paths, split between twenty-two `.ppif` sources and twenty-two `.ahb`
+aliases. See the
 [alias behavior](IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md)
 and [two-subordinate behavior](IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 
@@ -132,8 +133,8 @@ overlap. Standalone exact-two requester `t/1521` remains assertion-enabled.
 ## Explicit Deferrals
 
 Follow-on `.4` selected and `.5` now ships the matching exact-two paired `.ahb`
-alias. Follow-on `.8` now also ships the generic two-subordinate exact-two
-pairing at current 319/360/43 accounting; see
+alias. Follow-on `.8` and `.811` now also ship the generic plus matching `.ahb`
+two-subordinate exact-two pairing at current 320/361/44 accounting; see
 `IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
 Counts beyond two, multiple
 insertion points, runtime-selected

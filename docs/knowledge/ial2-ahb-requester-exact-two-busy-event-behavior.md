@@ -35,6 +35,5 @@ the same artifacts and bounded semantic JSON through the real read-only MCP
 adapter. The generic one-subordinate exact-two paired source now also ships and
 established the 317 protocol / 358 supported+strict / 41 AHB-path checkpoint.
 Its matching aggregate alias now ships too. The generic two-subordinate
-exact-two sibling also ships with its own runtime and semantic/MCP proof,
-moving current accounting to 319/360/43; its matching `.ahb` alias remains
-separate.
+exact-two sibling and its matching `.ahb` alias also ship with shared runtime
+and semantic/MCP proof, moving current accounting to 320/361/44.

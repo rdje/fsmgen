@@ -7209,6 +7209,14 @@ accounting is 320/361/44 split 22 generic/22 aliases; focused t1526 will add no
 second runtime and t1525 remains shared. `.810` changes no behavior; decision
 0020 remains inactive. See
 `docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md`.
+`.811` now ships that byte-identical `.ahb` alias through existing suffix
+cleanup and unchanged four-child generators at 320/361/44, evenly split 22
+generic/22 aliases. Focused t1526 passes byte/report/artifact/strict/schedule/
+normalized-semantic/real read-only MCP/outdir/verifier/diagnostic and
+preservation parity without a second simulation; t1525 remains the shared
+two-window runtime. No parser, generator, semantic model, or MCP API changed.
+See
+`docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

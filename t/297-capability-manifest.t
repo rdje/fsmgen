@@ -3470,13 +3470,18 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
-        qr/bounded public \.ahb is the AHB requester, word-only subordinate, byte-lane\/narrow-transfer subordinate, byte-lane in-word SEQ subordinate, HBURST-aware byte-lane in-word SEQ subordinate, HBURST-aware byte-lane in-word SEQ subordinate with BUSY-in-burst parking, one-requester\/one-subordinate aggregate interconnect, selected one-requester\/two-subordinate aggregate interconnect, selected one-requester\/one-subordinate aggregate byte-lane interconnect, selected one-requester\/two-subordinate aggregate byte-lane interconnect, selected one-requester\/one-subordinate aggregate byte-lane in-word SEQ interconnect, selected one-requester\/two-subordinate aggregate byte-lane in-word SEQ interconnect, selected one-requester\/one-subordinate aggregate HBURST-aware byte-lane SEQ interconnect, selected one-requester\/two-subordinate aggregate HBURST-aware byte-lane SEQ interconnect, selected one-requester\/one-subordinate aggregate HBURST-aware byte-lane SEQ interconnect with BUSY-in-burst parking, selected one-requester\/two-subordinate aggregate HBURST-aware byte-lane SEQ interconnect with BUSY-in-burst parking, selected exact-one and exact-two paired BUSY-inserting-requester\/BUSY-parking-subordinate aggregate interconnects, and selected two-subordinate exact-one paired BUSY-inserting-requester\/BUSY-parking-subordinates aggregate interconnect profile-alias suffixes/,
+        qr/bounded public \.ahb is the AHB requester, word-only subordinate, byte-lane\/narrow-transfer subordinate, byte-lane in-word SEQ subordinate, HBURST-aware byte-lane in-word SEQ subordinate, HBURST-aware byte-lane in-word SEQ subordinate with BUSY-in-burst parking, one-requester\/one-subordinate aggregate interconnect, selected one-requester\/two-subordinate aggregate interconnect, selected one-requester\/one-subordinate aggregate byte-lane interconnect, selected one-requester\/two-subordinate aggregate byte-lane interconnect, selected one-requester\/one-subordinate aggregate byte-lane in-word SEQ interconnect, selected one-requester\/two-subordinate aggregate byte-lane in-word SEQ interconnect, selected one-requester\/one-subordinate aggregate HBURST-aware byte-lane SEQ interconnect, selected one-requester\/two-subordinate aggregate HBURST-aware byte-lane SEQ interconnect, selected one-requester\/one-subordinate aggregate HBURST-aware byte-lane SEQ interconnect with BUSY-in-burst parking, selected one-requester\/two-subordinate aggregate HBURST-aware byte-lane SEQ interconnect with BUSY-in-burst parking, selected exact-one and exact-two paired BUSY-inserting-requester\/BUSY-parking-subordinate aggregate interconnects, and selected two-subordinate exact-one and exact-two paired BUSY-inserting-requester\/BUSY-parking-subordinates aggregate interconnect profile-alias suffixes/,
         'manifest describes .ahb as the bounded AHB requester, subordinate, aggregate interconnect, aggregate byte-lane, and aggregate byte-lane SEQ profile-alias suffix',
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
         qr/ppif\/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park\.ppif at ppif\/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park\.ahb/,
-        'manifest records the matching two-subordinate paired BUSY profile-alias fixture',
+        'manifest records the matching two-subordinate exact-one paired BUSY profile-alias fixture',
+    );
+    like(
+        $file_surface_by_suffix{'.ahb'}{current_boundary},
+        qr/ppif\/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ppif at ppif\/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ahb/,
+        'manifest records the matching two-subordinate exact-two paired BUSY profile-alias fixture',
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
@@ -3505,8 +3510,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
-        qr/plus the paired BUSY compositions ppif\/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park\.ppif at ppif\/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park\.ahb, ppif\/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ppif at ppif\/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ahb, and ppif\/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park\.ppif at ppif\/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park\.ahb/,
-        'manifest records the three shipped paired BUSY composition .ahb profile-alias samples',
+        qr/plus the paired BUSY compositions ppif\/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park\.ppif at ppif\/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park\.ahb, ppif\/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ppif at ppif\/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ahb, ppif\/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park\.ppif at ppif\/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park\.ahb, and ppif\/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ppif at ppif\/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ahb/,
+        'manifest records the four shipped paired BUSY composition .ahb profile-alias samples',
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},

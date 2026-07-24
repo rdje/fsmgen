@@ -7,10 +7,11 @@ Date: 2026-07-24
 
 ## Outcome
 
-FSMGen ships the topology-first generic AHB IAL2 source:
+FSMGen ships the topology-first AHB IAL2 source through both public containers:
 
 ```text
 ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif
+ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ahb
 ```
 
 It pairs the existing exact-two BUSY-inserting requester with the existing
@@ -18,7 +19,8 @@ two-window status/control interconnect and two HBURST-aware byte-lane
 subordinates whose burst contexts park across BUSY. This is a new declarative
 IAL2 composition over existing requester, subordinate, interconnect, and top
 generators; it is not a new parser, generator, report schema, semantic model,
-or MCP API.
+or MCP API. The files are byte-identical; `.ahb` is the matching profile alias
+over the same model.
 
 The topology-first spelling keeps `two_subordinate` (fabric topology) separate
 from `requester_busy_insert_two` (requester BUSY cardinality).
@@ -65,9 +67,10 @@ child count:   4
 semantic root: top
 ```
 
-This source moves current accounting to 319 protocol fixtures, 360
-supported-smoke plus strict fixtures, and 43 AHB IAL2 paths: twenty-two
-generic `.ppif` sources and twenty-one `.ahb` aliases.
+The generic source established the 319/360/43 checkpoint. Its matching alias
+moves current accounting to 320 protocol fixtures, 361 supported-smoke plus
+strict fixtures, and 44 AHB IAL2 paths: twenty-two generic `.ppif` sources and
+twenty-two `.ahb` aliases.
 
 ## Deep Semantic Introspection And MCP
 
@@ -88,7 +91,9 @@ Its provenance remains `read_only=true` and `shell_access=false`. FSMGen's
 deep semantic introspection is an ongoing language-wide capability: new
 support-accounted semantics must preserve check, schedule, normalized
 semantic JSON, and MCP parity through this stable adapter. Feature-specific
-MCP methods and raw private parser/lowering payloads are not introduced.
+MCP methods and raw private parser/lowering payloads are not introduced. The
+same rule is locked for the matching alias in
+`IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md`.
 
 ## Generated-HDL Proof
 
@@ -112,6 +117,12 @@ The aggregate retains the established `--no-assert` boundary because the
 unchanged interconnect default/decode selector overlap has a separate proposed
 owner. Standalone exact-two requester `t/1521` remains assertion-enabled.
 
+Focused
+`t/1526-ial2-ahb-two-subordinate-exact-two-paired-busy-composition-profile-alias.t`
+proves byte identity, strict/schedule/artifact/HDL parity, normalized semantic
+JSON, and real read-only MCP parity without compiling a second simulation.
+t1525 remains the shared runtime proof.
+
 ## Use It
 
 ```bash
@@ -124,8 +135,8 @@ owner. Standalone exact-two requester `t/1521` remains assertion-enabled.
 
 ## Explicit Deferrals
 
-A matching `.ahb` profile alias remains separate. Counts beyond two, multiple
-insertion points, runtime-selected policy, distinct local bus-BUSY status,
+Counts beyond two, multiple insertion points, runtime-selected policy,
+distinct local bus-BUSY status,
 broader bursts and optional signals, deeper queues, multiple outstanding
 transfers, broader managers/fabrics, selector repair, direct backends,
 verification-output generation, backend variants, other protocol changes,
@@ -133,8 +144,8 @@ VHDL, and decision 0020's transaction-layer horizon remain deferred/inactive.
 
 ## Rollback
 
-Rollback removes the generic source, one support entry, t1525 and its harness,
-and this current-surface documentation together; restores 318/359/42
-accounting; and leaves every existing generator, semantic/MCP API, lower
-layer, one-subordinate exact-two source/alias, and two-subordinate exact-one
-source/alias unchanged.
+The original `.8` rollback removes the generic source, one support entry,
+t1525 and its harness. The later `.811` rollback is documented in the alias
+behavior record and removes only the alias/support/t1526 surface. Neither
+rollback changes existing generators, the normalized semantic/MCP API, or
+lower layers.
