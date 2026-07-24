@@ -67,9 +67,11 @@ child count:   3
 semantic root: top
 ```
 
-This source moves the corpus to 317 protocol fixtures and 358
-supported-smoke/strict fixtures. The public AHB IAL2 inventory is 41 paths:
-twenty-one generic `.ppif` sources and twenty `.ahb` aliases.
+This generic source established the 317 protocol / 358 supported-smoke+strict
+checkpoint and a 41-path AHB inventory. Follow-on `.5` now ships the matching
+alias, moving current accounting to 318/359 and 42 AHB paths, evenly split
+between twenty-one `.ppif` sources and twenty-one `.ahb` aliases. See the
+[alias behavior](IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md).
 
 ## Semantic Introspection And MCP
 
@@ -127,9 +129,9 @@ overlap. Standalone exact-two requester `t/1521` remains assertion-enabled.
 
 ## Explicit Deferrals
 
-Follow-on `.4` selects the matching exact-two paired `.ahb` alias contract for
-proposed `.5`, but the alias does not ship yet. The two-subordinate exact-two
-pairing, counts beyond two, multiple insertion points, runtime-selected
+Follow-on `.4` selected and `.5` now ships the matching exact-two paired `.ahb`
+alias. The two-subordinate exact-two pairing, counts beyond two, multiple
+insertion points, runtime-selected
 count/point, policy/random throttling, distinct local bus-BUSY status,
 halfword/word or wider/indefinite burst expansion, broader optional AHB
 signals, deeper queues, multiple outstanding transfers, broader managers or

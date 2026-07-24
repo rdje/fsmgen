@@ -83,9 +83,9 @@ HDL module:      amba_requester_busy_insert_two
 
 This alias moved the support corpus to 316 protocol fixtures and 357
 supported-smoke/strict-supported fixtures, with 40 AHB IAL2 paths split
-twenty/twenty. The first generic exact-two paired composition now moves the
-current totals to 317/358 and 41 AHB paths: twenty-one `.ppif` sources and
-twenty `.ahb` aliases.
+twenty/twenty. The first generic exact-two paired composition established the
+317/358/41 checkpoint; its matching alias now moves current totals to 318/359
+and 42 AHB paths: twenty-one `.ppif` sources and twenty-one `.ahb` aliases.
 
 The alias is exposed through the same bounded semantic contract as every other
 support-accounted source. Strict check and `--emit-semantic-json` report its
@@ -116,8 +116,8 @@ observe one BUSY episode, exactly two qualified BUSY events, the same resumed
 
 ## Explicit Deferrals
 
-Paired exact-two requester/subordinate compositions, literal BUSY counts beyond
-one/two, generalized count width, multiple insertion points, runtime-selected
+The two-subordinate exact-two requester/subordinate composition, literal BUSY
+counts beyond one/two, generalized count width, multiple insertion points, runtime-selected
 counts/points, policy/random throttling, distinct local bus-BUSY status,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend

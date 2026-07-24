@@ -11,7 +11,7 @@ answers:
 date: 2026-07-24
 status: current
 tags: [ial2, ahb, requester, subordinate, interconnect, busy, exact-two, composition, semantics, mcp, runtime]
-evidence: docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md; ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1523-ial2-ahb-exact-two-paired-busy-composition.t; t/data/ahb_exact_two_paired_busy_composition_tb.svt; docs/book/src/16c-ial2-ahb.md; docs/tasks/IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.md
+evidence: docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md; docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md; ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif; ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ahb; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1523-ial2-ahb-exact-two-paired-busy-composition.t; t/1524-ial2-ahb-exact-two-paired-busy-composition-profile-alias.t; t/data/ahb_exact_two_paired_busy_composition_tb.svt; docs/book/src/16c-ial2-ahb.md; docs/tasks/IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.md
 reverify: scripts/run_with_ram_guard.sh --host-max-pct 100 --process-max-rss-mb 4096 -- prove -v t/1523-ial2-ahb-exact-two-paired-busy-composition.t
 ---
 
@@ -29,7 +29,9 @@ completion, one resumed `SEQ`, four clean byte beats, and final storage
 
 The same test proves strict check, schedule JSON, normalized semantic JSON, and
 the real read-only `fsmgen_semantic_introspect` MCP adapter with shell access
-disabled. No feature-specific MCP API or raw private payload was added. Current
-accounting is 317 protocol / 358 supported+strict / 41 AHB paths, split 21
-`.ppif` and 20 `.ahb`. The matching alias and two-subordinate exact-two sibling
-remain separate future work.
+disabled. No feature-specific MCP API or raw private payload was added. The
+generic checkpoint was 317 protocol / 358 supported+strict / 41 AHB paths.
+Follow-on `.5` now ships the matching alias and moves current accounting to
+318/359/42, split 21 `.ppif` and 21 `.ahb`; only the two-subordinate exact-two
+sibling remains separate future work. See
+`IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR`.

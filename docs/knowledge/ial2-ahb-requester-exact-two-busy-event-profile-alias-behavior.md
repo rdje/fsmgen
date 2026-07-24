@@ -34,5 +34,6 @@ Focused t/1522 proves source/report/artifact/check/schedule/semantic/MCP/verify
 parity. Assertion-enabled t/1521 remains the shared runtime proof. The alias
 checkpoint was 316 protocol fixtures, 357 supported-smoke/strict fixtures, and
 40 AHB IAL2 paths split evenly between `.ppif` and `.ahb`. The first generic
-exact-two paired composition now moves current accounting to 317/358 and 41
-AHB paths, split twenty-one `.ppif` and twenty `.ahb`.
+exact-two paired composition established the 317/358/41 checkpoint; its
+matching alias now moves current accounting to 318/359/42, split twenty-one
+`.ppif` and twenty-one `.ahb`.
