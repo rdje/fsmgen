@@ -23,5 +23,6 @@ The success case records two bus acceptances, one internal capture/completion,
 no error, and only the first write value `0x11111111`. The final-ERROR case
 records two acceptances, one capture/completion, exactly two ERROR cycles, and
 zero storage. This direct seed is separate from the generated IAL2 family
-repaired by `.3`. `.5` owns a no-behavior direct-seed contract selection and
-`.6` owns later implementation. Decision 0020 remains inactive.
+repaired by `.3`. `.5` now selects atomic direct-state capture/dispatch through
+the existing registers, and `.6` owns implementation. Decision 0020 remains
+inactive.

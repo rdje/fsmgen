@@ -10891,6 +10891,16 @@ No behavior changes. `.5` owns exact direct-seed contract selection and `.6`
 later implementation; the generated family and decision 0020 remain
 unchanged/inactive.
 
+Direct AHB subordinate pipelined active-transfer contract selection:
+[IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION](../../IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md)
+documents `.5`. The selected no-queue direct-state contract atomically
+dispatches selected accepted NONSEQ from successful/final-ERROR completion by
+loading existing addr/write/size/wait registers and entering `ACCESS`; selected
+SEQ loads wait and enters `UNSUPPORTED`; IDLE/BUSY/unselected returns to
+`IDLE`. HWDATA remains live data-phase state. `.6` owns implementation and
+t1520 repair expectations. No behavior changes; generated roles, public/
+support/artifact identities, broader AHB, and decision 0020 remain unchanged.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

@@ -80,11 +80,11 @@ replace one accepted active address phase directly with another.
   Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4: prove direct seed drops active phase`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the exact direct lower-layer AHB subordinate completion-edge phase-retention contract without behavior changes.`
   Acceptance: `Starting only after .4 commits cleanly, reconcile the direct seed's IDLE/ACCESS/UNSUPPORTED/ERROR_COMPLETE schedule and t1520 timing with the generated-family .2/.3 contract. Freeze the smallest direct-FSM state/capture/relaunch contract for successful and final-ERROR completion edges, address/control versus live HWDATA ownership, held-phase suppression, ready/response timing, one completion per acceptance, preservation, validation, docs/fact effects, implementation owner, and rollback. Make no seed/source/support/report/artifact/HDL/runtime behavior change. Do not change generated IAL2 roles, requesters/interconnects, broader burst policy, general queues/outstanding transfers, AXI/APB/VHDL, or decision 0020.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Reconciled direct t1520 loss timing, the direct IDLE/ACCESS/UNSUPPORTED/ERROR_COMPLETE source schedule, generated-family .2 contract, and .3 repair. Selected atomic no-queue completion-edge dispatch through existing direct state/registers: successful or final-ERROR ready plus selected NONSEQ loads addr_q/write_q/size_q/wait_ctr and enters ACCESS; selected SEQ loads wait_ctr and enters UNSUPPORTED; IDLE/BUSY/unselected enters IDLE without capture. The current effect uses old phase registers and live current-data-phase HWDATA before the edge; HWDATA is never captured, and the following cycle uses the new registers/state without an artificial bubble or second acceptance. First ERROR remains ready-low; final ERROR active captures while IDLE cancels. Exactly-once targets for .6 are two accepts/captures/completions, retained 0x11111111 after the success read, exactly two initial ERROR cycles and later 0xaaaaaaaa from the captured write. Added canonical contract record/fact ial2-ahb-direct-subordinate-pipelined-active-transfer-contract-selection and synchronized the audit/seed records/facts, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. t1518 current-doc truth passes 4/4 top-level tests; mdBook build, Knowledge Map generation/check at 975 facts/4940 question keys, memory architecture, docs paths, diff, and doctrine gates pass. Disposable book output removed. No seed/generator/source/support/report/artifact/port/HDL/runtime/backend/AXI/APB/VHDL or decision-0020 behavior changed. .6 owns implementation.`
+  Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5: select direct seed phase contract`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.6`
   Status: `pending`
@@ -152,6 +152,17 @@ The canonical `.4` result is
 plus fact
 `ial2-ahb-direct-subordinate-pipelined-active-transfer-runtime-audit`.
 `.5` may activate only after the `.4` closeout commit leaves the repository
+clean.
+
+`.5` activated only after `.4` committed cleanly at `d802aa615`. Its sole
+scope is the direct lower-layer seed contract: no seed, generator, source,
+support, report, artifact, HDL/runtime, backend, protocol, or decision-0020
+behavior may change before the selected contract commits.
+
+`.5` now freezes the atomic direct-state contract in
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md`
+and fact `ial2-ahb-direct-subordinate-pipelined-active-transfer-contract-selection`.
+`.6` may activate only after the `.5` closeout commit leaves the repository
 clean.
 
 Implementation finding: direct t1519 proves the one-slot subordinate and

@@ -4,6 +4,10 @@ Task-tree owner: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`
 
 Date: 2026-07-23
 
+Later selection: `.5` freezes atomic direct-state completion-edge capture and
+dispatch through the existing phase registers; `.6` owns implementation. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md`.
+
 ## Outcome
 
 Generated-HDL t/1520 proves that the unchanged direct lower-layer seed

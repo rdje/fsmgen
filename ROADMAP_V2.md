@@ -7080,6 +7080,16 @@ artifact/HDL/runtime behavior changes in the audit. `.5` is selected for exact
 no-behavior direct-seed contract work and `.6` for later implementation. The
 generated family and decision 0020 remain unchanged/inactive.
 
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5` now freezes the no-behavior
+direct-seed repair contract. Successful and final-ERROR ready edges dispatch a
+selected accepted NONSEQ by loading the existing addr/write/size/wait registers
+and entering `ACCESS`, or a selected SEQ by loading wait and entering
+`UNSUPPORTED`; IDLE/BUSY/unselected input returns to `IDLE`. HWDATA remains
+live current-data-phase state, and the direct state boundary needs no pending
+queue. `.6` owns implementation and repaired t1520 expectations. No seed/
+generated/source/support/artifact/HDL/runtime behavior changes; general queues,
+broader AHB, and decision 0020 remain deferred/inactive.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

@@ -38,8 +38,8 @@ Current limitation: t/1520 proves that the direct seed drops a selected active
 phase accepted on a successful or final-ERROR completion edge because only
 `IDLE` samples address/control. Each case has two bus acceptances but one
 internal capture/completion. This seed is distinct from the generated IAL2
-family repaired by `.3`; `.5` selects its direct contract and `.6` owns later
-implementation.
+family repaired by `.3`; `.5` selects atomic direct-state capture/dispatch and
+`.6` owns implementation.
 
 The selected next owner was `IAL2-FEATURE-COMPLETENESS-FRONTIER.710`, a
 no-behavior readiness audit for IAL2 AHB completer/subordinate source work.

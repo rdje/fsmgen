@@ -164,6 +164,11 @@ subtest 'current AHB surfaces describe the shipped depth-one phase pipeline' => 
         qr/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT/,
         'AHB direct-seed section links the canonical runtime audit',
     );
+    like(
+        $direct_section,
+        qr/selected direct contract.*?selected NONSEQ.*?ACCESS.*?selected SEQ.*?UNSUPPORTED/s,
+        'AHB direct-seed section records the selected completion-edge dispatch contract',
+    );
     unlike(
         $direct_section,
         qr/direct subordinate.*shares? the generated.*phase bank/is,

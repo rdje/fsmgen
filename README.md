@@ -6026,6 +6026,17 @@ audit. `.5` owns exact direct-seed contract selection and `.6` later
 implementation; the generated family remains repaired, and decision 0020
 remains inactive.
 
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5` now selects the direct-seed
+repair contract without changing behavior. On successful or final-ERROR ready
+edges, selected NONSEQ atomically loads existing HADDR/HWRITE/HSIZE/wait state
+and enters `ACCESS`; selected SEQ loads its wait and enters `UNSUPPORTED`;
+IDLE/BUSY/unselected input returns to `IDLE`. No pending queue or HWDATA capture
+is needed: the direct state completes on that edge, and the completing write
+still consumes its current live data. `.6` owns implementation and t/1520
+conversion to two acceptances/captures/completions. Generated-family behavior,
+public/support/artifact identities, general queues, and decision 0020 remain
+unchanged/inactive.
+
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -8696,6 +8707,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md` — freezes the `.2` depth-one accepted address/control bank at the bus-visible ready/completion edge, data-phase HWDATA ownership, sequence/error ordering, additive report contract, `.3` implementation gates, and `.4` direct-seed audit boundary.
 - `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md` — records the `.3` coupled generated subordinate/requester/interconnect phase repair, additive phase/data-owner reports, exact t/1519 and paired runtime proofs, stable public identities, depth-one boundary, and `.4` direct-seed handoff.
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md` — records the `.4` generated-HDL proof that the distinct direct subordinate seed drops active phases accepted on successful/final-ERROR completion edges, the IDLE-only capture root cause, unchanged behavior, and `.5`/`.6` handoff.
+- `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md` — freezes the `.5` direct-state atomic completion-edge NONSEQ/SEQ capture/dispatch contract, live-HWDATA ownership, exactly-once/capacity boundary, `.6` implementation gates, and rollback.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.
