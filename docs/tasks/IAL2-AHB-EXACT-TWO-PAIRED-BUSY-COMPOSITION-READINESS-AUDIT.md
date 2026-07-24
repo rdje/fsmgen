@@ -121,7 +121,7 @@ implementation.
   Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.5: ship exact-two paired BUSY alias`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.6`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit the two-subordinate exact-two paired BUSY composition before any public contract or behavior change.`
   Acceptance: `Activate only after .5 commits cleanly. Reconcile the shipped exact-two requester generic/alias, one-subordinate exact-two paired generic/alias and shared t1523 runtime, two-subordinate exact-one paired generic/alias and t1515 runtime, existing requester/subordinate/interconnect/top generators, phase/data ownership, address windows, exact artifacts/reports/residue, support/language/capability/current docs, normalized semantic/read-only MCP parity, Memory, Knowledge Map, selector-gap owners, and decision 0020. Use disposable static and generated-HDL probes under the 4-GiB cap to decide whether one exact-two requester can compose safely with both existing BUSY-parking subordinate windows through the current four-child architecture; prove or reject exact two qualified BUSY events, stable requester/two-subordinate/interconnect ownership, no BUSY data completion, one resumed SEQ, clean storage/status, and truthful semantic/MCP reachability. Select at most one follow-on public-contract leaf from evidence and make no shipped behavior change. Do not add a source/support/test, parser/generator/API change, a transaction-layer feature, broader counts/points/policies/status/bursts/signals/queues/managers/fabrics/backends/protocols, selector repair, or activate decision 0020.`
   Verification: `pending`
@@ -166,6 +166,10 @@ behavior.
 `.6` no-behavior two-subordinate exact-two readiness audit. `.6` must remain
 proposed until `.5` commits cleanly; activating it earlier would violate the
 clean-tree pivot rule.
+
+Activation condition satisfied: `.5` committed cleanly at `c6e56caf2`; `.6`
+is active. This activation changes only task/index/Memory state and adds no
+source, support entry, test, parser/generator/API, HDL, or runtime behavior.
 
 ## Rollback
 
