@@ -114,7 +114,7 @@ implementation.
   Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.4: select exact-two paired BUSY alias contract`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Ship the selected matching exact-two paired BUSY .ahb profile alias with semantic/MCP parity.`
   Acceptance: `Activate only after .4 commits cleanly. Add ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ahb as a byte-identical mirror of the shipped generic source; support-account it exactly as intent.ahb_profile_alias_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park / ial2_ahb_profile_alias_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli with source kind ial2_profile_alias, module ahb_tb, semantic root top, and child count three. Preserve exact generated IAL1/IAL0 artifacts, numeric requester child before_beat=2/beats=2, subordinate/propagated parks_on=[busy], no top busy_flow, and remove only alias residue through existing suffix handling. Add t1524 for byte/source/report/artifact equality, strict check, schedule, normalized semantic JSON, real read-only fsmgen_semantic_introspect with shell_access=false, outdir, verify-hdl, support identity, malformed aliases, and generic/exact-one/base preservation; reuse t1523 runtime without a second simulation. Update accounting to 318 protocol / 359 supported+strict / 42 AHB paths split 21/21, support/language/capability/current docs/mdBook/behavior/fact/task/Memory/Knowledge Map, and run focused/preservation/t248/t297/t1518/docs/doctrine gates under the 4-GiB cap. Do not change PPIF/AHB generators or semantic/MCP APIs, add a second runtime or two-subordinate exact-two source, broaden counts/points/policies/status/bursts/signals/queues/managers/fabrics/backends/protocols, repair selectors, or activate decision 0020.`
   Verification: `pending`
@@ -149,6 +149,11 @@ behavior.
 `.4` selected proposed `.5` data-only matching alias implementation. `.5`
 must remain proposed until `.4` commits cleanly; activating it earlier would
 violate the clean-tree pivot rule.
+
+Activation condition satisfied: `.4` committed cleanly at `2470d9b1a`; `.5`
+is active. This activation changes only task/index/Memory state and adds no
+alias source, support entry, test, parser/generator/API, HDL, or runtime
+behavior.
 
 ## Rollback
 
