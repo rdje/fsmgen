@@ -107,7 +107,8 @@ resumes once, four clean byte beats complete, and final storage is
 
 The two-subordinate exact-two pairing remains unshipped, although follow-on
 readiness audit `.6` now proves it composes through the current four-child
-architecture and selects separate public-contract work. BUSY counts beyond one/two, generalized
+architecture, and `.7` selects a separate topology-first generic public
+contract for proposed `.8` implementation. BUSY counts beyond one/two, generalized
 count width, multiple insertion points, runtime-selected counts/points,
 policy/random throttling, distinct local bus-BUSY status, broader bursts and
 optional signals, managers, queues/outstanding transfers, broader fabrics,

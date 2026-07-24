@@ -2009,6 +2009,18 @@ status/control storage is `32'h44332211`/`32'h88776655`. No generator or
 semantic/MCP repair is needed. Proposed `.7` owns public-contract selection;
 no two-subordinate exact-two source is part of the current 318/359/42 surface.
 
+Contract leaf `.7` selects the topology-first future generic path
+`ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`.
+The ordering makes `two_subordinate` the topology and `busy_insert_two` the
+requester policy, avoiding a visually ambiguous double-`two`. It reuses the
+same four-child architecture and exact `.6` runtime invariants. Focused t1525
+will own strict check, schedule/report/residue, exact artifacts, normalized
+semantic JSON, real read-only MCP, HDL verification, and one status/control
+runtime. The projected support checkpoint is 319/360/43, split twenty-two
+generic `.ppif` and twenty-one `.ahb`; the source does not ship until proposed
+`.8` is activated and completed. See the
+[selected contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
+
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that
 stale residue from alias reports. The generic subordinate `.ppif` report keeps

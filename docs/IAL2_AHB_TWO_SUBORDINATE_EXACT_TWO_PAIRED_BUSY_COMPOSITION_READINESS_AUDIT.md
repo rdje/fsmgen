@@ -159,8 +159,14 @@ runtime behavior.
 
 ## Follow-On Contract Boundary
 
-Leaf `.7` may select one generic `.ppif` public contract only after `.6`
-commits cleanly. It must freeze:
+Leaf `.7` now selects one topology-first generic `.ppif` public contract after
+clean `.6`:
+
+```text
+ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif
+```
+
+The selected contract freezes:
 
 - an unambiguous exact-two-requester/two-subordinate intent, source-object,
   filename, support id, coverage key, and focused test identity;

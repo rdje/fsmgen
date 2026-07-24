@@ -11017,6 +11017,18 @@ truthfully unmatched for the disposable candidate. No substrate or API repair
 is required, so proposed `.7` owns no-behavior generic public-contract
 selection. No two-subordinate exact-two public source ships yet, and decision
 0020 remains inactive.
+Follow-on `.7` now selects proposed `.8` implementation of topology-first
+generic source
+`ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`.
+The name explicitly separates topology from requester cardinality and avoids
+an ambiguous double-`two`. The
+[selected contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md)
+freezes the existing four-child artifacts, status/control windows, retained
+response owner, numeric requester `beats=2`, both child/propagated BUSY parks,
+t1525's single two-command runtime, normalized semantic JSON, and real
+read-only MCP parity. Projected accounting is 319/360/43 with 22 `.ppif` and
+21 `.ahb`. No source ships from `.7`; matching alias and decision 0020 remain
+separate.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
