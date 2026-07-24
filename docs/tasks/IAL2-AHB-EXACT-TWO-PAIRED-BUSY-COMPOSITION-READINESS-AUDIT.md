@@ -100,7 +100,7 @@ implementation.
   Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select exact-two paired BUSY contract`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Ship the selected generic one-subordinate exact-two paired BUSY composition with runtime and semantic/MCP proof.`
   Acceptance: `Starting only after .2 commits cleanly, implement exactly the selected contract: add ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif as the exact source-data delta from the existing exact-one paired source; add its RegressionCorpus support identity/coverage/source kind/module/top-root/three-child expectations; preserve existing generators and emit exact amba_requester_busy_insert_two, ahb_lite_subordinate_byte_lane_hburst_seq, ahb_interconnect, and ahb_tb IAL1/IAL0 artifacts. Add t1523 and ahb_exact_two_paired_busy_composition_tb.svt to prove source/report/artifacts, strict check, schedule, normalized semantic JSON, real read-only fsmgen_semantic_introspect, outdir, verify-hdl, and generated-HDL one BUSY episode/two qualified events/stable requester-subordinate-interconnect ownership/ahb_busy_remaining_q 2-to-1-to-0/no BUSY data completion/one resumed SEQ/four beats/clean status/final 44332211 under the paired --no-assert boundary while t1521 remains assertion-enabled. Update accounting to 317 protocol / 358 supported-smoke+strict / 41 AHB paths split 21 .ppif and 20 .ahb, support/capability/language/current docs/mdBook/behavior/fact/task/Memory/Knowledge Map, and run focused/preservation/t248/t297/docs/doctrine gates under the 4-GiB cap. Do not add an .ahb alias, two-subordinate exact-two source, parser/generator algorithm or semantic/MCP API change, broader counts/points/policies/status/bursts/signals/queues/managers/fabrics/backends/protocols, separate selector repair, or decision 0020.`
   Verification: `pending`
@@ -119,7 +119,9 @@ committed cleanly at `6fd06dc9e`; `.2` is active. This activation changes only
 task/index/Memory state.
 
 `.2` completed the no-behavior generic public contract selection and selected
-proposed `.3` implementation. `.3` cannot activate until `.2` commits cleanly.
+`.3` implementation. Activation condition satisfied: `.2` committed cleanly
+at `34ccdc40e`; `.3` is active. This activation changes only task/index/Memory
+state.
 
 ## Rollback
 
