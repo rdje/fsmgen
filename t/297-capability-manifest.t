@@ -3031,7 +3031,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/bounded AHB requester source, the bounded AHB requester single BUSY-beat insertion source, the bounded AHB-Lite word-only subordinate source, the bounded AHB-Lite byte-lane\/narrow-transfer subordinate source, the bounded AHB-Lite byte-lane in-word SEQ subordinate source, the bounded AHB-Lite byte-lane HBURST WRAP4\/INCR4 SEQ subordinate source/,
+        qr/bounded AHB requester source, the bounded AHB requester single BUSY-event insertion source, the bounded AHB requester exact-two BUSY-event insertion source, the bounded AHB-Lite word-only subordinate source, the bounded AHB-Lite byte-lane\/narrow-transfer subordinate source, the bounded AHB-Lite byte-lane in-word SEQ subordinate source, the bounded AHB-Lite byte-lane HBURST WRAP4\/INCR4 SEQ subordinate source/,
         'manifest states .ppif includes the bounded AHB requester, requester BUSY-insertion, and subordinate sources',
     );
     like(
@@ -3455,7 +3455,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
-        qr/requester profile-alias family includes the base requester and the additive requester single BUSY-beat insertion source; ppif\/ahb_requester_busy_insert\.ahb mirrors ppif\/ahb_requester_busy_insert\.ppif and generates amba_requester_busy_insert/,
+        qr/requester profile-alias family includes the base requester and the additive requester single BUSY-event insertion source; ppif\/ahb_requester_busy_insert\.ahb mirrors ppif\/ahb_requester_busy_insert\.ppif and generates amba_requester_busy_insert/,
         'manifest records the requester BUSY-insertion .ahb profile alias',
     );
     like(

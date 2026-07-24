@@ -1106,7 +1106,7 @@ sub _parse_ahb_requester($body, $source_label) {
                 $source_label,
                 "ahb-requester $name transfer",
                 [qw(idle nonseq seq first-beat later-beats advance-on)],
-                [qw(busy busy-before-beat)],
+                [qw(busy busy-before-beat busy-beats)],
             );
         } elsif ($head eq 'response') {
             $contract{response} = _parse_ahb_literal_block(

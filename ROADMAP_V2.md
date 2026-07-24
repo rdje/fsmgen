@@ -7126,16 +7126,18 @@ t/1513-t/1516 count exactly one qualified BUSY event per generic/alias paired
 command. Public syntax/report/support/artifacts stay unchanged. The paired
 `--no-assert` boundary remains because a separate proposed interconnect owner
 tracks the independently exposed default/decode selector overlap.
-Multiple-BUSY implementation has not shipped. `.4` now selects optional literal
-`(busy-beats 2)` on a new additive generic
+`.4` selected optional literal `(busy-beats 2)` on a new additive generic
 `ppif/ahb_requester_busy_insert_two.ppif`; absence preserves exact-one and all
-other counts remain rejected. A width-two remaining counter will retire two
+other counts remain rejected. A width-two remaining counter retires two
 qualified BUSY events and then hand the same transfer to existing pending
-`SEQ` ownership. `.5` owns implementation, assertion-enabled t1521 continuous/
-ready-low/grant-low proof, and projected 315 protocol / 356 supported-smoke+
-strict accounting. Runtime-selected throttling, other counts/points, exact-two
-aliases/paired sources, local bus-BUSY status, larger bursts, optional signals,
-and decision 0020 remain deferred/inactive.
+`SEQ` ownership. `.5` now ships the generic source through the existing AHB
+requester generator with actor-owned counter state, numeric report `beats=2`,
+source-specific residue, assertion-enabled t1521 continuous/ready-low/grant-low
+proof, and 315 protocol / 356 supported-smoke+strict accounting. The current
+conflict checker requires an explicit final-over-nonfinal priority; public
+semantics remain the selected `.4` contract. Runtime-selected throttling, other
+counts/points, exact-two aliases/paired sources, local bus-BUSY status, larger
+bursts, optional signals, and decision 0020 remain deferred/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

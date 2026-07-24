@@ -115,6 +115,8 @@ sub _normalize_contract($raw) {
     my @internal_signal_names = qw(addr_step_q ahb_address_pending_q ahb_data_pending_q ahb_read_data_q ahb_request_done_q ahb_response_pending_q ahb_response_q beat_index_q beats_remaining_q beats_total_q burst_active_q last_error_q last_read_data_q last_resp_q last_retry_q last_split_q wrap_base_q wrap_high_q wrap_mode_q wrap_span_q);
     push @internal_signal_names, 'busy_inserted_q'
         if defined($transfer->{busy_before_beat});
+    push @internal_signal_names, 'ahb_busy_remaining_q'
+        if defined($transfer->{busy_beats});
 
     _reject_duplicate_signal_names(
         $clock,
@@ -227,6 +229,8 @@ sub _normalize_burst($raw) {
 }
 
 sub _normalize_transfer($raw) {
+    confess "AHB requester transfer.busy_beats requires transfer.busy_before_beat\n"
+        if exists($raw->{busy_beats}) && !exists($raw->{busy_before_beat});
     confess "AHB requester transfer.busy_before_beat requires transfer.busy 2'b01\n"
         if exists($raw->{busy_before_beat}) && !exists($raw->{busy});
 
@@ -247,6 +251,13 @@ sub _normalize_transfer($raw) {
         confess "AHB requester transfer.busy_before_beat must be a literal integer in 1..15\n"
             if ref($value) || !defined($value) || $value !~ /\A(?:[1-9]|1[0-5])\z/;
         $transfer{busy_before_beat} = 0 + $value;
+    }
+
+    if (exists($raw->{busy_beats})) {
+        my $value = $raw->{busy_beats};
+        confess "AHB requester transfer.busy_beats must be the literal integer 2 in this slice\n"
+            if ref($value) || !defined($value) || $value ne '2';
+        $transfer{busy_beats} = 2;
     }
 
     return \%transfer;
@@ -275,6 +286,8 @@ sub _emit_isf($contract) {
     my $reset = _reset_clause($contract->{reset});
     my $internal_done = 'ahb_request_done_q';
     my $busy_before_beat = $transfer->{busy_before_beat};
+    my $busy_beats = $transfer->{busy_beats};
+    my $multiple_busy = defined($busy_beats);
     my @transfer_busy_drive = defined($busy_before_beat)
         ? (
             "  (drive transfer_busy",
@@ -294,30 +307,68 @@ sub _emit_isf($contract) {
     my @busy_local = defined($busy_before_beat)
         ? "    (local busy_inserted_q (width 1))"
         : ();
+    my @busy_storage = $multiple_busy
+        ? (
+            "    (var $internal_done (width 1) (reset 0))",
+            "    (var ahb_busy_remaining_q (width 2) (reset 0)))",
+        )
+        : "    (var $internal_done (width 1) (reset 0)))";
     my @busy_init = defined($busy_before_beat)
-        ? "    (set busy_inserted_q 0)"
+        ? (
+            "    (set busy_inserted_q 0)",
+            ($multiple_busy ? "    (set ahb_busy_remaining_q 0)" : ()),
+        )
         : ();
     my @busy_insertion = defined($busy_before_beat)
-        ? (
-            "        (when (& (== beat_index_q $busy_before_beat) (== busy_inserted_q 0))",
-            "          (drive transfer_busy)",
-            "          (set busy_inserted_q 1)",
-            "          (continue-when (== busy_inserted_q 1)))",
-        )
+        ? ($multiple_busy
+            ? (
+                "        (when (& (== beat_index_q $busy_before_beat) (== busy_inserted_q 0))",
+                "          (set ahb_busy_remaining_q $busy_beats)",
+                "          (drive transfer_busy)",
+                "          (set busy_inserted_q 1)",
+                "          (continue-when (== busy_inserted_q 1)))",
+            )
+            : (
+                "        (when (& (== beat_index_q $busy_before_beat) (== busy_inserted_q 0))",
+                "          (drive transfer_busy)",
+                "          (set busy_inserted_q 1)",
+                "          (continue-when (== busy_inserted_q 1)))",
+            ))
         : ();
     my @busy_priority = defined($busy_before_beat)
-        ? "  (priority ahb_busy_accept over ahb_request)"
-        : ();
-    my @busy_accept_rule = defined($busy_before_beat)
         ? (
-            "  (rule ahb_busy_accept (& $bus->{grant} $bus->{ready} (== $bus->{transfer}{name} $transfer->{busy}))",
-            "    (set ahb_address_pending_q 1)",
-            "    (set $bus->{transfer}{name} $transfer->{seq}))",
-            "",
+            "  (priority ahb_busy_accept over ahb_request)",
+            ($multiple_busy
+                ? (
+                    "  (priority ahb_busy_continue over ahb_request)",
+                    "  (priority ahb_busy_accept over ahb_busy_continue)",
+                )
+                : ()),
         )
         : ();
+    my @busy_accept_rule = defined($busy_before_beat)
+        ? ($multiple_busy
+            ? (
+                "  (rule ahb_busy_continue (& $bus->{grant} $bus->{ready} (== $bus->{transfer}{name} $transfer->{busy}) (> ahb_busy_remaining_q 1))",
+                "    (set ahb_busy_remaining_q (- ahb_busy_remaining_q 1)))",
+                "",
+                "  (rule ahb_busy_accept (& $bus->{grant} $bus->{ready} (== $bus->{transfer}{name} $transfer->{busy}) (== ahb_busy_remaining_q 1))",
+                "    (set ahb_busy_remaining_q 0)",
+                "    (set ahb_address_pending_q 1)",
+                "    (set $bus->{transfer}{name} $transfer->{seq}))",
+                "",
+            )
+            : (
+                "  (rule ahb_busy_accept (& $bus->{grant} $bus->{ready} (== $bus->{transfer}{name} $transfer->{busy}))",
+                "    (set ahb_address_pending_q 1)",
+                "    (set $bus->{transfer}{name} $transfer->{seq}))",
+                "",
+            ))
+        : ();
     my @busy_hold = defined($busy_before_beat)
-        ? "      (continue-when (& (! $bus->{ready}) (== $bus->{transfer}{name} $transfer->{busy})))"
+        ? ($multiple_busy
+            ? "      (continue-when (== $bus->{transfer}{name} $transfer->{busy}))"
+            : "      (continue-when (& (! $bus->{ready}) (== $bus->{transfer}{name} $transfer->{busy})))")
         : ();
 
     return join("\n",
@@ -372,7 +423,7 @@ sub _emit_isf($contract) {
         "    (var ahb_response_pending_q (width 1) (reset 0))",
         "    (var ahb_response_q (width $bus->{response}{width}) (reset 0))",
         "    (var ahb_read_data_q (width $bus->{read_data}{width}) (reset 0))",
-        "    (var $internal_done (width 1) (reset 0)))",
+        @busy_storage,
         "",
         "  (priority ahb_address_accept over ahb_request)",
         "  (priority ahb_address_accept over ahb_response_capture)",
@@ -662,6 +713,9 @@ sub _build_report(%args) {
             (defined($contract->{transfer}{busy_before_beat})
                 ? 'BUSY insertion requires HTRANS BUSY 2\'b01 and a literal before-beat index in 1..15'
                 : ()),
+            (defined($contract->{transfer}{busy_beats})
+                ? 'multiple BUSY insertion is bounded to literal busy-beats 2 in this slice'
+                : ()),
             'direct IAL2-to-IAL0 lowering is forbidden',
         ],
         unsupported_residue => _unsupported_residue($contract),
@@ -672,7 +726,7 @@ sub _build_report(%args) {
             generated_behavior   => JSON::PP::true,
             htrans_busy_encoding => $contract->{transfer}{busy},
             before_beat          => $contract->{transfer}{busy_before_beat},
-            beats                => 'single',
+            beats                => $contract->{transfer}{busy_beats} // 'single',
         };
     }
 
@@ -703,10 +757,15 @@ sub _unsupported_residue($contract) {
         },
     );
 
-    push @residue, {
-        id => 'ahb_requester_busy_insert_support',
-        detail => 'Bounded single held requester HTRANS BUSY insertion before one literal SEQ beat is shipped; multi-beat or policy-driven BUSY throttling, runtime-driven insertion points, and requester BUSY beyond one held beat remain future work.',
-    } if defined($contract->{transfer}{busy_before_beat});
+    if (defined($contract->{transfer}{busy_before_beat})) {
+        my $detail = defined($contract->{transfer}{busy_beats})
+            ? 'This source ships bounded exact-two qualified requester HTRANS BUSY events before one literal SEQ beat; counts beyond two, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.'
+            : 'This source ships one exact qualified requester HTRANS BUSY event before one literal SEQ beat; additive exact-two behavior is supported by ppif/ahb_requester_busy_insert_two.ppif, while counts beyond two, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.';
+        push @residue, {
+            id => 'ahb_requester_busy_insert_support',
+            detail => $detail,
+        };
+    }
 
     return \@residue;
 }

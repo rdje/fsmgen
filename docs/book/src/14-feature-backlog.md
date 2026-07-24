@@ -10943,21 +10943,24 @@ signals, and decision 0020 remain deferred/inactive. See the
 [selected repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md)
 and [shipped repair](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md).
 
-`.4` now selects the first public exact-two extension without changing shipped
-behavior. New additive generic source
-`ppif/ahb_requester_busy_insert_two.ppif` will add optional literal
+`.4` selected the first public exact-two extension without changing shipped
+behavior. Additive generic source
+`ppif/ahb_requester_busy_insert_two.ppif` adds optional literal
 `(busy-beats 2)` beside `(busy-before-beat 2)`; absence preserves exact-one and
 all other values fail closed. The selected width-two
 `ahb_busy_remaining_q` initializes before BUSY visibility, decrements only on
 qualified non-final BUSY events, and on the second event clears and reuses
 existing address-pending `SEQ` ownership. The new source reports numeric
 `busy_insertion.beats=2`, support-accounts as
-`intent.ppif_ahb_requester_busy_insert_two`, and projects 315 protocol / 356
-supported-smoke+strict fixtures. `.5` owns implementation and assertion-enabled
-t1521 continuous/32-clock-ready-low/32-clock-grant-low exact-two proof. The
+`intent.ppif_ahb_requester_busy_insert_two`. `.5` now ships it through the
+existing requester generator with actor-owned counter storage and a
+checker-required final-over-nonfinal rule priority. Assertion-enabled t1521
+passes continuous/32-clock-ready-low/32-clock-grant-low exact-two proof, and
+accounting is 315 protocol / 356 supported-smoke+strict fixtures. The
 matching alias, paired exact-two sources, other counts/points, policy/runtime
 behavior, and decision 0020 remain deferred. See the
-[exact-two contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md).
+[exact-two contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md)
+and [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

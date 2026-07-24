@@ -119,10 +119,10 @@ moves protocol fixtures from 314 to 315 and supported-smoke/strict entries from
 ## Event-Owned Generated IAL1 Contract
 
 Existing sources without `busy_beats` retain the current exact-one generated
-IAL1 shape. The exact-two branch adds one local:
+IAL1 shape. The exact-two branch adds one actor-owned storage variable:
 
 ```text
-(local ahb_busy_remaining_q (width 2))
+(var ahb_busy_remaining_q (width 2) (reset 0))
 ```
 
 It resets/initializes to zero for each command. At the selected insertion point,
@@ -130,7 +130,7 @@ the transaction sets `ahb_busy_remaining_q` to `2` before driving BUSY and
 marks existing `busy_inserted_q=1`. Initializing before BUSY becomes visible is
 required so the first qualified BUSY edge cannot observe a zero count.
 
-Two disjoint concurrent rules own retirement:
+Two semantically disjoint concurrent rules own retirement:
 
 1. **Non-final BUSY event:** when grant, ready, and BUSY are qualified and
    `ahb_busy_remaining_q > 1`, decrement the counter and leave BUSY active.
@@ -138,16 +138,27 @@ Two disjoint concurrent rules own retirement:
    `ahb_busy_remaining_q == 1`, clear the counter, set existing
    `ahb_address_pending_q=1`, and drive `HTRANS=SEQ`.
 
-The final acceptance rule keeps the current priority over `ahb_request`. The
-exact-two transaction uses an outer `HTRANS==BUSY` continue gate so it cannot
-schedule the normal `SEQ` path while either event remains. The non-final rule
-writes only the new counter; its guard is disjoint from the final rule. The
-existing no-grant behavior and the BUSY gate hold the pending presentation
-through grant/ready stalls.
+The final acceptance rule and non-final continuation rule both keep priority
+over `ahb_request`. The final rule also has an explicit priority over the
+non-final rule because the current conflict checker does not prove the `== 1`
+and `> 1` guards disjoint. The exact-two transaction uses an outer
+`HTRANS==BUSY` continue gate so it cannot schedule the normal `SEQ` path while
+either event remains. The existing no-grant behavior and the BUSY gate hold the
+pending presentation through grant/ready stalls.
 
 Existing `busy_inserted_q` remains necessary after the counter reaches zero so
 the same beat index cannot reinitialize the count. No new response, data,
 address, command, or status owner is introduced.
+
+### Implementation correction recorded by `.5`
+
+The `.4` selection initially described `ahb_busy_remaining_q` as a transaction
+local. Direct implementation proved concurrent retirement rules require the
+counter in actor-owned storage. Strict checking also requires the explicit
+`ahb_busy_accept over ahb_busy_continue` priority because guard disjointness is
+not inferred. `.5` therefore uses the storage and priority shape shown above.
+The public syntax, qualified-event semantics, report, resource width, and
+runtime contract selected by `.4` are unchanged.
 
 ## Report And Residue Contract
 

@@ -54,7 +54,7 @@ subtest 'adapter composes requester BUSY insertion with subordinate BUSY parking
     is($requester->{busy_insertion}{before_beat}, 2, 'requester child exposes the BUSY insertion index');
     is($requester->{busy_insertion}{beats}, 'single', 'requester child bounds insertion to one presentation');
     my %requester_residue = map { $_->{id} => $_->{detail} } @{$requester->{unsupported_residue}};
-    like($requester_residue{ahb_requester_busy_insert_support}, qr/single held requester HTRANS BUSY insertion/, 'requester child keeps bounded BUSY-insertion residue');
+    like($requester_residue{ahb_requester_busy_insert_support}, qr/one exact qualified requester HTRANS BUSY event/, 'requester child keeps bounded BUSY-insertion residue');
 
     my $subordinate = $report->{children}[2];
     is($subordinate->{transfer}{seq_policy}{mode}, 'hburst_in_word_progressive', 'subordinate child keeps HBURST SEQ progression');

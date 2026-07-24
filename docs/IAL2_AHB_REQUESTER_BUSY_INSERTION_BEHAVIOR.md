@@ -91,9 +91,11 @@ busy_insertion.before_beat          = 2
 busy_insertion.beats                 = single
 ```
 
-The generic source also carries `ahb_requester_busy_insert_support`, recording the
-shipped one-held-presentation subset and deferring multi-beat/policy-driven
-throttling, runtime insertion points, and broader requester BUSY behavior.
+The generic source also carries `ahb_requester_busy_insert_support`, recording
+the shipped exact-one qualified-event subset and pointing to additive exact-two
+source `ppif/ahb_requester_busy_insert_two.ppif`. Counts beyond two,
+policy/runtime/random throttling, multiple insertion points, and broader
+requester BUSY behavior remain deferred.
 
 ```text
 support id:      intent.ppif_ahb_requester_busy_insert
@@ -156,6 +158,19 @@ source-backed timing distinction and candidate matrix, and
 for the selected contract. Current implementation evidence is in
 `docs/IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md`.
 
+## Exact-Two Additive Sibling
+
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.5` now ships
+`ppif/ahb_requester_busy_insert_two.ppif`. It adds literal `(busy-beats 2)`,
+reports numeric `busy_insertion.beats=2`, and uses actor-owned width-two
+remaining state to retire exactly two qualified BUSY events before the same
+pending `SEQ`. It reuses this requester generator; it is not another generator.
+Assertion-enabled t/1521 proves continuous, 32-clock ready-low, and 32-clock
+grant-low behavior with two qualified BUSY events and four data beats.
+
+See `docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md` for the public
+source, lowering, report, support, runtime, and deferral boundary.
+
 ## Run It
 
 ```bash
@@ -168,10 +183,12 @@ for the selected contract. Current implementation evidence is in
 
 ## Explicit Deferrals
 
-The matching `.ahb` alias and the first generic paired requester/subordinate
-composition now ship. Paired `.ahb`/two-subordinate variants, multi-beat or
-policy-driven BUSY throttling, runtime-selected insertion point, distinct
-`local-status.bus_busy`, halfword/word burst `SEQ`, wider/indefinite bursts,
-multi-word/register-bank progression, optional AHB signals, broader AHB manager
-behavior, direct backend, verification output, backend-language variants,
-AXI/APB changes, and VHDL remain deferred.
+The matching exact-one `.ahb` alias and the generic/alias paired exact-one
+requester/subordinate families now ship. Exact-two currently ships only as the
+generic requester source. Its matching `.ahb` alias, paired exact-two sources,
+counts beyond two, policy/runtime/random throttling, multiple or
+runtime-selected insertion points, distinct `local-status.bus_busy`,
+halfword/word burst `SEQ`, wider/indefinite bursts, multi-word/register-bank
+progression, optional AHB signals, broader AHB manager behavior, direct
+backend, verification output, backend-language variants, AXI/APB changes, and
+VHDL remain deferred.

@@ -53,8 +53,9 @@ subtest 'adapter parses the bounded requester BUSY-insertion source' => sub {
     is($result->{report}{busy_insertion}{beats}, 'single', 'report bounds insertion to one held beat');
 
     my %residue = map { $_->{id} => $_->{detail} } @{$result->{report}{unsupported_residue}};
-    like($residue{ahb_requester_busy_insert_support}, qr/single held requester HTRANS BUSY insertion/, 'report records the shipped bounded BUSY insertion');
-    like($residue{ahb_requester_busy_insert_support}, qr/multi-beat or policy-driven BUSY throttling/, 'report keeps broader BUSY policy deferred');
+    like($residue{ahb_requester_busy_insert_support}, qr/one exact qualified requester HTRANS BUSY event/, 'report records the shipped bounded BUSY insertion');
+    like($residue{ahb_requester_busy_insert_support}, qr/additive exact-two behavior is supported by ppif\/ahb_requester_busy_insert_two\.ppif/, 'report points to the additive exact-two source');
+    like($residue{ahb_requester_busy_insert_support}, qr/counts beyond two/, 'report keeps broader BUSY policy deferred');
 };
 
 subtest 'malformed requester BUSY-insertion declarations fail closed' => sub {
@@ -152,7 +153,7 @@ subtest 'the shipped requester source remains BUSY-insertion free' => sub {
     ok(!exists($base->{report}{transfer}{busy}), 'base requester transfer report has no BUSY encoding');
     ok(!exists($base->{report}{transfer}{busy_before_beat}), 'base requester report has no insertion index');
     ok(!exists($base->{report}{busy_insertion}), 'base requester has no BUSY-insertion report block');
-    unlike($base->{generated_ial1}{text}, qr/transfer_busy|busy_inserted_q|ahb_busy_accept/, 'base requester generated IAL1 has no BUSY-insertion machinery');
+    unlike($base->{generated_ial1}{text}, qr/transfer_busy|busy_inserted_q|ahb_busy_remaining_q|ahb_busy_accept|ahb_busy_continue/, 'base requester generated IAL1 has no BUSY-insertion machinery');
     my %residue = map { $_->{id} => 1 } @{$base->{report}{unsupported_residue}};
     ok(!$residue{ahb_requester_busy_insert_support}, 'base requester residue is unchanged');
 };

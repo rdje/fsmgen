@@ -42,7 +42,7 @@ subtest 'requester BUSY-insertion .ahb alias mirrors the generic source and lowe
 
     my %alias_residue = map { $_->{id} => $_->{detail} } @{$alias->{report}{unsupported_residue}};
     ok(!exists $alias_residue{ahb_profile_alias_deferred}, 'alias removes source-surface profile-alias residue');
-    like($alias_residue{ahb_requester_busy_insert_support}, qr/single held requester HTRANS BUSY insertion/, 'alias keeps shipped BUSY subset residue');
+    like($alias_residue{ahb_requester_busy_insert_support}, qr/one exact qualified requester HTRANS BUSY event/, 'alias keeps shipped BUSY subset residue');
 
     my %ppif_residue = map { $_->{id} => $_->{detail} } @{$ppif->{report}{unsupported_residue}};
     ok($ppif_residue{ahb_profile_alias_deferred}, 'generic source keeps its alias-deferred residue');
