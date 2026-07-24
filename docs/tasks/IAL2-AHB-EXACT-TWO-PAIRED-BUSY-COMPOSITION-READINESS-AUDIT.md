@@ -83,7 +83,7 @@ implementation.
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
   Status: `active`
   Goal: `Audit one-subordinate exact-two requester BUSY insertion plus subordinate BUSY parking before selecting public composition behavior.`
-  Children: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`
+  Children: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
   Status: `done`
@@ -93,9 +93,16 @@ implementation.
   Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: prove exact-two paired BUSY readiness`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`
-  Status: `active`
+  Status: `done`
   Goal: `Select the first public one-subordinate exact-two paired BUSY composition contract.`
   Acceptance: `Starting only after .1 commits cleanly, freeze one generic .ppif source before any matching .ahb alias: exact source/intent/source-object/anchor/requester/support/coverage/test names, unchanged three-child ahb_tb architecture and generated IAL1/IAL0 set, numeric requester-child busy_insertion.beats=2, subordinate and propagated parks_on=[busy], truthful residue, support/accounting/capability/language surfaces, diagnostics, and rollback. Freeze a generated-HDL proof with one BUSY episode/two qualified BUSY events/stable requester-subordinate-interconnect ownership/no BUSY data completion/one resumed SEQ/four byte data beats/clean status/final 44332211, retain the paired --no-assert and standalone assertion-enabled boundaries, and preserve base/exact-one paired/standalone exact-two/aliases/two-subordinate exact-one. Require strict check, schedule, normalized semantic JSON, and existing read-only fsmgen_semantic_introspect MCP parity without a feature-specific API or raw private internals. Make no shipped behavior change. Keep the matching alias, two-subordinate exact-two sibling, broader counts/policy/status/bursts/signals/queues/managers/backends/protocols, separate selector repairs, and decision 0020 deferred.`
+  Verification: `Selected one additive generic source ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif with matching intent/source-object/anchor stem, embedded/requester-child amba_requester_busy_insert_two, support identity intent.ppif_ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park, coverage ial2_ppif_ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli, source kind ppif, module ahb_tb, semantic root top, and three composition children. Selected reuse of the existing exact-two requester, HBURST byte-lane BUSY-parking subordinate, interconnect, and top generators with exact IAL1/IAL0 artifacts from .1; no parser/generator/API change. Selected requester-child numeric busy_insertion.before_beat=2/beats=2, subordinate plus propagated parks_on=[busy], no duplicate top busy_flow, unchanged top/interconnect/subordinate residue, exact-two requester support residue, and generic aggregate alias deferral. Selected t1523 plus ahb_exact_two_paired_busy_composition_tb.svt for source/report/artifact/check/schedule/normalized semantic JSON/real read-only fsmgen_semantic_introspect/outdir/verify and --no-assert runtime, with one episode/two qualified BUSY events/stable requester-subordinate-interconnect ownership/2-to-1-to-0 BUSY counter/no BUSY beat completion/one resumed SEQ/four beats/clean status/44332211; t1521 remains assertion-enabled. Current direct count is 316 protocol / 357 supported+strict / 40 AHB paths split 20/20; projected generic implementation is 317 / 358 / 41 split 21 .ppif and 20 .ahb. Selected generic-first, proposed .3 implementation, separate alias and two-subordinate exact-two work, 4-GiB attached monitoring, preservation/docs/Knowledge Map/accounting/rollback gates, and no feature-specific/raw semantic API. Canonical record docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md and fact ial2-ahb-exact-two-paired-busy-composition-contract-selection. t1518 passes 5/5; mdBook builds; Knowledge Map generation/check passes at 991 facts/5023 question keys; memory architecture passes and generated book output was removed. No shipped behavior changed.`
+  Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select exact-two paired BUSY contract`
+
+- ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
+  Status: `proposed`
+  Goal: `Ship the selected generic one-subordinate exact-two paired BUSY composition with runtime and semantic/MCP proof.`
+  Acceptance: `Starting only after .2 commits cleanly, implement exactly the selected contract: add ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif as the exact source-data delta from the existing exact-one paired source; add its RegressionCorpus support identity/coverage/source kind/module/top-root/three-child expectations; preserve existing generators and emit exact amba_requester_busy_insert_two, ahb_lite_subordinate_byte_lane_hburst_seq, ahb_interconnect, and ahb_tb IAL1/IAL0 artifacts. Add t1523 and ahb_exact_two_paired_busy_composition_tb.svt to prove source/report/artifacts, strict check, schedule, normalized semantic JSON, real read-only fsmgen_semantic_introspect, outdir, verify-hdl, and generated-HDL one BUSY episode/two qualified events/stable requester-subordinate-interconnect ownership/ahb_busy_remaining_q 2-to-1-to-0/no BUSY data completion/one resumed SEQ/four beats/clean status/final 44332211 under the paired --no-assert boundary while t1521 remains assertion-enabled. Update accounting to 317 protocol / 358 supported-smoke+strict / 41 AHB paths split 21 .ppif and 20 .ahb, support/capability/language/current docs/mdBook/behavior/fact/task/Memory/Knowledge Map, and run focused/preservation/t248/t297/docs/doctrine gates under the 4-GiB cap. Do not add an .ahb alias, two-subordinate exact-two source, parser/generator algorithm or semantic/MCP API change, broader counts/points/policies/status/bursts/signals/queues/managers/fabrics/backends/protocols, separate selector repair, or decision 0020.`
   Verification: `pending`
   Commit: `pending`
 
@@ -110,6 +117,9 @@ behavior changes in the activation slice.
 selected `.2` public contract work. Activation condition satisfied: `.1`
 committed cleanly at `6fd06dc9e`; `.2` is active. This activation changes only
 task/index/Memory state.
+
+`.2` completed the no-behavior generic public contract selection and selected
+proposed `.3` implementation. `.3` cannot activate until `.2` commits cleanly.
 
 ## Rollback
 

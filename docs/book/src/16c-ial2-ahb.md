@@ -1954,9 +1954,15 @@ qualified BUSY events while requester pending fields/beat counters,
 subordinate continuation/phase/storage, and interconnect ownership remain
 stable; the same pending `SEQ` resumes once, four byte data beats complete with
 clean status, and final storage is `32'h44332211`. No generator or lower-layer
-repair is required. Proposed `.2` must still freeze one generic public source,
-support/test identity, and normalized semantic JSON/read-only MCP parity before
-implementation; no public source ships from this audit. See also the
+repair is required. The
+[selected public contract](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md)
+freezes generic source
+`ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`,
+the existing three-child artifacts, numeric requester-child `beats=2`,
+subordinate/aggregate `parks_on=[busy]`, t1523 runtime, normalized semantic JSON
+and real read-only MCP parity, and projected 317/358/41 accounting. Proposed
+`.3` implements only that generic contract after clean `.2`; no public source
+ships from contract selection. See also the
 [post-requester-multiple-BUSY selection](../../IAL2_POST_REQUESTER_MULTI_BUSY_NEXT_OWNER_SELECTION.md).
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`

@@ -10982,13 +10982,16 @@ stable requester pending fields/counters, stable subordinate
 continuation/phase/storage and interconnect data owner, no BUSY data-beat
 completion, one resumed pending `SEQ`, four clean byte beats, and final storage
 `32'h44332211`. The same existing generators produce all three children and
-the `ahb_tb` top; no substrate repair is required. Proposed `.2` owns one
-generic public contract after `.1` commits cleanly. No public source/name or
-behavior is selected yet. Any later support-accounted source must retain
-normalized semantic JSON and existing read-only MCP introspection without a
-feature-specific API. Counts beyond two, policy/runtime insertion,
-two-subordinate exact-two composition, and decision 0020 remain
-separate/inactive.
+the `ahb_tb` top; no substrate repair is required. The
+[selected contract](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md)
+freezes generic source
+`ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`,
+the unchanged three-child artifact/report shape, t1523 runtime, normalized
+semantic JSON and real read-only MCP proof, and projected 317 protocol / 358
+supported+strict / 41 AHB paths. Proposed `.3` implements that generic source
+after clean `.2`; no public behavior ships from contract selection. The alias,
+counts beyond two, policy/runtime insertion, two-subordinate exact-two
+composition, and decision 0020 remain separate/inactive.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

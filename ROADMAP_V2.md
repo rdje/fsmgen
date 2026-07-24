@@ -7156,9 +7156,14 @@ stable requester pending fields and beat counters, stable subordinate
 continuation/phase/storage and interconnect owner, one resumed `SEQ`, four
 clean byte beats, and final `44332211`. Existing t1513 plus assertion-enabled
 t1521 pass 9/9; no lower-layer repair is required. Proposed `.2` owns generic
-public contract selection after clean `.1`, including normalized semantic JSON
-and existing read-only MCP exposure. No shipped behavior changed in `.1`;
-decision 0020 remains proposed/inactive.
+public contract selection after clean `.1`. `.2` now selects
+`ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`,
+existing three-child lowering, numeric child `beats=2`, propagated BUSY parking,
+t1523 runtime plus normalized semantic JSON/real read-only MCP proof, and
+projected 317 protocol / 358 supported+strict / 41 AHB paths. Proposed `.3`
+implements only that generic contract after clean `.2`; alias and
+two-subordinate exact-two work remain separate. No shipped behavior changed in
+`.2`; decision 0020 remains proposed/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
