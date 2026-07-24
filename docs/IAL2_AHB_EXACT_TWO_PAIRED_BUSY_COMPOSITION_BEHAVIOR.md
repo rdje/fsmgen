@@ -127,7 +127,8 @@ overlap. Standalone exact-two requester `t/1521` remains assertion-enabled.
 
 ## Explicit Deferrals
 
-The matching exact-two paired `.ahb` alias, the two-subordinate exact-two
+Follow-on `.4` selects the matching exact-two paired `.ahb` alias contract for
+proposed `.5`, but the alias does not ship yet. The two-subordinate exact-two
 pairing, counts beyond two, multiple insertion points, runtime-selected
 count/point, policy/random throttling, distinct local bus-BUSY status,
 halfword/word or wider/indefinite burst expansion, broader optional AHB

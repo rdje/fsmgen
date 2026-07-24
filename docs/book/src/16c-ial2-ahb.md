@@ -1973,6 +1973,15 @@ two-subordinate exact-two sibling remain separate. See the
 [shipped behavior](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md)
 and the
 [post-requester-multiple-BUSY selection](../../IAL2_POST_REQUESTER_MULTI_BUSY_NEXT_OWNER_SELECTION.md).
+Follow-on `.4` now selects a byte-identical matching `.ahb` alias for proposed
+`.5`. A reserved-suffix probe preserves the same three children, exact review
+artifacts, numeric requester `beats=2`, both BUSY-parking projections, and
+normalized semantic root `top` through existing alias-only residue cleanup.
+Projected accounting is 318/359/42, and focused t1524 must prove strict check,
+schedule, normalized semantic JSON, and real read-only MCP parity while t1523
+remains the shared runtime. The alias does not ship from `.4`; the current
+inventory therefore remains 317/358/41. See the
+[selected alias contract](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md).
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that

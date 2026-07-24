@@ -6127,6 +6127,11 @@ contract through the existing generators at those counts. The alias and
 two-subordinate exact-two shape stay separate; decision 0020 remains
 proposed/inactive. See
 `docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
+`.4` now selects the byte-identical matching `.ahb` alias contract for proposed
+`.5`: existing suffix handling, projected 318/359/42 accounting, focused t1524
+normalized semantic JSON/real read-only MCP parity, and shared t1523 runtime.
+No alias source or shipped behavior changes in `.4`; the two-subordinate
+exact-two shape and decision 0020 remain separate/inactive.
 
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
@@ -8814,6 +8819,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md` — records the child `.1` disposable generated-HDL proof of two qualified BUSY events, stable requester/subordinate/interconnect ownership and storage, one resumed `SEQ`, four clean data beats, final `32'h44332211`, no required substrate repair, and proposed `.2` generic public-contract handoff with existing semantic/MCP parity required.
 - `docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md` — records `.2` selection of the long-form generic exact-two paired source, reuse of the existing three-child architecture, exact report/residue/artifact/support identities, projected 317/358/41 accounting, t1523 runtime, normalized semantic JSON and real read-only MCP parity, `.3` implementation handoff, and separate alias/two-subordinate deferral.
 - `docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md` — documents the `.3` shipped generic exact-two paired source, unchanged three-generator/top architecture, numeric requester child and BUSY-parking propagation reports, 317/358/41 accounting, t1523 runtime, and normalized semantic JSON/read-only MCP parity.
+- `docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records `.4` selection of the byte-identical matching `.ahb` alias, existing suffix-only residue cleanup, projected 318/359/42 accounting, t1524 normalized semantic/read-only MCP parity, shared t1523 runtime, and proposed `.5` data-only implementation.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

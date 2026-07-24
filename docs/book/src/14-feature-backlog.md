@@ -10995,6 +10995,14 @@ AHB paths. The matching alias, counts beyond two, policy/runtime insertion,
 two-subordinate exact-two composition, and decision 0020 remain
 separate/inactive. See the
 [shipped behavior](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
+`.4` now selects proposed `.5` data-only implementation of the byte-identical
+matching `.ahb` alias. Existing suffix handling preserves three children,
+numeric requester `beats=2`, BUSY parking, artifacts, and normalized semantic
+root `top` while removing only alias residue. Projected accounting is
+318/359/42; t1524 must prove real read-only MCP parity without a second runtime,
+with t1523 shared. No alias ships from `.4`; two-subordinate exact-two and
+decision 0020 remain separate/inactive. See the
+[selected alias contract](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

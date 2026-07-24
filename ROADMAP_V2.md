@@ -7166,6 +7166,13 @@ only that generic contract through the existing generators at those counts;
 the matching alias and two-subordinate exact-two work remain separate.
 Decision 0020 remains proposed/inactive. See
 `docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
+`.4` now selects proposed `.5` data-only implementation of the byte-identical
+matching `.ahb` alias. A reserved-suffix probe preserves three children,
+numeric requester `beats=2`, BUSY parking, byte-identical review artifacts,
+and normalized semantic root `top` through existing suffix cleanup. Projected
+accounting is 318/359/42; focused t1524 must prove real read-only MCP parity
+without a second runtime, while t1523 remains shared. No behavior changes in
+`.4`; the two-subordinate exact-two shape and decision 0020 remain separate.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
