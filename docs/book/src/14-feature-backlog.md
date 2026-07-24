@@ -10937,11 +10937,27 @@ stall scenarios; t/1513-t/1516 require one qualified embedded BUSY event per
 generic/alias paired command. Public syntax/report/support/artifacts remain
 unchanged. A separate proposed interconnect owner tracks the pre-existing
 default/decode selector conflict that keeps paired runtimes on `--no-assert`.
-Multiple-BUSY syntax/behavior, runtime-selected throttling, local bus-BUSY
-status, larger bursts, optional signals, and decision 0020 remain
-deferred/inactive. See the
+Multiple-BUSY implementation remained unshipped at `.3`; generalized counts,
+runtime-selected throttling, local bus-BUSY status, larger bursts, optional
+signals, and decision 0020 remain deferred/inactive. See the
 [selected repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md)
 and [shipped repair](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md).
+
+`.4` now selects the first public exact-two extension without changing shipped
+behavior. New additive generic source
+`ppif/ahb_requester_busy_insert_two.ppif` will add optional literal
+`(busy-beats 2)` beside `(busy-before-beat 2)`; absence preserves exact-one and
+all other values fail closed. The selected width-two
+`ahb_busy_remaining_q` initializes before BUSY visibility, decrements only on
+qualified non-final BUSY events, and on the second event clears and reuses
+existing address-pending `SEQ` ownership. The new source reports numeric
+`busy_insertion.beats=2`, support-accounts as
+`intent.ppif_ahb_requester_busy_insert_two`, and projects 315 protocol / 356
+supported-smoke+strict fixtures. `.5` owns implementation and assertion-enabled
+t1521 continuous/32-clock-ready-low/32-clock-grant-low exact-two proof. The
+matching alias, paired exact-two sources, other counts/points, policy/runtime
+behavior, and decision 0020 remain deferred. See the
+[exact-two contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

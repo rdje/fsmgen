@@ -1269,6 +1269,16 @@ generic/alias and two-subordinate paired generic sources are described below.
 > because a separate proposed AHB interconnect task owns the pre-existing
 > default/decode selector overlap; their qualified BUSY counts remain explicit.
 
+The next extension is selected but **not yet shipped**. It keeps
+`(busy-before-beat 2)` as the insertion point and adds optional literal
+`(busy-beats 2)` in a new additive generic source
+`ppif/ahb_requester_busy_insert_two.ppif`. Absence remains the canonical
+exact-one form; values other than literal two remain unsupported. The selected
+implementation uses a width-two remaining counter and retires it only on
+`HGRANT && HREADY && HTRANS == BUSY`, then reuses the same pending `SEQ`
+handoff. See the
+[exact-two contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md).
+
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.789` selected `.790`, which now ships the
 matching `ppif/ahb_requester_busy_insert.ahb` profile alias. It mirrors the
 generic source byte-for-byte, preserves the `busy_insertion` report and generated
@@ -1814,6 +1824,9 @@ the [runtime audit](../../IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDI
 then the
 [selected repair contract](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR_CONTRACT_SELECTION.md)
 and [shipped repair](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md).
+The subsequent
+[exact-two contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md)
+selects, but does not yet ship, additive `(busy-beats 2)` behavior for `.5`.
 
 Use the direct seeds when you need to inspect explicit cycle-level state
 transitions. Use the public IAL2 sources when you need source identity, source

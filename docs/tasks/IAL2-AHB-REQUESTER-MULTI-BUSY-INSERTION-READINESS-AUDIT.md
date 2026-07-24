@@ -60,7 +60,7 @@ insertion points.
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`
   Status: `active`
   Goal: `Audit bounded multiple requester BUSY presentations before selecting behavior.`
-  Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.4`
+  Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.4`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.5`
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`
   Status: `done`
@@ -84,9 +84,16 @@ insertion points.
   Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3: enforce single-BUSY event cardinality`
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the smallest public exact-two requester BUSY event contract after the single-event substrate repair.`
   Acceptance: `Starting only after .3 commits cleanly, reconcile the exact-two disposable candidate from .1 with the now-shipped single-event accept/hold substrate and select one bounded literal public contract. Freeze syntax and diagnostics, whether count extends busy-before-beat or uses a separate clause, minimum/maximum and width, per-qualified-event meaning through ready/grant stalls, counter initialization/retirement, address-pending SEQ handoff, report/support/residue changes, base/single preservation, generic/alias/paired generated-HDL gates, assertion boundary, resource cap, validation, and rollback. Make no shipped behavior change in contract selection. Keep runtime/policy/random throttling, multiple insertion points, local bus-BUSY status, broader bursts/signals/managers, queues/outstanding transfers, direct seeds/backends, AXI/APB/VHDL, separate output-selector repairs, and decision 0020 deferred.`
+  Verification: `Selected optional transfer literal (busy-beats 2), with absence preserving canonical exact-one and any other value rejected. Selected additive generic source ppif/ahb_requester_busy_insert_two.ppif, actor/module/artifacts amba_requester_busy_insert_two, support intent.ppif_ahb_requester_busy_insert_two / ial2_ppif_ahb_requester_busy_insert_two_pipeline_cli, projected 315 protocol / 356 supported-smoke+strict / 39 AHB IAL2 sources. Selected width-two ahb_busy_remaining_q initialized before BUSY visibility, non-final qualified decrement, final clear/address-pending/SEQ handoff, outer BUSY gate, stable ready/grant holds, existing busy_inserted_q one-shot, report beats numeric 2 while current single remains unchanged, source-specific truthful residue, assertion-enabled t1521 continuous/32-ready-low/32-grant-low exact-two/four-beat runtime, current generic/alias/paired preservation, 4-GiB cap, and rollback. Canonical record docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md and fact ial2-ahb-requester-exact-two-busy-event-contract-selection. t1518 passes 4/4; mdBook build, Knowledge Map generation/check at 985 facts/4990 question keys, memory architecture, relative-doc paths, diff, and doctrine gates pass. Generated book output was removed. No shipped behavior changes. Selected .5 implementation.`
+  Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.4: select exact-two BUSY event contract`
+
+- ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.5`
+  Status: `pending`
+  Goal: `Ship the additive exact-two requester BUSY source and assertion-enabled qualified-event runtime.`
+  Acceptance: `Starting only after .4 commits cleanly, add optional exact literal busy-beats=2 parsing/normalization, preserve absent-clause exact-one generated behavior, implement the selected width-two remaining counter and non-final/final BUSY retirement rules with initialization before BUSY visibility and the existing address-pending SEQ handoff, add ppif/ahb_requester_busy_insert_two.ppif plus support/language/capability/accounting surfaces, emit numeric busy_insertion.beats=2 and truthful source-specific residue, and add t1521 continuous/32-clock-ready-low/32-clock-grant-low generated-HDL proofs with assertions enabled, exactly two qualified BUSY events, stable fields/counters, one resumed SEQ, four data beats, and zero remaining. Run base/exact-one generic+alias/paired/current-surface/phase preservation, strict/report/artifact/verify gates, t248/t297, mdBook/README/roadmap/current behavior/facts/task/Memory/Knowledge Map sync, diff/docs/doctrine gates, and 4-GiB resource cap. Do not add a new .ahb alias or paired exact-two source, generalized count beyond literal two, multiple insertion points, runtime/policy/random throttling, local bus-BUSY status, broader bursts/signals/managers, queues/outstanding transfers, direct seeds/backends, AXI/APB/VHDL, separate selector repairs, or decision 0020.`
   Verification: `pending`
   Commit: `pending`
 
@@ -103,8 +110,9 @@ and selected `.2`. Activation condition satisfied: `.1` committed cleanly at
 `512e65b7e`; `.2` completed the no-behavior repair contract selection and
 selected `.3`. Activation condition satisfied: `.2` committed cleanly at
 `41cab81fb`; `.3` completed the exact-one requester BUSY repair and its
-generic/alias paired regression locks. `.4` remains pending until `.3` commits
-cleanly, then owns exact-two public contract selection.
+generic/alias paired regression locks and committed cleanly at `a4cabc875`.
+`.4` completed exact-two public contract selection and selected `.5`; `.5`
+remains pending until `.4` commits cleanly.
 
 ## Rollback
 
