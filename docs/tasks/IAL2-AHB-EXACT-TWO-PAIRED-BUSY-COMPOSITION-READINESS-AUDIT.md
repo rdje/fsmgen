@@ -107,7 +107,7 @@ implementation.
   Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: ship exact-two paired BUSY composition`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select or reject the matching one-subordinate exact-two paired BUSY .ahb profile-alias contract.`
   Acceptance: `Activate only after .3 commits cleanly. Read the shipped generic exact-two paired behavior/source/support/t1523, the exact-one paired generic/alias precedents and tests, the standalone exact-two requester alias lineage, current .ahb suffix handling and aggregate/child residue suppression, support/language/capability/current docs, normalized semantic/MCP contracts, Memory, Knowledge Map, and decision 0020. Select or reject exactly one byte-identical ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ahb alias. If selected, freeze support identity intent.ahb_profile_alias_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park, coverage ial2_ahb_profile_alias_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli, source kind ial2_profile_alias, module ahb_tb, semantic root top, child count three, unchanged IAL1/IAL0 artifacts, numeric requester child beats=2, subordinate/propagated parks_on=[busy], alias-only residue cleanup, projected 318 protocol / 359 supported+strict / 42 AHB paths split 21/21, focused t1524 source/report/check/schedule/normalized semantic JSON/real read-only MCP/outdir/verify parity, and shared t1523 runtime without a second simulation. Select a separate implementation leaf only from evidence and make no shipped behavior change. Do not add the alias fixture/support/test, a second runtime, a two-subordinate exact-two source, parser/generator or semantic/MCP API changes, broader counts/points/policies/status/bursts/signals/queues/managers/fabrics/backends/protocols, selector repairs, or decision 0020.`
   Verification: `pending`
@@ -133,6 +133,11 @@ state.
 `.3` now ships the selected generic source and selects proposed `.4` matching
 profile-alias contract selection. `.4` must remain proposed until `.3` commits
 cleanly; activating it earlier would violate the clean-tree pivot rule.
+
+Activation condition satisfied: `.3` committed cleanly at `e7f3d7ca9`; `.4`
+is active. This activation changes only task/index/Memory state and adds no
+alias source, support entry, test, parser/generator/API, HDL, or runtime
+behavior.
 
 ## Rollback
 
