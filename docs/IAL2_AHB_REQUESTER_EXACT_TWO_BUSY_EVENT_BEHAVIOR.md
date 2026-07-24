@@ -162,13 +162,17 @@ preservation, and base-requester preservation.
 ```
 
 No matching exact-two `.ahb` alias ships in this slice. Use the generic `.ppif`
-path above.
+path above. Follow-on selector `.6` now chooses a byte-identical alias contract
+at `ppif/ahb_requester_busy_insert_two.ahb`; it remains unshipped until `.7`
+implements and support-accounts it. See
+`docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md`.
 
 ## Explicit Deferrals
 
 Literal counts beyond one/two, generalized count width, multiple insertion
 points, runtime-selected count/point, policy/random throttling, distinct local
-bus-BUSY status, exact-two `.ahb` alias, paired exact-two compositions,
+bus-BUSY status, the still-unimplemented selected exact-two `.ahb` alias,
+paired exact-two compositions,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend
 variants, AXI/APB changes, VHDL, the separate interconnect selector repair, the

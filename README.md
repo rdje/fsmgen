@@ -6096,9 +6096,17 @@ that generic source through the existing AHB requester generator, numeric
 assertion-enabled t1521 continuous/ready-low/grant-low proof. The implementation
 uses an explicit final-over-nonfinal rule priority required by the conflict
 checker; the public contract is unchanged.
-Runtime-selected throttling, other counts/points, exact-two aliases/paired
-sources, local bus-BUSY status, larger bursts, optional signals, and decision
-0020 remain deferred/inactive.
+`.6` now selects `.7`, data-only implementation of the matching byte-identical
+`ppif/ahb_requester_busy_insert_two.ahb` profile alias. Existing suffix handling
+already preserves generated artifacts and numeric `busy_insertion.beats=2`
+while removing only `ahb_profile_alias_deferred`; an in-memory reserved-label
+probe confirms identical IAL1/IAL0. The future alias support identity is
+`intent.ahb_profile_alias_requester_busy_insert_two`, with semantic root `fsm`;
+focused t1522 must prove semantic JSON and read-only MCP introspection parity
+without a second runtime. The alias does not ship until `.7` implements it.
+Runtime-selected throttling, other counts/points, paired exact-two sources,
+local bus-BUSY status, larger bursts, optional signals, and decision 0020
+remain deferred/inactive.
 
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
@@ -8780,6 +8788,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md` — records the `.3` shipped conditional BUSY acceptance/hold repair, assertion-enabled continuous/32-clock-ready-low/32-clock-grant-low requester proofs, exact generic/alias paired qualified-event counts, unchanged public/report/support/artifact surfaces, and the separate pre-existing interconnect assertion boundary.
 - `docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md` — records `.4` selection of optional literal `(busy-beats 2)`, the additive generic exact-two requester identity, width-two qualified-event counter/SEQ handoff, numeric `busy_insertion.beats=2`, assertion-enabled t1521 contract, preservation/accounting boundaries, `.5` implementation, and broader-count/alias/composition deferral.
 - `docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md` — documents the `.5` shipped generic exact-two requester source, existing-generator architecture, actor-owned qualified-event counter and checker-required priority, numeric report/support surfaces, assertion-enabled t1521 runtime, 315/356 accounting, and exact-two alias/composition deferral.
+- `docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records `.6` selection of a byte-identical exact-two `.ahb` profile alias, its support/report/artifact/semantic/MCP parity contract, projected 316/357/40 accounting, shared t1521 runtime, focused t1522 proof boundary, `.7` implementation handoff, and explicit non-selections.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

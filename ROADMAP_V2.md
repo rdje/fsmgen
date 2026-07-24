@@ -7135,9 +7135,17 @@ requester generator with actor-owned counter state, numeric report `beats=2`,
 source-specific residue, assertion-enabled t1521 continuous/ready-low/grant-low
 proof, and 315 protocol / 356 supported-smoke+strict accounting. The current
 conflict checker requires an explicit final-over-nonfinal priority; public
-semantics remain the selected `.4` contract. Runtime-selected throttling, other
-counts/points, exact-two aliases/paired sources, local bus-BUSY status, larger
-bursts, optional signals, and decision 0020 remain deferred/inactive.
+semantics remain the selected `.4` contract. `.6` now selects `.7`, data-only
+implementation of byte-identical
+`ppif/ahb_requester_busy_insert_two.ahb`. Existing `.ahb` suffix handling
+preserves generated IAL1/IAL0 and numeric `beats=2`, removes only
+`ahb_profile_alias_deferred`, and needs no parser/generator change. The future
+alias support identity is `intent.ahb_profile_alias_requester_busy_insert_two`;
+t1522 will lock semantic JSON and read-only MCP introspection parity while
+t1521 remains the shared runtime. The alias does not ship until `.7`.
+Runtime-selected throttling, other counts/points, paired exact-two sources,
+local bus-BUSY status, larger bursts, optional signals, and decision 0020
+remain deferred/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

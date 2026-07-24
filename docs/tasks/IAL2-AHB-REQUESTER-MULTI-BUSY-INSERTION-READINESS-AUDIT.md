@@ -60,7 +60,7 @@ insertion points.
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`
   Status: `active`
   Goal: `Audit bounded multiple requester BUSY presentations before selecting behavior.`
-  Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.4`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.5`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.6`
+  Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.4`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.5`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.6`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.7`
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`
   Status: `done`
@@ -98,9 +98,16 @@ insertion points.
   Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.5: ship exact-two BUSY requester`
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the matching exact-two requester .ahb profile-alias contract after generic behavior ships.`
   Acceptance: `Starting only after .5 commits cleanly, reconcile shipped ppif/ahb_requester_busy_insert_two.ppif with existing .ahb suffix/profile handling and current exact-one alias precedent. Select or reject one byte-identical data-only ppif/ahb_requester_busy_insert_two.ahb alias; if selected, freeze source/support/coverage identities, alias-only residue cleanup, report/artifact/semantic/check parity, projected 316 protocol / 357 supported-smoke+strict / 40 AHB-path accounting, focused t1522 contract, retained assertion-enabled t1521 runtime, current generic/exact-one/paired preservation, docs/Knowledge Map/doctrine gates, 4-GiB cap, and rollback. Make no shipped behavior change in contract selection. Do not change the requester generator/parser, add a second runtime, paired exact-two sources, counts beyond two, multiple insertion points, policy/runtime/random throttling, local bus-BUSY status, broader bursts/signals/managers, queues/outstanding transfers, direct seeds/backends, AXI/APB/VHDL, separate selector repairs, or decision 0020.`
+  Verification: `Selected .7 data-only implementation of byte-identical ppif/ahb_requester_busy_insert_two.ahb with support identity intent.ahb_profile_alias_requester_busy_insert_two, coverage ial2_ahb_profile_alias_requester_busy_insert_two_pipeline_cli, source kind ial2_profile_alias, actor/module amba_requester_busy_insert_two, semantic root fsm, and projected 316 protocol / 357 supported+strict / 40 AHB-path accounting. An in-memory reserved .ahb-label probe over the generic exact-two bytes preserves kind protocol_intent.ahb_requester, amba_requester_busy_insert_two.isf text, all generated IAL0 files, numeric busy_insertion.beats=2, and identical ahb_requester_busy_insert_support while removing only ahb_profile_alias_deferred. Existing PPIF.pm suffix/profile handling makes the alias data-only; no parser/generator/API/runtime change is selected. Focused t1522 owns byte/parse/report/check/schedule/semantic/outdir/verify/support parity, malformed alias probes, and an existing read-only fsmgen_semantic_introspect MCP call; assertion-enabled t1521 remains the sole shared runtime proof. Canonical record docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md and fact ial2-ahb-requester-exact-two-busy-event-profile-alias-contract-selection. Guarded t1518 passes 5/5; mdBook build, relative-doc paths, Perl adapter syntax, diff, Knowledge Map generation/check at 987 facts/5002 question keys, memory architecture, and the authoritative doctrine gate pass. Generated book output was removed. No shipped source/support/report/artifact/semantic/MCP/HDL/runtime behavior changed.`
+  Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.6: select exact-two AHB alias contract`
+
+- ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.7`
+  Status: `pending`
+  Goal: `Ship the byte-identical exact-two requester .ahb profile alias with semantic/MCP parity and no new runtime behavior.`
+  Acceptance: `Starting only after .6 commits cleanly, add ppif/ahb_requester_busy_insert_two.ahb as a byte-identical mirror of the generic exact-two source; support-account it as intent.ahb_profile_alias_requester_busy_insert_two / ial2_ahb_profile_alias_requester_busy_insert_two_pipeline_cli with source kind ial2_profile_alias, module amba_requester_busy_insert_two, and semantic root fsm; preserve numeric busy_insertion.beats=2, generated IAL1/IAL0/HDL identity, exact-two support residue, and remove only ahb_profile_alias_deferred through existing suffix handling. Add focused t1522 for source/parse/report/check/schedule/semantic/outdir/verify/support parity, malformed profile-alias probes, generic/exact-one/base preservation, and a read-only fsmgen_semantic_introspect MCP call; retain assertion-enabled t1521 as the shared runtime proof without compiling a second simulation. Update accounting to 316 protocol / 357 supported-smoke+strict / 40 AHB paths, language/capability/current docs/facts/task/Memory/Knowledge Map, and run focused/accounting/docs/doctrine gates under the 4-GiB cap. Do not change parser/generator algorithms or public exact-two behavior, add paired exact-two sources, another runtime, broader counts/points/policies/status/bursts/signals/managers/queues/backends, AXI/APB/VHDL, selector repairs, or decision 0020.`
   Verification: `pending`
   Commit: `pending`
 
@@ -121,7 +128,10 @@ generic/alias paired regression locks and committed cleanly at `a4cabc875`.
 `.4` completed exact-two public contract selection and selected `.5`; `.5`
 activated after `.4` committed cleanly at `bb6d35523`. `.5` now ships the
 generic exact-two requester and selects pending `.6`; `.6` cannot activate
-until `.5` commits cleanly.
+until `.5` commits cleanly. Activation condition satisfied: `.5` committed
+cleanly at `ed968926e`; `.6` is active for matching alias contract selection
+and has now completed by selecting pending `.7` implementation, which cannot
+activate until `.6` commits cleanly.
 
 ## Rollback
 

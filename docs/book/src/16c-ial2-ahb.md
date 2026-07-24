@@ -1335,6 +1335,20 @@ exact-two compositions do not ship yet. See the
 [selected contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md)
 and [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md).
 
+The matching alias now has a selected, but still unimplemented, contract at
+`ppif/ahb_requester_busy_insert_two.ahb`. It will be byte-identical to the
+generic source and reuse the same requester generator and
+IAL2 -> IAL1 -> IAL0 -> HDL route. Existing `.ahb` suffix handling already
+preserves numeric `busy_insertion.beats=2` and generated artifacts while
+removing only `ahb_profile_alias_deferred`. Its selected support identity is
+`intent.ahb_profile_alias_requester_busy_insert_two`, source kind is
+`ial2_profile_alias`, and semantic root is `fsm`. Focused t/1522 must prove
+strict check, schedule, semantic JSON, artifacts, HDL verification, and
+read-only `fsmgen_semantic_introspect` MCP parity; t/1521 remains the shared
+runtime proof. Current inventory remains thirty-nine paths until the alias
+implementation commits. See the
+[selected alias contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md).
+
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.789` selected `.790`, which now ships the
 matching `ppif/ahb_requester_busy_insert.ahb` profile alias. It mirrors the
 generic source byte-for-byte, preserves the `busy_insertion` report and generated
@@ -1916,7 +1930,8 @@ The following are not shipped by the current AHB IAL2 surface:
   profile alias; aggregate BUSY-parking and additive requester-side exact-one
   plus generic exact-two BUSY insertion now ship independently, while counts
   beyond two, policy/runtime/random throttling, multiple insertion points, and
-  exact-two aliases/compositions remain deferred;
+  the selected-but-unimplemented exact-two requester alias plus paired
+  exact-two compositions remain outside the shipped surface;
 - legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;

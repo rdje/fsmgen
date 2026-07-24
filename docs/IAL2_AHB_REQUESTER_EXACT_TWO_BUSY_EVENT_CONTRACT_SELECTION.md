@@ -232,6 +232,13 @@ transfers, direct seeds/backends, verification-output generation, backend
 variants, AXI/APB changes, VHDL, the separate interconnect selector repair, the
 separate generic output-priority repair, and decision 0020 remain deferred.
 
+## Follow-On Alias Selection
+
+After `.5` shipped and verified the generic exact-two behavior, `.6` selected
+the byte-identical matching `.ahb` profile-alias contract. The alias remains
+unshipped until `.7`; its current contract is
+`docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md`.
+
 ## Rollback
 
 Before implementation, rollback removes this selection record/fact and returns
