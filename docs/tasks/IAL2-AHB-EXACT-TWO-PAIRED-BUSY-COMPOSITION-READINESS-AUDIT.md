@@ -135,7 +135,7 @@ implementation.
   Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.7: select two-subordinate exact-two contract`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.8`
-  Status: `proposed`
+  Status: `active`
   Goal: `Ship the selected generic two-subordinate exact-two paired BUSY source with one support entry, focused runtime, and semantic/MCP parity.`
   Acceptance: `Activate only after .7 commits cleanly. Add only ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif as the frozen delta from the shipped two-subordinate exact-one paired source: topology-first intent/object/anchor identity, requester amba_requester_busy_insert_two, (busy-beats 2), and matching child reference. Support-account it exactly as intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park / ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli, source kind ppif, supported_smoke+strict, module ahb_tb, semantic root top, child count four. Preserve exact four IAL1/five IAL0 artifacts, 29 signals, status [0,4)/control [4,8) windows, numeric requester before_beat=2/beats=2, both child/propagated parks_on=[busy], retained one-hot response ownership, existing generic residue, and no top busy_flow. Add only t1525 plus its two-command generated-HDL harness for strict/source/schedule/report/residue/artifact/outdir/verify/normalized semantic JSON/real read-only MCP parity and totals commands=2/transfers=10/beats=8/busy=2/qualified_busy=4/resumed_seq=2/status=44332211/control=88776655 under --no-assert and 4-GiB cap, with standalone t1521 assertions preserved. Update RegressionCorpus/LanguageSurface/t248/t297/t1518/current docs/mdBook/behavior/fact/task/Memory/Knowledge Map to 319 protocol / 360 supported+strict / 43 AHB paths split 22 .ppif/21 .ahb; run focused/preservation/docs/doctrine gates and remove generated artifacts. Do not change parser/generator/semantic-MCP APIs, add the matching alias or second runtime, broaden counts/points/policy/status/bursts/signals/queues/managers/fabrics/backends/protocols/VHDL/transaction layer, repair selectors, or activate decision 0020.`
   Verification: `pending`
@@ -198,6 +198,10 @@ source, support entry, test, parser/generator/API, HDL, or runtime behavior.
 topology-first reserved-name probe and completed `.6` runtime evidence. `.8`
 must remain proposed until `.7` commits cleanly; activating it earlier would
 violate the clean-tree pivot rule.
+
+Activation condition satisfied: `.7` committed cleanly at `2cf8aed3f`; `.8`
+is active. This activation changes only task/index/Memory state and adds no
+source, support entry, test, parser/generator/API, HDL, or runtime behavior.
 
 ## Rollback
 
