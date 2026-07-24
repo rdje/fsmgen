@@ -20,9 +20,11 @@ baseline. This leaf adds only structural regression evidence and documentation;
 there is no seed, generated HDL, runtime, support, artifact, port, report, or
 generated-family behavior change.
 
-`.7` must select a lowering-safe contract with separated current and next
-address/control storage plus an explicit relaunch boundary. `.8` is reserved
-for implementation after `.7` commits cleanly.
+Later `.7` finding: the documented Q-named `<-` assignment form provides the
+required current/next separation inside each existing register. `.7` selects
+that warning-clean four-state realization without a pending bank/relaunch;
+`.8` is reserved for implementation after `.7` commits cleanly. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md`.
 
 ## Attempt And Deterministic Failure
 
@@ -103,14 +105,13 @@ The following external requirements remain mandatory:
 - SEQ retains the direct fixture's unsupported policy; and
 - generated IAL2 roles and decision 0020 remain outside this direct-seed work.
 
-What `.6` invalidates is only `.5`'s no-bank/no-relaunch realization. The
-current phase registers must remain untouched while their phase completes.
-The smallest candidate for `.7` is a separate one-entry next address/control
-bank captured on the bus-visible completion edge, followed by a dedicated
-relaunch state that transfers the bank into current phase storage when no
-current `ACCESS` predicate/effect is active. `.7` must decide the exact bank,
-state, ready/response timing, and bounded extra stall before `.8` edits the
-seed.
+What `.6` invalidates is `.5`'s use of D-input-named `<=` for registers that
+the completing current phase also reads. The registered Q values must remain
+stable while their separate next values capture. `.7` proves the smallest
+realization is to use Q-named `<-` for the existing phase/storage registers:
+lowering generates a distinct `*_next` mux while source reads keep seeing Q.
+A D-input-named pending bank/relaunch probe was functionally correct but
+rejected for a cross-state `UNOPTFLAT` loop and an avoidable ready-low cycle.
 
 This remains capacity-one protocol bookkeeping, not a general queue or
 multiple-outstanding architecture.

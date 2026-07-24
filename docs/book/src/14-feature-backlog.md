@@ -10903,8 +10903,11 @@ outputs also feed current completion predicates: capturing the following
 read's `HWRITE=0` suppressed the completing write and produced storage zero.
 The failed attempt was restored. The
 [completion-capture substrate audit](../../IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md)
-records the evidence; `.7` owns a separated-bank/relaunch contract and `.8`
-later implementation. No shipped behavior changes; generated roles, public/
+records the evidence. The
+[register-output completion contract](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md)
+records `.7`'s selected Q-named `<-` four-state correction and its warning-clean
+four-scenario probe; the D-input bank/relaunch fallback was rejected for
+`UNOPTFLAT` and extra latency. `.8` owns later implementation. No shipped behavior changes; generated roles, public/
 support/artifact identities, broader AHB, and decision 0020 remain unchanged.
 
 Post APB surface-sync selector:

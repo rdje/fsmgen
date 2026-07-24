@@ -25,5 +25,5 @@ records two acceptances, one capture/completion, exactly two ERROR cycles, and
 zero storage. This direct seed is separate from the generated IAL2 family
 repaired by `.3`. `.6` later proved the `.5` existing-register realization
 unsafe under register-input mux lowering and restored the failed attempt. `.7`
-owns a separated-bank contract and `.8` later implementation. Decision 0020
-remains inactive.
+selects a Q-named `<-` four-state dispatcher without a pending bank/relaunch,
+and `.8` later implements it. Decision 0020 remains inactive.

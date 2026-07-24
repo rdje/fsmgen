@@ -7089,8 +7089,13 @@ that no-bank internal realization infeasible under current direct-FSM lowering:
 the existing register-input names are combinational mux outputs, and capturing
 the next read's `HWRITE=0` immediately suppresses the completing current write.
 The failed attempt was restored. t1520 now locks the mux substrate while
-retaining its current loss proof. `.7` selects a lowering-safe separated
-current/next bank plus relaunch contract, and `.8` later implements it. No
+retaining its current loss proof. `.7` now selects Q-named `<-` assignment for
+the existing four-state phase/storage registers: current predicates read the
+registered Q while same-edge capture writes separate generated `*_next`
+signals. A warning-clean disposable candidate passes four exact continuation/
+cancellation scenarios; a D-input-named bank/relaunch candidate was rejected
+for `UNOPTFLAT` and extra latency. `.8` later implements the selected no-bank,
+no-relaunch contract. No
 shipped seed/generated/source/support/artifact/HDL/runtime behavior changed;
 general queues, broader AHB, and decision 0020 remain deferred/inactive.
 

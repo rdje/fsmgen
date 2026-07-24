@@ -176,8 +176,8 @@ subtest 'current AHB surfaces describe the shipped depth-one phase pipeline' => 
     );
     like(
         $direct_section,
-        qr/\.7.*?separate current\/next.*?relaunch.*?\.8.*?implementation/s,
-        'AHB direct-seed section routes corrected contract selection before implementation',
+        qr/\.7.*?Q-named.*?<\-.*?four states.*?no\s+pending bank.*?relaunch.*?\.8.*?implementation/s,
+        'AHB direct-seed section records the selected register-output contract before implementation',
     );
     unlike(
         $direct_section,

@@ -40,8 +40,8 @@ phase accepted on a successful or final-ERROR completion edge because only
 internal capture/completion. This seed is distinct from the generated IAL2
 family repaired by `.3`. `.6` proved the `.5` no-bank realization unsafe
 because next-phase capture changes current register-input mux predicates, then
-restored the failed attempt. `.7` owns a separated-bank contract and `.8`
-later implementation.
+restored the failed attempt. `.7` selects Q-named `<-` loads for the existing
+four-state registers without a pending bank/relaunch; `.8` later implements it.
 
 The selected next owner was `IAL2-FEATURE-COMPLETENESS-FRONTIER.710`, a
 no-behavior readiness audit for IAL2 AHB completer/subordinate source work.

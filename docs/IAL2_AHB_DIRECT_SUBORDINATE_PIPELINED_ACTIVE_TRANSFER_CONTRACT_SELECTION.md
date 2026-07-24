@@ -7,9 +7,10 @@ Date: 2026-07-23
 Superseded internal realization: `.6` proved that the existing-register,
 no-relaunch implementation selected below is unsafe under direct-FSM
 `register_in` lowering. The external exactly-once/HWDATA requirements remain
-valid, but `.7` must select separated current/next phase storage before `.8`
-implementation. See
-`docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md`.
+valid. `.7` later selects the same four-state dispatcher with Q-named `<-`
+loads, which provide separate generated `*_next` storage without a pending
+bank/relaunch. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md`.
 
 ## Historical Outcome
 

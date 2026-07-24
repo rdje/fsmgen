@@ -6027,7 +6027,7 @@ invalidated its no-bank realization, and `.7`/`.8` now own corrected selection/
 implementation. The generated family remains repaired, and decision 0020
 remains inactive.
 
-`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5` now selects the direct-seed
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5` historically selected the direct-seed
 external repair goal without changing behavior. On successful or final-ERROR ready
 edges, selected NONSEQ atomically loads existing HADDR/HWRITE/HSIZE/wait state
 and enters `ACCESS`; selected SEQ loads its wait and enters `UNSUPPORTED`;
@@ -6036,7 +6036,9 @@ realization is now historical: `.6` proved that direct `register_in` names are
 combinational mux outputs, so capturing the next read's `HWRITE=0` in
 `ACCESS` immediately suppressed the completing current write and produced
 storage zero. The failed attempt was restored without behavior change. `.7`
-now owns a lowering-safe separated-bank/relaunch contract and `.8` later
+now selects the lowering-safe realization: express persistent phase/storage
+loads with Q-named `<-`, so current predicates read the registered value while
+same-edge capture writes a separate generated `*_next` signal. `.8` owns later
 implementation. Generated-family behavior, public/support/artifact identities,
 general queues, and decision 0020 remain unchanged/inactive.
 
@@ -6046,6 +6048,13 @@ emitted mux coupling: current write completion reads `write_q`, while
 `write_q` is the combinational register-input mux overridden by an enabled
 live `HWRITE` capture. The direct seed and runtime expectations were restored
 exactly; `.6` changes no shipped behavior.
+
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.7` selects that Q-named four-state
+contract without changing behavior. A warning-clean disposable candidate
+passes exact success+NONSEQ, final-ERROR+NONSEQ, success+SEQ, and final-ERROR+
+IDLE scenarios. A separated D-input-named bank/relaunch candidate was rejected
+for cross-state `UNOPTFLAT` and one avoidable ready-low cycle. `.8` implements
+the selected no-bank/no-relaunch contract.
 
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
@@ -8718,7 +8727,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md` — records the `.3` coupled generated subordinate/requester/interconnect phase repair, additive phase/data-owner reports, exact t/1519 and paired runtime proofs, stable public identities, depth-one boundary, and `.4` direct-seed handoff.
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md` — records the `.4` generated-HDL proof that the distinct direct subordinate seed drops active phases accepted on successful/final-ERROR completion edges, the IDLE-only capture root cause, unchanged behavior, and `.5`/`.6` handoff.
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md` — preserves the superseded `.5` no-bank completion-edge dispatch selection, its still-valid external exactly-once/HWDATA goals, and the `.6` lowering-evidence supersession route.
-- `docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md` — records the `.6` emitted-HDL proof that direct register-input mux reuse lets next control alter current completion, the deterministic suppressed-write failure, full behavior restoration, and `.7`/`.8` separated-bank handoff.
+- `docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md` — records the `.6` emitted-HDL proof that direct register-input mux reuse lets next control alter current completion, the deterministic suppressed-write failure, full behavior restoration, and corrected-contract handoff.
+- `docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md` — freezes the `.7` Q-named `<-` four-state completion dispatcher, warning-clean four-scenario feasibility proof, rejected UNOPTFLAT bank/relaunch alternative, `.8` gates, and rollback.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

@@ -113,7 +113,9 @@ which was repaired separately by `.3`. See
 `.5` historically selected no-queue capture through the existing direct phase
 registers, but `.6` proved that register-input mux reuse suppresses the current
 write when the following phase is a read. The failed attempt was restored.
-`.7` owns a separated current/next-bank contract and `.8` later implementation.
+`.7` now selects explicit Q-named `<-` loads for the existing four-state
+registers, with no pending bank/relaunch or extra stall; `.8` owns later
+implementation.
 
 ## Support Accounting
 
@@ -215,7 +217,7 @@ The following remain future task-tree-owned work:
 - narrow transfer byte-lane behavior, write strobes, alignment policy, and
   register banks beyond the single selected word register;
 - completion-edge retention of one accepted next active address/control phase
-  in this direct seed (lowering-safe contract owned by `.7`, implementation by `.8`);
+  in this direct seed (Q-named four-state contract selected by `.7`, implementation by `.8`);
 - legacy two-bit `HRESP` RETRY/SPLIT compatibility;
 - direct backend behavior, backend-language variants, AXI, APB, and VHDL.
 

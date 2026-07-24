@@ -7,8 +7,9 @@ Date: 2026-07-23
 Later finding: `.5` selected atomic direct-state completion-edge capture through
 the existing phase registers, but `.6` proved that internal realization unsafe
 under register-input mux lowering and restored the failed attempt. `.7` owns a
-separated-bank contract and `.8` later implementation. See
-`docs/IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md`.
+Q-named `<-` four-state contract without pending/relaunch, and `.8` later
+implementation. See
+`docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md`.
 
 ## Outcome
 

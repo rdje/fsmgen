@@ -1,6 +1,6 @@
 ---
 id: ial2-ahb-direct-subordinate-pipelined-active-transfer-contract-selection
-title: Historical direct AHB no-bank completion-dispatch contract was infeasible
+title: Historical direct AHB D-input completion-dispatch realization was infeasible
 answers:
   - "what did IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.5 select?"
   - "what was the historical no-bank direct AHB completion dispatcher?"
@@ -22,5 +22,6 @@ or unselected input enters IDLE without capture.
 register-input names are combinational mux outputs, not old-value-only reads.
 Capturing the next read's `HWRITE=0` immediately suppressed the completing
 current write. The failed behavior was restored. Current routing belongs to
-fact `ial2-ahb-direct-subordinate-completion-capture-substrate-audit`; `.7`
-selects a separated-bank contract and `.8` later implements it.
+facts `ial2-ahb-direct-subordinate-completion-capture-substrate-audit` and
+`ial2-ahb-direct-subordinate-register-output-completion-contract-selection`;
+`.7` selects the Q-named `<-` correction and `.8` later implements it.
