@@ -5740,11 +5740,15 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.810: select two-subordinate exact-two alias`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.811`
-  Status: `pending`
+  Status: `active`
   Goal: `Ship the byte-identical two-subordinate exact-two paired BUSY .ahb profile alias with semantic/MCP parity and no second runtime.`
   Acceptance: `Activate only after .810 commits cleanly. Add only ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ahb as a byte-identical mirror of the shipped generic source; support-account it exactly as intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park / ial2_ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli, source kind ial2_profile_alias, supported_smoke+strict, module ahb_tb, semantic root top, child count four. Preserve exact four IAL1/five IAL0 artifacts, 29 signals, status [0,4)/control [4,8) windows, numeric requester before_beat=2/beats=2, both child/propagated parks_on=[busy], retained one-hot response ownership, no top busy_flow, and remove only alias residue through existing suffix handling. Add t1526 for byte/report/artifact/strict check/schedule/normalized semantic JSON/real read-only fsmgen_semantic_introspect/outdir/verify-hdl/diagnostic and generic/one-subordinate/two-subordinate preservation parity; compile no second runtime and retain t1525 as shared generated-HDL proof. Update support/language/capability/t248/t297/t1518/current docs/mdBook/behavior/fact/task/Memory/Knowledge Map to 320 protocol / 361 supported+strict / 44 AHB paths split 22 .ppif/22 .ahb; run focused/preservation/docs/doctrine gates and remove generated artifacts. Do not change parser/generator/report/semantic-MCP APIs, add runtime or broader counts/points/policy/status/bursts/signals/queues/managers/fabrics/backends/protocols/VHDL/transaction behavior, repair selectors, or activate decision 0020.`
   Verification: `pending`
   Commit: `pending`
+
+Activation condition satisfied: `.810` committed cleanly at `e2dc65507`; `.811`
+is active. This activation changes only task/index/Memory state and adds no
+source, support entry, test, parser/generator/API, HDL, or runtime behavior.
 
 ## Current Frontier
 
