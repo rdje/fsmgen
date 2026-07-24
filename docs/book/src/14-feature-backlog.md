@@ -10976,13 +10976,19 @@ and [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFI
 An in-memory one-requester/one-subordinate candidate already preserves three
 children, `ahb_tb`, the exact-two requester artifacts and numeric child
 `busy_insertion.beats=2`, plus subordinate and propagated `parks_on=[busy]`.
-The selected audit must still prove two qualified BUSY events preserve all
-requester/subordinate/interconnect ownership and resume one pending `SEQ`
-exactly once. No public source/name or behavior is selected yet. Any later
-support-accounted source must retain normalized semantic JSON and existing
-read-only MCP introspection without a feature-specific API. Counts beyond two,
-policy/runtime insertion, two-subordinate exact-two composition, and decision
-0020 remain separate/inactive.
+The [completed runtime audit](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md)
+now proves one BUSY transition episode with exactly two qualified events,
+stable requester pending fields/counters, stable subordinate
+continuation/phase/storage and interconnect data owner, no BUSY data-beat
+completion, one resumed pending `SEQ`, four clean byte beats, and final storage
+`32'h44332211`. The same existing generators produce all three children and
+the `ahb_tb` top; no substrate repair is required. Proposed `.2` owns one
+generic public contract after `.1` commits cleanly. No public source/name or
+behavior is selected yet. Any later support-accounted source must retain
+normalized semantic JSON and existing read-only MCP introspection without a
+feature-specific API. Counts beyond two, policy/runtime insertion,
+two-subordinate exact-two composition, and decision 0020 remain
+separate/inactive.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -1947,9 +1947,16 @@ The next selected owner is a no-behavior readiness audit for the smallest
 paired exact-two composition: one shipped exact-two requester plus one shipped
 HBURST-aware byte-lane subordinate that parks BUSY. A static in-memory candidate
 already preserves three children, `ahb_tb`, numeric requester `beats=2`, and
-subordinate/propagated `parks_on=[busy]`; generated-HDL runtime must still prove
-two qualified BUSY events preserve ownership and resume one `SEQ` exactly once.
-No public source ships from that selection yet. See the
+subordinate/propagated `parks_on=[busy]`. The
+[runtime readiness audit](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md)
+now proves the generated-HDL composition: one BUSY episode retires exactly two
+qualified BUSY events while requester pending fields/beat counters,
+subordinate continuation/phase/storage, and interconnect ownership remain
+stable; the same pending `SEQ` resumes once, four byte data beats complete with
+clean status, and final storage is `32'h44332211`. No generator or lower-layer
+repair is required. Proposed `.2` must still freeze one generic public source,
+support/test identity, and normalized semantic JSON/read-only MCP parity before
+implementation; no public source ships from this audit. See also the
 [post-requester-multiple-BUSY selection](../../IAL2_POST_REQUESTER_MULTI_BUSY_NEXT_OWNER_SELECTION.md).
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`

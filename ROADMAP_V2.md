@@ -7150,11 +7150,15 @@ remain deferred/inactive.
 `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`. A disposable
 one-subordinate candidate already generates three children/top `ahb_tb`,
 exact-two requester artifacts and numeric child `beats=2`, plus subordinate and
-propagated `parks_on=[busy]`, through existing generators. The audit must prove
-two qualified BUSY events preserve requester/subordinate/interconnect ownership
-and resume one `SEQ` exactly once before public naming/behavior. Any later
-source must retain bounded semantic JSON and existing read-only MCP exposure.
-No behavior changed in `.809`; decision 0020 remains proposed/inactive.
+propagated `parks_on=[busy]`, through existing generators. Child `.1` now proves
+the disposable generated-HDL path with one BUSY episode/two qualified events,
+stable requester pending fields and beat counters, stable subordinate
+continuation/phase/storage and interconnect owner, one resumed `SEQ`, four
+clean byte beats, and final `44332211`. Existing t1513 plus assertion-enabled
+t1521 pass 9/9; no lower-layer repair is required. Proposed `.2` owns generic
+public contract selection after clean `.1`, including normalized semantic JSON
+and existing read-only MCP exposure. No shipped behavior changed in `.1`;
+decision 0020 remains proposed/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

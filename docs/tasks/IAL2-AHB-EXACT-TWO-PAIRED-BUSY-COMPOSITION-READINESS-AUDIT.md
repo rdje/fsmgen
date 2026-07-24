@@ -83,12 +83,19 @@ implementation.
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
   Status: `active`
   Goal: `Audit one-subordinate exact-two requester BUSY insertion plus subordinate BUSY parking before selecting public composition behavior.`
-  Children: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
+  Children: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
-  Status: `active`
+  Status: `done`
   Goal: `Establish exact-two paired BUSY runtime/lowering readiness and select the next exact owner.`
   Acceptance: `Starting only after clean .809 commit, read the exact-one paired generic/alias and exact-two requester generic/alias behavior/facts/sources/tests, PPIF/AhbRequester/AhbSubordinate/AhbInterconnect lowering and phase ownership, reports/residue/support/language/capability/semantic-MCP surfaces, mdBook/roadmap/Memory/Knowledge Map, selector repairs, and decision 0020. Build a disposable one-subordinate exact-two aggregate without selecting public names; prove normal IAL2->IAL1->IAL0->HDL generation, numeric child beats=2, parks_on=[busy], exact two qualified BUSY events in one episode, stable requester/subordinate/interconnect ownership and storage, no BUSY data completion, one resumed SEQ, four data beats, clean completion, and final 44332211. Retain the paired --no-assert boundary while keeping standalone requester assertions authoritative. Select contract work, a prerequisite repair, deferral, or closure only from evidence; require future check/schedule/semantic JSON/read-only MCP parity. Make no shipped behavior change in the audit.`
+  Verification: `A disposable candidate derived from the shipped one-subordinate exact-one paired source changed only the embedded requester/child reference to amba_requester_busy_insert_two and added (busy-beats 2), while retaining provisional source identity so no public name was selected. Existing PPIF/AhbRequester/AhbSubordinate/AhbInterconnect lowering produced schema fsmgen.ial2.protocol_intent.ahb_interconnect.v1, three children, top ahb_tb, exact amba_requester_busy_insert_two plus subordinate/interconnect IAL1/IAL0 and ahb_tb.fsm artifacts, numeric requester child busy_insertion.before_beat=2/beats=2, and subordinate plus aggregate parks_on=[busy]. Generated HDL compiled with Verilator --no-assert under the 4-GiB descendant-RSS cap and passed transfers=5 beats=4 busy=1 qualified_busy=2 resumed_seq=1 storage=44332211. The harness required stable requester address/control/data/beat counters; ahb_busy_remaining_q values 2 then 1 then 0; stable subordinate SEQ continuation, phase pending, and storage; stable interconnect one-hot data owner; no BUSY beat_done; exactly one resumed SEQ; zero remaining and clean status. Existing t1513 plus assertion-enabled t1521 pass 9/9 in 307 seconds. No lower-layer, semantic/MCP, or HDL repair is required. Selected pending .2 public contract selection, generic-first with alias and two-subordinate exact-two separate; future support-accounted behavior must preserve strict check/schedule/normalized semantic JSON/read-only fsmgen_semantic_introspect parity without feature APIs/raw internals. Canonical record docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md and fact ial2-ahb-exact-two-paired-busy-composition-readiness-audit. t1518 passes 5/5; mdBook builds; Knowledge Map generation/check passes at 990 facts/5018 question keys; memory architecture, relative-doc paths, diff, and doctrine gates pass; generated book output was removed. No shipped behavior changed.`
+  Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: prove exact-two paired BUSY readiness`
+
+- ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`
+  Status: `proposed`
+  Goal: `Select the first public one-subordinate exact-two paired BUSY composition contract.`
+  Acceptance: `Starting only after .1 commits cleanly, freeze one generic .ppif source before any matching .ahb alias: exact source/intent/source-object/anchor/requester/support/coverage/test names, unchanged three-child ahb_tb architecture and generated IAL1/IAL0 set, numeric requester-child busy_insertion.beats=2, subordinate and propagated parks_on=[busy], truthful residue, support/accounting/capability/language surfaces, diagnostics, and rollback. Freeze a generated-HDL proof with one BUSY episode/two qualified BUSY events/stable requester-subordinate-interconnect ownership/no BUSY data completion/one resumed SEQ/four byte data beats/clean status/final 44332211, retain the paired --no-assert and standalone assertion-enabled boundaries, and preserve base/exact-one paired/standalone exact-two/aliases/two-subordinate exact-one. Require strict check, schedule, normalized semantic JSON, and existing read-only fsmgen_semantic_introspect MCP parity without a feature-specific API or raw private internals. Make no shipped behavior change. Keep the matching alias, two-subordinate exact-two sibling, broader counts/policy/status/bursts/signals/queues/managers/backends/protocols, separate selector repairs, and decision 0020 deferred.`
   Verification: `pending`
   Commit: `pending`
 
@@ -99,9 +106,14 @@ Satisfied: `IAL2-FEATURE-COMPLETENESS-FRONTIER.809` committed cleanly as
 parser, generator, support, test, artifact, semantic/MCP API, HDL, or runtime
 behavior changes in the activation slice.
 
+`.1` completed the disposable static and generated-HDL runtime audit and
+selected proposed `.2` public contract work. `.2` cannot activate until `.1`
+commits cleanly.
+
 ## Rollback
 
 Before activation, rollback removes this proposed tree and restores `.809` to
 candidate selection. After activation, rollback follows the active leaf's
 evidence while preserving all shipped exact-one/exact-two requester and paired
-exact-one behavior.
+exact-one behavior. The disposable `.1` candidate lives outside the repository
+and has no shipped rollback surface.
