@@ -116,8 +116,10 @@ observe one BUSY episode, exactly two qualified BUSY events, the same resumed
 
 ## Explicit Deferrals
 
-The two-subordinate exact-two requester/subordinate composition, literal BUSY
-counts beyond one/two, generalized count width, multiple insertion points, runtime-selected
+The generic two-subordinate exact-two requester/subordinate composition now
+ships through the existing generators. Its matching `.ahb` alias remains
+separate. Literal BUSY counts beyond one/two, generalized count width,
+multiple insertion points, runtime-selected
 counts/points, policy/random throttling, distinct local bus-BUSY status,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend

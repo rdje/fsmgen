@@ -34,5 +34,7 @@ Follow-on t/1522 proves that the byte-identical `.ahb` requester alias exposes
 the same artifacts and bounded semantic JSON through the real read-only MCP
 adapter. The generic one-subordinate exact-two paired source now also ships and
 established the 317 protocol / 358 supported+strict / 41 AHB-path checkpoint.
-Its matching aggregate alias now ships too, moving current accounting to
-318/359/42; the two-subordinate exact-two sibling remains future work.
+Its matching aggregate alias now ships too. The generic two-subordinate
+exact-two sibling also ships with its own runtime and semantic/MCP proof,
+moving current accounting to 319/360/43; its matching `.ahb` alias remains
+separate.

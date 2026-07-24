@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `IAL2 / AHB requester-subordinate composition`
 - Created: `2026-07-24`
 - Last updated: `2026-07-24`
@@ -81,7 +81,7 @@ implementation.
 ## Task Tree
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-  Status: `active`
+  Status: `done`
   Goal: `Audit one-subordinate exact-two requester BUSY insertion plus subordinate BUSY parking before selecting public composition behavior.`
   Children: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.4, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.5, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.6, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.7, IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.8`
 
@@ -135,11 +135,11 @@ implementation.
   Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.7: select two-subordinate exact-two contract`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.8`
-  Status: `active`
+  Status: `done`
   Goal: `Ship the selected generic two-subordinate exact-two paired BUSY source with one support entry, focused runtime, and semantic/MCP parity.`
   Acceptance: `Activate only after .7 commits cleanly. Add only ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif as the frozen delta from the shipped two-subordinate exact-one paired source: topology-first intent/object/anchor identity, requester amba_requester_busy_insert_two, (busy-beats 2), and matching child reference. Support-account it exactly as intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park / ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli, source kind ppif, supported_smoke+strict, module ahb_tb, semantic root top, child count four. Preserve exact four IAL1/five IAL0 artifacts, 29 signals, status [0,4)/control [4,8) windows, numeric requester before_beat=2/beats=2, both child/propagated parks_on=[busy], retained one-hot response ownership, existing generic residue, and no top busy_flow. Add only t1525 plus its two-command generated-HDL harness for strict/source/schedule/report/residue/artifact/outdir/verify/normalized semantic JSON/real read-only MCP parity and totals commands=2/transfers=10/beats=8/busy=2/qualified_busy=4/resumed_seq=2/status=44332211/control=88776655 under --no-assert and 4-GiB cap, with standalone t1521 assertions preserved. Update RegressionCorpus/LanguageSurface/t248/t297/t1518/current docs/mdBook/behavior/fact/task/Memory/Knowledge Map to 319 protocol / 360 supported+strict / 43 AHB paths split 22 .ppif/21 .ahb; run focused/preservation/docs/doctrine gates and remove generated artifacts. Do not change parser/generator/semantic-MCP APIs, add the matching alias or second runtime, broaden counts/points/policy/status/bursts/signals/queues/managers/fabrics/backends/protocols/VHDL/transaction layer, repair selectors, or activate decision 0020.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Shipped only ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif as the frozen topology-first source-data delta from the shipped two-subordinate exact-one predecessor: exact identity, requester amba_requester_busy_insert_two, (busy-beats 2), and matching requester child reference. Existing generators emit four IAL1 and five IAL0 artifacts, ahb_tb/top/four children/29 signals, [0,4)/[4,8) windows, numeric requester before_beat=2/beats=2, both child/propagated parks_on=[busy], retained one_hot_accepted_subordinate response ownership, generic residue, and no top busy_flow; no parser/generator/semantic-model/MCP API changed. Support-accounted exactly as intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park / ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli, ppif/supported_smoke+strict, module ahb_tb, semantic root top, child count four. Focused t1525 passes 3/3 in 589 seconds under the 4-GiB cap: exact source/report/residue/artifacts, strict check, schedule, normalized semantic JSON, real fsmgen_semantic_introspect with read_only=true/shell_access=false, outdir, verify-hdl, and --no-assert runtime commands=2/transfers=10/beats=8/busy=2/qualified_busy=4/resumed_seq=2/status=44332211/control=88776655, including counter 2-to-1-to-0, stable selected/unselected subordinate state and both owner bits, and no BUSY beat completion. Guarded t1515+t1523 preservation passes 7/7 in 834 seconds. Accounting is 319 protocol / 360 supported+strict / 43 AHB paths split 22 .ppif/21 .ahb; t248+t297 pass 6875 assertions and t1518 passes 5/5. Canonical behavior docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md and fact ial2-ahb-two-subordinate-exact-two-paired-busy-composition-behavior document that deep semantic introspection/MCP parity is ongoing for new support-accounted features and this source is composition over existing generators. Perl source/tests are syntax-clean; mdBook builds and generated output was removed; Knowledge Map generation/check passes at 997 facts/5059 question keys; memory architecture, relative-doc paths, diff, and authoritative doctrine gates pass. Matching alias, broader BUSY/fabric/protocol/backend/VHDL/transaction behavior, selector repair, and decision 0020 remain separate/inactive.`
+  Commit: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.8: ship two-subordinate exact-two composition`
 
 ## Activation Gate
 

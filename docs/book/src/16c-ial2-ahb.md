@@ -1,6 +1,6 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships forty-two public bounded AHB IAL2 entrypoints today:
+FSMGen ships forty-three public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
@@ -24,6 +24,7 @@ ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ppif
 ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif
 ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif
 ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ppif
+ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif
 ppif/ahb_requester.ahb
 ppif/ahb_requester_busy_insert.ahb
 ppif/ahb_requester_busy_insert_two.ahb
@@ -63,8 +64,9 @@ parking (each embedded subordinate holds the in-word `SEQ` burst context across
 an `HTRANS=BUSY` beat instead of clearing it), plus paired aggregates whose
 requester inserts that BUSY and whose one or two subordinates park it. The
 generic one-subordinate family now includes both exact-one and exact-two
-requester insertion, with matching `.ahb` aliases; the two-subordinate
-exact-two sibling remains separate future work.
+requester insertion, with matching `.ahb` aliases. The two-subordinate family
+now also includes the topology-first generic exact-two requester pairing; its
+matching `.ahb` alias remains separate future work.
 The `.ahb` sources are bounded profile aliases over the same IAL2 model. They
 use the same `protocol-platform-intent` form, keep explicit `(profile ahb)`,
 and support exactly one selected object shape:
@@ -115,6 +117,7 @@ ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ppif -> amb
 ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif -> amba_requester_busy_insert.isf + ahb_lite_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester_busy_insert.fsm + ahb_lite_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif -> amba_requester_busy_insert_two.isf + ahb_lite_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester_busy_insert_two.fsm + ahb_lite_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ppif -> amba_requester_busy_insert.isf + ahb_status_subordinate_byte_lane_hburst_seq.isf + ahb_control_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester_busy_insert.fsm + ahb_status_subordinate_byte_lane_hburst_seq.fsm + ahb_control_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
+ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif -> amba_requester_busy_insert_two.isf + ahb_status_subordinate_byte_lane_hburst_seq.isf + ahb_control_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester_busy_insert_two.fsm + ahb_status_subordinate_byte_lane_hburst_seq.fsm + ahb_control_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect.ahb        -> amba_requester.isf + ahb_lite_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_two_subordinate.ahb -> amba_requester.isf + ahb_status_subordinate.isf + ahb_control_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_status_subordinate.fsm + ahb_control_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_byte_lane.ahb -> amba_requester.isf + ahb_lite_subordinate_byte_lane.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate_byte_lane.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
@@ -148,9 +151,9 @@ states, without a pending bank/relaunch. See the direct-seed section below.
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | The forty-two public AHB sources listed above, including the generic and matching `.ahb` exact-two requester, paired exact-one one- and two-subordinate `.ppif`/`.ahb` source pairs, and the generic plus matching `.ahb` exact-two one-subordinate paired sources | Bounded requester/subordinate/interconnect sources, exact-one and exact-two requester BUSY insertion, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, paired exact-one BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows, and the generic plus alias one-window exact-two pairing. |
+| Guided mode | The forty-three public AHB sources listed above, including the generic and matching `.ahb` exact-two requester, paired exact-one one- and two-subordinate `.ppif`/`.ahb` source pairs, the generic plus matching `.ahb` exact-two one-subordinate paired sources, and the generic two-subordinate exact-two paired source | Bounded requester/subordinate/interconnect sources, exact-one and exact-two requester BUSY insertion, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, paired exact-one BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows, the generic plus alias one-window exact-two pairing, and the generic two-window exact-two pairing. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs cover selected byte/halfword/word lanes, in-word `SEQ`, HBURST `WRAP4`/`INCR4`, and BUSY parking. The selected generic and matching `.ahb` aggregate HBURST-aware byte-lane `SEQ` sources include non-parking and BUSY-park variants, plus paired BUSY-inserting-requester compositions across one or two static windows. Interconnect knobs are exposed as `children`, static `address-map` windows, `decode`, and `wiring` clauses. |
-| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, and retained one-hot interconnect data ownership. The separate direct subordinate seed now retains completion-edge active NONSEQ/SEQ through Q-named `<-` loads in its existing four states, without pending/relaunch. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, BUSY counts beyond exact one/two, policy/runtime BUSY insertion, distinct bus-BUSY status, the two-subordinate exact-two sibling, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, and retained one-hot interconnect data ownership. The separate direct subordinate seed now retains completion-edge active NONSEQ/SEQ through Q-named `<-` loads in its existing four states, without pending/relaunch. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, BUSY counts beyond exact one/two, policy/runtime BUSY insertion, distinct bus-BUSY status, the matching two-subordinate exact-two `.ahb` alias, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -1342,9 +1345,8 @@ canonical exact-one form; zero, one, values above two, non-literals, missing
 prerequisites, and duplicates fail closed. The exact-two `.ahb` requester alias
 now ships through `.7`, and the first generic one-subordinate exact-two paired
 composition now ships through the paired tree's `.3`; its matching aggregate
-alias now ships through `.5`. The two-subordinate exact-two sibling does not
-ship yet; `.6` has proved its current four-child composition ready and selected
-separate public-contract work. See the
+alias now ships through `.5`. The generic two-subordinate exact-two sibling now
+ships through `.8`; its matching `.ahb` alias remains separate. See the
 [selected contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md)
 and [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md).
 
@@ -1360,7 +1362,9 @@ read-only `fsmgen_semantic_introspect` MCP call; t/1521 remains the shared
 runtime proof. The requester-only inventory checkpoint was forty paths evenly
 split between `.ppif` and `.ahb`; the generic paired exact-two source moved the
 next checkpoint to forty-one paths, and its alias now moves the current
-inventory to forty-two paths: twenty-one `.ppif` and twenty-one `.ahb`.
+inventory to forty-two paths; the generic two-subordinate exact-two source now
+moves the current inventory to forty-three paths: twenty-two `.ppif` and
+twenty-one `.ahb`.
 See the
 [selected alias contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md)
 and [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
@@ -1974,16 +1978,16 @@ the existing three-child artifacts, numeric requester-child `beats=2`,
 subordinate/aggregate `parks_on=[busy]`, t1523 runtime, normalized semantic JSON
 and real read-only MCP parity. `.3` shipped that source at 317 protocol / 358
 supported+strict / 41 AHB paths, reusing the existing generators and normalized
-read-only `fsmgen_semantic_introspect` API. The two-subordinate exact-two
-sibling remains separate. See the
+read-only `fsmgen_semantic_introspect` API. The generic two-subordinate
+exact-two sibling now also ships through `.8`. See the
 [shipped behavior](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md)
 and the
 [post-requester-multiple-BUSY selection](../../IAL2_POST_REQUESTER_MULTI_BUSY_NEXT_OWNER_SELECTION.md).
 Follow-on `.4` selected and `.5` now ships the byte-identical matching `.ahb`
 alias. It preserves the same three children, exact review artifacts, numeric
 requester `beats=2`, both BUSY-parking projections, and normalized semantic
-root `top` through existing alias-only residue cleanup. Current accounting is
-318/359/42, evenly split across twenty-one `.ppif` and twenty-one `.ahb`
+root `top` through existing alias-only residue cleanup. That alias checkpoint
+was 318/359/42, evenly split across twenty-one `.ppif` and twenty-one `.ahb`
 sources. Focused t1524 proves strict check, schedule, normalized semantic JSON,
 real read-only MCP, artifact, verifier, diagnostic, and preservation parity;
 t1523 remains the shared runtime. See the
@@ -2006,20 +2010,42 @@ has exactly two qualified BUSY events, one resumed pending `SEQ`, four data
 beats, stable selected and unselected subordinate continuation/storage, stable
 interconnect owner bits, no BUSY data completion, and clean status. Final
 status/control storage is `32'h44332211`/`32'h88776655`. No generator or
-semantic/MCP repair is needed. Proposed `.7` owns public-contract selection;
-no two-subordinate exact-two source is part of the current 318/359/42 surface.
+semantic/MCP repair is needed. `.7` selected the public contract and `.8` now
+ships it.
 
-Contract leaf `.7` selects the topology-first future generic path
+Contract leaf `.7` selected the topology-first generic path
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`.
 The ordering makes `two_subordinate` the topology and `busy_insert_two` the
 requester policy, avoiding a visually ambiguous double-`two`. It reuses the
-same four-child architecture and exact `.6` runtime invariants. Focused t1525
-will own strict check, schedule/report/residue, exact artifacts, normalized
-semantic JSON, real read-only MCP, HDL verification, and one status/control
-runtime. The projected support checkpoint is 319/360/43, split twenty-two
-generic `.ppif` and twenty-one `.ahb`; the source does not ship until proposed
-`.8` is activated and completed. See the
-[selected contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
+same four-child architecture and exact `.6` runtime invariants. `.8` now ships
+the source through the existing generators. Focused t1525 proves strict check,
+schedule/report/residue, exact artifacts, normalized semantic JSON, the real
+read-only MCP adapter, HDL verification, and one status/control runtime:
+two commands, four qualified BUSY events, two resumed `SEQ` events, eight data
+beats, and final `44332211`/`88776655` storage. Current support accounting is
+319/360/43, split twenty-two generic `.ppif` and twenty-one `.ahb`. See the
+[selected contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md)
+and [shipped behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
+
+Run the public source through the same semantic and review path as every other
+support-accounted IAL2 source:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json \
+  ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif
+./bin/fsmgen --quiet --emit-schedule-json \
+  ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json \
+  ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif
+./bin/fsmgen --quiet --strict --outdir generated/ial2-ahb-two-subordinate-exact-two \
+  ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif
+```
+
+The MCP tool `fsmgen_semantic_introspect` exposes the same normalized report
+through its stable read-only, shell-disabled adapter. This parity is ongoing:
+new support-accounted semantics extend the common introspection model instead
+of adding feature-specific MCP methods or exposing raw private internals. The
+matching two-subordinate exact-two `.ahb` alias remains separate.
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that

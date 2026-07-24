@@ -187,11 +187,12 @@ The matching exact-one `.ahb` alias and the generic/alias paired exact-one
 requester/subordinate families now ship. Exact-two ships as the generic
 requester, its matching `.ahb` requester alias, and the first generic
 one-subordinate paired composition. The matching exact-two paired aggregate
-alias, two-subordinate exact-two sibling, counts beyond two,
+alias and the generic two-subordinate exact-two sibling now ship. Counts beyond two,
 policy/runtime/random throttling, multiple or
 runtime-selected insertion points, distinct `local-status.bus_busy`,
 halfword/word burst `SEQ`, wider/indefinite bursts, multi-word/register-bank
 progression, optional AHB signals, broader AHB manager behavior, direct
 backend, verification output, backend-language variants, AXI/APB changes, and
 VHDL remain deferred. See
-`docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
+`docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md` and
+`docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.

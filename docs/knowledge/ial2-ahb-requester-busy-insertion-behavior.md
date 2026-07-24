@@ -48,7 +48,9 @@ requester surfaces, and the first generic one-subordinate exact-two paired
 composition also ships. Fact
 `ial2-ahb-exact-two-paired-busy-composition-behavior` owns its generated-HDL,
 normalized semantic JSON, and read-only MCP proof. The matching paired alias
-and two-subordinate exact-two sibling remain separate.
+and generic two-subordinate exact-two sibling now also ship; fact
+`ial2-ahb-two-subordinate-exact-two-paired-busy-composition-behavior` owns the
+two-window runtime and semantic/MCP proof.
 
 Historical audit `ial2-ahb-requester-multi-busy-insertion-readiness-audit`
 records the pre-repair ten-qualified-edge contradiction. Repair fact

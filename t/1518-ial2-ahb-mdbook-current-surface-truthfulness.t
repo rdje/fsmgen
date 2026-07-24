@@ -32,8 +32,8 @@ subtest 'mdBook current navigation and mode surfaces include aggregate aliases' 
 
     like(
         $navigation,
-        qr/matching selected `\.ahb` profile aliases, including the exact-two requester and the generic plus matching `\.ahb` one-subordinate exact-two paired sources, aggregate HBURST and aggregate BUSY-park surfaces/,
-        'protocol navigation positively includes exact-two requester, the generic and alias exact-two pairing, and aggregate aliases',
+        qr/matching selected `\.ahb` profile aliases, including the exact-two requester, the generic plus matching `\.ahb` one-subordinate exact-two paired sources, the generic two-subordinate exact-two paired source, aggregate HBURST and aggregate BUSY-park surfaces/,
+        'protocol navigation positively includes exact-two requester, both generic exact-two pairings, and aggregate aliases',
     );
     unlike(
         $navigation,
@@ -99,7 +99,7 @@ subtest 'current AHB surfaces include the shipped generic and alias exact-two re
     );
 
     my $ahb_chapter = slurp('docs/book/src/16c-ial2-ahb.md');
-    like($ahb_chapter, qr/FSMGen ships forty-two public bounded AHB IAL2 entrypoints today/, 'AHB chapter records the 42-path inventory');
+    like($ahb_chapter, qr/FSMGen ships forty-three public bounded AHB IAL2 entrypoints today/, 'AHB chapter records the 43-path inventory');
     like($ahb_chapter, qr/ppif\/ahb_requester_busy_insert_two\.ppif/, 'AHB chapter lists the exact-two source');
     like($ahb_chapter, qr/ppif\/ahb_requester_busy_insert_two\.ahb/, 'AHB chapter lists the exact-two profile alias');
     like(
@@ -112,13 +112,18 @@ subtest 'current AHB surfaces include the shipped generic and alias exact-two re
         qr/ppif\/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ahb/,
         'AHB chapter lists the exact-two paired profile alias',
     );
+    like(
+        $ahb_chapter,
+        qr/ppif\/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ppif/,
+        'AHB chapter lists the generic two-subordinate exact-two paired composition',
+    );
     like($ahb_chapter, qr/The additive exact-two extension now ships as the generic source/, 'AHB requester guide marks exact-two as shipped');
     like(
         $ahb_chapter,
         qr/\.3` shipped that source at 317 protocol \/ 358\s+supported\+strict \/ 41 AHB paths/s,
         'AHB chapter preserves the shipped generic exact-two paired checkpoint',
     );
-    like($ahb_chapter, qr/Current accounting is\s+318\/359\/42/s, 'AHB chapter records current alias accounting');
+    like($ahb_chapter, qr/Current support accounting is\s+319\/360\/43/s, 'AHB chapter records current generic two-subordinate accounting');
     unlike($ahb_chapter, qr/The next extension is selected but \*\*not yet shipped\*\*/, 'AHB requester guide removes stale pre-implementation wording');
     unlike(
         $ahb_chapter,
@@ -128,8 +133,12 @@ subtest 'current AHB surfaces include the shipped generic and alias exact-two re
 
     my $behavior = slurp('docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md');
     like($behavior, qr/Focused `t\/1521.*?keeps generated selector\s+assertions enabled/s, 'canonical behavior records the exact-two runtime proof');
-    like($behavior, qr/current\s+accounting to 318\/359 and 42\s+AHB paths/s, 'canonical behavior records current accounting');
+    like($behavior, qr/current accounting to 319\/360 and 43 AHB paths/s, 'canonical behavior records current accounting');
     like($behavior, qr/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR/, 'canonical behavior links the shipped exact-two alias owner');
+
+    my $two_subordinate_behavior = slurp('docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md');
+    like($two_subordinate_behavior, qr/Focused `t\/1525.*?real MCP call/s, 'two-subordinate behavior records focused semantic/MCP and runtime proof');
+    like($two_subordinate_behavior, qr/319 protocol fixtures, 360\s+supported-smoke plus strict fixtures, and 43 AHB IAL2 paths/s, 'two-subordinate behavior records current accounting');
 };
 
 subtest 'canonical current behavior records point to later alias owners' => sub {

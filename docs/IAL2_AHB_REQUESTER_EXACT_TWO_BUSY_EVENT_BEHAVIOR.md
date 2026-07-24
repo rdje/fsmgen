@@ -138,9 +138,10 @@ throttling.
 The generic source moved the support corpus to 315 protocol fixtures and 356
 supported-smoke/strict-supported fixtures. Follow-on alias `.7` moved that
 checkpoint to 316/357 and 40 AHB paths. The generic one-subordinate exact-two
-paired composition established 317/358/41; its matching alias now moves current
-accounting to 318/359 and 42 AHB paths: twenty-one generic `.ppif` sources and
-twenty-one `.ahb` aliases.
+paired composition established 317/358/41; its matching alias moved the next
+checkpoint to 318/359/42. The generic two-subordinate exact-two composition
+now moves current accounting to 319/360 and 43 AHB paths: twenty-two generic
+`.ppif` sources and twenty-one `.ahb` aliases.
 
 ## Generated-HDL Proof
 
@@ -180,7 +181,8 @@ that path in the same commands. See
 
 Literal counts beyond one/two, generalized count width, multiple insertion
 points, runtime-selected count/point, policy/random throttling, distinct local
-bus-BUSY status, the two-subordinate exact-two sibling,
+bus-BUSY status, the matching alias for the now-shipped generic
+two-subordinate exact-two sibling,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend
 variants, AXI/APB changes, VHDL, the separate interconnect selector repair, the

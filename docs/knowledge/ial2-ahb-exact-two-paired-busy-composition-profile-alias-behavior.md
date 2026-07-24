@@ -34,8 +34,9 @@ schedule, normalized semantic JSON, real read-only MCP, artifact, verifier,
 diagnostic, and preservation parity without a second runtime. t/1523 remains
 the shared exact-two generated-HDL runtime proof.
 
-Current accounting is 318 protocol fixtures, 359 supported-smoke/strict
-fixtures, and 42 AHB IAL2 paths split evenly between twenty-one `.ppif` and
-twenty-one `.ahb`. New support-accounted semantics continue to extend the one
+That alias established the 318/359/42 checkpoint. The generic two-subordinate
+exact-two source now moves current accounting to 319 protocol fixtures, 360
+supported-smoke/strict fixtures, and 43 AHB IAL2 paths split between twenty-two
+`.ppif` and twenty-one `.ahb`. New support-accounted semantics continue to extend the one
 normalized semantic surface and preserve read-only MCP parity; no
 feature-specific MCP route or private payload is added.

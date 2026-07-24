@@ -66,10 +66,10 @@ child count:     3
 HDL module:      ahb_tb
 ```
 
-The additive alias moves current accounting to 318 protocol fixtures and 359
-supported-smoke/strict-supported fixtures. FSMGen now ships 42 bounded AHB
-IAL2 paths, evenly split between twenty-one `.ppif` sources and twenty-one
-`.ahb` aliases.
+The additive alias established the 318 protocol / 359 supported-smoke+strict /
+42 AHB-path checkpoint. Follow-on `.8` now moves current accounting to
+319/360/43, split between twenty-two `.ppif` sources and twenty-one `.ahb`
+aliases.
 
 Strict check, schedule JSON, normalized semantic JSON, and the real read-only
 `fsmgen_semantic_introspect` MCP tool expose the same alias support identity,
@@ -105,10 +105,10 @@ resumes once, four clean byte beats complete, and final storage is
 
 ## Explicit Deferrals
 
-The two-subordinate exact-two pairing remains unshipped, although follow-on
-readiness audit `.6` now proves it composes through the current four-child
-architecture, and `.7` selects a separate topology-first generic public
-contract for proposed `.8` implementation. BUSY counts beyond one/two, generalized
+Follow-on `.8` now ships the separate topology-first generic two-subordinate
+exact-two pairing through the existing four-child architecture. See
+`IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
+BUSY counts beyond one/two, generalized
 count width, multiple insertion points, runtime-selected counts/points,
 policy/random throttling, distinct local bus-BUSY status, broader bursts and
 optional signals, managers, queues/outstanding transfers, broader fabrics,

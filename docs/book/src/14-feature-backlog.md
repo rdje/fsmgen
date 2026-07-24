@@ -10964,8 +10964,9 @@ identity `intent.ahb_profile_alias_requester_busy_insert_two`, semantic root
 report/artifact/semantic JSON/real read-only MCP parity; t1521 remains the
 shared runtime. That requester/alias checkpoint was 316 protocol / 357
 supported-smoke+strict fixtures and 40 AHB paths. The first generic
-one-subordinate paired exact-two source now also ships; its matching aggregate
-alias, the two-subordinate exact-two sibling, other counts/points,
+one-subordinate paired exact-two source and its matching aggregate alias now
+ship, as does the generic two-subordinate exact-two sibling. Its matching
+two-subordinate alias, other counts/points,
 policy/runtime behavior, and decision 0020 remain deferred. See the
 [exact-two contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md)
 [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md),
@@ -10991,9 +10992,10 @@ freezes generic source
 the unchanged three-child artifact/report shape, t1523 runtime, normalized
 semantic JSON and real read-only MCP proof. `.3` now ships that generic source
 through the existing generators at 317 protocol / 358 supported+strict / 41
-AHB paths. The matching alias, counts beyond two, policy/runtime insertion,
-two-subordinate exact-two composition, and decision 0020 remain
-separate/inactive. See the
+AHB paths. Its matching alias and the generic two-subordinate exact-two
+composition now also ship; counts beyond two, policy/runtime insertion, the
+matching two-subordinate alias, and decision 0020 remain separate/inactive.
+See the
 [shipped behavior](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 `.4` now selects proposed `.5` data-only implementation of the byte-identical
 matching `.ahb` alias. Existing suffix handling preserves three children,
@@ -11003,7 +11005,7 @@ root `top` while removing only alias residue. Projected accounting is
 with t1523 shared. No alias ships from `.4`; two-subordinate exact-two and
 decision 0020 remain separate/inactive. See the
 [selected alias contract](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md).
-`.5` now ships that byte-identical alias at current 318/359/42 accounting;
+`.5` shipped that byte-identical alias at the 318/359/42 checkpoint;
 t1524 proves strict/schedule/normalized-semantic/real read-only MCP parity and
 t1523 remains the shared runtime. Follow-on `.6` ships no source, but its
 [two-subordinate exact-two readiness audit](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md)
@@ -11014,10 +11016,7 @@ clean status, and final status/control storage
 `32'h44332211`/`32'h88776655`. Strict check, normalized semantic JSON, and a
 real read-only MCP call agree on `ahb_tb`/root `top`/four children; support is
 truthfully unmatched for the disposable candidate. No substrate or API repair
-is required, so proposed `.7` owns no-behavior generic public-contract
-selection. No two-subordinate exact-two public source ships yet, and decision
-0020 remains inactive.
-Follow-on `.7` now selects proposed `.8` implementation of topology-first
+is required. Follow-on `.7` selected `.8` implementation of topology-first
 generic source
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`.
 The name explicitly separates topology from requester cardinality and avoids
@@ -11026,9 +11025,15 @@ an ambiguous double-`two`. The
 freezes the existing four-child artifacts, status/control windows, retained
 response owner, numeric requester `beats=2`, both child/propagated BUSY parks,
 t1525's single two-command runtime, normalized semantic JSON, and real
-read-only MCP parity. Projected accounting is 319/360/43 with 22 `.ppif` and
-21 `.ahb`. No source ships from `.7`; matching alias and decision 0020 remain
-separate.
+read-only MCP parity. `.8` now ships that source through the existing
+generators. Focused t1525 proves strict/source/schedule/report/artifact/outdir/
+verifier parity, normalized semantic JSON, the real read-only MCP adapter, and
+one two-command generated-HDL runtime totaling four qualified BUSY events, two
+resumed `SEQ` events, eight data beats, and final status/control storage
+`44332211`/`88776655`. Current accounting is 319/360/43 with 22 `.ppif` and 21
+`.ahb`. See the
+[shipped behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
+The matching alias and decision 0020 remain separate.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

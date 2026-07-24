@@ -6134,12 +6134,11 @@ No alias source or shipped behavior changes in `.4`; the two-subordinate
 exact-two shape and decision 0020 remain separate/inactive.
 `.5` now ships that byte-identical matching `.ahb` alias through the existing
 suffix cleanup and unchanged requester/subordinate/interconnect/top generator
-architecture. Current accounting is 318 protocol / 359 supported+strict / 42
+architecture. That checkpoint was 318 protocol / 359 supported+strict / 42
 AHB paths, split 21 `.ppif` and 21 `.ahb`. Focused t1524 proves strict check,
 schedule JSON, normalized semantic JSON, real read-only MCP introspection,
 review artifacts, HDL verification, diagnostics, and preservation without a
-second runtime; t1523 remains the shared generated-HDL proof. The
-two-subordinate exact-two shape and decision 0020 remain separate/inactive.
+second runtime; t1523 remains the shared generated-HDL proof.
 `.6` now proves the two-subordinate exact-two shape is runtime-ready through
 the existing four-child architecture, without shipping it. A disposable
 candidate preserves status `[0,4)` and control `[4,8)` windows, exact requester/
@@ -6153,7 +6152,7 @@ semantic JSON, and real read-only MCP agree on four-child top `ahb_tb`; the
 disposable source truthfully remains support-unmatched. No generator or API
 repair is needed, so proposed `.7` owns no-behavior generic public-contract
 selection after clean `.6`. Decision 0020 remains inactive.
-`.7` now selects proposed `.8` implementation of topology-first generic source
+`.7` selected `.8` implementation of topology-first generic source
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`.
 Topology-first naming avoids ambiguous `...busy_insert_two_two_subordinate...`
 while preserving the existing exact-two requester and two-subordinate
@@ -6161,8 +6160,15 @@ families. The contract freezes the current four-child artifacts/windows/owner
 policy, numeric requester `beats=2`, both BUSY parks, support identity,
 t1525's one two-command runtime, normalized semantic JSON, and real read-only
 MCP parity. Projected accounting is 319 protocol / 360 supported+strict / 43
-AHB paths split 22 `.ppif`/21 `.ahb`. No source or behavior ships from `.7`;
-the matching alias and decision 0020 remain separate/inactive.
+AHB paths split 22 `.ppif`/21 `.ahb`. `.8` now ships that source through the
+existing generators. Focused t1525 proves the frozen source delta, strict
+support, schedule/report/artifacts, normalized semantic JSON, the real
+read-only shell-disabled MCP adapter, outdir, HDL verification, and one
+two-command generated-HDL runtime totaling four qualified BUSY events, two
+resumed `SEQ` events, eight data beats, and final `44332211`/`88776655`
+status/control storage. No parser, generator, semantic model, or MCP API
+changed. The matching alias and decision 0020 remain separate/inactive. See
+`docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
 
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
@@ -8854,6 +8860,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.5` shipped byte-identical matching `.ahb` alias, unchanged generator/artifact/report architecture, alias-only residue cleanup, 318/359/42 accounting, focused t1524 normalized semantic/read-only MCP parity, and shared t1523 runtime.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md` — records `.6` disposable four-child static/semantic/real read-only MCP and generated-HDL proof across both status/control windows, exact-two qualified-event and resumed-SEQ totals, stable selected/unselected/data-owner state, no required repair, and proposed `.7` public-contract handoff without shipped behavior.
 - `docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md` — records `.7` topology-first generic source identity, exact four-child report/artifact/window/owner contract, t1525 two-window exact-two runtime, normalized semantic/read-only MCP parity, projected 319/360/43 accounting, `.8` implementation handoff, and separate alias/transaction-layer boundaries.
+- `docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md` — documents `.8` shipment of the topology-first generic source through existing generators, 319/360/43 accounting, exact four-child artifacts/windows/ownership, focused t1525 two-command runtime, and ongoing normalized semantic/read-only MCP parity.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.

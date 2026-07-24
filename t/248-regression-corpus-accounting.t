@@ -21,7 +21,7 @@ my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
 ok(@entries >= 50, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
-is(scalar(@protocol_entries), 318, 'first visible corpus slice contains the named protocol and public intent fixtures');
+is(scalar(@protocol_entries), 319, 'first visible corpus slice contains the named protocol and public intent fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
     supported_smoke
@@ -64,6 +64,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     ial2_ppif_ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park_pipeline_cli
     ial2_ppif_ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli
     ial2_ppif_ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli
+    ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli
     ial2_ppif_ahb_interconnect_two_subordinate_byte_lane_pipeline_cli
     ial2_ppif_ahb_interconnect_two_subordinate_byte_lane_seq_pipeline_cli
     ial2_ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq_pipeline_cli
@@ -413,6 +414,7 @@ my %coverage_classification = (
     ial2_ppif_ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park_pipeline_cli => 'supported_smoke',
     ial2_ppif_ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli => 'supported_smoke',
     ial2_ppif_ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli => 'supported_smoke',
+    ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli => 'supported_smoke',
     ial2_ppif_ahb_interconnect_two_subordinate_byte_lane_pipeline_cli => 'supported_smoke',
     ial2_ppif_ahb_interconnect_two_subordinate_byte_lane_seq_pipeline_cli => 'supported_smoke',
     ial2_ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq_pipeline_cli => 'supported_smoke',
@@ -730,6 +732,7 @@ for my $required_id (qw(
     intent.ppif_ahb_interconnect_two_subordinate
     intent.ppif_ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park
     intent.ppif_ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park
+    intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park
     intent.ahb_profile_alias_requester
     intent.ahb_profile_alias_requester_busy_insert
     intent.ahb_profile_alias_requester_busy_insert_two
@@ -1260,8 +1263,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    359,
-    'catalog now keeps three hundred fifty-nine named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, and verification-output fixtures',
+    360,
+    'catalog now keeps three hundred sixty named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, and verification-output fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -1275,8 +1278,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    359,
-    'catalog now records three hundred fifty-nine positive strict-mode supported-smoke acceptance entries',
+    360,
+    'catalog now records three hundred sixty positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -1298,6 +1301,7 @@ for my $strict_supported_id (qw(
     intent.ppif_ahb_interconnect_byte_lane_seq
     intent.ppif_ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park
     intent.ppif_ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park
+    intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park
     intent.ppif_ahb_interconnect_two_subordinate_byte_lane
     intent.ppif_ahb_interconnect_two_subordinate_byte_lane_seq
     intent.ahb_profile_alias_requester

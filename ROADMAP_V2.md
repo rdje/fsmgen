@@ -7185,7 +7185,7 @@ and a real read-only MCP call agree on four children and truthfully unmatched
 disposable support. No parser/generator/semantic-MCP repair is required;
 proposed `.7` owns generic public-contract selection after clean `.6`.
 Decision 0020 remains proposed/inactive.
-`.7` now selects proposed `.8` implementation of generic source
+`.7` selected `.8` implementation of generic source
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`.
 The topology-first name distinguishes two subordinates from exact-two requester
 cardinality without a misleading double-`two`. The contract preserves the
@@ -7193,9 +7193,13 @@ four-child `ahb_tb`, exact artifacts/windows/owner policy, numeric requester
 `beats=2`, both child/propagated BUSY parks, and no top `busy_flow`; t1525 will
 own strict/schedule/normalized-semantic/real read-only MCP/outdir/verifier plus
 one two-command runtime totaling four qualified BUSY events, two resumed SEQ,
-eight beats, and final `44332211`/`88776655`. Projected accounting is
-319/360/43 split 22 generic/21 aliases. `.7` changes no behavior; matching
-alias and decision 0020 remain separate/inactive.
+eight beats, and final `44332211`/`88776655`. `.8` now ships the source through
+the existing generators at 319/360/43 split 22 generic/21 aliases. t1525
+passes its strict/schedule/normalized-semantic/real read-only MCP/outdir/
+verifier and two-command runtime contract; no parser, generator, semantic
+model, or MCP API changed. The matching alias and decision 0020 remain
+separate/inactive. See
+`docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
