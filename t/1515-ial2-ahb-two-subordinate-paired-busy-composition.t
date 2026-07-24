@@ -19,6 +19,8 @@ subtest 'source is the exact selected two-subordinate paired BUSY transform' => 
     is($report->{source_object}{id}, source_object_id(), 'schedule JSON selects source object id');
     is($report->{source_object}{intent_name}, source_intent(), 'schedule JSON selects source intent');
     is($report->{composition}{child_instance_count}, 4, 'schedule JSON reports four children');
+    is($report->{composition}{response_mux}{data_phase_owner}{mode}, 'one_hot_accepted_subordinate', 'schedule JSON reports retained one-hot data-phase response ownership');
+    is($report->{composition}{response_mux}{data_phase_owner}{retire_event}, 'retained_owner_ready_out', 'schedule JSON reports response-owner retirement on completion');
 
     is_deeply(
         [map { $_->{name} } @{$report->{generated_artifacts}{ial1}{items}}],
@@ -116,6 +118,9 @@ subtest 'strict CLI, semantic, review-artifact, and HDL surfaces agree' => sub {
     like(slurp(File::Spec->catfile($outdir, 'amba_requester_busy_insert.isf')), qr/\(drive transfer_busy\b/, 'requester IAL1 keeps BUSY drive');
     like(slurp(File::Spec->catfile($outdir, 'ahb_status_subordinate_byte_lane_hburst_seq.isf')), qr/seq_valid_q/, 'status IAL1 keeps burst context');
     like(slurp(File::Spec->catfile($outdir, 'ahb_control_subordinate_byte_lane_hburst_seq.isf')), qr/seq_valid_q/, 'control IAL1 keeps burst context');
+    my $interconnect_fsm = slurp(File::Spec->catfile($outdir, 'ahb_interconnect.fsm'));
+    like($interconnect_fsm, qr/\(ahb_data_owner_0_q 1 \(reset 0\)\).*?\(ahb_data_owner_1_q 1 \(reset 0\)\)/s, 'two-window fabric declares one reset-clean owner bit per subordinate');
+    like($interconnect_fsm, qr/\(<ahb_data_owner_0_q\s+\(= \(HREADY> HREADYOUT_STATUS\)\).*?\(<ahb_data_owner_1_q\s+\(= \(HREADY> HREADYOUT_CONTROL\)\)/s, 'two-window fabric muxes ready from the retained status or control owner');
     like(slurp($hdl), qr/\bmodule\s+ahb_tb\b/, 'generated HDL contains ahb_tb');
     like(slurp($hdl), qr/\bahb_interconnect\s+fabric\b/, 'generated HDL keeps legal fabric instance');
 

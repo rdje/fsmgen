@@ -133,9 +133,15 @@ their existing behavior and reports.
 
 A matching `.ahb` profile alias now ships as documented in
 `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md`.
-Policy-driven or multiple BUSY insertion, distinct local bus-BUSY status, true boundary-free
-active-transfer pipelining, halfword/word or wider/indefinite burst
+Policy-driven or multiple BUSY insertion, distinct local bus-BUSY status,
+general/deeper request or response queues, multiple outstanding transfers,
+halfword/word or wider/indefinite burst
 progression, multi-word/register-bank behavior, optional AHB signals, broader
 AHB manager behavior, direct backend, verification-output generation,
 backend-language variants, AXI/APB behavior changes, VHDL, decision `0020`,
 and the protocol-neutral transaction-layer horizon remain deferred/inactive.
+
+The current aggregate shares the depth-one generated active-phase pipeline in
+`docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md`; t/1515 preserves its exact
+two-window runtime result after that coupled requester/subordinate/interconnect
+repair.

@@ -116,9 +116,14 @@ prove -Iperl t/1516-ial2-ahb-two-subordinate-paired-busy-composition-profile-ali
 ## Explicit Deferrals
 
 Policy-driven or multiple BUSY insertion, distinct local bus-BUSY status,
-true boundary-free active-transfer pipelining, halfword/word or wider/
+general/deeper request or response queues, multiple outstanding transfers,
+halfword/word or wider/
 indefinite burst progression, multi-word/register-bank behavior, optional AHB
 signals, legacy two-bit subordinate `HRESP`, broader manager/interconnect
 behavior, direct backend, verification-output generation, backend-language
 variants, AXI/APB behavior changes, VHDL, decision `0020`, and proposed audits
 remain deferred/inactive.
+
+The alias shares the depth-one active-phase pipeline documented in
+`docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md`; it is not a separate
+generator.

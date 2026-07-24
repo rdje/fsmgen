@@ -110,10 +110,13 @@ sub _normalize_contract($raw) {
     my $storage = _normalize_storage(_required_hash($raw, 'storage'), $bus);
     my $transfer = _normalize_transfer(_required_hash($raw, 'transfer'), $control, $storage, $bus);
 
-    my @internal_signals = qw(addr_q write_q size_q trans_q wait_n ahb_access_done_q ahb_access_active_q);
+    my @internal_signals = qw(
+        addr_q write_q size_q trans_q wait_n ahb_access_done_q
+        ahb_phase_pending_q next_addr_q next_write_q next_size_q next_trans_q next_wait_n
+    );
     push @internal_signals, qw(seq_valid_q seq_expected_addr_q seq_size_q seq_write_q)
         if _transfer_selects_seq_policy($transfer);
-    push @internal_signals, qw(burst_q seq_hburst_q seq_beats_remaining_q)
+    push @internal_signals, qw(burst_q next_burst_q seq_hburst_q seq_beats_remaining_q)
         if _transfer_selects_hburst_seq_policy($transfer);
 
     _reject_duplicate_signal_names(
@@ -336,7 +339,15 @@ sub _emit_isf($contract) {
     my @read_drive_lines = _read_drive_lines($contract);
     my @access_lines = _access_lines($contract);
     my @burst_interface_lines = exists($bus->{burst}) ? _interface_line('input', $bus->{burst}) : ();
-    my @burst_sample_lines = exists($bus->{burst}) ? "      (sample $bus->{burst}{name} as burst_q)" : ();
+    my @burst_phase_storage_lines = exists($bus->{burst})
+        ? "    (var next_burst_q (width $bus->{burst}{width}) (reset 0))"
+        : ();
+    my @burst_phase_capture_lines = exists($bus->{burst})
+        ? "    (set next_burst_q $bus->{burst}{name})"
+        : ();
+    my @burst_phase_sample_lines = exists($bus->{burst})
+        ? "      (sample next_burst_q as burst_q)"
+        : ();
 
     return join("\n",
         "(actor $contract->{actor_name}",
@@ -361,7 +372,13 @@ sub _emit_isf($contract) {
         "  (storage",
         "    (var $reg_data (width $storage->{data}{width}) (reset $storage->{data}{reset}))",
         "    (var $internal_done (width 1) (reset 0))",
-        "    (var ahb_access_active_q (width 1) (reset 0))",
+        "    (var ahb_phase_pending_q (width 1) (reset 0))",
+        "    (var next_addr_q (width $bus->{address}{width}) (reset 0))",
+        "    (var next_write_q (width 1) (reset 0))",
+        "    (var next_size_q (width $bus->{size}{width}) (reset 0))",
+        "    (var next_trans_q (width $bus->{transfer}{width}) (reset 0))",
+        @burst_phase_storage_lines,
+        "    (var next_wait_n (width $control->{wait_cycles}{width}) (reset 0))",
         @seq_storage_lines,
         "  )",
         "",
@@ -386,24 +403,44 @@ sub _emit_isf($contract) {
         "    ($bus->{response}{name} $response->{error})",
         "    ($bus->{read_data}{name} 0))",
         "",
-        "  (priority ahb_access_admit over $transfer->{name})",
+        "  (priority ahb_phase_capture over ahb_error_retire)",
+        "  (priority ahb_phase_capture over ahb_phase_hold)",
+        "  (priority ahb_phase_hold over ahb_error_retire)",
+        "  (priority ahb_error_retire over $transfer->{name})",
+        "  (priority ahb_phase_hold over $transfer->{name})",
         "",
-        "  (rule ahb_access_admit (& (! ahb_access_active_q) $bus->{select} $bus->{ready_in} (| (== $bus->{transfer}{name} $transfer->{nonseq}) (== $bus->{transfer}{name} $transfer->{seq})))",
-        "    (set ahb_access_active_q 1)",
-        "    (set $bus->{ready_out} 0))",
+        "  (rule ahb_phase_capture (& (! ahb_phase_pending_q) $bus->{select} $bus->{ready_in} (| (== $bus->{transfer}{name} $transfer->{nonseq}) (== $bus->{transfer}{name} $transfer->{seq})))",
+        "    (set ahb_phase_pending_q 1)",
+        "    (set next_addr_q $bus->{address}{name})",
+        "    (set next_write_q $bus->{write})",
+        "    (set next_size_q $bus->{size}{name})",
+        "    (set next_trans_q $bus->{transfer}{name})",
+        @burst_phase_capture_lines,
+        "    (set next_wait_n $control->{wait_cycles}{name})",
+        "    (set $bus->{ready_out} 0)",
+        "    (set $bus->{response}{name} $response->{okay})",
+        "    (set $bus->{read_data}{name} 0))",
         "",
-        "  (rule ahb_access_release (& ahb_access_active_q (| (! $bus->{select}) (== $bus->{transfer}{name} $transfer->{idle}) (== $bus->{transfer}{name} $transfer->{busy})))",
-        "    (set ahb_access_active_q 0))",
+        "  (rule ahb_phase_hold ahb_phase_pending_q",
+        "    (set $bus->{ready_out} 0)",
+        "    (set $bus->{response}{name} $response->{okay})",
+        "    (set $bus->{read_data}{name} 0))",
+        "",
+        "  (rule ahb_error_retire (& $bus->{ready_out} (== $bus->{response}{name} $response->{error}))",
+        "    (set $bus->{ready_out} 1)",
+        "    (set $bus->{response}{name} $response->{okay})",
+        "    (set $bus->{read_data}{name} 0))",
         "",
         @seq_idle_clear_lines,
         "  (transaction $transfer->{name}",
-        "    (when (& (! ahb_access_active_q) $bus->{select} $bus->{ready_in} (| (== $bus->{transfer}{name} $transfer->{nonseq}) (== $bus->{transfer}{name} $transfer->{seq})))",
-        "      (sample $bus->{address}{name} as addr_q)",
-        "      (sample $bus->{write} as write_q)",
-        "      (sample $bus->{size}{name} as size_q)",
-        "      (sample $bus->{transfer}{name} as trans_q)",
-        @burst_sample_lines,
-        "      (sample $control->{wait_cycles}{name} as wait_n))",
+        "    (when ahb_phase_pending_q",
+        "      (sample next_addr_q as addr_q)",
+        "      (sample next_write_q as write_q)",
+        "      (sample next_size_q as size_q)",
+        "      (sample next_trans_q as trans_q)",
+        @burst_phase_sample_lines,
+        "      (sample next_wait_n as wait_n))",
+        "    (set ahb_phase_pending_q 0)",
         "    (drive enter_data_phase)",
         "    (repeat wait_n",
         "      (wait 1))",
@@ -834,6 +871,17 @@ sub _masked_read_expr($data_signal, $read_mask) {
 sub _build_report(%args) {
     my $contract = $args{contract};
     my @fsm_files = @{$args{fsm_files} || []};
+    my $bus = $contract->{bus};
+    my $control = $contract->{control};
+    my $transfer = $contract->{transfer};
+    my @captured_address_control = (
+        $bus->{address}{name},
+        $bus->{transfer}{name},
+        (exists($bus->{burst}) ? $bus->{burst}{name} : ()),
+        $bus->{write},
+        $bus->{size}{name},
+        $control->{wait_cycles}{name},
+    );
 
     my %source_object = (
         id      => $contract->{source_object_id},
@@ -847,6 +895,7 @@ sub _build_report(%args) {
         'role must be subordinate',
         'address, write-data, read-data, and register data widths are 32 in this slice',
         'AHB transfer width is 2, size width is 3, response width is 1, and wait-cycles width is 4 in this slice',
+        'every selected ready NONSEQ or SEQ address phase is retained exactly once through one accepted next address/control bank while HWDATA remains live data-phase state',
         _transfer_selects_hburst_seq_policy($contract->{transfer})
             ? (
                 'selected transfer support is NONSEQ SINGLE byte, halfword, and word access plus byte-only HBURST WRAP4/INCR4 in-word SEQ; IDLE and BUSY remain ignored and clear HBURST continuation history',
@@ -915,6 +964,23 @@ sub _build_report(%args) {
             $contract->{bus}{ready_out} => { reset => 1, default => 1 },
             $contract->{bus}{response}{name} => { reset => 0, default => 0 },
             $contract->{bus}{read_data}{name} => { reset => 0, default => 0 },
+        },
+        phase_pipeline => {
+            selected => JSON::PP::true,
+            mode => 'one_accepted_next_address_control',
+            accepted_next_capacity => 1,
+            acceptance => {
+                select => $bus->{select},
+                ready => $bus->{ready_in},
+                transfer => $bus->{transfer}{name},
+                active_values => [$transfer->{nonseq}, $transfer->{seq}],
+            },
+            captured_address_control => \@captured_address_control,
+            write_data => {
+                signal => $bus->{write_data}{name},
+                policy => 'live_data_phase_held_while_stalled',
+            },
+            overflow => 'stall_before_another_acceptance',
         },
         generated_artifacts => {
             ial1 => {

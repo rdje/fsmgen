@@ -8,7 +8,7 @@ answers:
   - "what report schema and support accounting identify AHB subordinate PPIF?"
   - "does AHB subordinate PPIF lower through generated isf and fsm artifacts?"
   - "is AHB subordinate exposed through .ahb yet?"
-date: 2026-06-29
+date: 2026-07-23
 status: current
 tags: [ial2, ahb, subordinate, ppif, behavior]
 evidence: docs/IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md; ppif/ahb_lite_subordinate.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/Support/RegressionCorpus.pm; t/1475-ial2-ahb-subordinate.t; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/16-ial2-protocol-platform-intent.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
@@ -28,15 +28,16 @@ Support accounting identifies the sample as
 `intent.ppif_ahb_lite_subordinate` with coverage
 `ial2_ppif_ahb_lite_subordinate_pipeline_cli` and `source_kind` `ppif`.
 
-The shipped behavior is the bounded AHB-Lite/common-AHB single-register
-subordinate: one-transfer `ahb_access_active_q` ownership around
-`HSEL && HREADY` admission for `NONSEQ`/`SEQ`, ignored `IDLE`/`BUSY`, selected
-`NONSEQ` word reads/writes to address 0, width-safe counted runtime
-`wait_cycles`, one-bit OKAY/ERROR `HRESP`, and two-cycle ERROR for unsupported
-`SEQ`, unsupported sizes, or unmapped addresses. Generated outputs preserve
-`HREADYOUT=1`, `HRESP=0`, and `HRDATA=0` reset/default metadata; the priority
-admission rule overrides ready low while claiming a transfer and prevents a
-held active presentation from being admitted twice.
+The current shipped behavior is the bounded AHB-Lite/common-AHB single-register
+subordinate with one `ahb_phase_pending_q` accepted address/control bank. At
+`HSEL && HREADY` for `NONSEQ`/`SEQ`, it captures HADDR, HTRANS, optional HBURST,
+HWRITE, HSIZE, and wait_cycles, never HWDATA, and drives ready low before
+another acceptance. It supports the selected word/byte-lane/SEQ/HBURST/BUSY
+variants, width-safe counted waits, one-bit OKAY/ERROR `HRESP`, and two-cycle
+ERROR. Generated outputs preserve `HREADYOUT=1`, `HRESP=0`, and `HRDATA=0`
+reset/default metadata. t/1519 proves boundary-free active-phase retention and
+final-ERROR active-capture versus IDLE cancel.
 
-AHB subordinate `.ahb` alias exposure remains deferred. The `.ahb` profile
-alias is still requester-only in this slice.
+The matching subordinate `.ahb` aliases ship through later slices and enter the
+same generator. General/deeper queues, multiple outstanding transfers, broader
+manager/fabric behavior, and the transaction-layer horizon remain deferred.

@@ -29,15 +29,17 @@ presentation, four completed byte beats, held requester/subordinate state and
 storage on BUSY, OKAY completion with zero remaining, and final storage
 `32'h44332211`.
 
-The proof also corrected the reused AHB endpoint phase path: the requester
-holds a presented transfer until data-phase `HREADY`; the subordinate claims
-one active transfer through `ahb_access_active_q`; continuation clearing is a
-concurrent rule rather than a competing transaction; runtime wait cycles use
+Current generated phase behavior separates requester address/data ownership,
+retires accepted `HTRANS` to IDLE, captures HRESP/HRDATA on data completion,
+banks one accepted subordinate address/control phase through
+`ahb_phase_pending_q`, and retains one one-hot interconnect data-phase owner.
+Continuation clearing remains a concurrent rule; runtime waits remain
 width-safe counted repeats; the interconnect child instance is `fabric`; and a
 zero-base decode omits `HADDR >= 0`. The paired source passes public
 `--verify-hdl`. The paired `.ahb` alias and generic two-subordinate paired
 sibling now ship through later task-tree slices. The matching two-subordinate
 alias also ships; current behavior is documented in
 `IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR`.
-True pipelined active transfers without an IDLE/BUSY/unselected boundary remain
-deferred.
+t/1519 separately proves boundary-free active-phase retention. General/deeper
+queues, multiple outstanding transfers, and broader manager/fabric behavior
+remain deferred.

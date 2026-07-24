@@ -109,6 +109,63 @@ subtest 'canonical current behavior records point to later alias owners' => sub 
     }
 };
 
+subtest 'current AHB surfaces describe the shipped depth-one phase pipeline' => sub {
+    my $protocol_chapter = slurp('docs/book/src/16-ial2-protocol-platform-intent.md');
+    my $navigation = section_between(
+        $protocol_chapter,
+        '## Protocol Navigation',
+        '## Reviewing Generated Artifacts',
+    );
+    like(
+        $navigation,
+        qr/one accepted active-phase bank.*retained one-hot data-phase ownership/s,
+        'protocol navigation describes subordinate and interconnect phase ownership',
+    );
+    unlike(
+        $navigation,
+        qr/boundary-free active-transfer pipelining.*future task-tree-owned work/s,
+        'protocol navigation no longer defers the shipped depth-one phase pipeline',
+    );
+
+    my $ahb_chapter = slurp('docs/book/src/16c-ial2-ahb.md');
+    my $phase_section = section_between(
+        $ahb_chapter,
+        '## Boundary-Free Active Address Phases',
+        '## Validation Used For This Chapter',
+    );
+    like(
+        $phase_section,
+        qr/phase_pipeline\.mode =\s+one_accepted_next_address_control/s,
+        'AHB chapter names the shipped phase-pipeline report mode',
+    );
+    like(
+        $phase_section,
+        qr/two acceptances, captures, and completions.*32'h00002211/s,
+        'AHB chapter records the exact repaired runtime outcome',
+    );
+    unlike(
+        $phase_section,
+        qr/pending implementation|Until `\.3` ships|known-broken/,
+        'AHB chapter contains no pre-repair current-status wording',
+    );
+
+    for my $relative_path (
+        'docs/IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md',
+        'docs/IAL2_AHB_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md',
+        'docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md',
+        'docs/knowledge/ial2-ahb-subordinate-ppif-behavior.md',
+        'docs/knowledge/ial2-ahb-paired-busy-composition-behavior.md',
+        'docs/knowledge/ial2-ahb-subordinate-busy-park-behavior.md',
+    ) {
+        my $text = slurp($relative_path);
+        unlike(
+            $text,
+            qr/true boundary-free active-transfer pipelining.*remain(?:s)? deferred/s,
+            "$relative_path no longer defers the shipped depth-one pipeline",
+        );
+    }
+};
+
 done_testing();
 
 sub repo_file {

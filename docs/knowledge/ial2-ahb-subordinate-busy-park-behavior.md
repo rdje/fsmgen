@@ -43,8 +43,10 @@ records shipped BUSY-in-burst parking.
 
 The classic non-parking `ahb_lite_subordinate_byte_lane_hburst_seq` source still
 clears on BUSY. Focused coverage: `t/1494`. The matching endpoint/aggregate
-aliases, aggregate BUSY parking, requester BUSY insertion, and the first paired
-generic aggregate have since shipped. Halfword/word burst `SEQ`, wider bursts,
-and true boundary-free active-transfer pipelining remain deferred. Fact
+aliases, aggregate BUSY parking, requester BUSY insertion, and the paired
+generic/alias aggregates have since shipped. The generated family also now
+ships one boundary-free accepted address/control slot. Halfword/word burst
+`SEQ`, wider bursts, general/deeper queues, and multiple outstanding transfers
+remain deferred. Fact
 [[ahb-hburst-seq-verify-hdl-widthexpand]] records that the former dynamic-wait
 `--verify-hdl` warning was resolved by `.794`'s AHB-local counted-wait form.

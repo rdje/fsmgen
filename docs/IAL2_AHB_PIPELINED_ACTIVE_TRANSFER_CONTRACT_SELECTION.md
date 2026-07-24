@@ -4,6 +4,11 @@ Task-tree owner: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`
 
 Date: 2026-07-23
 
+Implementation status: `.3` now implements this contract as the coupled
+generated-role repair documented in
+`docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md`. The selection below remains
+the durable rationale and boundary.
+
 ## Outcome
 
 The selected repair for the generated public AHB subordinate family is a

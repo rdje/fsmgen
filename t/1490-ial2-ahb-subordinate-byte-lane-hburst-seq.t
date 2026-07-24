@@ -32,10 +32,10 @@ subtest 'adapter parses selected AHB subordinate byte-lane HBURST SEQ PPIF shape
     is($result->{generated_ial1}{name}, 'ahb_lite_subordinate_byte_lane_hburst_seq.isf', 'generated IAL1 artifact is named');
     like($isf, qr/\A\(actor ahb_lite_subordinate_byte_lane_hburst_seq\b/, 'generated IAL1 names byte-lane HBURST SEQ subordinate actor');
     like($isf, qr/\(input HBURST \(width 3\)\)/, 'generated IAL1 exposes HBURST input');
-    like($isf, qr/\(sample HBURST as burst_q\)/, 'generated IAL1 samples HBURST alongside transfer controls');
+    like($isf, qr/\(set next_burst_q HBURST\).*?\(sample next_burst_q as burst_q\)/s, 'generated IAL1 captures then relaunches HBURST alongside transfer controls');
     like($isf, qr/\(var seq_hburst_q \(width 3\) \(reset 0\)\)/, 'generated IAL1 stores the prior HBURST for control stability');
     like($isf, qr/\(var seq_beats_remaining_q \(width 2\) \(reset 0\)\)/, 'generated IAL1 stores bounded four-beat remaining count');
-    like($isf, qr/\(rule ahb_access_admit \(& \(! ahb_access_active_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated IAL1 claims one active HBURST transfer phase at a time');
+    like($isf, qr/\(rule ahb_phase_capture \(& \(! ahb_phase_pending_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated IAL1 captures one ready active HBURST transfer phase at a time');
     like($isf, qr/\(rule ahb_seq_idle_clear \(& HSEL HREADY \(\| \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/s, 'generated IAL1 concurrently clears HBURST continuation history on accepted IDLE/BUSY');
     like($isf, qr/\(set seq_hburst_q 0\)\s+\(set seq_beats_remaining_q 0\)/s, 'generated IAL1 clear path resets HBURST continuation state');
     like($isf, qr/\(when \(& \(== trans_q 2'b10\) \(== burst_q 0\).*size_q 2.*write_q\)\s+\(set reg_data_q HWDATA\)\s+\(set seq_valid_q 0\)/s, 'HBURST SINGLE word access remains supported and clears history');

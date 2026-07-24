@@ -152,20 +152,30 @@ shipped by `IAL2-FEATURE-COMPLETENESS-FRONTIER.714`.
 
 ## Transfer Behavior
 
-The generated subordinate starts a transaction only when it does not already
-own the currently presented transfer:
+Current behavior was updated by
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`. The generated subordinate accepts
+an active address phase into one pending address/control bank:
 
 ```text
-!ahb_access_active_q && HSEL && HREADY
+!ahb_phase_pending_q && HSEL && HREADY
   && (HTRANS == NONSEQ || HTRANS == SEQ)
 ```
 
-The priority `ahb_access_admit` rule claims one active presentation in
-`ahb_access_active_q` and drives `HREADYOUT=0` before the scheduled transaction
-samples it. The latch prevents the same held `HTRANS` from being re-admitted
-after completion and releases on an unselected, `IDLE`, or `BUSY` boundary.
-This proves the shipped requester's boundary-producing behavior; true
-boundary-free pipelining remains a separate audit.
+`ahb_phase_capture` stores `HADDR`, `HTRANS`, optional `HBURST`, `HWRITE`,
+`HSIZE`, and `wait_cycles`, then drives `HREADYOUT=0`, `HRESP=OKAY`, and neutral
+`HRDATA` for the accepted phase's data cycle. `ahb_phase_hold` preserves that
+state while the bank is pending. The scheduled transaction samples the bank
+once, clears its pending flag, and applies the existing access policy. Because
+ready remains low while the bank is occupied, a held phase is not accepted or
+sampled twice and another address phase cannot overflow the depth-one bank.
+
+`HWDATA` is not captured with address/control: it belongs to the later data
+phase and is consumed live when the banked write completes successfully. A
+final two-cycle ERROR plus an active selected address phase captures that phase
+through the higher-priority `ahb_phase_capture`; final ERROR plus `IDLE`
+captures nothing. The additive report block `phase_pipeline` exposes mode
+`one_accepted_next_address_control`, capacity one, captured fields, live
+write-data policy, and `stall_before_another_acceptance` overflow behavior.
 
 `IDLE` and `BUSY` are ignored by not starting the transaction; output defaults
 therefore keep zero-wait OKAY when no admission overrides them:
@@ -229,7 +239,8 @@ Materialize generated review artifacts and HDL:
 
 ## Residue
 
-The generic AHB subordinate `.ppif` report keeps these future owners explicit:
+The generic AHB subordinate `.ppif` report keeps these historical/future
+owners explicit:
 
 ```text
 ahb_subordinate_profile_alias_deferred
@@ -243,10 +254,13 @@ The `.715` slice did not add AHB subordinate `.ahb` alias exposure; that alias
 is now shipped separately by `.718`. The generic `.ppif` report still keeps
 `ahb_subordinate_profile_alias_deferred` as historical residue while the
 subordinate `.ahb` alias report removes it. AHB interconnect/decode,
-optional/property-gated AHB signals, burst `SEQ` continuation, byte-lane or
-narrow-transfer behavior, legacy two-bit `HRESP` compatibility, direct backend
-lowering, verification-output generation, backend-language variants, AXI
-behavior, APB behavior, and VHDL behavior remain future work.
+optional/property-gated AHB signals, legacy two-bit `HRESP` compatibility,
+general/deeper request or response queues, multiple outstanding transfers,
+broader manager/fabric behavior, direct backend lowering, verification-output
+generation, backend-language variants, AXI behavior, APB behavior, and VHDL
+behavior remain future work. Byte-lane, bounded in-word `SEQ`, bounded HBURST,
+BUSY parking, and the depth-one active-phase pipeline ship through later
+task-tree slices and share this generator.
 
 ## Validation
 
@@ -271,3 +285,7 @@ shape, generated IAL1 output reset/default metadata, generated IAL0 reset and
 idle defaults, selected register read/write behavior, two-cycle ERROR paths,
 fail-closed diagnostics, schedule/report JSON, semantic JSON, support
 accounting, and outdir artifact emission.
+
+Generated-HDL t/1519 additionally proves boundary-free `NONSEQ`-to-`SEQ`
+retention and final-ERROR active-capture versus IDLE-cancel behavior. See
+`docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md`.

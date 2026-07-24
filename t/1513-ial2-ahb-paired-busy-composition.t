@@ -30,6 +30,8 @@ subtest 'adapter composes requester BUSY insertion with subordinate BUSY parking
         'paired source intent name is selected',
     );
     is($report->{composition}{child_instance_count}, 3, 'paired aggregate child count is preserved');
+    is($report->{composition}{response_mux}{data_phase_owner}{mode}, 'one_hot_accepted_subordinate', 'paired fabric retains the accepted subordinate as data-phase response owner');
+    is($report->{composition}{response_mux}{data_phase_owner}{same_edge_replacement}, 'completion_with_accepted_active_address_replaces_owner', 'paired fabric reports completion-edge owner replacement');
 
     is_deeply(
         [sort @{$report->{generated_artifacts}{ial0}{files}}],
@@ -106,8 +108,12 @@ subtest 'CLI and review surfaces agree on the paired BUSY aggregate' => sub {
         ok(-f File::Spec->catfile($outdir, $artifact), "outdir contains generated $artifact");
     }
     my $subordinate_isf = slurp(File::Spec->catfile($outdir, 'ahb_lite_subordinate_byte_lane_hburst_seq.isf'));
-    like($subordinate_isf, qr/\(rule ahb_access_admit \(& \(! ahb_access_active_q\)/, 'paired subordinate claims each active transfer once');
+    my $interconnect_fsm = slurp(File::Spec->catfile($outdir, 'ahb_interconnect.fsm'));
+    like($subordinate_isf, qr/\(rule ahb_phase_capture \(& \(! ahb_phase_pending_q\)/, 'paired subordinate captures each ready active transfer once');
+    like($subordinate_isf, qr/\(rule ahb_phase_hold ahb_phase_pending_q/, 'paired subordinate holds one accepted next phase');
     unlike($subordinate_isf, qr/\(transaction ahb_seq_idle_clear\b/, 'paired subordinate uses no competing idle-clear transaction');
+    like($interconnect_fsm, qr/\(ahb_data_owner_0_q 1 \(reset 0\)\)/, 'paired fabric declares one reset-clean data-phase owner bit');
+    like($interconnect_fsm, qr/\(<ahb_data_owner_0_q\s+\(= \(HREADY> HREADYOUT_REGS\)\).*?\(<HRESP_REGS/s, 'paired fabric muxes ready and response from the retained subordinate owner');
     like(slurp($hdl), qr/\bmodule\s+ahb_tb\b/, 'generated HDL contains the aggregate module');
 
     my ($verify_ok, undef, undef, $verify_stdout, $verify_stderr) = run(

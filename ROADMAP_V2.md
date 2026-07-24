@@ -7056,6 +7056,20 @@ generated-HDL/preservation gates are selected. `.4` later audits the separate
 direct lower-layer `.fsm` seed; general queues, broader bursts, AXI/APB/VHDL,
 and decision 0020 remain deferred/inactive.
 
+`IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3` now implements the coupled
+generated-role phase repair. The subordinate captures one selected ready
+active address/control phase into `ahb_phase_pending_q`, holds ready low while
+pending, consumes live data-phase HWDATA, and reports
+`phase_pipeline.mode=one_accepted_next_address_control`. The requester now
+separates address/data ownership, retires accepted HTRANS to IDLE, and captures
+HRESP/HRDATA on completion. The interconnect retains one one-hot accepted
+subordinate as response/data owner and permits same-edge mapped replacement.
+t/1519 proves exact boundary-free NONSEQ-to-SEQ and final-ERROR active-versus-
+IDLE cases; t/1513/t1515 preserve exact paired runtimes. Public source/support/
+artifact identities and direct seeds are unchanged. `.4` owns the direct-seed
+audit; general queues, multiple outstanding transfers, and decision 0020
+remain inactive/deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

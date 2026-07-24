@@ -70,15 +70,15 @@ subtest 'adapter parses the selected two-subordinate AHB interconnect PPIF shape
     like($interconnect_fsm, qr/\(= \(HADDR_CONTROL> \(- HADDR 4\)\)\)/, 'generated interconnect IAL0 subtracts control base for local address');
     like($interconnect_fsm, qr/<HRESP_STATUS\s+\(= \(HRESP> 2'b01\)\)/s, 'generated interconnect IAL0 maps status ERROR to requester ERROR');
     like($interconnect_fsm, qr/<HRESP_CONTROL\s+\(= \(HRESP> 2'b01\)\)/s, 'generated interconnect IAL0 maps control ERROR to requester ERROR');
-    like($interconnect_fsm, qr/\(! \(\| \(& \(>= HADDR 0\) \(< HADDR 4\)\) \(& \(>= HADDR 4\) \(< HADDR 8\)\)\)\)/, 'generated interconnect IAL0 treats unmapped as no selected window');
+    like($interconnect_fsm, qr/\(! \(\| \(< HADDR 4\) \(& \(>= HADDR 4\) \(< HADDR 8\)\)\)\).*?\(! \(\| ahb_data_owner_0_q ahb_data_owner_1_q\)\)/s, 'generated interconnect IAL0 treats unmapped as no selected window and no retained data-phase owner');
 
     my $top = $result->{generated_ial0}{files}{'ahb_tb.fsm'};
     like($top, qr/\(\?fsmc:status ahb_status_subordinate\)/, 'generated top instantiates status subordinate');
     like($top, qr/\(\?fsmc:control ahb_control_subordinate\)/, 'generated top instantiates control subordinate');
-    like($top, qr/\(interconnect\.HSEL_STATUS status\.HSEL_STATUS\)/, 'generated top wires status select');
-    like($top, qr/\(interconnect\.HSEL_CONTROL control\.HSEL_CONTROL\)/, 'generated top wires control select');
-    like($top, qr/\(status\.HRESP_STATUS interconnect\.HRESP_STATUS\)/, 'generated top wires status response into interconnect');
-    like($top, qr/\(control\.HRESP_CONTROL interconnect\.HRESP_CONTROL\)/, 'generated top wires control response into interconnect');
+    like($top, qr/\(fabric\.HSEL_STATUS status\.HSEL_STATUS\)/, 'generated top wires status select through the legal fabric instance');
+    like($top, qr/\(fabric\.HSEL_CONTROL control\.HSEL_CONTROL\)/, 'generated top wires control select through the legal fabric instance');
+    like($top, qr/\(status\.HRESP_STATUS fabric\.HRESP_STATUS\)/, 'generated top wires status response into the legal fabric instance');
+    like($top, qr/\(control\.HRESP_CONTROL fabric\.HRESP_CONTROL\)/, 'generated top wires control response into the legal fabric instance');
 
     my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
     ok(!$residue{ahb_multi_subordinate_decode_deferred}, 'two-subordinate report removes old multi-subordinate deferred residue');

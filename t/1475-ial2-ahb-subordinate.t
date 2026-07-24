@@ -39,11 +39,14 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
     like($isf, qr/\(output HREADYOUT \(reset 1\) \(default 1\)\)/, 'generated AHB subordinate IAL1 records HREADYOUT reset/default');
     like($isf, qr/\(output HRESP \(reset 0\) \(default 0\)\)/, 'generated AHB subordinate IAL1 records HRESP reset/default');
     like($isf, qr/\(output HRDATA \(width 32\) \(reset 0\) \(default 0\)\)/, 'generated AHB subordinate IAL1 records HRDATA reset/default');
-    like($isf, qr/\(var ahb_access_active_q \(width 1\) \(reset 0\)\)/, 'generated AHB subordinate IAL1 stores bounded address/data-phase ownership');
-    like($isf, qr/\(priority ahb_access_admit over ahb_lite_access\)/, 'generated AHB subordinate IAL1 admits a transfer before the transaction scheduler observes it');
-    like($isf, qr/\(rule ahb_access_admit \(& \(! ahb_access_active_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated AHB subordinate IAL1 claims one selected active transfer');
-    like($isf, qr/\(rule ahb_access_release \(& ahb_access_active_q \(\| \(! HSEL\) \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/, 'generated AHB subordinate IAL1 releases phase ownership at a transfer boundary');
-    like($isf, qr/\(when \(& \(! ahb_access_active_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated AHB subordinate IAL1 admits each held active transfer only once');
+    like($isf, qr/\(var ahb_phase_pending_q \(width 1\) \(reset 0\)\)/, 'generated AHB subordinate IAL1 stores one accepted next phase valid bit');
+    like($isf, qr/\(var next_addr_q \(width 32\) \(reset 0\)\).*?\(var next_trans_q \(width 2\) \(reset 0\)\).*?\(var next_wait_n \(width 4\) \(reset 0\)\)/s, 'generated AHB subordinate IAL1 stores one accepted next address/control bank');
+    like($isf, qr/\(priority ahb_phase_capture over ahb_phase_hold\).*?\(priority ahb_phase_hold over ahb_lite_access\)/s, 'generated AHB subordinate IAL1 gives phase capture and hold priority over the transaction tail');
+    like($isf, qr/\(rule ahb_phase_capture \(& \(! ahb_phase_pending_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated AHB subordinate IAL1 captures every selected ready active phase');
+    like($isf, qr/\(rule ahb_phase_hold ahb_phase_pending_q\s+\(set HREADYOUT 0\)/s, 'generated AHB subordinate IAL1 stalls a banked phase before another acceptance');
+    like($isf, qr/\(rule ahb_error_retire \(& HREADYOUT \(== HRESP 1'b1\)\)/, 'generated AHB subordinate IAL1 retires final ERROR while the internal tail drains');
+    like($isf, qr/\(when ahb_phase_pending_q\s+\(sample next_addr_q as addr_q\).*?\(sample next_trans_q as trans_q\).*?\(set ahb_phase_pending_q 0\)/s, 'generated AHB subordinate IAL1 relaunches the captured phase once');
+    unlike($isf, qr/\(sample HWDATA\b/, 'generated AHB subordinate IAL1 keeps HWDATA as live data-phase state');
     like($isf, qr/\(repeat wait_n\s+\(wait 1\)\)/s, 'generated AHB subordinate IAL1 repeats one-cycle waits from the sampled runtime count');
     like($isf, qr/\(when \(== trans_q 2'b11\)\s+\(drive error_first\)\s+\(drive error_complete\)\)/s, 'generated AHB subordinate IAL1 routes SEQ to two-cycle ERROR');
     like($isf, qr/\(set reg_data_q HWDATA\)/, 'generated AHB subordinate IAL1 writes the selected register from HWDATA');
@@ -59,8 +62,8 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
     like($fsm, qr/\(HREADYOUT 1 \(reset 1\)\)/, 'generated AHB subordinate IAL0 carries HREADYOUT reset metadata');
     like($fsm, qr/\(HRESP 1 \(reset 0\)\)/, 'generated AHB subordinate IAL0 carries HRESP reset metadata');
     like($fsm, qr/\(HRDATA 32 \(reset 0\)\)/, 'generated AHB subordinate IAL0 carries HRDATA reset metadata');
-    like($fsm, qr/\(ahb_lite_access_idle_0\s+\(<- \(HRDATA> 0\)\)\s+\(<- \(HREADYOUT> 1\) <\(! \(& \(! ahb_access_active_q\).*?\)\)\s+\(<- \(HRESP> 0\)\)/s,
-        'generated AHB subordinate IAL0 keeps the ready default priority-safe during admission');
+    like($fsm, qr/\(ahb_lite_access_idle_0\s+\(<- \(HRDATA> 0\)\)\s+\(<- \(HREADYOUT> 1\) <\(& \(! \(& \(! ahb_phase_pending_q\).*?\)\) \(! ahb_phase_pending_q\)\)\)\s+\(<- \(HRESP> 0\)/s,
+        'generated AHB subordinate IAL0 keeps the ready default suppressed during phase capture and hold');
     like($fsm, qr/\(<- \(reg_data_q HWDATA\)\)/, 'generated AHB subordinate IAL0 writes storage on mapped writes');
     like($fsm, qr/\(<- \(HRDATA> reg_data_q\) <read_hit_start\)/, 'generated AHB subordinate IAL0 drives read data on mapped reads');
     like($fsm, qr/\(<- \(HRESP> 1'b1\) <error_first_start\)/, 'generated AHB subordinate IAL0 drives first ERROR response');
@@ -77,6 +80,11 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
     is($result->{report}{output_defaults}{HREADYOUT}{default}, 1, 'report captures HREADYOUT idle default high');
     is($result->{report}{output_defaults}{HRESP}{reset}, 0, 'report captures HRESP reset OKAY');
     is($result->{report}{output_defaults}{HRDATA}{default}, 0, 'report captures HRDATA idle default zero');
+    is($result->{report}{phase_pipeline}{mode}, 'one_accepted_next_address_control', 'report exposes the one-next-phase pipeline mode');
+    is($result->{report}{phase_pipeline}{accepted_next_capacity}, 1, 'report bounds accepted next phase capacity to one');
+    is_deeply($result->{report}{phase_pipeline}{captured_address_control}, [qw(HADDR HTRANS HWRITE HSIZE wait_cycles)], 'report exposes the non-HBURST captured address/control bank');
+    is($result->{report}{phase_pipeline}{write_data}{policy}, 'live_data_phase_held_while_stalled', 'report keeps HWDATA live in the data phase');
+    is($result->{report}{phase_pipeline}{overflow}, 'stall_before_another_acceptance', 'report exposes phase-bank backpressure');
     is($result->{report}{generated_artifacts}{hdl_entry}{entry_artifact}, 'ahb_lite_subordinate.fsm', 'report selects generated subordinate .fsm as HDL entry');
 
     my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
@@ -168,6 +176,8 @@ subtest 'CLI checks, semantic export, schedule report, and outdir all use the pu
     is_deeply($schedule->{generated_artifacts}{ial0}{files}, ['ahb_lite_subordinate.fsm'], 'schedule/report JSON exposes generated IAL0 artifact');
     is($schedule->{output_defaults}{HREADYOUT}{default}, 1, 'schedule/report JSON exposes HREADYOUT default high');
     is($schedule->{output_defaults}{HRESP}{reset}, 0, 'schedule/report JSON exposes HRESP reset OKAY');
+    is($schedule->{phase_pipeline}{mode}, 'one_accepted_next_address_control', 'schedule/report JSON exposes the selected phase pipeline');
+    is($schedule->{phase_pipeline}{accepted_next_capacity}, 1, 'schedule/report JSON exposes the one-phase capacity');
     my %schedule_residue = map { $_->{id} => 1 } @{$schedule->{unsupported_residue}};
     ok($schedule_residue{ahb_subordinate_profile_alias_deferred}, 'schedule/report JSON keeps .ahb subordinate alias residue explicit');
 

@@ -34,7 +34,8 @@ subtest 'adapter parses the BUSY-park AHB subordinate PPIF and parks BUSY' => su
 
     # The BUSY-park delta: the concurrent idle-clear rule fires on IDLE only, so a
     # BUSY beat leaves the seq_* registers unassigned (parked) instead of cleared.
-    like($isf, qr/\(rule ahb_access_release \(& ahb_access_active_q \(\| \(! HSEL\) \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/, 'generated IAL1 releases the completed active transfer at the parked BUSY boundary');
+    like($isf, qr/\(rule ahb_phase_capture \(& \(! ahb_phase_pending_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated IAL1 captures ready active phases while BUSY remains non-admitted');
+    like($isf, qr/\(rule ahb_phase_hold ahb_phase_pending_q\s+\(set HREADYOUT 0\)/s, 'generated IAL1 holds a captured active phase without changing BUSY parking policy');
     like($isf, qr/\(rule ahb_seq_idle_clear \(& HSEL HREADY \(== HTRANS 2'b00\)\)/s, 'generated IAL1 concurrently clears continuation history on accepted IDLE only');
     unlike($isf, qr/\(rule ahb_seq_idle_clear \(& HSEL HREADY \(\| \(== HTRANS 2'b00\) \(== HTRANS 2'b01\)\)\)/s, 'generated IAL1 idle-clear no longer fires on BUSY');
 
@@ -51,6 +52,8 @@ subtest 'adapter parses the BUSY-park AHB subordinate PPIF and parks BUSY' => su
     is_deeply($sp->{supported_hburst_modes}, [qw(WRAP4 INCR4)], 'report keeps the supported HBURST modes');
     is_deeply($sp->{clears_on}, [qw(reset idle error new_nonseq final_beat)], 'report drops BUSY from clears_on');
     is_deeply($sp->{parks_on}, [qw(busy)], 'report records BUSY as a parked (held) transfer');
+    is($result->{report}{phase_pipeline}{mode}, 'one_accepted_next_address_control', 'report exposes one-next-phase capture alongside BUSY parking');
+    is_deeply($result->{report}{phase_pipeline}{captured_address_control}, [qw(HADDR HTRANS HBURST HWRITE HSIZE wait_cycles)], 'report captures HBURST in the atomic phase bank');
 
     my %residue = map { $_->{id} => $_->{detail} } @{$result->{report}{unsupported_residue}};
     like($residue{ahb_burst_seq_support_deferred}, qr/with BUSY-in-burst parking is shipped/, 'residue records shipped BUSY-in-burst parking');

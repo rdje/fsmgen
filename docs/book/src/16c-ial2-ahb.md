@@ -134,7 +134,7 @@ and do not produce generated `.isf` or generated `.fsm` review artifacts.
 | --- | --- | --- |
 | Guided mode | The thirty-eight public AHB sources listed above, including paired one- and two-subordinate `.ppif`/`.ahb` source pairs | Bounded requester/subordinate/interconnect sources, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, and paired BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs cover selected byte/halfword/word lanes, in-word `SEQ`, HBURST `WRAP4`/`INCR4`, and BUSY parking. The selected generic and matching `.ahb` aggregate HBURST-aware byte-lane `SEQ` sources include non-parking and BUSY-park variants, plus paired BUSY-inserting-requester compositions across one or two static windows. Interconnect knobs are exposed as `children`, static `address-map` windows, `decode`, and `wiring` clauses. |
-| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, policy/runtime or multiple BUSY insertion, distinct bus-BUSY status, boundary-free active-transfer pipelining, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, and retained one-hot interconnect data ownership. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, policy/runtime or multiple BUSY insertion, distinct bus-BUSY status, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -1137,12 +1137,18 @@ The generated AHB-side HDL ports include `HGRANT`, `HREADY`, `HRESP`,
 `beats_remaining`, `active_addr`, `active_hburst`, `last_error`,
 `last_retry`, `last_split`, `last_resp`, and `last_read_data`.
 
-The generated IAL1 requester uses an internal completion bit for transaction
-completion, so the public `done` status output remains an ordinary status
-drive:
+The generated IAL1 requester uses separate address, data, and captured-response
+ownership plus an internal transaction completion bit, so an accepted address
+retires independently of its later data response and public `done` remains an
+ordinary status drive:
 
 ```text
 (storage
+  (var ahb_address_pending_q (width 1) (reset 0))
+  (var ahb_data_pending_q (width 1) (reset 0))
+  (var ahb_response_pending_q (width 1) (reset 0))
+  (var ahb_response_q (width 2) (reset 0))
+  (var ahb_read_data_q (width 32) (reset 0))
   (var ahb_request_done_q (width 1) (reset 0)))
 ...
 (complete ahb_request_done_q)
@@ -1173,8 +1179,10 @@ The selected requester transfer behavior is:
 
 - first accepted beat uses `HTRANS=NONSEQ`;
 - later accepted beats use `HTRANS=SEQ`;
-- transfer activity is gated by `HGRANT`;
-- response advancement is gated by `HREADY`;
+- new address presentation is gated by `HGRANT`;
+- `HGRANT && HREADY` accepts the address phase, moves ownership to the data
+  phase, and immediately retires `HTRANS` to `IDLE`;
+- the later ready edge captures `HRESP` and `HRDATA` before response handling;
 - `OKAY` advances or completes;
 - `ERROR` completes with error status;
 - `RETRY` and `SPLIT` keep the request active for re-request behavior.
@@ -1322,21 +1330,22 @@ The requester holds address/control/data and counters from BUSY to resumed
 register storage; exactly four byte data beats complete with OKAY; final
 remaining count is zero; and the register becomes `32'h44332211`.
 
-That runtime proof also tightened the common AHB endpoint phase contract. A
-requester waits one clock after presenting an active transfer and holds it
-until data-phase `HREADY`. A subordinate claims one active presentation in
-`ahb_access_active_q`, immediately drives `HREADYOUT=0`, samples it once, and
-releases ownership at an unselected, `IDLE`, or `BUSY` boundary. Continuation
-clearing is a concurrent `ahb_seq_idle_clear` rule rather than a competing
-transaction. Sampled `wait_cycles` use a counted repetition of one-cycle waits,
-which preserves zero/nonzero timing and is clean under `--verify-hdl`.
+The current shared generated phase contract is coupled across all three AHB
+roles. The requester retires accepted `HTRANS` to IDLE while retaining the data
+phase and captures HRESP/HRDATA on completion. The subordinate banks one
+accepted address/control phase in `ahb_phase_pending_q`, drives ready low while
+pending, and does not bank data-phase HWDATA. The interconnect retains a
+one-hot `ahb_data_owner_N_q` and muxes HREADY/HRESP/HRDATA from that owner
+through data completion; a mapped acceptance on the same completion edge
+replaces the owner atomically. Continuation clearing is a concurrent
+`ahb_seq_idle_clear` rule, and sampled `wait_cycles` use a lint-clean counted
+repetition.
 
-The shipped requester produces the transfer boundary required by that bounded
-ownership contract. True boundary-free pipelined active transfers are not yet
-claimed. The interconnect child instance is HDL-safe `fabric`; a zero-base
-decode emits only its upper bound, while nonzero-base windows retain both
-bounds. The two-subordinate paired sibling and broader BUSY/burst policies
-remain deferred.
+Generated-HDL t/1519 proves boundary-free active-phase retention directly at
+the subordinate. The interconnect child instance remains HDL-safe `fabric`; a
+zero-base decode emits only its upper bound, while nonzero-base windows retain
+both bounds. General queues/multiple outstanding transfers and broader BUSY/
+burst policies remain deferred.
 
 `.795` selected `.796`; `.796` now ships the matching paired `.ahb` profile
 alias. The tracked alias is byte-identical to the generic source and preserves the same generated
@@ -1556,6 +1565,15 @@ outstanding queues, multi-manager behavior, and decision 0020 remain outside
 this boundary. See the
 [runtime audit](../../IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md).
 
+`.2` selected the depth-one accepted address/control bank at the bus-visible
+ready edge. `.3` now implements it and the paired generated-role prerequisites:
+requester address/data ownership separation with response-edge capture,
+subordinate one-slot phase retention, and interconnect retained data-phase
+ownership. Current t/1519 proves exact two-acceptance/two-completion
+NONSEQ-to-SEQ behavior plus final-ERROR active-capture versus IDLE cancel;
+t/1513 and t/1515 preserve exact one- and two-window paired results. See the
+[repair record](../../IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md).
+
 ## Subordinate Source Shape
 
 The public subordinate source starts with the selected AHB-Lite/common-AHB
@@ -1596,13 +1614,13 @@ blocks, duplicate names, unsupported fields, and non-AHB profiles fail closed.
 
 ## Subordinate Behavior
 
-The selected subordinate transaction begins only when
-`!ahb_access_active_q && HSEL && HREADY` and `HTRANS` is `NONSEQ` or `SEQ`.
-A priority admission rule claims that presentation, drives `HREADYOUT=0`, and
-prevents the same held transfer from being admitted twice. Ownership releases
-at an unselected, `IDLE`, or `BUSY` boundary. `IDLE` and `BUSY` are ignored by
-not starting the transaction; the idle/default outputs remain when admission
-does not override them:
+The selected subordinate accepts an active address phase only when
+`!ahb_phase_pending_q && HSEL && HREADY` and `HTRANS` is `NONSEQ` or `SEQ`.
+`ahb_phase_capture` banks HADDR, HTRANS, optional HBURST, HWRITE, HSIZE, and
+wait_cycles, drives `HREADYOUT=0`, and prevents another acceptance while the
+bank is pending. `ahb_phase_hold` preserves not-ready/OKAY/neutral-read-data
+until the scheduled transaction consumes the bank once. `IDLE` and `BUSY` are
+not captured; the idle/default outputs remain when no rule overrides them:
 
 ```text
 HREADYOUT = 1
@@ -1610,11 +1628,11 @@ HRESP     = 0
 HRDATA    = 0
 ```
 
-For accepted transfers, the generated `.isf` samples `HADDR`, `HWRITE`,
-`HSIZE`, `HTRANS`, and `wait_cycles`, drives the data phase pending state with
-`HREADYOUT=0`, repeats a one-cycle wait for the sampled count, then resolves
-the transfer. This counted form preserves zero bypass and nonzero delay while
-keeping generated HDL lint-clean:
+For accepted transfers, the generated `.isf` samples the pending bank into the
+transaction, clears its valid bit, repeats a one-cycle wait for the sampled
+count, then resolves the transfer. HWDATA is deliberately live data-phase state
+rather than an address/control-bank field. This counted form preserves zero
+bypass and nonzero delay while keeping generated HDL lint-clean:
 
 - `NONSEQ`, word size, address `0`, and `HWRITE=1` writes `reg_data_q` from
   `HWDATA` and completes with OKAY;
@@ -2090,39 +2108,45 @@ single-BUSY source now ship independently.
 
 ## Boundary-Free Active Address Phases
 
-The current generated subordinate has a runtime-proven phase-retention defect
-pending implementation in `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`. If a
-selected `SEQ` address phase directly follows a completing `NONSEQ` with no
-IDLE/BUSY/unselected boundary, the bus-visible interface accepts both phases
-but the pre-repair generator retains and completes only the first.
-
-The selected repair is deliberately bounded. The subordinate will hold one
-current phase plus exactly one bus-accepted next address/control phase:
+The generated AHB family now supports a deliberately bounded, depth-one active
+address-phase pipeline. The subordinate holds exactly one bus-accepted
+address/control phase:
 
 ```text
-current completes with HREADY high
-  + selected active next HTRANS
-  -> capture next HADDR/HTRANS/(HBURST)/HWRITE/HSIZE/wait_cycles
-  -> drive the next data phase HREADYOUT low
-  -> finish the current generated FSM tail
-  -> relaunch the captured phase without accepting it a second time
+empty bank + HSEL && HREADY && active HTRANS
+  -> capture HADDR/HTRANS/(HBURST)/HWRITE/HSIZE/wait_cycles
+  -> drive HREADYOUT low for that phase's data cycle
+  -> consume the bank once through the existing access policy
+  -> stall before another address acceptance while occupied
 ```
 
-`HWDATA` is not captured with that address/control phase. On the acceptance
-edge it still belongs to the completing write; the next write data is then
-held live by the manager while ready is low. Sequence history from the current
-transfer commits before the captured phase is evaluated. After final ERROR,
-`IDLE` cancels the presented next phase, while an active `NONSEQ`/`SEQ` is
-captured and later evaluated normally (including an independent error for an
-invalid continuation).
+`HWDATA` is not captured with address/control; it is live data-phase state and
+is held while ready is low. A final ERROR ready edge captures a selected active
+phase for later independent evaluation, while `IDLE` cancels it. The schedule
+report advertises `phase_pipeline.mode =
+one_accepted_next_address_control`, capacity one, and overflow policy
+`stall_before_another_acceptance`.
 
-The full contract, report shape, proof obligations, and exclusions are in
-[IAL2 AHB Pipelined Active-Transfer Contract Selection](../../IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md).
-Until `.3` ships, users must treat boundary-free generated subordinate
-pipelining as known-broken rather than supported. The shipped paired requester
-remains safe because it supplies the boundary used by its existing proofs.
-This repair is not a general outstanding queue and does not activate the
-protocol-neutral transaction-layer horizon.
+The generated requester separately owns address, data, and captured response:
+address acceptance retires HTRANS to IDLE, and the later data-completion edge
+captures HRESP/HRDATA. The generated interconnect retains one one-hot accepted
+subordinate as HREADY/HRESP/HRDATA owner until completion; a mapped acceptance
+on the same edge replaces that owner atomically. Without those paired roles,
+correct requester retirement would make the interconnect mux the response from
+the wrong current address phase.
+
+Generated-HDL t/1519 proves two acceptances, captures, and completions for
+boundary-free `NONSEQ(0) -> SEQ(1)`, producing storage `32'h00002211`. It also
+proves exactly two ERROR cycles and active-continuation capture after final
+ERROR, plus exactly two ERROR cycles and no continuation/storage effect for
+final ERROR followed by IDLE. t/1513 and t/1515 preserve the one- and
+two-subordinate paired results.
+
+See the [repair record](../../IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md) and
+the preceding [contract selection](../../IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md).
+This is protocol bookkeeping with capacity one, not a general outstanding
+queue, multi-manager fabric, or activation of the protocol-neutral
+transaction-layer horizon.
 
 ## Validation Used For This Chapter
 

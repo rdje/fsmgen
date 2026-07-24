@@ -91,7 +91,7 @@ subtest 'alias emits the shared artifacts and clean HDL' => sub {
         ok(-f File::Spec->catfile($outdir, $artifact), "outdir contains $artifact");
     }
     like(slurp(File::Spec->catfile($outdir, 'amba_requester_busy_insert.isf')), qr/\(drive transfer_busy\b/, 'requester IAL1 keeps BUSY drive');
-    like(slurp(File::Spec->catfile($outdir, 'ahb_lite_subordinate_byte_lane_hburst_seq.isf')), qr/ahb_access_active_q/, 'subordinate IAL1 keeps one-transfer ownership');
+    like(slurp(File::Spec->catfile($outdir, 'ahb_lite_subordinate_byte_lane_hburst_seq.isf')), qr/ahb_phase_pending_q/, 'subordinate IAL1 keeps one accepted next phase');
     like(slurp($hdl), qr/\bmodule\s+ahb_tb\b/, 'generated HDL contains aggregate module');
     like(slurp($hdl), qr/\bahb_interconnect\s+fabric\b/, 'generated HDL keeps legal fabric instance');
 

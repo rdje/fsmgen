@@ -1,8 +1,8 @@
 ---
 id: ial2-ahb-pipelined-active-transfer-runtime-audit
-title: Generated AHB subordinate drops a boundary-free accepted SEQ phase
+title: Pre-repair generated AHB subordinate dropped a boundary-free accepted SEQ phase
 answers:
-  - "does the generated AHB subordinate accept consecutive NONSEQ and SEQ address phases?"
+  - "what did the pre-repair generated AHB subordinate do with consecutive NONSEQ and SEQ address phases?"
   - "what happens when an AHB SEQ phase follows NONSEQ without IDLE or BUSY?"
   - "is the AHB boundary-free active-transfer defect runtime proven?"
   - "why does ahb_access_active_q drop a new AHB transfer?"
@@ -15,17 +15,22 @@ evidence: docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_RUNTIME_AUDIT.md; docs/tasks/I
 reverify: prove -Iperl t/1519-ial2-ahb-pipelined-active-transfer-audit.t
 ---
 
-Generated-HDL t/1519 presents a distinct `SEQ` byte write immediately after a
+Pre-repair generated-HDL t/1519 presented a distinct `SEQ` byte write immediately after a
 `NONSEQ` byte write and holds it through the first transfer's ready-low data
 phase. The bus accepts two active address phases, but the current subordinate
 records one admission/completion, retains captured address 0/`NONSEQ`, and
 leaves storage at `0x00000011` instead of applying the second lane-one write to
 produce `0x00002211`.
 
-`ahb_access_active_q` prevents duplicate admission of a held transfer but
-releases only on unselected/IDLE/BUSY. Requiring such a boundary cannot safely
+`ahb_access_active_q` prevented duplicate admission of a held transfer but
+released only on unselected/IDLE/BUSY. Requiring such a boundary could not safely
 fail closed: keeping ready low deadlocks the held next phase, while raising
 ready accepts it. Audit `.1` therefore selects explicit atomic
 completion-boundary phase recapture/tracking for no-behavior contract
 selection in `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`. Decision 0020 and
 the protocol-neutral transaction-layer horizon remain inactive.
+
+`.3` now repairs that defect through the generated subordinate phase bank,
+requester address/data separation, and interconnect data-phase owner documented
+in `IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR`. These measurements remain
+historical evidence rather than a statement of current behavior.

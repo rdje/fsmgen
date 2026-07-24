@@ -16,7 +16,7 @@ evidence: docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md; docs/IA
 reverify: rg -n 'cycle 37|cycle 48|HWDATA|one_accepted_next_address_control|final cycle of a two-cycle ERROR' docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md
 ---
 
-The selected generated-subordinate repair captures exactly one next accepted
+The selected generated-subordinate repair, now implemented by `.3`, captures exactly one next accepted
 address/control phase at `HSEL && HREADY && active HTRANS` while the current
 transaction drains its generated FSM tail. The audit observed the second bus
 acceptance at cycle 37 and `ahb_access_done_q` only at cycle 48, so the delayed
@@ -26,6 +26,7 @@ The bank contains HADDR, HTRANS, optional HBURST, HWRITE, HSIZE, and
 wait_cycles. It does not contain HWDATA, which belongs to the data phase and is
 held live while ready is low. Final ERROR plus IDLE cancels the next phase;
 final ERROR plus selected active HTRANS captures it for independent later
-evaluation after error history clears. `.3` owns the shared generator/report/
-runtime repair. The separate direct `.fsm` seed is preserved and audited later
+evaluation after error history clears. The shared generator/report/runtime
+repair is documented in `IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR`. The
+separate direct `.fsm` seed is preserved and audited later
 by `.4`. Decision 0020 remains inactive.

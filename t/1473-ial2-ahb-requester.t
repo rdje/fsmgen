@@ -35,10 +35,12 @@ subtest 'adapter parses the selected AHB requester PPIF shape' => sub {
     like($isf, qr/\(input HREADY\)/, 'generated AHB IAL1 declares HREADY');
     like($isf, qr/\(input HRESP \(width 2\)\)/, 'generated AHB IAL1 declares HRESP');
     like($isf, qr/\(output HTRANS \(width 2\)\)/, 'generated AHB IAL1 declares HTRANS');
-    like($isf, qr/\(storage\s+\(var ahb_request_done_q \(width 1\) \(reset 0\)\)\)/s, 'generated AHB IAL1 uses an internal completion bit');
+    like($isf, qr/\(storage\s+\(var ahb_address_pending_q \(width 1\) \(reset 0\)\)\s+\(var ahb_data_pending_q \(width 1\) \(reset 0\)\)\s+\(var ahb_response_pending_q \(width 1\) \(reset 0\)\)\s+\(var ahb_response_q \(width 2\) \(reset 0\)\)\s+\(var ahb_read_data_q \(width 32\) \(reset 0\)\)\s+\(var ahb_request_done_q \(width 1\) \(reset 0\)\)\)/s, 'generated AHB IAL1 tracks address acceptance, data completion, captured response, and internal completion');
+    like($isf, qr/\(rule ahb_address_accept \(& ahb_address_pending_q HGRANT HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)\s+\(set ahb_address_pending_q 0\)\s+\(set ahb_data_pending_q 1\)\s+\(set HTRANS 2'b00\)\)/s, 'generated AHB IAL1 retires an accepted active address presentation to IDLE');
+    like($isf, qr/\(rule ahb_response_capture \(& ahb_data_pending_q HREADY\)\s+\(set ahb_data_pending_q 0\)\s+\(set ahb_response_pending_q 1\)\s+\(set ahb_response_q HRESP\)\s+\(set ahb_read_data_q HRDATA\)\)/s, 'generated AHB IAL1 captures response and read data on the data-completion edge');
     like($isf, qr/\(while beats_remaining_q/, 'generated AHB IAL1 loops over remaining beats');
-    like($isf, qr/\(when HGRANT/, 'generated AHB IAL1 gates transfer activity on HGRANT');
-    like($isf, qr/\(wait 1\)\s+\(continue-when \(! HREADY\)\)/s, 'generated AHB IAL1 separates the address phase and holds the transfer while data-phase completion is pending');
+    like($isf, qr/\(continue-when \(& \(! HGRANT\) \(! ahb_address_pending_q\) \(! ahb_data_pending_q\) \(! ahb_response_pending_q\)\)\)/, 'generated AHB IAL1 gates new address presentation on HGRANT without blocking an accepted data phase');
+    like($isf, qr/\(continue-when ahb_address_pending_q\)\s+\(continue-when ahb_data_pending_q\)\s+\(set ahb_response_pending_q 0\)/s, 'generated AHB IAL1 separates address acceptance from data completion without replaying the active presentation');
     like($isf, qr/\(complete ahb_request_done_q\)/, 'generated AHB IAL1 completes on the internal bit');
 
     is_deeply(

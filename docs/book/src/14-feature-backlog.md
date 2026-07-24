@@ -10865,6 +10865,20 @@ IDLE cancels, while final ERROR plus active HTRANS captures. The report gains
 an additive `phase_pipeline` policy; `.4` separately audits the direct `.fsm`
 seed. General queues and decision 0020 remain inactive.
 
+AHB pipelined active-transfer repair:
+[IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR](../../IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md)
+documents `.3`. The generated subordinate now has one accepted
+HADDR/HTRANS/optional HBURST/HWRITE/HSIZE/wait_cycles bank and never banks
+data-phase HWDATA. Preservation required the generated requester to separate
+address/data ownership, retire accepted HTRANS to IDLE, and capture response/
+read data at completion; the generated interconnect now retains one one-hot
+subordinate data-phase owner through that completion. t/1519 proves exact
+boundary-free NONSEQ-to-SEQ retention and final-ERROR active-capture versus
+IDLE cancel; t/1513 and t/1515 preserve exact paired results. Public source,
+support, artifact, and direct-seed identities are unchanged. General/deeper
+queues, multiple outstanding transfers, `.4` direct-seed audit work, and
+decision 0020 remain outside this leaf.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

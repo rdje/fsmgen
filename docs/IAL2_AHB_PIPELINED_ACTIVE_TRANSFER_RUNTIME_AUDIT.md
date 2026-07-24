@@ -8,9 +8,14 @@ Later selection: `.2` freezes a depth-one accepted address/control phase bank
 at the bus-visible ready/completion edge and assigns implementation to `.3`.
 See `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_CONTRACT_SELECTION.md`.
 
+Current resolution: `.3` implements the coupled generated subordinate,
+requester, and interconnect phase contract. See
+`docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md`. The measurements below are
+preserved pre-repair audit evidence.
+
 ## Outcome
 
-Generated-HDL audit t/1519 proves that the current public AHB subordinate can
+The pre-repair generated-HDL audit t/1519 proved that the public AHB subordinate could
 silently drop a distinct selected `SEQ` address phase that follows a completed
 `NONSEQ` phase without an unselected, `IDLE`, or `BUSY` boundary.
 
@@ -26,8 +31,8 @@ captured_trans=NONSEQ
 storage=0x00000011
 ```
 
-The required second lane-one write would have produced `0x00002211`. It does
-not occur. The audit changes no generator, public source, support entry,
+The required second lane-one write would have produced `0x00002211`. It did
+not occur. The `.1` audit changed no generator, public source, support entry,
 report, artifact contract, port, or runtime behavior. It selects explicit
 completion-boundary phase recapture/tracking for contract selection in
 `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2`.
@@ -81,15 +86,15 @@ address/control values are not sampled because `ahb_access_active_q` remains
 set. The public interface nevertheless presents an OKAY/ready completion, so
 the loss is neither an explicit error nor a visible stall.
 
-This ownership state was introduced for a valid reason: it prevents repeated
+This ownership state was introduced for a valid reason: it prevented repeated
 admission of one active address phase held during a wait state. The defect is
 that the state does not distinguish that held phase from a new phase accepted
 on the completion boundary.
 
 ## Why Boundary Insertion Or Fail-Closed Handling Is Insufficient
 
-The shipped generated requester supplies an `IDLE`/`BUSY` boundary, so the
-paired t/1513 and t/1515 proofs remain valid for that bounded composition.
+The pre-repair generated requester supplied an `IDLE`/`BUSY` boundary, so the
+paired t/1513 and t/1515 proofs remained valid for that bounded composition.
 Requester-only boundary insertion cannot protect the public subordinate from
 another conforming AHB requester.
 

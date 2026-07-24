@@ -60,19 +60,22 @@ remain structurally unchanged.
 
 ## Generated Phase Behavior
 
-The generated-HDL proof exposed two prerequisite defects in the reused AHB
-endpoint path, and `.794` corrects them within the AHB family:
+The original `.794` generated-HDL proof corrected the first bounded endpoint
+timing defects. `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3` now completes the
+current generated pipeline contract across the three reused AHB roles:
 
-- The requester presents the request bus before entering its beat loop, waits
-  one clock after driving `NONSEQ`/`SEQ`, and repeats the same transfer while
-  `HREADY` is low. It evaluates `HRESP` and advances address/data/counters only
-  after the data phase completes.
-- The subordinate owns one admitted active transfer with
-  `ahb_access_active_q`. A priority `ahb_access_admit` rule claims a selected
-  `NONSEQ`/`SEQ` transfer and immediately lowers `HREADYOUT`; the transaction
-  samples that transfer once. `ahb_access_release` releases the ownership at
-  an unselected, `IDLE`, or `BUSY` boundary, preventing a held transfer from
-  being admitted twice.
+- The requester tracks address, data, and captured-response ownership
+  separately. Once `HGRANT && HREADY` accepts an active address, it immediately
+  drives `HTRANS=IDLE` while retaining the data phase; a later ready edge
+  captures `HRESP` and `HRDATA` before address/data/counters advance.
+- The subordinate captures one selected ready `NONSEQ`/`SEQ` address/control
+  phase in `ahb_phase_pending_q`, drives ready low while it is pending, and
+  consumes it once. The bank includes HADDR/HTRANS/optional HBURST/HWRITE/
+  HSIZE/wait_cycles and deliberately excludes data-phase HWDATA.
+- The interconnect records one one-hot `ahb_data_owner_N_q` on mapped address
+  acceptance and muxes HREADY/HRESP/HRDATA from that retained subordinate
+  through data completion, independent of the current address phase. A mapped
+  active acceptance on the same completion edge atomically replaces the owner.
 - `ahb_seq_idle_clear` is a concurrent rule, not a competing auxiliary
   transaction. This lets the shared transaction scheduler start the real AHB
   access while still clearing continuation history on the selected boundary.
@@ -80,11 +83,11 @@ endpoint path, and `.794` corrects them within the AHB family:
   one-cycle waits. A zero count bypasses the wait body; nonzero counts retain
   the sampled delay without the former dynamic-wait literal-width warning.
 
-The selected requester emits an `IDLE` or BUSY boundary between completed
-active transfers, so this ownership contract covers the shipped aggregate.
-True pipelined/back-to-back active transfers without such a boundary are not
-claimed; proposed tree `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT` owns that
-separate runtime audit.
+Generated-HDL t/1519 proves consecutive active address-phase retention directly
+at the subordinate, including final-ERROR active-capture and IDLE-cancel cases.
+The paired runtime remains intentionally bounded and still proves its exact
+BUSY insertion/parking result. This is a one-slot protocol pipeline, not a
+general outstanding-transfer queue.
 
 The generated interconnect uses HDL-safe instance name `fabric`, and a
 zero-base window emits only `HADDR < limit` rather than the unsigned tautology
@@ -154,9 +157,9 @@ two-subordinate paired sibling now ships as documented in
 `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`; its
 matching `.ahb` alias now ships as documented in
 [IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR](IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md).
-Policy/runtime or multi-BUSY insertion, a
-distinct local bus-BUSY status, true pipelined active
-transfer admission, halfword/word burst `SEQ`, wider or indefinite bursts,
+Policy/runtime or multi-BUSY insertion, a distinct local bus-BUSY status,
+general/deeper request or response queues, multiple outstanding transfers,
+halfword/word burst `SEQ`, wider or indefinite bursts,
 multi-word/register-bank behavior, optional AHB signals, broader AHB manager
 behavior, direct backend, verification-output generation, backend-language
 variants, AXI/APB behavior changes, and VHDL remain deferred.

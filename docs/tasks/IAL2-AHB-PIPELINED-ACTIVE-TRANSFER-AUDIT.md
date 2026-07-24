@@ -66,11 +66,11 @@ replace one accepted active address phase directly with another.
   Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.2: select one-slot phase recapture`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3`
-  Status: `pending`
-  Goal: `Implement one-slot accepted address/control phase recapture in the shared generated AHB subordinate family.`
-  Acceptance: `Starting only after .2 commits cleanly, update AhbSubordinate generated IAL1/state/report behavior so every HSEL && HREADY && active HTRANS phase is retained exactly once: direct-admit current when idle, otherwise capture exactly one next HADDR/HTRANS/optional HBURST/HWRITE/HSIZE/wait_cycles bank, never capture HWDATA, reassert HREADYOUT low after the acceptance edge, relaunch after the current generated FSM tail without a second bus acceptance, and complete every accepted phase exactly once. Preserve current-response ownership, wait states, storage side effects, IDLE/BUSY/selection handling, sequence/HBURST/BUSY-park policies, and two-cycle ERROR semantics including IDLE cancellation versus active continuation. Add the selected additive phase_pipeline report and update current docs/book/facts. Extend t1519 to prove two acceptances/admissions/completions and storage 0x00002211 plus held-phase/error cases; run affected subordinate/aggregate/paired preservation, support/accounting, mdBook, Knowledge Map, memory/path/diff/doctrine gates under the 4-GiB descendant cap. Do not change public syntax/ports/source or support IDs/artifact names, direct fsm/ahb_lite_subordinate.fsm, broader burst policy, AXI/APB/VHDL, general queues/outstanding transfers, or decision 0020.`
-  Verification: `pending`
-  Commit: `pending`
+  Status: `done`
+  Goal: `Implement one-slot accepted address/control phase recapture and preserve the generated AHB requester/fabric/subordinate phase contract.`
+  Acceptance: `Starting only after .2 commits cleanly, update AhbSubordinate generated IAL1/state/report behavior so every HSEL && HREADY && active HTRANS phase is retained exactly once: direct-admit current when idle, otherwise capture exactly one next HADDR/HTRANS/optional HBURST/HWRITE/HSIZE/wait_cycles bank, never capture HWDATA, reassert HREADYOUT low after the acceptance edge, relaunch after the current generated FSM tail without a second bus acceptance, and complete every accepted phase exactly once. Preserve current-response ownership, wait states, storage side effects, IDLE/BUSY/selection handling, sequence/HBURST/BUSY-park policies, and two-cycle ERROR semantics including IDLE cancellation versus active continuation. If paired generated-HDL preservation proves the bounded generated requester keeps an already-accepted address presentation active through the data phase, repair only that generated requester timing prerequisite so it retires the accepted presentation to an IDLE boundary while waiting for edge-captured data completion; preserve its public syntax/ports/report/status/burst policy and do not change direct requester seeds. If that correct IDLE retirement proves the generated interconnect response mux loses the accepted data-phase owner because it decodes only the current HTRANS/HADDR, add the smallest generated-interconnect owner latch: capture the selected subordinate at each ready active address acceptance, mux HREADY/HRESP/HRDATA from that retained owner through the data phase, retire on completion, and atomically replace it when completion accepts the next active address phase. Preserve address decode/select behavior, unmapped two-cycle ERROR behavior, public syntax/ports/report/source/support/artifact identities, and direct interconnect seeds. Add the selected additive phase_pipeline report and update current docs/book/facts. Extend t1519 to prove two acceptances/admissions/completions and storage 0x00002211 plus held-phase/error cases; run affected requester/subordinate/aggregate/paired preservation, support/accounting, mdBook, Knowledge Map, memory/path/diff/doctrine gates under the 4-GiB descendant cap. Do not change public syntax/ports/source or support IDs/artifact names, direct fsm/ahb_lite_subordinate.fsm or direct requester/interconnect seeds, broader burst policy, AXI/APB/VHDL, general queues/outstanding transfers, or decision 0020.`
+  Verification: `Implemented the shared generated-role depth-one phase pipeline without changing public syntax, ports, source/support identities, artifact names, selected burst policy, or direct seeds. AhbSubordinate now captures every selected ready active phase once in ahb_phase_pending_q plus HADDR/HTRANS/optional HBURST/HWRITE/HSIZE/wait_cycles fields, never HWDATA; holds ready low while occupied; retires final ERROR safely; and reports phase_pipeline mode one_accepted_next_address_control/capacity 1/live_data_phase_held_while_stalled/stall_before_another_acceptance. Preservation exposed and this leaf repaired the coupled generated prerequisites: AhbRequester separates address/data/response ownership, retires accepted HTRANS to IDLE, and edge-captures HRESP/HRDATA; AhbInterconnect retains a reset-clean one-hot subordinate data owner through completion with same-edge mapped replacement and additive composition.response_mux.data_phase_owner reporting. t1519 passes three exact generated-HDL scenarios: NONSEQ0->SEQ1 has 2 accepts/captures/completions and storage 0x00002211; final ERROR+active has exactly two ERROR cycles and completes the continuation to storage 0xaa; final ERROR+IDLE has exactly two ERROR cycles, no continuation, and no storage effect. Generated-HDL t1513 preserves 5 presentations/4 beats/1 BUSY/storage 0x44332211; t1515 preserves 2 commands/10 presentations/8 beats/2 BUSY/status 0x44332211/control 0x88776655. Requester SINGLE/INCR4/WRAP4/8/16/BUSY, subordinate word/byte/SEQ/HBURST/BUSY, one-/two-window mapped/unmapped, and alias tests pass; final consolidated t1473/t1475/t1478/t1480/t1498/t1514/t1516/t1518 passes 8 files/30 tests in 860 seconds. t248+t297 pass 6815 assertions with unchanged accounting. t1518 now locks the shipped current phase truth. Perl syntax, strict checks, --verify-hdl, mdBook build, Knowledge Map generation/check at 973 facts/4928 question keys, memory architecture, docs paths, diff, and doctrine gates pass. Direct memory-pressure probes stayed safe (56-70% free during the last broad verifier); all guarded descendants stayed below 4 GiB. The affected t1480 test-only legal fabric-name sync is recorded above; unrelated known t1474 diagnostic drift remains with PUBLIC-SYNC-TEST-DRIFT-REPAIR. Disposable book/temp outputs were removed. Current behavior record/fact ial2-ahb-pipelined-active-transfer-repair, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map are synchronized. Decision 0020 remains inactive; .4 owns the separate direct-seed audit.`
+  Commit: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.3: repair generated AHB phase pipeline`
 
 - ID: `IAL2-AHB-PIPELINED-ACTIVE-TRANSFER-AUDIT.4`
   Status: `pending`
@@ -95,6 +95,50 @@ the shared-generator/report/runtime repair to `.3`. The distinct direct `.fsm`
 seed remains unchanged for a separate `.4` audit. `.2` activated only after
 `.1` committed cleanly at `5cbed61cc`; no behavior repair is mixed into the
 contract-selection leaf.
+
+`.3` activated only after `.2` committed cleanly at `814a2cc40`. Its behavior
+boundary is the shared generated AHB subordinate family and the selected
+additive report/runtime proof; the direct lower-layer seed remains untouched
+for `.4`.
+
+`.3` now implements that shared generated contract together with the two
+coupled preservation prerequisites: requester address/data/response ownership
+separation and retained interconnect data-phase ownership. The current repair
+record is `docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md`, with Knowledge
+Map fact `ial2-ahb-pipelined-active-transfer-repair`. The direct lower-layer
+seeds remain unchanged; `.4` may activate only after the `.3` closeout commit
+leaves the repository clean.
+
+Implementation finding: direct t1519 proves the one-slot subordinate and
+two-cycle ERROR retirement, while paired t1513/t1515 time out because the
+bounded generated requester keeps its already-accepted active address
+presentation asserted until data completion. Under the repaired subordinate,
+that completion edge is correctly interpreted as another bus acceptance. `.3`
+therefore also owns the smallest generated-requester timing prerequisite:
+retire an accepted address presentation to `IDLE` during its data-phase wait.
+This is required to preserve the shipped pair without reintroducing silent
+same-value phase loss; direct requester seeds remain outside the slice.
+
+The first corrected-requester paired rerun completes instead of deadlocking
+but writes `00443322` rather than `44332211`. Root cause is the generated
+interconnect response mux: it selects `HREADY/HRESP/HRDATA` from the current
+active `HTRANS/HADDR`, so the requester's protocol-correct post-acceptance
+`IDLE` immediately returns the mux to default ready/OKAY while the accepted
+subordinate data phase is still stalled. The requester consequently advances
+`HWDATA` one beat early. `.3` therefore also owns the smallest generated-fabric
+prerequisite: retain the accepted subordinate as data-phase response owner
+until completion, with same-edge replacement for a newly accepted active
+phase. Direct interconnect seeds remain outside the slice.
+
+Affected two-subordinate preservation also found four pre-existing stale
+`t/1480` wiring assertions. Git blame dates them to `700ff29dde` on June 30,
+while `2c9c674998` on July 23 changed the generated interconnect instance to
+the legal identifier `fabric`; the generator/top wiring is correct and `.3`
+did not cause that drift. Because `t/1480` is a direct preservation gate for
+the generated interconnect changed here, `.3` owns the test-only `fabric`
+expectation synchronization together with its own unmapped-owner-guard
+expectation. The unrelated stale `t/1474` aggregate diagnostic remains owned
+by proposed `PUBLIC-SYNC-TEST-DRIFT-REPAIR`.
 
 ## Blockers
 

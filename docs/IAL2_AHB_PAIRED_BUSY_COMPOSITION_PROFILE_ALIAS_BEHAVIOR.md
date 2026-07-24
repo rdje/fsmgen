@@ -155,10 +155,14 @@ requester-only and aggregate-BUSY-park alias families.
 The generic two-subordinate paired source and its matching `.ahb` alias now
 ship as documented in
 `docs/IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md`.
-Multi-beat/
-policy/runtime BUSY, a distinct local bus-BUSY status, true boundary-free active-transfer pipelining,
+Multi-beat/policy/runtime BUSY, a distinct local bus-BUSY status,
+general/deeper request or response queues and multiple outstanding transfers,
 halfword/word or wider/indefinite burst progression, multi-word/register-bank
 behavior, optional AHB signals, legacy two-bit subordinate `HRESP`, broader
 manager/interconnect behavior, direct backend behavior, verification-output
 generation, backend-language variants, AXI/APB behavior, and VHDL remain
 deferred. Decision `0020` and all proposed audits remain inactive.
+
+The alias shares the depth-one active-phase pipeline documented in
+`docs/IAL2_AHB_PIPELINED_ACTIVE_TRANSFER_REPAIR.md`; it is not a separate
+generator.
