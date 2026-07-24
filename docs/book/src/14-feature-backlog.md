@@ -10971,6 +10971,19 @@ the
 [selected exact-two alias contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md),
 and [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
 
+`.809` selects the next no-behavior owner:
+[IAL2 exact-two paired BUSY composition readiness](../../IAL2_POST_REQUESTER_MULTI_BUSY_NEXT_OWNER_SELECTION.md).
+An in-memory one-requester/one-subordinate candidate already preserves three
+children, `ahb_tb`, the exact-two requester artifacts and numeric child
+`busy_insertion.beats=2`, plus subordinate and propagated `parks_on=[busy]`.
+The selected audit must still prove two qualified BUSY events preserve all
+requester/subordinate/interconnect ownership and resume one pending `SEQ`
+exactly once. No public source/name or behavior is selected yet. Any later
+support-accounted source must retain normalized semantic JSON and existing
+read-only MCP introspection without a feature-specific API. Counts beyond two,
+policy/runtime insertion, two-subordinate exact-two composition, and decision
+0020 remain separate/inactive.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

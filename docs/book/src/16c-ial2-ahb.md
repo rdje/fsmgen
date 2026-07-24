@@ -1943,6 +1943,15 @@ The following are not shipped by the current AHB IAL2 surface:
 - backend-language variants;
 - VHDL behavior.
 
+The next selected owner is a no-behavior readiness audit for the smallest
+paired exact-two composition: one shipped exact-two requester plus one shipped
+HBURST-aware byte-lane subordinate that parks BUSY. A static in-memory candidate
+already preserves three children, `ahb_tb`, numeric requester `beats=2`, and
+subordinate/propagated `parks_on=[busy]`; generated-HDL runtime must still prove
+two qualified BUSY events preserve ownership and resume one `SEQ` exactly once.
+No public source ships from that selection yet. See the
+[post-requester-multiple-BUSY selection](../../IAL2_POST_REQUESTER_MULTI_BUSY_NEXT_OWNER_SELECTION.md).
+
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that
 stale residue from alias reports. The generic subordinate `.ppif` report keeps

@@ -7146,6 +7146,15 @@ verifier parity while t1521 remains the shared runtime.
 Runtime-selected throttling, other counts/points, paired exact-two sources,
 local bus-BUSY status, larger bursts, optional signals, and decision 0020
 remain deferred/inactive.
+`.809` now selects proposed
+`IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`. A disposable
+one-subordinate candidate already generates three children/top `ahb_tb`,
+exact-two requester artifacts and numeric child `beats=2`, plus subordinate and
+propagated `parks_on=[busy]`, through existing generators. The audit must prove
+two qualified BUSY events preserve requester/subordinate/interconnect ownership
+and resume one `SEQ` exactly once before public naming/behavior. Any later
+source must retain bounded semantic JSON and existing read-only MCP exposure.
+No behavior changed in `.809`; decision 0020 remains proposed/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

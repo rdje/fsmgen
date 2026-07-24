@@ -6108,6 +6108,17 @@ parity without a second runtime; t1521 remains the shared runtime proof.
 Runtime-selected throttling, other counts/points, paired exact-two sources,
 local bus-BUSY status, larger bursts, optional signals, and decision 0020
 remain deferred/inactive.
+`.809` now selects proposed
+`IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT` as the next exact
+owner after the requester child tree closes. An in-memory one-subordinate
+candidate already preserves three children, top `ahb_tb`, exact-two requester
+IAL1/IAL0, numeric child `busy_insertion.beats=2`, and subordinate plus
+propagated `parks_on=[busy]` through existing generators. The audit must still
+prove two qualified BUSY events preserve requester/subordinate/interconnect
+ownership and resume one `SEQ` exactly once before any public source is
+selected. Any later source must expose bounded semantic JSON and existing
+read-only MCP introspection without a feature-specific API. No behavior changes
+in `.809`; decision 0020 remains proposed/inactive.
 
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
@@ -8791,6 +8802,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md` — documents the `.5` shipped generic exact-two requester source, existing-generator architecture, actor-owned qualified-event counter and checker-required priority, numeric report/support surfaces, assertion-enabled t1521 runtime, and `.6`/`.7` exact-two alias handoff.
 - `docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md` — records `.6` selection of a byte-identical exact-two `.ahb` profile alias, its support/report/artifact/semantic/MCP parity contract, projected 316/357/40 accounting, shared t1521 runtime, focused t1522 proof boundary, `.7` implementation handoff, and explicit non-selections.
 - `docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md` — documents the `.7` shipped byte-identical exact-two `.ahb` alias, same-generator lowering, alias-only residue cleanup, 316/357/40 support boundary, strict semantic JSON and real read-only MCP introspection, focused t1522 parity, and shared t1521 runtime.
+- `docs/IAL2_POST_REQUESTER_MULTI_BUSY_NEXT_OWNER_SELECTION.md` — records `.809` selection of one-subordinate exact-two requester/BUSY-parking-subordinate runtime readiness, the successful static three-child/artifact/report probe, semantic/MCP cross-cutting requirement, rejected broader owners, proposed audit activation boundary, and rollback.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.
