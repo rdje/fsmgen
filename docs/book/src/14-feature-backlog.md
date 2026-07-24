@@ -10917,12 +10917,17 @@ AHB, and decision 0020 remain unchanged.
 Post AHB phase-repair selector:
 [IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION](../../IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md)
 records `.808` selection of the proposed
-`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`. Current behavior
-remains one literal BUSY presentation (`busy-before-beat`, one-bit insertion
-flag, report `beats=single`). The audit must establish ready-accepted BUSY
-counting versus ready-low holding and lowering-safe bounded counter ownership
-before any syntax or behavior change. Runtime-selected throttling, local
-bus-BUSY status, larger bursts, optional signals, and decision 0020 remain
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`. `.1` now proves the
+current one-bit procedural insertion exposes ten ready-qualified BUSY edges
+under continuously-ready operation even though report JSON says
+`beats=single`; existing requester/paired tests count only one HTRANS episode.
+The imported Arm specification permits fixed-length BUSY-to-SEQ changes while
+ready is low, so the defect is accepted-edge cardinality rather than that
+transition. Assertion-enabled single/count-two candidates pass continuously-
+ready and 32-clock ready-low cases with four unchanged data beats. `.1` selects
+`.2`, exact single-BUSY event-cardinality repair contract selection, before
+multiple-BUSY syntax or behavior. Runtime-selected throttling, local bus-BUSY
+status, larger bursts, optional signals, and decision 0020 remain
 deferred/inactive.
 
 Post APB surface-sync selector:

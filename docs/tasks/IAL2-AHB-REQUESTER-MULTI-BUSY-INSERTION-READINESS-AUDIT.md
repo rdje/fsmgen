@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `IAL2 / AHB requester BUSY policy`
 - Created: `2026-07-23`
-- Last updated: `2026-07-23`
+- Last updated: `2026-07-24`
 - Owner: repo-local workflow
 
 ## Goal
@@ -58,14 +58,21 @@ insertion points.
 ## Task Tree
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit bounded multiple requester BUSY presentations before selecting behavior.`
-  Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`
+  Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Establish the exact ready/acceptance, state, public-contract, and proof boundary for more than one requester BUSY presentation.`
   Acceptance: `Starting only after the clean .808 selector commit, read the canonical single-BUSY requester/alias/paired behavior and facts, current PPIF parser plus AhbRequester generated IAL1/report implementation, t1498/t1512/t1513/t1515/t1519, public sources, support/language/capability surfaces, mdBook/roadmap/Memory/Knowledge Map, and relevant decisions. Probe a bounded literal count at one insertion point, including HREADY-high consecutive acceptance and HREADY-low hold behavior; prove BUSY does not consume a data beat or response, the same pending SEQ resumes exactly once, address/control/data ownership stays stable, final transfer/beat/status counts are exact, and no lowering/lint prerequisite is hidden. Select a separate contract/repair leaf only from evidence. Make no shipped behavior change in the audit.`
+  Verification: `The repo-local Arm AHB specification corrects the initial ready-low hypothesis: fixed-length BUSY may change to SEQ while HREADY is low, after which SEQ must hold until ready. Disposable current generated HDL with HGRANT=HREADY=1 exposes one BUSY transition episode but ten ready-qualified BUSY edges, contradicting report beats=single; t1498/t1513/t1515 count only HTRANS changes. Assertion-enabled disposable candidates prove (a) one event-owned BUSY acceptance and (b) a width-two remaining counter with exactly two qualified BUSY edges, each under continuously-ready and 32-clock ready-low-then-ready scenarios, with stable fields/counters, the same resumed SEQ, four data beats, and no response/address alias. A rejected concurrent output-hold rule proved declared rule-over-transaction priority does not mask different-value output selectors; its generated assertion fails and proposed inactive ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT owns that general gap. Selected .2 single-BUSY event-cardinality repair contract selection before multiple-BUSY syntax/behavior. Canonical record docs/IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md and fact ial2-ahb-requester-multi-busy-insertion-readiness-audit. Guarded t1518 passes 4/4 current-surface tests; mdBook build, Knowledge Map generation/check at 981 facts/4968 question keys, memory architecture, docs paths, diff, and doctrine gates pass. Disposable candidate/spec-text/book outputs were removed. No shipped behavior changed.`
+  Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1: prove current single-BUSY cardinality`
+
+- ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`
+  Status: `pending`
+  Goal: `Select the exact current single-BUSY ready/grant-qualified event-cardinality repair contract before multiple-BUSY work resumes.`
+  Acceptance: `Starting only after .1 commits cleanly, freeze busy_insertion.beats=single as exactly one HGRANT && HREADY && HTRANS==BUSY event rather than one signal-transition episode or generated-microstate duration. Select the smallest BUSY pending/remaining ownership state, acceptance rule, outer-loop gate, priority, reset/command initialization, ready-low policy, and address-pending SEQ handoff using assertion-enabled generated-HDL evidence. Freeze tracked t1498 continuously-ready edge count plus ready-low scenario, .ahb alias and every paired generic/alias one-/two-subordinate preservation path, report/support/artifact/public syntax stability, current docs/facts correction, resource cap, validation, and rollback. Make no shipped behavior change in contract selection. Multiple-BUSY syntax/count behavior remains deferred until the repair implementation commits cleanly.`
   Verification: `pending`
   Commit: `pending`
 
@@ -75,6 +82,10 @@ This tree remains proposed until
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.808` commits cleanly. Activation changes
 only task/index/Memory state; implementation cannot begin before `.1` closes
 and selects an exact owner.
+
+Activation condition satisfied: `.808` committed cleanly at `5d0effaca`.
+`.1` completed the no-behavior ready/acceptance and lowering-feasibility audit
+and selected `.2`; `.2` cannot activate until `.1` commits cleanly.
 
 ## Rollback
 

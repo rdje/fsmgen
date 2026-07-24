@@ -17,8 +17,12 @@ reverify: prove -Iperl t/1512-ial2-ahb-requester-busy-insert-profile-alias.t t/1
 FSMGen ships `ppif/ahb_requester_busy_insert.ahb` as a byte-identical profile
 alias of `ppif/ahb_requester_busy_insert.ppif`. Both lower through generated
 `amba_requester_busy_insert.isf` and `.fsm`, then generate HDL module
-`amba_requester_busy_insert` with the same single held BUSY presentation and
-resumed `SEQ` behavior.
+`amba_requester_busy_insert` with the same intended single BUSY episode and
+resumed `SEQ` behavior. Current audit
+`ial2-ahb-requester-multi-busy-insertion-readiness-audit` proves both suffixes
+inherit the same present cardinality contradiction: one transition episode but
+ten continuously-ready qualified BUSY edges despite report `beats=single`.
+Exact single-event repair is selected first.
 
 The alias support identity is
 `intent.ahb_profile_alias_requester_busy_insert`, coverage

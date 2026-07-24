@@ -30,9 +30,17 @@ The alias preserves the generic source's bounded transfer contract:
 
 For an `INCR4`, generated behavior presents
 `NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`. The BUSY
-presentation holds the pending address/control/write-data and counters, skips
-response advancement, and does not consume a data beat. Exactly four beats are
-accepted.
+episode holds the pending address/control/write-data and counters, skips
+response advancement, and does not consume a data beat. Exactly four data
+beats are accepted.
+
+Current cardinality qualification: the alias is byte-identical to the generic
+source and therefore inherits the current contradiction recorded by
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`. The transition
+sequence proves one contiguous BUSY episode, but continuously-ready generated
+HDL currently spans ten `HGRANT && HREADY` BUSY edges while report JSON says
+`beats=single`. Exact single-event repair is selected before any multiple-BUSY
+extension.
 
 The alias preserves:
 

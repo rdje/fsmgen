@@ -17,8 +17,8 @@ reverify: prove -Iperl t/1492-ial2-ahb-interconnect-byte-lane-hburst-seq.t t/149
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.801` ships
 `ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ppif`.
-The one-requester/two-subordinate aggregate pairs one bounded requester BUSY
-presentation before beat two with BUSY parking in both the status and control
+The one-requester/two-subordinate aggregate pairs one intended requester BUSY
+episode before beat two with BUSY parking in both the status and control
 HBURST-aware byte-lane subordinates. It reuses the existing IAL2-to-IAL1-to-
 IAL0-to-HDL generator pipeline; the additive public source is not a separate
 generator.
@@ -31,9 +31,12 @@ entries.
 
 Generated-HDL t/1515 runs status-base-0 and control-base-4 byte `INCR4`
 commands. Each proves
-`NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`, one BUSY,
-four completed data beats, selected-child parking, unselected-child
+`NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`, one BUSY
+transition episode, four completed data beats, selected-child parking, unselected-child
 non-interference, correct control local-address subtraction, OKAY/zero
 completion, and final status/control storage `32'h44332211`/`32'h88776655`.
+It does not count every ready-qualified BUSY edge; fact
+`ial2-ahb-requester-multi-busy-insertion-readiness-audit` records the embedded
+requester's current ten-edge versus `beats=single` contradiction.
 The matching `.ahb` alias now ships through `.803`; broader BUSY/status/burst
 behavior remains deferred.

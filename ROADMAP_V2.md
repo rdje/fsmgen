@@ -7106,14 +7106,18 @@ decision 0020 remain deferred/inactive.
 
 `.808` selects the proposed
 `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT` after the generated
-and direct completion-edge phase repairs close. Current requester behavior is
-still one literal BUSY presentation, implemented by `busy-before-beat` plus a
-one-bit `busy_inserted_q` and reported as `busy_insertion.beats=single`. The
-audit must settle ready-accepted BUSY presentation counting versus ready-low
-holding, generated counter feasibility, unchanged data-beat/address/response
-ownership, and source/alias/paired sequencing before any behavior selection.
-Runtime-selected throttling, local bus-BUSY status, larger bursts, optional
-signals, and decision 0020 remain deferred/inactive.
+and direct completion-edge phase repairs close. `.1` now proves current
+`busy-before-beat` produces one BUSY transition episode but ten
+`HGRANT && HREADY` BUSY edges with a continuously-ready bus, contradicting
+report `busy_insertion.beats=single`; current requester/paired tests count only
+transitions. Source-backed correction: fixed-length AHB permits BUSY-to-SEQ
+while ready is low, after which SEQ must hold. Assertion-enabled exact-one and
+width-two count candidates pass continuously-ready and 32-clock ready-low
+scenarios with unchanged address/data/response ownership and four data beats.
+`.1` selects `.2`, exact single-event repair contract selection, before any
+multiple-BUSY syntax/behavior. Runtime-selected throttling, local bus-BUSY
+status, larger bursts, optional signals, and decision 0020 remain
+deferred/inactive.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

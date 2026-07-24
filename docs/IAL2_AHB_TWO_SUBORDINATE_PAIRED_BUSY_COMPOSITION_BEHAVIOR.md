@@ -33,7 +33,7 @@ IAL2 source
 ```
 
 The bounded shape is one requester, two four-byte static windows, one 32-bit
-register per subordinate, byte-only `WRAP4`/`INCR4`, and one BUSY presentation
+register per subordinate, byte-only `WRAP4`/`INCR4`, and one intended BUSY episode
 before beat index two. This slice ships the generic `.ppif` surface only.
 
 ## Source, Windows, and Report Contract
@@ -85,13 +85,19 @@ Each command observes exactly:
 NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)
 ```
 
-The runtime proof establishes one BUSY presentation and four accepted data
-beats per command. Requester address/control/data and counters hold across
+The runtime proof establishes one BUSY transition episode and four accepted
+data beats per command. Requester address/control/data and counters hold across
 BUSY. The selected subordinate holds continuation state and storage without a
 BUSY data completion, while the unselected subordinate remains unchanged.
 The control transaction proves global addresses `4,5,6,6,7` map to local
 addresses `0,1,2,2,3`. Both commands complete with OKAY status and zero
 remaining beats; status retains `32'h44332211` after control finishes.
+
+The proof counts HTRANS changes, not every ready-qualified BUSY edge. Current
+audit `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1` proves each
+embedded requester command presently spans ten such edges when continuously
+ready despite report `beats=single`; both windows inherit that requester
+limitation until the selected single-event repair ships.
 
 The complete focused test passed 67 assertions across source/report,
 strict/semantic/artifact/HDL, and generated-HDL runtime subtests. No new public

@@ -1204,7 +1204,7 @@ finishes with zero remaining, and never underflows to the five-bit value `31`.
 ## Requester BUSY Insertion
 
 Use the additive requester BUSY-insertion source when a bounded burst should
-present one held AHB BUSY transfer before a selected later beat:
+request one held AHB BUSY episode before a selected later beat:
 
 ```text
 (protocol-platform-intent ahb_requester_busy_insert
@@ -1235,9 +1235,9 @@ Run the checked-in example:
 The source keeps the base requester command/status/bus interface. At beat index
 two it presents the pending address, control, and write data with
 `HTRANS = 2'b01`, holds the beat index and remaining count, and skips response
-advancement. The following presentation is the same pending beat as `SEQ`; an
-`INCR4` therefore presents `NONSEQ(0) → SEQ(1) → BUSY(2 held) → SEQ(2 resumed)
-→ SEQ(3)` while accepting exactly four data beats.
+advancement. The following transfer-type transition is the same pending beat as
+`SEQ`; an `INCR4` therefore shows `NONSEQ(0) → SEQ(1) → BUSY(2 held) → SEQ(2
+resumed) → SEQ(3)` while accepting exactly four data beats.
 
 `busy-before-beat` is a literal in `1..15` and requires `(busy 2'b01)`.
 Malformed, missing, duplicate, or out-of-range declarations fail closed. The
@@ -1251,6 +1251,20 @@ remain BUSY-insertion free. The matching additive alias
 behavior. Runtime/policy-driven or multi-beat BUSY throttling and a separate
 local bus-BUSY status output remain deferred. The one-subordinate paired
 generic/alias and two-subordinate paired generic sources are described below.
+
+> **Current cardinality limitation:** the public report intends
+> `busy_insertion.beats=single`, but the current generated requester holds one
+> BUSY transition episode across ten `HGRANT && HREADY` clock edges when the
+> bus is continuously ready. Existing t/1498 and paired harnesses count
+> transfer-type changes, so they prove one episode and four data beats, not one
+> accepted BUSY edge. The repo-local Arm AHB specification permits
+> fixed-length BUSY-to-SEQ changes while `HREADY=0`; the defect is the
+> continuously-ready cardinality mismatch. The
+> [multiple-BUSY readiness audit](../../IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md)
+> proves assertion-enabled exact-one and exact-two event candidates and selects
+> the exact-one repair before any public multiple-BUSY extension. Until that
+> repair ships, treat `beats=single` as intended rather than a current
+> clock-edge guarantee.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.789` selected `.790`, which now ships the
 matching `ppif/ahb_requester_busy_insert.ahb` profile alias. It mirrors the
@@ -1775,15 +1789,19 @@ the [lowering-substrate audit](../../IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPT
 the [Q-named contract](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md),
 and the current [repair record](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md).
 
-After both generated and direct phase repairs, `.808` selects the proposed
+After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
-The shipped requester still inserts exactly one literal BUSY presentation with
-`busy-before-beat`, one `busy_inserted_q` bit, and report
-`busy_insertion.beats=single`. The audit must determine whether more than one
-bounded presentation counts only on a ready acceptance while `HREADY=0` holds
-the current BUSY value, and whether a counter lowers without consuming the
-pending data beat or response. It selects no syntax or behavior yet. See the
-[selector record](../../IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md).
+`.1` has now proved that the current one-bit procedural flag yields ten
+ready-qualified BUSY edges under continuously-ready operation despite report
+`busy_insertion.beats=single`; the prior tests count only one transition
+episode. The repo-local Arm specification also corrected the ready-low premise:
+fixed-length BUSY may change to SEQ while ready is low, provided SEQ then holds.
+Assertion-enabled disposable candidates prove exact one- and two-event
+ownership, including a 32-clock ready-low stretch, with unchanged fields and
+four data beats. `.1` selects `.2`, exact single-event repair contract
+selection, before multiple-BUSY syntax/behavior. See the
+[selector record](../../IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md) and
+the [runtime audit](../../IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md).
 
 Use the direct seeds when you need to inspect explicit cycle-level state
 transitions. Use the public IAL2 sources when you need source identity, source

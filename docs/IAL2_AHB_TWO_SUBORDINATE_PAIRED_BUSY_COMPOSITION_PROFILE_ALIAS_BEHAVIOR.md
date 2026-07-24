@@ -45,9 +45,18 @@ control: global [4,8), local HADDR - 4
 
 Strict check reports module `ahb_tb`, four children, 29 top signals, and
 semantic root `top`. Schedule/report JSON exposes requester-child
-`busy_insertion` with `2'b01`, before-beat two, and one bounded presentation.
+`busy_insertion` with `2'b01`, before-beat two, and the intended one bounded
+presentation.
 Both status/control child SEQ policies and both propagated composition entries
 retain `parks_on = [busy]`. There is no duplicate top-level `busy_flow`.
+
+Current cardinality qualification: the alias mirrors the generic embedded
+requester and inherits the contradiction recorded by
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`. Existing runtime
+proof counts one BUSY transition episode per command, while continuously-ready
+requester HDL currently spans ten ready-qualified BUSY edges despite
+`beats=single`. Exact single-event repair is selected before multiple-BUSY
+behavior.
 
 t/1515 remains the shared generated-HDL runtime proof. It drives status-base-0
 and control-base-4 byte `INCR4` commands, each observing:

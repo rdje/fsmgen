@@ -118,10 +118,16 @@ The harness observes:
 NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)
 ```
 
-It proves one BUSY presentation, four data beats, held requester fields and
-counters across BUSY, held subordinate continuation state and storage across
-BUSY, clean resumed `SEQ`, OKAY completion, no error/retry/split, zero
+It proves one BUSY transition episode, four data beats, held requester fields
+and counters across BUSY, held subordinate continuation state and storage
+across BUSY, clean resumed `SEQ`, OKAY completion, no error/retry/split, zero
 remaining beats, and final little-endian register value `32'h44332211`.
+
+The harness does not count every ready-qualified BUSY edge. Current audit
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1` proves the embedded
+requester presently spans ten such edges when continuously ready despite its
+`beats=single` report; this composition inherits that requester limitation
+until the selected single-event repair ships.
 
 ## Support And Commands
 

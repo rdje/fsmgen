@@ -25,9 +25,11 @@ SEQ-policy propagation expose `parks_on: [busy]`, and no duplicate top
 
 Generated-HDL t/1513 proves
 `NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`, one BUSY
-presentation, four completed byte beats, held requester/subordinate state and
-storage on BUSY, OKAY completion with zero remaining, and final storage
-`32'h44332211`.
+transition episode, four completed byte beats, held requester/subordinate state
+and storage on BUSY, OKAY completion with zero remaining, and final storage
+`32'h44332211`. It does not count every ready-qualified BUSY edge; fact
+`ial2-ahb-requester-multi-busy-insertion-readiness-audit` records the embedded
+requester's current ten-edge versus `beats=single` contradiction.
 
 Current generated phase behavior separates requester address/data ownership,
 retires accepted `HTRANS` to IDLE, captures HRESP/HRDATA on data completion,

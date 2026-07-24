@@ -1,6 +1,6 @@
 ---
 id: ial2-ahb-requester-busy-insertion-behavior
-title: The additive AHB requester source inserts one held BUSY presentation before a selected SEQ beat
+title: The additive AHB requester requests one BUSY episode, with a current accepted-edge cardinality repair pending
 answers:
   - "does FSMGen generate requester-side AHB HTRANS BUSY?"
   - "how do I insert an AHB BUSY beat from a requester?"
@@ -8,11 +8,11 @@ answers:
   - "what shipped in IAL2-FEATURE-COMPLETENESS-FRONTIER.788?"
   - "what does t 1498 prove?"
   - "what is ppif/ahb_requester_busy_insert.ppif?"
-date: 2026-07-23
+date: 2026-07-24
 status: current
 tags: [ial2, ahb, requester, busy, htrans, burst, ppif, behavior]
-evidence: ppif/ahb_requester_busy_insert.ppif; ppif/ahb_requester_busy_insert.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1498-ial2-ahb-requester-busy-insert.t; t/1512-ial2-ahb-requester-busy-insert-profile-alias.t; t/data/ahb_requester_busy_insert_tb.svt; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR.md; docs/book/src/16c-ial2-ahb.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
-reverify: prove -Iperl t/1473-ial2-ahb-requester.t t/1498-ial2-ahb-requester-busy-insert.t t/248-regression-corpus-accounting.t t/297-capability-manifest.t && ./bin/fsmgen --quiet --strict --verify-hdl ppif/ahb_requester_busy_insert.ppif
+evidence: ppif/ahb_requester_busy_insert.ppif; ppif/ahb_requester_busy_insert.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1498-ial2-ahb-requester-busy-insert.t; t/1512-ial2-ahb-requester-busy-insert-profile-alias.t; t/data/ahb_requester_busy_insert_tb.svt; t/248-regression-corpus-accounting.t; t/297-capability-manifest.t; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md; docs/book/src/16c-ial2-ahb.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
+reverify: prove -Iperl t/1473-ial2-ahb-requester.t t/1498-ial2-ahb-requester-busy-insert.t t/248-regression-corpus-accounting.t t/297-capability-manifest.t && ./bin/fsmgen --quiet --strict --verify-hdl ppif/ahb_requester_busy_insert.ppif && rg -n 'ten.*ready-qualified BUSY|beats=single' docs/IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md
 ---
 
 FSMGen ships requester-side AHB BUSY insertion through the additive source
@@ -25,11 +25,11 @@ The transfer block adds `(busy 2'b01)` and `(busy-before-beat 2)`. For a burst
 that reaches index two, the generated requester presents the pending
 address/control/write-data with `HTRANS = BUSY`, holds address and counters,
 skips response advancement, and then resumes that same index-two transfer as
-`SEQ`. One `busy_inserted_q` bit makes the insertion a one-shot. The literal
+`SEQ`. One `busy_inserted_q` bit makes the procedural insertion a one-shot. The literal
 index must be in `1..15`; missing/wrong BUSY encoding, non-literal or
 out-of-range index, and duplicate clause fail closed.
 
-Generated-HDL t/1498 proves the `INCR4` presentation sequence
+Generated-HDL t/1498 proves the `INCR4` transfer-type transition sequence
 `NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)`, unchanged
 pending fields/counters across BUSY, exactly four accepted data beats, and
 completion with zero remaining. The base requester and its `.ahb` alias remain
@@ -39,6 +39,14 @@ fact `ial2-ahb-requester-busy-insertion-profile-alias-behavior` owns its public
 surface. The requester now presents an active transfer for a clock and holds it
 while `HREADY=0`, consuming `HRESP` only after data-phase completion. The first
 generic paired requester/subordinate composition now ships; fact
-`ial2-ahb-paired-busy-composition-behavior` owns it. Policy/runtime/multi-beat
+`ial2-ahb-paired-busy-composition-behavior` owns it.
+
+Current audit `ial2-ahb-requester-multi-busy-insertion-readiness-audit` proves
+that t/1498 counts one contiguous BUSY episode, not ready-qualified BUSY edges:
+with `HGRANT=HREADY=1`, current generated HDL produces ten such edges while the
+report says `beats=single`. A fixed-length BUSY-to-SEQ change while ready is low
+is permitted by the repo-local Arm specification; the continuously-ready
+cardinality mismatch is the defect. Exact single-event repair is selected
+before any multiple-BUSY extension. Policy/runtime/multi-beat
 BUSY, distinct local bus-BUSY status, paired alias/two-subordinate variants,
 and broader requester behavior remain deferred.

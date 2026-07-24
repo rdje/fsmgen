@@ -62,9 +62,13 @@ t/1513 remains the shared generated-HDL runtime proof. It observes:
 NONSEQ(0) -> SEQ(1) -> BUSY(2 held) -> SEQ(2 resumed) -> SEQ(3)
 ```
 
-and proves one BUSY presentation, four data beats, held requester/subordinate
-state and storage, OKAY completion, zero remaining beats, and final register
-value `32'h44332211`.
+and proves one BUSY transition episode, four data beats, held requester/
+subordinate state and storage, OKAY completion, zero remaining beats, and final
+register value `32'h44332211`. It does not count every ready-qualified BUSY
+edge; the alias inherits the current requester `beats=single` cardinality
+contradiction recorded by
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1` until the selected
+single-event repair ships.
 
 ## Alias-Only Difference
 

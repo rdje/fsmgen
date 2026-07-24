@@ -6,8 +6,8 @@ Date: 2026-07-23
 
 ## Outcome
 
-FSMGen ships an additive bounded AHB requester source that inserts one held
-`HTRANS = BUSY` presentation before a selected `SEQ` beat:
+FSMGen ships an additive bounded AHB requester source whose public contract
+requests one held `HTRANS = BUSY` presentation before a selected `SEQ` beat:
 
 ```text
 ppif/ahb_requester_busy_insert.ppif
@@ -59,13 +59,13 @@ The generator adds only when `busy-before-beat` is present:
 - the next iteration's unchanged `transfer_seq` and response advancement.
 
 The requester presents the request bus before the beat loop, waits one clock
-after driving an active transfer, and repeats that same transfer while
-`HREADY=0`. It samples `HRESP` and advances only after the selected data phase
-completes. This phase-hold behavior is common to the base and BUSY-inserting
-requesters and was runtime-corrected when the first paired aggregate exposed
-the former early-response path in `.794`.
+after driving an active data transfer, and retains that transfer while its
+address/data ownership is pending. It samples `HRESP` and advances only after
+the selected data phase completes. This phase behavior is common to the base
+and BUSY-inserting requesters and was runtime-corrected when the first paired
+aggregate exposed the former early-response path in `.794`.
 
-The BUSY presentation therefore cannot decrement `beats_remaining_q`, increment
+The BUSY episode therefore cannot decrement `beats_remaining_q`, increment
 `beat_index_q`, advance `addr_q`/`wdata_q`, or consume `HREADY`/`HRESP`. A burst
 that never reaches `N` is a safe no-op. There is no new local-status bus-BUSY
 output; users observe it directly on `HTRANS`, while `local-status.busy` keeps
@@ -107,18 +107,42 @@ record is `docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_PROFILE_ALIAS_BEHAVIOR.md`.
 
 Focused generated-HDL regression
 `t/1498-ial2-ahb-requester-busy-insert.t` runs an `INCR4` command and observes
-the non-IDLE transfer presentation sequence:
+the non-IDLE transfer-type transition sequence:
 
 ```text
 NONSEQ(index 0) -> SEQ(index 1) -> BUSY(index 2 held)
                  -> SEQ(index 2 resumed) -> SEQ(index 3)
 ```
 
-The proof requires exactly one BUSY presentation, unchanged address/control/
-write-data and unchanged beat index/remaining count from BUSY to resumed SEQ,
-exactly four accepted data beats, and request completion with zero remaining.
-It also covers report shape, diagnostics, CLI check/schedule/outdir behavior,
+The proof requires one contiguous BUSY transition episode, unchanged
+address/control/write-data and unchanged beat index/remaining count from BUSY
+to resumed SEQ, exactly four accepted data beats, and request completion with
+zero remaining. It does not count every ready-qualified BUSY clock edge. It
+also covers report shape, diagnostics, CLI check/schedule/outdir behavior,
 support accounting, and preservation of the base requester.
+
+## Current Cardinality Audit
+
+`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1` found a current
+runtime/report contradiction. With `HGRANT=1` and `HREADY=1` continuously, the
+generated requester exposes one BUSY transition episode spanning **ten**
+ready-qualified BUSY edges, while the report says
+`busy_insertion.beats=single`. The one-bit flag records that the procedural
+drive was scheduled, not that one bus event retired; generated microstates
+keep the registered BUSY output active in between.
+
+The repo-local Arm AHB specification permits a fixed-length BUSY-to-SEQ change
+while `HREADY=0`, so that transition is not itself the defect. The defect is
+the continuously-ready event cardinality. The audit proved assertion-enabled
+single- and two-event candidate shapes, then selected exact single-event repair
+contract work before any public multiple-BUSY extension. Until that repair
+ships, read `beats=single` as the intended contract, not as a current
+clock-edge guarantee. The generic/alias paired requester families inherit this
+same current limitation.
+
+See
+`docs/IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md` for the exact
+source-backed timing distinction and candidate matrix.
 
 ## Run It
 

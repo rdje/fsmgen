@@ -6067,11 +6067,15 @@ decision 0020 remains inactive.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.808` now selects the proposed
 `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT` as the next exact
-owner. The current requester remains bounded to one literal BUSY presentation:
-`busy-before-beat`, one `busy_inserted_q` bit, and report value
-`busy_insertion.beats=single`. The audit must distinguish ready-accepted BUSY
-presentations from a BUSY value held while ready is low, then decide whether a
-bounded literal count is lowering-safe before any syntax or behavior changes.
+owner. `.1` now proves that the current one-bit procedural insertion exposes
+one BUSY transition episode but ten `HGRANT && HREADY` BUSY edges when
+continuously ready, contradicting report `busy_insertion.beats=single`; t/1498
+and the paired harnesses count only transitions. The imported Arm
+specification permits fixed-length BUSY-to-SEQ changes while `HREADY=0`, so
+that transition is not the defect. Assertion-enabled exact-one and exact-two
+event candidates pass continuously-ready and 32-clock ready-low scenarios with
+the same resumed SEQ and four data beats. `.1` selects `.2`, exact current
+single-event repair contract selection, before multiple-BUSY syntax/behavior.
 Runtime-selected throttling, local bus-BUSY status, larger bursts, optional
 signals, and decision 0020 remain deferred/inactive.
 
@@ -8750,6 +8754,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md` — freezes the `.7` Q-named `<-` four-state completion dispatcher, warning-clean four-scenario feasibility proof, rejected UNOPTFLAT bank/relaunch alternative, `.8` gates, and rollback.
 - `docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md` — records the `.8` shipped Q-named four-state direct-seed repair, exact t1520 success/ERROR/SEQ/IDLE proof, stable support/public boundaries, and rollback.
 - `docs/IAL2_POST_AHB_PHASE_REPAIR_NEXT_OWNER_SELECTION.md` — records `.808` selection of a no-behavior readiness audit for bounded multiple requester BUSY presentations, including the ready-acceptance question and larger deferred alternatives.
+- `docs/IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md` — records the `.1` source-backed/runtime finding that current `beats=single` spans ten ready-qualified BUSY edges, corrects the fixed-length ready-low BUSY-to-SEQ premise, proves assertion-enabled exact-one/exact-two candidates, selects `.2` current single-event repair contract work, and routes a separate output-priority lowering gap.
 - `docs/IAL2_AHB_PROFILE_ALIAS_READINESS_AUDIT.md` — selects AHB `.ahb` public profile-alias contract selection before any `.ahb` implementation or behavior change.
 - `docs/IAL2_AHB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects bounded AHB `.ahb` profile-alias implementation and the exact future alias/support-accounting contract.
 - `docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped bounded AHB `.ahb` profile-alias behavior, generated review artifacts, support accounting, diagnostics, validation, and remaining broader-AHB residue.
