@@ -27,10 +27,11 @@ transfer to existing address-pending `SEQ` ownership. Ready/grant stalls consume
 no count, BUSY consumes no data beat, and existing exact-one/base sources retain
 their generated shapes.
 
-Both suffixes report numeric `busy_insertion.beats=2`. Assertion-enabled t/1521
-proves continuous, 32-clock ready-low, and 32-clock grant-low cases with exactly
-two qualified BUSY events and four data beats. Follow-on t/1522 proves that the
-byte-identical `.ahb` alias exposes the same artifacts and bounded semantic JSON
-through the real read-only MCP adapter. The current corpus is 316 protocol /
-357 supported+strict and the AHB IAL2 inventory is 40 paths. Paired exact-two
-sources remain future work.
+Both requester suffixes report numeric `busy_insertion.beats=2`.
+Assertion-enabled t/1521 proves continuous, 32-clock ready-low, and 32-clock
+grant-low cases with exactly two qualified BUSY events and four data beats.
+Follow-on t/1522 proves that the byte-identical `.ahb` requester alias exposes
+the same artifacts and bounded semantic JSON through the real read-only MCP
+adapter. The generic one-subordinate exact-two paired source now also ships and
+moves current accounting to 317 protocol / 358 supported+strict / 41 AHB paths.
+Its matching aggregate alias and two-subordinate sibling remain future work.

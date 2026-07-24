@@ -3178,6 +3178,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         qr/Broader mixed issue-order queue cardinality beyond that selected write BID multi-static shape/,
         'manifest keeps broader mixed dynamic/static issue-order queue cardinality deferred beyond the selected write multi-static shape',
     );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/one-requester\/one-subordinate AHB aggregate pairing exact-two requester BUSY insertion with subordinate BUSY parking/,
+        'manifest advertises the generic one-subordinate exact-two paired BUSY composition',
+    );
     is($file_surface_by_suffix{'.axi'}{intent_layer}, 'IAL2', 'manifest marks .axi as IAL2');
     is(
         $file_surface_by_suffix{'.axi'}{status},

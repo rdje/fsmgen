@@ -43,8 +43,16 @@ while `HREADY=0`, consuming `HRESP` only after data-phase completion. The first
 generic paired requester/subordinate composition now ships; fact
 `ial2-ahb-paired-busy-composition-behavior` owns it.
 
+Exact-two requester insertion now ships on generic `.ppif` and matching `.ahb`
+requester surfaces, and the first generic one-subordinate exact-two paired
+composition also ships. Fact
+`ial2-ahb-exact-two-paired-busy-composition-behavior` owns its generated-HDL,
+normalized semantic JSON, and read-only MCP proof. The matching paired alias
+and two-subordinate exact-two sibling remain separate.
+
 Historical audit `ial2-ahb-requester-multi-busy-insertion-readiness-audit`
 records the pre-repair ten-qualified-edge contradiction. Repair fact
 `ial2-ahb-requester-single-busy-event-cardinality-repair` owns the shipped
-exact-one result. Policy/runtime/multiple-BUSY behavior, distinct local
-bus-BUSY status, and broader requester behavior remain deferred.
+exact-one result. Counts beyond exact two, policy/runtime-selected BUSY
+behavior, distinct local bus-BUSY status, and broader requester behavior remain
+deferred.

@@ -7140,12 +7140,13 @@ ships byte-identical `ppif/ahb_requester_busy_insert_two.ahb`. Existing `.ahb`
 suffix handling preserves generated IAL1/IAL0 and numeric `beats=2`, removes
 only `ahb_profile_alias_deferred`, and needs no parser/generator change. The
 alias support identity is `intent.ahb_profile_alias_requester_busy_insert_two`;
-accounting is 316 protocol / 357 supported-smoke+strict fixtures and 40 AHB
-paths. t1522 locks source/report/artifact/semantic JSON/read-only MCP/HDL-
+the requester/alias accounting checkpoint is 316 protocol / 357
+supported-smoke+strict fixtures and 40 AHB paths. t1522 locks
+source/report/artifact/semantic JSON/read-only MCP/HDL-
 verifier parity while t1521 remains the shared runtime.
-Runtime-selected throttling, other counts/points, paired exact-two sources,
-local bus-BUSY status, larger bursts, optional signals, and decision 0020
-remain deferred/inactive.
+Runtime-selected throttling, other counts/points, the matching aggregate alias
+and two-subordinate exact-two pairing, local bus-BUSY status, larger bursts,
+optional signals, and decision 0020 remain deferred/inactive.
 `.809` now selects proposed
 `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`. A disposable
 one-subordinate candidate already generates three children/top `ahb_tb`,
@@ -7160,10 +7161,11 @@ public contract selection after clean `.1`. `.2` now selects
 `ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`,
 existing three-child lowering, numeric child `beats=2`, propagated BUSY parking,
 t1523 runtime plus normalized semantic JSON/real read-only MCP proof, and
-projected 317 protocol / 358 supported+strict / 41 AHB paths. Proposed `.3`
-implements only that generic contract after clean `.2`; alias and
-two-subordinate exact-two work remain separate. No shipped behavior changed in
-`.2`; decision 0020 remains proposed/inactive.
+projected 317 protocol / 358 supported+strict / 41 AHB paths. `.3` now ships
+only that generic contract through the existing generators at those counts;
+the matching alias and two-subordinate exact-two work remain separate.
+Decision 0020 remains proposed/inactive. See
+`docs/IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

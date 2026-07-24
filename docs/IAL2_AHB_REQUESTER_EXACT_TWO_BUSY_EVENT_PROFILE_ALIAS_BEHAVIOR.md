@@ -81,9 +81,11 @@ semantic root:   fsm
 HDL module:      amba_requester_busy_insert_two
 ```
 
-The support corpus now contains 316 protocol fixtures and 357
-supported-smoke/strict-supported fixtures. The public AHB IAL2 inventory is 40
-paths: twenty `.ppif` sources and twenty `.ahb` aliases.
+This alias moved the support corpus to 316 protocol fixtures and 357
+supported-smoke/strict-supported fixtures, with 40 AHB IAL2 paths split
+twenty/twenty. The first generic exact-two paired composition now moves the
+current totals to 317/358 and 41 AHB paths: twenty-one `.ppif` sources and
+twenty `.ahb` aliases.
 
 The alias is exposed through the same bounded semantic contract as every other
 support-accounted source. Strict check and `--emit-semantic-json` report its

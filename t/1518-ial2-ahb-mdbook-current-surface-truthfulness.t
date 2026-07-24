@@ -31,8 +31,8 @@ subtest 'mdBook current navigation and mode surfaces include aggregate aliases' 
 
     like(
         $navigation,
-        qr/matching selected `\.ahb` profile aliases, including the exact-two requester plus aggregate HBURST and aggregate BUSY-park surfaces/,
-        'protocol navigation positively includes exact-two requester, aggregate HBURST, and BUSY-park aliases',
+        qr/matching selected `\.ahb` profile aliases, including the exact-two requester, the generic one-subordinate exact-two paired source, aggregate HBURST and aggregate BUSY-park surfaces/,
+        'protocol navigation positively includes exact-two requester, the generic exact-two pairing, and aggregate aliases',
     );
     unlike(
         $navigation,
@@ -98,15 +98,30 @@ subtest 'current AHB surfaces include the shipped generic and alias exact-two re
     );
 
     my $ahb_chapter = slurp('docs/book/src/16c-ial2-ahb.md');
-    like($ahb_chapter, qr/FSMGen ships forty public bounded AHB IAL2 entrypoints today/, 'AHB chapter records the 40-path inventory');
+    like($ahb_chapter, qr/FSMGen ships forty-one public bounded AHB IAL2 entrypoints today/, 'AHB chapter records the 41-path inventory');
     like($ahb_chapter, qr/ppif\/ahb_requester_busy_insert_two\.ppif/, 'AHB chapter lists the exact-two source');
     like($ahb_chapter, qr/ppif\/ahb_requester_busy_insert_two\.ahb/, 'AHB chapter lists the exact-two profile alias');
+    like(
+        $ahb_chapter,
+        qr/ppif\/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ppif/,
+        'AHB chapter lists the generic exact-two paired composition',
+    );
     like($ahb_chapter, qr/The additive exact-two extension now ships as the generic source/, 'AHB requester guide marks exact-two as shipped');
+    like(
+        $ahb_chapter,
+        qr/\.3` now ships that source at 317 protocol \/ 358\s+supported\+strict \/ 41 AHB paths/s,
+        'AHB chapter records the shipped generic exact-two paired contract and current accounting',
+    );
     unlike($ahb_chapter, qr/The next extension is selected but \*\*not yet shipped\*\*/, 'AHB requester guide removes stale pre-implementation wording');
+    unlike(
+        $ahb_chapter,
+        qr/paired exact-two compositions remain future work/,
+        'AHB chapter no longer defers every paired exact-two composition',
+    );
 
     my $behavior = slurp('docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md');
     like($behavior, qr/Focused `t\/1521.*?keeps generated selector\s+assertions enabled/s, 'canonical behavior records the exact-two runtime proof');
-    like($behavior, qr/current\s+accounting to 316\/357/s, 'canonical behavior records current accounting');
+    like($behavior, qr/current accounting to 317\/358 and 41\s+AHB paths/s, 'canonical behavior records current accounting');
     like($behavior, qr/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR/, 'canonical behavior links the shipped exact-two alias owner');
 };
 

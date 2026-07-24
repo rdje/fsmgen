@@ -10962,8 +10962,10 @@ matching alias now ships after `.6` selected `.7`: byte-identical
 identity `intent.ahb_profile_alias_requester_busy_insert_two`, semantic root
 `fsm`, and no parser/generator or runtime change. Focused t1522 proves
 report/artifact/semantic JSON/real read-only MCP parity; t1521 remains the
-shared runtime. Accounting is 316 protocol / 357 supported-smoke+strict
-fixtures and 40 AHB paths. Paired exact-two sources, other counts/points,
+shared runtime. That requester/alias checkpoint was 316 protocol / 357
+supported-smoke+strict fixtures and 40 AHB paths. The first generic
+one-subordinate paired exact-two source now also ships; its matching aggregate
+alias, the two-subordinate exact-two sibling, other counts/points,
 policy/runtime behavior, and decision 0020 remain deferred. See the
 [exact-two contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md)
 [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md),
@@ -10987,11 +10989,12 @@ the `ahb_tb` top; no substrate repair is required. The
 freezes generic source
 `ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif`,
 the unchanged three-child artifact/report shape, t1523 runtime, normalized
-semantic JSON and real read-only MCP proof, and projected 317 protocol / 358
-supported+strict / 41 AHB paths. Proposed `.3` implements that generic source
-after clean `.2`; no public behavior ships from contract selection. The alias,
-counts beyond two, policy/runtime insertion, two-subordinate exact-two
-composition, and decision 0020 remain separate/inactive.
+semantic JSON and real read-only MCP proof. `.3` now ships that generic source
+through the existing generators at 317 protocol / 358 supported+strict / 41
+AHB paths. The matching alias, counts beyond two, policy/runtime insertion,
+two-subordinate exact-two composition, and decision 0020 remain
+separate/inactive. See the
+[shipped behavior](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
