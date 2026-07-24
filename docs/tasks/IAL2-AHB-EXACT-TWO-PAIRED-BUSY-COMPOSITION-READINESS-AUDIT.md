@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `IAL2 / AHB requester-subordinate composition`
 - Created: `2026-07-24`
 - Last updated: `2026-07-24`
@@ -81,12 +81,12 @@ implementation.
 ## Task Tree
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit one-subordinate exact-two requester BUSY insertion plus subordinate BUSY parking before selecting public composition behavior.`
   Children: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
 
 - ID: `IAL2-AHB-EXACT-TWO-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Establish exact-two paired BUSY runtime/lowering readiness and select the next exact owner.`
   Acceptance: `Starting only after clean .809 commit, read the exact-one paired generic/alias and exact-two requester generic/alias behavior/facts/sources/tests, PPIF/AhbRequester/AhbSubordinate/AhbInterconnect lowering and phase ownership, reports/residue/support/language/capability/semantic-MCP surfaces, mdBook/roadmap/Memory/Knowledge Map, selector repairs, and decision 0020. Build a disposable one-subordinate exact-two aggregate without selecting public names; prove normal IAL2->IAL1->IAL0->HDL generation, numeric child beats=2, parks_on=[busy], exact two qualified BUSY events in one episode, stable requester/subordinate/interconnect ownership and storage, no BUSY data completion, one resumed SEQ, four data beats, clean completion, and final 44332211. Retain the paired --no-assert boundary while keeping standalone requester assertions authoritative. Select contract work, a prerequisite repair, deferral, or closure only from evidence; require future check/schedule/semantic JSON/read-only MCP parity. Make no shipped behavior change in the audit.`
   Verification: `pending`
@@ -94,11 +94,10 @@ implementation.
 
 ## Activation Gate
 
-This tree remains proposed until
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.809` commits cleanly. Activation changes
-only task/index/Memory state; no source, parser, generator, support, test,
-artifact, semantic/MCP API, HDL, or runtime behavior may change before `.1`
-becomes active from a clean tree.
+Satisfied: `IAL2-FEATURE-COMPLETENESS-FRONTIER.809` committed cleanly as
+`9107ee297`. This activation changes only task/index/Memory state; no source,
+parser, generator, support, test, artifact, semantic/MCP API, HDL, or runtime
+behavior changes in the activation slice.
 
 ## Rollback
 
