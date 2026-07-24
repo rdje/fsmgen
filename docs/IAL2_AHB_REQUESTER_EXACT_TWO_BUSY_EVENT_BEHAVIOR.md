@@ -15,6 +15,12 @@ grant-and-ready-qualified `HTRANS=BUSY` events before one selected pending
 ppif/ahb_requester_busy_insert_two.ppif
 ```
 
+Follow-on `.7` also ships the byte-identical matching profile alias:
+
+```text
+ppif/ahb_requester_busy_insert_two.ahb
+```
+
 The source uses the existing AHB requester generator and the existing
 IAL2-to-IAL1-to-IAL0-to-HDL pipeline. It is not a separate generator. Its
 distinct public identity is:
@@ -129,9 +135,10 @@ the additive exact-two source, exact-two says two events ship, and both defer
 counts beyond two, multiple insertion points, and policy/runtime/random
 throttling.
 
-This source moves the current support corpus to 315 protocol fixtures and 356
-supported-smoke/strict-supported fixtures. The public AHB IAL2 inventory is 39
-paths: twenty generic `.ppif` sources and nineteen `.ahb` aliases.
+The generic source moved the support corpus to 315 protocol fixtures and 356
+supported-smoke/strict-supported fixtures. Follow-on alias `.7` moves current
+accounting to 316/357. The public AHB IAL2 inventory is 40 paths: twenty
+generic `.ppif` sources and twenty `.ahb` aliases.
 
 ## Generated-HDL Proof
 
@@ -162,17 +169,16 @@ preservation, and base-requester preservation.
 ```
 
 No matching exact-two `.ahb` alias ships in this slice. Use the generic `.ppif`
-path above. Follow-on selector `.6` now chooses a byte-identical alias contract
-at `ppif/ahb_requester_busy_insert_two.ahb`; it remains unshipped until `.7`
-implements and support-accounts it. See
-`docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md`.
+path above for `.5` history. Follow-on `.6` selected and `.7` now ships the
+byte-identical alias at `ppif/ahb_requester_busy_insert_two.ahb`; substitute
+that path in the same commands. See
+`docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.
 
 ## Explicit Deferrals
 
 Literal counts beyond one/two, generalized count width, multiple insertion
 points, runtime-selected count/point, policy/random throttling, distinct local
-bus-BUSY status, the still-unimplemented selected exact-two `.ahb` alias,
-paired exact-two compositions,
+bus-BUSY status, paired exact-two compositions,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend
 variants, AXI/APB changes, VHDL, the separate interconnect selector repair, the

@@ -226,7 +226,7 @@ selected source-specific support-residue text. Broad commands remain under the
 
 Literal BUSY counts other than one/two, generalized count width, multiple
 insertion points, runtime-selected counts/points, policy/random throttling,
-distinct local bus-BUSY status, exact-two `.ahb` alias and paired compositions,
+distinct local bus-BUSY status, paired exact-two compositions,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend
 variants, AXI/APB changes, VHDL, the separate interconnect selector repair, the
@@ -235,9 +235,10 @@ separate generic output-priority repair, and decision 0020 remain deferred.
 ## Follow-On Alias Selection
 
 After `.5` shipped and verified the generic exact-two behavior, `.6` selected
-the byte-identical matching `.ahb` profile-alias contract. The alias remains
-unshipped until `.7`; its current contract is
-`docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md`.
+the byte-identical matching `.ahb` profile-alias contract. The alias was
+unshipped in `.6`; `.7` now implements it. Its contract and shipped behavior are
+`docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md`
+and `docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.
 
 ## Rollback
 

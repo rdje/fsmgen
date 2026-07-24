@@ -32,4 +32,6 @@ The implementation must prove the alias through strict check, semantic JSON,
 and the existing read-only MCP `fsmgen_semantic_introspect` tool without an
 alias-specific API path. Focused t/1522 will own source/report/artifact/API
 parity; assertion-enabled t/1521 remains the shared runtime proof. The alias
-does not ship until `.7` implements and support-accounts it.
+now ships through `.7`; fact
+`ial2-ahb-requester-exact-two-busy-event-profile-alias-behavior` owns the
+current implementation result.

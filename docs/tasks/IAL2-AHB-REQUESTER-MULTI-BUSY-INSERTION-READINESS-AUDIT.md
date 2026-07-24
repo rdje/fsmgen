@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `IAL2 / AHB requester BUSY policy`
 - Created: `2026-07-23`
 - Last updated: `2026-07-24`
@@ -58,7 +58,7 @@ insertion points.
 ## Task Tree
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`
-  Status: `active`
+  Status: `done`
   Goal: `Audit bounded multiple requester BUSY presentations before selecting behavior.`
   Children: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.3`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.4`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.5`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.6`, `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.7`
 
@@ -105,11 +105,11 @@ insertion points.
   Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.6: select exact-two AHB alias contract`
 
 - ID: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.7`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the byte-identical exact-two requester .ahb profile alias with semantic/MCP parity and no new runtime behavior.`
   Acceptance: `Starting only after .6 commits cleanly, add ppif/ahb_requester_busy_insert_two.ahb as a byte-identical mirror of the generic exact-two source; support-account it as intent.ahb_profile_alias_requester_busy_insert_two / ial2_ahb_profile_alias_requester_busy_insert_two_pipeline_cli with source kind ial2_profile_alias, module amba_requester_busy_insert_two, and semantic root fsm; preserve numeric busy_insertion.beats=2, generated IAL1/IAL0/HDL identity, exact-two support residue, and remove only ahb_profile_alias_deferred through existing suffix handling. Add focused t1522 for source/parse/report/check/schedule/semantic/outdir/verify/support parity, malformed profile-alias probes, generic/exact-one/base preservation, and a read-only fsmgen_semantic_introspect MCP call; retain assertion-enabled t1521 as the shared runtime proof without compiling a second simulation. Update accounting to 316 protocol / 357 supported-smoke+strict / 40 AHB paths, language/capability/current docs/facts/task/Memory/Knowledge Map, and run focused/accounting/docs/doctrine gates under the 4-GiB cap. Do not change parser/generator algorithms or public exact-two behavior, add paired exact-two sources, another runtime, broader counts/points/policies/status/bursts/signals/managers/queues/backends, AXI/APB/VHDL, selector repairs, or decision 0020.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Shipped ppif/ahb_requester_busy_insert_two.ahb byte-identical to the generic exact-two source, support-accounted as intent.ahb_profile_alias_requester_busy_insert_two / ial2_ahb_profile_alias_requester_busy_insert_two_pipeline_cli with source kind ial2_profile_alias, module amba_requester_busy_insert_two, and semantic root fsm. Existing PPIF suffix handling preserves numeric busy_insertion.beats=2 and generated IAL1/IAL0/HDL exactly while removing only ahb_profile_alias_deferred; PPIF.pm and AhbRequester.pm are unchanged. Accounting is 316 protocol fixtures, 357 supported-smoke/strict fixtures, and 40 AHB IAL2 paths split twenty/twenty. New t1522 passes 4/4 in 49 seconds after correcting one initially over-specific profile-diagnostic regex to the actual earlier fail-closed requester-object diagnostic; it proves bytes, parse/report, strict check, schedule, semantic JSON, real read-only fsmgen_semantic_introspect MCP output, outdir artifacts, --verify-hdl, diagnostics, and generic/exact-one/base preservation without a second runtime. Updated t1518 first exposed only its expected navigation wording lock after the exact-two alias phrase was added; corrected lock passes 5/5. t248 passes; t297 first exposed only a stale ordered alias-inventory regex, corrected rerun passes with t248 at 6839/6839. Guarded t1512 plus assertion-enabled shared t1521 pass 9/9 in 68 seconds, retaining exact-one alias behavior and exact-two continuous/ready-low/grant-low runtime. Canonical behavior docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md and fact ial2-ahb-requester-exact-two-busy-event-profile-alias-behavior. Modified Perl/tests are syntax-clean; source cmp, mdBook build, relative-doc paths, diff, Knowledge Map generation/check at 988 facts/5008 question keys, memory architecture, and the authoritative doctrine gate pass; generated book output was removed. No parser/generator/runtime/API contract changed, and paired exact-two composition remains deferred.`
+  Commit: `IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.7: ship exact-two AHB alias`
 
 ## Activation Gate
 
@@ -131,7 +131,11 @@ generic exact-two requester and selects pending `.6`; `.6` cannot activate
 until `.5` commits cleanly. Activation condition satisfied: `.5` committed
 cleanly at `ed968926e`; `.6` is active for matching alias contract selection
 and has now completed by selecting pending `.7` implementation, which cannot
-activate until `.6` commits cleanly.
+activate until `.6` commits cleanly. Activation condition satisfied: `.6`
+committed cleanly at `6a30520d5`; `.7` is active for the selected data-only
+alias implementation. `.7` has now completed the byte-identical alias and
+closes this child tree; parent feature-completeness selection cannot resume
+until `.7` commits cleanly.
 
 ## Rollback
 

@@ -10957,18 +10957,19 @@ existing requester generator with actor-owned counter storage and a
 checker-required final-over-nonfinal rule priority. Assertion-enabled t1521
 passes continuous/32-clock-ready-low/32-clock-grant-low exact-two proof, and
 accounting is 315 protocol / 356 supported-smoke+strict fixtures. The
-matching alias does not ship yet. `.6` selects `.7` to add it as byte-identical
-`ppif/ahb_requester_busy_insert_two.ahb` through existing suffix handling, with
-support identity `intent.ahb_profile_alias_requester_busy_insert_two`, semantic
-root `fsm`, and no parser/generator or runtime change. Focused t1522 must prove
-report/artifact/semantic JSON/read-only MCP parity; t1521 remains the shared
-runtime. The alias targets 316 protocol / 357 supported-smoke+strict fixtures
-and 40 AHB paths. Paired exact-two sources, other counts/points,
+matching alias now ships after `.6` selected `.7`: byte-identical
+`ppif/ahb_requester_busy_insert_two.ahb` uses existing suffix handling, support
+identity `intent.ahb_profile_alias_requester_busy_insert_two`, semantic root
+`fsm`, and no parser/generator or runtime change. Focused t1522 proves
+report/artifact/semantic JSON/real read-only MCP parity; t1521 remains the
+shared runtime. Accounting is 316 protocol / 357 supported-smoke+strict
+fixtures and 40 AHB paths. Paired exact-two sources, other counts/points,
 policy/runtime behavior, and decision 0020 remain deferred. See the
 [exact-two contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_CONTRACT_SELECTION.md)
 [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md),
-plus the
-[selected exact-two alias contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md).
+the
+[selected exact-two alias contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md),
+and [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

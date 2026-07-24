@@ -174,3 +174,13 @@ Rollback of `.6` is documentation-only: remove this record and its fact card,
 restore `.6` to active selection, remove pending `.7`, and revert the current
 README/roadmap/mdBook/task/Memory pointers. No runtime or public source behavior
 is affected.
+
+## Implementation Outcome
+
+`.7` now ships the selected alias exactly at
+`ppif/ahb_requester_busy_insert_two.ahb`, support-accounted as
+`intent.ahb_profile_alias_requester_busy_insert_two`. Focused t/1522 proves
+byte/parse/report/check/schedule/semantic/artifact/HDL-verifier parity and a
+real read-only MCP `fsmgen_semantic_introspect` call; t/1521 remains the shared
+assertion-enabled runtime proof. Canonical current behavior is
+`docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.
