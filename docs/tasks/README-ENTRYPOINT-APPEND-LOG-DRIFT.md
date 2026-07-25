@@ -3,13 +3,17 @@
 ## Metadata
 
 - Tree ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `infra/continuity / entry-point documentation`
 - Created: `2026-07-25`
 - Last updated: `2026-07-25`
 - Owner: repo-local workflow
-- Activation: **director-activated only.** Not PNT-eligible. Restructuring the
-  system-of-record entry point is a judgment call, not a routine slice.
+- Activation: **activated by the director on 2026-07-25** — "README.md shall NOT
+  be used as a per-leaf append log, please strictly follow the doctrine
+  MEMORY_ARCHITECTURE.md advocates." That selects candidate shape 1 (trim to a
+  real entry point) plus shape 3 (cap and enforce) as the follow-up, because
+  §12 forbids re-narrating git history in prose and §9 holds that an unchecked
+  rule is an unfollowed rule.
 
 ## Finding
 
@@ -53,7 +57,36 @@ kill, now recurring one file over:
 - Not proposing a mechanical README line cap in the same slice as any content
   move; a cap without an agreed target shape would just fail the build.
 
-## Candidate Shapes (for director decision, none selected)
+## Selected Shape
+
+**Shape 1 (trim to a real entry point) + shape 3 (cap and enforce).** Director
+instruction, `2026-07-25`.
+
+Nothing is deleted from the project: `README.md` is tracked, so the removed
+prose stays recoverable via `git log -p -- README.md`, exactly as
+`MEMORY.md`'s own header records for its 38,776-line predecessor. This mirrors
+the two established precedents in this repo:
+
+- `MEMORY-ARCHITECTURE-ADOPTION` demoted `MEMORY.md` 38,776 → 24 lines.
+- `docs/decisions/0007` FROZE the legacy prose blobs rather than deleting them.
+
+Pre-trim evidence that no durable fact is lost — every non-chronological fact
+in the section already has a canonical home:
+
+| Fact in the objective section | Canonical home |
+| --- | --- |
+| Backend-language-neutral IAL contracts, Perl as reference/oracle | `docs/decisions/0018-ial-contracts-are-backend-language-neutral.md`, `docs/book/src/15-implementation-blueprint.md` |
+| Read-only semantic-introspection / MCP profile detail | `docs/book/src/11-extensions-and-embedding.md` (30 MCP references), `docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md`, `docs/knowledge/semantic-introspection-mcp-frontier.md`, `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` |
+| Per-leaf shipped-behavior chronology | git (layer D) + the owning task trees (layer B) |
+| Corpus sample inventory | `docs/REGRESSION_CORPUS.md` + `perl/FSM/Support/RegressionCorpus.pm`, mechanically checked by `t/248-regression-corpus-accounting.t` |
+
+Verified before the trim: no test or gate asserts `README.md` *content*.
+`scripts/check_doctrine_bootstrap.sh` requires only that the file exists and
+that bootstrap files point at it; `t/1134`, `t/1441`, `t/1447` use the path as
+a wrong-extension fixture; `t/1251` and `bin/fsmgen-issue-bundle` refer to a
+generated bundle README, not this one.
+
+## Candidate Shapes (recorded at filing; shape 1 + 3 selected)
 
 1. **Trim to a real entry point.** Keep objective, layout, navigation, and
    invariants; replace the per-leaf narration with pointers to
@@ -84,14 +117,35 @@ kill, now recurring one file over:
 ## Task Tree
 
 - ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT`
-  Status: `proposed`
-  Goal: `Decide and apply the entry-point README shape so ramp-up cost and doctrine self-consistency are restored.`
-  Children: `README-ENTRYPOINT-APPEND-LOG-DRIFT.1`
+  Status: `active`
+  Goal: `Restore README.md to a bounded discovery entry point and make the per-leaf-append-log regression mechanically impossible.`
+  Children: `README-ENTRYPOINT-APPEND-LOG-DRIFT.1, README-ENTRYPOINT-APPEND-LOG-DRIFT.2, README-ENTRYPOINT-APPEND-LOG-DRIFT.3, README-ENTRYPOINT-APPEND-LOG-DRIFT.4`
 
 - ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.1`
+  Status: `done`
+  Goal: `Record the selected shape as a decision record (layer C) so the rule outlives this session.`
+  Acceptance: `A dated docs/decisions/NNNN record states that README.md is a bounded discovery entry point and must not re-narrate git history; docs/decisions/INDEX.md lists it; the doctrine driver passes.`
+  Verification: `docs/decisions/0021-readme-is-a-bounded-discovery-entrypoint.md written as an explicit extension of 0007, with the measured evidence (9,911 lines / 928 KiB; objective section 7,191 lines / 73% / 1,827 leaf refs) and the four-part rule; docs/decisions/INDEX.md row added after 0020; scripts/check_doctrines.sh all PASS.`
+  Commit: `README-ENTRYPOINT-APPEND-LOG-DRIFT.1: record bounded-entrypoint decision`
+
+- ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.2`
   Status: `pending`
-  Goal: `Select one candidate shape with the director and record it as a decision record.`
-  Acceptance: `A decision record exists naming the selected shape and its rationale; this tree moves to active with implementation leaves, or to superseded if shape 4 is chosen.`
+  Goal: `Trim ## Project objective from 7,191 lines of per-leaf chronology to a real objective section that states what FSMGen is and points at the canonical layers.`
+  Acceptance: `The section states objective, the IAL0/IAL1/IAL2 layer model, and the backend-neutrality contract, and routes current state to the task-trees, decisions, mdBook, and Knowledge Map; no per-leaf chronology remains; every fact in the pre-trim evidence table is still reachable from its canonical home; scripts/check_doctrines.sh passes.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.3`
+  Status: `pending`
+  Goal: `De-narrate ## Documentation index entries so each is a one-line statement of what the file is, not a per-leaf changelog of it.`
+  Acceptance: `Index entries carry purpose, not leaf chronology; the ~99 corpus-sample rows route to docs/REGRESSION_CORPUS.md instead of duplicating the mechanically-checked catalog; no tracked .md file loses its index entry; scripts/check_doctrines.sh passes.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.4`
+  Status: `pending`
+  Goal: `Register a deterministic README doctrine check so the regrowth that produced this finding fails the build instead of recurring silently.`
+  Acceptance: `An executable check enforces a README size cap and a per-leaf-chronology heuristic, is registered in the scripts/check_doctrines.sh DOCTRINES registry, is documented in DOCTRINE_ENFORCEMENT.md and TOOLBOX.md, is proven to bite on a seeded violation, and passes on the trimmed file.`
   Verification: `pending`
   Commit: `pending`
 
