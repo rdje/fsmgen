@@ -15,6 +15,7 @@ DOCTRINES=(
   "MEMORY-ARCH|scripts/check_memory_architecture.sh|Durable memory architecture, bounded MEMORY.md, bootstrap pointers, task-tree and decision stores"
   "KNOWLEDGE-MAP|knowledge-map/scripts/check_knowledge_map.sh|Knowledge Map fact cards are valid and KNOWLEDGE_MAP.md is in sync"
   "DOC-PATHS|scripts/check_docs_relative_paths.sh|Live docs and Knowledge Map avoid machine-local absolute paths"
+  "README-ENTRYPOINT|scripts/check_readme_entrypoint.sh|README.md stays a bounded discovery entry point and does not re-narrate per-leaf history"
 )
 
 usage() {

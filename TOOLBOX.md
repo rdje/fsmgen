@@ -25,6 +25,7 @@ scripts/check_doctrines.sh
 | Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
 | Need user-facing docs proof | `mdbook build docs/book`. |
 | Need docs path hygiene | `scripts/check_docs_relative_paths.sh`. |
+| Need README entry-point hygiene | `scripts/check_readme_entrypoint.sh`. |
 | Need Knowledge Map sync | `knowledge-map/scripts/gen_knowledge_map.sh` then `knowledge-map/scripts/check_knowledge_map.sh`. |
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
 | Need diff hygiene before commit | `git --no-pager diff --check` and `git status --short`. |
@@ -174,6 +175,7 @@ policy.
 ```bash
 mdbook build docs/book
 scripts/check_docs_relative_paths.sh
+scripts/check_readme_entrypoint.sh
 knowledge-map/scripts/gen_knowledge_map.sh
 knowledge-map/scripts/check_knowledge_map.sh
 scripts/check_memory_architecture.sh
@@ -184,6 +186,8 @@ Expected signals:
 
 - mdBook completes without broken source or renderer errors.
 - docs relative-path audit reports no machine-local home-directory paths.
+- README entry-point check confirms `README.md` is under its line cap and does
+  not re-narrate per-leaf work-unit history (`docs/decisions/0021`).
 - Knowledge Map check says facts are valid, IDs are unique, and the map is in sync.
 - memory architecture check confirms `MEMORY.md` is bounded and bootstrap/task/decision stores exist.
 - doctrine bootstrap check confirms root doctrine/toolbox docs, bootstrap

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / entry-point documentation`
 - Created: `2026-07-25`
 - Last updated: `2026-07-25`
@@ -117,7 +117,7 @@ generated bundle README, not this one.
 ## Task Tree
 
 - ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT`
-  Status: `active`
+  Status: `done`
   Goal: `Restore README.md to a bounded discovery entry point and make the per-leaf-append-log regression mechanically impossible.`
   Children: `README-ENTRYPOINT-APPEND-LOG-DRIFT.1, README-ENTRYPOINT-APPEND-LOG-DRIFT.2, README-ENTRYPOINT-APPEND-LOG-DRIFT.3, README-ENTRYPOINT-APPEND-LOG-DRIFT.4, README-ENTRYPOINT-APPEND-LOG-DRIFT.5`
 
