@@ -129,11 +129,11 @@ generated bundle README, not this one.
   Commit: `README-ENTRYPOINT-APPEND-LOG-DRIFT.1: record bounded-entrypoint decision`
 
 - ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Trim ## Project objective from 7,191 lines of per-leaf chronology to a real objective section that states what FSMGen is and points at the canonical layers.`
   Acceptance: `The section states objective, the IAL0/IAL1/IAL2 layer model, and the backend-neutrality contract, and routes current state to the task-trees, decisions, mdBook, and Knowledge Map; no per-leaf chronology remains; every fact in the pre-trim evidence table is still reachable from its canonical home; scripts/check_doctrines.sh passes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `README.md 9,911 -> 2,803 lines and 928 KiB -> 440 KiB; the objective section is 7,191 -> 83 lines with zero per-leaf references. New section carries objective, the IAL2/IAL1/IAL0 layer table with the strict lowering order and the forbidden direct IAL2-to-IAL0 path (0014/0015/0016), backend neutrality (0018 + blueprint chapter), the read-only MCP profile pointer (book ch. 11), and a "where current state lives" routing table naming layers A-D plus the book, corpus, Knowledge Map, toolbox, and doctrine registry. All 8 link targets verified to exist. scripts/check_doctrines.sh all PASS including DOCTRINE-BOOTSTRAP (all 7 bootstrap files still point at README.md). prove -Iperl t/1134 t/1441 t/1447 t/1251 t/1414: 5 files, 12 tests, all PASS.`
+  Commit: `README-ENTRYPOINT-APPEND-LOG-DRIFT.2: trim objective section to a real entry point`
 
 - ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.3`
   Status: `pending`
