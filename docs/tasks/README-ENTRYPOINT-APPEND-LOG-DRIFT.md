@@ -119,7 +119,7 @@ generated bundle README, not this one.
 - ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT`
   Status: `active`
   Goal: `Restore README.md to a bounded discovery entry point and make the per-leaf-append-log regression mechanically impossible.`
-  Children: `README-ENTRYPOINT-APPEND-LOG-DRIFT.1, README-ENTRYPOINT-APPEND-LOG-DRIFT.2, README-ENTRYPOINT-APPEND-LOG-DRIFT.3, README-ENTRYPOINT-APPEND-LOG-DRIFT.4`
+  Children: `README-ENTRYPOINT-APPEND-LOG-DRIFT.1, README-ENTRYPOINT-APPEND-LOG-DRIFT.2, README-ENTRYPOINT-APPEND-LOG-DRIFT.3, README-ENTRYPOINT-APPEND-LOG-DRIFT.4, README-ENTRYPOINT-APPEND-LOG-DRIFT.5`
 
 - ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.1`
   Status: `done`
@@ -142,12 +142,19 @@ generated bundle README, not this one.
   Verification: `Audit found the index far less infected than the objective section: of 1,389 entries only 5 were genuine per-leaf enumerations (>=2 narrated leaf refs). The other 148 entries carrying a leaf id are legitimate one-line pointers of the form "selector for TREE.3" and were deliberately left intact. Those 5 were trimmed to their authored purpose clause. Separately, 99 rows listed .ppif/.isf/.fsm samples inside a section whose own title is "all .md files in this repo" - they violated its stated scope and duplicated the checked catalog, so they were replaced by a 5-line pointer to perl/FSM/Support/RegressionCorpus.pm (proven complete by t/248, 6,883 tests PASS) plus the docs/REGRESSION_CORPUS.md companion. README.md 2,803 -> 2,709 lines / 440 -> 404 KiB. All 1,284 .md index entries preserved (before/after diff empty). scripts/check_doctrines.sh all PASS; git diff --check clean.`
   Commit: `README-ENTRYPOINT-APPEND-LOG-DRIFT.3: de-narrate the documentation index`
 
+- ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.5`
+  Status: `done`
+  Goal: `Trim ## Fast ramp-up order back to an actual ramp-up order.`
+  Acceptance: `The section lists only the orientation documents a fresh engineer reads in sequence; per-slice selector/audit/behavior records are routed to the documentation index and their owning leaf; no document becomes unreachable; scripts/check_doctrines.sh passes.`
+  Verification: `Discovered while calibrating .4: the section had grown to 327 numbered items, so "read these in order" was self-defeating. Items 1-28 are genuine orientation docs (README, COMMIT, SESSION_BOOTSTRAP, task-tree workflow, ROADMAP_V2, book SUMMARY, the ISF/IAL2 specs and probes); items 29-327 were the AXI IAL2 per-slice selector/readiness-audit/first-slice chain, every one of which is already listed in the documentation index below. Items 29-327 replaced by a 12-line pointer stating that per-slice records are read when you touch their leaf, not in sequence, and routing history to git log --grep=<UNIT-ID> per 0021. README.md 2,709 -> 2,286 lines / 404 -> 348 KiB. scripts/check_doctrines.sh all PASS; git diff --check clean.`
+  Commit: `README-ENTRYPOINT-APPEND-LOG-DRIFT.5: trim the ramp-up order back to a ramp-up order`
+
 - ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Register a deterministic README doctrine check so the regrowth that produced this finding fails the build instead of recurring silently.`
   Acceptance: `An executable check enforces a README size cap and a per-leaf-chronology heuristic, is registered in the scripts/check_doctrines.sh DOCTRINES registry, is documented in DOCTRINE_ENFORCEMENT.md and TOOLBOX.md, is proven to bite on a seeded violation, and passes on the trimmed file.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `scripts/check_readme_entrypoint.sh added, executable, structural (re-derives both invariants from the tracked file). Cap README_LINE_CAP=2600 against an actual 2,286 lines - ~14% headroom, and it bites long before any return toward 9,911. Chronology rule README_MAX_LEAF_REFS_PER_LINE=1 forbids the enumeration signature (2+ narrated leaf refs on one line) while deliberately allowing single leaf pointers such as "selector for TREE.3" or "documents the .794 shipped aggregate", which are legitimate index content; measured max on the trimmed file is 1. Registered as README-ENTRYPOINT in the DOCTRINES registry (driver now reports 5 registered checks, all PASS), documented in DOCTRINE_ENFORCEMENT.md registry + structural archetype row and in TOOLBOX.md chooser/gate-list/expected-signals. Proven to bite: a seeded 3-leaf enumeration line exits 1 naming file:line:count, and README_LINE_CAP=100 exits 1 with the layer-routing remedy; the restored file exits 0. Inherits the pre-commit hook and CI automatically because both invoke scripts/check_doctrines.sh.`
+  Commit: `README-ENTRYPOINT-APPEND-LOG-DRIFT.4: register the README entry-point doctrine check`
 
 ## Decisions
 
