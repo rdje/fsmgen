@@ -136,11 +136,11 @@ generated bundle README, not this one.
   Commit: `README-ENTRYPOINT-APPEND-LOG-DRIFT.2: trim objective section to a real entry point`
 
 - ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.3`
-  Status: `pending`
+  Status: `done`
   Goal: `De-narrate ## Documentation index entries so each is a one-line statement of what the file is, not a per-leaf changelog of it.`
   Acceptance: `Index entries carry purpose, not leaf chronology; the ~99 corpus-sample rows route to docs/REGRESSION_CORPUS.md instead of duplicating the mechanically-checked catalog; no tracked .md file loses its index entry; scripts/check_doctrines.sh passes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Audit found the index far less infected than the objective section: of 1,389 entries only 5 were genuine per-leaf enumerations (>=2 narrated leaf refs). The other 148 entries carrying a leaf id are legitimate one-line pointers of the form "selector for TREE.3" and were deliberately left intact. Those 5 were trimmed to their authored purpose clause. Separately, 99 rows listed .ppif/.isf/.fsm samples inside a section whose own title is "all .md files in this repo" - they violated its stated scope and duplicated the checked catalog, so they were replaced by a 5-line pointer to perl/FSM/Support/RegressionCorpus.pm (proven complete by t/248, 6,883 tests PASS) plus the docs/REGRESSION_CORPUS.md companion. README.md 2,803 -> 2,709 lines / 440 -> 404 KiB. All 1,284 .md index entries preserved (before/after diff empty). scripts/check_doctrines.sh all PASS; git diff --check clean.`
+  Commit: `README-ENTRYPOINT-APPEND-LOG-DRIFT.3: de-narrate the documentation index`
 
 - ID: `README-ENTRYPOINT-APPEND-LOG-DRIFT.4`
   Status: `pending`
