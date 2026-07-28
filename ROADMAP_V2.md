@@ -35,6 +35,7 @@ That is what roadmap v2 is for.
 - Grow surface area only when semantics are crisp and regression-backed.
 - Keep composition and extension growth deliberate rather than legacy-compatible by default.
 - Alternate deliberately between consolidation slices and visibly user-facing capability slices; do not let long cleanup-only streaks become the default unless cleanup is still the clear blocker.
+- Keep every project-owned output, temporary workspace, test fixture, log, cache, dependency store, and build product on the repository filesystem volume through repository-derived paths; decision `0022` and `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION` own the enforced contract and migration.
 
 ## Current package-breakdown note
 - The bounded source-frontend family now has an explicit owner in [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm), covering Lispish file parsing, top-level source-kind classification, typed composition parsing, and semantic FSM/DT module creation.

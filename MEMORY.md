@@ -1,60 +1,45 @@
 # MEMORY — resume pointer (layer A; overwrite-only, keep ≤ ~60 lines)
-See `MEMORY_ARCHITECTURE.md` for the full system. This file is ONLY the bounded
-resume pointer: current state + the single next action. Never append to it; its
-prior 38,776-line history is preserved in git (recoverable via `git log -- MEMORY.md`).
 
-## How to resume (any model, any harness)
-- Read `README.md` (project) and `MEMORY_ARCHITECTURE.md` (the memory system — MANDATORY).
-- Work is tracked in task-trees under `docs/tasks/` (index `docs/TASK_TREE.md`); commit per `COMMIT.md`.
-- Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
-- Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
+See `MEMORY_ARCHITECTURE.md` for the four-layer system. This file is only the
+bounded current-state pointer. Git preserves its prior history.
 
-- latest_commit: this task-scoped commit, `README-ENTRYPOINT-APPEND-LOG-DRIFT.4: register the README entry-point doctrine check`; predecessor is `e66e99941`.
-- active_work_unit: none. `README-ENTRYPOINT-APPEND-LOG-DRIFT` is complete `.1`-`.5` (director-activated `2026-07-25`). Decision `0021`: `README.md` is a bounded discovery entry point and must not re-narrate per-leaf history. Objective section 7,191 -> 83 lines; index lost 5 chronology entries + 99 out-of-scope corpus rows (all 1,284 `.md` entries kept); ramp-up order 327 -> 28 items; new doctrine check `README-ENTRYPOINT` caps it at 2600 lines and rejects per-leaf enumeration, proven to bite. README.md 9,911 -> 2,286 lines / 928 -> 348 KiB. `IAL2-FEATURE-COMPLETENESS-FRONTIER` stays `active`, complete through `.811` at 320/361/44 split 22 `.ppif`/22 `.ahb`, PNT paused by director request.
-- DIRECTOR NORTH STAR (captured): the director's thinking-aloud future route (explicitly NO pivot) — a layered protocol-agnostic transactor architecture (transaction interface write/read single-or-burst upward; primitive per-(protocol,role) bus-adapter role blocks; composed into higher-order IAL2 entities that present the interface up the stack; sibling sub-blocks interact via it → bridges/converters; seed = the AHB requester `local-command`/`local-status`) is now captured as decision `docs/decisions/0020-ial2-layered-composable-transactor-roles.md` + proposed (not PNT-eligible) horizon owner `IAL2-TRANSACTION-LAYERED-ROLE-COMPOSITION-HORIZON`. Not scheduled; activate on director request.
-- recently_done: `.811` ships the byte-identical two-subordinate exact-two `.ahb` alias through existing generators/suffix cleanup. t1526 passes byte/report/artifact/strict/schedule/normalized-semantic/real read-only MCP/outdir/verifier/diagnostic/preservation parity without a second runtime; t1525 remains shared. No parser/generator/semantic-MCP API changed.
-- SURFACED (pre-existing, nonblocking to requester repair): (1) declared rule-over-transaction priority does not mask different-value registered-output selectors; proposed inactive owner `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT`, fact `isf-rule-transaction-output-priority-gap`; selected AHB shape avoids it. (2) Paired assertion enablement stops on unchanged interconnect overlapping default `HADDR_REGS<-0` and mapped `HADDR_REGS<-HADDR` selectors; requester-only assertions pass and paired tests retain prior `--no-assert` while adding qualified BUSY counts. Proposed inactive owner `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION`, fact `ial2-ahb-interconnect-default-decode-output-arbitration-gap`.
-- RESOLVED (both fully recorded in their trees + fact cards, no action left): (1) two-subordinate BUSY report contradiction — `.799` aligned broader/burst residue for parked sources while preserving non-parking BUSY deferral, `.800` returned to paired contract selection. (2) AHB requester WRAP defect — `.2` increments then wraps in AhbRequester.pm and both direct seed paths; generated-HDL t1517 proves byte/halfword/word WRAP4 and byte WRAP8/16 including required `3,0,1,2`; facts `ial2-ahb-requester-wrap-progression-runtime-audit` / `-repair`.
-- SURFACED (found in `.3`, not fixed there — needs an owner): 4 AHB samples (`ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif`, `ahb_interconnect_byte_lane_hburst_seq_busy_park.ppif`/`.ahb`, `ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ppif`) are in the mechanically-checked `perl/FSM/Support/RegressionCorpus.pm` catalog but absent from the `docs/REGRESSION_CORPUS.md` companion. The catalog is correct; the unchecked companion drifted. A companion-sync check would close it.
-- SURFACED (pre-existing public-sync drift): guarded ISF passed 293/295; t1131 omits an existing verification-observation presence key and t1250's spec index ends at t1453. Focused preservation also found t1474's old `.ahb` wrong-object regex omits the already-shipped two-subordinate wording while direct strict alias checking passes. Proposed inactive owner `PUBLIC-SYNC-TEST-DRIFT-REPAIR`; do not mix into `.788`.
-- SURFACED (pre-existing, NOT AXI write `.44`): concurrent-property intermediate inlining loses grouping for the shipped read burst4 guard's nested bitwise OR, so its generated assertion falsely rejects legal address `0x00000004` while behavioral admission remains correct. Reproduced assertion-enabled; proposed general owner `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`, fact `docs/knowledge/isf-assert-nested-bitwise-precedence-bug.md`. The new write design uses an exhaustively equivalent renderer-safe predicate and is not blocked.
-- SURFACED (pre-existing, NOT my regression): verifying `.4` via the heavy `t/1436` found 5 pre-existing failures, proven unrelated to the AW-driver change (commit `21bdd0947` touched neither the failing code nor tests): (1) a stale APB cardinality diagnostic regex in `t/1436` (~:3686) vs the extended message at `PPIF.pm:459`/`:245`; (2) a `WIDTHTRUNC` verilator lint in generated `axi0_capacity_status` SV (`!` on a 3-bit concat in the equality-to-zero lowering, from `AxiManagerCapacityStatus.pm`). Deterministic (not resource-induced). Tracked as proposed owner `IAL2-T1436-PREEXISTING-FAILURES`; `t/1436` is heavy + not in the routine gate, so these drifted undetected.
-- SURFACED (pre-existing, NOT AXI `.22`): `mdbook test docs/book` compiles four untyped plain-text ISF diagrams as Rust and fails on Unicode/pseudocode; blame dates them to 2026-05-12..14 and `mdbook build` passes. Proposed owner `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1`; fact `docs/knowledge/mdbook-test-plain-text-fence-rustdoc-failure.md`.
-- deferred_not_abandoned: counts beyond two, decision 0020 and its transaction-layer horizon, runtime BUSY policy/status, larger bursts, queues, optional signals, and selector repairs remain inactive/later.
+## Resume
+
+- latest_commit: this task-scoped commit,
+  `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.1: adopt same-volume data doctrine`;
+  predecessor `2efd79375`.
+- active_work_unit: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2`.
+- current_state: `.1` adopted decision `0022`, root
+  `PROJECT_DATA_LOCALITY.md`, a Knowledge Map fact, and registered doctrine
+  check `PROJECT-DATA-LOCALITY`. Exact pre-adoption match signatures pin the
+  runtime, public-command, explicit-test-path, File::Temp-test, and legacy
+  machine-local config debt so it cannot change without the active tree.
+- next_action: implement `.2`: add repository-root/project-local storage
+  helpers; move CLI and in-process IAL1/IAL2 temporary lowering, Knowledge Map
+  scratch files, standard test fixture environment, and live legacy config
+  paths onto the repository volume; add focused tests; verify and commit before
+  `.3` public/fact-card sync and residue closeout.
 - in_flight_uncommitted: none after this commit; no background job remains.
-- blockers: none. Heavy audit runs use direct pressure/RSS monitoring because the macOS RAM-guard host metric remains a known proposed infra repair.
-- next_action: Wait for director instruction; tree is clean and pushed. Do not resume IAL2 PNT or activate decision 0020 implicitly. Note for future slices: never append shipped-behavior narration to `README.md` — route it to the owning task-tree, `docs/decisions/`, the mdBook, or leave it to git (`docs/decisions/0021`, gated by `scripts/check_readme_entrypoint.sh`).
+- blockers: none.
 
-## Notes
-- Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
-  index; cards under `docs/knowledge/`, bundle `knowledge-map/`). Write a fact card
-  whenever you establish a durable fact or catch archaeology — lazily, never a sweep
-  (`docs/tasks/KNOWLEDGE-MAP-ADOPT.md`).
-- Push only on explicit user request (no commit-count cadence) — `docs/decisions/0005`.
-- PNT autonomously; do not pause mid-flow — `docs/decisions/0003`.
-- Proposed `FSMGEN-HIR-ROADMAP-FRONTIER` owns the source-facing HIR roadmap
-  phase; proposed `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` now consults that HIR
-  boundary before direct IAL2/IAL1 builder work; proposed
-  `SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON` owns the beyond-read-only MCP horizon
-  (write/generation/sampling/elicitation/roots/service transport), filed at
-  director request. Proposed `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE` owns presenting
-  IAL2 as a coherent whole in the mdBook (one language / per-protocol profiles /
-  optional `.axi`/`.ahb`/`.apb` aliases / layered lowering, decisions
-  0014/0015/0016/0018) and backfilling the thin AXI chapter (142 `.ppif`, ~4%
-  documented) — filed from a director question, documentation-only, director-activated.
-  None of these trees is currently PNT-eligible.
-- Decision `0019` (done via `TASK-TREE-AUX-VIEW-DRIFT-RESOLUTION`): a task tree's
-  live sources are the `## Task Tree` node list + `docs/TASK_TREE.md` + git; the
-  in-file `## Current Frontier`/`## Verification Log`/`## Commit Log`/`## Changelog`
-  are optional historical snapshots, NOT maintained per-slice. PNT selects the
-  earliest active/pending unblocked leaf from the node list, not the frontier table.
-- Heavy broad Perl/`prove`/`fsmgen` commands must run under
-  `scripts/run_with_ram_guard.sh` or equivalent monitoring; default cutoff is
-  host RAM 88% / descendant RSS 4096 MiB, below the user's 90% danger zone.
-  `.295` used documented 90% host-cutoff retries only after default host-memory
-  trips; a 92% retry request was rejected as too risky and was not run.
-- Optional `slang` HDL validation is a future backend-validation candidate only;
-  no `--verify-hdl` policy changed in `.194`
-  (`docs/knowledge/hdl-validation-slang-candidate.md`).
-- Legacy prose blobs (`CHANGES.md`, `DEVELOPMENT_NOTES.md`, `ROADMAP_STATUS.md`,
-  `LIVE_ACHIEVEMENT_STATUS.md`) are FROZEN — git is the audit trail (`docs/decisions/0007`).
+## Durable context
+
+- Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
+  complete the same-volume adoption tree, then resume roadmap PNT.
+- The prior active `IAL2-FEATURE-COMPLETENESS-FRONTIER` is clean and complete
+  through `.811` at support `320/361/44`; it has no selected `.812` yet.
+- Decision `0020` remains proposed/inactive; do not activate it implicitly.
+- New proposed startup-alignment owners: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`
+  (saved 213/212 vs live 227/226 packages),
+  `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
+  `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC`.
+- Other surfaced proposed owners remain indexed in `docs/TASK_TREE.md`,
+  including priority enforcement, AHB interconnect arbitration, public-sync
+  drift, nested assertion precedence, t/1436 failures, mdBook rustdoc fences,
+  and IAL2/mdBook coverage.
+- Task-tree live truth is the node list + `docs/TASK_TREE.md` + git (decision
+  `0019`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.
+- Push only on explicit request (decision `0005`). PNT runs autonomously without
+  mid-flow pauses (decision `0003`).
+- Heavy commands use `scripts/run_with_ram_guard.sh` or equivalent active
+  monitoring. Legacy blobs remain frozen by decision `0007`.

@@ -16,6 +16,7 @@ DOCTRINES=(
   "KNOWLEDGE-MAP|knowledge-map/scripts/check_knowledge_map.sh|Knowledge Map fact cards are valid and KNOWLEDGE_MAP.md is in sync"
   "DOC-PATHS|scripts/check_docs_relative_paths.sh|Live docs and Knowledge Map avoid machine-local absolute paths"
   "README-ENTRYPOINT|scripts/check_readme_entrypoint.sh|README.md stays a bounded discovery entry point and does not re-narrate per-leaf history"
+  "PROJECT-DATA-LOCALITY|scripts/check_project_data_locality.sh|Project-owned data stays on repository-derived same-volume roots"
 )
 
 usage() {

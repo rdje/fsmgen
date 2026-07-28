@@ -73,6 +73,7 @@ Current registered checks:
 | `KNOWLEDGE-MAP` | `knowledge-map/scripts/check_knowledge_map.sh` | Fact cards are valid and `KNOWLEDGE_MAP.md` is in sync with them. |
 | `DOC-PATHS` | `scripts/check_docs_relative_paths.sh` | Live docs and the Knowledge Map do not leak machine-local absolute home paths. |
 | `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | `README.md` stays under its line cap and no line enumerates two or more narrated work-unit leaves (`docs/decisions/0021`). |
+| `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
 
 List the registry with:
 
