@@ -11476,6 +11476,15 @@ parity without simulation; t1535 remains shared runtime. See the
 Clean contract commit `3370e15cd` activates only data-only alias
 implementation `.5`. The alias, support entry, t1536, and 328/369/52 boundary
 remain unshipped during activation; generic behavior stays at 327/368/51.
+Implementation `.5` now ships the byte-identical exact-four `.ahb` alias
+through existing suffix/lowering machinery. Focused t1536 proves width-three
+IAL1/IAL0, numeric report, alias-only residue cleanup, strict/schedule/artifact,
+normalized semantic/read-only MCP, verifier, diagnostic, requester, and paired-
+source parity without simulation; assertion-enabled t1535 remains shared
+runtime. Current accounting is 328/369/52 split 26 `.ppif` / 26 `.ahb`. See
+the [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
+The exact-four child tree is complete. Pending parent selector `.823` may
+activate only after the clean `.5` behavior commit.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

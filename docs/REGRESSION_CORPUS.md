@@ -503,12 +503,14 @@ runtime; t/1534 owns alias strict, schedule, artifact, normalized-semantic,
 read-only-MCP, and verifier parity.
 
 The generic exact-four requester at `ppif/ahb_requester_busy_insert_four.ppif`
-is strict-supported as `intent.ppif_ahb_requester_busy_insert_four`, selects
-`amba_requester_busy_insert_four` with semantic root `fsm`, and is covered by
-focused t/1535 for exact artifacts, normalized semantic/read-only-MCP parity,
-and assertion-enabled continuous/ready-low/grant-low `4 -> 3 -> 2 -> 1 -> 0`
-runtime. Current totals are 327 protocol fixtures and 368
-supported-smoke/strict-supported fixtures.
+and its byte-identical `.ahb` alias are strict-supported. Their distinct
+support IDs are `intent.ppif_ahb_requester_busy_insert_four` and
+`intent.ahb_profile_alias_requester_busy_insert_four`; both select
+`amba_requester_busy_insert_four` with semantic root `fsm`. Focused t/1535 owns
+exact artifacts, normalized semantic/read-only-MCP parity, and assertion-
+enabled continuous/ready-low/grant-low `4 -> 3 -> 2 -> 1 -> 0` runtime;
+t/1536 owns alias parity without a second simulation. Current totals are 328
+protocol fixtures and 369 supported-smoke/strict-supported fixtures.
 
 ## Capability manifest
 

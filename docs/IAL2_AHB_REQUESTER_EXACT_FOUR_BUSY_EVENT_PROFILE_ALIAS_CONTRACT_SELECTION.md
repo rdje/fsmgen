@@ -147,3 +147,11 @@ or decision 0020 behavior.
 Rollback of `.4` is documentation-only: remove this record/fact, restore `.4`
 to active selection, remove proposed `.5`, and restore roadmap/mdBook/task/
 Memory pointers. No public or runtime behavior is affected.
+
+## Implementation Outcome
+
+Leaf `.5` now ships the selected byte-identical alias with the exact support,
+semantic, report-residue, artifact, verifier, and preservation contract above.
+Focused t1536 proves parity without a second simulation; t1535 remains shared
+runtime. Current accounting is 328/369/52 split 26 `.ppif` / 26 `.ahb`. See
+`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.

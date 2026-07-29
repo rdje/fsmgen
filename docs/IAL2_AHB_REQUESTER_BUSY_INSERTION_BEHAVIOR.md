@@ -189,8 +189,8 @@ requester, its matching `.ahb` requester alias, and the first generic
 one-subordinate paired composition. The matching exact-two paired aggregate
 alias and the generic plus alias two-subordinate exact-two siblings now ship.
 The generic exact-three requester, its matching `.ahb` alias, both
-generic/profile exact-three paired topologies, and the generic exact-four
-requester also ship. The exact-four requester alias, counts above four, policy/runtime/random
+generic/profile exact-three paired topologies, and the generic/profile
+exact-four requester pair also ship. Counts above four, policy/runtime/random
 throttling, multiple or runtime-selected insertion points, distinct
 `local-status.bus_busy`,
 halfword/word burst `SEQ`, wider/indefinite bursts, multi-word/register-bank

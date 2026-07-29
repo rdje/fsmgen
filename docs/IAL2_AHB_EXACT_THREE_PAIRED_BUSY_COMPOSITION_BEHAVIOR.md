@@ -76,10 +76,10 @@ semantic root: top
 
 The alias established 324/365/48. The later generic two-subordinate exact-three
 paired source established 325/366/49; its matching alias established
-326/367/50. The later generic exact-four requester moves current accounting to
-327 protocol fixtures, 368 supported-smoke and strict-supported fixtures, and
-51 AHB IAL2 paths split between 26 generic `.ppif` sources and 25 `.ahb`
-aliases.
+326/367/50. The generic exact-four requester established 327/368/51; its
+matching alias now moves current accounting to 328 protocol fixtures, 369
+supported-smoke and strict-supported fixtures, and 52 AHB IAL2 paths split
+between 26 generic `.ppif` sources and 26 `.ahb` aliases.
 
 ## Semantic Introspection And MCP
 

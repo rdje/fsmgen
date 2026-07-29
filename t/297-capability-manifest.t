@@ -3041,8 +3041,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/bounded AHB requester exact-four BUSY-event insertion source is support-accounted on the generic \.ppif surface/,
-        'manifest records generic exact-four requester BUSY support',
+        qr/bounded AHB requester exact-four BUSY-event insertion source and its matching \.ahb profile alias are support-accounted/,
+        'manifest records generic and profile-alias exact-four requester BUSY support',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
@@ -3490,8 +3490,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},
-        qr/requester profile-alias family includes the base requester and additive exact-one\/exact-two\/exact-three BUSY-event insertion sources; ppif\/ahb_requester_busy_insert\.ahb mirrors ppif\/ahb_requester_busy_insert\.ppif and generates amba_requester_busy_insert, ppif\/ahb_requester_busy_insert_two\.ahb mirrors ppif\/ahb_requester_busy_insert_two\.ppif and generates amba_requester_busy_insert_two, and ppif\/ahb_requester_busy_insert_three\.ahb mirrors ppif\/ahb_requester_busy_insert_three\.ppif and generates amba_requester_busy_insert_three/,
-        'manifest records all three requester BUSY-insertion .ahb profile aliases',
+        qr/requester profile-alias family includes the base requester and additive exact-one\/exact-two\/exact-three\/exact-four BUSY-event insertion sources; ppif\/ahb_requester_busy_insert\.ahb mirrors ppif\/ahb_requester_busy_insert\.ppif and generates amba_requester_busy_insert, ppif\/ahb_requester_busy_insert_two\.ahb mirrors ppif\/ahb_requester_busy_insert_two\.ppif and generates amba_requester_busy_insert_two, ppif\/ahb_requester_busy_insert_three\.ahb mirrors ppif\/ahb_requester_busy_insert_three\.ppif and generates amba_requester_busy_insert_three, and ppif\/ahb_requester_busy_insert_four\.ahb mirrors ppif\/ahb_requester_busy_insert_four\.ppif and generates amba_requester_busy_insert_four/,
+        'manifest records all four requester BUSY-insertion .ahb profile aliases',
     );
     like(
         $file_surface_by_suffix{'.ahb'}{current_boundary},

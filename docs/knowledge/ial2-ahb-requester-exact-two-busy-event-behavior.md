@@ -39,6 +39,7 @@ Its matching aggregate alias now ships too. The generic two-subordinate
 exact-two sibling and its matching `.ahb` alias also ship with shared runtime
 and semantic/MCP proof established 320/361/44. The additive generic exact-three
 requester established 321/362/45; its matching alias established 322/363/46.
-The later generic exact-four requester moves current accounting to 327/368/51
-split 26 `.ppif` / 25 `.ahb`. Exact-two behavior and
+The generic exact-four requester established 327/368/51; its matching alias
+now moves current accounting to 328/369/52 split 26 `.ppif` / 26 `.ahb`.
+Exact-two behavior and
 identity remain unchanged.

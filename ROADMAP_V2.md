@@ -7672,6 +7672,18 @@ implementation `.5`. Activation changes continuity documentation and no
 source, support, test, parser/generator, artifact, semantic/MCP API, HDL/
 runtime, backend, protocol, HIAL/VIAL, VHDL, verification-generation, or
 transaction behavior; the exact-four alias remains unshipped.
+Implementation `.5` now ships the byte-identical exact-four `.ahb` alias
+through existing suffix/lowering machinery. Focused t1536 proves width-three
+IAL1/IAL0, numeric report, alias-only residue cleanup, strict/schedule/artifact,
+normalized semantic/read-only MCP, verifier, diagnostic, requester, and paired-
+source parity without simulation; assertion-enabled t1535 remains shared
+runtime. Current accounting is 328 protocol / 369 supported+strict / 52 AHB
+paths split 26 `.ppif` / 26 `.ahb`. No parser, generator, HDL/runtime,
+HIAL/VIAL, VHDL, or verification-generation behavior changed. See
+`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.
+The exact-four child tree is complete. Pending parent selector `.823` may
+activate only after the clean `.5` behavior commit, then selects the next
+smallest roadmap-aligned owner without behavior in its activation slice.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

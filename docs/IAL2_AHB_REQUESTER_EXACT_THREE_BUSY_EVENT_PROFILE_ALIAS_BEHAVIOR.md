@@ -86,10 +86,11 @@ The alias established 322 protocol fixtures, 363 supported-smoke/strict-
 supported fixtures, and 46 AHB IAL2 paths. The generic exact-three paired
 source established 323/364/47; its matching alias moves current support
 checkpoint to 324/365/48. The generic two-subordinate exact-three paired source
-established 325/366/49; its matching alias established 326/367/50. The later
-generic exact-four requester moves current support accounting to 327 protocol
-fixtures, 368 supported-smoke/strict-supported fixtures, and 51 AHB paths split
-26 `.ppif` sources / 25 `.ahb` aliases.
+established 325/366/49; its matching alias established 326/367/50. The generic
+exact-four requester established 327/368/51; its matching alias now moves
+current support accounting to 328 protocol fixtures, 369 supported-smoke/
+strict-supported fixtures, and 52 AHB paths split 26 `.ppif` sources / 26
+`.ahb` aliases.
 
 Strict check and `--emit-semantic-json` expose the alias path, support ID,
 coverage, source kind, module, and `fsm` semantic root. The read-only MCP
@@ -129,8 +130,8 @@ count.
 ## Explicit Deferrals
 
 Generic/profile one- and two-subordinate exact-three paired compositions and
-the generic exact-four requester now also ship. The exact-four requester alias,
-literal BUSY counts above four, multiple insertion points, runtime-selected counts/points, policy/
+the generic/profile exact-four requester pair now also ship. Literal BUSY
+counts above four, multiple insertion points, runtime-selected counts/points, policy/
 random throttling, distinct local bus-BUSY status, larger/broader bursts,
 optional AHB signals, managers, queues/outstanding transfers, direct seeds/
 backends, verification-output generation, backend variants, selector repairs,

@@ -90,11 +90,11 @@ exact-four support; exact-two names exact-three and exact-four; exact-three
 names exact-four; exact-four says four events ship. Counts above four and
 generalized runtime/policy/random or multiple-point insertion remain deferred.
 
-Current accounting is 327 protocol fixtures, 368 supported-smoke plus strict
-fixtures, and 51 AHB IAL2 paths split 26 generic `.ppif` sources and 25 `.ahb`
-aliases. The matching exact-four `.ahb` alias is selected by
-`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md`
-but remains unshipped until its separate implementation.
+The generic source established 327 protocol fixtures, 368 supported-smoke plus
+strict fixtures, and 51 AHB IAL2 paths split 26 generic `.ppif` sources and 25
+`.ahb` aliases. The matching exact-four `.ahb` alias now ships through
+`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`,
+moving current accounting to 328/369/52 split 26 `.ppif` / 26 `.ahb`.
 
 ## Verification
 
@@ -125,12 +125,12 @@ Generated outputs must use a repository-derived same-volume path.
 
 ## Explicit Deferrals And Rollback
 
-The exact-four `.ahb` alias, exact-four paired compositions, counts above four,
+Exact-four paired compositions, counts above four,
 arbitrary/runtime/policy/random counts, multiple insertion points, local
 bus-BUSY status, new burst/signal/topology behavior, HIAL/VIAL activation,
 VHDL, verification generation, and decision 0020 remain separate.
 
-Rollback removes the exact-four source/support/test/behavior/fact entries,
+Rollback removes the exact-four generic and alias source/support/test/behavior/fact entries,
 restores literal `2..3` normalization and diagnostics, removes the width
 helper, restores the former residue text and 326/367/50 accounting, then reruns
 the requester preservation boundary. Exact-one/two/three generated behavior

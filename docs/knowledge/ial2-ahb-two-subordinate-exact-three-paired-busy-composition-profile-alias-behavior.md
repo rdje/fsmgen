@@ -33,7 +33,8 @@ Focused t1534 proves byte/report/strict/schedule/semantic/read-only-MCP/artifact
 verifier/diagnostic/preservation parity without a second runtime; t1533 remains
 the shared assertion-enabled 10/8/2/6/2 behavioral proof.
 
-This alias established 326/367/50. The later generic exact-four requester moves
-current accounting to 327 protocol / 368 supported+strict / 51 AHB paths split
-26 `.ppif` / 25 `.ahb`. Every support-accounted semantic feature continues to
+This alias established 326/367/50. The generic exact-four requester established
+327/368/51; its matching alias now moves current accounting to 328 protocol /
+369 supported+strict / 52 AHB paths split 26 `.ppif` / 26 `.ahb`. Every
+support-accounted semantic feature continues to
 extend one normalized semantic surface and preserve read-only MCP parity.

@@ -34,8 +34,9 @@ alias also ships through `.5`, establishing 322/363/46. The generic exact-three
 paired source established 323/364/47; its matching alias moves current
 checkpoint to 324/365/48. The generic two-subordinate exact-three paired source
 established 325/366/49; its matching alias established 326/367/50. The generic
-exact-four requester moves current accounting to 327 protocol / 368
-supported+strict / 51 AHB paths split 26 `.ppif` / 25 `.ahb`.
+exact-four requester established 327/368/51; its matching alias now moves
+current accounting to 328 protocol / 369 supported+strict / 52 AHB paths split
+26 `.ppif` / 26 `.ahb`.
 Focused t1529
 proves alias parity without a second simulation and t1528 remains shared. Fact
 `ial2-ahb-requester-exact-three-busy-event-profile-alias-behavior` owns the

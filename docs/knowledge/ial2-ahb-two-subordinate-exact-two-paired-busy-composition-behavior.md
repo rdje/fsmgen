@@ -34,8 +34,9 @@ established 321/362/45 and its alias established 322/363/46. The generic
 exact-three paired source established 323/364/47; its matching alias moves
 the next checkpoint to 324/365/48. The generic two-subordinate exact-three
 paired source established 325/366/49; its matching alias established
-326/367/50. The later generic exact-four requester moves current accounting to
-327/368/51 split 26 `.ppif` / 25 `.ahb`.
+326/367/50. The generic exact-four requester established 327/368/51; its
+matching alias now moves current accounting to 328/369/52 split 26 `.ppif` /
+26 `.ahb`.
 Deep semantic
 introspection is an ongoing
 language-wide capability: each new support-accounted semantic feature must

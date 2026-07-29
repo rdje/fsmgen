@@ -237,4 +237,7 @@ evidence-backed handoff.
   priority change.
 - `2026-07-29`: Clean exact-four alias contract commit `3370e15cd` activates
   data-only `.5`; HIAL/VIAL remains proposed and unchanged.
+- `2026-07-29`: Exact-four alias implementation `.5` ships the requester
+  generic/profile pair at 328/369/52 split 26/26; HIAL/VIAL remains proposed
+  with no architecture or priority change.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

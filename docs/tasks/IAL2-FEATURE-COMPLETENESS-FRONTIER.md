@@ -68,7 +68,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
   Children continuation 14: `IAL2-FEATURE-COMPLETENESS-FRONTIER.792, IAL2-FEATURE-COMPLETENESS-FRONTIER.793, IAL2-FEATURE-COMPLETENESS-FRONTIER.794, IAL2-FEATURE-COMPLETENESS-FRONTIER.795`
   Children continuation 15: `IAL2-FEATURE-COMPLETENESS-FRONTIER.796, IAL2-FEATURE-COMPLETENESS-FRONTIER.797, IAL2-FEATURE-COMPLETENESS-FRONTIER.798, IAL2-FEATURE-COMPLETENESS-FRONTIER.799, IAL2-FEATURE-COMPLETENESS-FRONTIER.800, IAL2-FEATURE-COMPLETENESS-FRONTIER.801, IAL2-FEATURE-COMPLETENESS-FRONTIER.802, IAL2-FEATURE-COMPLETENESS-FRONTIER.803, IAL2-FEATURE-COMPLETENESS-FRONTIER.804, IAL2-FEATURE-COMPLETENESS-FRONTIER.805, IAL2-FEATURE-COMPLETENESS-FRONTIER.806, IAL2-FEATURE-COMPLETENESS-FRONTIER.807, IAL2-FEATURE-COMPLETENESS-FRONTIER.808, IAL2-FEATURE-COMPLETENESS-FRONTIER.809, IAL2-FEATURE-COMPLETENESS-FRONTIER.810, IAL2-FEATURE-COMPLETENESS-FRONTIER.811, IAL2-FEATURE-COMPLETENESS-FRONTIER.812, IAL2-FEATURE-COMPLETENESS-FRONTIER.813, IAL2-FEATURE-COMPLETENESS-FRONTIER.814`
-  Children continuation 16: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815, IAL2-FEATURE-COMPLETENESS-FRONTIER.816, IAL2-FEATURE-COMPLETENESS-FRONTIER.817, IAL2-FEATURE-COMPLETENESS-FRONTIER.818, IAL2-FEATURE-COMPLETENESS-FRONTIER.819, IAL2-FEATURE-COMPLETENESS-FRONTIER.820, IAL2-FEATURE-COMPLETENESS-FRONTIER.821, IAL2-FEATURE-COMPLETENESS-FRONTIER.822`
+  Children continuation 16: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815, IAL2-FEATURE-COMPLETENESS-FRONTIER.816, IAL2-FEATURE-COMPLETENESS-FRONTIER.817, IAL2-FEATURE-COMPLETENESS-FRONTIER.818, IAL2-FEATURE-COMPLETENESS-FRONTIER.819, IAL2-FEATURE-COMPLETENESS-FRONTIER.820, IAL2-FEATURE-COMPLETENESS-FRONTIER.821, IAL2-FEATURE-COMPLETENESS-FRONTIER.822, IAL2-FEATURE-COMPLETENESS-FRONTIER.823`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -5824,6 +5824,13 @@ path before reopening VHDL backend or VHDL rerouting work.
   Verification: `Activated only after clean .821 behavior commit db402fd9d through clean activation commit 3453a822f. Reconciled the complete exact-one/two/three requester and one-/two-window paired generic/profile cadence at 326/367/50 split 25/25, current literal-2..3 normalization, width-two requester storage, qualified rules, residue, semantic/read-only-MCP and runtime surfaces, remaining AHB semantics, generic priority, HIAL/VIAL, scalability, decisions, roadmap, mdBook, and Knowledge Map. Selected proposed IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1 as the smallest adjacent owner. A repository-local one-file/2,313-byte exact-four transform changed only intent/object/anchor/actor identity plus busy-beats 4 and failed closed before output with exactly one current-range diagnostic; the generator hardcodes ahb_busy_remaining_q width 2, making four the first unrepresentable count. The candidate was removed without residue. The audit must decide bounded width three versus reusable minimum-width derivation and prove exact 4 -> 3 -> 2 -> 1 -> 0 runtime before a public contract. New policy/points/status/burst/signal semantics, generic priority, HIAL/VIAL, scalability, VHDL, verification generation, and decision 0020 remain separate. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map generation/check passes at 1,032 facts/5,268 keys; mdBook builds 72 files/16,213,973 bytes and is removed without residue; Memory is 58 lines; diff and all six doctrine gates pass. Final canonical Stats-compatible RAM is 70.1% (16.825/24.000 GiB), kernel pressure is separately 1 (normal), and guard occupancy is excluded as capacity truth. No public behavior changed.`
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.822: select exact-four AHB BUSY readiness`
 
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.823`
+  Status: `pending`
+  Goal: `Select the next exact roadmap-aligned owner after the exact-four requester generic/profile pair ships cleanly.`
+  Acceptance: `Activate only after IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.5 commits cleanly. Reconcile the complete exact-one through exact-four requester generic/profile family at 328 protocol / 369 supported+strict / 52 AHB paths split 26/26, the one-/two-window exact-one/two/three paired families, current count-width/report/residue/runtime/semantic-read-only-MCP surfaces, exact-four paired-composition/count-above-four/policy/runtime/multiple-point/local-status/burst/signal residue, generic selector-priority and scalability owners, other roadmap lanes, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE, completed verification-output foundations, decisions 0004/0008/0020, roadmap, mdBook, and Knowledge Map. Choose exactly one smallest evidence-backed next owner and explain why it outranks the alternatives. Preserve event-capable compiled Verilator as the portable-fast subset profile separately from a qualified full-language/SystemVerilog-UVM simulator, with VHDL/mixed-language claims qualified independently. Freeze exact ownership, clean activation boundary, preservation, focused/broader validation, docs/Knowledge Map impact, authorized host100/process4096 with exact Stats-compatible capacity plus separate kernel pressure, repository-derived same-volume cleanup, and rollback before behavior changes. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction-layer behavior change in this selector. Keep decision 0020 proposed/inactive unless independently and explicitly selected.`
+  Verification: `pending clean exact-four alias behavior commit and separate activation.`
+  Commit: `pending`
+
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25
 `.ahb`. Child `.1`
@@ -5841,6 +5848,13 @@ verification generation, and decision `0020` remain separate. The
 director-agreed event-capable compiled Verilator versus full-language/
 SystemVerilog-UVM profile requirement remains durable without activating
 HIAL/VIAL.
+
+The selected exact-four child tree now completes through `.5`: `.1` proved
+width-three lower-layer and assertion-enabled runtime readiness, `.2` froze
+literal `2..4` plus minimum widths 2/2/3, `.3` shipped the generic source and
+t1535 runtime, `.4` selected the matching alias, and `.5` ships the byte-
+identical `.ahb` surface with t1536 parity at 328/369/52 split 26/26. Pending
+parent selector `.823` may activate only after the clean `.5` commit.
 
 Selector verification: current-surface/backlog/path tests pass 3 files/22
 tests; Knowledge Map generation/check passes at 1,026 facts/5,231 question

@@ -90,9 +90,9 @@ exact-three requester established 321/362/45; its matching exact-three alias
 established 322/363/46. The generic exact-three paired source established
 323/364/47; its matching alias established 324/365/48. The generic
 two-subordinate exact-three paired source established 325/366/49; its matching
-alias established 326/367/50. The later generic exact-four requester moves
-current totals to 327/368 and 51 AHB paths: twenty-six `.ppif` sources and
-twenty-five `.ahb` aliases.
+alias established 326/367/50. The generic exact-four requester established
+327/368/51; its matching alias now moves current totals to 328/369 and 52 AHB
+paths: twenty-six `.ppif` sources and twenty-six `.ahb` aliases.
 
 The alias is exposed through the same bounded semantic contract as every other
 support-accounted source. Strict check and `--emit-semantic-json` report its
@@ -126,8 +126,8 @@ observe one BUSY episode, exactly two qualified BUSY events, the same resumed
 The generic two-subordinate exact-two requester/subordinate composition and its
 matching `.ahb` alias now ship through the existing generators. The later
 generic exact-three requester, its matching `.ahb` alias, both generic/profile
-exact-three paired topologies, and the generic exact-four requester also ship.
-The exact-four requester alias, literal BUSY counts above four, multiple insertion points, runtime-selected
+exact-three paired topologies, and the generic/profile exact-four requester
+pair also ship. Literal BUSY counts above four, multiple insertion points, runtime-selected
 counts/points, policy/random throttling, distinct local bus-BUSY status,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend

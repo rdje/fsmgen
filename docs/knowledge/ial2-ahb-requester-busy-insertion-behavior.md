@@ -64,13 +64,13 @@ surface.
 The additive generic exact-four requester also ships with literal
 `busy-beats=4`, a preserving width-three counter, and direct
 `4 -> 3 -> 2 -> 1 -> 0` continuous/stall runtime proof. Fact
-`ial2-ahb-requester-exact-four-busy-event-behavior` owns the current
-327/368/51 checkpoint split 26 `.ppif` / 25 `.ahb`.
+`ial2-ahb-requester-exact-four-busy-event-profile-alias-behavior` owns the
+current 328/369/52 checkpoint split 26 `.ppif` / 26 `.ahb`.
 
 Historical audit `ial2-ahb-requester-multi-busy-insertion-readiness-audit`
 records the pre-repair ten-qualified-edge contradiction. Repair fact
 `ial2-ahb-requester-single-busy-event-cardinality-repair` owns the shipped
 exact-one result. Generic/profile one- and two-subordinate exact-three paired
-compositions ship. The exact-four requester alias, counts above four,
+compositions and the generic/profile exact-four requester pair ship. Counts above four,
 policy/runtime-selected BUSY behavior,
 distinct local bus-BUSY status, and broader requester behavior remain deferred.

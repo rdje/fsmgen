@@ -77,8 +77,8 @@ between twenty-two `.ppif` sources and twenty-two `.ahb` aliases. The later
 generic exact-three requester established 321/362/45; its matching alias
 established 322/363/46. The generic exact-three paired source established
 323/364/47; its matching alias established 324/365/48. After both
-two-subordinate exact-three sources and the generic exact-four requester,
-current accounting is 327/368/51 split 26 `.ppif` / 25 `.ahb`.
+two-subordinate exact-three sources and the generic/profile exact-four
+requester pair, current accounting is 328/369/52 split 26 `.ppif` / 26 `.ahb`.
 
 Strict check, schedule JSON, normalized semantic JSON, and the real read-only
 `fsmgen_semantic_introspect` MCP tool expose the same support identity, module,
