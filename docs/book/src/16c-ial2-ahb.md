@@ -456,6 +456,19 @@ The selected interconnect behavior is deliberately bounded:
 The generated aggregate top wires the requester, interconnect, and subordinate
 through `ahb_tb.fsm`; the generated HDL entry is module `ahb_tb`.
 
+> **Current selector-assertion boundary:** the shipped public behavior above
+> is unchanged, but generated interconnect IAL0 currently drives ordinary
+> defaults together with mapped-hit, retained-owner, or unmapped response
+> values in the same `idle` state. Fresh assertion-enabled base runs at mapped
+> addresses zero and two both stop at `HADDR_REGS`. The complete conflicting
+> set is five outputs for one window (`HADDR_REGS`, `HSEL_REGS`, `HRDATA`,
+> `HREADY`, `HRESP`) and seven for two windows (per-window `HADDR_*`/`HSEL_*`
+> plus the three global response outputs). Generic `onehot0` assertions are
+> accurate and remain mandatory; proposed contract leaf `.2` owns a
+> generated-`AhbInterconnect` mutually exclusive arbitration shape before any
+> repair. See the
+> [output-arbitration audit](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md).
+
 ## Guided PPIF Two-Subordinate Interconnect
 
 Run the shipped generic one-requester/two-subordinate AHB interconnect through

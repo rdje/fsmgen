@@ -8,7 +8,7 @@ answers:
 date: 2026-07-29
 status: current
 tags: [ial2, ahb, interconnect, selector, arbitration, correctness, roadmap, task-tree]
-evidence: docs/IAL2_POST_EXACT_THREE_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/tasks/IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.md; docs/knowledge/ial2-ahb-interconnect-default-decode-output-arbitration-gap.md; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; t/1513-ial2-ahb-paired-busy-composition.t; t/1515-ial2-ahb-two-subordinate-paired-busy-composition.t; t/1523-ial2-ahb-exact-two-paired-busy-composition.t; t/1525-ial2-ahb-two-subordinate-exact-two-paired-busy-composition.t
+evidence: docs/IAL2_POST_EXACT_THREE_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md; docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/tasks/IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.md; docs/knowledge/ial2-ahb-interconnect-default-decode-output-arbitration-gap.md; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; t/1513-ial2-ahb-paired-busy-composition.t; t/1515-ial2-ahb-two-subordinate-paired-busy-composition.t; t/1523-ial2-ahb-exact-two-paired-busy-composition.t; t/1525-ial2-ahb-two-subordinate-exact-two-paired-busy-composition.t
 reverify: rg -n 'subordinate_idle_lines|subordinate_hit_blocks|--no-assert|IAL2-FEATURE-COMPLETENESS-FRONTIER\.813|IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION' perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm t/1513-ial2-ahb-paired-busy-composition.t t/1515-ial2-ahb-two-subordinate-paired-busy-composition.t t/1523-ial2-ahb-exact-two-paired-busy-composition.t t/1525-ial2-ahb-two-subordinate-exact-two-paired-busy-composition.t docs/IAL2_POST_EXACT_THREE_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/tasks/IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.md
 ---
 
@@ -28,3 +28,8 @@ Exact-three paired composition is therefore deferred until the selected audit
 maps the full overlap and selects the smallest repair owner. The separate
 general ISF rule-versus-transaction priority gap remains proposed because the
 current requester path does not depend on that disposable mechanism.
+
+The audit now maps five conflicting one-window outputs and seven conflicting
+two-window outputs, assigns repair ownership to generated AHB interconnect
+IAL0, and proposes `.2` for exact contract selection. Generic assertions stay
+enabled and unchanged.

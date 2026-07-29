@@ -7301,6 +7301,16 @@ select the smallest repair owner without changing behavior. See
 `docs/IAL2_POST_EXACT_THREE_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md`.
 The `.813` selector committed cleanly at `347a85f80`; the selected arbitration
 audit `.1` is now active. Activation changes continuity/docs state only.
+Audit `.1` now reproduces the base assertion at mapped addresses zero and two,
+maps eight one-window and eleven two-window selector targets, and isolates the
+actual conflicts to five and seven outputs respectively. `HADDR_*`/`HSEL_*`
+overlap mapped hit with ordinary defaults; `HRDATA`/`HREADY`/`HRESP` overlap
+retained-owner or unmapped handling with their defaults. `HGRANT`, owner bits,
+and `next_state` are instrumented but exclusive. The repair belongs in
+generated `AhbInterconnect` IAL0; generic selector analysis/assertions remain
+correct and mandatory. Proposed child `.2` owns exact no-behavior contract
+selection after the audit commits cleanly. See
+`docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

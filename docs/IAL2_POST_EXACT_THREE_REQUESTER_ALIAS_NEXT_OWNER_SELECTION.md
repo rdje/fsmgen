@@ -15,6 +15,14 @@ child only after this selector commits cleanly.
 The selector committed cleanly at `347a85f80`; the selected audit child is now
 active. Activation changes continuity and documentation state only.
 
+The audit is now complete. Fresh assertion-enabled base runs reproduce
+`HADDR_REGS` at mapped addresses zero and two; generated metadata maps five
+conflicting outputs for one window and seven for two windows. The defect is
+owned by generated `AhbInterconnect` IAL0, not generic selector lowering.
+Proposed child `.2` owns exact no-behavior contract selection after the audit
+commits cleanly. See
+`docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md`.
+
 No parser, generator, public source, support entry, test, artifact,
 semantic/MCP API, HDL/runtime, backend, protocol, or transaction-layer
 behavior changes in this selector.
