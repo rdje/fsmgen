@@ -9,7 +9,7 @@ answers:
 date: 2026-07-24
 status: current
 tags: [ial2, ahb, interconnect, selector, assertion, haddr, arbitration, lowering]
-evidence: docs/tasks/IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.md; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; t/1513-ial2-ahb-paired-busy-composition.t; t/1515-ial2-ahb-two-subordinate-paired-busy-composition.t
+evidence: docs/IAL2_POST_EXACT_THREE_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md; docs/tasks/IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.md; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; t/1513-ial2-ahb-paired-busy-composition.t; t/1515-ial2-ahb-two-subordinate-paired-busy-composition.t
 reverify: rg -n 'subordinate_idle_lines|subordinate_hit_blocks|--no-assert|IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION' perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm t/1513-ial2-ahb-paired-busy-composition.t t/1515-ial2-ahb-two-subordinate-paired-busy-composition.t docs/tasks/IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.md
 ---
 
@@ -23,6 +23,8 @@ This overlap exists in the unchanged base interconnect generator and is not
 caused by the requester single-BUSY repair. The requester-only generated HDL
 passes with assertions enabled. Existing aggregate runtime tests compile with
 `--no-assert`; current requester BUSY work retains that boundary while adding
-ready-qualified BUSY edge counts. Proposed inactive tree
-`IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION` owns the separate
-audit and repair selection after the current work dries out.
+ready-qualified BUSY edge counts. Parent selector
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.813` now selects proposed tree
+`IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION` for the separate
+audit and repair-owner selection. It activates only after the selector commits
+cleanly.

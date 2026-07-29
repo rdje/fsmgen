@@ -6,14 +6,15 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.813: activate post-exact-three AHB selector`;
-  predecessor `c224b2cba`.
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.813: select AHB interconnect arbitration audit`;
+  predecessor `188940399`.
 - active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.813`.
-- current_state: `.813` is active after clean exact-three alias commit
-  `c224b2cba`; the child tree is done at 322/363/46 split 23/23 and this
-  activation changes continuity/docs state only.
-- next_action: execute `.813`: reconcile the completed AHB lineage and current
-  residue, then select exactly one smallest next owner before behavior changes.
+- current_state: `.813` selects proposed
+  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1` before more paired
+  expansion because shipped aggregate tests retain `--no-assert` around a
+  known default/mapped selector overlap. No behavior changes in the selector.
+- next_action: after this clean `.813` commit, activate the selected audit
+  child `.1` in a separate continuity commit.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. Guarded runtime can be stopped
   by the already-tracked macOS metric/external host pressure; never raise the
@@ -25,7 +26,8 @@ bounded current-state pointer. Git preserves its prior history.
   complete the same-volume adoption tree, then resume roadmap PNT.
 - The IAL2 frontier is complete through `.812`; exact-three generic child `.3`
   established `321/362/45`, `.5` ships its matching alias at `322/363/46`, and
-  active parent `.813` owns the next exact selection. Decision `0020`
+  completed parent `.813` selects the proposed AHB interconnect arbitration
+  audit as the next exact owner. Decision `0020`
   remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

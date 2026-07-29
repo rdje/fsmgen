@@ -5754,11 +5754,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.812: select exact-three AHB BUSY audit`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.813`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact IAL2 feature-completeness owner after the exact-three requester BUSY alias ships.`
   Acceptance: `Activate only after IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.5 commits cleanly. Reconcile the complete exact-one/two/three generic/alias requester lineage, one-/two-subordinate exact-two paired lineage, 322 protocol / 363 supported+strict / 46 AHB-path checkpoint, current AhbRequester and AHB residue, focused runtime/parity/current-truth tests, support/language/capability/semantic-MCP surfaces, roadmap, mdBook, Knowledge Map, proposed correctness owners, and decision 0020. Select exactly one smallest evidence-backed next owner among exact-three paired composition, literal counts above three and required width/contract readiness, policy/runtime/multiple-point insertion, distinct local bus-BUSY status, wider/indefinite burst or optional-signal work, an existing correctness/public-truth prerequisite, another roadmap-aligned protocol/platform residue, or explicit parent completion. Freeze task ownership, activation boundary, preservation, validation, docs/Knowledge Map, resource cap, and rollback before behavior changes. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, backend, protocol, or transaction-layer behavior change in this selector; keep decision 0020 proposed/inactive.`
-  Verification: `Activated only after exact-three alias child commit c224b2cba left the tree clean. This continuity slice changes task/index/Memory/roadmap/mdBook/Knowledge Map state only; selector investigation and owner choice remain the next action. No parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, backend, protocol, or transaction-layer behavior changes.`
-  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.813: activate post-exact-three AHB selector`
+  Verification: `Selected proposed IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1 after reconciling the complete exact-one/two/three requester and exact-two paired lineage, 322/363/46 support checkpoint, current AHB generator/test residue, semantic/MCP surfaces, Knowledge Map, proposed correctness owners, and decision 0020. Static generator inspection confirms subordinate_idle_lines unconditionally drive each subordinate HSEL/HADDR output to zero in idle while subordinate_hit_blocks conditionally drive the same outputs for every mapped transfer. Existing assertion-enabled evidence stops first at selector multi-value conflict: HADDR_REGS, and aggregate runtime tests t1513/t1515/t1523/t1525 all compile with --no-assert. The overlap is present in the base non-BUSY public interconnect, whereas the separate ISF rule-versus-transaction priority gap came from a disposable path current requester behavior avoids. Exact-three paired composition would extend an aggregate family whose selector assertions remain disabled, so the interconnect-specific correctness audit is the smallest safe next owner. The selected audit must reproduce base mapped address-zero/nonzero conflicts, map the complete affected output set and ownership layer, and select a separate repair contract without weakening assertions or changing behavior in the audit. Canonical record docs/IAL2_POST_EXACT_THREE_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md and fact ial2-post-exact-three-requester-alias-next-owner-selection. Exact-three paired/count-width/policy/status/burst/signal work, the general ISF priority owner, broader protocols/backends/VHDL, and decision 0020 remain separate/inactive. Knowledge Map generation/check passes at 1007 facts/5117 question keys; mdBook build, memory architecture, README entry point, project-data locality, fact reverify, and diff checks pass, and generated book output is removed. Doctrine closeout evidence is recorded by this commit; no parser/generator/source/support/test/artifact/semantic-MCP API/HDL/runtime/backend/protocol/transaction-layer behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.813: select AHB interconnect arbitration audit`
 
 Activation condition was satisfied when `.810` committed cleanly at
 `e2dc65507`; `.811` was then activated. That activation changed only
@@ -5778,8 +5778,9 @@ projected 322/363/46 split 23/23 with focused t1529 parity and t1528 retained
 as shared runtime. `.5` activated after clean `.4` commit `b7c62d2b6` and now
 ships the byte-identical alias at 322/363/46 split 23/23 with focused t1529
 parity and shared t1528 runtime. Clean `.5` commit `c224b2cba` satisfied the
-activation boundary; parent selector `.813` is active and owns the next exact
-selection.
+activation boundary. Parent selector `.813` now selects proposed
+`IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1`; activate that
+audit only after the `.813` selector commit is clean.
 
 ## Current Frontier
 
@@ -6285,6 +6286,14 @@ selection.
 
 ## Decisions
 
+- `2026-07-29`: `.813` selects proposed
+  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1` before any
+  exact-three paired-composition expansion. Shipped aggregate runtime tests
+  still use `--no-assert`, and the base interconnect emits unconditional
+  subordinate select/address defaults together with conditional mapped-hit
+  writes in one state. The AHB-specific audit owns reproduction, complete
+  overlap mapping, and repair-owner selection; the protocol-neutral
+  rule-versus-transaction priority gap and decision 0020 remain inactive.
 - `2026-06-28`: `.687` selects `.688`, direct implementation of the
   bounded APB sideband-aware data16 no-policy six-register generalized
   `reg0..regN` register-set multi-peripheral timing family, without behavior

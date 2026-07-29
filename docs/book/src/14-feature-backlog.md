@@ -11125,6 +11125,15 @@ See the
 Clean alias commit `c224b2cba` satisfies the parent activation boundary, so
 `.813` is now the active documentation-only selector for the next exact IAL2
 owner. No new behavior ships from activation.
+Leaf `.813` now selects proposed
+`IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1`. The shipped
+interconnect emits subordinate select/address defaults and mapped-hit writes
+to the same outputs in one state, assertion-enabled evidence fails first on
+`HADDR_REGS`, and aggregate runtime tests t1513/t1515/t1523/t1525 retain
+`--no-assert`. This correctness audit therefore precedes exact-three paired
+expansion. It must reproduce the base conflict, map the complete overlap, and
+select the smallest repair owner without changing behavior. See the
+[post-alias selector](../../IAL2_POST_EXACT_THREE_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

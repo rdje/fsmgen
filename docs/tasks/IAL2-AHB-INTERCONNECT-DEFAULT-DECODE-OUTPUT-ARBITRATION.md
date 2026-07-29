@@ -36,6 +36,12 @@ does not depend on the requester repair. Existing paired and phase-pipeline
 runtime tests deliberately compile with `--no-assert`, so this was not a new
 regression.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.813` later reconciled the complete
+exact-one/two/three requester and exact-two paired lineage and selected this
+audit as the next proposed correctness owner. Exact-three paired expansion
+would otherwise extend the same public aggregate family while its generated
+selector assertions remain disabled.
+
 ## Non-Goals
 
 - Do not activate or repair this while the requester BUSY `.3` worktree is
@@ -75,9 +81,9 @@ regression.
 
 ## Activation Gate
 
-This tree is proposed and inactive. It may activate only after the current AHB
-requester BUSY tree commits cleanly and the active frontier explicitly selects
-it.
+This tree is selected by completed parent selector `.813` but remains proposed
+and inactive until that selector commits cleanly. Activate child `.1` only in a
+separate continuity commit from the resulting clean tree.
 
 ## Rollback
 
