@@ -1417,11 +1417,18 @@ t/1521 directly retains exact-two `2 -> 1 -> 0` proof.
 
 Current support accounting is 321 protocol fixtures, 362 supported-smoke plus
 strict fixtures, and 45 AHB paths split 23 `.ppif` / 22 `.ahb`. The matching
-exact-three `.ahb` alias remains a separate follow-on: active `.4` must select
-or reject its contract after clean generic commit `325f21267` and before any
-alias implementation. See the
+exact-three `.ahb` alias remains a separate follow-on: completed `.4` selects
+proposed `.5` to add a byte-identical alias through existing suffix handling.
+The future alias will use support ID
+`intent.ahb_profile_alias_requester_busy_insert_three`, source kind
+`ial2_profile_alias`, the same `amba_requester_busy_insert_three` artifacts and
+HDL module, numeric `beats=3`, and semantic root `fsm`; projected accounting is
+322/363/46 split 23 `.ppif`/23 `.ahb`. Focused t1529 will prove parity without
+a second runtime, and t1528 remains shared. No alias ships from `.4`. See the
 [contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_CONTRACT_SELECTION.md)
-and [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md).
+and [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md),
+plus the
+[selected alias contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md).
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.789` selected `.790`, which now ships the
 matching `ppif/ahb_requester_busy_insert.ahb` profile alias. It mirrors the
@@ -2153,9 +2160,12 @@ unchanged. Its current checkpoint is 321 protocol / 362 supported+strict /
 45 AHB paths split 23 `.ppif`/22 `.ahb`. Focused t1528 directly observes
 `3 -> 2 -> 1 -> 0` through continuous, 32-clock ready-low, and 32-clock
 grant-low runtime; t1521 directly locks exact-two `2 -> 1 -> 0`. The
-matching exact-three `.ahb` alias does not yet ship; active `.4` separately
-owns its contract selection or rejection after clean generic commit
-`325f21267`.
+matching exact-three `.ahb` alias does not yet ship. Completed `.4` selects
+proposed `.5`, a byte-identical data-only alias implementation with exact
+support identity, numeric `beats=3`, existing suffix-only residue cleanup,
+normalized semantic/read-only MCP parity, projected 322/363/46 accounting, and
+t1528 retained as the sole runtime proof. See the
+[selected alias contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md).
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that

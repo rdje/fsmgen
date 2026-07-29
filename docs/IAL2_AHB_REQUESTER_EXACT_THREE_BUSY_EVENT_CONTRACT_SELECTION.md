@@ -103,8 +103,8 @@ semantic root:    fsm
 ```
 
 The source is additive and generic-first. The matching byte-identical `.ahb`
-alias is not part of `.3`; active `.4` must select or reject that alias
-contract after clean generic commit `325f21267`.
+alias is not part of `.3`; completed `.4` separately selects its contract, and
+proposed `.5` owns implementation after `.4` commits cleanly.
 
 ## Existing Lowering Is The Contract
 

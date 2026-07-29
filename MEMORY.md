@@ -6,15 +6,16 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.4: activate exact-three AHB alias selection`;
-  predecessor `325f21267`.
+  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.4: select exact-three AHB alias contract`;
+  predecessor `9d4fd2f0b`.
 - active_work_unit:
   `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.4`.
-- current_state: `.3` committed cleanly at `325f21267`, shipping the generic
-  exact-three requester at 321/362/45; `.4` is active for matching `.ahb`
-  alias contract selection only, with no behavior change in activation.
-- next_action: execute `.4`: probe suffix/report/artifact/semantic/MCP parity,
-  then select or reject one byte-identical alias contract and a later owner.
+- current_state: `.4` selects proposed `.5`, a byte-identical exact-three
+  requester `.ahb` alias at projected 322/363/46 split 23/23; focused t1529
+  will prove parity without a second runtime, with t1528 shared. No alias or
+  behavior changes in `.4`.
+- next_action: after this clean `.4` commit, activate `.5` in a separate
+  continuity commit, then ship the selected data-only alias and focused proof.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. Guarded runtime can be stopped
   by the already-tracked macOS metric/external host pressure; never raise the
@@ -25,8 +26,9 @@ bounded current-state pointer. Git preserves its prior history.
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
 - The IAL2 frontier is complete through `.812`; exact-three generic child `.3`
-  ships at `321/362/45`, and active `.4` is the exact alias-selection frontier.
-  Decision `0020` remains proposed/inactive.
+  ships at `321/362/45`, and completed `.4` selects pending `.5`, the exact
+  alias implementation at projected `322/363/46`. Decision `0020` remains
+  proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and

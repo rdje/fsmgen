@@ -30,9 +30,10 @@ beats, and zero final count.
 
 Strict/check/schedule/artifact/verifier, normalized semantic JSON, and real
 read-only shell-disabled MCP parity pass. Current accounting is 321 protocol /
-362 supported+strict / 45 AHB paths split 23 `.ppif` / 22 `.ahb`. Active `.4`
-owns no-behavior selection or rejection of the matching exact-three alias;
-the alias itself and all broader count/policy/composition work remain separate.
+362 supported+strict / 45 AHB paths split 23 `.ppif` / 22 `.ahb`. Completed
+`.4` selects proposed `.5`, the byte-identical matching alias implementation,
+projected at 322/363/46 split 23/23 with t1528 shared. The alias itself and all
+broader count/policy/composition work remain separate until their owners ship.
 Requester aliases and generic/alias one-/two-subordinate exact-two paired
 surfaces pass t1512/t1522-t1526; t248+t297 pass 6,899 assertions, and
 strengthened t1518 locks current behavior/fact/mdBook truth.

@@ -69,7 +69,7 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
 - ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT`
   Status: `active`
   Goal: `Audit literal-three requester BUSY reuse before selecting public behavior.`
-  Children: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3`, `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.4`
+  Children: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3`, `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.4`, `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.5`
 
 - ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`
   Status: `done`
@@ -93,9 +93,16 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
   Commit: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3: ship generic exact-three BUSY`
 
 - ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.4`
-  Status: `active`
+  Status: `done`
   Goal: `Select the matching exact-three requester .ahb profile-alias contract after generic behavior ships.`
   Acceptance: `Activate only after .3 commits cleanly. Reconcile shipped ppif/ahb_requester_busy_insert_three.ppif with existing .ahb suffix/profile handling and exact-one/exact-two alias precedent. Select or reject one byte-identical data-only ppif/ahb_requester_busy_insert_three.ahb alias; if selected, freeze support intent.ahb_profile_alias_requester_busy_insert_three / ial2_ahb_profile_alias_requester_busy_insert_three_pipeline_cli, source kind ial2_profile_alias, actor/module amba_requester_busy_insert_three, semantic root fsm, alias-only residue cleanup, numeric beats=3, exact IAL1/IAL0/HDL identity, projected 322 protocol / 363 supported+strict / 46 AHB paths split 23 .ppif/23 .ahb, focused t1529 check/schedule/report/artifact/semantic/read-only MCP/outdir/verifier/diagnostic/preservation contract, retained assertion-enabled t1528 as the sole shared runtime, docs/Knowledge Map/doctrine gates, unchanged 4-GiB cap, and rollback. Make no parser, generator, public source, support entry, test, artifact, semantic/MCP API, HDL/runtime, backend, protocol, or transaction-layer behavior change in contract selection. Do not add the alias itself, a second runtime, counts above three, generalized width, policy/runtime/random or multiple insertion points, local bus-BUSY status, exact-three compositions, broader bursts/signals/managers/fabrics, selector repairs, AXI/APB/VHDL, or decision 0020 behavior.`
+  Verification: `Selected proposed .5, a byte-identical data-only ppif/ahb_requester_busy_insert_three.ahb implementation. An in-memory reserved-label probe over the shipped generic text confirmed protocol_intent.ahb_requester/requester mode, source object fsmgen-ahb-requester-busy-insert-three and intent ahb_requester_busy_insert_three, exact amba_requester_busy_insert_three.isf plus identical IAL1 text and IAL0 files, numeric beats=3, removal only of ahb_profile_alias_deferred, and identical shared BUSY-support residue. A second exact-three probe confirmed targeted non-AHB-profile and non-requester-object diagnostics; the future alias path/support identity remain absent. Existing exact-one/exact-two aliases and t1512/t1522 establish shared-runtime precedent; no parser/generator change is needed. Froze support intent.ahb_profile_alias_requester_busy_insert_three / coverage ial2_ahb_profile_alias_requester_busy_insert_three_pipeline_cli, ial2_profile_alias, amba_requester_busy_insert_three, semantic root fsm, projected 322/363/46 split 23/23, focused t1529 parity with no second runtime, and t1528 as the sole shared assertion-enabled runtime. Focused t1518 passes 5 top-level subtests including its 34-assertion exact-one/two/three truth lock. Knowledge Map generation/check passes at 1005 facts/5108 question keys; mdBook build, memory architecture, relative-doc paths, README entry-point, project-data locality, diff, and doctrine gates pass, and generated book output was removed. Canonical record docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md and fact ial2-ahb-requester-exact-three-busy-event-profile-alias-contract-selection. No source/support/test/parser/generator/artifact/semantic-MCP API/HDL/runtime/backend/protocol/transaction-layer behavior changed.`
+  Commit: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.4: select exact-three AHB alias contract`
+
+- ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.5`
+  Status: `pending`
+  Goal: `Ship the selected byte-identical exact-three requester .ahb profile alias.`
+  Acceptance: `Activate only after .4 commits cleanly. Add only ppif/ahb_requester_busy_insert_three.ahb as a byte-identical mirror of the shipped generic source; support-account it exactly as intent.ahb_profile_alias_requester_busy_insert_three / ial2_ahb_profile_alias_requester_busy_insert_three_pipeline_cli, source kind ial2_profile_alias, supported_smoke+strict, module amba_requester_busy_insert_three, semantic root fsm. Preserve exact IAL1/IAL0/HDL output, numeric beats=3, width-two 3->2->1->0 qualified retirement, ports/state/runtime behavior, and shared BUSY support residue; remove only ahb_profile_alias_deferred through existing suffix handling. Add t/1529-ial2-ahb-requester-three-busy-insert-profile-alias.t for byte/report/lowering/strict-check/schedule/semantic/real read-only shell-disabled MCP/outdir/verifier/targeted-diagnostic and generic/exact-two/exact-one/paired/base preservation parity. Compile no second simulation and retain assertion-enabled t1528 as the sole shared continuous/32-ready-low/32-grant-low runtime proof. Update support/language/capability/t248/t297/t1518/current docs/mdBook/behavior/fact/task/Memory/Knowledge Map to 322 protocol / 363 supported+strict / 46 AHB paths split 23 .ppif/23 .ahb; run focused/preservation/docs/doctrine gates under the unchanged RAM guard and remove generated artifacts. Do not change parser/generator/report/semantic-MCP APIs, public syntax, counter/rules, add runtime or counts above three/generalized width/policy/runtime/random/multiple points/local bus-BUSY status/exact-three compositions/broader bursts/signals/managers/fabrics/backends/protocols/VHDL/transaction behavior, repair selectors, or activate decision 0020.`
   Verification: `pending`
   Commit: `pending`
 
@@ -132,6 +139,12 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
   `325f21267`; `.4` is active for matching exact-three `.ahb` alias contract
   selection only and changes no shipped behavior until a later implementation
   leaf is separately selected and committed.
+- `2026-07-29`: `.4` selects proposed `.5`, the byte-identical exact-three
+  requester `.ahb` alias implementation. Existing suffix handling preserves
+  exact lowering, numeric `beats=3`, shared runtime/report semantics, and
+  normalized semantic/MCP behavior while removing only alias residue. Projected
+  accounting is 322/363/46 split 23/23; focused t1529 owns parity without a
+  second simulation and t1528 remains the sole shared runtime proof.
 
 ## Blockers
 

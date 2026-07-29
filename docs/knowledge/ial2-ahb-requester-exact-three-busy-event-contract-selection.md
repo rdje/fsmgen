@@ -32,7 +32,7 @@ two/three residue, normalized semantic/read-only MCP parity, and
 321/362/45 accounting split 23 generic `.ppif` / 22 `.ahb` now ship.
 
 `.3` now implements the contract with t1528 and strengthened direct t1521
-counter observation. Active `.4` separately owns selection or rejection of
-the matching exact-three `.ahb` alias contract. The alias itself, counts above
+counter observation. Completed `.4` separately selects the matching exact-three
+`.ahb` alias contract; proposed `.5` owns implementation. The alias itself, counts above
 three, generalized width/policy/points/status, compositions, broader AHB,
 AXI/APB/VHDL, and decision 0020 remain separate.
