@@ -2315,6 +2315,8 @@ data beats / 1 BUSY episode / 4 qualified BUSY events / internal
 repair is required; pending `.2` owns a separate generic contract projecting
 329/370/53 split 27 `.ppif`/26 `.ahb`. See the
 [readiness audit](../../IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
+Clean audit commit `19772adec1` now activates that contract selector only; the
+generic exact-four paired source remains unshipped during selection.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

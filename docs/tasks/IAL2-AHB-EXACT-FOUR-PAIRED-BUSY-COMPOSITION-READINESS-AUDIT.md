@@ -63,11 +63,11 @@ any new public paired source or behavior.
   Commit: `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: audit exact-four paired AHB readiness`
 
 - ID: `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the first generic exact-four paired AHB BUSY public contract before implementation.`
   Acceptance: `Activate only after clean .1 audit commit. Read the canonical audit record/fact and exact disposable strict/schedule/artifact/normalized-semantic/real read-only MCP/public-verifier/assertion-runtime evidence; reconcile standalone exact-four requester and exact-three paired generic/alias contracts, RegressionCorpus/language/capability/current-doc surfaces, roadmap, mdBook, Knowledge Map, HIAL/VIAL, scalability, and decisions 0004/0008/0020. Freeze exactly one future generic source ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif with intent ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park, source object fsmgen-ahb-interconnect-requester-busy-insert-four-byte-lane-hburst-seq-busy-park, bounded anchor, embedded requester amba_requester_busy_insert_four, subordinate ahb_lite_subordinate_byte_lane_hburst_seq, fabric ahb_interconnect, top ahb_tb, exact 3 IAL1/4 IAL0 artifacts, width-three 4->3->2->1->0 requester behavior, before_beat=2/beats=4, child/propagated parks_on=[busy], one-hot accepted-subordinate ownership, and no top busy_flow. Select support id intent.ppif_ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park, coverage ial2_ppif_ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park_pipeline_cli, ppif/supported_smoke/strict/module ahb_tb/root top/3 children, and projected 329 protocol / 370 supported+strict / 53 AHB paths split 27 .ppif/26 .ahb only if reconfirmed. Freeze future t1537 plus t/data/ahb_exact_four_paired_busy_composition_tb.svt for strict/check/schedule/artifact/verifier/diagnostic/normalized-semantic/real read-only MCP and assertion-enabled 5/4/1/4/1/0x44332211 proof, preservation of t1531/t1535/t1536, docs/KM/resource/same-volume cleanup/rollback, separate implementation leaf, and separate matching alias/two-window cadence. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, HIAL/VIAL, VHDL, verification-generation, or transaction behavior change in contract selection. Keep counts above four, policy/status/burst/signal semantics, generic priority, scale implementation, other protocols/backends, and decision 0020 separate/inactive.`
-  Verification: `pending clean .1 audit commit and separate activation.`
-  Commit: `pending`
+  Verification: `Activated only after clean .1 audit commit 19772adec1. Activation changes task/index/Memory/roadmap/mdBook/fact continuity only; no parser, generator, public source, support entry, test, checked-in generated artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 top-level tests. Knowledge Map generation/check remains synchronized at 1,039 facts/5,309 question keys. mdBook builds exactly 72 files/16,289,400 bytes and the exact repository-local render is removed without residue. Memory remains 60 lines; diff and all six doctrine gates pass. Pre-gate canonical Stats-compatible RAM is 64.0% (15.358/24.000 GiB; 16,490,676,224 bytes); post-gate capacity is 64.8% (15.551/24.000 GiB; 16,697,262,080 bytes). Kernel pressure is separately 1 (normal) at both readings, and neither guard occupancy nor inverted memory_pressure free percentage is used as capacity truth.`
+  Commit: `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: activate exact-four paired contract`
 
 ## Decisions
 
@@ -79,6 +79,8 @@ any new public paired source or behavior.
   without changing public or generated behavior.
 - `2026-07-29`: `.1` proves direct assertion-enabled exact-four paired
   readiness and selects pending no-behavior generic contract `.2`.
+- `2026-07-29`: Clean audit commit `19772adec1` satisfies the `.2` activation
+  boundary; contract selection is active and still changes no behavior.
 
 ## Open Questions
 
@@ -86,4 +88,4 @@ any new public paired source or behavior.
 
 ## Blockers
 
-- `.2` must wait for the clean `.1` audit commit.
+- None.

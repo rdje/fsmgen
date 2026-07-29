@@ -33,3 +33,7 @@ supported+strict / 53 AHB paths split 27 `.ppif` / 26 `.ahb`. Alias,
 two-subordinate exact-four, broader BUSY semantics, HIAL/VIAL, VHDL,
 verification generation, scalability implementation, and decision 0020 remain
 separate.
+
+Clean audit commit `19772adec1` now activates only the selected `.2` generic
+public-contract leaf. Activation changes continuity documentation and no public
+or generated behavior.

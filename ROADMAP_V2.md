@@ -7718,6 +7718,10 @@ internal `4->3->2->1->0` / 1 resumed `SEQ` / storage `0x44332211`. No
 lower-layer repair is required; pending `.2` owns the no-behavior generic
 contract at projected 329/370/53 split 27 `.ppif`/26 `.ahb`. See
 `docs/IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md`.
+Clean audit commit `19772adec1` activates only contract selector `.2`.
+Activation changes task/index/Memory/roadmap/mdBook/fact continuity and no
+public source, support, test, artifact, HDL/runtime, semantic-MCP, simulator,
+backend, HIAL/VIAL, VHDL, verification-generation, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -11505,6 +11505,9 @@ public-verifier surfaces plus assertion-enabled 5 presentations / 4 data beats
 `SEQ` / storage `0x44332211`. No repair is required. Pending `.2` owns a
 separate generic contract projecting 329/370/53 split 27 `.ppif`/26 `.ahb`.
 See the [readiness audit](../../IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
+Clean audit commit `19772adec1` activates only contract selector `.2`.
+Activation changes continuity documentation and no public or generated
+behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
