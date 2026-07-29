@@ -31,4 +31,6 @@ beats, and zero final count.
 Strict/check/schedule/artifact/verifier, normalized semantic JSON, and real
 read-only shell-disabled MCP parity pass. Current accounting is 327 protocol /
 368 supported+strict / 51 AHB paths split 26 `.ppif` / 25 `.ahb`. The matching
-exact-four alias and broader count/policy/composition work remain separate.
+exact-four alias is selected by fact
+`ial2-ahb-requester-exact-four-busy-event-profile-alias-contract-selection`
+but remains unshipped; broader count/policy/composition work stays separate.

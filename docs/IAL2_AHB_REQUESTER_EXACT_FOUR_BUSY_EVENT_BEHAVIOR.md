@@ -92,7 +92,9 @@ generalized runtime/policy/random or multiple-point insertion remain deferred.
 
 Current accounting is 327 protocol fixtures, 368 supported-smoke plus strict
 fixtures, and 51 AHB IAL2 paths split 26 generic `.ppif` sources and 25 `.ahb`
-aliases. The matching exact-four `.ahb` alias is not part of this slice.
+aliases. The matching exact-four `.ahb` alias is selected by
+`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md`
+but remains unshipped until its separate implementation.
 
 ## Verification
 

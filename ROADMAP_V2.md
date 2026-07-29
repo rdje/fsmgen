@@ -7659,6 +7659,14 @@ contract selector `.4`. Activation changes continuity documentation and no
 parser, generator, source, support, test, artifact, semantic/MCP API, HDL/
 runtime, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or
 transaction behavior; the exact-four `.ahb` alias remains unshipped.
+Contract `.4` now selects proposed data-only alias implementation `.5`. A
+warning-free in-memory reserved-label probe proves byte-identical IAL1/IAL0,
+width three, numeric `beats=4`, identical BUSY-support residue, alias-only
+residue removal, and targeted wrong-profile/wrong-object diagnostics through
+existing machinery. `.5` will add exact support identity, focused t1536 parity
+without a second simulation, and projected 328/369/52 split 26/26; t1535 stays
+the shared assertion-enabled runtime. No alias ships in selection. See
+`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

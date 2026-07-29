@@ -2258,6 +2258,13 @@ Clean generic behavior commit `95bfb7e4b` activates only no-behavior alias
 contract selector `.4`. The exact-four `.ahb` alias, support identity, focused
 parity test, and projected 328/369/52 boundary remain unshipped during
 activation; generic behavior stays fixed at 327/368/51.
+Contract `.4` now selects proposed data-only alias implementation `.5`. The
+future `ppif/ahb_requester_busy_insert_four.ahb` must be byte-identical, reuse
+width-three IAL1/IAL0 and numeric `beats=4`, remove only alias-deferred residue,
+and support-account at projected 328/369/52 split 26/26. Focused t1536 owns
+strict/schedule/artifact/normalized-semantic/read-only-MCP/verifier parity
+without simulation; t1535 remains shared runtime. See the
+[alias contract](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
