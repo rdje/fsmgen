@@ -34,7 +34,8 @@ semantic root:   fsm
 ```
 
 The matching `.ahb` alias is not shipped by this slice. Completed `.4` selects
-its byte-identical contract, and proposed `.5` separately owns implementation.
+its byte-identical contract, and active `.5` separately owns implementation
+after clean selector commit `b7c62d2b6`.
 
 ## Public Count Boundary
 
@@ -181,7 +182,7 @@ Generated outputs should use a repository-derived same-volume path.
 ## Explicit Deferrals
 
 Completed `.4` owns the selected matching exact-three `.ahb` alias contract;
-proposed `.5` owns the alias itself. Counts above three and generalized counter width,
+active `.5` owns the alias itself. Counts above three and generalized counter width,
 runtime/policy/random count selection, multiple insertion points,
 distinct local bus-BUSY status, exact-three paired compositions, broader
 bursts/signals/managers/fabrics, selector repairs, AXI/APB/VHDL, and decision

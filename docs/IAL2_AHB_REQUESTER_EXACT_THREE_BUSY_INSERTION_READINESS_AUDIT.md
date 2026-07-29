@@ -120,7 +120,7 @@ the bounded public contract recorded in
   behavior change.
 
 Leaf `.3` now ships the additive generic implementation at 321/362/45 split
-23 `.ppif` / 22 `.ahb`. Completed `.4` selects proposed `.5`, implementation
+23 `.ppif` / 22 `.ahb`. Completed `.4` selects active `.5`, implementation
 of the matching byte-identical `.ahb` alias contract, projected at 322/363/46
 split 23/23 with t1528 retained as shared runtime. See
 `docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md` and

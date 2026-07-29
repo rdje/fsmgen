@@ -5765,10 +5765,11 @@ Child `.1` proved guarded internal `3 -> 2 -> 1 -> 0` retirement without a
 lower-layer repair; child `.2` selected `.3`, which now ships the generic
 exact-three requester with bounded literal range `2..3`, unchanged width-two
 lowering, direct counter/runtime/semantic/MCP proof, and 321/362/45 accounting.
-Child `.4` activated after clean `.3` commit `325f21267` and now selects
-proposed `.5`, the matching byte-identical `.ahb` alias implementation at
+Child `.4` activated after clean `.3` commit `325f21267` and selected `.5`,
+the matching byte-identical `.ahb` alias implementation at
 projected 322/363/46 split 23/23 with focused t1529 parity and t1528 retained
-as shared runtime. No alias or shipped behavior changes in `.4`.
+as shared runtime. `.5` activated after clean `.4` commit `b7c62d2b6`; no alias
+or shipped behavior changes in activation.
 
 ## Current Frontier
 

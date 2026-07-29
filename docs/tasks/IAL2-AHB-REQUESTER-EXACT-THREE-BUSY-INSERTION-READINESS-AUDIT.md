@@ -100,7 +100,7 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
   Commit: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.4: select exact-three AHB alias contract`
 
 - ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Ship the selected byte-identical exact-three requester .ahb profile alias.`
   Acceptance: `Activate only after .4 commits cleanly. Add only ppif/ahb_requester_busy_insert_three.ahb as a byte-identical mirror of the shipped generic source; support-account it exactly as intent.ahb_profile_alias_requester_busy_insert_three / ial2_ahb_profile_alias_requester_busy_insert_three_pipeline_cli, source kind ial2_profile_alias, supported_smoke+strict, module amba_requester_busy_insert_three, semantic root fsm. Preserve exact IAL1/IAL0/HDL output, numeric beats=3, width-two 3->2->1->0 qualified retirement, ports/state/runtime behavior, and shared BUSY support residue; remove only ahb_profile_alias_deferred through existing suffix handling. Add t/1529-ial2-ahb-requester-three-busy-insert-profile-alias.t for byte/report/lowering/strict-check/schedule/semantic/real read-only shell-disabled MCP/outdir/verifier/targeted-diagnostic and generic/exact-two/exact-one/paired/base preservation parity. Compile no second simulation and retain assertion-enabled t1528 as the sole shared continuous/32-ready-low/32-grant-low runtime proof. Update support/language/capability/t248/t297/t1518/current docs/mdBook/behavior/fact/task/Memory/Knowledge Map to 322 protocol / 363 supported+strict / 46 AHB paths split 23 .ppif/23 .ahb; run focused/preservation/docs/doctrine gates under the unchanged RAM guard and remove generated artifacts. Do not change parser/generator/report/semantic-MCP APIs, public syntax, counter/rules, add runtime or counts above three/generalized width/policy/runtime/random/multiple points/local bus-BUSY status/exact-three compositions/broader bursts/signals/managers/fabrics/backends/protocols/VHDL/transaction behavior, repair selectors, or activate decision 0020.`
   Verification: `pending`
@@ -145,6 +145,11 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
   normalized semantic/MCP behavior while removing only alias residue. Projected
   accounting is 322/363/46 split 23/23; focused t1529 owns parity without a
   second simulation and t1528 remains the sole shared runtime proof.
+- `2026-07-29`: Activation condition satisfied: `.4` committed cleanly at
+  `b7c62d2b6`; `.5` is active for only the selected data-only alias, support
+  entry, focused parity test, accounting, and synchronized documentation. No
+  source, support, test, generated artifact, API, HDL, or behavior changes in
+  activation.
 
 ## Blockers
 

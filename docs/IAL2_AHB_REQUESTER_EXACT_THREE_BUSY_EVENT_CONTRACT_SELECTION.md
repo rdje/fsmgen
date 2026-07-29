@@ -104,7 +104,7 @@ semantic root:    fsm
 
 The source is additive and generic-first. The matching byte-identical `.ahb`
 alias is not part of `.3`; completed `.4` separately selects its contract, and
-proposed `.5` owns implementation after `.4` commits cleanly.
+active `.5` owns implementation after clean `.4` commit `b7c62d2b6`.
 
 ## Existing Lowering Is The Contract
 

@@ -33,6 +33,6 @@ two/three residue, normalized semantic/read-only MCP parity, and
 
 `.3` now implements the contract with t1528 and strengthened direct t1521
 counter observation. Completed `.4` separately selects the matching exact-three
-`.ahb` alias contract; proposed `.5` owns implementation. The alias itself, counts above
+`.ahb` alias contract; active `.5` owns implementation. The alias itself, counts above
 three, generalized width/policy/points/status, compositions, broader AHB,
 AXI/APB/VHDL, and decision 0020 remain separate.
