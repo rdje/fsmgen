@@ -6,14 +6,14 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.814: activate post-interconnect selector`;
-  predecessor `6eeac974c`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.814`.
-- current_state: the interconnect arbitration tree is done at `6eeac974c`;
-  `.814` is active from that clean boundary. Activation changes continuity
-  documentation only; no selection or behavior change has started.
-- next_action: reconcile the `.814` candidates and select exactly one smallest
-  evidence-backed IAL2 owner.
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.814: select subordinate arbitration audit`;
+  predecessor `457aa601e`.
+- active_work_unit: none after this commit; `.814` selection is done.
+- current_state: `.814` selects proposed
+  `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1` as the next exact
+  correctness owner; no behavior changes in the selector.
+- next_action: from the clean `.814` selector commit, activate the selected
+  subordinate audit `.1` without starting implementation.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -28,7 +28,8 @@ bounded current-state pointer. Git preserves its prior history.
 - The IAL2 frontier is complete through `.812`; exact-three generic child `.3`
   established `321/362/45`, `.5` ships its matching alias at `322/363/46`, and
   completed parent `.813` selected the AHB interconnect arbitration audit;
-  child `.1`-.3 tree is complete and parent selector `.814` is active. The
+  child `.1`-.3 tree is complete and parent selector `.814` selects the
+  subordinate arbitration audit. The
   independent subordinate `HRDATA_REGS` overlap is durably routed to proposed
   `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1`. Decision `0020`
   remains proposed/inactive.

@@ -7338,8 +7338,13 @@ ports, reports, support, artifacts, semantic/MCP surfaces, and transaction
 behavior are unchanged. See
 `docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
 Clean child commit `6eeac974c` completes the arbitration tree, so parent
-selector `.814` is now active from that handoff-ready boundary. Activation
-changes continuity documentation only; no next owner has been selected yet.
+selector `.814` activated from that handoff-ready boundary. It now selects
+proposed `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1`: direct
+fabric assertions pass, but paired t1513-t1516/t1523/t1525 retain `--no-assert`
+and the durable endpoint probe identifies simultaneous transaction-idle and
+`ahb_phase_capture` `HRDATA_REGS <- 0` families. Exact-three paired expansion
+and broader AHB behavior follow the no-behavior endpoint audit. See
+`docs/IAL2_POST_INTERCONNECT_ARBITRATION_NEXT_OWNER_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

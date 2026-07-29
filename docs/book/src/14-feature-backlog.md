@@ -11172,8 +11172,13 @@ only for the separately tracked subordinate idle/phase-capture overlap. See
 the
 [shipped arbitration behavior](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_BEHAVIOR.md).
 Clean child commit `6eeac974c` completes the arbitration tree. Parent selector
-`.814` is now active from that handoff-ready boundary; activation changes
-continuity documentation only and has not selected the next behavior owner.
+`.814` activated from that handoff-ready boundary and now selects proposed
+`IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1`. Direct fabric
+assertions pass, but paired t1513-t1516/t1523/t1525 retain `--no-assert`; the
+durable endpoint probe identifies overlapping transaction-idle and
+`ahb_phase_capture` `HRDATA_REGS <- 0` families. Exact-three paired expansion
+follows the no-behavior endpoint audit. See the
+[post-interconnect selector](../../IAL2_POST_INTERCONNECT_ARBITRATION_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
