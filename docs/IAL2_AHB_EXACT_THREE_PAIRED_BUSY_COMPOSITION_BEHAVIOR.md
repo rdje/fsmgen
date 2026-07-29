@@ -7,12 +7,14 @@ Date: 2026-07-29
 
 ## Outcome
 
-FSMGen ships one additive generic AHB aggregate that pairs the existing
-exact-three BUSY-inserting requester with the existing HBURST-aware byte-lane
+FSMGen ships one additive generic AHB aggregate and its byte-identical `.ahb`
+profile alias. Both pair the existing exact-three BUSY-inserting requester
+with the existing HBURST-aware byte-lane
 subordinate whose burst context parks across BUSY:
 
 ```text
 ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif
+ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ahb
 ```
 
 This is a data-only composition through the existing generators. It adds no
@@ -60,17 +62,21 @@ replacement remain unchanged.
 ```text
 support id:
   intent.ppif_ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park
+alias support id:
+  intent.ahb_profile_alias_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park
 coverage:
   ial2_ppif_ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli
-source kind:   ppif
+alias coverage:
+  ial2_ahb_profile_alias_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli
+source kinds:  ppif / ial2_profile_alias
 HDL module:    ahb_tb
 child count:   3
 semantic root: top
 ```
 
-The additive source moves current accounting to 323 protocol fixtures, 364
-supported-smoke and strict-supported fixtures, and 47 AHB IAL2 paths split
-between 24 generic `.ppif` sources and 23 `.ahb` aliases.
+The alias moves current accounting to 324 protocol fixtures, 365
+supported-smoke and strict-supported fixtures, and 48 AHB IAL2 paths split
+evenly between 24 generic `.ppif` sources and 24 `.ahb` aliases.
 
 ## Semantic Introspection And MCP
 
@@ -115,6 +121,16 @@ selector assertions without `--no-assert`. Runtime totals are five transfer
 presentations, four completed beats, one BUSY episode, three qualified BUSY
 events, one resumed `SEQ`, and final storage `44332211`.
 
+Focused
+`t/1532-ial2-ahb-exact-three-paired-busy-composition-profile-alias.t`
+proves that the `.ahb` source is byte-identical to the generic source and
+retains parse/report, strict-check, schedule, exact-artifact, normalized
+semantic, read-only shell-disabled MCP, repository-local output, and
+`--verify-hdl` parity. It removes only the aggregate, requester, subordinate,
+and alias-exposure residue selected by existing suffix handling. The alias
+reuses t/1531 as its assertion-enabled runtime proof; no second testbench or
+generator path was added.
+
 ## Use It
 
 ```bash
@@ -123,14 +139,15 @@ events, one resumed `SEQ`, and final storage `44332211`.
   ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif
 ./bin/fsmgen --quiet --strict --verify-hdl \
   ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif
+./bin/fsmgen --quiet --strict --verify-hdl \
+  ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ahb
 ```
 
 ## Explicit Deferrals
 
-Parent selector `.817` selects `.818` for the matching byte-identical `.ahb`
-alias. Clean selector commit `c70fe528f` activates that leaf, but the alias
-remains unshipped until implementation passes. The two-subordinate pairing remains a
-separate future owner. Counts above three, generalized counter width,
+Parent selector `.817` selected `.818`, which now ships the matching
+byte-identical `.ahb` alias. The two-subordinate pairing remains a separate
+future owner. Counts above three, generalized counter width,
 multiple insertion points, runtime-selected or policy/random throttling,
 distinct local bus-BUSY status, broader bursts/signals/managers/fabrics,
 other protocols/backends, VHDL, VIAL verification generation, HIAL/VIAL
@@ -141,7 +158,8 @@ See
 
 ## Rollback
 
-Rollback removes the additive source, support entry, focused test/harness, and
-current-surface documentation together; restores 322/363/46 accounting split
-23 `.ppif` / 23 `.ahb`; and leaves the exact-three requester, exact-two paired
-families, generators, semantic/MCP API, and all lower layers unchanged.
+Rollback of `.818` removes only the `.ahb` mirror, its support entry, t/1532,
+and alias-current documentation together; restores 323/364/47 accounting
+split 24 `.ppif` / 23 `.ahb`; and leaves the generic exact-three paired
+source, its t/1531 runtime proof, generators, semantic/MCP API, and all lower
+layers unchanged.

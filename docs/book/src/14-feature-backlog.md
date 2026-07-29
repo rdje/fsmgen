@@ -11356,6 +11356,15 @@ simulation and with VHDL/mixed-language claims qualified independently. See
 the [selection record](../../IAL2_POST_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
 Clean selector commit `c70fe528f` activates only `.818`; the alias, support
 entry, t1532, and projected accounting remain unshipped during activation.
+Implementation `.818` now ships the byte-identical exact-three paired `.ahb`
+alias through existing suffix/lowering machinery. t1532 proves byte, report,
+strict, schedule, exact-artifact, normalized-semantic, real read-only MCP,
+repository-local output, HDL-verifier, diagnostic, and preservation parity;
+t1531 remains the shared assertion-enabled runtime. Current accounting is
+324 protocol / 365 supported+strict / 48 AHB paths split 24 `.ppif`/24 `.ahb`.
+Two-subordinate exact-three, broader BUSY policy/count/burst/signal work,
+generic priority, HIAL/VIAL activation, VHDL, and verification generation
+remain separate.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

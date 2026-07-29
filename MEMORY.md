@@ -5,16 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.818: activate exact-three paired AHB alias`;
-  predecessor selector `c70fe528f`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.818` (implementation).
-- current_state: exact-three paired child `.1`-.3 is complete at 323/364/47;
-  `.818` is active from clean selector `c70fe528f` for the byte-identical
-  exact-three paired `.ahb` alias at projected 324/365/48 split 24/24; the
-  alias, support entry, and t1532 remain unshipped during activation.
-- next_action: implement exactly `.818`, then run its focused/preservation and
-  docs/doctrine gates before the behavior commit.
+- latest_commit: this task-scoped behavior commit,
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.818: ship exact-three paired AHB alias`;
+  predecessor activation `a13e8672e`.
+- active_work_unit: parent `IAL2-FEATURE-COMPLETENESS-FRONTIER`; `.818` is
+  complete and committed.
+- current_state: exact-three paired generic plus byte-identical `.ahb` alias
+  ship at 324 protocol / 365 supported-smoke+strict / 48 AHB paths split
+  24 `.ppif`/24 `.ahb`; t1532 proves alias parity and t1531 remains shared
+  assertion-enabled runtime.
+- next_action: from the clean `.818` behavior commit, create and activate one
+  parent-frontier selector for the next exact roadmap-aligned owner.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -27,10 +28,9 @@ bounded current-state pointer. Git preserves its prior history.
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
 - The IAL2 frontier completed exact-three requester generic/alias, fabric and
-  generated/direct endpoint arbitration repairs, and exact-three paired
-  readiness/contract/implementation through parent `.816`. Current truth is
-  323/364/47 split 24 `.ppif`/23 `.ahb`; `.817` selects pending `.818` for the
-  matching alias.
+  generated/direct endpoint arbitration repairs, exact-three paired generic
+  readiness/contract/implementation, and matching alias `.818`. Current truth
+  is 324/365/48 split 24 `.ppif`/24 `.ahb`.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

@@ -7516,6 +7516,15 @@ Clean selector commit `c70fe528f` activates only `.818`. Activation changes
 continuity documentation and no alias, support, test, artifact, HDL/runtime,
 simulator, backend, verification-generation, HIAL/VIAL, or VHDL behavior; the
 projected 324/365/48 boundary remains unshipped until implementation passes.
+Implementation `.818` now ships the byte-identical exact-three paired `.ahb`
+alias through existing lowering and introspection surfaces. Focused t1532
+proves byte/report/strict/schedule/exact-artifact/normalized-semantic/real
+read-only MCP/repository-local output/HDL-verifier/diagnostic/preservation
+parity, while t1531 remains the shared assertion-enabled runtime. Current
+accounting is 324 protocol / 365 supported+strict / 48 AHB paths split 24/24.
+Two-subordinate exact-three, broader BUSY/count/burst/signal work, generic
+priority, HIAL/VIAL activation, VHDL, and verification generation remain
+separate.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

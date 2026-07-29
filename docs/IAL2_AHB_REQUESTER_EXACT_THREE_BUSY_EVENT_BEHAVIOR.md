@@ -105,9 +105,10 @@ policy/runtime/random and multiple-point insertion. Existing `.ahb` suffix
 cleanup remains unchanged.
 
 The generic source established the 321/362/45 checkpoint and the matching alias
-established 322/363/46. The generic exact-three paired source now moves current
-accounting to 323 protocol fixtures, 364 supported-smoke plus strict fixtures,
-and 47 AHB IAL2 paths: 24 generic `.ppif` sources and 23 `.ahb` aliases.
+established 322/363/46. The generic exact-three paired source established
+323/364/47; its matching alias now moves current accounting to 324 protocol
+fixtures, 365 supported-smoke plus strict fixtures, and 48 AHB IAL2 paths: 24
+generic `.ppif` sources and 24 `.ahb` aliases.
 
 ## Generated-HDL Proof
 

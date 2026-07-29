@@ -33,6 +33,7 @@ internal exposure was added.
 Focused t/1529 proves byte/report/artifact/check/schedule/semantic/MCP/verifier/
 diagnostic parity without compiling a second simulation. Assertion-enabled
 t/1528 remains the sole shared continuous/ready-low/grant-low runtime proof.
-The alias established 322/363/46. The generic exact-three paired source moves
-current accounting to 323 protocol fixtures, 364 supported-smoke/strict
-fixtures, and 47 AHB IAL2 paths split 24 `.ppif` / 23 `.ahb`.
+The alias established 322/363/46. The generic exact-three paired source
+established 323/364/47; its matching alias moves current accounting to 324
+protocol fixtures, 365 supported-smoke/strict fixtures, and 48 AHB IAL2 paths
+split 24 `.ppif` / 24 `.ahb`.

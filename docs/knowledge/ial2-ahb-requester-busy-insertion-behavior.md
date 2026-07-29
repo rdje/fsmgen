@@ -55,8 +55,9 @@ two-window runtime and semantic/MCP proof.
 The additive generic exact-three requester now also ships with literal
 `busy-beats=3`, unchanged width-two counter lowering, direct `3 -> 2 -> 1 -> 0`
 runtime proof, and a matching byte-identical alias that established the
-322/363/46 checkpoint. The generic exact-three paired source moves current
-accounting to 323/364/47. Facts `ial2-ahb-requester-exact-three-busy-event-behavior` and
+322/363/46 checkpoint. The generic exact-three paired source established
+323/364/47, and its matching alias moves current accounting to 324/365/48.
+Facts `ial2-ahb-requester-exact-three-busy-event-behavior` and
 `ial2-ahb-requester-exact-three-busy-event-profile-alias-behavior` own that
 surface.
 

@@ -486,13 +486,13 @@ that token family with a migration hint toward `(source target)` or
 `(connect source target)`.
 
 The supported AHB protocol-fixture inventory includes the generic exact-three
-paired source
-`ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif`.
-Its catalog entry is strict-supported, selects `ahb_tb` with semantic root
-`top` and three children, and is owned by focused t/1531 across strict check,
-schedule, review artifacts, normalized semantics, read-only MCP, verifier, and
-assertion-enabled runtime. Current totals are 323 protocol fixtures and 364
-supported-smoke/strict-supported fixtures.
+paired source and its byte-identical `.ahb` alias at
+`ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park`.
+Both catalog entries are strict-supported and select `ahb_tb` with semantic
+root `top` and three children. Focused t/1531 owns the shared
+assertion-enabled runtime; t/1532 owns alias strict, schedule, artifact,
+normalized-semantic, read-only-MCP, and verifier parity. Current totals are
+324 protocol fixtures and 365 supported-smoke/strict-supported fixtures.
 
 ## Capability manifest
 

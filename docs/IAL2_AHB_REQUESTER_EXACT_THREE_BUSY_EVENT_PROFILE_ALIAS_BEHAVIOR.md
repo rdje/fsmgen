@@ -83,9 +83,9 @@ HDL module:      amba_requester_busy_insert_three
 
 The alias established 322 protocol fixtures, 363 supported-smoke/strict-
 supported fixtures, and 46 AHB IAL2 paths. The generic exact-three paired
-source moves current support accounting to 323 protocol fixtures, 364
-supported-smoke/strict-supported fixtures, and 47 AHB paths split 24 `.ppif`
-sources / 23 `.ahb` aliases.
+source established 323/364/47; its matching alias moves current support
+accounting to 324 protocol fixtures, 365 supported-smoke/strict-supported
+fixtures, and 48 AHB paths split 24 `.ppif` sources / 24 `.ahb` aliases.
 
 Strict check and `--emit-semantic-json` expose the alias path, support ID,
 coverage, source kind, module, and `fsm` semantic root. The read-only MCP

@@ -38,6 +38,6 @@ exact-two paired composition established the 317/358/41 checkpoint; its
 matching alias established 318/359/42. The generic two-subordinate exact-two
 source established 319/360/43; its matching alias established 320/361/44. The
 additive generic exact-three requester established 321/362/45; its matching
-alias established 322/363/46. The generic exact-three paired source now moves
-current accounting to 323/364/47, split twenty-four `.ppif` and twenty-three
-`.ahb`.
+alias established 322/363/46. The generic exact-three paired source established
+323/364/47; its matching alias now moves current accounting to 324/365/48,
+split twenty-four `.ppif` and twenty-four `.ahb`.

@@ -71,8 +71,8 @@ The generic source established the 319/360/43 checkpoint. Its matching alias
 established the 320 protocol-fixture / 361 supported-smoke-plus-strict / 44 AHB
 IAL2-path checkpoint: twenty-two generic `.ppif` sources and twenty-two `.ahb`
 aliases. The later exact-three requester alias established 322/363/46; the
-generic exact-three paired source moves current accounting to 323/364/47 split
-24 `.ppif` / 23 `.ahb`.
+generic exact-three paired source established 323/364/47, and its matching
+alias moves current accounting to 324/365/48 split 24 `.ppif` / 24 `.ahb`.
 
 ## Deep Semantic Introspection And MCP
 

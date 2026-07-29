@@ -75,8 +75,9 @@ At shipment this additive alias established 320 protocol fixtures, 361
 supported-smoke plus strict fixtures, and 44 AHB IAL2 paths, evenly split
 between twenty-two `.ppif` sources and twenty-two `.ahb` aliases. The later
 generic exact-three requester established 321/362/45; its matching alias
-established 322/363/46. The generic exact-three paired source moves current
-accounting to 323/364/47, split 24 `.ppif` sources and 23 `.ahb` aliases.
+established 322/363/46. The generic exact-three paired source established
+323/364/47; its matching alias moves current accounting to 324/365/48, split
+24 `.ppif` sources and 24 `.ahb` aliases.
 
 Strict check, schedule JSON, normalized semantic JSON, and the real read-only
 `fsmgen_semantic_introspect` MCP tool expose the same support identity, module,

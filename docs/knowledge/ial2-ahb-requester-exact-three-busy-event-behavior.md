@@ -31,8 +31,9 @@ beats, and zero final count.
 Strict/check/schedule/artifact/verifier, normalized semantic JSON, and real
 read-only shell-disabled MCP parity pass. The matching byte-identical `.ahb`
 alias also ships through `.5`, establishing 322/363/46. The generic exact-three
-paired source moves current accounting to 323 protocol / 364 supported+strict /
-47 AHB paths split 24 `.ppif` / 23 `.ahb`. Focused t1529
+paired source established 323/364/47; its matching alias moves current
+accounting to 324 protocol / 365 supported+strict / 48 AHB paths split 24
+`.ppif` / 24 `.ahb`. Focused t1529
 proves alias parity without a second simulation and t1528 remains shared. Fact
 `ial2-ahb-requester-exact-three-busy-event-profile-alias-behavior` owns the
 alias surface; broader count/policy/composition work remains separate.
