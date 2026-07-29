@@ -6,16 +6,15 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1: prove exact-three BUSY readiness`;
-  predecessor `04bd3aeb9`.
+  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.2: activate exact-three BUSY contract selection`;
+  predecessor `91dbc63b1`.
 - active_work_unit:
-  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`.
-- current_state: `.1` proves the unchanged width-two counter retires internal
-  `3 -> 2 -> 1 -> 0` across guarded continuous/32-ready-low/32-grant-low HDL,
-  with strict/schedule/semantic/read-only MCP parity and no substrate repair.
-- next_action: after `.1` commits cleanly, activate proposed `.2` in a separate
-  commit, then select the exact public literal-three requester BUSY contract;
-  do not implement behavior in contract selection.
+  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.2`.
+- current_state: `.1` is committed and proves the unchanged width-two counter
+  retires `3 -> 2 -> 1 -> 0`; `.2` is active for public contract selection.
+- next_action: execute `.2`: freeze the exact accepted literals, diagnostics,
+  source/support/artifact identities, report/residue truth, validation,
+  accounting, alias cadence, and rollback; make no behavior change.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. Guarded runtime can be stopped
   by the already-tracked macOS metric/external host pressure; never raise the
@@ -26,7 +25,7 @@ bounded current-state pointer. Git preserves its prior history.
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
 - The IAL2 frontier is complete through `.812` at unchanged support
-  `320/361/44`; exact-three audit `.1` selected proposed public-contract `.2`.
+  `320/361/44`; exact-three public-contract `.2` is active.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

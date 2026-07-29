@@ -79,7 +79,7 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
   Commit: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1: prove exact-three BUSY readiness`
 
 - ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the exact public literal-three requester BUSY contract before implementation.`
   Acceptance: `Starting only after clean .1 audit commit, reconcile the authoritative disposable 3->2->1->0 continuous/ready-low/grant-low proof with the shipped exact-one/exact-two generic/alias contracts and current AhbRequester parser/report/residue/support/language/capability/semantic-MCP surfaces. Select or reject exactly one additive generic ppif/ahb_requester_busy_insert_three.ppif contract. If selected, freeze accepted busy-beats literals and diagnostics, source/intent/object/anchor/actor/support/coverage/module/artifact identities, unchanged width-two counter and qualified retirement/priority/SEQ ownership, numeric report/residue truth for exact-one/two/three, assertion-enabled focused runtime and malformed/preservation gates, normalized semantic/read-only MCP parity, projected support accounting, generic-first then separate .ahb alias cadence, docs/Knowledge Map, resource cap, and rollback. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, backend, protocol, or transaction-layer behavior change in contract selection. Keep counts above three, generalized count width, runtime/policy/random or multiple-point insertion, local bus-BUSY status, exact-three compositions, broader bursts/signals/managers/fabrics, selector repairs, AXI/APB/VHDL, and decision 0020 separate/inactive.`
   Verification: `pending`
@@ -100,6 +100,8 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
   continuous, 32-ready-low, and 32-grant-low generated-HDL scenarios. Select
   proposed `.2` public contract selection; direct implementation remains
   forbidden until `.2` commits and chooses it.
+- `2026-07-29`: Activation condition satisfied: `.1` committed cleanly at
+  `91dbc63b1`; `.2` is active for public contract selection only.
 
 ## Blockers
 
