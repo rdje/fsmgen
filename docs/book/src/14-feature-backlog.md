@@ -11431,6 +11431,8 @@ unrepresentable adjacent count. The audit must decide bounded width three
 versus reusable minimum-width derivation and prove exact `4 -> 3 -> 2 -> 1 ->
 0` runtime before selecting a public contract. See the
 [selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
+Clean selector commit `db0990c9d` activates only exact-four readiness audit
+`.1`; activation changes continuity documentation and no public behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

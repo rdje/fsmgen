@@ -5,18 +5,18 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped selector commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.822: select exact-four AHB BUSY readiness`;
-  predecessor activation `3453a822f`.
-- active_work_unit: proposed
-  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1`, pending a
-  separate clean activation commit.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1: activate exact-four counter audit`;
+  predecessor selector `db0990c9d`.
+- active_work_unit:
+  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1`.
 - current_state: two-window exact-three paired AHB generic/profile sources ship
   at 326 protocol / 367 supported-smoke+strict / 50 AHB paths split 25
   `.ppif`/25 `.ahb`; t1534 proves alias parity and t1533 remains shared
   assertion-enabled 10/8/2/6/2 runtime.
-- next_action: activate only the exact-four readiness audit `.1`, then prove or
-  disprove bounded width-three versus reusable minimum-width derivation.
+- next_action: audit the requester normalizer/generator and IAL1/IAL0 width
+  path; prove or disprove bounded width-three versus reusable minimum-width
+  derivation with a same-volume assertion-enabled exact-four candidate.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

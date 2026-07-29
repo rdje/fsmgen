@@ -2163,6 +2163,8 @@ reusable minimum-width derivation and prove internal `4 -> 3 -> 2 -> 1 -> 0`,
 four qualified BUSY events, stall preservation, and resumed `SEQ` before any
 public range or source change. See the
 [selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
+Clean selector commit `db0990c9d` activates only exact-four readiness audit
+`.1`; activation changes continuity documentation and no public behavior.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

@@ -214,4 +214,6 @@ evidence-backed handoff.
   requester counter-width readiness audit. HIAL/VIAL remains proposed with its
   typed bridge, portable/native semantics, full-language simulator, VHDL/
   mixed-language, migration, and large-design requirements unchanged.
+- `2026-07-29`: Clean parent selector commit `db0990c9d` activates only the
+  exact-four readiness audit `.1`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

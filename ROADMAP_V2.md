@@ -7607,6 +7607,11 @@ versus reusable minimum-width derivation and prove exact four-event runtime
 before a separate public contract. New BUSY policy/points/status/burst/signal
 semantics, generic priority, HIAL/VIAL, scale, VHDL, verification generation,
 and decision `0020` remain separate.
+Clean selector commit `db0990c9d` activates only exact-four readiness audit
+`.1`; activation changes task/continuity documentation and no parser,
+generator, public source, support, test, artifact, semantic/MCP API, HDL/
+runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL,
+VHDL, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
