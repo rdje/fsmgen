@@ -11274,6 +11274,9 @@ repository-local candidate passes the complete t1520 harness with every
 selector assertion enabled and unchanged success/ERROR/SEQ/IDLE results. The
 tracked seed and `--no-assert` remain unchanged until `.2` activates. See the
 [direct-seed arbitration contract](../../IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
+Contract `.1` committed cleanly at `454767c15`, so implementation `.2` is
+active. Activation changes continuity/documentation state only; no direct-seed
+repair has shipped yet.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -26,6 +26,6 @@ active-ERROR continuation, SEQ-to-ERROR, and ERROR-to-IDLE scenarios complete
 when only those bus assertions log.
 
 Completed `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1` selects exactly
-four redundant zero-write removals and proposes `.2` as implementation owner.
-The tracked seed and t1520 boundary remain unchanged until `.2` activates from
-the clean contract commit.
+four redundant zero-write removals. Clean commit `454767c15` activates `.2` as
+implementation owner. Activation changes continuity only; the tracked seed and
+t1520 boundary remain unchanged until `.2` ships.

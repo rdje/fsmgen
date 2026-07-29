@@ -55,11 +55,11 @@ independent of the generated `AhbSubordinate.pm` phase-rule defect.
   Commit: `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1: select implicit-zero output contract`
 
 - ID: `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected four-write direct-seed arbitration repair and retire t1520 assertion suppression.`
   Acceptance: `Activate only from the clean .1 contract commit. Remove exactly HREADYOUT/HRESP/HRDATA zero writes from access and the HRESP zero write from unsupported in fsm/ahb_lite_subordinate.fsm; retain unsupported HREADYOUT/HRDATA zero drives, all idle/error_complete drives, conditional access success/read/error and unsupported ERROR drives, storage, Q-named capture, transitions, names, widths, and generic same-value/multi-value assertions. Update t1520 structural checks for the exact removals, retained explicit owners, and emitted implicit zero baselines; remove only Verilator --no-assert and prove unchanged exact success/active-ERROR/SEQ-to-ERROR/ERROR-to-IDLE results. Preserve strict/check JSON, module/source/support/artifact identities, t1211/t1219, generated endpoint t1519, t248/t297 accounting, all public/report/semantic-MCP surfaces, protocols/backends/VHDL, HIAL/VIAL, and decision 0020. Synchronize behavior docs/README/roadmap/mdBook/task/index/Memory/Knowledge Map; use repository-derived same-volume storage, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup census, and rollback.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated from clean contract commit 454767c15 after .1 selected the exact four-write implicit-zero repair. Activation changes task/index/Memory/roadmap/mdBook/fact continuity only; no seed, test, generated artifact, selector, HDL, or runtime behavior changed. Knowledge Map remained synchronized at 1019 facts/5185 question keys, mdBook built successfully, every doctrine check passed, and the exact 72-file/16,098,898-byte build output was removed with no residue. Post-gate Stats-compatible capacity was 54.9% (13.17/24.00 GiB) with kernel pressure 1 (normal); ram-guard occupancy was not used as capacity truth.`
+  Commit: `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.2: activate direct seed arbitration implementation`
 
 ## Activation Gate
 
@@ -68,15 +68,16 @@ generated endpoint tree completed at `1eec6253d`. Leaf `.1` activates from
 that clean boundary as a documentation-only slice. No source, test, generated
 artifact, selector, HDL, or runtime behavior changes in activation.
 
-Contract `.1` selects proposed implementation `.2`: remove exactly four
-conflicting zero writes and retire only t1520's `--no-assert` after a clean
-contract commit. See
+Contract `.1` committed cleanly at `454767c15`. Implementation `.2` activates
+from that handoff-ready boundary as a documentation-only slice. It will remove
+exactly four conflicting zero writes and retire only t1520's `--no-assert`.
+No source, test, generated artifact, HDL, or runtime behavior changes in
+activation. See
 `docs/IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md`.
 
 ## Blockers
 
-- None. Contract selector `.1` is complete; implementation `.2` awaits
-  activation from its clean commit boundary.
+- None. Implementation `.2` is the active frontier.
 
 ## Rollback
 

@@ -11,9 +11,9 @@ writes from `fsm/ahb_lite_subordinate.fsm` and rely on the existing IAL0 HDL
 emitter's zero-valued combinational output baseline only where a conditional
 nonzero owner already exists.
 
-This contract selection changes documentation and task state only. Proposed
-implementation `.2` owns the seed and test changes after this selector commits
-cleanly.
+This contract selection changes documentation and task state only. It
+committed cleanly at `454767c15`; active implementation `.2` owns the seed and
+test changes from that handoff-ready boundary.
 
 ## Selected Four Writes
 
@@ -76,9 +76,10 @@ unsupported HREADYOUT/HRDATA writes. It was rejected as broader than
 necessary. Its 28-file/1,116,367-byte workspace and the selected candidate's
 27-file/1,102,673-byte workspace were both deleted; neither path has residue.
 
-## Proposed Implementation `.2`
+## Active Implementation `.2`
 
-After this selector commits cleanly, implementation `.2` must:
+Implementation `.2` activated from clean contract commit `454767c15` as a
+documentation-only slice. It must:
 
 - remove only the four selected zero writes from
   `fsm/ahb_lite_subordinate.fsm`;

@@ -23,6 +23,6 @@ wait cycles.
 Unsupported HREADYOUT-zero and HRDATA-zero remain explicit because they are
 already exclusive. A repository-local candidate passed the complete t1520
 harness with all selector assertions enabled and unchanged exact
-success/ERROR/SEQ/IDLE results. The selected implementation is proposed `.2`;
-the tracked seed and t1520 remain unchanged until that leaf activates after a
-clean contract commit.
+success/ERROR/SEQ/IDLE results. Clean contract commit `454767c15` activates
+implementation `.2`; its activation is documentation-only, so the tracked
+seed and t1520 remain unchanged until that leaf ships.

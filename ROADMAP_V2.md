@@ -7429,6 +7429,10 @@ repository-local candidate passes the complete t1520 harness with every
 selector assertion enabled and unchanged success/ERROR/SEQ/IDLE results. The
 tracked seed and `--no-assert` remain unchanged until `.2` activates. See
 `docs/IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md`.
+Contract `.1` committed cleanly at `454767c15`, so implementation `.2` is
+active. Activation changes task/index/Memory/roadmap/mdBook/Knowledge Map
+state only; the direct seed and t1520 behavior remain unchanged until `.2`
+ships.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
