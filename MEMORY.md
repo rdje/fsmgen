@@ -5,18 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped contract commit,
-  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select two-window exact-three contract`;
-  predecessor activation `4abde8306`.
-- active_work_unit: selected proposed
-  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`;
-  pending clean activation.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: activate two-window exact-three implementation`;
+  predecessor contract `129d52967`.
+- active_work_unit:
+  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`.
 - current_state: exact-three paired generic plus byte-identical `.ahb` alias
   ship at 324 protocol / 365 supported-smoke+strict / 48 AHB paths split
   24 `.ppif`/24 `.ahb`; t1532 proves alias parity and t1531 remains shared
   assertion-enabled runtime.
-- next_action: activate only selected data-only implementation `.3` in a clean
-  no-behavior commit, then implement its exact source/support/t1533 contract.
+- next_action: implement `.3`: add only the selected generic source, exact
+  support entry, t1533/harness, behavior docs/fact, and 325/366/49 accounting.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

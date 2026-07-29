@@ -2114,6 +2114,9 @@ assertion-enabled t1533 at projected 325/366/49 split 25/24. Proposed `.3`
 owns data-only implementation and remains inactive; no source ships in
 contract selection. See the
 [contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_THREE_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
+Clean contract commit `129d52967` activates only data-only implementation
+`.3`; the source, support identity, t1533, and projected 325/366/49 boundary
+remain unshipped during activation.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

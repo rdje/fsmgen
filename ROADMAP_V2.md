@@ -7559,6 +7559,10 @@ one-hot response ownership, support identity, real read-only semantic/MCP
 surface, and assertion-enabled t1533 at projected 325/366/49 split 25/24.
 Proposed `.3` owns data-only implementation and remains inactive until a clean
 contract commit and activation. The source remains unshipped in selection.
+Clean contract commit `129d52967` activates only data-only implementation
+`.3`; activation changes continuity/documentation state and no public source,
+support, test, artifact, semantic/MCP API, HDL/runtime, simulator, backend,
+HIAL/VIAL, VHDL, or verification-generation behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

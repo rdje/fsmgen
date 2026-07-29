@@ -115,8 +115,9 @@ is the first executable leaf only after a future clean-boundary roadmap selector
 activates it. The smaller adjacent two-subordinate exact-three paired AHB
 readiness audit `.1` now passes and clean audit commit `c2aa63c3e` activates
 generic contract `.2`. Completed `.2` selects proposed data-only implementation
-`.3`, pending clean activation. This architecture stays proposed; the simulator
-profile agreement does not pre-empt that evidence-backed handoff.
+`.3`, now active after clean contract commit `129d52967`. This architecture
+stays proposed; the simulator profile agreement does not pre-empt that
+evidence-backed handoff.
 
 ## Decisions
 

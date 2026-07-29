@@ -29,3 +29,7 @@ shell-disabled MCP, public `--verify-hdl`, and assertion-enabled two-command
 10/8/2/6/2/status-`44332211`/control-`88776655` runtime with stable selected,
 unselected, and fabric state. The matching alias and broader BUSY/HIAL/VIAL/
 VHDL/verification-generation work remain separate.
+
+Clean contract commit `129d52967` now activates only `.3` data-only
+implementation. No public source, support, test, artifact, HDL/runtime,
+HIAL/VIAL, VHDL, or verification-generation behavior changes in activation.

@@ -239,3 +239,7 @@ Focused t1518/t1256/t1414 pass 3 files / 22 tests. The Knowledge Map contains
 and that exact output is removed without residue. All doctrine gates pass.
 Canonical Stats-compatible capacity is 68.1% (16.342/24 GiB), kernel pressure
 is `1` (normal), and the guard's 92.1% heuristic is not capacity truth.
+
+Clean contract commit `129d52967` now activates only `.3` data-only
+implementation. The source, support entry, t1533, and 325/366/49 behavior
+remain unshipped during activation.

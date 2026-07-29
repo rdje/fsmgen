@@ -11394,6 +11394,9 @@ verification-generation behavior changes in activation.
 Contract `.2` now freezes one generic source/support/t1533 boundary at
 projected 325/366/49 split 25 `.ppif`/24 `.ahb` and selects proposed data-only
 implementation `.3`, pending clean activation. No source ships in selection.
+Clean contract commit `129d52967` activates only data-only implementation
+`.3`; no public source, support, test, artifact, API, HDL/runtime, HIAL/VIAL,
+VHDL, or verification-generation behavior changes in activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

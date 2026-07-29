@@ -94,17 +94,17 @@ any public two-subordinate exact-three source or contract is selected.
   Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select two-window exact-three contract`
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Ship the selected generic two-subordinate exact-three paired AHB BUSY source through existing generators.`
   Acceptance: `Activate only after clean .2 contract commit. Implement exactly the .2 contract: add ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif as the exact data-only extension of the shipped two-window exact-two source, with selected intent/object/anchor, embedded amba_requester_busy_insert_three, busy-before-beat 2, busy-beats 3, existing status/control HBURST-aware byte-lane BUSY-parking subordinates, ahb_interconnect, ahb_tb, ports/windows/storage/wait controls/wiring unchanged. Add RegressionCorpus entry intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park with selected coverage, ppif/supported_smoke/strict/module ahb_tb/root top/4 children; update t248/t297 and public support/language/capability/current-doc inventory surfaces to exact 325 protocol/366 supported+strict/49 AHB split 25 .ppif/24 .ahb. Add t/1533-ial2-ahb-two-subordinate-exact-three-paired-busy-composition.t and t/data/ahb_two_subordinate_exact_three_paired_busy_composition_tb.svt covering source identities/delta, strict/check success and exact support, schedule schema/4 children/29 signals/4 IAL1/5 IAL0 artifacts/two windows/one-hot ownership/requester before_beat=2/beats=3/width-two counter/both child+propagated parks/no top busy_flow, normalized semantic JSON, real repo-relative fsmgen_semantic_introspect read_only=true/shell_access=false, repo-local outdir, --verify-hdl, and Verilator without --no-assert at exact commands=2/transfers=10/beats=8/BUSY episodes=2/qualified BUSY=6/resumed SEQ=2/status=0x44332211/control=0x88776655 plus stable requester/selected/unselected subordinate/fabric ownership and clean completion. Preserve t1525/t1526/t1531/t1532 and existing source/alias bytes; use the smallest warranted focused/broader gates. Add behavior record/fact and sync README, ROADMAP_V2, REGRESSION_CORPUS/support docs, mdBook, task/index, Memory, and Knowledge Map. Use repo-derived same-volume temp/output, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup census, rollback, and commit. Do not change parser/generator algorithms, existing source bytes, reports/schemas, semantic-MCP API, .ahb alias, counts above three, new policy/status/burst/signal semantics, generic priority, other protocols/backends, HIAL/VIAL, VHDL, verification generation, or decision 0020.`
-  Verification: `pending clean activation after the .2 contract commit`
-  Commit: `pending activation`
+  Verification: `Activated only after clean .2 contract commit 129d52967. Activation changes task/index/Memory/roadmap/mdBook/contract-fact state only; no source, support, test, artifact, generated output, semantic/MCP API, HDL/runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 tests. Knowledge Map remains 1,028 facts/5,242 question keys. mdBook builds 72 files/16,186,227 bytes and the exact generated tree is removed without residue. All doctrine gates pass. Canonical Stats-compatible capacity is 72.2% (17.331/24 GiB) while kernel pressure is separately normal (1); the guard's 96.8% heuristic is excluded as capacity truth. Implementation evidence remains pending.`
+  Commit: `pending implementation completion`
 
 ## Current Frontier
 
-Contract `.2` freezes one generic source/support/t1533 boundary and selects
-proposed `.3` for data-only implementation. `.3` remains inactive until the
-clean `.2` contract commit and a separate no-behavior activation commit.
+Contract `.2` freezes one generic source/support/t1533 boundary. Clean contract
+commit `129d52967` now activates only `.3` for data-only implementation; the
+activation changes continuity/documentation state and no public behavior.
 
 ## Decisions
 
@@ -125,6 +125,9 @@ clean `.2` contract commit and a separate no-behavior activation commit.
   semantic/MCP identities, assertion-enabled t1533, projected 325/366/49
   accounting, and selects `.3` data-only implementation. No source ships in
   contract selection.
+- `2026-07-29`: Clean contract commit `129d52967` satisfies the `.3`
+  activation boundary. Implementation is active but no source or behavior
+  changes in activation.
 
 ## Open Questions
 
