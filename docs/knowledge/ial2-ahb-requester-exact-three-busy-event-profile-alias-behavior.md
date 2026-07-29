@@ -35,5 +35,7 @@ diagnostic parity without compiling a second simulation. Assertion-enabled
 t/1528 remains the sole shared continuous/ready-low/grant-low runtime proof.
 The alias established 322/363/46. The generic exact-three paired source
 established 323/364/47; its matching alias moves current accounting to 324
-protocol fixtures, 365 supported-smoke/strict fixtures, and 48 AHB IAL2 paths
-split 24 `.ppif` / 24 `.ahb`.
+protocol fixtures / 365 supported+strict / 48 AHB paths. The generic
+two-subordinate exact-three paired source now moves current accounting to 325
+protocol fixtures, 366 supported-smoke/strict fixtures, and 49 AHB IAL2 paths
+split 25 `.ppif` / 24 `.ahb`.

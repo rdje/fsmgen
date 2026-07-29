@@ -106,9 +106,10 @@ cleanup remains unchanged.
 
 The generic source established the 321/362/45 checkpoint and the matching alias
 established 322/363/46. The generic exact-three paired source established
-323/364/47; its matching alias now moves current accounting to 324 protocol
-fixtures, 365 supported-smoke plus strict fixtures, and 48 AHB IAL2 paths: 24
-generic `.ppif` sources and 24 `.ahb` aliases.
+323/364/47; its matching alias established 324/365/48. The generic
+two-subordinate exact-three paired source now moves current accounting to 325
+protocol fixtures, 366 supported-smoke plus strict fixtures, and 49 AHB IAL2
+paths: 25 generic `.ppif` sources and 24 `.ahb` aliases.
 
 ## Generated-HDL Proof
 
@@ -197,7 +198,8 @@ insertion points, distinct local bus-BUSY status, broader
 bursts/signals/managers/fabrics, AXI/APB/VHDL, and decision 0020 remain separate
 and inactive. The generic one-subordinate exact-three paired source now ships
 through its completed implementation leaf; its matching alias and the
-two-subordinate exact-three topology remain separate.
+generic two-subordinate exact-three topology also ship. The matching
+two-subordinate exact-three alias remains separate.
 
 ## Rollback
 

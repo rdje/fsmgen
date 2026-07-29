@@ -190,4 +190,8 @@ evidence-backed handoff.
   parent selector `.817` selected the smaller adjacent AHB alias.
 - `2026-07-29`: Parent selector `.819` keeps the architecture proposed while
   selecting the bounded two-window exact-three AHB readiness audit.
+- `2026-07-29`: The bounded child audit/contract/implementation now ships the
+  generic two-window exact-three source at 325/366/49. Proposed parent selector
+  `.820` retains this architecture boundary and must independently decide
+  whether it now outranks the matching alias and other adjacent IAL2 work.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

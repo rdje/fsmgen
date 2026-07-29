@@ -3071,8 +3071,13 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/selected one-requester\/two-subordinate AHB aggregate pairing exact-two requester BUSY insertion with both subordinate BUSY-parking windows/,
+        qr/selected one-requester\/two-subordinate AHB aggregate pairing for exact-two requester BUSY insertion with both subordinate BUSY-parking windows/,
         'manifest states .ppif includes the selected two-subordinate exact-two paired requester/subordinate BUSY aggregate',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/corresponding exact-three requester BUSY insertion pairing is also support-accounted on the generic \.ppif surface/,
+        'manifest states .ppif includes the selected two-subordinate exact-three paired requester/subordinate BUSY aggregate',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},

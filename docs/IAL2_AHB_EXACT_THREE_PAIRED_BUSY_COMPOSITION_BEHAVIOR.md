@@ -74,9 +74,10 @@ child count:   3
 semantic root: top
 ```
 
-The alias moves current accounting to 324 protocol fixtures, 365
-supported-smoke and strict-supported fixtures, and 48 AHB IAL2 paths split
-evenly between 24 generic `.ppif` sources and 24 `.ahb` aliases.
+The alias established 324/365/48. The later generic two-subordinate exact-three
+paired source now moves current accounting to 325 protocol fixtures, 366
+supported-smoke and strict-supported fixtures, and 49 AHB IAL2 paths split
+between 25 generic `.ppif` sources and 24 `.ahb` aliases.
 
 ## Semantic Introspection And MCP
 
@@ -146,9 +147,10 @@ generator path was added.
 ## Explicit Deferrals
 
 Parent selector `.817` selected `.818`, which now ships the matching
-byte-identical `.ahb` alias. Parent selector `.819` now assigns the
-two-subordinate exact-three pairing to a separate readiness audit; it remains
-unshipped until direct runtime evidence and a later contract pass. Counts
+byte-identical `.ahb` alias. Parent selector `.819` assigned the
+two-subordinate exact-three pairing to a separate readiness audit; completed
+implementation `.3` now ships that generic source with assertion-enabled
+t1533 and exact semantic/MCP parity. Its matching alias remains separate. Counts
 above three, generalized counter width,
 multiple insertion points, runtime-selected or policy/random throttling,
 distinct local bus-BUSY status, broader bursts/signals/managers/fabrics,

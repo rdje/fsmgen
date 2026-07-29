@@ -32,7 +32,8 @@ That alias shipment checkpoint is 320 protocol / 361 supported+strict / 44 AHB
 paths split 22 `.ppif` and 22 `.ahb`; the later generic exact-three requester
 established 321/362/45 and its alias established 322/363/46. The generic
 exact-three paired source established 323/364/47; its matching alias moves
-current accounting to 324/365/48 split 24/24.
+the next checkpoint to 324/365/48. The generic two-subordinate exact-three
+paired source now moves current accounting to 325/366/49 split 25/24.
 Deep semantic
 introspection is an ongoing
 language-wide capability: each new support-accounted semantic feature must

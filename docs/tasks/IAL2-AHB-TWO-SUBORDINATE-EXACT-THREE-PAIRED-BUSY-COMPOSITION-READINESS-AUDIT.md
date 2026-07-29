@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `IAL2 / AHB paired requester-subordinate BUSY composition`
 - Created: `2026-07-29`
 - Last updated: `2026-07-29`
@@ -75,7 +75,7 @@ any public two-subordinate exact-three source or contract is selected.
 ## Task Tree
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-  Status: `active`
+  Status: `done`
   Goal: `Audit assertion-enabled two-window exact-three requester/BUSY-parking composition before public expansion.`
   Children: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1, IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2, IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
 
@@ -94,17 +94,19 @@ any public two-subordinate exact-three source or contract is selected.
   Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select two-window exact-three contract`
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
-  Status: `active`
+  Status: `done`
   Goal: `Ship the selected generic two-subordinate exact-three paired AHB BUSY source through existing generators.`
   Acceptance: `Activate only after clean .2 contract commit. Implement exactly the .2 contract: add ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif as the exact data-only extension of the shipped two-window exact-two source, with selected intent/object/anchor, embedded amba_requester_busy_insert_three, busy-before-beat 2, busy-beats 3, existing status/control HBURST-aware byte-lane BUSY-parking subordinates, ahb_interconnect, ahb_tb, ports/windows/storage/wait controls/wiring unchanged. Add RegressionCorpus entry intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park with selected coverage, ppif/supported_smoke/strict/module ahb_tb/root top/4 children; update t248/t297 and public support/language/capability/current-doc inventory surfaces to exact 325 protocol/366 supported+strict/49 AHB split 25 .ppif/24 .ahb. Add t/1533-ial2-ahb-two-subordinate-exact-three-paired-busy-composition.t and t/data/ahb_two_subordinate_exact_three_paired_busy_composition_tb.svt covering source identities/delta, strict/check success and exact support, schedule schema/4 children/29 signals/4 IAL1/5 IAL0 artifacts/two windows/one-hot ownership/requester before_beat=2/beats=3/width-two counter/both child+propagated parks/no top busy_flow, normalized semantic JSON, real repo-relative fsmgen_semantic_introspect read_only=true/shell_access=false, repo-local outdir, --verify-hdl, and Verilator without --no-assert at exact commands=2/transfers=10/beats=8/BUSY episodes=2/qualified BUSY=6/resumed SEQ=2/status=0x44332211/control=0x88776655 plus stable requester/selected/unselected subordinate/fabric ownership and clean completion. Preserve t1525/t1526/t1531/t1532 and existing source/alias bytes; use the smallest warranted focused/broader gates. Add behavior record/fact and sync README, ROADMAP_V2, REGRESSION_CORPUS/support docs, mdBook, task/index, Memory, and Knowledge Map. Use repo-derived same-volume temp/output, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup census, rollback, and commit. Do not change parser/generator algorithms, existing source bytes, reports/schemas, semantic-MCP API, .ahb alias, counts above three, new policy/status/burst/signal semantics, generic priority, other protocols/backends, HIAL/VIAL, VHDL, verification generation, or decision 0020.`
-  Verification: `Activated only after clean .2 contract commit 129d52967. Activation changes task/index/Memory/roadmap/mdBook/contract-fact state only; no source, support, test, artifact, generated output, semantic/MCP API, HDL/runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 tests. Knowledge Map remains 1,028 facts/5,242 question keys. mdBook builds 72 files/16,186,227 bytes and the exact generated tree is removed without residue. All doctrine gates pass. Canonical Stats-compatible capacity is 72.2% (17.331/24 GiB) while kernel pressure is separately normal (1); the guard's 96.8% heuristic is excluded as capacity truth. Implementation evidence remains pending.`
-  Commit: `pending implementation completion`
+  Verification: `Activated only after clean .2 contract commit 129d52967 through clean activation commit 63de6a6b7. Added only the selected generic source as the exact data-only transform of the shipped two-window exact-two source, plus its exact ppif/supported-smoke+strict/ahb_tb/top/four-child RegressionCorpus identity, t1533, the assertion-enabled harness, and synchronized public behavior surfaces. Existing PPIF/AHB parsing, generator algorithms, reports/schemas, semantic/MCP APIs, and all prior source bytes remain unchanged. t1533 passes 3 top-level tests / 83 nested assertions in 640 seconds: zero strict diagnostics; exact support; schema, four children, 29 signals, two windows, one-hot owner, requester before_beat=2/beats=3 and width-two 3 -> 2 -> 1 -> 0, both child/propagated parks_on=[busy], no top busy_flow, exact 4 IAL1/5 IAL0 artifacts, normalized semantic JSON, real repo-relative fsmgen_semantic_introspect with read_only=true/shell_access=false, repository-local output, public --verify-hdl, and Verilator --timing with every selector assertion enabled. Runtime passes exact commands=2/transfers=10/beats=8/BUSY episodes=2/qualified BUSY=6/resumed SEQ=2/status=44332211/control=88776655 while selected/unselected endpoint and fabric state remain stable. t248+t297 pass 2 files/6,947 tests at 325 protocol/366 supported+strict/49 AHB split 25 .ppif/24 .ahb; t1518 passes all five current-truth groups. t1526+t1532 pass 2 files/8 top-level groups in 1,317 seconds, preserving byte/lowering/strict/schedule/semantic/read-only-MCP/artifact/HDL-verifier identity for the adjacent two-window exact-two and one-window exact-three aliases. t1256+t1414 pass 2 files/17 tests. Knowledge Map generation/check passes at 1,029 facts/5,247 question keys. mdBook builds to exactly 72 files/16,192,778 bytes; build output and six exact task-owned File::Temp directories containing 45 regenerable preservation artifacts are removed with zero residue. Memory is 56 lines; frozen legacy blobs and all prior generic/profile bytes remain unchanged; diff and all six doctrine gates pass. Final canonical Stats-compatible RAM is 67.2% (16.124/24.000 GiB), kernel pressure is separately 1 (normal), and the guard heuristic is excluded as capacity truth.`
+  Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: ship two-window exact-three composition`
 
 ## Current Frontier
 
-Contract `.2` freezes one generic source/support/t1533 boundary. Clean contract
-commit `129d52967` now activates only `.3` for data-only implementation; the
-activation changes continuity/documentation state and no public behavior.
+Complete `.1`-.3: readiness proved the combined boundary, contract selection
+froze it, and implementation ships the generic source/support/t1533 at exact
+325/366/49 split 25 `.ppif`/24 `.ahb`. Ownership returns to proposed parent
+selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.820` only after this behavior
+commits cleanly.
 
 ## Decisions
 
@@ -128,10 +130,15 @@ activation changes continuity/documentation state and no public behavior.
 - `2026-07-29`: Clean contract commit `129d52967` satisfies the `.3`
   activation boundary. Implementation is active but no source or behavior
   changes in activation.
+- `2026-07-29`: Implementation `.3` ships the selected generic two-window
+  exact-three source through unchanged generators, exact support and
+  semantic/read-only-MCP surfaces, and assertion-enabled t1533 runtime at
+  325/366/49 split 25/24. The matching alias and broader BUSY/HIAL/VIAL work
+  remain separate; proposed parent selector `.820` is the next clean owner.
 
 ## Open Questions
 
-- None for the contract. Implementation `.3` owns realization.
+- None. The tree is complete.
 
 ## Blockers
 
@@ -139,6 +146,6 @@ activation changes continuity/documentation state and no public behavior.
 
 ## Rollback
 
-Revert the contract record/fact plus `.2` completion and `.3` selection
-pointers. No shipped source, support entry, test, artifact, or behavior
-requires rollback.
+Remove the new generic source, RegressionCorpus entry, t1533/harness, behavior
+record/fact, and exact accounting/current-truth updates; restore 324/365/48
+split 24/24. Existing generators, sources, and semantic/MCP APIs remain intact.

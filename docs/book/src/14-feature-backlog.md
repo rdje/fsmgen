@@ -11397,6 +11397,12 @@ implementation `.3`, pending clean activation. No source ships in selection.
 Clean contract commit `129d52967` activates only data-only implementation
 `.3`; no public source, support, test, artifact, API, HDL/runtime, HIAL/VIAL,
 VHDL, or verification-generation behavior changes in activation.
+Implementation `.3` now ships the generic two-window exact-three source,
+exact support identity, normalized semantic/read-only MCP parity, and
+assertion-enabled t1533 10/8/2/6/2 runtime at 325/366/49 split 25 `.ppif`/24
+`.ahb`. Proposed parent selector `.820` may activate only after the clean
+behavior commit. The matching alias, broader BUSY semantics, HIAL/VIAL, VHDL,
+and verification generation remain separate.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

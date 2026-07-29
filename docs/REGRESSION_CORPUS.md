@@ -491,8 +491,16 @@ paired source and its byte-identical `.ahb` alias at
 Both catalog entries are strict-supported and select `ahb_tb` with semantic
 root `top` and three children. Focused t/1531 owns the shared
 assertion-enabled runtime; t/1532 owns alias strict, schedule, artifact,
-normalized-semantic, read-only-MCP, and verifier parity. Current totals are
-324 protocol fixtures and 365 supported-smoke/strict-supported fixtures.
+normalized-semantic, read-only-MCP, and verifier parity.
+
+The generic two-window exact-three source at
+`ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif`
+is also strict-supported, selects `ahb_tb` with semantic root `top` and four
+children, and uses the topology-first support identity. Focused t/1533 owns
+source delta, strict/schedule/artifact/normalized-semantic/read-only-MCP/
+verifier parity plus assertion-enabled two-command 10/8/2/6/2 runtime.
+Current totals are 325 protocol fixtures and 366
+supported-smoke/strict-supported fixtures.
 
 ## Capability manifest
 

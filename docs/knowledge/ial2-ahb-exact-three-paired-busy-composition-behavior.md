@@ -31,7 +31,7 @@ generator algorithm, report API, or feature-specific MCP route was added.
 
 Focused t/1532 proves alias byte/report/artifact/strict/schedule/semantic/MCP/
 repository-local-output/HDL-verifier parity without duplicating t/1531
-runtime. Current accounting is 324 protocol fixtures, 365 supported-smoke/
-strict fixtures, and 48 AHB IAL2 paths split 24 `.ppif` / 24 `.ahb`. Parent
-selector `.819` assigns the still-unshipped two-subordinate exact-three form to
-`IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`.
+runtime. The later generic two-subordinate exact-three paired source moves
+current accounting to 325 protocol fixtures, 366 supported-smoke/strict
+fixtures, and 49 AHB IAL2 paths split 25 `.ppif` / 24 `.ahb`. Its matching
+alias remains separate.

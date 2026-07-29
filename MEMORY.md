@@ -5,17 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: activate two-window exact-three implementation`;
-  predecessor contract `129d52967`.
-- active_work_unit:
-  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`.
-- current_state: exact-three paired generic plus byte-identical `.ahb` alias
-  ship at 324 protocol / 365 supported-smoke+strict / 48 AHB paths split
-  24 `.ppif`/24 `.ahb`; t1532 proves alias parity and t1531 remains shared
-  assertion-enabled runtime.
-- next_action: implement `.3`: add only the selected generic source, exact
-  support entry, t1533/harness, behavior docs/fact, and 325/366/49 accounting.
+- latest_commit: this task-scoped behavior commit,
+  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: ship two-window exact-three composition`;
+  predecessor activation `63de6a6b7`.
+- active_work_unit: proposed `IAL2-FEATURE-COMPLETENESS-FRONTIER.820`, pending
+  separate activation from the clean behavior commit.
+- current_state: generic two-window exact-three paired AHB composition ships
+  at 325 protocol / 366 supported-smoke+strict / 49 AHB paths split 25
+  `.ppif`/24 `.ahb`; t1533 proves assertion-enabled 10/8/2/6/2 runtime plus
+  semantic/read-only-MCP parity.
+- next_action: from the clean behavior commit, activate only parent selector
+  `.820`, then select the next smallest roadmap-aligned owner.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -29,8 +29,9 @@ bounded current-state pointer. Git preserves its prior history.
   complete the same-volume adoption tree, then resume roadmap PNT.
 - The IAL2 frontier completed exact-three requester generic/alias, fabric and
   generated/direct endpoint arbitration repairs, exact-three paired generic
-  readiness/contract/implementation, and matching alias `.818`. Current truth
-  is 324/365/48 split 24 `.ppif`/24 `.ahb`.
+  plus alias, and generic two-window exact-three composition. Current truth is
+  325/366/49 split 25 `.ppif`/24 `.ahb`; the matching two-window alias remains
+  separate.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

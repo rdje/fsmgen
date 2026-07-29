@@ -1,6 +1,6 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships forty-eight public bounded AHB IAL2 entrypoints today:
+FSMGen ships forty-nine public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
@@ -126,6 +126,7 @@ ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.p
 ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif -> amba_requester_busy_insert_three.isf + ahb_lite_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester_busy_insert_three.fsm + ahb_lite_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ppif -> amba_requester_busy_insert.isf + ahb_status_subordinate_byte_lane_hburst_seq.isf + ahb_control_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester_busy_insert.fsm + ahb_status_subordinate_byte_lane_hburst_seq.fsm + ahb_control_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif -> amba_requester_busy_insert_two.isf + ahb_status_subordinate_byte_lane_hburst_seq.isf + ahb_control_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester_busy_insert_two.fsm + ahb_status_subordinate_byte_lane_hburst_seq.fsm + ahb_control_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
+ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif -> amba_requester_busy_insert_three.isf + ahb_status_subordinate_byte_lane_hburst_seq.isf + ahb_control_subordinate_byte_lane_hburst_seq.isf + ahb_interconnect.isf -> amba_requester_busy_insert_three.fsm + ahb_status_subordinate_byte_lane_hburst_seq.fsm + ahb_control_subordinate_byte_lane_hburst_seq.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect.ahb        -> amba_requester.isf + ahb_lite_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_two_subordinate.ahb -> amba_requester.isf + ahb_status_subordinate.isf + ahb_control_subordinate.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_status_subordinate.fsm + ahb_control_subordinate.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
 ppif/ahb_interconnect_byte_lane.ahb -> amba_requester.isf + ahb_lite_subordinate_byte_lane.isf + ahb_interconnect.isf -> amba_requester.fsm + ahb_lite_subordinate_byte_lane.fsm + ahb_interconnect.fsm + ahb_tb.fsm -> HDL module ahb_tb
@@ -161,7 +162,7 @@ states, without a pending bank/relaunch. See the direct-seed section below.
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | The forty-eight public AHB sources listed above, including generic plus matching `.ahb` exact-one/exact-two/exact-three requesters, paired exact-one one- and two-subordinate `.ppif`/`.ahb` source pairs, generic plus matching `.ahb` exact-two one- and two-subordinate paired sources, and generic plus matching `.ahb` one-subordinate exact-three paired sources | Bounded requester/subordinate/interconnect sources, exact-one, exact-two, and exact-three requester BUSY insertion across generic and alias surfaces, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, paired exact-one BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows, generic plus alias exact-two pairings across one or two windows, and generic plus alias exact-three pairing across one window. |
+| Guided mode | The forty-nine public AHB sources listed above, including generic plus matching `.ahb` exact-one/exact-two/exact-three requesters, paired exact-one one- and two-subordinate `.ppif`/`.ahb` source pairs, generic plus matching `.ahb` exact-two one- and two-subordinate paired sources, generic plus matching `.ahb` one-subordinate exact-three paired sources, and the generic two-subordinate exact-three paired source | Bounded requester/subordinate/interconnect sources, exact-one, exact-two, and exact-three requester BUSY insertion across generic and alias surfaces, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, paired exact-one BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows, generic plus alias exact-two pairings across one or two windows, generic plus alias exact-three pairing across one window, and generic exact-three pairing across two windows. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs cover selected byte/halfword/word lanes, in-word `SEQ`, HBURST `WRAP4`/`INCR4`, and BUSY parking. The selected generic and matching `.ahb` aggregate HBURST-aware byte-lane `SEQ` sources include non-parking and BUSY-park variants, plus paired BUSY-inserting-requester compositions across one or two static windows. Interconnect knobs are exposed as `children`, static `address-map` windows, `decode`, and `wiring` clauses. |
 | Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, and retained one-hot interconnect data ownership. The separate direct subordinate seed now retains completion-edge active NONSEQ/SEQ through Q-named `<-` loads in its existing four states, without pending/relaunch. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, BUSY counts beyond three, policy/runtime BUSY insertion, distinct bus-BUSY status, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
@@ -1410,7 +1411,9 @@ inventory to forty-four paths: twenty-two `.ppif` and twenty-two `.ahb`. The
 generic exact-three requester established forty-five paths and its matching
 alias established forty-six paths. The generic exact-three paired source
 established forty-seven paths, and its matching alias now moves the current
-inventory to forty-eight paths: twenty-four `.ppif` and twenty-four `.ahb`.
+inventory to forty-eight paths. The generic two-subordinate exact-three paired
+source now establishes forty-nine paths: twenty-five `.ppif` and twenty-four
+`.ahb`.
 See the
 [selected alias contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md)
 and [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
@@ -2057,13 +2060,15 @@ qualified BUSY events, one resumed `SEQ`, and final storage `44332211` while
 directly checking requester `3 -> 2 -> 1 -> 0` retirement and stable requester,
 subordinate, and fabric ownership.
 
-Current support accounting is 324 protocol fixtures, 365 supported-smoke plus
-strict fixtures, and 48 AHB paths split 24 `.ppif` / 24 `.ahb`. The matching
+Current support accounting is 325 protocol fixtures, 366 supported-smoke plus
+strict fixtures, and 49 AHB paths split 25 `.ppif` / 24 `.ahb`. The matching
 exact-three paired `.ahb` alias ships byte-identically through existing
-suffix/lowering machinery; the two-subordinate exact-three topology remains
-separate. Focused t/1532 proves strict, schedule, artifact, normalized
+suffix/lowering machinery; the generic two-subordinate exact-three topology
+also ships through existing generators. Focused t/1532 proves alias strict,
+schedule, artifact, normalized
 semantic, read-only MCP, repository-local output, and HDL-verifier parity
-without duplicating t/1531 runtime. See the
+without duplicating t/1531 runtime; t/1533 proves the two-window generic
+source and assertion-enabled 10/8/2/6/2 runtime. See the
 [shipped behavior](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 
 Clean behavior commit `00d71114d` returns ownership to the parent frontier and
@@ -2117,6 +2122,15 @@ contract selection. See the
 Clean contract commit `129d52967` activates only data-only implementation
 `.3`; the source, support identity, t1533, and projected 325/366/49 boundary
 remain unshipped during activation.
+Implementation `.3` now ships the selected generic source and exact support
+identity at 325/366/49 split 25 `.ppif`/24 `.ahb`. t1533 proves exact source
+delta, 4 IAL1/5 IAL0 artifacts, normalized semantic/read-only MCP parity,
+public `--verify-hdl`, and assertion-enabled 10/8/2/6/2 runtime with final
+status/control `44332211`/`88776655`. See the
+[two-window behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
+The matching `.ahb` alias is still separate. Proposed parent selector `.820`
+may activate only after this implementation commits cleanly and must choose
+the next exact roadmap-aligned owner before any further behavior change.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

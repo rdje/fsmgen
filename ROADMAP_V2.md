@@ -7563,6 +7563,14 @@ Clean contract commit `129d52967` activates only data-only implementation
 `.3`; activation changes continuity/documentation state and no public source,
 support, test, artifact, semantic/MCP API, HDL/runtime, simulator, backend,
 HIAL/VIAL, VHDL, or verification-generation behavior.
+Implementation `.3` now ships the selected generic two-window exact-three
+source through unchanged generators with exact support identity, 4 IAL1/5
+IAL0 artifacts, normalized semantic/read-only MCP parity, and assertion-enabled
+t1533 runtime at commands/transfers/beats/BUSY/qualified/resumed
+`2/10/8/2/6/2`, final status/control `44332211`/`88776655`. Current accounting
+is 325/366/49 split 25 `.ppif`/24 `.ahb`. Proposed parent selector `.820` may
+activate only after this behavior commits cleanly; the matching alias and
+broader BUSY/HIAL/VIAL work remain separate.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
