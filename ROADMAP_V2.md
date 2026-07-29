@@ -7541,6 +7541,14 @@ Clean selector commit `e2109a2ba` activates only the selected readiness-audit
 `.1`; activation changes task/continuity surfaces and no public source,
 support, test, artifact, semantic/MCP API, HDL/runtime, simulator, backend,
 HIAL/VIAL, VHDL, or verification-generation behavior.
+Audit `.1` now proves the exact future generic two-window candidate through
+strict/schedule/4-IAL1/5-IAL0/normalized-semantic/real read-only MCP/public
+verify-HDL and assertion-enabled two-command runtime. The observed result is
+10 presentations, 8 beats, 2 BUSY episodes, 6 qualified BUSY events, 2 resumed
+`SEQ` events, status `44332211`, and control `88776655`, with stable selected
+and unselected endpoints plus fabric ownership. No lower-layer repair is
+required. Proposed `.2` owns a separate 325/366/49 split 25/24 generic public
+contract and remains inactive until the clean audit commit and activation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

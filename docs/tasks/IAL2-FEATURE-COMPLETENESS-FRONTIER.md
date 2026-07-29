@@ -5803,14 +5803,15 @@ path before reopening VHDL backend or VHDL rerouting work.
   Verification: `Activated only after clean behavior commit d94f303d8 through clean activation commit 2b9b71716, then reconciled the shipped standalone/one-window exact-three and two-window exact-two generic/profile families, assertion-clean AHB lower layers, current 324/365/48 split-24/24 support boundary, generic priority, HIAL/VIAL, completed verification-output foundations, decisions 0004/0008/0020, roadmap, mdBook, and Knowledge Map. Selected proposed IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1 as the smallest adjacent owner. A 6,650-byte same-volume disposable generic candidate strict-checks with zero diagnostics at ahb_tb/4 children/29 signals and intentionally unmatched support; emits exact 4 IAL1/5 IAL0 artifacts; preserves before_beat=2/beats=3, both child and propagated parks_on=[busy], one-hot response ownership, normalized semantic schema v1/root top/4 children/29 signals; and passes --verify-hdl. Runtime was deliberately not inferred: the audit must prove real read-only MCP and assertion-enabled two-command 10/8/2/6/2/status-44332211/control-88776655 behavior before any contract. The exact 3-file/62,001,772-byte workspace was removed without residue. The audit may project exact support id intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park, selected coverage, ppif/supported-smoke+strict/ahb_tb/top/4 children, and 325/366/49 split 25/24 only after runtime passes. Counts above three, new BUSY policy/status/burst/signal semantics, generic priority, decision 0020, and broad HIAL/VIAL activation remain separate; HIAL/VIAL retains portable-fast event-capable compiled Verilator versus separately qualified full-language/SystemVerilog-UVM plus independent VHDL/mixed-language profiles. Canonical selector record/fact and proposed child task tree are synchronized. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map generation/check passes at 1,026 facts/5,231 question keys; mdBook builds to 72 files/16,172,871 bytes and is removed without residue; Memory is 56 lines; diff and all six doctrine gates pass. Final Stats-compatible RAM is 76.1% (18.26/24.00 GiB), kernel pressure is separately 1 (normal), and guard occupancy is excluded as capacity truth. No parser, generator, public source, support, test, checked-in artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes in the selector.`
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.819: select two-window exact-three AHB audit`
 
-The exact-three paired generic/profile pair now ships at 324/365/48 split
-24/24 with t1531 shared runtime and t1532 alias parity. Selector `.819` is
-complete and selects proposed
+The exact-three paired generic/profile pair ships at 324/365/48 split 24/24
+with t1531 shared runtime and t1532 alias parity. Selector `.819` selected
 `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`;
-the next clean action is activation of that audit, not behavior. Counts above
-three, new BUSY policy/status/burst/signal semantics, generic priority,
-HIAL/VIAL, VHDL, verification generation, and decision `0020` remain separate.
-The director-agreed event-capable compiled Verilator versus full-language/
+that audit now proves real read-only MCP plus assertion-enabled two-command
+10/8/2/6/2 runtime and selects proposed generic contract `.2`. The next clean
+action is `.2` activation, not behavior. Counts above three, new BUSY
+policy/status/burst/signal semantics, generic priority, HIAL/VIAL, VHDL,
+verification generation, and decision `0020` remain separate. The
+director-agreed event-capable compiled Verilator versus full-language/
 SystemVerilog-UVM profile requirement remains durable without activating
 HIAL/VIAL.
 

@@ -2092,6 +2092,19 @@ separate contract project 325/366/49 split 25 `.ppif`/24 `.ahb`. See the
 Clean selector commit `e2109a2ba` activates only the selected audit `.1`; the
 candidate and projected 325/366/49 boundary remain unshipped during activation.
 
+Audit `.1` now proves the combined boundary directly. Strict check, schedule,
+exact 4 IAL1/5 IAL0 artifacts, normalized semantic JSON, real read-only
+shell-disabled MCP, and public `--verify-hdl` pass. Verilator compiles with
+`--timing` and all generated selector assertions enabled; two mapped `INCR4`
+commands complete at exact 10 presentations / 8 beats / 2 BUSY episodes / 6
+qualified BUSY events / 2 resumed `SEQ` events / status `44332211` / control
+`88776655`, while selected/unselected endpoint state and fabric ownership stay
+stable through BUSY. This is a supported-event compiled-model proof, not a
+full-SystemVerilog/UVM runtime claim. No lower-layer repair is required.
+Proposed contract `.2` remains inactive and the source remains unshipped until
+a clean activation. See the
+[readiness audit](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_THREE_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
+
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
 `.1` proved that the pre-repair one-bit procedural flag yielded ten

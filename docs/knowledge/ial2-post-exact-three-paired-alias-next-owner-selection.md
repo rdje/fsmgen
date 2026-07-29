@@ -39,3 +39,9 @@ qualified VHDL/mixed-language profiles.
 Clean selector commit `e2109a2ba` now activates only the selected audit `.1`;
 no public source, support, test, artifact, HDL/runtime, or HIAL/VIAL behavior
 changes in activation.
+
+Completed audit `.1` directly proves real read-only shell-disabled MCP, public
+`--verify-hdl`, and assertion-enabled two-command
+10/8/2/6/2/`44332211`/`88776655` runtime. It selects proposed generic contract
+`.2` at projected 325/366/49 split 25/24; `.2` remains inactive until the clean
+audit commit and separate activation.

@@ -11383,6 +11383,11 @@ Clean selector commit `e2109a2ba` activates only the selected readiness-audit
 `.1`; no public source, support, test, artifact, semantic/MCP API, HDL/runtime,
 simulator, backend, HIAL/VIAL, VHDL, or verification-generation behavior
 changes in activation.
+Audit `.1` now proves real read-only MCP plus assertion-enabled two-window
+exact-three 10/8/2/6/2 runtime with final status/control
+`44332211`/`88776655`; no lower-layer repair is required. It selects proposed
+generic public-contract `.2` at projected 325/366/49 split 25 `.ppif`/24
+`.ahb`, pending a separate clean activation. No source ships in the audit.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
