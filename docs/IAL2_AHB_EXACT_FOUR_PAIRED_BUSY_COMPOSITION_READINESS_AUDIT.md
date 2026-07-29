@@ -144,6 +144,11 @@ Focused t1537 should own tracked source/report/artifact/semantic/read-only-MCP/
 verifier parity and the assertion-enabled 5/4/1/4/1/`44332211` runtime. The
 matching `.ahb` alias and two-subordinate exact-four topology remain separate.
 
+Completed `.2` now freezes those boundaries and selects `.3` data-only
+implementation. The source remains unshipped until `.3` activates and passes.
+See
+`docs/IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md`.
+
 ## Resource, Cleanup, And Rollback
 
 All heavy work used authorized `--host-max-pct 100 --process-max-rss-mb 4096`.

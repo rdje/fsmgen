@@ -7722,6 +7722,19 @@ Clean audit commit `19772adec1` activates only contract selector `.2`.
 Activation changes task/index/Memory/roadmap/mdBook/fact continuity and no
 public source, support, test, artifact, HDL/runtime, semantic-MCP, simulator,
 backend, HIAL/VIAL, VHDL, verification-generation, or transaction behavior.
+Contract `.2` now freezes exactly one additive generic source,
+`ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
+through existing generators. It selects exact intent/object/anchor/support and
+coverage identities, 3 IAL1/4 IAL0 artifacts, width-three
+`4 -> 3 -> 2 -> 1 -> 0`, requester `before_beat=2`/`beats=4`, child/propagated
+BUSY parking, one-hot fabric ownership, normalized semantic/read-only MCP
+parity, and assertion-enabled t1537 5/4/1/4/1/`44332211` runtime. Projected
+accounting is 329/370/53 split 27 `.ppif`/26 `.ahb`. Pending `.3` owns only
+data/source/test/support/docs implementation after this contract commits
+cleanly. No behavior changes in `.2`; aliases, two-subordinate exact-four,
+broader BUSY semantics, HIAL/VIAL, scale implementation, VHDL, verification
+generation, and decision 0020 remain separate. See
+`docs/IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

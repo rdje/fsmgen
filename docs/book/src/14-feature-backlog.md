@@ -11508,6 +11508,12 @@ See the [readiness audit](../../IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READ
 Clean audit commit `19772adec1` activates only contract selector `.2`.
 Activation changes continuity documentation and no public or generated
 behavior.
+Contract `.2` now freezes one generic exact-four paired source through the
+existing three-child architecture, exact support/semantic identities, and
+assertion-enabled t1537 5/4/1/4/1/`44332211` runtime. Projected accounting is
+329/370/53 split 27 `.ppif`/26 `.ahb`. Pending `.3` is the separate data-only
+implementation; the source remains unshipped during selection. See the
+[contract](../../IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

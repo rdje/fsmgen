@@ -251,4 +251,7 @@ evidence-backed handoff.
 - `2026-07-29`: Exact-four paired audit `.1` passes assertion-enabled
   5/4/1/4/1 runtime plus real MCP and selects generic contract `.2`; HIAL/VIAL
   remains proposed with no architecture or priority change.
+- `2026-07-29`: Exact-four paired contract `.2` selects data-only proposed `.3`
+  at projected 329/370/53; HIAL/VIAL remains proposed with no architecture or
+  priority change.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

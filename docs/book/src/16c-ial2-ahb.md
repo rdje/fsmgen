@@ -2317,6 +2317,13 @@ repair is required; pending `.2` owns a separate generic contract projecting
 [readiness audit](../../IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
 Clean audit commit `19772adec1` now activates that contract selector only; the
 generic exact-four paired source remains unshipped during selection.
+Contract `.2` now freezes the future generic path
+`ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
+existing 3 IAL1/4 IAL0 architecture, exact support/semantic/read-only-MCP
+identity, and assertion-enabled t1537 5/4/1/4/1/`44332211` runtime at projected
+329/370/53. Pending `.3` owns implementation, so the path still does not ship
+at this checkpoint. See the
+[selected contract](../../IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

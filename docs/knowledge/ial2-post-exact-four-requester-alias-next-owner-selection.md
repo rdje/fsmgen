@@ -40,3 +40,7 @@ the public 328/369/52 boundary remains unchanged during activation.
 
 Completed `.1` now proves assertion-enabled exact-four paired readiness plus
 real read-only MCP and selects pending generic contract `.2`; no source ships.
+
+Completed contract `.2` now freezes one generic source, assertion-enabled
+t1537, semantic/MCP identities, and 329/370/53 accounting, then selects `.3`
+data-only implementation. The source remains unshipped until `.3`.

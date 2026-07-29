@@ -36,5 +36,5 @@ current accounting to 328 protocol / 369 supported+strict / 52 AHB paths split
 26 `.ppif` / 26 `.ahb`; broader count/policy/composition work stays separate.
 Parent `.823` now selects a separate one-window exact-four paired readiness
 audit. Completed `.1` proves assertion-enabled aggregate runtime and real
-read-only MCP, then selects pending generic contract `.2`; no paired source
-ships during audit.
+read-only MCP; completed contract `.2` freezes a separate implementation leaf,
+but no paired source ships yet.
