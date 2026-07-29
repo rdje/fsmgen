@@ -203,4 +203,8 @@ evidence-backed handoff.
   unchanged.
 - `2026-07-29`: Clean selector commit `f3585f98d` activates only alias
   implementation `.821`; HIAL/VIAL remains proposed and unchanged.
+- `2026-07-29`: Alias implementation `.821` ships the two-window exact-three
+  generic/profile pair at 326/367/50. Proposed `.822` will independently
+  select the next roadmap owner; HIAL/VIAL and its portable-fast/full-language/
+  VHDL/mixed-language profile boundary remain proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

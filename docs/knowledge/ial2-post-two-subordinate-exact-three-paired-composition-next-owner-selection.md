@@ -25,10 +25,12 @@ artifacts, requester `before_beat=2` / `beats=3`, both BUSY-parking contexts,
 one-hot response ownership, normalized semantic root `top`, real read-only MCP,
 and public `--verify-hdl`.
 
-The future support ID is
+The selected support ID is
 `intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park`.
-Implementation projects 326/367/50 split 25 `.ppif`/25 `.ahb`; focused t1534
-will prove alias parity while t1533 remains the sole assertion-enabled runtime.
+Implementation `.821` now ships at 326/367/50 split 25 `.ppif`/25 `.ahb`;
+focused t1534 proves alias parity while t1533 remains the sole assertion-enabled
+runtime. Proposed `.822` owns the next selection after the clean behavior
+commit.
 
 Counts above three, new BUSY policy/status/burst/signal semantics, generic
 priority, decision `0020`, and HIAL/VIAL activation remain separate. HIAL/VIAL

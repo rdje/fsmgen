@@ -107,9 +107,10 @@ cleanup remains unchanged.
 The generic source established the 321/362/45 checkpoint and the matching alias
 established 322/363/46. The generic exact-three paired source established
 323/364/47; its matching alias established 324/365/48. The generic
-two-subordinate exact-three paired source now moves current accounting to 325
-protocol fixtures, 366 supported-smoke plus strict fixtures, and 49 AHB IAL2
-paths: 25 generic `.ppif` sources and 24 `.ahb` aliases.
+two-subordinate exact-three paired source established 325/366/49; its matching
+alias now moves current accounting to 326 protocol fixtures, 367 supported-smoke
+plus strict fixtures, and 50 AHB IAL2 paths: 25 generic `.ppif` sources and 25
+`.ahb` aliases.
 
 ## Generated-HDL Proof
 

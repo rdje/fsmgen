@@ -33,7 +33,8 @@ paths split 22 `.ppif` and 22 `.ahb`; the later generic exact-three requester
 established 321/362/45 and its alias established 322/363/46. The generic
 exact-three paired source established 323/364/47; its matching alias moves
 the next checkpoint to 324/365/48. The generic two-subordinate exact-three
-paired source now moves current accounting to 325/366/49 split 25/24.
+paired source established 325/366/49; its matching alias now moves current
+accounting to 326/367/50 split 25/25.
 Deep semantic
 introspection is an ongoing
 language-wide capability: each new support-accounted semantic feature must

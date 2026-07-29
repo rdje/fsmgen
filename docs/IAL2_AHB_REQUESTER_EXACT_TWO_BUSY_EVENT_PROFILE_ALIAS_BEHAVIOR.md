@@ -89,8 +89,9 @@ lineage later established checkpoints through 320/361/44. The additive generic
 exact-three requester established 321/362/45; its matching exact-three alias
 established 322/363/46. The generic exact-three paired source established
 323/364/47; its matching alias established 324/365/48. The generic
-two-subordinate exact-three paired source now moves current totals to 325/366
-and 49 AHB paths: twenty-five `.ppif` sources and twenty-four `.ahb` aliases.
+two-subordinate exact-three paired source established 325/366/49; its matching
+alias now moves current totals to 326/367 and 50 AHB paths: twenty-five
+`.ppif` sources and twenty-five `.ahb` aliases.
 
 The alias is exposed through the same bounded semantic contract as every other
 support-accounted source. Strict check and `--emit-semantic-json` report its

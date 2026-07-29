@@ -11415,6 +11415,12 @@ See the
 Clean selector commit `f3585f98d` activates only data-only alias
 implementation `.821`; activation changes continuity documentation and no
 public behavior.
+Implementation `.821` now ships the byte-identical two-window exact-three
+`.ahb` alias and exact support identity at 326/367/50 split 25/25. Focused
+t1534 proves byte/report/strict/schedule/artifact/normalized-semantic/
+read-only-MCP/repository-local-output/HDL-verifier/diagnostic/preservation
+parity without a second simulation; t1533 remains the shared assertion-enabled
+10/8/2/6/2 runtime. Proposed `.822` owns the next roadmap-aligned selection.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

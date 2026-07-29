@@ -75,9 +75,10 @@ semantic root: top
 ```
 
 The alias established 324/365/48. The later generic two-subordinate exact-three
-paired source now moves current accounting to 325 protocol fixtures, 366
-supported-smoke and strict-supported fixtures, and 49 AHB IAL2 paths split
-between 25 generic `.ppif` sources and 24 `.ahb` aliases.
+paired source established 325/366/49; its matching alias now moves current
+accounting to 326 protocol fixtures, 367 supported-smoke and strict-supported
+fixtures, and 50 AHB IAL2 paths split between 25 generic `.ppif` sources and 25
+`.ahb` aliases.
 
 ## Semantic Introspection And MCP
 

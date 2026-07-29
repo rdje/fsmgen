@@ -37,9 +37,9 @@ semantic root:  top
 children:       4
 ```
 
-Current accounting is 325 protocol fixtures, 366 supported-smoke fixtures,
-366 strict-supported fixtures, and 49 AHB IAL2 paths split 25 generic `.ppif`
-sources / 24 `.ahb` aliases.
+Current accounting is 326 protocol fixtures, 367 supported-smoke fixtures,
+367 strict-supported fixtures, and 50 AHB IAL2 paths split 25 generic `.ppif`
+sources / 25 `.ahb` aliases.
 
 ## Generated Architecture
 
@@ -115,12 +115,12 @@ separate HIAL/VIAL simulator-qualification profile.
 t1533 passes 3 top-level / 83 nested assertions, covering exact source delta,
 strict/check/support, schedule/report/residue, exact artifacts, normalized
 semantic JSON, real read-only MCP, repository-local output, public
-`--verify-hdl`, and assertion-enabled runtime. t248 plus t297 pass 2 files /
-6,947 tests at the exact 325/366/49 checkpoint.
+`--verify-hdl`, and assertion-enabled runtime. The matching alias adds focused
+t1534 parity without a second simulation; t248 plus t297 pass 2 files / 6,959
+tests at the exact 326/367/50 checkpoint.
 
-Parent selector `.820` now selects the matching byte-identical `.ahb` alias
-for proposed implementation `.821`; it remains unshipped until that leaf is
-cleanly activated and completed. Counts above three, counter-width generalization,
+Implementation `.821` now ships the matching byte-identical `.ahb` alias while
+sharing this t1533 runtime proof. Counts above three, counter-width generalization,
 runtime/policy/random/multiple-point BUSY insertion, distinct bus-BUSY status,
 larger/indefinite bursts, optional signals, queues/outstanding transfers,
 broader fabrics/managers, generic priority changes, other protocols/backends,

@@ -7587,6 +7587,13 @@ Clean selector commit `f3585f98d` activates only data-only alias
 implementation `.821`; activation changes continuity documentation and no
 public source, support, test, artifact, API, HDL/runtime, HIAL/VIAL, VHDL, or
 verification-generation behavior.
+Implementation `.821` now ships the byte-identical two-window exact-three
+`.ahb` alias and exact support identity at 326/367/50 split 25 `.ppif`/25
+`.ahb`. Focused t1534 proves alias byte/report/strict/schedule/artifact/
+normalized-semantic/read-only-MCP/repository-local-output/HDL-verifier/
+diagnostic/preservation parity without a second simulation; t1533 remains the
+shared assertion-enabled 10/8/2/6/2 runtime. Proposed `.822` will select the
+next exact roadmap-aligned owner after the clean behavior commit.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

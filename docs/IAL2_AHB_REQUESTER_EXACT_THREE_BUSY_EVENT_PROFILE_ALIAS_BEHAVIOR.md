@@ -85,9 +85,9 @@ The alias established 322 protocol fixtures, 363 supported-smoke/strict-
 supported fixtures, and 46 AHB IAL2 paths. The generic exact-three paired
 source established 323/364/47; its matching alias moves current support
 checkpoint to 324/365/48. The generic two-subordinate exact-three paired source
-now moves current support accounting to 325 protocol fixtures, 366
-supported-smoke/strict-supported fixtures, and 49 AHB paths split 25 `.ppif`
-sources / 24 `.ahb` aliases.
+established 325/366/49; its matching alias now moves current support accounting
+to 326 protocol fixtures, 367 supported-smoke/strict-supported fixtures, and 50
+AHB paths split 25 `.ppif` sources / 25 `.ahb` aliases.
 
 Strict check and `--emit-semantic-json` expose the alias path, support ID,
 coverage, source kind, module, and `fsm` semantic root. The read-only MCP

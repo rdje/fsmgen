@@ -113,6 +113,14 @@ reports/schemas, semantic/MCP APIs, runtime/HDL behavior, ports, existing
 source bytes, other aliases, BUSY semantics, backends, VHDL, verification
 generation, HIAL/VIAL activation, or decision `0020`.
 
+## Implementation Outcome
+
+Implementation `.821` satisfied this contract: the byte-identical alias and
+exact support identity now ship at 326/367/50 split 25/25. Focused t1534 proves
+the selected parity boundary without a second simulation; t1533 remains the
+shared assertion-enabled runtime. Proposed `.822` owns the next roadmap-aligned
+selection after the clean `.821` behavior commit.
+
 ## Validation And Resource Boundary
 
 The selector changes documentation and task ownership only. Focused
@@ -125,8 +133,6 @@ under repository-derived same-volume paths.
 
 ## Rollback
 
-Rollback removes only the proposed `.821` node and this selection record/fact,
-returning the frontier to `.820` while leaving shipped 325/366/49 behavior
-untouched. A later `.821` rollback must remove the alias, support entry,
-focused test, and synchronized accounting together, restoring the generic
-source as the sole two-window exact-three member.
+Rollback of the shipped `.821` slice removes the alias, support entry, focused
+test, and synchronized accounting together, restoring the generic source as
+the sole two-window exact-three member at 325/366/49.

@@ -146,8 +146,9 @@ established 319/360/43; its matching alias established 320/361/44. The generic
 exact-three requester alias established 322/363/46. The generic exact-three
 paired source established 323/364/47, and its matching alias now moves current
 checkpoint to 324/365/48. The generic two-subordinate exact-three paired source
-now moves current accounting to 325/366 and 49 AHB paths: twenty-five generic
-`.ppif` sources and twenty-four `.ahb` aliases.
+established 325/366/49; its matching alias now moves current accounting to
+326/367 and 50 AHB paths: twenty-five generic `.ppif` sources and twenty-five
+`.ahb` aliases.
 
 ## Generated-HDL Proof
 

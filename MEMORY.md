@@ -5,16 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.821: activate two-window exact-three AHB alias`;
-  predecessor selector `f3585f98d`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.821`.
-- current_state: generic two-window exact-three paired AHB composition ships
-  at 325 protocol / 366 supported-smoke+strict / 49 AHB paths split 25
-  `.ppif`/24 `.ahb`; t1533 proves assertion-enabled 10/8/2/6/2 runtime plus
-  semantic/read-only-MCP parity.
-- next_action: implement only the byte-identical alias, exact support entry,
-  focused t1534 parity, and synchronized 326/367/50 current surfaces.
+- latest_commit: this task-scoped behavior commit,
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.821: ship two-window exact-three AHB alias`;
+  predecessor activation `91c41cf2b`.
+- active_work_unit: proposed `IAL2-FEATURE-COMPLETENESS-FRONTIER.822`, pending
+  a separate clean activation commit.
+- current_state: two-window exact-three paired AHB generic/profile sources ship
+  at 326 protocol / 367 supported-smoke+strict / 50 AHB paths split 25
+  `.ppif`/25 `.ahb`; t1534 proves alias parity and t1533 remains shared
+  assertion-enabled 10/8/2/6/2 runtime.
+- next_action: activate only `.822`, then select the next exact roadmap-aligned
+  owner without a behavior change.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -27,10 +28,9 @@ bounded current-state pointer. Git preserves its prior history.
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
 - The IAL2 frontier completed exact-three requester generic/alias, fabric and
-  generated/direct endpoint arbitration repairs, exact-three paired generic
-  plus alias, and generic two-window exact-three composition. Current truth is
-  325/366/49 split 25 `.ppif`/24 `.ahb`; the matching two-window alias remains
-  separate.
+  generated/direct endpoint arbitration repairs, and exact-three paired
+  generic/profile compositions across one and two windows. Current truth is
+  326/367/50 split 25 `.ppif`/25 `.ahb`.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

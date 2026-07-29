@@ -27,8 +27,7 @@ presentations / 8 beats / 2 BUSY episodes / 6 qualified BUSY events / 2 resumed
 `SEQ` events / status `44332211` / control `88776655`, including stable selected,
 unselected, and fabric state.
 
-Current accounting is 325 protocol / 366 supported+strict / 49 AHB paths split
-25 `.ppif` / 24 `.ahb`. Parent selector `.820` selects the byte-identical
-matching alias for proposed `.821` at projected 326/367/50 split 25/25, but it
-remains unshipped. Broader BUSY, HIAL/VIAL, VHDL, and verification-generation
-work remains separate.
+Current accounting is 326 protocol / 367 supported+strict / 50 AHB paths split
+25 `.ppif` / 25 `.ahb`. Implementation `.821` ships the byte-identical
+matching alias and shares t1533 assertion-enabled runtime. Broader BUSY,
+HIAL/VIAL, VHDL, and verification-generation work remains separate.
