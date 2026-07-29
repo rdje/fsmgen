@@ -70,11 +70,11 @@ any new public paired source or behavior.
   Commit: `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select exact-four paired AHB contract`
 
 - ID: `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Ship the selected generic one-subordinate exact-four paired AHB BUSY source through existing generators.`
   Acceptance: `Activate only after clean .2 contract commit. Implement exactly the .2 contract: add ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif as the exact data-only extension of the exact-three paired source, with selected intent/object/anchor, embedded amba_requester_busy_insert_four, busy-before-beat 2, busy-beats 4, existing ahb_lite_subordinate_byte_lane_hburst_seq, ahb_interconnect, ahb_tb, ports/storage/burst/response/window/wiring unchanged. Add RegressionCorpus entry intent.ppif_ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park with selected coverage, ppif/supported_smoke/strict/module ahb_tb/root top/3-child expectations; update t248/t297 and public support/language/capability/current-doc inventory surfaces to exact 329 protocol / 370 supported+strict / 53 AHB paths split 27 .ppif/26 .ahb. Add t/1537-ial2-ahb-exact-four-paired-busy-composition.t and t/data/ahb_exact_four_paired_busy_composition_tb.svt covering source identities, strict/check success and exact support, schedule schema/3 children/artifacts/one-hot ownership/requester before_beat=2/beats=4/width-three counter/child+propagated parks/no top busy_flow, normalized semantic JSON, real repo-relative fsmgen_semantic_introspect read_only=true/shell_access=false, repo-local output, --verify-hdl, and Verilator 5.046 --timing without --no-assert at exact transfers=5/beats=4/BUSY episodes=1/qualified BUSY=4/resumed SEQ=1/storage=0x44332211 plus 4->3->2->1->0 and stable requester/subordinate/fabric ownership with clean completion. Preserve t1531/t1535/t1536 and existing source/alias bytes; use the smallest warranted focused/broader gates. Add behavior record/fact and sync README, ROADMAP_V2, REGRESSION_CORPUS/support docs, mdBook, task/index, Memory, and Knowledge Map. Use repo-derived same-volume temp/output, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup census, rollback, and commit. Do not change parser/generator algorithms, existing source bytes, report schema/API, matching .ahb alias, two-subordinate topology, counts above four, policy/status/burst/signal behavior, generic priority, other protocols/backends, HIAL/VIAL, VHDL, verification generation, scale implementation, or decision 0020.`
-  Verification: `pending clean .2 contract commit and separate activation.`
-  Commit: `pending`
+  Verification: `Activated only after clean .2 contract commit d54dc8afb. Activation changes task/index/Memory/roadmap/mdBook/fact continuity only; no parser, generator, public source, support entry, test, testbench, checked-in generated artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, scale, VHDL, or transaction behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 top-level tests. Knowledge Map generation/check remains synchronized at 1,040 facts/5,314 keys. mdBook builds exactly 72 files/16,293,829 bytes and its exact repository-local render is removed without residue. Memory remains 59 lines; diff and all six doctrine gates pass. Pre-gate canonical Stats-compatible RAM is 68.5% (16.432/24.000 GiB; 17,644,027,904 bytes); post-gate capacity is 68.2% (16.380/24.000 GiB; 17,587,453,952 bytes). Kernel pressure is separately 1 (normal) at both readings; guard occupancy and inverted memory_pressure free percentage are excluded as capacity truth.`
+  Commit: `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: activate exact-four paired AHB implementation`
 
 ## Decisions
 
@@ -91,6 +91,9 @@ any new public paired source or behavior.
 - `2026-07-29`: Contract `.2` freezes one generic source, support identity,
   t1537 assertion-enabled runtime, and `.3` data-only implementation; aliases
   and the two-subordinate topology remain separately owned.
+- `2026-07-29`: Clean contract commit `d54dc8afb` satisfies the `.3` activation
+  boundary; implementation is active but no source or behavior changes in
+  activation.
 
 ## Open Questions
 

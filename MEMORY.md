@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: exact-four paired `.2` contract; predecessor `6cbfb8b25`.
-- active_work_unit: none after this contract commit; selected pending leaf
-  `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3` awaits activation.
-- current_state: `.2` freezes one generic source, exact support/semantic/MCP
-  identities, t1537 runtime, and 329/370/53 projection; no behavior changed.
-- next_action: from the clean contract commit, activate only `.3` data-only
-  implementation in a separate no-behavior commit.
+- latest_commit: this task-scoped `.3` activation; predecessor `d54dc8afb`.
+- active_work_unit:
+  `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`.
+- current_state: exact generic one-subordinate source/support/t1537 data-only
+  implementation is active; activation changes continuity only and no behavior.
+- next_action: implement exactly `.3`, validate assertion-enabled runtime and
+  329/370/53 public accounting, document behavior, and commit.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

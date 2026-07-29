@@ -7735,6 +7735,10 @@ cleanly. No behavior changes in `.2`; aliases, two-subordinate exact-four,
 broader BUSY semantics, HIAL/VIAL, scale implementation, VHDL, verification
 generation, and decision 0020 remain separate. See
 `docs/IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md`.
+Clean contract commit `d54dc8afb` now activates only `.3` data-only
+implementation. Activation changes continuity documentation and no public
+source, support, test, artifact, HDL/runtime, semantic-MCP, simulator, backend,
+HIAL/VIAL, scale, VHDL, verification-generation, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
