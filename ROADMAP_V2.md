@@ -7245,6 +7245,20 @@ contract selection before implementation. Counts above three, generalized
 policy/points/status/compositions/bursts/signals and decision 0020 remain
 separate. See
 `docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_INSERTION_READINESS_AUDIT.md`.
+Contract leaf `.2` now selects proposed `.3`, the additive generic
+`ppif/ahb_requester_busy_insert_three.ppif` implementation. Absence of
+`busy-beats` remains exact-one; public normalization will accept only literal
+values 2..3 and reject 0/1/4+/non-literals. The existing width-two counter,
+qualified `>1`/`==1` rules, priorities, and pending `SEQ` ownership remain
+unchanged. Exact-three reports numeric `beats=3`; shared exact-one/two/three
+residue becomes truthful. The projected checkpoint is 321 protocol / 362
+supported+strict / 45 AHB paths split 23 `.ppif`/22 `.ahb`. Focused t1528 must
+directly prove `3 -> 2 -> 1 -> 0` under continuous/32-ready-low/32-grant-low,
+and t1521 will gain direct `2 -> 1 -> 0` observation. The matching exact-three
+`.ahb` alias, counts above three, generalized policy/points/status,
+compositions, broader protocols, and decision 0020 remain separately owned.
+See
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_CONTRACT_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

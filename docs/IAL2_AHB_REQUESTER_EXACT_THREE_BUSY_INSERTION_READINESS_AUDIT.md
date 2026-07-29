@@ -104,10 +104,11 @@ the same width-two counter to two. Exact-one retained report token `single` and
 no counter/continue rule. The base requester retained no BUSY machinery.
 Candidate values `0`, `1`, `4`, and a symbolic count failed closed.
 
-The runtime result removes a substrate prerequisite, but public exact-three
-behavior still requires a contract. Leaf `.2` must freeze:
+The runtime result removes a substrate prerequisite. Leaf `.2` has now selected
+the bounded public contract recorded in
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_CONTRACT_SELECTION.md`:
 
-- whether public normalization accepts exactly `{2,3}` and its diagnostic;
+- public normalization accepts exactly `{2,3}` with a literal-range diagnostic;
 - additive generic source/intent/object/actor/support/coverage identities;
 - numeric report wording and truthful residue for exact-one, exact-two, and
   exact-three sources;
@@ -117,6 +118,10 @@ behavior still requires a contract. Leaf `.2` must freeze:
 - generic-first then matching `.ahb` alias sequencing; and
 - rollback before any parser, generator, source, support, test, or runtime
   behavior change.
+
+Proposed leaf `.3` owns the additive generic implementation. The matching
+`.ahb` alias remains a later separate contract and current support remains
+320/361/44 until `.3` ships.
 
 ## Non-Selections
 

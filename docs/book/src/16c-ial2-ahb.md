@@ -2082,9 +2082,23 @@ The disposable source also strict-checks, emits the exact candidate IAL1/IAL0
 artifacts, reports numeric `busy_insertion.beats=3`, and passes normalized
 semantic JSON plus the common read-only shell-disabled MCP adapter. Exact-one,
 exact-two, base, and malformed boundaries stay distinct. No lower-layer repair
-is required, but exact-three is still not public: proposed contract leaf `.2`
-must freeze syntax, identities, report/residue truth, support accounting,
-validation, and generic-before-alias sequencing before implementation.
+is required. At that audit checkpoint exact-three was still not public, so
+contract leaf `.2` had to freeze syntax, identities, report/residue truth,
+support accounting, validation, and generic-before-alias sequencing before
+implementation.
+
+The resulting
+[exact-three contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_CONTRACT_SELECTION.md)
+selects proposed `.3`, a generic-first additive source. Absence of
+`busy-beats` remains exact-one; literal values 2 and 3 are the only selected
+multiple-event forms, with 0/1/4+/non-literals rejected. The exact-three
+source will report numeric `beats=3` and reuse the existing width-two counter,
+qualified retirement rules, checker priorities, and pending `SEQ` handoff
+unchanged. Its projected checkpoint is 321 protocol / 362 supported+strict /
+45 AHB paths split 23 `.ppif`/22 `.ahb`. Focused t1528 must directly observe
+`3 -> 2 -> 1 -> 0` through continuous, 32-clock ready-low, and 32-clock
+grant-low runtime; t1521 will directly lock exact-two `2 -> 1 -> 0`. The
+matching exact-three `.ahb` alias remains a later separate selector.
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that

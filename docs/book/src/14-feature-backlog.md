@@ -11078,6 +11078,19 @@ boundaries remained distinct. No lower-layer repair is needed. Proposed `.2`
 owns the public exact-three contract before implementation. See the
 [readiness audit](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_INSERTION_READINESS_AUDIT.md).
 
+Contract leaf `.2` now selects proposed `.3`, the additive generic
+`ppif/ahb_requester_busy_insert_three.ppif` implementation. The bounded
+language will accept literal `busy-beats` values 2..3 while absence remains
+exact-one; 0/1/4+/non-literals stay invalid. The existing width-two counter,
+qualified non-final/final rules, priorities, and pending `SEQ` ownership are
+unchanged. Exact-three reports numeric `beats=3`, shared exact-one/two/three
+residue becomes truthful, and projected support is 321/362/45 split 23
+`.ppif`/22 `.ahb`. Focused t1528 must directly prove internal
+`3 -> 2 -> 1 -> 0` under continuous/32-ready-low/32-grant-low operation, and
+t1521 gains direct exact-two `2 -> 1 -> 0` observation. The matching
+exact-three `.ahb` alias remains a later selector. See the
+[selected contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_CONTRACT_SELECTION.md).
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

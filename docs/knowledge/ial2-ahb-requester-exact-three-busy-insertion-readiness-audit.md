@@ -25,6 +25,8 @@ consumption or BUSY data completion, one resumed pending `SEQ`, four byte
 Strict check, schedule, normalized semantic JSON, exact IAL1/IAL0 artifacts,
 and real read-only shell-disabled `fsmgen_semantic_introspect` also passed.
 Exact-one, exact-two, base, and malformed boundaries remained distinct. The
-audit selects proposed `.2` public contract selection; it ships no behavior.
-Counts above three, generalized policy/points/status/bursts/signals,
+audit selected `.2`, which now freezes bounded literals `2..3`, the generic
+exact-three source contract, unchanged width-two lowering, and proposed `.3`
+implementation; `.2` ships no behavior. Counts above three, generalized
+policy/points/status/bursts/signals,
 compositions, interconnect repairs, and decision 0020 remain separate.

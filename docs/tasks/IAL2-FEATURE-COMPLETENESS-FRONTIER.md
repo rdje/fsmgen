@@ -5761,6 +5761,10 @@ source, support entry, test, parser/generator/API, HDL, or runtime behavior.
 `57ab6e7d1`, and `.812` activated from clean commit `974899b7b`. `.812` selects
 proposed `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`,
 which activated only after this selector committed cleanly at `37f17ff00`.
+Child `.1` proved guarded internal `3 -> 2 -> 1 -> 0` retirement without a
+lower-layer repair; child `.2` now selects proposed `.3`, generic exact-three
+implementation with bounded literal range `2..3`, unchanged width-two
+lowering, projected 321/362/45 accounting, and a later separate alias.
 
 ## Current Frontier
 
