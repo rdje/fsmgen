@@ -5,15 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped audit commit,
-  `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1: audit endpoint selector ownership`;
-  predecessor `7c74c9200`.
-- active_work_unit: none after this commit; audit `.1` is done.
-- current_state: `.1` independently reproduces and maps the generated endpoint
-  output overlaps, keeps generic assertions authoritative, and selects
-  proposed generated-local contract `.2`; no shipped behavior changed.
-- next_action: from the clean audit commit, activate contract-selection leaf
-  `.2` without starting implementation.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.2: activate endpoint arbitration contract`;
+  predecessor `0dad690cb`.
+- active_work_unit:
+  `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.2`.
+- current_state: clean audit `.1` selects `.2`; contract selection is active
+  and activation changes documentation/continuity state only.
+- next_action: select exact mutually exclusive generated endpoint output modes
+  and freeze a separate implementation leaf without changing behavior.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -29,7 +29,7 @@ bounded current-state pointer. Git preserves its prior history.
   established `321/362/45`, `.5` ships its matching alias at `322/363/46`, and
   completed parent `.813` selected the AHB interconnect arbitration audit;
   child `.1`-.3 tree is complete and parent selector `.814` selected the
-  subordinate arbitration tree. Its audit `.1` selects proposed generated
+  subordinate arbitration tree. Its audit `.1` selects active generated
   endpoint contract `.2`. The distinct direct IAL0 seed override gap is parked
   under proposed `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION`; decision
   `0020` remains proposed/inactive.

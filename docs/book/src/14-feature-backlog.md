@@ -11196,6 +11196,9 @@ priority correctly keeps same-value multiple ownership visible, so proposed
 hand-authored IAL0 seed conditional-override gap is parked without changing
 priority. See the
 [subordinate arbitration audit](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_AUDIT.md).
+Audit commit `0dad690cb` is clean, so selected generated-endpoint contract leaf
+`.2` is active. Activation changes continuity and documentation state only;
+the direct IAL0 seed task remains parked and no output repair has started.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

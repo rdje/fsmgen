@@ -75,7 +75,7 @@ yet been audited.
   Commit: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1: audit endpoint selector ownership`
 
 - ID: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the exact generated subordinate output-ownership contract and implementation boundary.`
   Acceptance: `Activate only after .1 commits cleanly. Read .1, docs/IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_AUDIT.md, AhbSubordinate.pm, all generated base/byte-lane/SEQ/HBURST/BUSY-park IAL1/IAL0/HDL selector families, generic priority/selector owners and tests, direct and aggregate runtime evidence, t1475/t1482/t1486/t1490/t1494/t1513-t1516/t1519/t1523/t1525, public reports/support/artifacts/semantic-MCP surfaces, roadmap, mdBook, Memory, and Knowledge Map. Select exact mutually exclusive transaction-idle/capture/hold/retire/enter/read/write/success/ERROR output modes or only provably redundant assignment removal in AhbSubordinate.pm; preserve initial capture, one-bank backpressure, wait, same-edge completion plus next capture, data, writes, success, two-cycle ERROR, SEQ, BUSY, IDLE, public syntax/ports/names/reports/support/artifacts/semantic-MCP surfaces, generic assertions, direct IAL0 seed ownership, protocols/backends/VHDL, and decision 0020. Freeze a separate implementation leaf with assertion-enabled base/rich direct plus one-/two-window paired gates, removal of --no-assert only where the generated endpoint is the final blocker, preservation, same-volume cleanup, authorized macOS host-max 100 / descendant 4096-MiB profile, exact Stats-compatible capacity plus separate kernel-pressure reporting, and rollback. Do not change shipped behavior in contract selection.`
   Verification: `pending`
@@ -90,10 +90,13 @@ requirement then committed without a priority pivot at clean boundary
 slice. No source, generator, test, artifact, HDL, or runtime behavior changes
 in activation.
 
+Audit `.1` committed cleanly at `0dad690cb`. Selected contract leaf `.2`
+activates from that handoff-ready boundary as a documentation-only slice; the
+parked direct IAL0 seed task remains proposed/inactive.
+
 ## Blockers
 
-- None. Audit `.1` selects proposed contract leaf `.2`; activation awaits the
-  clean audit commit.
+- None. Contract selector `.2` is the active frontier.
 
 ## Rollback
 

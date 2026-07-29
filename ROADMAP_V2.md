@@ -7383,6 +7383,9 @@ keeps same-value multiple ownership visible, so proposed `.2` owns an exact
 IAL0 seed conditional-override gap is parked under proposed
 `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION` without pivoting. See
 `docs/IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_AUDIT.md`.
+Audit commit `0dad690cb` is clean, so selected generated-endpoint contract leaf
+`.2` is active. Activation changes continuity and documentation state only;
+the direct IAL0 seed task remains parked and no output repair has started.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
