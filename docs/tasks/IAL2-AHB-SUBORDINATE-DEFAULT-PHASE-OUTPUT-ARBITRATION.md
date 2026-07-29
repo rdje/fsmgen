@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `IAL2 / AHB subordinate correctness`
 - Created: `2026-07-29`
 - Last updated: `2026-07-29`
@@ -63,27 +63,29 @@ yet been audited.
 ## Task Tree
 
 - ID: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION`
-  Status: `proposed`
+  Status: `active`
   Goal: `Make generated AHB subordinate output arbitration assertion-clean without masking ownership conflicts.`
   Children: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1`
 
 - ID: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Audit the complete subordinate output-overlap set and select the smallest repair owner.`
-  Acceptance: `Activate only from a clean tree after the current interconnect work reaches a handoff-ready boundary. Reproduce the exact idle plus ahb_phase_capture HRDATA_REGS zero overlap independently; map all generated subordinate same-value/multi-value output selectors and phase/completion conditions across current variants; distinguish AHB-generator authoring from generic rule/transaction priority behavior; freeze a separate no-behavior contract or prerequisite with assertion-enabled runtime gates, preservation, same-volume disposal, the unchanged 88%/4096-MiB guard, and rollback. Do not change shipped behavior in the audit.`
+  Acceptance: `Activate only from a clean tree after the current interconnect work reaches a handoff-ready boundary. Reproduce the exact idle plus ahb_phase_capture HRDATA_REGS zero overlap independently; map all generated subordinate same-value/multi-value output selectors and phase/completion conditions across current variants; distinguish AHB-generator authoring from generic rule/transaction priority behavior; freeze a separate no-behavior contract or prerequisite with assertion-enabled runtime gates, preservation, same-volume disposal, the director-authorized macOS host-max 100 / descendant 4096-MiB profile, exact Stats-compatible capacity reporting, separate kernel-pressure reporting, and rollback. Do not change shipped behavior in the audit.`
   Verification: `pending`
   Commit: `pending`
 
 ## Activation Gate
 
-This tree is proposed only. Do not pivot while the interconnect tree is dirty
-or before its current leaf commits cleanly. A later roadmap selector must
-activate `.1` from a clean handoff boundary.
+Satisfied. Parent selector `.814` committed cleanly at `ece98c002` after the
+interconnect tree completed at `6eeac974c`; the separately parked scalability
+requirement then committed without a priority pivot at clean boundary
+`54964456f`. Leaf `.1` activates from that boundary as a documentation-only
+slice. No source, generator, test, artifact, HDL, or runtime behavior changes
+in activation.
 
 ## Blockers
 
-- None for the proposed audit; activation awaits roadmap selection and a clean
-  interconnect boundary.
+- None. Audit `.1` is the active frontier.
 
 ## Rollback
 

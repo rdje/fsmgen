@@ -11179,6 +11179,11 @@ durable endpoint probe identifies overlapping transaction-idle and
 `ahb_phase_capture` `HRDATA_REGS <- 0` families. Exact-three paired expansion
 follows the no-behavior endpoint audit. See the
 [post-interconnect selector](../../IAL2_POST_INTERCONNECT_ARBITRATION_NEXT_OWNER_SELECTION.md).
+The `.814` selector committed cleanly at `ece98c002`. After the independently
+parked scalability requirement also committed cleanly at `54964456f` without
+changing priority, the selected subordinate audit `.1` is active. Activation
+changes continuity and documentation state only; no behavior repair has
+started.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

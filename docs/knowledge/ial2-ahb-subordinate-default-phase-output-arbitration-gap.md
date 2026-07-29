@@ -22,6 +22,6 @@ The ordered enable vector proves two active generated sources: the subordinate
 transaction's idle-state output default `HRDATA_REGS <- 0` and the generated
 `ahb_phase_capture` rule's explicit `HRDATA_REGS <- 0`. The overlap is
 independent of the interconnect defect. Its complete selector set and smallest
-repair owner remain to be audited by proposed task
+repair owner remain to be audited by active leaf
 `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION`; generic assertions
 must not be disabled in lieu of that audit.

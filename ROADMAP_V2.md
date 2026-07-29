@@ -7365,6 +7365,11 @@ and the durable endpoint probe identifies simultaneous transaction-idle and
 `ahb_phase_capture` `HRDATA_REGS <- 0` families. Exact-three paired expansion
 and broader AHB behavior follow the no-behavior endpoint audit. See
 `docs/IAL2_POST_INTERCONNECT_ARBITRATION_NEXT_OWNER_SELECTION.md`.
+The `.814` selector committed cleanly at `ece98c002`; after the independently
+parked scalability requirement also committed cleanly at `54964456f` without
+changing priority, the selected subordinate audit `.1` is active. Activation
+changes continuity and documentation state only; no behavior repair has
+started.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
