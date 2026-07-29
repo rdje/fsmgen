@@ -11442,6 +11442,8 @@ proposed no-behavior `.2` must freeze minimum unsigned width
 `ceil(log2(busy_beats + 1))`, so exact two/three remain width two and exact four
 uses width three, before selecting any public literal-`2..4` implementation.
 See the [readiness audit](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_INSERTION_READINESS_AUDIT.md).
+Clean audit commit `74d91347e` activates only no-behavior contract `.2`;
+activation changes continuity documentation and no public behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

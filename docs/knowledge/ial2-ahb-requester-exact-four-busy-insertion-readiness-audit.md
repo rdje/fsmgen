@@ -30,5 +30,6 @@ final counter.
 Exact four is therefore lower-layer ready. The public generator should derive
 the minimum unsigned width `ceil(log2(busy_beats + 1))`: literals two and three
 remain width two, while literal four becomes width three. This preserves prior
-generated behavior and avoids a hardcoded family-wide widening. Proposed
-contract leaf `.2` owns the next no-behavior decision before implementation.
+generated behavior and avoids a hardcoded family-wide widening. Clean audit
+commit `74d91347e` activates contract leaf `.2` for the next no-behavior
+decision before implementation.

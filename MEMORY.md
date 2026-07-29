@@ -5,17 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: planned task-scoped `.1` exact-four counter-readiness audit;
-  predecessor activation `08e970b3f`.
-- active_work_unit: none until proposed `.2` activates after the clean `.1`
-  audit commit.
+- latest_commit: this task-scoped `.2` activation commit; predecessor audit
+  `74d91347e`.
+- active_work_unit:
+  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.2`.
 - current_state: two-window exact-three paired AHB generic/profile sources ship
   at 326 protocol / 367 supported-smoke+strict / 50 AHB paths split 25
   `.ppif`/25 `.ahb`; t1534 proves alias parity and t1533 remains shared
   assertion-enabled 10/8/2/6/2 runtime.
-- next_action: from the clean `.1` audit commit, activate no-behavior `.2` and
-  freeze the literal-`2..4` public contract plus minimum unsigned counter-width
-  derivation before implementation.
+- next_action: reconcile exact-one/two/three preservation and freeze the
+  literal-`2..4` public contract, minimum unsigned counter width, exact
+  identities, focused gates, rollback, and separate implementation leaf.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

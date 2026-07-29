@@ -2177,6 +2177,8 @@ contract `.2` must select minimum unsigned width
 using width three for exact four, before any public literal-`2..4` source or
 normalizer change. See the
 [readiness audit](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_INSERTION_READINESS_AUDIT.md).
+Clean audit commit `74d91347e` activates only no-behavior contract `.2`;
+activation changes continuity documentation and no public behavior.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

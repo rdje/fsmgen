@@ -58,11 +58,11 @@ AHB requester family.
   Commit: `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1: prove exact-four counter readiness`
 
 - ID: `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the exact public literal-four requester BUSY and minimum-width counter contract before implementation.`
   Acceptance: `Activate only after clean .1 audit commit. Reconcile the authoritative disposable 4->3->2->1->0 continuous/ready-low/grant-low proof with the shipped exact-one/two/three generic/alias family, AhbRequester normalization/lowering/report/residue, IAL1 width contracts, support/language/capability/current docs, normalized semantic/read-only-MCP surfaces, paired composition preservation, roadmap, mdBook, Knowledge Map, HIAL/VIAL, generic priority, and decision 0020. Select or reject exactly one additive generic ppif/ahb_requester_busy_insert_four.ppif contract. If selected, freeze literal range 2..4 and diagnostics, absence-as-exact-one, minimum unsigned counter width ceil(log2(busy_beats+1)) preserving width two for counts two/three and selecting width three for four, exact source/intent/object/anchor/actor/module/artifact/support/coverage identities, numeric report and truthful residue, assertion-enabled continuous/32-ready-low/32-grant-low runtime, malformed/preservation/semantic/MCP/artifact/verifier/support-accounting gates, generic-first then separate alias cadence, docs/Knowledge Map, resource cap, cleanup, and rollback. Make no parser/generator/public source/support/test/artifact/semantic-MCP API/HDL/runtime/backend/protocol/verification-generation/HIAL-VIAL/VHDL/transaction behavior change in contract selection. Keep counts above four, arbitrary/runtime/policy/random counts, multiple insertion points, local bus-BUSY status, new burst/signal/topology behavior, generic priority, other protocols/backends, HIAL/VIAL activation, VHDL, verification generation, and decision 0020 separate.`
-  Verification: `pending activation after clean .1 audit commit`
-  Commit: `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.2: select exact-four BUSY contract`
+  Verification: `Activated only after clean .1 audit commit 74d91347e. Activation changes task/index/Memory/roadmap/mdBook/HIAL-VIAL/fact continuity state only; the public literal range remains 2..3, generated exact-two/three counters remain width two, no exact-four source/support/test exists, and all parser/generator/report/residue/semantic-MCP/HDL/runtime behavior is unchanged. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map generation/check remains current at 1,033 facts/5,273 keys; mdBook builds 72 files/16,222,993 bytes and its exact repository-local generated tree is removed without residue; Memory is 60 lines; diff and all six doctrine gates pass. Canonical Stats-compatible RAM is 63.1% (15.150/24.000 GiB), kernel pressure is separately 1 (normal), and guard occupancy is excluded as capacity truth. Contract selection remains pending.`
+  Commit: `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.2: activate exact-four BUSY contract`
 
 ## Decisions
 
@@ -87,3 +87,5 @@ AHB requester family.
 - `2026-07-29`: Clean parent selector commit `db0990c9d` activates `.1`.
 - `2026-07-29`: `.1` proves lower-layer/runtime readiness with a 3-bit
   exact-four counter and selects proposed `.2` with minimum-width derivation.
+- `2026-07-29`: Clean audit commit `74d91347e` activates `.2` for public
+  contract selection; no public or generated behavior changes.

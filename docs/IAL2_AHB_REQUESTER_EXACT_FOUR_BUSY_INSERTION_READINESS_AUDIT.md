@@ -24,9 +24,10 @@ counter_width = ceil(log2(busy_beats + 1))
 4 -> width 3
 ```
 
-The audit therefore selects proposed no-behavior contract leaf
-`IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.2`. It does not
-broaden the public range or ship an exact-four source.
+The audit therefore selects no-behavior contract leaf
+`IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.2`. Clean audit
+commit `74d91347e` activates that leaf. Activation does not broaden the public
+range or ship an exact-four source.
 
 ## Public Fail-Closed Boundary
 

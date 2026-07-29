@@ -7624,6 +7624,10 @@ width three. Proposed no-behavior `.2` must freeze the literal-`2..4` contract,
 identities, reports/residue, runtime/semantic/MCP/artifact/support/preservation
 gates, cleanup, and rollback before implementation. See
 `docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_INSERTION_READINESS_AUDIT.md`.
+Clean audit commit `74d91347e` activates only no-behavior contract `.2`.
+Activation changes continuity documentation and no parser, generator, public
+source, support, test, artifact, semantic/MCP API, HDL/runtime, backend,
+protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
