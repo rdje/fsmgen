@@ -29,6 +29,10 @@ The audit therefore selects no-behavior contract leaf
 commit `74d91347e` activates that leaf. Activation does not broaden the public
 range or ship an exact-four source.
 
+Contract `.2` now selects proposed implementation `.3` under the exact public
+boundary recorded in
+`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_CONTRACT_SELECTION.md`.
+
 ## Public Fail-Closed Boundary
 
 A repository-local exact-four candidate copied the 2,313-byte shipped

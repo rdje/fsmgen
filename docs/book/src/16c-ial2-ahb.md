@@ -2179,6 +2179,16 @@ normalizer change. See the
 [readiness audit](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_INSERTION_READINESS_AUDIT.md).
 Clean audit commit `74d91347e` activates only no-behavior contract `.2`;
 activation changes continuity documentation and no public behavior.
+Contract `.2` selects proposed generic implementation `.3`. The future source
+is `ppif/ahb_requester_busy_insert_four.ppif`; normalization accepts only
+literal `2..4`, and integer-loop minimum-width lowering keeps exact two/three
+at width two while exact four uses width three. The selected t1535 fixture owns
+one assertion-enabled binary proving continuous/32-ready-low/32-grant-low
+`4 -> 3 -> 2 -> 1 -> 0` plus strict/schedule/artifact/normalized-semantic/real
+read-only-MCP/outdir/verifier/preservation parity. Projected accounting is
+327 protocol / 368 supported+strict / 51 AHB paths split 26 `.ppif` / 25
+`.ahb`. The matching alias remains separate. See the
+[contract selection](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_CONTRACT_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

@@ -5,17 +5,16 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped `.2` activation commit; predecessor audit
-  `74d91347e`.
-- active_work_unit:
-  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.2`.
+- latest_commit: this task-scoped `.2` contract commit; predecessor activation
+  `ebcc89f0f`.
+- active_work_unit: none until proposed `.3` activates after clean `.2`.
 - current_state: two-window exact-three paired AHB generic/profile sources ship
   at 326 protocol / 367 supported-smoke+strict / 50 AHB paths split 25
   `.ppif`/25 `.ahb`; t1534 proves alias parity and t1533 remains shared
   assertion-enabled 10/8/2/6/2 runtime.
-- next_action: reconcile exact-one/two/three preservation and freeze the
-  literal-`2..4` public contract, minimum unsigned counter width, exact
-  identities, focused gates, rollback, and separate implementation leaf.
+- next_action: after clean `.2`, activate `.3` and implement the generic
+  exact-four source, minimum-width helper use, report/residue/support truth,
+  t1535 runtime, synchronized 327/368/51 docs, and preservation gates.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -34,8 +33,8 @@ bounded current-state pointer. Git preserves its prior history.
   Parent `.822` selects exact-four requester BUSY counter-width readiness.
   Audit `.1` proves a 3-bit disposable counter through exact
   `4->3->2->1->0` continuous/ready-low/grant-low runtime and selects proposed
-  `.2`; public minimum-width derivation must preserve width two for exact
-  two/three while selecting width three for exact four.
+  `.2`; `.2` now selects proposed generic implementation `.3` with public
+  literal `2..4`, minimum counter widths 2/2/3, and projected 327/368/51.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

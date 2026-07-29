@@ -7628,6 +7628,17 @@ Clean audit commit `74d91347e` activates only no-behavior contract `.2`.
 Activation changes continuity documentation and no parser, generator, public
 source, support, test, artifact, semantic/MCP API, HDL/runtime, backend,
 protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior.
+Contract `.2` selects proposed generic implementation `.3`. The source will be
+`ppif/ahb_requester_busy_insert_four.ppif` with exact adjacent identities,
+literal range `2..4`, numeric reports, and a local integer-loop minimum-width
+rule that preserves width two for counts two/three and selects width three for
+four. t1535 owns assertion-enabled continuous/32-ready-low/32-grant-low
+`4 -> 3 -> 2 -> 1 -> 0` runtime plus strict/schedule/artifact/semantic/
+read-only-MCP/verifier/preservation proof. One generic source projects
+327 protocol / 368 supported+strict / 51 AHB paths split 26 `.ppif` / 25
+`.ahb`; the alias and broader BUSY/HIAL-VIAL/VHDL/verification work remain
+separate. See
+`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_CONTRACT_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

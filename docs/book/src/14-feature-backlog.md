@@ -11444,6 +11444,13 @@ uses width three, before selecting any public literal-`2..4` implementation.
 See the [readiness audit](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_INSERTION_READINESS_AUDIT.md).
 Clean audit commit `74d91347e` activates only no-behavior contract `.2`;
 activation changes continuity documentation and no public behavior.
+Contract `.2` selects proposed generic implementation `.3` with exact source/
+support identities, literal range `2..4`, and minimum counter widths 2/2/3 for
+counts two/three/four. t1535 will own assertion-enabled
+`4 -> 3 -> 2 -> 1 -> 0` runtime and strict/schedule/artifact/semantic/read-only-
+MCP/verifier/preservation gates. One generic source projects 327/368/51 split
+26 `.ppif` / 25 `.ahb`; the alias remains separate. See the
+[contract selection](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_CONTRACT_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

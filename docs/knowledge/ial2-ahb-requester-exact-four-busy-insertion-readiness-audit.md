@@ -32,4 +32,5 @@ the minimum unsigned width `ceil(log2(busy_beats + 1))`: literals two and three
 remain width two, while literal four becomes width three. This preserves prior
 generated behavior and avoids a hardcoded family-wide widening. Clean audit
 commit `74d91347e` activates contract leaf `.2` for the next no-behavior
-decision before implementation.
+decision. `.2` now selects proposed generic implementation `.3` with literal
+range `2..4` and preserving minimum-width lowering.
