@@ -33,8 +33,8 @@ subtest 'mdBook current navigation and mode surfaces include aggregate aliases' 
 
     like(
         $navigation,
-        qr/matching selected `\.ahb` profile aliases through exact-two plus the generic exact-three requester, the generic plus matching `\.ahb` one- and two-subordinate exact-two paired sources, aggregate HBURST and aggregate BUSY-park surfaces/,
-        'protocol navigation positively includes generic exact-three, exact-two aliases, both exact-two pairings, and aggregate aliases',
+        qr/matching selected `\.ahb` profile aliases through exact-three, the generic plus matching `\.ahb` one- and two-subordinate exact-two paired sources, aggregate HBURST and aggregate BUSY-park surfaces/,
+        'protocol navigation positively includes exact-three aliases, both exact-two pairings, and aggregate aliases',
     );
     unlike(
         $navigation,
@@ -72,7 +72,7 @@ subtest 'mdBook current navigation and mode surfaces include aggregate aliases' 
     );
 };
 
-subtest 'current AHB surfaces include exact-two aliases and the generic exact-three requester' => sub {
+subtest 'current AHB surfaces include exact-two and exact-three requester aliases' => sub {
     ok(
         -f repo_file('ppif/ahb_requester_busy_insert_two.ppif'),
         'generic exact-two requester source exists',
@@ -85,6 +85,10 @@ subtest 'current AHB surfaces include exact-two aliases and the generic exact-th
         -f repo_file('ppif/ahb_requester_busy_insert_three.ppif'),
         'generic exact-three requester source exists',
     );
+    ok(
+        -f repo_file('ppif/ahb_requester_busy_insert_three.ahb'),
+        'exact-three requester profile alias exists',
+    );
 
     my $protocol_chapter = slurp('docs/book/src/16-ial2-protocol-platform-intent.md');
     my $navigation = section_between(
@@ -94,8 +98,8 @@ subtest 'current AHB surfaces include exact-two aliases and the generic exact-th
     );
     like(
         $navigation,
-        qr/exact-one and exact-two BUSY insertion across generic `\.ppif` and matching `\.ahb` requester surfaces, generic exact-three BUSY insertion/,
-        'protocol navigation includes exact-two aliases and generic exact-three requester',
+        qr/exact-one, exact-two, and exact-three BUSY insertion across generic `\.ppif` and matching `\.ahb` requester surfaces/,
+        'protocol navigation includes exact-two and exact-three aliases',
     );
     unlike(
         $navigation,
@@ -104,10 +108,11 @@ subtest 'current AHB surfaces include exact-two aliases and the generic exact-th
     );
 
     my $ahb_chapter = slurp('docs/book/src/16c-ial2-ahb.md');
-    like($ahb_chapter, qr/FSMGen ships forty-five public bounded AHB IAL2 entrypoints today/, 'AHB chapter records the 45-path inventory');
+    like($ahb_chapter, qr/FSMGen ships forty-six public bounded AHB IAL2 entrypoints today/, 'AHB chapter records the 46-path inventory');
     like($ahb_chapter, qr/ppif\/ahb_requester_busy_insert_two\.ppif/, 'AHB chapter lists the exact-two source');
     like($ahb_chapter, qr/ppif\/ahb_requester_busy_insert_two\.ahb/, 'AHB chapter lists the exact-two profile alias');
     like($ahb_chapter, qr/ppif\/ahb_requester_busy_insert_three\.ppif/, 'AHB chapter lists the exact-three generic source');
+    like($ahb_chapter, qr/ppif\/ahb_requester_busy_insert_three\.ahb/, 'AHB chapter lists the exact-three profile alias');
     like(
         $ahb_chapter,
         qr/ppif\/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park\.ppif/,
@@ -135,7 +140,7 @@ subtest 'current AHB surfaces include exact-two aliases and the generic exact-th
         qr/\.3` shipped that source at 317 protocol \/ 358\s+supported\+strict \/ 41 AHB paths/s,
         'AHB chapter preserves the shipped generic exact-two paired checkpoint',
     );
-    like($ahb_chapter, qr/Current support accounting is 321 protocol fixtures, 362 supported-smoke plus\s+strict fixtures, and 45 AHB paths split 23 `\.ppif` \/ 22 `\.ahb`/s, 'AHB chapter records current exact-three accounting');
+    like($ahb_chapter, qr/Current support accounting is 322 protocol fixtures, 363 supported-smoke plus\s+strict fixtures, and 46 AHB paths split 23 `\.ppif` \/ 23 `\.ahb`/s, 'AHB chapter records current exact-three accounting');
     unlike($ahb_chapter, qr/The next extension is selected but \*\*not yet shipped\*\*/, 'AHB requester guide removes stale pre-implementation wording');
     unlike(
         $ahb_chapter,
@@ -145,7 +150,7 @@ subtest 'current AHB surfaces include exact-two aliases and the generic exact-th
 
     my $behavior = slurp('docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_BEHAVIOR.md');
     like($behavior, qr/Focused `t\/1521.*?keeps generated selector\s+assertions enabled/s, 'canonical behavior records the exact-two runtime proof');
-    like($behavior, qr/current accounting to 321\/362 and 45 AHB\s+paths/s, 'canonical exact-two behavior points at current accounting');
+    like($behavior, qr/current accounting to 322\/363 and 46 AHB\s+paths/s, 'canonical exact-two behavior points at current accounting');
     like($behavior, qr/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR/, 'canonical behavior links the shipped exact-two alias owner');
 
     my $exact_one_behavior = slurp('docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md');
@@ -156,18 +161,22 @@ subtest 'current AHB surfaces include exact-two aliases and the generic exact-th
     unlike($exact_one_fact, qr/[Cc]ounts beyond exact two/, 'canonical exact-one fact does not retain the stale exact-two ceiling');
 
     my $exact_two_alias_behavior = slurp('docs/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md');
-    like($exact_two_alias_behavior, qr/exact-three requester now moves current totals to 321\/362 and 45 AHB paths/s, 'canonical exact-two alias behavior points at current accounting');
+    like($exact_two_alias_behavior, qr/matching exact-three alias\s+now moves current totals to 322\/363 and 46 AHB paths/s, 'canonical exact-two alias behavior points at current accounting');
     unlike($exact_two_alias_behavior, qr/counts beyond one\/two/, 'canonical exact-two alias behavior does not retain the stale exact-two ceiling');
 
     my $two_subordinate_behavior = slurp('docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md');
     like($two_subordinate_behavior, qr/Focused `t\/1525.*?real MCP call/s, 'two-subordinate behavior records focused semantic/MCP and runtime proof');
-    like($two_subordinate_behavior, qr/generic exact-three requester\s+moves\s+current accounting to\s+321\/362\/45/s, 'two-subordinate behavior points at current accounting');
+    like($two_subordinate_behavior, qr/exact-three requester alias\s+moves\s+current accounting to\s+322\/363\/46/s, 'two-subordinate behavior points at current accounting');
     like($two_subordinate_behavior, qr/t\/1526.*?read-only.*?MCP/s, 'two-subordinate behavior records focused alias semantic/MCP parity');
 
     my $exact_three_behavior = slurp('docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md');
     like($exact_three_behavior, qr/width-two.*?`3 -> 2 -> 1 -> 0`/s, 'exact-three behavior records unchanged lowering and direct counter proof');
-    like($exact_three_behavior, qr/321 protocol\s+fixtures, 362 supported-smoke plus strict fixtures, and 45 AHB IAL2 paths/s, 'exact-three behavior records current accounting');
+    like($exact_three_behavior, qr/322 protocol fixtures, 363 supported-smoke\s+plus strict fixtures, and 46 AHB IAL2 paths/s, 'exact-three behavior records current accounting');
     like($exact_three_behavior, qr/read_only\s*=\s*true.*?shell_access\s*=\s*false/s, 'exact-three behavior records read-only MCP parity');
+    like($exact_three_behavior, qr/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR/, 'exact-three generic behavior links the shipped alias owner');
+    my $exact_three_alias_behavior = slurp('docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md');
+    like($exact_three_alias_behavior, qr/Focused t\/1529.*?real read-only MCP/s, 'exact-three alias behavior records focused semantic/MCP parity');
+    like($exact_three_alias_behavior, qr/322 protocol fixtures.*?46 AHB IAL2 paths/s, 'exact-three alias behavior records current accounting');
 };
 
 subtest 'canonical current behavior records point to later alias owners' => sub {

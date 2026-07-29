@@ -147,10 +147,10 @@ ready-low, and 32-clock grant-low generated HDL, with strict/schedule/artifact/
 normalized-semantic/read-only MCP parity and no lower-layer repair. Proposed
 `.2` selected `.3`, which now ships the additive generic exact-three requester
 with bounded literals `2..3`, unchanged width-two lowering, direct runtime and
-semantic/MCP proof, and current 321/362/45 accounting. Completed `.4` selects
-active `.5`, the matching byte-identical `.ahb` alias implementation,
-projected at 322/363/46 split 23/23 with focused t1529 parity and t1528 retained
-as the sole shared runtime. No alias or behavior changes in `.4`.
+semantic/MCP proof, and the 321/362/45 generic checkpoint. Completed `.4`
+selected `.5`, which now ships the matching byte-identical `.ahb` alias at
+322/363/46 split 23/23 with focused t1529 parity and t1528 retained as the sole
+shared runtime. Pending parent `.813` owns the next post-alias selection.
 Decision 0020 remains proposed/inactive.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.215` selected `.216` after `.214` shipped

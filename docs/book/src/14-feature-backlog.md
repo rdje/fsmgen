@@ -11102,7 +11102,7 @@ with direct `3 -> 2 -> 1 -> 0` observation, one BUSY episode, three qualified
 events, one resumed `SEQ`, four data beats, stable pending ownership, and zero
 final count; t1521 now directly locks exact-two `2 -> 1 -> 0`. Strict,
 schedule, artifact, verifier, normalized semantic JSON, and real read-only MCP
-parity pass. Current accounting is 321/362/45 split 23 `.ppif`/22 `.ahb`.
+parity pass. The generic checkpoint is 321/362/45 split 23 `.ppif`/22 `.ahb`.
 Leaf `.4` now selects active `.5`, data-only implementation of the matching
 byte-identical exact-three `.ahb` alias. Existing suffix handling preserves
 numeric `beats=3`, exact IAL1/IAL0/HDL, and normalized semantic/read-only MCP
@@ -11112,8 +11112,16 @@ a second runtime, and t1528 remains shared. No alias ships from `.4`. See the
 [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md)
 and the
 [selected alias contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md).
-Activation after clean selector commit `b7c62d2b6` changes only the live
-frontier; the alias and projected accounting remain unshipped until `.5` closes.
+At activation after clean selector commit `b7c62d2b6`, the alias and projected
+accounting remained unshipped; the `.5` outcome follows.
+Leaf `.5` now ships the byte-identical alias at
+`ppif/ahb_requester_busy_insert_three.ahb`. Existing suffix handling removes
+only profile-alias residue while preserving numeric `beats=3`, exact artifacts,
+HDL, and normalized semantic/read-only MCP behavior. Focused t1529 passes four
+top-level subtests/72 nested assertions without a second simulation; t1528
+remains the shared runtime proof. Current accounting is 322/363/46 split 23/23.
+See the
+[shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

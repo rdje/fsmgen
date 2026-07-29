@@ -32,6 +32,7 @@ and numeric `busy_insertion.beats=3`, removing only
 The implementation must prove the alias through strict check, semantic JSON,
 and the existing read-only MCP `fsmgen_semantic_introspect` tool without an
 alias-specific API path. Focused t/1529 will own source/report/artifact/API
-parity; assertion-enabled t/1528 remains the sole shared runtime proof. The
-alias does not ship in selector `.4`; active `.5` owns its implementation after
-clean selector commit `b7c62d2b6`.
+parity; assertion-enabled t/1528 remains the sole shared runtime proof. `.5`
+now ships the selected alias; fact
+`ial2-ahb-requester-exact-three-busy-event-profile-alias-behavior` owns the
+current implementation result.

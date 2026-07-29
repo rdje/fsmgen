@@ -30,7 +30,8 @@ resumed `SEQ` events, eight data beats, and final status/control storage
 
 That alias shipment checkpoint is 320 protocol / 361 supported+strict / 44 AHB
 paths split 22 `.ppif` and 22 `.ahb`; the later generic exact-three requester
-moves current accounting to 321/362/45 split 23/22. Deep semantic
+established 321/362/45 and its alias moves current accounting to 322/363/46
+split 23/23. Deep semantic
 introspection is an ongoing
 language-wide capability: each new support-accounted semantic feature must
 preserve check, schedule, normalized semantic JSON, and stable read-only MCP

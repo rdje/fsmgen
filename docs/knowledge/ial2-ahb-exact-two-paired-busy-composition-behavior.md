@@ -32,7 +32,7 @@ the real read-only `fsmgen_semantic_introspect` MCP adapter with shell access
 disabled. No feature-specific MCP API or raw private payload was added. The
 generic checkpoint was 317 protocol / 358 supported+strict / 41 AHB paths.
 Follow-on `.5` shipped the matching alias at 318/359/42. The later
-two-subordinate exact-two source/alias checkpoints reached 320/361/44, and the
-additive generic exact-three requester now moves current accounting to
-321/362/45 split 23 `.ppif` / 22 `.ahb`. See
+two-subordinate exact-two source/alias checkpoints reached 320/361/44. The
+additive generic exact-three requester established 321/362/45, and its alias
+now moves current accounting to 322/363/46 split 23 `.ppif` / 23 `.ahb`. See
 `IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR`.

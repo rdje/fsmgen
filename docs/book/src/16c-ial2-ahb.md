@@ -1,6 +1,6 @@
 # AHB IAL2 Current Boundary
 
-FSMGen ships forty-five public bounded AHB IAL2 entrypoints today:
+FSMGen ships forty-six public bounded AHB IAL2 entrypoints today:
 
 ```text
 ppif/ahb_requester.ppif
@@ -29,6 +29,7 @@ ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst
 ppif/ahb_requester.ahb
 ppif/ahb_requester_busy_insert.ahb
 ppif/ahb_requester_busy_insert_two.ahb
+ppif/ahb_requester_busy_insert_three.ahb
 ppif/ahb_lite_subordinate.ahb
 ppif/ahb_lite_subordinate_byte_lane.ahb
 ppif/ahb_lite_subordinate_byte_lane_seq.ahb
@@ -51,7 +52,7 @@ ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst
 ```
 
 The `.ppif` sources are generic Protocol/Platform Intent files. They cover the
-bounded AHB requester, its exact-one, exact-two, and generic exact-three
+bounded AHB requester, its exact-one, exact-two, and exact-three generic plus alias
 requester BUSY-insertion variants, the bounded word-only AHB-Lite/common-AHB subordinate,
 the bounded AHB-Lite/common-AHB byte-lane/narrow-transfer subordinate, the
 bounded AHB-Lite/common-AHB byte-lane in-word `SEQ` subordinate, and the
@@ -95,6 +96,7 @@ ppif/ahb_requester_busy_insert_three.ppif -> amba_requester_busy_insert_three.is
 ppif/ahb_requester.ahb           -> amba_requester.isf -> amba_requester.fsm -> HDL module amba_requester
 ppif/ahb_requester_busy_insert.ahb -> amba_requester_busy_insert.isf -> amba_requester_busy_insert.fsm -> HDL module amba_requester_busy_insert
 ppif/ahb_requester_busy_insert_two.ahb -> amba_requester_busy_insert_two.isf -> amba_requester_busy_insert_two.fsm -> HDL module amba_requester_busy_insert_two
+ppif/ahb_requester_busy_insert_three.ahb -> amba_requester_busy_insert_three.isf -> amba_requester_busy_insert_three.fsm -> HDL module amba_requester_busy_insert_three
 ppif/ahb_lite_subordinate.ppif   -> ahb_lite_subordinate.isf -> ahb_lite_subordinate.fsm -> HDL module ahb_lite_subordinate
 ppif/ahb_lite_subordinate_byte_lane.ppif -> ahb_lite_subordinate_byte_lane.isf -> ahb_lite_subordinate_byte_lane.fsm -> HDL module ahb_lite_subordinate_byte_lane
 ppif/ahb_lite_subordinate_byte_lane_seq.ppif -> ahb_lite_subordinate_byte_lane_seq.isf -> ahb_lite_subordinate_byte_lane_seq.fsm -> HDL module ahb_lite_subordinate_byte_lane_seq
@@ -153,7 +155,7 @@ states, without a pending bank/relaunch. See the direct-seed section below.
 
 | Mode | Current source | Boundary |
 | --- | --- | --- |
-| Guided mode | The forty-five public AHB sources listed above, including generic exact-three and generic plus matching `.ahb` exact-two requesters, paired exact-one one- and two-subordinate `.ppif`/`.ahb` source pairs, and the generic plus matching `.ahb` exact-two one- and two-subordinate paired sources | Bounded requester/subordinate/interconnect sources, exact-one, exact-two, and generic exact-three requester BUSY insertion, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, paired exact-one BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows, and generic plus alias exact-two pairings across one or two windows. |
+| Guided mode | The forty-six public AHB sources listed above, including generic plus matching `.ahb` exact-one/exact-two/exact-three requesters, paired exact-one one- and two-subordinate `.ppif`/`.ahb` source pairs, and the generic plus matching `.ahb` exact-two one- and two-subordinate paired sources | Bounded requester/subordinate/interconnect sources, exact-one, exact-two, and exact-three requester BUSY insertion across generic and alias surfaces, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, paired exact-one BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows, and generic plus alias exact-two pairings across one or two windows. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs cover selected byte/halfword/word lanes, in-word `SEQ`, HBURST `WRAP4`/`INCR4`, and BUSY parking. The selected generic and matching `.ahb` aggregate HBURST-aware byte-lane `SEQ` sources include non-parking and BUSY-park variants, plus paired BUSY-inserting-requester compositions across one or two static windows. Interconnect knobs are exposed as `children`, static `address-map` windows, `decode`, and `wiring` clauses. |
 | Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, and retained one-hot interconnect data ownership. The separate direct subordinate seed now retains completion-edge active NONSEQ/SEQ through Q-named `<-` loads in its existing four states, without pending/relaunch. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, BUSY counts beyond three, policy/runtime BUSY insertion, distinct bus-BUSY status, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
@@ -1367,8 +1369,9 @@ next checkpoint to forty-one paths, and its alias now moves the current
 inventory to forty-two paths; the generic two-subordinate exact-two source
 established forty-three paths, and its matching alias now moves the current
 inventory to forty-four paths: twenty-two `.ppif` and twenty-two `.ahb`. The
-generic exact-three requester now moves the current inventory to forty-five
-paths: twenty-three `.ppif` and twenty-two `.ahb`.
+generic exact-three requester established forty-five paths. Its matching alias
+now moves the current inventory to forty-six paths: twenty-three `.ppif` and
+twenty-three `.ahb`.
 See the
 [selected alias contract](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md)
 and [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
@@ -1415,22 +1418,20 @@ final count. Strict, schedule, exact artifacts, verifier, normalized semantic
 JSON, and real read-only shell-disabled MCP parity also pass. Strengthened
 t/1521 directly retains exact-two `2 -> 1 -> 0` proof.
 
-Current support accounting is 321 protocol fixtures, 362 supported-smoke plus
-strict fixtures, and 45 AHB paths split 23 `.ppif` / 22 `.ahb`. The matching
-exact-three `.ahb` alias remains a separate follow-on: completed `.4` selects
-active `.5` to add a byte-identical alias through existing suffix handling.
-The future alias will use support ID
+Current support accounting is 322 protocol fixtures, 363 supported-smoke plus
+strict fixtures, and 46 AHB paths split 23 `.ppif` / 23 `.ahb`. The matching
+exact-three `.ahb` alias now ships byte-identically through existing suffix
+handling. It uses support ID
 `intent.ahb_profile_alias_requester_busy_insert_three`, source kind
 `ial2_profile_alias`, the same `amba_requester_busy_insert_three` artifacts and
-HDL module, numeric `beats=3`, and semantic root `fsm`; projected accounting is
-322/363/46 split 23 `.ppif`/23 `.ahb`. Focused t1529 will prove parity without
-a second runtime, and t1528 remains shared. No alias ships from `.4`. See the
+HDL module, numeric `beats=3`, and semantic root `fsm`. Focused t1529 proves
+parity without a second runtime, and t1528 remains shared. See the
 [contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_CONTRACT_SELECTION.md)
 and [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md),
 plus the
 [selected alias contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md).
-Activation after clean selector commit `b7c62d2b6` changes only frontier state;
-the current inventory remains 45 paths until `.5` ships.
+See also the
+[shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.789` selected `.790`, which now ships the
 matching `ppif/ahb_requester_busy_insert.ahb` profile alias. It mirrors the
@@ -2086,8 +2087,9 @@ read-only MCP adapter, HDL verification, and one status/control runtime:
 two commands, four qualified BUSY events, two resumed `SEQ` events, eight data
 beats, and final `44332211`/`88776655` storage. The generic checkpoint was
 319/360/43. Its matching alias established 320/361/44, split twenty-two generic
-`.ppif` and twenty-two `.ahb`; the later generic exact-three requester moves
-current support accounting to 321/362/45 split 23/22. See the
+`.ppif` and twenty-two `.ahb`; the later generic exact-three requester
+established 321/362/45 split 23/22, and its alias now moves current support
+accounting to 322/363/46 split 23/23. See the
 [selected contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md)
 and [shipped behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 
@@ -2158,16 +2160,16 @@ selected `.3`, a generic-first additive source that now ships. Absence of
 multiple-event forms, with 0/1/4+/non-literals rejected. The exact-three
 source reports numeric `beats=3` and reuses the existing width-two counter,
 qualified retirement rules, checker priorities, and pending `SEQ` handoff
-unchanged. Its current checkpoint is 321 protocol / 362 supported+strict /
+unchanged. Its generic checkpoint was 321 protocol / 362 supported+strict /
 45 AHB paths split 23 `.ppif`/22 `.ahb`. Focused t1528 directly observes
 `3 -> 2 -> 1 -> 0` through continuous, 32-clock ready-low, and 32-clock
 grant-low runtime; t1521 directly locks exact-two `2 -> 1 -> 0`. The
-matching exact-three `.ahb` alias does not yet ship. Completed `.4` selects
-active `.5`, a byte-identical data-only alias implementation with exact
-support identity, numeric `beats=3`, existing suffix-only residue cleanup,
-normalized semantic/read-only MCP parity, projected 322/363/46 accounting, and
-t1528 retained as the sole runtime proof. See the
-[selected alias contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md).
+matching exact-three `.ahb` alias now ships through `.5` at current 322/363/46
+split 23/23. Focused t1529 proves exact support, numeric `beats=3`, existing
+suffix-only residue cleanup, artifacts, normalized semantic/read-only MCP, and
+verifier parity without a second simulation; t1528 remains the sole runtime
+proof. See the
+[shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that

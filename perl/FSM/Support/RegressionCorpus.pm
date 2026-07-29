@@ -361,6 +361,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ahb_profile_alias_requester_busy_insert_three',
+        relpath => 'ppif/ahb_requester_busy_insert_three.ahb',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ahb_profile_alias_requester_busy_insert_three_pipeline_cli',
+        source_kind => 'ial2_profile_alias',
+        strict_supported => 1,
+        expected_module_name => 'amba_requester_busy_insert_three',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ahb_profile_alias_subordinate',
         relpath => 'ppif/ahb_lite_subordinate.ahb',
         family => 'protocol_fixture',

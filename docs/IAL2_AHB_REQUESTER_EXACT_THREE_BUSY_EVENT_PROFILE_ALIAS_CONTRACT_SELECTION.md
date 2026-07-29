@@ -181,3 +181,14 @@ Rollback of `.4` is documentation-only: remove this record and its fact card,
 restore `.4` to active selection, remove pending `.5`, and revert current
 README/roadmap/mdBook/task/Memory pointers. No runtime or public source behavior
 is affected.
+
+## Implementation Outcome
+
+`.5` now ships the selected byte-identical alias at
+`ppif/ahb_requester_busy_insert_three.ahb`, support-accounted as
+`intent.ahb_profile_alias_requester_busy_insert_three`. Focused t/1529 proves
+byte/parse/report/check/schedule/semantic/artifact/HDL-verifier/diagnostic
+parity and a real read-only shell-disabled `fsmgen_semantic_introspect` call;
+t/1528 remains the sole shared assertion-enabled runtime proof. Canonical
+current behavior is
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.

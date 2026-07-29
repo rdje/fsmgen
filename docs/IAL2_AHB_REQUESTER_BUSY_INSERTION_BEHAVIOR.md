@@ -188,8 +188,8 @@ requester/subordinate families now ship. Exact-two ships as the generic
 requester, its matching `.ahb` requester alias, and the first generic
 one-subordinate paired composition. The matching exact-two paired aggregate
 alias and the generic plus alias two-subordinate exact-two siblings now ship.
-The generic exact-three requester also ships. Its matching `.ahb` alias,
-exact-three paired compositions, counts above three, policy/runtime/random
+The generic exact-three requester and its matching `.ahb` alias also ship.
+Exact-three paired compositions, counts above three, policy/runtime/random
 throttling, multiple or runtime-selected insertion points, distinct
 `local-status.bus_busy`,
 halfword/word burst `SEQ`, wider/indefinite bursts, multi-word/register-bank

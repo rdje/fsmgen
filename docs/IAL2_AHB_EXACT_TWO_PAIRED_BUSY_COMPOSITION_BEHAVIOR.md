@@ -136,8 +136,8 @@ Follow-on `.4` selected and `.5` now ships the matching exact-two paired `.ahb`
 alias. Follow-on `.8` and `.811` now also ship the generic plus matching `.ahb`
 two-subordinate exact-two pairing, establishing 320/361/44; see
 `IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
-The later generic exact-three requester moves current accounting to
-321/362/45. Exact-three paired compositions, counts above three, multiple
+The later generic exact-three requester plus alias move current accounting to
+322/363/46. Exact-three paired compositions, counts above three, multiple
 insertion points, runtime-selected count/point, policy/random throttling,
 distinct local bus-BUSY status,
 halfword/word or wider/indefinite burst expansion, broader optional AHB

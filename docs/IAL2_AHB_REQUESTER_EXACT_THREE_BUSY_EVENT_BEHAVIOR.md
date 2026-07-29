@@ -33,9 +33,14 @@ source kind:     ppif
 semantic root:   fsm
 ```
 
-The matching `.ahb` alias is not shipped by this slice. Completed `.4` selects
-its byte-identical contract, and active `.5` separately owns implementation
-after clean selector commit `b7c62d2b6`.
+The matching byte-identical `.ahb` alias now also ships through completed `.5`:
+
+```text
+ppif/ahb_requester_busy_insert_three.ahb
+```
+
+Canonical alias behavior is documented in
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.
 
 ## Public Count Boundary
 
@@ -99,9 +104,10 @@ events ship, and all three defer only counts above three plus generalized
 policy/runtime/random and multiple-point insertion. Existing `.ahb` suffix
 cleanup remains unchanged.
 
-One generic support entry moves the current checkpoint to 321 protocol
-fixtures, 362 supported-smoke plus strict fixtures, and 45 AHB IAL2 paths:
-23 generic `.ppif` sources and 22 `.ahb` aliases.
+The generic source established the 321/362/45 checkpoint. The matching alias
+now moves current accounting to 322 protocol fixtures, 363 supported-smoke
+plus strict fixtures, and 46 AHB IAL2 paths: 23 generic `.ppif` sources and 23
+`.ahb` aliases.
 
 ## Generated-HDL Proof
 
@@ -133,6 +139,7 @@ unchanged RAM guard:
 | --- | --- | ---: |
 | t1498 + t1521 | exact-one plus strengthened assertion-enabled exact-two runtime; 10 top-level subtests | 62 s |
 | t1528 | exact-three source/runtime/semantic/MCP contract; 5 top-level subtests, 87 nested assertions | 48 s |
+| t1529 | exact-three alias report/artifact/semantic/MCP/verifier/diagnostic parity; 4 top-level subtests, 72 nested assertions; no second runtime | 53 s |
 | t1512 | exact-one requester `.ahb` alias parity; 4 top-level subtests | 24 s |
 | t1522 | exact-two requester `.ahb` alias parity; 4 top-level subtests | 47 s |
 | t1523 | one-subordinate generic exact-two paired runtime/parity; 4 top-level subtests | 327 s |
@@ -140,10 +147,11 @@ unchanged RAM guard:
 | t1525 | two-subordinate generic exact-two paired runtime/parity; 3 top-level subtests | 603 s |
 | t1526 | matching two-subordinate exact-two alias parity; 4 top-level subtests | 722 s |
 
-t248 plus t297 pass 6,899 accounting/capability assertions. Strengthened t1518
+t248 plus t297 pass 6,911 assertions over the updated accounting/capability
+boundary. Strengthened t1518
 passes five top-level subtests and locks exact-one, exact-two, exact-three,
 paired, alias, mdBook, and Knowledge Map fact truth against stale exact-two
-ceilings or pre-321 accounting.
+ceilings or pre-322 accounting.
 
 Two t1526 attempts were safely stopped by the guard when an unrelated `pgen`
 compiler pushed host memory above the 88% cutoff. The complete 722-second rerun
@@ -175,14 +183,14 @@ scripts/run_with_ram_guard.sh -- ./bin/fsmgen --quiet --strict --check --json pp
 scripts/run_with_ram_guard.sh -- ./bin/fsmgen --quiet --emit-schedule-json ppif/ahb_requester_busy_insert_three.ppif
 scripts/run_with_ram_guard.sh -- ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/ahb_requester_busy_insert_three.ppif
 scripts/run_with_ram_guard.sh -- ./bin/fsmgen --quiet --strict --verify-hdl ppif/ahb_requester_busy_insert_three.ppif
+scripts/run_with_ram_guard.sh -- ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester_busy_insert_three.ahb
 ```
 
 Generated outputs should use a repository-derived same-volume path.
 
 ## Explicit Deferrals
 
-Completed `.4` owns the selected matching exact-three `.ahb` alias contract;
-active `.5` owns the alias itself. Counts above three and generalized counter width,
+The matching exact-three `.ahb` alias now ships. Counts above three and generalized counter width,
 runtime/policy/random count selection, multiple insertion points,
 distinct local bus-BUSY status, exact-three paired compositions, broader
 bursts/signals/managers/fabrics, selector repairs, AXI/APB/VHDL, and decision

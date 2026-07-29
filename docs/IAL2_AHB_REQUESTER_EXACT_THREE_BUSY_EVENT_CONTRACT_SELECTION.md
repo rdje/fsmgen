@@ -225,3 +225,11 @@ Knowledge Map pointers. There is no behavior to revert. After `.3`, rollback
 must remove the exact-three generic source/support/test entries, restore the
 literal-two diagnostic and exact-one/two residue, restore 320/361/44
 accounting, and rerun the full preservation boundary.
+
+## Implementation Outcome
+
+`.3` ships the selected generic source, `.4` selected the byte-identical
+profile alias, and `.5` now ships that alias at
+`ppif/ahb_requester_busy_insert_three.ahb`. Current exact-three behavior is
+documented by `docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md` and
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.

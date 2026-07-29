@@ -74,8 +74,9 @@ HDL module:      ahb_tb
 At shipment this additive alias established 320 protocol fixtures, 361
 supported-smoke plus strict fixtures, and 44 AHB IAL2 paths, evenly split
 between twenty-two `.ppif` sources and twenty-two `.ahb` aliases. The later
-generic exact-three requester moves current accounting to 321/362/45, split
-23 `.ppif` sources and 22 `.ahb` aliases.
+generic exact-three requester established 321/362/45; its matching alias moves
+current accounting to 322/363/46, split 23 `.ppif` sources and 23 `.ahb`
+aliases.
 
 Strict check, schedule JSON, normalized semantic JSON, and the real read-only
 `fsmgen_semantic_introspect` MCP tool expose the same support identity, module,

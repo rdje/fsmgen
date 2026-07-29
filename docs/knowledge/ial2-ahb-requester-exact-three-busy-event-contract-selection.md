@@ -28,11 +28,11 @@ The first additive source is
 actor-owned counter and qualified non-final/final rules unchanged; the audit
 already proves internal `3 -> 2 -> 1 -> 0` retirement across continuous,
 ready-low, and grant-low runtime. Numeric report `beats=3`, truthful exact-one/
-two/three residue, normalized semantic/read-only MCP parity, and
-321/362/45 accounting split 23 generic `.ppif` / 22 `.ahb` now ship.
+two/three residue, normalized semantic/read-only MCP parity, and the
+321/362/45 generic checkpoint split 23 `.ppif` / 22 `.ahb` now ship.
 
 `.3` now implements the contract with t1528 and strengthened direct t1521
-counter observation. Completed `.4` separately selects the matching exact-three
-`.ahb` alias contract; active `.5` owns implementation. The alias itself, counts above
-three, generalized width/policy/points/status, compositions, broader AHB,
+counter observation. Completed `.4` separately selected the matching exact-three
+`.ahb` alias contract, and `.5` now ships it with focused t1529 parity plus
+shared t1528 runtime. Counts above three, generalized width/policy/points/status, compositions, broader AHB,
 AXI/APB/VHDL, and decision 0020 remain separate.

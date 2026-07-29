@@ -120,11 +120,11 @@ the bounded public contract recorded in
   behavior change.
 
 Leaf `.3` now ships the additive generic implementation at 321/362/45 split
-23 `.ppif` / 22 `.ahb`. Completed `.4` selects active `.5`, implementation
-of the matching byte-identical `.ahb` alias contract, projected at 322/363/46
-split 23/23 with t1528 retained as shared runtime. See
+23 `.ppif` / 22 `.ahb`. Completed `.4` selected `.5`, which now ships the
+matching byte-identical `.ahb` alias at 322/363/46 split 23/23; focused t1529
+proves parity without a second simulation and t1528 remains shared. See
 `docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md` and
-`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md`.
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.
 
 ## Non-Selections
 

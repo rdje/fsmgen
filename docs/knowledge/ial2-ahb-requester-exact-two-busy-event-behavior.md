@@ -38,5 +38,6 @@ established the 317 protocol / 358 supported+strict / 41 AHB-path checkpoint.
 Its matching aggregate alias now ships too. The generic two-subordinate
 exact-two sibling and its matching `.ahb` alias also ship with shared runtime
 and semantic/MCP proof established 320/361/44. The additive generic exact-three
-requester now moves current accounting to 321/362/45 split 23 `.ppif` / 22
-`.ahb`; exact-two behavior and identity remain unchanged.
+requester established 321/362/45; its matching alias now moves current
+accounting to 322/363/46 split 23 `.ppif` / 23 `.ahb`. Exact-two behavior and
+identity remain unchanged.

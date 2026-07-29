@@ -36,7 +36,8 @@ remains the shared two-window generated-HDL runtime proof.
 
 This alias established 320 protocol / 361 supported+strict / 44 AHB paths,
 split twenty-two `.ppif` and twenty-two `.ahb`. The later generic exact-three
-requester moves current accounting to 321/362/45 split 23/22. New
+requester established 321/362/45 and its alias moves current accounting to
+322/363/46 split 23/23. New
 support-accounted semantics continue to extend one normalized semantic surface
 and preserve read-only MCP parity; no feature-specific MCP route or private
 payload is added.

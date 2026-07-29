@@ -27,7 +27,8 @@ and real read-only shell-disabled `fsmgen_semantic_introspect` also passed.
 Exact-one, exact-two, base, and malformed boundaries remained distinct. The
 audit selected `.2`, which froze bounded literals `2..3`, the generic
 exact-three source contract, and unchanged width-two lowering. `.3` now ships
-that generic source at 321/362/45; the audit/selector themselves shipped no
-behavior. Counts above three, generalized
+that generic source at 321/362/45; `.4`/`.5` later select and ship the matching
+byte-identical alias at current 322/363/46 split 23/23, with t1529 parity and
+t1528 shared runtime. Counts above three, generalized
 policy/points/status/bursts/signals,
 compositions, interconnect repairs, and decision 0020 remain separate.
