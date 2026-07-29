@@ -11344,7 +11344,7 @@ generation remain separate. See the
 [behavior record](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 
 Clean behavior commit `00d71114d` activates only parent selector `.817` from
-the 323/364/47 handoff. It now selects pending `.818`, the byte-identical
+the 323/364/47 handoff. It now selects `.818`, the byte-identical
 exact-three paired `.ahb` profile alias. A same-volume candidate proves strict,
 exact-artifact, schedule, residue, and normalized-semantic readiness through
 existing machinery; projected accounting is 324/365/48 split 24/24. t1532
@@ -11354,6 +11354,8 @@ broader HIAL/VIAL audit. HIAL/VIAL stays proposed with event-capable compiled
 Verilator separated from authoritative full-language/SystemVerilog-UVM
 simulation and with VHDL/mixed-language claims qualified independently. See
 the [selection record](../../IAL2_POST_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
+Clean selector commit `c70fe528f` activates only `.818`; the alias, support
+entry, t1532, and projected accounting remain unshipped during activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

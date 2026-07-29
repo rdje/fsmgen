@@ -127,9 +127,9 @@ events, one resumed `SEQ`, and final storage `44332211`.
 
 ## Explicit Deferrals
 
-Parent selector `.817` now selects pending `.818` for the matching
-byte-identical `.ahb` alias; it remains unshipped until that separate leaf
-activates and passes. The two-subordinate exact-three pairing remains a
+Parent selector `.817` selects `.818` for the matching byte-identical `.ahb`
+alias. Clean selector commit `c70fe528f` activates that leaf, but the alias
+remains unshipped until implementation passes. The two-subordinate pairing remains a
 separate future owner. Counts above three, generalized counter width,
 multiple insertion points, runtime-selected or policy/random throttling,
 distinct local bus-BUSY status, broader bursts/signals/managers/fabrics,

@@ -29,5 +29,5 @@ generator algorithm, report API, or feature-specific MCP route was added.
 
 Current accounting is 323 protocol fixtures, 364 supported-smoke/strict
 fixtures, and 47 AHB IAL2 paths split 24 `.ppif` / 23 `.ahb`. The matching
-alias is selected but unshipped under pending parent leaf `.818`; the
+alias is selected and active but unshipped under parent leaf `.818`; the
 two-subordinate exact-three composition remains separately owned.

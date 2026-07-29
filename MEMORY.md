@@ -5,15 +5,16 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped selector commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.817: select exact-three paired AHB alias`;
-  predecessor activation `ce6313f61`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.818` (pending activation).
+- latest_commit: this task-scoped activation commit,
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.818: activate exact-three paired AHB alias`;
+  predecessor selector `c70fe528f`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.818` (implementation).
 - current_state: exact-three paired child `.1`-.3 is complete at 323/364/47;
-  `.817` selects `.818`, the byte-identical exact-three paired `.ahb` alias at
-  projected 324/365/48 split 24/24; the selector changes no behavior.
-- next_action: after this selector commits cleanly, activate `.818` before
-  adding the alias, support entry, t1532, or current docs.
+  `.818` is active from clean selector `c70fe528f` for the byte-identical
+  exact-three paired `.ahb` alias at projected 324/365/48 split 24/24; the
+  alias, support entry, and t1532 remain unshipped during activation.
+- next_action: implement exactly `.818`, then run its focused/preservation and
+  docs/doctrine gates before the behavior commit.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

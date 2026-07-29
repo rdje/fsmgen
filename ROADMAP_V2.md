@@ -7500,7 +7500,7 @@ HIAL/VIAL activation, VHDL, verification generation, and decision 0020 remain
 separate. See `docs/IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
 Clean behavior commit `00d71114d` activates only parent selector
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.817`. This activation changes continuity
-and architecture evidence, not behavior. `.817` now selects pending `.818`,
+and architecture evidence, not behavior. `.817` now selects `.818`,
 the byte-identical exact-three paired `.ahb` profile alias through existing
 suffix/lowering machinery. A same-volume candidate strict-checks without
 diagnostics, retains the exact 3 IAL1/4 IAL0 artifacts and normalized semantic
@@ -7512,6 +7512,10 @@ proposed with event-capable compiled Verilator separated from a
 full-language/SystemVerilog-UVM simulator profile and with independent VHDL
 and mixed-language qualification. See
 `docs/IAL2_POST_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `c70fe528f` activates only `.818`. Activation changes
+continuity documentation and no alias, support, test, artifact, HDL/runtime,
+simulator, backend, verification-generation, HIAL/VIAL, or VHDL behavior; the
+projected 324/365/48 boundary remains unshipped until implementation passes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

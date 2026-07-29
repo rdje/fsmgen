@@ -2060,7 +2060,7 @@ remain separate. See the
 [shipped behavior](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 
 Clean behavior commit `00d71114d` returns ownership to the parent frontier and
-activates no-behavior selector `.817`. The selector now chooses pending `.818`,
+activates no-behavior selector `.817`. The selector now chooses `.818`,
 the byte-identical matching `.ahb` profile alias through existing machinery.
 A same-volume candidate preserves exact artifacts, exact-three metadata, BUSY
 parking, response ownership, and normalized semantics while removing only
@@ -2069,6 +2069,8 @@ will prove alias surfaces and reuse t1531 runtime. Two-subordinate exact-three,
 broader BUSY/count/burst/signal work, generic priority, and HIAL/VIAL remain
 separate. See the
 [post-generic selector](../../IAL2_POST_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
+Clean selector commit `c70fe528f` activates `.818` only; no alias or support
+behavior ships until that implementation passes.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

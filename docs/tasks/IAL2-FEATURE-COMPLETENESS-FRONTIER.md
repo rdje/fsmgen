@@ -5790,18 +5790,19 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.817: select exact-three paired AHB alias`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.818`
-  Status: `pending`
+  Status: `active`
   Goal: `Ship the byte-identical one-subordinate exact-three paired AHB .ahb profile alias through existing lowering and introspection surfaces.`
   Acceptance: `Activate only after .817 commits cleanly. Add only ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ahb as a byte-identical mirror of the shipped generic source. Add exact support identity intent.ahb_profile_alias_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park, coverage ial2_ahb_profile_alias_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli, source kind ial2_profile_alias, family protocol_fixture, supported_smoke+strict, module ahb_tb, semantic root top, and three-child expectations. Preserve exact 3 IAL1/4 IAL0 artifacts, 28 signals, requester before_beat=2/beats=3 and width-two 3 -> 2 -> 1 -> 0 semantics, subordinate/propagated parks_on=[busy], one-hot accepted-subordinate response ownership, no top busy_flow, and substantive residue; remove only aggregate/requester/subordinate alias residue plus alias-exposure wording through existing suffix handling. Add t/1532-ial2-ahb-exact-three-paired-busy-composition-profile-alias.t for byte/parse/report/residue/strict check/schedule/exact-artifact/normalized-semantic/real read-only and shell-disabled MCP/repository-local outdir/verify-HDL/diagnostic/generic and existing-alias preservation proof; retain t1531 as shared assertion-enabled runtime and do not compile a second testbench. Update RegressionCorpus, t248 to 324 protocol / 365 supported-smoke+strict, LanguageSurfaceSection/t297, t1518 current truth, behavior/fact, README, roadmap, mdBook, task/index, Memory, and Knowledge Map. Run focused and preservation checks, docs/doctrine gates, exact Stats-compatible RAM plus separate kernel pressure, and repository-derived same-volume cleanup; commit before selecting another owner. If the tracked alias disproves the disposable selector probe, stop and select the smallest prerequisite. Do not change parser/generator algorithms, reports/schemas, semantic-MCP APIs, runtime/HDL behavior, ports, other source bytes, other aliases, two-subordinate topology, wider counts, BUSY policy/status/burst/signal behavior, generic priority, backends, VHDL, verification generation, HIAL/VIAL activation, or decision 0020.`
-  Verification: `pending activation`
+  Verification: `Activated only after clean selector commit c70fe528f. Activation changes task/index/Memory/roadmap/mdBook/current-fact continuity and no public source, support entry, test, generated artifact, parser/generator/report/semantic-MCP API, HDL/runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior. The selected alias, support identity, t1532, and projected 324/365/48 accounting remain unshipped until this leaf implements and verifies them. Knowledge Map generation/check passes at 1,025 facts/5,224 question keys; mdBook builds to 72 files/16,158,103 bytes and is removed without residue; Memory is 55 lines; diff and all six doctrine gates pass.`
   Commit: `pending activation`
 
 The selected child tree is now complete through `.3`. It ships the generic
 one-subordinate exact-three paired source at 323/364/47 split 24/23 with exact
 review artifacts, normalized semantic/read-only MCP parity, and
 assertion-enabled t1531 runtime. From clean behavior commit `00d71114d`, `.817`
-is now complete and selects pending `.818`, the byte-identical matching `.ahb`
-alias at projected 324/365/48 split 24/24. Two-window exact-three,
+is now complete and selects `.818`, the byte-identical matching `.ahb` alias at
+projected 324/365/48 split 24/24. Clean selector commit `c70fe528f` now
+activates `.818`; no alias behavior ships in activation. Two-window exact-three,
 counts/policy/status/burst/signal work, HIAL/VIAL, VHDL, verification
 generation, and decision 0020 remain separate. The director-agreed
 event-capable compiled Verilator versus full-language/SystemVerilog-UVM
