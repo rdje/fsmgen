@@ -33,8 +33,8 @@ source kind:     ppif
 semantic root:   fsm
 ```
 
-The matching `.ahb` alias is not shipped by this slice. Pending `.4` separately
-owns its no-behavior contract selection after the clean `.3` commit.
+The matching `.ahb` alias is not shipped by this slice. Active `.4` separately
+owns its no-behavior contract selection after clean `.3` commit `325f21267`.
 
 ## Public Count Boundary
 
@@ -180,7 +180,7 @@ Generated outputs should use a repository-derived same-volume path.
 
 ## Explicit Deferrals
 
-Pending `.4` owns only matching exact-three `.ahb` alias contract selection;
+Active `.4` owns only matching exact-three `.ahb` alias contract selection;
 the alias itself, counts above three, generalized counter width,
 runtime/policy/random count selection, multiple insertion points,
 distinct local bus-BUSY status, exact-three paired compositions, broader

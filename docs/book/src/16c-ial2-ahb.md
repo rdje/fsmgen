@@ -1417,9 +1417,9 @@ t/1521 directly retains exact-two `2 -> 1 -> 0` proof.
 
 Current support accounting is 321 protocol fixtures, 362 supported-smoke plus
 strict fixtures, and 45 AHB paths split 23 `.ppif` / 22 `.ahb`. The matching
-exact-three `.ahb` alias remains a separate follow-on: pending `.4` must select
-or reject its contract after the clean generic commit and before any alias
-implementation. See the
+exact-three `.ahb` alias remains a separate follow-on: active `.4` must select
+or reject its contract after clean generic commit `325f21267` and before any
+alias implementation. See the
 [contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_CONTRACT_SELECTION.md)
 and [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md).
 
@@ -2153,8 +2153,9 @@ unchanged. Its current checkpoint is 321 protocol / 362 supported+strict /
 45 AHB paths split 23 `.ppif`/22 `.ahb`. Focused t1528 directly observes
 `3 -> 2 -> 1 -> 0` through continuous, 32-clock ready-low, and 32-clock
 grant-low runtime; t1521 directly locks exact-two `2 -> 1 -> 0`. The
-matching exact-three `.ahb` alias does not yet ship; pending `.4` separately
-owns its contract selection or rejection after the clean generic commit.
+matching exact-three `.ahb` alias does not yet ship; active `.4` separately
+owns its contract selection or rejection after clean generic commit
+`325f21267`.
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that

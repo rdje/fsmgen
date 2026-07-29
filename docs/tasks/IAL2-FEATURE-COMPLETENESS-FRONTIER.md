@@ -5765,8 +5765,9 @@ Child `.1` proved guarded internal `3 -> 2 -> 1 -> 0` retirement without a
 lower-layer repair; child `.2` selected `.3`, which now ships the generic
 exact-three requester with bounded literal range `2..3`, unchanged width-two
 lowering, direct counter/runtime/semantic/MCP proof, and 321/362/45 accounting.
-Pending child `.4` will select or reject only the matching byte-identical
-`.ahb` alias contract after `.3` commits cleanly.
+Child `.4` activated after clean `.3` commit `325f21267` and now selects or
+rejects only the matching byte-identical `.ahb` alias contract without changing
+shipped behavior.
 
 ## Current Frontier
 

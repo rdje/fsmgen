@@ -30,7 +30,7 @@ beats, and zero final count.
 
 Strict/check/schedule/artifact/verifier, normalized semantic JSON, and real
 read-only shell-disabled MCP parity pass. Current accounting is 321 protocol /
-362 supported+strict / 45 AHB paths split 23 `.ppif` / 22 `.ahb`. Pending `.4`
+362 supported+strict / 45 AHB paths split 23 `.ppif` / 22 `.ahb`. Active `.4`
 owns no-behavior selection or rejection of the matching exact-three alias;
 the alias itself and all broader count/policy/composition work remain separate.
 Requester aliases and generic/alias one-/two-subordinate exact-two paired

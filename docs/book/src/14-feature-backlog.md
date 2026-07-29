@@ -11103,9 +11103,9 @@ events, one resumed `SEQ`, four data beats, stable pending ownership, and zero
 final count; t1521 now directly locks exact-two `2 -> 1 -> 0`. Strict,
 schedule, artifact, verifier, normalized semantic JSON, and real read-only MCP
 parity pass. Current accounting is 321/362/45 split 23 `.ppif`/22 `.ahb`.
-Pending `.4` separately owns selection or rejection of the matching
-byte-identical exact-three `.ahb` alias contract after the clean `.3` commit;
-no alias ships in `.3`. See the
+Active `.4` separately owns selection or rejection of the matching
+byte-identical exact-three `.ahb` alias contract after clean `.3` commit
+`325f21267`; no alias ships in activation. See the
 [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md).
 
 Post APB surface-sync selector:

@@ -7268,9 +7268,9 @@ episode, stable pending ownership, one resumed `SEQ`, four data beats, and
 zero final count; t1521 now directly proves exact-two `2 -> 1 -> 0`. Strict,
 schedule, artifact, verifier, normalized semantic JSON, and real read-only MCP
 parity pass. Current support is 321/362/45 split 23 `.ppif`/22 `.ahb`. See
-`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md`. Pending child
-`.4` will select or reject only the matching byte-identical `.ahb` alias
-contract after `.3` commits cleanly; no alias ships in `.3`.
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md`. Child `.4` is now
+active to select or reject only the matching byte-identical `.ahb` alias
+contract after clean `.3` commit `325f21267`; no alias ships in activation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

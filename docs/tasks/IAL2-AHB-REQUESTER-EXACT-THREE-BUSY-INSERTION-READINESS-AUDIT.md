@@ -93,7 +93,7 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
   Commit: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3: ship generic exact-three BUSY`
 
 - ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the matching exact-three requester .ahb profile-alias contract after generic behavior ships.`
   Acceptance: `Activate only after .3 commits cleanly. Reconcile shipped ppif/ahb_requester_busy_insert_three.ppif with existing .ahb suffix/profile handling and exact-one/exact-two alias precedent. Select or reject one byte-identical data-only ppif/ahb_requester_busy_insert_three.ahb alias; if selected, freeze support intent.ahb_profile_alias_requester_busy_insert_three / ial2_ahb_profile_alias_requester_busy_insert_three_pipeline_cli, source kind ial2_profile_alias, actor/module amba_requester_busy_insert_three, semantic root fsm, alias-only residue cleanup, numeric beats=3, exact IAL1/IAL0/HDL identity, projected 322 protocol / 363 supported+strict / 46 AHB paths split 23 .ppif/23 .ahb, focused t1529 check/schedule/report/artifact/semantic/read-only MCP/outdir/verifier/diagnostic/preservation contract, retained assertion-enabled t1528 as the sole shared runtime, docs/Knowledge Map/doctrine gates, unchanged 4-GiB cap, and rollback. Make no parser, generator, public source, support entry, test, artifact, semantic/MCP API, HDL/runtime, backend, protocol, or transaction-layer behavior change in contract selection. Do not add the alias itself, a second runtime, counts above three, generalized width, policy/runtime/random or multiple insertion points, local bus-BUSY status, exact-three compositions, broader bursts/signals/managers/fabrics, selector repairs, AXI/APB/VHDL, or decision 0020 behavior.`
   Verification: `pending`
@@ -128,6 +128,10 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
   unchanged width-two lowering and selects pending `.4`, a separate no-behavior
   contract selection for the matching byte-identical `.ahb` alias. `.4` cannot
   activate before `.3` commits cleanly.
+- `2026-07-29`: Activation condition satisfied: `.3` committed cleanly at
+  `325f21267`; `.4` is active for matching exact-three `.ahb` alias contract
+  selection only and changes no shipped behavior until a later implementation
+  leaf is separately selected and committed.
 
 ## Blockers
 
