@@ -7598,6 +7598,15 @@ Clean behavior commit `db402fd9d` activates only no-behavior selector `.822`;
 activation changes task/continuity documentation and no public source,
 support, test, artifact, semantic/MCP API, HDL/runtime, simulator, backend,
 protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior.
+Selector `.822` now chooses proposed
+`IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1`. A
+same-volume one-file/2,313-byte exact-four transform fails closed before output
+at the intentional literal-`2..3` boundary, while the generator hardcodes
+width-two `ahb_busy_remaining_q`. The audit must decide bounded width three
+versus reusable minimum-width derivation and prove exact four-event runtime
+before a separate public contract. New BUSY policy/points/status/burst/signal
+semantics, generic priority, HIAL/VIAL, scale, VHDL, verification generation,
+and decision `0020` remain separate.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -5,17 +5,18 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.822: activate post-alias selector`;
-  predecessor behavior `db402fd9d`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.822`.
+- latest_commit: this task-scoped selector commit,
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.822: select exact-four AHB BUSY readiness`;
+  predecessor activation `3453a822f`.
+- active_work_unit: proposed
+  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1`, pending a
+  separate clean activation commit.
 - current_state: two-window exact-three paired AHB generic/profile sources ship
   at 326 protocol / 367 supported-smoke+strict / 50 AHB paths split 25
   `.ppif`/25 `.ahb`; t1534 proves alias parity and t1533 remains shared
   assertion-enabled 10/8/2/6/2 runtime.
-- next_action: reconcile the completed AHB generic/profile cadence, remaining
-  IAL2 residue, HIAL/VIAL, generic correctness owners, roadmap, and facts;
-  select exactly one next owner without a behavior change.
+- next_action: activate only the exact-four readiness audit `.1`, then prove or
+  disprove bounded width-three versus reusable minimum-width derivation.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -31,6 +32,8 @@ bounded current-state pointer. Git preserves its prior history.
   generated/direct endpoint arbitration repairs, and exact-three paired
   generic/profile compositions across one and two windows. Current truth is
   326/367/50 split 25 `.ppif`/25 `.ahb`.
+  Parent `.822` selects exact-four requester BUSY counter-width readiness after
+  a one-file/2,313-byte candidate fails closed at the intentional `2..3` bound.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

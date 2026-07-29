@@ -210,4 +210,8 @@ evidence-backed handoff.
 - `2026-07-29`: Clean alias behavior commit `db402fd9d` activates parent
   selector `.822`; HIAL/VIAL remains proposed while the selector compares it
   with the remaining exact IAL2 and correctness owners.
+- `2026-07-29`: Parent selector `.822` selects the smaller exact-four AHB
+  requester counter-width readiness audit. HIAL/VIAL remains proposed with its
+  typed bridge, portable/native semantics, full-language simulator, VHDL/
+  mixed-language, migration, and large-design requirements unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

@@ -157,6 +157,12 @@ because shipped aggregate tests retain `--no-assert` around a known selector
 overlap.
 Decision 0020 remains proposed/inactive.
 
+The current post-AHB frontier has since advanced through the complete
+exact-one/two/three requester and one-/two-window paired generic/profile family
+at 326/367/50 split 25/25. Parent selector `.822` now selects proposed
+`IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1` to resolve the
+first counter-width boundary before any public exact-four behavior change.
+
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.215` selected `.216` after `.214` shipped
 counted group-local admitted-request behavior. The selector found no immediate
 cleanup prerequisite: generated queue-head reports now expose counted

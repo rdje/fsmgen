@@ -11423,6 +11423,14 @@ parity without a second simulation; t1533 remains the shared assertion-enabled
 10/8/2/6/2 runtime. Proposed `.822` owns the next roadmap-aligned selection.
 Clean behavior commit `db402fd9d` activates only no-behavior selector `.822`;
 activation changes continuity documentation and no public behavior.
+Selector `.822` now chooses proposed exact-four requester BUSY counter-width
+readiness. A same-volume one-file/2,313-byte transform fails closed before
+output at the intentional literal-`2..3` normalizer boundary; the generator
+also hardcodes width-two `ahb_busy_remaining_q`, making four the first
+unrepresentable adjacent count. The audit must decide bounded width three
+versus reusable minimum-width derivation and prove exact `4 -> 3 -> 2 -> 1 ->
+0` runtime before selecting a public contract. See the
+[selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

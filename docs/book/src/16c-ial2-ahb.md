@@ -2155,6 +2155,14 @@ remains the shared assertion-enabled 10/8/2/6/2 runtime. See the
 [alias behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_THREE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md).
 Clean behavior commit `db402fd9d` activates only no-behavior selector `.822`;
 activation changes continuity documentation and no public behavior.
+Selector `.822` now chooses proposed exact-four requester BUSY counter-width
+readiness. The current public normalizer intentionally rejects literal four at
+the `2..3` boundary, and the generated requester uses width-two
+`ahb_busy_remaining_q`. A separate audit must decide bounded width three versus
+reusable minimum-width derivation and prove internal `4 -> 3 -> 2 -> 1 -> 0`,
+four qualified BUSY events, stall preservation, and resumed `SEQ` before any
+public range or source change. See the
+[selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

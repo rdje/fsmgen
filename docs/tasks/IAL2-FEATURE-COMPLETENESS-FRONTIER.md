@@ -5818,11 +5818,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.821: ship two-window exact-three AHB alias`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.822`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact roadmap-aligned owner after the two-subordinate exact-three paired AHB generic/profile pair ships cleanly.`
   Acceptance: `Activate only after .821 commits cleanly. Reconcile the completed exact-one/exact-two/exact-three requester and one-/two-window paired AHB generic/profile families at 326/367/50 split 25/25, remaining count-width/policy/status/burst/signal residue, generic selector-priority owners, other roadmap lanes, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE, completed IAL1 verification-output foundations, decisions 0004/0008/0020, roadmap, mdBook, Knowledge Map, and the director's HIAL/VIAL plus simulator-profile requirements. Choose exactly one smallest evidence-backed next owner, freeze clean ownership and validation, and make no public behavior change in selection.`
-  Verification: `Activated only after clean .821 behavior commit db402fd9d. Activation changes task/index/Memory/roadmap/mdBook/HIAL-VIAL continuity state only; no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map remains current at 1,031 facts/5,261 question keys; mdBook builds 72 files/16,208,700 bytes and is removed without residue; Memory is 55 lines; diff and all six doctrine gates pass. Final canonical Stats-compatible RAM is 64.9% (15.584/24.000 GiB), kernel pressure is separately 1 (normal), and guard occupancy is excluded as capacity truth. Selector evidence remains pending.`
-  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.822: activate post-alias selector`
+  Verification: `Activated only after clean .821 behavior commit db402fd9d through clean activation commit 3453a822f. Reconciled the complete exact-one/two/three requester and one-/two-window paired generic/profile cadence at 326/367/50 split 25/25, current literal-2..3 normalization, width-two requester storage, qualified rules, residue, semantic/read-only-MCP and runtime surfaces, remaining AHB semantics, generic priority, HIAL/VIAL, scalability, decisions, roadmap, mdBook, and Knowledge Map. Selected proposed IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1 as the smallest adjacent owner. A repository-local one-file/2,313-byte exact-four transform changed only intent/object/anchor/actor identity plus busy-beats 4 and failed closed before output with exactly one current-range diagnostic; the generator hardcodes ahb_busy_remaining_q width 2, making four the first unrepresentable count. The candidate was removed without residue. The audit must decide bounded width three versus reusable minimum-width derivation and prove exact 4 -> 3 -> 2 -> 1 -> 0 runtime before a public contract. New policy/points/status/burst/signal semantics, generic priority, HIAL/VIAL, scalability, VHDL, verification generation, and decision 0020 remain separate. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map generation/check passes at 1,032 facts/5,268 keys; mdBook builds 72 files/16,213,973 bytes and is removed without residue; Memory is 58 lines; diff and all six doctrine gates pass. Final canonical Stats-compatible RAM is 70.1% (16.825/24.000 GiB), kernel pressure is separately 1 (normal), and guard occupancy is excluded as capacity truth. No public behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.822: select exact-four AHB BUSY readiness`
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25
@@ -5833,8 +5833,9 @@ support identity, t1533/harness, semantic/MCP proof, and behavior record.
 Implementation `.821` ships the byte-identical matching two-window exact-three
 `.ahb` alias through existing suffix/lowering machinery. t1534 owns parity
 while t1533 remains shared runtime. Clean behavior commit `db402fd9d`
-activates `.822` to select the next exact roadmap-aligned owner. Counts above
-three, new BUSY
+activates `.822`, which selects proposed
+`IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1` to resolve the
+first counter-width boundary before a public contract. Counts above four, new BUSY
 policy/status/burst/signal semantics, generic priority, HIAL/VIAL, VHDL,
 verification generation, and decision `0020` remain separate. The
 director-agreed event-capable compiled Verilator versus full-language/
