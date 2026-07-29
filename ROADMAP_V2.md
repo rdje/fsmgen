@@ -7311,6 +7311,9 @@ generated `AhbInterconnect` IAL0; generic selector analysis/assertions remain
 correct and mandatory. Proposed child `.2` owns exact no-behavior contract
 selection after the audit commits cleanly. See
 `docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md`.
+Audit commit `c32255645` is clean, so contract-selection child `.2` is now
+active. Activation changes continuity/docs state only; no arbitration repair
+has started.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

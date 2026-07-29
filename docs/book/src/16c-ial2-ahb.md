@@ -468,6 +468,8 @@ through `ahb_tb.fsm`; the generated HDL entry is module `ahb_tb`.
 > generated-`AhbInterconnect` mutually exclusive arbitration shape before any
 > repair. See the
 > [output-arbitration audit](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md).
+> Clean audit commit `c32255645` satisfies the boundary, so `.2` is now active
+> for contract selection only; generated behavior remains unchanged.
 
 ## Guided PPIF Two-Subordinate Interconnect
 

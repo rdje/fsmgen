@@ -80,7 +80,7 @@ selector assertions remain disabled.
   Commit: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1: audit interconnect selector overlap`
 
 - ID: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Freeze the exact generated-IAL0 mutually exclusive arbitration contract and implementation gates.`
   Acceptance: `Activate only after .1 commits cleanly. Read .1, docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md, the current one-/two-window interconnect sources, AhbInterconnect.pm, generated IAL1/IAL0/HDL selector metadata, LoweredRTLIRBuilder, GeneratedModuleEmitter, t1478/t1480 and affected paired runtimes t1513-t1516/t1523/t1525, current reports/artifacts/normalized semantic JSON/read-only MCP surfaces, README, ROADMAP_V2, mdBook, Memory, Knowledge Map, and the existing mapped-owner-to-unmapped non-promise. Select the exact generator-local IAL0 contract: mutually exclusive per-window mapped-hit/not-hit HSEL/HADDR drives; mutually exclusive retained-owner/unmapped-first-cycle/ordinary-default HREADY/HRESP/HRDATA drives; no priority masking of impossible multiple owners; unchanged HGRANT/input visibility, owner capture/clear/same-edge mapped replacement, next_state, unmapped_error_complete, decode windows, local translation, wait/response behavior, public syntax/ports/reports/support/artifacts/semantic-MCP surfaces; unchanged generic selector analysis and assertions. Freeze a separate implementation leaf, focused t1530 assertion-enabled one-/two-window mapped-zero/nonzero/success/wait/subordinate-ERROR/unmapped-ERROR proof, removal of --no-assert from the affected exact-one/exact-two paired runtime family, preservation/accounting/docs/doctrine gates, same-volume disposable paths, unchanged 88% host/4096-MiB descendant cap, and rollback. Do not change code, parser, generator, public source, support, test, artifact, report/schema, semantic/MCP API, HDL/runtime, backend, protocol, VHDL, or transaction-layer behavior in this contract slice. Keep the generic ISF priority owner and decision 0020 inactive.`
   Verification: `pending`
@@ -90,8 +90,10 @@ selector assertions remain disabled.
 
 Completed parent selector `.813` committed cleanly at `347a85f80`, and child
 `.1` activated from that clean boundary at `70eeeab70`. The audit is now
-complete and proposes `.2`; `.2` must remain inactive until the `.1` audit
-commit is clean. No behavior changes in either selector/audit boundary.
+complete at clean commit `c32255645`, so `.2` is active. This activation
+changes only task/index/Memory/roadmap/mdBook/Knowledge Map state; exact
+contract selection remains the next action and no behavior changes in this
+boundary.
 
 ## Rollback
 

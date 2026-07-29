@@ -29,6 +29,9 @@ report, artifact, semantic/MCP API, HDL, runtime, backend, protocol, or
 transaction-layer behavior. It selects proposed child `.2` to freeze an exact
 generator-local mutually exclusive arbitration contract before repair.
 
+The audit committed cleanly at `c32255645`; proposed child `.2` is now active.
+Activation changes continuity/documentation state only.
+
 ## Fresh Base Reproduction
 
 The audit generated `ppif/ahb_interconnect.ppif` into the task-owned,

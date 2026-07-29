@@ -33,3 +33,6 @@ together with mapped-hit, retained-owner, and unmapped drives. Generic
 lowering accurately preserves those families and emits the assertions; it
 must remain unchanged. Proposed child `.2` owns an exact mutually exclusive
 generated-IAL0 arbitration contract before implementation.
+
+Clean audit commit `c32255645` satisfies the activation boundary, so `.2` is
+now active without a behavior change.
