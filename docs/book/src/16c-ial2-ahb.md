@@ -2265,6 +2265,9 @@ and support-account at projected 328/369/52 split 26/26. Focused t1536 owns
 strict/schedule/artifact/normalized-semantic/read-only-MCP/verifier parity
 without simulation; t1535 remains shared runtime. See the
 [alias contract](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_CONTRACT_SELECTION.md).
+Clean contract commit `3370e15cd` activates only data-only alias
+implementation `.5`. The alias, support entry, t1536, and 328/369/52 boundary
+remain unshipped during activation; generic behavior stays at 327/368/51.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
