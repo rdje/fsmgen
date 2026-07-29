@@ -2104,6 +2104,9 @@ full-SystemVerilog/UVM runtime claim. No lower-layer repair is required.
 Proposed contract `.2` remains inactive and the source remains unshipped until
 a clean activation. See the
 [readiness audit](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_THREE_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
+Clean audit commit `c2aa63c3e` activates only contract `.2`; the source,
+support identity, focused test, and projected 325/366/49 boundary remain
+unshipped during activation.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

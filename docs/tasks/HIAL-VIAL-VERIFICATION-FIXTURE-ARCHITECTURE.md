@@ -113,9 +113,9 @@ architecture needed to move beyond that bounded foundation.
 This tree is proposed and inactive. `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
 is the first executable leaf only after a future clean-boundary roadmap selector
 activates it. The smaller adjacent two-subordinate exact-three paired AHB
-readiness audit `.1` now passes and selects proposed generic contract `.2`,
-which remains pending clean activation. This architecture stays proposed; the
-simulator profile agreement does not pre-empt that evidence-backed handoff.
+readiness audit `.1` now passes and clean audit commit `c2aa63c3e` activates
+generic contract `.2`. This architecture stays proposed; the simulator
+profile agreement does not pre-empt that evidence-backed handoff.
 
 ## Decisions
 

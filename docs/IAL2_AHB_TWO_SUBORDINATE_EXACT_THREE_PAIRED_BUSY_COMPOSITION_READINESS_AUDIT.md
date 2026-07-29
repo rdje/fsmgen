@@ -204,3 +204,7 @@ file-backed`; pressure remained a separate safety signal.
 
 Revert this audit record/fact and the `.1` completion/`.2` selection pointers.
 No shipped source, support entry, test, artifact, or behavior requires rollback.
+
+Clean audit commit `c2aa63c3e` now activates only `.2` contract selection. The
+source and projected 325/366/49 public boundary remain unshipped during
+activation.

@@ -11388,6 +11388,9 @@ exact-three 10/8/2/6/2 runtime with final status/control
 `44332211`/`88776655`; no lower-layer repair is required. It selects proposed
 generic public-contract `.2` at projected 325/366/49 split 25 `.ppif`/24
 `.ahb`, pending a separate clean activation. No source ships in the audit.
+Clean audit commit `c2aa63c3e` activates only generic contract `.2`; no public
+source, support, test, artifact, API, HDL/runtime, HIAL/VIAL, VHDL, or
+verification-generation behavior changes in activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

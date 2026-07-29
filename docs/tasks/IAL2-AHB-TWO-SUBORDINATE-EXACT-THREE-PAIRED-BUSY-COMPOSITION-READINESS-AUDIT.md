@@ -87,17 +87,17 @@ any public two-subordinate exact-three source or contract is selected.
   Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: audit two-window exact-three AHB readiness`
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the first generic two-subordinate exact-three paired AHB BUSY public contract before implementation.`
   Acceptance: `Activate only after the clean .1 audit commit. Read the .1 audit record/fact, exact disposable strict/schedule/artifact/assertion-runtime/normalized-semantic/real read-only MCP evidence, shipped one-window exact-three and two-window exact-two generic/profile contracts and behavior, current RegressionCorpus/support/capability surfaces, public diagnostics, roadmap, mdBook, Knowledge Map, HIAL/VIAL, generic priority, and decisions 0004/0008/0020. Freeze exactly one future generic source ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif with the selected intent, source object, bounded anchor, embedded requester amba_requester_busy_insert_three, status/control HBURST-aware byte-lane BUSY-parking subordinates, ahb_interconnect fabric, top ahb_tb, exact 4 IAL1/5 IAL0 artifacts, width-two 3 -> 2 -> 1 -> 0 behavior, before_beat=2/beats=3, both child/propagated parks_on=[busy], one-hot accepted-subordinate ownership, two windows, and no duplicate top busy_flow. Select support id intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park, coverage ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli, ppif/supported_smoke/strict/module ahb_tb/root top/4-child expectations, and projected 325 protocol / 366 supported+strict / 49 AHB split 25 .ppif/24 .ahb only if reconfirmed. Freeze a future focused test plus assertion-enabled two-command harness owning strict/check/schedule/artifacts/verifier/diagnostics/normalized semantic/real read-only MCP and exact 10/8/2/6/2/0x44332211/0x88776655 runtime, preservation, documentation, same-volume cleanup, rollback, and a separate implementation leaf. Do not add the source, support entry, test, artifact, parser/generator behavior, .ahb alias, counts above three, new policy/status/burst/signal semantics, generic priority, another protocol/backend, HIAL/VIAL activation, VHDL, verification generation, or decision-0020 behavior in this selector.`
-  Verification: `pending clean activation after the .1 audit commit`
-  Commit: `pending activation`
+  Verification: `Activated only after clean .1 audit commit c2aa63c3e. Activation changes task/index/Memory/roadmap/mdBook/audit-fact state only; no source, support, test, artifact, generated output, semantic/MCP API, HDL/runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 tests. Knowledge Map remains 1,027 facts/5,237 question keys. mdBook builds 72 files/16,181,348 bytes and the exact generated tree is removed without residue. All doctrine gates pass. Canonical Stats-compatible capacity is 67.8% (16.278/24 GiB) while kernel pressure is separately normal (1); the guard's 92.2% heuristic is excluded as capacity truth. Contract evidence remains pending.`
+  Commit: `pending contract completion`
 
 ## Current Frontier
 
-Audit `.1` proves direct data-only readiness and selects proposed `.2`, a
-separate generic public-contract leaf. `.2` remains inactive until the clean
-`.1` audit commit and a separate no-behavior activation commit.
+Audit `.1` proves direct data-only readiness. Clean audit commit `c2aa63c3e`
+now activates only `.2`, the separate generic public-contract leaf; the
+activation changes continuity/documentation state and no public behavior.
 
 ## Decisions
 
@@ -112,6 +112,8 @@ separate generic public-contract leaf. `.2` remains inactive until the clean
   through real read-only MCP and assertion-enabled 10/8/2/6/2 runtime, requires
   no lower-layer repair, and selects `.2` for a separate generic public
   contract. No source ships in the audit.
+- `2026-07-29`: Clean audit commit `c2aa63c3e` satisfies the `.2` activation
+  boundary. Contract selection is active and still changes no behavior.
 
 ## Open Questions
 

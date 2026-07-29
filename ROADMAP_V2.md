@@ -7549,6 +7549,10 @@ verify-HDL and assertion-enabled two-command runtime. The observed result is
 and unselected endpoints plus fabric ownership. No lower-layer repair is
 required. Proposed `.2` owns a separate 325/366/49 split 25/24 generic public
 contract and remains inactive until the clean audit commit and activation.
+Clean audit commit `c2aa63c3e` activates only contract `.2`; activation changes
+continuity/documentation state and no public source, support, test, artifact,
+semantic/MCP API, HDL/runtime, simulator, backend, HIAL/VIAL, VHDL, or
+verification-generation behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

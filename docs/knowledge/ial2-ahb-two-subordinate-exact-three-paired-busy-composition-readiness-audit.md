@@ -34,3 +34,7 @@ separate generic public-contract leaf with projected 325 protocol / 366
 supported+strict / 49 AHB paths split 25 `.ppif` / 24 `.ahb`. The matching
 alias, broader BUSY semantics, generic priority, HIAL/VIAL activation, VHDL,
 verification generation, and decision `0020` remain separate.
+
+Clean audit commit `c2aa63c3e` now activates only `.2` contract selection. No
+public source, support entry, test, artifact, HDL/runtime, HIAL/VIAL, VHDL, or
+verification-generation behavior changes in activation.
