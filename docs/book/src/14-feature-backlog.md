@@ -11286,9 +11286,16 @@ with selector assertions enabled. Public/report/semantic-MCP, generated IAL2,
 protocol/backend/VHDL, and HIAL/VIAL boundaries remain unchanged. See the
 [shipped direct-seed arbitration behavior](../../IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_BEHAVIOR.md).
 Clean behavior commit `35a6fbfcf` completes the direct child tree. Parent
-selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.816` is now active from that
-handoff-ready boundary. Activation changes continuity/documentation only; no
-next owner or behavior is selected yet.
+selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.816` selects proposed
+`IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1` from that
+handoff-ready boundary. A same-volume disposable generic one-subordinate
+candidate compiles with every selector assertion enabled and passes five
+presentations, four accepted beats, one BUSY episode, three qualified BUSY
+events, one resumed `SEQ`, and storage `0x44332211`. The audit must still freeze
+public source/support/report/semantic-MCP/test boundaries before any behavior;
+aliases, the two-window form, broader BUSY semantics, HIAL/VIAL, and decision
+0020 remain separate. See the
+[post-direct selector](../../IAL2_POST_DIRECT_ARBITRATION_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

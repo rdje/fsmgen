@@ -2005,6 +2005,16 @@ handwritten regression infrastructure; this repair does not claim generated
 VIAL output. See the
 [direct-seed arbitration behavior](../../IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_BEHAVIOR.md).
 
+With the fabric, generated endpoint, and direct seed now assertion-clean,
+parent selector `.816` selects the proposed generic one-subordinate
+[exact-three paired readiness audit](../../tasks/IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.md).
+A same-volume disposable candidate passes with all selector assertions and
+exact runtime totals 5 presentations / 4 accepted beats / 1 BUSY episode / 3
+qualified BUSY events / 1 resumed `SEQ` / storage `0x44332211`. This is audit
+feasibility only: no exact-three paired public source ships until a later
+contract and implementation are selected. See the
+[post-direct selector](../../IAL2_POST_DIRECT_ARBITRATION_NEXT_OWNER_SELECTION.md).
+
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
 `.1` proved that the pre-repair one-bit procedural flag yielded ten
@@ -2063,9 +2073,11 @@ The following are not shipped by the current AHB IAL2 surface:
   profile alias; aggregate BUSY-parking and additive requester-side exact-one
   plus generic and matching `.ahb` exact-two BUSY insertion now ship. The
   generic and matching `.ahb` one- and two-subordinate exact-two pairings also
-  ship. Generic exact-three requester BUSY insertion now ships on `.ppif`,
-  while its matching `.ahb` alias, counts beyond three, policy/runtime/random
-  throttling, and multiple insertion points remain outside the shipped surface;
+  ship. Generic exact-three requester BUSY insertion now ships on `.ppif` and
+  its matching `.ahb` alias. The one-subordinate exact-three paired form is
+  selected only for a proposed readiness audit; counts beyond three,
+  policy/runtime/random throttling, and multiple insertion points remain
+  outside the shipped surface;
 - legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;

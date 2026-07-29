@@ -7443,9 +7443,17 @@ support/capability, public, semantic/MCP, protocol/backend/VHDL, HIAL/VIAL, and
 decision-0020 boundaries remain unchanged. See
 `docs/IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
 Clean behavior commit `35a6fbfcf` completes that direct child tree. Parent
-selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.816` is now active from the clean
-boundary. Activation changes task/index/Memory/roadmap/mdBook continuity only;
-the next owner remains unselected and no behavior changes in activation.
+selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.816` selects proposed
+`IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1` from the clean
+boundary. A repository-derived same-volume generic one-subordinate candidate
+emits three IAL1/four IAL0 artifacts, compiles with all selector assertions,
+and passes 5 presentations/4 accepted beats/1 BUSY episode/3 qualified BUSY
+events/1 resumed SEQ/storage `0x44332211`. The selected audit must still freeze
+public source/support/report/semantic-MCP/test identities and projected
+323/364/47 accounting before behavior. Aliases, two-subordinate exact-three,
+counts above three, policy/status/burst/signal work, HIAL/VIAL, and decision
+0020 remain separate/inactive. See
+`docs/IAL2_POST_DIRECT_ARBITRATION_NEXT_OWNER_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

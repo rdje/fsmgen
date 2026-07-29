@@ -190,11 +190,13 @@ Generated outputs should use a repository-derived same-volume path.
 
 ## Explicit Deferrals
 
-The matching exact-three `.ahb` alias now ships. Counts above three and generalized counter width,
-runtime/policy/random count selection, multiple insertion points,
-distinct local bus-BUSY status, exact-three paired compositions, broader
-bursts/signals/managers/fabrics, selector repairs, AXI/APB/VHDL, and decision
-0020 remain separate and inactive.
+The matching exact-three `.ahb` alias now ships. Counts above three and
+generalized counter width, runtime/policy/random count selection, multiple
+insertion points, distinct local bus-BUSY status, broader
+bursts/signals/managers/fabrics, AXI/APB/VHDL, and decision 0020 remain separate
+and inactive. The generic one-subordinate exact-three paired composition is now
+selected only for a proposed readiness audit; no paired exact-three public
+source ships yet.
 
 ## Rollback
 
