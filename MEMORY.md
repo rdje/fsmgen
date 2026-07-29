@@ -5,17 +5,16 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped `.3` activation commit; predecessor contract
-  `58efc8aff`.
-- active_work_unit:
-  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.3`.
-- current_state: two-window exact-three paired AHB generic/profile sources ship
-  at 326 protocol / 367 supported-smoke+strict / 50 AHB paths split 25
-  `.ppif`/25 `.ahb`; t1534 proves alias parity and t1533 remains shared
-  assertion-enabled 10/8/2/6/2 runtime.
-- next_action: implement the frozen generic exact-four contract: source,
-  literal `2..4`, minimum-width helper use, report/residue/support truth,
-  t1535 runtime, synchronized 327/368/51 docs, and preservation gates.
+- latest_commit: this `.3` behavior commit; predecessor activation
+  `8baf0abc8`.
+- active_work_unit: none after this commit; proposed
+  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.4` is next.
+- current_state: generic exact-four requester BUSY ships at 327 protocol / 368
+  supported-smoke+strict / 51 AHB paths split 26 `.ppif`/25 `.ahb`; minimum
+  counter widths are 2/2/3 for counts two/three/four, and assertion-enabled
+  t1535 proves continuous/ready-low/grant-low `4->3->2->1->0` runtime.
+- next_action: activate `.4` from a clean tree, then select or reject the
+  byte-identical matching exact-four `.ahb` alias contract without behavior.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -28,15 +27,13 @@ bounded current-state pointer. Git preserves its prior history.
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
 - The IAL2 frontier completed exact-three requester generic/alias, fabric and
-  generated/direct endpoint arbitration repairs, and exact-three paired
-  generic/profile compositions across one and two windows. Current truth is
-  326/367/50 split 25 `.ppif`/25 `.ahb`.
+  endpoint arbitration repairs, and exact-three paired generic/profile
+  compositions. Generic exact-four now ships at 327/368/51 split 26/25.
   Parent `.822` selects exact-four requester BUSY counter-width readiness.
-  Audit `.1` proves a 3-bit disposable counter through exact
-  `4->3->2->1->0` continuous/ready-low/grant-low runtime and selects proposed
-  `.2`; `.2` now selects proposed generic implementation `.3` with public
-  literal `2..4`, minimum counter widths 2/2/3, and projected 327/368/51.
-  Decision `0020` remains proposed/inactive.
+  Audit `.1` proved lower-layer/runtime readiness; `.2` froze the contract;
+  `.3` ships literal `2..4`, preserving minimum widths 2/2/3, exact source/
+  support/semantic surfaces, and t1535. Proposed `.4` owns only the matching
+  alias contract. Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and

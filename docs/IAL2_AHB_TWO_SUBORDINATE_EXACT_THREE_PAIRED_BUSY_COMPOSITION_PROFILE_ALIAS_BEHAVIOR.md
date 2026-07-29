@@ -72,8 +72,9 @@ child count:     4
 HDL module:      ahb_tb
 ```
 
-Current accounting is 326 protocol fixtures, 367 supported-smoke plus strict
-fixtures, and 50 AHB IAL2 paths split 25 `.ppif` sources / 25 `.ahb` aliases.
+This alias established 326 protocol fixtures, 367 supported-smoke plus strict
+fixtures, and 50 AHB IAL2 paths. The later generic exact-four requester moves
+current accounting to 327/368/51 split 26 `.ppif` sources / 25 `.ahb` aliases.
 
 Strict check, schedule JSON, normalized semantic JSON, and real read-only
 `fsmgen_semantic_introspect` expose the same support identity, module, semantic

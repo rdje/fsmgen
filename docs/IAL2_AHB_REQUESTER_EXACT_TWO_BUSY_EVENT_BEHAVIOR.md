@@ -68,13 +68,15 @@ write data, beat index, and remaining data-beat count stay stable for the whole
 BUSY episode. Neither BUSY event completes a data beat or consumes a response.
 After the second event, the same pending transfer resumes as `SEQ`.
 
-The parser now accepts literal integers `2..3`. `busy-beats` requires
+The parser now accepts literal integers `2..4`. `busy-beats` requires
 `busy-before-beat`, and the existing insertion point requires BUSY encoding
-`2'b01`. Zero, one, values above three, symbols, expressions, missing
+`2'b01`. Zero, one, values above four, symbols, expressions, missing
 prerequisites, and duplicate clauses fail closed. Absence of `busy-beats`
 remains the canonical exact-one source spelling. The additive literal-three
 source is documented in
 `docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md`.
+The additive literal-four source is documented in
+`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_BEHAVIOR.md`.
 
 ## Generated IAL1 Ownership
 
@@ -133,8 +135,9 @@ busy_insertion.beats                = 2
 `busy_insertion.beats` is numeric for exact-two. Existing exact-one sources
 still report the string `single`. The shared
 `ahb_requester_busy_insert_support` residue is source-specific: exact-one names
-the additive exact-two and exact-three sources, exact-two says two events ship
-and points to exact-three, and both defer counts beyond three, multiple
+the additive exact-two, exact-three, and exact-four sources; exact-two says two
+events ship and points to exact-three and exact-four; all defer counts beyond
+four, multiple
 insertion points, and policy/runtime/random throttling.
 
 The generic source moved the support corpus to 315 protocol fixtures and 356
@@ -146,9 +149,9 @@ established 319/360/43; its matching alias established 320/361/44. The generic
 exact-three requester alias established 322/363/46. The generic exact-three
 paired source established 323/364/47, and its matching alias now moves current
 checkpoint to 324/365/48. The generic two-subordinate exact-three paired source
-established 325/366/49; its matching alias now moves current accounting to
-326/367 and 50 AHB paths: twenty-five generic `.ppif` sources and twenty-five
-`.ahb` aliases.
+established 325/366/49; its matching alias established 326/367/50. The later
+generic exact-four requester moves current accounting to 327/368 and 51 AHB
+paths: twenty-six generic `.ppif` sources and twenty-five `.ahb` aliases.
 
 ## Generated-HDL Proof
 
@@ -187,7 +190,7 @@ that path in the same commands. See
 
 ## Explicit Deferrals
 
-Literal counts beyond three, generalized count width, multiple insertion
+Literal counts beyond four, arbitrary/runtime count selection, multiple insertion
 points, runtime-selected count/point, policy/random throttling, distinct local
 bus-BUSY status, exact-three paired aliases and two-subordinate forms,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding

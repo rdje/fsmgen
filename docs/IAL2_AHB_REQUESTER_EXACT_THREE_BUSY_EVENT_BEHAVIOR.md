@@ -44,7 +44,7 @@ Canonical alias behavior is documented in
 
 ## Public Count Boundary
 
-The optional transfer clause now accepts exact literal integers `2..3`:
+The optional transfer clause now accepts exact literal integers `2..4`:
 
 ```text
 (busy-before-beat 2)
@@ -52,11 +52,11 @@ The optional transfer clause now accepts exact literal integers `2..3`:
 ```
 
 Absence remains canonical exact-one. Literal two retains its existing
-exact-two behavior. Zero, one, values above three, symbolic/non-literal forms,
+exact-two behavior. Zero, one, values above four, symbolic/non-literal forms,
 missing prerequisites, and duplicates fail closed. The range diagnostic is:
 
 ```text
-AHB requester transfer.busy_beats must be a literal integer in 2..3 in this slice
+AHB requester transfer.busy_beats must be a literal integer in 2..4 in this slice
 ```
 
 `busy-beats 3` means exactly three rising events satisfying:
@@ -98,9 +98,9 @@ busy_insertion.beats                = 3
 ```
 
 Exact-one keeps `beats=single`; exact-two keeps numeric `beats=2`. Shared
-residue now tells the complete truth: exact-one names both additive generic
-sources, exact-two acknowledges exact-three, exact-three states that three
-events ship, and all three defer only counts above three plus generalized
+residue now tells the complete truth: exact-one names all three additive
+generic sources, exact-two acknowledges exact-three and exact-four, exact-three
+acknowledges exact-four, and all defer only counts above four plus generalized
 policy/runtime/random and multiple-point insertion. Existing `.ahb` suffix
 cleanup remains unchanged.
 
@@ -108,9 +108,10 @@ The generic source established the 321/362/45 checkpoint and the matching alias
 established 322/363/46. The generic exact-three paired source established
 323/364/47; its matching alias established 324/365/48. The generic
 two-subordinate exact-three paired source established 325/366/49; its matching
-alias now moves current accounting to 326 protocol fixtures, 367 supported-smoke
-plus strict fixtures, and 50 AHB IAL2 paths: 25 generic `.ppif` sources and 25
-`.ahb` aliases.
+alias established 326/367/50. The later generic exact-four requester moves
+current accounting to 327 protocol fixtures, 368 supported-smoke plus strict
+fixtures, and 51 AHB IAL2 paths: 26 generic `.ppif` sources and 25 `.ahb`
+aliases.
 
 ## Generated-HDL Proof
 
@@ -193,8 +194,8 @@ Generated outputs should use a repository-derived same-volume path.
 
 ## Explicit Deferrals
 
-The matching exact-three `.ahb` alias now ships. Counts above three and
-generalized counter width, runtime/policy/random count selection, multiple
+The matching exact-three `.ahb` alias and the generic exact-four requester now
+ship. Counts above four, runtime/policy/random count selection, multiple
 insertion points, distinct local bus-BUSY status, broader
 bursts/signals/managers/fabrics, AXI/APB/VHDL, and decision 0020 remain separate
 and inactive. The generic one-subordinate exact-three paired source now ships

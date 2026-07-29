@@ -7304,7 +7304,7 @@ Leaf `.5` now ships the byte-identical alias at
 only profile-alias residue while preserving numeric `beats=3`, exact artifacts,
 HDL, and normalized semantic/read-only MCP behavior. Focused t1529 passes four
 top-level subtests/72 nested assertions without a second simulation; t1528
-remains the shared runtime proof. Current accounting is 322/363/46 split 23/23.
+remains the shared runtime proof. That checkpoint was 322/363/46 split 23/23.
 See
 `docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.
 Clean alias commit `c224b2cba` satisfies the parent activation boundary, so
@@ -7643,6 +7643,17 @@ Clean contract commit `58efc8aff` activates only implementation `.3`.
 Activation changes continuity documentation and no parser, generator, public
 source, support, test, artifact, semantic/MCP API, HDL/runtime, backend,
 protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior.
+Implementation `.3` now ships the generic exact-four requester source through
+the existing IAL2 -> IAL1 -> IAL0 -> HDL path. The public range is literal
+`2..4`; integer-loop minimum-width lowering preserves width two for exact-two
+and exact-three and selects width three for exact-four. Assertion-enabled
+t1535 proves continuous/32-ready-low/32-grant-low exact
+`4 -> 3 -> 2 -> 1 -> 0` runtime plus strict/schedule/artifact/normalized-
+semantic/read-only-MCP/verifier/preservation parity. Accounting is now
+327 protocol / 368 supported+strict / 51 AHB paths split 26 `.ppif` / 25
+`.ahb`. The matching alias and broader BUSY/HIAL-VIAL/VHDL/verification work
+remain separate. See
+`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_BEHAVIOR.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

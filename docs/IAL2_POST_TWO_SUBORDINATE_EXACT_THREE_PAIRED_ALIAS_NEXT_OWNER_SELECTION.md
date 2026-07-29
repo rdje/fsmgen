@@ -14,7 +14,7 @@ support, report, test, or runtime behavior changes.
 
 Clean behavior commit `db402fd9d` completes the bounded exact-one/two/three
 requester and one-/two-window paired-composition generic/profile cadence.
-Current accounting is 326 protocol fixtures, 367 supported-smoke plus strict
+The selector baseline was 326 protocol fixtures, 367 supported-smoke plus strict
 fixtures, and 50 AHB IAL2 paths split 25 `.ppif` / 25 `.ahb`. Exact-one uses
 the one-event flag path. Exact-two and exact-three share the actor-owned
 `ahb_busy_remaining_q`, qualified continuation/final-accept rules, stable

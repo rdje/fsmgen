@@ -54,8 +54,8 @@ subtest 'adapter parses the bounded requester BUSY-insertion source' => sub {
 
     my %residue = map { $_->{id} => $_->{detail} } @{$result->{report}{unsupported_residue}};
     like($residue{ahb_requester_busy_insert_support}, qr/one exact qualified requester HTRANS BUSY event/, 'report records the shipped bounded BUSY insertion');
-    like($residue{ahb_requester_busy_insert_support}, qr/additive exact-two and exact-three behavior is supported by ppif\/ahb_requester_busy_insert_two\.ppif and ppif\/ahb_requester_busy_insert_three\.ppif/, 'report points to both additive bounded-count sources');
-    like($residue{ahb_requester_busy_insert_support}, qr/counts beyond three/, 'report keeps broader BUSY policy deferred');
+    like($residue{ahb_requester_busy_insert_support}, qr/additive exact-two, exact-three, and exact-four behavior is supported by ppif\/ahb_requester_busy_insert_two\.ppif, ppif\/ahb_requester_busy_insert_three\.ppif, and ppif\/ahb_requester_busy_insert_four\.ppif/, 'report points to all additive bounded-count sources');
+    like($residue{ahb_requester_busy_insert_support}, qr/counts beyond four/, 'report keeps broader BUSY policy deferred');
 };
 
 subtest 'malformed requester BUSY-insertion declarations fail closed' => sub {

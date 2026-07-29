@@ -73,8 +73,9 @@ IAL2-path checkpoint: twenty-two generic `.ppif` sources and twenty-two `.ahb`
 aliases. The later exact-three requester alias established 322/363/46; the
 generic exact-three paired source established 323/364/47, and its matching
 alias established 324/365/48. The generic two-subordinate exact-three paired
-source established 325/366/49; its matching alias now moves current accounting
-to 326/367/50 split 25 `.ppif` / 25 `.ahb`.
+source established 325/366/49; its matching alias established 326/367/50. The
+later generic exact-four requester moves current accounting to 327/368/51
+split 26 `.ppif` / 25 `.ahb`.
 
 ## Deep Semantic Introspection And MCP
 

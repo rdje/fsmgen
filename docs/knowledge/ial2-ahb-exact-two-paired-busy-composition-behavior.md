@@ -35,6 +35,6 @@ Follow-on `.5` shipped the matching alias at 318/359/42. The later
 two-subordinate exact-two source/alias checkpoints reached 320/361/44. The
 additive generic exact-three requester established 321/362/45, and its alias
 established 322/363/46. The generic exact-three paired source established
-323/364/47; its matching alias now moves current accounting to 324/365/48
+323/364/47; its matching alias established 324/365/48
 split 24 `.ppif` / 24 `.ahb`. See
 `IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR`.

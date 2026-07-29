@@ -34,9 +34,9 @@ Focused t/1529 proves byte/report/artifact/check/schedule/semantic/MCP/verifier/
 diagnostic parity without compiling a second simulation. Assertion-enabled
 t/1528 remains the sole shared continuous/ready-low/grant-low runtime proof.
 The alias established 322/363/46. The generic exact-three paired source
-established 323/364/47; its matching alias moves current accounting to 324
+established 323/364/47; its matching alias established 324
 protocol fixtures / 365 supported+strict / 48 AHB paths. The generic
 two-subordinate exact-three paired source established 325/366/49; its matching
-alias now moves current accounting to 326 protocol fixtures, 367
-supported-smoke/strict fixtures, and 50 AHB IAL2 paths split 25 `.ppif` / 25
-`.ahb`.
+alias established 326/367/50. The later generic exact-four requester moves
+current accounting to 327 protocol fixtures, 368 supported-smoke/strict
+fixtures, and 51 AHB IAL2 paths split 26 `.ppif` / 25 `.ahb`.

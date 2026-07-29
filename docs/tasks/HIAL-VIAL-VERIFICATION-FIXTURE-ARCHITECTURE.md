@@ -226,4 +226,7 @@ evidence-backed handoff.
   no architecture or priority change.
 - `2026-07-29`: Clean contract commit `58efc8aff` activates exact-four
   implementation `.3`; HIAL/VIAL remains proposed and unchanged.
+- `2026-07-29`: Exact-four implementation `.3` ships the generic source at
+  327/368/51 split 26/25 and reserves a separate proposed alias-contract `.4`;
+  HIAL/VIAL remains proposed with no architecture or priority change.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

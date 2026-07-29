@@ -37,8 +37,9 @@ semantic root:  top
 children:       4
 ```
 
-Current accounting is 326 protocol fixtures, 367 supported-smoke fixtures,
-367 strict-supported fixtures, and 50 AHB IAL2 paths split 25 generic `.ppif`
+The matching alias established 326 protocol fixtures, 367 supported-smoke and
+strict-supported fixtures, and 50 AHB IAL2 paths. The later generic exact-four
+requester moves current accounting to 327/368/51 split 26 generic `.ppif`
 sources / 25 `.ahb` aliases.
 
 ## Generated Architecture

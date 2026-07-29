@@ -64,9 +64,9 @@ The generic `.ppif` report keeps `ahb_profile_alias_deferred` to identify the
 second source surface. Existing suffix-keyed adapter handling removes only that
 residue from the `.ahb` report. Both keep identical
 `ahb_requester_busy_insert_support` detail: exact two qualified BUSY events
-ship, the additive generic exact-three source is supported, and only counts
-above three, multiple insertion points, and runtime/policy/random throttling
-remain deferred.
+ship, the additive generic exact-three and exact-four sources are supported,
+and only counts above four, multiple insertion points, and
+runtime/policy/random throttling remain deferred.
 
 No parser or generator algorithm changed for the alias.
 
@@ -90,8 +90,9 @@ exact-three requester established 321/362/45; its matching exact-three alias
 established 322/363/46. The generic exact-three paired source established
 323/364/47; its matching alias established 324/365/48. The generic
 two-subordinate exact-three paired source established 325/366/49; its matching
-alias now moves current totals to 326/367 and 50 AHB paths: twenty-five
-`.ppif` sources and twenty-five `.ahb` aliases.
+alias established 326/367/50. The later generic exact-four requester moves
+current totals to 327/368 and 51 AHB paths: twenty-six `.ppif` sources and
+twenty-five `.ahb` aliases.
 
 The alias is exposed through the same bounded semantic contract as every other
 support-accounted source. Strict check and `--emit-semantic-json` report its
@@ -124,10 +125,9 @@ observe one BUSY episode, exactly two qualified BUSY events, the same resumed
 
 The generic two-subordinate exact-two requester/subordinate composition and its
 matching `.ahb` alias now ship through the existing generators. The later
-generic exact-three requester, its matching `.ahb` alias, and the generic
-one-subordinate exact-three pairing also ship separately. Its matching paired
-alias and two-subordinate exact-three form, literal BUSY counts above three,
-generalized count width, multiple insertion points, runtime-selected
+generic exact-three requester, its matching `.ahb` alias, both generic/profile
+exact-three paired topologies, and the generic exact-four requester also ship.
+The exact-four requester alias, literal BUSY counts above four, multiple insertion points, runtime-selected
 counts/points, policy/random throttling, distinct local bus-BUSY status,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend

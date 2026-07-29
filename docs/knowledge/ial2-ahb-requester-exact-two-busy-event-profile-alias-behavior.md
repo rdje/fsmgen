@@ -39,8 +39,8 @@ matching alias established 318/359/42. The generic two-subordinate exact-two
 source established 319/360/43; its matching alias established 320/361/44. The
 additive generic exact-three requester established 321/362/45; its matching
 alias established 322/363/46. The generic exact-three paired source established
-323/364/47; its matching alias now moves current accounting to 324/365/48,
+323/364/47; its matching alias established 324/365/48,
 split twenty-four `.ppif` and twenty-four `.ahb`. The generic two-subordinate
-exact-three paired source established 325/366/49; its matching alias moves
-current accounting to 326/367/50, split twenty-five `.ppif` and twenty-five
-`.ahb`.
+exact-three paired source established 325/366/49; its matching alias established
+326/367/50. The later generic exact-four requester moves current accounting to
+327/368/51, split twenty-six `.ppif` and twenty-five `.ahb`.

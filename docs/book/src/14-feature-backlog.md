@@ -11453,6 +11453,16 @@ MCP/verifier/preservation gates. One generic source projects 327/368/51 split
 [contract selection](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_CONTRACT_SELECTION.md).
 Clean contract commit `58efc8aff` activates only implementation `.3`;
 activation changes continuity documentation and no public behavior.
+Implementation `.3` now ships `ppif/ahb_requester_busy_insert_four.ppif`
+through the existing requester pipeline. Literal normalization is `2..4`;
+integer-loop minimum-width lowering preserves two-bit counters for exact two
+and three and emits three bits for exact four. Assertion-enabled t1535 proves
+continuous/32-ready-low/32-grant-low `4 -> 3 -> 2 -> 1 -> 0` runtime plus
+strict/schedule/artifact/semantic/read-only-MCP/verifier and preservation
+surfaces. Current accounting is 327 protocol / 368 supported+strict / 51 AHB
+paths split 26 `.ppif` / 25 `.ahb`. The exact-four alias and broader
+BUSY/HIAL-VIAL/VHDL/verification work remain separate. See the
+[behavior record](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

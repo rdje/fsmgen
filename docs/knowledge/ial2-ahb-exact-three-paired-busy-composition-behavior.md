@@ -32,6 +32,7 @@ generator algorithm, report API, or feature-specific MCP route was added.
 Focused t/1532 proves alias byte/report/artifact/strict/schedule/semantic/MCP/
 repository-local-output/HDL-verifier parity without duplicating t/1531
 runtime. The later generic two-subordinate exact-three paired source established
-325/366/49; its matching alias now moves current accounting to 326 protocol
-fixtures, 367 supported-smoke/strict fixtures, and 50 AHB IAL2 paths split 25
-`.ppif` / 25 `.ahb`.
+325/366/49; its matching alias established 326/367/50. The later generic
+exact-four requester moves current accounting to 327 protocol fixtures, 368
+supported-smoke/strict fixtures, and 51 AHB IAL2 paths split 26 `.ppif` / 25
+`.ahb`.

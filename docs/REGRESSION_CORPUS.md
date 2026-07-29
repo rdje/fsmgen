@@ -500,8 +500,15 @@ are also strict-supported, select `ahb_tb` with semantic root `top` and four
 children, and use the topology-first generic/profile support identities.
 Focused t/1533 owns source delta plus assertion-enabled two-command 10/8/2/6/2
 runtime; t/1534 owns alias strict, schedule, artifact, normalized-semantic,
-read-only-MCP, and verifier parity. Current totals are 326 protocol fixtures
-and 367 supported-smoke/strict-supported fixtures.
+read-only-MCP, and verifier parity.
+
+The generic exact-four requester at `ppif/ahb_requester_busy_insert_four.ppif`
+is strict-supported as `intent.ppif_ahb_requester_busy_insert_four`, selects
+`amba_requester_busy_insert_four` with semantic root `fsm`, and is covered by
+focused t/1535 for exact artifacts, normalized semantic/read-only-MCP parity,
+and assertion-enabled continuous/ready-low/grant-low `4 -> 3 -> 2 -> 1 -> 0`
+runtime. Current totals are 327 protocol fixtures and 368
+supported-smoke/strict-supported fixtures.
 
 ## Capability manifest
 

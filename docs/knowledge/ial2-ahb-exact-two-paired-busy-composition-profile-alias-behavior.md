@@ -38,7 +38,7 @@ That alias established the 318/359/42 checkpoint. The generic two-subordinate
 exact-two source established 319/360/43; its matching alias established
 320/361/44. The additive generic exact-three requester established 321/362/45;
 its matching alias established 322/363/46. The generic exact-three paired
-source established 323/364/47; its matching alias now moves current accounting
+source established 323/364/47; its matching alias established
 to 324 protocol fixtures, 365 supported-smoke/strict fixtures, and 48 AHB IAL2
 paths split between twenty-four `.ppif` and twenty-four `.ahb`.
 New support-accounted semantics continue to extend the one

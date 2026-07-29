@@ -56,15 +56,21 @@ The additive generic exact-three requester now also ships with literal
 `busy-beats=3`, unchanged width-two counter lowering, direct `3 -> 2 -> 1 -> 0`
 runtime proof, and a matching byte-identical alias that established the
 322/363/46 checkpoint. The generic exact-three paired source established
-323/364/47, and its matching alias moves current accounting to 324/365/48.
+323/364/47, and its matching alias established 324/365/48.
 Facts `ial2-ahb-requester-exact-three-busy-event-behavior` and
 `ial2-ahb-requester-exact-three-busy-event-profile-alias-behavior` own that
 surface.
 
+The additive generic exact-four requester also ships with literal
+`busy-beats=4`, a preserving width-three counter, and direct
+`4 -> 3 -> 2 -> 1 -> 0` continuous/stall runtime proof. Fact
+`ial2-ahb-requester-exact-four-busy-event-behavior` owns the current
+327/368/51 checkpoint split 26 `.ppif` / 25 `.ahb`.
+
 Historical audit `ial2-ahb-requester-multi-busy-insertion-readiness-audit`
 records the pre-repair ten-qualified-edge contradiction. Repair fact
 `ial2-ahb-requester-single-busy-event-cardinality-repair` owns the shipped
-exact-one result. The generic one-subordinate exact-three paired composition
-now also ships; its alias and two-subordinate form, counts above three,
+exact-one result. Generic/profile one- and two-subordinate exact-three paired
+compositions ship. The exact-four requester alias, counts above four,
 policy/runtime-selected BUSY behavior,
 distinct local bus-BUSY status, and broader requester behavior remain deferred.

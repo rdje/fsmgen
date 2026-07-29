@@ -64,8 +64,9 @@ The generic `.ppif` report keeps `ahb_profile_alias_deferred` to identify the
 second source surface. Existing suffix-keyed adapter handling removes only that
 residue from the `.ahb` report. Both keep identical
 `ahb_requester_busy_insert_support` detail: exact three qualified BUSY events
-ship, while counts above three, multiple insertion points, and runtime/policy/
-random throttling remain deferred.
+ship and the additive generic exact-four source is supported, while counts
+above four, multiple insertion points, and runtime/policy/random throttling
+remain deferred.
 
 No parser or generator algorithm changed for the alias.
 
@@ -85,9 +86,10 @@ The alias established 322 protocol fixtures, 363 supported-smoke/strict-
 supported fixtures, and 46 AHB IAL2 paths. The generic exact-three paired
 source established 323/364/47; its matching alias moves current support
 checkpoint to 324/365/48. The generic two-subordinate exact-three paired source
-established 325/366/49; its matching alias now moves current support accounting
-to 326 protocol fixtures, 367 supported-smoke/strict-supported fixtures, and 50
-AHB paths split 25 `.ppif` sources / 25 `.ahb` aliases.
+established 325/366/49; its matching alias established 326/367/50. The later
+generic exact-four requester moves current support accounting to 327 protocol
+fixtures, 368 supported-smoke/strict-supported fixtures, and 51 AHB paths split
+26 `.ppif` sources / 25 `.ahb` aliases.
 
 Strict check and `--emit-semantic-json` expose the alias path, support ID,
 coverage, source kind, module, and `fsm` semantic root. The read-only MCP
@@ -126,9 +128,9 @@ count.
 
 ## Explicit Deferrals
 
-The generic one-subordinate exact-three paired composition now also ships. Its
-matching alias and two-subordinate exact-three form, literal BUSY counts above three, generalized
-count width, multiple insertion points, runtime-selected counts/points, policy/
+Generic/profile one- and two-subordinate exact-three paired compositions and
+the generic exact-four requester now also ship. The exact-four requester alias,
+literal BUSY counts above four, multiple insertion points, runtime-selected counts/points, policy/
 random throttling, distinct local bus-BUSY status, larger/broader bursts,
 optional AHB signals, managers, queues/outstanding transfers, direct seeds/
 backends, verification-output generation, backend variants, selector repairs,

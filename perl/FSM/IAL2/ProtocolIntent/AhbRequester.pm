@@ -255,8 +255,8 @@ sub _normalize_transfer($raw) {
 
     if (exists($raw->{busy_beats})) {
         my $value = $raw->{busy_beats};
-        confess "AHB requester transfer.busy_beats must be a literal integer in 2..3 in this slice\n"
-            if ref($value) || !defined($value) || $value !~ /\A[23]\z/;
+        confess "AHB requester transfer.busy_beats must be a literal integer in 2..4 in this slice\n"
+            if ref($value) || !defined($value) || $value !~ /\A[234]\z/;
         $transfer{busy_beats} = 0 + $value;
     }
 
@@ -276,6 +276,16 @@ sub _normalize_response($raw) {
     };
 }
 
+sub _counter_width($max_value) {
+    my $width = 1;
+    my $limit = 2;
+    while ($limit <= $max_value) {
+        ++$width;
+        $limit *= 2;
+    }
+    return $width;
+}
+
 sub _emit_isf($contract) {
     my $cmd = $contract->{local_command};
     my $status = $contract->{local_status};
@@ -288,6 +298,7 @@ sub _emit_isf($contract) {
     my $busy_before_beat = $transfer->{busy_before_beat};
     my $busy_beats = $transfer->{busy_beats};
     my $multiple_busy = defined($busy_beats);
+    my $busy_counter_width = $multiple_busy ? _counter_width($busy_beats) : undef;
     my @transfer_busy_drive = defined($busy_before_beat)
         ? (
             "  (drive transfer_busy",
@@ -310,7 +321,7 @@ sub _emit_isf($contract) {
     my @busy_storage = $multiple_busy
         ? (
             "    (var $internal_done (width 1) (reset 0))",
-            "    (var ahb_busy_remaining_q (width 2) (reset 0)))",
+            "    (var ahb_busy_remaining_q (width $busy_counter_width) (reset 0)))",
         )
         : "    (var $internal_done (width 1) (reset 0)))";
     my @busy_init = defined($busy_before_beat)
@@ -714,7 +725,7 @@ sub _build_report(%args) {
                 ? 'BUSY insertion requires HTRANS BUSY 2\'b01 and a literal before-beat index in 1..15'
                 : ()),
             (defined($contract->{transfer}{busy_beats})
-                ? 'multiple BUSY insertion is bounded to literal busy-beats values 2..3 in this slice'
+                ? 'multiple BUSY insertion is bounded to literal busy-beats values 2..4 in this slice'
                 : ()),
             'direct IAL2-to-IAL0 lowering is forbidden',
         ],
@@ -760,10 +771,12 @@ sub _unsupported_residue($contract) {
     if (defined($contract->{transfer}{busy_before_beat})) {
         my $busy_beats = $contract->{transfer}{busy_beats};
         my $detail = !defined($busy_beats)
-            ? 'This source ships one exact qualified requester HTRANS BUSY event before one literal SEQ beat; additive exact-two and exact-three behavior is supported by ppif/ahb_requester_busy_insert_two.ppif and ppif/ahb_requester_busy_insert_three.ppif, while counts beyond three, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.'
+            ? 'This source ships one exact qualified requester HTRANS BUSY event before one literal SEQ beat; additive exact-two, exact-three, and exact-four behavior is supported by ppif/ahb_requester_busy_insert_two.ppif, ppif/ahb_requester_busy_insert_three.ppif, and ppif/ahb_requester_busy_insert_four.ppif, while counts beyond four, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.'
             : $busy_beats == 2
-                ? 'This source ships bounded exact-two qualified requester HTRANS BUSY events before one literal SEQ beat; additive exact-three behavior is supported by ppif/ahb_requester_busy_insert_three.ppif, while counts beyond three, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.'
-                : 'This source ships bounded exact-three qualified requester HTRANS BUSY events before one literal SEQ beat; counts beyond three, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.';
+                ? 'This source ships bounded exact-two qualified requester HTRANS BUSY events before one literal SEQ beat; additive exact-three and exact-four behavior is supported by ppif/ahb_requester_busy_insert_three.ppif and ppif/ahb_requester_busy_insert_four.ppif, while counts beyond four, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.'
+                : $busy_beats == 3
+                    ? 'This source ships bounded exact-three qualified requester HTRANS BUSY events before one literal SEQ beat; additive exact-four behavior is supported by ppif/ahb_requester_busy_insert_four.ppif, while counts beyond four, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.'
+                    : 'This source ships bounded exact-four qualified requester HTRANS BUSY events before one literal SEQ beat; counts beyond four, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.';
         push @residue, {
             id => 'ahb_requester_busy_insert_support',
             detail => $detail,
