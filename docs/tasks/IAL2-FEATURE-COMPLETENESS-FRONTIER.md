@@ -5769,11 +5769,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.814: select subordinate arbitration audit`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact IAL2 feature-completeness owner after assertion-clean generated AHB subordinate arbitration ships.`
   Acceptance: `Activate only after clean generated-subordinate behavior commit 1eec6253d and the clean HIAL/VIAL parking boundary 64f056b12. Reconcile .814, the completed IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION .1-.3 lineage, the now assertion-enabled generated direct and paired AHB families, the separately proposed IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION owner and t1520 --no-assert boundary, exact-three requester and exact-two paired-composition lineage, current AHB source/report residue, focused runtime/parity/current-truth tests, support/language/capability/semantic-MCP surfaces, roadmap, mdBook, Knowledge Map, proposed correctness owners, and decision 0020. Choose exactly one smallest evidence-backed next owner among the direct IAL0 seed arbitration audit, exact-three paired composition, literal counts above three and required width/contract readiness, policy/runtime/multiple-point insertion, distinct local bus-BUSY status, wider/indefinite burst or optional-signal work, generic selector-priority enforcement, another roadmap-aligned protocol/platform residue, or explicit parent completion. Freeze task ownership, activation boundary, preservation, validation, docs/Knowledge Map, the director-authorized macOS host-max 100 / descendant 4096-MiB profile with exact Stats-compatible capacity plus separate kernel-pressure reporting, repository-derived same-volume cleanup, and rollback before behavior changes. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, backend, protocol, verification-generation, or transaction-layer behavior change in this selector; keep HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE and decision 0020 proposed/inactive.`
-  Verification: `Activated from clean generated-subordinate behavior commit 1eec6253d after .1-.3 completed the endpoint arbitration audit, contract, five-write repair, assertion-enabled base/rich direct and six paired gates, preservation/accounting/semantic-MCP/docs/doctrine proof, exact Stats-compatible RAM reporting, and same-volume cleanup. Clean follow-up commit 64f056b12 parked the director-approved HIAL/VIAL architecture without changing IAL2 priority. Activation changes task/index/Memory/roadmap/mdBook continuity only; selection work has not started.`
-  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815: activate post-subordinate selector`
+  Verification: `Selected proposed IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1 after reconciling .814, the completed generated endpoint .1-.3 lineage, assertion-enabled generated direct and paired families, the direct seed/task/fact/t1520 boundary, exact-three requester and exact-two paired lineage, current AHB residue and public/semantic-MCP surfaces, generic selector/priority owners, HIAL/VIAL, and decision 0020. The generated endpoint repair retires --no-assert from t1513-t1516/t1519/t1523/t1525; only t1520 retains it in the audited family. The direct seed authors access HREADYOUT/HRDATA/HRESP defaults plus conditional success/read/ERROR overrides, and completed diagnostics reproduce all three bus conflicts with internal assertions enabled. Guarded t1211/t1219/t1520 pass 3 files/9 tests in 7 seconds, proving generic selector visibility and current direct behavior remain sound. Direct-seed correctness is smaller than exact-three paired expansion, counts/policy/status/burst/signal work, generic priority changes, HIAL/VIAL activation, or decision 0020. Canonical selector/fact, task/index, README, roadmap, mdBook, Memory, and Knowledge Map are synchronized at 1,018 facts/5,180 keys; mdBook and all doctrine gates pass. The generated book output contained 72 files/15,856 KiB and was removed with no build residue. Exact post-gate Stats-compatible RAM capacity was 55.0% (13.19/24.00 GiB) and kernel pressure was 1 (normal); guard percentages up to 99.7% were excluded as capacity truth. No parser/generator/source/support/test/artifact/semantic-MCP API/HDL/runtime/backend/protocol/verification-generation/transaction behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815: select direct seed arbitration audit`
 
 Activation condition was satisfied when `.810` committed cleanly at
 `e2dc65507`; `.811` was then activated. That activation changed only
@@ -5798,8 +5798,9 @@ activation boundary. Parent selector `.813` selected
 complete at clean commit `6eeac974c`. Parent selector `.814` selected the
 generated AHB subordinate arbitration tree; that child tree is complete at
 clean behavior commit `1eec6253d`. Clean HIAL/VIAL parking commit `64f056b12`
-preserved IAL2 priority, and parent selector `.815` is now active from that
-handoff-ready boundary.
+preserved IAL2 priority. Parent selector `.815` now selects proposed
+`IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1`; activate that contract leaf
+only after the `.815` selector commit is clean.
 
 ## Current Frontier
 

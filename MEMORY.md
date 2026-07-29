@@ -5,14 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.815: activate post-subordinate selector`;
-  predecessor `64f056b12`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815`.
-- current_state: generated AHB subordinate arbitration is complete at
-  `1eec6253d`; `.815` is active from the clean HIAL/VIAL parking boundary.
-- next_action: reconcile `.815` candidates and select exactly one smallest
-  evidence-backed IAL2 owner.
+- latest_commit: this task-scoped selector commit,
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.815: select direct seed arbitration audit`;
+  predecessor `85ef488cb`.
+- active_work_unit: none after this commit; `.815` selection is done.
+- current_state: `.815` selects proposed
+  `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1` as the next exact
+  correctness owner; no behavior changes in the selector.
+- next_action: from the clean `.815` selector commit, activate the selected
+  direct IAL0 arbitration contract `.1` without starting implementation.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -29,8 +30,8 @@ bounded current-state pointer. Git preserves its prior history.
   completed parent `.813` selected the AHB interconnect arbitration audit;
   child `.1`-.3 tree is complete and parent selector `.814` selected the
   subordinate arbitration tree. Its audit `.1`, contract `.2`, and five-write
-  implementation `.3` are complete; parent selector `.815` is active. The
-  distinct direct IAL0 seed override gap is parked under proposed
+  implementation `.3` are complete; parent selector `.815` selects the
+  distinct direct IAL0 seed override gap under proposed
   `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION`; decision `0020` remains
   proposed/inactive.
 - Proposed startup-alignment owners remain:

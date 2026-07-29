@@ -7410,8 +7410,13 @@ remain parked. See
 Clean behavior commit `1eec6253d` completes the generated subordinate
 arbitration tree, and clean HIAL/VIAL parking commit `64f056b12` preserves the
 active IAL2 priority. Parent selector `.815` is now active from that
-handoff-ready boundary. Activation changes continuity documentation only; no
-next behavior owner has been selected yet.
+handoff-ready boundary and selects proposed
+`IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1`. Generated direct and paired
+AHB tests now run with assertions, while t1520 alone retains `--no-assert`
+because the hand-authored seed has separate HREADYOUT, HRDATA, and HRESP
+conditional overrides. Direct-seed correctness precedes exact-three paired
+expansion and broader AHB work. See
+`docs/IAL2_POST_SUBORDINATE_ARBITRATION_NEXT_OWNER_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
