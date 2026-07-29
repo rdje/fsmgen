@@ -2290,6 +2290,11 @@ assertion-enabled t1535 remains shared runtime. Current accounting is
 [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
 The exact-four child tree is complete. Pending parent selector `.823` may
 activate only after the clean `.5` behavior commit.
+Clean exact-four alias behavior commit `ba2d1c01f` activates parent selector
+`.823` without changing behavior. The generic/profile pair remains byte-
+identical at 328/369/52 split 26/26; t1536 remains alias parity and t1535
+remains the shared assertion-enabled runtime while `.823` selects one next
+roadmap owner.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

@@ -240,4 +240,7 @@ evidence-backed handoff.
 - `2026-07-29`: Exact-four alias implementation `.5` ships the requester
   generic/profile pair at 328/369/52 split 26/26; HIAL/VIAL remains proposed
   with no architecture or priority change.
+- `2026-07-29`: Clean exact-four alias behavior commit `ba2d1c01f` activates
+  parent selector `.823`; HIAL/VIAL remains proposed while the selector
+  compares it with the remaining exact roadmap owners.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

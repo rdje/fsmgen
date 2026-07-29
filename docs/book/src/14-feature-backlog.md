@@ -11485,6 +11485,10 @@ runtime. Current accounting is 328/369/52 split 26 `.ppif` / 26 `.ahb`. See
 the [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
 The exact-four child tree is complete. Pending parent selector `.823` may
 activate only after the clean `.5` behavior commit.
+Clean exact-four alias behavior commit `ba2d1c01f` activates parent selector
+`.823` without changing behavior. The exact-four generic/profile pair remains
+at 328/369/52 split 26/26; t1536 remains parity-only and t1535 remains the
+shared assertion-enabled runtime while the selector reconciles the next owner.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

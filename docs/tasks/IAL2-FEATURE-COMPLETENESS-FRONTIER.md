@@ -5825,11 +5825,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.822: select exact-four AHB BUSY readiness`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.823`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the next exact roadmap-aligned owner after the exact-four requester generic/profile pair ships cleanly.`
   Acceptance: `Activate only after IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.5 commits cleanly. Reconcile the complete exact-one through exact-four requester generic/profile family at 328 protocol / 369 supported+strict / 52 AHB paths split 26/26, the one-/two-window exact-one/two/three paired families, current count-width/report/residue/runtime/semantic-read-only-MCP surfaces, exact-four paired-composition/count-above-four/policy/runtime/multiple-point/local-status/burst/signal residue, generic selector-priority and scalability owners, other roadmap lanes, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE, completed verification-output foundations, decisions 0004/0008/0020, roadmap, mdBook, and Knowledge Map. Choose exactly one smallest evidence-backed next owner and explain why it outranks the alternatives. Preserve event-capable compiled Verilator as the portable-fast subset profile separately from a qualified full-language/SystemVerilog-UVM simulator, with VHDL/mixed-language claims qualified independently. Freeze exact ownership, clean activation boundary, preservation, focused/broader validation, docs/Knowledge Map impact, authorized host100/process4096 with exact Stats-compatible capacity plus separate kernel pressure, repository-derived same-volume cleanup, and rollback before behavior changes. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction-layer behavior change in this selector. Keep decision 0020 proposed/inactive unless independently and explicitly selected.`
-  Verification: `pending clean exact-four alias behavior commit and separate activation.`
-  Commit: `pending`
+  Verification: `Activated only after clean exact-four alias behavior commit ba2d1c01f. Activation changes task/index/Memory/roadmap/mdBook/HIAL-VIAL continuity state only. Exact-four generic/profile behavior remains byte-identical at 328 protocol / 369 supported+strict / 52 AHB paths split 26/26; t1536 remains the alias-parity proof and assertion-enabled t1535 remains shared runtime. Focused t1518+t1256+t1414 pass 3 files/22 top-level tests including 66 nested current-AHB assertions. Knowledge Map generation/check passes at 1,037 facts/5,296 question keys. mdBook builds exactly 72 files/16,276,592 bytes; the exact repository-local render tree is removed and absence is verified. Memory remains bounded; diff and all six doctrine gates pass. Canonical Stats-compatible RAM is 57.9% (13.888/24.000 GiB; 14,912,307,200 bytes), kernel pressure is separately 1 (normal), and neither guard occupancy nor inverted memory_pressure free percentage is used as capacity truth. No parser, generator, source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes in activation. Selection evidence remains pending.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.823: activate post-exact-four selector`
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25
@@ -5853,8 +5853,9 @@ The selected exact-four child tree now completes through `.5`: `.1` proved
 width-three lower-layer and assertion-enabled runtime readiness, `.2` froze
 literal `2..4` plus minimum widths 2/2/3, `.3` shipped the generic source and
 t1535 runtime, `.4` selected the matching alias, and `.5` ships the byte-
-identical `.ahb` surface with t1536 parity at 328/369/52 split 26/26. Pending
-parent selector `.823` may activate only after the clean `.5` commit.
+identical `.ahb` surface with t1536 parity at 328/369/52 split 26/26. Clean
+behavior commit `ba2d1c01f` activates parent selector `.823` without changing
+public behavior.
 
 Selector verification: current-surface/backlog/path tests pass 3 files/22
 tests; Knowledge Map generation/check passes at 1,026 facts/5,231 question

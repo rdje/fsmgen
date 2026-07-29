@@ -5,16 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this `.5` behavior commit; predecessor activation
-  `bd7fb01cf`.
-- active_work_unit: none after this commit; pending parent
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.823` is next.
+- latest_commit: this `.823` activation commit; predecessor exact-four alias
+  behavior `ba2d1c01f`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.823`.
 - current_state: exact-four requester generic/profile surfaces ship byte-
   identically at 328 protocol / 369 supported-smoke+strict / 52 AHB paths
   split 26/26. t1536 proves alias parity without simulation; assertion-enabled
   t1535 remains shared `4->3->2->1->0` runtime.
-- next_action: after this clean commit, activate parent selector `.823` in a
-  separate continuity commit, then select the next exact roadmap owner.
+- next_action: reconcile the exact-one through exact-four requester and paired
+  AHB frontier, then select exactly one smallest evidence-backed next owner.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -34,7 +33,7 @@ bounded current-state pointer. Git preserves its prior history.
   `.3` ships literal `2..4`, preserving minimum widths 2/2/3, exact source/
   support/semantic surfaces, and t1535. `.4` selected `.5`; `.5` ships the
   byte-identical alias, exact support/semantic parity, t1536, and 328/369/52.
-  Pending parent `.823` owns the next selection. Decision `0020` remains
+  Active parent `.823` owns the next selection. Decision `0020` remains
   inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

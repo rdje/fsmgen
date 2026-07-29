@@ -7684,6 +7684,13 @@ HIAL/VIAL, VHDL, or verification-generation behavior changed. See
 The exact-four child tree is complete. Pending parent selector `.823` may
 activate only after the clean `.5` behavior commit, then selects the next
 smallest roadmap-aligned owner without behavior in its activation slice.
+Clean exact-four alias behavior commit `ba2d1c01f` activates parent selector
+`.823`. Activation changes continuity documentation only: the exact-four
+generic/profile pair remains byte-identical at 328/369/52 split 26/26, t1536
+remains its parity proof, and t1535 remains the shared assertion-enabled
+runtime. No source, support, test, artifact, HDL/runtime, simulator-profile,
+backend, protocol, HIAL/VIAL, VHDL, verification-generation, or transaction
+behavior changes in activation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
