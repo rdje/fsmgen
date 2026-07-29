@@ -5760,7 +5760,7 @@ source, support entry, test, parser/generator/API, HDL, or runtime behavior.
 `.811` committed cleanly at `1b5687d39`; same-volume adoption then completed at
 `57ab6e7d1`, and `.812` activated from clean commit `974899b7b`. `.812` selects
 proposed `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`,
-which cannot activate until this selector commits cleanly.
+which activated only after this selector committed cleanly at `37f17ff00`.
 
 ## Current Frontier
 

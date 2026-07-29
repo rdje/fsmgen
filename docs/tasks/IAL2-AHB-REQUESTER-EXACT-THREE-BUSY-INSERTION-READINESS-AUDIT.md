@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `IAL2 / AHB requester BUSY policy`
 - Created: `2026-07-29`
 - Last updated: `2026-07-29`
@@ -67,12 +67,12 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
 ## Task Tree
 
 - ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit literal-three requester BUSY reuse before selecting public behavior.`
   Children: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`
 
 - ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Runtime-prove or disprove literal-three reuse of the shipped width-two requester BUSY counter.`
   Acceptance: `Starting only after clean .812 selector commit, create a same-volume repo-local disposable candidate from the shipped exact-two requester, admit only literal busy-beats 3 in that candidate, preserve width-two ahb_busy_remaining_q and current qualified >1/==1 retirement rules, and run assertion-enabled continuous/32-ready-low/32-grant-low generated-HDL scenarios. Prove exactly one BUSY episode, three qualified BUSY events, no stall-time count consumption or BUSY data/response completion, stable address/control/write-data/beat ownership, one resumed pending SEQ, four accepted byte INCR4 data beats, zero final remaining count, and no exact-one/exact-two regression. Reconcile strict/schedule/report/artifacts/normalized semantic/read-only MCP surfaces and select a separate contract, prerequisite, deferral, or closure leaf from evidence. Remove all disposable artifacts. Make no shipped behavior change.`
   Verification: `pending`
@@ -85,6 +85,9 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
 - `2026-07-29`: Bound the first audit to literal three at the existing single
   insertion point. Wider/general counts and policy-selected points are larger
   independent contracts.
+- `2026-07-29`: Activation condition satisfied: `.812` committed cleanly at
+  `37f17ff00`; `.1` is active and still changes no shipped behavior until its
+  evidence selects a separate contract or repair owner.
 
 ## Blockers
 

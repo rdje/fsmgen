@@ -6,16 +6,16 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.812: select exact-three AHB BUSY audit`;
-  predecessor `974899b7b`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.812`.
-- current_state: `.812` selects proposed
-  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`. Static
-  evidence shows literal three fits the shipped width-two counter; runtime
-  proof remains required before any public contract.
-- next_action: after this selector commits cleanly, activate the proposed
-  exact-three audit `.1` in a separate task-scoped commit, then run its
-  same-volume guarded disposable generated-HDL proof.
+  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1: activate exact-three BUSY audit`;
+  predecessor `37f17ff00`.
+- active_work_unit:
+  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`.
+- current_state: `.812` is committed and the selected exact-three readiness
+  audit is active. Static evidence shows literal three fits the shipped
+  width-two counter; runtime proof remains required before any public contract.
+- next_action: execute `.1` from a same-volume disposable workspace under the
+  RAM guard: prove continuous/32-ready-low/32-grant-low exact-three cardinality,
+  preservation, report/artifact/semantic/MCP parity, then select one next owner.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none for selection or activation. Guarded runtime can be stopped
   by the already-tracked macOS metric/external host pressure; never raise the
@@ -26,7 +26,7 @@ bounded current-state pointer. Git preserves its prior history.
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
 - The IAL2 frontier is complete through `.812` at unchanged support
-  `320/361/44`; the proposed exact-three audit is the selected next owner.
+  `320/361/44`; exact-three audit `.1` is the active next owner.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
