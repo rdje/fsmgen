@@ -7337,6 +7337,9 @@ the separately owned subordinate idle/phase-capture overlap. Public sources,
 ports, reports, support, artifacts, semantic/MCP surfaces, and transaction
 behavior are unchanged. See
 `docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
+Clean child commit `6eeac974c` completes the arbitration tree, so parent
+selector `.814` is now active from that handoff-ready boundary. Activation
+changes continuity documentation only; no next owner has been selected yet.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
