@@ -6,17 +6,15 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.3: close same-volume adoption`;
-  predecessor `017153eac`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER` has no selected leaf
-  after completed `.811`; same-volume adoption is complete through `.3`.
-- current_state: decision 0022 is fully adopted. Runtime/lowering, standard
-  tests and gates, tool caches, active public commands, fact reverification,
-  Knowledge Map generation, and mdBook guidance use repository-derived local
-  storage. The doctrine gate now requires zero active OS-temp paths.
-- next_action: resume roadmap PNT from the clean commit: inspect the current
-  IAL2 residue/support frontier and select the smallest exact `.812` leaf in
-  `docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md` before any implementation.
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.812: activate post-adoption selector`;
+  predecessor `57ab6e7d1`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.812`.
+- current_state: same-volume adoption is complete. PNT has resumed after
+  `.811`, and `.812` owns a no-behavior comparison of the smallest remaining
+  AHB/roadmap residues, beginning with literal requester BUSY counts beyond two.
+- next_action: execute `.812`: reconcile current AHB code/tests/reports/docs and
+  select exactly one smallest evidence-backed follow-on owner; do not change
+  parser, generator, source, support, test, API, HDL, or runtime behavior.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none for task selection. Guarded confirmatory reruns can be stopped
   by the already-tracked macOS metric/external host pressure; never raise the
@@ -26,8 +24,8 @@ bounded current-state pointer. Git preserves its prior history.
 
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
-- The IAL2 frontier is complete through `.811` at support `320/361/44`; no
-  `.812` contract is selected yet. Decision `0020` remains proposed/inactive.
+- The IAL2 frontier is complete through `.811` at support `320/361/44`; `.812`
+  is the active next-owner selector. Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
