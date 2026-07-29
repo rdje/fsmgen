@@ -112,9 +112,10 @@ architecture needed to move beyond that bounded foundation.
 
 This tree is proposed and inactive. `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
 is the first executable leaf only after a future clean-boundary roadmap selector
-activates it. Active parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.817`
-now evaluates this architecture against adjacent roadmap work; the simulator
-profile agreement does not pre-empt that evidence-backed selection.
+activates it. Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.817` kept
+this architecture proposed and selected the smaller adjacent exact-three AHB
+profile alias; the simulator profile agreement did not pre-empt that
+evidence-backed selection.
 
 ## Decisions
 
@@ -136,6 +137,11 @@ profile agreement does not pre-empt that evidence-backed selection.
   tier for advanced native VIAL output. Apply the same claim-by-capability rule
   to VHDL and mixed-language verification. This requirement records the
   director's agreement but does not itself activate this proposed tree.
+- `2026-07-29`: Describe Verilator precisely as event-capable compiled
+  simulation, not a traditional full-language event-driven simulator. Its
+  explicit model-evaluation loop and `--timing` scheduling of supported delays,
+  event controls, waits, forks, and delayed processes strengthen rather than
+  erase the separate full-language/UVM profile requirement.
 
 ## Open Questions
 
@@ -177,5 +183,5 @@ profile agreement does not pre-empt that evidence-backed selection.
 - `2026-07-29`: Added the director-agreed portable-Verilator versus
   full-language/SystemVerilog-UVM validation-profile requirement, with separate
   VHDL and mixed-language claim qualification; the tree remains proposed while
-  parent selector `.817` evaluates priority.
+  parent selector `.817` selected the smaller adjacent AHB alias.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

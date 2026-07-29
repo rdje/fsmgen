@@ -127,12 +127,17 @@ events, one resumed `SEQ`, and final storage `44332211`.
 
 ## Explicit Deferrals
 
-The matching `.ahb` alias and the two-subordinate exact-three pairing require
-separate task-tree owners. Counts above three, generalized counter width,
+Parent selector `.817` now selects pending `.818` for the matching
+byte-identical `.ahb` alias; it remains unshipped until that separate leaf
+activates and passes. The two-subordinate exact-three pairing remains a
+separate future owner. Counts above three, generalized counter width,
 multiple insertion points, runtime-selected or policy/random throttling,
 distinct local bus-BUSY status, broader bursts/signals/managers/fabrics,
 other protocols/backends, VHDL, VIAL verification generation, HIAL/VIAL
 activation, and decision-0020 behavior remain separate.
+
+See
+[`IAL2_POST_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION`](IAL2_POST_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
 
 ## Rollback
 

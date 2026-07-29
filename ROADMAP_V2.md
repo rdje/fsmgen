@@ -7500,13 +7500,18 @@ HIAL/VIAL activation, VHDL, verification generation, and decision 0020 remain
 separate. See `docs/IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
 Clean behavior commit `00d71114d` activates only parent selector
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.817`. This activation changes continuity
-and architecture evidence, not behavior. `.817` must compare adjacent AHB and
-other roadmap residue with the proposed HIAL/VIAL architecture and choose one
-exact owner. The HIAL/VIAL candidate now explicitly requires a portable-fast
-Verilator subset profile plus a separately capability-qualified
-full-language/SystemVerilog-UVM simulator profile; VHDL and mixed-language
-claims receive separate profiles. Recording that director-agreed validation
-boundary does not preselect HIAL/VIAL.
+and architecture evidence, not behavior. `.817` now selects pending `.818`,
+the byte-identical exact-three paired `.ahb` profile alias through existing
+suffix/lowering machinery. A same-volume candidate strict-checks without
+diagnostics, retains the exact 3 IAL1/4 IAL0 artifacts and normalized semantic
+top, and removes only alias-specific residue. Projected accounting is
+324/365/48 split 24/24; t1532 will own alias parity while t1531 remains shared
+runtime. The explicit SystemVerilog-backed IAL2 priority and data-only
+readiness outrank the broader HIAL/VIAL audit at this boundary. HIAL/VIAL stays
+proposed with event-capable compiled Verilator separated from a
+full-language/SystemVerilog-UVM simulator profile and with independent VHDL
+and mixed-language qualification. See
+`docs/IAL2_POST_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
@@ -8479,12 +8484,16 @@ layering. Backend semantic parity, readable generated code, mixed-language
 qualification, migration from current passive observation metadata/skeletons,
 and large-to-very-large-design scale proof all require exact later owners. The
 validation matrix must keep Verilator as a fast portable synthesis-oriented
-SystemVerilog subset tier and use a separately capability-qualified simulator
-tier for advanced full-language/SystemVerilog-UVM output; it must report tool
-versions and exercised capabilities rather than infer full LRM/UVM coverage.
+SystemVerilog subset tier. Verilator compiles a model that is explicitly
+evaluated; `--timing` schedules supported delays, event controls, waits, forks,
+and delayed processes, so it is event-capable compiled simulation rather than
+a traditional full-language event-driven authority. A separately
+capability-qualified simulator tier remains required for advanced
+full-language/SystemVerilog-UVM output; every profile must report tool versions
+and exercised capabilities rather than infer full LRM/UVM coverage.
 VHDL portability, full-language qualification, and mixed-language validation
-are likewise separate claims. Parking this destination does not activate it;
-active selector `.817` now evaluates its priority against adjacent work.
+are likewise separate claims. Parent selector `.817` kept this destination
+proposed and selected the smaller adjacent exact-three AHB profile alias.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile

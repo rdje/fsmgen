@@ -13,12 +13,14 @@ answers:
   - "is Verilator enough to validate full SystemVerilog and UVM VIAL output?"
   - "what simulator capability profiles does VIAL require?"
   - "is Verilator the only planned VIAL simulator?"
+  - "is Verilator a traditional event-driven simulator?"
+  - "does Verilator support events with timing enabled?"
   - "is the HIAL VIAL architecture active now?"
 date: 2026-07-29
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
-evidence: docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; https://verilator.org/guide/latest/languages.html
-reverify: rg -n 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE|Hardware IAL|Verification IAL|typed, language-neutral HIAL/VIAL bridge|VIAL0/VIAL1/VIAL2|typed native extension|portable SystemVerilog|full-language.SystemVerilog-UVM|full-LRM|capability profiles' docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/hial-vial-verification-fixture-architecture.md
+evidence: docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; https://verilator.org/guide/latest/overview.html; https://verilator.org/guide/latest/languages.html; https://verilator.org/guide/latest/connecting.html
+reverify: rg -n 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE|Hardware IAL|Verification IAL|typed, language-neutral HIAL/VIAL bridge|VIAL0/VIAL1/VIAL2|typed native extension|portable SystemVerilog|full-language.SystemVerilog-UVM|full-LRM|capability profiles|event-capable compiled|traditional full-language event-driven' docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/hial-vial-verification-fixture-architecture.md
 ---
 
 The director established a peer-intent architecture requirement on
@@ -46,6 +48,13 @@ a separate, capability-qualified full-language/UVM simulator profile, with the
 tool version and exercised capabilities recorded. VHDL and mixed-language
 verification use the same claim-by-capability discipline: portable,
 full-language, and mixed-language validation are distinct gates.
+
+Verilator is not a traditional full-language event-driven simulator. It
+compiles the design into a model that is explicitly evaluated. With
+`--timing`, supported delays, event controls, waits, forks, and delayed
+processes participate in a timing-aware evaluation loop, so "event-capable
+compiled simulation" is the useful precise description. Those scheduling
+capabilities do not widen Verilator into the authoritative full-LRM/UVM tier.
 
 This requirement is parked under proposed, inactive task tree
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`. It extends the bounded completed
