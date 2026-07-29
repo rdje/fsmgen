@@ -7751,6 +7751,13 @@ two-subordinate exact-four, counts above four, broader BUSY semantics,
 HIAL/VIAL, scale, VHDL, verification generation, and decision 0020 remain
 separate. See
 `docs/IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
+Clean exact-four paired behavior commit `c42347a5e` now activates parent
+selector `.824`. Activation changes task/index/Memory/roadmap/mdBook/fact
+continuity only; public sources, support, tests, HDL/runtime, semantic/MCP,
+simulator integration, HIAL/VIAL, VHDL, verification generation, scale, and
+transaction behavior remain unchanged. `.824` must choose exactly one next
+owner after comparing the matching alias, two-window exact-four, broader AHB,
+generic priority, HIAL/VIAL, portability, verification, and scale candidates.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

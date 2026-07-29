@@ -5,13 +5,12 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped `.3` behavior commit; predecessor `43fa9fa85`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER`; no next selector is
-  activated until the exact-four paired behavior commit is clean.
-- current_state: exact-four paired child `.1`-.3 is complete; the generic
-  source/support/t1537 ships at 329/370/53 split 27/26.
-- next_action: from the clean behavior commit, create and activate the next
-  exact parent selector leaf, then continue roadmap PNT.
+- latest_commit: this task-scoped `.824` activation; predecessor `c42347a5e`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.824`.
+- current_state: exact-four paired child `.1`-.3 is complete at 329/370/53;
+  parent `.824` is active for one exact no-behavior next-owner selection.
+- next_action: execute `.824`: reconcile current evidence and select exactly
+  one smallest roadmap-aligned owner, then commit the selector.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

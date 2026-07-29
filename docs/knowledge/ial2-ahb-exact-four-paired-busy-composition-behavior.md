@@ -33,3 +33,6 @@ MCP route, or simulator integration was added.
 Current accounting is 329 protocol fixtures, 370 supported-smoke/strict
 fixtures, and 53 AHB IAL2 paths split 27 `.ppif` / 26 `.ahb`. The matching
 alias and two-subordinate exact-four topology remain separate.
+
+Clean behavior commit `c42347a5e` activates no-behavior parent selector
+`.824`; it must choose one exact next roadmap owner before further expansion.

@@ -257,4 +257,7 @@ evidence-backed handoff.
 - `2026-07-30`: Exact-four paired implementation `.3` ships the generic source
   at 329/370/53 with assertion-enabled t1537 and semantic/read-only-MCP parity;
   HIAL/VIAL remains proposed with no architecture or priority change.
+- `2026-07-30`: Clean exact-four paired behavior commit `c42347a5e` activates
+  parent selector `.824`; HIAL/VIAL remains proposed while `.824` compares it
+  with adjacent exact AHB and other roadmap owners.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

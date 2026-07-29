@@ -113,6 +113,12 @@ protocols/backends, VHDL, VIAL verification generation, HIAL/VIAL activation,
 large-design scale implementation, and decision-0020 behavior remain separate
 task-tree-owned work.
 
+Clean behavior commit `c42347a5e` activates parent selector
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.824` without changing this shipped
+boundary. The selector must choose one next owner before any alias,
+two-subordinate, broader-AHB, HIAL/VIAL, verification, portability, priority,
+or scale behavior changes.
+
 ## Rollback
 
 Rollback removes only the generic source, its support entry, t1537 and its

@@ -2373,6 +2373,11 @@ repository-local. Current accounting is 329/370/53 split 27 `.ppif` / 26
 `.ahb`; the matching alias and two-subordinate exact-four topology remain
 separate. See the
 [shipped behavior](../../IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
+Clean exact-four paired behavior commit `c42347a5e` now activates parent
+selector `.824` without changing public behavior. The selector must compare
+the matching `.ahb` alias, two-window exact-four form, broader AHB semantics,
+generic priority, HIAL/VIAL, verification generation, portability, and scale
+before choosing one next owner.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
