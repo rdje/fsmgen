@@ -11451,6 +11451,8 @@ counts two/three/four. t1535 will own assertion-enabled
 MCP/verifier/preservation gates. One generic source projects 327/368/51 split
 26 `.ppif` / 25 `.ahb`; the alias remains separate. See the
 [contract selection](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_CONTRACT_SELECTION.md).
+Clean contract commit `58efc8aff` activates only implementation `.3`;
+activation changes continuity documentation and no public behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

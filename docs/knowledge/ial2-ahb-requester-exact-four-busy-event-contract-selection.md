@@ -27,7 +27,8 @@ semantics: exact two and three remain width two, while exact four uses width
 three. Existing qualified rules implement the proven `4 -> 3 -> 2 -> 1 -> 0`
 runtime without a lower-layer feature.
 
-Proposed `.3` owns the source, helper use, report/residue truth, t1535
+Clean contract commit `58efc8aff` activates `.3`, which owns the source,
+helper use, report/residue truth, t1535
 continuous/ready-low/grant-low runtime, semantic/read-only-MCP/artifact/support
 gates, preservation, cleanup, and rollback. The matching alias, counts above
 four, generalized policy, HIAL/VIAL, VHDL, and verification generation remain

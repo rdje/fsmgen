@@ -5,15 +5,16 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped `.2` contract commit; predecessor activation
-  `ebcc89f0f`.
-- active_work_unit: none until proposed `.3` activates after clean `.2`.
+- latest_commit: this task-scoped `.3` activation commit; predecessor contract
+  `58efc8aff`.
+- active_work_unit:
+  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.3`.
 - current_state: two-window exact-three paired AHB generic/profile sources ship
   at 326 protocol / 367 supported-smoke+strict / 50 AHB paths split 25
   `.ppif`/25 `.ahb`; t1534 proves alias parity and t1533 remains shared
   assertion-enabled 10/8/2/6/2 runtime.
-- next_action: after clean `.2`, activate `.3` and implement the generic
-  exact-four source, minimum-width helper use, report/residue/support truth,
+- next_action: implement the frozen generic exact-four contract: source,
+  literal `2..4`, minimum-width helper use, report/residue/support truth,
   t1535 runtime, synchronized 327/368/51 docs, and preservation gates.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus

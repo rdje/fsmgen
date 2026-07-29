@@ -2189,6 +2189,8 @@ read-only-MCP/outdir/verifier/preservation parity. Projected accounting is
 327 protocol / 368 supported+strict / 51 AHB paths split 26 `.ppif` / 25
 `.ahb`. The matching alias remains separate. See the
 [contract selection](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_CONTRACT_SELECTION.md).
+Clean contract commit `58efc8aff` activates only implementation `.3`;
+activation changes continuity documentation and no public behavior.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

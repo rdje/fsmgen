@@ -7639,6 +7639,10 @@ read-only-MCP/verifier/preservation proof. One generic source projects
 `.ahb`; the alias and broader BUSY/HIAL-VIAL/VHDL/verification work remain
 separate. See
 `docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_CONTRACT_SELECTION.md`.
+Clean contract commit `58efc8aff` activates only implementation `.3`.
+Activation changes continuity documentation and no parser, generator, public
+source, support, test, artifact, semantic/MCP API, HDL/runtime, backend,
+protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

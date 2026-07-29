@@ -12,8 +12,9 @@ minimum-width counter rule. Public normalization will accept only literal
 `(busy-beats 2)`, `(busy-beats 3)`, and `(busy-beats 4)`; absence remains the
 canonical exact-one behavior.
 
-Implementation is owned by proposed leaf
-`IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.3`. This contract
+Implementation is owned by active leaf
+`IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.3`. Clean
+contract commit `58efc8aff` activates that implementation leaf. This contract
 selection changes no parser, generator, source, support, test, artifact,
 semantic/MCP API, HDL/runtime, backend, protocol, verification-generation,
 HIAL/VIAL, VHDL, or transaction behavior.
