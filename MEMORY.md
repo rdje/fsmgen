@@ -6,15 +6,14 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.2: select exact-three BUSY contract`;
-  predecessor `62a538c1b`.
+  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3: activate generic exact-three BUSY implementation`;
+  predecessor `5623b975a`.
 - active_work_unit:
-  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.2`.
-- current_state: `.2` selects proposed `.3`: bounded literals `2..3`, one
-  generic exact-three source, unchanged width-two lowering, numeric report,
-  projected 321/362/45, direct-counter runtime proof, and a later alias.
-- next_action: after this clean `.2` commit, activate `.3` in its own
-  task-state commit, then implement only the generic exact-three contract.
+  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3`.
+- current_state: `.2` committed cleanly at `5623b975a`; `.3` is active for the
+  generic exact-three source, bounded literals `2..3`, and its proof gates.
+- next_action: execute `.3`: source/support/normalization/report/test/docs
+  implementation to 321/362/45, preserving unchanged width-two lowering.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. Guarded runtime can be stopped
   by the already-tracked macOS metric/external host pressure; never raise the

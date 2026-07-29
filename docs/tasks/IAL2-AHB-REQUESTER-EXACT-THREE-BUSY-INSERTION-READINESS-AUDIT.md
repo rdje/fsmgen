@@ -86,7 +86,7 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
   Commit: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.2: select exact-three BUSY contract`
 
 - ID: `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Ship the additive generic exact-three requester BUSY source through the proven existing lowering.`
   Acceptance: `Activate only after .2 commits cleanly. Add only ppif/ahb_requester_busy_insert_three.ppif with intent ahb_requester_busy_insert_three, object fsmgen-ahb-requester-busy-insert-three, anchor bounded-requester-three-busy-insertion, actor/module amba_requester_busy_insert_three, artifacts amba_requester_busy_insert_three.isf/.fsm, support intent.ppif_ahb_requester_busy_insert_three / ial2_ppif_ahb_requester_busy_insert_three_pipeline_cli, protocol_fixture/supported_smoke+strict, ppif, semantic root fsm. Broaden AhbRequester normalization only from exact literal 2 to literal integers 2..3 with diagnostic 'AHB requester transfer.busy_beats must be a literal integer in 2..3 in this slice'; PPIF syntax is unchanged. Reuse the width-two actor-owned ahb_busy_remaining_q, literal initialization, qualified >1 decrement, ==1 clear/address-pending SEQ handoff, whole-BUSY continuation, final-over-nonfinal and both-over-request priorities, busy_inserted_q, and all owners unchanged. Report numeric beats=3 and make exact-one/two/three shared residue truthful while preserving existing alias suffix cleanup. Add t/1528-ial2-ahb-requester-three-busy-insert.t plus t/data/ahb_requester_three_busy_insert_tb.svt with one assertion-enabled Verilator binary proving continuous/32-ready-low/32-grant-low one episode, three qualified BUSY events, direct internal 3->2->1->0 plus stall stability, one resumed SEQ, four accepted byte INCR4 data beats, stable pending ownership, no BUSY data/response completion, and zero final count. Strengthen t1521 to directly observe exact-two internal 2->1->0. Reject 0/1/4/symbolic/missing-prerequisite/duplicate forms; preserve exact-one, exact-two generic/alias, paired exact-two, base, strict/schedule/report/artifacts/normalized semantic/real read-only MCP/outdir/verifier/diagnostic/language surfaces. Update accounting to 321 protocol / 362 supported+strict / 45 AHB paths split 23 .ppif/22 .ahb. Run focused t1498/t1512/t1521-t1526/t1528/t1518/t248/t297 as affected, syntax/docs/Knowledge Map/doctrine gates under the unchanged RAM guard where broad, remove generated artifacts, and leave a clean tree. Do not add the exact-three .ahb alias, counts above three, generalized width, policy/runtime/random or multiple insertion points, local bus-BUSY status, exact-three compositions, broader bursts/signals/managers/fabrics, selector repairs, AXI/APB/VHDL, or decision 0020 behavior.`
   Verification: `pending`
@@ -114,6 +114,9 @@ assertion-enabled continuous/ready-low/grant-low runtime proof.
   absence remains exact-one; width-two lowering is unchanged, projected
   accounting is 321/362/45 split 23 generic/22 aliases, and the matching
   exact-three `.ahb` alias remains separately owned after generic shipment.
+- `2026-07-29`: Activation condition satisfied: `.2` committed cleanly at
+  `5623b975a`; `.3` is active for only the selected generic exact-three
+  implementation and preservation gates.
 
 ## Blockers
 
