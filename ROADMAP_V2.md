@@ -7370,6 +7370,19 @@ parked scalability requirement also committed cleanly at `54964456f` without
 changing priority, the selected subordinate audit `.1` is active. Activation
 changes continuity and documentation state only; no behavior repair has
 started.
+Audit `.1` now independently reproduces the generated direct endpoint at time
+40 on `HRDATA 0` and the repaired-fabric paired endpoint at time 345 on
+`HRDATA_REGS 0`. Base, byte-lane, SEQ, HBURST/SEQ, and BUSY-park variants have
+8/10/20/20/20 total conflict targets respectively, but exactly three bus
+targets each. Runtime proves idle+capture, idle+hold, and final-ERROR
+retire+capture same-value modes while success/read/write/SEQ/BUSY/IDLE
+behavior and all internal assertions remain intact under diagnostic-only bus
+logging. Generic priority correctly suppresses different-value losers and
+keeps same-value multiple ownership visible, so proposed `.2` owns an exact
+`AhbSubordinate.pm`-local contract. A separately discovered hand-authored
+IAL0 seed conditional-override gap is parked under proposed
+`IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION` without pivoting. See
+`docs/IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_AUDIT.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

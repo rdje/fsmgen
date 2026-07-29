@@ -11184,6 +11184,18 @@ parked scalability requirement also committed cleanly at `54964456f` without
 changing priority, the selected subordinate audit `.1` is active. Activation
 changes continuity and documentation state only; no behavior repair has
 started.
+Audit `.1` independently reproduces the generated direct endpoint at time 40
+on `HRDATA 0` and the repaired-fabric paired endpoint at time 345 on
+`HRDATA_REGS 0`. Base, byte-lane, SEQ, HBURST/SEQ, and BUSY-park variants have
+8/10/20/20/20 total conflict targets respectively, with exactly three bus
+targets each. Runtime proves idle+capture, idle+hold, and final-ERROR
+retire+capture modes while success/read/write/SEQ/BUSY/IDLE behavior and all
+internal assertions remain intact under diagnostic-only bus logging. Generic
+priority correctly keeps same-value multiple ownership visible, so proposed
+`.2` owns the exact `AhbSubordinate.pm`-local contract. A separate
+hand-authored IAL0 seed conditional-override gap is parked without changing
+priority. See the
+[subordinate arbitration audit](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_AUDIT.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
