@@ -6,15 +6,16 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.813: select AHB interconnect arbitration audit`;
-  predecessor `188940399`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.813`.
-- current_state: `.813` selects proposed
-  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1` before more paired
-  expansion because shipped aggregate tests retain `--no-assert` around a
-  known default/mapped selector overlap. No behavior changes in the selector.
-- next_action: after this clean `.813` commit, activate the selected audit
-  child `.1` in a separate continuity commit.
+  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1: activate interconnect arbitration audit`;
+  predecessor `347a85f80`.
+- active_work_unit:
+  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1`.
+- current_state: audit `.1` is active after clean `.813` selector commit
+  `347a85f80`; activation changes continuity/docs state only and no
+  reproduction or repair has started.
+- next_action: reproduce assertion-enabled base mapped address-zero and
+  nonzero conflicts, map the complete affected-output set and ownership layer,
+  then select the smallest separate repair owner without behavior changes.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. Guarded runtime can be stopped
   by the already-tracked macOS metric/external host pressure; never raise the
@@ -26,8 +27,8 @@ bounded current-state pointer. Git preserves its prior history.
   complete the same-volume adoption tree, then resume roadmap PNT.
 - The IAL2 frontier is complete through `.812`; exact-three generic child `.3`
   established `321/362/45`, `.5` ships its matching alias at `322/363/46`, and
-  completed parent `.813` selects the proposed AHB interconnect arbitration
-  audit as the next exact owner. Decision `0020`
+  completed parent `.813` selected the AHB interconnect arbitration audit;
+  child `.1` is active. Decision `0020`
   remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

@@ -11134,6 +11134,8 @@ to the same outputs in one state, assertion-enabled evidence fails first on
 expansion. It must reproduce the base conflict, map the complete overlap, and
 select the smallest repair owner without changing behavior. See the
 [post-alias selector](../../IAL2_POST_EXACT_THREE_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md).
+The `.813` selector committed cleanly at `347a85f80`; the selected arbitration
+audit `.1` is now active. Activation changes continuity/docs state only.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

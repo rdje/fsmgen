@@ -12,6 +12,9 @@ documentation-and-runtime readiness audit of the shipped AHB interconnect's
 overlapping idle-default and mapped-decode output selectors. Activate that
 child only after this selector commits cleanly.
 
+The selector committed cleanly at `347a85f80`; the selected audit child is now
+active. Activation changes continuity and documentation state only.
+
 No parser, generator, public source, support entry, test, artifact,
 semantic/MCP API, HDL/runtime, backend, protocol, or transaction-layer
 behavior changes in this selector.

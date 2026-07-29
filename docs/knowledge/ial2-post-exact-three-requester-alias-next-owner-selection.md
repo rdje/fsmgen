@@ -15,6 +15,8 @@ reverify: rg -n 'subordinate_idle_lines|subordinate_hit_blocks|--no-assert|IAL2-
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.813` selects proposed
 `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1` after the
 exact-three requester alias establishes the 322/363/46 checkpoint.
+Clean selector commit `347a85f80` satisfies the activation boundary, so that
+audit child is now active.
 
 The shipped AHB interconnect emits unconditional subordinate select/address
 defaults and conditional mapped-hit select/address writes in the same `idle`

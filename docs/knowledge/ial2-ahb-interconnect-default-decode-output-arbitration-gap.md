@@ -24,7 +24,7 @@ caused by the requester single-BUSY repair. The requester-only generated HDL
 passes with assertions enabled. Existing aggregate runtime tests compile with
 `--no-assert`; current requester BUSY work retains that boundary while adding
 ready-qualified BUSY edge counts. Parent selector
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.813` now selects proposed tree
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.813` selected tree
 `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION` for the separate
-audit and repair-owner selection. It activates only after the selector commits
-cleanly.
+audit and repair-owner selection. Clean selector commit `347a85f80` satisfied
+the boundary; child `.1` is active.

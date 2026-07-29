@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `IAL2 / AHB interconnect correctness`
 - Created: `2026-07-24`
 - Last updated: `2026-07-24`
@@ -68,12 +68,12 @@ selector assertions remain disabled.
 ## Task Tree
 
 - ID: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION`
-  Status: `proposed`
+  Status: `active`
   Goal: `Repair generated AHB interconnect default/decode output arbitration.`
   Children: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1`
 
 - ID: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Audit the exact selector-overlap set and select the smallest repair owner.`
   Acceptance: `Starting only from a clean tree after the requester BUSY work dries out, reproduce base mapped address-zero/nonzero conflicts with assertions enabled, map every affected output selector through generated IAL0/HDL, distinguish AHB-generator versus generic-lowering ownership, and select an exact contract or repair leaf without changing behavior.`
   Verification: `pending`
@@ -81,9 +81,10 @@ selector assertions remain disabled.
 
 ## Activation Gate
 
-This tree is selected by completed parent selector `.813` but remains proposed
-and inactive until that selector commits cleanly. Activate child `.1` only in a
-separate continuity commit from the resulting clean tree.
+Completed parent selector `.813` committed cleanly at `347a85f80`. Child `.1`
+is now active from that clean boundary. This activation changes only
+task/index/Memory/roadmap/mdBook/Knowledge Map state; reproduction, audit
+findings, and repair-owner selection remain the next task.
 
 ## Rollback
 
