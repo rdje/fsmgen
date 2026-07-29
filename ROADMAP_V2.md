@@ -7789,6 +7789,11 @@ parser/generator algorithm, report or semantic/MCP API, HDL/runtime behavior,
 simulator integration, backend, HIAL/VIAL, VHDL, verification generation,
 scale, decision 0020, or transaction behavior changes. Pending `.826` owns
 the next exact no-behavior roadmap selection after the clean `.825` commit.
+Clean exact-four paired alias behavior commit `40b8ead71` now activates `.826`
+as continuity only. The public boundary remains 330/371/54 split 27/27 while
+the selector compares the remaining exact AHB, HIAL/VIAL, verification,
+portability, priority, and scale owners. No public or generated behavior
+changes in activation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

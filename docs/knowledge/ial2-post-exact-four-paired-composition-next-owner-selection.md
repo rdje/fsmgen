@@ -37,3 +37,6 @@ t1538 owns alias parity without another simulation; t1537 remains the
 sole assertion-enabled exact-four paired runtime. Two-window exact-four,
 broader BUSY behavior, generic priority, HIAL/VIAL activation, verification
 generation, VHDL, scale, and decision 0020 remain separate.
+
+Clean `.825` behavior commit `40b8ead71` activates no-behavior selector `.826`
+for the next exact decision.

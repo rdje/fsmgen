@@ -49,3 +49,6 @@ Completed `.824` selected `.825`, activated only after clean selector commit
 330/371/54. Fact
 `ial2-post-exact-four-paired-composition-next-owner-selection` owns the exact
 support and t1538/shared-t1537 boundary.
+
+Clean alias behavior commit `40b8ead71` activates no-behavior selector `.826`
+without changing the 330/371/54 boundary.

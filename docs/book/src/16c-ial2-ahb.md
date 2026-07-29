@@ -2405,6 +2405,8 @@ report/artifact/schedule/normalized-semantic/read-only-MCP/repository-local-
 output/verifier/diagnostic parity in 4 top-level subtests and 88 nested
 assertions without a second simulation. Current accounting is 330/371/54
 split 27 `.ppif`/27 `.ahb`; t1537 remains the shared assertion-enabled runtime.
+Clean behavior commit `40b8ead71` now activates no-behavior selector `.826`.
+The 330/371/54 boundary remains unchanged while it chooses one next owner.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

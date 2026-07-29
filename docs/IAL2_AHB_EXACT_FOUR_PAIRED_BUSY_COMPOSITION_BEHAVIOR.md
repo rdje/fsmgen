@@ -142,6 +142,9 @@ second simulation; t1537 remains this generic/profile pair's shared assertion-
 enabled runtime. See
 `docs/IAL2_POST_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md`.
 
+Clean alias behavior commit `40b8ead71` activates no-behavior selector `.826`
+without changing the shipped 330/371/54 generic/profile boundary.
+
 ## Rollback
 
 Rollback of `.825` removes only the alias source, its support entry, t1538, and

@@ -150,3 +150,6 @@ implementation, and decision 0020 remain separate task-tree-owned work.
 Rollback of `.825` removes the alias/support/t1538 and returns current
 accounting to 329/370/53 split 27/26; the generic source and shared t1537
 runtime remain shipped. The selector evidence itself remains historical.
+
+Clean `.825` behavior commit `40b8ead71` activates parent selector `.826` for
+one exact next-owner decision without changing this shipped boundary.

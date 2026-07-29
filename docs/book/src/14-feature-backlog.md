@@ -11526,6 +11526,8 @@ byte/report/artifact/strict/schedule/normalized-semantic/real read-only MCP/
 repository-local-output/public-verifier/diagnostic/preservation parity without
 another simulation; t1537 remains shared runtime. Pending `.826` owns the next
 no-behavior selection after the clean `.825` commit.
+Clean behavior commit `40b8ead71` now activates `.826` as continuity only;
+selection has not changed public behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

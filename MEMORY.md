@@ -5,13 +5,12 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped `.825` behavior; predecessor `98abfec6a`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.825`; `.826` remains
-  pending until this behavior slice commits cleanly.
+- latest_commit: this task-scoped `.826` activation; predecessor `40b8ead71`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.826`.
 - current_state: exact-four paired generic/profile paths ship at 330/371/54
   split 27/27 with t1538 parity and shared assertion-enabled t1537 runtime.
-- next_action: finish `.825` gates and commit; from that clean boundary,
-  activate `.826` for one exact no-behavior next-owner selection.
+- next_action: reconcile exact current evidence and choose exactly one smallest
+  roadmap-aligned next owner without changing public behavior.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -28,7 +27,7 @@ bounded current-state pointer. Git preserves its prior history.
   The generic one-window exact-four paired source now ships through existing
   generators with semantic/read-only-MCP parity and repository-local t1537
   assertion runtime 5/4/1/4/1/`44332211`. `.825` now ships its byte-identical
-  alias with t1538 parity at 330/371/54; pending `.826` owns next selection.
+  alias with t1538 parity at 330/371/54; active `.826` owns next selection.
   Two-window exact-four and decision `0020`
   remain separate.
 - Proposed startup-alignment owners remain:
