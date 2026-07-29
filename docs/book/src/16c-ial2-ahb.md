@@ -2254,6 +2254,10 @@ semantic/read-only-MCP/verifier parity and continuous/32-ready-low/32-grant-low
 exact `4 -> 3 -> 2 -> 1 -> 0` runtime. Current accounting is 327/368/51 split
 26 `.ppif` / 25 `.ahb`; the matching exact-four alias remains separate. See
 the [shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_BEHAVIOR.md).
+Clean generic behavior commit `95bfb7e4b` activates only no-behavior alias
+contract selector `.4`. The exact-four `.ahb` alias, support identity, focused
+parity test, and projected 328/369/52 boundary remain unshipped during
+activation; generic behavior stays fixed at 327/368/51.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

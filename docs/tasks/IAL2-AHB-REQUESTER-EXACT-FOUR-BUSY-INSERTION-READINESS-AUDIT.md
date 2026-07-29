@@ -72,10 +72,10 @@ AHB requester family.
   Commit: `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.3: ship generic exact-four BUSY`
 
 - ID: `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the matching exact-four requester .ahb alias contract after generic shipment.`
   Acceptance: `Activate only after the clean .3 behavior commit. Audit the shipped generic exact-four source, existing exact-one/two/three requester aliases and parity tests, suffix normalization, support/language/capability/current docs, semantic/read-only-MCP surfaces, roadmap, mdBook, Knowledge Map, HIAL/VIAL, generic priority, and decision 0020. Select or reject exactly one byte-identical ppif/ahb_requester_busy_insert_four.ahb alias through existing machinery. If selected, freeze support id intent.ahb_profile_alias_requester_busy_insert_four, coverage ial2_ahb_profile_alias_requester_busy_insert_four_pipeline_cli, source kind ial2_profile_alias, exact artifact/report/semantic/verifier parity, alias-only residue removal, t1536 focused parity without a second simulation, t1535 as sole shared assertion-enabled runtime, projected 328 protocol/369 supported+strict/52 AHB split 26 .ppif/26 .ahb, same-volume cleanup, authorized resource profile, docs/fact/task/Memory gates, deferrals, and rollback. Make no public parser/generator/HDL/runtime/transaction behavior change in contract selection. Keep paired exact-four compositions, counts above four, runtime/policy/random counts, multiple insertion points, local bus-BUSY status, new burst/signal/topology behavior, HIAL/VIAL activation, VHDL, verification generation, and decision 0020 separate.`
-  Verification: `Pending clean .3 behavior commit and explicit activation.`
+  Verification: `Activated only after clean .3 behavior commit 95bfb7e4b. Activation changes task/index/Memory/roadmap/mdBook/HIAL-VIAL continuity state only. The generic exact-four source remains shipped at 327/368/51 split 26 .ppif/25 .ahb; no exact-four alias/support/test exists and no parser/generator/report/residue/semantic-MCP API/HDL/runtime behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map remains current at 1,035 facts/5,284 keys; mdBook builds exactly 72 files/16,257,763 bytes and its repository-local generated tree is removed with zero residue; Memory is 57 lines; diff and all six doctrine gates pass. Canonical Stats-compatible RAM is 68.9% (16.539/24.000 GiB), kernel pressure is separately 1 (normal), and guard occupancy is excluded as capacity truth. Contract-selection evidence remains pending.`
   Commit: `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.4: activate exact-four BUSY alias contract`
 
 ## Decisions
@@ -112,3 +112,5 @@ AHB requester family.
 - `2026-07-29`: `.3` ships generic exact-four with literal `2..4`, preserving
   minimum widths `2/2/3`, assertion-enabled t1535 runtime, and 327/368/51;
   proposed no-behavior `.4` is the next clean activation.
+- `2026-07-29`: Clean behavior commit `95bfb7e4b` activates no-behavior alias
+  contract selector `.4`; generic exact-four remains the sole count-four path.

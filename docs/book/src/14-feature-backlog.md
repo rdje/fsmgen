@@ -11463,6 +11463,10 @@ surfaces. Current accounting is 327 protocol / 368 supported+strict / 51 AHB
 paths split 26 `.ppif` / 25 `.ahb`. The exact-four alias and broader
 BUSY/HIAL-VIAL/VHDL/verification work remain separate. See the
 [behavior record](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_BEHAVIOR.md).
+Clean generic behavior commit `95bfb7e4b` activates only no-behavior alias
+contract selector `.4`. The exact-four `.ahb` alias, support identity, focused
+parity test, and projected 328/369/52 boundary remain unshipped during
+activation; generic behavior stays fixed at 327/368/51.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
