@@ -5,15 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this proposed architecture parking commit,
-  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE: park dual-intent architecture`;
-  predecessor `1eec6253d`.
-- active_work_unit: none after this commit; the HIAL/VIAL architecture tree is
-  proposed and inactive.
-- current_state: the director's HIAL/VIAL requirement is durably task-tree
-  owned without changing current IAL behavior or active IAL2 priority.
-- next_action: resume the IAL2 parent next-slice selector from this clean
-  boundary.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.815: activate post-subordinate selector`;
+  predecessor `64f056b12`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815`.
+- current_state: generated AHB subordinate arbitration is complete at
+  `1eec6253d`; `.815` is active from the clean HIAL/VIAL parking boundary.
+- next_action: reconcile `.815` candidates and select exactly one smallest
+  evidence-backed IAL2 owner.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -30,8 +29,8 @@ bounded current-state pointer. Git preserves its prior history.
   completed parent `.813` selected the AHB interconnect arbitration audit;
   child `.1`-.3 tree is complete and parent selector `.814` selected the
   subordinate arbitration tree. Its audit `.1`, contract `.2`, and five-write
-  implementation `.3` are complete. The distinct direct IAL0 seed
-  override gap is parked under proposed
+  implementation `.3` are complete; parent selector `.815` is active. The
+  distinct direct IAL0 seed override gap is parked under proposed
   `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION`; decision `0020` remains
   proposed/inactive.
 - Proposed startup-alignment owners remain:

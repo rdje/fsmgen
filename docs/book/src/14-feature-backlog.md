@@ -11252,6 +11252,11 @@ transfer, beat, SEQ, ERROR, or storage results. Generic assertions stay
 authoritative, all public/report/support/semantic/MCP surfaces remain fixed,
 and the separately hand-authored direct IAL0 seed stays parked. See the
 [shipped subordinate arbitration behavior](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md).
+Clean behavior commit `1eec6253d` completes the generated subordinate
+arbitration tree, and clean HIAL/VIAL parking commit `64f056b12` preserves the
+active IAL2 priority. Parent selector `.815` is now active from that
+handoff-ready boundary; activation changes continuity documentation only and
+has not selected the next behavior owner.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

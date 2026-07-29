@@ -7407,6 +7407,11 @@ support/accounting, normalized semantic JSON, and read-only MCP surfaces are
 preserved. The separately hand-authored direct IAL0 seed and t1520 boundary
 remain parked. See
 `docs/IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
+Clean behavior commit `1eec6253d` completes the generated subordinate
+arbitration tree, and clean HIAL/VIAL parking commit `64f056b12` preserves the
+active IAL2 priority. Parent selector `.815` is now active from that
+handoff-ready boundary. Activation changes continuity documentation only; no
+next behavior owner has been selected yet.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

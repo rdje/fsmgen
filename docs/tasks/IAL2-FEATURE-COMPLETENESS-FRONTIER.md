@@ -68,6 +68,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
   Children continuation 14: `IAL2-FEATURE-COMPLETENESS-FRONTIER.792, IAL2-FEATURE-COMPLETENESS-FRONTIER.793, IAL2-FEATURE-COMPLETENESS-FRONTIER.794, IAL2-FEATURE-COMPLETENESS-FRONTIER.795`
   Children continuation 15: `IAL2-FEATURE-COMPLETENESS-FRONTIER.796, IAL2-FEATURE-COMPLETENESS-FRONTIER.797, IAL2-FEATURE-COMPLETENESS-FRONTIER.798, IAL2-FEATURE-COMPLETENESS-FRONTIER.799, IAL2-FEATURE-COMPLETENESS-FRONTIER.800, IAL2-FEATURE-COMPLETENESS-FRONTIER.801, IAL2-FEATURE-COMPLETENESS-FRONTIER.802, IAL2-FEATURE-COMPLETENESS-FRONTIER.803, IAL2-FEATURE-COMPLETENESS-FRONTIER.804, IAL2-FEATURE-COMPLETENESS-FRONTIER.805, IAL2-FEATURE-COMPLETENESS-FRONTIER.806, IAL2-FEATURE-COMPLETENESS-FRONTIER.807, IAL2-FEATURE-COMPLETENESS-FRONTIER.808, IAL2-FEATURE-COMPLETENESS-FRONTIER.809, IAL2-FEATURE-COMPLETENESS-FRONTIER.810, IAL2-FEATURE-COMPLETENESS-FRONTIER.811, IAL2-FEATURE-COMPLETENESS-FRONTIER.812, IAL2-FEATURE-COMPLETENESS-FRONTIER.813, IAL2-FEATURE-COMPLETENESS-FRONTIER.814`
+  Children continuation 16: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -5767,6 +5768,13 @@ path before reopening VHDL backend or VHDL rerouting work.
   Verification: `Selected proposed IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1 after reconciling .813, the completed interconnect .1-.3 lineage, current AHB source/residue/tests/docs/facts, exact-three requester and exact-two paired boundaries, support/semantic-MCP surfaces, proposed correctness owners, and decision 0020. Direct one-/two-window interconnect t1530 now passes with assertions, while paired t1513-t1516/t1523/t1525 still compile with --no-assert. The durable fabric-suppressed probe stops in the subordinate at cycle 345 with HRDATA_REGS 0 enables=01100000, identifying transaction-idle and ahb_phase_capture output families authored by AhbSubordinate.pm; the complete endpoint selector set remains unaudited. The selected no-behavior audit is therefore smaller and safer than exact-three paired expansion, larger BUSY counts/policy/status/bursts/signals, generic priority implementation, or decision 0020. Canonical selector/fact, task/index, roadmap, README, mdBook, Memory, and Knowledge Map are synchronized. Knowledge Map generation/check passes at 1,012 facts/5,147 question keys; mdBook builds; memory architecture, relative-doc paths, README entrypoint, project-data locality, diff, and all doctrine gates pass. The exact generated mdBook output contained 72 files/16,014,191 bytes, was removed, and residue is none. No parser/generator/source/support/test/artifact/semantic-MCP API/HDL/runtime/backend/protocol/transaction-layer behavior changed.`
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.814: select subordinate arbitration audit`
 
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815`
+  Status: `active`
+  Goal: `Select the next exact IAL2 feature-completeness owner after assertion-clean generated AHB subordinate arbitration ships.`
+  Acceptance: `Activate only after clean generated-subordinate behavior commit 1eec6253d and the clean HIAL/VIAL parking boundary 64f056b12. Reconcile .814, the completed IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION .1-.3 lineage, the now assertion-enabled generated direct and paired AHB families, the separately proposed IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION owner and t1520 --no-assert boundary, exact-three requester and exact-two paired-composition lineage, current AHB source/report residue, focused runtime/parity/current-truth tests, support/language/capability/semantic-MCP surfaces, roadmap, mdBook, Knowledge Map, proposed correctness owners, and decision 0020. Choose exactly one smallest evidence-backed next owner among the direct IAL0 seed arbitration audit, exact-three paired composition, literal counts above three and required width/contract readiness, policy/runtime/multiple-point insertion, distinct local bus-BUSY status, wider/indefinite burst or optional-signal work, generic selector-priority enforcement, another roadmap-aligned protocol/platform residue, or explicit parent completion. Freeze task ownership, activation boundary, preservation, validation, docs/Knowledge Map, the director-authorized macOS host-max 100 / descendant 4096-MiB profile with exact Stats-compatible capacity plus separate kernel-pressure reporting, repository-derived same-volume cleanup, and rollback before behavior changes. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, backend, protocol, verification-generation, or transaction-layer behavior change in this selector; keep HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE and decision 0020 proposed/inactive.`
+  Verification: `Activated from clean generated-subordinate behavior commit 1eec6253d after .1-.3 completed the endpoint arbitration audit, contract, five-write repair, assertion-enabled base/rich direct and six paired gates, preservation/accounting/semantic-MCP/docs/doctrine proof, exact Stats-compatible RAM reporting, and same-volume cleanup. Clean follow-up commit 64f056b12 parked the director-approved HIAL/VIAL architecture without changing IAL2 priority. Activation changes task/index/Memory/roadmap/mdBook continuity only; selection work has not started.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815: activate post-subordinate selector`
+
 Activation condition was satisfied when `.810` committed cleanly at
 `e2dc65507`; `.811` was then activated. That activation changed only
 task/index/Memory state and added no
@@ -5787,8 +5795,11 @@ ships the byte-identical alias at 322/363/46 split 23/23 with focused t1529
 parity and shared t1528 runtime. Clean `.5` commit `c224b2cba` satisfied the
 activation boundary. Parent selector `.813` selected
 `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1`; that child tree is
-complete at clean commit `6eeac974c`. Parent selector `.814` is now active
-from the handoff-ready boundary.
+complete at clean commit `6eeac974c`. Parent selector `.814` selected the
+generated AHB subordinate arbitration tree; that child tree is complete at
+clean behavior commit `1eec6253d`. Clean HIAL/VIAL parking commit `64f056b12`
+preserved IAL2 priority, and parent selector `.815` is now active from that
+handoff-ready boundary.
 
 ## Current Frontier
 
