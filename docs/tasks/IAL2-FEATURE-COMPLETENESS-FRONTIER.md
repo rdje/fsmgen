@@ -5798,9 +5798,11 @@ activation boundary. Parent selector `.813` selected
 complete at clean commit `6eeac974c`. Parent selector `.814` selected the
 generated AHB subordinate arbitration tree; that child tree is complete at
 clean behavior commit `1eec6253d`. Clean HIAL/VIAL parking commit `64f056b12`
-preserved IAL2 priority. Parent selector `.815` now selects proposed
-`IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1`; activate that contract leaf
-only after the `.815` selector commit is clean.
+preserved IAL2 priority. Parent selector `.815` selected
+`IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1`; its contract committed at
+`454767c15`, and implementation `.2` activated at `37d7b9b04` before shipping
+the exact four-write assertion-clean repair. The next parent selector may
+activate only after that behavior commit is clean.
 
 ## Current Frontier
 

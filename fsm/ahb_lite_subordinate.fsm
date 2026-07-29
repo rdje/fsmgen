@@ -65,10 +65,6 @@
   )
 
   (access
-    (= (HREADYOUT> 0))
-    (= (HRESP> 0))
-    (= (HRDATA> 32'h00000000))
-
     (<wait_ctr!=0
       (-- wait_ctr)
     )
@@ -127,7 +123,6 @@
 
   (unsupported
     (= (HREADYOUT> 0))
-    (= (HRESP> 0))
     (= (HRDATA> 32'h00000000))
 
     (<wait_ctr!=0

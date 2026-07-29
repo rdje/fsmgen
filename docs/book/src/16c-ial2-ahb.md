@@ -469,9 +469,11 @@ through `ahb_tb.fsm`; the generated HDL entry is module `ahb_tb`.
 > [selected contract](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md),
 > and
 > [shipped behavior](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_BEHAVIOR.md).
-> Paired aggregate tests retain `--no-assert` only because the separately
-> proposed subordinate idle/`ahb_phase_capture` `HRDATA_REGS <- 0` overlap
-> remains outside this fabric repair.
+> Historical boundary: paired aggregate tests temporarily retained
+> `--no-assert` because subordinate idle/`ahb_phase_capture` output overlap
+> remained outside this fabric repair. The later generated-subordinate repair
+> retired that boundary, and the separately hand-authored direct seed is now
+> assertion-clean as well.
 
 ## Guided PPIF Two-Subordinate Interconnect
 
@@ -1296,8 +1298,9 @@ generic/alias and two-subordinate paired generic sources are described below.
 > full direct phase-pipeline runtime with assertions enabled. Implementation
 > `.3` now ships exactly those five removals. Base and richest direct t1519 and
 > paired t1513-t1516/t1523/t1525 all pass with requester, fabric, generated
-> endpoint, and internal selector assertions enabled. The hand-authored direct
-> IAL0 seed remains a separate parked owner. See the
+> endpoint, and internal selector assertions enabled. The separately
+> hand-authored direct IAL0 seed later received its own four-write
+> assertion-clean repair. See the
 > [shipped behavior](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md).
 
 > **Exact single-event cardinality:** `busy_insertion.beats=single` now means
@@ -1929,9 +1932,9 @@ coverage: direct_root_pipeline_cli
 module_name: ahb_lite_subordinate
 ```
 
-Unlike the generated IAL2 subordinate family, this direct seed currently
-samples new address/control only in `IDLE`. Generated-HDL t/1520 presents a
-distinct active phase through a not-ready data phase and observes its
+Before the Q-named `.8` completion-edge repair, this direct seed sampled new
+address/control only in `IDLE`. Historical generated-HDL t/1520 presented a
+distinct active phase through a not-ready data phase and observed its
 acceptance on both kinds of ready completion edge:
 
 ```text
@@ -1984,6 +1987,23 @@ See the historical
 the [lowering-substrate audit](../../IAL2_AHB_DIRECT_SUBORDINATE_COMPLETION_CAPTURE_SUBSTRATE_AUDIT.md),
 the [Q-named contract](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_CONTRACT_SELECTION.md),
 and the current [repair record](../../IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md).
+
+### Direct subordinate output arbitration
+
+The direct seed is now assertion-clean. The bounded repair removes only
+access HREADYOUT/HRESP/HRDATA zero writes and unsupported HRESP zero. Emitted
+SystemVerilog already initializes all three output muxes to zero, so access
+wait/OKAY/zero-data behavior and unsupported wait-cycle OKAY behavior are
+unchanged. Unsupported retains explicit HREADYOUT-zero and HRDATA-zero owners;
+idle and final ERROR remain fully explicit.
+
+t1520 structurally checks the exact removals, retained owners, zero mux
+baselines, and emitted selector identities, then compiles without
+`--no-assert`. All four exact Q-named completion-edge scenarios above pass with
+every generated selector assertion enabled. The `.svt` harness remains
+handwritten regression infrastructure; this repair does not claim generated
+VIAL output. See the
+[direct-seed arbitration behavior](../../IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_BEHAVIOR.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

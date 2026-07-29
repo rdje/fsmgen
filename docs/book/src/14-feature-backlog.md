@@ -11277,6 +11277,14 @@ tracked seed and `--no-assert` remain unchanged until `.2` activates. See the
 Contract `.1` committed cleanly at `454767c15`, so implementation `.2` is
 active. Activation changes continuity/documentation state only; no direct-seed
 repair has shipped yet.
+Implementation `.2` now ships exactly those four removals. Access receives
+pending/OKAY/zero-data values from the existing emitted zero baseline until
+its conditional ready/ERROR/read-data owner fires; unsupported keeps explicit
+not-ready and zero-data owners while using the response baseline during its
+wait. t1520 removes only `--no-assert` and passes all four unchanged scenarios
+with selector assertions enabled. Public/report/semantic-MCP, generated IAL2,
+protocol/backend/VHDL, and HIAL/VIAL boundaries remain unchanged. See the
+[shipped direct-seed arbitration behavior](../../IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

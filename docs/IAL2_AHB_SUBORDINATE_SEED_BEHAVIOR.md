@@ -112,6 +112,14 @@ IDLE cancellation. See
 `docs/IAL2_AHB_DIRECT_SUBORDINATE_REGISTER_OUTPUT_COMPLETION_REPAIR.md`.
 The generated public IAL2 family remains separately repaired by `.3`.
 
+Current output-arbitration boundary: direct implementation
+`IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.2` removes only the redundant
+access HREADYOUT/HRESP/HRDATA zero writes and unsupported HRESP zero write.
+The emitted mux baseline supplies those zero/OKAY values; unsupported keeps
+explicit HREADYOUT/HRDATA zero ownership. t1520 now runs the same four phase
+scenarios with every selector assertion enabled and no `--no-assert`. See
+`docs/IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
+
 ## Support Accounting
 
 `perl/FSM/Support/RegressionCorpus.pm` now includes:

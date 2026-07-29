@@ -7433,6 +7433,15 @@ Contract `.1` committed cleanly at `454767c15`, so implementation `.2` is
 active. Activation changes task/index/Memory/roadmap/mdBook/Knowledge Map
 state only; the direct seed and t1520 behavior remain unchanged until `.2`
 ships.
+Implementation `.2` now ships the selected four-write repair. Access relies
+on the emitted zero baseline for HREADYOUT/HRESP/HRDATA until its conditional
+ready/ERROR/read-data owners fire; unsupported relies on the response baseline
+while keeping explicit not-ready/zero-data ownership. t1520 removes only
+`--no-assert` and passes its unchanged four scenarios with every selector
+assertion enabled. Strict identity, generic priority, generated endpoint,
+support/capability, public, semantic/MCP, protocol/backend/VHDL, HIAL/VIAL, and
+decision-0020 boundaries remain unchanged. See
+`docs/IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

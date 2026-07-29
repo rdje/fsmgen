@@ -1,6 +1,6 @@
 ---
 id: ial0-ahb-direct-subordinate-output-arbitration-gap
-title: Direct AHB subordinate seed has intentional conditional output overrides
+title: Direct AHB subordinate selector gap preceded the four-write repair
 answers:
   - "why does t1520 use no-assert for the direct AHB subordinate?"
   - "which selector assertions fail in fsm/ahb_lite_subordinate.fsm?"
@@ -25,7 +25,8 @@ access/unsupported default HRESP zero plus ERROR one. The functional success,
 active-ERROR continuation, SEQ-to-ERROR, and ERROR-to-IDLE scenarios complete
 when only those bus assertions log.
 
-Completed `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1` selects exactly
-four redundant zero-write removals. Clean commit `454767c15` activates `.2` as
-implementation owner. Activation changes continuity only; the tracked seed and
-t1520 boundary remain unchanged until `.2` ships.
+Completed `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1` selected exactly
+four redundant zero-write removals. Implementation `.2` now ships that repair:
+t1520 no longer uses `--no-assert`, all selector assertions remain enabled,
+and exact runtime results are unchanged. The dedicated behavior fact is
+current truth; this card preserves why the former boundary existed.
