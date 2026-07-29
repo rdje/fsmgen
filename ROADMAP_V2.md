@@ -7709,6 +7709,15 @@ Activation changes continuity documentation and no parser, generator, public
 source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator,
 backend, protocol, HIAL/VIAL, VHDL, verification-generation, or transaction
 behavior; exact-four paired runtime and real MCP evidence remain pending.
+Audit `.1` now proves direct exact-four paired readiness. The disposable
+candidate passes strict/schedule/exact 3 IAL1 plus 4 IAL0 artifacts, normalized
+semantic JSON, real read-only shell-disabled MCP, public HDL verification, and
+Verilator 5.046 `--timing` with all assertions. Runtime is exactly 5 transfer
+presentations / 4 data beats / 1 BUSY episode / 4 qualified BUSY events /
+internal `4->3->2->1->0` / 1 resumed `SEQ` / storage `0x44332211`. No
+lower-layer repair is required; pending `.2` owns the no-behavior generic
+contract at projected 329/370/53 split 27 `.ppif`/26 `.ahb`. See
+`docs/IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

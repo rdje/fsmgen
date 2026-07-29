@@ -2307,6 +2307,14 @@ audit before any projected 329/370/53 public contract. See the
 Clean selector commit `d91c5c7c9` activates only readiness audit `.1` with no
 public behavior change. The exact-four paired source remains absent while the
 audit owns assertion-enabled aggregate runtime and real read-only MCP proof.
+Audit `.1` now proves direct exact-four pairing through strict/artifact/
+normalized-semantic/real read-only-MCP/public-verifier surfaces and Verilator
+5.046 `--timing` with all assertions. Runtime observes 5 presentations / 4
+data beats / 1 BUSY episode / 4 qualified BUSY events / internal
+`4->3->2->1->0` / 1 resumed `SEQ` / storage `0x44332211`. No lower-layer
+repair is required; pending `.2` owns a separate generic contract projecting
+329/370/53 split 27 `.ppif`/26 `.ahb`. See the
+[readiness audit](../../IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

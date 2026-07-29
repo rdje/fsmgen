@@ -248,4 +248,7 @@ evidence-backed handoff.
   migration, and large-design requirements remain proposed and unchanged.
 - `2026-07-29`: Clean selector commit `d91c5c7c9` activates only exact-four
   paired readiness `.1`; HIAL/VIAL remains proposed and unchanged.
+- `2026-07-29`: Exact-four paired audit `.1` passes assertion-enabled
+  5/4/1/4/1 runtime plus real MCP and selects generic contract `.2`; HIAL/VIAL
+  remains proposed with no architecture or priority change.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

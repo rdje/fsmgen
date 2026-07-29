@@ -5864,6 +5864,10 @@ width-three exact-four requester state and BUSY parking, and passes public HDL
 verification; assertion-enabled aggregate runtime and real MCP remain owned by
 the audit.
 
+Completed child audit `.1` now proves real read-only MCP and assertion-enabled
+5/4/1/4/1/`44332211` runtime without repair, selecting pending generic contract
+`.2` at projected 329/370/53 split 27/26. Public behavior remains 328/369/52.
+
 Selector verification: current-surface/backlog/path tests pass 3 files/22
 tests; Knowledge Map generation/check passes at 1,026 facts/5,231 question
 keys; mdBook builds to 72 files/16,172,871 bytes and the repository-local

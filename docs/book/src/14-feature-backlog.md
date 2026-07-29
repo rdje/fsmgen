@@ -11499,6 +11499,12 @@ See the [selection record](../../IAL2_POST_EXACT_FOUR_REQUESTER_ALIAS_NEXT_OWNER
 Clean selector commit `d91c5c7c9` activates only readiness audit `.1`.
 Activation adds no public paired source, support, test, or behavior; assertion-
 enabled aggregate runtime and real read-only MCP remain pending.
+Audit `.1` now passes strict/artifact/normalized-semantic/real read-only-MCP/
+public-verifier surfaces plus assertion-enabled 5 presentations / 4 data beats
+/ 1 BUSY episode / 4 qualified BUSY events / `4->3->2->1->0` / 1 resumed
+`SEQ` / storage `0x44332211`. No repair is required. Pending `.2` owns a
+separate generic contract projecting 329/370/53 split 27 `.ppif`/26 `.ahb`.
+See the [readiness audit](../../IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

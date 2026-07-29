@@ -35,5 +35,6 @@ read-only shell-disabled MCP parity pass. The generic source established
 current accounting to 328 protocol / 369 supported+strict / 52 AHB paths split
 26 `.ppif` / 26 `.ahb`; broader count/policy/composition work stays separate.
 Parent `.823` now selects a separate one-window exact-four paired readiness
-audit. Its feasibility candidate lowers and verifies cleanly, but no paired
-source ships until assertion-enabled aggregate runtime and real MCP pass.
+audit. Completed `.1` proves assertion-enabled aggregate runtime and real
+read-only MCP, then selects pending generic contract `.2`; no paired source
+ships during audit.

@@ -37,3 +37,6 @@ profile, not the full-language/SystemVerilog-UVM authority.
 
 Clean selector commit `d91c5c7c9` now activates only readiness audit `.1`;
 the public 328/369/52 boundary remains unchanged during activation.
+
+Completed `.1` now proves assertion-enabled exact-four paired readiness plus
+real read-only MCP and selects pending generic contract `.2`; no source ships.
