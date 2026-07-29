@@ -7442,6 +7442,10 @@ assertion enabled. Strict identity, generic priority, generated endpoint,
 support/capability, public, semantic/MCP, protocol/backend/VHDL, HIAL/VIAL, and
 decision-0020 boundaries remain unchanged. See
 `docs/IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
+Clean behavior commit `35a6fbfcf` completes that direct child tree. Parent
+selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.816` is now active from the clean
+boundary. Activation changes task/index/Memory/roadmap/mdBook continuity only;
+the next owner remains unselected and no behavior changes in activation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

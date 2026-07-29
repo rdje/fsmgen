@@ -5,15 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped behavior commit,
-  `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.2: ship assertion-clean direct seed arbitration`;
-  predecessor `37d7b9b04`.
-- active_work_unit: none after this commit; the direct arbitration tree is
-  complete.
-- current_state: `.2` ships the exact four-write direct-seed repair; t1520 now
-  runs all unchanged scenarios with every selector assertion enabled.
-- next_action: from this clean behavior commit, add and activate the next
-  parent IAL2 roadmap selector after `.815`, then select one smallest owner.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.816: activate post-direct-arbitration selector`;
+  predecessor `35a6fbfcf`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.816`.
+- current_state: clean direct arbitration completes the audited AHB assertion
+  boundary; `.816` is active with no behavior change in activation.
+- next_action: reconcile post-`.815` AHB/IAL2 residue and select exactly one
+  smallest evidence-backed next owner without implementing it.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -32,7 +31,8 @@ bounded current-state pointer. Git preserves its prior history.
   subordinate arbitration tree. Its audit `.1`, contract `.2`, and five-write
   implementation `.3` are complete. Parent selector `.815` selected direct
   IAL0 arbitration; its `.1` contract and assertion-clean four-write `.2`
-  implementation are complete. Decision `0020` remains proposed/inactive.
+  implementation are complete. Parent selector `.816` is active. Decision
+  `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and

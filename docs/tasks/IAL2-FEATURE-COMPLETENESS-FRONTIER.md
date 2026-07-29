@@ -68,7 +68,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
   Children continuation 14: `IAL2-FEATURE-COMPLETENESS-FRONTIER.792, IAL2-FEATURE-COMPLETENESS-FRONTIER.793, IAL2-FEATURE-COMPLETENESS-FRONTIER.794, IAL2-FEATURE-COMPLETENESS-FRONTIER.795`
   Children continuation 15: `IAL2-FEATURE-COMPLETENESS-FRONTIER.796, IAL2-FEATURE-COMPLETENESS-FRONTIER.797, IAL2-FEATURE-COMPLETENESS-FRONTIER.798, IAL2-FEATURE-COMPLETENESS-FRONTIER.799, IAL2-FEATURE-COMPLETENESS-FRONTIER.800, IAL2-FEATURE-COMPLETENESS-FRONTIER.801, IAL2-FEATURE-COMPLETENESS-FRONTIER.802, IAL2-FEATURE-COMPLETENESS-FRONTIER.803, IAL2-FEATURE-COMPLETENESS-FRONTIER.804, IAL2-FEATURE-COMPLETENESS-FRONTIER.805, IAL2-FEATURE-COMPLETENESS-FRONTIER.806, IAL2-FEATURE-COMPLETENESS-FRONTIER.807, IAL2-FEATURE-COMPLETENESS-FRONTIER.808, IAL2-FEATURE-COMPLETENESS-FRONTIER.809, IAL2-FEATURE-COMPLETENESS-FRONTIER.810, IAL2-FEATURE-COMPLETENESS-FRONTIER.811, IAL2-FEATURE-COMPLETENESS-FRONTIER.812, IAL2-FEATURE-COMPLETENESS-FRONTIER.813, IAL2-FEATURE-COMPLETENESS-FRONTIER.814`
-  Children continuation 16: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815`
+  Children continuation 16: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815, IAL2-FEATURE-COMPLETENESS-FRONTIER.816`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -5775,6 +5775,13 @@ path before reopening VHDL backend or VHDL rerouting work.
   Verification: `Selected proposed IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1 after reconciling .814, the completed generated endpoint .1-.3 lineage, assertion-enabled generated direct and paired families, the direct seed/task/fact/t1520 boundary, exact-three requester and exact-two paired lineage, current AHB residue and public/semantic-MCP surfaces, generic selector/priority owners, HIAL/VIAL, and decision 0020. The generated endpoint repair retires --no-assert from t1513-t1516/t1519/t1523/t1525; only t1520 retains it in the audited family. The direct seed authors access HREADYOUT/HRDATA/HRESP defaults plus conditional success/read/ERROR overrides, and completed diagnostics reproduce all three bus conflicts with internal assertions enabled. Guarded t1211/t1219/t1520 pass 3 files/9 tests in 7 seconds, proving generic selector visibility and current direct behavior remain sound. Direct-seed correctness is smaller than exact-three paired expansion, counts/policy/status/burst/signal work, generic priority changes, HIAL/VIAL activation, or decision 0020. Canonical selector/fact, task/index, README, roadmap, mdBook, Memory, and Knowledge Map are synchronized at 1,018 facts/5,180 keys; mdBook and all doctrine gates pass. The generated book output contained 72 files/15,856 KiB and was removed with no build residue. Exact post-gate Stats-compatible RAM capacity was 55.0% (13.19/24.00 GiB) and kernel pressure was 1 (normal); guard percentages up to 99.7% were excluded as capacity truth. No parser/generator/source/support/test/artifact/semantic-MCP API/HDL/runtime/backend/protocol/verification-generation/transaction behavior changed.`
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815: select direct seed arbitration audit`
 
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.816`
+  Status: `active`
+  Goal: `Select the next exact IAL2 feature-completeness owner after direct IAL0 AHB arbitration becomes assertion-clean.`
+  Acceptance: `Activate only after clean direct-arbitration behavior commit 35a6fbfcf. Reconcile .815, completed IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION .1-.2, assertion-enabled direct/generated/paired AHB runtime boundaries, exact-three requester and exact-two paired-composition lineage, current AHB source/report residue, support/language/capability/semantic-introspection/read-only-MCP surfaces, roadmap, mdBook, Knowledge Map, proposed correctness owners, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE, and decision 0020. Choose exactly one smallest evidence-backed next owner among exact-three paired composition, counts above three plus required storage/contract widening, policy/runtime/multiple-point BUSY insertion, distinct local bus-BUSY status, wider/indefinite burst or optional-signal work, generic selector-priority enforcement, another roadmap-aligned protocol/platform residue, HIAL/VIAL activation only if roadmap priority now warrants it, or explicit parent completion. Freeze exact ownership, clean activation boundary, preservation, focused and broader validation, docs/Knowledge Map, authorized host100/process4096 with exact Stats-compatible capacity plus separate kernel pressure, repository-derived same-volume cleanup, and rollback before behavior changes. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, backend, protocol, verification-generation, HIAL/VIAL, or transaction-layer behavior change in this selector; keep decision 0020 proposed/inactive.`
+  Verification: `Activated from clean direct-arbitration behavior commit 35a6fbfcf. Activation changes parent task/index/Memory/roadmap/mdBook continuity only; no source, support, test, generated artifact, parser/generator/API, HDL/runtime, backend, protocol, verification-generation, HIAL/VIAL, or transaction-layer behavior changed. Knowledge Map remains synchronized at 1020 facts/5190 question keys, mdBook and every doctrine check pass, and the exact 72-file/16,113,123-byte book output was removed with no residue. Post-gate Stats-compatible capacity was 59.5% (14.28/24.00 GiB), kernel pressure was 1 (normal), and ram-guard occupancy was excluded as capacity truth.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.816: activate post-direct-arbitration selector`
+
 Activation condition was satisfied when `.810` committed cleanly at
 `e2dc65507`; `.811` was then activated. That activation changed only
 task/index/Memory state and added no
@@ -5801,8 +5808,9 @@ clean behavior commit `1eec6253d`. Clean HIAL/VIAL parking commit `64f056b12`
 preserved IAL2 priority. Parent selector `.815` selected
 `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1`; its contract committed at
 `454767c15`, and implementation `.2` activated at `37d7b9b04` before shipping
-the exact four-write assertion-clean repair. The next parent selector may
-activate only after that behavior commit is clean.
+the exact four-write assertion-clean repair at `35a6fbfcf`. Parent selector
+`.816` is now active from that clean behavior boundary; activation changes
+continuity only.
 
 ## Current Frontier
 
