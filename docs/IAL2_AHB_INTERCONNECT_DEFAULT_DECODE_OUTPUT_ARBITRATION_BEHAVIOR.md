@@ -69,12 +69,12 @@ without `--no-assert`. It covers mapped address zero and nonzero, status and
 control windows, local translation, wait, success, subordinate ERROR,
 same-edge mapped replacement, and two-cycle unmapped ERROR.
 
-The paired aggregate tests `t/1513`-`t/1516`, `t/1523`, and `t/1525` retain
-their existing `--no-assert` boundary. A separately tracked generated
-subordinate idle/`ahb_phase_capture` `HRDATA_REGS <- 0` overlap remains the
-reason; it is owned by
-`IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION`, not this interconnect
-repair.
+At this interconnect slice's commit, paired aggregate tests `t/1513`-`t/1516`,
+`t/1523`, and `t/1525` retained `--no-assert` for the separately tracked
+generated subordinate overlap. That later endpoint repair now ships under
+`IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.3`; all six paired
+tests run with repaired-fabric and generated-endpoint assertions enabled. See
+`IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
 
 ## Validation
 

@@ -124,12 +124,11 @@ held subordinate continuation state and storage across BUSY, clean resumed
 `SEQ`, OKAY completion, no error/retry/split, zero remaining beats, and final
 little-endian register value `32'h44332211`.
 
-The aggregate retains its pre-existing `--no-assert` compile boundary because
-assertion enablement independently exposes overlapping default and mapped
-output selectors in the unchanged interconnect. The harness still counts the
-qualified embedded BUSY event directly; proposed inactive task
-`IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION` owns the separate
-selector gap.
+The original aggregate shipped with `--no-assert` while separate interconnect
+and generated-subordinate selector gaps remained. Both repairs now ship, and
+`t/1513` plus its `.ahb` alias `t/1514` compile and run with all requester,
+fabric, endpoint, and internal selector assertions enabled. See
+`IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
 
 ## Support And Commands
 

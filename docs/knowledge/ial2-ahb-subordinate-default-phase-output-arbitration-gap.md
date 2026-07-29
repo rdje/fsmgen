@@ -1,8 +1,8 @@
 ---
 id: ial2-ahb-subordinate-default-phase-output-arbitration-gap
-title: Generated AHB subordinate idle and phase-capture outputs overlap
+title: Historical generated AHB subordinate idle and phase-capture outputs overlapped
 answers:
-  - "why can paired AHB tests not enable assertions after the interconnect repair?"
+  - "why could paired AHB tests not enable assertions after the interconnect repair?"
   - "which AHB subordinate selectors overlap on the first captured phase?"
   - "what does subordinate HRDATA_REGS enables 01100000 mean?"
   - "which task owns the generated AHB subordinate output arbitration audit?"
@@ -30,8 +30,8 @@ families and all narrow variants have 8/2/3. Runtime additionally proves
 idle+hold `HRDATA=0` and final-ERROR retire+capture `HRDATA=0` plus explicit
 OKAY `HRESP` overlaps. Generic priority correctly suppresses different-value
 losers but intentionally leaves same-value multiple ownership observable.
-Therefore completed `.2` selects exactly five redundant-write removals in
-`AhbSubordinate.pm`; proposed implementation `.3` owns the repair and generic
-assertions remain mandatory. The separate hand-authored IAL0 seed gap is owned
-by proposed
+Completed `.2` selected exactly five redundant-write removals in
+`AhbSubordinate.pm`; implementation `.3` now ships them and generic assertions
+remain mandatory. Direct and paired generated endpoints pass assertion-enabled.
+The separate hand-authored IAL0 seed gap remains owned by proposed
 `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION`.

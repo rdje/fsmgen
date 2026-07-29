@@ -262,5 +262,7 @@ accounting, fail-closed diagnostics, and outdir artifact emission.
 Focused `t/1530-ial2-ahb-interconnect-output-arbitration.t` additionally
 instantiates the generated fabric directly with assertions enabled across
 mapped-zero/nonzero, wait, success, subordinate ERROR, same-edge replacement,
-and two-cycle unmapped behavior. Paired aggregate tests retain `--no-assert`
-only for the separately owned subordinate idle/phase-capture overlap.
+and two-cycle unmapped behavior. The later subordinate arbitration repair now
+lets paired aggregate tests run with fabric and generated-endpoint assertions
+enabled; see
+`IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md`.

@@ -136,18 +136,18 @@ subtest 'generated HDL pairs one requester BUSY presentation with subordinate pa
 
     my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
         command => [
-            'verilator', '--binary', '--timing', '--no-assert', '-Wno-fatal',
+            'verilator', '--binary', '--timing', '-Wno-fatal',
             '-j', '1', '--top-module', 'ahb_paired_busy_composition_tb',
             '--Mdir', $objdir, $hdl, testbench_path(),
         ],
     );
-    ok($compile_ok, 'Verilator builds the paired BUSY composition harness')
+    ok($compile_ok, 'Verilator builds the assertion-enabled paired BUSY composition harness')
         or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
     return unless $compile_ok;
 
     my $binary = File::Spec->catfile($objdir, 'Vahb_paired_busy_composition_tb');
     my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
-    ok($run_ok, 'generated-HDL paired BUSY composition passes')
+    ok($run_ok, 'generated-HDL paired BUSY composition passes with assertions enabled')
         or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
     like(
         join('', @{$run_stdout || []}),

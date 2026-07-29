@@ -7398,6 +7398,15 @@ gates. The distinct direct IAL0 seed stays parked. See
 Contract `.2` commits cleanly at `ef14893f5`, so selected implementation `.3`
 is active. Activation changes task/index/Memory/roadmap/mdBook/Knowledge Map
 state only; generator and runtime behavior remain unchanged until `.3` ships.
+Implementation `.3` removes exactly the selected five generated IAL1 writes.
+Base and richest direct t1519 pass with all selector assertions enabled;
+t1513-t1516, t1523, and t1525 remove `--no-assert` and pass the complete
+one-/two-window generic/alias exact-one/exact-two paired family unchanged.
+All five generated variants, public strict/check/schedule/artifact/verifier,
+support/accounting, normalized semantic JSON, and read-only MCP surfaces are
+preserved. The separately hand-authored direct IAL0 seed and t1520 boundary
+remain parked. See
+`docs/IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

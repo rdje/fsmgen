@@ -42,9 +42,9 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
     like($isf, qr/\(var ahb_phase_pending_q \(width 1\) \(reset 0\)\)/, 'generated AHB subordinate IAL1 stores one accepted next phase valid bit');
     like($isf, qr/\(var next_addr_q \(width 32\) \(reset 0\)\).*?\(var next_trans_q \(width 2\) \(reset 0\)\).*?\(var next_wait_n \(width 4\) \(reset 0\)\)/s, 'generated AHB subordinate IAL1 stores one accepted next address/control bank');
     like($isf, qr/\(priority ahb_phase_capture over ahb_phase_hold\).*?\(priority ahb_phase_hold over ahb_lite_access\)/s, 'generated AHB subordinate IAL1 gives phase capture and hold priority over the transaction tail');
-    like($isf, qr/\(rule ahb_phase_capture \(& \(! ahb_phase_pending_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)/, 'generated AHB subordinate IAL1 captures every selected ready active phase');
-    like($isf, qr/\(rule ahb_phase_hold ahb_phase_pending_q\s+\(set HREADYOUT 0\)/s, 'generated AHB subordinate IAL1 stalls a banked phase before another acceptance');
-    like($isf, qr/\(rule ahb_error_retire \(& HREADYOUT \(== HRESP 1'b1\)\)/, 'generated AHB subordinate IAL1 retires final ERROR while the internal tail drains');
+    like($isf, qr/\(rule ahb_phase_capture \(& \(! ahb_phase_pending_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\).*?\(set next_wait_n wait_cycles\)\s+\(set HREADYOUT 0\)\)/s, 'generated AHB subordinate IAL1 capture owns phase storage and not-ready only');
+    like($isf, qr/\(rule ahb_phase_hold ahb_phase_pending_q\s+\(set HREADYOUT 0\)\)/s, 'generated AHB subordinate IAL1 hold owns not-ready only');
+    like($isf, qr/\(rule ahb_error_retire \(& HREADYOUT \(== HRESP 1'b1\)\)\s+\(set HREADYOUT 1\)\s+\(set HRESP 1'b0\)\)/s, 'generated AHB subordinate IAL1 retirement owns ready and OKAY without redundant data');
     like($isf, qr/\(when ahb_phase_pending_q\s+\(sample next_addr_q as addr_q\).*?\(sample next_trans_q as trans_q\).*?\(set ahb_phase_pending_q 0\)/s, 'generated AHB subordinate IAL1 relaunches the captured phase once');
     unlike($isf, qr/\(sample HWDATA\b/, 'generated AHB subordinate IAL1 keeps HWDATA as live data-phase state');
     like($isf, qr/\(repeat wait_n\s+\(wait 1\)\)/s, 'generated AHB subordinate IAL1 repeats one-cycle waits from the sampled runtime count');

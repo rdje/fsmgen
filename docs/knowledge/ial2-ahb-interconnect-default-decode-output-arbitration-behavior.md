@@ -26,7 +26,7 @@ direct-fabric `t/1530` passes one- and two-window mapped-zero/nonzero, local
 translation, wait, success, subordinate ERROR, same-edge replacement, and
 two-cycle unmapped ERROR behavior.
 
-Paired aggregate tests retain `--no-assert` only because the separately owned
-generated subordinate idle/phase-capture overlap remains. Public syntax,
-ports, reports, support, artifacts, semantic/MCP surfaces, and AHB transaction
-behavior are unchanged.
+The later generated-subordinate repair retires the paired `--no-assert`
+boundary; paired aggregates now run with fabric and endpoint assertions
+enabled. Public syntax, ports, reports, support, artifacts, semantic/MCP
+surfaces, and AHB transaction behavior are unchanged.

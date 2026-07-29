@@ -5,16 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.3: activate endpoint arbitration implementation`;
-  predecessor `ef14893f5`.
-- active_work_unit:
-  `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.3`.
-- current_state: clean contract `.2` selects the exact five-write repair;
-  implementation `.3` is active and activation changes documentation and
-  continuity state only.
-- next_action: implement exactly the five selected generated-IAL1 removals and
-  prove assertion-enabled base/rich direct plus one-/two-window paired gates.
+- latest_commit: this task-scoped behavior commit,
+  `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.3: ship assertion-clean endpoint arbitration`;
+  predecessor `3908070ea`.
+- active_work_unit: none after this commit; the subordinate arbitration tree is
+  complete.
+- current_state: generated endpoint arbitration removes exactly five redundant
+  IAL1 writes; base/rich direct and all six paired gates pass with assertions
+  enabled, while the separate direct IAL0 seed remains parked.
+- next_action: from this clean boundary, durably park the director's HIAL/VIAL
+  verification-fixture architecture requirement without changing roadmap
+  priority, then resume the IAL2 parent next-slice selector.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -30,8 +31,8 @@ bounded current-state pointer. Git preserves its prior history.
   established `321/362/45`, `.5` ships its matching alias at `322/363/46`, and
   completed parent `.813` selected the AHB interconnect arbitration audit;
   child `.1`-.3 tree is complete and parent selector `.814` selected the
-  subordinate arbitration tree. Its audit `.1` and contract `.2` select active
-  five-write implementation `.3`. The distinct direct IAL0 seed
+  subordinate arbitration tree. Its audit `.1`, contract `.2`, and five-write
+  implementation `.3` are complete. The distinct direct IAL0 seed
   override gap is parked under proposed
   `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION`; decision `0020` remains
   proposed/inactive.
@@ -39,6 +40,12 @@ bounded current-state pointer. Git preserves its prior history.
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
   `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC`.
+- Director requirement (`2026-07-29`): frame synthesizable IAL0/1/2 as HIAL;
+  add a peer pure-verification VIAL that can extensively describe elegant,
+  powerful fixtures and lower to native SV/UVM or VHDL, joined through a typed
+  language-neutral HIAL/VIAL bridge. Audit VIAL0/1/2 layering rather than
+  assuming it; use native typed extension points instead of cloning SV/UVM or
+  VHDL. Park this in a proposed task-tree at the next clean boundary.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, direct AHB seed arbitration, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc

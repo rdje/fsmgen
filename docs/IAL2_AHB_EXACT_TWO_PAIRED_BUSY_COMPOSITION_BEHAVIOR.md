@@ -117,9 +117,12 @@ The runtime drives one byte `INCR4` write and proves:
 - four byte data beats complete with clean status; and
 - final storage is `32'h44332211`.
 
-The aggregate retains the established `--no-assert` boundary because the
-unchanged interconnect still has a separately tracked default/decode selector
-overlap. Standalone exact-two requester `t/1521` remains assertion-enabled.
+The original aggregate shipped with `--no-assert` while separate interconnect
+and generated-subordinate selector gaps remained. Both repairs now ship, and
+paired `t/1523` runs with requester, fabric, endpoint, and internal selector
+assertions enabled. Standalone exact-two requester `t/1521` remains
+assertion-enabled. See
+`IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
 
 ## Use It
 

@@ -41,8 +41,9 @@ zero-base decode omits `HADDR >= 0`. The paired source passes public
 sibling now ship through later task-tree slices. The matching two-subordinate
 alias also ships; current behavior is documented in
 `IAL2_AHB_TWO_SUBORDINATE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR`.
-t/1519 separately proves boundary-free active-phase retention. Paired tests
-retain `--no-assert` because of the separately tracked interconnect
-default/decode selector overlap, but explicitly count qualified BUSY events.
+t/1519 separately proves boundary-free active-phase retention. The later
+interconnect and generated-subordinate arbitration repairs let paired tests
+run with all selector assertions enabled while retaining the same qualified
+BUSY counts.
 General/deeper queues, multiple outstanding transfers, and broader
 manager/fabric behavior remain deferred.

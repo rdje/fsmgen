@@ -1,0 +1,178 @@
+// Task-owned handwritten regression harness for the generated
+// IAL2 -> IAL1 -> IAL0 AHB DUT. This file is not generated verification output.
+module ahb_generated_subordinate_base_output_arbitration_tb;
+  logic clk = 0;
+  logic rst_n = 0;
+  logic [31:0] HADDR = 0;
+  wire HREADY;
+  logic HSEL = 0;
+  logic [2:0] HSIZE = 3'b010;
+  logic [1:0] HTRANS = 2'b00;
+  logic [31:0] HWDATA = 0;
+  logic HWRITE = 0;
+  logic [3:0] wait_cycles = 0;
+  wire [31:0] HRDATA;
+  wire HREADYOUT;
+  wire HRESP;
+
+  assign HREADY = HREADYOUT;
+
+  ahb_lite_subordinate dut (.*);
+  always #5 clk = ~clk;
+
+  task automatic reset_dut;
+    begin
+      rst_n = 0;
+      HSEL = 0;
+      HADDR = 0;
+      HTRANS = 2'b00;
+      HWRITE = 0;
+      HSIZE = 3'b010;
+      HWDATA = 0;
+      wait_cycles = 0;
+      repeat (3) @(negedge clk);
+      rst_n = 1;
+      @(negedge clk);
+    end
+  endtask
+
+  task automatic run_success;
+    integer cycles;
+    integer accepts;
+    integer captures;
+    integer holds;
+    integer completions;
+    integer ready_low;
+    logic previous_done;
+    begin
+      reset_dut();
+      cycles = 0;
+      accepts = 0;
+      captures = 0;
+      holds = 0;
+      completions = 0;
+      ready_low = 0;
+      previous_done = 0;
+
+      HSEL = 1;
+      HADDR = 32'h00000000;
+      HTRANS = 2'b10;
+      HWRITE = 1;
+      HSIZE = 3'b010;
+      HWDATA = 32'hcafebabe;
+      wait_cycles = 2;
+
+      while ((completions < 1 || !HREADYOUT || dut.ahb_phase_pending_q) && cycles < 256) begin
+        @(posedge clk);
+        if (HSEL && HREADY && HTRANS[1])
+          accepts = accepts + 1;
+        if (dut.ahb_phase_capture_en)
+          captures = captures + 1;
+        if (dut.ahb_phase_hold_en)
+          holds = holds + 1;
+        if (dut.ahb_access_done_q && !previous_done)
+          completions = completions + 1;
+        if (!HREADYOUT)
+          ready_low = ready_low + 1;
+        if (HRESP || HRDATA !== 32'h00000000)
+          $fatal(1, "base success output resp=%b data=%h", HRESP, HRDATA);
+        previous_done = dut.ahb_access_done_q;
+
+        @(negedge clk);
+        if (accepts == 1)
+          HTRANS = 2'b00;
+        cycles = cycles + 1;
+      end
+
+      if (cycles >= 256)
+        $fatal(1, "base success timed out");
+      if (accepts != 1 || captures != 1 || holds < 1 || completions != 1 || ready_low < 1)
+        $fatal(1, "base success counts accepts=%0d captures=%0d holds=%0d completions=%0d ready_low=%0d", accepts, captures, holds, completions, ready_low);
+      if (dut.reg_data_q !== 32'hcafebabe || HRESP !== 1'b0 || HREADYOUT !== 1'b1)
+        $fatal(1, "base success terminal storage=%h ready=%b resp=%b", dut.reg_data_q, HREADYOUT, HRESP);
+
+      $display(
+        "BASE_ASSERT_SUCCESS accepts=%0d captures=%0d holds=%0d completions=%0d ready_low=%0d storage=%08x",
+        accepts,
+        captures,
+        holds,
+        completions,
+        ready_low,
+        dut.reg_data_q
+      );
+    end
+  endtask
+
+  task automatic run_error;
+    integer cycles;
+    integer accepts;
+    integer captures;
+    integer holds;
+    integer completions;
+    integer error_cycles;
+    logic previous_done;
+    begin
+      reset_dut();
+      cycles = 0;
+      accepts = 0;
+      captures = 0;
+      holds = 0;
+      completions = 0;
+      error_cycles = 0;
+      previous_done = 0;
+
+      HSEL = 1;
+      HADDR = 32'h00000000;
+      HTRANS = 2'b10;
+      HWRITE = 1;
+      HSIZE = 3'b111;
+      HWDATA = 32'hffffffff;
+      wait_cycles = 1;
+
+      while ((completions < 1 || !HREADYOUT || HRESP || dut.ahb_phase_pending_q) && cycles < 256) begin
+        @(posedge clk);
+        if (HSEL && HREADY && HTRANS[1])
+          accepts = accepts + 1;
+        if (dut.ahb_phase_capture_en)
+          captures = captures + 1;
+        if (dut.ahb_phase_hold_en)
+          holds = holds + 1;
+        if (dut.ahb_access_done_q && !previous_done)
+          completions = completions + 1;
+        if (HRESP)
+          error_cycles = error_cycles + 1;
+        if (HRDATA !== 32'h00000000)
+          $fatal(1, "base ERROR data=%h", HRDATA);
+        previous_done = dut.ahb_access_done_q;
+
+        @(negedge clk);
+        if (accepts == 1)
+          HTRANS = 2'b00;
+        cycles = cycles + 1;
+      end
+
+      if (cycles >= 256)
+        $fatal(1, "base ERROR timed out");
+      if (accepts != 1 || captures != 1 || holds < 1 || completions != 1 || error_cycles != 2)
+        $fatal(1, "base ERROR counts accepts=%0d captures=%0d holds=%0d completions=%0d errors=%0d", accepts, captures, holds, completions, error_cycles);
+      if (dut.reg_data_q !== 32'h00000000 || HRESP !== 1'b0 || HREADYOUT !== 1'b1)
+        $fatal(1, "base ERROR terminal storage=%h ready=%b resp=%b", dut.reg_data_q, HREADYOUT, HRESP);
+
+      $display(
+        "BASE_ASSERT_ERROR accepts=%0d captures=%0d holds=%0d completions=%0d error_cycles=%0d storage=%08x",
+        accepts,
+        captures,
+        holds,
+        completions,
+        error_cycles,
+        dut.reg_data_q
+      );
+    end
+  endtask
+
+  initial begin
+    run_success();
+    run_error();
+    $finish;
+  end
+endmodule

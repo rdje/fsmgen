@@ -42,9 +42,9 @@ Generated IAL0 now makes the decode and response families mutually exclusive:
 each window uses mapped-hit/not-hit `HSEL_*`/`HADDR_*`, while global response
 outputs use retained-owner, first-cycle-unmapped, or
 `!any_owner && !unmapped_address` ordinary-default modes. Direct-fabric t1530
-passes with selector assertions enabled. Paired aggregate tests retain
-`--no-assert` only for the separately owned subordinate idle/phase-capture
-overlap.
+passes with selector assertions enabled. The later generated-subordinate
+repair now lets paired aggregates run with fabric and endpoint assertions
+enabled.
 
 Aggregate AHB `.ahb` alias behavior now ships separately as
 `ppif/ahb_interconnect.ahb`, support-accounted as

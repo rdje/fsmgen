@@ -28,8 +28,6 @@ resumed SEQ, four data beats, and zero remaining. t/1513-t/1516 count one
 qualified embedded BUSY event per paired command across generic and `.ahb`
 one-/two-window surfaces.
 
-Paired aggregate tests retain their pre-existing `--no-assert` compile mode
-because the unchanged interconnect independently overlaps mapped output drives
-with state defaults. Fact
-`ial2-ahb-interconnect-default-decode-output-arbitration-gap` and its proposed
-inactive task own that separate assertion-enablement gap.
+Later interconnect and generated-subordinate arbitration repairs retire the
+paired `--no-assert` boundary. The same t/1513-t/1516 runtimes now pass with
+requester, fabric, endpoint, and internal selector assertions enabled.

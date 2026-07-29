@@ -11211,6 +11211,14 @@ paired gates; the direct IAL0 seed remains parked. See the
 Contract `.2` commits cleanly at `ef14893f5`, so implementation `.3` is active.
 Activation changes continuity/documentation state only; no generated output
 repair has shipped yet.
+Implementation `.3` now removes exactly the selected five generated-IAL1
+writes. Assertion-enabled t1519 passes both base and richest direct endpoints;
+t1513-t1516, t1523, and t1525 retire `--no-assert` across the one-/two-window
+generic/alias exact-one/exact-two paired family without changing exact BUSY,
+transfer, beat, SEQ, ERROR, or storage results. Generic assertions stay
+authoritative, all public/report/support/semantic/MCP surfaces remain fixed,
+and the separately hand-authored direct IAL0 seed stays parked. See the
+[shipped subordinate arbitration behavior](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

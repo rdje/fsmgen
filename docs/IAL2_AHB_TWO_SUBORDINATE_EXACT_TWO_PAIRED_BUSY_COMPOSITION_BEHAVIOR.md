@@ -140,9 +140,15 @@ The generic exact-three requester and matching `.ahb` alias now ship
 separately. Exact-three paired compositions, counts above three, multiple insertion
 points, runtime-selected policy, distinct local bus-BUSY status,
 broader bursts and optional signals, deeper queues, multiple outstanding
-transfers, broader managers/fabrics, selector repair, direct backends,
+transfers, broader managers/fabrics, direct backends,
 verification-output generation, backend variants, other protocol changes,
 VHDL, and decision 0020's transaction-layer horizon remain deferred/inactive.
+
+The original two-window aggregate shipped with `--no-assert` while separate
+interconnect and generated-subordinate selector gaps remained. Both repairs
+now ship, and `t/1525` runs with requester, fabric, both endpoints, and all
+internal selector assertions enabled. See
+`IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
 
 ## Rollback
 

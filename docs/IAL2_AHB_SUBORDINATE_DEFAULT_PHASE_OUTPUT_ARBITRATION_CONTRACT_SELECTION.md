@@ -12,7 +12,9 @@ The selected repair is local to generated IAL1 authored by
 output writes while retaining the existing phase scheduler, values, timing,
 priorities, and generic selector assertions.
 
-Active child `.3` owns implementation after clean contract commit `ef14893f5`.
+Completed child `.3` implements the contract after clean contract commit
+`ef14893f5`; see
+`IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
 This contract slice changes no parser, generator, public source, support
 identity, report/schema, review artifact, semantic/MCP API, HDL, runtime,
 backend, protocol, VHDL, or transaction-layer behavior.
@@ -103,9 +105,9 @@ reading was 40.8% (9.78/24.00 GiB), while the kernel pressure state was `1`
 (normal). The guard's incompatible displayed percentage is not capacity
 evidence.
 
-## Active Implementation Gate
+## Implementation Gate
 
-Active `.3` must:
+Completed `.3` was required to:
 
 1. remove only the selected five writes in `AhbSubordinate.pm`;
 2. preserve structural coverage for base, byte-lane, SEQ, HBURST/SEQ, and

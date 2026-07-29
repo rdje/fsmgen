@@ -1293,11 +1293,12 @@ generic/alias and two-subordinate paired generic sources are described below.
 > selected contract removes only capture/hold HRESP+HRDATA and retirement
 > HRDATA writes; all ready ownership, functional drive values, priorities, and
 > generic assertions stay fixed. The richest disposable candidate passes the
-> full direct phase-pipeline runtime with assertions enabled. Clean contract
-> commit `ef14893f5` activates implementation `.3`; activation changes docs
-> only, so paired aggregate tests retain `--no-assert` until `.3` proves the
-> base/rich and one-/two-window gates. See the
-> [contract selection](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
+> full direct phase-pipeline runtime with assertions enabled. Implementation
+> `.3` now ships exactly those five removals. Base and richest direct t1519 and
+> paired t1513-t1516/t1523/t1525 all pass with requester, fabric, generated
+> endpoint, and internal selector assertions enabled. The hand-authored direct
+> IAL0 seed remains a separate parked owner. See the
+> [shipped behavior](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_BEHAVIOR.md).
 
 > **Exact single-event cardinality:** `busy_insertion.beats=single` now means
 > exactly one rising edge with `HGRANT && HREADY && HTRANS == BUSY`. BUSY
@@ -1312,11 +1313,9 @@ generic/alias and two-subordinate paired generic sources are described below.
 > [multiple-BUSY readiness audit](../../IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md)
 > records the former ten-edge mismatch; the
 > [single-event repair](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md)
-> records the shipped correction. Paired aggregate tests retain `--no-assert`
-> because the selected AHB subordinate output-arbitration contract still awaits
-> implementation; the interconnect default/decode
-> overlap is repaired and direct fabric assertions pass. Their qualified BUSY
-> counts remain explicit.
+> records the shipped correction. Paired aggregate tests now run with all
+> requester, repaired-fabric, generated-endpoint, and internal selector
+> assertions enabled. Their qualified BUSY counts remain explicit.
 
 The additive exact-two extension now ships as the generic source
 `ppif/ahb_requester_busy_insert_two.ppif`:

@@ -28,18 +28,18 @@ subtest 'generated phase bank retains every ready active address phase' => sub {
     );
     like(
         $isf,
-        qr/\(rule ahb_phase_capture \(& \(! ahb_phase_pending_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)\s+\(set ahb_phase_pending_q 1\)\s+\(set next_addr_q HADDR\)\s+\(set next_write_q HWRITE\)\s+\(set next_size_q HSIZE\)\s+\(set next_trans_q HTRANS\)\s+\(set next_burst_q HBURST\)\s+\(set next_wait_n wait_cycles\)\s+\(set HREADYOUT 0\)\s+\(set HRESP 1'b0\)\s+\(set HRDATA 0\)\)/s,
-        'IAL1 captures one complete ready active address/control phase and stalls its data phase',
+        qr/\(rule ahb_phase_capture \(& \(! ahb_phase_pending_q\) HSEL HREADY \(\| \(== HTRANS 2'b10\) \(== HTRANS 2'b11\)\)\)\s+\(set ahb_phase_pending_q 1\)\s+\(set next_addr_q HADDR\)\s+\(set next_write_q HWRITE\)\s+\(set next_size_q HSIZE\)\s+\(set next_trans_q HTRANS\)\s+\(set next_burst_q HBURST\)\s+\(set next_wait_n wait_cycles\)\s+\(set HREADYOUT 0\)\)/s,
+        'IAL1 capture owns only phase storage and not-ready output',
     );
     like(
         $isf,
-        qr/\(rule ahb_phase_hold ahb_phase_pending_q\s+\(set HREADYOUT 0\)\s+\(set HRESP 1'b0\)\s+\(set HRDATA 0\)\)/s,
-        'IAL1 holds the accepted phase not-ready until transaction relaunch',
+        qr/\(rule ahb_phase_hold ahb_phase_pending_q\s+\(set HREADYOUT 0\)\)/s,
+        'IAL1 hold owns only not-ready until transaction relaunch',
     );
     like(
         $isf,
-        qr/\(rule ahb_error_retire \(& HREADYOUT \(== HRESP 1'b1\)\)\s+\(set HREADYOUT 1\)\s+\(set HRESP 1'b0\)\s+\(set HRDATA 0\)\)/s,
-        'IAL1 retires final ERROR to zero-wait IDLE OKAY while the transaction tail drains',
+        qr/\(rule ahb_error_retire \(& HREADYOUT \(== HRESP 1'b1\)\)\s+\(set HREADYOUT 1\)\s+\(set HRESP 1'b0\)\)/s,
+        'IAL1 retirement owns ready and OKAY while retaining final ERROR zero data',
     );
     like(
         $isf,
@@ -79,18 +79,18 @@ subtest 'generated HDL retains success and ERROR completion-edge phases exactly 
 
     my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
         command => [
-            'verilator', '--binary', '--timing', '--no-assert', '-Wno-fatal',
+            'verilator', '--binary', '--timing', '-Wno-fatal',
             '-j', '1', '--top-module', 'ahb_pipelined_active_transfer_audit_tb',
             '--Mdir', $objdir, $hdl, testbench_path(),
         ],
     );
-    ok($compile_ok, 'Verilator builds the boundary-free active-transfer repair harness')
+    ok($compile_ok, 'Verilator builds the assertion-enabled active-transfer repair harness')
         or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
     return unless $compile_ok;
 
     my $binary = File::Spec->catfile($objdir, 'Vahb_pipelined_active_transfer_audit_tb');
     my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
-    ok($run_ok, 'generated-HDL boundary-free repair proof completes deterministically')
+    ok($run_ok, 'generated-HDL assertion-enabled repair proof completes deterministically')
         or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
     return unless $run_ok;
 
@@ -112,6 +112,47 @@ subtest 'generated HDL retains success and ERROR completion-edge phases exactly 
     );
 };
 
+subtest 'base generated endpoint is assertion-clean through capture, hold, success, and ERROR' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'ahb_lite_subordinate_base.sv');
+    my $objdir = File::Spec->catdir($tempdir, 'obj-base');
+    my ($generate_ok, undef, undef, $generate_stdout, $generate_stderr) = run(
+        command => ['./bin/fsmgen', '--quiet', '--strict', '--output', $hdl, base_sample_path()],
+    );
+    ok($generate_ok, 'public base AHB subordinate emits generated HDL for assertion proof')
+        or diag(join('', @{$generate_stdout || []}), join('', @{$generate_stderr || []}));
+    return unless $generate_ok;
+
+    my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
+        command => [
+            'verilator', '--binary', '--timing', '-Wno-fatal',
+            '-j', '1', '--top-module', 'ahb_generated_subordinate_base_output_arbitration_tb',
+            '--Mdir', $objdir, $hdl, base_testbench_path(),
+        ],
+    );
+    ok($compile_ok, 'Verilator builds the assertion-enabled base endpoint harness')
+        or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
+    return unless $compile_ok;
+
+    my $binary = File::Spec->catfile($objdir, 'Vahb_generated_subordinate_base_output_arbitration_tb');
+    my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
+    ok($run_ok, 'base endpoint capture/hold/success/ERROR proof completes with assertions enabled')
+        or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
+    return unless $run_ok;
+
+    my $stdout = join('', @{$run_stdout || []});
+    like(
+        $stdout,
+        qr/BASE_ASSERT_SUCCESS accepts=1 captures=1 holds=\d+ completions=1 ready_low=\d+ storage=cafebabe/,
+        'base success covers one capture, at least one hold, one completion, and exact write storage',
+    );
+    like(
+        $stdout,
+        qr/BASE_ASSERT_ERROR accepts=1 captures=1 holds=\d+ completions=1 error_cycles=2 storage=00000000/,
+        'base unsupported-size path covers two-cycle ERROR and returns to zero storage',
+    );
+};
+
 done_testing();
 
 sub sample_path {
@@ -128,5 +169,22 @@ sub testbench_path {
         $FindBin::Bin,
         'data',
         'ahb_pipelined_active_transfer_audit_tb.svt',
+    );
+}
+
+sub base_sample_path {
+    return File::Spec->catfile(
+        $FindBin::Bin,
+        '..',
+        'ppif',
+        'ahb_lite_subordinate.ppif',
+    );
+}
+
+sub base_testbench_path {
+    return File::Spec->catfile(
+        $FindBin::Bin,
+        'data',
+        'ahb_generated_subordinate_base_output_arbitration_tb.svt',
     );
 }
