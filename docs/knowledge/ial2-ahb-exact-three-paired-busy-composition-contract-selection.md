@@ -29,3 +29,7 @@ Projected accounting is 323 protocol / 364 supported-smoke+strict / 47 AHB
 paths split 24 `.ppif` / 23 `.ahb`. The matching alias, two-subordinate form,
 broader BUSY semantics, HIAL/VIAL activation, VHDL, verification generation,
 and decision 0020 remain separate.
+
+Clean contract commit `547d8102f` now activates only selected `.3` data-only
+implementation. Activation changes continuity documentation and no source,
+support entry, test, or generated behavior.

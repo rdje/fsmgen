@@ -11316,6 +11316,8 @@ assertion-enabled t1531 5/4/1/3/1/`44332211` runtime. Projected accounting is
 323/364/47 split 24 `.ppif`/23 `.ahb`. Pending `.3` is the separate data-only
 implementation; the source remains unshipped during selection. See the
 [contract](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
+Clean contract commit `547d8102f` activates only `.3`; the selected source,
+support path, and t1531 remain unshipped until implementation passes.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

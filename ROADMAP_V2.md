@@ -7486,6 +7486,10 @@ support/docs implementation after the contract commits cleanly. No behavior
 changes in `.2`; aliases, two-subordinate exact-three, broader BUSY semantics,
 HIAL/VIAL, VHDL, verification generation, and decision 0020 remain separate.
 See `docs/IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md`.
+Clean contract commit `547d8102f` now activates only `.3` data-only
+implementation. Activation changes continuity documentation and no public
+source, support, test, artifact, HDL/runtime, semantic-MCP, backend, HIAL/VIAL,
+VHDL, verification-generation, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -73,11 +73,11 @@ public source or behavior is selected.
   Commit: `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select exact-three paired AHB contract`
 
 - ID: `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Ship the selected generic one-subordinate exact-three paired AHB BUSY source through existing generators.`
   Acceptance: `Activate only after clean .2 contract commit. Implement exactly the .2 contract: add ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif as the exact data-only extension of the exact-two paired source, with selected intent/object/anchor, embedded amba_requester_busy_insert_three, busy-before-beat 2, busy-beats 3, existing ahb_lite_subordinate_byte_lane_hburst_seq, ahb_interconnect, ahb_tb, ports/storage/burst/response/window/wiring unchanged. Add RegressionCorpus entry intent.ppif_ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park with selected coverage, ppif/supported_smoke/strict/module ahb_tb/root top/3-child expectations; update t248/t297 and public support/language/capability/current-doc inventory surfaces to exact 323 protocol / 364 supported+strict / 47 AHB paths split 24 .ppif/23 .ahb. Add t/1531-ial2-ahb-exact-three-paired-busy-composition.t and t/data/ahb_exact_three_paired_busy_composition_tb.svt covering source identities, strict/check success and exact support, schedule schema/3 children/artifacts/one-hot ownership/requester before_beat=2/beats=3/width-two counter/child+propagated parks/no top busy_flow, normalized semantic JSON, real repo-relative fsmgen_semantic_introspect read_only=true/shell_access=false, repo-local outdir, --verify-hdl, and Verilator without --no-assert at exact transfers=5/beats=4/BUSY episodes=1/qualified BUSY=3/resumed SEQ=1/storage=0x44332211 plus stable requester/subordinate/fabric ownership and clean completion. Preserve t1520/t1523-t1526/t1528-t1530 and existing source/alias byte identity; use the smallest warranted focused/broader gates. Add behavior record/fact and sync README, ROADMAP_V2, REGRESSION_CORPUS/support docs, mdBook, task/index, Memory, and Knowledge Map. Use repo-derived same-volume temp/output, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup census, rollback, and commit. Do not change parser/generator algorithms, existing source bytes, report schema/API, `.ahb` alias, two-subordinate topology, counts above three, policy/status/burst/signal behavior, generic priority, other protocols/backends, HIAL/VIAL, VHDL, verification generation, or decision 0020.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean .2 contract commit 547d8102f. Activation changes task/index/Memory/roadmap/mdBook/fact continuity only; no parser, generator, public source, support entry, test, testbench, checked-in generated artifact, semantic/MCP API, HDL/runtime, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction-layer behavior changes. Knowledge Map is synchronized at 1,023 facts/5,206 keys; mdBook builds and its exact 72-file/16,133,596-byte output was removed without residue; all six doctrine gates pass. Post-gate Stats-compatible capacity was 57.9% (13.89/24.00 GiB), kernel pressure was 1 (normal), and guard occupancy was excluded as capacity truth.`
+  Commit: `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: activate exact-three paired AHB implementation`
 
 ## Decisions
 
@@ -95,6 +95,9 @@ public source or behavior is selected.
 - `2026-07-29`: Contract `.2` freezes one generic source, support identity,
   t1531 assertion-enabled runtime, and `.3` data-only implementation; aliases
   and the two-subordinate topology remain separately owned.
+- `2026-07-29`: Clean contract commit `547d8102f` satisfies the `.3` activation
+  boundary; implementation is active but no source or behavior changes in
+  activation.
 
 ## Open Questions
 

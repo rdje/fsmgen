@@ -2034,6 +2034,8 @@ identity, and assertion-enabled t1531 5/4/1/3/1/`44332211` runtime at projected
 323/364/47. Pending `.3` owns implementation, so the path still does not ship
 at this checkpoint. See the
 [selected contract](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
+Clean contract commit `547d8102f` now activates `.3` only; the selected generic
+path still does not ship during activation.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

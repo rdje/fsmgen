@@ -5,17 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped contract commit,
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select exact-three paired AHB contract`;
-  predecessor `1087d9bb1`.
-- active_work_unit: none after this contract commit; selected pending leaf
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3` awaits
-  activation.
-- current_state: `.2` freezes one generic source, exact support/semantic/MCP
-  identities, t1531 assertion runtime, and 323/364/47 projection; no public
-  behavior changed.
-- next_action: from the clean contract commit, activate only `.3` data-only
-  implementation in a separate no-behavior commit.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: activate exact-three paired AHB implementation`;
+  predecessor `547d8102f`.
+- active_work_unit:
+  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`.
+- current_state: exact generic one-subordinate source/support/t1531 data-only
+  implementation is active; activation changes continuity only and no behavior.
+- next_action: implement exactly `.3`, validate assertion-enabled runtime and
+  323/364/47 public accounting, document behavior, and commit.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
