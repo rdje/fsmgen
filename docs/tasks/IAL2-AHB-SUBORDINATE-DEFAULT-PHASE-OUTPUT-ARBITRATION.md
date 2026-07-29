@@ -82,7 +82,7 @@ yet been audited.
   Commit: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.2: select endpoint arbitration contract`
 
 - ID: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected five-write generated endpoint arbitration repair and retire generated-endpoint assertion suppressions.`
   Acceptance: `Activate only from the clean .2 contract commit. In perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm remove exactly HRESP/HRDATA from ahb_phase_capture, HRESP/HRDATA from ahb_phase_hold, and HRDATA from ahb_error_retire; preserve all HREADYOUT ownership, error-retire HRESP OKAY, transaction defaults, enter/read/write/success/two-cycle-ERROR drives, priorities, names, ports, widths, and generic same-value/multi-value assertions. Add or update focused assertion-enabled base and richest direct plus one-window and two-window paired runtime gates for initial capture, wait/hold, same-edge success/ERROR completion plus next capture, data, writes, SEQ, BUSY, ERROR-to-IDLE cancellation, and exact capture/completion/storage counts. Remove --no-assert from t1513-t1516/t1519/t1523/t1525 only where the generated endpoint is the final blocker; retain t1520's boundary under proposed IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION. Preserve t1475/t1482/t1486/t1490/t1494 and relevant t1518/t248/t297 surfaces; prove strict/check/schedule/artifact/verifier, report/support/accounting, normalized semantic JSON, read-only MCP, public PPIF/AHB bytes, mdBook examples, Knowledge Map, doctrines, and no protocol/backend/VHDL/decision-0020 expansion. Use repository-derived same-volume storage, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup census, and rollback.`
   Verification: `pending`
@@ -102,10 +102,13 @@ activated from that handoff-ready boundary as a documentation-only slice. It
 selects proposed implementation `.3`; the parked direct IAL0 seed task remains
 proposed/inactive.
 
+Contract `.2` committed cleanly at `ef14893f5`. Implementation `.3` activates
+from that handoff-ready boundary as a documentation-only slice. No source,
+generator, test, artifact, HDL, or runtime behavior changes in activation.
+
 ## Blockers
 
-- None. Contract selector `.2` is complete; implementation `.3` awaits
-  activation from its clean commit boundary.
+- None. Implementation `.3` is the active frontier.
 
 ## Rollback
 

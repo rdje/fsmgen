@@ -11208,6 +11208,9 @@ runtime with assertions enabled and exact results unchanged. Proposed `.3`
 owns implementation and assertion-enabled base/rich plus one-/two-window
 paired gates; the direct IAL0 seed remains parked. See the
 [selected subordinate arbitration contract](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
+Contract `.2` commits cleanly at `ef14893f5`, so implementation `.3` is active.
+Activation changes continuity/documentation state only; no generated output
+repair has shipped yet.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

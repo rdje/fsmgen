@@ -24,6 +24,6 @@ The richest disposable candidate lowered through public `bin/fsmgen` and
 passed the existing direct phase-pipeline runtime with every assertion
 enabled. It preserved exact active success/SEQ, ERROR continuation, and
 ERROR-to-IDLE cancellation counts and storage. Generic same-value and
-multi-value selector assertions remain enabled and unchanged. Contract `.2`
-selects proposed implementation `.3`; the separate hand-authored IAL0 seed
-remains outside this repair.
+multi-value selector assertions remain enabled and unchanged. Clean contract
+commit `ef14893f5` activates implementation `.3`; the separate hand-authored
+IAL0 seed remains outside this repair.

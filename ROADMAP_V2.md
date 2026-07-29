@@ -7395,6 +7395,9 @@ all assertions enabled and exact counts/storage unchanged. Proposed `.3` owns
 implementation plus base, rich, one-window, and two-window assertion-enabled
 gates. The distinct direct IAL0 seed stays parked. See
 `docs/IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md`.
+Contract `.2` commits cleanly at `ef14893f5`, so selected implementation `.3`
+is active. Activation changes task/index/Memory/roadmap/mdBook/Knowledge Map
+state only; generator and runtime behavior remain unchanged until `.3` ships.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

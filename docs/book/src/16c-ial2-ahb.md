@@ -1293,10 +1293,10 @@ generic/alias and two-subordinate paired generic sources are described below.
 > selected contract removes only capture/hold HRESP+HRDATA and retirement
 > HRDATA writes; all ready ownership, functional drive values, priorities, and
 > generic assertions stay fixed. The richest disposable candidate passes the
-> full direct phase-pipeline runtime with assertions enabled. Implementation
-> remains proposed under `.3`, so paired aggregate tests retain `--no-assert`
-> until that separately committed slice proves the base/rich and one-/two-window
-> gates. See the
+> full direct phase-pipeline runtime with assertions enabled. Clean contract
+> commit `ef14893f5` activates implementation `.3`; activation changes docs
+> only, so paired aggregate tests retain `--no-assert` until `.3` proves the
+> base/rich and one-/two-window gates. See the
 > [contract selection](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
 
 > **Exact single-event cardinality:** `busy_insertion.beats=single` now means
