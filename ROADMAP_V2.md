@@ -1045,6 +1045,26 @@ Priority note:
   rules, completion-event release rules, runtime assertions, and
   `auto_id_lifecycle.generated_behavior: true`.
 
+### H6. End-to-end big-to-really-big design scalability
+
+Foundational requirement:
+
+- FSMGen shall handle end-to-end big to really big designs;
+- “end-to-end” covers source parsing and normalization, IAL lowering,
+  scheduling/analysis, review artifacts, HDL emission, semantic exports, and
+  verification/tool handoff—not a parser-only microbenchmark;
+- capacity claims must preserve correctness, diagnostics, deterministic
+  artifacts, same-volume locality, and recoverability.
+
+Proposed task
+[FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY](docs/tasks/FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY.md)
+owns evidence-backed `big`/`really_big` structural profiles, deterministic
+workloads, per-stage correctness oracles, peak descendant RSS/time/artifact
+metrics, bottleneck analysis, budgets, graceful beyond-capacity behavior, and
+stable local/CI qualification gates. The requirement is parked and does not
+pivot current priority away from the selected AHB subordinate correctness
+audit; a later roadmap selector must activate it.
+
 ## Current intent
 The active immediate priority is now first-class semantic introspection and
 MCP-queryable FSMGen semantics under

@@ -16496,6 +16496,27 @@ single-event fixture, and a dual opposite-direction event fixture are shipped;
 both fixture families now reach plain generated HDL with concrete CDC
 children.
 
+## End-To-End Large-Design Scalability
+
+FSMGen has a foundational requirement to handle end-to-end big to really big
+designs. That means the complete source-to-HDL/verification path: parsing and
+normalization, IAL lowering, scheduling/analysis, review artifacts, HDL,
+semantic exports, and tool handoff. A parser-only stress input is not sufficient
+evidence.
+
+The proposed
+[large-design scalability task](../../tasks/FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY.md)
+will first select measurable `big` and `really_big` structural profiles,
+deterministic same-volume workloads, per-stage correctness oracles, peak
+descendant RSS/time/artifact measurements, bottleneck analysis, evidence-based
+budgets, graceful beyond-capacity behavior, and stable local/CI qualification
+gates. Correctness, diagnostics, deterministic artifacts, locality, and
+recoverability remain part of the capacity contract.
+
+This requirement is parked rather than active. It does not displace the
+selected AHB subordinate correctness audit; a later roadmap selector must
+activate it from a clean boundary.
+
 ## Backends And Validation
 
 ### Full VHDL Backend

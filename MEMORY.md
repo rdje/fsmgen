@@ -38,8 +38,10 @@ bounded current-state pointer. Git preserves its prior history.
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
   `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC`.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
-  priority enforcement, AHB interconnect arbitration, nested assertion
-  precedence, t/1436 failures, mdBook rustdoc fences, and guard metric repair.
+  priority enforcement, AHB subordinate arbitration, end-to-end big-design
+  scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc
+  fences, and guard metric repair. Scalability is parked and does not pivot the
+  active AHB priority.
 - Task-tree live truth is the node list + `docs/TASK_TREE.md` + git (decision
   `0019`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.
 - Push only on explicit request (decision `0005`). PNT runs autonomously without
