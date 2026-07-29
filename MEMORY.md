@@ -5,14 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1: activate direct seed arbitration contract`;
-  predecessor `8cae38a73`.
-- active_work_unit: `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1`.
-- current_state: `.815` selected the direct-seed arbitration contract; `.1` is
-  active from a clean boundary with no seed or test behavior change.
-- next_action: select the exact exclusive direct-seed output modes and freeze a
-  separate implementation leaf before changing `fsm/ahb_lite_subordinate.fsm`.
+- latest_commit: this task-scoped contract commit,
+  `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1: select implicit-zero output contract`;
+  predecessor `eeede66b3`.
+- active_work_unit: none after this commit; contract `.1` is complete.
+- current_state: `.1` selects proposed four-write implementation `.2`; the
+  tracked seed and t1520 `--no-assert` boundary remain unchanged.
+- next_action: from the clean `.1` contract commit, activate implementation
+  `.2` without changing the seed or test behavior in the activation slice.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -29,10 +29,9 @@ bounded current-state pointer. Git preserves its prior history.
   completed parent `.813` selected the AHB interconnect arbitration audit;
   child `.1`-.3 tree is complete and parent selector `.814` selected the
   subordinate arbitration tree. Its audit `.1`, contract `.2`, and five-write
-  implementation `.3` are complete; parent selector `.815` selected the now
-  active direct IAL0 seed override gap under
-  `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION`; decision `0020` remains
-  proposed/inactive.
+  implementation `.3` are complete. Parent selector `.815` selected direct
+  IAL0 arbitration; its `.1` contract selects proposed four-write
+  implementation `.2`. Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and

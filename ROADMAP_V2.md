@@ -7421,6 +7421,14 @@ The `.815` selector committed cleanly at `8cae38a73`, so selected direct-seed
 contract leaf `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1` is active.
 Activation changes continuity and documentation state only; the seed and
 t1520 assertion boundary remain unchanged until the contract is selected.
+Contract `.1` selects proposed implementation `.2`: remove exactly access
+HREADYOUT/HRESP/HRDATA zero writes and unsupported HRESP zero, relying on the
+existing implicit zero mux baseline only where conditional nonzero owners
+remain. Unsupported HREADYOUT/HRDATA zero drives stay explicit. An exact-four
+repository-local candidate passes the complete t1520 harness with every
+selector assertion enabled and unchanged success/ERROR/SEQ/IDLE results. The
+tracked seed and `--no-assert` remain unchanged until `.2` activates. See
+`docs/IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
