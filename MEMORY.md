@@ -5,15 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: activate exact-three paired AHB audit`;
-  predecessor `bc3d9eaf1`.
-- active_work_unit:
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`.
-- current_state: selected generic one-subordinate exact-three paired readiness
-  audit is active; activation changes continuity only and no behavior.
-- next_action: execute `.1` readiness audit and select the next exact owner
-  from strict/artifact/assertion-runtime/semantic-MCP evidence.
+- latest_commit: this task-scoped audit commit,
+  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: audit exact-three paired AHB readiness`;
+  predecessor `0d5093f36`.
+- active_work_unit: none after this audit commit; selected pending leaf
+  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2` awaits
+  activation.
+- current_state: `.1` proves direct generic one-subordinate readiness through
+  exact artifacts, assertions, runtime, normalized semantics, and read-only
+  MCP; no public behavior changed.
+- next_action: from the clean audit commit, activate only selected `.2` public
+  contract selector in a separate no-behavior commit.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -33,9 +35,10 @@ bounded current-state pointer. Git preserves its prior history.
   implementation `.3` are complete. Parent selector `.815` selected direct
   IAL0 arbitration; its `.1` contract and assertion-clean four-write `.2`
   implementation are complete. Parent selector `.816` selects proposed
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`; its
-  disposable feasibility boundary passed 5/4/1/3/1/`44332211` with assertions
-  and was removed without residue. Decision `0020` remains proposed/inactive.
+  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`; `.1` now
+  proves strict/artifact/assertion-runtime/semantic-MCP readiness and selects
+  `.2` contract work at projected 323/364/47. Decision `0020` remains
+  proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and

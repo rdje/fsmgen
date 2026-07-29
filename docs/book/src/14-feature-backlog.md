@@ -11299,6 +11299,14 @@ aliases, the two-window form, broader BUSY semantics, HIAL/VIAL, and decision
 Clean selector commit `bc3d9eaf1` activates only the selected readiness-audit
 leaf. Activation changes continuity documentation and no generated or public
 behavior; the audit must complete before any contract or implementation.
+Audit `.1` now proves the existing exact-three requester and one-subordinate
+parking aggregate compose through exact 3 IAL1/4 IAL0 artifacts with every
+selector assertion enabled. Strict/schedule/normalized-semantic/read-only-MCP
+surfaces agree, runtime passes 5/4/1/3/1/`44332211`, and current preservation
+owners pass. Pending `.2` must freeze the one generic public source and
+projected 323/364/47 support boundary before implementation. No exact-three
+paired public source ships in the audit. See the
+[readiness audit](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

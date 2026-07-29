@@ -2015,6 +2015,17 @@ feasibility only: no exact-three paired public source ships until a later
 contract and implementation are selected. See the
 [post-direct selector](../../IAL2_POST_DIRECT_ARBITRATION_NEXT_OWNER_SELECTION.md).
 
+Active audit `.1` now proves that composition directly. The future generic
+candidate retains the existing three-child `ahb_tb`, exact three IAL1/four IAL0
+artifacts, width-two `3 -> 2 -> 1 -> 0` requester retirement,
+subordinate/aggregate `parks_on=[busy]`, and one-hot fabric ownership. Strict
+check, normalized semantics, and real read-only MCP agree; assertion-enabled
+runtime passes 5 presentations / 4 beats / 1 BUSY episode / 3 qualified BUSY
+events / 1 resumed `SEQ` / storage `0x44332211`. Pending `.2` must freeze the
+public generic contract and projected 323/364/47 accounting before a separate
+implementation. See the
+[readiness result](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
+
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
 `.1` proved that the pre-repair one-bit procedural flag yielded ten

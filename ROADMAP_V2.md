@@ -7459,6 +7459,17 @@ Clean selector commit `bc3d9eaf1` satisfies the selected child boundary, so
 Activation changes task/index/Memory/roadmap/mdBook/fact continuity only; no
 public source, support, test, artifact, HDL/runtime, semantic-MCP, backend,
 HIAL/VIAL, VHDL, verification-generation, or transaction behavior changes.
+Audit `.1` now proves direct data-only readiness: the future generic candidate
+strict-checks with zero diagnostics, preserves exact 3 IAL1/4 IAL0 artifacts,
+width-two `3 -> 2 -> 1 -> 0`, child/propagated BUSY parking, and one-hot fabric
+ownership; normalized semantic JSON and real read-only MCP agree; and
+assertion-enabled runtime passes 5/4/1/3/1/`44332211`. Direct, exact-two paired
+one-/two-window, standalone exact-three, and support/capability owners pass.
+`.1` selects pending `.2` to freeze exactly one generic public contract at
+projected 323/364/47 before implementation. No public behavior ships in the
+audit; aliases, the two-subordinate topology, broader BUSY semantics,
+HIAL/VIAL, VHDL, verification generation, and decision 0020 remain separate.
+See `docs/IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

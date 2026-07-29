@@ -35,3 +35,9 @@ HIAL/VIAL activation, and decision 0020 remain separate and inactive.
 Clean selector commit `bc3d9eaf1` now activates only the selected `.1` audit
 leaf. Activation changes continuity documentation and no public or generated
 behavior.
+
+Completed audit `.1` proves direct data-only readiness with strict/schedule,
+exact 3 IAL1/4 IAL0 artifacts, assertion-enabled 5/4/1/3/1/`44332211` runtime,
+normalized semantic/read-only MCP parity, and projected 323/364/47 accounting.
+It selects a separate generic public-contract leaf; no exact-three paired
+source ships in the audit.
