@@ -11199,6 +11199,15 @@ priority. See the
 Audit commit `0dad690cb` is clean, so selected generated-endpoint contract leaf
 `.2` is active. Activation changes continuity and documentation state only;
 the direct IAL0 seed task remains parked and no output repair has started.
+Contract `.2` selects exactly five redundant generated-IAL1 write removals:
+HRESP/HRDATA from capture and hold plus HRDATA from error retirement. It keeps
+all HREADYOUT ownership, retirement OKAY, transaction/data/ERROR drives,
+priorities, and generic assertions. The richest disposable candidate passes
+the existing active success/SEQ, ERROR continuation, and ERROR cancellation
+runtime with assertions enabled and exact results unchanged. Proposed `.3`
+owns implementation and assertion-enabled base/rich plus one-/two-window
+paired gates; the direct IAL0 seed remains parked. See the
+[selected subordinate arbitration contract](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

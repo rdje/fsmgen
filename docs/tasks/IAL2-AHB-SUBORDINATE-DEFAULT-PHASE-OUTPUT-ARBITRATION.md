@@ -65,7 +65,7 @@ yet been audited.
 - ID: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION`
   Status: `active`
   Goal: `Make generated AHB subordinate output arbitration assertion-clean without masking ownership conflicts.`
-  Children: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1, IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.2`
+  Children: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1, IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.2, IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.3`
 
 - ID: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1`
   Status: `done`
@@ -75,9 +75,16 @@ yet been audited.
   Commit: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1: audit endpoint selector ownership`
 
 - ID: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.2`
-  Status: `active`
+  Status: `done`
   Goal: `Select the exact generated subordinate output-ownership contract and implementation boundary.`
   Acceptance: `Activate only after .1 commits cleanly. Read .1, docs/IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_AUDIT.md, AhbSubordinate.pm, all generated base/byte-lane/SEQ/HBURST/BUSY-park IAL1/IAL0/HDL selector families, generic priority/selector owners and tests, direct and aggregate runtime evidence, t1475/t1482/t1486/t1490/t1494/t1513-t1516/t1519/t1523/t1525, public reports/support/artifacts/semantic-MCP surfaces, roadmap, mdBook, Memory, and Knowledge Map. Select exact mutually exclusive transaction-idle/capture/hold/retire/enter/read/write/success/ERROR output modes or only provably redundant assignment removal in AhbSubordinate.pm; preserve initial capture, one-bank backpressure, wait, same-edge completion plus next capture, data, writes, success, two-cycle ERROR, SEQ, BUSY, IDLE, public syntax/ports/names/reports/support/artifacts/semantic-MCP surfaces, generic assertions, direct IAL0 seed ownership, protocols/backends/VHDL, and decision 0020. Freeze a separate implementation leaf with assertion-enabled base/rich direct plus one-/two-window paired gates, removal of --no-assert only where the generated endpoint is the final blocker, preservation, same-volume cleanup, authorized macOS host-max 100 / descendant 4096-MiB profile, exact Stats-compatible capacity plus separate kernel-pressure reporting, and rollback. Do not change shipped behavior in contract selection.`
+  Verification: `Selected the smallest generated-IAL1 repair: remove only HRESP/HRDATA writes from ahb_phase_capture and ahb_phase_hold plus HRDATA from ahb_error_retire, while preserving every HREADYOUT write, error-retire HRESP OKAY, enter/read/write/ERROR drives, priorities, and generic assertions. A disposable richest-variant feasibility build changed exactly those five writes, lowered through public bin/fsmgen, compiled with Verilator, and passed the assertion-enabled t1519 runtime unchanged: two active captures/completions with storage 0x00002211, two ERROR-continuation captures/completions with storage 0x000000aa and two error cycles, and one ERROR-cancel capture/completion with zero storage and two error cycles. The reduced HRDATA-zero family has five sources and the explicit-OKAY HRESP family has ten; HREADYOUT is unchanged. All heavy commands used authorized host100/process4096 with no descendant trip; exact post-probe capacity was 40.8% (9.78/24.00 GiB), kernel pressure 1 normal, and the guard percentage was excluded. The repository-local workspace contained 47 files/52,853,130 bytes, was removed, and residue is none. Canonical contract, task/index/roadmap/mdBook/Memory/fact/Knowledge Map are synchronized; Knowledge Map passes at 1,015 facts/5,160 keys. mdBook builds; its 72-file/16,040,224-byte output was removed with no residue. Doctrines pass. No shipped behavior changed.`
+  Commit: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.2: select endpoint arbitration contract`
+
+- ID: `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.3`
+  Status: `proposed`
+  Goal: `Implement the selected five-write generated endpoint arbitration repair and retire generated-endpoint assertion suppressions.`
+  Acceptance: `Activate only from the clean .2 contract commit. In perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm remove exactly HRESP/HRDATA from ahb_phase_capture, HRESP/HRDATA from ahb_phase_hold, and HRDATA from ahb_error_retire; preserve all HREADYOUT ownership, error-retire HRESP OKAY, transaction defaults, enter/read/write/success/two-cycle-ERROR drives, priorities, names, ports, widths, and generic same-value/multi-value assertions. Add or update focused assertion-enabled base and richest direct plus one-window and two-window paired runtime gates for initial capture, wait/hold, same-edge success/ERROR completion plus next capture, data, writes, SEQ, BUSY, ERROR-to-IDLE cancellation, and exact capture/completion/storage counts. Remove --no-assert from t1513-t1516/t1519/t1523/t1525 only where the generated endpoint is the final blocker; retain t1520's boundary under proposed IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION. Preserve t1475/t1482/t1486/t1490/t1494 and relevant t1518/t248/t297 surfaces; prove strict/check/schedule/artifact/verifier, report/support/accounting, normalized semantic JSON, read-only MCP, public PPIF/AHB bytes, mdBook examples, Knowledge Map, doctrines, and no protocol/backend/VHDL/decision-0020 expansion. Use repository-derived same-volume storage, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup census, and rollback.`
   Verification: `pending`
   Commit: `pending`
 
@@ -91,15 +98,18 @@ slice. No source, generator, test, artifact, HDL, or runtime behavior changes
 in activation.
 
 Audit `.1` committed cleanly at `0dad690cb`. Selected contract leaf `.2`
-activates from that handoff-ready boundary as a documentation-only slice; the
-parked direct IAL0 seed task remains proposed/inactive.
+activated from that handoff-ready boundary as a documentation-only slice. It
+selects proposed implementation `.3`; the parked direct IAL0 seed task remains
+proposed/inactive.
 
 ## Blockers
 
-- None. Contract selector `.2` is the active frontier.
+- None. Contract selector `.2` is complete; implementation `.3` awaits
+  activation from its clean commit boundary.
 
 ## Rollback
 
 Rollback of `.1` removes its audit/fact/index/direct-seed routing and restores
-the pre-audit frontier. After `.2` activates, rollback must follow its selected
-contract and restore generator plus assertion expectations together.
+the pre-audit frontier. Rollback of `.2` removes the selected contract and
+proposed `.3`; after implementation activates, rollback must restore the five
+generated writes and assertion expectations together.

@@ -1288,6 +1288,17 @@ behavior. Runtime/policy-driven or multi-beat BUSY throttling and a separate
 local bus-BUSY status output remain deferred. The one-subordinate paired
 generic/alias and two-subordinate paired generic sources are described below.
 
+> **Generated endpoint assertion boundary:** the subordinate arbitration audit
+> maps the idle/capture, idle/hold, and ERROR-retire/capture overlaps. Its
+> selected contract removes only capture/hold HRESP+HRDATA and retirement
+> HRDATA writes; all ready ownership, functional drive values, priorities, and
+> generic assertions stay fixed. The richest disposable candidate passes the
+> full direct phase-pipeline runtime with assertions enabled. Implementation
+> remains proposed under `.3`, so paired aggregate tests retain `--no-assert`
+> until that separately committed slice proves the base/rich and one-/two-window
+> gates. See the
+> [contract selection](../../IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
+
 > **Exact single-event cardinality:** `busy_insertion.beats=single` now means
 > exactly one rising edge with `HGRANT && HREADY && HTRANS == BUSY`. BUSY
 > remains a pending presentation while either qualifier is low; its address,
@@ -1302,8 +1313,8 @@ generic/alias and two-subordinate paired generic sources are described below.
 > records the former ten-edge mismatch; the
 > [single-event repair](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md)
 > records the shipped correction. Paired aggregate tests retain `--no-assert`
-> because the separately proposed AHB subordinate output-arbitration audit owns
-> an idle/phase-capture selector overlap; the interconnect default/decode
+> because the selected AHB subordinate output-arbitration contract still awaits
+> implementation; the interconnect default/decode
 > overlap is repaired and direct fabric assertions pass. Their qualified BUSY
 > counts remain explicit.
 

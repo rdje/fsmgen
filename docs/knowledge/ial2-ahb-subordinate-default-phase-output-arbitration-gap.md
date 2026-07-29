@@ -30,7 +30,8 @@ families and all narrow variants have 8/2/3. Runtime additionally proves
 idle+hold `HRDATA=0` and final-ERROR retire+capture `HRDATA=0` plus explicit
 OKAY `HRESP` overlaps. Generic priority correctly suppresses different-value
 losers but intentionally leaves same-value multiple ownership observable.
-Therefore active `.2` selects an `AhbSubordinate.pm`-local exclusive output
-contract; generic assertions remain mandatory. The separate hand-authored
-IAL0 seed gap is owned by proposed
+Therefore completed `.2` selects exactly five redundant-write removals in
+`AhbSubordinate.pm`; proposed implementation `.3` owns the repair and generic
+assertions remain mandatory. The separate hand-authored IAL0 seed gap is owned
+by proposed
 `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION`.

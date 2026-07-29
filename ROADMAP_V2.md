@@ -7386,6 +7386,15 @@ IAL0 seed conditional-override gap is parked under proposed
 Audit commit `0dad690cb` is clean, so selected generated-endpoint contract leaf
 `.2` is active. Activation changes continuity and documentation state only;
 the direct IAL0 seed task remains parked and no output repair has started.
+Contract `.2` selects exactly five generated-IAL1 removals: capture/hold
+HRESP+HRDATA and error-retire HRDATA. Every HREADYOUT write, retirement OKAY,
+transaction default, data drive, two-cycle ERROR drive, priority, and generic
+assertion remains unchanged. A richest-variant disposable candidate passes
+active success/SEQ, ERROR continuation, and ERROR-to-IDLE cancellation with
+all assertions enabled and exact counts/storage unchanged. Proposed `.3` owns
+implementation plus base, rich, one-window, and two-window assertion-enabled
+gates. The distinct direct IAL0 seed stays parked. See
+`docs/IAL2_AHB_SUBORDINATE_DEFAULT_PHASE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
