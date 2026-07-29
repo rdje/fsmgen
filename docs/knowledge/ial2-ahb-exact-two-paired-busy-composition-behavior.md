@@ -31,7 +31,8 @@ The same test proves strict check, schedule JSON, normalized semantic JSON, and
 the real read-only `fsmgen_semantic_introspect` MCP adapter with shell access
 disabled. No feature-specific MCP API or raw private payload was added. The
 generic checkpoint was 317 protocol / 358 supported+strict / 41 AHB paths.
-Follow-on `.5` now ships the matching alias and moves current accounting to
-318/359/42, split 21 `.ppif` and 21 `.ahb`; only the two-subordinate exact-two
-sibling remains separate future work. See
+Follow-on `.5` shipped the matching alias at 318/359/42. The later
+two-subordinate exact-two source/alias checkpoints reached 320/361/44, and the
+additive generic exact-three requester now moves current accounting to
+321/362/45 split 23 `.ppif` / 22 `.ahb`. See
 `IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR`.

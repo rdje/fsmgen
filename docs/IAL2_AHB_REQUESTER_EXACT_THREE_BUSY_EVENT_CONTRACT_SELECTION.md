@@ -18,8 +18,12 @@ The first exact-three source will be the generic fixture
 `AhbRequester` generator and its already-shipped width-two event counter. This
 selection changes no parser, generator, source, support, test, artifact,
 semantic/MCP API, HDL/runtime, backend, protocol, or transaction-layer
-behavior. Implementation is owned by proposed leaf
+behavior. Implementation is owned by leaf
 `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3`.
+
+Leaf `.3` now implements this contract. The shipped result is documented in
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md`; the selection
+below remains the normative public boundary.
 
 ## Public Syntax And Event Meaning
 
@@ -99,8 +103,8 @@ semantic root:    fsm
 ```
 
 The source is additive and generic-first. The matching byte-identical `.ahb`
-alias is not part of `.3`; a later separately committed selector must freeze
-that alias contract after the generic source ships.
+alias is not part of `.3`; pending `.4` must select or reject that alias
+contract after the generic source commits cleanly.
 
 ## Existing Lowering Is The Contract
 

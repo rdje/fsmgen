@@ -7259,6 +7259,18 @@ and t1521 will gain direct `2 -> 1 -> 0` observation. The matching exact-three
 compositions, broader protocols, and decision 0020 remain separately owned.
 See
 `docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_CONTRACT_SELECTION.md`.
+Leaf `.3` now ships that additive generic source through the existing
+requester generator. Literal two remains unchanged, literal three reports
+numeric `beats=3`, and exact-one remains the absent-clause canonical form.
+Assertion-enabled t1528 directly proves internal `3 -> 2 -> 1 -> 0` across
+continuous, 32-clock ready-low, and 32-clock grant-low operation with one BUSY
+episode, stable pending ownership, one resumed `SEQ`, four data beats, and
+zero final count; t1521 now directly proves exact-two `2 -> 1 -> 0`. Strict,
+schedule, artifact, verifier, normalized semantic JSON, and real read-only MCP
+parity pass. Current support is 321/362/45 split 23 `.ppif`/22 `.ahb`. See
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md`. Pending child
+`.4` will select or reject only the matching byte-identical `.ahb` alias
+contract after `.3` commits cleanly; no alias ships in `.3`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

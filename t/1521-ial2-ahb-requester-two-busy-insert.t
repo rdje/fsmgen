@@ -56,18 +56,20 @@ subtest 'adapter parses the exact-two requester BUSY-insertion source' => sub {
     is($result->{report}{transfer}{busy_before_beat}, 2, 'report records the insertion index');
     is($result->{report}{transfer}{busy_beats}, 2, 'report records the exact event count');
     is($result->{report}{busy_insertion}{beats}, 2, 'report exposes exact-two as a numeric count');
+    like(join(' ', @{$result->{report}{enforced_static_rules}}), qr/literal busy-beats values 2\.\.3/, 'static rule reports the bounded public count range');
     my %residue = map { $_->{id} => $_->{detail} } @{$result->{report}{unsupported_residue}};
     like($residue{ahb_requester_busy_insert_support}, qr/exact-two qualified requester HTRANS BUSY events/, 'report states the shipped exact-two behavior');
-    like($residue{ahb_requester_busy_insert_support}, qr/counts beyond two/, 'report keeps broader counts deferred');
+    like($residue{ahb_requester_busy_insert_support}, qr/additive exact-three behavior is supported by ppif\/ahb_requester_busy_insert_three\.ppif/, 'report points to the additive exact-three source');
+    like($residue{ahb_requester_busy_insert_support}, qr/counts beyond three/, 'report keeps broader counts deferred');
 };
 
 subtest 'malformed exact-two declarations fail closed' => sub {
     my @cases = (
         ['missing insertion point', sub { replace_clause(sample_source(), qr/\n      \(busy-before-beat 2\)/, '') }, qr/busy_beats requires transfer\.busy_before_beat/],
-        ['zero event count', sub { replace_clause(sample_source(), qr/\(busy-beats 2\)/, '(busy-beats 0)') }, qr/busy_beats must be the literal integer 2 in this slice/],
-        ['single event count', sub { replace_clause(sample_source(), qr/\(busy-beats 2\)/, '(busy-beats 1)') }, qr/busy_beats must be the literal integer 2 in this slice/],
-        ['larger event count', sub { replace_clause(sample_source(), qr/\(busy-beats 2\)/, '(busy-beats 3)') }, qr/busy_beats must be the literal integer 2 in this slice/],
-        ['symbolic event count', sub { replace_clause(sample_source(), qr/\(busy-beats 2\)/, '(busy-beats cmd_count)') }, qr/busy_beats must be the literal integer 2 in this slice/],
+        ['zero event count', sub { replace_clause(sample_source(), qr/\(busy-beats 2\)/, '(busy-beats 0)') }, qr/busy_beats must be a literal integer in 2\.\.3 in this slice/],
+        ['single event count', sub { replace_clause(sample_source(), qr/\(busy-beats 2\)/, '(busy-beats 1)') }, qr/busy_beats must be a literal integer in 2\.\.3 in this slice/],
+        ['larger event count', sub { replace_clause(sample_source(), qr/\(busy-beats 2\)/, '(busy-beats 4)') }, qr/busy_beats must be a literal integer in 2\.\.3 in this slice/],
+        ['symbolic event count', sub { replace_clause(sample_source(), qr/\(busy-beats 2\)/, '(busy-beats cmd_count)') }, qr/busy_beats must be a literal integer in 2\.\.3 in this slice/],
         ['duplicate event count', sub { replace_clause(sample_source(), qr/\(busy-beats 2\)/, "(busy-beats 2)\n      (busy-beats 2)") }, qr/duplicate \(busy-beats \.\.\.\) clause/],
     );
 
@@ -158,8 +160,8 @@ subtest 'generated HDL retires exactly two qualified BUSY events and resumes SEQ
             or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
         like(
             join('', @{$run_stdout || []}),
-            qr/PASS transfers=5 beats=4 busy=1 qualified_busy=2 stall_mode=$mode stall_clocks=$stall_clocks/,
-            "$label retires exactly two qualified BUSY events and completes four data beats",
+            qr/PASS transfers=5 beats=4 busy=1 qualified_busy=2 stall_mode=$mode stall_clocks=$stall_clocks busy_remaining=0/,
+            "$label directly observes 2-to-1-to-0 retirement and completes four data beats",
         );
     }
 };

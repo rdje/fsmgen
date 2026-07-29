@@ -64,8 +64,9 @@ The generic `.ppif` report keeps `ahb_profile_alias_deferred` to identify the
 second source surface. Existing suffix-keyed adapter handling removes only that
 residue from the `.ahb` report. Both keep identical
 `ahb_requester_busy_insert_support` detail: exact two qualified BUSY events
-ship, while counts beyond two, multiple insertion points, and runtime/policy/
-random throttling remain deferred.
+ship, the additive generic exact-three source is supported, and only counts
+above three, multiple insertion points, and runtime/policy/random throttling
+remain deferred.
 
 No parser or generator algorithm changed for the alias.
 
@@ -83,9 +84,10 @@ HDL module:      amba_requester_busy_insert_two
 
 This alias moved the support corpus to 316 protocol fixtures and 357
 supported-smoke/strict-supported fixtures, with 40 AHB IAL2 paths split
-twenty/twenty. The first generic exact-two paired composition established the
-317/358/41 checkpoint; its matching alias now moves current totals to 318/359
-and 42 AHB paths: twenty-one `.ppif` sources and twenty-one `.ahb` aliases.
+twenty/twenty. The one- and two-subordinate exact-two paired source/alias
+lineage later established checkpoints through 320/361/44. The additive generic
+exact-three requester now moves current totals to 321/362 and 45 AHB paths:
+twenty-three `.ppif` sources and twenty-two `.ahb` aliases.
 
 The alias is exposed through the same bounded semantic contract as every other
 support-accounted source. Strict check and `--emit-semantic-json` report its
@@ -116,10 +118,11 @@ observe one BUSY episode, exactly two qualified BUSY events, the same resumed
 
 ## Explicit Deferrals
 
-The generic two-subordinate exact-two requester/subordinate composition now
-ships through the existing generators. Its matching `.ahb` alias remains
-separate. Literal BUSY counts beyond one/two, generalized count width,
-multiple insertion points, runtime-selected
+The generic two-subordinate exact-two requester/subordinate composition and its
+matching `.ahb` alias now ship through the existing generators. The later
+generic exact-three requester also ships separately. Its matching `.ahb`
+alias, exact-three paired compositions, literal BUSY counts above three,
+generalized count width, multiple insertion points, runtime-selected
 counts/points, policy/random throttling, distinct local bus-BUSY status,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend

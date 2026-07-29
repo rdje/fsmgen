@@ -68,7 +68,7 @@ HDL module:      ahb_tb
 
 The additive alias established the 318 protocol / 359 supported-smoke+strict /
 42 AHB-path checkpoint. Follow-on `.8` established 319/360/43; the matching
-two-subordinate alias now moves current accounting to 320/361/44, split
+two-subordinate alias later established 320/361/44, split
 between twenty-two `.ppif` sources and twenty-two `.ahb` aliases.
 
 Strict check, schedule JSON, normalized semantic JSON, and the real read-only
@@ -108,13 +108,13 @@ resumes once, four clean byte beats complete, and final storage is
 Follow-on `.8` now ships the separate topology-first generic two-subordinate
 exact-two pairing through the existing four-child architecture. See
 `IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
-BUSY counts beyond one/two, generalized
-count width, multiple insertion points, runtime-selected counts/points,
-policy/random throttling, distinct local bus-BUSY status, broader bursts and
-optional signals, managers, queues/outstanding transfers, broader fabrics,
-direct backends, verification-output generation, backend variants, AXI/APB
-changes, VHDL, separate selector repairs, and decision 0020 remain
-deferred/inactive.
+The later generic exact-three requester ships separately. Exact-three paired
+compositions, BUSY counts above three, generalized count width, multiple
+insertion points, runtime-selected counts/points, policy/random throttling,
+distinct local bus-BUSY status, broader bursts and optional signals, managers,
+queues/outstanding transfers, broader fabrics, direct backends,
+verification-output generation, backend variants, AXI/APB changes, VHDL,
+separate selector repairs, and decision 0020 remain deferred/inactive.
 
 ## Rollback
 

@@ -68,11 +68,13 @@ write data, beat index, and remaining data-beat count stay stable for the whole
 BUSY episode. Neither BUSY event completes a data beat or consumes a response.
 After the second event, the same pending transfer resumes as `SEQ`.
 
-The parser accepts only literal integer `2`. `busy-beats` requires
+The parser now accepts literal integers `2..3`. `busy-beats` requires
 `busy-before-beat`, and the existing insertion point requires BUSY encoding
-`2'b01`. Zero, one, larger values, symbols, expressions, missing prerequisites,
-and duplicate clauses fail closed. Absence of `busy-beats` remains the
-canonical exact-one source spelling.
+`2'b01`. Zero, one, values above three, symbols, expressions, missing
+prerequisites, and duplicate clauses fail closed. Absence of `busy-beats`
+remains the canonical exact-one source spelling. The additive literal-three
+source is documented in
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md`.
 
 ## Generated IAL1 Ownership
 
@@ -131,18 +133,18 @@ busy_insertion.beats                = 2
 `busy_insertion.beats` is numeric for exact-two. Existing exact-one sources
 still report the string `single`. The shared
 `ahb_requester_busy_insert_support` residue is source-specific: exact-one names
-the additive exact-two source, exact-two says two events ship, and both defer
-counts beyond two, multiple insertion points, and policy/runtime/random
-throttling.
+the additive exact-two and exact-three sources, exact-two says two events ship
+and points to exact-three, and both defer counts beyond three, multiple
+insertion points, and policy/runtime/random throttling.
 
 The generic source moved the support corpus to 315 protocol fixtures and 356
 supported-smoke/strict-supported fixtures. Follow-on alias `.7` moved that
 checkpoint to 316/357 and 40 AHB paths. The generic one-subordinate exact-two
 paired composition established 317/358/41; its matching alias moved the next
 checkpoint to 318/359/42. The generic two-subordinate exact-two composition
-established 319/360/43; its matching alias now moves current accounting to
-320/361 and 44 AHB paths: twenty-two generic `.ppif` sources and twenty-two
-`.ahb` aliases.
+established 319/360/43; its matching alias established 320/361/44. The generic
+exact-three requester now moves current accounting to 321/362 and 45 AHB
+paths: twenty-three generic `.ppif` sources and twenty-two `.ahb` aliases.
 
 ## Generated-HDL Proof
 
@@ -156,7 +158,8 @@ assertions enabled and compiles one generated requester. It runs three cases:
 | `HGRANT=0` after first visible BUSY | 32 | 2 after release | 4 |
 
 Every case observes one contiguous BUSY transition episode, exactly two
-qualified BUSY events, stable pending fields and counters, no BUSY data
+qualified BUSY events, direct private-counter `2 -> 1 -> 0` retirement and
+stall stability, stable pending fields and public counters, no BUSY data
 completion, the same resumed `SEQ`, exactly four accepted data beats, and zero
 remaining. The test also covers strict check, semantic JSON, schedule JSON,
 review artifacts, `--verify-hdl`, support identity, malformed inputs, exact-one
@@ -180,10 +183,10 @@ that path in the same commands. See
 
 ## Explicit Deferrals
 
-Literal counts beyond one/two, generalized count width, multiple insertion
+Literal counts beyond three, generalized count width, multiple insertion
 points, runtime-selected count/point, policy/random throttling, distinct local
-bus-BUSY status, the matching alias for the now-shipped generic
-two-subordinate exact-two sibling,
+bus-BUSY status, the matching exact-three alias, exact-three paired
+compositions,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend
 variants, AXI/APB changes, VHDL, the separate interconnect selector repair, the

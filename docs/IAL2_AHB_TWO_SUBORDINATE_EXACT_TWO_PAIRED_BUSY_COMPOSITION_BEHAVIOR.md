@@ -68,9 +68,10 @@ semantic root: top
 ```
 
 The generic source established the 319/360/43 checkpoint. Its matching alias
-moves current accounting to 320 protocol fixtures, 361 supported-smoke plus
-strict fixtures, and 44 AHB IAL2 paths: twenty-two generic `.ppif` sources and
-twenty-two `.ahb` aliases.
+established the 320 protocol-fixture / 361 supported-smoke-plus-strict / 44 AHB
+IAL2-path checkpoint: twenty-two generic `.ppif` sources and twenty-two `.ahb`
+aliases. The later generic exact-three requester moves current accounting to
+321/362/45 split 23 `.ppif` / 22 `.ahb`.
 
 ## Deep Semantic Introspection And MCP
 
@@ -135,8 +136,9 @@ t1525 remains the shared runtime proof.
 
 ## Explicit Deferrals
 
-Counts beyond two, multiple insertion points, runtime-selected policy,
-distinct local bus-BUSY status,
+The generic exact-three requester now ships separately. Its matching `.ahb`
+alias, exact-three paired compositions, counts above three, multiple insertion
+points, runtime-selected policy, distinct local bus-BUSY status,
 broader bursts and optional signals, deeper queues, multiple outstanding
 transfers, broader managers/fabrics, selector repair, direct backends,
 verification-output generation, backend variants, other protocol changes,

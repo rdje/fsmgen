@@ -10993,8 +10993,10 @@ the unchanged three-child artifact/report shape, t1523 runtime, normalized
 semantic JSON and real read-only MCP proof. `.3` now ships that generic source
 through the existing generators at 317 protocol / 358 supported+strict / 41
 AHB paths. Its matching alias and the generic two-subordinate exact-two
-composition now also ship; counts beyond two, policy/runtime insertion, the
-matching two-subordinate alias, and decision 0020 remain separate/inactive.
+composition now also ship. The matching two-subordinate alias subsequently
+ships, and the generic exact-three requester follows below; policy/runtime
+insertion, exact-three paired compositions, and decision 0020 remain
+separate/inactive.
 See the
 [shipped behavior](../../IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 `.4` now selects proposed `.5` data-only implementation of the byte-identical
@@ -11090,6 +11092,21 @@ residue becomes truthful, and projected support is 321/362/45 split 23
 t1521 gains direct exact-two `2 -> 1 -> 0` observation. The matching
 exact-three `.ahb` alias remains a later selector. See the
 [selected contract](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_CONTRACT_SELECTION.md).
+
+Leaf `.3` now ships that generic exact-three requester. The normalizer accepts
+only literal values 2..3, the source reports numeric `beats=3`, and shared
+exact-one/two/three residue now defers only counts above three plus broader
+policy/points. The width-two counter and qualified rules are unchanged.
+Assertion-enabled t1528 passes continuous/32-ready-low/32-grant-low runtime
+with direct `3 -> 2 -> 1 -> 0` observation, one BUSY episode, three qualified
+events, one resumed `SEQ`, four data beats, stable pending ownership, and zero
+final count; t1521 now directly locks exact-two `2 -> 1 -> 0`. Strict,
+schedule, artifact, verifier, normalized semantic JSON, and real read-only MCP
+parity pass. Current accounting is 321/362/45 split 23 `.ppif`/22 `.ahb`.
+Pending `.4` separately owns selection or rejection of the matching
+byte-identical exact-three `.ahb` alias contract after the clean `.3` commit;
+no alias ships in `.3`. See the
+[shipped behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

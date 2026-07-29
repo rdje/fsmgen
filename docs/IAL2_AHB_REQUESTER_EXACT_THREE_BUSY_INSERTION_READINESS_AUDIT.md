@@ -119,9 +119,10 @@ the bounded public contract recorded in
 - rollback before any parser, generator, source, support, test, or runtime
   behavior change.
 
-Proposed leaf `.3` owns the additive generic implementation. The matching
-`.ahb` alias remains a later separate contract and current support remains
-320/361/44 until `.3` ships.
+Leaf `.3` now ships the additive generic implementation at 321/362/45 split
+23 `.ppif` / 22 `.ahb`. Pending `.4` separately owns no-behavior selection or
+rejection of the matching byte-identical `.ahb` alias contract. See
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_BEHAVIOR.md`.
 
 ## Non-Selections
 

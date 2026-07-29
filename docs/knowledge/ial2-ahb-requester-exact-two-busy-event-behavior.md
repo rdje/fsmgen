@@ -29,11 +29,14 @@ their generated shapes.
 
 Both requester suffixes report numeric `busy_insertion.beats=2`.
 Assertion-enabled t/1521 proves continuous, 32-clock ready-low, and 32-clock
-grant-low cases with exactly two qualified BUSY events and four data beats.
+grant-low cases with exactly two qualified BUSY events, direct private-counter
+`2 -> 1 -> 0` retirement and stall stability, and four data beats.
 Follow-on t/1522 proves that the byte-identical `.ahb` requester alias exposes
 the same artifacts and bounded semantic JSON through the real read-only MCP
 adapter. The generic one-subordinate exact-two paired source now also ships and
 established the 317 protocol / 358 supported+strict / 41 AHB-path checkpoint.
 Its matching aggregate alias now ships too. The generic two-subordinate
 exact-two sibling and its matching `.ahb` alias also ship with shared runtime
-and semantic/MCP proof, moving current accounting to 320/361/44.
+and semantic/MCP proof established 320/361/44. The additive generic exact-three
+requester now moves current accounting to 321/362/45 split 23 `.ppif` / 22
+`.ahb`; exact-two behavior and identity remain unchanged.

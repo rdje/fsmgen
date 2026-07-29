@@ -92,8 +92,8 @@ busy_insertion.beats                 = single
 ```
 
 The generic source also carries `ahb_requester_busy_insert_support`, recording
-the shipped exact-one qualified-event subset and pointing to additive exact-two
-source `ppif/ahb_requester_busy_insert_two.ppif`. Counts beyond two,
+the shipped exact-one qualified-event subset and pointing to the additive
+exact-two and exact-three generic sources. Counts above three,
 policy/runtime/random throttling, multiple insertion points, and broader
 requester BUSY behavior remain deferred.
 
@@ -187,9 +187,11 @@ The matching exact-one `.ahb` alias and the generic/alias paired exact-one
 requester/subordinate families now ship. Exact-two ships as the generic
 requester, its matching `.ahb` requester alias, and the first generic
 one-subordinate paired composition. The matching exact-two paired aggregate
-alias and the generic two-subordinate exact-two sibling now ship. Counts beyond two,
-policy/runtime/random throttling, multiple or
-runtime-selected insertion points, distinct `local-status.bus_busy`,
+alias and the generic plus alias two-subordinate exact-two siblings now ship.
+The generic exact-three requester also ships. Its matching `.ahb` alias,
+exact-three paired compositions, counts above three, policy/runtime/random
+throttling, multiple or runtime-selected insertion points, distinct
+`local-status.bus_busy`,
 halfword/word burst `SEQ`, wider/indefinite bursts, multi-word/register-bank
 progression, optional AHB signals, broader AHB manager behavior, direct
 backend, verification output, backend-language variants, AXI/APB changes, and

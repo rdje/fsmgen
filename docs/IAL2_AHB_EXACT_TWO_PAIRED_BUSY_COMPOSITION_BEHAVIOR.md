@@ -70,7 +70,7 @@ semantic root: top
 This generic source established the 317 protocol / 358 supported-smoke+strict
 checkpoint and a 41-path AHB inventory. Follow-on `.5` shipped the matching
 alias at the 318/359/42 checkpoint. Follow-on `.8` established 319/360/43, and
-the matching two-subordinate alias now moves current accounting to 320/361 and
+the matching two-subordinate alias later established 320/361 and
 44 AHB paths, split between twenty-two `.ppif` sources and twenty-two `.ahb`
 aliases. See the
 [alias behavior](IAL2_AHB_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md)
@@ -134,11 +134,12 @@ overlap. Standalone exact-two requester `t/1521` remains assertion-enabled.
 
 Follow-on `.4` selected and `.5` now ships the matching exact-two paired `.ahb`
 alias. Follow-on `.8` and `.811` now also ship the generic plus matching `.ahb`
-two-subordinate exact-two pairing at current 320/361/44 accounting; see
+two-subordinate exact-two pairing, establishing 320/361/44; see
 `IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
-Counts beyond two, multiple
-insertion points, runtime-selected
-count/point, policy/random throttling, distinct local bus-BUSY status,
+The later generic exact-three requester moves current accounting to
+321/362/45. Exact-three paired compositions, counts above three, multiple
+insertion points, runtime-selected count/point, policy/random throttling,
+distinct local bus-BUSY status,
 halfword/word or wider/indefinite burst expansion, broader optional AHB
 signals, deeper queues, multiple outstanding transfers, broader managers or
 fabrics, direct backends, verification-output generation, backend variants,

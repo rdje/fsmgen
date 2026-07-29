@@ -3036,6 +3036,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/bounded AHB requester exact-three BUSY-event insertion source is support-accounted only on the generic \.ppif surface; its matching \.ahb alias remains separately deferred/,
+        'manifest records generic exact-three requester BUSY support and its alias boundary',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/selected one-requester\/one-subordinate AHB interconnect\/decode source/,
         'manifest states .ppif includes the selected AHB interconnect/decode source',
     );

@@ -28,8 +28,10 @@ generated-HDL behavior. Runtime totals are four qualified BUSY events, two
 resumed `SEQ` events, eight data beats, and final status/control storage
 `32'h44332211`/`32'h88776655`.
 
-Current accounting is 320 protocol / 361 supported+strict / 44 AHB paths,
-split 22 `.ppif` and 22 `.ahb`. Deep semantic introspection is an ongoing
+That alias shipment checkpoint is 320 protocol / 361 supported+strict / 44 AHB
+paths split 22 `.ppif` and 22 `.ahb`; the later generic exact-three requester
+moves current accounting to 321/362/45 split 23/22. Deep semantic
+introspection is an ongoing
 language-wide capability: each new support-accounted semantic feature must
 preserve check, schedule, normalized semantic JSON, and stable read-only MCP
 parity rather than introducing feature-specific APIs or exposing raw private

@@ -71,9 +71,11 @@ child count:     4
 HDL module:      ahb_tb
 ```
 
-This additive alias moves current accounting to 320 protocol fixtures, 361
+At shipment this additive alias established 320 protocol fixtures, 361
 supported-smoke plus strict fixtures, and 44 AHB IAL2 paths, evenly split
-between twenty-two `.ppif` sources and twenty-two `.ahb` aliases.
+between twenty-two `.ppif` sources and twenty-two `.ahb` aliases. The later
+generic exact-three requester moves current accounting to 321/362/45, split
+23 `.ppif` sources and 22 `.ahb` aliases.
 
 Strict check, schedule JSON, normalized semantic JSON, and the real read-only
 `fsmgen_semantic_introspect` MCP tool expose the same support identity, module,
@@ -114,12 +116,12 @@ resumed pending `SEQ` events, eight data beats, and final status/control storage
 
 ## Explicit Deferrals
 
-BUSY counts beyond two, multiple insertion points, runtime-selected policy,
-distinct local bus-BUSY status, broader bursts and optional signals, deeper
-queues, multiple outstanding transfers, broader managers/fabrics, selector
-repair, direct backends, verification-output generation, backend variants,
-other protocol changes, VHDL, and decision 0020's transaction-layer horizon
-remain deferred/inactive.
+BUSY counts above three, exact-three paired compositions, multiple insertion
+points, runtime-selected policy, distinct local bus-BUSY status, broader bursts
+and optional signals, deeper queues, multiple outstanding transfers, broader
+managers/fabrics, selector repair, direct backends, verification-output
+generation, backend variants, other protocol changes, VHDL, and decision
+0020's transaction-layer horizon remain deferred/inactive.
 
 ## Rollback
 

@@ -145,9 +145,11 @@ now proves the shipped width-two requester BUSY counter retires internal
 `3 -> 2 -> 1 -> 0` exactly across assertion-enabled continuous, 32-clock
 ready-low, and 32-clock grant-low generated HDL, with strict/schedule/artifact/
 normalized-semantic/read-only MCP parity and no lower-layer repair. Proposed
-`.2` selected `.3`, now active as the PNT owner for additive generic
-exact-three implementation with bounded literals `2..3`, unchanged width-two
-lowering, projected 321/362/45 accounting, and a later separate `.ahb` alias.
+`.2` selected `.3`, which now ships the additive generic exact-three requester
+with bounded literals `2..3`, unchanged width-two lowering, direct runtime and
+semantic/MCP proof, and current 321/362/45 accounting. Pending `.4` will select
+or reject only the matching byte-identical `.ahb` alias contract after `.3`
+commits cleanly.
 Decision 0020 remains proposed/inactive.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.215` selected `.216` after `.214` shipped

@@ -6,14 +6,16 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3: activate generic exact-three BUSY implementation`;
-  predecessor `5623b975a`.
+  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3: ship generic exact-three BUSY`;
+  predecessor `08b6e4208`.
 - active_work_unit:
   `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.3`.
-- current_state: `.2` committed cleanly at `5623b975a`; `.3` is active for the
-  generic exact-three source, bounded literals `2..3`, and its proof gates.
-- next_action: execute `.3`: source/support/normalization/report/test/docs
-  implementation to 321/362/45, preserving unchanged width-two lowering.
+- current_state: `.3` ships the generic exact-three requester at 321/362/45,
+  with bounded literals `2..3`, unchanged width-two lowering, direct
+  `3 -> 2 -> 1 -> 0` runtime, and normalized semantic/read-only MCP parity;
+  pending `.4` separately owns matching `.ahb` alias contract selection.
+- next_action: after this commit is clean, activate `.4` through task/index/
+  Memory only; do not add the alias during activation.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. Guarded runtime can be stopped
   by the already-tracked macOS metric/external host pressure; never raise the
@@ -23,8 +25,8 @@ bounded current-state pointer. Git preserves its prior history.
 
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
-- The IAL2 frontier is complete through `.812` at unchanged support
-  `320/361/44`; exact-three public-contract `.2` is active.
+- The IAL2 frontier is complete through `.812`; exact-three generic child `.3`
+  now ships at `321/362/45`, and pending `.4` is the next activation frontier.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

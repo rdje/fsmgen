@@ -1,4 +1,4 @@
-module ahb_requester_two_busy_insert_tb;
+module ahb_requester_three_busy_insert_tb;
   logic clk = 0;
   logic rst_n = 0;
   logic HGRANT = 1;
@@ -40,7 +40,7 @@ module ahb_requester_two_busy_insert_tb;
   wire last_split;
   wire wrap_active;
 
-  amba_requester_busy_insert_two dut (.*);
+  amba_requester_busy_insert_three dut (.*);
   always #5 clk = ~clk;
 
   integer cycles;
@@ -153,14 +153,19 @@ module ahb_requester_two_busy_insert_tb;
         check_transfer();
       if (HTRANS == 2'b01) begin
         if (HGRANT && HREADY) begin
-          if (qualified_busy_count == 0 && dut.ahb_busy_remaining_q !== 2)
-            $fatal(1, "first qualified BUSY saw remaining=%0d expected=2", dut.ahb_busy_remaining_q);
-          if (qualified_busy_count == 1 && dut.ahb_busy_remaining_q !== 1)
-            $fatal(1, "second qualified BUSY saw remaining=%0d expected=1", dut.ahb_busy_remaining_q);
+          case (qualified_busy_count)
+            0: if (dut.ahb_busy_remaining_q !== 3)
+                 $fatal(1, "first qualified BUSY saw remaining=%0d expected=3", dut.ahb_busy_remaining_q);
+            1: if (dut.ahb_busy_remaining_q !== 2)
+                 $fatal(1, "second qualified BUSY saw remaining=%0d expected=2", dut.ahb_busy_remaining_q);
+            2: if (dut.ahb_busy_remaining_q !== 1)
+                 $fatal(1, "third qualified BUSY saw remaining=%0d expected=1", dut.ahb_busy_remaining_q);
+            default: $fatal(1, "unexpected extra qualified BUSY event");
+          endcase
           qualified_busy_count = qualified_busy_count + 1;
         end else begin
-          if (dut.ahb_busy_remaining_q !== 2)
-            $fatal(1, "stalled BUSY changed remaining=%0d expected=2", dut.ahb_busy_remaining_q);
+          if (dut.ahb_busy_remaining_q !== 3)
+            $fatal(1, "stalled BUSY changed remaining=%0d expected=3", dut.ahb_busy_remaining_q);
           stall_clocks = stall_clocks + 1;
         end
         if (beat_done)
@@ -169,9 +174,9 @@ module ahb_requester_two_busy_insert_tb;
           if (HADDR !== busy_addr || HWRITE !== busy_write ||
               HSIZE !== busy_size || HBURST !== busy_burst ||
               HPROT !== busy_prot || HWDATA !== busy_wdata)
-            $fatal(1, "BUSY stall changed pending address/control/data");
+            $fatal(1, "BUSY episode changed pending address/control/data");
           if (beat_index !== busy_index || beats_remaining !== busy_remaining)
-            $fatal(1, "BUSY stall changed pending beat counters");
+            $fatal(1, "BUSY episode changed pending beat counters");
         end
       end
       if (beat_done && !previous_beat_done) begin
@@ -185,14 +190,14 @@ module ahb_requester_two_busy_insert_tb;
     end
 
     if (!done)
-      $fatal(1, "exact-two BUSY-insertion request did not complete");
-    if (transfer_count != 5 || beat_count != 4 || busy_count != 1 || qualified_busy_count != 2)
+      $fatal(1, "exact-three BUSY-insertion request did not complete");
+    if (transfer_count != 5 || beat_count != 4 || busy_count != 1 || qualified_busy_count != 3)
       $fatal(1, "counts transfers=%0d beats=%0d busy=%0d qualified_busy=%0d", transfer_count, beat_count, busy_count, qualified_busy_count);
     if ((stall_mode == 0 && (stall_injected || stall_clocks != 0)) ||
         (stall_mode != 0 && (!stall_injected || stall_clocks != 32)))
       $fatal(1, "stall mode=%0d injected=%0d clocks=%0d", stall_mode, stall_injected, stall_clocks);
     if (beats_remaining != 0)
-      $fatal(1, "completion left remaining count=%0d", beats_remaining);
+      $fatal(1, "completion left burst remaining=%0d", beats_remaining);
     if (dut.ahb_busy_remaining_q !== 0)
       $fatal(1, "completion left BUSY remaining=%0d", dut.ahb_busy_remaining_q);
     $display("PASS transfers=%0d beats=%0d busy=%0d qualified_busy=%0d stall_mode=%0d stall_clocks=%0d busy_remaining=%0d", transfer_count, beat_count, busy_count, qualified_busy_count, stall_mode, stall_clocks, dut.ahb_busy_remaining_q);

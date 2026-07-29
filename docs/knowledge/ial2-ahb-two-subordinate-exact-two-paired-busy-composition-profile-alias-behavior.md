@@ -34,7 +34,9 @@ schedule, normalized semantic JSON, real read-only MCP, exact artifact,
 verifier, diagnostic, and preservation parity without a second runtime. t/1525
 remains the shared two-window generated-HDL runtime proof.
 
-Current accounting is 320 protocol / 361 supported+strict / 44 AHB paths,
-split twenty-two `.ppif` and twenty-two `.ahb`. New support-accounted semantics
-continue to extend one normalized semantic surface and preserve read-only MCP
-parity; no feature-specific MCP route or private payload is added.
+This alias established 320 protocol / 361 supported+strict / 44 AHB paths,
+split twenty-two `.ppif` and twenty-two `.ahb`. The later generic exact-three
+requester moves current accounting to 321/362/45 split 23/22. New
+support-accounted semantics continue to extend one normalized semantic surface
+and preserve read-only MCP parity; no feature-specific MCP route or private
+payload is added.

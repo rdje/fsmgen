@@ -48,13 +48,18 @@ requester surfaces, and the first generic one-subordinate exact-two paired
 composition also ships. Fact
 `ial2-ahb-exact-two-paired-busy-composition-behavior` owns its generated-HDL,
 normalized semantic JSON, and read-only MCP proof. The matching paired alias
-and generic two-subordinate exact-two sibling now also ship; fact
+and generic plus alias two-subordinate exact-two siblings now also ship; fact
 `ial2-ahb-two-subordinate-exact-two-paired-busy-composition-behavior` owns the
 two-window runtime and semantic/MCP proof.
+
+The additive generic exact-three requester now also ships with literal
+`busy-beats=3`, unchanged width-two counter lowering, direct `3 -> 2 -> 1 -> 0`
+runtime proof, and current 321/362/45 accounting. Fact
+`ial2-ahb-requester-exact-three-busy-event-behavior` owns that surface.
 
 Historical audit `ial2-ahb-requester-multi-busy-insertion-readiness-audit`
 records the pre-repair ten-qualified-edge contradiction. Repair fact
 `ial2-ahb-requester-single-busy-event-cardinality-repair` owns the shipped
-exact-one result. Counts beyond exact two, policy/runtime-selected BUSY
-behavior, distinct local bus-BUSY status, and broader requester behavior remain
-deferred.
+exact-one result. The matching exact-three `.ahb` alias, exact-three paired
+compositions, counts above three, policy/runtime-selected BUSY behavior,
+distinct local bus-BUSY status, and broader requester behavior remain deferred.

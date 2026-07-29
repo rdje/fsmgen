@@ -36,5 +36,6 @@ checkpoint was 316 protocol fixtures, 357 supported-smoke/strict fixtures, and
 40 AHB IAL2 paths split evenly between `.ppif` and `.ahb`. The first generic
 exact-two paired composition established the 317/358/41 checkpoint; its
 matching alias established 318/359/42. The generic two-subordinate exact-two
-source established 319/360/43; its matching alias now moves current accounting
-to 320/361/44, split twenty-two `.ppif` and twenty-two `.ahb`.
+source established 319/360/43; its matching alias established 320/361/44. The
+additive generic exact-three requester now moves current accounting to
+321/362/45, split twenty-three `.ppif` and twenty-two `.ahb`.
