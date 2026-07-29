@@ -78,9 +78,11 @@ semantic root:   fsm
 HDL module:      amba_requester_busy_insert_four
 ```
 
-The alias moves current accounting to 328 protocol fixtures, 369 supported-
-smoke and strict-supported fixtures, and 52 AHB IAL2 paths split evenly
-between 26 `.ppif` sources and 26 `.ahb` aliases.
+The alias established 328 protocol fixtures, 369 supported-smoke and strict-
+supported fixtures, and 52 AHB IAL2 paths. The later generic exact-four paired
+source moves current accounting to 329 protocol fixtures, 370 supported-
+smoke and strict-supported fixtures, and 53 AHB IAL2 paths split between 27
+`.ppif` sources and 26 `.ahb` aliases.
 
 Strict check and normalized semantic JSON expose the alias path, support ID,
 coverage, source kind, module, and `fsm` semantic root. The existing read-only

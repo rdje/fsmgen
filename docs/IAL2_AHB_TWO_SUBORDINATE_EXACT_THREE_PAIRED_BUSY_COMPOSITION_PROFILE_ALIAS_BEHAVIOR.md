@@ -74,8 +74,9 @@ HDL module:      ahb_tb
 
 This alias established 326 protocol fixtures, 367 supported-smoke plus strict
 fixtures, and 50 AHB IAL2 paths. The generic exact-four requester established
-327/368/51; its matching alias now moves current accounting to 328/369/52
-split 26 `.ppif` sources / 26 `.ahb` aliases.
+327/368/51 and its matching alias established 328/369/52. The later generic
+exact-four paired source moves current accounting to 329/370/53 split 27
+`.ppif` sources / 26 `.ahb` aliases.
 
 Strict check, schedule JSON, normalized semantic JSON, and real read-only
 `fsmgen_semantic_introspect` expose the same support identity, module, semantic

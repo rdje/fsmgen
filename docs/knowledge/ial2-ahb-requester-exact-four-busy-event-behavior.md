@@ -30,10 +30,11 @@ beats, and zero final count.
 
 Strict/check/schedule/artifact/verifier, normalized semantic JSON, and real
 read-only shell-disabled MCP parity pass. The generic source established
-327/368/51. The matching exact-four alias now ships under fact
-`ial2-ahb-requester-exact-four-busy-event-profile-alias-behavior`, moving
-current accounting to 328 protocol / 369 supported+strict / 52 AHB paths split
-26 `.ppif` / 26 `.ahb`; broader count/policy/composition work stays separate.
+327/368/51. The matching exact-four alias ships under fact
+`ial2-ahb-requester-exact-four-busy-event-profile-alias-behavior` and
+established 328/369/52. The later generic exact-four paired source moves
+current accounting to 329 protocol / 370 supported+strict / 53 AHB paths split
+27 `.ppif` / 26 `.ahb`; broader count/policy/composition work stays separate.
 Parent `.823` now selects a separate one-window exact-four paired readiness
 audit. Completed `.1` proves assertion-enabled aggregate runtime and real
 read-only MCP; completed contract `.2` freezes a separate implementation leaf,

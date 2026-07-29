@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped `.3` activation; predecessor `d54dc8afb`.
-- active_work_unit:
-  `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`.
-- current_state: exact generic one-subordinate source/support/t1537 data-only
-  implementation is active; activation changes continuity only and no behavior.
-- next_action: implement exactly `.3`, validate assertion-enabled runtime and
-  329/370/53 public accounting, document behavior, and commit.
+- latest_commit: this task-scoped `.3` behavior commit; predecessor `43fa9fa85`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER`; no next selector is
+  activated until the exact-four paired behavior commit is clean.
+- current_state: exact-four paired child `.1`-.3 is complete; the generic
+  source/support/t1537 ships at 329/370/53 split 27/26.
+- next_action: from the clean behavior commit, create and activate the next
+  exact parent selector leaf, then continue roadmap PNT.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -31,11 +31,12 @@ bounded current-state pointer. Git preserves its prior history.
   `.3` ships literal `2..4`, preserving minimum widths 2/2/3, exact source/
   support/semantic surfaces, and t1535. `.4` selected `.5`; `.5` ships the
   byte-identical alias, exact support/semantic parity, t1536, and 328/369/52.
-  Parent `.823` selected one-window exact-four paired readiness `.1`; the audit
-  proves strict/artifact/semantic/read-only-MCP/verifier plus assertion-enabled
-  5/4/1/4/1/`44332211` runtime. Contract `.2` freezes the generic boundary and
-  selects pending `.3` implementation at 329/370/53. Decision `0020` remains
-  inactive.
+  Parent `.823` selected one-window exact-four paired readiness `.1`; audit
+  `.1`, contract `.2`, and implementation `.3` are now complete. The generic
+  source ships through existing generators with exact support/semantic/read-
+  only-MCP parity, repository-local t1537 assertion runtime
+  5/4/1/4/1/`44332211`, and 329/370/53 accounting. Matching alias and
+  two-window exact-four remain separate. Decision `0020` remains inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and

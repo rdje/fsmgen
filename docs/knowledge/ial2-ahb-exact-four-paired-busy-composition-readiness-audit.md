@@ -42,3 +42,6 @@ Completed `.2` now freezes one generic source, exact support/semantic/MCP
 identities, assertion-enabled t1537, and projected 329/370/53 accounting, then
 selects `.3` data-only implementation. No source ships during contract
 selection.
+
+Completed `.3` now ships that generic source at 329/370/53. Canonical shipped
+facts live in `ial2-ahb-exact-four-paired-busy-composition-behavior`.

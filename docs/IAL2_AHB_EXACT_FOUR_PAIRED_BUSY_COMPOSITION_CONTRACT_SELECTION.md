@@ -187,7 +187,7 @@ enabled.
 
 ## Support and Preservation
 
-Current accounting is 328 protocol paths, 369 supported-smoke paths, 369
+At contract selection, current accounting was 328 protocol paths, 369 supported-smoke paths, 369
 strict paths, and 52 AHB paths split 26 `.ppif` / 26 `.ahb`. The selected one
 generic source projects:
 
@@ -251,3 +251,12 @@ transfers, managers, broader fabrics, generic priority changes, direct
 backends, AXI/APB expansion, HIAL/VIAL activation and topology selection,
 verification-output generation, backend variants, VHDL, large-design scale
 implementation, and decision 0020 remain separate task-tree-owned work.
+
+## Implementation Outcome
+
+Completed `.3` now ships the selected generic source and exact support entry.
+Focused t1537 proves strict/report/artifact/normalized-semantic/repo-relative
+read-only-MCP/public-verifier surfaces and assertion-enabled
+5/4/1/4/1/`44332211` runtime through repository-local temporary workspaces.
+Current accounting is 329/370/53 split 27 `.ppif` / 26 `.ahb`. See
+`docs/IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.

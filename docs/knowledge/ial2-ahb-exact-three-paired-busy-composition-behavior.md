@@ -33,6 +33,7 @@ Focused t/1532 proves alias byte/report/artifact/strict/schedule/semantic/MCP/
 repository-local-output/HDL-verifier parity without duplicating t/1531
 runtime. The later generic two-subordinate exact-three paired source established
 325/366/49; its matching alias established 326/367/50. The generic exact-four
-requester established 327/368/51; its matching alias now moves current
-accounting to 328 protocol fixtures, 369 supported-smoke/strict fixtures, and
-52 AHB IAL2 paths split 26 `.ppif` / 26 `.ahb`.
+requester established 327/368/51 and its matching alias established
+328/369/52. The later generic exact-four paired source moves current accounting
+to 329 protocol fixtures, 370 supported-smoke/strict fixtures, and 53 AHB IAL2
+paths split 27 `.ppif` / 26 `.ahb`.

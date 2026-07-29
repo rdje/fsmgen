@@ -33,3 +33,7 @@ large-design scale implementation, and decision 0020 remain separate.
 Clean contract commit `d54dc8afb` now activates only selected `.3` data-only
 implementation. Activation changes continuity documentation and no source,
 support entry, test, simulator behavior, or generated behavior.
+
+Completed `.3` now ships the selected source, support entry, t1537 and
+repository-local testbench at 329/370/53. Canonical shipped facts live in
+`ial2-ahb-exact-four-paired-busy-composition-behavior`.

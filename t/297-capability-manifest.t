@@ -3210,8 +3210,18 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/one-requester\/one-subordinate AHB aggregate pairing exact-four requester BUSY insertion with subordinate BUSY parking/,
+        'manifest advertises the generic one-subordinate exact-four paired BUSY composition',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/selected one-requester\/one-subordinate exact-three paired BUSY composition and its matching \.ahb profile alias are support-accounted/,
         'manifest records the shipped exact-three paired generic/profile pair',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/selected one-requester\/one-subordinate exact-four requester BUSY insertion pairing is support-accounted on the generic \.ppif surface/,
+        'manifest records the exact-four paired generic-first alias boundary',
     );
     is($file_surface_by_suffix{'.axi'}{intent_layer}, 'IAL2', 'manifest marks .axi as IAL2');
     is(

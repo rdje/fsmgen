@@ -254,4 +254,7 @@ evidence-backed handoff.
 - `2026-07-29`: Exact-four paired contract `.2` selects data-only proposed `.3`
   at projected 329/370/53; HIAL/VIAL remains proposed with no architecture or
   priority change.
+- `2026-07-30`: Exact-four paired implementation `.3` ships the generic source
+  at 329/370/53 with assertion-enabled t1537 and semantic/read-only-MCP parity;
+  HIAL/VIAL remains proposed with no architecture or priority change.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

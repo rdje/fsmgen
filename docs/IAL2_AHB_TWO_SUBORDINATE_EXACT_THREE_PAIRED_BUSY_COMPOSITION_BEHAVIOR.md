@@ -39,8 +39,9 @@ children:       4
 
 The matching alias established 326 protocol fixtures, 367 supported-smoke and
 strict-supported fixtures, and 50 AHB IAL2 paths. The generic exact-four
-requester established 327/368/51; its matching alias now moves current
-accounting to 328/369/52 split 26 generic `.ppif` sources / 26 `.ahb` aliases.
+requester established 327/368/51 and its matching alias established
+328/369/52. The later generic exact-four paired source moves current accounting
+to 329/370/53 split 27 generic `.ppif` sources / 26 `.ahb` aliases.
 
 ## Generated Architecture
 

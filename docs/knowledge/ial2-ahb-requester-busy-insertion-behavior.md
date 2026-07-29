@@ -65,7 +65,8 @@ The additive generic exact-four requester also ships with literal
 `busy-beats=4`, a preserving width-three counter, and direct
 `4 -> 3 -> 2 -> 1 -> 0` continuous/stall runtime proof. Fact
 `ial2-ahb-requester-exact-four-busy-event-profile-alias-behavior` owns the
-current 328/369/52 checkpoint split 26 `.ppif` / 26 `.ahb`.
+328/369/52 requester-pair checkpoint. The later generic exact-four paired
+source moves the current boundary to 329/370/53 split 27 `.ppif` / 26 `.ahb`.
 
 Historical audit `ial2-ahb-requester-multi-busy-insertion-readiness-audit`
 records the pre-repair ten-qualified-edge contradiction. Repair fact

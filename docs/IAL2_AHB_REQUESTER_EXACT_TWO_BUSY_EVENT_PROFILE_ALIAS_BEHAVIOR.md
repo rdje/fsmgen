@@ -91,8 +91,9 @@ established 322/363/46. The generic exact-three paired source established
 323/364/47; its matching alias established 324/365/48. The generic
 two-subordinate exact-three paired source established 325/366/49; its matching
 alias established 326/367/50. The generic exact-four requester established
-327/368/51; its matching alias now moves current totals to 328/369 and 52 AHB
-paths: twenty-six `.ppif` sources and twenty-six `.ahb` aliases.
+327/368/51 and its matching alias established 328/369/52. The later generic
+exact-four paired source moves current totals to 329/370 and 53 AHB paths:
+twenty-seven `.ppif` sources and twenty-six `.ahb` aliases.
 
 The alias is exposed through the same bounded semantic contract as every other
 support-accounted source. Strict check and `--emit-semantic-json` report its

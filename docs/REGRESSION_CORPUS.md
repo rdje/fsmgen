@@ -510,7 +510,18 @@ support IDs are `intent.ppif_ahb_requester_busy_insert_four` and
 exact artifacts, normalized semantic/read-only-MCP parity, and assertion-
 enabled continuous/ready-low/grant-low `4 -> 3 -> 2 -> 1 -> 0` runtime;
 t/1536 owns alias parity without a second simulation. Current totals are 328
-protocol fixtures and 369 supported-smoke/strict-supported fixtures.
+protocol fixtures and 369 supported-smoke/strict-supported fixtures at that
+requester-pair checkpoint.
+
+The generic exact-four paired source at
+`ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`
+is also strict-supported, selects `ahb_tb` with semantic root `top` and three
+children, and composes the width-three exact-four requester with the existing
+BUSY-parking subordinate and one-window interconnect. Focused t/1537 owns
+strict, schedule, exact-artifact, normalized-semantic, repo-relative read-only
+MCP, public-verifier, repository-local-output, and assertion-enabled
+5/4/1/4/1/`44332211` runtime proof. Current totals are 329 protocol fixtures
+and 370 supported-smoke/strict-supported fixtures.
 
 ## Capability manifest
 

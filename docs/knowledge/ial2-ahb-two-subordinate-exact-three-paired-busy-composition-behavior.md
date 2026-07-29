@@ -28,8 +28,9 @@ presentations / 8 beats / 2 BUSY episodes / 6 qualified BUSY events / 2 resumed
 unselected, and fabric state.
 
 Its matching alias established 326/367/50. The generic exact-four requester
-established 327/368/51; its matching alias now moves current accounting to 328
-protocol / 369 supported+strict / 52 AHB paths split 26 `.ppif` / 26 `.ahb`.
+established 327/368/51 and its matching alias established 328/369/52. The later
+generic exact-four paired source moves current accounting to 329 protocol / 370
+supported+strict / 53 AHB paths split 27 `.ppif` / 26 `.ahb`.
 Implementation `.821` ships the byte-identical
 matching alias and shares t1533 assertion-enabled runtime. Broader BUSY,
 HIAL/VIAL, VHDL, and verification-generation work remains separate.

@@ -7677,7 +7677,7 @@ through existing suffix/lowering machinery. Focused t1536 proves width-three
 IAL1/IAL0, numeric report, alias-only residue cleanup, strict/schedule/artifact,
 normalized semantic/read-only MCP, verifier, diagnostic, requester, and paired-
 source parity without simulation; assertion-enabled t1535 remains shared
-runtime. Current accounting is 328 protocol / 369 supported+strict / 52 AHB
+runtime. This requester-pair checkpoint is 328 protocol / 369 supported+strict / 52 AHB
 paths split 26 `.ppif` / 26 `.ahb`. No parser, generator, HDL/runtime,
 HIAL/VIAL, VHDL, or verification-generation behavior changed. See
 `docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md`.
@@ -7739,6 +7739,18 @@ Clean contract commit `d54dc8afb` now activates only `.3` data-only
 implementation. Activation changes continuity documentation and no public
 source, support, test, artifact, HDL/runtime, semantic-MCP, simulator, backend,
 HIAL/VIAL, scale, VHDL, verification-generation, or transaction behavior.
+Implementation `.3` now ships the generic one-subordinate exact-four paired
+source through the existing three-child architecture. Exact support, strict/
+schedule/3-IAL1/4-IAL0/normalized-semantic/repo-relative read-only-MCP/public-
+verifier surfaces and assertion-enabled Verilator 5.046 `--timing` runtime pass
+in t1537 at 5 presentations / 4 beats / 1 BUSY episode / 4 qualified BUSY
+events / internal `4->3->2->1->0` / 1 resumed `SEQ` / storage `0x44332211`.
+The test uses repository-derived same-volume temporary workspaces. Current
+accounting is 329/370/53 split 27 `.ppif`/26 `.ahb`; matching alias,
+two-subordinate exact-four, counts above four, broader BUSY semantics,
+HIAL/VIAL, scale, VHDL, verification generation, and decision 0020 remain
+separate. See
+`docs/IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

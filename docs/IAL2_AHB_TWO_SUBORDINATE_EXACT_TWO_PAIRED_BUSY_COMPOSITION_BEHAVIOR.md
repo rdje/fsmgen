@@ -74,8 +74,9 @@ aliases. The later exact-three requester alias established 322/363/46; the
 generic exact-three paired source established 323/364/47, and its matching
 alias established 324/365/48. The generic two-subordinate exact-three paired
 source established 325/366/49; its matching alias established 326/367/50. The
-generic exact-four requester established 327/368/51; its matching alias now
-moves current accounting to 328/369/52 split 26 `.ppif` / 26 `.ahb`.
+generic exact-four requester established 327/368/51 and its matching alias
+established 328/369/52. The later generic exact-four paired source moves
+current accounting to 329/370/53 split 27 `.ppif` / 26 `.ahb`.
 
 ## Deep Semantic Introspection And MCP
 

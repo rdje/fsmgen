@@ -5864,6 +5864,15 @@ width-three exact-four requester state and BUSY parking, and passes public HDL
 verification; assertion-enabled aggregate runtime and real MCP remain owned by
 the audit.
 
+The selected child tree is now complete through `.3`. The generic
+one-subordinate exact-four paired source, exact support/semantic/read-only-MCP
+identity, repository-local assertion-enabled t1537 5/4/1/4/1/`44332211`
+runtime, and 329/370/53 boundary split 27 `.ppif` / 26 `.ahb` ship through
+existing generators. The next parent selector may activate only after the
+clean child behavior commit; matching alias, two-window exact-four, broader
+BUSY semantics, HIAL/VIAL, scale, VHDL, verification generation, generic
+priority, and decision 0020 remain separate candidates.
+
 Completed child audit `.1` now proves real read-only MCP and assertion-enabled
 5/4/1/4/1/`44332211` runtime without repair, selecting pending generic contract
 `.2` at projected 329/370/53 split 27/26. Public behavior remains 328/369/52.
