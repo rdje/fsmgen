@@ -11033,7 +11033,8 @@ resumed `SEQ` events, eight data beats, and final status/control storage
 `44332211`/`88776655`. Current accounting is 319/360/43 with 22 `.ppif` and 21
 `.ahb`. See the
 [shipped behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
-The matching alias and decision 0020 remain separate.
+At that `.8` checkpoint, the matching alias and decision 0020 remained
+separate.
 Parent selector `.810` now chooses proposed `.811` direct data-only
 implementation of that byte-identical matching `.ahb` alias. Existing suffix
 handling preserves the exact four-child report/artifact/window/owner contract,
@@ -11051,6 +11052,18 @@ verifier/diagnostic and preservation parity without a second simulation;
 t1525 remains the shared two-window runtime. No parser, generator, semantic
 model, or MCP API changed. See the
 [shipped alias behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md).
+
+Post-alias selector `.812` changes no behavior. Static inspection finds that
+literal `(busy-beats 3)` fits the shipped width-two requester counter and the
+current qualified non-final/final rules would retire it as
+`3 -> 2 -> 1 -> 0` through the same pending `SEQ` handoff. Because only
+literal two has assertion-enabled runtime proof, `.812` selects proposed
+`IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1` rather than
+public implementation. The audit must use a same-volume disposable candidate
+and guarded continuous/32-ready-low/32-grant-low generated HDL to prove exact
+three-event cardinality, stable ownership, one resumed `SEQ`, four data beats,
+and zero remaining. See the
+[next-owner selection](../../IAL2_POST_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

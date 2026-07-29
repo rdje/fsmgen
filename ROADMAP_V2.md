@@ -7218,6 +7218,19 @@ preservation parity without a second simulation; t1525 remains the shared
 two-window runtime. No parser, generator, semantic model, or MCP API changed.
 See
 `docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md`.
+`.812` now selects proposed
+`IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT`. The shipped
+width-two `ahb_busy_remaining_q` can represent three, and its unchanged
+qualified `> 1` / `== 1` retirement split statically maps
+`3 -> 2 -> 1 -> 0` through the existing pending-transfer `SEQ` handoff. Only
+literal two has assertion-enabled runtime proof, so child `.1` must use a
+same-volume disposable candidate and guarded continuous, 32-clock ready-low,
+and 32-clock grant-low generated-HDL scenarios before any public exact-three
+contract or implementation. General counts, policy/runtime/random or
+multiple-point insertion, distinct bus-BUSY status, broader bursts/signals,
+interconnect correctness owners, and decision 0020 remain separate/inactive.
+See
+`docs/IAL2_POST_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

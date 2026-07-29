@@ -1949,11 +1949,10 @@ The following are not shipped by the current AHB IAL2 surface:
   and its matching `ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb`
   profile alias; aggregate BUSY-parking and additive requester-side exact-one
   plus generic and matching `.ahb` exact-two BUSY insertion now ship. The
-  generic and matching `.ahb` one-subordinate exact-two pairing also ship,
+  generic and matching `.ahb` one- and two-subordinate exact-two pairings also
+  ship,
   while counts beyond two, policy/runtime/random throttling, multiple
-  insertion points remain outside the shipped surface. The two-subordinate
-  exact-two pairing also remains unshipped, although its disposable static,
-  semantic/MCP, and generated-HDL readiness proof now passes;
+  insertion points remain outside the shipped surface;
 - legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;
@@ -2055,6 +2054,19 @@ diagnostic and preservation parity without a second runtime; t1525 remains
 shared. See the
 [selected alias contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_CONTRACT_SELECTION.md)
 and [shipped alias behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md).
+
+The next-owner
+[selector](../../IAL2_POST_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md)
+changes no public behavior. Literal `(busy-beats 3)` fits the shipped width-two
+requester counter, whose existing qualified rules would retire
+`3 -> 2 -> 1 -> 0` and reuse the same pending `SEQ` handoff. Runtime proof is
+not inferred from that static fit: proposed
+`IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1` must use a
+repo-local disposable candidate and assertion-enabled continuously-ready,
+32-clock ready-low, and 32-clock grant-low generated-HDL scenarios. Public
+syntax, source/support identities, report wording, alias and composition
+cadence, counts above three, policy/runtime/multiple-point insertion, distinct
+bus-BUSY status, and broader bursts/signals remain unselected.
 
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that

@@ -5747,16 +5747,20 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.811: ship two-subordinate exact-two alias`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.812`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact IAL2 feature-completeness owner after same-volume adoption and the two-subordinate exact-two paired BUSY alias.`
   Acceptance: `Starting only after clean adoption commit 57ab6e7d1, read .808-.811, the completed requester multiple-BUSY and exact-two paired-composition child trees, current AHB requester/subordinate/interconnect source and report residue, focused runtime/parity/current-truth tests, support/language/capability/semantic-introspection/MCP surfaces, README, ROADMAP_V2, mdBook, Knowledge Map, Memory, canonical proposed audits, and decision 0020. Choose exactly one smallest evidence-backed next owner among literal BUSY counts beyond two, policy/runtime-selected or multiple-point insertion, distinct local bus-BUSY status, halfword/word or wider/indefinite burst continuation, optional AHB signals, an existing correctness/public-truth prerequisite, another roadmap-aligned protocol/platform residue, or explicit parent-tree completion. For a count widening, audit whether the shipped width-two remaining counter and parser/report contract can safely admit one smallest additional literal without changing insertion-point or runtime-policy semantics; preserve normalized semantic JSON and read-only MCP exposure without feature-specific API forks. Record readiness, exact activation boundary, preservation, validation, docs/Knowledge Map impact, resource boundary, and rollback. Make no parser, generator, public source, support, test, generated artifact, semantic/MCP API, HDL/runtime, backend, AXI/APB/AHB/VHDL, or transaction-layer behavior change in this selector. Keep decision 0020 proposed/inactive.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Selected proposed IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT after clean same-volume adoption and .811 alias completion. Reconciled .808-.811, completed requester multiple-BUSY and exact-two paired child trees, AhbRequester normalization/lowering/report/residue, t1521/t1522 and paired t1523-t1526 proof boundaries, 320/361/44 support/language/capability/semantic-MCP surfaces, current docs/facts, proposed correctness owners, and decision 0020. Static inspection proves literal three fits shipped width-two ahb_busy_remaining_q and maps through unchanged qualified retirement as 3 -> 2 -> 1 -> 0 using current >1 decrement and ==1 clear/address-pending SEQ handoff; the parser and report remain literal-two policy restrictions rather than a storage-width prerequisite. Because only literal two has assertion-enabled runtime evidence, selected child .1 must use a repo-local disposable candidate and guarded continuous/32-ready-low/32-grant-low generated-HDL scenarios to prove exact three-event cardinality, stable pending ownership, one resumed SEQ, four data beats, and zero remaining before any public contract. Direct implementation, generalized counts, policy/runtime/multiple points, status, bursts, signals, interconnect correctness owners, and decision 0020 remain separate/inactive. Corrected one stale mdBook current-boundary sentence that still called the now-shipped two-subordinate exact-two pair unshipped. Knowledge Map generation/check passes at 1001 facts/5085 question keys; mdBook build, memory architecture, relative-doc paths, README entry-point, project-data locality, diff, and all doctrine gates pass; generated book output was removed. No parser/generator/source/support/test/artifact/semantic-MCP API/HDL/runtime/backend/protocol/transaction-layer behavior changed.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.812: select exact-three AHB BUSY audit`
 
 Activation condition was satisfied when `.810` committed cleanly at
 `e2dc65507`; `.811` was then activated. That activation changed only
 task/index/Memory state and added no
 source, support entry, test, parser/generator/API, HDL, or runtime behavior.
+`.811` committed cleanly at `1b5687d39`; same-volume adoption then completed at
+`57ab6e7d1`, and `.812` activated from clean commit `974899b7b`. `.812` selects
+proposed `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1`,
+which cannot activate until this selector commits cleanly.
 
 ## Current Frontier
 
