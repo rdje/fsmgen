@@ -5,18 +5,18 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped selector commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.819: select two-window exact-three AHB audit`;
-  predecessor activation `2b9b71716`.
-- active_work_unit: selected proposed
-  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`;
-  pending clean activation.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: activate two-window exact-three audit`;
+  predecessor selector `e2109a2ba`.
+- active_work_unit:
+  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`.
 - current_state: exact-three paired generic plus byte-identical `.ahb` alias
   ship at 324 protocol / 365 supported-smoke+strict / 48 AHB paths split
   24 `.ppif`/24 `.ahb`; t1532 proves alias parity and t1531 remains shared
   assertion-enabled runtime.
-- next_action: activate only the selected two-subordinate exact-three paired
-  readiness-audit `.1` in a clean no-behavior commit, then execute the audit.
+- next_action: execute `.1`: recreate the same-volume candidate, prove real
+  read-only MCP plus assertion-enabled two-command runtime, and select or
+  reject a separate generic public contract.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

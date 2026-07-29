@@ -11379,6 +11379,10 @@ support. HIAL/VIAL remains proposed with portable-fast event-capable compiled
 Verilator separated from full-language/SystemVerilog-UVM authority and with
 VHDL/mixed-language profiles qualified independently. See the
 [selection record](../../IAL2_POST_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
+Clean selector commit `e2109a2ba` activates only the selected readiness-audit
+`.1`; no public source, support, test, artifact, semantic/MCP API, HDL/runtime,
+simulator, backend, HIAL/VIAL, VHDL, or verification-generation behavior
+changes in activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

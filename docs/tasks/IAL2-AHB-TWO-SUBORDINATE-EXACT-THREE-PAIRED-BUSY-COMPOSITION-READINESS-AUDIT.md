@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `IAL2 / AHB paired requester-subordinate BUSY composition`
 - Created: `2026-07-29`
 - Last updated: `2026-07-29`
@@ -75,22 +75,21 @@ any public two-subordinate exact-three source or contract is selected.
 ## Task Tree
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit assertion-enabled two-window exact-three requester/BUSY-parking composition before public expansion.`
   Children: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit generic two-subordinate exact-three paired AHB BUSY readiness and select the next exact owner.`
   Acceptance: `Activate only after clean parent selector .819 commit. Reconcile the shipped exact-three requester and one-window generic/profile paired behavior, generic/profile two-window exact-two paired behavior, assertion-clean interconnect/generated-subordinate/direct-seed repairs, public PPIF/AHB generators, report residue, support/language/capability surfaces, normalized semantic JSON, real read-only MCP, t1525/t1526/t1531/t1532, roadmap, mdBook, Knowledge Map, HIAL/VIAL, generic priority, decisions 0004/0008/0020, and the .819 disposable static/HDL evidence. Recreate only a repository-derived same-volume generic candidate with the exact future identity, four children, 29 signals, 4 IAL1/5 IAL0 artifacts, requester before_beat=2/beats=3, both child and propagated parks_on=[busy], one-hot ownership, normalized semantic/MCP parity, and unmatched support. Compile without --no-assert and execute an adapted two-command runtime proving 10 presentations/8 beats/2 BUSY episodes/6 qualified BUSY events/2 resumed SEQ/status 0x44332211/control 0x88776655 with stable selected/unselected endpoint and fabric state. Decide whether a separate generic public-contract leaf can follow, a lower-layer repair is required, or the candidate must fail closed. If ready, freeze projected 325/366/49 split 25 .ppif/24 .ahb and exact future support/test/diagnostic/preservation/cleanup/rollback boundaries. Keep aliases, counts above three, new BUSY policy/status/burst/signal semantics, generic priority, other protocols/backends, HIAL/VIAL activation, VHDL, verification generation, and decision 0020 separate. Use authorized host100/process4096, canonical Stats-compatible capacity, separate kernel pressure, repository-local artifacts, exact census, and residue proof.`
-  Verification: `Pending activation after the clean .819 selector commit.`
-  Commit: `pending activation`
+  Verification: `Activated only after clean parent selector commit e2109a2ba; no source, test, artifact, generated output, or frozen legacy blob changed. Focused t1518+t1256+t1414 pass 3 files/22 tests. Knowledge Map regeneration remains 1026 facts/5231 question keys. mdBook builds 72 files/16,174,671 bytes and the exact generated tree is removed with no residue. scripts/check_doctrines.sh passes. Canonical Stats-compatible capacity at verification is 65.6% (15.754/24 GiB) from active+inactive+speculative+wired+compressor-occupied-purgeable-file-backed; kernel VM pressure is separately normal (1). Behavioral audit evidence remains pending.`
+  Commit: `pending audit completion`
 
 ## Current Frontier
 
-This tree is proposed and inactive. Parent selector
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.819` selects `.1` as the next exact owner;
-a separate clean activation commit is required before the audit runs.
+This tree is active. Parent selector commit `e2109a2ba` selected `.1`; the
+current no-behavior activation owns the next audit evidence.
 
 ## Decisions
 

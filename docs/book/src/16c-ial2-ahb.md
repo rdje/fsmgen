@@ -2089,6 +2089,8 @@ presentations, 8 beats, 2 BUSY episodes, 6 qualified BUSY events, 2 resumed
 `SEQ` events, and final status/control `44332211`/`88776655`. Only then may a
 separate contract project 325/366/49 split 25 `.ppif`/24 `.ahb`. See the
 [selection record](../../IAL2_POST_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
+Clean selector commit `e2109a2ba` activates only the selected audit `.1`; the
+candidate and projected 325/366/49 boundary remain unshipped during activation.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

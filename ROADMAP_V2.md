@@ -7537,6 +7537,10 @@ read-only MCP and assertion-enabled two-command 10/8/2/6/2 runtime with final
 status/control `44332211`/`88776655` before selecting projected 325/366/49
 support. HIAL/VIAL remains proposed with its separate simulator capability
 profiles intact.
+Clean selector commit `e2109a2ba` activates only the selected readiness-audit
+`.1`; activation changes task/continuity surfaces and no public source,
+support, test, artifact, semantic/MCP API, HDL/runtime, simulator, backend,
+HIAL/VIAL, VHDL, or verification-generation behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

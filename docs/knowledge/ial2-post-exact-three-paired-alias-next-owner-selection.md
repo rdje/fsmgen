@@ -35,3 +35,7 @@ episodes/6 qualified BUSY events/2 resumed `SEQ`/status `44332211`/control
 HIAL/VIAL remains proposed with portable-fast event-capable compiled Verilator
 separate from full-language/SystemVerilog-UVM authority and separately
 qualified VHDL/mixed-language profiles.
+
+Clean selector commit `e2109a2ba` now activates only the selected audit `.1`;
+no public source, support, test, artifact, HDL/runtime, or HIAL/VIAL behavior
+changes in activation.
