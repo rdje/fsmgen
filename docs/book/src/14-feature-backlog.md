@@ -11365,6 +11365,9 @@ t1531 remains the shared assertion-enabled runtime. Current accounting is
 Two-subordinate exact-three, broader BUSY policy/count/burst/signal work,
 generic priority, HIAL/VIAL activation, VHDL, and verification generation
 remain separate.
+Clean behavior commit `d94f303d8` activates only no-behavior parent selector
+`.819`. The selector must reconcile those adjacent owners and select exactly
+one next bounded slice; activation changes continuity only.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

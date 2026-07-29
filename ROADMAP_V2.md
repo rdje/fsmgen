@@ -7525,6 +7525,9 @@ accounting is 324 protocol / 365 supported+strict / 48 AHB paths split 24/24.
 Two-subordinate exact-three, broader BUSY/count/burst/signal work, generic
 priority, HIAL/VIAL activation, VHDL, and verification generation remain
 separate.
+Clean behavior commit `d94f303d8` activates only no-behavior parent selector
+`.819`. It must reconcile those adjacent owners and choose exactly one next
+roadmap-aligned slice before any further behavior change.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

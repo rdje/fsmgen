@@ -2079,6 +2079,8 @@ separate. See the
 Clean selector commit `c70fe528f` activated `.818` only. Implementation `.818`
 now ships the alias, support identity, and t/1532 proof at 324/365/48 split
 24/24 while preserving the shared t/1531 runtime.
+Clean behavior commit `d94f303d8` activates only no-behavior parent selector
+`.819` for the next exact roadmap-aligned owner.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
