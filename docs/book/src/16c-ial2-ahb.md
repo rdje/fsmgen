@@ -464,12 +464,19 @@ through `ahb_tb.fsm`; the generated HDL entry is module `ahb_tb`.
 > set is five outputs for one window (`HADDR_REGS`, `HSEL_REGS`, `HRDATA`,
 > `HREADY`, `HRESP`) and seven for two windows (per-window `HADDR_*`/`HSEL_*`
 > plus the three global response outputs). Generic `onehot0` assertions are
-> accurate and remain mandatory; proposed contract leaf `.2` owns a
-> generated-`AhbInterconnect` mutually exclusive arbitration shape before any
-> repair. See the
-> [output-arbitration audit](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md).
-> Clean audit commit `c32255645` satisfies the boundary, so `.2` is now active
-> for contract selection only; generated behavior remains unchanged.
+> accurate and remain mandatory. Completed contract leaf `.2` selects a
+> generated-`AhbInterconnect` shape with complementary per-window
+> mapped-hit/not-hit address/select modes and exclusive retained-owner,
+> first-cycle-unmapped, or ordinary-default response modes. See the
+> [output-arbitration audit](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md)
+> and the
+> [selected contract](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
+> Proposed `.3` owns implementation; generated behavior remains unchanged.
+> A feasibility run with only fabric assertions suppressed exposed a separate
+> subordinate idle/`ahb_phase_capture` `HRDATA_REGS <- 0` overlap. Focused
+> t1530 will therefore instantiate the fabric directly with assertions, while
+> paired tests retain `--no-assert` pending the separately proposed subordinate
+> audit.
 
 ## Guided PPIF Two-Subordinate Interconnect
 

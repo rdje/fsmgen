@@ -29,8 +29,11 @@ report, artifact, semantic/MCP API, HDL, runtime, backend, protocol, or
 transaction-layer behavior. It selects proposed child `.2` to freeze an exact
 generator-local mutually exclusive arbitration contract before repair.
 
-The audit committed cleanly at `c32255645`; proposed child `.2` is now active.
-Activation changes continuity/documentation state only.
+The audit committed cleanly at `c32255645`; child `.2` is now complete and
+selects proposed implementation `.3`. Contract feasibility also exposed a
+separate generated subordinate idle/phase-capture overlap, so the
+interconnect implementation uses direct-fabric assertion coverage while the
+paired family retains `--no-assert` pending its separately proposed audit.
 
 ## Fresh Base Reproduction
 
@@ -183,8 +186,9 @@ covers:
 - status/control select and local-address exclusivity;
 - retained-owner `HREADY`/`HRESP`/`HRDATA`, completion, and same-edge mapped
   replacement;
-- removal of `--no-assert` from the affected paired aggregate runtime family,
-  including exact-one and exact-two one-/two-subordinate proofs;
+- a feasibility probe for removing `--no-assert` from the affected paired
+  aggregate runtime family, with any independent endpoint failure routed to a
+  separate owner instead of being hidden or folded into this repair;
 - unchanged public source bytes, support identities/counts, report schemas and
   payloads, exact IAL1/IAL0 artifact names, normalized semantic JSON,
   read-only MCP behavior, ports, and current mdBook examples;
@@ -204,6 +208,26 @@ The disposable workspace contained exactly 45 files / 2,663,969 bytes after
 the probes. That exact task-owned directory was removed after the evidence was
 recorded, and a path census confirmed no residue. Pre-existing artifacts
 elsewhere under `.artifacts/` were not changed.
+
+## Contract-Selection Feasibility Correction
+
+Child `.2` tested the paired assertion boundary by suppressing only the
+generated interconnect assertion block in disposable HDL. The requester and
+subordinate assertions remained enabled. The run then stopped at cycle 345 in
+the subordinate with:
+
+```text
+selector same-value conflict: HRDATA_REGS 0 enables=01100000
+```
+
+The enable vector proves simultaneous transaction idle-state and
+`ahb_phase_capture` zero assignments. This is independent of the interconnect
+defect. Therefore proposed `.3` directly instantiates generated one-/two-window
+fabric modules for assertion-enabled t1530 and retains `--no-assert` in the
+paired preservation family. Proposed task
+`IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1` owns the complete
+endpoint audit. See
+`docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md`.
 
 ## Closeout Validation
 

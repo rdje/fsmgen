@@ -34,5 +34,8 @@ lowering accurately preserves those families and emits the assertions; it
 must remain unchanged. Proposed child `.2` owns an exact mutually exclusive
 generated-IAL0 arbitration contract before implementation.
 
-Clean audit commit `c32255645` satisfies the activation boundary, so `.2` is
-now active without a behavior change.
+Clean audit commit `c32255645` satisfied the activation boundary. Completed
+`.2` selects proposed implementation `.3` with direct-fabric assertion
+coverage. Its feasibility probe exposed a separate subordinate
+idle/`ahb_phase_capture` overlap, so paired `--no-assert` removal is owned by a
+separate proposed endpoint audit rather than this interconnect repair.

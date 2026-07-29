@@ -7314,6 +7314,18 @@ selection after the audit commits cleanly. See
 Audit commit `c32255645` is clean, so contract-selection child `.2` is now
 active. Activation changes continuity/docs state only; no arbitration repair
 has started.
+Contract leaf `.2` now selects proposed implementation `.3`. Per-window
+`HSEL_*`/`HADDR_*` use complementary mapped-hit/not-hit modes; global
+`HREADY`/`HRESP`/`HRDATA` use retained-owner, first-cycle-unmapped, or
+`!any_owner && !unmapped_address` ordinary-default modes. Independent owner
+blocks preserve impossible-multiple-owner assertion visibility, and all
+decode/phase/report/public behavior remains fixed. A paired feasibility probe
+with only fabric assertions suppressed exposed a separate subordinate
+idle-state plus `ahb_phase_capture` `HRDATA_REGS <- 0` overlap, so `.3` uses
+direct-fabric assertion-enabled t1530 and keeps paired `--no-assert`; proposed
+`IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1` owns the endpoint
+audit. See
+`docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

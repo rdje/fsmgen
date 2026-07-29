@@ -6,19 +6,21 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.2: activate interconnect arbitration contract selection`;
-  predecessor `c32255645`.
+  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.2: select mutually exclusive arbitration contract`;
+  predecessor `22eb4822a`.
 - active_work_unit:
-  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.2`.
-- current_state: audit `.1` committed cleanly at `c32255645`; contract-selection
-  child `.2` is active. Activation changes continuity/docs state only.
-- next_action: freeze the exact mutually exclusive generated-IAL0 arbitration
-  contract, assertion-enabled runtime/preservation gates, resource boundary,
-  rollback, and separate implementation owner without changing behavior.
+  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3` (proposed).
+- current_state: `.2` is complete and selects complementary per-window plus
+  exclusive global response modes; proposed `.3` owns interconnect
+  implementation. Paired `--no-assert` removal is excluded because the
+  feasibility probe exposed a separate subordinate idle/phase-capture overlap.
+- next_action: after this commit is clean, activate `.3` in a docs-only boundary
+  commit, then implement the selected interconnect contract and direct-fabric
+  assertion-enabled t1530.
 - in_flight_uncommitted: none after this commit; no background job remains.
-- blockers: none. The fixed guard correctly refused work at 97.3% during an
-  unrelated external compiler and later admitted all audit commands at
-  65.6%-85.5%; never raise the cutoff or kill unrelated processes.
+- blockers: none. The fixed guard refused attempts during unrelated external
+  compiler pressure and admitted the definitive endpoint probe at 70.9%; never
+  raise the cutoff or kill unrelated processes.
 
 ## Durable context
 
@@ -27,8 +29,10 @@ bounded current-state pointer. Git preserves its prior history.
 - The IAL2 frontier is complete through `.812`; exact-three generic child `.3`
   established `321/362/45`, `.5` ships its matching alias at `322/363/46`, and
   completed parent `.813` selected the AHB interconnect arbitration audit;
-  child `.1` is complete and active `.2` owns the no-behavior contract. Decision
-  `0020` remains proposed/inactive.
+  child `.1` is complete and `.2` selects proposed implementation `.3`. The
+  independent subordinate `HRDATA_REGS` overlap is durably routed to proposed
+  `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1`. Decision `0020`
+  remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
