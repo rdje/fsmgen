@@ -5,17 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped behavior commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.821: ship two-window exact-three AHB alias`;
-  predecessor activation `91c41cf2b`.
-- active_work_unit: proposed `IAL2-FEATURE-COMPLETENESS-FRONTIER.822`, pending
-  a separate clean activation commit.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.822: activate post-alias selector`;
+  predecessor behavior `db402fd9d`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.822`.
 - current_state: two-window exact-three paired AHB generic/profile sources ship
   at 326 protocol / 367 supported-smoke+strict / 50 AHB paths split 25
   `.ppif`/25 `.ahb`; t1534 proves alias parity and t1533 remains shared
   assertion-enabled 10/8/2/6/2 runtime.
-- next_action: activate only `.822`, then select the next exact roadmap-aligned
-  owner without a behavior change.
+- next_action: reconcile the completed AHB generic/profile cadence, remaining
+  IAL2 residue, HIAL/VIAL, generic correctness owners, roadmap, and facts;
+  select exactly one next owner without a behavior change.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

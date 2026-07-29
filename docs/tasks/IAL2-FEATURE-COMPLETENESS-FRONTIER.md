@@ -5818,11 +5818,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.821: ship two-window exact-three AHB alias`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.822`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the next exact roadmap-aligned owner after the two-subordinate exact-three paired AHB generic/profile pair ships cleanly.`
   Acceptance: `Activate only after .821 commits cleanly. Reconcile the completed exact-one/exact-two/exact-three requester and one-/two-window paired AHB generic/profile families at 326/367/50 split 25/25, remaining count-width/policy/status/burst/signal residue, generic selector-priority owners, other roadmap lanes, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE, completed IAL1 verification-output foundations, decisions 0004/0008/0020, roadmap, mdBook, Knowledge Map, and the director's HIAL/VIAL plus simulator-profile requirements. Choose exactly one smallest evidence-backed next owner, freeze clean ownership and validation, and make no public behavior change in selection.`
-  Verification: `Pending clean .821 behavior commit and separate activation.`
-  Commit: `pending activation`
+  Verification: `Activated only after clean .821 behavior commit db402fd9d. Activation changes task/index/Memory/roadmap/mdBook/HIAL-VIAL continuity state only; no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map remains current at 1,031 facts/5,261 question keys; mdBook builds 72 files/16,208,700 bytes and is removed without residue; Memory is 55 lines; diff and all six doctrine gates pass. Final canonical Stats-compatible RAM is 64.9% (15.584/24.000 GiB), kernel pressure is separately 1 (normal), and guard occupancy is excluded as capacity truth. Selector evidence remains pending.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.822: activate post-alias selector`
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25
@@ -5832,8 +5832,9 @@ runtime, `.2` froze the public contract, and `.3` ships the selected source,
 support identity, t1533/harness, semantic/MCP proof, and behavior record.
 Implementation `.821` ships the byte-identical matching two-window exact-three
 `.ahb` alias through existing suffix/lowering machinery. t1534 owns parity
-while t1533 remains shared runtime. Proposed `.822` owns the next clean
-roadmap-aligned selection. Counts above three, new BUSY
+while t1533 remains shared runtime. Clean behavior commit `db402fd9d`
+activates `.822` to select the next exact roadmap-aligned owner. Counts above
+three, new BUSY
 policy/status/burst/signal semantics, generic priority, HIAL/VIAL, VHDL,
 verification generation, and decision `0020` remain separate. The
 director-agreed event-capable compiled Verilator versus full-language/

@@ -207,4 +207,7 @@ evidence-backed handoff.
   generic/profile pair at 326/367/50. Proposed `.822` will independently
   select the next roadmap owner; HIAL/VIAL and its portable-fast/full-language/
   VHDL/mixed-language profile boundary remain proposed and unchanged.
+- `2026-07-29`: Clean alias behavior commit `db402fd9d` activates parent
+  selector `.822`; HIAL/VIAL remains proposed while the selector compares it
+  with the remaining exact IAL2 and correctness owners.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

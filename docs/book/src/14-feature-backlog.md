@@ -11421,6 +11421,8 @@ t1534 proves byte/report/strict/schedule/artifact/normalized-semantic/
 read-only-MCP/repository-local-output/HDL-verifier/diagnostic/preservation
 parity without a second simulation; t1533 remains the shared assertion-enabled
 10/8/2/6/2 runtime. Proposed `.822` owns the next roadmap-aligned selection.
+Clean behavior commit `db402fd9d` activates only no-behavior selector `.822`;
+activation changes continuity documentation and no public behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

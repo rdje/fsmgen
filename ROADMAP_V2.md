@@ -7594,6 +7594,10 @@ normalized-semantic/read-only-MCP/repository-local-output/HDL-verifier/
 diagnostic/preservation parity without a second simulation; t1533 remains the
 shared assertion-enabled 10/8/2/6/2 runtime. Proposed `.822` will select the
 next exact roadmap-aligned owner after the clean behavior commit.
+Clean behavior commit `db402fd9d` activates only no-behavior selector `.822`;
+activation changes task/continuity documentation and no public source,
+support, test, artifact, semantic/MCP API, HDL/runtime, simulator, backend,
+protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

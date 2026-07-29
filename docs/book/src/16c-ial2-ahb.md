@@ -2153,6 +2153,8 @@ byte/report/strict/schedule/artifact/normalized-semantic/read-only-MCP/
 repository-local-output/HDL-verifier/diagnostic/preservation parity; t1533
 remains the shared assertion-enabled 10/8/2/6/2 runtime. See the
 [alias behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_THREE_PAIRED_BUSY_COMPOSITION_PROFILE_ALIAS_BEHAVIOR.md).
+Clean behavior commit `db402fd9d` activates only no-behavior selector `.822`;
+activation changes continuity documentation and no public behavior.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
