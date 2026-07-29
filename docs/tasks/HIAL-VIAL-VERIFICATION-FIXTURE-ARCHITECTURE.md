@@ -194,4 +194,7 @@ evidence-backed handoff.
   generic two-window exact-three source at 325/366/49. Proposed parent selector
   `.820` retains this architecture boundary and must independently decide
   whether it now outranks the matching alias and other adjacent IAL2 work.
+- `2026-07-29`: Clean behavior commit `1a73bc65e` activates parent selector
+  `.820`; HIAL/VIAL remains proposed while that selector evaluates it against
+  the adjacent matching alias and other exact owners.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

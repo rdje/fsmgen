@@ -2131,6 +2131,8 @@ status/control `44332211`/`88776655`. See the
 The matching `.ahb` alias is still separate. Proposed parent selector `.820`
 may activate only after this implementation commits cleanly and must choose
 the next exact roadmap-aligned owner before any further behavior change.
+Clean behavior commit `1a73bc65e` activates only `.820`; activation changes
+continuity documentation and no public behavior.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

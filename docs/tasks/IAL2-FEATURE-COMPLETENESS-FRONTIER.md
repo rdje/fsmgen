@@ -5804,19 +5804,20 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.819: select two-window exact-three AHB audit`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.820`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the next exact roadmap-aligned owner after generic two-subordinate exact-three paired AHB composition ships cleanly.`
   Acceptance: `Activate only after IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3 commits cleanly. Reconcile .819, the completed child .1-.3 lineage, current 325 protocol / 366 supported+strict / 49 AHB-path checkpoint split 25 .ppif/24 .ahb, the adjacent matching alias/count-width/policy/status/burst/signal residue, generic selector-priority owners, other roadmap lanes, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE, completed IAL1 verification-output foundations, decisions 0004/0008/0020, roadmap, mdBook, Knowledge Map, and the director's HIAL/VIAL plus simulator-profile requirements. Choose exactly one smallest evidence-backed next owner and explain why it outranks the alternatives. If HIAL/VIAL is selected, activate only its architecture-audit leaf after this selector commits; if an adjacent IAL2 owner is selected, keep HIAL/VIAL proposed while preserving event-capable compiled Verilator as a portable-fast subset profile separate from a qualified full-language/SystemVerilog-UVM simulator, with VHDL/mixed-language claims qualified independently. Freeze exact ownership, clean activation boundary, preservation, focused/broader validation, docs/Knowledge Map impact, authorized host100/process4096 with exact Stats-compatible capacity plus separate kernel pressure, repository-derived same-volume cleanup, and rollback before behavior changes. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction-layer behavior change in this selector. Keep decision 0020 proposed/inactive unless independently and explicitly selected.`
-  Verification: `Pending clean child behavior commit and separate activation.`
-  Commit: `pending selector activation`
+  Verification: `Activated only after clean child behavior commit 1a73bc65e. Activation changes task/index/Memory/roadmap/mdBook/HIAL-VIAL continuity state only; no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map check remains current at 1,029 facts/5,247 question keys; mdBook builds to 72 files/16,194,300 bytes and the exact repository-local output is removed without residue; Memory is 55 lines; diff and all six doctrine gates pass. Final canonical Stats-compatible RAM is 59.6% (14.312/24.000 GiB), kernel pressure is separately 1 (normal), and guard occupancy is excluded as capacity truth. Selector evidence remains pending.`
+  Commit: `pending selector completion`
 
 The exact-three paired generic/profile pair now extends through the generic
 two-subordinate source at 325/366/49 split 25 `.ppif`/24 `.ahb`. Child `.1`
 proved real read-only MCP plus assertion-enabled two-command 10/8/2/6/2
 runtime, `.2` froze the public contract, and `.3` ships the selected source,
 support identity, t1533/harness, semantic/MCP proof, and behavior record.
-Proposed parent selector `.820` may activate only after the clean `.3`
-behavior commit. Counts above three, the matching alias, new BUSY
+Clean child behavior commit `1a73bc65e` now activates only parent selector
+`.820`; activation changes continuity documentation and no public behavior.
+Counts above three, the matching alias, new BUSY
 policy/status/burst/signal semantics, generic priority, HIAL/VIAL, VHDL,
 verification generation, and decision `0020` remain separate. The
 director-agreed event-capable compiled Verilator versus full-language/

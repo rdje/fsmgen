@@ -5,17 +5,16 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped behavior commit,
-  `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: ship two-window exact-three composition`;
-  predecessor activation `63de6a6b7`.
-- active_work_unit: proposed `IAL2-FEATURE-COMPLETENESS-FRONTIER.820`, pending
-  separate activation from the clean behavior commit.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.820: activate post-composition selector`;
+  predecessor behavior `1a73bc65e`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.820`.
 - current_state: generic two-window exact-three paired AHB composition ships
   at 325 protocol / 366 supported-smoke+strict / 49 AHB paths split 25
   `.ppif`/24 `.ahb`; t1533 proves assertion-enabled 10/8/2/6/2 runtime plus
   semantic/read-only-MCP parity.
-- next_action: from the clean behavior commit, activate only parent selector
-  `.820`, then select the next smallest roadmap-aligned owner.
+- next_action: reconcile the exact adjacent owner set and select exactly one
+  next smallest roadmap-aligned task without changing behavior.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

@@ -7571,6 +7571,10 @@ t1533 runtime at commands/transfers/beats/BUSY/qualified/resumed
 is 325/366/49 split 25 `.ppif`/24 `.ahb`. Proposed parent selector `.820` may
 activate only after this behavior commits cleanly; the matching alias and
 broader BUSY/HIAL/VIAL work remain separate.
+Clean behavior commit `1a73bc65e` activates only no-behavior parent selector
+`.820`; activation changes task/continuity documentation and no public source,
+support, test, artifact, semantic/MCP API, HDL/runtime, simulator, backend,
+protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

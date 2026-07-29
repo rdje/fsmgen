@@ -11403,6 +11403,8 @@ assertion-enabled t1533 10/8/2/6/2 runtime at 325/366/49 split 25 `.ppif`/24
 `.ahb`. Proposed parent selector `.820` may activate only after the clean
 behavior commit. The matching alias, broader BUSY semantics, HIAL/VIAL, VHDL,
 and verification generation remain separate.
+Clean behavior commit `1a73bc65e` activates only no-behavior parent selector
+`.820`; activation changes continuity documentation and no public behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
