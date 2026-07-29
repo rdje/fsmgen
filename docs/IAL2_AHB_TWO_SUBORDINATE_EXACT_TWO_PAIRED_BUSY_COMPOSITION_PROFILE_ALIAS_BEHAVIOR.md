@@ -78,9 +78,9 @@ generic exact-three requester established 321/362/45; its matching alias
 established 322/363/46. The generic exact-three paired source established
 323/364/47; its matching alias established 324/365/48. After both
 two-subordinate exact-three sources and the generic/profile exact-four
-requester pair, accounting reached 328/369/52. The later generic exact-four
-paired source moves current accounting to 329/370/53 split 27 `.ppif` / 26
-`.ahb`.
+requester pair, accounting reached 328/369/52. The later exact-four paired
+generic/profile pair moves current accounting to 330/371/54 split 27 `.ppif`
+/ 27 `.ahb`.
 
 Strict check, schedule JSON, normalized semantic JSON, and the real read-only
 `fsmgen_semantic_introspect` MCP tool expose the same support identity, module,
@@ -121,7 +121,7 @@ resumed pending `SEQ` events, eight data beats, and final status/control storage
 
 ## Explicit Deferrals
 
-BUSY counts above three, exact-three paired aliases and two-window forms, multiple insertion
+BUSY counts above four, the two-window exact-four form, multiple insertion
 points, runtime-selected policy, distinct local bus-BUSY status, broader bursts
 and optional signals, deeper queues, multiple outstanding transfers, broader
 managers/fabrics, selector repair, direct backends, verification-output

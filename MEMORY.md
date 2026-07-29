@@ -5,12 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped `.825` activation; predecessor `5b601fffc`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.825`.
-- current_state: exact-four paired generic ships at 329/370/53; `.825` is
-  active for its byte-identical `.ahb` alias at target 330/371/54 split 27/27.
-- next_action: implement exact alias/support/t1538 parity with t1537 shared
-  runtime, then run focused/preservation/docs/doctrine gates and commit.
+- latest_commit: this task-scoped `.825` behavior; predecessor `98abfec6a`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.825`; `.826` remains
+  pending until this behavior slice commits cleanly.
+- current_state: exact-four paired generic/profile paths ship at 330/371/54
+  split 27/27 with t1538 parity and shared assertion-enabled t1537 runtime.
+- next_action: finish `.825` gates and commit; from that clean boundary,
+  activate `.826` for one exact no-behavior next-owner selection.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -26,9 +27,9 @@ bounded current-state pointer. Git preserves its prior history.
   arbitration repairs, and exact-four requester generic/alias at 328/369/52.
   The generic one-window exact-four paired source now ships through existing
   generators with semantic/read-only-MCP parity and repository-local t1537
-  assertion runtime 5/4/1/4/1/`44332211` at 329/370/53. Active `.825` owns
-  its byte-identical alias with t1538 parity and shared t1537 runtime at target
-  330/371/54. Two-window exact-four and decision `0020`
+  assertion runtime 5/4/1/4/1/`44332211`. `.825` now ships its byte-identical
+  alias with t1538 parity at 330/371/54; pending `.826` owns next selection.
+  Two-window exact-four and decision `0020`
   remain separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
@@ -40,7 +41,7 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. `.825` keeps the tree proposed.
+  mixed-language claims qualified separately. `.826` keeps the tree proposed.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc

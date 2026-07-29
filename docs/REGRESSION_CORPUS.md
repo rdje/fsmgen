@@ -520,8 +520,9 @@ children, and composes the width-three exact-four requester with the existing
 BUSY-parking subordinate and one-window interconnect. Focused t/1537 owns
 strict, schedule, exact-artifact, normalized-semantic, repo-relative read-only
 MCP, public-verifier, repository-local-output, and assertion-enabled
-5/4/1/4/1/`44332211` runtime proof. Current totals are 329 protocol fixtures
-and 370 supported-smoke/strict-supported fixtures.
+5/4/1/4/1/`44332211` runtime proof. The byte-identical `.ahb` alias adds t1538
+parity without another simulation. Current totals are 330 protocol fixtures
+and 371 supported-smoke/strict-supported fixtures.
 
 ## Capability manifest
 

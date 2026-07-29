@@ -1,16 +1,19 @@
 # IAL2 AHB Exact-Four Paired BUSY Composition Behavior
 
 Task-tree owner:
-`IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
+`IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3` and
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.825`
 
 Date: 2026-07-30
 
 ## Outcome
 
-FSMGen ships one additive generic AHB aggregate:
+FSMGen ships one additive generic AHB aggregate and its byte-identical profile
+alias:
 
 ```text
 ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif
+ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ahb
 ```
 
 It pairs the existing exact-four BUSY-inserting requester with the existing
@@ -53,20 +56,24 @@ policy both report `parks_on=[busy]`. The top intentionally adds no duplicate
 completion-edge owner replacement remain unchanged.
 
 ```text
-support id:
+generic support id:
   intent.ppif_ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park
-coverage:
+generic coverage:
   ial2_ppif_ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park_pipeline_cli
-source kind:   ppif
+alias support id:
+  intent.ahb_profile_alias_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park
+alias coverage:
+  ial2_ahb_profile_alias_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park_pipeline_cli
+source kinds:  ppif / ial2_profile_alias
 class/strict:  supported_smoke / true
 HDL module:    ahb_tb
 child count:   3
 semantic root: top
 ```
 
-This source moves current accounting to 329 protocol fixtures, 370
-supported-smoke and strict-supported fixtures, and 53 AHB IAL2 paths split
-between 27 generic `.ppif` sources and 26 `.ahb` aliases.
+The alias moves current accounting to 330 protocol fixtures, 371
+supported-smoke and strict-supported fixtures, and 54 AHB IAL2 paths split
+between 27 generic `.ppif` sources and 27 `.ahb` aliases.
 
 ## Semantic Introspection And Runtime Proof
 
@@ -92,6 +99,15 @@ The test creates all lowering and Verilator workspaces beneath the
 repository-derived `.artifacts/tmp/tests` directory and removes each exact
 temporary tree on completion.
 
+Focused `t/1538-ial2-ahb-exact-four-paired-busy-composition-profile-alias.t`
+passes 4 top-level subtests and 88 nested assertions. It proves byte identity,
+alias-residue cleanup, strict support identity, exact 3 IAL1/4 IAL0 artifact
+and width-three counter parity, schedule and normalized semantic parity, real
+repo-relative MCP with `read_only=true` and `shell_access=false`, repository-
+local same-volume output, public `--verify-hdl`, targeted diagnostics, and
+adjacent generic/alias preservation. It intentionally compiles no second
+simulation; t1537 remains the sole assertion-enabled runtime authority.
+
 ## Use It
 
 ```bash
@@ -101,13 +117,13 @@ scripts/run_with_ram_guard.sh --host-max-pct 100 --process-max-rss-mb 4096 -- \
 
 scripts/run_with_ram_guard.sh --host-max-pct 100 --process-max-rss-mb 4096 -- \
   ./bin/fsmgen --quiet --strict --verify-hdl \
-  ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif
+  ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ahb
 ```
 
 ## Explicit Deferrals
 
-The matching `.ahb` alias, two-subordinate exact-four topology, counts above
-four, multiple insertion points, runtime-selected or random policy, distinct
+The two-subordinate exact-four topology, counts above four, multiple insertion
+points, runtime-selected or random policy, distinct
 local bus-BUSY status, broader bursts/signals/managers/fabrics, other
 protocols/backends, VHDL, VIAL verification generation, HIAL/VIAL activation,
 large-design scale implementation, and decision-0020 behavior remain separate
@@ -119,18 +135,19 @@ boundary. The selector must choose one next owner before any alias,
 two-subordinate, broader-AHB, HIAL/VIAL, verification, portability, priority,
 or scale behavior changes.
 
-Completed selector `.824` chooses active `.825`, activated only after clean
-selector commit `5b601fffc`, for the byte-identical matching `.ahb` alias with
-projected 330/371/54 accounting split 27/27. Future
-t1538 owns alias parity without a second simulation; t1537 remains this
-generic/profile pair's shared assertion-enabled runtime. See
+Completed selector `.824` chose `.825`, activated only after clean selector
+commit `5b601fffc`. `.825` now ships the byte-identical matching `.ahb` alias
+at 330/371/54 accounting split 27/27. Focused t1538 owns alias parity without a
+second simulation; t1537 remains this generic/profile pair's shared assertion-
+enabled runtime. See
 `docs/IAL2_POST_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md`.
 
 ## Rollback
 
-Rollback removes only the generic source, its support entry, t1537 and its
-testbench, this behavior record/fact, and corresponding current-accounting
-references. Accounting returns to 328 protocol fixtures, 369 supported-smoke
-and strict-supported fixtures, and 52 AHB paths split 26 `.ppif` / 26 `.ahb`.
+Rollback of `.825` removes only the alias source, its support entry, t1538, and
+the alias/current-accounting additions in this record/fact. Accounting returns
+to 329 protocol fixtures, 370 supported-smoke and strict-supported fixtures,
+and 53 AHB paths split 27 `.ppif` / 26 `.ahb`.
 Existing generators, exact-four requester behavior, exact-three paired
-behavior, semantic/MCP APIs, and simulator profiles remain unchanged.
+behavior, the generic exact-four paired source/t1537 runtime, semantic/MCP
+APIs, and simulator profiles remain unchanged.

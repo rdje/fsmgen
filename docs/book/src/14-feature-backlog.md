@@ -11516,6 +11516,16 @@ implementation; the source remains unshipped during selection. See the
 [contract](../../IAL2_AHB_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
 Clean contract commit `d54dc8afb` activates only `.3`; the selected source,
 support path, and t1537 remain unshipped until implementation passes.
+Implementation `.3` ships the generic exact-four paired source at 329/370/53
+split 27 `.ppif`/26 `.ahb`, with exact 3 IAL1/4 IAL0 artifacts, semantic/read-
+only-MCP parity, and assertion-enabled t1537 5/4/1/4/1/`44332211` runtime.
+Parent selector `.824` then selected the byte-identical matching `.ahb` alias
+as `.825`. Implementation `.825` now ships that alias at 330/371/54 split
+27/27. Focused t1538 passes 4 top-level subtests and 88 nested assertions for
+byte/report/artifact/strict/schedule/normalized-semantic/real read-only MCP/
+repository-local-output/public-verifier/diagnostic/preservation parity without
+another simulation; t1537 remains shared runtime. Pending `.826` owns the next
+no-behavior selection after the clean `.825` commit.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

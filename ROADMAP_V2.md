@@ -7778,6 +7778,17 @@ the shared runtime authority. No parser, generator, source, support, test,
 report, semantic/MCP, HDL/runtime, simulator, backend, HIAL/VIAL, VHDL,
 verification-generation, scale, decision-0020, or transaction behavior changes
 in activation.
+Implementation `.825` now ships the byte-identical exact-four paired `.ahb`
+alias through existing suffix/lowering machinery. Support accounting is
+330/371/54 split 27 `.ppif`/27 `.ahb`. Focused t1538 proves byte/report/
+artifact/strict/schedule/normalized-semantic/real read-only MCP/repository-
+local-output/public-verifier/diagnostic/preservation parity in 4 top-level
+subtests and 88 nested assertions without another simulation; assertion-
+enabled t1537 remains the shared 5/4/1/4/1/`44332211` runtime authority. No
+parser/generator algorithm, report or semantic/MCP API, HDL/runtime behavior,
+simulator integration, backend, HIAL/VIAL, VHDL, verification generation,
+scale, decision 0020, or transaction behavior changes. Pending `.826` owns
+the next exact no-behavior roadmap selection after the clean `.825` commit.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

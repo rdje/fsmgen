@@ -265,4 +265,7 @@ evidence-backed handoff.
   portable-fast/full-language/VHDL/mixed-language/scale requirements intact.
 - `2026-07-30`: Clean selector commit `5b601fffc` activates only data-only
   alias slice `.825`; HIAL/VIAL remains proposed and unchanged.
+- `2026-07-30`: Alias slice `.825` ships the exact-four paired generic/profile
+  pair at 330/371/54 with t1538 parity and shared t1537 runtime; HIAL/VIAL
+  remains proposed for pending post-behavior selector `.826` to compare.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

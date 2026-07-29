@@ -75,8 +75,8 @@ generic exact-three paired source established 323/364/47, and its matching
 alias established 324/365/48. The generic two-subordinate exact-three paired
 source established 325/366/49; its matching alias established 326/367/50. The
 generic exact-four requester established 327/368/51 and its matching alias
-established 328/369/52. The later generic exact-four paired source moves
-current accounting to 329/370/53 split 27 `.ppif` / 26 `.ahb`.
+established 328/369/52. The later exact-four paired generic/profile pair moves
+current accounting to 330/371/54 split 27 `.ppif` / 27 `.ahb`.
 
 ## Deep Semantic Introspection And MCP
 
@@ -143,8 +143,9 @@ t1525 remains the shared runtime proof.
 
 The generic exact-three requester, matching `.ahb` alias, and generic
 one-subordinate exact-three paired composition now ship separately. Its
-matching alias and the generic two-subordinate exact-three form also ship;
-only the two-subordinate exact-three matching alias, counts above three,
+matching alias and the two-subordinate exact-three generic/profile pair also
+ship. The exact-four requester and one-window paired generic/profile families
+ship; only the two-window exact-four topology, counts above four,
 multiple insertion points, runtime-selected policy, distinct local bus-BUSY status,
 broader bursts and optional signals, deeper queues, multiple outstanding
 transfers, broader managers/fabrics, direct backends,

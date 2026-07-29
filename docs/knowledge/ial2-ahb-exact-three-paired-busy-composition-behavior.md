@@ -34,6 +34,6 @@ repository-local-output/HDL-verifier parity without duplicating t/1531
 runtime. The later generic two-subordinate exact-three paired source established
 325/366/49; its matching alias established 326/367/50. The generic exact-four
 requester established 327/368/51 and its matching alias established
-328/369/52. The later generic exact-four paired source moves current accounting
-to 329 protocol fixtures, 370 supported-smoke/strict fixtures, and 53 AHB IAL2
-paths split 27 `.ppif` / 26 `.ahb`.
+328/369/52. The later exact-four paired generic/profile pair moves current
+accounting to 330 protocol fixtures, 371 supported-smoke/strict fixtures, and
+54 AHB IAL2 paths split 27 `.ppif` / 27 `.ahb`.

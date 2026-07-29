@@ -94,8 +94,8 @@ The generic source established 327 protocol fixtures, 368 supported-smoke plus
 strict fixtures, and 51 AHB IAL2 paths split 26 generic `.ppif` sources and 25
 `.ahb` aliases. The matching exact-four `.ahb` alias ships through
 `docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md` and
-established 328/369/52. The later generic exact-four paired source moves
-current accounting to 329/370/53 split 27 `.ppif` / 26 `.ahb`.
+established 328/369/52. The later exact-four paired generic/profile pair moves
+current accounting to 330/371/54 split 27 `.ppif` / 27 `.ahb`.
 
 ## Verification
 
@@ -126,12 +126,11 @@ Generated outputs must use a repository-derived same-volume path.
 
 ## Explicit Deferrals And Rollback
 
-Parent selector `.823` now proposes a separate one-window exact-four paired
-composition readiness audit. Audit `.1` proves direct assertion-enabled
-5/4/1/4/1/`44332211` readiness; its completed contract selector freezes a
-separate implementation leaf, but no paired source ships yet. Two-window exact-four,
-the eventual paired alias, counts above four,
-arbitrary/runtime/policy/random counts, multiple insertion points, local
+Parent selector `.823` selected the one-window exact-four paired readiness
+audit. That audit and contract now culminate in the shipped generic/profile
+pair with shared assertion-enabled 5/4/1/4/1/`44332211` runtime. Two-window
+exact-four, counts above four, arbitrary/runtime/policy/random counts,
+multiple insertion points, local
 bus-BUSY status, new burst/signal/topology behavior, HIAL/VIAL activation,
 VHDL, verification generation, and decision 0020 remain separate.
 

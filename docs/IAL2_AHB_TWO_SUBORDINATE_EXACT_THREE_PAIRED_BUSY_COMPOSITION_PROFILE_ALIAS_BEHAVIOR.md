@@ -74,9 +74,9 @@ HDL module:      ahb_tb
 
 This alias established 326 protocol fixtures, 367 supported-smoke plus strict
 fixtures, and 50 AHB IAL2 paths. The generic exact-four requester established
-327/368/51 and its matching alias established 328/369/52. The later generic
-exact-four paired source moves current accounting to 329/370/53 split 27
-`.ppif` sources / 26 `.ahb` aliases.
+327/368/51 and its matching alias established 328/369/52. The later exact-four
+paired generic/profile pair moves current accounting to 330/371/54 split 27
+`.ppif` sources / 27 `.ahb` aliases.
 
 Strict check, schedule JSON, normalized semantic JSON, and real read-only
 `fsmgen_semantic_introspect` expose the same support identity, module, semantic
@@ -117,8 +117,9 @@ authority; that remains a separate proposed HIAL/VIAL simulator profile.
 
 ## Explicit Deferrals
 
-Counts above three, generalized counter width, multiple insertion points,
-runtime/policy/random insertion, distinct bus-BUSY status, broader bursts and
+The exact-four requester and one-window paired generic/profile families now
+ship. The two-window exact-four topology, counts above four, multiple insertion
+points, runtime/policy/random insertion, distinct bus-BUSY status, broader bursts and
 optional signals, queues/outstanding transfers, broader managers/fabrics,
 generic priority changes, direct backends, verification generation, backend
 variants, other protocols, VHDL, HIAL/VIAL activation, and decision `0020`

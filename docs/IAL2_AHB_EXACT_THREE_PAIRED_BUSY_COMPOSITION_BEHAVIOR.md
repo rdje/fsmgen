@@ -77,10 +77,10 @@ semantic root: top
 The alias established 324/365/48. The later generic two-subordinate exact-three
 paired source established 325/366/49; its matching alias established
 326/367/50. The generic exact-four requester established 327/368/51 and its
-matching alias established 328/369/52. The later generic exact-four paired
-source moves current accounting to 329 protocol fixtures, 370 supported-smoke
-and strict-supported fixtures, and 53 AHB IAL2 paths split between 27 generic
-`.ppif` sources and 26 `.ahb` aliases.
+matching alias established 328/369/52. The later exact-four paired generic/
+profile pair moves current accounting to 330 protocol fixtures, 371 supported-
+smoke and strict-supported fixtures, and 54 AHB IAL2 paths split between 27
+generic `.ppif` sources and 27 `.ahb` aliases.
 
 ## Semantic Introspection And MCP
 
@@ -153,8 +153,9 @@ Parent selector `.817` selected `.818`, which now ships the matching
 byte-identical `.ahb` alias. Parent selector `.819` assigned the
 two-subordinate exact-three pairing to a separate readiness audit; completed
 implementation `.3` now ships that generic source with assertion-enabled
-t1533 and exact semantic/MCP parity. Its matching alias remains separate. Counts
-above three, generalized counter width,
+t1533 and exact semantic/MCP parity; its matching alias also ships. The exact-
+four requester and one-window paired generic/profile families now ship. The
+two-window exact-four topology, counts above four,
 multiple insertion points, runtime-selected or policy/random throttling,
 distinct local bus-BUSY status, broader bursts/signals/managers/fabrics,
 other protocols/backends, VHDL, VIAL verification generation, HIAL/VIAL

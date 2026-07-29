@@ -142,7 +142,8 @@ two-subordinate exact-two pairing, establishing 320/361/44; see
 The later generic exact-three requester plus alias established 322/363/46,
 the generic one-subordinate exact-three pairing established 323/364/47, and
 its matching alias now ships at 324/365/48. The two-subordinate exact-three
-form, counts above three, multiple
+generic/profile pair and the exact-four requester plus one-window paired
+families also ship. The two-window exact-four topology, counts above four, multiple
 insertion points, runtime-selected count/point, policy/random throttling,
 distinct local bus-BUSY status,
 halfword/word or wider/indefinite burst expansion, broader optional AHB

@@ -16,9 +16,9 @@ evidence: docs/IAL2_POST_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md; 
 reverify: rg -n 't/1538|330|371|54 AHB|read_only=true|shell_access=false|two-subordinate' docs/IAL2_POST_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
 ---
 
-Parent selector `.824` selects the matching byte-identical one-window
+Parent selector `.824` selected the matching byte-identical one-window
 exact-four paired `.ahb` alias as implementation `.825`, activated only after
-clean selector commit `5b601fffc`. A 4,978-byte
+clean selector commit `5b601fffc` and now shipped. A 4,978-byte
 repository-local candidate strict-checks with zero diagnostics, preserves
 `ahb_tb`/top/3 children/28 signals, exact 3 IAL1/4 IAL0 artifacts, numeric
 `before_beat=2`/`beats=4`, BUSY parking, and one-hot response ownership, and
@@ -30,10 +30,10 @@ Selected support is
 with corresponding
 `ial2_ahb_profile_alias_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park_pipeline_cli`
 coverage, source kind `ial2_profile_alias`, supported-smoke plus strict,
-`ahb_tb`/top/3-child expectations, and projected 330/371/54 accounting split
+`ahb_tb`/top/3-child expectations, and current 330/371/54 accounting split
 27 `.ppif` / 27 `.ahb`.
 
-Future t1538 owns alias parity without another simulation; t1537 remains the
+t1538 owns alias parity without another simulation; t1537 remains the
 sole assertion-enabled exact-four paired runtime. Two-window exact-four,
 broader BUSY behavior, generic priority, HIAL/VIAL activation, verification
 generation, VHDL, scale, and decision 0020 remain separate.

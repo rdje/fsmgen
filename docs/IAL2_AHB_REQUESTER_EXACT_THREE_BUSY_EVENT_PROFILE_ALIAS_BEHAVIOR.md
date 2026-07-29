@@ -88,9 +88,10 @@ source established 323/364/47; its matching alias moves current support
 checkpoint to 324/365/48. The generic two-subordinate exact-three paired source
 established 325/366/49; its matching alias established 326/367/50. The generic
 exact-four requester established 327/368/51 and its matching alias established
-328/369/52. The later generic exact-four paired source moves current support
-accounting to 329 protocol fixtures, 370 supported-smoke/strict-supported
-fixtures, and 53 AHB paths split 27 `.ppif` sources / 26 `.ahb` aliases.
+328/369/52. The later exact-four paired generic/profile pair moves current
+support accounting to 330 protocol fixtures, 371 supported-smoke/strict-
+supported fixtures, and 54 AHB paths split 27 `.ppif` sources / 27 `.ahb`
+aliases.
 
 Strict check and `--emit-semantic-json` expose the alias path, support ID,
 coverage, source kind, module, and `fsm` semantic root. The read-only MCP

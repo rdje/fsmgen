@@ -109,10 +109,10 @@ established 322/363/46. The generic exact-three paired source established
 323/364/47; its matching alias established 324/365/48. The generic
 two-subordinate exact-three paired source established 325/366/49; its matching
 alias established 326/367/50. The generic exact-four requester established
-327/368/51 and its matching alias established 328/369/52. The later generic
-exact-four paired source moves current accounting to 329 protocol fixtures,
-370 supported-smoke plus strict fixtures, and 53 AHB IAL2 paths: 27 generic
-`.ppif` sources and 26 `.ahb` aliases.
+327/368/51 and its matching alias established 328/369/52. The later exact-four
+paired generic/profile pair moves current accounting to 330 protocol fixtures,
+371 supported-smoke plus strict fixtures, and 54 AHB IAL2 paths: 27 generic
+`.ppif` sources and 27 `.ahb` aliases.
 
 ## Generated-HDL Proof
 
@@ -201,8 +201,9 @@ insertion points, distinct local bus-BUSY status, broader
 bursts/signals/managers/fabrics, AXI/APB/VHDL, and decision 0020 remain separate
 and inactive. The generic one-subordinate exact-three paired source now ships
 through its completed implementation leaf; its matching alias and the
-generic two-subordinate exact-three topology also ship. The matching
-two-subordinate exact-three alias remains separate.
+generic two-subordinate exact-three topology and matching alias also ship.
+The exact-four requester and one-window paired generic/profile families ship;
+the two-window exact-four topology remains separate.
 
 ## Rollback
 

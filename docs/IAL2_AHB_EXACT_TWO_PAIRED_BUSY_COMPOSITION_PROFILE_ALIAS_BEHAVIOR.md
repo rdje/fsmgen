@@ -108,8 +108,9 @@ resumes once, four clean byte beats complete, and final storage is
 Follow-on `.8` now ships the separate topology-first generic two-subordinate
 exact-two pairing through the existing four-child architecture. See
 `IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
-The later generic exact-three requester ships separately. Exact-three paired
-compositions, BUSY counts above three, generalized count width, multiple
+The exact-three requester and one-/two-window paired generic/profile families
+now ship, as do the exact-four requester and one-window paired families. The
+two-window exact-four topology, BUSY counts above four, multiple
 insertion points, runtime-selected counts/points, policy/random throttling,
 distinct local bus-BUSY status, broader bursts and optional signals, managers,
 queues/outstanding transfers, broader fabrics, direct backends,

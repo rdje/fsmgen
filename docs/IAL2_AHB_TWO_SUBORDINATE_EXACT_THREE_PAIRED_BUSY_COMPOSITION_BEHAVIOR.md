@@ -40,8 +40,8 @@ children:       4
 The matching alias established 326 protocol fixtures, 367 supported-smoke and
 strict-supported fixtures, and 50 AHB IAL2 paths. The generic exact-four
 requester established 327/368/51 and its matching alias established
-328/369/52. The later generic exact-four paired source moves current accounting
-to 329/370/53 split 27 generic `.ppif` sources / 26 `.ahb` aliases.
+328/369/52. The later exact-four paired generic/profile pair moves current
+accounting to 330/371/54 split 27 generic `.ppif` sources / 27 `.ahb` aliases.
 
 ## Generated Architecture
 
@@ -122,7 +122,9 @@ t1534 parity without a second simulation; t248 plus t297 pass 2 files / 6,959
 tests at the exact 326/367/50 checkpoint.
 
 Implementation `.821` now ships the matching byte-identical `.ahb` alias while
-sharing this t1533 runtime proof. Counts above three, counter-width generalization,
+sharing this t1533 runtime proof. The exact-four requester and one-window
+paired generic/profile families also ship. The two-window exact-four topology,
+counts above four,
 runtime/policy/random/multiple-point BUSY insertion, distinct bus-BUSY status,
 larger/indefinite bursts, optional signals, queues/outstanding transfers,
 broader fabrics/managers, generic priority changes, other protocols/backends,

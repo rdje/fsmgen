@@ -12,8 +12,8 @@ Select one byte-identical `.ahb` profile alias as the next exact owner:
 ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ahb
 ```
 
-Active `IAL2-FEATURE-COMPLETENESS-FRONTIER.825`, activated only after clean
-selector commit `5b601fffc`, owns implementation. It must
+Completed `IAL2-FEATURE-COMPLETENESS-FRONTIER.825`, activated only after clean
+selector commit `5b601fffc`, ships the selected alias. It
 mirror the shipped generic source byte-for-byte, reuse the existing AHB suffix
 and lowering machinery, add exact support accounting and one focused parity
 test, and reuse t1537 as the sole assertion-enabled runtime proof.
@@ -102,8 +102,8 @@ HDL module / semantic root / child count:
   ahb_tb / top / 3
 ```
 
-One additive support-accounted alias projects 330 protocol fixtures, 371
-supported-smoke and strict-supported fixtures, and 54 AHB paths split evenly
+One additive support-accounted alias now establishes 330 protocol fixtures,
+371 supported-smoke and strict-supported fixtures, and 54 AHB paths split evenly
 between 27 `.ppif` sources and 27 `.ahb` aliases.
 
 ## Selected Test Contract
@@ -114,7 +114,7 @@ Select:
 t/1538-ial2-ahb-exact-four-paired-busy-composition-profile-alias.t
 ```
 
-t1538 must prove:
+t1538 proves:
 
 - tracked alias existence and byte identity with the generic source;
 - parse/report equality except exact alias-residue cleanup;
@@ -127,7 +127,7 @@ t1538 must prove:
 - preservation of generic exact-four, exact-three paired alias, standalone
   exact-four requester alias, and adjacent aggregate identities.
 
-t1538 must compile no second simulation or testbench. Assertion-enabled t1537
+t1538 compiles no second simulation or testbench. Assertion-enabled t1537
 remains authoritative for five presentations, four data beats, one BUSY
 episode, four qualified BUSY events, internal `4 -> 3 -> 2 -> 1 -> 0`, one
 resumed `SEQ`, and storage `32'h44332211`.
@@ -147,6 +147,6 @@ broader bursts/signals/managers/fabrics, generic priority, other protocols and
 backends, HIAL/VIAL activation, verification generation, VHDL, scale
 implementation, and decision 0020 remain separate task-tree-owned work.
 
-Rollback removes this record/fact and active `.825`, restores `.824` to
-active selection, and leaves the shipped 329/370/53 boundary unchanged. No
-public or generated behavior changes in selection.
+Rollback of `.825` removes the alias/support/t1538 and returns current
+accounting to 329/370/53 split 27/26; the generic source and shared t1537
+runtime remain shipped. The selector evidence itself remains historical.

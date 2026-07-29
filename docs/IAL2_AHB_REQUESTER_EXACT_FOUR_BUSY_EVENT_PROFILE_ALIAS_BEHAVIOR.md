@@ -79,10 +79,10 @@ HDL module:      amba_requester_busy_insert_four
 ```
 
 The alias established 328 protocol fixtures, 369 supported-smoke and strict-
-supported fixtures, and 52 AHB IAL2 paths. The later generic exact-four paired
-source moves current accounting to 329 protocol fixtures, 370 supported-
-smoke and strict-supported fixtures, and 53 AHB IAL2 paths split between 27
-`.ppif` sources and 26 `.ahb` aliases.
+supported fixtures, and 52 AHB IAL2 paths. The later exact-four paired
+generic/profile pair moves current accounting to 330 protocol fixtures, 371
+supported-smoke and strict-supported fixtures, and 54 AHB IAL2 paths split
+between 27 `.ppif` sources and 27 `.ahb` aliases.
 
 Strict check and normalized semantic JSON expose the alias path, support ID,
 coverage, source kind, module, and `fsm` semantic root. The existing read-only
@@ -116,11 +116,11 @@ events, stable pending ownership, one resumed `SEQ`, four accepted byte
 
 ## Explicit Deferrals
 
-Exact-four paired compositions, counts above four, arbitrary/runtime/policy/
-random counts, multiple insertion points, local bus-BUSY status, broader
-bursts/signals/topologies, generic priority, other protocols/backends,
-HIAL/VIAL activation, VHDL, verification generation, and decision 0020 remain
-separate.
+The one-subordinate exact-four paired generic/profile pair now ships. Its
+two-subordinate topology, counts above four, arbitrary/runtime/policy/random
+counts, multiple insertion points, local bus-BUSY status, broader bursts/
+signals/topologies, generic priority, other protocols/backends, HIAL/VIAL
+activation, VHDL, verification generation, and decision 0020 remain separate.
 
 ## Rollback
 
