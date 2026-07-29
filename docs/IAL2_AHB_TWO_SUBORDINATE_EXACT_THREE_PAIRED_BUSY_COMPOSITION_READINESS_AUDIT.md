@@ -208,3 +208,9 @@ No shipped source, support entry, test, artifact, or behavior requires rollback.
 Clean audit commit `c2aa63c3e` now activates only `.2` contract selection. The
 source and projected 325/366/49 public boundary remain unshipped during
 activation.
+
+Completed `.2` now freezes one generic source, exact support/semantic/MCP
+identities, assertion-enabled t1533, and projected 325/366/49 accounting, then
+selects proposed `.3` data-only implementation. No source ships in contract
+selection. See the
+[`contract selection`](IAL2_AHB_TWO_SUBORDINATE_EXACT_THREE_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).

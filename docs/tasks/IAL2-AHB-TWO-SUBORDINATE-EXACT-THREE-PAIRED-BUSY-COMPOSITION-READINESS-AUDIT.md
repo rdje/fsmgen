@@ -77,7 +77,7 @@ any public two-subordinate exact-three source or contract is selected.
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
   Status: `active`
   Goal: `Audit assertion-enabled two-window exact-three requester/BUSY-parking composition before public expansion.`
-  Children: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1, IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`
+  Children: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1, IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2, IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
   Status: `done`
@@ -87,17 +87,24 @@ any public two-subordinate exact-three source or contract is selected.
   Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: audit two-window exact-three AHB readiness`
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`
-  Status: `active`
+  Status: `done`
   Goal: `Select the first generic two-subordinate exact-three paired AHB BUSY public contract before implementation.`
   Acceptance: `Activate only after the clean .1 audit commit. Read the .1 audit record/fact, exact disposable strict/schedule/artifact/assertion-runtime/normalized-semantic/real read-only MCP evidence, shipped one-window exact-three and two-window exact-two generic/profile contracts and behavior, current RegressionCorpus/support/capability surfaces, public diagnostics, roadmap, mdBook, Knowledge Map, HIAL/VIAL, generic priority, and decisions 0004/0008/0020. Freeze exactly one future generic source ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif with the selected intent, source object, bounded anchor, embedded requester amba_requester_busy_insert_three, status/control HBURST-aware byte-lane BUSY-parking subordinates, ahb_interconnect fabric, top ahb_tb, exact 4 IAL1/5 IAL0 artifacts, width-two 3 -> 2 -> 1 -> 0 behavior, before_beat=2/beats=3, both child/propagated parks_on=[busy], one-hot accepted-subordinate ownership, two windows, and no duplicate top busy_flow. Select support id intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park, coverage ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli, ppif/supported_smoke/strict/module ahb_tb/root top/4-child expectations, and projected 325 protocol / 366 supported+strict / 49 AHB split 25 .ppif/24 .ahb only if reconfirmed. Freeze a future focused test plus assertion-enabled two-command harness owning strict/check/schedule/artifacts/verifier/diagnostics/normalized semantic/real read-only MCP and exact 10/8/2/6/2/0x44332211/0x88776655 runtime, preservation, documentation, same-volume cleanup, rollback, and a separate implementation leaf. Do not add the source, support entry, test, artifact, parser/generator behavior, .ahb alias, counts above three, new policy/status/burst/signal semantics, generic priority, another protocol/backend, HIAL/VIAL activation, VHDL, verification generation, or decision-0020 behavior in this selector.`
-  Verification: `Activated only after clean .1 audit commit c2aa63c3e. Activation changes task/index/Memory/roadmap/mdBook/audit-fact state only; no source, support, test, artifact, generated output, semantic/MCP API, HDL/runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 tests. Knowledge Map remains 1,027 facts/5,237 question keys. mdBook builds 72 files/16,181,348 bytes and the exact generated tree is removed without residue. All doctrine gates pass. Canonical Stats-compatible capacity is 67.8% (16.278/24 GiB) while kernel pressure is separately normal (1); the guard's 92.2% heuristic is excluded as capacity truth. Contract evidence remains pending.`
-  Commit: `pending contract completion`
+  Verification: `Activated only after clean .1 audit commit c2aa63c3e through clean activation commit 4abde8306. Froze exactly one additive generic source ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif as the data-only exact-two transform: topology-first intent/object/bounded anchor, requester amba_requester_busy_insert_three, (busy-before-beat 2)/(busy-beats 3), existing status/control children, static [0,4)/[4,8) windows, interconnect, bindings, ports, wait controls, storage, and ahb_tb unchanged. Froze exact 4 IAL1/5 IAL0 artifacts, width-two 3 -> 2 -> 1 -> 0 behavior, child/propagated parks_on=[busy], one-hot accepted-subordinate owner capture/retire/replacement, no duplicate top busy_flow, and unchanged substantive residue. Selected support id intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park, coverage ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli, ppif/supported_smoke/strict/module ahb_tb/root top/4 children, and projected 325 protocol/366 supported+strict/49 AHB split 25 .ppif/24 .ahb. Selected future t/1533-ial2-ahb-two-subordinate-exact-three-paired-busy-composition.t plus t/data/ahb_two_subordinate_exact_three_paired_busy_composition_tb.svt to own source delta, strict/support, schedule/report/residue/artifacts, normalized semantic, real read-only shell-disabled MCP, repository-local outdir, public --verify-hdl, diagnostics/preservation, and assertion-enabled exact 10/8/2/6/2/status-44332211/control-88776655 runtime with stable selected/unselected endpoint and fabric state. Selected pending `.3` for data-only implementation. The matching alias, counts above three, new BUSY policy/status/burst/signal semantics, generic priority, other protocols/backends, HIAL/VIAL activation, VHDL, verification generation, and decision 0020 remain separate. Contract selection changes no public source/support/test/artifact/API/HDL/runtime behavior. Contract record/fact, roadmap, parent/child/HIAL-VIAL trees, mdBook, task index, and Memory are synchronized. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map reaches 1,028 facts/5,242 question keys; mdBook builds 72 files/16,184,455 bytes and the exact generated tree is removed without residue; all doctrine gates pass. Canonical Stats-compatible capacity is 68.1% (16.342/24 GiB), kernel pressure is separately normal (1), and the guard's 92.1% heuristic is excluded as capacity truth.`
+  Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select two-window exact-three contract`
+
+- ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`
+  Status: `proposed`
+  Goal: `Ship the selected generic two-subordinate exact-three paired AHB BUSY source through existing generators.`
+  Acceptance: `Activate only after clean .2 contract commit. Implement exactly the .2 contract: add ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif as the exact data-only extension of the shipped two-window exact-two source, with selected intent/object/anchor, embedded amba_requester_busy_insert_three, busy-before-beat 2, busy-beats 3, existing status/control HBURST-aware byte-lane BUSY-parking subordinates, ahb_interconnect, ahb_tb, ports/windows/storage/wait controls/wiring unchanged. Add RegressionCorpus entry intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park with selected coverage, ppif/supported_smoke/strict/module ahb_tb/root top/4 children; update t248/t297 and public support/language/capability/current-doc inventory surfaces to exact 325 protocol/366 supported+strict/49 AHB split 25 .ppif/24 .ahb. Add t/1533-ial2-ahb-two-subordinate-exact-three-paired-busy-composition.t and t/data/ahb_two_subordinate_exact_three_paired_busy_composition_tb.svt covering source identities/delta, strict/check success and exact support, schedule schema/4 children/29 signals/4 IAL1/5 IAL0 artifacts/two windows/one-hot ownership/requester before_beat=2/beats=3/width-two counter/both child+propagated parks/no top busy_flow, normalized semantic JSON, real repo-relative fsmgen_semantic_introspect read_only=true/shell_access=false, repo-local outdir, --verify-hdl, and Verilator without --no-assert at exact commands=2/transfers=10/beats=8/BUSY episodes=2/qualified BUSY=6/resumed SEQ=2/status=0x44332211/control=0x88776655 plus stable requester/selected/unselected subordinate/fabric ownership and clean completion. Preserve t1525/t1526/t1531/t1532 and existing source/alias bytes; use the smallest warranted focused/broader gates. Add behavior record/fact and sync README, ROADMAP_V2, REGRESSION_CORPUS/support docs, mdBook, task/index, Memory, and Knowledge Map. Use repo-derived same-volume temp/output, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup census, rollback, and commit. Do not change parser/generator algorithms, existing source bytes, reports/schemas, semantic-MCP API, .ahb alias, counts above three, new policy/status/burst/signal semantics, generic priority, other protocols/backends, HIAL/VIAL, VHDL, verification generation, or decision 0020.`
+  Verification: `pending clean activation after the .2 contract commit`
+  Commit: `pending activation`
 
 ## Current Frontier
 
-Audit `.1` proves direct data-only readiness. Clean audit commit `c2aa63c3e`
-now activates only `.2`, the separate generic public-contract leaf; the
-activation changes continuity/documentation state and no public behavior.
+Contract `.2` freezes one generic source/support/t1533 boundary and selects
+proposed `.3` for data-only implementation. `.3` remains inactive until the
+clean `.2` contract commit and a separate no-behavior activation commit.
 
 ## Decisions
 
@@ -114,10 +121,14 @@ activation changes continuity/documentation state and no public behavior.
   contract. No source ships in the audit.
 - `2026-07-29`: Clean audit commit `c2aa63c3e` satisfies the `.2` activation
   boundary. Contract selection is active and still changes no behavior.
+- `2026-07-29`: Contract `.2` freezes one generic source, exact support and
+  semantic/MCP identities, assertion-enabled t1533, projected 325/366/49
+  accounting, and selects `.3` data-only implementation. No source ships in
+  contract selection.
 
 ## Open Questions
 
-- None for readiness. Contract `.2` owns the exact future public boundary.
+- None for the contract. Implementation `.3` owns realization.
 
 ## Blockers
 
@@ -125,5 +136,6 @@ activation changes continuity/documentation state and no public behavior.
 
 ## Rollback
 
-Revert the audit record/fact plus `.1` completion and `.2` selection pointers.
-No shipped source, support entry, test, artifact, or behavior requires rollback.
+Revert the contract record/fact plus `.2` completion and `.3` selection
+pointers. No shipped source, support entry, test, artifact, or behavior
+requires rollback.

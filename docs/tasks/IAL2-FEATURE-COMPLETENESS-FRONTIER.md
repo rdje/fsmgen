@@ -5806,9 +5806,10 @@ path before reopening VHDL backend or VHDL rerouting work.
 The exact-three paired generic/profile pair ships at 324/365/48 split 24/24
 with t1531 shared runtime and t1532 alias parity. Selector `.819` selected
 `IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`;
-that audit now proves real read-only MCP plus assertion-enabled two-command
-10/8/2/6/2 runtime and selects proposed generic contract `.2`. The next clean
-action is `.2` activation, not behavior. Counts above three, new BUSY
+that audit proves real read-only MCP plus assertion-enabled two-command
+10/8/2/6/2 runtime. Contract `.2` now freezes one generic source/support/t1533
+boundary and selects proposed data-only implementation `.3`. The next clean
+action is `.3` activation, not behavior. Counts above three, new BUSY
 policy/status/burst/signal semantics, generic priority, HIAL/VIAL, VHDL,
 verification generation, and decision `0020` remain separate. The
 director-agreed event-capable compiled Verilator versus full-language/

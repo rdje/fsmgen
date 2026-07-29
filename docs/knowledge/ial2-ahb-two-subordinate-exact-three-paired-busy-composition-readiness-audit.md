@@ -38,3 +38,8 @@ verification generation, and decision `0020` remain separate.
 Clean audit commit `c2aa63c3e` now activates only `.2` contract selection. No
 public source, support entry, test, artifact, HDL/runtime, HIAL/VIAL, VHDL, or
 verification-generation behavior changes in activation.
+
+Completed `.2` now freezes one generic source, exact support/semantic/MCP
+identities, assertion-enabled t1533, and projected 325/366/49 accounting, then
+selects proposed `.3` data-only implementation. No source ships during
+contract selection.

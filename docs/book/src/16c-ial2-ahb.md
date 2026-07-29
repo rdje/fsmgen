@@ -2107,6 +2107,13 @@ a clean activation. See the
 Clean audit commit `c2aa63c3e` activates only contract `.2`; the source,
 support identity, focused test, and projected 325/366/49 boundary remain
 unshipped during activation.
+Contract `.2` now freezes the topology-first generic source, existing four-child
+architecture, exact 4 IAL1/5 IAL0 artifacts, width-two `3 -> 2 -> 1 -> 0`,
+both BUSY-parking contexts, one-hot ownership, exact support identity, and
+assertion-enabled t1533 at projected 325/366/49 split 25/24. Proposed `.3`
+owns data-only implementation and remains inactive; no source ships in
+contract selection. See the
+[contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_THREE_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
