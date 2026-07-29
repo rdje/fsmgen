@@ -5811,18 +5811,18 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.820: select two-window exact-three AHB alias`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.821`
-  Status: `proposed`
+  Status: `active`
   Goal: `Ship the byte-identical two-subordinate exact-three paired AHB .ahb profile alias through existing lowering and introspection surfaces.`
   Acceptance: `Activate only after .820 commits cleanly. Add only ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ahb as a byte-identical mirror of the shipped generic source. Add exact support identity intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park, coverage ial2_ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli, source kind ial2_profile_alias, family protocol_fixture, supported-smoke+strict, module ahb_tb, semantic root top, and four-child expectations. Preserve exact 4 IAL1/5 IAL0 artifacts, 29 signals, status [0,4)/control [4,8) windows, requester before_beat=2/beats=3 and width-two 3 -> 2 -> 1 -> 0 semantics, both subordinate/propagated parks_on=[busy], one-hot accepted-subordinate ownership, no top busy_flow, and substantive residue; remove only aggregate/requester/subordinate alias residue plus alias-exposure wording through existing suffix handling. Add t/1534-ial2-ahb-two-subordinate-exact-three-paired-busy-composition-profile-alias.t for byte/parse/report/residue/strict check/schedule/exact-artifact/normalized-semantic/real read-only and shell-disabled MCP/repository-local outdir/verify-HDL/diagnostic/generic and existing-alias preservation proof; retain t1533 as shared assertion-enabled runtime and add no second testbench. Update RegressionCorpus, t248 to 326 protocol / 367 supported-smoke+strict, LanguageSurfaceSection/t297, t1518 current truth, behavior/fact, README, roadmap, mdBook, task/index, Memory, and Knowledge Map to 50 AHB paths split 25 .ppif/25 .ahb. Run focused and preservation checks, docs/doctrine gates, exact Stats-compatible RAM plus separate kernel pressure, and repository-derived same-volume cleanup; commit before selecting another owner. If the tracked alias disproves the disposable selector probe, stop and select the smallest prerequisite. Do not change parser/generator algorithms, reports/schemas, semantic-MCP APIs, runtime/HDL behavior, ports, existing source bytes, other aliases, wider counts, BUSY policy/status/burst/signal behavior, generic priority, backends, VHDL, verification generation, HIAL/VIAL activation, or decision 0020.`
-  Verification: `Pending clean selector commit and separate activation.`
-  Commit: `pending implementation activation`
+  Verification: `Activated only after clean selector commit f3585f98d. Activation changes task/index/Memory/roadmap/mdBook/HIAL-VIAL continuity state only; no alias, support entry, test, artifact, parser/generator/report, semantic/MCP API, HDL/runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map remains current at 1,030 facts/5,254 question keys; mdBook builds to 72 files/16,199,925 bytes and the exact output is removed without residue; Memory is 55 lines; diff and all six doctrine gates pass. Final canonical Stats-compatible RAM is 64.4% (15.467/24.000 GiB), kernel pressure is separately 1 (normal), and the guard's 99.5% heuristic is excluded as capacity truth. Implementation evidence remains pending.`
+  Commit: `pending implementation completion`
 
 The exact-three paired generic/profile pair now extends through the generic
 two-subordinate source at 325/366/49 split 25 `.ppif`/24 `.ahb`. Child `.1`
 proved real read-only MCP plus assertion-enabled two-command 10/8/2/6/2
 runtime, `.2` froze the public contract, and `.3` ships the selected source,
 support identity, t1533/harness, semantic/MCP proof, and behavior record.
-Selector `.820` now selects proposed `.821`, the byte-identical matching
+Clean selector commit `f3585f98d` activates `.821`, the byte-identical matching
 two-window exact-three `.ahb` alias through existing suffix/lowering machinery.
 Projected accounting is 326/367/50 split 25/25; t1534 owns parity while t1533
 remains shared runtime. Counts above three, new BUSY

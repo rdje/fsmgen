@@ -7583,6 +7583,10 @@ without a repair. Projected accounting is 326/367/50 split 25/25; focused t1534
 will prove alias parity while t1533 remains the sole assertion-enabled runtime.
 Counts above three, new BUSY semantics, generic priority, HIAL/VIAL, VHDL,
 verification generation, and decision `0020` remain separate.
+Clean selector commit `f3585f98d` activates only data-only alias
+implementation `.821`; activation changes continuity documentation and no
+public source, support, test, artifact, API, HDL/runtime, HIAL/VIAL, VHDL, or
+verification-generation behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

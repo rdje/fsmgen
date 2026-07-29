@@ -201,4 +201,6 @@ evidence-backed handoff.
   exact-three `.ahb` alias as the smaller data-only owner. HIAL/VIAL stays
   proposed with its portable-fast/full-language/VHDL/mixed-language profiles
   unchanged.
+- `2026-07-29`: Clean selector commit `f3585f98d` activates only alias
+  implementation `.821`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

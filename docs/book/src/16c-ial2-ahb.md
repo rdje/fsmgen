@@ -2140,6 +2140,8 @@ HDL verification through existing machinery. Projected accounting is
 326/367/50 split 25 `.ppif`/25 `.ahb`; focused t1534 will prove alias parity
 while t1533 remains shared assertion-enabled runtime. See the
 [selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
+Clean selector commit `f3585f98d` activates only `.821`; the projected alias,
+support identity, t1534, and 326/367/50 boundary remain unshipped in activation.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

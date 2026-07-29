@@ -11412,6 +11412,9 @@ public HDL-verifier checks without a repair. Projected accounting is
 326/367/50 split 25/25; t1534 owns parity and t1533 remains shared runtime.
 See the
 [selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
+Clean selector commit `f3585f98d` activates only data-only alias
+implementation `.821`; activation changes continuity documentation and no
+public behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
