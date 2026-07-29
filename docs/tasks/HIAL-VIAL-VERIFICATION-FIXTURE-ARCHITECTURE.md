@@ -216,4 +216,7 @@ evidence-backed handoff.
   mixed-language, migration, and large-design requirements unchanged.
 - `2026-07-29`: Clean parent selector commit `db0990c9d` activates only the
   exact-four readiness audit `.1`; HIAL/VIAL remains proposed and unchanged.
+- `2026-07-29`: Exact-four readiness audit `.1` proves assertion-enabled
+  `4 -> 3 -> 2 -> 1 -> 0` runtime and selects proposed no-behavior contract
+  `.2`; HIAL/VIAL remains proposed with no architecture or priority change.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

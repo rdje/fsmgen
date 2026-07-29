@@ -7612,6 +7612,18 @@ Clean selector commit `db0990c9d` activates only exact-four readiness audit
 generator, public source, support, test, artifact, semantic/MCP API, HDL/
 runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL,
 VHDL, or transaction behavior.
+Audit `.1` now proves exact-four lower-layer/runtime readiness. A disposable
+IAL1 variant changed only actor identity, requester remaining-counter width
+`2 -> 3`, and initializer `3 -> 4`; unchanged qualified rules lower and verify
+cleanly, and one assertion-enabled Verilator binary passes continuous,
+32-clock ready-low, and 32-clock grant-low scenarios at exact
+`4 -> 3 -> 2 -> 1 -> 0`, five presentations, four data beats, and zero final
+counter. The preserving public prerequisite is minimum unsigned width
+`ceil(log2(busy_beats + 1))`: counts two/three stay width two and count four is
+width three. Proposed no-behavior `.2` must freeze the literal-`2..4` contract,
+identities, reports/residue, runtime/semantic/MCP/artifact/support/preservation
+gates, cleanup, and rollback before implementation. See
+`docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_INSERTION_READINESS_AUDIT.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

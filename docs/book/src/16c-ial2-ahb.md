@@ -2165,6 +2165,18 @@ public range or source change. See the
 [selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
 Clean selector commit `db0990c9d` activates only exact-four readiness audit
 `.1`; activation changes continuity documentation and no public behavior.
+The audit now proves the lower layers are ready. A disposable IAL1 variant
+changes only actor identity, `ahb_busy_remaining_q` width `2 -> 3`, and its
+initializer `3 -> 4`; the existing `>1` decrement and `==1` final handoff lower
+and verify unchanged. One assertion-enabled Verilator binary passes
+continuous, 32-clock ready-low, and 32-clock grant-low runs, directly observing
+`4 -> 3 -> 2 -> 1 -> 0`, four qualified BUSY events, stable stalls, one resumed
+pending `SEQ`, four data beats, and zero final counter. Proposed no-behavior
+contract `.2` must select minimum unsigned width
+`ceil(log2(busy_beats + 1))`, preserving width two for exact two/three and
+using width three for exact four, before any public literal-`2..4` source or
+normalizer change. See the
+[readiness audit](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_INSERTION_READINESS_AUDIT.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

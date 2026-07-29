@@ -5,18 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1: activate exact-four counter audit`;
-  predecessor selector `db0990c9d`.
-- active_work_unit:
-  `IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.1`.
+- latest_commit: planned task-scoped `.1` exact-four counter-readiness audit;
+  predecessor activation `08e970b3f`.
+- active_work_unit: none until proposed `.2` activates after the clean `.1`
+  audit commit.
 - current_state: two-window exact-three paired AHB generic/profile sources ship
   at 326 protocol / 367 supported-smoke+strict / 50 AHB paths split 25
   `.ppif`/25 `.ahb`; t1534 proves alias parity and t1533 remains shared
   assertion-enabled 10/8/2/6/2 runtime.
-- next_action: audit the requester normalizer/generator and IAL1/IAL0 width
-  path; prove or disprove bounded width-three versus reusable minimum-width
-  derivation with a same-volume assertion-enabled exact-four candidate.
+- next_action: from the clean `.1` audit commit, activate no-behavior `.2` and
+  freeze the literal-`2..4` public contract plus minimum unsigned counter-width
+  derivation before implementation.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -32,8 +31,11 @@ bounded current-state pointer. Git preserves its prior history.
   generated/direct endpoint arbitration repairs, and exact-three paired
   generic/profile compositions across one and two windows. Current truth is
   326/367/50 split 25 `.ppif`/25 `.ahb`.
-  Parent `.822` selects exact-four requester BUSY counter-width readiness after
-  a one-file/2,313-byte candidate fails closed at the intentional `2..3` bound.
+  Parent `.822` selects exact-four requester BUSY counter-width readiness.
+  Audit `.1` proves a 3-bit disposable counter through exact
+  `4->3->2->1->0` continuous/ready-low/grant-low runtime and selects proposed
+  `.2`; public minimum-width derivation must preserve width two for exact
+  two/three while selecting width three for exact four.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

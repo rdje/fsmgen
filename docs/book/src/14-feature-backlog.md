@@ -11433,6 +11433,15 @@ versus reusable minimum-width derivation and prove exact `4 -> 3 -> 2 -> 1 ->
 [selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
 Clean selector commit `db0990c9d` activates only exact-four readiness audit
 `.1`; activation changes continuity documentation and no public behavior.
+Audit `.1` now passes: a disposable IAL1 candidate changes only actor identity,
+counter width `2 -> 3`, and initializer `3 -> 4`; unchanged rules lower and
+verify cleanly, and assertion-enabled continuous/32-ready-low/32-grant-low
+runs directly observe exact `4 -> 3 -> 2 -> 1 -> 0`, four qualified BUSY
+events, five presentations, four data beats, and zero final counter. The next
+proposed no-behavior `.2` must freeze minimum unsigned width
+`ceil(log2(busy_beats + 1))`, so exact two/three remain width two and exact four
+uses width three, before selecting any public literal-`2..4` implementation.
+See the [readiness audit](../../IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_INSERTION_READINESS_AUDIT.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
