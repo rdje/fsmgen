@@ -2133,6 +2133,13 @@ may activate only after this implementation commits cleanly and must choose
 the next exact roadmap-aligned owner before any further behavior change.
 Clean behavior commit `1a73bc65e` activates only `.820`; activation changes
 continuity documentation and no public behavior.
+Selector `.820` now chooses proposed `.821`, the byte-identical matching
+two-window exact-three `.ahb` alias. The exact candidate preserves 4 IAL1/5
+IAL0 artifacts, four-child `ahb_tb`, semantic/read-only MCP parity, and public
+HDL verification through existing machinery. Projected accounting is
+326/367/50 split 25 `.ppif`/25 `.ahb`; focused t1534 will prove alias parity
+while t1533 remains shared assertion-enabled runtime. See the
+[selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

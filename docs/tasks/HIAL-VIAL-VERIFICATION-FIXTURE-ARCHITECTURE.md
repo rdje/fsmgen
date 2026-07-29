@@ -197,4 +197,8 @@ evidence-backed handoff.
 - `2026-07-29`: Clean behavior commit `1a73bc65e` activates parent selector
   `.820`; HIAL/VIAL remains proposed while that selector evaluates it against
   the adjacent matching alias and other exact owners.
+- `2026-07-29`: Parent selector `.820` selects the byte-identical two-window
+  exact-three `.ahb` alias as the smaller data-only owner. HIAL/VIAL stays
+  proposed with its portable-fast/full-language/VHDL/mixed-language profiles
+  unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

@@ -118,12 +118,18 @@ semantic JSON, real read-only MCP, repository-local output, public
 `--verify-hdl`, and assertion-enabled runtime. t248 plus t297 pass 2 files /
 6,947 tests at the exact 325/366/49 checkpoint.
 
-The matching `.ahb` alias, counts above three, counter-width generalization,
+Parent selector `.820` now selects the matching byte-identical `.ahb` alias
+for proposed implementation `.821`; it remains unshipped until that leaf is
+cleanly activated and completed. Counts above three, counter-width generalization,
 runtime/policy/random/multiple-point BUSY insertion, distinct bus-BUSY status,
 larger/indefinite bursts, optional signals, queues/outstanding transfers,
 broader fabrics/managers, generic priority changes, other protocols/backends,
 HIAL/VIAL activation, verification-output generation, VHDL, and decision
 `0020` remain separate.
+
+See
+`docs/IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md`
+for the exact projected 326/367/50 alias contract and shared-runtime boundary.
 
 ## Rollback
 

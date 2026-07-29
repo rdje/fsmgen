@@ -28,5 +28,7 @@ presentations / 8 beats / 2 BUSY episodes / 6 qualified BUSY events / 2 resumed
 unselected, and fabric state.
 
 Current accounting is 325 protocol / 366 supported+strict / 49 AHB paths split
-25 `.ppif` / 24 `.ahb`. The matching alias and broader BUSY, HIAL/VIAL, VHDL,
-and verification-generation work remain separate.
+25 `.ppif` / 24 `.ahb`. Parent selector `.820` selects the byte-identical
+matching alias for proposed `.821` at projected 326/367/50 split 25/25, but it
+remains unshipped. Broader BUSY, HIAL/VIAL, VHDL, and verification-generation
+work remains separate.

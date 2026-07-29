@@ -11405,6 +11405,13 @@ behavior commit. The matching alias, broader BUSY semantics, HIAL/VIAL, VHDL,
 and verification generation remain separate.
 Clean behavior commit `1a73bc65e` activates only no-behavior parent selector
 `.820`; activation changes continuity documentation and no public behavior.
+Selector `.820` now chooses proposed `.821`, the byte-identical two-window
+exact-three `.ahb` alias. A same-volume candidate passes strict, schedule,
+exact 4 IAL1/5 IAL0 artifact, normalized semantic, real read-only MCP, and
+public HDL-verifier checks without a repair. Projected accounting is
+326/367/50 split 25/25; t1534 owns parity and t1533 remains shared runtime.
+See the
+[selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

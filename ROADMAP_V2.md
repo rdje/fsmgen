@@ -7575,6 +7575,14 @@ Clean behavior commit `1a73bc65e` activates only no-behavior parent selector
 `.820`; activation changes task/continuity documentation and no public source,
 support, test, artifact, semantic/MCP API, HDL/runtime, simulator, backend,
 protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior.
+Selector `.820` now chooses proposed `.821`, the byte-identical matching
+two-window exact-three `.ahb` alias through existing suffix/lowering and
+semantic/MCP machinery. A same-volume candidate proves strict/schedule/exact
+4-IAL1/5-IAL0/normalized-semantic/real read-only MCP/public verify-HDL parity
+without a repair. Projected accounting is 326/367/50 split 25/25; focused t1534
+will prove alias parity while t1533 remains the sole assertion-enabled runtime.
+Counts above three, new BUSY semantics, generic priority, HIAL/VIAL, VHDL,
+verification generation, and decision `0020` remain separate.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
