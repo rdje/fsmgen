@@ -38,3 +38,8 @@ verification generation, and decision 0020 remain separate.
 Clean audit commit `c1f3232f9` now activates only the selected `.2` generic
 public-contract leaf. Activation changes continuity documentation and no public
 or generated behavior.
+
+Completed `.2` now freezes one generic source, exact support/semantic/MCP
+identities, assertion-enabled t1531, and projected 323/364/47 accounting, then
+selects `.3` data-only implementation. No source ships during contract
+selection.

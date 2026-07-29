@@ -38,6 +38,6 @@ alias surface; broader count/policy/composition work remains separate.
 Requester aliases and generic/alias one-/two-subordinate exact-two paired
 surfaces pass t1512/t1522-t1526; t248+t297 pass 6,899 assertions, and
 strengthened t1518 locks current behavior/fact/mdBook truth. The selected
-generic one-subordinate exact-three paired readiness audit now passes and
-selects a separate public-contract leaf; no exact-three paired public source
-ships yet.
+generic one-subordinate exact-three paired readiness audit now passes; its
+completed contract selector freezes a separate implementation leaf, but no
+exact-three paired public source ships yet.

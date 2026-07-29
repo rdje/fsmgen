@@ -195,8 +195,8 @@ generalized counter width, runtime/policy/random count selection, multiple
 insertion points, distinct local bus-BUSY status, broader
 bursts/signals/managers/fabrics, AXI/APB/VHDL, and decision 0020 remain separate
 and inactive. The generic one-subordinate exact-three paired readiness audit
-now passes and selects a separate public-contract leaf; no paired exact-three
-public source ships yet.
+now passes; its completed contract selector freezes a separate generic
+implementation leaf, but no paired exact-three public source ships yet.
 
 ## Rollback
 

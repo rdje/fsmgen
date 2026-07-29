@@ -41,3 +41,7 @@ exact 3 IAL1/4 IAL0 artifacts, assertion-enabled 5/4/1/3/1/`44332211` runtime,
 normalized semantic/read-only MCP parity, and projected 323/364/47 accounting.
 It selects a separate generic public-contract leaf; no exact-three paired
 source ships in the audit.
+
+Completed contract `.2` now freezes one generic source, assertion-enabled
+t1531, semantic/MCP identities, and 323/364/47 accounting, then selects `.3`
+data-only implementation. The source remains unshipped until `.3`.

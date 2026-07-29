@@ -170,6 +170,11 @@ assertion-enabled 5/4/1/3/1/`44332211` runtime, preservation gates,
 diagnostics, support projection, documentation, cleanup, and rollback before a
 separate implementation leaf is selected.
 
+Completed `.2` now freezes those boundaries and selects `.3` data-only
+implementation. The source remains unshipped until `.3` activates and passes.
+See
+`docs/IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md`.
+
 The matching `.ahb` alias and two-subordinate exact-three topology remain
 separate future slices. Counts above three, counter-width generalization,
 runtime/policy/multiple-point insertion, distinct bus-BUSY status, wider or

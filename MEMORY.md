@@ -5,15 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: activate exact-three paired AHB contract`;
-  predecessor `c1f3232f9`.
-- active_work_unit:
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`.
-- current_state: generic one-subordinate exact-three paired public-contract
-  selection is active; activation changes continuity only and no behavior.
-- next_action: execute `.2` and freeze the exact generic public contract plus
-  a separate implementation handoff without adding the source.
+- latest_commit: this task-scoped contract commit,
+  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select exact-three paired AHB contract`;
+  predecessor `1087d9bb1`.
+- active_work_unit: none after this contract commit; selected pending leaf
+  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3` awaits
+  activation.
+- current_state: `.2` freezes one generic source, exact support/semantic/MCP
+  identities, t1531 assertion runtime, and 323/364/47 projection; no public
+  behavior changed.
+- next_action: from the clean contract commit, activate only `.3` data-only
+  implementation in a separate no-behavior commit.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -34,9 +36,9 @@ bounded current-state pointer. Git preserves its prior history.
   IAL0 arbitration; its `.1` contract and assertion-clean four-write `.2`
   implementation are complete. Parent selector `.816` selects proposed
   `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`; `.1` now
-  proves strict/artifact/assertion-runtime/semantic-MCP readiness and selects
-  `.2` contract work at projected 323/364/47. Decision `0020` remains
-  proposed/inactive.
+  proves strict/artifact/assertion-runtime/semantic-MCP readiness; `.2` freezes
+  the contract and selects `.3` implementation at projected 323/364/47.
+  Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
