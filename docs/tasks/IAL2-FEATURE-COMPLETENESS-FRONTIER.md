@@ -68,7 +68,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
   Children continuation 14: `IAL2-FEATURE-COMPLETENESS-FRONTIER.792, IAL2-FEATURE-COMPLETENESS-FRONTIER.793, IAL2-FEATURE-COMPLETENESS-FRONTIER.794, IAL2-FEATURE-COMPLETENESS-FRONTIER.795`
   Children continuation 15: `IAL2-FEATURE-COMPLETENESS-FRONTIER.796, IAL2-FEATURE-COMPLETENESS-FRONTIER.797, IAL2-FEATURE-COMPLETENESS-FRONTIER.798, IAL2-FEATURE-COMPLETENESS-FRONTIER.799, IAL2-FEATURE-COMPLETENESS-FRONTIER.800, IAL2-FEATURE-COMPLETENESS-FRONTIER.801, IAL2-FEATURE-COMPLETENESS-FRONTIER.802, IAL2-FEATURE-COMPLETENESS-FRONTIER.803, IAL2-FEATURE-COMPLETENESS-FRONTIER.804, IAL2-FEATURE-COMPLETENESS-FRONTIER.805, IAL2-FEATURE-COMPLETENESS-FRONTIER.806, IAL2-FEATURE-COMPLETENESS-FRONTIER.807, IAL2-FEATURE-COMPLETENESS-FRONTIER.808, IAL2-FEATURE-COMPLETENESS-FRONTIER.809, IAL2-FEATURE-COMPLETENESS-FRONTIER.810, IAL2-FEATURE-COMPLETENESS-FRONTIER.811, IAL2-FEATURE-COMPLETENESS-FRONTIER.812, IAL2-FEATURE-COMPLETENESS-FRONTIER.813, IAL2-FEATURE-COMPLETENESS-FRONTIER.814`
-  Children continuation 16: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815, IAL2-FEATURE-COMPLETENESS-FRONTIER.816`
+  Children continuation 16: `IAL2-FEATURE-COMPLETENESS-FRONTIER.815, IAL2-FEATURE-COMPLETENESS-FRONTIER.816, IAL2-FEATURE-COMPLETENESS-FRONTIER.817`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -5782,14 +5782,31 @@ path before reopening VHDL backend or VHDL rerouting work.
   Verification: `Activated from clean direct-arbitration behavior commit 35a6fbfcf, then reconciled the completed fabric/generated-endpoint/direct-seed arbitration lineage, assertion-enabled direct/paired tests, exact-three requester and exact-two paired families, current 322/363/46 public checkpoint, support/semantic-MCP surfaces, roadmap, mdBook, Knowledge Map, proposed owners, HIAL/VIAL, and decision 0020. Selected proposed IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1 as the smallest adjacent owner. A repository-derived same-volume generic one-subordinate candidate reused the existing exact-three requester, byte-lane/HBURST-SEQ/BUSY-parking subordinate, and fabric; the public path emitted exactly three IAL1/four IAL0 artifacts, compiled without --no-assert, and passed 5 presentations/4 accepted beats/1 BUSY episode/3 qualified BUSY events/1 resumed SEQ/storage 0x44332211. The 54-file/53,577,454-byte disposable workspace was removed with no residue. The audit must still freeze public source/support/report/semantic-MCP/test boundaries and projected 323/364/47 accounting before behavior. Aliases, two-subordinate exact-three, counts above three, policy/status/bursts/signals, generic priority, other protocols/backends, HIAL/VIAL activation, VHDL, verification generation, and decision 0020 remain separate/inactive. Selector documentation, proposed child task tree, current docs/book, Memory, and Knowledge Map were synchronized. Focused t1518/t1256/t1414 pass 3 files/22 tests; Knowledge Map generation/check passes at 1,021 facts/5,195 question keys; mdBook builds and its exact 72-file/16,118,984-byte output was removed without residue; memory, path, diff, and all six doctrine gates pass. Final Stats-compatible capacity was 49.8% (11.94/24.00 GiB), kernel pressure was 1 (normal), and ram-guard occupancy was excluded as capacity truth. No parser/generator/source/support/test/checked-in artifact/semantic-MCP API/HDL/runtime/backend/protocol/verification-generation/HIAL/VIAL/transaction behavior changed.`
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.816: select exact-three paired AHB audit`
 
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.817`
+  Status: `active`
+  Goal: `Select the next exact roadmap-aligned owner after generic exact-three paired AHB composition ships cleanly.`
+  Acceptance: `Activate only after clean behavior commit 00d71114d. Reconcile .816, the completed IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT .1-.3 lineage, current 323/364/47 support checkpoint split 24 .ppif/23 .ahb, adjacent AHB alias/two-subordinate/count/policy/status/burst/signal residue, generic selector-priority owners, other roadmap lanes, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE, completed IAL1 verification-output foundations, decisions 0004/0008/0020, roadmap, mdBook, Knowledge Map, and the director's 2026-07-29 agreement that VIAL needs separate portable-Verilator and full-SystemVerilog-LRM/UVM simulator capability profiles while HIAL lowers to synthesizable SystemVerilog/VHDL and VIAL lowers to SystemVerilog/UVM or VHDL verification. Choose exactly one smallest evidence-backed next owner and explain why it outranks the alternatives. If HIAL/VIAL is selected, activate only its architecture-audit leaf after this selector commits; if an adjacent IAL2 owner is selected, keep HIAL/VIAL proposed while preserving the simulator-profile requirement durably. Freeze exact ownership, clean activation boundary, preservation, focused/broader validation, docs/Knowledge Map impact, authorized host100/process4096 with exact Stats-compatible capacity plus separate kernel pressure, repository-derived same-volume cleanup, and rollback before behavior changes. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, or transaction-layer behavior change in this selector. Keep decision 0020 proposed/inactive unless independently and explicitly selected.`
+  Verification: `pending selection`
+  Commit: `pending selection`
+
 The selected child tree is now complete through `.3`. It ships the generic
 one-subordinate exact-three paired source at 323/364/47 split 24/23 with exact
 review artifacts, normalized semantic/read-only MCP parity, and
-assertion-enabled t1531 runtime. The next clean parent action is to create and
-activate the next exact frontier selector; aliases, two-window exact-three,
-counts/policy/status/burst/signal work, HIAL/VIAL activation and simulator
-profiles, VHDL, verification generation, and decision 0020 remain candidates,
-not implicit pivots.
+assertion-enabled t1531 runtime. From clean behavior commit `00d71114d`, `.817`
+is now the active no-behavior selector. Its activation preserves aliases,
+two-window exact-three, counts/policy/status/burst/signal work, HIAL/VIAL,
+VHDL, verification generation, and decision 0020 as candidates rather than
+implicit pivots. The director-agreed portable-Verilator versus
+full-language/SystemVerilog-UVM profile requirement is durable evidence for
+the HIAL/VIAL candidate, not a preselected outcome.
+
+Activation verification: Knowledge Map generation/check passes at 1,024 facts
+and 5,214 question keys; mdBook builds to 72 files / 16,153,793 bytes and the
+repository-local output is removed without residue; Memory is 55 lines; diff
+checks and all six doctrine gates pass. The recorded closeout
+Stats-compatible RAM sample is 73.9% (17.74/24.00 GiB) and kernel pressure is
+1 (normal). The RAM guard's separate heuristic occupancy is excluded from
+capacity truth. No background job remains.
 
 Activation condition was satisfied when `.810` committed cleanly at
 `e2dc65507`; `.811` was then activated. That activation changed only

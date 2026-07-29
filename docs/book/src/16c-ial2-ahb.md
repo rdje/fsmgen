@@ -2059,6 +2059,15 @@ exact-three paired `.ahb` alias and the two-subordinate exact-three topology
 remain separate. See the
 [shipped behavior](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 
+Clean behavior commit `00d71114d` returns ownership to the parent frontier and
+activates no-behavior selector `.817`. The selector must choose exactly one
+next roadmap owner from the 323/364/47 boundary. The matching alias,
+two-subordinate exact-three composition, broader BUSY/count/burst/signal work,
+generic priority, and proposed HIAL/VIAL architecture are candidates rather
+than implicit continuations. The HIAL/VIAL candidate now carries an explicit
+portable-Verilator versus full-language/SystemVerilog-UVM simulator-profile
+requirement, but recording that requirement does not select it.
+
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
 `.1` proved that the pre-repair one-bit procedural flag yielded ten

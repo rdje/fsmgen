@@ -5,16 +5,17 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped behavior commit,
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: ship exact-three paired AHB composition`;
-  predecessor activation `24b302647`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER` (next selector not yet
-  activated).
-- current_state: exact-three paired child `.1`-.3 is complete; generic source,
-  support, t1531 assertion runtime, semantics/MCP, and 323/364/47 docs ship.
-- next_action: from the clean behavior commit, create and activate the next
-  exact parent frontier selector before any new behavior or HIAL/VIAL pivot.
-- in_flight_uncommitted: none after this commit; no background job remains.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.817: activate post-exact-three paired selector`;
+  predecessor behavior `00d71114d`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.817` (selector).
+- current_state: exact-three paired child `.1`-.3 is complete at 323/364/47;
+  `.817` now exists as the no-behavior next-owner selector from clean commit
+  `00d71114d`; activation continuity and simulator-profile evidence are now
+  synchronized without behavior change.
+- next_action: execute `.817` from the clean activation commit and choose
+  exactly one evidence-backed next roadmap owner.
+- in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -25,18 +26,10 @@ bounded current-state pointer. Git preserves its prior history.
 
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
-- The IAL2 frontier is complete through `.812`; exact-three generic child `.3`
-  established `321/362/45`, `.5` ships its matching alias at `322/363/46`, and
-  completed parent `.813` selected the AHB interconnect arbitration audit;
-  child `.1`-.3 tree is complete and parent selector `.814` selected the
-  subordinate arbitration tree. Its audit `.1`, contract `.2`, and five-write
-  implementation `.3` are complete. Parent selector `.815` selected direct
-  IAL0 arbitration; its `.1` contract and assertion-clean four-write `.2`
-  implementation are complete. Parent selector `.816` selects proposed
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`; `.1` now
-  proves strict/artifact/assertion-runtime/semantic-MCP readiness; `.2` freezes
-  the contract and `.3` now ships at 323/364/47 split 24/23; the child tree is
-  complete and returns selection to the parent frontier.
+- The IAL2 frontier completed exact-three requester generic/alias, fabric and
+  generated/direct endpoint arbitration repairs, and exact-three paired
+  readiness/contract/implementation through parent `.816`. Current truth is
+  323/364/47 split 24 `.ppif`/23 `.ahb`; `.817` owns the next selection.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
@@ -45,8 +38,11 @@ bounded current-state pointer. Git preserves its prior history.
 - Proposed `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` now durably owns the
   director's peer hardware/verification intent requirement, typed bridge,
   portable fixture semantics, native SV/UVM and VHDL extension model, backend
-  parity, VIAL layer-topology audit, and large-design scale gates. It remains
-  inactive and does not pivot current IAL2 priority.
+  parity, VIAL layer-topology audit, and large-design scale gates. Director
+  agreement also requires separate portable-Verilator and authoritative
+  full-language/UVM simulator profiles, with VHDL and mixed-language claims
+  capability-qualified separately. The tree remains inactive while `.817`
+  objectively evaluates it against adjacent roadmap work.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc

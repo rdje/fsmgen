@@ -4322,6 +4322,15 @@ must also provide typed, scoped, traceable native extension points so advanced
 SV/UVM or VHDL code remains available without turning VIAL into a copy of
 those languages.
 
+Verification is qualified through explicit simulator capability profiles. A
+fast portable profile uses Verilator only for the synthesis-oriented
+SystemVerilog subset it supports; that profile is not evidence of complete
+SystemVerilog LRM or UVM support. Advanced native SystemVerilog/UVM output
+requires a separate full-language/UVM simulator profile with the tool version
+and exercised capabilities reported. VHDL portability, full-language
+qualification, and mixed-language qualification are distinct profiles as
+well, so one successful tool run never silently widens the support claim.
+
 The VIAL layer topology is deliberately undecided. A future architecture audit
 must determine whether VIAL0/VIAL1/VIAL2 is the right split or whether
 verification elaboration, scenario intent, and backend realization need a
@@ -4332,7 +4341,8 @@ skeletons, and performance/scale gates for large to very large designs. Its
 worked example will map the handwritten AHB subordinate arbitration fixture
 to proposed portable VIAL plus typed native extensions; it will not claim that
 the fixture is generated today. The architecture tree remains proposed and
-inactive, so this destination does not change the active IAL2 roadmap priority.
+inactive. Active selector `.817` evaluates it against adjacent roadmap work;
+recording the simulator-profile requirement does not preselect the outcome.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -11327,6 +11337,16 @@ split 24 `.ppif`/23 `.ahb`. The matching alias, two-subordinate exact-three
 topology, broader BUSY policy, HIAL/VIAL activation, VHDL, and verification
 generation remain separate. See the
 [behavior record](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
+
+Clean behavior commit `00d71114d` activates only parent selector `.817` from
+the 323/364/47 handoff. The selector owns the next priority decision and must
+compare adjacent AHB residue, other roadmap lanes, and proposed HIAL/VIAL
+architecture. It also durably records the director-agreed validation boundary:
+portable-fast Verilator subset coverage is separate from authoritative
+full-language/SystemVerilog-UVM simulation, while VHDL and mixed-language
+claims are capability-qualified independently. No simulator integration,
+verification generation, protocol behavior, or HIAL/VIAL activation changes
+in the activation slice.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

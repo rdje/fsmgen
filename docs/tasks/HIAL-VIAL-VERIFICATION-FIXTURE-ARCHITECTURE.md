@@ -70,6 +70,14 @@ architecture needed to move beyond that bounded foundation.
 - Equivalent VIAL intent has explicit cross-backend semantic-parity criteria;
   mixed-language HIAL/VIAL combinations remain a separately gated target where
   supported by the selected toolchain.
+- The validation matrix separates a fast portable SystemVerilog profile using
+  Verilator's supported synthesis-oriented subset from an authoritative
+  full-language/SystemVerilog-UVM profile using a capability-qualified
+  simulator. Tool versions and exercised capabilities are reported, and the
+  portable profile never implies full SystemVerilog LRM or UVM support.
+- VHDL verification receives an equally explicit analyzer/simulator profile;
+  open-source portability, full-language qualification, and mixed-language
+  qualification are separate claims rather than one inferred capability.
 - Native extension points are typed, scoped, traceable to VIAL source, and
   readable in generated artifacts; they extend rather than clone the target
   verification languages.
@@ -104,8 +112,9 @@ architecture needed to move beyond that bounded foundation.
 
 This tree is proposed and inactive. `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
 is the first executable leaf only after a future clean-boundary roadmap selector
-activates it. Parking this requirement does not pre-empt the active IAL2
-feature-completeness frontier.
+activates it. Active parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.817`
+now evaluates this architecture against adjacent roadmap work; the simulator
+profile agreement does not pre-empt that evidence-backed selection.
 
 ## Decisions
 
@@ -121,6 +130,12 @@ feature-completeness frontier.
   decision. The architecture audit must select and justify the layers.
 - `2026-07-29`: Park this architecture as proposed/inactive and resume the
   existing IAL2 roadmap priority after the parking commit.
+- `2026-07-29`: Require explicit verification-tool capability profiles. Use
+  Verilator as the fast portable SystemVerilog subset tier, not as full-LRM or
+  UVM authority; require a separately qualified full-language/UVM simulator
+  tier for advanced native VIAL output. Apply the same claim-by-capability rule
+  to VHDL and mixed-language verification. This requirement records the
+  director's agreement but does not itself activate this proposed tree.
 
 ## Open Questions
 
@@ -134,6 +149,9 @@ feature-completeness frontier.
   and outcomes across SystemVerilog/UVM and VHDL verification backends?
 - Which mixed-language combinations can be validated locally and in CI, and
   which must remain toolchain-qualified capability claims?
+- Which full-language/UVM simulator or simulator matrix (for example Questa,
+  VCS, or Xcelium) will be available for authoritative native-VIAL validation,
+  and which exact language/UVM capabilities will each profile claim?
 - How should portable VIAL and native extensions remain deterministic,
   traceable, reviewable, and scalable on very large generated designs?
 
@@ -156,4 +174,8 @@ feature-completeness frontier.
 
 ## Changelog
 
+- `2026-07-29`: Added the director-agreed portable-Verilator versus
+  full-language/SystemVerilog-UVM validation-profile requirement, with separate
+  VHDL and mixed-language claim qualification; the tree remains proposed while
+  parent selector `.817` evaluates priority.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

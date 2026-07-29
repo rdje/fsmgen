@@ -7498,6 +7498,15 @@ accounting is 323 protocol / 364 supported+strict / 47 AHB paths split 24
 `.ppif`/23 `.ahb`. Alias, two-window exact-three, broader BUSY semantics,
 HIAL/VIAL activation, VHDL, verification generation, and decision 0020 remain
 separate. See `docs/IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
+Clean behavior commit `00d71114d` activates only parent selector
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.817`. This activation changes continuity
+and architecture evidence, not behavior. `.817` must compare adjacent AHB and
+other roadmap residue with the proposed HIAL/VIAL architecture and choose one
+exact owner. The HIAL/VIAL candidate now explicitly requires a portable-fast
+Verilator subset profile plus a separately capability-qualified
+full-language/SystemVerilog-UVM simulator profile; VHDL and mixed-language
+claims receive separate profiles. Recording that director-agreed validation
+boundary does not preselect HIAL/VIAL.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
@@ -8468,9 +8477,14 @@ points preserve the full power of SV/UVM and VHDL without recreating either
 language. VIAL0/VIAL1/VIAL2 is a topology hypothesis to audit, not a selected
 layering. Backend semantic parity, readable generated code, mixed-language
 qualification, migration from current passive observation metadata/skeletons,
-and large-to-very-large-design scale proof all require exact later owners.
-Parking this destination does not activate it or change the active IAL2
-roadmap priority.
+and large-to-very-large-design scale proof all require exact later owners. The
+validation matrix must keep Verilator as a fast portable synthesis-oriented
+SystemVerilog subset tier and use a separately capability-qualified simulator
+tier for advanced full-language/SystemVerilog-UVM output; it must report tool
+versions and exercised capabilities rather than infer full LRM/UVM coverage.
+VHDL portability, full-language qualification, and mixed-language validation
+are likewise separate claims. Parking this destination does not activate it;
+active selector `.817` now evaluates its priority against adjacent work.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile
