@@ -7470,6 +7470,10 @@ projected 323/364/47 before implementation. No public behavior ships in the
 audit; aliases, the two-subordinate topology, broader BUSY semantics,
 HIAL/VIAL, VHDL, verification generation, and decision 0020 remain separate.
 See `docs/IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md`.
+Clean audit commit `c1f3232f9` now activates only contract selector `.2`.
+Activation changes task/index/Memory/roadmap/mdBook/fact continuity and no
+public source, support, test, artifact, HDL/runtime, semantic-MCP, backend,
+HIAL/VIAL, VHDL, verification-generation, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

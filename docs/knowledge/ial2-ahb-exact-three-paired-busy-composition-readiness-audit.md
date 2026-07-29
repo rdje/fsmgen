@@ -34,3 +34,7 @@ separate generic public-contract leaf with projected 323 protocol / 364
 supported+strict / 47 AHB paths split 24 `.ppif` / 23 `.ahb`. The alias,
 two-subordinate form, broader BUSY semantics, HIAL/VIAL activation, VHDL,
 verification generation, and decision 0020 remain separate.
+
+Clean audit commit `c1f3232f9` now activates only the selected `.2` generic
+public-contract leaf. Activation changes continuity documentation and no public
+or generated behavior.

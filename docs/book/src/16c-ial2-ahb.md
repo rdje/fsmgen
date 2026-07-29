@@ -2025,6 +2025,8 @@ events / 1 resumed `SEQ` / storage `0x44332211`. Pending `.2` must freeze the
 public generic contract and projected 323/364/47 accounting before a separate
 implementation. See the
 [readiness result](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
+Clean audit commit `c1f3232f9` now activates that contract selector only; the
+generic exact-three paired source remains unshipped during selection.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

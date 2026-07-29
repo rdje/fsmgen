@@ -11307,6 +11307,9 @@ owners pass. Pending `.2` must freeze the one generic public source and
 projected 323/364/47 support boundary before implementation. No exact-three
 paired public source ships in the audit. See the
 [readiness audit](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
+Clean audit commit `c1f3232f9` activates only contract selector `.2`.
+Activation changes continuity documentation and no public or generated
+behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
