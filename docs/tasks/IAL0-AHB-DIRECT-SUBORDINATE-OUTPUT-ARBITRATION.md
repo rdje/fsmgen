@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `IAL0 / AHB direct-seed correctness`
 - Created: `2026-07-29`
 - Last updated: `2026-07-29`
@@ -43,27 +43,27 @@ independent of the generated `AhbSubordinate.pm` phase-rule defect.
 ## Task Tree
 
 - ID: `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION`
-  Status: `proposed`
+  Status: `active`
   Goal: `Make direct AHB subordinate output modes exclusive and assertion-clean.`
   Children: `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1`
 
 - ID: `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the exact exclusive direct-seed output-mode contract and implementation boundary.`
   Acceptance: `Activate only through a later clean-boundary roadmap selector after the generated endpoint priority completes or explicitly defers. Reconcile the audit, fsm/ahb_lite_subordinate.fsm, t1520, output selector metadata, access/wait/read/write/ERROR/completion-edge modes, generic assertion invariants, public preservation, same-volume cleanup, the authorized macOS host-max 100 / descendant 4096-MiB profile with exact capacity and separate kernel-pressure reporting, and rollback. Freeze a separate implementation leaf before changing the seed.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated from clean selector commit 8cae38a73 after .815 selected this direct-seed correctness owner from the completed assertion-clean generated endpoint boundary. Activation changes task/index/Memory/roadmap/mdBook/fact continuity only; no seed, test, generated artifact, selector, HDL, or runtime behavior changed.`
+  Commit: `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1: activate direct seed arbitration contract`
 
 ## Activation Gate
 
-Proposed and inactive. Recording this independently discovered owner does not
-pivot the active generated-endpoint task. A later roadmap selector must choose
-`.1` from a clean tree.
+Satisfied. Parent selector `.815` committed cleanly at `8cae38a73` after the
+generated endpoint tree completed at `1eec6253d`. Leaf `.1` activates from
+that clean boundary as a documentation-only slice. No source, test, generated
+artifact, selector, HDL, or runtime behavior changes in activation.
 
 ## Blockers
 
-- None for future contract selection; the active generated endpoint has
-  roadmap priority.
+- None. Contract selector `.1` is the active frontier.
 
 ## Rollback
 

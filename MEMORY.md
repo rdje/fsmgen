@@ -5,15 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped selector commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.815: select direct seed arbitration audit`;
-  predecessor `85ef488cb`.
-- active_work_unit: none after this commit; `.815` selection is done.
-- current_state: `.815` selects proposed
-  `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1` as the next exact
-  correctness owner; no behavior changes in the selector.
-- next_action: from the clean `.815` selector commit, activate the selected
-  direct IAL0 arbitration contract `.1` without starting implementation.
+- latest_commit: this task-scoped activation commit,
+  `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1: activate direct seed arbitration contract`;
+  predecessor `8cae38a73`.
+- active_work_unit: `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1`.
+- current_state: `.815` selected the direct-seed arbitration contract; `.1` is
+  active from a clean boundary with no seed or test behavior change.
+- next_action: select the exact exclusive direct-seed output modes and freeze a
+  separate implementation leaf before changing `fsm/ahb_lite_subordinate.fsm`.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -30,8 +29,8 @@ bounded current-state pointer. Git preserves its prior history.
   completed parent `.813` selected the AHB interconnect arbitration audit;
   child `.1`-.3 tree is complete and parent selector `.814` selected the
   subordinate arbitration tree. Its audit `.1`, contract `.2`, and five-write
-  implementation `.3` are complete; parent selector `.815` selects the
-  distinct direct IAL0 seed override gap under proposed
+  implementation `.3` are complete; parent selector `.815` selected the now
+  active direct IAL0 seed override gap under
   `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION`; decision `0020` remains
   proposed/inactive.
 - Proposed startup-alignment owners remain:
@@ -44,7 +43,7 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. It remains
   inactive and does not pivot current IAL2 priority.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
-  priority enforcement, direct AHB seed arbitration, end-to-end big-design
+  priority enforcement, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc
   fences, and guard metric repair. Parked findings do not pivot active AHB
   priority.

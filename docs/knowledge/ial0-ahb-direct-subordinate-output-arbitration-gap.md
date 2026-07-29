@@ -25,6 +25,7 @@ access/unsupported default HRESP zero plus ERROR one. The functional success,
 active-ERROR continuation, SEQ-to-ERROR, and ERROR-to-IDLE scenarios complete
 when only those bus assertions log.
 
-Proposed `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION` owns a later direct
-seed contract. It remains inactive and does not pivot the active generated
-endpoint repair.
+Active `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1` owns the direct-seed
+contract after parent selector `.815` committed cleanly at `8cae38a73`.
+Activation changes continuity only; the seed and t1520 boundary remain
+unchanged until the contract is selected and committed.

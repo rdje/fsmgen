@@ -7417,6 +7417,10 @@ because the hand-authored seed has separate HREADYOUT, HRDATA, and HRESP
 conditional overrides. Direct-seed correctness precedes exact-three paired
 expansion and broader AHB work. See
 `docs/IAL2_POST_SUBORDINATE_ARBITRATION_NEXT_OWNER_SELECTION.md`.
+The `.815` selector committed cleanly at `8cae38a73`, so selected direct-seed
+contract leaf `IAL0-AHB-DIRECT-SUBORDINATE-OUTPUT-ARBITRATION.1` is active.
+Activation changes continuity and documentation state only; the seed and
+t1520 assertion boundary remain unchanged until the contract is selected.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
