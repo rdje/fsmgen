@@ -7490,6 +7490,14 @@ Clean contract commit `547d8102f` now activates only `.3` data-only
 implementation. Activation changes continuity documentation and no public
 source, support, test, artifact, HDL/runtime, semantic-MCP, backend, HIAL/VIAL,
 VHDL, verification-generation, or transaction behavior.
+Implementation `.3` now ships the selected generic exact-three paired source
+through the existing three-child AHB architecture. Exact 3 IAL1/4 IAL0 review
+artifacts, strict support identity, normalized semantic/read-only MCP parity,
+and assertion-enabled t1531 5/4/1/3/1/`44332211` runtime pass. Current
+accounting is 323 protocol / 364 supported+strict / 47 AHB paths split 24
+`.ppif`/23 `.ahb`. Alias, two-window exact-three, broader BUSY semantics,
+HIAL/VIAL activation, VHDL, verification generation, and decision 0020 remain
+separate. See `docs/IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

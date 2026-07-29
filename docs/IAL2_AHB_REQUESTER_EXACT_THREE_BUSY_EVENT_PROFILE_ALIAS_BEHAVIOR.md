@@ -81,9 +81,11 @@ semantic root:   fsm
 HDL module:      amba_requester_busy_insert_three
 ```
 
-The alias moves current support accounting to 322 protocol fixtures and 363
-supported-smoke/strict-supported fixtures, with 46 AHB IAL2 paths evenly split
-between 23 `.ppif` sources and 23 `.ahb` aliases.
+The alias established 322 protocol fixtures, 363 supported-smoke/strict-
+supported fixtures, and 46 AHB IAL2 paths. The generic exact-three paired
+source moves current support accounting to 323 protocol fixtures, 364
+supported-smoke/strict-supported fixtures, and 47 AHB paths split 24 `.ppif`
+sources / 23 `.ahb` aliases.
 
 Strict check and `--emit-semantic-json` expose the alias path, support ID,
 coverage, source kind, module, and `fsm` semantic root. The read-only MCP
@@ -122,7 +124,8 @@ count.
 
 ## Explicit Deferrals
 
-Exact-three paired compositions, literal BUSY counts above three, generalized
+The generic one-subordinate exact-three paired composition now also ships. Its
+matching alias and two-subordinate exact-three form, literal BUSY counts above three, generalized
 count width, multiple insertion points, runtime-selected counts/points, policy/
 random throttling, distinct local bus-BUSY status, larger/broader bursts,
 optional AHB signals, managers, queues/outstanding transfers, direct seeds/

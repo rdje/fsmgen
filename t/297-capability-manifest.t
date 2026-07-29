@@ -3031,13 +3031,13 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/bounded AHB requester source, the bounded AHB requester single BUSY-event insertion source, the bounded AHB requester exact-two BUSY-event insertion source, the bounded AHB-Lite word-only subordinate source, the bounded AHB-Lite byte-lane\/narrow-transfer subordinate source, the bounded AHB-Lite byte-lane in-word SEQ subordinate source, the bounded AHB-Lite byte-lane HBURST WRAP4\/INCR4 SEQ subordinate source/,
+        qr/bounded AHB requester source, the bounded AHB requester single BUSY-event insertion source, the bounded AHB requester exact-two BUSY-event insertion source, the bounded AHB requester exact-three BUSY-event insertion source, the bounded AHB-Lite word-only subordinate source, the bounded AHB-Lite byte-lane\/narrow-transfer subordinate source, the bounded AHB-Lite byte-lane in-word SEQ subordinate source, the bounded AHB-Lite byte-lane HBURST WRAP4\/INCR4 SEQ subordinate source/,
         'manifest states .ppif includes the bounded AHB requester, requester BUSY-insertion, and subordinate sources',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/bounded AHB requester exact-three BUSY-event insertion source is support-accounted only on the generic \.ppif surface; its matching \.ahb alias remains separately deferred/,
-        'manifest records generic exact-three requester BUSY support and its alias boundary',
+        qr/bounded AHB requester exact-three BUSY-event insertion source and its matching \.ahb profile alias are support-accounted/,
+        'manifest records generic and profile-alias exact-three requester BUSY support',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
@@ -3192,6 +3192,16 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/one-requester\/one-subordinate AHB aggregate pairing exact-two requester BUSY insertion with subordinate BUSY parking/,
         'manifest advertises the generic one-subordinate exact-two paired BUSY composition',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/one-requester\/one-subordinate AHB aggregate pairing exact-three requester BUSY insertion with subordinate BUSY parking/,
+        'manifest advertises the generic one-subordinate exact-three paired BUSY composition',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/selected one-requester\/one-subordinate exact-three paired BUSY composition is support-accounted on the generic \.ppif surface; its matching \.ahb alias remains separately deferred/,
+        'manifest records the exact-three paired generic-first alias boundary',
     );
     is($file_surface_by_suffix{'.axi'}{intent_layer}, 'IAL2', 'manifest marks .axi as IAL2');
     is(

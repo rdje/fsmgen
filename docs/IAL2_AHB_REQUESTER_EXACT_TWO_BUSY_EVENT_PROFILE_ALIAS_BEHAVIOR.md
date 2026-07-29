@@ -87,8 +87,9 @@ supported-smoke/strict-supported fixtures, with 40 AHB IAL2 paths split
 twenty/twenty. The one- and two-subordinate exact-two paired source/alias
 lineage later established checkpoints through 320/361/44. The additive generic
 exact-three requester established 321/362/45; its matching exact-three alias
-now moves current totals to 322/363 and 46 AHB paths: twenty-three `.ppif`
-sources and twenty-three `.ahb` aliases.
+established 322/363/46. The generic exact-three paired source now moves current
+totals to 323/364 and 47 AHB paths: twenty-four `.ppif` sources and twenty-three
+`.ahb` aliases.
 
 The alias is exposed through the same bounded semantic contract as every other
 support-accounted source. Strict check and `--emit-semantic-json` report its
@@ -121,8 +122,9 @@ observe one BUSY episode, exactly two qualified BUSY events, the same resumed
 
 The generic two-subordinate exact-two requester/subordinate composition and its
 matching `.ahb` alias now ship through the existing generators. The later
-generic exact-three requester and its matching `.ahb` alias also ship
-separately. Exact-three paired compositions, literal BUSY counts above three,
+generic exact-three requester, its matching `.ahb` alias, and the generic
+one-subordinate exact-three pairing also ship separately. Its matching paired
+alias and two-subordinate exact-three form, literal BUSY counts above three,
 generalized count width, multiple insertion points, runtime-selected
 counts/points, policy/random throttling, distinct local bus-BUSY status,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding

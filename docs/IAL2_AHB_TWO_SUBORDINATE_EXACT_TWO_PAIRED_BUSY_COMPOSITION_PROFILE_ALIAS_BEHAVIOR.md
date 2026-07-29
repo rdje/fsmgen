@@ -74,9 +74,9 @@ HDL module:      ahb_tb
 At shipment this additive alias established 320 protocol fixtures, 361
 supported-smoke plus strict fixtures, and 44 AHB IAL2 paths, evenly split
 between twenty-two `.ppif` sources and twenty-two `.ahb` aliases. The later
-generic exact-three requester established 321/362/45; its matching alias moves
-current accounting to 322/363/46, split 23 `.ppif` sources and 23 `.ahb`
-aliases.
+generic exact-three requester established 321/362/45; its matching alias
+established 322/363/46. The generic exact-three paired source moves current
+accounting to 323/364/47, split 24 `.ppif` sources and 23 `.ahb` aliases.
 
 Strict check, schedule JSON, normalized semantic JSON, and the real read-only
 `fsmgen_semantic_introspect` MCP tool expose the same support identity, module,
@@ -117,7 +117,7 @@ resumed pending `SEQ` events, eight data beats, and final status/control storage
 
 ## Explicit Deferrals
 
-BUSY counts above three, exact-three paired compositions, multiple insertion
+BUSY counts above three, exact-three paired aliases and two-window forms, multiple insertion
 points, runtime-selected policy, distinct local bus-BUSY status, broader bursts
 and optional signals, deeper queues, multiple outstanding transfers, broader
 managers/fabrics, selector repair, direct backends, verification-output

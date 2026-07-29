@@ -485,6 +485,15 @@ shape: default mode still compiles `/source/target/`, while strict mode rejects
 that token family with a migration hint toward `(source target)` or
 `(connect source target)`.
 
+The supported AHB protocol-fixture inventory includes the generic exact-three
+paired source
+`ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif`.
+Its catalog entry is strict-supported, selects `ahb_tb` with semantic root
+`top` and three children, and is owned by focused t/1531 across strict check,
+schedule, review artifacts, normalized semantics, read-only MCP, verifier, and
+assertion-enabled runtime. Current totals are 323 protocol fixtures and 364
+supported-smoke/strict-supported fixtures.
+
 ## Capability manifest
 
 Downstream tools can ask FSMGen for the first bounded machine-readable support

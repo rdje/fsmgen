@@ -11065,8 +11065,8 @@ generators. Focused t1525 proves strict/source/schedule/report/artifact/outdir/
 verifier parity, normalized semantic JSON, the real read-only MCP adapter, and
 one two-command generated-HDL runtime totaling four qualified BUSY events, two
 resumed `SEQ` events, eight data beats, and final status/control storage
-`44332211`/`88776655`. Current accounting is 319/360/43 with 22 `.ppif` and 21
-`.ahb`. See the
+`44332211`/`88776655`. That source established the 319/360/43 checkpoint with
+22 `.ppif` and 21 `.ahb`. See the
 [shipped behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 At that `.8` checkpoint, the matching alias and decision 0020 remained
 separate.
@@ -11152,7 +11152,8 @@ Leaf `.5` now ships the byte-identical alias at
 only profile-alias residue while preserving numeric `beats=3`, exact artifacts,
 HDL, and normalized semantic/read-only MCP behavior. Focused t1529 passes four
 top-level subtests/72 nested assertions without a second simulation; t1528
-remains the shared runtime proof. Current accounting is 322/363/46 split 23/23.
+remains the shared runtime proof. That shipment established the 322/363/46
+checkpoint split 23/23.
 See the
 [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
 Clean alias commit `c224b2cba` satisfies the parent activation boundary, so
@@ -11318,6 +11319,14 @@ implementation; the source remains unshipped during selection. See the
 [contract](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
 Clean contract commit `547d8102f` activates only `.3`; the selected source,
 support path, and t1531 remain unshipped until implementation passes.
+Implementation `.3` now ships the selected generic exact-three paired source
+through existing generators. Exact 3 IAL1/4 IAL0 artifacts, strict support,
+normalized semantic/read-only MCP parity, and assertion-enabled t1531
+5/4/1/3/1/`44332211` runtime pass, moving current accounting to 323/364/47
+split 24 `.ppif`/23 `.ahb`. The matching alias, two-subordinate exact-three
+topology, broader BUSY policy, HIAL/VIAL activation, VHDL, and verification
+generation remain separate. See the
+[behavior record](../../IAL2_AHB_EXACT_THREE_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

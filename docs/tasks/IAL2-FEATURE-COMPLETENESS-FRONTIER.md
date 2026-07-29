@@ -5782,6 +5782,15 @@ path before reopening VHDL backend or VHDL rerouting work.
   Verification: `Activated from clean direct-arbitration behavior commit 35a6fbfcf, then reconciled the completed fabric/generated-endpoint/direct-seed arbitration lineage, assertion-enabled direct/paired tests, exact-three requester and exact-two paired families, current 322/363/46 public checkpoint, support/semantic-MCP surfaces, roadmap, mdBook, Knowledge Map, proposed owners, HIAL/VIAL, and decision 0020. Selected proposed IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1 as the smallest adjacent owner. A repository-derived same-volume generic one-subordinate candidate reused the existing exact-three requester, byte-lane/HBURST-SEQ/BUSY-parking subordinate, and fabric; the public path emitted exactly three IAL1/four IAL0 artifacts, compiled without --no-assert, and passed 5 presentations/4 accepted beats/1 BUSY episode/3 qualified BUSY events/1 resumed SEQ/storage 0x44332211. The 54-file/53,577,454-byte disposable workspace was removed with no residue. The audit must still freeze public source/support/report/semantic-MCP/test boundaries and projected 323/364/47 accounting before behavior. Aliases, two-subordinate exact-three, counts above three, policy/status/bursts/signals, generic priority, other protocols/backends, HIAL/VIAL activation, VHDL, verification generation, and decision 0020 remain separate/inactive. Selector documentation, proposed child task tree, current docs/book, Memory, and Knowledge Map were synchronized. Focused t1518/t1256/t1414 pass 3 files/22 tests; Knowledge Map generation/check passes at 1,021 facts/5,195 question keys; mdBook builds and its exact 72-file/16,118,984-byte output was removed without residue; memory, path, diff, and all six doctrine gates pass. Final Stats-compatible capacity was 49.8% (11.94/24.00 GiB), kernel pressure was 1 (normal), and ram-guard occupancy was excluded as capacity truth. No parser/generator/source/support/test/checked-in artifact/semantic-MCP API/HDL/runtime/backend/protocol/verification-generation/HIAL/VIAL/transaction behavior changed.`
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.816: select exact-three paired AHB audit`
 
+The selected child tree is now complete through `.3`. It ships the generic
+one-subordinate exact-three paired source at 323/364/47 split 24/23 with exact
+review artifacts, normalized semantic/read-only MCP parity, and
+assertion-enabled t1531 runtime. The next clean parent action is to create and
+activate the next exact frontier selector; aliases, two-window exact-three,
+counts/policy/status/burst/signal work, HIAL/VIAL activation and simulator
+profiles, VHDL, verification generation, and decision 0020 remain candidates,
+not implicit pivots.
+
 Activation condition was satisfied when `.810` committed cleanly at
 `e2dc65507`; `.811` was then activated. That activation changed only
 task/index/Memory state and added no

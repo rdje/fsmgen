@@ -5,15 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped activation commit,
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: activate exact-three paired AHB implementation`;
-  predecessor `547d8102f`.
-- active_work_unit:
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`.
-- current_state: exact generic one-subordinate source/support/t1531 data-only
-  implementation is active; activation changes continuity only and no behavior.
-- next_action: implement exactly `.3`, validate assertion-enabled runtime and
-  323/364/47 public accounting, document behavior, and commit.
+- latest_commit: this task-scoped behavior commit,
+  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3: ship exact-three paired AHB composition`;
+  predecessor activation `24b302647`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER` (next selector not yet
+  activated).
+- current_state: exact-three paired child `.1`-.3 is complete; generic source,
+  support, t1531 assertion runtime, semantics/MCP, and 323/364/47 docs ship.
+- next_action: from the clean behavior commit, create and activate the next
+  exact parent frontier selector before any new behavior or HIAL/VIAL pivot.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -35,7 +35,8 @@ bounded current-state pointer. Git preserves its prior history.
   implementation are complete. Parent selector `.816` selects proposed
   `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`; `.1` now
   proves strict/artifact/assertion-runtime/semantic-MCP readiness; `.2` freezes
-  the contract and selects `.3` implementation at projected 323/364/47.
+  the contract and `.3` now ships at 323/364/47 split 24/23; the child tree is
+  complete and returns selection to the parent frontier.
   Decision `0020` remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,

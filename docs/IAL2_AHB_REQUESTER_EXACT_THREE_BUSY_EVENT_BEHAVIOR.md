@@ -104,10 +104,10 @@ events ship, and all three defer only counts above three plus generalized
 policy/runtime/random and multiple-point insertion. Existing `.ahb` suffix
 cleanup remains unchanged.
 
-The generic source established the 321/362/45 checkpoint. The matching alias
-now moves current accounting to 322 protocol fixtures, 363 supported-smoke
-plus strict fixtures, and 46 AHB IAL2 paths: 23 generic `.ppif` sources and 23
-`.ahb` aliases.
+The generic source established the 321/362/45 checkpoint and the matching alias
+established 322/363/46. The generic exact-three paired source now moves current
+accounting to 323 protocol fixtures, 364 supported-smoke plus strict fixtures,
+and 47 AHB IAL2 paths: 24 generic `.ppif` sources and 23 `.ahb` aliases.
 
 ## Generated-HDL Proof
 
@@ -151,7 +151,7 @@ t248 plus t297 pass 6,911 assertions over the updated accounting/capability
 boundary. Strengthened t1518
 passes five top-level subtests and locks exact-one, exact-two, exact-three,
 paired, alias, mdBook, and Knowledge Map fact truth against stale exact-two
-ceilings or pre-322 accounting.
+ceilings or pre-323 accounting.
 
 Two t1526 attempts were safely stopped by the guard when an unrelated `pgen`
 compiler pushed host memory above the 88% cutoff. The complete 722-second rerun
@@ -194,9 +194,9 @@ The matching exact-three `.ahb` alias now ships. Counts above three and
 generalized counter width, runtime/policy/random count selection, multiple
 insertion points, distinct local bus-BUSY status, broader
 bursts/signals/managers/fabrics, AXI/APB/VHDL, and decision 0020 remain separate
-and inactive. The generic one-subordinate exact-three paired readiness audit
-now passes; its completed contract selector freezes a separate generic
-implementation leaf, but no paired exact-three public source ships yet.
+and inactive. The generic one-subordinate exact-three paired source now ships
+through its completed implementation leaf; its matching alias and the
+two-subordinate exact-three topology remain separate.
 
 ## Rollback
 

@@ -143,8 +143,9 @@ checkpoint to 316/357 and 40 AHB paths. The generic one-subordinate exact-two
 paired composition established 317/358/41; its matching alias moved the next
 checkpoint to 318/359/42. The generic two-subordinate exact-two composition
 established 319/360/43; its matching alias established 320/361/44. The generic
-exact-three requester alias now moves current accounting to 322/363 and 46 AHB
-paths: twenty-three generic `.ppif` sources and twenty-three `.ahb` aliases.
+exact-three requester alias established 322/363/46. The generic exact-three
+paired source now moves current accounting to 323/364 and 47 AHB paths:
+twenty-four generic `.ppif` sources and twenty-three `.ahb` aliases.
 
 ## Generated-HDL Proof
 
@@ -185,7 +186,7 @@ that path in the same commands. See
 
 Literal counts beyond three, generalized count width, multiple insertion
 points, runtime-selected count/point, policy/random throttling, distinct local
-bus-BUSY status, exact-three paired compositions,
+bus-BUSY status, exact-three paired aliases and two-subordinate forms,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding
 transfers, direct seeds/backends, verification-output generation, backend
 variants, AXI/APB changes, VHDL, the separate interconnect selector repair, the
