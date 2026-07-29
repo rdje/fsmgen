@@ -7454,6 +7454,11 @@ public source/support/report/semantic-MCP/test identities and projected
 counts above three, policy/status/burst/signal work, HIAL/VIAL, and decision
 0020 remain separate/inactive. See
 `docs/IAL2_POST_DIRECT_ARBITRATION_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `bc3d9eaf1` satisfies the selected child boundary, so
+`IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1` is now active.
+Activation changes task/index/Memory/roadmap/mdBook/fact continuity only; no
+public source, support, test, artifact, HDL/runtime, semantic-MCP, backend,
+HIAL/VIAL, VHDL, verification-generation, or transaction behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

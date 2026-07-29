@@ -11296,6 +11296,9 @@ public source/support/report/semantic-MCP/test boundaries before any behavior;
 aliases, the two-window form, broader BUSY semantics, HIAL/VIAL, and decision
 0020 remain separate. See the
 [post-direct selector](../../IAL2_POST_DIRECT_ARBITRATION_NEXT_OWNER_SELECTION.md).
+Clean selector commit `bc3d9eaf1` activates only the selected readiness-audit
+leaf. Activation changes continuity documentation and no generated or public
+behavior; the audit must complete before any contract or implementation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

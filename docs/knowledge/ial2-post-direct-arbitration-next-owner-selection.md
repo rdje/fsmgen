@@ -31,3 +31,7 @@ leaf must freeze source/support/report/semantic-MCP/test identities and
 projected 323/364/47 support accounting before a contract is chosen. Aliases,
 the two-subordinate topology, counts above three, policy/status/bursts/signals,
 HIAL/VIAL activation, and decision 0020 remain separate and inactive.
+
+Clean selector commit `bc3d9eaf1` now activates only the selected `.1` audit
+leaf. Activation changes continuity documentation and no public or generated
+behavior.

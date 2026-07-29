@@ -5,17 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped selector commit,
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.816: select exact-three paired AHB audit`;
-  predecessor `6cda9e7db`.
-- active_work_unit: none after this selector commit; selected proposed leaf
-  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1` awaits
-  activation.
-- current_state: `.816` selects the generic one-subordinate exact-three paired
-  readiness audit after all audited AHB lower layers became assertion-clean;
-  no public behavior changed.
-- next_action: from the clean selector commit, activate only selected child
-  `.1` in a separate no-behavior commit.
+- latest_commit: this task-scoped activation commit,
+  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: activate exact-three paired AHB audit`;
+  predecessor `bc3d9eaf1`.
+- active_work_unit:
+  `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`.
+- current_state: selected generic one-subordinate exact-three paired readiness
+  audit is active; activation changes continuity only and no behavior.
+- next_action: execute `.1` readiness audit and select the next exact owner
+  from strict/artifact/assertion-runtime/semantic-MCP evidence.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `IAL2 / AHB paired requester-subordinate BUSY composition`
 - Created: `2026-07-29`
 - Last updated: `2026-07-29`
@@ -54,16 +54,16 @@ public source or behavior is selected.
 ## Task Tree
 
 - ID: `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit assertion-enabled exact-three requester/BUSY-parking-subordinate/fabric composition before public expansion.`
   Children: `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
 
 - ID: `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Audit one-subordinate generic exact-three paired AHB BUSY composition readiness and select the next exact owner.`
   Acceptance: `Activate only after clean parent selector commit IAL2-FEATURE-COMPLETENESS-FRONTIER.816. Reconcile the shipped generic/alias exact-three requester, generic/alias one-/two-subordinate exact-two paired compositions, completed interconnect/generated-subordinate/direct-seed arbitration repairs, public PPIF adapters and AHB generators, report residue, support/language/capability surfaces, normalized semantic JSON, read-only fsmgen_semantic_introspect MCP, focused tests t1520/t1523/t1525/t1528, roadmap, mdBook, Knowledge Map, HIAL/VIAL, and decision 0020. Use only a repository-derived same-volume disposable one-subordinate candidate corresponding to future path ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif, intent ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park, object ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park, anchor ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_anchor, top ahb_tb, and children amba_requester_busy_insert_three, ahb_lite_subordinate_byte_lane_hburst_seq, and ahb_interconnect. Require strict/check success, exact three IAL1 and four IAL0 review artifacts, assertion-enabled generated HDL, requester report before_beat=2/beats=3, child and propagated parks_on=[busy], one-hot accepted-subordinate ownership, normalized semantic JSON/read-only MCP parity, and runtime 5 presentations/4 beats/1 BUSY episode/3 qualified BUSY events/1 resumed SEQ/storage 0x44332211. Decide whether direct data-only public contract selection can follow, a lower-layer repair is required, or the candidate must fail closed. If ready, freeze projected support accounting 323 protocol / 364 supported+strict / 47 AHB paths split 24 .ppif and 23 .ahb, the exact support id, future focused test owner, diagnostics, preservation, residue, rollback, and separate alias/two-subordinate cadence before behavior changes. Keep counts above three, policy/status/bursts/signals, generic priority, other protocols/backends, HIAL/VIAL activation, VHDL, verification generation, and decision 0020 out of scope. Use the director-authorized --host-max-pct 100 --process-max-rss-mb 4096 profile, report exact Stats-compatible capacity separately from kernel pressure, census the disposable workspace, and remove it without residue.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean parent selector commit bc3d9eaf1. Activation changes task/index/Memory/roadmap/mdBook/fact continuity only; no parser, generator, public source, support entry, test, checked-in generated artifact, semantic/MCP API, HDL/runtime, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction-layer behavior changes. Knowledge Map generation/check remains synchronized at 1,021 facts/5,195 question keys; mdBook builds and its exact 72-file/16,120,016-byte output was removed without residue; memory, path, README, project-locality, and all six doctrine gates pass. Post-gate Stats-compatible capacity was 50.3% (12.07/24.00 GiB), kernel pressure was 1 (normal), and guard occupancy was excluded as capacity truth.`
+  Commit: `IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: activate exact-three paired AHB audit`
 
 ## Decisions
 
@@ -71,6 +71,8 @@ public source or behavior is selected.
   readiness audit as the smallest adjacent owner after all audited AHB
   interconnect, generated-endpoint, and direct-seed assertion boundaries became
   clean. This proposal does not activate the tree or change behavior.
+- `2026-07-29`: Clean selector commit `bc3d9eaf1` satisfies the activation
+  boundary; `.1` is now the only active leaf and still changes no behavior.
 
 ## Open Questions
 
@@ -80,4 +82,4 @@ public source or behavior is selected.
 
 ## Blockers
 
-- Parent selector `.816` must commit cleanly before `.1` activation.
+- None.

@@ -2006,7 +2006,7 @@ VIAL output. See the
 [direct-seed arbitration behavior](../../IAL0_AHB_DIRECT_SUBORDINATE_OUTPUT_ARBITRATION_BEHAVIOR.md).
 
 With the fabric, generated endpoint, and direct seed now assertion-clean,
-parent selector `.816` selects the proposed generic one-subordinate
+parent selector `.816` selects the now-active generic one-subordinate
 [exact-three paired readiness audit](../../tasks/IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.md).
 A same-volume disposable candidate passes with all selector assertions and
 exact runtime totals 5 presentations / 4 accepted beats / 1 BUSY episode / 3
