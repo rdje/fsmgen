@@ -260,4 +260,7 @@ evidence-backed handoff.
 - `2026-07-30`: Clean exact-four paired behavior commit `c42347a5e` activates
   parent selector `.824`; HIAL/VIAL remains proposed while `.824` compares it
   with adjacent exact AHB and other roadmap owners.
+- `2026-07-30`: Parent `.824` selects the smaller byte-identical exact-four
+  paired `.ahb` alias as pending `.825`; HIAL/VIAL remains proposed with its
+  portable-fast/full-language/VHDL/mixed-language/scale requirements intact.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

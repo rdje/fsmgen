@@ -2378,6 +2378,15 @@ selector `.824` without changing public behavior. The selector must compare
 the matching `.ahb` alias, two-window exact-four form, broader AHB semantics,
 generic priority, HIAL/VIAL, verification generation, portability, and scale
 before choosing one next owner.
+Selector `.824` now chooses pending `.825`, the byte-identical matching
+exact-four paired `.ahb` alias. A repository-local 4,978-byte candidate passes
+strict check, exact 3 IAL1/4 IAL0 artifact and report preservation, normalized
+semantic `ahb_tb`/top/3-child identity, real read-only shell-disabled MCP, and
+public HDL verification through existing suffix handling. Projected accounting
+is 330/371/54 split 27 `.ppif` / 27 `.ahb`; focused t1538 will own alias parity
+without another simulation, while t1537 remains the shared assertion-enabled
+runtime. See the
+[next-owner selection](../../IAL2_POST_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

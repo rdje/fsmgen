@@ -7758,6 +7758,19 @@ simulator integration, HIAL/VIAL, VHDL, verification generation, scale, and
 transaction behavior remain unchanged. `.824` must choose exactly one next
 owner after comparing the matching alias, two-window exact-four, broader AHB,
 generic priority, HIAL/VIAL, portability, verification, and scale candidates.
+Selector `.824` now chooses pending `.825`, the byte-identical matching
+one-window exact-four paired `.ahb` alias. A repository-local same-volume
+4,978-byte candidate passes strict check with zero diagnostics and unmatched
+support, exact 3 IAL1/4 IAL0 artifacts, width-three before_beat=2/beats=4
+reports, child/propagated BUSY parking, one-hot ownership, normalized semantic
+`ahb_tb`/top/3-child identity, real read-only shell-disabled MCP, and public
+HDL verification through existing suffix/lowering machinery. Selected support
+projects 330/371/54 split 27 `.ppif`/27 `.ahb`; t1538 owns alias parity and
+t1537 remains the sole assertion-enabled runtime. The candidate is removed
+without residue. Two-window exact-four, broader AHB, generic priority,
+HIAL/VIAL, VHDL, verification generation, portability implementation, scale,
+and decision 0020 remain separate. See
+`docs/IAL2_POST_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

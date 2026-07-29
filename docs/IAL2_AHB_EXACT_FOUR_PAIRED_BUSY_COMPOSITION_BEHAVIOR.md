@@ -119,6 +119,12 @@ boundary. The selector must choose one next owner before any alias,
 two-subordinate, broader-AHB, HIAL/VIAL, verification, portability, priority,
 or scale behavior changes.
 
+Completed selector `.824` now chooses pending `.825`, the byte-identical
+matching `.ahb` alias with projected 330/371/54 accounting split 27/27. Future
+t1538 owns alias parity without a second simulation; t1537 remains this
+generic/profile pair's shared assertion-enabled runtime. See
+`docs/IAL2_POST_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md`.
+
 ## Rollback
 
 Rollback removes only the generic source, its support entry, t1537 and its

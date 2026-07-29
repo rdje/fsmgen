@@ -5,12 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped `.824` activation; predecessor `c42347a5e`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.824`.
-- current_state: exact-four paired child `.1`-.3 is complete at 329/370/53;
-  parent `.824` is active for one exact no-behavior next-owner selection.
-- next_action: execute `.824`: reconcile current evidence and select exactly
-  one smallest roadmap-aligned owner, then commit the selector.
+- latest_commit: this task-scoped `.824` selector; predecessor `940c130d1`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.824`; selected `.825`
+  remains pending until the selector commits cleanly.
+- current_state: exact-four paired generic ships at 329/370/53; `.824` selects
+  the byte-identical matching `.ahb` alias at projected 330/371/54 split 27/27.
+- next_action: from the clean `.824` selector commit, activate `.825`, then
+  implement exact alias/support/t1538 parity with t1537 shared runtime.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -22,20 +23,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
-- The IAL2 frontier completed exact-three requester generic/alias, fabric and
-  endpoint arbitration repairs, and exact-three paired generic/profile
-  compositions. Generic exact-four now ships at 327/368/51 split 26/25.
-  Parent `.822` selects exact-four requester BUSY counter-width readiness.
-  Audit `.1` proved lower-layer/runtime readiness; `.2` froze the contract;
-  `.3` ships literal `2..4`, preserving minimum widths 2/2/3, exact source/
-  support/semantic surfaces, and t1535. `.4` selected `.5`; `.5` ships the
-  byte-identical alias, exact support/semantic parity, t1536, and 328/369/52.
-  Parent `.823` selected one-window exact-four paired readiness `.1`; audit
-  `.1`, contract `.2`, and implementation `.3` are now complete. The generic
-  source ships through existing generators with exact support/semantic/read-
-  only-MCP parity, repository-local t1537 assertion runtime
-  5/4/1/4/1/`44332211`, and 329/370/53 accounting. Matching alias and
-  two-window exact-four remain separate. Decision `0020` remains inactive.
+- The IAL2 frontier completed exact-three families, AHB fabric/endpoint/direct
+  arbitration repairs, and exact-four requester generic/alias at 328/369/52.
+  The generic one-window exact-four paired source now ships through existing
+  generators with semantic/read-only-MCP parity and repository-local t1537
+  assertion runtime 5/4/1/4/1/`44332211` at 329/370/53. Parent `.824` selects
+  pending `.825`, its byte-identical alias with t1538 parity and shared t1537
+  runtime at projected 330/371/54. Two-window exact-four and decision `0020`
+  remain separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
@@ -46,7 +41,7 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. `.817` keeps the tree proposed.
+  mixed-language claims qualified separately. `.824` keeps the tree proposed.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc
