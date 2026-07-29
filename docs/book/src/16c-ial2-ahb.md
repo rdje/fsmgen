@@ -2068,6 +2068,24 @@ syntax, source/support identities, report wording, alias and composition
 cadence, counts above three, policy/runtime/multiple-point insertion, distinct
 bus-BUSY status, and broader bursts/signals remain unselected.
 
+The follow-on
+[exact-three readiness audit](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_INSERTION_READINESS_AUDIT.md)
+now supplies that runtime proof without changing shipped behavior. One
+assertion-enabled generated-HDL binary covers continuously-qualified,
+32-clock ready-low, and 32-clock grant-low operation. Every run observes one
+BUSY episode, exactly three qualified BUSY events, internal counter
+`3 -> 2 -> 1 -> 0`, no stall-time count consumption or BUSY data completion,
+stable address/control/data/beat ownership, one resumed pending `SEQ`, four
+accepted byte `INCR4` beats, and zero final count.
+
+The disposable source also strict-checks, emits the exact candidate IAL1/IAL0
+artifacts, reports numeric `busy_insertion.beats=3`, and passes normalized
+semantic JSON plus the common read-only shell-disabled MCP adapter. Exact-one,
+exact-two, base, and malformed boundaries stay distinct. No lower-layer repair
+is required, but exact-three is still not public: proposed contract leaf `.2`
+must freeze syntax, identities, report/residue truth, support accounting,
+validation, and generic-before-alias sequencing before implementation.
+
 The generic AHB requester `.ppif` report keeps historical `.ahb`
 profile-alias residue, and the shipped requester `.ahb` alias removes that
 stale residue from alias reports. The generic subordinate `.ppif` report keeps

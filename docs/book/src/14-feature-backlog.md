@@ -11065,6 +11065,19 @@ three-event cardinality, stable ownership, one resumed `SEQ`, four data beats,
 and zero remaining. See the
 [next-owner selection](../../IAL2_POST_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md).
 
+Exact-three readiness audit `.1` now passes without changing the public
+surface. A same-volume disposable candidate preserved the width-two counter
+and existing qualified non-final/final rules. One assertion-enabled generated-
+HDL binary proved continuous, 32-clock ready-low, and 32-clock grant-low
+operation with internal `3 -> 2 -> 1 -> 0`, exactly three qualified BUSY
+events, no stall-time consumption or BUSY data completion, stable pending
+ownership, one resumed `SEQ`, four byte `INCR4` data beats, and zero final
+count. Strict check, schedule/report, exact artifacts, normalized semantic JSON,
+and real read-only MCP parity also passed; exact-one/two/base and malformed
+boundaries remained distinct. No lower-layer repair is needed. Proposed `.2`
+owns the public exact-three contract before implementation. See the
+[readiness audit](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_INSERTION_READINESS_AUDIT.md).
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

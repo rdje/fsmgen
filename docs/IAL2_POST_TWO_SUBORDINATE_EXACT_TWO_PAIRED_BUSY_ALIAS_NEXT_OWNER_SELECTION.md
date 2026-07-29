@@ -122,6 +122,18 @@ support accounting, and rollback remain decisions for a later contract leaf.
 - **Decision 0020 transaction layer:** director-owned, proposed/inactive, and
   not PNT-eligible.
 
+## Audit Result
+
+The selected audit `.1` has now passed. A same-volume disposable candidate and
+one assertion-enabled Verilator binary proved continuously-qualified,
+32-clock ready-low, and 32-clock grant-low internal
+`3 -> 2 -> 1 -> 0` retirement, exact cardinality, stable pending ownership,
+one resumed `SEQ`, four data beats, and zero final count. Strict, schedule,
+artifact, normalized semantic, and real read-only MCP evidence also passed.
+No lower-layer repair is required; proposed `.2` owns public contract selection
+before any behavior change. The canonical result is
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_INSERTION_READINESS_AUDIT.md`.
+
 ## Validation And Resource Boundary
 
 Selector closeout is documentation-only plus current-code/static-test

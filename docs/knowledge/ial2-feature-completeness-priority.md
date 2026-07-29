@@ -140,13 +140,13 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.811|IAL2-FEATURE-COMPLETEN
 
 The current IAL2 feature-completeness frontier has completed
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.812`, which selects proposed
-`IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.1` as the next
-PNT owner after its selector commit. Literal three fits the shipped width-two
-requester BUSY counter and statically follows the current qualified retirement
-path `3 -> 2 -> 1 -> 0`, but only literal two has assertion-enabled runtime
-proof. The proposed audit must prove continuous, ready-low, and grant-low
-generated-HDL behavior before any public exact-three contract or implementation
-is selected. Decision 0020 remains proposed/inactive.
+`IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT`. Child `.1`
+now proves the shipped width-two requester BUSY counter retires internal
+`3 -> 2 -> 1 -> 0` exactly across assertion-enabled continuous, 32-clock
+ready-low, and 32-clock grant-low generated HDL, with strict/schedule/artifact/
+normalized-semantic/read-only MCP parity and no lower-layer repair. Proposed
+`.2` is the next PNT owner for public exact-three contract selection after
+`.1` commits cleanly. Decision 0020 remains proposed/inactive.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.215` selected `.216` after `.214` shipped
 counted group-local admitted-request behavior. The selector found no immediate

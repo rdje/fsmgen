@@ -7231,6 +7231,20 @@ multiple-point insertion, distinct bus-BUSY status, broader bursts/signals,
 interconnect correctness owners, and decision 0020 remain separate/inactive.
 See
 `docs/IAL2_POST_TWO_SUBORDINATE_EXACT_TWO_PAIRED_BUSY_ALIAS_NEXT_OWNER_SELECTION.md`.
+Exact-three audit `.1` now proves the candidate under the unchanged 4-GiB
+guard. One assertion-enabled generated-HDL binary passes continuous,
+32-clock ready-low, and 32-clock grant-low scenarios with one BUSY episode,
+exactly three qualified BUSY events, internal counter `3 -> 2 -> 1 -> 0`, no
+stall-time consumption or BUSY data completion, stable pending fields, one
+resumed `SEQ`, four byte `INCR4` data beats, and zero final count. Strict
+check, schedule/report, exact IAL1/IAL0 artifacts, normalized semantic JSON,
+and the existing real read-only shell-disabled MCP adapter also pass; exact-
+one, exact-two, base, and malformed boundaries remain distinct. No lower-layer
+repair or shipped behavior change is required. Proposed `.2` now owns public
+contract selection before implementation. Counts above three, generalized
+policy/points/status/compositions/bursts/signals and decision 0020 remain
+separate. See
+`docs/IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_INSERTION_READINESS_AUDIT.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
