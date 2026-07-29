@@ -8361,6 +8361,25 @@ for the current lane: `.ppif` remains unsupported for verification-output CLI
 modes, and future protocol-specific verification facts should first lower or
 annotate generated IAL1 `.isf` review artifacts unless a later exact owner
 proves a direct route is required.
+
+The larger verification-fixture destination is now parked under proposed,
+inactive `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`. In that architecture,
+Hardware IAL (HIAL) names the current IAL0/IAL1/IAL2 hardware-intent stack and
+must lower to synthesizable SystemVerilog or synthesizable VHDL. Its peer,
+Verification IAL (VIAL), is pure verification intent and must be capable of
+describing extensive fixtures that lower to native SystemVerilog/UVM or VHDL
+verification code. A typed, language-neutral HIAL/VIAL bridge must bind DUT
+interfaces, transactions, protocol facts, clocks/resets, configuration, and
+source identity across the two domains. Portable VIAL must cover stimulus,
+scenarios, concurrency, expected outcomes, temporal checks, reference models,
+scoreboards, coverage, and fault injection, while typed native extension
+points preserve the full power of SV/UVM and VHDL without recreating either
+language. VIAL0/VIAL1/VIAL2 is a topology hypothesis to audit, not a selected
+layering. Backend semantic parity, readable generated code, mixed-language
+qualification, migration from current passive observation metadata/skeletons,
+and large-to-very-large-design scale proof all require exact later owners.
+Parking this destination does not activate it or change the active IAL2
+roadmap priority.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile

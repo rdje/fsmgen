@@ -4301,6 +4301,39 @@ verification-output path unless a later exact owner proves a direct route is
 required. Scoreboard behavior, coverage behavior, and reusable VIP behavior
 remain deferred behind later selector leaves.
 
+### Proposed HIAL/VIAL architecture
+
+The durable destination for full fixture generation is proposed, not shipped.
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` names current synthesizable
+IAL0/IAL1/IAL2 collectively as **Hardware IAL (HIAL)** and proposes a peer
+**Verification IAL (VIAL)** for pure verification intent:
+
+| Intent system | Required target family | Contract boundary |
+| --- | --- | --- |
+| HIAL | synthesizable SystemVerilog and synthesizable VHDL | hardware behavior only |
+| VIAL | native SystemVerilog/UVM or VHDL verification code | non-synthesizable fixture behavior |
+
+A typed, language-neutral bridge must connect VIAL fixtures to HIAL-generated
+DUT interfaces, clocks/resets, transactions, protocol facts, configuration,
+and source identity. Portable VIAL should be able to express stimulus,
+transactions, scenarios, concurrency, expected outcomes, temporal checks,
+reference models, scoreboards, functional coverage, and fault injection. It
+must also provide typed, scoped, traceable native extension points so advanced
+SV/UVM or VHDL code remains available without turning VIAL into a copy of
+those languages.
+
+The VIAL layer topology is deliberately undecided. A future architecture audit
+must determine whether VIAL0/VIAL1/VIAL2 is the right split or whether
+verification elaboration, scenario intent, and backend realization need a
+different minimum set of layers. That audit must also define backend semantic
+parity, readable and deterministic output, mixed-language qualification,
+migration from the current `(observe ...)` metadata and inert UVM/VHDL
+skeletons, and performance/scale gates for large to very large designs. Its
+worked example will map the handwritten AHB subordinate arbitration fixture
+to proposed portable VIAL plus typed native extensions; it will not claim that
+the fixture is generated today. The architecture tree remains proposed and
+inactive, so this destination does not change the active IAL2 roadmap priority.
+
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
 selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.82`, report/static residue

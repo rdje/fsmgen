@@ -5,17 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped behavior commit,
-  `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.3: ship assertion-clean endpoint arbitration`;
-  predecessor `3908070ea`.
-- active_work_unit: none after this commit; the subordinate arbitration tree is
-  complete.
-- current_state: generated endpoint arbitration removes exactly five redundant
-  IAL1 writes; base/rich direct and all six paired gates pass with assertions
-  enabled, while the separate direct IAL0 seed remains parked.
-- next_action: from this clean boundary, durably park the director's HIAL/VIAL
-  verification-fixture architecture requirement without changing roadmap
-  priority, then resume the IAL2 parent next-slice selector.
+- latest_commit: this proposed architecture parking commit,
+  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE: park dual-intent architecture`;
+  predecessor `1eec6253d`.
+- active_work_unit: none after this commit; the HIAL/VIAL architecture tree is
+  proposed and inactive.
+- current_state: the director's HIAL/VIAL requirement is durably task-tree
+  owned without changing current IAL behavior or active IAL2 priority.
+- next_action: resume the IAL2 parent next-slice selector from this clean
+  boundary.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -40,12 +38,11 @@ bounded current-state pointer. Git preserves its prior history.
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
   `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC`.
-- Director requirement (`2026-07-29`): frame synthesizable IAL0/1/2 as HIAL;
-  add a peer pure-verification VIAL that can extensively describe elegant,
-  powerful fixtures and lower to native SV/UVM or VHDL, joined through a typed
-  language-neutral HIAL/VIAL bridge. Audit VIAL0/1/2 layering rather than
-  assuming it; use native typed extension points instead of cloning SV/UVM or
-  VHDL. Park this in a proposed task-tree at the next clean boundary.
+- Proposed `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` now durably owns the
+  director's peer hardware/verification intent requirement, typed bridge,
+  portable fixture semantics, native SV/UVM and VHDL extension model, backend
+  parity, VIAL layer-topology audit, and large-design scale gates. It remains
+  inactive and does not pivot current IAL2 priority.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, direct AHB seed arbitration, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc
