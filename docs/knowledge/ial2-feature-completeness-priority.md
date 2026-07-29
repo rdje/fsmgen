@@ -150,7 +150,8 @@ with bounded literals `2..3`, unchanged width-two lowering, direct runtime and
 semantic/MCP proof, and the 321/362/45 generic checkpoint. Completed `.4`
 selected `.5`, which now ships the matching byte-identical `.ahb` alias at
 322/363/46 split 23/23 with focused t1529 parity and t1528 retained as the sole
-shared runtime. Pending parent `.813` owns the next post-alias selection.
+shared runtime. Clean child commit `c224b2cba` satisfied the activation
+boundary, so parent `.813` is active and owns the next post-alias selection.
 Decision 0020 remains proposed/inactive.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.215` selected `.216` after `.214` shipped

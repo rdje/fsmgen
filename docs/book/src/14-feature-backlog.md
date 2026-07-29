@@ -11122,6 +11122,9 @@ top-level subtests/72 nested assertions without a second simulation; t1528
 remains the shared runtime proof. Current accounting is 322/363/46 split 23/23.
 See the
 [shipped alias behavior](../../IAL2_AHB_REQUESTER_EXACT_THREE_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md).
+Clean alias commit `c224b2cba` satisfies the parent activation boundary, so
+`.813` is now the active documentation-only selector for the next exact IAL2
+owner. No new behavior ships from activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

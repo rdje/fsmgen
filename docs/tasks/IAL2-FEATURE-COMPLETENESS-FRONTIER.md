@@ -5754,11 +5754,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.812: select exact-three AHB BUSY audit`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.813`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the next exact IAL2 feature-completeness owner after the exact-three requester BUSY alias ships.`
   Acceptance: `Activate only after IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.5 commits cleanly. Reconcile the complete exact-one/two/three generic/alias requester lineage, one-/two-subordinate exact-two paired lineage, 322 protocol / 363 supported+strict / 46 AHB-path checkpoint, current AhbRequester and AHB residue, focused runtime/parity/current-truth tests, support/language/capability/semantic-MCP surfaces, roadmap, mdBook, Knowledge Map, proposed correctness owners, and decision 0020. Select exactly one smallest evidence-backed next owner among exact-three paired composition, literal counts above three and required width/contract readiness, policy/runtime/multiple-point insertion, distinct local bus-BUSY status, wider/indefinite burst or optional-signal work, an existing correctness/public-truth prerequisite, another roadmap-aligned protocol/platform residue, or explicit parent completion. Freeze task ownership, activation boundary, preservation, validation, docs/Knowledge Map, resource cap, and rollback before behavior changes. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, backend, protocol, or transaction-layer behavior change in this selector; keep decision 0020 proposed/inactive.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after exact-three alias child commit c224b2cba left the tree clean. This continuity slice changes task/index/Memory/roadmap/mdBook/Knowledge Map state only; selector investigation and owner choice remain the next action. No parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, backend, protocol, or transaction-layer behavior changes.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.813: activate post-exact-three AHB selector`
 
 Activation condition was satisfied when `.810` committed cleanly at
 `e2dc65507`; `.811` was then activated. That activation changed only
@@ -5777,8 +5777,9 @@ the matching byte-identical `.ahb` alias implementation at
 projected 322/363/46 split 23/23 with focused t1529 parity and t1528 retained
 as shared runtime. `.5` activated after clean `.4` commit `b7c62d2b6` and now
 ships the byte-identical alias at 322/363/46 split 23/23 with focused t1529
-parity and shared t1528 runtime. The completed child tree hands the next
-selection to pending parent leaf `.813` after clean `.5` commit.
+parity and shared t1528 runtime. Clean `.5` commit `c224b2cba` satisfied the
+activation boundary; parent selector `.813` is active and owns the next exact
+selection.
 
 ## Current Frontier
 

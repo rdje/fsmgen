@@ -6,15 +6,14 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.5: ship exact-three AHB alias`;
-  predecessor `b60333982`.
-- active_work_unit:
-  `IAL2-AHB-REQUESTER-EXACT-THREE-BUSY-INSERTION-READINESS-AUDIT.5`.
-- current_state: `.5` ships the byte-identical exact-three requester `.ahb`
-  alias at 322/363/46 split 23/23; focused t1529 proves full parity without a
-  second simulation and t1528 remains shared runtime. The child tree is done.
-- next_action: after this clean `.5` commit, activate pending parent selector
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.813` in a separate continuity commit.
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.813: activate post-exact-three AHB selector`;
+  predecessor `c224b2cba`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.813`.
+- current_state: `.813` is active after clean exact-three alias commit
+  `c224b2cba`; the child tree is done at 322/363/46 split 23/23 and this
+  activation changes continuity/docs state only.
+- next_action: execute `.813`: reconcile the completed AHB lineage and current
+  residue, then select exactly one smallest next owner before behavior changes.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. Guarded runtime can be stopped
   by the already-tracked macOS metric/external host pressure; never raise the
@@ -25,8 +24,8 @@ bounded current-state pointer. Git preserves its prior history.
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
 - The IAL2 frontier is complete through `.812`; exact-three generic child `.3`
-  established `321/362/45`, `.5` now ships its matching alias at `322/363/46`,
-  and pending parent `.813` owns the next exact selection. Decision `0020`
+  established `321/362/45`, `.5` ships its matching alias at `322/363/46`, and
+  active parent `.813` owns the next exact selection. Decision `0020`
   remains proposed/inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
