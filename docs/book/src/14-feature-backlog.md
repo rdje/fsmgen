@@ -11161,6 +11161,9 @@ direct-fabric assertion-enabled t1530 and keeps paired `--no-assert`; proposed
 `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1` owns the endpoint
 audit. See the
 [selected arbitration contract](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
+Contract commit `3883c3a0d` is clean, so selected implementation `.3` is now
+active. Activation changes continuity/documentation state only; the generator
+and runtime behavior remain unchanged.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

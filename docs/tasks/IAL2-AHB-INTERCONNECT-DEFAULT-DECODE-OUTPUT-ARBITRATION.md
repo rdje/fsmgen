@@ -87,7 +87,7 @@ selector assertions remain disabled.
   Commit: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.2: select mutually exclusive arbitration contract`
 
 - ID: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement assertion-clean generated AHB interconnect output arbitration.`
   Acceptance: `Activate only after .2 commits cleanly. Change only AhbInterconnect.pm generated IAL0 construction so each window has complementary mapped-hit/not-hit HSEL/HADDR and global HREADY/HRESP/HRDATA have exclusive retained-owner, first-cycle-unmapped, or ordinary-default modes; preserve independent owner blocks, HGRANT/input visibility, owner capture/hold/clear/same-edge mapped replacement, next_state, unmapped_error_complete, decode/local translation, wait/response behavior, the mapped-owner-to-unmapped non-promise, generic selector analysis/assertions, public sources/ports/support/reports/artifacts/semantic-MCP surfaces, backends/VHDL, and transaction behavior. Update t1478/t1480 and add t1530 plus task-owned harness data that directly instantiates generated one-/two-window ahb_interconnect modules and runs without --no-assert across mapped zero/nonzero/success/wait/subordinate-ERROR/unmapped-ERROR/status/control/same-edge mapped replacement. Keep --no-assert in t1513-t1516/t1523/t1525 because the independently tracked subordinate idle/phase-capture overlap remains; rerun that family for functional preservation. Require strict/check/schedule/artifact/verifier/semantic-MCP, t1518, t248/t297, docs/mdBook/Knowledge Map/doctrine, same-volume cleanup, the unchanged 88%/4096-MiB guard, and rollback. Do not repair the subordinate, generic ISF priority, mapped-owner-to-unmapped, broader AHB/protocol/backend/VHDL behavior, or decision 0020.`
   Verification: `pending`
@@ -101,7 +101,8 @@ complete at clean commit `c32255645`, so `.2` activated and is now complete.
 It selects proposed implementation child `.3` while routing a separately
 exposed subordinate assertion overlap to proposed task
 `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION`. No arbitration repair
-has started; `.3` may activate only after this contract commit is clean.
+has started. Contract commit `3883c3a0d` is clean, so `.3` is now active from
+that handoff-ready boundary; activation changes continuity/docs state only.
 
 ## Rollback
 

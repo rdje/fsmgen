@@ -13,7 +13,8 @@ defaults with explicit, mutually exclusive arbitration modes. Generic
 lowered-RTL selector analysis and generated `onehot0` assertions remain
 unchanged.
 
-Proposed child `.3` owns implementation. This contract slice changes no
+Child `.3` owns implementation and is active after clean contract commit
+`3883c3a0d`. This contract slice changes no
 parser, generator, public source, support identity, report/schema, review
 artifact, semantic/MCP API, HDL, runtime, backend, protocol, VHDL, or
 transaction-layer behavior.
@@ -150,7 +151,7 @@ correct owner.
 
 ## Future Implementation Gate
 
-Proposed `.3` must:
+Active `.3` must:
 
 1. change only the generated interconnect IAL0 shape in
    `AhbInterconnect.pm`;

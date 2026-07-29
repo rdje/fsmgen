@@ -28,5 +28,6 @@ paired run stops in the generated subordinate at cycle 345. Enable vector
 `ahb_phase_capture` rule's same assignment. Proposed separate subordinate task
 `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION` owns that audit.
 
-Proposed interconnect child `.3` instead instantiates generated fabric modules
-directly in focused t1530 and keeps generic assertion analysis unchanged.
+Clean contract commit `3883c3a0d` activates interconnect child `.3`. It
+instantiates generated fabric modules directly in focused t1530 and keeps
+generic assertion analysis unchanged.

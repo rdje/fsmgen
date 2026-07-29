@@ -7326,6 +7326,9 @@ direct-fabric assertion-enabled t1530 and keeps paired `--no-assert`; proposed
 `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1` owns the endpoint
 audit. See
 `docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md`.
+Contract commit `3883c3a0d` is clean, so selected implementation `.3` is now
+active. Activation changes task/index/Memory/roadmap/mdBook/Knowledge Map
+state only; the generator and runtime behavior remain unchanged.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

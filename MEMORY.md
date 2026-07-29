@@ -6,17 +6,15 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.2: select mutually exclusive arbitration contract`;
-  predecessor `22eb4822a`.
+  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3: activate interconnect arbitration implementation`;
+  predecessor `3883c3a0d`.
 - active_work_unit:
-  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3` (proposed).
-- current_state: `.2` is complete and selects complementary per-window plus
-  exclusive global response modes; proposed `.3` owns interconnect
-  implementation. Paired `--no-assert` removal is excluded because the
-  feasibility probe exposed a separate subordinate idle/phase-capture overlap.
-- next_action: after this commit is clean, activate `.3` in a docs-only boundary
-  commit, then implement the selected interconnect contract and direct-fabric
-  assertion-enabled t1530.
+  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3`.
+- current_state: `.2` committed cleanly at `3883c3a0d`; `.3` is active from
+  that boundary. Activation changes continuity/docs state only. Paired
+  `--no-assert` removal remains excluded by the separate subordinate overlap.
+- next_action: implement the selected AhbInterconnect IAL0 modes, update
+  t1478/t1480, and add direct-fabric assertion-enabled t1530.
 - in_flight_uncommitted: none after this commit; no background job remains.
 - blockers: none. The fixed guard refused attempts during unrelated external
   compiler pressure and admitted the definitive endpoint probe at 70.9%; never
@@ -29,7 +27,7 @@ bounded current-state pointer. Git preserves its prior history.
 - The IAL2 frontier is complete through `.812`; exact-three generic child `.3`
   established `321/362/45`, `.5` ships its matching alias at `322/363/46`, and
   completed parent `.813` selected the AHB interconnect arbitration audit;
-  child `.1` is complete and `.2` selects proposed implementation `.3`. The
+  child `.1` is complete and `.2` selects active implementation `.3`. The
   independent subordinate `HRDATA_REGS` overlap is durably routed to proposed
   `IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION.1`. Decision `0020`
   remains proposed/inactive.

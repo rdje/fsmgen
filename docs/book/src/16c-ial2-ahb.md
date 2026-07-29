@@ -471,7 +471,8 @@ through `ahb_tb.fsm`; the generated HDL entry is module `ahb_tb`.
 > [output-arbitration audit](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md)
 > and the
 > [selected contract](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
-> Proposed `.3` owns implementation; generated behavior remains unchanged.
+> Clean contract commit `3883c3a0d` activates `.3` for implementation;
+> generated behavior remains unchanged at this boundary.
 > A feasibility run with only fabric assertions suppressed exposed a separate
 > subordinate idle/`ahb_phase_capture` `HRDATA_REGS <- 0` overlap. Focused
 > t1530 will therefore instantiate the fabric directly with assertions, while
