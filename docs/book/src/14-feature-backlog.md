@@ -11489,6 +11489,13 @@ Clean exact-four alias behavior commit `ba2d1c01f` activates parent selector
 `.823` without changing behavior. The exact-four generic/profile pair remains
 at 328/369/52 split 26/26; t1536 remains parity-only and t1535 remains the
 shared assertion-enabled runtime while the selector reconciles the next owner.
+Selector `.823` now chooses proposed one-window exact-four paired-BUSY
+readiness audit `.1`. A same-volume candidate strict-checks and lowers to exact
+3 IAL1/4 IAL0 artifacts with width-three literal-four requester state,
+one-hot response ownership, BUSY parking, and public HDL verification. The
+audit must still prove real read-only MCP and assertion-enabled
+5/4/1/4/1/`44332211` runtime before any projected 329/370/53 public contract.
+See the [selection record](../../IAL2_POST_EXACT_FOUR_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

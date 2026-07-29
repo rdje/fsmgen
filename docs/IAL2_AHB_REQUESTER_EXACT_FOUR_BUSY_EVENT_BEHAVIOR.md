@@ -125,7 +125,9 @@ Generated outputs must use a repository-derived same-volume path.
 
 ## Explicit Deferrals And Rollback
 
-Exact-four paired compositions, counts above four,
+Parent selector `.823` now proposes a separate one-window exact-four paired
+composition readiness audit; no paired source ships yet. Two-window exact-four,
+the eventual paired alias, counts above four,
 arbitrary/runtime/policy/random counts, multiple insertion points, local
 bus-BUSY status, new burst/signal/topology behavior, HIAL/VIAL activation,
 VHDL, verification generation, and decision 0020 remain separate.

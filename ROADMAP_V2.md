@@ -7691,6 +7691,19 @@ remains its parity proof, and t1535 remains the shared assertion-enabled
 runtime. No source, support, test, artifact, HDL/runtime, simulator-profile,
 backend, protocol, HIAL/VIAL, VHDL, verification-generation, or transaction
 behavior changes in activation.
+Selector `.823` now chooses proposed one-window exact-four paired-BUSY
+readiness audit `.1` as the smallest adjacent gap. A repository-local
+same-volume candidate strict-checks with zero diagnostics and unmatched
+support, emits exact 3 IAL1/4 IAL0 artifacts under `ahb_tb`, preserves
+width-three literal-four requester state, one-hot response ownership, and
+child/propagated BUSY parking, and passes public `--verify-hdl`. The exact
+9-file/1,247,052-byte workspace is removed without residue. The audit must
+still prove real read-only MCP and assertion-enabled 5/4/1/4/1/`44332211`
+runtime before any projected 329/370/53 generic source contract. Two-window
+exact-four, alias, counts above four, new policy/status/burst/signal semantics,
+HIAL/VIAL, scale implementation, VHDL, verification generation, and decision
+0020 remain separate. See
+`docs/IAL2_POST_EXACT_FOUR_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

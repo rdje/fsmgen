@@ -5,15 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this `.823` activation commit; predecessor exact-four alias
-  behavior `ba2d1c01f`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.823`.
+- latest_commit: this `.823` selector commit; predecessor `b2ffcd746`.
+- active_work_unit: none after this commit; selected proposed
+  `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1` is next.
 - current_state: exact-four requester generic/profile surfaces ship byte-
   identically at 328 protocol / 369 supported-smoke+strict / 52 AHB paths
   split 26/26. t1536 proves alias parity without simulation; assertion-enabled
   t1535 remains shared `4->3->2->1->0` runtime.
-- next_action: reconcile the exact-one through exact-four requester and paired
-  AHB frontier, then select exactly one smallest evidence-backed next owner.
+- next_action: from this clean selector commit, activate only the selected
+  exact-four one-window paired readiness audit `.1` in a separate commit.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -33,8 +33,10 @@ bounded current-state pointer. Git preserves its prior history.
   `.3` ships literal `2..4`, preserving minimum widths 2/2/3, exact source/
   support/semantic surfaces, and t1535. `.4` selected `.5`; `.5` ships the
   byte-identical alias, exact support/semantic parity, t1536, and 328/369/52.
-  Active parent `.823` owns the next selection. Decision `0020` remains
-  inactive.
+  Parent `.823` selects proposed one-window exact-four paired readiness `.1`;
+  its 9-file feasibility probe strict-checks/lowers/verifies cleanly and was
+  removed, while assertion runtime remains for the audit. Decision `0020`
+  remains inactive.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and

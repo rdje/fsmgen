@@ -2295,6 +2295,15 @@ Clean exact-four alias behavior commit `ba2d1c01f` activates parent selector
 identical at 328/369/52 split 26/26; t1536 remains alias parity and t1535
 remains the shared assertion-enabled runtime while `.823` selects one next
 roadmap owner.
+Selector `.823` now chooses proposed one-window exact-four paired-BUSY
+readiness audit `.1`. A same-volume candidate strict-checks with unmatched
+support, lowers to exact 3 IAL1/4 IAL0 artifacts under `ahb_tb`, preserves
+width-three literal-four requester state, one-hot response ownership, and
+child/propagated BUSY parking, and passes public `--verify-hdl`. Assertion-
+enabled 5 presentations / 4 beats / 1 BUSY episode / 4 qualified BUSY events /
+1 resumed `SEQ` / storage `0x44332211` plus real read-only MCP remain for the
+audit before any projected 329/370/53 public contract. See the
+[selection record](../../IAL2_POST_EXACT_FOUR_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

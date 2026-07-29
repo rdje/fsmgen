@@ -11,7 +11,7 @@ answers:
 date: 2026-07-29
 status: current
 tags: [ial2, ahb, requester, busy, exact-four, ppif, runtime, counter, semantics, mcp]
-evidence: docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_CONTRACT_SELECTION.md; ppif/ahb_requester_busy_insert_four.ppif; ppif/ahb_requester_busy_insert_four.ahb; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/RegressionCorpus.pm; t/1535-ial2-ahb-requester-four-busy-insert.t; t/1536-ial2-ahb-requester-four-busy-insert-profile-alias.t; t/data/ahb_requester_four_busy_insert_tb.svt; docs/tasks/IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.md; docs/book/src/16c-ial2-ahb.md
+evidence: docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_CONTRACT_SELECTION.md; docs/IAL2_POST_EXACT_FOUR_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md; ppif/ahb_requester_busy_insert_four.ppif; ppif/ahb_requester_busy_insert_four.ahb; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/Support/RegressionCorpus.pm; t/1535-ial2-ahb-requester-four-busy-insert.t; t/1536-ial2-ahb-requester-four-busy-insert-profile-alias.t; t/data/ahb_requester_four_busy_insert_tb.svt; docs/tasks/IAL2-AHB-REQUESTER-EXACT-FOUR-BUSY-INSERTION-READINESS-AUDIT.md; docs/tasks/IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.md; docs/book/src/16c-ial2-ahb.md
 reverify: scripts/run_with_ram_guard.sh --host-max-pct 100 --process-max-rss-mb 4096 -- prove -Iperl -v t/1535-ial2-ahb-requester-four-busy-insert.t
 ---
 
@@ -34,3 +34,6 @@ read-only shell-disabled MCP parity pass. The generic source established
 `ial2-ahb-requester-exact-four-busy-event-profile-alias-behavior`, moving
 current accounting to 328 protocol / 369 supported+strict / 52 AHB paths split
 26 `.ppif` / 26 `.ahb`; broader count/policy/composition work stays separate.
+Parent `.823` now selects a separate one-window exact-four paired readiness
+audit. Its feasibility candidate lowers and verifies cleanly, but no paired
+source ships until assertion-enabled aggregate runtime and real MCP pass.

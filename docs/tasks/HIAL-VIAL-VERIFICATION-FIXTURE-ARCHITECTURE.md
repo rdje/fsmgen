@@ -243,4 +243,7 @@ evidence-backed handoff.
 - `2026-07-29`: Clean exact-four alias behavior commit `ba2d1c01f` activates
   parent selector `.823`; HIAL/VIAL remains proposed while the selector
   compares it with the remaining exact roadmap owners.
+- `2026-07-29`: Parent `.823` selects the smaller one-window exact-four paired
+  AHB readiness audit; HIAL/VIAL and its full-language simulator, VHDL,
+  migration, and large-design requirements remain proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.
