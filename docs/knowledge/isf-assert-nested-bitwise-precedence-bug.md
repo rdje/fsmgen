@@ -11,7 +11,7 @@ date: 2026-07-23
 status: current
 tags: [isf, assertion, systemverilog, precedence, bitwise, axi, verification, pre-existing]
 evidence: ppif/axi_read_burst4_transaction_composition.ppif; perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm; perl/FSM/Backend/GeneratedModuleEmitter.pm; t/1507-ial2-axi-read-burst4-transaction-composition.t; docs/tasks/ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.md
-reverify: ./bin/fsmgen --quiet --strict -o /tmp/fsmgen-axi-read-burst4-assertion-probe.sv ppif/axi_read_burst4_transaction_composition.ppif
+reverify: ./bin/fsmgen --quiet --strict -o .artifacts/sv/fsmgen-axi-read-burst4-assertion-probe.sv ppif/axi_read_burst4_transaction_composition.ppif
 ---
 
 The shipped AXI fixed-four read admission behavior is correct, but its

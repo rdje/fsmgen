@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / project data locality`
 - Created: `2026-07-29`
 - Last updated: `2026-07-29`
@@ -57,7 +57,7 @@ migrated or removed through copy/verify/use/delete evidence.
 ## Task Tree
 
 - ID: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION`
-  Status: `active`
+  Status: `done`
   Goal: `Adopt and enforce repository-volume locality for all project-owned data.`
   Children: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.1`, `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2`, `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.3`
 
@@ -76,11 +76,11 @@ migrated or removed through copy/verify/use/delete evidence.
   Commit: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2: localize runtime and test storage`
 
 - ID: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.3`
-  Status: `active`
+  Status: `done`
   Goal: `Synchronize active public instructions and fact-card reverification, perform exact residue migration/cleanup, and close the adoption.`
   Acceptance: `README, TOOLBOX, active fact-card reverify commands, generated Knowledge Map, and remaining relevant live references use repository-relative local storage; off-volume project-owned residue census/migration/removal evidence is recorded; no ambiguous shared cache is deleted; all focused, doctrine, Knowledge Map, mdBook, memory, diff, and warranted broader gates pass; the tree closes cleanly and PNT returns to a roadmap-aligned owner.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `README.md`, `TOOLBOX.md`, three active fact-card reverify commands, the generated `KNOWLEDGE_MAP.md`, and mdBook chapter 09 use repository-relative `.artifacts/` destinations; `git grep` reports zero active public operating-system temporary paths. The final doctrine check has no migration signature and passes strict zero-debt validation. The read-only residue census proved repository device 16777240 differs from host temp/home device 16777232; the only project-name matches under the host temp and targeted home-cache roots were the external Claude directories classified below, and no FSMGen process was active. Four exact current-session repository-local temp leftovers (4 files, 227,555 bytes, SHA-256 `e375d7ce...`, `15731907...`, `88aa50b6...`, `4d62589a...`) were deleted; the pre-existing `.artifacts/sv/direct_assignment_pair_form.sv` (6,278 bytes, SHA-256 `5464af04...`, born 2026-07-25) was retained because ownership was not proven. A project-path-keyed Claude temp directory (4 files, 104,712 bytes) and Claude connector cache (3 files, 5,715 bytes) were classified as external tool-owned/ambiguous and left untouched. Passing gates: `knowledge-map/scripts/gen_knowledge_map.sh`; `knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_project_data_locality.sh`; `scripts/check_docs_relative_paths.sh`; `scripts/check_readme_entrypoint.sh`; `mdbook build docs/book`; `scripts/check_doctrines.sh`; `scripts/check_memory_architecture.sh`; `git diff --check`. Leaf `.2` supplies the unchanged runtime implementation's passing 26-test locality/CLI proof and wider focused evidence. Guarded fact-card/focused reruns were attempted without changing the 88% cutoff: the first stopped before output at 96.6% while unrelated `pgen` rustc held about 9.4 GiB RSS; after that compiler exited, a retry stopped at 88.7% before producing output. No unguarded fallback was used.`
+  Commit: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.3: close same-volume adoption`
 
 ## Current Frontier
 
@@ -88,7 +88,7 @@ migrated or removed through copy/verify/use/delete evidence.
 | --- | --- | --- | --- |
 | 1 | `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.1` | `done` | Decision 0022, the root policy, exact pre-adoption debt signatures, doctrine registration, Knowledge Map fact, and adjacent startup-drift owners are in place. |
 | 2 | `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2` | `done` | Runtime/lowering storage, Knowledge Map scratch, test/gate environment, output containment, focused regressions, and affected mdBook behavior are repository-local. |
-| 3 | `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.3` | `active` | Synchronize remaining public/fact-card commands, prove residue cleanup, retire the final migration signature, and close the adoption. |
+| 3 | `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.3` | `done` | Public/fact-card paths, Knowledge Map, mdBook policy, exact residue evidence, and the strict zero-debt doctrine close the adoption; roadmap PNT resumes from the clean commit. |
 
 ## Decisions
 
@@ -121,6 +121,15 @@ migrated or removed through copy/verify/use/delete evidence.
   both predate this slice. The guarded run stopped later under real external
   memory pressure from a separate `pgen` rustc process. No unrelated fix or
   unsafe unguarded broad rerun was mixed into `.2`.
+- `2026-07-29`: Leaf `.3` retires the last public-command migration signature.
+  README, toolbox, fact cards, generated Knowledge Map, and the mdBook now use
+  repository-relative `.artifacts/` paths, and the doctrine gate requires zero
+  active operating-system temporary references.
+- `2026-07-29`: The residue census found no FSMGen-named off-volume data.
+  Project-path-keyed Claude temp and connector-cache directories are external
+  tool state, not FSMGen-owned workflow data, and were left untouched under the
+  ambiguous-cache rule. Exact current-session `.artifacts/tmp/` leftovers were
+  hashed and removed; an older unclassified generated HDL file was retained.
 
 ## Open Questions
 

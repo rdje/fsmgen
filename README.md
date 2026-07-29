@@ -1610,14 +1610,14 @@ order — pull it on demand:
 ## Quick start
 ```bash
 ./bin/fsmgen fsm/trial_0.fsm
-./bin/fsmgen --output /tmp/trial_0.sv fsm/trial_0.fsm
+./bin/fsmgen --output .artifacts/sv/trial_0.sv fsm/trial_0.fsm
 ./bin/fsmgen --debug=3 fsm/lte_dif_pmaster.fsm
-./bin/fsmgen --verify-hdl --output /tmp/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
+./bin/fsmgen --verify-hdl --output .artifacts/sv/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --emit-schedule-json isf/i2c_master.isf
 ./bin/fsmgen --emit-schedule-json ppif/axi_aw_valid_ready.ppif
-./bin/fsmgen --emit-verification-output uvm-passive-monitor --verification-outdir /tmp/fsmgen-uvm isf/verification_observation_metadata.isf
-./bin/fsmgen --emit-verification-output vhdl-observation-package --verification-outdir /tmp/fsmgen-vhdl-observation isf/verification_observation_metadata.isf
+./bin/fsmgen --emit-verification-output uvm-passive-monitor --verification-outdir .artifacts/verification/uvm-passive-monitor isf/verification_observation_metadata.isf
+./bin/fsmgen --emit-verification-output vhdl-observation-package --verification-outdir .artifacts/verification/vhdl-observation-package isf/verification_observation_metadata.isf
 ./bin/fsmgen --capability-manifest
 perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
@@ -1625,10 +1625,12 @@ perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list
 When `--output` is omitted, generated HDL is written under the git-ignored
 `.artifacts/<language>/` directory, such as `.artifacts/sv/trial_0.sv` or
 `.artifacts/vhd/direct_assignment_pair_form.vhd`. Use `--output` when you want
-an exact destination path.
+an exact repository-contained destination path. Project-owned output paths may
+not escape the repository; external source inputs remain caller-authorized,
+read-only inputs.
 Verification-output mode is separate from HDL generation: it requires
 `--verification-outdir DIR` and writes the selected artifact tree there instead
-of using `.artifacts/<language>/`.
+of using `.artifacts/<language>/`; `DIR` must also remain inside the repository.
 
 For a read-only MCP client, configure the local command as
 `perl /path/to/fsmgen/bin/fsmgen-mcp --workspace-root /path/to/workspace`.

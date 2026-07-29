@@ -26,19 +26,9 @@ legacy_config_matches() {
     perl/env.conf 2>/dev/null || true
 }
 
-# The runtime/test/config baselines were retired by adoption leaf .2. The one
-# remaining public-instruction signature is temporary monotonic debt owned by
-# leaf .3. Any new, removed, or modified public match must be classified there.
-expect_signature() {
-  local label="$1"
-  local expected="$2"
-  local actual="$3"
-  if [[ "${actual}" != "${expected}" ]]; then
-    note "${label} signature changed (expected ${expected}, found ${actual}); classify it in the active locality task-tree"
-  fi
-}
-
-expect_signature "remaining public off-volume command debt" "2942575830:249556" "$(public_matches | LC_ALL=C sort | cksum | awk '{ print $1 ":" $2 }')"
+if [[ -n "$(public_matches)" ]]; then
+  note "active public instructions retain operating-system temporary paths"
+fi
 
 if [[ -n "$(test_explicit_matches)" ]]; then
   note "tests retain explicit operating-system temporary paths"
@@ -116,4 +106,4 @@ if [[ "${fail}" -ne 0 ]]; then
   exit 1
 fi
 
-printf '[project-data-locality] OK: runtime/test/config paths are repository-local; remaining public debt is pinned for leaf .3\n'
+printf '[project-data-locality] OK: runtime, test, config, and active public paths are repository-local\n'

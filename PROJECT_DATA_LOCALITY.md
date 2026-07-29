@@ -90,9 +90,9 @@ Run:
 scripts/check_project_data_locality.sh
 ```
 
-The check is registered in `scripts/check_doctrines.sh`. During the bounded
-adoption tree it pins the exact pre-adoption violation signatures so the debt
-can only shrink; the final adoption leaf removes those signatures and leaves a
-strict zero-new-default gate over live runtime, test, and public-instruction
-surfaces. Historical completed task-tree evidence and frozen legacy prose are
-not active instructions and are not rewritten merely to disguise old paths.
+The check is registered in `scripts/check_doctrines.sh`. It requires zero
+operating-system temporary paths across live runtime, test, configuration, and
+public-instruction surfaces, and it verifies the repository-local runtime and
+launcher controls. Historical completed task-tree evidence and frozen legacy
+prose are not active instructions and are not rewritten merely to disguise old
+paths.

@@ -180,10 +180,11 @@ hygiene. The mechanical gate model is documented in
 scripts/check_doctrines.sh
 ```
 
-That driver currently runs the doctrine-bootstrap check, memory-architecture
-check, Knowledge Map sync check, and docs relative-path audit. The local
-pre-commit hook regenerates the Knowledge Map before running the driver, and
-hosted regression CI runs the same driver before the broader regression gate.
+That driver runs every registered repository doctrine, including bootstrap,
+memory architecture, Knowledge Map sync, docs path hygiene, README entry-point
+hygiene, and project-data locality. The local pre-commit hook regenerates the
+Knowledge Map before running the driver, and hosted regression CI runs the same
+driver before the broader regression gate.
 
 Recommended debug run:
 
@@ -205,6 +206,22 @@ Trace behavior:
 - non-quiet failures keep more composition/diagnostic context
 - report-only JSON modes keep stdout JSON-only and route trace text away from
   stdout when tracing is enabled
+
+## Project-Local Storage
+
+FSMGen keeps project-owned generated output, temporary lowering and test
+workspaces, logs, caches, dependency stores, and build products on the
+repository filesystem volume. The canonical generated-state root is the
+git-ignored `.artifacts/` directory, with typed roots such as
+`.artifacts/tmp/`, `.artifacts/logs/`, and `.artifacts/cache/`; established
+in-tree build roots such as `rust/target/` and `docs/book/book/` also remain
+valid.
+
+Output-bearing CLI options must resolve inside the repository and reject
+parent traversal, absolute external destinations, and symlink escapes. An
+external source may still be supplied as an explicit caller-authorized input;
+FSMGen treats that cross-volume access as read-only and keeps every generated
+artifact local.
 
 ## Useful Options
 

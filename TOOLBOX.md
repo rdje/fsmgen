@@ -20,7 +20,7 @@ scripts/check_doctrines.sh
 | ISF or PPIF lowering/report shape is unclear | `--emit-schedule-json`. |
 | Need stable diagnostics without writing HDL | `--strict --check --json`. |
 | Need sanitized semantic/IR structure | `--strict --emit-semantic-json`. |
-| Need generated SystemVerilog checked by external tools | `--verify-hdl --output /tmp/out.sv`. |
+| Need generated SystemVerilog checked by external tools | `--verify-hdl --output .artifacts/sv/out.sv`. |
 | Need support-accounting coverage truth | `prove -Iperl t/248-regression-corpus-accounting.t`. |
 | Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
 | Need user-facing docs proof | `mdbook build docs/book`. |
@@ -38,19 +38,20 @@ scripts/check_doctrines.sh
 Use this when the control flow, lowering path, or diagnostic context is unclear.
 
 ```bash
-./bin/fsmgen --trace-verbosity=debug --trace-log=/tmp/fsmgen.trace \
-  --output /tmp/fsmgen_out.sv path/to/input.fsm
+./bin/fsmgen --trace-verbosity=debug --trace-log=.artifacts/logs/fsmgen.trace \
+  --output .artifacts/sv/fsmgen_out.sv path/to/input.fsm
 ```
 
-Expected signal: command stderr/stdout stays readable, while `/tmp/fsmgen.trace`
-contains origin-tagged trace lines with file, function, and line information.
+Expected signal: command stderr/stdout stays readable, while
+`.artifacts/logs/fsmgen.trace` contains origin-tagged trace lines with file,
+function, and line information.
 Use lower verbosity (`low`, `medium`, `high`) when the trace is too large.
 
 For `.isf` or `.ppif` inputs, keep report-only JSON stdout clean by routing
 trace output to a file:
 
 ```bash
-./bin/fsmgen --quiet --trace-verbosity=debug --trace-log=/tmp/fsmgen.trace \
+./bin/fsmgen --quiet --trace-verbosity=debug --trace-log=.artifacts/logs/fsmgen.trace \
   --emit-schedule-json path/to/input.ppif
 ```
 
@@ -59,7 +60,7 @@ trace output to a file:
 Use this for the older compatibility debug stream:
 
 ```bash
-./bin/fsmgen --debug=3 --output /tmp/fsmgen_out.sv path/to/input.fsm
+./bin/fsmgen --debug=3 --output .artifacts/sv/fsmgen_out.sv path/to/input.fsm
 ```
 
 Expected signal: debug output identifies parser/generator phases and major
@@ -117,7 +118,7 @@ Use `--verify-hdl` after generating SystemVerilog when the suspected issue is
 backend output quality or external-tool compatibility.
 
 ```bash
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_out.sv path/to/input.fsm
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_out.sv path/to/input.fsm
 ```
 
 Expected signal: FSMGEN writes SystemVerilog and runs the configured
@@ -128,9 +129,13 @@ optional tools as a behavior fix.
 For direct inspection without external tools:
 
 ```bash
-./bin/fsmgen --quiet --output /tmp/fsmgen_out.sv path/to/input.fsm
-rg -n 'signal_or_rule_name|assert|always_ff' /tmp/fsmgen_out.sv
+./bin/fsmgen --quiet --output .artifacts/sv/fsmgen_out.sv path/to/input.fsm
+rg -n 'signal_or_rule_name|assert|always_ff' .artifacts/sv/fsmgen_out.sv
 ```
+
+All project-owned output, trace, cache, and temporary paths must remain inside
+the repository. Use [PROJECT_DATA_LOCALITY.md](PROJECT_DATA_LOCALITY.md) for
+the canonical roots and the bounded external-input exception.
 
 ## 4. Support Accounting And Regression
 

@@ -5,7 +5,7 @@ layer: B
 date: 2026-06-15
 owner: IAL2-FEATURE-COMPLETENESS-FRONTIER.113
 evidence: docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE.md; ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; perl/FSM/Support/RegressionCorpus.pm; docs/REGRESSION_CORPUS.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif && env -u PERL5LIB ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_queue_head_read_data_reverify.sv ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif && env -u PERL5LIB prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t t/1436-ial2-ppif-parser-cli.t
+reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif && env -u PERL5LIB ./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_queue_head_read_data_reverify.sv ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif && env -u PERL5LIB prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t
 answers:
   - "does AXI manager read-data support generated queue-head response demux?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.113 ship?"
