@@ -34,3 +34,6 @@ Two-window exact-four, counts above four, new policies/status/bursts/signals,
 HIAL/VIAL activation, scale, VHDL, verification generation, and decision 0020
 remain separate. Verilator remains the portable-fast event-capable compiled
 profile, not the full-language/SystemVerilog-UVM authority.
+
+Clean selector commit `d91c5c7c9` now activates only readiness audit `.1`;
+the public 328/369/52 boundary remains unchanged during activation.

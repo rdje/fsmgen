@@ -99,6 +99,9 @@ The selector itself changes no public source, support, test, artifact, API,
 HDL/runtime, simulator integration, backend, protocol, HIAL/VIAL, VHDL,
 verification-generation, or transaction behavior.
 
+Clean selector commit `d91c5c7c9` now activates only the selected readiness
+audit `.1`; activation changes continuity documentation and no behavior.
+
 ## Validation And Rollback
 
 Focused current-surface/backlog/path tests, Knowledge Map generation/check,

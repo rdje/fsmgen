@@ -246,4 +246,6 @@ evidence-backed handoff.
 - `2026-07-29`: Parent `.823` selects the smaller one-window exact-four paired
   AHB readiness audit; HIAL/VIAL and its full-language simulator, VHDL,
   migration, and large-design requirements remain proposed and unchanged.
+- `2026-07-29`: Clean selector commit `d91c5c7c9` activates only exact-four
+  paired readiness `.1`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

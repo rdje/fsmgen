@@ -5,15 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this `.823` selector commit; predecessor `b2ffcd746`.
-- active_work_unit: none after this commit; selected proposed
-  `IAL2-AHB-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1` is next.
+- latest_commit: this exact-four paired `.1` activation; predecessor `d91c5c7c9`.
+- active_work_unit: exact-four paired readiness audit `.1`.
 - current_state: exact-four requester generic/profile surfaces ship byte-
   identically at 328 protocol / 369 supported-smoke+strict / 52 AHB paths
   split 26/26. t1536 proves alias parity without simulation; assertion-enabled
   t1535 remains shared `4->3->2->1->0` runtime.
-- next_action: from this clean selector commit, activate only the selected
-  exact-four one-window paired readiness audit `.1` in a separate commit.
+- next_action: execute the same-volume assertion-enabled exact-four paired
+  readiness audit and select either a generic contract or smallest prerequisite.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact

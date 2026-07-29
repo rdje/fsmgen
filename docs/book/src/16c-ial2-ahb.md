@@ -2304,6 +2304,9 @@ enabled 5 presentations / 4 beats / 1 BUSY episode / 4 qualified BUSY events /
 1 resumed `SEQ` / storage `0x44332211` plus real read-only MCP remain for the
 audit before any projected 329/370/53 public contract. See the
 [selection record](../../IAL2_POST_EXACT_FOUR_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md).
+Clean selector commit `d91c5c7c9` activates only readiness audit `.1` with no
+public behavior change. The exact-four paired source remains absent while the
+audit owns assertion-enabled aggregate runtime and real read-only MCP proof.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

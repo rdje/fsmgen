@@ -11496,6 +11496,9 @@ one-hot response ownership, BUSY parking, and public HDL verification. The
 audit must still prove real read-only MCP and assertion-enabled
 5/4/1/4/1/`44332211` runtime before any projected 329/370/53 public contract.
 See the [selection record](../../IAL2_POST_EXACT_FOUR_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md).
+Clean selector commit `d91c5c7c9` activates only readiness audit `.1`.
+Activation adds no public paired source, support, test, or behavior; assertion-
+enabled aggregate runtime and real read-only MCP remain pending.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

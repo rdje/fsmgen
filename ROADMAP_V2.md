@@ -7704,6 +7704,11 @@ exact-four, alias, counts above four, new policy/status/burst/signal semantics,
 HIAL/VIAL, scale implementation, VHDL, verification generation, and decision
 0020 remain separate. See
 `docs/IAL2_POST_EXACT_FOUR_REQUESTER_ALIAS_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `d91c5c7c9` activates only readiness audit `.1`.
+Activation changes continuity documentation and no parser, generator, public
+source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator,
+backend, protocol, HIAL/VIAL, VHDL, verification-generation, or transaction
+behavior; exact-four paired runtime and real MCP evidence remain pending.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
