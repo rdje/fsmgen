@@ -263,4 +263,6 @@ evidence-backed handoff.
 - `2026-07-30`: Parent `.824` selects the smaller byte-identical exact-four
   paired `.ahb` alias as pending `.825`; HIAL/VIAL remains proposed with its
   portable-fast/full-language/VHDL/mixed-language/scale requirements intact.
+- `2026-07-30`: Clean selector commit `5b601fffc` activates only data-only
+  alias slice `.825`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

@@ -37,7 +37,8 @@ alias and two-subordinate exact-four topology remain separate.
 Clean behavior commit `c42347a5e` activates no-behavior parent selector
 `.824`; it must choose one exact next roadmap owner before further expansion.
 
-Completed `.824` selects pending `.825`, the byte-identical matching `.ahb`
-alias at projected 330/371/54. Fact
+Completed `.824` selects active `.825`, activated only after clean selector
+commit `5b601fffc`, for the byte-identical matching `.ahb` alias at projected
+330/371/54. Fact
 `ial2-post-exact-four-paired-composition-next-owner-selection` owns the exact
 support and t1538/shared-t1537 boundary.

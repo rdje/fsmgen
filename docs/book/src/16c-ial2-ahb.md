@@ -2387,6 +2387,10 @@ is 330/371/54 split 27 `.ppif` / 27 `.ahb`; focused t1538 will own alias parity
 without another simulation, while t1537 remains the shared assertion-enabled
 runtime. See the
 [next-owner selection](../../IAL2_POST_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
+Clean selector commit `5b601fffc` now activates `.825` without changing the
+public 329/370/53 split 27 `.ppif`/26 `.ahb` boundary. The active slice owns
+only the byte-identical alias, exact support accounting, and t1538 parity;
+t1537 remains the sole assertion-enabled runtime.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

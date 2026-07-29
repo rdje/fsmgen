@@ -7771,6 +7771,13 @@ without residue. Two-window exact-four, broader AHB, generic priority,
 HIAL/VIAL, VHDL, verification generation, portability implementation, scale,
 and decision 0020 remain separate. See
 `docs/IAL2_POST_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `5b601fffc` now activates `.825` as continuity only.
+The public boundary remains 329/370/53 split 27 `.ppif`/26 `.ahb` until the
+tracked alias, support identity, and t1538 parity proof ship; t1537 remains
+the shared runtime authority. No parser, generator, source, support, test,
+report, semantic/MCP, HDL/runtime, simulator, backend, HIAL/VIAL, VHDL,
+verification-generation, scale, decision-0020, or transaction behavior changes
+in activation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

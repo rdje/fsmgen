@@ -17,7 +17,8 @@ reverify: rg -n 't/1538|330|371|54 AHB|read_only=true|shell_access=false|two-sub
 ---
 
 Parent selector `.824` selects the matching byte-identical one-window
-exact-four paired `.ahb` alias as pending implementation `.825`. A 4,978-byte
+exact-four paired `.ahb` alias as implementation `.825`, activated only after
+clean selector commit `5b601fffc`. A 4,978-byte
 repository-local candidate strict-checks with zero diagnostics, preserves
 `ahb_tb`/top/3 children/28 signals, exact 3 IAL1/4 IAL0 artifacts, numeric
 `before_beat=2`/`beats=4`, BUSY parking, and one-hot response ownership, and

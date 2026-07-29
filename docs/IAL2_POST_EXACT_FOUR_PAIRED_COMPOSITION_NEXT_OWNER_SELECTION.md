@@ -12,7 +12,8 @@ Select one byte-identical `.ahb` profile alias as the next exact owner:
 ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ahb
 ```
 
-Pending `IAL2-FEATURE-COMPLETENESS-FRONTIER.825` owns implementation. It must
+Active `IAL2-FEATURE-COMPLETENESS-FRONTIER.825`, activated only after clean
+selector commit `5b601fffc`, owns implementation. It must
 mirror the shipped generic source byte-for-byte, reuse the existing AHB suffix
 and lowering machinery, add exact support accounting and one focused parity
 test, and reuse t1537 as the sole assertion-enabled runtime proof.
@@ -146,6 +147,6 @@ broader bursts/signals/managers/fabrics, generic priority, other protocols and
 backends, HIAL/VIAL activation, verification generation, VHDL, scale
 implementation, and decision 0020 remain separate task-tree-owned work.
 
-Rollback removes this record/fact and pending `.825`, restores `.824` to
+Rollback removes this record/fact and active `.825`, restores `.824` to
 active selection, and leaves the shipped 329/370/53 boundary unchanged. No
 public or generated behavior changes in selection.
