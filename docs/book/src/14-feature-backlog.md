@@ -4920,7 +4920,7 @@ ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.108`. The public sample is:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_write_same_id_queue_head_response_demux.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_write_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_write_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_write_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_write_same_id_queue_head_response_demux.ppif
 ```
 
 The sample uses two write transactions, `w0` and `w1`, sharing concrete write
@@ -4978,7 +4978,7 @@ ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.110`. The public sample is:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_single_beat_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_read_single_beat_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux.ppif
 ```
 
 The sample uses two read transactions, `r0` and `r1`, sharing concrete read ID
@@ -5032,7 +5032,7 @@ ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.113`. The public sample is:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_single_beat_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_read_single_beat_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif
 ```
 
 The implemented boundary is exactly one generated read single-beat concrete
@@ -5092,7 +5092,7 @@ burst-last concrete same-ID queue-head demux shape:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_last_beat_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_read_last_beat_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif
 ```
 
 The implementation reuses the generated `RID` plus `RLAST` queue-head demux
@@ -5141,7 +5141,7 @@ read burst-last concrete same-ID queue-head last-beat read-data shape:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_last_beat_same_id_queue_head_burst_length.sv ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_read_last_beat_same_id_queue_head_burst_length.sv ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif
 ```
 
 The generated burst-length capture is request-bound:
@@ -5188,7 +5188,7 @@ queue-head runtime validation behavior:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.sv ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.sv ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif
 ```
 
 For that sample, the report keeps the queue-head last-beat completion validity
@@ -5221,7 +5221,7 @@ read burst-last concrete same-ID queue-head demux sample:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_multi_beat_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_read_multi_beat_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data.ppif
 ```
 
 The lane capture rules use raw matched queue-head read beats plus the current
@@ -5289,7 +5289,7 @@ behavior for multiple duplicate concrete read-ID groups. The public sample is:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_multi_group_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_read_multi_group_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif
 ```
 
 The sample uses two duplicate read-ID groups: `r0`/`r1` share concrete `RID`
@@ -5559,7 +5559,7 @@ The public sample is:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_write_multi_group_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_write_multi_group_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif
 ```
 
 The sample uses two duplicate write-ID groups: `w0`/`w1` share concrete `BID`
@@ -5749,7 +5749,7 @@ is:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_burst_last_depth3_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_read_burst_last_depth3_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux.ppif
 ```
 
 The generated queue covers `r0`, `r1`, and `r2` with concrete `RID` `3`.
@@ -5821,7 +5821,7 @@ burst-last concrete `RID` group at depth 3. The runnable public sample is:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_burst_last_depth3_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_read_burst_last_depth3_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data.ppif
 ```
 
 The generated queue covers `r0`, `r1`, and `r2` with concrete `RID` `3`.
@@ -6071,7 +6071,7 @@ queue-head response-demux. The public source is:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_write_depth3_same_id_queue_head_response_demux.ppif
-./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_write_depth3_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_write_depth3_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output .artifacts/sv/fsmgen_write_depth3_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_write_depth3_same_id_queue_head_response_demux.ppif
 ```
 
 The sample covers one write group with `w0`, `w1`, and `w2` sharing concrete
@@ -9623,8 +9623,8 @@ support-accounts `intent.ppif_apb_requester_transfer`. APB support here is a
 ./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer.ppif
 ./bin/fsmgen --strict --check --json ppif/apb_requester_transfer.ppif
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer.ppif
-./bin/fsmgen --quiet --outdir /tmp/fsmgen-apb-ppif \
-  --output /tmp/fsmgen-apb-ppif/apb_requester.sv \
+./bin/fsmgen --quiet --outdir .artifacts/ial2/fsmgen-apb-ppif \
+  --output .artifacts/ial2/fsmgen-apb-ppif/apb_requester.sv \
   ppif/apb_requester_transfer.ppif
 ```
 
@@ -9687,8 +9687,8 @@ source paths in check JSON and semantic JSON, and support-account as
 ./bin/fsmgen --strict --check --json ppif/apb_completer.apb
 ./bin/fsmgen --strict --check --json ppif/apb_composition.apb
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer.apb
-./bin/fsmgen --quiet --outdir /tmp/fsmgen-apb-alias \
-  --output /tmp/fsmgen-apb-alias/apb_requester.sv \
+./bin/fsmgen --quiet --outdir .artifacts/ial2/fsmgen-apb-alias \
+  --output .artifacts/ial2/fsmgen-apb-alias/apb_requester.sv \
   ppif/apb_requester_transfer.apb
 ```
 
@@ -11115,8 +11115,8 @@ report schema `fsmgen.ial2.protocol_intent.apb_completer.v1`, materializes
 ./bin/fsmgen --emit-schedule-json ppif/apb_completer.ppif
 ./bin/fsmgen --strict --check --json ppif/apb_completer.ppif
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_completer.ppif
-./bin/fsmgen --quiet --outdir /tmp/fsmgen-apb-completer \
-  --output /tmp/fsmgen-apb-completer/apb_completer.sv \
+./bin/fsmgen --quiet --outdir .artifacts/ial2/fsmgen-apb-completer \
+  --output .artifacts/ial2/fsmgen-apb-completer/apb_completer.sv \
   ppif/apb_completer.ppif
 ```
 
@@ -11175,8 +11175,8 @@ and support-accounts `intent.ppif_apb_composition`.
 ./bin/fsmgen --emit-schedule-json ppif/apb_composition.ppif
 ./bin/fsmgen --strict --check --json ppif/apb_composition.ppif
 ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition.ppif
-./bin/fsmgen --quiet --outdir /tmp/fsmgen-apb-composition \
-  --output /tmp/fsmgen-apb-composition/apb_tb.sv \
+./bin/fsmgen --quiet --outdir .artifacts/ial2/fsmgen-apb-composition \
+  --output .artifacts/ial2/fsmgen-apb-composition/apb_tb.sv \
   ppif/apb_composition.ppif
 ```
 

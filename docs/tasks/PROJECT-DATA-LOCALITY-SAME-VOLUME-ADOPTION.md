@@ -69,17 +69,16 @@ migrated or removed through copy/verify/use/delete evidence.
   Commit: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.1: adopt same-volume data doctrine`
 
 - ID: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2`
-  Status: `active`
+  Status: `done`
   Goal: `Move live runtime, lowering, doctrine-tool, and standard test temporary storage onto repository-derived roots.`
-  Acceptance: `CLI and in-process IAL1/IAL2 lowering use repository-local temporary workspaces; Knowledge Map checks create scratch files there; standard test/gate launchers export a repository-local temporary root before any fixture creation; explicit output-path behavior is bounded and regression-locked; focused and broader runtime gates pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `CLI and in-process IAL1/IAL2 lowering use repository-local temporary workspaces; Knowledge Map checks create scratch files there; standard test/gate launchers export a repository-local temporary root before any fixture creation; explicit output-path behavior is bounded and regression-locked; the mdBook commands and option descriptions affected by that behavior change in the same slice; focused and broader runtime gates pass.`
+  Verification: `perl -Iperl -c perl/FSM/ProjectDataLocality.pm`; `perl -Iperl -c bin/fsmgen`; `perl -Iperl -c perl/FSM/Pipeline/HDLGenerator.pm`; `bash -n` over changed shell entrypoints; `prove t/1527-project-data-locality.t t/1463-cli-generated-hdl-artifact-placement.t` (26 tests); 17 changed-path/runtime tests through `t/1305` passed in the RAM-guarded extended set; `prove t/1444-semantic-introspection-mcp-support-queries.t t/1464-isf-verification-output-uvm-passive-monitor.t t/1465-isf-verification-output-vhdl-observation-package.t` (10 tests); `knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_project_data_locality.sh`; `scripts/check_doctrines.sh`; `mdbook build docs/book`; `scripts/check_memory_architecture.sh`; `git diff --check` (all pass, 2026-07-29). The extended set then reached the already-tracked stale APB expectation in `IAL2-T1436-PREEXISTING-FAILURES`; the guard stopped that run at 94.0% host usage. A confirmatory quick gate was also stopped immediately at 97.9% while an unrelated `/Volumes/SSD/Documents/github/pgen` rustc process held 9,123,344 KiB RSS; no unguarded broad rerun was substituted, and leaf `.3` retains the final broader-gate opportunity.`
+  Commit: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2: localize runtime and test storage`
 
 - ID: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.3`
-  Status: `pending`
-  Blocked by: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2`
+  Status: `active`
   Goal: `Synchronize active public instructions and fact-card reverification, perform exact residue migration/cleanup, and close the adoption.`
-  Acceptance: `README, TOOLBOX, mdBook, active fact-card reverify commands, generated Knowledge Map, and relevant live references use repository-relative local storage; off-volume project-owned residue census/migration/removal evidence is recorded; no ambiguous shared cache is deleted; all focused, doctrine, Knowledge Map, mdBook, memory, diff, and warranted broader gates pass; the tree closes cleanly and PNT returns to a roadmap-aligned owner.`
+  Acceptance: `README, TOOLBOX, active fact-card reverify commands, generated Knowledge Map, and remaining relevant live references use repository-relative local storage; off-volume project-owned residue census/migration/removal evidence is recorded; no ambiguous shared cache is deleted; all focused, doctrine, Knowledge Map, mdBook, memory, diff, and warranted broader gates pass; the tree closes cleanly and PNT returns to a roadmap-aligned owner.`
   Verification: `pending`
   Commit: `pending`
 
@@ -88,8 +87,8 @@ migrated or removed through copy/verify/use/delete evidence.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.1` | `done` | Decision 0022, the root policy, exact pre-adoption debt signatures, doctrine registration, Knowledge Map fact, and adjacent startup-drift owners are in place. |
-| 2 | `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2` | `active` | Move runtime, lowering, Knowledge Map scratch, and standard test fixtures to repository-local roots. |
-| 3 | `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.3` | `pending` | Public sync and residue proof close the adoption after live paths migrate. |
+| 2 | `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2` | `done` | Runtime/lowering storage, Knowledge Map scratch, test/gate environment, output containment, focused regressions, and affected mdBook behavior are repository-local. |
+| 3 | `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.3` | `active` | Synchronize remaining public/fact-card commands, prove residue cleanup, retire the final migration signature, and close the adoption. |
 
 ## Decisions
 
@@ -106,6 +105,22 @@ migrated or removed through copy/verify/use/delete evidence.
   set, and legacy machine-local configuration. Leaves `.2` and `.3` must
   shrink and finally retire those migration signatures; changing debt without
   task-tree classification fails the doctrine gate.
+- `2026-07-29`: Leaf `.2` owns the mdBook command and option updates directly
+  affected by its CLI output-containment change. Leaf `.3` retains the README,
+  toolbox, fact-card, Knowledge Map, residue, and remaining live-reference
+  closeout so no committed runtime behavior is temporarily misdocumented.
+- `2026-07-29`: `FSM::ProjectDataLocality` is the shared runtime containment
+  boundary. CLI output, review, verification, and trace destinations must
+  resolve inside the repository; external source inputs remain explicit
+  read-only inputs. Implicit IAL1/IAL2 handoff files use typed
+  `.artifacts/tmp/` workspaces, while standard `prove` and repo launchers set
+  repository-local temp/cache environment before creating fixtures.
+- `2026-07-29`: The extended `.2` regression encountered the exact stale APB
+  diagnostic already owned by proposed tree `IAL2-T1436-PREEXISTING-FAILURES`;
+  `git show HEAD` proves the expectation and expanded implementation message
+  both predate this slice. The guarded run stopped later under real external
+  memory pressure from a separate `pgen` rustc process. No unrelated fix or
+  unsafe unguarded broad rerun was mixed into `.2`.
 
 ## Open Questions
 

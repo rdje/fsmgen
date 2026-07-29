@@ -1,0 +1,4 @@
+-Mlib=perl,t/lib
+-Iperl
+-It/lib
+-MFSM::Test::ProjectDataLocality

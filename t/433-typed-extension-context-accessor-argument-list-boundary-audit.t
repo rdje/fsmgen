@@ -68,7 +68,7 @@ subtest 'direct context accessors accept no payload arguments' => sub {
 
     is($context->stage, 'after_parse_source', 'stage accepts no payload arguments');
     is($context->pipeline, $pipeline, 'pipeline accepts no payload arguments');
-    is($context->source_path, '/tmp/context_accessor_argument_list_boundary.fsm', 'source_path accepts no payload arguments');
+    is($context->source_path, 'fixtures/context_accessor_argument_list_boundary.fsm', 'source_path accepts no payload arguments');
     is($context->target_language, 'systemverilog', 'target_language accepts no payload arguments');
     is_deeply($context->source_info, {kind => 'fsm'}, 'source_info accepts no payload arguments');
     is_deeply($context->raw_ast, [], 'raw_ast accepts no payload arguments');
@@ -128,7 +128,7 @@ sub make_context {
     return FSM::Extension::Context->new(
         stage => $args{stage},
         pipeline => $args{pipeline} || bless({}, 'Test::ContextAccessorArgumentListBoundaryPipeline'),
-        source_path => '/tmp/context_accessor_argument_list_boundary.fsm',
+        source_path => 'fixtures/context_accessor_argument_list_boundary.fsm',
         target_language => 'systemverilog',
         source_info => {
             kind => 'fsm',

@@ -250,7 +250,7 @@ sub make_context {
     return FSM::Extension::Context->new(
         stage => $args{stage},
         pipeline => bless({}, 'Test::RegistryDispatchBoundaryPipeline'),
-        source_path => '/tmp/registry_dispatch_boundary.fsm',
+        source_path => 'fixtures/registry_dispatch_boundary.fsm',
         target_language => 'systemverilog',
         source_info => {
             kind => 'fsm',

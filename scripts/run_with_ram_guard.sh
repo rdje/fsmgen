@@ -3,6 +3,10 @@
 set -u
 set -o pipefail
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+# shellcheck source=project_data_locality_env.sh
+source "${SCRIPT_DIR}/project_data_locality_env.sh"
+
 host_max_pct="${FSMGEN_RAM_GUARD_HOST_MAX_PCT:-88}"
 process_max_rss_mb="${FSMGEN_RAM_GUARD_PROCESS_MAX_RSS_MB:-4096}"
 poll_seconds="${FSMGEN_RAM_GUARD_POLL_SECONDS:-2}"

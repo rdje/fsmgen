@@ -207,7 +207,7 @@ sub make_context {
     return FSM::Extension::Context->new(
         stage => $args{stage},
         pipeline => bless({}, 'Test::RegistryMethodArgumentListBoundaryPipeline'),
-        source_path => '/tmp/registry_method_argument_list_boundary.fsm',
+        source_path => 'fixtures/registry_method_argument_list_boundary.fsm',
         target_language => 'systemverilog',
         source_info => {
             kind => 'fsm',

@@ -9,7 +9,6 @@ no warnings 'experimental::signatures';
 
 use Carp qw(confess);
 use File::Spec;
-use File::Temp qw(tempdir);
 use FindBin;
 use lib "$FindBin::Bin";
 use Scalar::Util qw(blessed reftype);
@@ -18,6 +17,7 @@ use FSM::Composition::RTLInterfaceLoader;
 use FSM::Extension::Loader;
 use FSM::Extension::Registry;
 use FSM::Pipeline::SourceGenerationOrchestrator;
+use FSM::ProjectDataLocality qw(create_project_tempdir);
 use FSM::SourcePathResolver;
 
 my @SUPPORTED_EXTENSION_HOOK_METHODS = qw(
@@ -432,7 +432,7 @@ sub _generate_hdl_from_ppif_file ($pipeline, $ppif_path) {
     return $result;
 }
 sub _write_generated_fsm_files ($files, $entry_basename) {
-    my $dir = tempdir(CLEANUP => 1);
+    my $dir = create_project_tempdir(purpose => 'in-process-lowering');
     for my $name (sort keys %$files) {
         my $path = File::Spec->catfile($dir, $name);
         open my $fh, '>', $path or confess "Cannot write generated temporary .fsm artifact '$path': $!";

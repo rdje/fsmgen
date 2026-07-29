@@ -191,10 +191,10 @@ This chapter was validated from checked-in sources with:
 ./bin/fsmgen --quiet --strict --check --json ppif/apb_requester_transfer.apb
 ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_completer.apb
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/apb_composition.apb
-./bin/fsmgen --quiet --outdir /tmp/fsmgen-doc-apb-692-out ppif/apb_composition.ppif
+./bin/fsmgen --quiet --outdir .artifacts/ial2/fsmgen-doc-apb-692-out ppif/apb_composition.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.apb
-./bin/fsmgen --quiet --outdir /tmp/fsmgen-doc-apb-692-raw-out ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.ppif
+./bin/fsmgen --quiet --outdir .artifacts/ial2/fsmgen-doc-apb-692-raw-out ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.ppif
 ```
 
 The temporary outdir probes confirmed both the fixed composition review

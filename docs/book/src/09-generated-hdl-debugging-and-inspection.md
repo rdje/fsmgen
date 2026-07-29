@@ -15,10 +15,10 @@ Common commands:
 
 ```bash
 ./bin/fsmgen fsm/trial_0.fsm
-./bin/fsmgen --output /tmp/trial_0.sv fsm/trial_0.fsm
-./bin/fsmgen --language verilog --output /tmp/trial_0.v fsm/trial_0.fsm
+./bin/fsmgen --output .artifacts/sv/trial_0-explicit.sv fsm/trial_0.fsm
+./bin/fsmgen --language verilog --output .artifacts/v/trial_0.v fsm/trial_0.fsm
 ./bin/fsmgen --debug=3 fsm/lte_dif_pmaster.fsm
-./bin/fsmgen --verify-hdl --output /tmp/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
+./bin/fsmgen --verify-hdl --output .artifacts/sv/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
 ./bin/fsmgen --capability-manifest
 ./bin/fsmgen --strict --check --json fsm/apb_requester.fsm
 ./bin/fsmgen --strict --emit-semantic-json fsm/apb_requester.fsm
@@ -27,7 +27,11 @@ Common commands:
 If `--output` is omitted, generated HDL is written below the git-ignored
 `.artifacts/<language>/` tree, for example `.artifacts/sv/trial_0.sv` for
 SystemVerilog or `.artifacts/vhd/direct_assignment_pair_form.vhd` for VHDL.
-Explicit `--output` paths are preserved exactly.
+Explicit `--output`, `--outdir`, `--verification-outdir`, and trace-log paths
+must resolve inside the repository. FSMGen creates missing output parent
+directories there and rejects parent-directory or symlink escapes before it
+writes data. External source inputs remain caller-authorized read-only inputs
+and may live elsewhere when that access is genuinely required.
 
 ## Output Shape
 
@@ -75,7 +79,7 @@ When Verilator and Yosys are installed, FSMGen can validate generated
 SystemVerilog after emission:
 
 ```bash
-./bin/fsmgen --verify-hdl --output /tmp/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
+./bin/fsmgen --verify-hdl --output .artifacts/sv/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
 ```
 
 `--validate-hdl` is the same mode. The command first runs FSMGen's own parser,
@@ -184,16 +188,18 @@ hosted regression CI runs the same driver before the broader regression gate.
 Recommended debug run:
 
 ```bash
-./bin/fsmgen --trace-verbosity=debug --trace-log=trace.log \
-  --output /tmp/example.sv \
+./bin/fsmgen --trace-verbosity=debug \
+  --trace-log=.artifacts/logs/example.trace.log \
+  --output .artifacts/sv/example.sv \
   fsm/lte_dif_pmaster.fsm
 ```
 
 Trace behavior:
 
 - `--trace-verbosity` accepts `none`, `low`, `medium`, `high`, and `debug`
-- `--trace-log[=FILE]` routes trace output to a file, defaulting to
-  `trace.log` when the option is present without an explicit path
+- `--trace-log[=FILE]` routes trace output to a repository-local file,
+  defaulting to `.artifacts/logs/trace.log` when the option is present without
+  an explicit path
 - every trace line carries origin metadata: file, function, and line number
 - trace formatting is indentation-aware and grouped by topic
 - non-quiet failures keep more composition/diagnostic context
@@ -203,15 +209,16 @@ Trace behavior:
 ## Useful Options
 
 - With no `--output`, generated HDL is saved under `.artifacts/<language>/`.
-- `-o, --output <file>` writes generated HDL to the requested path.
+- `-o, --output <file>` writes generated HDL to the requested repository-local
+  path and rejects a destination outside the repository.
 - `-l, --language <systemverilog|sv|verilog|v|vhdl>` selects the target
   language. `sv` aliases SystemVerilog, `v` aliases Verilog, and VHDL is
   routed through the direct single-FSM scaffold subset.
 - `-d, --debug[=N]` enables numeric trace compatibility levels `0..4`; a bare
   `--debug` means level `4`.
 - `--trace-verbosity <none|low|medium|high|debug>` selects named trace detail.
-- `--trace-log[=FILE]` sends trace output to `FILE`, or to `trace.log` when no
-  path is provided.
+- `--trace-log[=FILE]` sends trace output to a repository-local `FILE`, or to
+  `.artifacts/logs/trace.log` when no path is provided.
 - `--trace-emojis` / `--notrace-emojis` enables or disables emoji trace
   markers without changing trace content.
 - `--path <dir>` adds one source search root for bare `.fsm` names and related

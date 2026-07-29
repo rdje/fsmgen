@@ -1328,7 +1328,7 @@ example through `PERL5LIB`, and it must provide a real `new()` constructor.
 ```bash
 PERL5LIB=./my_extensions ./bin/fsmgen \
   --extension-module My::ResultMarker \
-  --output /tmp/trial_0.sv \
+  --output .artifacts/sv/trial_0-extension.sv \
   fsm/trial_0.fsm
 ```
 
@@ -1345,7 +1345,7 @@ module My::ResultMarker
 ```bash
 PERL5LIB=./my_extensions ./bin/fsmgen \
   --extension-config extensions.fsmext \
-  --output /tmp/trial_0.sv \
+  --output .artifacts/sv/trial_0-extension.sv \
   fsm/trial_0.fsm
 ```
 

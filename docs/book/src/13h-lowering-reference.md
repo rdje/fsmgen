@@ -197,9 +197,12 @@ synchronizes that reset-active condition before asserting source `ready` or
 destination `pulse`. This avoids reporting an event while the other side is
 still being reset.
 
-The full plain `.isf` HDL path writes those generated `.fsm` artifacts to
-`--outdir` or the current directory, selects `<actor>_top.fsm` as the entry
-artifact, and feeds that top through the existing composition HDL pipeline.
+The full plain `.isf` HDL path writes those generated `.fsm` artifacts to an
+explicit repository-local `--outdir`, or otherwise keeps them in a transient
+`.artifacts/tmp/ial1-lowering/` workspace. It selects `<actor>_top.fsm` as the
+entry artifact and feeds that top through the existing composition HDL
+pipeline. Only the explicit `--outdir` form keeps the scheduled `.fsm` files
+as durable review artifacts.
 
 The final SystemVerilog/Verilog-family output contains the two generated
 domain modules, the generated CDC module, and the generated top module.

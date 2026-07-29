@@ -238,7 +238,7 @@ sub make_context {
     return FSM::Extension::Context->new(
         stage => $args{stage},
         pipeline => bless({}, 'Test::RegistryMethodReceiverBoundaryPipeline'),
-        source_path => '/tmp/registry_method_receiver_boundary.fsm',
+        source_path => 'fixtures/registry_method_receiver_boundary.fsm',
         target_language => 'systemverilog',
         source_info => {
             kind => 'fsm',

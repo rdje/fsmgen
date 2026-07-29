@@ -41,7 +41,10 @@ subtest 'extra_search_paths returns a fresh array on every call' => sub {
 };
 
 subtest 'normalized_search_paths returns fresh deduplicated arrays' => sub {
-    local $ENV{HOME} = '/tmp/fsmgen-home';
+    my $fake_home = File::Spec->rel2abs(
+        File::Spec->catdir($FindBin::Bin, '..', '.artifacts', 'tmp', 'tests', 'fsmgen-home'),
+    );
+    local $ENV{HOME} = $fake_home;
     local $ENV{FSMLIB} = 'env_a:env_b:env_a';
 
     my @preferred = ('preferred', 'lib_a');
@@ -59,7 +62,7 @@ subtest 'normalized_search_paths returns fresh deduplicated arrays' => sub {
         [
             'preferred',
             'lib_a',
-            '/tmp/fsmgen-home/project_lib',
+            File::Spec->catdir($fake_home, 'project_lib'),
             'lib_b',
             'env_a',
             'env_b',
@@ -81,7 +84,7 @@ subtest 'normalized_search_paths returns fresh deduplicated arrays' => sub {
         [
             'preferred',
             'lib_a',
-            '/tmp/fsmgen-home/project_lib',
+            File::Spec->catdir($fake_home, 'project_lib'),
             'lib_b',
             'env_a',
             'env_b',

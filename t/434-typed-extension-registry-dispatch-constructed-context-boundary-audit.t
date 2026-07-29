@@ -186,7 +186,7 @@ sub make_context {
     return FSM::Extension::Context->new(
         stage => $args{stage},
         pipeline => bless({}, 'Test::RegistryDispatchConstructedContextBoundaryPipeline'),
-        source_path => '/tmp/registry_dispatch_constructed_context_boundary.fsm',
+        source_path => 'fixtures/registry_dispatch_constructed_context_boundary.fsm',
         target_language => 'systemverilog',
         source_info => {
             kind => 'fsm',

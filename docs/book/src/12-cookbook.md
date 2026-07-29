@@ -262,8 +262,9 @@ Use this when:
 ## 8. First Debug Run
 
 ```bash
-./bin/fsmgen --trace-verbosity=debug --trace-log=trace.log \
-  --output /tmp/example.sv \
+./bin/fsmgen --trace-verbosity=debug \
+  --trace-log=.artifacts/logs/example.trace.log \
+  --output .artifacts/sv/example.sv \
   fsm/lte_dif_pmaster.fsm
 ```
 

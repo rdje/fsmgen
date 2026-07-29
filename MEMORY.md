@@ -6,21 +6,25 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.1: adopt same-volume data doctrine`;
-  predecessor `2efd79375`.
-- active_work_unit: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2`.
-- current_state: `.1` adopted decision `0022`, root
-  `PROJECT_DATA_LOCALITY.md`, a Knowledge Map fact, and registered doctrine
-  check `PROJECT-DATA-LOCALITY`. Exact pre-adoption match signatures pin the
-  runtime, public-command, explicit-test-path, File::Temp-test, and legacy
-  machine-local config debt so it cannot change without the active tree.
-- next_action: implement `.2`: add repository-root/project-local storage
-  helpers; move CLI and in-process IAL1/IAL2 temporary lowering, Knowledge Map
-  scratch files, standard test fixture environment, and live legacy config
-  paths onto the repository volume; add focused tests; verify and commit before
-  `.3` public/fact-card sync and residue closeout.
+  `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2: localize runtime and test storage`;
+  predecessor `d9bfeb61d`.
+- active_work_unit: `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.3`.
+- current_state: `.2` centralizes repository-root/temp/output containment in
+  `FSM::ProjectDataLocality`; CLI/in-process IAL1/IAL2 handoffs, Knowledge Map
+  scratch, standard test/gate temp and cache environment, legacy config, and
+  affected mdBook commands are repository-local. Runtime/test/config migration
+  baselines are retired; the exact remaining public-command signature is pinned
+  for `.3`.
+- next_action: implement `.3`: update README, TOOLBOX, active fact-card
+  reverification and generated Knowledge Map paths; inventory exact local and
+  off-volume residue; remove only provably FSMGen-owned residue; retire the
+  final doctrine migration signature; run closeout gates and commit before
+  returning to roadmap PNT.
 - in_flight_uncommitted: none after this commit; no background job remains.
-- blockers: none.
+- blockers: no implementation blocker. The final broader gate must wait for
+  safe host pressure: an unrelated `pgen` rustc held 9,123,344 KiB RSS and the
+  RAM guard stopped confirmatory runs at 94.0%/97.9%; the known t/1436 APB
+  expectation remains owned by proposed `IAL2-T1436-PREEXISTING-FAILURES`.
 
 ## Durable context
 

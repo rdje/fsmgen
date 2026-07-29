@@ -6,7 +6,6 @@ use feature qw(signatures postderef);
 use Getopt::Long;
 use JSON::PP ();
 use File::Basename;
-use File::Path qw(make_path);
 use File::Spec;
 
 use FindBin;
@@ -20,6 +19,13 @@ use FSM::Composition::ProvenanceReportBuilder;
 use FSM::Debug;  # Global debug system
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_signal_summary_text);
 use FSM::Pipeline::HDLGenerator;
+use FSM::ProjectDataLocality qw(
+    create_project_tempdir
+    create_project_tempfile
+    ensure_project_artifact_dir
+    ensure_project_output_directory
+    project_output_path
+);
 use FSM::SourcePathResolver;
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CheckDiagnostics qw(build_check_failure_report build_check_success_report);
@@ -212,6 +218,13 @@ sub format_cli_artifact_error {
     return $prefix . $text;
 }
 
+sub resolve_cli_project_output_path {
+    my ($path, $label) = @_;
+    my $resolved = eval { project_output_path($path, label => $label); };
+    die normalize_cli_error_text($@) if $@;
+    return $resolved;
+}
+
 sub default_hdl_artifact_dir {
     my ($lang_info) = @_;
 
@@ -221,20 +234,7 @@ sub default_hdl_artifact_dir {
         '.v'   => 'v',
     );
     my $subdir = $subdir_for_ext{$lang_info->{ext}} // 'hdl';
-    return File::Spec->catdir('.artifacts', $subdir);
-}
-
-sub ensure_default_hdl_artifact_dir {
-    my ($dir, %context) = @_;
-
-    return if -d $dir;
-
-    eval { make_path($dir); 1 }
-        or die format_cli_artifact_error(
-            "Cannot create default HDL artifact directory: $@\n",
-            ['Output directory', $dir],
-            ['Source input', $context{input}],
-        );
+    return ensure_project_artifact_dir($subdir);
 }
 
 sub emit_machine_failure_if_requested {
@@ -485,7 +485,7 @@ my $output_file = "";
 my $outdir = "";
 my $target_language = "systemverilog";  # Default to SystemVerilog
 my $trace_verbosity = "";               # Named mode: none|low|medium|high|debug
-my $trace_log_path = "trace.log";       # Default trace output file path
+my $trace_log_path = "";                # Bare trace logging uses .artifacts/logs/trace.log
 my $trace_log_enabled = 0;
 my $trace_emojis = 1;
 my @extension_modules = ();
@@ -550,9 +550,6 @@ set_fsm_trace_emojis($trace_emojis);
 # Note: Getopt sets the optional-string target to '' when --trace-log is passed with no value.
 if ($has_trace_log_flag || get_fsm_debug_level() > 0) {
     $trace_log_enabled = 1;
-    if (!defined($trace_log_path) || $trace_log_path eq '') {
-        $trace_log_path = 'trace.log';
-    }
 }
 
 # Validate target language
@@ -596,7 +593,8 @@ Options:
   --trace-verbosity <none|low|medium|high|debug>
                   Preferred named verbosity selector
   --trace-log[=FILE]
-                  Route all trace output to FILE (default: trace.log)
+                  Route all trace output to FILE
+                  Default: .artifacts/logs/trace.log under repository root
                   When trace logging is active, trace lines are written to FILE
                   instead of stdout
   --trace-emojis / --notrace-emojis
@@ -632,6 +630,7 @@ Options:
                   requires the modern explicit '?fsm:module_name' family
   -l, --language  Target HDL language: systemverilog|sv|verilog|v|vhdl (default: systemverilog)
   -o, --output    Specify output file (default: .artifacts/<language>/<fsm_name>.<ext>)
+                  Explicit output paths must resolve inside the repository
   -h, --help      Show this help message
 
 Environment Variables:
@@ -700,7 +699,7 @@ Debug Examples:
   ./bin/fsmgen --debug my_fsm
   
   # Named verbosity with trace file routing
-  ./bin/fsmgen --trace-verbosity=debug --trace-log=trace.log my_fsm
+  ./bin/fsmgen --trace-verbosity=debug --trace-log=.artifacts/logs/my_fsm.trace.log my_fsm
   
   # Short form numeric trace
   ./bin/fsmgen -d2 my_fsm
@@ -710,10 +709,10 @@ Other Examples:
   ./bin/fsmgen --language verilog --debug=2 lte_dif_pmaster
   
   # Generate VHDL RTL quietly to specific file using relative path
-  ./bin/fsmgen --language vhdl --quiet --output my_output.vhd ../fsm/my_fsm.fsm
+  ./bin/fsmgen --language vhdl --quiet --output .artifacts/vhd/my_output.vhd ../fsm/my_fsm.fsm
   
   # Debug SystemVerilog with custom output using FSMLIB lookup
-  ./bin/fsmgen -l sv -d3 -o debug_output.sv my_fsm
+  ./bin/fsmgen -l sv -d3 -o .artifacts/sv/debug_output.sv my_fsm
 
   # Enforce the current strict-mode boundary
   ./bin/fsmgen --strict my_fsm
@@ -729,12 +728,12 @@ Other Examples:
 
   # Emit the bounded passive UVM monitor skeleton for an ISF observe source
   ./bin/fsmgen --emit-verification-output uvm-passive-monitor \
-    --verification-outdir generated-verification \
+    --verification-outdir .artifacts/verification \
     isf/verification_observation_metadata.isf
 
   # Emit the bounded VHDL observation metadata package for an ISF observe source
   ./bin/fsmgen --emit-verification-output vhdl-observation-package \
-    --verification-outdir generated-verification \
+    --verification-outdir .artifacts/verification \
     isf/verification_observation_metadata.isf
 
   # Generate SystemVerilog and validate it with Verilator plus Yosys
@@ -797,6 +796,28 @@ if ($verify_hdl && ($check_mode || $emit_semantic_json)) {
 }
 if ($verify_hdl && $target_language !~ /^(?:systemverilog|sv)$/) {
     die "Error: --verify-hdl currently supports generated SystemVerilog only\n";
+}
+
+# Output and trace destinations are project-owned. Resolve them once, before
+# any lowering or writer can create data, and fail closed on repository escape
+# or a symlink to another filesystem volume.
+$output_file = resolve_cli_project_output_path($output_file, '--output path')
+    if length($output_file);
+$outdir = resolve_cli_project_output_path($outdir, '--outdir path')
+    if length($outdir);
+$verification_outdir = resolve_cli_project_output_path(
+    $verification_outdir,
+    '--verification-outdir path',
+) if length($verification_outdir);
+if ($trace_log_enabled) {
+    $trace_log_path = File::Spec->catfile(
+        ensure_project_artifact_dir('logs'),
+        'trace.log',
+    ) unless defined($trace_log_path) && length($trace_log_path);
+    $trace_log_path = resolve_cli_project_output_path(
+        $trace_log_path,
+        '--trace-log path',
+    );
 }
 
 # Check for required positional argument
@@ -915,7 +936,7 @@ if (length($emit_verification_output)) {
         );
     }
 
-    my $verification_output_dir = File::Spec->rel2abs($verification_outdir);
+    my $verification_output_dir = $verification_outdir;
     my $verification_result = eval {
         if ($emit_verification_output eq 'uvm-passive-monitor') {
             write_uvm_passive_monitor_skeleton(
@@ -956,7 +977,6 @@ if (length($emit_verification_output)) {
 # generated .isf to .fsm first.
 if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
     require FSM::Adapter::IAL2::PPIF;
-    require File::Temp;
 
     my $adapter = FSM::Adapter::IAL2::PPIF->new();
     my $ppif_result = eval { $adapter->parse_file($fsm_file); };
@@ -1042,12 +1062,15 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
 
         my $dir = $outdir || undef;
         if (!$dir) {
-            my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
+            my ($fh, $tmp_path) = create_project_tempfile(
+                purpose => 'ial2-lowering',
+                suffix => '.fsm',
+            );
             print $fh $files->{$entry_basename};
             close $fh;
             $fsm_file = $tmp_path;
         } else {
-            mkdir $dir unless -d $dir;
+            ensure_project_output_directory($dir, label => '--outdir path');
 
             for my $item (@{$ppif_result->{generated_ial1}{items} || []}) {
                 my $isf_path = File::Spec->catfile($dir, $item->{name});
@@ -1110,12 +1133,15 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
 
         my $dir = $outdir || undef;
         if (!$dir) {
-            my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
+            my ($fh, $tmp_path) = create_project_tempfile(
+                purpose => 'ial2-lowering',
+                suffix => '.fsm',
+            );
             print $fh $entry_text;
             close $fh;
             $fsm_file = $tmp_path;
         } else {
-            mkdir $dir unless -d $dir;
+            ensure_project_output_directory($dir, label => '--outdir path');
 
             for my $item (ppif_generated_ial1_items($ppif_result)) {
                 next unless defined($item->{name}) && defined($item->{text});
@@ -1151,7 +1177,6 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
 if ($fsm_file =~ /\.isf$/i) {
     require FSM::Adapter::ISF;
     require FSM::Scheduler::ISF;
-    require File::Temp;
 
     my $adapter   = FSM::Adapter::ISF->new();
     my $scheduler = FSM::Scheduler::ISF->new();
@@ -1240,14 +1265,18 @@ if ($fsm_file =~ /\.isf$/i) {
     if (!$dir && scalar(keys %$files) == 1) {
         # Single file, no outdir: write to temp and feed to normal pipeline
         my $only_file = $files->{$entry_basename};
-        my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
+        my ($fh, $tmp_path) = create_project_tempfile(
+            purpose => 'ial1-lowering',
+            suffix => '.fsm',
+        );
         print $fh $only_file;
         close $fh;
         $fsm_file = $tmp_path;
     } else {
-        # Write all files to output directory
-        $dir ||= '.';
-        mkdir $dir unless -d $dir;
+        # Keep implicit multi-file handoff artifacts temporary; only an
+        # explicit --outdir makes the lowered files durable review artifacts.
+        $dir ||= create_project_tempdir(purpose => 'ial1-lowering');
+        ensure_project_output_directory($dir, label => 'IAL1 lowering directory');
         for my $fname (sort keys %$files) {
             my $path = File::Spec->catfile($dir, $fname);
             open my $fh, '>', $path or die "Cannot write $path: $!\n";
@@ -1281,16 +1310,19 @@ if (!$check_mode && !$emit_semantic_json && !$output_file) {
     
     # Keep implicit generated HDL out of the repository root.
     my $artifact_dir = default_hdl_artifact_dir($lang_info);
-    ensure_default_hdl_artifact_dir($artifact_dir, input => $fsm_input);
     $output_file = File::Spec->catfile($artifact_dir, "${fsm_bare_name}$lang_info->{ext}");
 }
 
-# Convert output file to absolute path
-$output_file = File::Spec->rel2abs($output_file)
+# Validate the implicit destination through the same containment boundary used
+# for caller-selected output paths.
+$output_file = resolve_cli_project_output_path($output_file, 'generated HDL output path')
     if defined $output_file && length $output_file;
 # Set up trace routing
 if ($trace_log_enabled) {
-    $trace_log_path = File::Spec->rel2abs($trace_log_path);
+    ensure_project_output_directory(
+        dirname($trace_log_path),
+        label => '--trace-log parent directory',
+    );
     set_fsm_trace_output_file($trace_log_path);
     print "Trace logging enabled - trace output will be saved to: $trace_log_path\n\n"
         unless $machine_json_mode;
@@ -1448,6 +1480,10 @@ unless ($quiet) {
 }
 
 # Save to file
+ensure_project_output_directory(
+    dirname($output_file),
+    label => 'generated HDL output directory',
+);
 open my $fh, '>', $output_file or die format_cli_artifact_error(
     "Cannot write to output file: $!\n",
     ['Source file', $fsm_file],

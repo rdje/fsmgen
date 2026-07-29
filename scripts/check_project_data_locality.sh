@@ -11,25 +11,14 @@ note() {
   fail=1
 }
 
-runtime_matches() {
-  git grep -hE 'File::Temp|temp(dir|file)|mktemp|(/private)?/tmp/' -- \
-    bin/fsmgen perl/FSM/Pipeline/HDLGenerator.pm knowledge-map/scripts \
-    2>/dev/null || true
-}
-
 public_matches() {
-  git grep -hE '(/private)?/tmp/' -- \
+  git grep -hE '(^|[^[:alnum:]_.-])(/private)?/tmp/' -- \
     README.md TOOLBOX.md KNOWLEDGE_MAP.md docs/book/src docs/knowledge \
     2>/dev/null || true
 }
 
 test_explicit_matches() {
-  git grep -hE '(/private)?/tmp/' -- 't/*.t' 2>/dev/null || true
-}
-
-test_file_temp_files() {
-  git grep -l 'use File::Temp' -- 't/*.t' 2>/dev/null \
-    | sed 's#^[^/]*/##' || true
+  git grep -hE '(^|[^[:alnum:]_.-])(/private)?/tmp/' -- 't/*.t' 2>/dev/null || true
 }
 
 legacy_config_matches() {
@@ -37,10 +26,9 @@ legacy_config_matches() {
     perl/env.conf 2>/dev/null || true
 }
 
-# Exact pre-adoption signatures. They are temporary monotonic-debt pins owned
-# by PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2/.3. Any new, removed, or
-# modified match requires the owning leaf to update or retire the corresponding
-# signature, so unowned locality drift fails immediately.
+# The runtime/test/config baselines were retired by adoption leaf .2. The one
+# remaining public-instruction signature is temporary monotonic debt owned by
+# leaf .3. Any new, removed, or modified public match must be classified there.
 expect_signature() {
   local label="$1"
   local expected="$2"
@@ -50,11 +38,66 @@ expect_signature() {
   fi
 }
 
-expect_signature "runtime temporary-path debt" "2129192340:452" "$(runtime_matches | LC_ALL=C sort | cksum | awk '{ print $1 ":" $2 }')"
-expect_signature "public off-volume command debt" "1873392830:253463" "$(public_matches | LC_ALL=C sort | cksum | awk '{ print $1 ":" $2 }')"
-expect_signature "explicit test off-volume path debt" "1570842766:1619" "$(test_explicit_matches | LC_ALL=C sort | cksum | awk '{ print $1 ":" $2 }')"
-expect_signature "uncontrolled File::Temp test set" "4078265247:28340" "$(test_file_temp_files | LC_ALL=C sort | cksum | awk '{ print $1 ":" $2 }')"
-expect_signature "legacy machine-local config debt" "2365314575:150" "$(legacy_config_matches | LC_ALL=C sort | cksum | awk '{ print $1 ":" $2 }')"
+expect_signature "remaining public off-volume command debt" "2942575830:249556" "$(public_matches | LC_ALL=C sort | cksum | awk '{ print $1 ":" $2 }')"
+
+if [[ -n "$(test_explicit_matches)" ]]; then
+  note "tests retain explicit operating-system temporary paths"
+fi
+if [[ -n "$(legacy_config_matches)" ]]; then
+  note "perl/env.conf retains machine-local home or operating-system temporary paths"
+fi
+
+if git grep -qE 'File::Temp|(^|[^[:alnum:]_])temp(dir|file)\(' -- \
+  bin/fsmgen perl/FSM/Pipeline/HDLGenerator.pm 2>/dev/null; then
+  note "CLI/facade lowering must use FSM::ProjectDataLocality instead of ambient File::Temp defaults"
+fi
+if ! grep -qF 'create_project_tempfile' bin/fsmgen; then
+  note "bin/fsmgen does not use the repository-local tempfile helper"
+fi
+if ! grep -qF 'create_project_tempdir' perl/FSM/Pipeline/HDLGenerator.pm; then
+  note "in-process lowering does not use the repository-local tempdir helper"
+fi
+if ! grep -qF 'project_output_path' bin/fsmgen; then
+  note "bin/fsmgen does not enforce repository-contained output paths"
+fi
+
+if [[ ! -f .proverc ]] || ! grep -qxF -- '-MFSM::Test::ProjectDataLocality' .proverc; then
+  note "standard prove runs must preload FSM::Test::ProjectDataLocality"
+fi
+if [[ ! -f t/lib/FSM/Test/ProjectDataLocality.pm ]] \
+  || ! grep -qF 'configure_project_temp_environment' t/lib/FSM/Test/ProjectDataLocality.pm; then
+  note "test harness locality module is missing or does not establish repository-local temp storage"
+fi
+for launcher in bin/ci-regression scripts/run_with_ram_guard.sh; do
+  if ! grep -qF 'project_data_locality_env.sh' "${launcher}"; then
+    note "${launcher} does not establish the project-local tool environment"
+  fi
+done
+
+if ! grep -qF 'project_data_locality_env.sh' knowledge-map/scripts/check_knowledge_map.sh; then
+  note "Knowledge Map validation does not establish the project-local tool environment"
+fi
+if grep -qE '="\$\(mktemp\)"' knowledge-map/scripts/check_knowledge_map.sh; then
+  note "Knowledge Map validation still uses an unqualified operating-system temporary path"
+fi
+if ! grep -qF 'command mktemp "$scratch_dir/' knowledge-map/scripts/check_knowledge_map.sh; then
+  note "Knowledge Map validation does not bind scratch files to its repository-local directory"
+fi
+
+if [[ ! -f perl/FSM/ProjectDataLocality.pm ]]; then
+  note "FSM::ProjectDataLocality is missing"
+else
+  tempfile_dir_count="$(grep -cF 'DIR => $dir' perl/FSM/ProjectDataLocality.pm || true)"
+  if [[ "${tempfile_dir_count}" -lt 2 ]]; then
+    note "FSM::ProjectDataLocality temp file/directory constructors must pass explicit repository-local DIR values"
+  fi
+fi
+if [[ ! -x scripts/project_data_locality_env.sh ]]; then
+  note "scripts/project_data_locality_env.sh is missing or not executable"
+fi
+if [[ ! -x scripts/project_mktemp.sh ]]; then
+  note "scripts/project_mktemp.sh is missing or not executable"
+fi
 
 if [[ ! -f PROJECT_DATA_LOCALITY.md ]]; then
   note "PROJECT_DATA_LOCALITY.md is missing"
@@ -73,4 +116,4 @@ if [[ "${fail}" -ne 0 ]]; then
   exit 1
 fi
 
-printf '[project-data-locality] OK: policy present; pre-adoption debt signatures unchanged and cannot grow silently\n'
+printf '[project-data-locality] OK: runtime/test/config paths are repository-local; remaining public debt is pinned for leaf .3\n'

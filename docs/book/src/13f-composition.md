@@ -260,9 +260,10 @@ spawn_parent.isf
 The `--outdir DIR` flag writes all generated `.fsm` files:
 
 ```bash
-./bin/fsmgen --strict --outdir output/ isf/spawn_parent.isf
-# Writes: output/child_worker.fsm, output/spawn_parent.fsm,
-#         and output/spawn_parent_top.fsm.
+./bin/fsmgen --strict --outdir .artifacts/ial1/spawn-parent isf/spawn_parent.isf
+# Writes: .artifacts/ial1/spawn-parent/child_worker.fsm,
+#         .artifacts/ial1/spawn-parent/spawn_parent.fsm, and
+#         .artifacts/ial1/spawn-parent/spawn_parent_top.fsm.
 # If --output is also provided, HDL generation uses spawn_parent_top.fsm.
 ```
 

@@ -129,7 +129,7 @@ subtest 'source discovery resource filters unsafe catalog paths before returning
                         },
                         {
                             id => 'absolute.path',
-                            relpath => '/tmp/machine-local.fsm',
+                            relpath => '/machine-local/absolute.fsm',
                             family => 'fixture',
                             classification => 'supported_smoke',
                             coverage => 'unit',

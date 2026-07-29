@@ -157,7 +157,7 @@ my @required_examples = (
     '(spawn worker as w0',
     '(imports',
     '--emit-schedule-json',
-    '--strict --outdir /tmp/isf-build',
+    '--strict --outdir .artifacts/ial1/isf-build',
     'I2C-like fixture',
     'burst-reader fixture',
     'UART-like fixture',

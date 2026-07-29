@@ -28,7 +28,7 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 
 | Feature family | Status | Accepted authoring surface | Generated and reported behavior |
 | --- | --- | --- | --- |
-| `.isf` CLI input | shipped | `./bin/fsmgen file.isf`, `--strict file.isf`, `--emit-schedule-json`, and `--outdir DIR` for multi-file lower results. | Single-file actors lower to scheduled `.fsm` before HDL. Multi-file generated-child and accepted multi-domain actors write every scheduled `.fsm` artifact, then use the generated top for HDL generation. |
+| `.isf` CLI input | shipped | `./bin/fsmgen file.isf`, `--strict file.isf`, `--emit-schedule-json`, and `--outdir DIR` for durable multi-file lower results. | Single-file actors lower to scheduled `.fsm` before HDL. Multi-file generated-child and accepted multi-domain actors keep implicit handoff files under `.artifacts/tmp/ial1-lowering/`, or write every scheduled `.fsm` artifact to an explicit repository-local `--outdir`, then use the generated top for HDL generation. |
 | Public parser and scheduler facades | shipped bounded surface | `FSM::Adapter::ISF->new(debug => ...)`, `parse_file`, `parse_source`, `FSM::Scheduler::ISF->new(...)`, `lower`, and `report`. | Public methods validate receivers and argument shapes before private parsing/lowering. The capability manifest advertises the live public contract under `embedding.isf_public_interface`. |
 | Actor envelope | shipped | `(actor NAME ...)` with singleton `(clock ...)`, `(clock-domains ...)`, `(reset ...)`, `(watchdog ...)`, `(interface ...)`, `(storage ...)`, `(types ...)`, `(enums ...)`, `(imports ...)`, `(constants ...)`, `(params ...)`, `(resources ...)`, and reusable-library `(use ...)` where documented. | The scheduled `.fsm` preserves reviewable system, size, constants, params, type, enum, import, storage, rule, drive, and transaction artifacts. Duplicate singleton clauses fail closed. |
 | Actor report metadata and params | shipped bounded surface | Actor-level `(params ...)`, `(phase NAME ...)`, `(stage NAME ...)`, and passive verification observation metadata `(observe NAME (role passive_monitor) (signals SIG...))` where documented. Actor parameter defaults may use literals, declared actor constants, earlier scalar actor parameter defaults, enum members, qualified imported package scalar constants, and compatible aggregate/list defaults with those scalar leaves. Observation signals must be unique public actor interface signals in a single-clock actor. | Parameter defaults preserve source-order report entries in `actor_params[]`; actor-constant-backed, earlier-actor-parameter-backed, and qualified package-constant-backed defaults also carry resolved literals internally for width/count consumers. Forward, self, cyclic, non-scalar actor-parameter references, unqualified package constants, aggregate package constants, package member/item paths, and ambiguous local-enum/package-constant spellings fail closed. Actor-level phase/stage clauses are parser-validated and report-only through `actor_phases[]` and `actor_stages[]`. Passive observation metadata is parser-validated and report-only through `verification_observations[]`, with source-ordered signal `name`/`direction`/`width` summaries; it does not add generated `.fsm`, HDL, UVM, VHDL, scoreboard, coverage, or VIP behavior. |
@@ -198,15 +198,16 @@ diagnostics.
 ```bash
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --emit-schedule-json isf/i2c_master.isf
-./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-build isf/spawn_parent.isf
 ./bin/fsmgen -l sv isf/apb_requester.isf
 ```
 
 `--emit-schedule-json` reports the scheduled intent view and exits before HDL
-generation. `--outdir` is the public path for multi-file lowering, including
-generated-child and accepted multi-domain actors. Plain `.isf` HDL generation
-lowers through scheduled `.fsm` first, then continues through the existing HDL
-pipeline.
+generation. `--outdir` is the public durable-review path for multi-file
+lowering, including generated-child and accepted multi-domain actors. Without
+it, those handoff files stay in a repository-local transient workspace. Plain
+`.isf` HDL generation lowers through scheduled `.fsm` first, then continues
+through the existing HDL pipeline.
 
 The I2C-like fixture is a bounded realistic fixture, not a full I2C protocol
 compliance claim. It is file-backed in the `isf` regression tier for strict

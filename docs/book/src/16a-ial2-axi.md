@@ -643,7 +643,7 @@ Run and inspect the public source directly:
 ./bin/fsmgen --quiet --emit-schedule-json ppif/axi_write_transaction_composition.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_write_transaction_composition.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_write_transaction_composition.ppif
-./bin/fsmgen --quiet --strict --outdir /tmp/fsmgen-axi-full-write-out ppif/axi_write_transaction_composition.ppif
+./bin/fsmgen --quiet --strict --outdir .artifacts/ial2/fsmgen-axi-full-write-out ppif/axi_write_transaction_composition.ppif
 ```
 
 The outdir contains the five `.isf` review sources, five leaf `.fsm` files,
@@ -1123,7 +1123,7 @@ This chapter was validated from checked-in sources with:
 ./bin/fsmgen --quiet --emit-schedule-json ppif/axi_manager_capacity_status_id_family.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_manager_capacity_status_transaction_envelope.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif
-./bin/fsmgen --quiet --outdir /tmp/fsmgen-doc-axi-691-out ppif/axi_aw_valid_ready.ppif
+./bin/fsmgen --quiet --outdir .artifacts/ial2/fsmgen-doc-axi-691-out ppif/axi_aw_valid_ready.ppif
 ```
 
 The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and

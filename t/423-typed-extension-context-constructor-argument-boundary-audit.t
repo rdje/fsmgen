@@ -78,7 +78,7 @@ subtest 'context construction still accepts the supported option set' => sub {
     isa_ok($context, 'FSM::Extension::Context');
     is($context->stage, 'after_parse_source', 'constructed context preserves stage');
     is(ref($context->pipeline), 'Test::ContextConstructorBoundaryPipeline', 'constructed context preserves pipeline object');
-    is($context->source_path, '/tmp/context_constructor_boundary.fsm', 'constructed context preserves source path');
+    is($context->source_path, 'fixtures/context_constructor_boundary.fsm', 'constructed context preserves source path');
     is($context->target_language, 'systemverilog', 'constructed context preserves target language');
     is($context->source_info->{kind}, 'fsm', 'constructed context preserves source info');
     is(ref($context->raw_ast), 'ARRAY', 'constructed context preserves raw AST');
@@ -197,7 +197,7 @@ subtest 'context constructor rejects unsupported and duplicate option names' => 
     my $duplicate_error = capture_exception(sub {
         FSM::Extension::Context->new(
             valid_context_args(),
-            source_path => '/tmp/duplicate_path.fsm',
+            source_path => 'fixtures/duplicate_path.fsm',
             stage => 'after_generate_result',
         );
     });
@@ -223,7 +223,7 @@ sub valid_context_args {
     return (
         stage => 'after_parse_source',
         pipeline => bless({}, 'Test::ContextConstructorBoundaryPipeline'),
-        source_path => '/tmp/context_constructor_boundary.fsm',
+        source_path => 'fixtures/context_constructor_boundary.fsm',
         target_language => 'systemverilog',
         source_info => {
             kind => 'fsm',

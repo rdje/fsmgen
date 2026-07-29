@@ -34,7 +34,7 @@ subtest 'failure report builder extracts child-header failures' => sub {
 
 subtest 'failure report builder extracts generated-child source artifacts' => sub {
     my $report = FSM::Composition::FailureReportBuilder->build_report(
-        "Composition source '?top:wiring_top' resolves '?fsmc' child 'left' to '/tmp/left.fsm', ".
+        "Composition source '?top:wiring_top' resolves '?fsmc' child 'left' to 'fixtures/left.fsm', ".
         "but generated child source resolution is blocked because the resolved file is not a supported FSM child source. ".
         "See docs/COMPOSITION_SCOPE.md.\n",
     );
@@ -43,7 +43,7 @@ subtest 'failure report builder extracts generated-child source artifacts' => su
     is($report->{top_name}, 'wiring_top', 'builder keeps the top name');
     is($report->{construct}, '?fsmc', 'builder infers the construct from the generated child source family');
     is($report->{artifact_label}, 'Child source file', 'builder extracts the child source file label');
-    is($report->{artifact_value}, "'/tmp/left.fsm'", 'builder extracts the child source file value');
+    is($report->{artifact_value}, "'fixtures/left.fsm'", 'builder extracts the child source file value');
     is($report->{context_label}, 'Child', 'builder keeps the child context that accompanied the source resolution');
     is($report->{context_value}, "'left'", 'builder formats the child context');
     is($report->{blocked_boundary}, 'generated child source resolution', 'builder keeps the generated-child boundary');

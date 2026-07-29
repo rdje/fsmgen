@@ -14,14 +14,15 @@ Useful first commands:
 
 ```bash
 ./bin/fsmgen fsm/trial_0.fsm
-./bin/fsmgen --output /tmp/trial_0.sv fsm/trial_0.fsm
+./bin/fsmgen --output .artifacts/sv/trial_0-explicit.sv fsm/trial_0.fsm
 ./bin/fsmgen --debug=3 fsm/lte_dif_pmaster.fsm
 ```
 
 Without `--output`, FSMGen writes generated HDL under the git-ignored
 `.artifacts/<language>/` directory. The first command above writes
-`.artifacts/sv/trial_0.sv`; an explicit `--output` path is used exactly as
-provided.
+`.artifacts/sv/trial_0.sv`. An explicit `--output` may select another path
+inside the repository, but FSMGen rejects a destination that escapes the
+repository or resolves through an off-repository symlink.
 
 ## A Small First FSM
 
@@ -91,14 +92,15 @@ to regression-lock.
 When something looks wrong:
 
 ```bash
-./bin/fsmgen --trace-verbosity=debug --trace-log=trace.log \
-  --output /tmp/counter_demo.sv \
+./bin/fsmgen --trace-verbosity=debug \
+  --trace-log=.artifacts/logs/counter_demo.trace.log \
+  --output .artifacts/sv/counter_demo.sv \
   path/to/counter_demo.fsm
 ```
 
 Then inspect:
 
-- `trace.log`
+- `.artifacts/logs/counter_demo.trace.log`
 - the emitted `.sv`
 - any failure summary on the CLI
 

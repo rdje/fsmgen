@@ -277,7 +277,10 @@ only evidence:
 
 ```bash
 ./bin/fsmgen --strict --check --json path/to/file.fsm
-./bin/fsmgen --trace-verbosity=debug --trace-log=trace.log --output /tmp/out.sv path/to/file.fsm
+./bin/fsmgen --trace-verbosity=debug \
+  --trace-log=.artifacts/logs/file.trace.log \
+  --output .artifacts/sv/out.sv \
+  path/to/file.fsm
 ```
 
 For the full CLI and trace workflow, see

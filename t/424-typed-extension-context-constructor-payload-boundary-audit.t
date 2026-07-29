@@ -72,7 +72,7 @@ subtest 'context construction accepts valid parse and result payloads' => sub {
     isa_ok($parse_context, 'FSM::Extension::Context');
     is($parse_context->stage, 'after_parse_source', 'parse context preserves stage');
     is(ref($parse_context->pipeline), 'Test::ContextConstructorPayloadBoundaryPipeline', 'parse context preserves pipeline object');
-    is($parse_context->source_path, '/tmp/context_constructor_payload_boundary.fsm', 'parse context preserves source path');
+    is($parse_context->source_path, 'fixtures/context_constructor_payload_boundary.fsm', 'parse context preserves source path');
     is($parse_context->target_language, 'systemverilog', 'parse context preserves target language');
     is($parse_context->source_info->{kind}, 'fsm', 'parse context preserves source kind');
     is(ref($parse_context->raw_ast), 'ARRAY', 'parse context carries raw_ast array');
@@ -264,7 +264,7 @@ sub result_context_args {
 sub common_context_args {
     return (
         pipeline => bless({}, 'Test::ContextConstructorPayloadBoundaryPipeline'),
-        source_path => '/tmp/context_constructor_payload_boundary.fsm',
+        source_path => 'fixtures/context_constructor_payload_boundary.fsm',
         target_language => 'systemverilog',
     );
 }

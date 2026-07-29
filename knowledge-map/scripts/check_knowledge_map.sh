@@ -13,6 +13,9 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel 2>/dev/null || pwd)"
 
+# shellcheck source=../../scripts/project_data_locality_env.sh
+source "$ROOT/scripts/project_data_locality_env.sh"
+
 [ -f "$ROOT/.knowledge_map.conf" ] && . "$ROOT/.knowledge_map.conf"
 [ -f "$SCRIPT_DIR/knowledge_map.conf" ] && . "$SCRIPT_DIR/knowledge_map.conf"
 : "${KM_SCAN_DIRS:=docs/knowledge docs/decisions}"
@@ -23,10 +26,13 @@ fail=0
 note() { printf 'knowledge-map: %s\n' "$1" >&2; fail=1; }
 warn() { printf 'knowledge-map: WARNING: %s\n' "$1" >&2; }
 
+scratch_dir="$FSMGEN_TMP_ROOT/knowledge-map"
+mkdir -p "$scratch_dir"
 ids_file=""; tmpmap=""
 cleanup() { [ -n "$ids_file" ] && rm -f "$ids_file"; [ -n "$tmpmap" ] && rm -f "$tmpmap"; }
 trap cleanup EXIT
-ids_file="$(mktemp)"; tmpmap="$(mktemp)"
+ids_file="$(command mktemp "$scratch_dir/ids.XXXXXX")"
+tmpmap="$(command mktemp "$scratch_dir/map.XXXXXX")"
 
 # --- 1 + 2: per-file required-field validation; collect ids ---
 for d in $KM_SCAN_DIRS; do

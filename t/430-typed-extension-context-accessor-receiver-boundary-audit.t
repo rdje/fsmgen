@@ -77,7 +77,7 @@ subtest 'direct context accessors accept only constructed exact context instance
     my $context = FSM::Extension::Context->new(
         stage => 'after_parse_source',
         pipeline => $pipeline,
-        source_path => '/tmp/context_accessor_receiver_boundary.fsm',
+        source_path => 'fixtures/context_accessor_receiver_boundary.fsm',
         target_language => 'systemverilog',
         source_info => {
             kind => 'fsm',
@@ -87,7 +87,7 @@ subtest 'direct context accessors accept only constructed exact context instance
 
     is($context->stage, 'after_parse_source', 'constructed context returns stage');
     is($context->pipeline, $pipeline, 'constructed context returns pipeline');
-    is($context->source_path, '/tmp/context_accessor_receiver_boundary.fsm', 'constructed context returns source_path');
+    is($context->source_path, 'fixtures/context_accessor_receiver_boundary.fsm', 'constructed context returns source_path');
     is($context->target_language, 'systemverilog', 'constructed context returns target_language');
     is_deeply($context->source_info, {kind => 'fsm'}, 'constructed context returns source_info');
     is_deeply($context->raw_ast, [], 'constructed parse context returns raw_ast');
