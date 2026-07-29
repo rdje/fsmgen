@@ -68,6 +68,21 @@ subtest 'adapter parses the selected two-subordinate AHB interconnect PPIF shape
     like($interconnect_fsm, qr/\(= \(HSEL_CONTROL> 1\)\)/, 'generated interconnect IAL0 asserts control select on control hits');
     like($interconnect_fsm, qr/\(= \(HADDR_STATUS> HADDR\)\)/, 'generated interconnect IAL0 emits zero-base status local address');
     like($interconnect_fsm, qr/\(= \(HADDR_CONTROL> \(- HADDR 4\)\)\)/, 'generated interconnect IAL0 subtracts control base for local address');
+    like(
+        $interconnect_fsm,
+        qr/\(<\(! \(& \(! \(== HTRANS 2'b00\)\) \(< HADDR 4\)\)\)\s+\(= \(HSEL_STATUS> 0\)\)\s+\(= \(HADDR_STATUS> 0\)\)/s,
+        'generated interconnect IAL0 gives status a complementary not-hit default',
+    );
+    like(
+        $interconnect_fsm,
+        qr/\(<\(! \(& \(! \(== HTRANS 2'b00\)\) \(& \(>= HADDR 4\) \(< HADDR 8\)\)\)\)\s+\(= \(HSEL_CONTROL> 0\)\)\s+\(= \(HADDR_CONTROL> 0\)\)/s,
+        'generated interconnect IAL0 gives control a complementary not-hit default',
+    );
+    like(
+        $interconnect_fsm,
+        qr/\(<\(& \(! \(\| ahb_data_owner_0_q ahb_data_owner_1_q\)\) \(! \(& \(! \(== HTRANS 2'b00\)\) \(! \(\| \(< HADDR 4\) \(& \(>= HADDR 4\) \(< HADDR 8\)\)\)\)\)\)\)\s+\(= \(HREADY> 1\)\)\s+\(= \(HRESP> 2'b00\)\)\s+\(= \(HRDATA> 0\)\)/s,
+        'generated interconnect IAL0 ordinary response default excludes every owner and unmapped address',
+    );
     like($interconnect_fsm, qr/<HRESP_STATUS\s+\(= \(HRESP> 2'b01\)\)/s, 'generated interconnect IAL0 maps status ERROR to requester ERROR');
     like($interconnect_fsm, qr/<HRESP_CONTROL\s+\(= \(HRESP> 2'b01\)\)/s, 'generated interconnect IAL0 maps control ERROR to requester ERROR');
     like($interconnect_fsm, qr/\(! \(\| \(< HADDR 4\) \(& \(>= HADDR 4\) \(< HADDR 8\)\)\)\).*?\(! \(\| ahb_data_owner_0_q ahb_data_owner_1_q\)\)/s, 'generated interconnect IAL0 treats unmapped as no selected window and no retained data-phase owner');

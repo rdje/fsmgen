@@ -7,11 +7,13 @@ answers:
   - "is the RAM guard's host memory near-100% real memory pressure on macOS?"
   - "why can't t/248 run under the RAM guard on macOS?"
   - "what does the RAM guard count as available memory?"
-date: 2026-07-12
+  - "how should an agent measure macOS RAM usage accurately?"
+  - "what is the difference between Stats RAM usage and macOS memory pressure?"
+date: 2026-07-29
 status: current
 tags: [infra, ram-guard, macos, memory, continuity]
-evidence: scripts/run_with_ram_guard.sh; docs/tasks/AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.md; docs/tasks/AGENT-RUNTIME-RAM-GUARD.md; MEMORY.md
-reverify: "TOTAL=$(sysctl -n hw.memsize); vm_stat | awk -v t=$TOTAL '/page size of/{ps=$8}/^Pages free:/{gsub(/[^0-9]/,\"\",$3);f=$3}/^Pages speculative:/{gsub(/[^0-9]/,\"\",$3);s=$3}/^Pages inactive:/{gsub(/[^0-9]/,\"\",$3);i=$3}/^Pages purgeable:/{gsub(/[^0-9]/,\"\",$3);p=$3}END{printf \"guard_used=%.1f%% real_used=%.1f%%\\n\",(t-(f+s)*ps)*100/t,(t-(f+s+i+p)*ps)*100/t}'; memory_pressure | grep -i 'free percentage'"
+evidence: scripts/run_with_ram_guard.sh; docs/tasks/AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.md; docs/tasks/AGENT-RUNTIME-RAM-GUARD.md; docs/tasks/IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.md; MEMORY.md; https://github.com/exelban/stats/blob/master/Modules/RAM/readers.swift; https://support.apple.com/en-lamr/guide/activity-monitor/actmntr1004/mac
+reverify: "FSMGEN_TOTAL_BYTES=$(sysctl -n hw.memsize); vm_stat | awk -v t=$FSMGEN_TOTAL_BYTES '/page size of/{ps=$8}/^Pages active:/{gsub(/[^0-9]/,\"\",$3);a=$3}/^Pages inactive:/{gsub(/[^0-9]/,\"\",$3);i=$3}/^Pages speculative:/{gsub(/[^0-9]/,\"\",$3);s=$3}/^Pages wired down:/{gsub(/[^0-9]/,\"\",$4);w=$4}/^Pages purgeable:/{gsub(/[^0-9]/,\"\",$3);p=$3}/^File-backed pages:/{gsub(/[^0-9]/,\"\",$3);e=$3}/^Pages occupied by compressor:/{gsub(/[^0-9]/,\"\",$5);c=$5}END{printf \"stats_used=%.1f%%\\n\",(a+i+s+w+c-p-e)*ps*100/t}'; sysctl -n kern.memorystatus_vm_pressure_level; memory_pressure -Q"
 ---
 
 `scripts/run_with_ram_guard.sh` computes host memory usage as
@@ -27,11 +29,35 @@ Measured 2026-07-12 on a 24 GiB host: guard metric `90.5%` used vs approx real
 reported `75%` free. Earlier the same session the guard reported `99.4-99.5%`
 and terminated `./bin/fsmgen`.
 
-Practical rule until fixed: run lightweight single-file `fsmgen` commands
-directly (COMMIT.md scopes the guard to broad/heavy runs); the heavy
-`t/248-regression-corpus-accounting.t` gate has no working guarded path on
-macOS. Do not misread the guard's ~90-99% as real memory pressure, and do not
-"bypass the cutoff" as if the host were genuinely full. The correction is
-tracked by `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT` (proposed; needs
-director approval since it changes a safety guard). The descendant-RSS cutoff
-(4096 MiB) is unaffected and correct.
+The earlier `free + speculative + inactive + purgeable` estimate was also only
+an approximation and must not be reported as canonical usage. Stats 3.0.9
+computes used RAM from Mach VM counters as:
+
+```text
+used = active + inactive + speculative + wired + compressed
+       - purgeable - external
+used_pct = used / physical_memory * 100
+```
+
+For `vm_stat`, `Pages occupied by compressor` supplies `compressed` and
+`File-backed pages` supplies the compatible external/file-backed count. A
+2026-07-29 sample calculated 49.9% while the director's rapidly changing Stats
+display was about 47%; later samples moved to 54.4% and 59.2%. The matching
+source is Stats' `Modules/RAM/readers.swift`.
+
+Capacity and safety are separate readings. Report the Stats-compatible
+percentage for capacity, and report
+`kern.memorystatus_vm_pressure_level` independently as normal (`1`), warning
+(`2`), or critical (`4`). Apple's Activity Monitor documentation describes
+memory pressure as a combined efficiency signal influenced by free memory,
+swap rate, wired memory, and cached files; `memory_pressure -Q`'s free
+percentage is therefore not the inverse of Stats usage. Treat swap *movement*
+over a sampling interval as useful supporting evidence, not accumulated swap
+occupancy as immediate pressure.
+
+Practical rule until the guard itself is fixed: use the director-authorized
+macOS verification profile `--host-max-pct 100 --process-max-rss-mb 4096`,
+report the exact Stats-compatible percentage plus kernel pressure state, and
+retain the correct 4096-MiB descendant cap. Do not misread the guard's current
+host percentage as real memory usage. The implementation correction remains
+tracked by `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT`.

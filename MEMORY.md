@@ -6,19 +6,19 @@ bounded current-state pointer. Git preserves its prior history.
 ## Resume
 
 - latest_commit: this task-scoped commit,
-  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3: activate interconnect arbitration implementation`;
+  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3: ship assertion-clean interconnect arbitration`;
   predecessor `3883c3a0d`.
-- active_work_unit:
-  `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3`.
-- current_state: `.2` committed cleanly at `3883c3a0d`; `.3` is active from
-  that boundary. Activation changes continuity/docs state only. Paired
-  `--no-assert` removal remains excluded by the separate subordinate overlap.
-- next_action: implement the selected AhbInterconnect IAL0 modes, update
-  t1478/t1480, and add direct-fabric assertion-enabled t1530.
+- active_work_unit: none after this commit; interconnect tree `.1`-.3 is done.
+- current_state: `.3` ships assertion-clean generated AHB interconnect output
+  modes; focused/preservation/broad/docs/doctrine gates and cleanup pass.
+- next_action: from the clean `.3` commit, create and activate the next exact
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER` selector after `.813`.
 - in_flight_uncommitted: none after this commit; no background job remains.
-- blockers: none. The fixed guard refused attempts during unrelated external
-  compiler pressure and admitted the definitive endpoint probe at 70.9%; never
-  raise the cutoff or kill unrelated processes.
+- blockers: none. The director authorized canonical macOS host-max 100 plus
+  the correct 4096-MiB descendant cap. Report capacity with the exact
+  Stats-compatible Mach formula and safety with kernel pressure state
+  separately; never use the faulty guard percentage or inactive-cache
+  approximation as RAM usage.
 
 ## Durable context
 

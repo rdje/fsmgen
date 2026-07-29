@@ -7327,8 +7327,16 @@ direct-fabric assertion-enabled t1530 and keeps paired `--no-assert`; proposed
 audit. See
 `docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md`.
 Contract commit `3883c3a0d` is clean, so selected implementation `.3` is now
-active. Activation changes task/index/Memory/roadmap/mdBook/Knowledge Map
-state only; the generator and runtime behavior remain unchanged.
+active. Activation changed task/index/Memory/roadmap/mdBook/Knowledge Map state
+only. Leaf `.3` now ships complementary mapped-hit/not-hit `HSEL_*`/`HADDR_*`
+modes and exclusive retained-owner, first-cycle-unmapped, or
+`!any_owner && !unmapped_address` ordinary response modes. Direct-fabric t1530
+passes one- and two-window behavior with assertions enabled; t1513-t1516,
+t1523, and t1525 preserve paired behavior with `--no-assert` retained only for
+the separately owned subordinate idle/phase-capture overlap. Public sources,
+ports, reports, support, artifacts, semantic/MCP surfaces, and transaction
+behavior are unchanged. See
+`docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_BEHAVIOR.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

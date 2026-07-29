@@ -465,10 +465,9 @@ sub _build_ahb_interconnect_fsm($contract) {
         . ")";
     my @subordinate_size_lines;
     my @subordinate_owner_size_lines;
-    my @subordinate_idle_lines;
-    my @subordinate_hit_blocks;
+    my @subordinate_completion_defaults;
+    my @subordinate_decode_blocks;
     my @subordinate_owner_mux_blocks;
-    my @subordinate_unmapped_lines;
     my @owner_names;
     my @owner_ready_terms;
     my @accepted_window_hits;
@@ -477,6 +476,7 @@ sub _build_ahb_interconnect_fsm($contract) {
         my $sub_bus = $entry->{endpoint}{bus};
         my $window = $entry->{window};
         my $hit = "(& $active_transfer $window_matches[$index])";
+        my $not_hit = "(! $hit)";
         my $accepted_window_hit = "(& (| (== $transfer 2'b10) (== $transfer 2'b11)) $window_matches[$index])";
         my $owner = "ahb_data_owner_${index}_q";
         my $local_address = _local_address_expr($address, $window);
@@ -493,14 +493,18 @@ sub _build_ahb_interconnect_fsm($contract) {
             _size_line($sub_bus->{address}{name}, $sub_bus->{address}{width}, 0);
         push @subordinate_owner_size_lines,
             _size_line($owner, 1, 0);
-        push @subordinate_idle_lines,
+        push @subordinate_completion_defaults,
             "    (= ($sub_bus->{select}> 0))",
             "    (= ($sub_bus->{address}{name}> 0))";
-        push @subordinate_hit_blocks,
+        push @subordinate_decode_blocks,
             "",
             "    (<$hit",
             "      (= ($sub_bus->{select}> 1))",
             "      (= ($sub_bus->{address}{name}> $local_address))",
+            "    )",
+            "    (<$not_hit",
+            "      (= ($sub_bus->{select}> 0))",
+            "      (= ($sub_bus->{address}{name}> 0))",
             "    )";
         push @subordinate_owner_mux_blocks,
             "",
@@ -514,9 +518,6 @@ sub _build_ahb_interconnect_fsm($contract) {
             "        (= ($bus->{response}{name}> 2'b00))",
             "      )",
             "    )";
-        push @subordinate_unmapped_lines,
-            "      (= ($sub_bus->{select}> 0))",
-            "      (= ($sub_bus->{address}{name}> 0))";
     }
 
     my $any_owner = @owner_names == 1
@@ -542,6 +543,7 @@ sub _build_ahb_interconnect_fsm($contract) {
             "    )";
     }
     my $unmapped = "(& $unmapped_address (! $any_owner))";
+    my $ordinary_default = "(& (! $any_owner) (! $unmapped_address))";
 
     return join("\n",
         "(?fsm:ahb_interconnect",
@@ -571,23 +573,24 @@ sub _build_ahb_interconnect_fsm($contract) {
         "",
         "  (idle",
         "    (= ($bus->{grant}> 1))",
-        "    (= ($bus->{ready}> 1))",
-        "    (= ($bus->{response}{name}> 2'b00))",
-        "    (= ($bus->{read_data}{name}> 0))",
-        @subordinate_idle_lines,
         @owner_update_lines,
         "    (<$input_visibility_guard",
         "      (= ($bus->{grant}> 1))",
         "    )",
-        @subordinate_hit_blocks,
+        @subordinate_decode_blocks,
         @subordinate_owner_mux_blocks,
         "",
         "    (<$unmapped",
         "      (= ($bus->{ready}> 0))",
         "      (= ($bus->{response}{name}> 2'b01))",
         "      (= ($bus->{read_data}{name}> 0))",
-        @subordinate_unmapped_lines,
         "      (-> unmapped_error_complete)",
+        "    )",
+        "",
+        "    (<$ordinary_default",
+        "      (= ($bus->{ready}> 1))",
+        "      (= ($bus->{response}{name}> 2'b00))",
+        "      (= ($bus->{read_data}{name}> 0))",
         "    )",
         "  )",
         "",
@@ -596,7 +599,7 @@ sub _build_ahb_interconnect_fsm($contract) {
         "    (= ($bus->{ready}> 1))",
         "    (= ($bus->{response}{name}> 2'b01))",
         "    (= ($bus->{read_data}{name}> 0))",
-        @subordinate_idle_lines,
+        @subordinate_completion_defaults,
         "    (-> idle)",
         "  )",
         ")",

@@ -59,6 +59,21 @@ subtest 'adapter parses the selected AHB interconnect PPIF shape' => sub {
     like($interconnect_fsm, qr/\(<\(& \(! \(== HTRANS 2'b00\)\) \(< HADDR 4\)\)/, 'generated interconnect IAL0 omits the tautological lower-bound comparison for a zero-base static window');
     like($interconnect_fsm, qr/\(= \(HSEL_REGS> 1\)\)/, 'generated interconnect IAL0 asserts subordinate select on hits');
     like($interconnect_fsm, qr/\(= \(HADDR_REGS> HADDR\)\)/, 'generated interconnect IAL0 emits local address for the zero-base window');
+    like(
+        $interconnect_fsm,
+        qr/\(<\(! \(& \(! \(== HTRANS 2'b00\)\) \(< HADDR 4\)\)\)\s+\(= \(HSEL_REGS> 0\)\)\s+\(= \(HADDR_REGS> 0\)\)/s,
+        'generated interconnect IAL0 drives select/address defaults only on the complementary not-hit path',
+    );
+    like(
+        $interconnect_fsm,
+        qr/\(<\(& \(! ahb_data_owner_0_q\) \(! \(& \(! \(== HTRANS 2'b00\)\) \(! \(< HADDR 4\)\)\)\)\)\s+\(= \(HREADY> 1\)\)\s+\(= \(HRESP> 2'b00\)\)\s+\(= \(HRDATA> 0\)\)/s,
+        'generated interconnect IAL0 ordinary response default excludes retained owner and unmapped address',
+    );
+    unlike(
+        $interconnect_fsm,
+        qr/\(idle\s+\(= \(HGRANT> 1\)\)\s+\(= \(HREADY> 1\)\)/s,
+        'generated interconnect IAL0 no longer enables an unconditional idle HREADY default',
+    );
     like($interconnect_fsm, qr/\(<HRESP_REGS\s+\(= \(HRESP> 2'b01\)\)/s, 'generated interconnect IAL0 maps one-bit subordinate ERROR to two-bit requester ERROR');
     like($interconnect_fsm, qr/\(<!HRESP_REGS\s+\(= \(HRESP> 2'b00\)\)/s, 'generated interconnect IAL0 maps one-bit subordinate OKAY to two-bit requester OKAY');
     like($interconnect_fsm, qr/\(unmapped_error_complete\s+\(= \(HGRANT> 1\)\)\s+\(= \(HREADY> 1\)\)\s+\(= \(HRESP> 2'b01\)\)/s, 'generated interconnect IAL0 completes unmapped ERROR on the second cycle');

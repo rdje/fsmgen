@@ -11162,8 +11162,15 @@ direct-fabric assertion-enabled t1530 and keeps paired `--no-assert`; proposed
 audit. See the
 [selected arbitration contract](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
 Contract commit `3883c3a0d` is clean, so selected implementation `.3` is now
-active. Activation changes continuity/documentation state only; the generator
-and runtime behavior remain unchanged.
+active. Activation changed continuity/documentation state only. Leaf `.3` now
+ships complementary mapped-hit/not-hit `HSEL_*`/`HADDR_*` modes and exclusive
+retained-owner, first-cycle-unmapped, or ordinary global response modes.
+Assertion-enabled direct-fabric t1530 passes one- and two-window mapped-zero,
+mapped-nonzero, wait, success, subordinate ERROR, same-edge replacement, and
+two-cycle unmapped ERROR behavior. Paired aggregate tests retain `--no-assert`
+only for the separately tracked subordinate idle/phase-capture overlap. See
+the
+[shipped arbitration behavior](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

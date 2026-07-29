@@ -456,28 +456,22 @@ The selected interconnect behavior is deliberately bounded:
 The generated aggregate top wires the requester, interconnect, and subordinate
 through `ahb_tb.fsm`; the generated HDL entry is module `ahb_tb`.
 
-> **Current selector-assertion boundary:** the shipped public behavior above
-> is unchanged, but generated interconnect IAL0 currently drives ordinary
-> defaults together with mapped-hit, retained-owner, or unmapped response
-> values in the same `idle` state. Fresh assertion-enabled base runs at mapped
-> addresses zero and two both stop at `HADDR_REGS`. The complete conflicting
-> set is five outputs for one window (`HADDR_REGS`, `HSEL_REGS`, `HRDATA`,
-> `HREADY`, `HRESP`) and seven for two windows (per-window `HADDR_*`/`HSEL_*`
-> plus the three global response outputs). Generic `onehot0` assertions are
-> accurate and remain mandatory. Completed contract leaf `.2` selects a
-> generated-`AhbInterconnect` shape with complementary per-window
-> mapped-hit/not-hit address/select modes and exclusive retained-owner,
-> first-cycle-unmapped, or ordinary-default response modes. See the
-> [output-arbitration audit](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md)
-> and the
-> [selected contract](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md).
-> Clean contract commit `3883c3a0d` activates `.3` for implementation;
-> generated behavior remains unchanged at this boundary.
-> A feasibility run with only fabric assertions suppressed exposed a separate
-> subordinate idle/`ahb_phase_capture` `HRDATA_REGS <- 0` overlap. Focused
-> t1530 will therefore instantiate the fabric directly with assertions, while
-> paired tests retain `--no-assert` pending the separately proposed subordinate
-> audit.
+> **Selector-assertion behavior:** generated interconnect IAL0 now uses
+> complementary per-window mapped-hit/not-hit address/select modes and
+> exclusive retained-owner, first-cycle-unmapped, or ordinary-default global
+> response modes. The ordinary predicate is
+> `!any_owner && !unmapped_address`; independent owner blocks still expose an
+> impossible multiple-owner state to generic `onehot0` assertions. Direct
+> one-/two-window t1530 passes mapped address zero/nonzero, local translation,
+> wait, success, subordinate ERROR, same-edge replacement, and two-cycle
+> unmapped ERROR with assertions enabled. See the
+> [output-arbitration audit](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_AUDIT.md),
+> [selected contract](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_CONTRACT_SELECTION.md),
+> and
+> [shipped behavior](../../IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_BEHAVIOR.md).
+> Paired aggregate tests retain `--no-assert` only because the separately
+> proposed subordinate idle/`ahb_phase_capture` `HRDATA_REGS <- 0` overlap
+> remains outside this fabric repair.
 
 ## Guided PPIF Two-Subordinate Interconnect
 
@@ -1308,8 +1302,10 @@ generic/alias and two-subordinate paired generic sources are described below.
 > records the former ten-edge mismatch; the
 > [single-event repair](../../IAL2_AHB_REQUESTER_SINGLE_BUSY_EVENT_CARDINALITY_REPAIR.md)
 > records the shipped correction. Paired aggregate tests retain `--no-assert`
-> because a separate proposed AHB interconnect task owns the pre-existing
-> default/decode selector overlap; their qualified BUSY counts remain explicit.
+> because the separately proposed AHB subordinate output-arbitration audit owns
+> an idle/phase-capture selector overlap; the interconnect default/decode
+> overlap is repaired and direct fabric assertions pass. Their qualified BUSY
+> counts remain explicit.
 
 The additive exact-two extension now ships as the generic source
 `ppif/ahb_requester_busy_insert_two.ppif`:

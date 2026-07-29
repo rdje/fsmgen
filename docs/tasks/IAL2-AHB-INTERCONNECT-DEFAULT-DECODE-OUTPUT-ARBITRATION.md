@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `IAL2 / AHB interconnect correctness`
 - Created: `2026-07-24`
 - Last updated: `2026-07-29`
@@ -68,7 +68,7 @@ selector assertions remain disabled.
 ## Task Tree
 
 - ID: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION`
-  Status: `active`
+  Status: `done`
   Goal: `Repair generated AHB interconnect default/decode output arbitration.`
   Children: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.1, IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.2, IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3`
 
@@ -87,22 +87,22 @@ selector assertions remain disabled.
   Commit: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.2: select mutually exclusive arbitration contract`
 
 - ID: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement assertion-clean generated AHB interconnect output arbitration.`
-  Acceptance: `Activate only after .2 commits cleanly. Change only AhbInterconnect.pm generated IAL0 construction so each window has complementary mapped-hit/not-hit HSEL/HADDR and global HREADY/HRESP/HRDATA have exclusive retained-owner, first-cycle-unmapped, or ordinary-default modes; preserve independent owner blocks, HGRANT/input visibility, owner capture/hold/clear/same-edge mapped replacement, next_state, unmapped_error_complete, decode/local translation, wait/response behavior, the mapped-owner-to-unmapped non-promise, generic selector analysis/assertions, public sources/ports/support/reports/artifacts/semantic-MCP surfaces, backends/VHDL, and transaction behavior. Update t1478/t1480 and add t1530 plus task-owned harness data that directly instantiates generated one-/two-window ahb_interconnect modules and runs without --no-assert across mapped zero/nonzero/success/wait/subordinate-ERROR/unmapped-ERROR/status/control/same-edge mapped replacement. Keep --no-assert in t1513-t1516/t1523/t1525 because the independently tracked subordinate idle/phase-capture overlap remains; rerun that family for functional preservation. Require strict/check/schedule/artifact/verifier/semantic-MCP, t1518, t248/t297, docs/mdBook/Knowledge Map/doctrine, same-volume cleanup, the unchanged 88%/4096-MiB guard, and rollback. Do not repair the subordinate, generic ISF priority, mapped-owner-to-unmapped, broader AHB/protocol/backend/VHDL behavior, or decision 0020.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `Activate only after .2 commits cleanly. Change only AhbInterconnect.pm generated IAL0 construction so each window has complementary mapped-hit/not-hit HSEL/HADDR and global HREADY/HRESP/HRDATA have exclusive retained-owner, first-cycle-unmapped, or ordinary-default modes; preserve independent owner blocks, HGRANT/input visibility, owner capture/hold/clear/same-edge mapped replacement, next_state, unmapped_error_complete, decode/local translation, wait/response behavior, the mapped-owner-to-unmapped non-promise, generic selector analysis/assertions, public sources/ports/support/reports/artifacts/semantic-MCP surfaces, backends/VHDL, and transaction behavior. Update t1478/t1480 and add t1530 plus task-owned harness data that directly instantiates generated one-/two-window ahb_interconnect modules and runs without --no-assert across mapped zero/nonzero/success/wait/subordinate-ERROR/unmapped-ERROR/status/control/same-edge mapped replacement. Keep --no-assert in t1513-t1516/t1523/t1525 because the independently tracked subordinate idle/phase-capture overlap remains; rerun that family for functional preservation. Require strict/check/schedule/artifact/verifier/semantic-MCP, t1518, t248/t297, docs/mdBook/Knowledge Map/doctrine, same-volume cleanup, the unchanged 4096-MiB descendant guard, and rollback. Director authorization on 2026-07-29 supersedes this leaf's original 88% macOS host setting only: use the canonical host-max-pct 100 / process-max-rss-mb 4096 verification profile because the tracked macOS metric counts reclaimable cache as pressure. Report capacity with the Stats-compatible Mach formula (active + inactive + speculative + wired + compressed - purgeable - external) / physical memory, and report kern.memorystatus_vm_pressure_level separately as the safety state; do not substitute the guard percentage, the earlier inactive/purgeable approximation, or memory_pressure's free percentage. Do not change the guard implementation while this tree is dirty. Do not repair the subordinate, generic ISF priority, mapped-owner-to-unmapped, broader AHB/protocol/backend/VHDL behavior, or decision 0020.`
+  Verification: `AhbInterconnect.pm emits complementary per-window hit/not-hit HSEL/HADDR modes and an ordinary global response mode guarded by (! any_owner) && (! unmapped_address), while independent owner blocks preserve impossible-multiple-owner assertion visibility. Updated t1478/t1480 pass. New direct-fabric assertion-enabled t1530 passes one- and two-window mapped-zero/nonzero, local translation, wait, success, subordinate ERROR, same-edge mapped replacement, and two-cycle unmapped ERROR. Preservation t1513-t1516, t1523, and the full unmodified t1525 pass with the existing subordinate-owned --no-assert boundary; t1525 passes 3 top-level subtests in 646 seconds. Guarded t1518 passes 5/5, and t248/t297 pass 6,911 tests. Strict/check/schedule/artifact/verifier/semantic-MCP coverage is retained through those focused and preservation gates. Initial retries stopped only because the macOS guard's free+speculative formula over-reports reclaimable cache. Source inspection of Stats 3.0.9 established the exact capacity formula active+inactive+speculative+wired+compressed-purgeable-external; a same-period vm_stat sample calculated 49.9% against the director's rapidly changing approximately 47% display, with later exact samples at 54.4% and 59.2%. kern.memorystatus_vm_pressure_level remained 1 (normal); memory_pressure -Q's free percentage is a different efficiency signal. Final heavy gates therefore used the authorized host-max 100 / descendant 4096-MiB profile while reporting exact capacity plus kernel state. The temporary t1525 sharding from the false diagnosis was removed and t1525 remained byte-identical to HEAD. No project shutdown or claimed 70% baseline is warranted. The exact same-volume implementation workspace contained 68 files/2,961,033 bytes after final direct builds; it was removed and both task-workspace and t1530 residue censuses are empty. Canonical behavior/docs/README/roadmap/mdBook/facts/task/index/Memory are synchronized. Knowledge Map generation/check passes at 1,011 facts/5,142 question keys; mdBook builds; Perl syntax, diff, memory architecture, relative-doc paths, README entrypoint, project-data locality, and all doctrine gates pass. The exact generated mdBook output contained 72 files/16,011,113 bytes, was removed, and residue is none.`
+  Commit: `IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.3: ship assertion-clean interconnect arbitration`
 
 ## Activation Gate
 
 Completed parent selector `.813` committed cleanly at `347a85f80`, and child
 `.1` activated from that clean boundary at `70eeeab70`. The audit is now
 complete at clean commit `c32255645`, so `.2` activated and is now complete.
-It selects proposed implementation child `.3` while routing a separately
-exposed subordinate assertion overlap to proposed task
-`IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION`. No arbitration repair
-has started. Contract commit `3883c3a0d` is clean, so `.3` is now active from
-that handoff-ready boundary; activation changes continuity/docs state only.
+It selected implementation child `.3` while routing a separately exposed
+subordinate assertion overlap to proposed task
+`IAL2-AHB-SUBORDINATE-DEFAULT-PHASE-OUTPUT-ARBITRATION`. Contract commit
+`3883c3a0d` was clean, so `.3` activated from that handoff-ready boundary and
+now completes the interconnect repair with direct assertion-enabled proof.
 
 ## Rollback
 

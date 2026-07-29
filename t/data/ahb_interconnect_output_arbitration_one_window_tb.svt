@@ -1,0 +1,197 @@
+module ahb_interconnect_output_arbitration_one_window_tb;
+  logic clk = 0;
+  logic rst_n = 0;
+  logic [31:0] HADDR = 0;
+  logic [2:0] HBURST = 0;
+  logic HBUSREQ = 1;
+  logic HLOCK = 0;
+  logic [3:0] HPROT = 0;
+  logic [31:0] HRDATA_REGS = 0;
+  logic HREADYOUT_REGS = 1;
+  logic HRESP_REGS = 0;
+  logic [2:0] HSIZE = 2;
+  logic [1:0] HTRANS = 0;
+  logic [31:0] HWDATA = 0;
+  logic HWRITE = 0;
+  wire [31:0] HADDR_REGS;
+  wire HGRANT;
+  wire [31:0] HRDATA;
+  wire HREADY;
+  wire [1:0] HRESP;
+  wire HSEL_REGS;
+
+  ahb_interconnect dut (
+    .clk(clk),
+    .rst_n(rst_n),
+    .HADDR(HADDR),
+    .HBURST(HBURST),
+    .HBUSREQ(HBUSREQ),
+    .HLOCK(HLOCK),
+    .HPROT(HPROT),
+    .HRDATA_REGS(HRDATA_REGS),
+    .HREADYOUT_REGS(HREADYOUT_REGS),
+    .HRESP_REGS(HRESP_REGS),
+    .HSIZE(HSIZE),
+    .HTRANS(HTRANS),
+    .HWDATA(HWDATA),
+    .HWRITE(HWRITE),
+    .HADDR_REGS(HADDR_REGS),
+    .HGRANT(HGRANT),
+    .HRDATA(HRDATA),
+    .HREADY(HREADY),
+    .HRESP(HRESP),
+    .HSEL_REGS(HSEL_REGS)
+  );
+
+  always #5 clk = ~clk;
+
+  task automatic expect_global(
+    input logic expected_ready,
+    input logic [1:0] expected_resp,
+    input logic [31:0] expected_data
+  );
+    begin
+      #1;
+      if (HGRANT !== 1'b1 || HREADY !== expected_ready ||
+          HRESP !== expected_resp || HRDATA !== expected_data)
+        $fatal(1, "global grant=%b ready=%b resp=%b data=%h expected=1/%b/%b/%h",
+               HGRANT, HREADY, HRESP, HRDATA,
+               expected_ready, expected_resp, expected_data);
+    end
+  endtask
+
+  task automatic expect_decode(
+    input logic expected_select,
+    input logic [31:0] expected_address
+  );
+    begin
+      #1;
+      if (HSEL_REGS !== expected_select || HADDR_REGS !== expected_address)
+        $fatal(1, "decode select=%b address=%h expected=%b/%h",
+               HSEL_REGS, HADDR_REGS, expected_select, expected_address);
+    end
+  endtask
+
+  initial begin
+    repeat (3) @(negedge clk);
+    rst_n = 1;
+
+    @(negedge clk);
+    expect_decode(0, 0);
+    expect_global(1, 2'b00, 0);
+
+    // Address zero uses the mapped family even though its value equals default.
+    HADDR = 0;
+    HTRANS = 2'b10;
+    HREADYOUT_REGS = 0;
+    HRDATA_REGS = 32'h11111111;
+    expect_decode(1, 0);
+    expect_global(1, 2'b00, 0);
+    @(posedge clk);
+    #1;
+    if (dut.ahb_data_owner_0_q !== 1'b1)
+      $fatal(1, "mapped address zero did not capture the data owner");
+    expect_global(0, 2'b00, 32'h11111111);
+
+    @(negedge clk);
+    HTRANS = 2'b00;
+    expect_decode(0, 0);
+    expect_global(0, 2'b00, 32'h11111111);
+
+    HREADYOUT_REGS = 1;
+    HRDATA_REGS = 32'ha5a55a5a;
+    expect_global(1, 2'b00, 32'ha5a55a5a);
+    @(posedge clk);
+    #1;
+    if (dut.ahb_data_owner_0_q !== 1'b0)
+      $fatal(1, "successful completion did not clear the data owner");
+    expect_global(1, 2'b00, 0);
+
+    // A nonzero mapped address preserves local translation and subordinate ERROR.
+    @(negedge clk);
+    HADDR = 2;
+    HTRANS = 2'b10;
+    HREADYOUT_REGS = 0;
+    HRESP_REGS = 0;
+    HRDATA_REGS = 32'h22222222;
+    expect_decode(1, 2);
+    expect_global(1, 2'b00, 0);
+    @(posedge clk);
+    #1;
+    if (dut.ahb_data_owner_0_q !== 1'b1)
+      $fatal(1, "mapped nonzero address did not capture the data owner");
+    expect_global(0, 2'b00, 32'h22222222);
+
+    @(negedge clk);
+    HTRANS = 2'b00;
+    HREADYOUT_REGS = 1;
+    HRESP_REGS = 1;
+    HRDATA_REGS = 32'hcafef00d;
+    expect_decode(0, 0);
+    expect_global(1, 2'b01, 32'hcafef00d);
+    @(posedge clk);
+    #1;
+    if (dut.ahb_data_owner_0_q !== 1'b0)
+      $fatal(1, "ERROR completion did not clear the data owner");
+    HRESP_REGS = 0;
+    expect_global(1, 2'b00, 0);
+
+    // Completion plus a new mapped phase replaces the owner on the same edge.
+    @(negedge clk);
+    HADDR = 0;
+    HTRANS = 2'b10;
+    HREADYOUT_REGS = 0;
+    HRDATA_REGS = 32'h33333333;
+    expect_decode(1, 0);
+    @(posedge clk);
+    #1;
+    if (dut.ahb_data_owner_0_q !== 1'b1)
+      $fatal(1, "replacement setup did not capture the first owner");
+
+    @(negedge clk);
+    HADDR = 2;
+    HTRANS = 2'b10;
+    HREADYOUT_REGS = 1;
+    HRDATA_REGS = 32'h12345678;
+    expect_decode(1, 2);
+    expect_global(1, 2'b00, 32'h12345678);
+    @(posedge clk);
+    #1;
+    if (dut.ahb_data_owner_0_q !== 1'b1)
+      $fatal(1, "same-edge mapped replacement dropped the owner");
+
+    @(negedge clk);
+    HTRANS = 2'b00;
+    HREADYOUT_REGS = 0;
+    HRDATA_REGS = 32'h87654321;
+    expect_decode(0, 0);
+    expect_global(0, 2'b00, 32'h87654321);
+    HREADYOUT_REGS = 1;
+    expect_global(1, 2'b00, 32'h87654321);
+    @(posedge clk);
+    #1;
+    if (dut.ahb_data_owner_0_q !== 1'b0)
+      $fatal(1, "replacement completion did not clear the owner");
+
+    // Unmapped access keeps selects low and completes as a two-cycle ERROR.
+    @(negedge clk);
+    HADDR = 4;
+    HTRANS = 2'b10;
+    expect_decode(0, 0);
+    expect_global(0, 2'b01, 0);
+    @(posedge clk);
+    #1;
+    expect_decode(0, 0);
+    expect_global(1, 2'b01, 0);
+    @(negedge clk);
+    HTRANS = 2'b00;
+    expect_global(1, 2'b01, 0);
+    @(posedge clk);
+    #1;
+    expect_decode(0, 0);
+    expect_global(1, 2'b00, 0);
+
+    $display("PASS one-window mapped_zero mapped_nonzero wait success error replacement unmapped");
+    $finish;
+  end
+endmodule

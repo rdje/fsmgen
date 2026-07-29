@@ -2,7 +2,7 @@
 
 Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.723`
 
-Date: 2026-06-29
+Date: 2026-07-29
 
 ## Outcome
 
@@ -151,6 +151,16 @@ On a hit, the generated interconnect:
 - maps subordinate `HRESP_REGS=0` to requester `HRESP=2'b00`; and
 - maps subordinate `HRESP_REGS=1` to requester `HRESP=2'b01`.
 
+The generated IAL0 makes those modes mutually exclusive. Each window drives
+`HSEL_*`/`HADDR_*` from either its mapped-hit family or its complementary
+not-hit family. Global `HREADY`/`HRESP`/`HRDATA` select a retained owner, the
+first-cycle unmapped response, or the ordinary default guarded by
+`!any_owner && !unmapped_address`. Generic selector assertions remain enabled,
+including visibility of impossible multiple-owner states. See the
+assertion-clean
+`docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_BEHAVIOR.md`
+record.
+
 On inactive/no-transfer cycles, the generated defaults are:
 
 ```text
@@ -248,3 +258,9 @@ Focused coverage in `t/1478-ial2-ahb-interconnect.t` checks the public source
 shape, generated IAL1/IAL0 artifact names, interconnect decode and response
 mapping, aggregate top wiring, schedule/check/semantic JSON, support
 accounting, fail-closed diagnostics, and outdir artifact emission.
+
+Focused `t/1530-ial2-ahb-interconnect-output-arbitration.t` additionally
+instantiates the generated fabric directly with assertions enabled across
+mapped-zero/nonzero, wait, success, subordinate ERROR, same-edge replacement,
+and two-cycle unmapped behavior. Paired aggregate tests retain `--no-assert`
+only for the separately owned subordinate idle/phase-capture overlap.
