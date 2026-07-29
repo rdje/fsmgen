@@ -7528,6 +7528,15 @@ separate.
 Clean behavior commit `d94f303d8` activates only no-behavior parent selector
 `.819`. It must reconcile those adjacent owners and choose exactly one next
 roadmap-aligned slice before any further behavior change.
+Selector `.819` now chooses the proposed two-subordinate exact-three paired AHB
+readiness audit. A same-volume disposable generic candidate strict-checks at
+`ahb_tb`/4 children/29 signals, emits exact 4 IAL1/5 IAL0 artifacts, preserves
+both parked endpoint contexts and one-hot response ownership, exports normalized
+semantic root `top`, and passes `--verify-hdl`. The audit must still prove real
+read-only MCP and assertion-enabled two-command 10/8/2/6/2 runtime with final
+status/control `44332211`/`88776655` before selecting projected 325/366/49
+support. HIAL/VIAL remains proposed with its separate simulator capability
+profiles intact.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

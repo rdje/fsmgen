@@ -112,10 +112,10 @@ architecture needed to move beyond that bounded foundation.
 
 This tree is proposed and inactive. `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
 is the first executable leaf only after a future clean-boundary roadmap selector
-activates it. Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.817` kept
-this architecture proposed and selected the smaller adjacent exact-three AHB
-profile alias; the simulator profile agreement did not pre-empt that
-evidence-backed selection.
+activates it. Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.819` keeps
+this architecture proposed and selects the smaller adjacent two-subordinate
+exact-three paired AHB readiness audit; the simulator profile agreement does
+not pre-empt that evidence-backed selection.
 
 ## Decisions
 
@@ -142,6 +142,8 @@ evidence-backed selection.
   explicit model-evaluation loop and `--timing` scheduling of supported delays,
   event controls, waits, forks, and delayed processes strengthen rather than
   erase the separate full-language/UVM profile requirement.
+- `2026-07-29`: Parent selector `.819` retains this proposed boundary and
+  selects the smaller adjacent two-window exact-three AHB readiness audit.
 
 ## Open Questions
 
@@ -184,4 +186,6 @@ evidence-backed selection.
   full-language/SystemVerilog-UVM validation-profile requirement, with separate
   VHDL and mixed-language claim qualification; the tree remains proposed while
   parent selector `.817` selected the smaller adjacent AHB alias.
+- `2026-07-29`: Parent selector `.819` keeps the architecture proposed while
+  selecting the bounded two-window exact-three AHB readiness audit.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

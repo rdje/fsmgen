@@ -146,8 +146,10 @@ generator path was added.
 ## Explicit Deferrals
 
 Parent selector `.817` selected `.818`, which now ships the matching
-byte-identical `.ahb` alias. The two-subordinate pairing remains a separate
-future owner. Counts above three, generalized counter width,
+byte-identical `.ahb` alias. Parent selector `.819` now assigns the
+two-subordinate exact-three pairing to a separate readiness audit; it remains
+unshipped until direct runtime evidence and a later contract pass. Counts
+above three, generalized counter width,
 multiple insertion points, runtime-selected or policy/random throttling,
 distinct local bus-BUSY status, broader bursts/signals/managers/fabrics,
 other protocols/backends, VHDL, VIAL verification generation, HIAL/VIAL
@@ -155,6 +157,8 @@ activation, and decision-0020 behavior remain separate.
 
 See
 [`IAL2_POST_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION`](IAL2_POST_EXACT_THREE_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
+See also
+[`IAL2_POST_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION`](IAL2_POST_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
 
 ## Rollback
 

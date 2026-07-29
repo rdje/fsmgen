@@ -5797,31 +5797,31 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.818: ship exact-three paired AHB alias`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.819`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact roadmap-aligned owner after the one-subordinate exact-three paired AHB generic/profile pair ships cleanly.`
   Acceptance: `Activate only after clean behavior commit d94f303d8. Reconcile .817-.818, the completed IAL2-AHB-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT .1-.3 lineage, current 324/365/48 support checkpoint split 24 .ppif/24 .ahb, adjacent AHB two-subordinate exact-three/count/policy/status/burst/signal residue, generic selector-priority owners, other roadmap lanes, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE, completed IAL1 verification-output foundations, decisions 0004/0008/0020, roadmap, mdBook, Knowledge Map, and the director's 2026-07-29 HIAL/VIAL and simulator-profile requirements. Choose exactly one smallest evidence-backed next owner and explain why it outranks the alternatives. If HIAL/VIAL is selected, activate only its architecture-audit leaf after this selector commits; if an adjacent IAL2 owner is selected, keep HIAL/VIAL proposed while preserving event-capable compiled Verilator as a portable-fast subset profile separate from a qualified full-language/SystemVerilog-UVM simulator, with VHDL/mixed-language claims qualified independently. Freeze exact ownership, clean activation boundary, preservation, focused/broader validation, docs/Knowledge Map impact, authorized host100/process4096 with exact Stats-compatible capacity plus separate kernel pressure, repository-derived same-volume cleanup, and rollback before behavior changes. Make no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction-layer behavior change in this selector. Keep decision 0020 proposed/inactive unless independently and explicitly selected.`
-  Verification: `Activated only after clean behavior commit d94f303d8. Activation adds this task-tree owner and synchronizes task index, Memory, roadmap, mdBook, and the post-exact-three selector fact with the shipped 324/365/48 split-24/24 handoff; it makes no parser, generator, public source, support, test, artifact, semantic/MCP API, HDL/runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior change. Focused t1256+t1414 pass 2 files/17 checks; Knowledge Map generation/check passes at 1,025 facts/5,225 question keys; mdBook builds to 72 files/16,166,431 bytes and its repository-local output is removed without residue; Memory is 54 lines; diff and all six doctrine gates pass. Stats-compatible RAM is 62.8% (15.08/24.00 GiB) from the canonical Mach formula; kernel pressure is separately 1 (normal), and guard occupancy is excluded as capacity truth. Exact next action remains executing this selector after the activation commit.`
-  Commit: `pending activation`
+  Verification: `Activated only after clean behavior commit d94f303d8 through clean activation commit 2b9b71716, then reconciled the shipped standalone/one-window exact-three and two-window exact-two generic/profile families, assertion-clean AHB lower layers, current 324/365/48 split-24/24 support boundary, generic priority, HIAL/VIAL, completed verification-output foundations, decisions 0004/0008/0020, roadmap, mdBook, and Knowledge Map. Selected proposed IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1 as the smallest adjacent owner. A 6,650-byte same-volume disposable generic candidate strict-checks with zero diagnostics at ahb_tb/4 children/29 signals and intentionally unmatched support; emits exact 4 IAL1/5 IAL0 artifacts; preserves before_beat=2/beats=3, both child and propagated parks_on=[busy], one-hot response ownership, normalized semantic schema v1/root top/4 children/29 signals; and passes --verify-hdl. Runtime was deliberately not inferred: the audit must prove real read-only MCP and assertion-enabled two-command 10/8/2/6/2/status-44332211/control-88776655 behavior before any contract. The exact 3-file/62,001,772-byte workspace was removed without residue. The audit may project exact support id intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park, selected coverage, ppif/supported-smoke+strict/ahb_tb/top/4 children, and 325/366/49 split 25/24 only after runtime passes. Counts above three, new BUSY policy/status/burst/signal semantics, generic priority, decision 0020, and broad HIAL/VIAL activation remain separate; HIAL/VIAL retains portable-fast event-capable compiled Verilator versus separately qualified full-language/SystemVerilog-UVM plus independent VHDL/mixed-language profiles. Canonical selector record/fact and proposed child task tree are synchronized. Focused t1518+t1256+t1414 pass 3 files/22 tests; Knowledge Map generation/check passes at 1,026 facts/5,231 question keys; mdBook builds to 72 files/16,172,871 bytes and is removed without residue; Memory is 56 lines; diff and all six doctrine gates pass. Final Stats-compatible RAM is 76.1% (18.26/24.00 GiB), kernel pressure is separately 1 (normal), and guard occupancy is excluded as capacity truth. No parser, generator, public source, support, test, checked-in artifact, semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, or transaction behavior changes in the selector.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.819: select two-window exact-three AHB audit`
 
-The selected child tree is now complete through `.3`. It ships the generic
-one-subordinate exact-three paired source at 323/364/47 split 24/23 with exact
-review artifacts, normalized semantic/read-only MCP parity, and
-assertion-enabled t1531 runtime. From clean behavior commit `00d71114d`, `.817`
-is now complete and selects `.818`, the byte-identical matching `.ahb` alias at
-projected 324/365/48 split 24/24. Clean selector commit `c70fe528f` now
-activates `.818`; no alias behavior ships in activation. Two-window exact-three,
-counts/policy/status/burst/signal work, HIAL/VIAL, VHDL, verification
-generation, and decision 0020 remain separate. The director-agreed
-event-capable compiled Verilator versus full-language/SystemVerilog-UVM
-profile requirement remains durable without activating HIAL/VIAL.
+The exact-three paired generic/profile pair now ships at 324/365/48 split
+24/24 with t1531 shared runtime and t1532 alias parity. Selector `.819` is
+complete and selects proposed
+`IAL2-AHB-TWO-SUBORDINATE-EXACT-THREE-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`;
+the next clean action is activation of that audit, not behavior. Counts above
+three, new BUSY policy/status/burst/signal semantics, generic priority,
+HIAL/VIAL, VHDL, verification generation, and decision `0020` remain separate.
+The director-agreed event-capable compiled Verilator versus full-language/
+SystemVerilog-UVM profile requirement remains durable without activating
+HIAL/VIAL.
 
-Activation verification: Knowledge Map generation/check passes at 1,024 facts
-and 5,214 question keys; mdBook builds to 72 files / 16,153,793 bytes and the
-repository-local output is removed without residue; Memory is 55 lines; diff
-checks and all six doctrine gates pass. The recorded closeout
-Stats-compatible RAM sample is 73.9% (17.74/24.00 GiB) and kernel pressure is
-1 (normal). The RAM guard's separate heuristic occupancy is excluded from
-capacity truth. No background job remains.
+Selector verification: current-surface/backlog/path tests pass 3 files/22
+tests; Knowledge Map generation/check passes at 1,026 facts/5,231 question
+keys; mdBook builds to 72 files/16,172,871 bytes and the repository-local
+output is removed without residue; Memory is 56 lines; diff checks and all six
+doctrine gates pass. The recorded closeout Stats-compatible RAM sample is
+76.1% (18.26/24.00 GiB) and kernel pressure is 1 (normal). The RAM guard's
+separate heuristic occupancy is excluded from capacity truth. No background
+job remains.
 
 Activation condition was satisfied when `.810` committed cleanly at
 `e2dc65507`; `.811` was then activated. That activation changed only

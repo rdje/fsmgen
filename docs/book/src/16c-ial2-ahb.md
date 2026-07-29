@@ -2081,6 +2081,14 @@ now ships the alias, support identity, and t/1532 proof at 324/365/48 split
 24/24 while preserving the shared t/1531 runtime.
 Clean behavior commit `d94f303d8` activates only no-behavior parent selector
 `.819` for the next exact roadmap-aligned owner.
+Selector `.819` now chooses the proposed two-subordinate exact-three paired
+readiness audit. Static, schedule, normalized-semantic, and HDL-verifier probes
+pass for a disposable four-child candidate, but the audit must directly prove
+real read-only MCP plus assertion-enabled two-command runtime at 10
+presentations, 8 beats, 2 BUSY episodes, 6 qualified BUSY events, 2 resumed
+`SEQ` events, and final status/control `44332211`/`88776655`. Only then may a
+separate contract project 325/366/49 split 25 `.ppif`/24 `.ahb`. See the
+[selection record](../../IAL2_POST_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

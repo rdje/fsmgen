@@ -11368,6 +11368,17 @@ remain separate.
 Clean behavior commit `d94f303d8` activates only no-behavior parent selector
 `.819`. The selector must reconcile those adjacent owners and select exactly
 one next bounded slice; activation changes continuity only.
+Selector `.819` now chooses the proposed two-subordinate exact-three paired AHB
+readiness audit. A same-volume disposable generic candidate strict-checks at
+`ahb_tb`/4 children/29 signals, emits exact 4 IAL1/5 IAL0 artifacts, preserves
+both parked endpoint contexts and one-hot response ownership, exports normalized
+semantic root `top`, and passes `--verify-hdl`. The audit must still prove real
+read-only MCP and assertion-enabled two-command 10/8/2/6/2 runtime with final
+status/control `44332211`/`88776655` before selecting projected 325/366/49
+support. HIAL/VIAL remains proposed with portable-fast event-capable compiled
+Verilator separated from full-language/SystemVerilog-UVM authority and with
+VHDL/mixed-language profiles qualified independently. See the
+[selection record](../../IAL2_POST_EXACT_THREE_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
