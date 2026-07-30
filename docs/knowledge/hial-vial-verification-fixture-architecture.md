@@ -86,5 +86,11 @@ the HIAL/VIAL architecture remains proposed and unchanged.
 Completed direct-VHDL implementation `.2` closes one synthesizable
 HIAL-to-VHDL reduction seam with scalar/static-bit identity and explicit vector
 folds. It does not select any VIAL layer, fixture semantics, verification
-lowering, or simulator authority; proposed parent selector `.832` compares
-HIAL/VIAL independently.
+lowering, or simulator authority. HIAL/VIAL therefore remained independently
+proposed for the next parent comparison.
+
+Parent selector `.832` selects the smaller shipped nested-bitwise concurrent-
+assertion correctness audit first. HIAL/VIAL remains proposed with its typed
+bridge, portable/native semantics, SV/UVM and VHDL lowerings, capability-
+qualified simulator profiles, parity, migration, and scale requirements
+unchanged.

@@ -10,7 +10,7 @@ answers:
 date: 2026-07-23
 status: current
 tags: [isf, assertion, systemverilog, precedence, bitwise, axi, verification, pre-existing]
-evidence: ppif/axi_read_burst4_transaction_composition.ppif; perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm; perl/FSM/Backend/GeneratedModuleEmitter.pm; t/1507-ial2-axi-read-burst4-transaction-composition.t; docs/tasks/ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.md
+evidence: ppif/axi_read_burst4_transaction_composition.ppif; perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm; perl/FSM/Backend/GeneratedModuleEmitter.pm; t/1507-ial2-axi-read-burst4-transaction-composition.t; docs/tasks/ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.md; docs/IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md
 reverify: ./bin/fsmgen --quiet --strict -o .artifacts/sv/fsmgen-axi-read-burst4-assertion-probe.sv ppif/axi_read_burst4_transaction_composition.ppif
 ---
 
@@ -39,3 +39,7 @@ Proposed tree `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR` owns the general
 root-cause/repair and the missing assertion-enabled AXI regression. The active
 fixed-four write-request design is not blocked: it uses an exhaustively
 equivalent De Morgan predicate whose generated assertion preserves grouping.
+
+Parent selector `.832` now selects no-behavior audit `.1` as the next bounded
+owner. The tree remains proposed until the clean selector commit and separate
+continuity activation; no generated behavior changes during selection.

@@ -49,3 +49,8 @@ implementation; it is not capacity evidence, and scale remains proposed.
 Completed direct-VHDL implementation `.2` supplies bounded backend correctness,
 not large-design capacity evidence. The scale tree remains proposed for parent
 selector `.832` to compare independently.
+
+Parent selector `.832` chooses the smaller shipped concurrent-assertion
+correctness audit first. End-to-end scale remains proposed with its measurable
+workload, correctness-oracle, resource, budget, graceful-failure, and
+regression-gate requirements unchanged.

@@ -6,7 +6,7 @@
 - Status: `proposed`
 - Roadmap lane: `R14 / generated verification correctness`
 - Created: `2026-07-23`
-- Last updated: `2026-07-23`
+- Last updated: `2026-07-30`
 - Owner: repo-local workflow
 
 ## Goal
@@ -73,6 +73,14 @@ the assertion condition roundtrip/inlining path involving
   Verification: `pending`
   Commit: `pending`
 
+## Current Frontier
+
+Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.832` selects no-behavior
+audit `.1` as the next bounded correctness owner. The tree and `.1` remain
+proposed/inactive until that selector commits cleanly and a separate
+continuity commit activates them. No assertion or generated behavior changes
+during selection.
+
 ## Decisions
 
 - `2026-07-23`: Record the defect as proposed and inactive. The active `.44`
@@ -81,7 +89,13 @@ the assertion condition roundtrip/inlining path involving
 - `2026-07-23`: Require a general renderer audit before changing the shipped
   read source. A source-only De Morgan rewrite would hide the underlying
   assertion compiler defect from other users.
+- `2026-07-30`: Parent selector `.832` revalidates the current generated HDL:
+  the behavioral path retains the nested OR through an intermediate while the
+  concurrent property emits `high & bit3 | bit2`. Select audit `.1` ahead of
+  broader HIAL/VIAL, scale, maintenance, protocol, and backend owners; activate
+  it only after the clean selector commit.
 
 ## Blockers
 
-- None technical. Activation/order follows the task-tree pivot doctrine.
+- None technical. Selected audit `.1` awaits the clean parent selector commit
+  and a separate continuity-only activation.

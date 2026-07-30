@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.832: activate post reduction-lowering selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.832`.
-- current_state: clean direct-VHDL behavior commit `2879f22af` completes the selected child; `.832` is active continuity-only to choose exactly one next roadmap owner. Reduction lowering, public syntax, named-drive/AMBA/APB preservation, AHB requester `2..16`, and 332/373/56 split 28/28 accounting remain unchanged.
-- next_action: compare the `.832` candidate owners against durable roadmap/code/book evidence and select one exact child or prerequisite without changing behavior.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.832: select assertion precedence audit`).
+- active_work_unit: none after `.832`; selected `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1` remains proposed until clean activation.
+- current_state: `.832` revalidates the shipped AXI fixed-four read mismatch: behavioral lowering retains `high & (bit3 | bit2)`, while concurrent-property inlining emits `high & bit3 | bit2` and falsely rejects legal `0x00000004`. Direct-VHDL reduction behavior and all other shipped surfaces remain unchanged.
+- next_action: after this clean selector commit, activate only `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1` through continuity changes and audit the general AST-preserving repair contract.
+- in_flight_uncommitted: none after this selector commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -36,13 +36,12 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. HIAL/VIAL remains proposed for
-  active parent selector `.832` to compare independently.
+  mixed-language claims qualified separately. HIAL/VIAL remains proposed after
+  `.832` selects the smaller shipped assertion-correctness audit.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   end-to-end big-design
-  scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc
-  fences, and guard metric repair. Parked findings await the next clean parent
-  selector.
+  scalability, t/1436 failures, mdBook rustdoc fences, and guard metric repair.
+  Parked findings await a later clean parent selector.
 - Task-tree live truth is the node list + `docs/TASK_TREE.md` + git (decision
   `0019`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.
 - Push only on explicit request (decision `0005`). PNT runs autonomously without

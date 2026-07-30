@@ -11746,6 +11746,18 @@ one-operand source syntax remains rejected. See the
 No external VHDL compiler qualification is claimed. Clean behavior commit
 `2879f22af` activates parent selector `.832` continuity-only; all shipped
 behavior remains unchanged while it selects exactly one next roadmap owner.
+Completed `.832` selects the proposed no-behavior
+[nested-bitwise concurrent-assertion audit](../../tasks/ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.md).
+The AXI fixed-four read behavioral guard correctly preserves
+`high & (bit3 | bit2)` through an intermediate, but its generated concurrent
+property inlines `high & bit3 | bit2`. SystemVerilog precedence changes the
+meaning and rejects legal address `0x00000004`; current t1507 passes because
+its Verilator runtime explicitly uses `--no-assert`. Audit `.1` will select a
+general AST-preserving renderer contract and assertion-enabled coverage before
+implementation `.2`. See the
+[selection record](../../IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md).
+HIAL/VIAL, big-design scale, maintenance, other protocol/backend, simulator,
+and decision-`0020` owners remain independent.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

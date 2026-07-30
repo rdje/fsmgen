@@ -133,6 +133,10 @@ and diagnostic behavior per stage while proving semantic/output correctness.
 - `2026-07-30`: Direct-VHDL implementation `.2` ships its bounded reduction
   repair. Functional preservation is not end-to-end capacity evidence; scale
   remains proposed for independent comparison by parent selector `.832`.
+- `2026-07-30`: Parent selector `.832` chooses the smaller shipped concurrent-
+  assertion correctness audit. Scale remains proposed with its workload,
+  correctness, resource, budget, graceful-failure, and regression-gate
+  contract unchanged.
 
 ## Open Questions
 
@@ -145,9 +149,8 @@ and diagnostic behavior per stage while proving semantic/output correctness.
 
 ## Blockers
 
-- None for durable capture. Activation awaits a later roadmap selector; the
-  completed direct-VHDL reduction tree returns independent comparison to
-  proposed parent selector `.832`.
+- None for durable capture. Activation awaits a later roadmap selector; `.832`
+  selects the smaller shipped assertion-correctness audit first.
 
 ## Capture Verification
 

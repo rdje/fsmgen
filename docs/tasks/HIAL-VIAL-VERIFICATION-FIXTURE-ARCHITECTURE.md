@@ -114,9 +114,11 @@ This tree is proposed and inactive. `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE
 is the first executable leaf only after a future clean-boundary roadmap selector
 activates it. Completed parent selector `.831` chooses the smaller direct-VHDL
 unary-reduction correctness audit after named-drive priority ships; that child
-is now complete. This architecture stays proposed for parent selector `.832`;
+is now complete. Parent selector `.832` chooses the smaller shipped
+concurrent-assertion correctness audit first. This architecture stays proposed;
 its source-model, typed-bridge, native-extension, simulator-profile, backend,
-migration, parity, and scale requirements remain intact.
+migration, parity, and scale requirements remain intact for a later clean
+selector.
 
 ## Decisions
 
@@ -145,6 +147,11 @@ migration, parity, and scale requirements remain intact.
   erase the separate full-language/UVM profile requirement.
 - `2026-07-29`: Parent selector `.819` retains this proposed boundary and
   selects the smaller adjacent two-window exact-three AHB readiness audit.
+- `2026-07-30`: Parent selector `.832` selects the smaller no-behavior nested-
+  bitwise concurrent-assertion precedence audit before this broader
+  architecture. HIAL/VIAL remains proposed with every topology, bridge,
+  semantics, backend, qualification, parity, migration, and scale requirement
+  unchanged.
 
 ## Open Questions
 
@@ -359,4 +366,7 @@ migration, parity, and scale requirements remain intact.
   identity, explicit vector folds, and unsupported-shape rejection. This closes
   one HIAL-to-VHDL correctness seam but does not activate or narrow VIAL;
   proposed parent selector `.832` must compare the architecture independently.
+- `2026-07-30`: Parent `.832` compares the architecture and selects the
+  smaller shipped AXI concurrent-assertion correctness audit first. HIAL/VIAL
+  remains proposed and unchanged for a later clean roadmap selector.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

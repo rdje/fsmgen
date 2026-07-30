@@ -989,6 +989,17 @@ clean beats, reset after one accepted beat, and post-reset recovery. It ends
 idle at exact AR/R/request/beat/transaction counts `4/13/4/13/3`; Verilator and
 Yosys both pass.
 
+Current correctness caveat: t1507 runs that behavioral harness with
+`--no-assert`. The behavioral admission path correctly factors the nested
+4-KiB test as `high & (bit3 | bit2)`, but the generated concurrent property
+currently inlines it as `high & bit3 | bit2`. SystemVerilog precedence then
+falsely rejects legal address `0x00000004`. Parent selector `.832` selects
+no-behavior audit `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1` to isolate a
+general AST-preserving renderer contract and freeze assertion-enabled legal-
+bit-2 coverage before repair. This caveat concerns the generated assertion,
+not the shipped behavioral admission set. See the
+[selection record](../../IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md).
+
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and
 back-to-back reads, ID queues/demux/interleaving, aliases, and decision 0020's

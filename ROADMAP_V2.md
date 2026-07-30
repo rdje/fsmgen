@@ -8062,6 +8062,16 @@ qualification. See `docs/DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md`.
 Clean direct-VHDL behavior commit `2879f22af` activates parent selector `.832`
 continuity-only. All shipped behavior remains unchanged while it compares and
 selects exactly one next roadmap owner.
+Completed selector `.832` chooses proposed no-behavior
+`ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`. Current AXI fixed-four read
+behavior correctly factors `high & (bit3 | bit2)`, but concurrent-property
+intermediate inlining emits `high & bit3 | bit2`; SystemVerilog precedence
+therefore makes the assertion reject legal address `0x00000004`. Existing
+t1507 passes with `--no-assert`, so `.1` must freeze a general AST-preserving
+repair contract and assertion-enabled coverage before implementation `.2`.
+HIAL/VIAL, big-design scale, startup alignment, AHB expansion, other
+protocols/backends, simulator profiles, and decision `0020` remain separate.
+See `docs/IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
