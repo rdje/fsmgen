@@ -1012,6 +1012,9 @@ malformed property and correct behavioral intermediate; a separate cleanly
 activated implementation must enable t1507 assertions and add legal address
 `0x00000004` without changing the admission set. See the
 [readiness audit](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_READINESS_AUDIT.md).
+Clean audit commit `628ca0c33` activates only implementation `.2`. AXI
+admission, generated HDL, and the current assertion defect remain unchanged
+during this continuity transition.
 
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and

@@ -8087,6 +8087,10 @@ reconcile t1410-t1412/t1544 and enable t1507 assertions with legal address
 `0x00000004`; no product behavior changes until `.2` is cleanly activated and
 implemented. See
 `docs/ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_READINESS_AUDIT.md`.
+Clean audit commit `628ca0c33` activates only implementation `.2`. This
+continuity transition changes no parser, carrier, renderer, generated HDL,
+runtime, public surface, protocol behavior, or broader roadmap owner; `.2` now
+owns the selected substitution-grouping repair and regression proof.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

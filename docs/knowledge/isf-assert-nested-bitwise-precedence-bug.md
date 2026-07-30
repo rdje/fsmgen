@@ -64,4 +64,6 @@ preserves grouping.
 
 Audit `.1` changes no generated behavior. Its selected implementation requires
 a clean separate activation commit before product or existing-test behavior
-may change.
+may change. Clean audit commit `628ca0c33` now activates implementation `.2`
+continuity-only; the malformed property remains unchanged until that leaf's
+implementation commit.

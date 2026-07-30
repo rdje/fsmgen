@@ -5898,8 +5898,9 @@ path before reopening VHDL backend or VHDL rerouting work.
 Parent selector `.832` is complete and handed off to
 `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`. Child audit `.1` is now complete:
 it isolates an all-CoreAST inline-substitution grouping loss and selects a
-one-branch general repair. Product behavior remains unchanged while child `.2`
-awaits a clean separate continuity activation.
+one-branch general repair. Clean audit commit `628ca0c33` activates child `.2`
+continuity-only; product behavior remains unchanged until that child implements
+and verifies the selected repair.
 
 The child selected by `.826` is complete through `.3`, and parent `.828` now
 closes the matching byte-identical two-subordinate exact-four `.ahb` alias.

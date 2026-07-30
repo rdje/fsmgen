@@ -11772,6 +11772,9 @@ t1410-t1412/t1544 reconciliation and assertion-enabled legal-`0x00000004`
 t1507 proof. See the
 [readiness audit](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_READINESS_AUDIT.md).
 No generated behavior changes during this audit slice.
+Clean audit commit `628ca0c33` activates only implementation `.2`
+continuity-only. The malformed property remains unchanged during activation;
+`.2` now owns the selected grouping repair and assertion-enabled AXI proof.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

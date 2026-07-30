@@ -67,20 +67,18 @@ the assertion condition roundtrip/inlining path involving
   Commit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1: select AST-preserving substitution repair`
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected general renderer repair and correct the AXI fixed-four read assertion proof.`
   Acceptance: `After .1 freezes the repair, preserve nested mixed-precedence bitwise ASTs through concurrent property rendering; add direct and intermediate/inlined regressions, assertion-enabled legal 0x00000004 AXI read proof, preservation gates, docs/facts/continuity, and commit. Keep rule admission and all unrelated generated HDL behavior unchanged.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean audit commit 628ca0c33. Activation changes continuity pointers only: the selected grouping contract, current malformed assertion, correct behavioral admission, parser, carrier, CoreAST, renderer, emitter, generated HDL/runtime, public/report/semantic/MCP/support surfaces, tests, protocols/backends, HIAL/VIAL, scale, simulator profiles, and decision-0020 behavior remain unchanged until implementation begins. Book/status/path truth gates pass 4 files/46 tests. Knowledge Map generation/check remains synchronized at 1,060 facts/5,456 question keys. The mdBook renders exactly 72 files/16,515,405 bytes and its exact repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 49 lines, README.md is 2,346 lines, diff hygiene and all six doctrine gates pass. Final canonical Stats-compatible capacity is 17,794,711,552/25,769,803,776 bytes = 16.573/24.000 GiB = 69.05%, with separate macOS kernel pressure level 1 and memory_pressure 75% free; guard occupancy is excluded from capacity truth. No background job remains.`
+  Commit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2: activate substitution repair`
 
 ## Current Frontier
 
-Audit `.1` is complete and selects explicit grouping at every concurrent-check
-inline-intermediate substitution boundary. The assertion defect and every
-shipped behavior remain unchanged. After this audit commits cleanly, activate
-implementation `.2` through a separate continuity-only commit; `.2` then owns
-the one-branch renderer repair and t1410-t1412/t1544/assertion-enabled-t1507
-proof.
+Clean audit commit `628ca0c33` activates implementation `.2` through a separate
+continuity-only transition. The assertion defect and every shipped behavior
+remain unchanged. `.2` now owns the one-branch inline-substitution grouping
+repair and t1410-t1412/t1544/assertion-enabled-t1507 proof.
 
 ## Decisions
 
@@ -111,8 +109,10 @@ proof.
   classification, CoreAST, behavioral lowering, and the emitter unchanged.
   Tracked t1544 characterizes the current defect; implementation `.2` must
   reconcile it and add the frozen focused/runtime coverage.
+- `2026-07-30`: Clean audit commit `628ca0c33` activates implementation `.2`
+  continuity-only. The malformed property and all product/test/runtime behavior
+  remain unchanged during activation.
 
 ## Blockers
 
-- None technical. Audit `.1` is complete; `.2` awaits clean continuity
-  activation after the audit commit.
+- None technical. Implementation `.2` is active.

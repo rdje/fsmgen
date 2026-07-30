@@ -223,6 +223,9 @@ The audit changes no parser, carrier, renderer, emitter, generated HDL,
 diagnostic, runtime, support accounting, report/semantic/MCP schema, public API,
 protocol behavior, HIAL/VIAL boundary, scale claim, or simulator profile.
 Implementation `.2` requires a separate clean continuity activation.
+Clean audit commit `628ca0c33` now activates `.2` continuity-only. The selected
+contract and current malformed generated property remain unchanged during that
+transition.
 
 ## Rollback
 
