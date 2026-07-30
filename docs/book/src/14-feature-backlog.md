@@ -11971,6 +11971,10 @@ See the [selection record](../../IAL2_POST_IDENTIFIER_NEXT_OWNER_SELECTION.md).
 Clean selector commit `28d3e777a` activates only the selected identifier-era
 import-map child continuity-only. The stale note/fact, separate AHB residue,
 and every product behavior remain unchanged during activation.
+The identifier-era import-map child is complete. The canonical architecture
+note/fact now match the live `229` / `228` / `19` closure, `Support 71`, and
+portable identifier-policy reachability. Product behavior is unchanged; the
+separate Chapter 16c AHB residue remains for the next clean parent selector.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

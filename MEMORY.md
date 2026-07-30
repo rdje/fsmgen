@@ -5,15 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1: activate identifier import-map refresh`).
+- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1: refresh identifier-era import map`).
 - active_work_unit: `BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1`
-  (continuity-only activation).
-- current_state: the exact identifier-era import-map task tree now owns the
-  measured 229-file / 228-package / 19-IAL2 note/fact synchronization; the
-  stale canonical baseline is deliberately unchanged during activation.
-- next_action: remeasure the live closure, synchronize only the canonical
-  import-tree note/fact and continuity docs, validate, and commit `.1`.
-- in_flight_uncommitted: none after this activation commit; no background job.
+  (complete).
+- current_state: canonical note/fact now match the live 229-file / 228-package /
+  19-IAL2 closure, Support 71, portable identifier-policy reachability, and
+  current selected line counts; product behavior is unchanged.
+- next_action: return to the parent frontier and activate one clean selector;
+  reconcile the preserved Chapter 16c counts-beyond-four contradiction first.
+- in_flight_uncommitted: none after this completion commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -35,9 +35,8 @@ history; this file carries only the current bounded resume state.
 - `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3` is complete: t1502 passes at
   `Files=1, Tests=4`; t1410-t1412+t1544 pass at `Files=4, Tests=22`; test syntax
   is clean, and `.artifacts/tmp/tests` is empty.
-- Startup remeasurement after the identifier implementation reports 229
-  project files / 228 packages / 19 IAL2 owners; selection must reconcile that
-  live closure against the saved 228 / 227 / 19 import-tree baseline.
+- The identifier-era import-map baseline is current at 229 project files / 228
+  packages / 19 IAL2 owners and Support 71.
 - Chapter 16c still says counts beyond four are outside the shipped surface,
   contradicting its current canonical literal 2..16 sections; the next parent
   selector must preserve or select that independent documentation repair after

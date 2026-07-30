@@ -95,3 +95,9 @@ Clean selector commit `28d3e777a` activates only the selected identifier-era
 import-map child through a separate continuity transition. The stale note/fact,
 the AHB residue contradiction, and every product behavior remain unchanged
 during activation.
+
+The selected child is complete: the canonical note/fact now match the live
+`229` / `228` / `19` closure, `Support 71`, and portable identifier-policy
+reachability. Its 228 unique package links match the 228 live packages exactly.
+The separate Chapter 16c AHB residue remains the exact next documentation
+candidate for a clean parent selector.

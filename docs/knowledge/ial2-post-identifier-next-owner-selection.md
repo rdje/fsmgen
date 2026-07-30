@@ -32,3 +32,7 @@ candidate rather than mixing it into the import-map refresh.
 Clean selector commit `28d3e777a` activates only the selected import-map child
 continuity-only. The canonical note/fact, AHB residue, and every product
 behavior remain unchanged during activation.
+
+The selected child now completes the canonical note/fact synchronization at
+`229` / `228` / `19` and `Support 71`. The independent Chapter 16c AHB residue
+remains for the next clean parent selector.

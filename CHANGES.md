@@ -30896,3 +30896,18 @@ task tree and git.
   files remain unchanged during activation; no development note is warranted.
   Focused documentation audits pass with `Files=3, Tests=40`; Knowledge Map,
   memory architecture, and diff hygiene pass.
+
+### BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1 — identifier-era import map refreshed
+
+- Refreshed the canonical entrypoint architecture note/fact from `228` / `227`
+  / `19` to the live `229` project files / `228` packages / `19` IAL2 owners,
+  including `Support 71` and the reachable portable instance-identifier policy.
+- Updated every selected source line count that moved after the July 29
+  baseline. A live-set comparison proves the 228 unique package links match all
+  228 reachable packages exactly, and no measured line-count mismatch remains.
+- Runtime code, public support accounting, generated artifacts, product
+  behavior, the separate Chapter 16c AHB residue, and both frozen status files
+  remain unchanged; no development note is warranted. `bin/fsmgen` syntax,
+  five focused documentation audits (`Files=5, Tests=329`), Knowledge Map at
+  1,073 facts / 5,530 keys, memory architecture, mdBook HTML build, and diff
+  hygiene pass; the exact repository-local book render is removed.
