@@ -112,11 +112,11 @@ architecture needed to move beyond that bounded foundation.
 
 This tree is proposed and inactive. `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
 is the first executable leaf only after a future clean-boundary roadmap selector
-activates it. Completed parent selector `.830` chooses the smaller
-assertion-backed transaction-invoked named-drive priority audit after the AHB
-requester generalized count range ships. This architecture stays proposed;
-its simulator-profile, backend, migration, parity, and scale requirements do
-not pre-empt that evidence-backed correctness handoff.
+activates it. Completed parent selector `.831` chooses the smaller direct-VHDL
+unary-reduction correctness audit after named-drive priority ships. This
+architecture stays proposed; its source-model, typed-bridge, native-extension,
+simulator-profile, backend, migration, parity, and scale requirements do not
+pre-empt that exact invalid-output handoff.
 
 ## Decisions
 
@@ -342,4 +342,9 @@ not pre-empt that evidence-backed correctness handoff.
   direct-VHDL unary-reduction residue under decision `0023`; proposed
   `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` owns that HIAL backend defect,
   while HIAL/VIAL architecture scope remains proposed and unchanged.
+- `2026-07-30`: Named-drive priority implementation `.3` ships through clean
+  commit `1dbff8fc6`; parent selector `.831` selects the narrower no-behavior
+  direct-VHDL unary-reduction audit. HIAL/VIAL remains proposed with every
+  architecture, backend, qualification, parity, migration, and scale
+  requirement intact.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

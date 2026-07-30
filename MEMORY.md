@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit, `IAL2-FEATURE-COMPLETENESS-FRONTIER.831: activate post named-drive priority selector` (resolve with `git log -1`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.831`.
-- current_state: clean named-drive priority behavior commit `1dbff8fc6` completes the selected child; `.831` is activated continuity-only to choose exactly one next roadmap owner. Exact-one-local-caller priority, SV/Verilog qualification, decision-0023 VHDL separation, IAL2 AHB `2..16`, and 332/373/56 split 28/28 accounting remain unchanged.
-- next_action: compare the `.831` candidate owners against durable roadmap/code/book evidence and select one exact child or prerequisite without changing behavior.
-- in_flight_uncommitted: none after this activation commit workflow; no background job.
+- latest_commit: this commit, `IAL2-FEATURE-COMPLETENESS-FRONTIER.831: select direct VHDL reduction audit` (resolve with `git log -1`).
+- active_work_unit: none after this selector commit; selected next owner is `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1`.
+- current_state: `.831` selects the exact no-behavior direct-VHDL unary OR/AND/XOR reduction audit after the named-drive probe emitted foreign `(|drive_zero_start)` syntax. Named-drive priority, AHB `2..16`, and 332/373/56 split 28/28 accounting remain unchanged.
+- next_action: from the clean selector commit, activate only `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1` through continuity changes, commit, then perform its no-behavior audit.
+- in_flight_uncommitted: none after this selector commit workflow; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -36,13 +36,13 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. HIAL/VIAL remains proposed after
-  `.830`'s narrower priority correctness child completes.
+  mixed-language claims qualified separately. HIAL/VIAL remains proposed while
+  `.831` selects the narrower direct-VHDL reduction-expression audit.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc
-  fences, and guard metric repair. Parked findings do not pivot active AHB
-  priority.
+  fences, and guard metric repair. Parked findings do not pivot the selected
+  direct-VHDL audit.
 - Task-tree live truth is the node list + `docs/TASK_TREE.md` + git (decision
   `0019`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.
 - Push only on explicit request (decision `0005`). PNT runs autonomously without

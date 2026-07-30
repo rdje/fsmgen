@@ -18,11 +18,11 @@ quality, artifact integrity, or workflow recoverability.
 This is a parked product requirement, not an active priority change. A later
 roadmap selector must activate it explicitly from a clean boundary.
 
-Completed selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.830` keeps this
-requirement proposed while selecting the smaller assertion-backed
-transaction-invoked named-drive priority audit. Every active slice must still
-measure and bound its own resource/verification cost; that does not claim or
-replace end-to-end big-to-really-big qualification.
+Completed selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.831` keeps this
+requirement proposed while selecting the smaller direct-VHDL unary-reduction
+correctness audit after named-drive priority ships. Every active slice must
+still measure and bound its own resource/verification cost; that does not
+claim or replace end-to-end big-to-really-big qualification.
 
 ## Requirement
 
@@ -117,6 +117,11 @@ and diagnostic behavior per stage while proving semantic/output correctness.
 - `2026-07-30`: Named-drive priority contract `.2` selects bounded `.3` and
   separately routes a direct-VHDL reduction-expression defect; neither result
   is end-to-end large-design evidence, so scale remains proposed.
+- `2026-07-30`: Named-drive priority implementation `.3` ships through clean
+  commit `1dbff8fc6`; parent selector `.831` selects the exact no-behavior
+  direct-VHDL reduction audit before this broader methodology tree. Scale
+  remains proposed with its workload, correctness, resource, budget, and
+  graceful-failure contract unchanged.
 
 ## Open Questions
 
@@ -130,7 +135,7 @@ and diagnostic behavior per stage while proving semantic/output correctness.
 ## Blockers
 
 - None for durable capture. Activation awaits a later roadmap selector; the
-  selected named-drive priority correctness audit proceeds first.
+  selected direct-VHDL reduction-expression correctness audit proceeds first.
 
 ## Capture Verification
 

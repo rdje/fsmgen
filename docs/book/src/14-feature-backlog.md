@@ -11706,6 +11706,18 @@ report/semantic key sets do not widen. See the
 Clean behavior commit `1dbff8fc6` activates parent selector `.831`
 continuity-only. All shipped behavior and broader owner boundaries remain
 unchanged while `.831` compares and selects exactly one next roadmap owner.
+Completed selector `.831` chooses the proposed no-behavior
+[direct-VHDL reduction-expression audit](../../tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md).
+The exact defect is the foreign SystemVerilog token in
+`drive_zero_en and (|drive_zero_start)`. Audit `.1` will reproduce scalar and
+vector unary OR, AND, and XOR, distinguish scalar identity from vector
+reduction semantics, and choose exact VHDL translation or deterministic
+pre-emission rejection. No `ghdl`, `nvc`, or `vcom` is installed, so the audit
+cannot claim executable VHDL qualification. See the
+[selection record](../../IAL2_POST_NAMED_DRIVE_PRIORITY_NEXT_OWNER_SELECTION.md).
+All shipped named-drive/AHB behavior and broader HIAL/VIAL, scale, simulator,
+startup-alignment, protocol, and backend owners remain unchanged pending a
+clean activation commit.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
@@ -17049,9 +17061,9 @@ budgets, graceful beyond-capacity behavior, and stable local/CI qualification
 gates. Correctness, diagnostics, deterministic artifacts, locality, and
 recoverability remain part of the capacity contract.
 
-This requirement is parked rather than active. Selector `.830` chose the
-smaller assertion-backed transaction-invoked named-drive priority tree first;
-that separate tree now completes through implementation `.3`. A later roadmap
+This requirement is parked rather than active. Selector `.831` chose the
+smaller direct-VHDL unary-reduction correctness audit after the separate named-
+drive priority tree completed through implementation `.3`. A later roadmap
 selector must still activate scale from a clean boundary.
 
 ## Backends And Validation
@@ -17088,6 +17100,15 @@ Bounded direct aggregate-output fixtures now lower generated inferred packed
 struct outputs as VHDL `std_logic_vector` ports with the generated packed
 widths.
 It is covered by direct pipeline, CLI, and facade tests.
+
+The current direct-VHDL expression boundary is not yet truthful for unary
+reductions: a scheduled named-drive enable can emit
+`drive_zero_en and (|drive_zero_start)`, carrying SystemVerilog syntax into
+VHDL. Decision `0023` prevents generation success from being treated as syntax
+or runtime validation. Selector `.831` therefore chooses a no-behavior audit of
+scalar/vector unary OR, AND, and XOR before any repair. The audit must select a
+semantic translation or explicit rejection; it cannot claim external compiler
+qualification because no `ghdl`, `nvc`, or `vcom` is installed.
 
 Composition VHDL now includes the bounded C3 external-RTL literal/concat top
 for `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1

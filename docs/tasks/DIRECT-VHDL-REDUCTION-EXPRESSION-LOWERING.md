@@ -63,9 +63,12 @@ removed after its three-file/19,070-byte census.
 
 ## Current Frontier
 
-Proposed and inactive. The active named-drive priority contract records this
-as a separate VHDL backend defect and must not broaden its SystemVerilog-backed
-implementation to repair it. A later clean roadmap selector may activate `.1`.
+Selected but not yet active. Completed parent selector
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.831` chooses `.1` as the next exact
+no-behavior audit because a supported direct-VHDL command emits a proven
+foreign-language reduction token and the backend owner is narrow. The child
+must remain pending until the selector commits cleanly; a separate clean
+activation slice may then change continuity pointers only.
 
 ## Decisions
 
@@ -73,6 +76,10 @@ implementation to repair it. A later clean roadmap selector may activate `.1`.
   named-drive priority semantics. The shared scheduled FSM change may still be
   inspected through VHDL generation, but it cannot claim syntactically valid
   VHDL while the reduction token leaks.
+- `2026-07-30`: Parent selector `.831` selects audit `.1` ahead of broader
+  HIAL/VIAL, scale, AHB, ISF, simulator-profile, startup-alignment, defect, and
+  other-backend owners. Selection changes no behavior; activation requires the
+  clean selector commit.
 
 ## Open Questions
 

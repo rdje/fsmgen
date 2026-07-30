@@ -2576,6 +2576,13 @@ direct VHDL remains separately gated by decision `0023`. See the
 Clean protocol-neutral behavior commit `1dbff8fc6` activates parent selector
 `.831` without changing AHB requester `2..16`, generated AHB artifacts, or
 332/373/56 split 28/28 accounting.
+Completed selector `.831` chooses the separate no-behavior direct-VHDL unary-
+reduction audit after the named-drive probe emitted foreign
+`(|drive_zero_start)` syntax. That backend audit changes no AHB source,
+artifact, runtime, or accounting. HIAL/VIAL, scale, broader AHB/ISF work,
+simulator profiles, other defects, protocols/backends, and decision `0020`
+remain independently gated. See the
+[post-named-drive selection](../../IAL2_POST_NAMED_DRIVE_PRIORITY_NEXT_OWNER_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

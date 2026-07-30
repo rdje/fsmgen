@@ -8017,6 +8017,18 @@ selector `.831`. This continuity-only transition changes no parser, lowerer,
 source, report/semantic/MCP schema, support accounting, HDL/runtime behavior,
 protocol/AHB behavior, HIAL/VIAL, VHDL, scale, or decision `0020`; `.831` owns
 the evidence-backed choice of exactly one next roadmap owner.
+Completed selector `.831` chooses proposed no-behavior
+`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1`. The named-drive probe proved
+that direct VHDL can report generation success while leaking SystemVerilog
+unary-reduction syntax, `(|drive_zero_start)`. The audit must reproduce scalar
+and vector unary OR/AND/XOR, trace widths and expression contexts through
+`_sv_expr_to_vhdl`, and select exact translation or deterministic fail-closed
+handling before implementation. No `ghdl`, `nvc`, or `vcom` is installed, so
+executable VHDL qualification remains separately blocked. HIAL/VIAL, scale,
+broader AHB/ISF work, verification/simulator profiles, startup-alignment and
+known-defect owners, other protocols/backends, and decision `0020` remain
+separate. Selection changes no product behavior or current 332/373/56 split
+28/28 accounting.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
