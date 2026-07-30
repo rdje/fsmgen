@@ -146,6 +146,10 @@ The assertion-enabled proof qualifies this supported generated subset through
 event-capable compiled Verilator. It does not claim full-SystemVerilog-LRM or
 UVM support.
 
+Clean behavior commit `80aa203ab` hands continuity back to parent selector
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.833`. That selector changes no behavior and
+must choose exactly one next roadmap owner before another tree is activated.
+
 ## Rollback
 
 Rollback removes the substitution-boundary grouping and the new focused/

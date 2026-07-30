@@ -1025,6 +1025,10 @@ proves exact `1/4/1/4/1` retirement with fixed LEN3/SIZE2/INCR metadata and
 matching RID/RLAST. See the
 [behavior record](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.md).
 
+Clean behavior commit `80aa203ab` activates parent selector `.833`
+continuity-only. AXI admission, assertions, generated HDL, and runtime behavior
+remain unchanged while the next roadmap owner is selected.
+
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and
 back-to-back reads, ID queues/demux/interleaving, aliases, and decision 0020's

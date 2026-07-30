@@ -8099,6 +8099,10 @@ behavior matrix at exact `5/17/5/17/4` and separately proves an all-assertion
 legal-only `1/4/1/4/1` transaction. The harnesses are separate because the two
 intentional illegal behavior probes correctly violate the generated boundary
 assertion. See `docs/ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.md`.
+Clean behavior commit `80aa203ab` activates parent selector `.833`
+continuity-only. The grouped assertion repair and every shipped behavior remain
+unchanged while `.833` reconciles the remaining roadmap directions and selects
+exactly one next owner.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

@@ -11784,6 +11784,11 @@ negative/positive harness reaches exact `5/17/5/17/4` including legal address
 correctly violate the boundary assertion. See the
 [shipped behavior](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.md).
 
+Clean behavior commit `80aa203ab` activates parent selector `.833`
+continuity-only. The repair and all shipped feature behavior remain unchanged
+while that selector compares the remaining roadmap directions and chooses
+exactly one next owner.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

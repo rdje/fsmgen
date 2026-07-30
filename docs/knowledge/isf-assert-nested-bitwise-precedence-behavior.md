@@ -38,3 +38,7 @@ formal-only classification, report/semantic/MCP schema, support accounting,
 backend contract, HIAL/VIAL architecture, or simulator qualification. The
 Verilator runtime proves only the supported generated subset, not full
 SystemVerilog/UVM coverage.
+
+Clean behavior commit `80aa203ab` hands continuity to no-behavior parent
+selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.833`; no broader roadmap owner is
+implicitly active while that selector compares the remaining directions.
