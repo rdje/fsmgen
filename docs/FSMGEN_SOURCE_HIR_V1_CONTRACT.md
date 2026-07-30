@@ -7,6 +7,9 @@ Status: selected and implemented privately by `.4`
 The three private packages and `t/1547-source-hir-valid-ready.t` implement and
 prove this exact contract without adding a public surface.
 
+Clean prototype commit `b4733b879` activates `.5` continuity-only to audit
+promotion, another private fixture, or retirement.
+
 ## Scope
 
 This document freezes the first executable contract for the private

@@ -28,3 +28,7 @@ protocol reports as the hand-written fixture.
 The implementation is private and adds no CLI, normalized report, capability
 manifest, support-accounting entry, public builder package, or direct IAL2
 generator call.
+
+Clean implementation commit `b4733b879` activates `.5` continuity-only for
+the evidence-based promotion, continued-private, or retirement audit. The
+activation selects none of those outcomes.

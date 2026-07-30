@@ -85,7 +85,7 @@ changes.
 
 ### Source-Facing FSMGEN HIR
 
-Status: private version-1 valid-ready prototype implemented; public promotion unselected.
+Status: private version-1 valid-ready prototype implemented; promotion audit active.
 
 Goal: give future high-level language frontends and builder APIs one checked
 FSMGEN-native semantic target above IAL2 and IAL1. The intended architecture is
@@ -117,7 +117,8 @@ focused t1547 proof now ship internally: rendered text re-enters the existing
 PPIF parser and produces equal IAL1, IAL0, schedule, and protocol reports.
 There is still no public builder, CLI mode, HIR report/manifest/accounting
 surface, or direct generator path. Public host-language ergonomics and any
-promotion remain a separate later decision.
+promotion remain unselected while active evidence-audit leaf `.5` compares
+promotion, another private fixture, and retirement.
 
 ### Inference-First Scalar Authoring
 

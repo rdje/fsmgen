@@ -86,16 +86,17 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.4: implement private SourceHIR golden path`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit private SourceHIR prototype promotion or retirement.`
   Acceptance: `After .4, decide from evidence whether to promote a first public frontend/builder and bounded projection, keep the prototype private for another fixture, or retire it. Coordinate any public-host-language selection with IAL2-HOST-LANGUAGE-BUILDER-FRONTIER; do not assume promotion.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated continuity-only after clean private implementation commit b4733b879. Activation changes only task/index, architecture/contract/implementation fact continuity, roadmap, mdBook backlog, Memory, changelog, and regenerated Knowledge Map. Promotion, another fixture, retirement, public builder/API/report/accounting, code, tests, parser, fixture, artifacts, config, HDL/runtime, and behavior remain unselected and unchanged. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; all 36 mdBook chapters pass executable-example testing; the 72-file HTML build passes and its exact repository-local output is removed. Knowledge Map generation/check passes at 1078 facts / 5558 question keys; memory architecture passes with MEMORY.md at 46 lines; diff hygiene and all seven staged doctrine gates pass. Both frozen status files remain untouched.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.5: activate SourceHIR promotion audit`
 
 ## Current Frontier
 
-Leaf `.4` implements and proves the selected private valid-ready golden path.
-Leaf `.5` remains proposed until a separate clean activation commit.
+Clean private implementation commit `b4733b879` activates `.5`
+continuity-only. The leaf must now choose promotion, another private fixture,
+or retirement from the recorded evidence.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
@@ -103,7 +104,7 @@ Leaf `.5` remains proposed until a separate clean activation commit.
 | 2 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `done` | Selected a distinct private SourceHIR, internal Perl builder, canonical PPIF handoff, and valid-ready golden. |
 | 3 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `done` | Froze the exact closed object, APIs, provenance/diagnostics, renderer/source-map, test, and golden oracle. |
 | 4 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `done` | Implemented the three private packages and t1547 exact golden/downstream-equivalence proof. |
-| 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `proposed` | Audit promotion, continued private iteration, or retirement from evidence. |
+| 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `active` | Audit promotion, continued private iteration, or retirement from evidence. |
 
 ## Decisions
 
@@ -159,6 +160,9 @@ Leaf `.5` remains proposed until a separate clean activation commit.
 - `2026-07-30`: `.4` implements the private closed SourceHIR object, builder,
   PPIF renderer/source map, and structured diagnostic remapper. T1547 proves
   exact fixture bytes and unchanged existing-parser downstream results.
+- `2026-07-30`: Clean private implementation commit `b4733b879` activates
+  `.5` continuity-only. Promotion, continued-private expansion, and retirement
+  remain unselected until the activation commits cleanly.
 
 ## Open Questions
 
@@ -168,8 +172,7 @@ Leaf `.5` remains proposed until a separate clean activation commit.
 
 ## Blockers
 
-- None. `.4` is complete; `.5` remains proposed until a separate clean
-  activation commit.
+- None. `.5` is active continuity-only after clean commit `b4733b879`.
 
 ## Verification Log
 
@@ -181,6 +184,7 @@ Leaf `.5` remains proposed until a separate clean activation commit.
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.3` contract | fixture line/byte/SHA oracle; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; exact private contract only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.4` activation | documentation audits; Knowledge Map; memory architecture; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; continuity-only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.4` implementation | t1547 plus current forward-IR/contract/valid-ready baseline; four syntax checks; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; private golden path only |
+| `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.5` activation | documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; continuity-only |
 
 ## Commit Log
 
@@ -196,6 +200,7 @@ Leaf `.5` remains proposed until a separate clean activation commit.
 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `FSMGEN-HIR-ROADMAP-FRONTIER.4: activate private SourceHIR implementation` | Continuity-only activation after the clean v1 contract. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `FSMGEN-HIR-ROADMAP-FRONTIER.4: implement private SourceHIR golden path` | Implements only the private three-package/t1547 contract. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `pending` | Proposed evidence-based promotion/retirement audit. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `FSMGEN-HIR-ROADMAP-FRONTIER.5: activate SourceHIR promotion audit` | Continuity-only activation after the clean private prototype. |
 
 ## Changelog
 
@@ -214,6 +219,8 @@ Leaf `.5` remains proposed until a separate clean activation commit.
   implementation and behavior remain unchanged.
 - `2026-07-30`: Implemented and proved the private SourceHIR valid-ready
   golden path without advertising or changing any public surface.
+- `2026-07-30`: Activated `.5` continuity-only for evidence-based promotion,
+  continued-private, or retirement selection.
 
 ## Acceptance Checklist (enforced)
 

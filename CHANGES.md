@@ -31099,3 +31099,19 @@ task tree and git.
   Repository-local scratch is removed, both frozen status files remain
   untouched, and the decision/contract records own the rationale instead of a
   duplicate development note.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.5 — SourceHIR promotion audit activated
+
+- Activated only the evidence-based promotion, continued-private, or
+  retirement audit after clean private implementation commit `b4733b879`.
+- Task/index, architecture/contract/implementation facts, roadmap, mdBook
+  backlog, Memory, and changelog continuity are aligned. The audit outcome,
+  public builder/API/report/accounting, code, tests, parser, fixtures,
+  artifacts, config, HDL/runtime, and behavior remain unselected and unchanged
+  until this activation commits cleanly.
+- Broader public host-language, HIAL/VIAL, scale, MCP-write, and director-gated
+  owners remain inactive; both frozen status files stay untouched and no
+  separate development note is warranted for continuity-only activation.
+- Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
+  and the 72-file HTML build pass; Knowledge Map passes at 1,078 facts / 5,558
+  keys; memory, diff, output cleanup, and all seven staged doctrine gates pass.

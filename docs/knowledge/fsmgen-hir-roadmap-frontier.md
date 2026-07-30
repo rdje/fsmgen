@@ -37,5 +37,6 @@ The prototype remains private and adds no CLI, public host-language API,
 normalized-report key, or support-accounting promise. Leaf `.3` freezes the
 exact version-1 contract in `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md` without
 implementation. Leaf `.4` now implements and proves the private
-three-package/t1547 valid-ready path; `.5` remains proposed for promotion or
+three-package/t1547 valid-ready path. Clean commit `b4733b879` activates `.5`
+continuity-only for the evidence-based promotion, continued-private, or
 retirement audit.

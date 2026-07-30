@@ -32,4 +32,5 @@ Leaf `.3` freezes the exact keys, private package APIs, provenance,
 diagnostics, renderer/source-map result, t1547 owner, and byte-equivalence
 oracle in `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md`. Implementation remains
 private; `.4` implements the exact three-package/t1547 contract without a
-public surface.
+public surface. Clean implementation commit `b4733b879` activates `.5`
+continuity-only; no audit outcome is selected by activation.

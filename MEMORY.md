@@ -5,14 +5,13 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.4: implement private SourceHIR golden path`).
-- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.5` (proposed; not active).
-- current_state: `.4` implements the three private packages and t1547 exact
-  PPIF/downstream-equivalence proof without any public surface change.
-- next_action: after this implementation commit is clean, activate `.5`
-  separately for evidence-based promotion, continued-private, or retirement
-  selection.
-- in_flight_uncommitted: none after this implementation commit; no background job.
+- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.5: activate SourceHIR promotion audit`).
+- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.5` (active continuity-only).
+- current_state: clean private prototype commit `b4733b879` activates `.5`
+  without selecting promotion, another private fixture, or retirement.
+- next_action: compare the three audit outcomes against the recorded prototype
+  evidence and select the smallest defensible post-prototype boundary.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -39,8 +38,8 @@ history; this file carries only the current bounded resume state.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
 - Decision `0028`, the architecture record, and the v1 contract are canonical.
-  `.5` remains proposed; the public host-language builder, HIAL/VIAL, scale,
-  MCP-write, and every director-gated owner remain inactive.
+  `.5` is active continuity-only; the public host-language builder, HIAL/VIAL,
+  scale, MCP-write, and every director-gated owner remain inactive.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously

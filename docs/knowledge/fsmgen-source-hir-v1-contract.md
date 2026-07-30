@@ -31,4 +31,5 @@ The first oracle is byte equality with `ppif/valid_ready_handshake.ppif`:
 `6cbc68152c9e1658a341994bc2ccdd83bdb94b26aedd20d4180c996b5124f7ac`.
 Completed implementation leaf `.4` owns the three packages and focused
 `t/1547-source-hir-valid-ready.t`; no public API/report/accounting surface is
-selected.
+selected. Clean implementation commit `b4733b879` activates `.5`
+continuity-only for the separate evidence audit.

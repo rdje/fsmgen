@@ -12,6 +12,9 @@ The three selected packages now implement the private valid-ready path.
 Focused t1547 proves canonical rendering through the existing parser and
 unchanged downstream artifacts/reports; no public surface is added.
 
+Clean prototype commit `b4733b879` activates the separate `.5` evidence audit;
+its activation selects no promotion, expansion, or retirement outcome.
+
 ## Outcome
 
 FSMGen will add a distinct, private, pre-IAL semantic-intent layer named
