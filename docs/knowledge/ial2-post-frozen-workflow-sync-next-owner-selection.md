@@ -32,3 +32,7 @@ candidate remain unchanged. HIAL/VIAL, end-to-end scale, public-test drift,
 mdBook rustdoc fences, other protocols/backends, and simulator work remain
 independently proposed; RAM-guard refinement, t1436, and decision `0020` keep
 their explicit gates.
+
+Clean selector commit `23a987e06` activates only the selected import-tree
+child continuity-only. The note/fact and every product behavior remain
+unchanged during activation.

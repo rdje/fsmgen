@@ -8161,6 +8161,10 @@ only the architecture note/fact after a separate clean activation. HIAL/VIAL,
 scale, public-test drift, rustdoc fences, other protocols/backends, simulator
 profiles, and decision `0020` remain separate. See
 `docs/IAL2_POST_FROZEN_WORKFLOW_SYNC_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `23a987e06` activates only
+`BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` continuity-only. The stale note/fact,
+live import closure, and every product behavior remain unchanged until the
+child commits its documentation repair.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

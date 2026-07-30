@@ -11839,6 +11839,9 @@ will refresh only the architecture note and fact after a separate clean
 activation. HIAL/VIAL, scale, public-test drift, rustdoc fences, other
 protocols/backends, simulator profiles, and decision `0020` remain separate.
 See the [selection record](../../IAL2_POST_FROZEN_WORKFLOW_SYNC_NEXT_OWNER_SELECTION.md).
+Clean selector commit `23a987e06` activates only the import-tree child
+continuity-only. The stale note/fact, live import closure, and every product
+behavior remain unchanged until the documentation repair commits.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

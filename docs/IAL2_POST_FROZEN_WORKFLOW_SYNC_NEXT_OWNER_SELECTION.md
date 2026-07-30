@@ -102,3 +102,7 @@ unchanged until a clean selector commit separately activates the child.
   18,000,412,672/25,769,803,776 bytes = 16.764/24.000 GiB = 69.85%, with
   separate macOS kernel pressure level 1 and `memory_pressure` 74% free. Guard
   occupancy is excluded from capacity truth. No background job remains.
+
+Clean selector commit `23a987e06` activates only the selected import-tree
+child through continuity changes. The stale note/fact and every product
+behavior remain unchanged during activation.

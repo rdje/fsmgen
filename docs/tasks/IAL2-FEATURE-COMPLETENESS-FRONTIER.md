@@ -5941,6 +5941,9 @@ Completed `.835` selects proposed no-behavior
 probe proves the canonical note's `213` / `212` / `IAL2 5` snapshot stale. The
 selected child remains unchanged until the selector commits cleanly; no broader
 owner or product behavior is implicitly activated.
+Clean selector commit `23a987e06` activates only the selected import-tree child
+through a separate continuity transition. The stale note/fact and every
+product behavior remain unchanged during activation.
 
 The child selected by `.826` is complete through `.3`, and parent `.828` now
 closes the matching byte-identical two-subordinate exact-four `.ahb` alias.

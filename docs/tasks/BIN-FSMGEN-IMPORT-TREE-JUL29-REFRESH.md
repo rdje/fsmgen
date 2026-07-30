@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `bootstrap architecture maintenance`
 - Created: `2026-07-29`
-- Last updated: `2026-07-29`
+- Last updated: `2026-07-30`
 - Owner: repo-local workflow
 
 ## Goal
@@ -33,16 +33,16 @@ snapshot stale.
 ## Task Tree
 
 - ID: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`
-  Status: `proposed`
+  Status: `active`
   Goal: `Refresh the live bin/fsmgen import-tree architecture note.`
   Children: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1`
 
 - ID: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Re-measure and synchronize the import-tree note.`
   Acceptance: `Module::ScanDeps results, family counts, selected line counts, and prose agree with the live closure; no runtime behavior changes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean parent selector commit 23a987e06. This continuity leaf changes no import-tree note/fact, runtime package, parser, generator, public source, support accounting, artifact, API, HDL/runtime, backend, protocol, HIAL/VIAL, portability, scale, or decision-0020 behavior; the stale 213-file / 212-package / 5-IAL2 note and canonical fact remain untouched. Focused verification passed 329 tests across 5 files (t/1256, t/1303, t/1305, t/1332, and t/1414); Knowledge Map generation/check passed at 1,064 facts / 5,477 question keys; mdBook built 72 files / 16,545,847 bytes and book/build was removed; .artifacts/tmp/tests is empty; MEMORY.md is 47 lines and README.md is 2,353 lines; diff hygiene and all six doctrine checks pass. The closeout RAM sample was 18,200,133,632 / 25,769,803,776 bytes (16.950 / 24.000 GiB, 70.63%) by the canonical macOS accounting formula, with kernel pressure level 1 and memory_pressure reporting 75% free; the guard's host reading is excluded from capacity truth. No background job remains.`
+  Commit: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1: activate import map refresh`
 
 ## Decisions
 
@@ -53,4 +53,5 @@ snapshot stale.
 
 ## Blockers
 
-- Inactive until selected from a clean tree after the current adoption closes.
+- Active only after clean selector commit `23a987e06`; remeasure and repair the
+  architecture note without changing runtime behavior.

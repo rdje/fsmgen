@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.835: select import tree refresh`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.835` (selector completion).
-- current_state: `.835` selects proposed no-behavior `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` after live closure measures 228 files / 227 packages / 19 IAL2 owners versus the maintained note's 213 / 212 / 5 snapshot. The child remains unchanged until this selector commits cleanly.
-- next_action: after the clean selector commit, activate only the selected import-tree child through a continuity commit.
-- in_flight_uncommitted: none after this selector commit; no background job.
+- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1: activate import map refresh`).
+- active_work_unit: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` (continuity-only activation).
+- current_state: clean selector commit `23a987e06` selects the no-behavior import-tree refresh. `.1` is active continuity-only; the stale 213 / 212 / 5 note/fact remain unchanged until this activation commits cleanly.
+- next_action: remeasure the live closure and synchronize `docs/BIN_FSMGEN_IMPORT_TREE.md`, its canonical fact, and permitted live/user docs without changing runtime behavior.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
