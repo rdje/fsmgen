@@ -347,4 +347,6 @@ pre-empt that exact invalid-output handoff.
   direct-VHDL unary-reduction audit. HIAL/VIAL remains proposed with every
   architecture, backend, qualification, parity, migration, and scale
   requirement intact.
+- `2026-07-30`: Clean selector commit `5f904d2d2` activates only the selected
+  direct-VHDL audit `.1`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

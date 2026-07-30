@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `Backends And Validation / direct VHDL correctness`
 - Created: `2026-07-30`
 - Last updated: `2026-07-30`
@@ -43,16 +43,16 @@ removed after its three-file/19,070-byte census.
 ## Task Tree
 
 - ID: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING`
-  Status: `proposed`
+  Status: `active`
   Goal: `Make direct VHDL reduction-expression handling syntactically truthful and regression-backed.`
   Children: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1, DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2`
 
 - ID: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Audit and freeze the exact unary reduction-expression contract.`
   Acceptance: `Activate only from a clean roadmap-selected boundary. Reproduce scalar and vector unary reduction OR, AND, and XOR shapes through direct VHDL; distinguish valid identity lowering for scalar operands from vector reductions; inspect declaration widths and expression contexts; select the smallest correct lowering or explicit fail-closed boundary; freeze syntax, diagnostics, GHDL availability/qualification, focused tests, preservation, docs, same-volume cleanup, and rollback without changing behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean parent selector commit 5f904d2d2. Activation changes continuity pointers only; the current unary-reduction token leak, direct-VHDL/backend behavior, generated HDL, diagnostics, facade behavior, named-drive priority, parser/scheduler/lowering, other HDL targets, public reports/semantic/MCP APIs, AHB/accounting, HIAL/VIAL, scale, simulator profiles, decision 0020, and tests remain unchanged. Book/status/path gates pass 4 files/45 tests. Knowledge Map remains synchronized at 1,057 facts/5,433 question keys. The mdBook renders exactly 72 files/16,480,952 bytes and the exact repository-local output is removed. MEMORY.md is 50 lines, README.md is 2,341 lines, .artifacts/tmp/tests is empty, diff hygiene passes, and all six doctrine gates pass. Final canonical Stats-compatible capacity is 15,641,083,904/25,769,803,776 bytes = 14.567/24.000 GiB = 60.70%, with separate macOS kernel pressure level 1 and memory_pressure 72% free; guard occupancy is excluded from capacity truth. No background job remains.`
+  Commit: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1: activate reduction audit`
 
 - ID: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2`
   Status: `proposed`
@@ -63,12 +63,11 @@ removed after its three-file/19,070-byte census.
 
 ## Current Frontier
 
-Selected but not yet active. Completed parent selector
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.831` chooses `.1` as the next exact
-no-behavior audit because a supported direct-VHDL command emits a proven
-foreign-language reduction token and the backend owner is narrow. The child
-must remain pending until the selector commits cleanly; a separate clean
-activation slice may then change continuity pointers only.
+Audit `.1` is active after clean parent selector commit `5f904d2d2`. It must
+reproduce scalar and vector unary OR, AND, and XOR through the direct-VHDL
+path, trace resolved widths and expression contexts, distinguish scalar
+identity from vector reductions, and select exact translation or deterministic
+fail-closed handling without changing product behavior.
 
 ## Decisions
 
@@ -80,6 +79,9 @@ activation slice may then change continuity pointers only.
   HIAL/VIAL, scale, AHB, ISF, simulator-profile, startup-alignment, defect, and
   other-backend owners. Selection changes no behavior; activation requires the
   clean selector commit.
+- `2026-07-30`: Clean selector commit `5f904d2d2` activates only audit `.1`.
+  The foreign reduction token and all backend/runtime behavior remain unchanged
+  while the no-behavior evidence audit runs.
 
 ## Open Questions
 
@@ -94,6 +96,7 @@ activation slice may then change continuity pointers only.
 
 ## Rollback
 
-Before activation, rollback removes this proposed tree and its index/fact/book
-references. After activation, rollback follows the selected leaf contract and
-must retain the exact reduction-token reproducer until corrected or rejected.
+Rollback of activation restores this tree to proposed, `.1` to pending, and
+clean selector commit `5f904d2d2` as the resume boundary. During the audit,
+rollback must retain the exact reduction-token reproducer until corrected or
+rejected.

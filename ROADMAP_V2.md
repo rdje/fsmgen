@@ -8029,6 +8029,10 @@ broader AHB/ISF work, verification/simulator profiles, startup-alignment and
 known-defect owners, other protocols/backends, and decision `0020` remain
 separate. Selection changes no product behavior or current 332/373/56 split
 28/28 accounting.
+Clean selector commit `5f904d2d2` activates only
+`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1`. This continuity transition
+changes no backend or generated-output behavior; the exact unary-reduction
+leak remains the active audit evidence, and all broader owners remain separate.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

@@ -122,6 +122,8 @@ and diagnostic behavior per stage while proving semantic/output correctness.
   direct-VHDL reduction audit before this broader methodology tree. Scale
   remains proposed with its workload, correctness, resource, budget, and
   graceful-failure contract unchanged.
+- `2026-07-30`: Clean selector commit `5f904d2d2` activates only the selected
+  direct-VHDL audit `.1`; this scale tree remains proposed and unchanged.
 
 ## Open Questions
 

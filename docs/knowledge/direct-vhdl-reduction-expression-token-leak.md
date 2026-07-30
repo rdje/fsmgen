@@ -25,5 +25,7 @@ No `ghdl`, `nvc`, or `vcom` is installed, and the repository's external VHDL
 validation lane remains deferred.
 
 Generation success is therefore not VHDL qualification for this shape.
-Proposed task `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` owns the exact audit
-and repair independently from named-drive priority lowering.
+Active task `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` owns the exact audit
+and repair independently from named-drive priority lowering. Parent selector
+`.831` chooses `.1`, and clean selector commit `5f904d2d2` activates that
+no-behavior audit without changing the leak or any generated output.

@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit, `IAL2-FEATURE-COMPLETENESS-FRONTIER.831: select direct VHDL reduction audit` (resolve with `git log -1`).
-- active_work_unit: none after this selector commit; selected next owner is `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1`.
-- current_state: `.831` selects the exact no-behavior direct-VHDL unary OR/AND/XOR reduction audit after the named-drive probe emitted foreign `(|drive_zero_start)` syntax. Named-drive priority, AHB `2..16`, and 332/373/56 split 28/28 accounting remain unchanged.
-- next_action: from the clean selector commit, activate only `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1` through continuity changes, commit, then perform its no-behavior audit.
-- in_flight_uncommitted: none after this selector commit workflow; no background job.
+- latest_commit: clean `.831` selector commit `5f904d2d2`.
+- active_work_unit: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1` activation.
+- current_state: `.831` is done and `.1` activation is continuity-only; the direct-VHDL unary-reduction leak and all generated-output behavior remain unchanged.
+- next_action: commit activation, then execute `.1`'s scalar/vector OR/AND/XOR width/context audit and select exact translation or deterministic rejection.
+- in_flight_uncommitted: `.1` activation continuity synchronization; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

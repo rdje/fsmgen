@@ -2583,6 +2583,8 @@ artifact, runtime, or accounting. HIAL/VIAL, scale, broader AHB/ISF work,
 simulator profiles, other defects, protocols/backends, and decision `0020`
 remain independently gated. See the
 [post-named-drive selection](../../IAL2_POST_NAMED_DRIVE_PRIORITY_NEXT_OWNER_SELECTION.md).
+Clean selector commit `5f904d2d2` activates only that separate no-behavior
+direct-VHDL audit; AHB behavior and accounting remain unchanged.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

@@ -11718,6 +11718,9 @@ cannot claim executable VHDL qualification. See the
 All shipped named-drive/AHB behavior and broader HIAL/VIAL, scale, simulator,
 startup-alignment, protocol, and backend owners remain unchanged pending a
 clean activation commit.
+Clean selector commit `5f904d2d2` activates only the direct-VHDL audit `.1`.
+The reduction-token leak and all parser, backend, HDL, runtime, AHB, and
+broader-roadmap behavior remain unchanged during this continuity transition.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

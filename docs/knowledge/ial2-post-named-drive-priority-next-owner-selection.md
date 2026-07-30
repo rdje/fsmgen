@@ -32,3 +32,6 @@ authoritative executable-VHDL qualification claim, but does not block the
 no-behavior audit or a later internal fail-closed repair. HIAL/VIAL, scale,
 broader AHB/ISF work, simulator profiles, other tracked defects, other
 protocols/backends, and decision `0020` remain separate.
+
+Clean selector commit `5f904d2d2` activates only audit `.1`; activation is
+continuity-only and leaves product behavior unchanged.

@@ -127,3 +127,7 @@ truth.
 Rollback removes this selector and fact, restores `.831` to active, and leaves
 all shipped behavior unchanged. A later clean selector commit may activate only
 the selected audit `.1` through continuity changes.
+
+Clean selector commit `5f904d2d2` activates only the selected audit `.1`.
+Activation changes continuity pointers and no parser, scheduler, backend,
+generated HDL, runtime, AHB, HIAL/VIAL, scale, or transaction behavior.
