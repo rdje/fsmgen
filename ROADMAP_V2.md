@@ -975,7 +975,9 @@ Source-facing HIR roadmap phase:
   stores no raw ISF or parser AST. Leaf `.7` now implements that private
   contract and proves exact ISF/IAL0 bytes plus equal typed actor and schedule;
   clean commit `8876adb0b` activates `.8` continuity-only to repeat the
-  promotion audit. Public
+  promotion audit. That audit now retains SourceHIR as a validated private
+  architecture seam, selects no third architecture-only route, and closes the
+  HIR frontier. Public
   language, packaging, versioning, and compatibility remain separately owned
   by proposed `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`.
 

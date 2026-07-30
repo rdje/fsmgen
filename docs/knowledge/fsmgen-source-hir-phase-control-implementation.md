@@ -35,4 +35,5 @@ remapper truthfully falls back to SourceHIR root provenance instead of
 inventing a field location. The implementation adds no CLI, public schema,
 serialization, report, manifest, capability, or support-accounting surface.
 Clean implementation commit `8876adb0b` activates `.8` continuity-only for the
-evidence-based two-route disposition audit.
+evidence-based two-route disposition audit. Decision `0031` now retains the
+validated seam privately and selects no third architecture-only route.

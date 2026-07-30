@@ -36,4 +36,6 @@ separate concrete-control-to-IAL1 design leaf before promotion is
 reconsidered. Leaf `.6` now selects additive discriminated schema version 2
 for that route; version 1 stays unchanged.
 Clean version-2 contract commit `f42fb033d` activates its separate private
-implementation leaf without changing version 1.
+implementation leaf without changing version 1. That route is now proved, and
+audit decision `0031` retains the validated two-route seam privately without
+selecting a third architecture-only route.

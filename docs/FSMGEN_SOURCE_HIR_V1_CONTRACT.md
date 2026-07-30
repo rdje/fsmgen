@@ -401,7 +401,8 @@ must not add SourceHIR to CLI help, capability manifests, normalized reports,
 `module_info`, support accounting, or installed public-language packages.
 
 Audit `.5` rejects retirement and immediate promotion. These packages and
-`t/1547` remain private while separate `.6` selects a concrete-control-to-IAL1
-contract. That later contract must select its own migration/versioning rules;
-version 1 does not imply them, and any public promotion must coordinate with
-`IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`.
+`t/1547` remain private. Leaves `.6`/`.7` select and prove a separate
+concrete-control-to-IAL1 contract, and audit `.8` retains the validated
+two-route seam privately under decision `0031`. Version 1 does not imply a
+public migration/versioning contract; any public producer/projection must be
+selected by `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`.

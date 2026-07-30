@@ -16,11 +16,16 @@ unchanged downstream artifacts/reports; no public surface is added.
 Post-prototype audit `.5` retained the healthy boundary privately and selected
 a second private concrete-control-to-IAL1 proof before promotion is
 reconsidered. Leaves `.6` and `.7` have now selected and implemented that
-proof; `.8` owns the next audit. `docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md`
+proof; `.8` has now completed the audit. `docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md`
 and decision `0029` own the original refinement.
 
 Clean private implementation commit `8876adb0b` activates `.8`
 continuity-only; activation selects no public/private/retirement outcome.
+
+Audit `.8` now retains the two-route boundary privately and closes this HIR
+frontier. Decision `0031` rejects current-shape promotion, narrowing, and
+retirement, selects no third architecture-only route, and leaves public
+producer/projection selection to the separate proposed builder owner.
 
 ## Outcome
 
@@ -288,7 +293,8 @@ evidence.
 - `.5` keeps SourceHIR private: retention is warranted, promotion is
   premature, and retirement is rejected.
 - `.6` selects the exact private concrete-control-to-IAL1 boundary, `.7`
-  implements it, and active `.8` repeats the evidence audit across both routes.
+  implements it, and `.8` retains the validated two-route seam privately and
+  closes this frontier.
 
 Leaf `.6` now selects that boundary in
 `docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md`: semantic SourceHIR

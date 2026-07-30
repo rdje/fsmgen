@@ -32,5 +32,5 @@ t1548. The golden ISF and IAL0 hashes, equal typed actor/schedule, provenance,
 ordered variants, and no-public-surface rule are proved. Version 1 and every
 public CLI/report/manifest/accounting surface remain unchanged. Clean contract
 commit `f42fb033d` activated `.7` continuity-only before implementation; clean
-implementation commit `8876adb0b` activates `.8` continuity-only for the next
-audit.
+implementation commit `8876adb0b` activated `.8`, whose decision `0031`
+retains the validated two-route seam privately.

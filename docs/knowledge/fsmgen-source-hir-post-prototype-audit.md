@@ -34,4 +34,5 @@ Leaf `.6` selects the exact second route as semantic SourceHIR version 2 with
 byte-identical `isf/phase_test.isf` rendering and existing ISF adapter/scheduler
 re-entry. Clean contract commit `f42fb033d` activated `.7` continuity-only;
 `.7` now implements that proof privately, and clean commit `8876adb0b`
-activates `.8` continuity-only for the fresh audit.
+activated `.8`. Decision `0031` retains the validated two-route seam privately
+and closes the HIR frontier.

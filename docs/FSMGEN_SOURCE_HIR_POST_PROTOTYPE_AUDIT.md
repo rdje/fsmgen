@@ -4,6 +4,10 @@ Date: 2026-07-30
 Owner: `FSMGEN-HIR-ROADMAP-FRONTIER.5`
 Status: selected — remain private through a second lowering route
 
+Refined by `docs/FSMGEN_SOURCE_HIR_TWO_ROUTE_PROMOTION_AUDIT.md` and decision
+`0031`, which retain the now two-route boundary privately and close the HIR
+frontier without selecting a third architecture-only route.
+
 ## Decision
 
 Keep `FSM::IR::SourceHIR` private. Do not promote the current valid-ready
@@ -20,9 +24,9 @@ canonical byte-identical `isf/phase_test.isf` rendering and existing-adapter/
 scheduler re-entry. The exact contract is
 `docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md`.
 
-Leaf `.7` now implements and proves that route privately. Leaf `.8` remains
-the sole owner of the next promotion/continued-private/retirement decision;
-clean implementation commit `8876adb0b` activates that audit continuity-only.
+Leaf `.7` now implements and proves that route privately. Leaf `.8` has since
+retained the validated two-route seam privately and closed the HIR frontier;
+decision `0031` owns that conclusion.
 
 Public host-language selection remains owned by proposed
 `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`. No Perl, Python, Julia, C, CLI, raw-HIR,
@@ -74,7 +78,7 @@ SourceHIR concrete FSM/control -> canonical IAL1 -> IAL0
 Publishing the object at that point would have frozen names, versioning, error
 contracts, and package ergonomics from one semantic shape before the common
 abstraction survived a second lowering target. Leaf `.7` has since supplied
-that second private proof; `.8` owns the fresh conclusion.
+that second private proof, and `.8` retained the seam privately.
 
 ### Concrete-route readiness
 
@@ -102,13 +106,13 @@ fixture choice.
 - `.7` implements only the `.6`-selected private route and equivalence proof;
   it is now complete.
 - `.8` repeats the promotion/continued-private/retirement audit from evidence
-  across both lowering routes.
+  across both lowering routes; it is now complete under decision `0031`.
 
-The next promotion audit may recommend public activation only if both private
-routes are coherent and `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` separately
-selects a supported producer, versioning policy, packaging, diagnostics, and
-compatibility boundary. A second route is necessary evidence, not by itself a
-public API authorization.
+The completed promotion audit finds both private routes coherent but retains
+the seam privately because `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` has not
+selected a supported producer, versioning policy, packaging, diagnostics, or
+compatibility boundary. A second route is necessary architecture evidence,
+not by itself a public API authorization.
 
 ## Guardrails and retirement test
 

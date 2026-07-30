@@ -39,4 +39,5 @@ semantic version-2 concrete-control subset rendered to the existing phase-test
 IAL1 path; raw ISF and parser-AST storage remain rejected. Clean contract
 commit `f42fb033d` activated its private implementation leaf, and `.7` now
 proves that route without adding a public surface. Clean implementation commit
-`8876adb0b` activates `.8` continuity-only for the two-route audit.
+`8876adb0b` activated `.8`; decision `0031` now retains the validated two-route
+seam privately and closes the HIR frontier.

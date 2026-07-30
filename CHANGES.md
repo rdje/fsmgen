@@ -31241,3 +31241,27 @@ task tree and git.
   the 72-file HTML build pass; Knowledge Map passes at 1,081 facts / 5,574
   question keys; memory, diff, repository-local scratch/output cleanup, and
   all seven staged doctrine gates pass.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.8 — private SourceHIR architecture retained
+
+- Decision `0031` and the two-route audit retain SourceHIR as a private
+  validated architecture boundary. T1547+t1548 pass at `Files=2, Tests=18`
+  and prove coherent immutable/closed/provenance/canonical-handoff/existing-
+  parser/equivalence invariants across PPIF/IAL2 and ISF/IAL1.
+- Rejected retirement and narrowing because both distinct targets share the
+  selected seam without syntax or parser-AST leakage. Selected no third
+  architecture-only route because the intended cross-target claim is proved.
+- Rejected current-shape public promotion because source usage remains four
+  private modules plus t1547/t1548, every producer is test-only, and no
+  supported language/package, public schema/serialization, versioning,
+  compatibility, diagnostic, user-workflow, or accounting contract exists.
+  The separate proposed builder frontier solely owns any future producer and
+  public projection; this audit does not activate it.
+- No code, test, parser, fixture, artifact, config, CLI/API/report/manifest/
+  accounting, HDL/runtime, frozen status file, or behavior changes. The HIR
+  tree is complete; the audit/decision/fact own rationale instead of a
+  duplicate development note.
+- Documentation audits pass at `Files=3, Tests=40`; all 36 mdBook chapters and
+  the 72-file HTML build pass; Knowledge Map passes at 1,082 facts / 5,579
+  question keys; memory, diff, repository-local scratch/output cleanup, and
+  all seven staged doctrine gates pass.

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `FSMGEN-HIR-ROADMAP-FRONTIER`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `architecture / high-level frontend IR`
 - Created: `2026-06-28`
 - Last updated: `2026-07-30`
@@ -53,7 +53,7 @@ and future IAL evolution.
 ## Task Tree
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER`
-  Status: `active`
+  Status: `done`
   Goal: `Own the source-facing FSMGEN HIR roadmap phase above IAL2 and IAL1.`
   Children: `FSMGEN-HIR-ROADMAP-FRONTIER.1`, `FSMGEN-HIR-ROADMAP-FRONTIER.2`, `FSMGEN-HIR-ROADMAP-FRONTIER.3`, `FSMGEN-HIR-ROADMAP-FRONTIER.4`, `FSMGEN-HIR-ROADMAP-FRONTIER.5`, `FSMGEN-HIR-ROADMAP-FRONTIER.6`, `FSMGEN-HIR-ROADMAP-FRONTIER.7`, `FSMGEN-HIR-ROADMAP-FRONTIER.8`
 
@@ -107,18 +107,18 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.7: implement private SourceHIR IAL1 path`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.8`
-  Status: `active`
+  Status: `done`
   Goal: `Re-audit SourceHIR promotion after both private lowering routes.`
   Acceptance: `After .7, compare promotion, continued private iteration, narrowing/renaming, and retirement using both private route proofs. Coordinate any public selection with IAL2-HOST-LANGUAGE-BUILDER-FRONTIER; a second route alone does not authorize a public API.`
-  Verification: `Activated continuity-only after clean private second-route implementation commit 8876adb0b. Activation changes only task/index, architecture/audit/contract/fact continuity, roadmap, mdBook backlog, Memory, changelog, and regenerated Knowledge Map. Documentation audits pass with Files=3, Tests=40; all 36 mdBook chapters and the 72-file HTML build pass; Knowledge Map generation/check passes at 1081 facts / 5574 question keys; memory architecture passes at 49 lines; diff hygiene and all seven staged doctrine gates pass; repository-local scratch and generated book output are removed. Promotion, continued-private iteration, narrowing/renaming, retirement, public host language/API/schema/versioning/packaging, code, tests, parser, fixtures, artifacts, CLI/report/manifest/accounting, HDL/runtime, frozen status files, and behavior remain unselected and unchanged.`
-  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.8: activate SourceHIR two-route promotion audit`
+  Verification: `Clean activation commit 8af24c87c permits only the evidence audit. docs/FSMGEN_SOURCE_HIR_TWO_ROUTE_PROMOTION_AUDIT.md and decision 0031 select retention as a private validated architecture boundary: t1547+t1548 pass Files=2, Tests=18 and prove coherent immutable/closed/provenance/canonical-handoff/existing-parser/equivalence invariants across IAL2 and IAL1, so retirement and narrowing/renaming are rejected. Source census finds exactly four private SourceHIR modules plus focused t1547/t1548, with test-only producers and no CLI, language-surface, embedding/result, report/manifest/capability/accounting, supported host language, public schema/serialization, versioning, compatibility, or ergonomic-package contract, so current-shape promotion is rejected as premature. No third architecture-only route is selected; the separate proposed builder frontier solely owns any future public producer/projection and is not activated. Documentation audits pass with Files=3, Tests=40; all 36 mdBook chapters and the 72-file HTML build pass; Knowledge Map generation/check passes at 1082 facts / 5579 question keys; memory architecture passes at 49 lines; diff hygiene and all seven staged doctrine gates pass; repository-local scratch and generated book output are removed. No code, test, parser, fixture, artifact, config, public surface, HDL/runtime, frozen status file, or behavior changes.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.8: retain private SourceHIR architecture`
 
 ## Current Frontier
 
-Clean private implementation commit `8876adb0b` activates `.8`
-continuity-only. The leaf now owns an evidence-based comparison of promotion,
-continued-private iteration, narrowing/renaming, and retirement; no outcome is
-selected by activation.
+The tree is complete. `.8` retains SourceHIR as a validated private
+architecture boundary, rejects promotion/narrowing/retirement from current
+evidence, selects no third architecture-only route, and leaves any supported
+public producer/projection to the separate proposed builder frontier.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
@@ -129,7 +129,7 @@ selected by activation.
 | 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `done` | Kept SourceHIR private because one IAL2 schema is healthy but insufficient for promotion. |
 | 6 | `FSMGEN-HIR-ROADMAP-FRONTIER.6` | `done` | Selected semantic SourceHIR v2 and the exact phase-test IAL1/IAL0 oracles. |
 | 7 | `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `done` | Implemented and proved the selected second private route without public exposure. |
-| 8 | `FSMGEN-HIR-ROADMAP-FRONTIER.8` | `active` | Compare the four disposition options across both lowering routes. |
+| 8 | `FSMGEN-HIR-ROADMAP-FRONTIER.8` | `done` | Retained the validated private seam and closed the HIR frontier. |
 
 ## Decisions
 
@@ -210,16 +210,21 @@ selected by activation.
 - `2026-07-30`: Clean private implementation commit `8876adb0b` activates
   `.8` continuity-only. The audit conclusion remains unselected until this
   activation commits cleanly.
+- `2026-07-30`: `.8` retains SourceHIR privately and closes this tree. Two
+  coherent route proofs reject retirement and narrowing; test-only producers
+  plus absent public product/versioning contracts reject current promotion.
+  Decision `0031` leaves public selection to the proposed builder owner and
+  forbids further architecture-only expansion.
 
 ## Open Questions
 
-- Active `.8` must decide promotion, continued-private iteration,
-  narrowing/renaming, or retirement from both route proofs; activation
-  authorizes none of those outcomes.
+- None within this completed tree. Public producer, language/package,
+  projection, versioning, compatibility, and user-workflow selection remain
+  separately proposed under `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`.
 
 ## Blockers
 
-- None. `.8` is active continuity-only after clean commit `8876adb0b`.
+- None. The tree is complete.
 
 ## Verification Log
 
@@ -238,6 +243,7 @@ selected by activation.
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.7` activation | documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; continuity-only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.7` implementation | t1548+t1547+t1179+t1312; four syntax checks; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; private exact SourceHIR-to-IAL1 path only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.8` activation | documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; continuity-only |
+| `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.8` audit | t1547+t1548; producer/public-surface census; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; retain private and close tree |
 
 ## Commit Log
 
@@ -260,6 +266,7 @@ selected by activation.
 | `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `FSMGEN-HIR-ROADMAP-FRONTIER.7: activate private SourceHIR IAL1 implementation` | Continuity-only activation after the clean version-2 contract. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `FSMGEN-HIR-ROADMAP-FRONTIER.7: implement private SourceHIR IAL1 path` | Implements only the closed version-2 object/builder/renderer and t1548 proof. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.8` | `FSMGEN-HIR-ROADMAP-FRONTIER.8: activate SourceHIR two-route promotion audit` | Continuity-only activation after the clean second-route proof. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.8` | `FSMGEN-HIR-ROADMAP-FRONTIER.8: retain private SourceHIR architecture` | Retains the validated private seam, selects no third route, and closes the tree. |
 
 ## Changelog
 
@@ -294,6 +301,9 @@ selected by activation.
   version 1, and all public surfaces.
 - `2026-07-30`: Activated `.8` continuity-only for the evidence-based
   two-route disposition audit.
+- `2026-07-30`: Retained SourceHIR as a private validated architecture
+  boundary, rejected current-shape promotion/narrowing/retirement, selected no
+  third route, and closed the HIR frontier.
 
 ## Acceptance Checklist (enforced)
 

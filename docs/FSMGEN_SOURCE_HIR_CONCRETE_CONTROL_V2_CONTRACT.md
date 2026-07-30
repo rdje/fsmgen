@@ -4,6 +4,10 @@ Date: 2026-07-30
 Owner: `FSMGEN-HIR-ROADMAP-FRONTIER.6`
 Status: selected and privately implemented under `.7`
 
+Disposition audit `.8` now retains the two-route boundary privately under
+decision `0031`; no third architecture-only route or public surface is
+selected.
+
 Clean contract commit `f42fb033d` activated `.7` continuity-only. The private
 implementation now satisfies this contract without changing the parser,
 fixture, public surface, or existing behavior.
@@ -440,9 +444,9 @@ no existing source migrates.
 Implementation preserves the semantic closed subset, deterministic provenance,
 exact canonical fixture, existing parser/scheduler re-entry, and version-1
 behavior without embedding raw ISF syntax or duplicating the parser AST. The
-failure rule remains the guardrail for later changes. Only `.8` may reconsider
-promotion. Clean private implementation commit `8876adb0b` activates `.8`
-continuity-only without selecting an outcome.
+failure rule remains the guardrail for later changes. `.8` has now reconsidered
+promotion and retained the validated two-route seam privately under decision
+`0031`.
 
 ## Implementation evidence
 

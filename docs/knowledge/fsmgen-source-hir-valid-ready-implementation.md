@@ -35,4 +35,5 @@ only an IAL2 renderer reject immediate public promotion. The next design leaf
 now selects semantic SourceHIR version 2 and a phase-test IAL1 golden. The
 version-1 implementation remains unchanged after `.7` implements the separate
 private concrete-control route; clean commit `8876adb0b` activates `.8`
-continuity-only for the next promotion audit.
+continuity-only for the next promotion audit. Decision `0031` now retains both
+routes privately and closes the HIR frontier.

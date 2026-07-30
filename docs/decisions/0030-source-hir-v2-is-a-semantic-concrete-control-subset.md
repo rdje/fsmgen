@@ -4,6 +4,7 @@
 - Type: architecture
 - Status: accepted by `FSMGEN-HIR-ROADMAP-FRONTIER.6`
 - Refines: `0029`
+- Refined by: `0031`
 
 ## Context
 
