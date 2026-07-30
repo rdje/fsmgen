@@ -11,19 +11,19 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-06-28`.
-- Startup bootstrap refreshed again on `2026-06-28`; the live static trace
-  includes the R14 `.isf` intent-scheduling path, the IAL2 `.ppif` and profile
-  alias protocol-intent pre-lowering path, the AXI manager capacity/status PPIF
-  surface, the APB requester/completer/composition PPIF and `.apb` surfaces,
-  the first-class semantic-introspection manifest support surface, and the
-  bounded direct/composition VHDL backend owners. The project-owned closure
-  remains `213` project files total / `212` `.pm` packages after the APB
-  generalized register-set timing work, and selected line-count measurements
-  below were refreshed from source after that implementation.
+- Reviewed on `2026-07-30`.
+- Startup bootstrap refreshed on `2026-07-30`; the live static trace includes
+  the R14 `.isf` intent-scheduling path, the IAL2 `.ppif` and profile-alias
+  protocol-intent pre-lowering path, the Valid-Ready, AXI manager plus bounded
+  AXI initiator, APB, and AHB protocol-intent owners, the first-class
+  semantic-introspection and verification-output support surfaces, the
+  repository-local project-data owner, and the bounded direct/composition VHDL
+  backend owners. The project-owned closure now reaches `228` project files
+  total / `227` `.pm` packages, including `19` packages under `FSM/IAL2`.
+  Selected line-count measurements below were refreshed from source.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `213` project files total, `212` `.pm` packages.
+- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `228` project files total, `227` `.pm` packages.
 - The R14 `.isf` front door is reachable from [bin/fsmgen](bin/fsmgen)
   through conditional runtime requires of [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
   and [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm). That path lowers
@@ -36,15 +36,25 @@ Current baseline:
   [perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm](perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm)
   for shipped Valid-Ready source objects and
   [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm)
-  for shipped AXI manager capacity/status source objects. The same PPIF front
-  door reaches
+  for shipped AXI manager capacity/status source objects, the bounded AXI
+  initiator primitive/composition owners under
+  [perl/FSM/IAL2/ProtocolIntent/](perl/FSM/IAL2/ProtocolIntent/), and the AHB
+  requester, subordinate, and interconnect owners. The same PPIF front door
+  reaches
   [perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm](perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm),
   [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm),
   and [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm)
   for shipped APB requester-transfer, completer, fixed and bounded generalized
-  register-set composition, `.apb` alias, and busy-capable source objects, then
-  reuses the IAL1 `.isf` lowerer before handing generated `.fsm` artifacts to
-  the ordinary HDL pipeline.
+  register-set composition, `.apb` alias, and busy-capable source objects.
+  Every shipped IAL2 path then reuses the IAL1 `.isf` lowerer before handing
+  generated `.fsm` artifacts to the ordinary HDL pipeline.
+- Project-owned output, temporary, and cache destinations are now reachable
+  through [perl/FSM/ProjectDataLocality.pm](perl/FSM/ProjectDataLocality.pm),
+  which keeps CLI and lowerer-created data repository-derived and on the same
+  filesystem volume.
+- The CLI now directly reaches the UVM passive-monitor and VHDL observation
+  package skeleton emitters, while the capability manifest reaches their
+  bounded verification-output discovery/contract owners.
 - The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm), including bounded scalar expressions, matching-shape leafwise aggregate expression folding, and unary aggregate bitwise complement folding.
 - Shared integer literal parsing is now reachable through [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm), keeping common decimal, `0d`, based SystemVerilog, `0x`, `0b`, `0o`, and intent-level sized `.fsm` spellings such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`, and `20'x1` consistent across scalar widths, constants, and direct `+size` expression terms while normalizing to legal target-HDL literals before backend emission.
 - The bounded VHDL generation owners are now reachable from [bin/fsmgen](bin/fsmgen):
@@ -79,7 +89,8 @@ Current baseline:
 
 ## Executive read
 [bin/fsmgen](bin/fsmgen) is a thin CLI/reporting shell plus the R14 `.isf`
-and IAL2 `.ppif` pre-lowering front doors.
+and IAL2 `.ppif` pre-lowering front doors, repository-local artifact/temp
+routing, and explicit verification-output dispatch.
 [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm)
 is now down to the honest facade role we wanted: shared pipeline
 configuration plus the single top-level `generate_hdl_from_file(...)`
@@ -113,11 +124,15 @@ The best current architecture in the tree is the newer composition/forward-IR/ba
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)
 - [perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm](perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm)
 
-The most visible growth since the previous snapshot is the semantic package /
-type support family beneath [perl/FSM/Package/](perl/FSM/Package). That growth is intentional: reusable named values,
-package imports, scalar/list/record type aliases, aggregate paths, and
-aggregate expression contracts now have explicit owners instead of being
-parser-local string rules.
+The most visible growth since the previous snapshot is the IAL2 protocol-intent
+family: the PPIF adapter now reaches bounded AXI initiator primitives and
+transaction compositions plus the AHB requester, subordinate, and interconnect
+owners alongside the existing Valid-Ready, AXI manager capacity/status, and APB
+families. The semantic package/type family beneath
+[perl/FSM/Package/](perl/FSM/Package) remains intentionally explicit: reusable
+named values, package imports, scalar/list/record type aliases, aggregate paths,
+and aggregate expression contracts have owners instead of parser-local string
+rules.
 
 The visible `R11` composition cleanup since the previous snapshot is the new
 [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm) owner for open/numeric actual parsing, concat-operand intrinsic-width literal lowering, target-width widening, and actual binding type contracts. That moved roughly one thousand lines of literal-specific policy out of [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) while preserving the planner's explicit-link role and diagnostic ownership.
@@ -282,8 +297,8 @@ This is the current static measurement view behind the qualitative assessment
 above.
 
 Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
-- total reachable project files: `213`
-- reachable `.pm` packages: `212`
+- total reachable project files: `228`
+- reachable `.pm` packages: `227`
 - `Support`: `70`
 - `Composition`: `36`
 - `HDL`: `33`
@@ -296,34 +311,34 @@ Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
 - `Backend`: `4`
 - `Extension`: `3`
 - `AST`: `1`
-- `IAL2`: `5`
+- `IAL2`: `19`
 - `VerificationOutput`: `2`
-- singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `ParameterValueSupport.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
+- singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `ParameterValueSupport.pm`, `ProjectDataLocality.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
 
 Current thin-coordinator / public-surface assembler line counts:
-- [bin/fsmgen](bin/fsmgen): `1788`
+- [bin/fsmgen](bin/fsmgen): `1825`
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm): `495`
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `175`
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `125`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm): `509`
 - [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm): `178`
-- [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `2468`
+- [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `4626`
 - [perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm](perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm): `503`
 - [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm): `9773`
 - [perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm](perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm): `1158`
-- [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm): `1476`
-- [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm): `2448`
+- [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm): `1515`
+- [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm): `2522`
 - [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm): `100`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `10090`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `10133`
 - [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm): `99`
 - [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm): `591`
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12758`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `13052`
 - [perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm](perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm): `95`
 - [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm): `547`
 - [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm): `499`
 - [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `1099`
-- [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm): `36`
-- [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `308`
+- [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm): `38`
+- [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `342`
 - [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm): `62`
 - [perl/FSM/Support/SupportAccountingSection.pm](perl/FSM/Support/SupportAccountingSection.pm): `94`
 - [perl/FSM/Support/DiagnosticsSection.pm](perl/FSM/Support/DiagnosticsSection.pm): `49`
@@ -332,7 +347,7 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Support/SemanticIntrospectionContract.pm](perl/FSM/Support/SemanticIntrospectionContract.pm): `604`
 - [perl/FSM/Support/BackendValidationSection.pm](perl/FSM/Support/BackendValidationSection.pm): `30`
 - [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm): `36`
-- [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm): `221`
+- [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm): `259`
 - [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm): `30`
 - [perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm): `184`
 - [perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm): `256`
@@ -341,26 +356,26 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Support/NormalizedSemanticProtocolIntentBundleContract.pm](perl/FSM/Support/NormalizedSemanticProtocolIntentBundleContract.pm): `89`
 
 Current largest reachable files by line count:
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12758`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `10090`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `13052`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `10133`
 - [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm): `9773`
-- [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `5431`
+- [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `6558`
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3906`
-- [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `2468`
-- [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm): `2448`
+- [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `4626`
+- [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm): `2522`
 - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm): `2431`
-- [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2067`
+- [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2068`
+- [perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm](perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm): `1909`
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm): `1835`
-- [bin/fsmgen](bin/fsmgen): `1788`
+- [bin/fsmgen](bin/fsmgen): `1825`
 - [perl/FSM/Scheduler/ISF/ControlFlowEffects.pm](perl/FSM/Scheduler/ISF/ControlFlowEffects.pm): `1769`
 - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm): `1695`
 - [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](perl/FSM/Synthesis/EnableGraph/ASTSupport.pm): `1694`
+- [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm): `1515`
 - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm): `1501`
 - [perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticReportContract.pm): `1484`
-- [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm): `1476`
 - [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm): `1443`
-- [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPayloadContract.pm): `1343`
-- [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm): `1301`
+- [perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm](perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm): `1372`
 
 Interpretation:
 - line count alone is not the same thing as current architectural risk,
@@ -417,11 +432,14 @@ Interpretation:
 - [perl/FSM/Debug.pm](perl/FSM/Debug.pm)
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm)
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm)
+- [perl/FSM/ProjectDataLocality.pm](perl/FSM/ProjectDataLocality.pm)
 - [perl/FSM/SourcePathResolver.pm](perl/FSM/SourcePathResolver.pm)
 - [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 - [perl/FSM/Support/CheckDiagnostics.pm](perl/FSM/Support/CheckDiagnostics.pm)
 - [perl/FSM/Support/HDLExternalValidation.pm](perl/FSM/Support/HDLExternalValidation.pm)
 - [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm)
+- [perl/FSM/VerificationOutput/UVM/PassiveMonitorSkeleton.pm](perl/FSM/VerificationOutput/UVM/PassiveMonitorSkeleton.pm)
+- [perl/FSM/VerificationOutput/VHDL/ObservationPackageSkeleton.pm](perl/FSM/VerificationOutput/VHDL/ObservationPackageSkeleton.pm)
 
 For `.isf` inputs, [bin/fsmgen](bin/fsmgen) also conditionally requires:
 - [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
@@ -441,13 +459,15 @@ It mainly owns:
   handoff, and multi-file scheduled `.fsm` output routing
 - debug/trace routing
 - output-file writing
+- repository-local output, trace, temporary-workspace, and cache routing
+- generated verification-output target dispatch and artifact-manifest writing
 - capability-manifest JSON emission
 - check-JSON lifecycle routing
 - semantic-JSON lifecycle routing
 - external HDL validation lifecycle routing
 - user-facing summaries for composition provenance, override/block events, failure summaries, generated children, and shared-datapath metadata
 
-[bin/fsmgen](bin/fsmgen) is `1788` lines today, so it is not tiny, but most of
+[bin/fsmgen](bin/fsmgen) is `1825` lines today, so it is not tiny, but most of
 that weight is presentation/reporting and `.ppif` / `.isf` pre-lowering glue
 rather than semantic compiler ownership.
 
@@ -465,14 +485,29 @@ bin/fsmgen
      -> FSM::Adapter::IAL2::PPIF
      -> FSM::IAL2::ProtocolIntent::ValidReadyChannel
      -> FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus
+     -> FSM::IAL2::ProtocolIntent::AxiAwDriver / AxiWDriver / AxiWBurst4Driver
+     -> FSM::IAL2::ProtocolIntent::AxiArDriver / AxiRBeatAcceptor
+     -> FSM::IAL2::ProtocolIntent::AxiBResponseAcceptor
+     -> FSM::IAL2::ProtocolIntent::Axi*Composition owners
      -> FSM::IAL2::ProtocolIntent::ApbRequesterTransfer
      -> FSM::IAL2::ProtocolIntent::ApbCompleter
      -> FSM::IAL2::ProtocolIntent::ApbComposition
+     -> FSM::IAL2::ProtocolIntent::AhbRequester
+     -> FSM::IAL2::ProtocolIntent::AhbSubordinate
+     -> FSM::IAL2::ProtocolIntent::AhbInterconnect
      -> FSM::Adapter::ISF
      -> FSM::Scheduler::ISF
   -> generated .isf review artifact(s)
   -> generated .fsm review artifact(s), including bundle wrapper/top entries
   -> Direct-root spine below, unless --emit-schedule-json exits earlier
+
+Verification-output spine
+bin/fsmgen
+  -> FSM::Adapter::ISF
+  -> FSM::Scheduler::ISF
+  -> FSM::VerificationOutput::UVM::PassiveMonitorSkeleton, or
+     FSM::VerificationOutput::VHDL::ObservationPackageSkeleton
+  -> repository-local artifact tree plus artifact manifest
 
 ISF pre-spine
 bin/fsmgen
@@ -579,6 +614,7 @@ Important distinction:
 ### CLI and source routing
 - [bin/fsmgen](bin/fsmgen)
 - [perl/FSM/Debug.pm](perl/FSM/Debug.pm)
+- [perl/FSM/ProjectDataLocality.pm](perl/FSM/ProjectDataLocality.pm)
 - [perl/FSM/SourcePathResolver.pm](perl/FSM/SourcePathResolver.pm)
 - [perl/FSM/SourceClassifier.pm](perl/FSM/SourceClassifier.pm)
 
@@ -586,9 +622,23 @@ Important distinction:
 - [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm)
 - [perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm](perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm)
 - [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiAwDriver.pm](perl/FSM/IAL2/ProtocolIntent/AxiAwDriver.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiWDriver.pm](perl/FSM/IAL2/ProtocolIntent/AxiWDriver.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiWBurst4Driver.pm](perl/FSM/IAL2/ProtocolIntent/AxiWBurst4Driver.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiBResponseAcceptor.pm](perl/FSM/IAL2/ProtocolIntent/AxiBResponseAcceptor.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiWriteRequestComposition.pm](perl/FSM/IAL2/ProtocolIntent/AxiWriteRequestComposition.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiWriteBurst4RequestComposition.pm](perl/FSM/IAL2/ProtocolIntent/AxiWriteBurst4RequestComposition.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiWriteTransactionComposition.pm](perl/FSM/IAL2/ProtocolIntent/AxiWriteTransactionComposition.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiArDriver.pm](perl/FSM/IAL2/ProtocolIntent/AxiArDriver.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiRBeatAcceptor.pm](perl/FSM/IAL2/ProtocolIntent/AxiRBeatAcceptor.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiReadTransactionComposition.pm](perl/FSM/IAL2/ProtocolIntent/AxiReadTransactionComposition.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AxiReadBurst4TransactionComposition.pm](perl/FSM/IAL2/ProtocolIntent/AxiReadBurst4TransactionComposition.pm)
 - [perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm](perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm)
 - [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm)
 - [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm](perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm](perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm)
+- [perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm](perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm)
 - [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
 - [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
 - [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm)
@@ -617,9 +667,11 @@ create a second HDL backend path.
 - [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm)
 - [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm)
 - [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm)
+- [perl/FSM/Support/VerificationOutputsSection.pm](perl/FSM/Support/VerificationOutputsSection.pm)
 - [perl/FSM/Support/EmbeddingContract.pm](perl/FSM/Support/EmbeddingContract.pm)
 - [perl/FSM/Support/DiagnosticsContract.pm](perl/FSM/Support/DiagnosticsContract.pm)
 - [perl/FSM/Support/DocumentationContract.pm](perl/FSM/Support/DocumentationContract.pm)
+- [perl/FSM/Support/DocumentationHints.pm](perl/FSM/Support/DocumentationHints.pm)
 - [perl/FSM/Support/LanguageSurfaceContract.pm](perl/FSM/Support/LanguageSurfaceContract.pm)
 - [perl/FSM/Support/ProducerContract.pm](perl/FSM/Support/ProducerContract.pm)
 - [perl/FSM/Support/SemanticExportsContract.pm](perl/FSM/Support/SemanticExportsContract.pm)
@@ -631,6 +683,7 @@ create a second HDL backend path.
 - [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
 - [perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm)
 - [perl/FSM/Support/ExtensionContract.pm](perl/FSM/Support/ExtensionContract.pm)
+- [perl/FSM/Support/ISFResourceCatalog.pm](perl/FSM/Support/ISFResourceCatalog.pm)
 - [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm)
 - [perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm)
 - [perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm)
@@ -661,6 +714,7 @@ create a second HDL backend path.
 - [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
 - [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
 - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
+- [perl/FSM/Support/VerificationOutputsContract.pm](perl/FSM/Support/VerificationOutputsContract.pm)
 
 This layer owns the first machine-readable downstream-tool support surface.
 The CLI now reaches it through one thin top-level manifest assembler plus
@@ -677,6 +731,15 @@ contract, and JSON-safe serializable plan/report snapshots, so downstream
 tools get machine-readable success/failure diagnostics, a sanitized semantic
 projection, and explicit embedding boundaries without depending on private
 pipeline objects.
+
+### Generated verification outputs
+- [perl/FSM/VerificationOutput/UVM/PassiveMonitorSkeleton.pm](perl/FSM/VerificationOutput/UVM/PassiveMonitorSkeleton.pm)
+- [perl/FSM/VerificationOutput/VHDL/ObservationPackageSkeleton.pm](perl/FSM/VerificationOutput/VHDL/ObservationPackageSkeleton.pm)
+
+These owners emit the bounded inert UVM passive-monitor and VHDL observation
+package skeleton targets selected by the CLI. They consume ISF observation
+metadata and write repository-local artifact trees plus manifests; they do not
+claim UVM compilation, VHDL compilation, PSL, or simulation support.
 
 ### Main orchestration hub
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm)
@@ -827,6 +890,7 @@ It is one of the cleaner parts of the tree.
 - [perl/FSM/Composition/ParameterOverrideResolver.pm](perl/FSM/Composition/ParameterOverrideResolver.pm)
 - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm)
 - [perl/FSM/Composition/InterfacePortBuilder.pm](perl/FSM/Composition/InterfacePortBuilder.pm)
+- [perl/FSM/Composition/ISFEventCDCModuleEmitter.pm](perl/FSM/Composition/ISFEventCDCModuleEmitter.pm)
 - [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](perl/FSM/Composition/SharedDatapathCandidateBuilder.pm)
 - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm)
 - [perl/FSM/Composition/SharedDatapathSupport.pm](perl/FSM/Composition/SharedDatapathSupport.pm)

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `bootstrap architecture maintenance`
 - Created: `2026-07-29`
 - Last updated: `2026-07-30`
@@ -33,16 +33,16 @@ snapshot stale.
 ## Task Tree
 
 - ID: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`
-  Status: `active`
+  Status: `done`
   Goal: `Refresh the live bin/fsmgen import-tree architecture note.`
   Children: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1`
 
 - ID: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1`
-  Status: `active`
+  Status: `done`
   Goal: `Re-measure and synchronize the import-tree note.`
   Acceptance: `Module::ScanDeps results, family counts, selected line counts, and prose agree with the live closure; no runtime behavior changes.`
-  Verification: `Activated only after clean parent selector commit 23a987e06. This continuity leaf changes no import-tree note/fact, runtime package, parser, generator, public source, support accounting, artifact, API, HDL/runtime, backend, protocol, HIAL/VIAL, portability, scale, or decision-0020 behavior; the stale 213-file / 212-package / 5-IAL2 note and canonical fact remain untouched. Focused verification passed 329 tests across 5 files (t/1256, t/1303, t/1305, t/1332, and t/1414); Knowledge Map generation/check passed at 1,064 facts / 5,477 question keys; mdBook built 72 files / 16,545,847 bytes and book/build was removed; .artifacts/tmp/tests is empty; MEMORY.md is 47 lines and README.md is 2,353 lines; diff hygiene and all six doctrine checks pass. The closeout RAM sample was 18,200,133,632 / 25,769,803,776 bytes (16.950 / 24.000 GiB, 70.63%) by the canonical macOS accounting formula, with kernel pressure level 1 and memory_pressure reporting 75% free; the guard's host reading is excluded from capacity truth. No background job remains.`
-  Commit: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1: activate import map refresh`
+  Verification: `Activated only after clean continuity commit 8b1c22731. Module::ScanDeps reports 228 project files / 227 packages / 19 IAL2 owners; a set comparison proves all 227 live packages are linked from the maintained note and no linked package is outside the closure. Refreshed family counts, selected line counts, runtime spines, direct CLI ownership, the newer AXI/AHB protocol-intent owners, repository-local project-data routing, verification-output surfaces, and hotspot prose without changing runtime behavior. perl -Iperl -c bin/fsmgen passes. Focused verification passes 329 tests across t/1256, t/1303, t/1305, t/1332, and t/1414. Knowledge Map generation/check passes at 1,064 facts / 5,477 question keys. The mdBook builds successfully and generated docs/book/book is removed. Diff hygiene and doctrine checks pass; no background job remains.`
+  Commit: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1: refresh live import map`
 
 ## Decisions
 
@@ -50,8 +50,11 @@ snapshot stale.
   `226` packages, including `19` under `FSM/IAL2`, while the maintained note
   still says `213` / `212` and `IAL2: 5`. The mismatch is pre-existing and is
   routed here rather than mixed into the same-volume policy adoption.
+- `2026-07-30`: The clean activated closure measures `228` project files / `227`
+  packages / `19` IAL2 owners. The added reachable singleton is
+  `FSM::ProjectDataLocality`; the maintained note now links every live package
+  exactly and carries no stale package link.
 
 ## Blockers
 
-- Active only after clean selector commit `23a987e06`; remeasure and repair the
-  architecture note without changing runtime behavior.
+- None.

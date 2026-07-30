@@ -5,11 +5,16 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1: activate import map refresh`).
-- active_work_unit: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` (continuity-only activation).
-- current_state: clean selector commit `23a987e06` selects the no-behavior import-tree refresh. `.1` is active continuity-only; the stale 213 / 212 / 5 note/fact remain unchanged until this activation commits cleanly.
-- next_action: remeasure the live closure and synchronize `docs/BIN_FSMGEN_IMPORT_TREE.md`, its canonical fact, and permitted live/user docs without changing runtime behavior.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1: refresh live import map`).
+- active_work_unit: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` (complete).
+- current_state: the import-tree note and canonical fact match the exact live
+  `bin/fsmgen` closure: 228 total modules, 227 `.pm` modules, and 19 IAL2
+  modules. Every live package has one linked note entry; runtime is unchanged.
+- next_action: create and cleanly activate the smallest exact task-tree owner
+  for the director-requested nearly-static GitHub README reduction and a small,
+  project-neutral, git-tracked README growth-control standard; do not edit
+  `README.md` before that owner exists.
+- in_flight_uncommitted: none after this refresh commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -26,8 +31,12 @@ bounded current-state pointer. Git preserves its prior history.
   per-count public fixture. Completed `.830` selected the protocol-neutral
   named-drive priority child, now complete through `.3`; decision `0020` stays
   separate.
-- Remaining startup-alignment owner `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1`
-  is selected by `.835`; the mdBook VHDL and frozen-workflow repairs are done.
+- Startup alignment through `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` is done;
+  the import-tree note/fact now cover the exact 228 / 227 / 19 live closure.
+- Director direction (`2026-07-30`): make `README.md` a concise, nearly static
+  GitHub landing page, derive dynamic detail from existing canonical files,
+  and add a small project-neutral tracked standard that other repositories can
+  adopt to prevent README growth.
 - Proposed `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` now durably owns the
   director's peer hardware/verification intent requirement, typed bridge,
   portable fixture semantics, native SV/UVM and VHDL extension model, backend

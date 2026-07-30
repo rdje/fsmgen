@@ -8,22 +8,22 @@ answers:
   - "does bin/fsmgen reach semantic-introspection support?"
   - "does bin/fsmgen reach the AXI manager PPIF implementation?"
   - "does bin/fsmgen reach the APB PPIF implementation?"
-date: 2026-06-28
+date: 2026-07-30
 status: current
 tags: [bootstrap, architecture, import-tree, bin-fsmgen, semantic-introspection, ial2, ppif]
-evidence: docs/BIN_FSMGEN_IMPORT_TREE.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN28-REFRESH.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/IAL2_APB_GENERALIZED_MULTI_PERIPHERAL_MULTI_REGISTER_BACK_TO_BACK_BEHAVIOR.md; docs/IAL2_POST_APB_BUSY_OUTPUT_NEXT_SLICE_SELECTION.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN23-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN22-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN16-REFRESH.md
-reverify: perl -Iperl -MModule::ScanDeps=scan_deps -E 'my $d=scan_deps(files=>["bin/fsmgen"], recurse=>1); my @pm=grep { /(?:^|\/)FSM\// && /\.pm\z/ } keys %$d; say "total=".(scalar(@pm)+1); say "pm=".scalar(@pm); say join("\n", sort grep { /(?:Adapter\/IAL2|IAL2\/ProtocolIntent|Support\/LanguageSurfaceSection|Support\/RegressionCorpus)/ } @pm);'
+evidence: docs/BIN_FSMGEN_IMPORT_TREE.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; bin/fsmgen; perl/FSM/ProjectDataLocality.pm; perl/FSM/Adapter/IAL2/PPIF.pm; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN28-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN23-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN22-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN16-REFRESH.md
+reverify: perl -Iperl -MModule::ScanDeps=scan_deps -E 'my $d=scan_deps(files=>["bin/fsmgen"], recurse=>1); my @pm=grep { /(?:^|\/)FSM\/.*\.pm\z/ } keys %$d; say "total=".(scalar(@pm)+1); say "pm=".scalar(@pm); say "ial2=".scalar(grep { /(?:^|\/)FSM\/IAL2\// } @pm);'
 ---
 
 `docs/BIN_FSMGEN_IMPORT_TREE.md` is the canonical live maintainer-facing
 architecture note for the `bin/fsmgen` runtime spine.
 
-As of the 2026-06-28 refresh, the static project-owned closure still reaches
-`213` project files total: `212` `FSM::...` `.pm` packages plus `bin/fsmgen`.
-The closure includes the `.isf` front door, the `.ppif`/IAL2 front door, the
-AXI manager capacity/status PPIF implementation, the APB requester-transfer,
-completer, fixed-composition, and bounded generalized register-set
-PPIF/profile-alias implementations, bounded VHDL owners, and the first-class
-semantic-introspection manifest support surface. The June 28 refresh updated
-stale line-count measurements only; no new project-owned reachability edge was
-found.
+As of the 2026-07-30 refresh, the static project-owned closure reaches `228`
+project files total: `227` `FSM::...` `.pm` packages plus `bin/fsmgen`, with
+`19` packages under `FSM/IAL2`. The closure includes the `.isf` front door; the
+`.ppif`/profile-alias IAL2 front door; the Valid-Ready, AXI manager plus bounded
+AXI initiator, APB, and AHB protocol-intent owners; bounded direct/composition
+VHDL owners; semantic-introspection and verification-output support; and the
+repository-local project-data owner. The canonical maintainer note records the
+complete reachable package inventory, measured family counts, selected line
+counts, runtime spines, and current hotspots.
