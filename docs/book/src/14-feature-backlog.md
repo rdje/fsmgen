@@ -11612,6 +11612,16 @@ Clean selector commit `a2750d8a6` activates only audit `.1`. This is a
 continuity change: literal `2..4`, accounting 332/373/56 split 28/28, generated
 HDL/runtime, reports, and all broader owners remain unchanged while the audit
 chooses a finite range and verification contract.
+Audit `.1` now selects proposed no-behavior contract `.2` for canonical literal
+`busy-beats` values `2..16`. A same-volume patched-copy probe passes 46
+structural/report/read-only-MCP/diagnostic assertions and seven all-assertion
+count-5/8/16 runs, including 32-clock ready/grant stalls at the first and
+maximum new boundaries. Counts 5/8/16 use widths 3/4/5, complete four data
+beats, resume one `SEQ`, and finish at zero. The AHB protocol supplies no
+numeric BUSY cap; FSMGen selects 16 to match its bounded `max_beats=16` profile.
+See the [readiness audit](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_READINESS_AUDIT.md).
+Current literal `2..4`, existing source bytes, and 332/373/56 split 28/28 stay
+unchanged until a later contract and implementation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

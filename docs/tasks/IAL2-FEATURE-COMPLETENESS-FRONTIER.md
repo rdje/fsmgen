@@ -5893,6 +5893,10 @@ fixture growth. All broader owners remain separate and behavior stays at
 Clean selector commit `a2750d8a6` activates only the selected audit `.1` with
 continuity changes; current literal `2..4` and 332/373/56 split 28/28 behavior
 remain unchanged during activation.
+Completed generalized-count audit `.1` now selects proposed no-behavior
+contract `.2` for future canonical literal `2..16` after structural/report/
+read-only-MCP/diagnostic and all-assertion 5/8/16 proof. Current public behavior
+remains `2..4` at 332/373/56 split 28/28 until separate implementation.
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25

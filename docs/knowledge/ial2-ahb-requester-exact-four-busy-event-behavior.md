@@ -44,4 +44,8 @@ profile pair with shared assertion-enabled runtime and focused alias parity.
 Parent selector `.829` now selects proposed generalized literal requester
 BUSY-count readiness `.1`. It must prove one finite reusable public range above
 four; an exact-five-only fixture is not selected. The current `2..4` behavior
-and 332/373/56 split 28/28 project boundary remain unchanged during selection.
+and 332/373/56 split 28/28 project-wide boundary remain unchanged during selection.
+
+Completed generalized-count audit `.1` selects proposed contract `.2` for
+future literal `2..16`; exact-four behavior remains unchanged until a separate
+implementation ships.

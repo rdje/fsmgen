@@ -2499,6 +2499,16 @@ remain separate.
 Clean selector commit `a2750d8a6` activates only generalized-count audit `.1`.
 The public literal `2..4` contract, generated behavior, and 332/373/56 split
 28/28 accounting remain unchanged during the audit.
+Completed audit `.1` selects proposed contract `.2` for a future canonical
+literal `2..16` range. A 46-assertion structural/report/read-only-MCP/
+diagnostic probe plus seven all-assertion count-5/8/16 runs prove widths 3/4/5,
+exact qualified retirement, 32-clock ready/grant stalls at 5 and 16, stable
+pending state, one resumed `SEQ`, four data beats, and zero final count. The
+AHB protocol sets no numeric BUSY cap; FSMGen's selected 16 is the bounded
+`max_beats=16` profile limit. See the
+[readiness audit](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_READINESS_AUDIT.md).
+Current shipping remains literal `2..4` at 332/373/56 split 28/28 until later
+contract and implementation commits.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

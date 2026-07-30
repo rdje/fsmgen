@@ -125,3 +125,8 @@ exact-one-through-four behavior and 332/373/56 accounting remain unchanged.
 Clean selector commit `a2750d8a6` activates only the selected audit `.1`.
 Activation changes continuity pointers and no public or generated behavior;
 literal `2..4` and 332/373/56 split 28/28 remain current.
+
+Completed audit `.1` selects proposed contract `.2` for future canonical
+literal `2..16` behavior after 46 structural/report/MCP/diagnostic assertions
+and seven all-assertion count-5/8/16 runtime scenarios. Current `2..4` and
+332/373/56 split 28/28 remain unchanged until later implementation.

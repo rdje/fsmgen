@@ -7897,6 +7897,21 @@ simulator, backend, protocol, HIAL/VIAL, VHDL, verification-generation,
 portability, scale, decision-0020, or transaction behavior. Current
 332/373/56 split 28/28 and literal `2..4` behavior remain authoritative while
 the audit chooses the finite range and proof boundary.
+Audit `.1` selects proposed no-behavior contract `.2` for canonical literal
+`busy-beats` values `2..16`, with absence exact-one. The repo-local Arm AHB
+specification constrains BUSY placement/termination but sets no numeric count
+maximum; 16 is FSMGen's bounded-profile limit aligned with requester
+`max_beats=16` and its five-bit local length/status class. A 46-assertion
+structural/report/real read-only MCP/diagnostic probe passes for 5/8/16 and
+0/1/17/32/symbolic boundaries. Generated all-assertion Verilator 5.046 runtime
+passes seven 5/8/16 continuous and required 32-clock ready/grant-stall runs
+with exact qualified events, widths 3/4/5, stable pending state, one resumed
+`SEQ`, four data beats, and zero final count. The exact 92-file/7,016,808-byte
+workspace is removed without residue. Contract `.2` must freeze range,
+diagnostics, unified numeric residue, future t1541/generic harness,
+preservation, unchanged source bytes, and unchanged 332/373/56 split 28/28
+before separate implementation. Current shipping remains literal `2..4`.
+See `docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_READINESS_AUDIT.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

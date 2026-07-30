@@ -45,3 +45,7 @@ separate. Selection changes no behavior; 332/373/56 split 28/28 remains current.
 Clean selector commit `a2750d8a6` activates only generalized-count audit `.1`.
 Activation is continuity-only; literal `2..4` and current accounting remain
 unchanged while the audit determines the finite range and proof contract.
+
+Completed audit `.1` selects proposed no-behavior contract `.2` for future
+canonical literal `2..16`. Current `2..4` and 332/373/56 split 28/28 remain
+unchanged until later implementation.

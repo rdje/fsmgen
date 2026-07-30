@@ -147,3 +147,8 @@ BUSY-count readiness `.1`. The selected audit must choose and prove one finite
 range above four rather than add an exact-five-only fixture. Until a separate
 contract and implementation ship, the public `2..4` boundary and all behavior
 in this record remain unchanged.
+
+Completed generalized-count audit `.1` selects proposed contract `.2` for a
+future canonical literal `2..16` range after width-transition and assertion-
+enabled runtime proof. This exact-four behavior remains unchanged and current
+until that contract and a separate implementation commit.

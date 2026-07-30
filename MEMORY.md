@@ -5,10 +5,10 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: clean `.829` selector commit `a2750d8a6`.
-- active_work_unit: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.1`.
-- current_state: `.1` is active as a no-behavior range/readiness audit at unchanged 332/373/56 split 28/28.
-- next_action: compare finite maxima and width-transition/runtime gates, then select one exact contract, prerequisite, narrower increment, or deferral.
+- latest_commit: this generalized-count `.1` audit commit; activation predecessor `9ff1e6ba0`.
+- active_work_unit: none after clean `.1` audit closeout.
+- current_state: `.1` proves literal 2..16 readiness and selects proposed no-behavior contract `.2`; current shipping stays 2..4 and 332/373/56 split 28/28.
+- next_action: activate only `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.2` from the clean audit commit.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -46,8 +46,8 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. Active generalized-count audit
-  `.1` keeps HIAL/VIAL proposed and independently gated.
+  mixed-language claims qualified separately. Completed generalized-count
+  audit `.1` keeps HIAL/VIAL proposed while selecting bounded contract `.2`.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc
