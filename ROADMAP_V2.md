@@ -8242,6 +8242,14 @@ Clean four-fence completion commit `59fcaa99e` activates parent selector `.838`
 continuity-only. It selects no candidate during activation; the scheduled
 four-document lifecycle review and every explicit director gate remain
 inactive, and both legacy status files stay untouched.
+Completed `.838` selects proposed
+`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1`. Current HEAD's public
+APB multi-peripheral composition emits `apb_interconnect interconnect (` and
+fails Verilator on the reserved instance token, while AHB already uses local
+`fabric`. The selected no-behavior audit will inventory all producers and
+target languages after a separate clean activation. The scheduled lifecycle
+review and every director gate remain inactive. See
+`docs/IAL2_POST_RUSTDOC_NEXT_OWNER_SELECTION.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

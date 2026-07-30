@@ -11915,6 +11915,14 @@ Clean four-fence completion commit `59fcaa99e` activates parent selector `.838`
 continuity-only. No candidate is selected during activation; the scheduled
 four-document lifecycle review and every director-gated direction stay
 inactive.
+Completed `.838` selects proposed
+[protocol-composition instance-identifier audit `.1`](../../tasks/PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.md).
+Current HEAD's public APB multi-peripheral composition emits
+`apb_interconnect interconnect (` and Verilator rejects the reserved instance
+token, while AHB already carries a local `fabric` avoidance. The child will
+inventory all producers/targets and select a shared contract after a separate
+clean activation; the lifecycle review and every director gate stay inactive.
+See the [selection record](../../IAL2_POST_RUSTDOC_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

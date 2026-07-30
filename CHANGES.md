@@ -30735,3 +30735,23 @@ task tree and git.
   5,507 keys; mdBook HTML build and diff hygiene pass. No product, test,
   lifecycle-policy, prose, or example behavior changes, and no development-
   note entry is warranted.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.838 — HDL instance-identifier audit selected
+
+- Reproduced the current public APB defect on clean activation commit
+  `070d6ba2d`: strict HDL verification emits `apb_interconnect interconnect (`
+  and Verilator fails at generated line 3134 with `unexpected interconnect`.
+  The exact repository-local output was removed.
+- Source inspection proves APB still seeds `interconnect`, AHB locally seeds
+  legal `fabric`, and both uniqueness helpers only avoid declared-name
+  collisions. Selected only proposed
+  `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` to inventory all
+  producers/targets and choose a shared contract without behavior changes.
+- The child remains unchanged until separate clean activation. The scheduled
+  four-document lifecycle review and every director gate remain inactive; both
+  legacy status files stay untouched, and no development-note entry is warranted.
+- Feature-backlog status, live-book-path, and relative-path audits pass with
+  `Files=3, Tests=40`; Knowledge Map generation/check passes at 1,071 facts /
+  5,513 keys; mdBook HTML-build and diff-hygiene gates pass. No source, test,
+  artifact, API, HDL/runtime, product, lifecycle-policy, prose, or example
+  behavior changes.

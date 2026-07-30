@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.838: activate post rustdoc selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.838` (continuity-only activation).
-- current_state: the four-fence repair is clean and complete; `.838` owns one
-  new roadmap selection without selecting or activating a candidate yet.
-- next_action: reconcile the current-HEAD eligible candidate set and select
-  exactly one smallest owner, preserving lifecycle-review/director gates.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.838: select HDL instance-identifier audit`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.838` (selector complete).
+- current_state: `.838` selects proposed instance-identifier audit `.1` after
+  reproducing APB's generated `interconnect` SystemVerilog keyword failure.
+- next_action: after this selector commits cleanly, activate only the selected
+  audit and inventory/probe all composition name producers without behavior change.
+- in_flight_uncommitted: none after this selector commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
