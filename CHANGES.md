@@ -31065,3 +31065,18 @@ task tree and git.
   5,553 keys, memory, diff, and all seven doctrine gates pass. Scratch is
   removed, both frozen status files remain untouched, and the contract record
   is the rationale owner instead of a duplicate development note.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.4 — private SourceHIR implementation activated
+
+- Activated only the contract-selected private implementation leaf after clean
+  v1-contract commit `3244f8817`.
+- Task/index, architecture/contract/facts, roadmap, mdBook backlog, Memory, and
+  changelog continuity are aligned. The three packages, t1547, parser, fixture,
+  artifacts, config, CLI/API/report/accounting, HDL/runtime, and behavior remain
+  unchanged until this activation commits cleanly.
+- Public builder, HIAL/VIAL, scale, MCP-write, and director-gated owners remain
+  inactive; both frozen status files stay untouched and no separate
+  development note is warranted for continuity-only activation.
+- Documentation audits pass with `Files=3, Tests=40`; Knowledge Map passes at
+  1,077 facts / 5,553 keys; memory architecture, the 72-file mdBook build,
+  output cleanup, diff hygiene, and all seven doctrine gates pass.

@@ -963,7 +963,8 @@ Source-facing HIR roadmap phase:
   promise, or concrete-FSM-to-IAL1 route is selected yet. Design-only leaf
   `.3` freezes the exact closed private version-1 object, package APIs,
   provenance/diagnostics, renderer/source-map, focused t1547 owner, and
-  14-line/428-byte golden hash. Implementation remains proposed under `.4`.
+  14-line/428-byte golden hash. Leaf `.4` is active continuity-only for that
+  private implementation and changes no behavior during activation.
 
 Advanced synthesizable targets worth considering later, not rejecting upfront:
 - macro/preprocessor-heavy RTL after preprocessing with provenance retained,

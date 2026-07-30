@@ -79,11 +79,11 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.3: freeze SourceHIR v1 contract`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the private valid-ready SourceHIR golden path.`
   Acceptance: `Implement only the policy-selected SourceHIR, SourceHIRBuilder, and SourceHIRPPIFRenderer private package family after .3 is done. Prove construction/rejection, immutability, deterministic byte-identical rendering of ppif/valid_ready_handshake.ppif, provenance diagnostics, PPIF reparse, and unchanged generated IAL1/IAL0 semantics. Add no public frontend, CLI mode, report key, manifest field, or support-accounting entry.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated continuity-only after clean v1-contract commit 3244f8817. Activation changes only task/index, architecture/contract/fact continuity, roadmap, mdBook backlog, Memory, and changelog. The three private packages, t/1547, parser, fixture, generated artifacts, config, CLI/API/report/accounting, HDL/runtime, and behavior remain unchanged until this activation commits cleanly. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1077 facts / 5553 question keys; memory architecture passes with MEMORY.md at 47 lines; the 72-file mdBook HTML build passes and its exact repository-local output is removed; diff hygiene and all seven doctrine gates pass.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.4: activate private SourceHIR implementation`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.5`
   Status: `proposed`
@@ -94,15 +94,15 @@ and future IAL evolution.
 
 ## Current Frontier
 
-Leaf `.3` freezes the exact private version-1 contract without implementation.
-Leaf `.4` remains proposed until a separate clean activation commit.
+Clean v1-contract commit `3244f8817` activates `.4` continuity-only. The leaf
+must implement only the selected private packages and focused proof.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `done` | Captured the roadmap phase and activation criteria without behavior changes. |
 | 2 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `done` | Selected a distinct private SourceHIR, internal Perl builder, canonical PPIF handoff, and valid-ready golden. |
 | 3 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `done` | Froze the exact closed object, APIs, provenance/diagnostics, renderer/source-map, test, and golden oracle. |
-| 4 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `proposed` | Implement and prove the private valid-ready golden path. |
+| 4 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `active` | Implement and prove the private valid-ready golden path. |
 | 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `proposed` | Audit promotion, continued private iteration, or retirement from evidence. |
 
 ## Decisions
@@ -153,6 +153,9 @@ Leaf `.4` remains proposed until a separate clean activation commit.
   immutable access, deterministic canonical rendering, structured private
   diagnostics, JSON-Pointer provenance, current-adapter no-line fallback, and
   `t/1547` implementation ownership.
+- `2026-07-30`: Clean v1-contract commit `3244f8817` activates `.4`
+  continuity-only. Implementation remains unchanged until the activation
+  commits cleanly.
 
 ## Open Questions
 
@@ -161,8 +164,7 @@ Leaf `.4` remains proposed until a separate clean activation commit.
 
 ## Blockers
 
-- None. `.3` is complete; `.4` remains proposed until a separate clean
-  activation commit.
+- None. `.4` is active continuity-only after clean commit `3244f8817`.
 
 ## Verification Log
 
@@ -172,6 +174,7 @@ Leaf `.4` remains proposed until a separate clean activation commit.
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | public PPIF strict check + schedule JSON; `prove -Iperl t/155-forward-intent-hir-surface.t t/156-forward-lowered-rtl-ir-surface.t t/163-forward-structural-rtl-ir-surface.t t/334-normalized-semantic-forward-ir-contract.t t/339-normalized-semantic-intent-hir-contract.t t/1435-axi-ial2-valid-ready-generator.t`; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; diff hygiene; `scripts/check_doctrines.sh` | `passed`; no implementation or behavior change |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.3` activation | documentation audits; Knowledge Map; memory architecture; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; continuity-only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.3` contract | fixture line/byte/SHA oracle; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; exact private contract only |
+| `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.4` activation | documentation audits; Knowledge Map; memory architecture; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; continuity-only |
 
 ## Commit Log
 
@@ -184,6 +187,7 @@ Leaf `.4` remains proposed until a separate clean activation commit.
 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `FSMGEN-HIR-ROADMAP-FRONTIER.3: activate SourceHIR v1 contract` | Continuity-only activation after the clean architecture selection. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `FSMGEN-HIR-ROADMAP-FRONTIER.3: freeze SourceHIR v1 contract` | Freezes the exact private contract and test oracle without implementation. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `pending` | Proposed private implementation leaf. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `FSMGEN-HIR-ROADMAP-FRONTIER.4: activate private SourceHIR implementation` | Continuity-only activation after the clean v1 contract. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `pending` | Proposed evidence-based promotion/retirement audit. |
 
 ## Changelog
@@ -199,3 +203,5 @@ Leaf `.4` remains proposed until a separate clean activation commit.
   selection; exact contract and implementation remain unchanged.
 - `2026-07-30`: Froze the exact private v1 object/API/provenance/diagnostic/
   renderer/test contract and golden hash without implementation.
+- `2026-07-30`: Activated `.4` continuity-only after the clean v1 contract;
+  implementation and behavior remain unchanged.

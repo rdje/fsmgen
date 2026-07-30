@@ -8,6 +8,9 @@ Status: selected; version-1 private contract selected; implementation not starte
 field, package API, provenance, diagnostic, renderer-result, source-map, test,
 and golden-equivalence contract selected by `.3`.
 
+Clean contract commit `3244f8817` activates `.4` continuity-only for the
+private implementation; activation itself adds no packages or behavior.
+
 ## Outcome
 
 FSMGen will add a distinct, private, pre-IAL semantic-intent layer named

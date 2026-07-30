@@ -2,7 +2,10 @@
 
 Date: 2026-07-30
 Owner: `FSMGEN-HIR-ROADMAP-FRONTIER.3`
-Status: selected; implementation remains proposed under `.4`
+Status: selected; implementation active continuity-only under `.4`
+
+Clean contract commit `3244f8817` activates `.4`; no implementation exists
+until that separate activation commits cleanly.
 
 ## Scope
 

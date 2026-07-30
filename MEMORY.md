@@ -5,14 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.3: freeze SourceHIR v1 contract`).
-- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.4` (proposed; not active).
-- current_state: `.3` freezes the exact closed private v1 object, APIs,
-  provenance/diagnostics, renderer/source map, t1547 owner, and golden oracle;
-  no implementation or public behavior changed.
-- next_action: after this contract commit is clean, activate `.4` separately
-  for only the three private packages and focused golden proof.
-- in_flight_uncommitted: none after this contract commit; no background job.
+- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.4: activate private SourceHIR implementation`).
+- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.4`
+  (continuity-only activation).
+- current_state: clean v1-contract commit `3244f8817` activates `.4` without
+  adding packages, t1547, API/report/accounting, or behavior.
+- next_action: after this activation commits cleanly, implement only the three
+  private packages and focused valid-ready golden proof.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -39,7 +39,7 @@ history; this file carries only the current bounded resume state.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
 - Decision `0028`, the architecture record, and the v1 contract are canonical.
-  `.4` remains proposed; the public host-language builder, HIAL/VIAL, scale,
+  `.4` is active continuity-only; the public host-language builder, HIAL/VIAL, scale,
   MCP-write, and every director-gated owner remain inactive.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.

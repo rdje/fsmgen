@@ -29,6 +29,6 @@ source-location fallback.
 The first oracle is byte equality with `ppif/valid_ready_handshake.ppif`:
 14 lines, 428 bytes, SHA-256
 `6cbc68152c9e1658a341994bc2ccdd83bdb94b26aedd20d4180c996b5124f7ac`.
-Proposed implementation leaf `.4` owns the three packages and focused
-`t/1547-source-hir-valid-ready.t`; no public API/report/accounting surface is
-selected.
+Active implementation leaf `.4` owns the three packages and focused
+`t/1547-source-hir-valid-ready.t` after clean contract commit `3244f8817`; no
+public API/report/accounting surface is selected.
