@@ -152,6 +152,9 @@ selector.
   architecture. HIAL/VIAL remains proposed with every topology, bridge,
   semantics, backend, qualification, parity, migration, and scale requirement
   unchanged.
+- `2026-07-30`: Parent selector `.833` selects the smaller mdBook VHDL
+  introduction/backend-summary truth repair after assertion precedence ships.
+  HIAL/VIAL remains proposed with its complete architecture contract unchanged.
 
 ## Open Questions
 

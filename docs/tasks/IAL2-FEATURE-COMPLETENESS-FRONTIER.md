@@ -5896,19 +5896,21 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.832: select assertion precedence audit`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.833`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact roadmap-aligned owner after nested-bitwise concurrent-assertion precedence repair ships.`
   Acceptance: `Activate only after clean ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2 behavior commit 80aa203ab. Reconcile grouped concurrent-check intermediate substitution; direct/temporal property coverage; unchanged AXI fixed-four admission; t1507 negative/positive 5/17/5/17/4 behavior and all-assertion legal-0x00000004 1/4/1/4/1 proof; unchanged public/report/semantic/MCP/support surfaces; AHB requester 2..16 and 332/373/56 split 28/28; direct-VHDL reduction behavior and compiler boundary; HIAL/VIAL, scale, simulator profiles, startup alignment, known defects, other protocols/backends, roadmap, mdBook, Knowledge Map, and decisions 0020/0023. Compare exactly one smallest evidence-backed next owner, freeze scope/validation/rollback, make no behavior change, and preserve repository-local storage plus host100/process4096 and canonical RAM/pressure reporting. Do not activate or modify the selected child until this selector commits cleanly.`
-  Verification: `Activated only after clean assertion-precedence behavior commit 80aa203ab. Activation changes continuity pointers only; the grouped property behavior, AXI admission/runtime, parser/lowering/backends, public/report/semantic/MCP/support surfaces, tests, HIAL/VIAL, scale, simulator profiles, startup owners, other protocols, and decisions 0020/0023 remain unchanged while selection runs. Book/status/path truth passes 4 files/46 tests. Knowledge Map generation/check passes at 1,061 facts/5,461 question keys. The mdBook renders exactly 72 files/16,521,858 bytes and its repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 49 lines, README.md is 2,347 lines, and diff hygiene passes. Activation-closeout canonical Stats-compatible capacity is 18,134,532,096/25,769,803,776 bytes = 16.889/24.000 GiB = 70.37%, with separate macOS kernel pressure level 1 and memory_pressure 75% free; guard occupancy is excluded from capacity truth. No background job remains.`
-  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.833: activate post assertion selector`
+  Verification: `Activated only after clean assertion-precedence behavior commit 80aa203ab through clean activation commit 132f9b172. Reconciled the grouped concurrent-check repair, direct/temporal property coverage, unchanged AXI fixed-four admission, t1507 exact 5/17/5/17/4 plus all-assertion 1/4/1/4/1 proof, unchanged public/report/semantic/MCP/support surfaces, AHB 2..16 and 332/373/56 split 28/28, direct-VHDL reduction behavior and decision-0023 qualification boundary, HIAL/VIAL, scale, simulator profiles, startup alignment, known defects, other protocols/backends, roadmap, mdBook, Knowledge Map, and decisions 0020/0023. Selected proposed no-behavior MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1 as the smallest exact owner because Chapter 00's blanket VHDL non-implementation claim and Chapter 10's blanket composition-rejection prose contradict Chapter 14's canonical partially shipped direct/C1/C2/APB-C4 boundary. The selected leaf aligns summaries only, preserves full-backend/GHDL/external-compiler/parity/unsupported-shape deferrals, and changes no product behavior. HIAL/VIAL, scale, frozen-workflow sync, import-tree refresh, public-test drift, other protocols/backends, and simulator profiles remain independently proposed or deferred; RAM-guard refinement, t1436, and decision 0020 retain their explicit gates. Book/status/path truth passes 5 files/329 tests. Knowledge Map generation/check passes at 1,062 facts/5,466 question keys. The mdBook renders exactly 72 files/16,526,790 bytes and its repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 49 lines, README.md is 2,349 lines, and diff hygiene passes. Final canonical Stats-compatible capacity is 18,141,708,288/25,769,803,776 bytes = 16.896/24.000 GiB = 70.40%, with separate macOS kernel pressure level 1 and memory_pressure 75% free; guard occupancy is excluded from capacity truth. No background job remains.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.833: select mdBook VHDL boundary sync`
 
 Parent selector `.832` is complete and handed off to
 `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`. That child now ships the selected
 grouping repair, corrected AXI property, expanded negative/positive behavior
 matrix, and separate assertion-enabled legal-bit-2 proof. Clean behavior commit
-`80aa203ab` activates parent selector `.833` continuity-only. No broader roadmap
-owner is implicitly activated while `.833` compares and selects exactly one
-next boundary.
+`80aa203ab` activated parent selector `.833` through clean continuity commit
+`132f9b172`. Completed `.833` selects proposed no-behavior
+`MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1` as the next exact owner. That child
+remains proposed until this selector commits cleanly; no broader roadmap owner
+or product behavior is implicitly activated.
 
 The child selected by `.826` is complete through `.3`, and parent `.828` now
 closes the matching byte-identical two-subordinate exact-four `.ahb` alias.

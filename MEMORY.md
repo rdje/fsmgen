@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.833: activate post assertion selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.833` (continuity-only selector).
-- current_state: clean behavior commit `80aa203ab` completes the assertion-precedence tree. Parent `.833` is active continuity-only; no broader roadmap owner or behavior change is active.
-- next_action: reconcile the remaining roadmap candidates from their durable facts and task trees, select exactly one smallest evidence-backed owner, and commit the selector cleanly before activating that owner.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.833: select mdBook VHDL boundary sync`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.833` (selector complete in this commit).
+- current_state: `.833` selects proposed no-behavior `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1` because Chapters 00/10 contradict Chapter 14's bounded shipped VHDL truth. The child is not active until a separate clean continuity commit.
+- next_action: after this selector commit is clean, activate only `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1`, then align the two summaries while preserving full-backend/GHDL/external-compiler deferrals.
+- in_flight_uncommitted: none after this selector commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -37,7 +37,7 @@ bounded current-state pointer. Git preserves its prior history.
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
   mixed-language claims qualified separately. HIAL/VIAL remains proposed after
-  `.832` selects the smaller shipped assertion-correctness audit.
+  `.833` selects the smaller mdBook VHDL truth repair.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   end-to-end big-design
   scalability, t/1436 failures, mdBook rustdoc fences, and guard metric repair.

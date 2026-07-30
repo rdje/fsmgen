@@ -42,3 +42,6 @@ SystemVerilog/UVM coverage.
 Clean behavior commit `80aa203ab` hands continuity to no-behavior parent
 selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.833`; no broader roadmap owner is
 implicitly active while that selector compares the remaining directions.
+Completed `.833` selects no-behavior
+`MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1`; assertion behavior remains complete
+and unchanged while that separate documentation leaf waits for activation.

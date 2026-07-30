@@ -50,7 +50,11 @@ shipped.
   support is not implemented, while Chapter 14 documents a substantial bounded
   direct/composition VHDL subset. This is a public truth-sync repair, not a
   backend feature slice.
+- `2026-07-30`: Parent selector
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.833` selects `.1` as the smallest current
+  truth-sync owner after assertion-precedence repair. The tree remains proposed
+  until the selector commits cleanly.
 
 ## Blockers
 
-- Inactive until selected from a clean tree after the current adoption closes.
+- Selected by parent `.833`; activation waits for the clean selector commit.

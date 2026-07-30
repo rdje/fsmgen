@@ -11789,6 +11789,18 @@ continuity-only. The repair and all shipped feature behavior remain unchanged
 while that selector compares the remaining roadmap directions and chooses
 exactly one next owner.
 
+Completed `.833` selects proposed no-behavior
+[mdBook VHDL introduction boundary sync](../../tasks/MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.md).
+Chapter 00's blanket VHDL non-implementation claim and Chapter 10's blanket
+composition-rejection wording contradict this chapter's canonical partially
+shipped direct/C1/C2/APB-C4 boundary. The selected leaf will align only those
+summaries while preserving full-backend, external-compiler, GHDL, broad-
+composition, aggregate/package, and parity deferrals. See the
+[selection record](../../IAL2_POST_ASSERTION_PRECEDENCE_NEXT_OWNER_SELECTION.md).
+HIAL/VIAL, end-to-end scale, other startup maintenance, known defects,
+protocol/backend expansion, simulator profiles, and decision `0020` remain
+separate.
+
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
 selects `.558`, a no-behavior readiness audit for APB completer/interconnect

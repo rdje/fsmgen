@@ -8103,6 +8103,15 @@ Clean behavior commit `80aa203ab` activates parent selector `.833`
 continuity-only. The grouped assertion repair and every shipped behavior remain
 unchanged while `.833` reconciles the remaining roadmap directions and selects
 exactly one next owner.
+Completed `.833` selects proposed no-behavior
+`MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1`. Chapters 00 and 10 currently make
+blanket VHDL non-implementation/composition-rejection claims that contradict
+Chapter 14's canonical partially shipped direct/C1/C2/APB-C4 subset. The child
+will align only those summaries, preserving full-backend, external-compiler,
+GHDL, broad-composition, aggregate/package, and parity deferrals. HIAL/VIAL,
+scale, other startup maintenance, known defects, protocol/backend expansion,
+simulator profiles, and decision `0020` remain separate. See
+`docs/IAL2_POST_ASSERTION_PRECEDENCE_NEXT_OWNER_SELECTION.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

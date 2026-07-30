@@ -137,6 +137,9 @@ and diagnostic behavior per stage while proving semantic/output correctness.
   assertion correctness audit. Scale remains proposed with its workload,
   correctness, resource, budget, graceful-failure, and regression-gate
   contract unchanged.
+- `2026-07-30`: Parent selector `.833` chooses the smaller mdBook VHDL
+  introduction/backend-summary truth repair after assertion precedence ships.
+  Scale remains proposed with its full capacity-methodology contract unchanged.
 
 ## Open Questions
 

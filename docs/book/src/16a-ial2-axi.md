@@ -1029,6 +1029,10 @@ Clean behavior commit `80aa203ab` activates parent selector `.833`
 continuity-only. AXI admission, assertions, generated HDL, and runtime behavior
 remain unchanged while the next roadmap owner is selected.
 
+Completed `.833` selects a no-behavior mdBook VHDL introduction/backend-summary
+truth repair. It changes no AXI source, generated HDL, assertion, or runtime
+contract; broader AXI work remains separately owned.
+
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and
 back-to-back reads, ID queues/demux/interleaving, aliases, and decision 0020's

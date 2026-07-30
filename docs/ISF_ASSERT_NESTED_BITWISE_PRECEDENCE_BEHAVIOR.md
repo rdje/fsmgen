@@ -149,6 +149,9 @@ UVM support.
 Clean behavior commit `80aa203ab` hands continuity back to parent selector
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.833`. That selector changes no behavior and
 must choose exactly one next roadmap owner before another tree is activated.
+Completed `.833` selects no-behavior
+`MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1`; this repair remains complete and
+unchanged while that separate documentation leaf waits for clean activation.
 
 ## Rollback
 
