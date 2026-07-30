@@ -1356,6 +1356,21 @@ A runnable example — a saturating value with an in-range invariant:
 Under simulation the assertion stays silent while `count < 200` and fires (with
 the message) the moment it is violated.
 
+Nested expressions retain their authored grouping even when FSMGEN factors a
+child into an internal intermediate. For example:
+
+```lisp
+(assert (& high (| bit3 bit2)) "nested bitwise semantics")
+```
+
+emits the semantic core `high & (bit3 | bit2)`, never
+`high & bit3 | bit2`. The same guarantee applies when the expression is an
+implication leaf or sits beneath `next`/`within`: each inlined intermediate is
+kept as one grouped SystemVerilog subexpression. This matters because SV gives
+bitwise AND higher precedence than bitwise OR. See the
+[behavior record](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.md) for
+the generated AXI legal-`0x00000004` proof and regression split.
+
 Use `(assert …)` for "this must always hold." For "this must eventually happen
 within N cycles," use the bounded-eventually monitor `(assert (monitor (within
 SIGNAL N)) …)` documented below (which checks a property over a bounded number

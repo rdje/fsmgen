@@ -11775,6 +11775,14 @@ No generated behavior changes during this audit slice.
 Clean audit commit `628ca0c33` activates only implementation `.2`
 continuity-only. The malformed property remains unchanged during activation;
 `.2` now owns the selected grouping repair and assertion-enabled AXI proof.
+Implementation `.2` now ships grouped inline-intermediate substitution.
+Direct, overlapping-implication, and delayed property leaves preserve nested
+mixed-precedence semantics. The AXI admission set stays unchanged: t1507's
+negative/positive harness reaches exact `5/17/5/17/4` including legal address
+`0x00000004`, while a separate all-assertion legal-only harness reaches exact
+`1/4/1/4/1`. The split is required because the intentional illegal commands
+correctly violate the boundary assertion. See the
+[shipped behavior](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

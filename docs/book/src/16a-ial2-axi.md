@@ -1016,6 +1016,15 @@ Clean audit commit `628ca0c33` activates only implementation `.2`. AXI
 admission, generated HDL, and the current assertion defect remain unchanged
 during this continuity transition.
 
+Implementation `.2` now ships the correction. The property contains
+`high & (bit3 | bit2)` and agrees with unchanged behavioral admission for legal
+address `0x00000004`. The expanded behavior harness retains two deliberate
+illegal commands and reaches `5/17/5/17/4`; because those commands correctly
+violate the boundary assertion, a separate all-assertion legal-only harness
+proves exact `1/4/1/4/1` retirement with fixed LEN3/SIZE2/INCR metadata and
+matching RID/RLAST. See the
+[behavior record](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.md).
+
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and
 back-to-back reads, ID queues/demux/interleaving, aliases, and decision 0020's

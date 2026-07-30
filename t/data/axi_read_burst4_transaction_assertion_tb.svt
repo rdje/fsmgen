@@ -1,0 +1,126 @@
+module axi_read_burst4_transaction_assertion_tb;
+  logic clk = 0;
+  logic rst_n = 0;
+  logic read_cmd_valid = 0;
+  logic [31:0] cmd_read_addr = 0;
+  logic [3:0] cmd_read_id = 0;
+  logic arready = 0;
+  logic rvalid = 0;
+  logic [3:0] rid = 0;
+  logic [31:0] rdata = 0;
+  logic [1:0] rresp = 0;
+  logic rlast = 0;
+
+  wire arvalid;
+  wire [31:0] araddr;
+  wire [3:0] arid;
+  wire [7:0] arlen;
+  wire [2:0] arsize;
+  wire [1:0] arburst;
+  wire rready;
+  wire [3:0] response_rid;
+  wire [31:0] response_rdata;
+  wire [1:0] response_rresp;
+  wire response_rlast;
+  wire read_busy;
+  wire read_request_done;
+  wire read_beat_done;
+  wire read_transaction_done;
+  wire [1:0] response_beat_index;
+  wire response_id_match;
+  wire response_last_match;
+
+  integer ar_handshakes = 0;
+  integer r_handshakes = 0;
+  integer request_pulses = 0;
+  integer beat_pulses = 0;
+  integer transaction_pulses = 0;
+  integer cycles = 0;
+  integer beat = 0;
+
+  axi_read_burst4_transaction_composition dut (.*);
+
+  always #5 clk = ~clk;
+
+  always @(posedge clk) if (rst_n) begin
+    if (arvalid && {araddr, arid, arlen, arsize, arburst}
+        !== {32'h00000004, 4'h6, 8'd3, 3'd2, 2'b01})
+      $fatal(1, "legal-bit-2 AR metadata mismatch");
+    if (arvalid && arready) ar_handshakes <= ar_handshakes + 1;
+    if (rvalid && rready) r_handshakes <= r_handshakes + 1;
+    if (read_request_done) request_pulses <= request_pulses + 1;
+    if (read_beat_done) beat_pulses <= beat_pulses + 1;
+    if (read_transaction_done) transaction_pulses <= transaction_pulses + 1;
+  end
+
+  initial begin
+    repeat (2) @(negedge clk);
+    rst_n = 1;
+    repeat (2) @(negedge clk);
+
+    arready = 1;
+    @(negedge clk);
+    cmd_read_addr = 32'h00000004;
+    cmd_read_id = 4'h6;
+    read_cmd_valid = 1;
+    @(negedge clk);
+    read_cmd_valid = 0;
+
+    cycles = 0;
+    while ((ar_handshakes < 1 || request_pulses < 1 || !rready) && cycles < 120) begin
+      @(negedge clk);
+      cycles = cycles + 1;
+    end
+    if (ar_handshakes != 1 || request_pulses != 1 || !rready || !read_busy)
+      $fatal(1, "legal-bit-2 request did not launch");
+
+    for (beat = 0; beat < 4; beat = beat + 1) begin
+      @(negedge clk);
+      rid = 4'h6;
+      rdata = 32'h00040000 + beat;
+      rresp = 2'b00;
+      rlast = (beat == 3);
+      rvalid = 1;
+      cycles = 0;
+      while (r_handshakes < beat + 1 && cycles < 120) begin
+        @(negedge clk);
+        cycles = cycles + 1;
+      end
+      if (r_handshakes != beat + 1) $fatal(1, "R handshake %0d", beat);
+      rvalid = 0;
+      cycles = 0;
+      while (beat_pulses < beat + 1 && cycles < 120) begin
+        @(negedge clk);
+        cycles = cycles + 1;
+      end
+      if (beat_pulses != beat + 1) $fatal(1, "beat pulse %0d", beat);
+      if (response_beat_index !== beat[1:0]) $fatal(1, "beat index %0d", beat);
+      if ({response_rid, response_rdata, response_rresp, response_rlast}
+          !== {4'h6, 32'h00040000 + beat, 2'b00, beat == 3})
+        $fatal(1, "raw response %0d", beat);
+      if (!response_id_match || !response_last_match)
+        $fatal(1, "sticky response status %0d", beat);
+    end
+
+    cycles = 0;
+    while (transaction_pulses < 1 && cycles < 120) begin
+      @(negedge clk);
+      cycles = cycles + 1;
+    end
+    repeat (4) @(negedge clk);
+    if (ar_handshakes != 1 || r_handshakes != 4 || request_pulses != 1
+        || beat_pulses != 4 || transaction_pulses != 1)
+      $fatal(1, "all-assertion cardinality");
+    if (arvalid || rready || read_busy || read_request_done
+        || read_beat_done || read_transaction_done)
+      $fatal(1, "all-assertion final idle");
+
+    $display("PASS assertion ar=1 r=4 request=1 beat=4 transaction=1 addr=00000004");
+    $finish;
+  end
+
+  initial begin
+    #20000;
+    $fatal(1, "timeout");
+  end
+endmodule

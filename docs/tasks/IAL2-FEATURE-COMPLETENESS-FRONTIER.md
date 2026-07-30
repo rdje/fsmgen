@@ -5899,8 +5899,10 @@ Parent selector `.832` is complete and handed off to
 `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`. Child audit `.1` is now complete:
 it isolates an all-CoreAST inline-substitution grouping loss and selects a
 one-branch general repair. Clean audit commit `628ca0c33` activates child `.2`
-continuity-only; product behavior remains unchanged until that child implements
-and verifies the selected repair.
+continuity-only. Child `.2` now ships the selected grouping repair, corrected
+AXI property, expanded negative/positive behavior matrix, and separate
+assertion-enabled legal-bit-2 proof. The next clean action is a new parent
+selector; no broader roadmap owner is implicitly activated by this closeout.
 
 The child selected by `.826` is complete through `.3`, and parent `.828` now
 closes the matching byte-identical two-subordinate exact-four `.ahb` alias.

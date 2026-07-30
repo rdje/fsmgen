@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14 / generated verification correctness`
 - Created: `2026-07-23`
 - Last updated: `2026-07-30`
@@ -55,7 +55,7 @@ the assertion condition roundtrip/inlining path involving
 ## Task Tree
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve nested bitwise expression semantics across concurrent-property inlining and repair the shipped AXI read false assertion.`
   Children: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`, `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2`
 
@@ -67,18 +67,19 @@ the assertion condition roundtrip/inlining path involving
   Commit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1: select AST-preserving substitution repair`
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected general renderer repair and correct the AXI fixed-four read assertion proof.`
   Acceptance: `After .1 freezes the repair, preserve nested mixed-precedence bitwise ASTs through concurrent property rendering; add direct and intermediate/inlined regressions, assertion-enabled legal 0x00000004 AXI read proof, preservation gates, docs/facts/continuity, and commit. Keep rule admission and all unrelated generated HDL behavior unchanged.`
-  Verification: `Activated only after clean audit commit 628ca0c33. Activation changes continuity pointers only: the selected grouping contract, current malformed assertion, correct behavioral admission, parser, carrier, CoreAST, renderer, emitter, generated HDL/runtime, public/report/semantic/MCP/support surfaces, tests, protocols/backends, HIAL/VIAL, scale, simulator profiles, and decision-0020 behavior remain unchanged until implementation begins. Book/status/path truth gates pass 4 files/46 tests. Knowledge Map generation/check remains synchronized at 1,060 facts/5,456 question keys. The mdBook renders exactly 72 files/16,515,405 bytes and its exact repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 49 lines, README.md is 2,346 lines, diff hygiene and all six doctrine gates pass. Final canonical Stats-compatible capacity is 17,794,711,552/25,769,803,776 bytes = 16.573/24.000 GiB = 69.05%, with separate macOS kernel pressure level 1 and memory_pressure 75% free; guard occupancy is excluded from capacity truth. No background job remains.`
-  Commit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2: activate substitution repair`
+  Verification: `Activated only after clean audit commit 628ca0c33 through clean continuity commit a2f99f848. GeneratedModuleInfoBuilder now keeps every successfully rendered inline-intermediate replacement inside one explicit grouping boundary, preserving AST semantics independently of parent/child operator pairs while leaving direct CoreAST rendering, cycle fallback, property operators, and emitter behavior unchanged. t1410 freezes the authored carrier and factored all-CoreAST AND/OR graph; t1411 proves exact grouped builder/emitter output; t1412 proves overlapping and next-cycle wrappers plus unchanged formal-only classification; t1544 proves corrected AXI condition/final property and unchanged behavioral factoring. t1507 preserves two illegal behavioral rejections under --no-assert, adds legal 0x00000004 to exact 5/17/5/17/4 behavior, and adds a separate all-assertion legal-only 1/4/1/4/1 harness. The first attempt to enable assertions on the combined negative harness correctly failed on its intentional illegal command, so the final split keeps both contracts executable without weakening either. Production/test syntax passes for the builder plus t1410-t1412/t1507/t1544. Final focused t1410-t1412+t1544+t1507 passes 5 files/27 top-level tests. Trigger/sampled/window/facade preservation t1413+t1416-t1418+t404 passes 5 files/34 tests. Book matrix/status/path truth gates pass 5 files/329 tests. Knowledge Map generation/check passes at 1,061 facts/5,461 question keys. The mdBook renders exactly 72 files/16,519,726 bytes and its repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 49 lines, README.md is 2,347 lines, diff hygiene and all six doctrine gates pass. Final canonical Stats-compatible capacity is 18,161,516,544/25,769,803,776 bytes = 16.914/24.000 GiB = 70.48%, with separate macOS kernel pressure level 1 and memory_pressure 75% free; guard occupancy is excluded from capacity truth. No background job remains.`
+  Commit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2: ship substitution grouping`
 
 ## Current Frontier
 
-Clean audit commit `628ca0c33` activates implementation `.2` through a separate
-continuity-only transition. The assertion defect and every shipped behavior
-remain unchanged. `.2` now owns the one-branch inline-substitution grouping
-repair and t1410-t1412/t1544/assertion-enabled-t1507 proof.
+Implementation `.2` is complete. Concurrent-check intermediate substitution
+preserves grouping, the AXI legal-bit-2 assertion now agrees with unchanged
+behavioral admission, and separate negative-behavior/all-assertion t1507
+harnesses preserve both contracts. After this behavior commit is clean, return
+roadmap choice to a new parent `IAL2-FEATURE-COMPLETENESS-FRONTIER` selector.
 
 ## Decisions
 
@@ -112,7 +113,17 @@ repair and t1410-t1412/t1544/assertion-enabled-t1507 proof.
 - `2026-07-30`: Clean audit commit `628ca0c33` activates implementation `.2`
   continuity-only. The malformed property and all product/test/runtime behavior
   remain unchanged during activation.
+- `2026-07-30`: Implement the selected repair at the one proven boundary:
+  every successful inline-intermediate rendering returns as a grouped
+  subexpression. Direct CoreAST precedence, temporal property operators,
+  cycle/failure fallback, behavioral lowering, and the emitter stay unchanged.
+- `2026-07-30`: Enabling assertions on the existing t1507 harness correctly
+  fires on its deliberately misaligned command before reaching the legal-bit-2
+  case. Preserve that negative behavior matrix under `--no-assert` and add a
+  separate legal-only all-assertion harness. This proves both illegal admission
+  rejection and assertion correctness without weakening or suppressing either
+  contract.
 
 ## Blockers
 
-- None technical. Implementation `.2` is active.
+- None technical. Tree complete.

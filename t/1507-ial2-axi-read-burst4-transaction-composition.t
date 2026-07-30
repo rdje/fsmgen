@@ -278,13 +278,33 @@ subtest 'generated structural top joins AR then retires exact raw R outcomes' =>
     write_file($testbench, behavior_testbench());
 
     my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(command => ['verilator', '--binary', '--timing', '--no-assert', '-Wno-fatal', '-j', '1', '--top-module', 'axi_read_burst4_transaction_composition_tb', '--Mdir', $obj_dir, $hdl, $testbench]);
-    ok($compile_ok, 'Verilator builds the generated structural-top harness with assertions disabled') or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
+    ok($compile_ok, 'Verilator builds the negative-and-positive behavior harness with assertions disabled') or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
     return unless $compile_ok;
     my $binary = File::Spec->catfile($obj_dir, 'Vaxi_read_burst4_transaction_composition_tb');
     ok(-x $binary, 'simulation binary exists');
     my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
     ok($run_ok, 'generated structural-top behavior passes') or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
-    like(join('', @{$run_stdout || []}), qr/PASS ar=4 r=13 request=4 beat=13 transaction=3 illegal=2 busy_ignored=1 error_drain=4 reset_abort=1/, 'all legality, re-arm, raw capture, count-authoritative drain, reset, and exact-cardinality checks pass');
+    like(join('', @{$run_stdout || []}), qr/PASS ar=5 r=17 request=5 beat=17 transaction=4 illegal=2 busy_ignored=1 error_drain=4 reset_abort=1/, 'illegal rejection, legal-bit-2 admission, re-arm, raw capture, count-authoritative drain, reset, and exact-cardinality checks pass');
+};
+
+subtest 'legal bit2-high read passes every generated assertion' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_read_burst4_transaction_composition.sv');
+    my $testbench = File::Spec->catfile($tempdir, 'axi_read_burst4_transaction_assertion_tb.sv');
+    my $obj_dir = File::Spec->catdir($tempdir, 'obj_assertion');
+    my ($generate_ok, undef, undef, undef, $generate_stderr) = run(command => ['./bin/fsmgen', '--quiet', '--strict', '--output', $hdl, sample_path()]);
+    ok($generate_ok, 'public source emits structural HDL for the all-assertion proof');
+    is(join('', @{$generate_stderr || []}), '', 'all-assertion HDL generation keeps stderr clean');
+    write_file($testbench, assertion_testbench());
+
+    my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(command => ['verilator', '--binary', '--timing', '-Wno-fatal', '-j', '1', '--top-module', 'axi_read_burst4_transaction_assertion_tb', '--Mdir', $obj_dir, $hdl, $testbench]);
+    ok($compile_ok, 'Verilator builds the legal-bit-2 harness with assertions enabled') or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
+    return unless $compile_ok;
+    my $binary = File::Spec->catfile($obj_dir, 'Vaxi_read_burst4_transaction_assertion_tb');
+    ok(-x $binary, 'all-assertion simulation binary exists');
+    my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
+    ok($run_ok, 'legal address 0x00000004 passes every generated assertion') or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
+    like(join('', @{$run_stdout || []}), qr/PASS assertion ar=1 r=4 request=1 beat=4 transaction=1 addr=00000004/, 'all-assertion proof completes the exact legal fixed-four read');
 };
 
 done_testing();
@@ -376,4 +396,8 @@ sub write_file {
 
 sub behavior_testbench {
     return slurp(File::Spec->catfile($FindBin::Bin, 'data', 'axi_read_burst4_transaction_composition_tb.svt'));
+}
+
+sub assertion_testbench {
+    return slurp(File::Spec->catfile($FindBin::Bin, 'data', 'axi_read_burst4_transaction_assertion_tb.svt'));
 }

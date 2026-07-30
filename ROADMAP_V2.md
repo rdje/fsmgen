@@ -8091,6 +8091,14 @@ Clean audit commit `628ca0c33` activates only implementation `.2`. This
 continuity transition changes no parser, carrier, renderer, generated HDL,
 runtime, public surface, protocol behavior, or broader roadmap owner; `.2` now
 owns the selected substitution-grouping repair and regression proof.
+Implementation `.2` now ships the one-branch grouping repair. Inlineable
+concurrent-check intermediates remain explicit subexpressions, so direct and
+temporal leaves preserve `high & (bit3 | bit2)`. The AXI behavioral admission
+set is unchanged; t1507 adds legal `0x00000004` to its negative/positive
+behavior matrix at exact `5/17/5/17/4` and separately proves an all-assertion
+legal-only `1/4/1/4/1` transaction. The harnesses are separate because the two
+intentional illegal behavior probes correctly violate the generated boundary
+assertion. See `docs/ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

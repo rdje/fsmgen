@@ -227,6 +227,12 @@ Clean audit commit `628ca0c33` now activates `.2` continuity-only. The selected
 contract and current malformed generated property remain unchanged during that
 transition.
 
+Implementation `.2` subsequently ships the selected one-branch grouping
+repair and closes the defect. The historical readiness evidence remains here;
+current output, the expanded behavior matrix, and the separate all-assertion
+legal-bit-2 proof are documented in
+`docs/ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.md`.
+
 ## Rollback
 
 Audit rollback removes t1544 and this record, restores `.1` to active, and

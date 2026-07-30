@@ -10,9 +10,9 @@ answers:
   - "what is the selected repair for inline assertion expression precedence?"
   - "are mixed legacy and CoreAST nodes responsible for the AXI assertion bug?"
 date: 2026-07-30
-status: current
+status: historical
 tags: [isf, assertion, systemverilog, precedence, bitwise, axi, verification, pre-existing]
-evidence: ppif/axi_read_burst4_transaction_composition.ppif; perl/FSM/CoreAST.pm; perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm; perl/FSM/Backend/GeneratedModuleEmitter.pm; t/1507-ial2-axi-read-burst4-transaction-composition.t; t/1544-isf-assert-nested-bitwise-precedence-readiness.t; docs/ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_READINESS_AUDIT.md; docs/tasks/ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.md; docs/IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md
+evidence: ppif/axi_read_burst4_transaction_composition.ppif; perl/FSM/CoreAST.pm; perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm; perl/FSM/Backend/GeneratedModuleEmitter.pm; t/1507-ial2-axi-read-burst4-transaction-composition.t; t/1544-isf-assert-nested-bitwise-precedence-readiness.t; docs/ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_READINESS_AUDIT.md; docs/ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.md; docs/tasks/ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.md; docs/IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md
 reverify: scripts/run_with_ram_guard.sh --host-max-pct 100 --process-max-rss-mb 4096 -- env TMPDIR=.artifacts/tmp/tests prove -v t/1544-isf-assert-nested-bitwise-precedence-readiness.t
 ---
 
@@ -67,3 +67,7 @@ a clean separate activation commit before product or existing-test behavior
 may change. Clean audit commit `628ca0c33` now activates implementation `.2`
 continuity-only; the malformed property remains unchanged until that leaf's
 implementation commit.
+
+Implementation `.2` subsequently shipped the selected grouping repair. This
+card remains the historical root-cause/audit record; current behavior is
+canonical in `isf-assert-nested-bitwise-precedence-behavior`.

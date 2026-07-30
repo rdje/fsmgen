@@ -81,6 +81,42 @@ ISF
         'antecedent (> level hi) and consequent ok both render');
 };
 
+subtest 'implication and delayed wrappers preserve grouped inline intermediates' => sub {
+    my $module = parsed_module(<<'ISF', 'nested_property_bits');
+(actor nested_property_bits
+  (interface
+    (input start)
+    (input enable)
+    (input high)
+    (input bit3)
+    (input bit2)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (=> enable (& high (| bit3 bit2))) "overlap")
+    (assert (=> enable (next (& high (| bit3 bit2)))) "delayed")
+    (complete done)))
+ISF
+    my $info = module_info_for($module);
+    my %by = map { $_->{name} => $_ } @{$info->{immediate_assertions}};
+    like(
+        $by{main_assert_0}{condition_sv},
+        qr/\Q(enable) |-> (((high & (bit3 | bit2))))\E/,
+        'overlapping implication retains the nested OR grouping',
+    );
+    unlike(
+        $by{main_assert_0}{condition_sv},
+        qr/high & bit3 \| bit2/,
+        'overlapping implication contains no ungrouped substitution',
+    );
+    like(
+        $by{main_assert_1}{condition_sv},
+        qr/\Q(enable) |-> (##1 (((high & (bit3 | bit2)))))\E/,
+        'next-cycle wrapper retains the same grouped boolean leaf',
+    );
+    ok($by{main_assert_1}{formal_only}, 'the nested delayed property remains formal-only');
+};
+
 subtest 'signals used only inside an implication are kept alive as ports' => sub {
     my $module = parsed_module(<<'ISF', 'imp3');
 (actor imp3

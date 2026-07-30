@@ -63,6 +63,38 @@ ISF
     is($asserts->[0]{message}, 'o must stay below 200', 'message surfaced');
 };
 
+subtest 'inline intermediate substitution retains one grouped AST operand' => sub {
+    my $module = parsed_module(<<'ISF', 'nested_bits');
+(actor nested_bits
+  (interface
+    (input start)
+    (input high)
+    (input bit3)
+    (input bit2)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (& high (| bit3 bit2)) "nested bitwise semantics")
+    (complete done)))
+ISF
+    my $info = module_info_for($module);
+    is(
+        $info->{immediate_assertions}[0]{condition_sv},
+        '((high & (bit3 | bit2)))',
+        'both the nested OR and the factored root survive textual substitution as grouped expressions',
+    );
+
+    my @lines = FSM::Backend::GeneratedModuleEmitter->immediate_assertion_runtime_lines(
+        module_info => $info,
+        target_language => 'systemverilog',
+    );
+    like(
+        join("\n", @lines),
+        qr/assert property \(@\(posedge clk\) disable iff \(!rst_n\) \(\(\(high & \(bit3 \| bit2\)\)\)\)\)/,
+        'the concurrent assertion emitter preserves the builder-owned grouping',
+    );
+};
+
 subtest 'immediate_assertion_runtime_lines emits a verification-only SV assertion' => sub {
     my $module = parsed_module(<<'ISF', 'em2');
 (actor em2

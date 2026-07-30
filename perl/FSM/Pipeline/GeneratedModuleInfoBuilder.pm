@@ -123,7 +123,11 @@ sub _render_check_condition_sv ($cond, $seen = undef) {
             my $rendered = _render_check_condition_sv($driving_ast, $seen)
                 if blessed($driving_ast) || ref($driving_ast);
             --$seen->{$name};
-            return $rendered if defined($rendered) && length($rendered);
+            # Preserve the AST boundary occupied by this SignalRef. The driving
+            # expression rendered in isolation has no parent precedence, so
+            # substituting its bare text into a caller can change semantics
+            # (for example, high & (bit3 | bit2) becoming high & bit3 | bit2).
+            return "($rendered)" if defined($rendered) && length($rendered);
         }
     }
 

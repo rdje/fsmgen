@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2: activate substitution repair`).
-- active_work_unit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2`.
-- current_state: clean audit commit `628ca0c33` selects explicit grouping at every concurrent-check inline-intermediate substitution; `.2` is active continuity-only. The malformed AXI assertion, correct behavioral admission, and every other shipped surface remain unchanged.
-- next_action: implement the one-branch grouping repair, reconcile t1410-t1412/t1544, and run t1507 assertion-enabled with legal address 0x00000004 plus all preservation/documentation gates.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2: ship substitution grouping`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER` (next clean selector pending).
+- current_state: assertion-precedence tree `.1`-.2 is complete. Concurrent-check inline intermediates remain grouped; direct/temporal regressions pass; AXI admission is unchanged; t1507 proves `5/17/5/17/4` negative/positive behavior plus separate all-assertion legal-0x00000004 `1/4/1/4/1` retirement.
+- next_action: after this behavior commit is clean, activate a new parent IAL2 roadmap selector and choose exactly one next evidence-backed owner.
+- in_flight_uncommitted: none after this behavior commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

@@ -115,6 +115,37 @@ ISF
     is($asserts->[1]{name}, 'main_assert_1', 'second named _1');
 };
 
+subtest 'nested mixed-precedence bitwise structure survives the assertion carrier' => sub {
+    my ($fsm, $module) = roundtrip_module(<<'ISF', 'nested_bits');
+(actor nested_bits
+  (interface
+    (input start)
+    (input high)
+    (input bit3)
+    (input bit2)
+    (output done))
+  (transaction main
+    (on start)
+    (assert (& high (| bit3 bit2)))
+    (complete done)))
+ISF
+    like(
+        $fsm,
+        qr/\(main_assert_0 assert \(& high \(\| bit3 bit2\)\)\)/,
+        'the +assert carrier retains the authored AND with a nested OR child',
+    );
+
+    my $condition = $module->{attributes}{immediate_assertions}[0]{condition};
+    isa_ok($condition, 'FSM::CoreAST::SignalRef', 'factored assertion root');
+    my $and_ast = $condition->signal->driving_ast;
+    isa_ok($and_ast, 'FSM::CoreAST::BinaryOp', 'factored assertion driving AST');
+    is($and_ast->operator, '&', 'the factored root remains AND');
+    isa_ok($and_ast->right, 'FSM::CoreAST::SignalRef', 'nested child intermediate');
+    my $or_ast = $and_ast->right->signal->driving_ast;
+    isa_ok($or_ast, 'FSM::CoreAST::BinaryOp', 'nested child driving AST');
+    is($or_ast->operator, '|', 'the nested child remains OR');
+};
+
 subtest 'a malformed (assert ...) fails closed in the ISF lowerer' => sub {
     like(lower_error(
         "(actor t (interface (input start) (output done)) "

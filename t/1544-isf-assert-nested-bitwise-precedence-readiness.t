@@ -37,7 +37,7 @@ subtest 'direct CoreAST rendering preserves nested mixed bitwise precedence' => 
     );
 };
 
-subtest 'AXI assertion inlining currently loses the nested OR grouping' => sub {
+subtest 'AXI assertion inlining preserves the nested OR grouping' => sub {
     my $outdir = File::Spec->catdir($workspace, 'out');
     my $hdl = File::Spec->catfile($workspace, 'axi_read_burst4_transaction_composition.sv');
     my $source = File::Spec->catfile(
@@ -99,13 +99,13 @@ subtest 'AXI assertion inlining currently loses the nested OR grouping' => sub {
 
     like(
         $rendered->{condition_sv},
-        qr/cmd_read_addr\[4\] & cmd_read_addr\[3\] \| cmd_read_addr\[2\]/,
-        'readiness characterization freezes the current ungrouped inline expansion',
+        qr/cmd_read_addr\[4\] & \(cmd_read_addr\[3\] \| cmd_read_addr\[2\]\)/,
+        'the inlined condition preserves the nested OR as one AND child',
     );
     unlike(
         $rendered->{condition_sv},
-        qr/cmd_read_addr\[4\] & \(cmd_read_addr\[3\] \| cmd_read_addr\[2\]\)/,
-        'the current property text does not preserve the nested OR as the AND child',
+        qr/cmd_read_addr\[4\] & cmd_read_addr\[3\] \| cmd_read_addr\[2\]/,
+        'the malformed ungrouped substitution is absent',
     );
 
     my $hdl_text = slurp($hdl);
@@ -121,8 +121,8 @@ subtest 'AXI assertion inlining currently loses the nested OR grouping' => sub {
     );
     like(
         $hdl_text,
-        qr/assert property .*cmd_read_addr\[4\] & cmd_read_addr\[3\] \| cmd_read_addr\[2\]/,
-        'the emitted concurrent property reproduces the same grouping loss',
+        qr/assert property .*cmd_read_addr\[4\] & \(cmd_read_addr\[3\] \| cmd_read_addr\[2\]\)/,
+        'the emitted concurrent property preserves the same grouping boundary',
     );
 };
 

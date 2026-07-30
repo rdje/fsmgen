@@ -55,6 +55,7 @@ module axi_read_burst4_transaction_composition_tb;
         1: if ({araddr, arid} !== {32'h00002000, 4'h3}) $fatal(1, "AR2");
         2: if ({araddr, arid} !== {32'h00003000, 4'h4}) $fatal(1, "AR3");
         3: if ({araddr, arid} !== {32'h00004000, 4'h5}) $fatal(1, "AR4");
+        4: if ({araddr, arid} !== {32'h00000004, 4'h6}) $fatal(1, "AR5 legal bit2-high");
         default: $fatal(1, "extra AR");
       endcase
       ar_handshakes <= ar_handshakes + 1;
@@ -254,10 +255,19 @@ module axi_read_burst4_transaction_composition_tb;
     send_beat(4'h5, 32'h44440003, 2'b00, 1, 13, 13, 2'd3, 1, 1);
     cycles = 0;
     while (transaction_pulses < 3 && cycles < 80) begin @(negedge clk); cycles = cycles + 1; end
+
+    command(32'h00000004, 4'h6);
+    wait_request(5);
+    send_beat(4'h6, 32'h00040000, 2'b00, 0, 14, 14, 2'd0, 1, 1);
+    send_beat(4'h6, 32'h00040001, 2'b00, 0, 15, 15, 2'd1, 1, 1);
+    send_beat(4'h6, 32'h00040002, 2'b00, 0, 16, 16, 2'd2, 1, 1);
+    send_beat(4'h6, 32'h00040003, 2'b00, 1, 17, 17, 2'd3, 1, 1);
+    cycles = 0;
+    while (transaction_pulses < 4 && cycles < 80) begin @(negedge clk); cycles = cycles + 1; end
     repeat (5) @(negedge clk);
 
-    if (ar_handshakes != 4 || r_handshakes != 13 || request_pulses != 4
-        || beat_pulses != 13 || transaction_pulses != 3)
+    if (ar_handshakes != 5 || r_handshakes != 17 || request_pulses != 5
+        || beat_pulses != 17 || transaction_pulses != 4)
       $fatal(1, "final cardinality");
     if (illegal_rejections != 2 || busy_ignored != 1 || observed_nonokay != 2
         || error_drain != 4 || reset_abort != 1)
@@ -265,7 +275,7 @@ module axi_read_burst4_transaction_composition_tb;
     if (arvalid || rready || read_busy || read_request_done || read_beat_done || read_transaction_done)
       $fatal(1, "final idle");
 
-    $display("PASS ar=4 r=13 request=4 beat=13 transaction=3 illegal=2 busy_ignored=1 error_drain=4 reset_abort=1");
+    $display("PASS ar=5 r=17 request=5 beat=17 transaction=4 illegal=2 busy_ignored=1 error_drain=4 reset_abort=1");
     $finish;
   end
 
