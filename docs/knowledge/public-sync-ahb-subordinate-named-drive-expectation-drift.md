@@ -25,3 +25,7 @@ AHB phase/retirement priorities. The lowerer behavior is intentional and its
 focused named-drive gates are authoritative; pending
 `PUBLIC-SYNC-TEST-DRIFT-REPAIR.4` owns synchronization of only the four stale
 structural expectations after `.3` commits cleanly.
+
+Clean `.3` commit `ce891bbd7` activates `.4` continuity-only. The four tests,
+lowerer/generator sources, generated artifacts, and product behavior remain
+unchanged until the activation commit is clean.

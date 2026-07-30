@@ -83,11 +83,11 @@ changed loop lowering and requester terminal-count paths.
   Commit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.3: synchronize alias diagnostic expectation`
 
 - ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Synchronize generated AHB subordinate IAL0 ERROR-drive priority-mask expectations.`
   Acceptance: `After .3 commits cleanly, audit the exact four stale unguarded ERROR-drive regexes in t/1475 and t/1482 against the named-drive priority masks introduced by 1dbff8fc6; update only those proven structural expectations, prove both focused files plus the relevant rule/transaction-priority and AHB preservation gates, and keep lowerer/generator/product behavior unchanged.`
-  Verification: `Discovery-only evidence from the .3 slice: isolated current-HEAD t/1475 fails two assertions at lines 69-70 and t/1482 fails two assertions at lines 51-52. Exact repository search finds only these four old unguarded patterns. Git history identifies 1dbff8fc6 as the sole post-arbitration LoweringIR change; it extends rule/transaction priority to exact-one-local-caller named drives, so emitted error_first HRESP and error_complete HREADYOUT assignments now carry the selected inverse-winner masks. No .4 implementation is included in .3.`
-  Commit: `pending`
+  Verification: `Activated only after clean .3 implementation commit ce891bbd7. Isolated current-HEAD t/1475 fails two assertions at lines 69-70 and t/1482 fails two assertions at lines 51-52. Exact repository search finds only these four old unguarded patterns. Git history identifies 1dbff8fc6 as the sole post-arbitration LoweringIR change; it extends rule/transaction priority to exact-one-local-caller named drives, so emitted error_first HRESP and error_complete HREADYOUT assignments now carry the selected inverse-winner masks. Feature-backlog status, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1,069 facts / 5,502 question keys; mdBook HTML build and diff hygiene pass. Activation changes continuity surfaces only; t1475/t1482, lowerer/generator sources, fixtures, generated artifacts, and product behavior remain unchanged until this commit is clean.`
+  Commit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.4: activate named-drive expectation sync`
 
 ## Decisions
 
@@ -112,12 +112,14 @@ changed loop lowering and requester terminal-count paths.
   named-drive priority implementation; pending `.4` owns that repair.
 - `2026-07-30`: `.3` updates exactly one t1474 regex and restores the full
   six-file alias gate; parser and product behavior remain unchanged.
+- `2026-07-30`: Clean `.3` commit `ce891bbd7` activates `.4` continuity-only
+  for the exact four rooted generated-IAL0 expectation mismatches.
 
 ## Blockers
 
 - `.1` is complete at clean `012660f90`; `.2` is complete at clean
-  `4ba108b3d`; `.3` is complete in this commit. `.4` may activate only after
-  `.3` commits cleanly.
+  `4ba108b3d`; `.3` is complete at clean `ce891bbd7`; `.4` is active
+  continuity-only.
 
 ## Acceptance Checklist (enforced for implementation changes)
 

@@ -30620,3 +30620,16 @@ task tree and git.
   Knowledge Map generation/check passes at 1,069 facts / 5,502 keys; mdBook
   HTML build and diff hygiene pass; the staged seven-doctrine driver passes
   with fresh `perl_diagnostic` / `prove_summary` task-acceptance evidence.
+
+### PUBLIC-SYNC-TEST-DRIFT-REPAIR.4 — named-drive expectation sync activated
+
+- Activated only `.4` from clean `.3` implementation commit `ce891bbd7`.
+  Its exact boundary is four pre-named-drive-priority unguarded generated-IAL0
+  patterns: t1475 lines 69-70 and t1482 lines 51-52.
+- The tests, lowerer/generator sources, fixtures, generated artifacts, and
+  product behavior remain unchanged during activation. Task/index, roadmap,
+  mdBook, selector facts, Memory, and changelog continuity are synchronized;
+  feature-backlog status, live-book-path, and relative-path audits pass with
+  `Files=3, Tests=40`; Knowledge Map generation/check passes at 1,069 facts /
+  5,502 keys; mdBook HTML build and diff hygiene pass. This activation does not
+  warrant a development-note entry.

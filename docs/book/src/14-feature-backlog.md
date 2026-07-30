@@ -11885,6 +11885,9 @@ aggregate shapes, the six-file profile-alias gate passes 36 tests, and the
 canonical public `.ahb` strict check stays clean. Adjacent verification found
 four old generated-IAL0 ERROR-drive patterns in t1475/t1482 that predate
 named-drive priority masks; pending `.4` owns them without changing behavior.
+Clean `.3` implementation commit `ce891bbd7` activates public-sync `.4`
+continuity-only for exactly those four patterns. The tests, lowerer/generator,
+generated artifacts, and product behavior remain unchanged during activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

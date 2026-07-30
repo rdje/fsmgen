@@ -52,3 +52,6 @@ green.
 Completed `.3` restores t1474 and the six-file alias gate. Adjacent verification
 roots four stale t1475/t1482 generated-IAL0 expectations to named-drive priority
 commit `1dbff8fc6`; pending `.4` owns that separate repair.
+
+Clean `.3` commit `ce891bbd7` activates only `.4` continuity-only for those
+four rooted expectations; tests and implementation remain unchanged.

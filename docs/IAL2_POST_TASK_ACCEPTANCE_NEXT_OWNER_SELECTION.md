@@ -94,3 +94,7 @@ Public-sync `.3` updates exactly that regex and restores the six-file alias
 gate without product changes. Adjacent proof discovers four stale generated-
 IAL0 ERROR-drive expectations in t1475/t1482; pending `.4` owns them after the
 clean `.3` commit.
+
+Clean `.3` implementation commit `ce891bbd7` activates only public-sync `.4`
+continuity-only for those four rooted expectations; implementation sources and
+product behavior remain unchanged.

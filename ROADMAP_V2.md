@@ -8211,6 +8211,10 @@ six-file cross-protocol/profile-alias gate at 36 tests, and retains canonical
 AHB strict-check success without product changes. Adjacent verification roots
 four stale generated-IAL0 ERROR-drive expectations in t1475/t1482 to named-drive
 priority commit `1dbff8fc6`; pending `.4` owns that separate synchronization.
+Clean `.3` implementation commit `ce891bbd7` activates only public-sync `.4`
+continuity-only. Its exact boundary is the four rooted unguarded patterns at
+t1475 lines 69-70 and t1482 lines 51-52; tests, lowerer/generator sources,
+generated artifacts, and product behavior remain unchanged during activation.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
