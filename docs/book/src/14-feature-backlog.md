@@ -12005,6 +12005,9 @@ handoff, one first frontend or builder, and one golden fixture before any
 implementation. HIAL/VIAL, scale, MCP-write, and every director-gated direction
 remain inactive. See the
 [selection record](../../IAL2_POST_AHB_BOOK_SYNC_NEXT_OWNER_SELECTION.md).
+Clean selector commit `b4e66c067` activates only HIR `.2` continuity-only.
+The architecture boundary, first frontend/builder, golden fixture, current IR
+owners, and every product behavior remain unchanged during activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

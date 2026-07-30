@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `FSMGEN-HIR-ROADMAP-FRONTIER`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `architecture / high-level frontend IR`
 - Created: `2026-06-28`
 - Last updated: `2026-06-28`
@@ -53,7 +53,7 @@ and future IAL evolution.
 ## Task Tree
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER`
-  Status: `proposed`
+  Status: `active`
   Goal: `Own the source-facing FSMGEN HIR roadmap phase above IAL2 and IAL1.`
   Children: `FSMGEN-HIR-ROADMAP-FRONTIER.1`, `FSMGEN-HIR-ROADMAP-FRONTIER.2`
 
@@ -65,25 +65,22 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.1: capture FSMGEN HIR roadmap phase`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the first source-facing HIR architecture boundary.`
   Acceptance: `Audit docs/IR_POLICY.md, docs/tasks/FSMGEN-IR-AUDIT.md, existing IntentHIR/LoweredRTLIR/StructuralRTLIR owners, IAL1 and IAL2 public source surfaces, normalized semantic/report contracts, and IAL2-HOST-LANGUAGE-BUILDER-FRONTIER. Decide whether the first source-facing HIR should extend an existing IntentHIR-adjacent layer, create a new named surface, or remain a textual IAL handoff for the first prototype. Define producers, consumers, invariants, mutation policy, public/private status, source-span diagnostics, validation, docs impact, migration/retirement rules, first exact frontend or builder, and first golden fixture. No implementation begins in this leaf unless split into a later active implementation leaf.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean parent selector commit b4e66c067. Activation changes task/index, selector record/facts, roadmap, mdBook backlog, Memory, and changelog continuity only. The source-facing HIR shape, first frontend/builder, golden fixture, and every IR-policy field remain unselected until this activation commits cleanly. Existing IR owners, IAL1/IAL2 sources, code, tests, artifacts, APIs, HDL/runtime, and public behavior remain unchanged. Feature-backlog status, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1075 facts / 5540 question keys; memory architecture passes with MEMORY.md at 46 lines; the 72-file mdBook HTML build passes and its exact repository-local output is removed; diff hygiene passes.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.2: activate source-facing HIR boundary`
 
 ## Current Frontier
 
-Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.841` selects `.2` as the
-next exact no-behavior architecture owner. The tree and leaf remain proposed
-until that selector commits cleanly and a separate continuity commit activates
-them. The first activation leaf is deliberately a design selection leaf because
-the HIR must satisfy the repo IR policy before source or compiler behavior
-changes.
+Clean parent selector commit `b4e66c067` activates `.2` continuity-only. The
+leaf is deliberately a design selection leaf because the HIR must satisfy the
+repo IR policy before source or compiler behavior changes.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `done` | Captured the roadmap phase and activation criteria without behavior changes. |
-| 2 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `proposed` | Select the first exact source-facing HIR boundary before implementation. |
+| 2 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `active` | Select the first exact source-facing HIR boundary before implementation. |
 
 ## Decisions
 
@@ -113,6 +110,9 @@ changes.
 - `2026-07-30`: Parent selector `.841` selects proposed `.2` as the smallest
   foundational owner after the Chapter 16c AHB truth repair. `.2` remains
   inactive until the selector commits cleanly; no IR or behavior changes.
+- `2026-07-30`: Clean selector commit `b4e66c067` activates `.2`
+  continuity-only. Architecture choices and all implementation remain
+  unchanged until the activation commit is clean.
 
 ## Open Questions
 
@@ -130,9 +130,9 @@ changes.
 
 ## Blockers
 
-- Not blocked. It is intentionally proposed until selected by roadmap or user
-  priority. Activation may start incrementally once `.2` can choose one exact
-  boundary and one exact fixture.
+- None. `.2` is active after clean selector commit `b4e66c067`; perform the
+  IR-policy audit and choose one exact boundary and fixture without
+  implementation.
 
 ## Verification Log
 
@@ -145,7 +145,7 @@ changes.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `FSMGEN-HIR-ROADMAP-FRONTIER.1: capture FSMGEN HIR roadmap phase` | Captures the HIR roadmap phase; no compiler behavior changed. |
-| `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `pending` | Proposed first activation/design-selection leaf. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `FSMGEN-HIR-ROADMAP-FRONTIER.2: activate source-facing HIR boundary` | Continuity-only activation; architecture selection follows after this commit is clean. |
 
 ## Changelog
 

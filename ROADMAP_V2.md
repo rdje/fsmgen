@@ -8304,6 +8304,10 @@ choose reuse/new/textual handoff, one first frontend or builder, and one golden
 fixture before implementation. HIAL/VIAL, scale, MCP-write, and every
 director-gated lane remain inactive. See
 `docs/IAL2_POST_AHB_BOOK_SYNC_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `b4e66c067` activates only
+`FSMGEN-HIR-ROADMAP-FRONTIER.2` continuity-only. The source-facing HIR shape,
+first frontend/builder, golden fixture, current IR owners, and all product
+behavior remain unchanged during activation.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

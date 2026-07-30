@@ -28,3 +28,7 @@ builder's own contract requires the HIR boundary first. HIAL/VIAL, end-to-end
 scale, and beyond-read-only MCP remain broader independent proposed owners.
 Every director-gated lane remains inactive. The HIR child remains proposed
 until a separate clean activation commit.
+
+Clean selector commit `b4e66c067` activates only HIR `.2` through continuity
+changes. The source-facing boundary and every implementation choice remain
+unselected during activation.

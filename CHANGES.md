@@ -30995,3 +30995,17 @@ task tree and git.
   documentation audits pass with `Files=3, Tests=40`; Knowledge Map at 1,075
   facts / 5,539 keys, memory architecture, the 72-file mdBook HTML build,
   output cleanup, and diff hygiene pass.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.2 — source-facing HIR boundary activated
+
+- Activated only the selected no-behavior HIR architecture leaf after clean
+  parent selector commit `b4e66c067`.
+- Task/index, selector record/facts, roadmap, mdBook backlog, Memory, and
+  changelog continuity are aligned. The HIR shape, first frontend/builder,
+  golden fixture, current IR owners, code, tests, artifacts, APIs, HDL/runtime,
+  and public behavior remain unchanged during activation.
+- HIAL/VIAL, scale, MCP-write, and every director-gated owner remain inactive;
+  no separate development note is warranted for this continuity slice.
+  Focused documentation audits pass with `Files=3, Tests=40`; Knowledge Map,
+  memory architecture, the 72-file mdBook HTML build, output cleanup, and diff
+  hygiene pass.

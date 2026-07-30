@@ -6,6 +6,7 @@ answers:
   - "should high-level frontends lower directly to IAL1 or IAL2?"
   - "what is the proposed FSMGEN HIR architecture?"
   - "how does FSMGEN HIR relate to IAL1 and IAL2?"
+  - "is the source-facing FSMGEN HIR architecture audit active now?"
 date: 2026-06-28
 status: current
 tags: [architecture, hir, ial1, ial2, frontend, task-tree, roadmap]
@@ -14,8 +15,8 @@ reverify: rg -n 'FSMGEN-HIR-ROADMAP-FRONTIER|source-facing HIR|high-level fronte
 ---
 
 `FSMGEN-HIR-ROADMAP-FRONTIER` owns the source-facing FSMGEN HIR roadmap phase.
-The phase is proposed and not PNT-eligible until explicit activation or roadmap
-selection.
+Clean parent selector commit `b4e66c067` activates architecture-selection leaf
+`.2` continuity-only.
 
 The recorded architecture direction is:
 
@@ -26,6 +27,6 @@ input layer: HIR should lower to IAL2 when the source expresses
 protocol/platform intent and to IAL1 when the source is already concrete
 FSM/control logic.
 
-The first activation leaf is `FSMGEN-HIR-ROADMAP-FRONTIER.2`, a design
-selection/audit leaf. It must satisfy `docs/IR_POLICY.md` before parser,
-compiler, source, generated-artifact, config, or behavior changes begin.
+Active `.2` is a design selection/audit leaf. It must satisfy
+`docs/IR_POLICY.md` before parser, compiler, source, generated-artifact, config,
+or behavior changes begin. The activation itself selects no architecture.

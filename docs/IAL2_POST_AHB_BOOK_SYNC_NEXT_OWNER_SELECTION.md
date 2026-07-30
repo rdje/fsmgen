@@ -69,5 +69,10 @@ passes at `1075` facts / `5539` question keys; memory architecture passes with
 `MEMORY.md` at `46` lines; the 72-file mdBook HTML build passes and its exact
 repository-local output is removed; diff hygiene passes.
 
+Clean selector commit `b4e66c067` activates only
+`FSMGEN-HIR-ROADMAP-FRONTIER.2` through continuity changes. Every architecture
+choice, implementation-bearing file, broader proposed horizon, and
+director-gated lane remains unchanged during activation.
+
 Rollback removes this selector record/fact and restores `.841` to active. Every
 candidate remains proposed or director-gated, and product behavior is unchanged.
