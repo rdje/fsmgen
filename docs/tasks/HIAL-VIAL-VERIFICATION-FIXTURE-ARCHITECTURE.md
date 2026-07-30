@@ -291,4 +291,7 @@ evidence-backed handoff.
 - `2026-07-30`: Clean child behavior commit `a62ddb705` activates parent
   selector `.827`; HIAL/VIAL remains proposed and unchanged while `.827`
   compares it with smaller adjacent and cross-lane owners.
+- `2026-07-30`: Selector `.827` chooses pending data-only exact-four
+  two-window `.ahb` alias `.828`; HIAL/VIAL remains proposed with its complete
+  portable-fast/full-language/VHDL/mixed-language/scale boundary intact.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

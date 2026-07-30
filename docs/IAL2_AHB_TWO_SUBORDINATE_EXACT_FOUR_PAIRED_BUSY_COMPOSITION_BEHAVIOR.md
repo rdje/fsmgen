@@ -26,6 +26,11 @@ Clean behavior commit `a62ddb705` activates no-behavior parent selector
 `.827`. The selector, not this behavior record, owns the next exact roadmap
 choice; the shipped 331/372/55 boundary remains unchanged during activation.
 
+Completed selector `.827` now selects pending data-only alias implementation
+`.828`. The future byte-identical `.ahb` path projects 332/373/56 split 28/28;
+t1540 will own alias parity while t1539 remains the sole assertion-enabled
+runtime. No alias ships in selection.
+
 ## Exact Source Delta
 
 The 6,645-byte source is the frozen identity/requester/cardinality-only

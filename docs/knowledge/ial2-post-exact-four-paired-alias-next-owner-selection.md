@@ -56,3 +56,7 @@ selected assertion-enabled runtime.
 Clean child behavior commit `a62ddb705` activates no-behavior parent selector
 `.827`; the `.826` handoff is complete and public behavior remains 331/372/55
 while `.827` owns the next exact selection.
+
+Completed `.827` selects pending `.828`, the byte-identical matching
+two-window exact-four `.ahb` alias. Future t1540 owns parity without a second
+runtime; t1539 remains the shared assertion-enabled authority.

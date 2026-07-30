@@ -7848,6 +7848,17 @@ Clean behavior commit `a62ddb705` now activates no-behavior parent selector
 `.827`. Public accounting remains 331/372/55 split 28 `.ppif`/27 `.ahb` while
 the selector compares one exact next roadmap owner; no source, support, test,
 artifact, API, HDL/runtime, backend, protocol, or HIAL/VIAL behavior changes.
+Selector `.827` now selects pending `.828`, the byte-identical matching
+two-window exact-four `.ahb` alias. A same-volume 6,645-byte candidate proves
+strict `ahb_tb`/4-child/29-signal success, identical 4 IAL1/5 IAL0 payloads,
+two windows, width-three exact-four retirement, both BUSY-parking contexts,
+one-hot retained response ownership, normalized semantic root `top`, real
+read-only shell-disabled MCP, public HDL verification, and alias-only residue
+removal. Implementation projects 332/373/56 split 28 `.ppif`/28 `.ahb`; t1540
+will own parity without simulation while t1539 remains the assertion-enabled
+10/8/2/8/2/`44332211`/`88776655` runtime authority. HIAL/VIAL and broader
+owners remain separate. See
+`docs/IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

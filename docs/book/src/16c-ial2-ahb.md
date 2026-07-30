@@ -2463,6 +2463,14 @@ Current accounting is 331/372/55 split 28 `.ppif`/27 `.ahb`. See the
 Clean behavior commit `a62ddb705` activates parent selector `.827` without a
 public behavior change. The 331/372/55 split 28 `.ppif`/27 `.ahb` boundary
 remains fixed while it compares one exact next roadmap owner.
+Selector `.827` selects pending `.828`, the byte-identical matching two-window
+exact-four `.ahb` alias. The disposable candidate preserves exact 4 IAL1/5
+IAL0 artifacts, four children, 29 signals, two windows, width-three exact-four
+retirement, both BUSY-parking contexts, normalized semantic/read-only-MCP and
+public-verifier behavior, while removing only alias residue. Implementation
+projects 332/373/56 split 28 `.ppif`/28 `.ahb`; t1540 will prove parity without
+a second runtime. See the
+[next-owner selection](../../IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

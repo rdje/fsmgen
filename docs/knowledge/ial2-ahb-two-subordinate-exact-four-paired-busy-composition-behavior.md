@@ -39,3 +39,7 @@ portability, scale, and decision `0020` remain separate.
 Clean behavior commit `a62ddb705` activates no-behavior parent selector
 `.827`; current 331/372/55 behavior is unchanged while that selector chooses
 one exact next roadmap owner.
+
+Completed `.827` selects pending data-only alias implementation `.828` at
+projected 332/373/56 split 28/28. The alias remains absent in selection; future
+t1540 owns parity and t1539 remains the shared assertion-enabled runtime.

@@ -158,9 +158,14 @@ Clean child behavior commit `a62ddb705` activates no-behavior parent selector
 `.827`. The former `.826` selection is complete; `.827` independently owns the
 next exact roadmap choice while public behavior remains at 331/372/55.
 
+Completed `.827` selects pending `.828`, the byte-identical matching
+two-window exact-four `.ahb` alias through existing suffix/lowering machinery.
+Future t1540 owns parity without another simulation; t1539 remains the shared
+assertion-enabled runtime.
+
 ## Rollback
 
-Rollback removes this selection record/fact, the proposed audit tree, and the
-handoff from `.826`. It leaves shipped 330/371/54 behavior, existing tests,
-generators, semantic/MCP APIs, HIAL/VIAL proposal, and decision `0020`
-unchanged.
+Rollback of the `.826` selector record alone removes only its historical
+handoff; the completed child tree owns rollback of the now-shipped
+331/372/55 behavior. Existing generators, semantic/MCP APIs, HIAL/VIAL
+proposal, and decision `0020` remain unchanged.

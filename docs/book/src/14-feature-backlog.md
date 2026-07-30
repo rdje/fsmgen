@@ -11573,6 +11573,13 @@ preserve both adjacent generic/profile families. See the
 Clean behavior commit `a62ddb705` activates parent selector `.827` without a
 public behavior change. Accounting remains 331/372/55 split 28 `.ppif`/27
 `.ahb` while it selects one exact next roadmap owner.
+Selector `.827` selects pending `.828`, the byte-identical matching two-window
+exact-four `.ahb` alias through existing suffix/lowering machinery. A direct
+same-volume strict/artifact/semantic/read-only-MCP/verifier probe passes with
+alias-only residue removal. Implementation projects 332/373/56 split 28/28;
+t1540 will own parity without another simulation while t1539 remains the
+shared assertion-enabled runtime. See the
+[next-owner selection](../../IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
