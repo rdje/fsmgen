@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# check_readme_entrypoint.sh - doctrine check for decision 0021: README.md is a
-# bounded discovery entry point, not a per-leaf append log.
+# check_readme_entrypoint.sh - doctrine check for decisions 0021 and 0024:
+# README.md is a bounded, nearly static landing page, not an append log.
 #
 # README.md is the file every harness's bootstrap chain routes a fresh agent to
 # first, so its size is paid on every ramp-up in every session. MEMORY.md is
@@ -10,7 +10,7 @@
 #
 # Two structural invariants, both re-derived from the tracked file:
 #
-#   1. SIZE     - README.md stays under a line cap.
+#   1. SIZE     - README.md stays under both line and byte caps.
 #   2. NARRATION - no single line enumerates two or more work-unit leaves with
 #                  narration verbs. That pattern (".2.1 captured ..., .2.2
 #                  completed ..., .2.3 selected ...") is the append-log
@@ -18,13 +18,15 @@
 #                  "documents the .794 shipped aggregate") is legitimate index
 #                  content and is deliberately allowed.
 #
-# Knobs (env): README_LINE_CAP, README_MAX_LEAF_REFS_PER_LINE.
+# Knobs (env): README_LINE_CAP, README_BYTE_CAP,
+#              README_MAX_LEAF_REFS_PER_LINE.
 set -uo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT_DIR}"
 
-CAP="${README_LINE_CAP:-2600}"
+LINE_CAP="${README_LINE_CAP:-300}"
+BYTE_CAP="${README_BYTE_CAP:-16384}"
 MAX_REFS="${README_MAX_LEAF_REFS_PER_LINE:-1}"
 fail=0
 
@@ -38,14 +40,24 @@ fi
 
 # 1. Size cap.
 lines=$(wc -l < README.md | tr -d ' ')
-if [ "${lines}" -le "${CAP}" ]; then
-  ok "README.md is ${lines} lines (<= cap ${CAP})"
+if [ "${lines}" -le "${LINE_CAP}" ]; then
+  ok "README.md is ${lines} lines (<= cap ${LINE_CAP})"
 else
-  note "README.md is ${lines} lines (> cap ${CAP})"
-  note "  README.md is a bounded discovery entry point (docs/decisions/0021)."
+  note "README.md is ${lines} lines (> cap ${LINE_CAP})"
+  note "  README.md is a nearly static landing page (docs/decisions/0024)."
   note "  Move per-leaf detail to its owning task-tree under docs/tasks/, durable"
   note "  cross-cutting facts to docs/decisions/, user-facing behavior to docs/book/,"
   note "  and leave history to git (git log --grep=<UNIT-ID>)."
+fi
+
+bytes=$(wc -c < README.md | tr -d ' ')
+if [ "${bytes}" -le "${BYTE_CAP}" ]; then
+  ok "README.md is ${bytes} bytes (<= cap ${BYTE_CAP})"
+else
+  note "README.md is ${bytes} bytes (> cap ${BYTE_CAP})"
+  note "  README.md is a nearly static landing page (docs/decisions/0024)."
+  note "  Move dynamic or detailed content to its canonical maintained surface;"
+  note "  README_POLICY.md defines the project-neutral routing and exception rule."
 fi
 
 # 2. Per-leaf chronology enumeration.

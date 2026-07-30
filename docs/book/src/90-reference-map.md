@@ -41,6 +41,7 @@ Some docs are intentionally still focused references:
 - [../../COMPOSITION_LEGACY_MAPPING.md](../../COMPOSITION_LEGACY_MAPPING.md)
 - [../../../MEMORY.md](../../../MEMORY.md)
 - [../../../ROADMAP_V2.md](../../../ROADMAP_V2.md)
+- [../../../README_POLICY.md](../../../README_POLICY.md)
 - [../../../COMMIT.md](../../../COMMIT.md)
 
 These should stay precise and sometimes narrower than the book.
@@ -49,6 +50,10 @@ These should stay precise and sometimes narrower than the book.
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 `ROADMAP_STATUS.md` is retained only as a frozen legacy record under decision
 0007 and must not be used as current status.
+
+`README_POLICY.md` is the project-neutral landing-page maintenance standard:
+it defines stable content, routes dynamic detail elsewhere, and requires
+deterministic line/byte budgets in both pre-commit and CI.
 
 `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is the canonical human handoff contract
 for SPECFORGE-style downstream consumers. The book includes that file directly

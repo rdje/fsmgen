@@ -191,8 +191,9 @@ Expected signals:
 
 - mdBook completes without broken source or renderer errors.
 - docs relative-path audit reports no machine-local home-directory paths.
-- README entry-point check confirms `README.md` is under its line cap and does
-  not re-narrate per-leaf work-unit history (`docs/decisions/0021`).
+- README entry-point check confirms `README.md` is under its line and byte caps
+  and does not re-narrate per-leaf work-unit history (`docs/decisions/0021`
+  and `0024`; reusable policy: `README_POLICY.md`).
 - Knowledge Map check says facts are valid, IDs are unique, and the map is in sync.
 - memory architecture check confirms `MEMORY.md` is bounded and bootstrap/task/decision stores exist.
 - doctrine bootstrap check confirms root doctrine/toolbox docs, bootstrap

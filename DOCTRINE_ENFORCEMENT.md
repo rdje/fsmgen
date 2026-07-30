@@ -48,7 +48,7 @@ FSMGEN uses the same three archetypes as the portable model:
 
 | Archetype | Meaning | FSMGEN examples |
 | --- | --- | --- |
-| Structural | Re-derive an invariant from tracked files. | `MEMORY.md` line cap, `README.md` entry-point cap and chronology density, bootstrap pointers, relative-path docs audit. |
+| Structural | Re-derive an invariant from tracked files. | `MEMORY.md` line cap, `README.md` line/byte caps and chronology density, bootstrap pointers, relative-path docs audit. |
 | Oracle | Re-run a deterministic tool. | Focused `prove` tests, `mdbook build docs/book`, `./bin/ci-regression`, HDL validation. |
 | Evidence | Require a task-tree leaf to carry tool-backed diagnosis and verification evidence. | Future diagnosis-evidence checks can cite `TOOLBOX.md` commands and rerunnable gates. |
 
@@ -72,7 +72,7 @@ Current registered checks:
 | `MEMORY-ARCH` | `scripts/check_memory_architecture.sh` | `MEMORY_ARCHITECTURE.md`, bounded `MEMORY.md`, bootstrap pointers, decision store, and task-tree index are present and compliant. |
 | `KNOWLEDGE-MAP` | `knowledge-map/scripts/check_knowledge_map.sh` | Fact cards are valid and `KNOWLEDGE_MAP.md` is in sync with them. |
 | `DOC-PATHS` | `scripts/check_docs_relative_paths.sh` | Live docs and the Knowledge Map do not leak machine-local absolute home paths. |
-| `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | `README.md` stays under its line cap and no line enumerates two or more narrated work-unit leaves (`docs/decisions/0021`). |
+| `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | `README.md` stays within its 300-line / 16,384-byte landing-page budget and no line enumerates two or more narrated work-unit leaves (`docs/decisions/0021` and `0024`; reusable standard: `README_POLICY.md`). |
 | `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
 
 List the registry with:

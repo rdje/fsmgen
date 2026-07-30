@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `README-STATIC-LANDING-PAGE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / entry-point documentation`
 - Created: `2026-07-30`
 - Last updated: `2026-07-30`
@@ -40,7 +40,7 @@ their own README files from growing into histories or documentation catalogs.
 ## Task Tree
 
 - ID: `README-STATIC-LANDING-PAGE`
-  Status: `active`
+  Status: `done`
   Goal: `Make README.md a concise, nearly static landing page and prevent renewed growth.`
   Children: `README-STATIC-LANDING-PAGE.1, README-STATIC-LANDING-PAGE.2, README-STATIC-LANDING-PAGE.3`
 
@@ -59,10 +59,10 @@ their own README files from growing into histories or documentation catalogs.
   Commit: `README-STATIC-LANDING-PAGE.2: reduce README to stable landing page`
 
 - ID: `README-STATIC-LANDING-PAGE.3`
-  Status: `active`
+  Status: `done`
   Goal: `Add a small project-neutral README maintenance standard and ratchet mechanical enforcement to the reduced shape.`
   Acceptance: `A self-contained git-tracked Markdown standard explains the stable landing-page contract, dynamic-content routing, line/byte budgets, deterministic pre-commit/CI enforcement, exception rule, and adoption checklist without FSMGen-specific assumptions; FSMGen's doctrine check enforces the reduced budget; doctrine/tooling docs, decision record, task tree, Memory, mdBook when relevant, and Knowledge Map are synchronized.`
-  Verification: `Pending.`
+  Verification: `Added the self-contained 61-line / 2,425-byte README_POLICY.md with a project-neutral content contract, routing table, line/byte guard, pre-commit/CI rule, explicit cap-increase boundary, and six-step adoption checklist. Decision 0024 records FSMGen's nearly-static contract and 300-line / 16,384-byte budgets; the canonical fact card is indexed by the regenerated Knowledge Map at 1,065 facts / 5,482 question keys. scripts/check_readme_entrypoint.sh now checks lines, bytes, and chronology; its default check passes at README.md 244 lines / 9,679 bytes. Override probes at line cap 243 and byte cap 9,678 both fail with actionable routing guidance. README, doctrine registry documentation, toolbox, decision index, and mdBook reference map link the standard. README local links, shell syntax, Knowledge Map generation/check, and mdBook build pass; generated docs/book/book is removed. Diff hygiene and all six registered doctrine checks pass; runtime behavior is unchanged.`
   Commit: `README-STATIC-LANDING-PAGE.3: codify reusable README growth control`
 
 ## Validation Plan
@@ -89,6 +89,12 @@ recoverable in git; no replacement append-log file is created.
 - `2026-07-30`: The reduced landing page is 242 lines / 9,566 bytes. Its
   quick-start commands and every retained local link were verified before
   closeout; detailed dynamic content remains in existing canonical homes.
+- `2026-07-30`: The reusable standard is deliberately one Markdown file rather
+  than a copied FSMGen-specific script. It specifies a portable check contract
+  and adoption steps, while each adopting repository selects and owns its caps.
+- `2026-07-30`: FSMGen's reviewed post-link baseline is 244 lines / 9,679
+  bytes; fixed 300-line / 16,384-byte ceilings leave modest headroom and may
+  increase only through an explicit reviewed landing-contract decision.
 
 ## Blockers
 

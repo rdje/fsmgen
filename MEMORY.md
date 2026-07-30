@@ -5,15 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`README-STATIC-LANDING-PAGE.2: reduce README to stable landing page`).
-- active_work_unit: `README-STATIC-LANDING-PAGE.3` (active after this commit).
-- current_state: `README.md` is a verified 242-line / 9,566-byte stable landing
-  page, down from 2,353 lines / 377,853 bytes. Dynamic detail remains in its
-  canonical book/task/decision/fact/git/source surfaces; runtime is unchanged.
-- next_action: add the small project-neutral git-tracked README maintenance
-  standard, ratchet FSMGen's deterministic line/byte budget to the reduced
-  shape, synchronize doctrine/decision/fact surfaces, and close the tree.
-- in_flight_uncommitted: none after this landing-page commit; no background job.
+- latest_commit: this commit (`README-STATIC-LANDING-PAGE.3: codify reusable README growth control`).
+- active_work_unit: `README-STATIC-LANDING-PAGE.3` (complete; tree done).
+- current_state: `README.md` is a verified 244-line / 9,679-byte nearly-static
+  landing page. `README_POLICY.md` is the 61-line project-neutral shareable
+  standard; decision 0024 and 300-line / 16,384-byte checks prevent regrowth.
+- next_action: from the clean tree, resume roadmap PNT by selecting the
+  smallest exact roadmap-aligned owner after completed parent frontier `.835`;
+  create/activate its task-tree leaf before any implementation change.
+- in_flight_uncommitted: none after this policy commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

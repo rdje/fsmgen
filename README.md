@@ -235,7 +235,9 @@ the mdBook, work state in task trees, decisions in decision records, established
 facts in the Knowledge Map, and history in git.
 
 The bounded-entrypoint rationale is recorded in decision
-[0021](docs/decisions/0021-readme-is-a-bounded-discovery-entrypoint.md).
+[0021](docs/decisions/0021-readme-is-a-bounded-discovery-entrypoint.md). The
+shareable, project-neutral guard and adoption checklist are tracked in
+[README_POLICY.md](README_POLICY.md).
 
 ## License
 
