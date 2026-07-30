@@ -8254,6 +8254,14 @@ Clean grouped-assertion expectation completion commit `5fb1c0d47` activates
 parent selector `.839` continuity-only. It selects no candidate during
 activation; the scheduled four-document lifecycle review and every explicit
 director gate remain inactive, and both legacy status files stay untouched.
+Completed `.839` selects proposed no-behavior
+`BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1`. The live closure is now
+`229` project files / `228` packages / `19` IAL2 owners because identifier
+implementation commit `299db4cae` added reachable
+`FSM::Support::HDLInstanceIdentifierPolicy`; the canonical note/fact remain one
+package lower. Chapter 16c's stale counts-beyond-four residue is preserved as a
+separate next documentation candidate. See
+`docs/IAL2_POST_IDENTIFIER_NEXT_OWNER_SELECTION.md`.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

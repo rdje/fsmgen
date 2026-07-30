@@ -5,15 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.839: activate post identifier selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.839`
-  (continuity-only activation).
-- current_state: the identifier and grouped-assertion repair trees are clean
-  and complete; `.839` owns one new roadmap selection without selecting or
-  activating a candidate yet.
-- next_action: reconcile the current-HEAD eligible candidate set and select
-  exactly one smallest owner, preserving lifecycle-review/director gates.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.839: select identifier import-map refresh`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.839` (complete).
+- current_state: live entrypoint closure is 229 project files / 228 packages /
+  19 IAL2 owners; `.839` selects proposed no-behavior
+  `BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1` to repair the one-package
+  canonical note/fact drift.
+- next_action: after this selector commits cleanly, create and activate only
+  the selected import-map refresh task tree before changing its note/fact.
+- in_flight_uncommitted: none after this selection commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -38,6 +38,10 @@ history; this file carries only the current bounded resume state.
 - Startup remeasurement after the identifier implementation reports 229
   project files / 228 packages / 19 IAL2 owners; selection must reconcile that
   live closure against the saved 228 / 227 / 19 import-tree baseline.
+- Chapter 16c still says counts beyond four are outside the shipped surface,
+  contradicting its current canonical literal 2..16 sections; the next parent
+  selector must preserve or select that independent documentation repair after
+  import-map synchronization.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously

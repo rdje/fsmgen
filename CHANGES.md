@@ -30867,3 +30867,19 @@ task tree and git.
   development note is warranted. Feature-backlog status, live-book-path, and
   relative-path audits pass with `Files=3, Tests=40`; Knowledge Map, memory-
   architecture, and diff-hygiene checks pass.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.839 — identifier import-map refresh selected
+
+- The exact live closure probe reports `229` project files / `228` packages /
+  `19` IAL2 owners against the canonical note/fact's `228` / `227` / `19`.
+  Git history traces the added reachable Support owner exactly to identifier
+  implementation commit `299db4cae`; no unexplained dependency drift remains.
+- Selected proposed no-behavior
+  `BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1` as the smallest
+  foundational owner. The selected child remains inactive until a separate
+  clean activation, and no product behavior changes in this selector.
+- Preserved Chapter 16c's contradictory counts-beyond-four residue as the next
+  independent documentation candidate. Lifecycle review and director gates
+  remain inactive, and both frozen status files remain untouched. Focused
+  documentation audits pass with `Files=3, Tests=40`; Knowledge Map passes at
+  1,073 facts / 5,529 keys; memory architecture and diff hygiene pass.

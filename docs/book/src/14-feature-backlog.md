@@ -11961,6 +11961,13 @@ Clean grouped-assertion expectation completion commit `5fb1c0d47` activates
 parent selector `.839` continuity-only. No candidate is selected during
 activation; the scheduled lifecycle review and every director-gated direction
 remain inactive.
+Completed `.839` selects proposed no-behavior
+`BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1`. The live entrypoint closure
+is now `229` project files / `228` packages / `19` IAL2 owners because the
+portable identifier implementation added one reachable Support owner; the
+canonical note/fact remain one package lower. The separate stale AHB
+counts-beyond-four residue stays an independent next documentation candidate.
+See the [selection record](../../IAL2_POST_IDENTIFIER_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
