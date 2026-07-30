@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `public-contract, specification, and focused-test synchronization`
 - Created: `2026-07-23`
 - Last updated: `2026-07-30`
@@ -57,7 +57,7 @@ changed loop lowering and requester terminal-count paths.
 ## Task Tree
 
 - ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR`
-  Status: `active`
+  Status: `done`
   Goal: `Restore the pre-existing public synchronization gates without behavior changes.`
   Children: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1`, `PUBLIC-SYNC-TEST-DRIFT-REPAIR.2`, `PUBLIC-SYNC-TEST-DRIFT-REPAIR.3`, `PUBLIC-SYNC-TEST-DRIFT-REPAIR.4`
 
@@ -83,11 +83,11 @@ changed loop lowering and requester terminal-count paths.
   Commit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.3: synchronize alias diagnostic expectation`
 
 - ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.4`
-  Status: `active`
+  Status: `done`
   Goal: `Synchronize generated AHB subordinate IAL0 ERROR-drive priority-mask expectations.`
   Acceptance: `After .3 commits cleanly, audit the exact four stale unguarded ERROR-drive regexes in t/1475 and t/1482 against the named-drive priority masks introduced by 1dbff8fc6; update only those proven structural expectations, prove both focused files plus the relevant rule/transaction-priority and AHB preservation gates, and keep lowerer/generator/product behavior unchanged.`
-  Verification: `Activated only after clean .3 implementation commit ce891bbd7. Isolated current-HEAD t/1475 fails two assertions at lines 69-70 and t/1482 fails two assertions at lines 51-52. Exact repository search finds only these four old unguarded patterns. Git history identifies 1dbff8fc6 as the sole post-arbitration LoweringIR change; it extends rule/transaction priority to exact-one-local-caller named drives, so emitted error_first HRESP and error_complete HREADYOUT assignments now carry the selected inverse-winner masks. Feature-backlog status, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1,069 facts / 5,502 question keys; mdBook HTML build and diff hygiene pass. Activation changes continuity surfaces only; t1475/t1482, lowerer/generator sources, fixtures, generated artifacts, and product behavior remain unchanged until this commit is clean.`
-  Commit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.4: activate named-drive expectation sync`
+  Verification: `Activated only after clean .3 implementation commit ce891bbd7 through clean activation commit 5ddfb9791. Updated exactly the four stale t1475/t1482 generated-IAL0 structural expectations to require the shipped named-drive-priority inverse-winner masks: HRESP first-ERROR is suppressed while HREADYOUT/HRESP indicates final ERROR, and HREADYOUT final-ERROR completion is suppressed during phase capture/hold. Exact literal qr/\Q...\E/ forms avoid fragile parenthesis escaping. Both files pass Perl syntax and move from four failed assertions to All tests successful, Files=2, Tests=7. Both canonical ppif/ahb_lite_subordinate{,_byte_lane}.ppif sources pass strict JSON checking. The host100/process4096 guarded t1209/t1211/t1219/t1519/t1542 preservation cluster reports All tests successful, Files=5, Tests=21 in 71 seconds. Focused-index, feature-backlog, live-book-path, and relative-path audits pass with Files=4, Tests=42; Knowledge Map generation/check passes at 1,069 facts / 5,502 question keys; mdBook HTML build and diff hygiene pass; the staged seven-doctrine driver reports [doctrine] all doctrine checks passed with fresh perl_diagnostic/prove_summary task-acceptance evidence. No lowerer/generator source, fixture, generated artifact, support/report/schema, HDL/runtime, or product behavior changed.`
+  Commit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.4: synchronize named-drive expectations`
 
 ## Decisions
 
@@ -114,12 +114,14 @@ changed loop lowering and requester terminal-count paths.
   six-file alias gate; parser and product behavior remain unchanged.
 - `2026-07-30`: Clean `.3` commit `ce891bbd7` activates `.4` continuity-only
   for the exact four rooted generated-IAL0 expectation mismatches.
+- `2026-07-30`: `.4` synchronizes those four structural expectations, restores
+  both focused files plus the priority/AHB preservation cluster, and completes
+  this public-sync tree without product changes.
 
 ## Blockers
 
-- `.1` is complete at clean `012660f90`; `.2` is complete at clean
-  `4ba108b3d`; `.3` is complete at clean `ce891bbd7`; `.4` is active
-  continuity-only.
+- None. `.1`-.4 are complete; the next action returns to the parent IAL2
+  frontier only after the clean `.4` commit.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
@@ -147,3 +149,18 @@ changed loop lowering and requester terminal-count paths.
   `All tests successful` with `Files=6, Tests=36`; the staged driver reports
   `[doctrine] all doctrine checks passed`. The separate t1475/t1482 drift is
   isolated and owned by pending `.4`, not absorbed here.
+
+## Acceptance Checklist — `.4` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Isolated pre-fix prove output reports
+  the first stale Perl diagnostic at t/1475-ial2-ahb-subordinate.t line 69
+  and the parallel byte-lane failure at t/1482-ial2-ahb-subordinate-byte-lane.t
+  line 51. Git history identifies `1dbff8fc6` as the sole post-arbitration
+  LoweringIR change and exact search bounds the old unguarded patterns to four.
+- [x] **ADDRESSED (verified)** — The four exact-literal expectation updates
+  move t1475/t1482 from four failed assertions to `All tests successful`,
+  `Files=2, Tests=7`; both canonical public sources strict-check cleanly.
+- [x] **NO REGRESSION** — The host100/process4096 guarded static-conflict,
+  selector, rule/transaction-priority, generated-AHB-runtime, and named-drive
+  cluster reports `All tests successful`, `Files=5, Tests=21`; the staged
+  driver reports `[doctrine] all doctrine checks passed`.

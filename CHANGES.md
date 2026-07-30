@@ -30633,3 +30633,23 @@ task tree and git.
   `Files=3, Tests=40`; Knowledge Map generation/check passes at 1,069 facts /
   5,502 keys; mdBook HTML build and diff hygiene pass. This activation does not
   warrant a development-note entry.
+
+### PUBLIC-SYNC-TEST-DRIFT-REPAIR.4 — named-drive expectations synchronized
+
+- Updated exactly four generated-IAL0 structural expectations—t1475 lines
+  69-70 and t1482 lines 51-52—to require the inverse-winner masks already
+  emitted by named-drive priority. Exact literal `qr/\Q...\E/` forms keep the
+  guard contracts readable and avoid fragile parenthesis escaping.
+- Both files pass Perl syntax and move from four failed assertions to
+  `All tests successful`, `Files=2, Tests=7`. Both canonical base/byte-lane AHB
+  subordinate public sources pass strict JSON checking.
+- The host100/process4096 guarded t1209/t1211/t1219/t1519/t1542 static-conflict,
+  selector, priority, generated-AHB-runtime, and named-drive cluster reports
+  `All tests successful`, `Files=5, Tests=21` in 71 seconds.
+- No lowerer/generator source, fixture, generated artifact, support/report/
+  schema, HDL/runtime, or product behavior changed. Public-sync `.1`-.4 are
+  complete. Focused-index, feature-backlog, live-book-path, and relative-path
+  audits pass with `Files=4, Tests=42`; Knowledge Map generation/check passes
+  at 1,069 facts / 5,502 keys; mdBook HTML build and diff hygiene pass. No
+  development-note entry is warranted. The staged seven-doctrine driver passes
+  with fresh `perl_diagnostic` / `prove_summary` task-acceptance evidence.

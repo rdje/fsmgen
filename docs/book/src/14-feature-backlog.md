@@ -11888,6 +11888,10 @@ named-drive priority masks; pending `.4` owns them without changing behavior.
 Clean `.3` implementation commit `ce891bbd7` activates public-sync `.4`
 continuity-only for exactly those four patterns. The tests, lowerer/generator,
 generated artifacts, and product behavior remain unchanged during activation.
+Public-sync `.4` is now complete: t1475/t1482 require the exact shipped
+inverse-winner masks, both focused files and the named-drive/AHB preservation
+cluster pass, and both canonical public sources strict-check. No product
+behavior changed; the public-sync `.1`-.4 tree is complete.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

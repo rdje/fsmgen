@@ -55,3 +55,6 @@ commit `1dbff8fc6`; pending `.4` owns that separate repair.
 
 Clean `.3` commit `ce891bbd7` activates only `.4` continuity-only for those
 four rooted expectations; tests and implementation remain unchanged.
+
+Completed `.4` restores t1475/t1482 plus the guarded named-drive/AHB cluster
+without product changes. The public-sync `.1`-.4 child tree is complete.

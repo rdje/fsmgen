@@ -29,3 +29,8 @@ structural expectations after `.3` commits cleanly.
 Clean `.3` commit `ce891bbd7` activates `.4` continuity-only. The four tests,
 lowerer/generator sources, generated artifacts, and product behavior remain
 unchanged until the activation commit is clean.
+
+Completed `.4` updates exactly the four structural expectations to the shipped
+inverse-winner masks. t1475/t1482 pass together, the guarded named-drive/AHB
+preservation cluster is green, both canonical public sources strict-check, and
+implementation plus product behavior remain unchanged.

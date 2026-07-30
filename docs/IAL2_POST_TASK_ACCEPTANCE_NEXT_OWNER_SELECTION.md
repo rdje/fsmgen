@@ -98,3 +98,8 @@ clean `.3` commit.
 Clean `.3` implementation commit `ce891bbd7` activates only public-sync `.4`
 continuity-only for those four rooted expectations; implementation sources and
 product behavior remain unchanged.
+
+Public-sync `.4` now synchronizes exactly those four expectations and restores
+the focused plus named-drive/AHB preservation gates without behavior changes.
+The `.1`-.4 child tree is complete; the next action returns to a clean parent
+IAL2 selector.

@@ -48,8 +48,8 @@ subtest 'adapter parses selected AHB subordinate byte-lane PPIF shape' => sub {
     like($fsm, qr/\(<- \(reg_data_q \(\| \(& reg_data_q 32'hffffff00\) \(& HWDATA 32'h000000ff\)\)\)\)/, 'generated IAL0 carries byte-lane write mask');
     like($fsm, qr/\(<- \(HRDATA> \(& reg_data_q 32'h0000ff00\)\) <read_byte_lane1_hit_start\)/, 'generated IAL0 carries masked byte read drive');
     like($fsm, qr/\(<- \(HRDATA> \(& reg_data_q 32'hffff0000\)\) <read_halfword_lane1_hit_start\)/, 'generated IAL0 carries masked halfword read drive');
-    like($fsm, qr/\(<- \(HRESP> 1'b1\) <error_first_start\)/, 'generated IAL0 keeps first ERROR response');
-    like($fsm, qr/\(<- \(HREADYOUT> 1\) <error_complete_start\)/, 'generated IAL0 keeps second ERROR completion');
+    like($fsm, qr/\Q(<- (HRESP> 1'b1) <(& error_first_start (! (& HREADYOUT (== HRESP 1'b1)))))\E/, 'generated IAL0 keeps first ERROR response');
+    like($fsm, qr/\Q(<- (HREADYOUT> 1) <(& error_complete_start (! (& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))) (! ahb_phase_pending_q)))\E/, 'generated IAL0 keeps second ERROR completion');
 
     is_deeply($result->{report}{transfer}{supported_size}, [qw(byte halfword word)], 'report captures selected supported sizes');
     is($result->{report}{transfer}{lane_order}, 'little-endian', 'report captures lane ordering');

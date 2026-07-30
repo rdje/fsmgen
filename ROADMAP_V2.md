@@ -8215,6 +8215,10 @@ Clean `.3` implementation commit `ce891bbd7` activates only public-sync `.4`
 continuity-only. Its exact boundary is the four rooted unguarded patterns at
 t1475 lines 69-70 and t1482 lines 51-52; tests, lowerer/generator sources,
 generated artifacts, and product behavior remain unchanged during activation.
+Completed public-sync `.4` updates exactly those four patterns to require the
+shipped inverse-winner masks. t1475/t1482 and the guarded five-file named-drive/
+AHB preservation cluster pass; both canonical public sources strict-check.
+No product behavior changed, and the `.1`-.4 public-sync tree is complete.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

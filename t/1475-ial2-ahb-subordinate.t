@@ -66,8 +66,8 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
         'generated AHB subordinate IAL0 keeps the ready default suppressed during phase capture and hold');
     like($fsm, qr/\(<- \(reg_data_q HWDATA\)\)/, 'generated AHB subordinate IAL0 writes storage on mapped writes');
     like($fsm, qr/\(<- \(HRDATA> reg_data_q\) <read_hit_start\)/, 'generated AHB subordinate IAL0 drives read data on mapped reads');
-    like($fsm, qr/\(<- \(HRESP> 1'b1\) <error_first_start\)/, 'generated AHB subordinate IAL0 drives first ERROR response');
-    like($fsm, qr/\(<- \(HREADYOUT> 1\) <error_complete_start\)/, 'generated AHB subordinate IAL0 completes the second ERROR cycle');
+    like($fsm, qr/\Q(<- (HRESP> 1'b1) <(& error_first_start (! (& HREADYOUT (== HRESP 1'b1)))))\E/, 'generated AHB subordinate IAL0 drives first ERROR response');
+    like($fsm, qr/\Q(<- (HREADYOUT> 1) <(& error_complete_start (! (& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))) (! ahb_phase_pending_q)))\E/, 'generated AHB subordinate IAL0 completes the second ERROR cycle');
 
     is($result->{report}{bindings}{bus}{response}{name}, 'HRESP', 'report captures AHB response binding');
     is($result->{report}{bindings}{bus}{response}{width}, 1, 'report captures one-bit AHB-Lite response width');
