@@ -11559,6 +11559,9 @@ runtime. Projected accounting is 331/372/55 split 28 `.ppif`/27 `.ahb`.
 Pending `.3` is the separate data-only implementation; no source ships in
 selection. See the
 [contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
+Clean contract commit `4d0cc34bd` activates only data-only implementation
+`.3`. The selected source/support/t1539/testbench remain absent during
+activation, so public behavior stays at 330/371/54 split 27/27.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

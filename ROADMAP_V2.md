@@ -7840,6 +7840,11 @@ at 10/8/2/8/2/`44332211`/`88776655`. Projected accounting is 331/372/55 split
 28 `.ppif`/27 `.ahb`. Pending `.3` owns data-only implementation; the source
 remains unshipped during selection. See
 `docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md`.
+Clean contract commit `4d0cc34bd` activates only data-only implementation
+`.3`. Activation changes continuity documentation and no parser, generator,
+public source, support, test, artifact, report/semantic/MCP API, HDL/runtime,
+simulator, backend, protocol, HIAL/VIAL, VHDL, verification-generation,
+portability, scale, decision-0020, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

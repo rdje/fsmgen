@@ -2442,6 +2442,9 @@ ownership, normalized semantic/read-only-MCP parity, and assertion-enabled
 t1539 runtime at 10/8/2/8/2/`44332211`/`88776655`. Projected accounting is
 331/372/55 split 28 `.ppif`/27 `.ahb`; pending `.3` owns implementation. See
 the [selected contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
+Clean contract commit `4d0cc34bd` activates only data-only implementation
+`.3`. The exact source/support/t1539/testbench remain absent during activation;
+the 330/371/54 split 27/27 shipped boundary is unchanged.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

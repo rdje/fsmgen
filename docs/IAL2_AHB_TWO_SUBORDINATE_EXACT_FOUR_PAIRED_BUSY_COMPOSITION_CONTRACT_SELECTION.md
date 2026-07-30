@@ -289,3 +289,8 @@ generic priority changes, direct backends, AXI/APB expansion, HIAL/VIAL
 activation and topology selection, verification-output generation, backend
 variants, VHDL, large-design scale implementation, portability, and decision
 `0020` remain separate task-tree-owned work.
+
+Clean contract commit `4d0cc34bd` activates only selected data-only
+implementation `.3`. Activation changes continuity documentation only; the
+source, support entry, t1539, and testbench remain absent and public accounting
+remains 330/371/54 split 27 `.ppif`/27 `.ahb` until `.3` ships.

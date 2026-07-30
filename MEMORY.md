@@ -5,14 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this two-subordinate exact-four paired `.2` contract;
-  predecessor activation `93a7f2089`.
-- active_work_unit: none after this commit; selected pending data-only
-  two-window exact-four implementation `.3` is next.
+- latest_commit: this two-subordinate exact-four paired `.3` activation;
+  predecessor contract `4d0cc34bd`.
+- active_work_unit:
+  `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.3`.
 - current_state: exact-four paired generic/profile paths ship at 330/371/54
   split 27/27 with t1538 parity and shared assertion-enabled t1537 runtime.
-- next_action: from this clean contract commit, activate `.3` separately and
-  ship the selected generic source/support/t1539 behavior.
+- next_action: ship the selected generic source/support/t1539 behavior and
+  prove exact 331/372/55 accounting plus preservation/cleanup gates.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
