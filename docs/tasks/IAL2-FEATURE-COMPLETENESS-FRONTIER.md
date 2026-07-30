@@ -5889,11 +5889,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.831: select direct VHDL reduction audit`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.832`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the next exact roadmap-aligned owner after direct-VHDL reduction-expression lowering ships.`
   Acceptance: `Activate only after the clean DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2 behavior commit. Reconcile the shipped scalar/static-bit identity/complement, required-only vector fold helpers, range/unresolved/compound fail-closed boundary, token-free named-drive VHDL, restored AMBA/APB preservation, no external VHDL compiler qualification, unchanged public source grammar, AHB requester 2..16 and 332/373/56 split 28/28 accounting, HIAL/VIAL, scale, simulator profiles, roadmap, mdBook, Knowledge Map, and relevant decisions. Compare exactly one smallest next owner across remaining roadmap candidates, freeze scope/validation/rollback, make no behavior change, and preserve repository-local storage plus host100/process4096 and canonical RAM/pressure reporting.`
-  Verification: `pending clean behavior commit`
-  Commit: `pending`
+  Verification: `Activated only after clean direct-VHDL reduction behavior commit 2879f22af. Activation changes continuity pointers only; shipped reduction lowering, parser/source grammar, generated HDL/runtime behavior, reports/semantic/MCP schemas, support accounting, protocols/AHB, HIAL/VIAL, scale, simulator profiles, decision 0020, tests, and generated artifacts remain unchanged while the selector performs its evidence comparison. Book/status/path truth gates pass 4 files/45 tests. Knowledge Map remains synchronized at 1,059 facts/5,448 question keys. The mdBook renders exactly 72 files/16,496,633 bytes and the exact repository-local render is removed. MEMORY.md is 50 lines, README.md is 2,343 lines, .artifacts/tmp/tests is empty, git_message_brief.txt is zero bytes, diff hygiene passes, and all six doctrine gates pass. Final canonical Stats-compatible capacity is 18,536,726,528/25,769,803,776 bytes = 17.264/24.000 GiB = 71.93%, with separate macOS kernel pressure level 1 and memory_pressure 75% free; guard occupancy is excluded from capacity truth. No background job remains.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.832: activate post reduction-lowering selector`
 
 The child selected by `.826` is complete through `.3`, and parent `.828` now
 closes the matching byte-identical two-subordinate exact-four `.ahb` alias.

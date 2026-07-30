@@ -2600,6 +2600,10 @@ preserves existing AMBA requester `HRESP` truthiness and APB generated-child
 artifacts, requester `2..16`, or 332/373/56 split 28/28 accounting. External
 VHDL compiler qualification remains separate. See the
 [shipped reduction behavior](../../DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md).
+Clean behavior commit `2879f22af` activates parent selector `.832`
+continuity-only. AHB source intent, runtime, generated artifacts, requester
+`2..16`, and 332/373/56 split 28/28 accounting remain unchanged while the
+selector compares the next roadmap owners.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

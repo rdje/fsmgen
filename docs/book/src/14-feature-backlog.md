@@ -11743,8 +11743,9 @@ vector rejection was rejected by preservation evidence because existing AMBA
 t1542/t1543 plus real t1420/t386 prove token-free output while public
 one-operand source syntax remains rejected. See the
 [shipped behavior](../../DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md).
-No external VHDL compiler qualification is claimed; proposed parent selector
-`.832` owns the next roadmap choice after the clean behavior commit.
+No external VHDL compiler qualification is claimed. Clean behavior commit
+`2879f22af` activates parent selector `.832` continuity-only; all shipped
+behavior remains unchanged while it selects exactly one next roadmap owner.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

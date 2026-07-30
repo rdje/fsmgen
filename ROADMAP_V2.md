@@ -8059,7 +8059,9 @@ compiler independence with shipped scope. t1542/t1543 and real t1420/t386
 prove token-free named-drive/AMBA/APB output; public one-operand source syntax
 does not widen, and decision `0023` still withholds external VHDL compiler
 qualification. See `docs/DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md`.
-Proposed parent selector `.832` owns the next clean roadmap choice.
+Clean direct-VHDL behavior commit `2879f22af` activates parent selector `.832`
+continuity-only. All shipped behavior remains unchanged while it compares and
+selects exactly one next roadmap owner.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
