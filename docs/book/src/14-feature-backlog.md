@@ -12066,6 +12066,15 @@ is activated. See the
 Clean integrity commit `c21765214` activates only `.844` through continuity
 changes. Candidate reconciliation/selection, every product surface, and every
 broader architecture owner remain unchanged until activation commits cleanly.
+Completed `.844` selects proposed no-product-behavior
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`. Its first audit will choose
+the VIAL topology, typed HIAL/VIAL bridge, portable/native verification
+semantics, SV/UVM and VHDL backend/profile boundaries, migration/parity/scale
+contracts, and exact later leaves before implementation. Public builder,
+whole-product scale, MCP-write, protocols/backends, lifecycle/transaction
+horizons, and all director-gated work remain inactive; the selected audit
+requires separate clean activation. See the
+[selection record](../../IAL2_POST_TASK_TREE_INTEGRITY_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

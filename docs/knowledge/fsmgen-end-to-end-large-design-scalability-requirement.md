@@ -6,7 +6,7 @@ answers:
   - "what does big to really big design support mean for FSMGen?"
   - "is FSMGen large-design scalability an active priority?"
   - "which task owns end-to-end FSMGen scalability?"
-date: 2026-07-30
+date: 2026-07-31
 status: current
 tags: [scalability, performance, large-design, end-to-end, requirement]
 evidence: docs/tasks/FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; MEMORY.md
@@ -54,3 +54,7 @@ Parent selector `.832` chooses the smaller shipped concurrent-assertion
 correctness audit first. End-to-end scale remains proposed with its measurable
 workload, correctness-oracle, resource, budget, graceful-failure, and
 regression-gate requirements unchanged.
+
+Parent selector `.844` selects the HIAL/VIAL architecture audit first.
+Whole-product scale remains independently proposed; the selected audit's own
+scale constraints do not replace end-to-end workload qualification.

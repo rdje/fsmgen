@@ -31354,3 +31354,23 @@ task tree and git.
   the 72-file / 16,666,702-byte HTML build pass; Knowledge Map passes at 1,084
   facts / 5,589 keys; memory, diff, repository-local cleanup, task-tree
   integrity, and all eight doctrine gates complete activation closeout.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.844 — HIAL/VIAL audit selected
+
+- Selected proposed no-product-behavior
+  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1` after clean `.844`
+  activation commit `17c60ccc8`; the audit remains inactive until a separate
+  clean commit.
+- The director-established dual-intent requirement now outranks the independent
+  public-builder, whole-product-scale, and MCP-write horizons because private
+  HIR and ledger prerequisites are closed, the inert-skeleton-to-runnable-
+  fixture gap and AHB architecture fixture are concrete, and `.1` is a bounded
+  documentation-only architecture audit.
+- Public builder, scale qualification, MCP-write trust expansion,
+  protocol/backend implementation, lifecycle/transaction horizons, every
+  director gate, both frozen files, and all product behavior remain unchanged.
+  The selection record/fact own rationale; no development note is warranted.
+- Task-tree integrity passes at one active tree / 845 nodes; docs audits pass at
+  `Files=3, Tests=40`; all 36 mdBook chapters and the 72-file / 16,670,326-byte
+  build pass; Knowledge Map passes at 1,085 facts / 5,594 keys; memory, diff,
+  all eight doctrines, and exact repository-local output cleanup pass.

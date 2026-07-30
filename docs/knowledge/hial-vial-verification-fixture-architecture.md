@@ -16,7 +16,7 @@ answers:
   - "is Verilator a traditional event-driven simulator?"
   - "does Verilator support events with timing enabled?"
   - "is the HIAL VIAL architecture active now?"
-date: 2026-07-30
+date: 2026-07-31
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
 evidence: docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; https://verilator.org/guide/latest/overview.html; https://verilator.org/guide/latest/languages.html; https://verilator.org/guide/latest/connecting.html
@@ -94,3 +94,8 @@ assertion correctness audit first. HIAL/VIAL remains proposed with its typed
 bridge, portable/native semantics, SV/UVM and VHDL lowerings, capability-
 qualified simulator profiles, parity, migration, and scale requirements
 unchanged.
+
+After the private HIR boundary and live task-tree integrity close, parent
+selector `.844` selects proposed no-behavior HIAL/VIAL architecture audit `.1`
+as the strongest ungated product-architecture owner. It remains inactive until
+a separate clean activation and changes no product behavior.

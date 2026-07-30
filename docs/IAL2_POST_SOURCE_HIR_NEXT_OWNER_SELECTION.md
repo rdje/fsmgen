@@ -102,3 +102,8 @@ by this infrastructure repair, and no product behavior changes.
 Clean integrity commit `c21765214` activates only `.844` through a separate
 continuity transition. Candidate reconciliation and selection remain
 unperformed until that activation commits cleanly.
+
+Completed `.844` now selects proposed no-behavior HIAL/VIAL architecture audit
+`.1`. The exact candidate comparison lives in
+`docs/IAL2_POST_TASK_TREE_INTEGRITY_NEXT_OWNER_SELECTION.md`; the selected
+audit still requires separate clean activation.

@@ -5,15 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.844: activate post-integrity selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.844` (active
-  continuity-only).
-- current_state: clean integrity commit `c21765214` activates only the exact
-  post-integrity roadmap selector; no candidate reconciliation or selection
-  occurs during activation.
-- next_action: reconcile all ungated roadmap candidates and select exactly one
-  smallest PNT-eligible owner without product behavior changes.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.844: select HIAL VIAL architecture audit`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
+  (proposed selected audit; not yet active).
+- current_state: `.844` selects only the no-product-behavior HIAL/VIAL
+  architecture audit after private HIR and live-ledger prerequisites close.
+- next_action: after the clean `.844` commit, activate only selected HIAL/VIAL
+  `.1` through a separate continuity commit.
+- in_flight_uncommitted: none after this selector commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -39,15 +38,18 @@ history; this file carries only the current bounded resume state.
   packages / 19 IAL2 owners and Support 71.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
-- Decisions `0028`-`0031` and the private HIR records remain canonical. Public
-  builder, HIAL/VIAL, scale, MCP-write, and every director-gated owner remain
-  inactive; active `.844` owns exact-one next-owner selection.
+- Decisions `0028`-`0031` and the private HIR records remain canonical. HIAL/
+  VIAL `.1` is selected but inactive; public builder, whole-product scale,
+  MCP-write, and every director-gated owner remain proposed/inactive.
 - Live ledger is 844 numbered nodes / 844 unique root references. `.73` is
   canonical `done`; `.705` is live `done` after `.706`-.709; `.758` has its
   canonical commit field. The checker reports one active tree / 845 total nodes.
 - `.843` verification: t1549 `Files=1, Tests=11`; docs audits `Files=3,
   Tests=40`; all 36 mdBook chapters and 72-file / 16,665,035-byte build pass;
   Knowledge Map is current at 1,084 facts / 5,589 keys; all output is removed.
+- `.844` selection verification: one active tree / 845 nodes; docs `Files=3,
+  Tests=40`; 36 chapters and 72-file / 16,670,326-byte build; Knowledge Map
+  1,085 facts / 5,594 keys; exact outputs removed.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously

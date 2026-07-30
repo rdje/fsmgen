@@ -6,7 +6,7 @@
 - Status: `proposed`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-07-12`
-- Last updated: `2026-07-12`
+- Last updated: `2026-07-31`
 - Owner: repo-local workflow
 
 ## Goal
@@ -103,6 +103,9 @@ work.
   arbitrary shell, ambient network, or unbounded filesystem authority.
 - `2026-07-12`: The read-only surface remains the default and supported profile;
   this tree must never regress it.
+- `2026-07-31`: Parent selector `.844` selects the HIAL/VIAL architecture audit
+  first. Beyond-read-only MCP remains an independent proposed trust-boundary
+  decision and is not required for verification-intent architecture.
 
 ## Open Questions
 

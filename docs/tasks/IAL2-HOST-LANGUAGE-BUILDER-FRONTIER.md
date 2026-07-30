@@ -6,7 +6,7 @@
 - Status: `proposed`
 - Roadmap lane: `IAL2 horizon exploration / authoring ergonomics`
 - Created: `2026-06-28`
-- Last updated: `2026-06-28`
+- Last updated: `2026-07-31`
 - Owner: repo-local workflow
 
 ## Goal
@@ -99,6 +99,9 @@ package, module, parser, source, or generated-artifact implementation work.
   contract and phase-test golden. This tree remains proposed: the internal
   second route selects no supported host language, package, version, or public
   compatibility promise.
+- `2026-07-31`: Parent selector `.844` selects the HIAL/VIAL architecture audit
+  first. Decision `0031` keeps any supported producer/public projection an
+  independent future choice; this builder remains proposed and inactive.
 
 ## Open Questions
 

@@ -76,3 +76,7 @@ Clean implementation commit `c21765214` activates only `.844` through a
 separate continuity transition. The integrity implementation remains complete;
 candidate comparison and exact-one next-owner selection remain unperformed
 during activation.
+
+Completed `.844` selects proposed no-behavior HIAL/VIAL architecture audit
+`.1`; the audit remains inactive until a separate clean commit. The integrity
+contract and product behavior remain unchanged.

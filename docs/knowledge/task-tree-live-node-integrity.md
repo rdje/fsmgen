@@ -27,3 +27,6 @@ selector. No product behavior changes.
 
 Clean implementation commit `c21765214` activates only `.844` through a
 separate continuity transition; it does not perform candidate selection.
+
+Completed `.844` selects proposed HIAL/VIAL architecture audit `.1`, which
+remains inactive until separate clean activation.

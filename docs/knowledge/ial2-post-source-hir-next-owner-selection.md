@@ -42,3 +42,6 @@ Proposed `.844` owns the next selector. Product behavior remains unchanged.
 
 Clean integrity commit `c21765214` activates only `.844` continuity-only.
 Candidate reconciliation and selection remain unperformed during activation.
+
+Completed `.844` selects proposed no-behavior HIAL/VIAL architecture audit
+`.1`, still inactive until a separate clean commit.

@@ -6,7 +6,7 @@
 - Status: `proposed`
 - Roadmap lane: `performance/scalability / end-to-end design capacity`
 - Created: `2026-07-29`
-- Last updated: `2026-07-30`
+- Last updated: `2026-07-31`
 - Owner: repo-local workflow
 
 ## Goal
@@ -143,6 +143,10 @@ and diagnostic behavior per stage while proving semantic/output correctness.
 - `2026-07-30`: Parent selector `.841` chooses the narrower source-facing HIR
   boundary selection before this independent workload/capacity methodology.
   Scale remains proposed with its full contract unchanged.
+- `2026-07-31`: Parent selector `.844` selects the HIAL/VIAL architecture audit
+  first. Whole-product scale remains independently proposed with its workload,
+  correctness-oracle, measurement, budget, graceful-failure, and gate contract
+  unchanged.
 
 ## Open Questions
 

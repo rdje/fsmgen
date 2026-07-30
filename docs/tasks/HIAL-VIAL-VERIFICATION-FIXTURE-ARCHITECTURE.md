@@ -6,7 +6,7 @@
 - Status: `proposed`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-07-30`
+- Last updated: `2026-07-31`
 - Owner: repo-local workflow
 
 ## Goal
@@ -120,6 +120,9 @@ its source-model, typed-bridge, native-extension, simulator-profile, backend,
 migration, parity, and scale requirements remain intact for a later clean
 selector. Parent `.841` now chooses the narrower source-facing HIR boundary
 selection first; HIAL/VIAL remains independent and proposed.
+Parent `.844` now selects proposed audit `.1` after the private HIR and live
+task-tree-integrity prerequisites close. The tree remains inactive until a
+separate clean activation commit.
 
 ## Decisions
 
@@ -159,6 +162,9 @@ selection first; HIAL/VIAL remains independent and proposed.
 - `2026-07-30`: Parent selector `.841` selects the narrower IR-policy-governed
   source-facing HIR boundary before this comprehensive dual-intent audit.
   HIAL/VIAL remains proposed with every architecture requirement unchanged.
+- `2026-07-31`: Parent selector `.844` selects proposed no-behavior audit `.1`
+  after the private HIR boundary closes and live task-tree integrity ships.
+  The audit remains inactive until a separate clean activation commit.
 
 ## Open Questions
 

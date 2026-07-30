@@ -8364,6 +8364,16 @@ director gate, frozen status file, or product behavior changes. See
 Clean integrity commit `c21765214` activates only `.844` through a separate
 continuity transition. Exact candidate reconciliation and selection remain
 unperformed; product behavior and every broader owner remain unchanged.
+Completed `.844` selects proposed no-product-behavior
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`. With the private HIR and live
+ledger prerequisites closed, the director-established dual-intent requirement,
+concrete inert-skeleton-to-runnable-fixture gap, handwritten AHB architecture
+fixture, and bounded documentation-only first audit make it the strongest
+ungated product owner. Public builder, whole-product scale, MCP-write,
+protocol/backend implementation, lifecycle/transaction horizons, and every
+director gate remain proposed or inactive; both frozen files and product
+behavior stay unchanged. See
+`docs/IAL2_POST_TASK_TREE_INTEGRITY_NEXT_OWNER_SELECTION.md`.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
