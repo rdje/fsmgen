@@ -32,3 +32,7 @@ general AST-preserving contract, and defines assertion-enabled coverage before
 implementation `.2`. It changes no behavior. HIAL/VIAL, end-to-end scale,
 startup alignment, other protocols/backends, simulator profiles, and decision
 `0020` remain independently proposed or deferred.
+
+Clean selector commit `1be57f7bd` activates only audit `.1` through
+continuity changes. The malformed property and every shipped behavior remain
+unchanged during activation.

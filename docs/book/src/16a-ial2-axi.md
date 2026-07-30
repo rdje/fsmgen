@@ -999,6 +999,9 @@ general AST-preserving renderer contract and freeze assertion-enabled legal-
 bit-2 coverage before repair. This caveat concerns the generated assertion,
 not the shipped behavioral admission set. See the
 [selection record](../../IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md).
+Clean selector commit `1be57f7bd` activates only that no-behavior audit. AXI
+admission, generated HDL, and the current assertion defect remain unchanged
+during activation.
 
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and

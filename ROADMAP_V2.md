@@ -8072,6 +8072,9 @@ repair contract and assertion-enabled coverage before implementation `.2`.
 HIAL/VIAL, big-design scale, startup alignment, AHB expansion, other
 protocols/backends, simulator profiles, and decision `0020` remain separate.
 See `docs/IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `1be57f7bd` activates only the no-behavior assertion
+precedence audit `.1`. The malformed property and all shipped behavior remain
+unchanged during this continuity transition.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

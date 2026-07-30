@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `R14 / generated verification correctness`
 - Created: `2026-07-23`
 - Last updated: `2026-07-30`
@@ -55,16 +55,16 @@ the assertion condition roundtrip/inlining path involving
 ## Task Tree
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`
-  Status: `proposed`
+  Status: `active`
   Goal: `Preserve nested bitwise expression semantics across concurrent-property inlining and repair the shipped AXI read false assertion.`
   Children: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`, `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2`
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Audit the exact assertion roundtrip owner and select the smallest general repair contract.`
   Acceptance: `Turn the legal 0x00000004 AXI read false assertion into a tracked deterministic reproduction; distinguish correct rule admission from incorrect property HDL; isolate whether intermediate inlining, AST reconstruction, or property rendering drops the grouping; compare a general AST-preserving fix with scoped workarounds; select exact t/1410-t/1412 and t/1507 coverage plus a following implementation leaf without changing behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean parent selector commit 1be57f7bd. Activation changes continuity pointers only; the malformed concurrent assertion, correct behavioral admission, parser, lowerer, generated HDL/runtime, reports/semantic/MCP schemas, support accounting, AHB/AXI/APB behavior, direct VHDL, HIAL/VIAL, scale, simulator profiles, tests, and artifacts remain unchanged while the audit runs. Book/status/path truth gates pass 3 files/40 tests. Knowledge Map generation/check remains synchronized at 1,060 facts/5,454 question keys. The mdBook renders exactly 72 files/16,506,428 bytes and its exact repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 49 lines, README.md is 2,345 lines, diff hygiene passes, and all six doctrine gates pass. Final canonical Stats-compatible capacity is 16,923,394,048/25,769,803,776 bytes = 15.761/24.000 GiB = 65.67%, with separate macOS kernel pressure level 1 and memory_pressure 75% free; guard occupancy is excluded from capacity truth. No background job remains.`
+  Commit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1: activate precedence audit`
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2`
   Status: `pending`
@@ -75,11 +75,10 @@ the assertion condition roundtrip/inlining path involving
 
 ## Current Frontier
 
-Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.832` selects no-behavior
-audit `.1` as the next bounded correctness owner. The tree and `.1` remain
-proposed/inactive until that selector commits cleanly and a separate
-continuity commit activates them. No assertion or generated behavior changes
-during selection.
+Clean parent selector commit `1be57f7bd` activates no-behavior audit `.1`
+through continuity changes only. The assertion defect and every shipped
+behavior remain unchanged while `.1` selects the general repair contract and
+coverage boundary.
 
 ## Decisions
 
@@ -94,8 +93,10 @@ during selection.
   concurrent property emits `high & bit3 | bit2`. Select audit `.1` ahead of
   broader HIAL/VIAL, scale, maintenance, protocol, and backend owners; activate
   it only after the clean selector commit.
+- `2026-07-30`: Clean selector commit `1be57f7bd` activates audit `.1`
+  continuity-only. No parser, lowering, assertion, HDL, runtime, public, or
+  roadmap behavior changes during activation.
 
 ## Blockers
 
-- None technical. Selected audit `.1` awaits the clean parent selector commit
-  and a separate continuity-only activation.
+- None technical. Audit `.1` is active.

@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.832: select assertion precedence audit`).
-- active_work_unit: none after `.832`; selected `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1` remains proposed until clean activation.
-- current_state: `.832` revalidates the shipped AXI fixed-four read mismatch: behavioral lowering retains `high & (bit3 | bit2)`, while concurrent-property inlining emits `high & bit3 | bit2` and falsely rejects legal `0x00000004`. Direct-VHDL reduction behavior and all other shipped surfaces remain unchanged.
-- next_action: after this clean selector commit, activate only `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1` through continuity changes and audit the general AST-preserving repair contract.
-- in_flight_uncommitted: none after this selector commit; no background job.
+- latest_commit: this commit (`ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1: activate precedence audit`).
+- active_work_unit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`.
+- current_state: clean selector commit `1be57f7bd` selects the no-behavior precedence audit; `.1` is active continuity-only. The AXI fixed-four behavioral guard remains correct, the malformed concurrent assertion remains unchanged, and every other shipped surface is preserved.
+- next_action: trace the assertion carrier/CoreAST/intermediate-inlining/emitter path, reproduce direct versus inlined mixed-precedence semantics, and select the smallest general repair plus exact assertion-enabled coverage without changing behavior.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

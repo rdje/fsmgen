@@ -11758,6 +11758,9 @@ implementation `.2`. See the
 [selection record](../../IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md).
 HIAL/VIAL, big-design scale, maintenance, other protocol/backend, simulator,
 and decision-`0020` owners remain independent.
+Clean selector commit `1be57f7bd` activates only audit `.1` continuity-only.
+The malformed concurrent property and every shipped behavior remain unchanged
+while the audit selects a general repair contract.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

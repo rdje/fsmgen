@@ -121,6 +121,10 @@ the current assertion defect and every shipped behavior unchanged. A clean
 selector commit may activate only the selected audit `.1` through a separate
 continuity commit.
 
+Clean selector commit `1be57f7bd` activates only the selected no-behavior
+audit `.1` through continuity changes. The assertion defect and every shipped
+behavior remain unchanged during activation.
+
 ## Closeout Evidence
 
 - Current t1410-t1412 plus t1507 pass 4 files/21 tests. This is preservation
