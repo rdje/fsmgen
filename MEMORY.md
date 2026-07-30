@@ -5,11 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`README-STATIC-LANDING-PAGE.3: codify reusable README growth control`).
-- active_work_unit: `README-STATIC-LANDING-PAGE.3` (complete; tree done).
-- current_state: `README.md` is a verified 244-line / 9,679-byte nearly-static
-  landing page. `README_POLICY.md` is the 61-line project-neutral shareable
-  standard; decision 0024 and 300-line / 16,384-byte checks prevent regrowth.
+- latest_commit: this commit (`PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW: capture deferred document-policy review`).
+- active_work_unit: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW` capture
+  (complete; review tree remains proposed and inactive).
+- current_state: proposed leaf `.1` durably owns the later evidence-based
+  lifecycle review of `CHANGES.md`, `DEVELOPMENT_NOTES.md`,
+  `ROADMAP_STATUS.md`, and `LIVE_ACHIEVEMENT_STATUS.md`. No policy or reviewed
+  file changed; checked-in decision 0007 remains in force pending review.
 - next_action: from the clean tree, resume roadmap PNT by selecting the
   smallest exact roadmap-aligned owner after completed parent frontier `.835`;
   create/activate its task-tree leaf before any implementation change.
@@ -22,8 +24,9 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Durable context
 
-- Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
-  complete the same-volume adoption tree, then resume roadmap PNT.
+- Director direction (`2026-07-30`): do not choose a new `CHANGES.md` policy
+  now; later review all four legacy documents without assuming one outcome.
+  `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` owns that proposed audit.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
