@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW`
-- Status: `active`
+- Status: `proposed`
 - Roadmap lane: `infra/continuity / project-document lifecycle`
 - Created: `2026-07-30`
 - Last updated: `2026-07-30`
@@ -87,7 +87,7 @@ make that clarified boundary durable. The broader evidence-based review in
 ## Task Tree
 
 - ID: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW`
-  Status: `active`
+  Status: `proposed`
   Goal: `Select evidence-backed long-term roles for the four legacy project documents without presupposing one shared policy.`
   Children: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`, `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2`
 
@@ -99,20 +99,20 @@ make that clarified boundary durable. The broader evidence-based review in
   Commit: `pending activation`
 
 - ID: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2`
-  Status: `active`
+  Status: `done`
   Goal: `Synchronize the director-confirmed interim lifecycle policy before the next ordinary slice.`
   Acceptance: `Checked-in policy requires one concise CHANGES.md entry for every completed slice, requires DEVELOPMENT_NOTES.md only for durable engineering rationale/constraints/working decisions, keeps ROADMAP_STATUS.md and LIVE_ACHIEVEMENT_STATUS.md untouched pending .1, supersedes only the conflicting parts of decision 0007, aligns bootstrap/commit/toolbox/task-tree/mdBook/Memory/Knowledge Map surfaces, and changes no product behavior.`
-  Verification: `focused policy-reference searches; Knowledge Map generation/check; mdbook build docs/book; scripts/check_doctrines.sh; scripts/check_memory_architecture.sh; git diff --check`
-  Commit: `pending`
+  Verification: `Decision 0025, COMMIT.md, AGENTS.md, README.md, TOOLBOX.md, docs/TASK_TREE.md, mdBook reference map, Memory, and a new fact card all encode the split interim policy. Knowledge Map generation/check passes at 1066 facts / 5487 question keys; README guard passes at 245 lines / 9871 bytes; docs relative-path audit, memory architecture, full six-doctrine driver, mdBook build, and diff hygiene pass. ROADMAP_STATUS.md, LIVE_ACHIEVEMENT_STATUS.md, and DEVELOPMENT_NOTES.md are byte-untouched; generated docs/book/book was removed. No product behavior changed.`
+  Commit: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2: adopt split interim document policy`
 
 ## Current Frontier
 
-The director activated the bounded interim-policy synchronization on
-`2026-07-30`. The full lifecycle audit remains proposed for later discussion.
+The bounded interim-policy synchronization is complete. The full lifecycle
+audit returns to proposed status for later discussion.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2` | `active` | Make the director-confirmed per-file interim policy durable before any later slice relies on it. |
+| 1 | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2` | `done` | Decision 0025 and all active workflow surfaces now carry the director-confirmed interim split. |
 | 2 | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` | `proposed` | Audit the files' long-term roles later without disturbing the interim boundary. |
 
 ## Decisions
@@ -144,4 +144,16 @@ The director activated the bounded interim-policy synchronization on
 
 ## Blockers
 
-- None. Leaf `.2` is active; leaf `.1` remains deliberately proposed.
+- None. Leaf `.2` is complete; leaf `.1` remains deliberately proposed.
+
+## Verification Log
+
+| Date | Leaf | Checks | Result |
+| --- | --- | --- | --- |
+| `2026-07-30` | `.2` | policy-reference search; `knowledge-map/scripts/gen_knowledge_map.sh`; `knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_readme_entrypoint.sh`; `scripts/check_docs_relative_paths.sh`; `scripts/check_memory_architecture.sh`; `scripts/check_doctrines.sh`; `mdbook build docs/book`; frozen/conditional-file diff checks; `git diff --check` | `passed`; 1066 facts / 5487 keys; README 245 lines / 9871 bytes; no product change; generated book removed |
+
+## Commit Log
+
+| Leaf | Commit subject or reference | Notes |
+| --- | --- | --- |
+| `.2` | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2: adopt split interim document policy` | Supersedes the blanket freeze prospectively for the changelog and conditional development rationale while leaving both status files untouched. |

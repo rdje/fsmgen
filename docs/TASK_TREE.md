@@ -47,7 +47,7 @@ first.
 | `PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION` | `done` | `infra/continuity / project data locality` | complete (`.1`-`.3`; decision/policy, runtime/test/cache/temp containment, public docs/fact cards/Knowledge Map/mdBook sync, exact residue census, and a strict zero-debt doctrine gate all ship; ambiguous external-tool caches and one unclassified older local HDL artifact remain untouched) | [docs/tasks/PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.md](docs/tasks/PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.md) |
 | `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH` | `done` | `bootstrap architecture maintenance` | complete `.1`: the canonical note/fact now match the 228-file / 227-package / 19-IAL2 closure, link every live package exactly, and preserve runtime behavior | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.md) |
 | `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC` | `done` | `infra/continuity / task-tree doctrine alignment` | complete `.1`: active task-tree guidance now uses the decision-0007 memory layers, preserves decision 0019, and leaves all four frozen blobs untouched | [docs/tasks/TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.md](docs/tasks/TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.md) |
-| `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW` | `active` | `infra/continuity / project-document lifecycle` | active `.2`: synchronize the director-confirmed interim split (`CHANGES.md` per slice, `DEVELOPMENT_NOTES.md` when warranted, last two untouched); proposed `.1` retains the later four-file lifecycle review | [docs/tasks/PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.md](docs/tasks/PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.md) |
+| `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW` | `proposed` | `infra/continuity / project-document lifecycle` | `.2` complete: decision 0025 now makes `CHANGES.md` per-slice and `DEVELOPMENT_NOTES.md` conditional while leaving both status files untouched; proposed `.1` retains the later four-file lifecycle review | [docs/tasks/PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.md](docs/tasks/PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.md) |
 | `README-ENTRYPOINT-APPEND-LOG-DRIFT` | `done` | `infra/continuity / entry-point documentation` | complete (`.1`-`.5`; director-activated `2026-07-25`). Decision `0021` makes `README.md` a bounded discovery entry point that must not re-narrate per-leaf history; the objective section went 7,191 -> 83 lines, the documentation index lost 5 chronology entries and 99 out-of-scope corpus rows, the ramp-up order went 327 -> 28 items, and new doctrine check `README-ENTRYPOINT` (`scripts/check_readme_entrypoint.sh`, cap 2600 lines + no per-leaf enumeration) makes the regrowth fail the build. README.md overall 9,911 -> 2,286 lines / 928 -> 348 KiB | [docs/tasks/README-ENTRYPOINT-APPEND-LOG-DRIFT.md](docs/tasks/README-ENTRYPOINT-APPEND-LOG-DRIFT.md) |
 | `README-STATIC-LANDING-PAGE` | `done` | `infra/continuity / entry-point documentation` | complete `.1`-.3: README.md is a verified 244-line / 9,679-byte stable landing page; README_POLICY.md is the project-neutral shareable standard; decision 0024 and a 300-line / 16,384-byte doctrine gate prevent regrowth; roadmap/bootstrap/mdBook navigation routes live state to Memory plus task trees | [docs/tasks/README-STATIC-LANDING-PAGE.md](docs/tasks/README-STATIC-LANDING-PAGE.md) |
 | `README-POLICY-STORAGE-LOCATION` | `done` | `infra/continuity / entry-point documentation` | complete `.1`: adopting projects keep the canonical tracked README_POLICY.md at repository root beside README.md; external copies are templates only, the mdBook pointer is synchronized, and existing README behavior and enforcement remain unchanged | [docs/tasks/README-POLICY-STORAGE-LOCATION.md](docs/tasks/README-POLICY-STORAGE-LOCATION.md) |
@@ -1004,10 +1004,14 @@ The task tree is the detailed execution ledger.
 - `docs/decisions/` carries durable accepted rationale and cross-cutting facts.
 - Git is the chronological audit trail.
 - The mdBook is the user-facing product/language documentation.
-- `CHANGES.md`, `DEVELOPMENT_NOTES.md`, `ROADMAP_STATUS.md`, and
-  `LIVE_ACHIEVEMENT_STATUS.md` are frozen legacy blobs under decision
-  [0007](decisions/0007-memory-architecture-supersedes-blob-narration.md); do
-  not append to or treat them as live sources.
+- `CHANGES.md` is the concise per-slice technical changelog.
+- `DEVELOPMENT_NOTES.md` is conditional: update it only for durable engineering
+  rationale, constraints, or working decisions that lack a better canonical
+  home.
+- `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain frozen legacy
+  records pending `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`; do not append
+  to or treat them as live sources. See decision
+  [0025](decisions/0025-project-document-interim-lifecycle.md).
 
 Do not duplicate the task tree or git history into another hand-maintained
 status narrative.

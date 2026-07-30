@@ -49,7 +49,11 @@ These should stay precise and sometimes narrower than the book.
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 `ROADMAP_STATUS.md` is retained only as a frozen legacy record under decision
-0007 and must not be used as current status.
+0025 and must not be used as current status. `CHANGES.md` records one concise
+entry for every completed slice; `DEVELOPMENT_NOTES.md` is updated only when a
+slice produces durable engineering rationale that lacks a better canonical
+home. `LIVE_ACHIEVEMENT_STATUS.md` remains frozen with `ROADMAP_STATUS.md`
+pending their scheduled lifecycle review.
 
 `README_POLICY.md` is the project-neutral landing-page maintenance standard:
 adopting projects keep the canonical tracked copy at repository root beside

@@ -47,9 +47,11 @@ and can strand large or important generated state on another volume.
    controls, public instructions, and project configuration. During adoption,
    exact baseline signatures make existing violations monotonic debt rather
    than allowing new violations; the closeout removes the baselines.
-8. Completed task-tree evidence and the four frozen legacy blobs remain
+8. Completed task-tree evidence and pre-`0025` legacy-document contents remain
    historical. They are not rewritten solely to make old commands appear to
-   have followed a policy adopted later.
+   have followed a policy adopted later. Decision `0025` subsequently
+   reactivates only prospective `CHANGES.md` and conditional
+   `DEVELOPMENT_NOTES.md` updates.
 
 ## Consequences
 

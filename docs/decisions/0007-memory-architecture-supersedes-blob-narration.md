@@ -2,7 +2,8 @@
 
 - Date: 2026-06-02
 - Type: architecture
-- Status: accepted (executed in MEMORY-ARCHITECTURE-ADOPTION.3/.4)
+- Status: accepted (executed in MEMORY-ARCHITECTURE-ADOPTION.3/.4; partially
+  superseded by `0025` for `CHANGES.md` and `DEVELOPMENT_NOTES.md`)
 
 ## Context
 
@@ -42,3 +43,11 @@ parts of `COMMIT.md`:
 - Future cleanup (optional): trim the frozen blobs to short "legacy — see git
   history / docs/decisions/" stubs. Not required for compliance; left for a
   follow-up so this adoption stays non-destructive.
+
+## Later Refinement
+
+Decision `0025` reactivates `CHANGES.md` as a concise per-slice technical
+changelog and `DEVELOPMENT_NOTES.md` as a conditional engineering-rationale
+record. This decision continues to govern bounded `MEMORY.md`, canonical
+task-tree/decision/git routing, and the frozen status of `ROADMAP_STATUS.md`
+plus `LIVE_ACHIEVEMENT_STATUS.md` pending their scheduled review.

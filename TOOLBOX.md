@@ -224,9 +224,12 @@ truncate -s 0 git_message_brief.txt
 git status --short
 ```
 
-Do not update frozen legacy blobs (`CHANGES.md`, `DEVELOPMENT_NOTES.md`,
-`ROADMAP_STATUS.md`, `LIVE_ACHIEVEMENT_STATUS.md`). Route durable status to
-task-trees, `MEMORY.md`, decision records, Knowledge Map fact cards, and git.
+Add one concise `CHANGES.md` entry for every completed slice. Update
+`DEVELOPMENT_NOTES.md` only when durable engineering rationale, constraints,
+or working decisions warrant it. Do not update `ROADMAP_STATUS.md` or
+`LIVE_ACHIEVEMENT_STATUS.md` before their scheduled lifecycle review. Route
+canonical state to task-trees, `MEMORY.md`, decision records, Knowledge Map
+fact cards, the mdBook, and git.
 
 ## 7. Downstream Issue Bundles
 

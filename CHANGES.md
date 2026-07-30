@@ -1,5 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+Every completed slice adds one concise entry under decision
+`0025-project-document-interim-lifecycle`; exact evidence remains in the owning
+task tree and git.
 ## 2026-05-26
 ### R14 — Defensive missing-drain coverage shipped for same-domain second-awaitany
 - Completed `ISF-REPEAT-GENDO-DOMAIN-SECOND-AWAITANY-MISSING-DRAIN-COVERAGE.1`
@@ -30411,3 +30414,20 @@ This is the persistent technical change history for FSMGen.
 
 ### shipped R14 ISF-LOOP-CONTINUE.3 ((continue-when) when-in-loop + clause-named safety; tree closed)
 - A `(continue-when cond)` in a `when` body nested in a `while`/`until` loop now lowers (its true edge jumps to the whole loop's tail check) — this already worked because a `when`'s body states are part of the enclosing loop's `loop_body_state_names`, so `_link_states`' per-loop pass stamps the tail-check target with no new machinery (exactly as in the exit-when when-nested slice); `.3` locks it with a test. The shared not-in-a-loop safety check now names the actual clause — `'(continue-when ...)' is only valid inside a 'while'/'until' loop body` vs the `'(exit-when ...)'` form — by inspecting the `loop_continue_when` marker. Book `13d` notes the when-nested case for continue-when. `t/1393` gains a when-in-loop subtest and a non-loop-`when` safety subtest (5 subtests); `t/1389` (exit-when) is unchanged. This closes the `ISF-LOOP-CONTINUE` tree (`.1`–`.3`): with `(exit-when)` + `(continue-when)`, ISF loops have the full break/continue pair (in `while`/`until` bodies and `when`-nested-in-loop). Validation: `prove -Iperl t/1393 t/1389 t/1376 t/1305 t/1250 t/1304 t/1307` PASS; when-in-loop continue + clause-named fail-closed + exit-when regression verified; full `./bin/ci-regression isf --no-book` PASS; `perl -c`; `mdbook build`; `git diff --check`.
+
+## 2026-07-30
+
+### PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2 — split interim document lifecycle adopted
+
+- Decision `0025` and the active bootstrap, commit, toolbox, task-tree,
+  README, mdBook, Memory, and Knowledge Map surfaces now require one concise
+  `CHANGES.md` entry for every completed slice and a `DEVELOPMENT_NOTES.md`
+  entry only when durable engineering rationale warrants one.
+- `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain untouched pending
+  proposed review `.1`; this policy slice also did not warrant or add a
+  `DEVELOPMENT_NOTES.md` entry. No product behavior changed.
+- Verification passed: Knowledge Map generation/check at 1066 facts / 5487
+  question keys; README guard at 245 lines / 9871 bytes; docs relative paths;
+  memory architecture; full six-doctrine driver; mdBook build; frozen-file and
+  conditional-file diff checks; diff hygiene. Generated book output was
+  removed after verification.

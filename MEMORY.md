@@ -5,16 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2: select interim document-policy sync`).
-- active_work_unit: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2` (active).
-- current_state: the existing project-document review tree now owns an exact
-  interim-policy synchronization leaf while preserving the later lifecycle
-  audit in proposed `.1`; no product or document-lifecycle doctrine changed in
-  this selector.
-- next_action: implement `.2`: make `CHANGES.md` per-slice,
-  `DEVELOPMENT_NOTES.md` rationale-only, and keep `ROADMAP_STATUS.md` plus
-  `LIVE_ACHIEVEMENT_STATUS.md` untouched pending `.1`.
-- in_flight_uncommitted: none after the selector commit; no background job.
+- latest_commit: this commit (`PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2: adopt split interim document policy`).
+- active_work_unit: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2` (complete;
+  tree returns to proposed `.1`).
+- current_state: decision 0025 and active workflow surfaces now require one
+  concise `CHANGES.md` entry per slice, conditional `DEVELOPMENT_NOTES.md`, and
+  no changes to either status file pending their scheduled review.
+- next_action: from the clean tree, create and activate the missing neutral
+  `TASK-ACCEPTANCE` doctrine-design owner before changing enforcement code.
+- in_flight_uncommitted: none after the policy commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -23,11 +22,9 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Durable context
 
-- Director direction (`2026-07-30`): update `CHANGES.md` every slice, update
-  `DEVELOPMENT_NOTES.md` only when warranted, and do not touch
-  `ROADMAP_STATUS.md` or `LIVE_ACHIEVEMENT_STATUS.md` before their scheduled
-  discussion. Active `.2` owns the interim sync; proposed `.1` owns the later
-  four-file lifecycle audit.
+- Director direction (`2026-07-30`) is durable in decision `0025`: update
+  `CHANGES.md` every slice, update `DEVELOPMENT_NOTES.md` only when warranted,
+  and leave both status files untouched. Proposed `.1` owns the later review.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
@@ -56,5 +53,5 @@ bounded current-state pointer. Git preserves its prior history.
   `0019`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.
 - Push only on explicit request (decision `0005`). PNT runs autonomously without
   mid-flow pauses (decision `0003`). Heavy commands use the unchanged RAM guard.
-- Decision `0007` remains checked-in policy only until active `.2` supersedes
-  its conflicting `CHANGES.md`/`DEVELOPMENT_NOTES.md` boundary.
+- Decision `0007` still governs bounded Memory and canonical routing; decision
+  `0025` supersedes only its prospective changelog/development-note freeze.

@@ -48,11 +48,19 @@ Ignoring it is not a style issue; it is a project-safety failure.
   - Must be updated before commit whenever a task-tree-managed activity changes a node status, current frontier, blocker, decision, validation evidence, or completion evidence.
   - Must stay below this file for commit policy: task-tree docs may require task IDs and evidence, but must not redefine the commit workflow independently.
 - `CHANGES.md`
-  - **FROZEN legacy blob** (do not append). Change history is git (layer D);
-    `git log` / `git log --grep=UNIT-ID` reconstructs it. See `docs/decisions/0007`.
+  - **Live concise technical changelog.** Add one entry for every completed
+    task, slice, lane, or task-scoped activity in the same commit. Name the
+    work-unit id, summarize the result, and record the decisive verification;
+    do not duplicate the full task-tree log. See `docs/decisions/0025`.
 - `DEVELOPMENT_NOTES.md`
-  - **FROZEN legacy blob** (do not append). Durable design rationale now goes to a
-    decision record under `docs/decisions/` (layer C). See `docs/decisions/0007`.
+  - **Conditional engineering rationale.** Update it only when the slice
+    produces a useful design constraint, implementation rationale, or working
+    decision that is not better owned by a decision record, fact card,
+    task-tree entry, user document, or git. Do not add a placeholder entry for
+    slices that do not warrant one. See `docs/decisions/0025`.
+- `LIVE_ACHIEVEMENT_STATUS.md`
+  - **FROZEN legacy blob** (do not append) pending the scheduled lifecycle
+    review in `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`.
 - `git_message_brief.txt`
   - Short-lived commit message input file for `git commit -F`.
   - Must be overwritten for each commit and truncated to zero bytes after commit.
@@ -73,9 +81,12 @@ Ignoring it is not a style issue; it is a project-safety failure.
       durable cross-cutting fact/decision/learning (and update `docs/decisions/INDEX.md`).
    3. `MEMORY.md` (layer A) — **overwrite** its "Current state" block to point at the new
       latest commit / active leaf / next action; keep it ≤ ~60 lines.
-   - The legacy blobs (`ROADMAP_STATUS.md`, `CHANGES.md`, `DEVELOPMENT_NOTES.md`,
-     `LIVE_ACHIEVEMENT_STATUS.md`) are FROZEN — do NOT append to them; git (layer D) is
-     the audit trail. See `docs/decisions/0007`.
+   4. `CHANGES.md` — append one concise entry for this completed slice.
+   5. `DEVELOPMENT_NOTES.md` — update only when the conditional rationale
+      boundary above is met.
+   - `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain FROZEN — do
+     not append to them before their scheduled review. See
+     `docs/decisions/0025`.
 4. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.

@@ -34,9 +34,11 @@ The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`** +
 - **Route every durable thing to a layer and commit before the turn ends** — task-trees
   (`docs/tasks/`, layer B) / decision records (`docs/decisions/`, layer C) / the bounded
   `MEMORY.md` pointer (layer A, overwrite-only, capped) / git history (layer D). Nothing
-  important may live only in this conversation. The legacy prose blobs
-  (`CHANGES.md`, `DEVELOPMENT_NOTES.md`, `ROADMAP_STATUS.md`, `LIVE_ACHIEVEMENT_STATUS.md`)
-  are FROZEN — do not append to them (`docs/decisions/0007`).
+  important may live only in this conversation. Add one concise `CHANGES.md`
+  entry for every completed slice; update `DEVELOPMENT_NOTES.md` only when a
+  slice produces durable engineering rationale, constraints, or working
+  decisions. `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain frozen
+  pending their scheduled review (`docs/decisions/0025`).
 - **Commit per `COMMIT.md`** after every slice, with the **work-unit id in the subject**
   (e.g. `ISF-SWAP: …`, `MEMORY-ARCHITECTURE-ADOPTION.4: …`).
 - **The mdBook (`docs/book/`) is user-facing** — keep it synced in the same slice with
