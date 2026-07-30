@@ -8250,6 +8250,10 @@ fails Verilator on the reserved instance token, while AHB already uses local
 target languages after a separate clean activation. The scheduled lifecycle
 review and every director gate remain inactive. See
 `docs/IAL2_POST_RUSTDOC_NEXT_OWNER_SELECTION.md`.
+Clean grouped-assertion expectation completion commit `5fb1c0d47` activates
+parent selector `.839` continuity-only. It selects no candidate during
+activation; the scheduled four-document lifecycle review and every explicit
+director gate remain inactive, and both legacy status files stay untouched.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

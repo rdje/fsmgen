@@ -30855,3 +30855,15 @@ task tree and git.
   leaving `.artifacts/tmp/tests` empty. The existing behavior record/fact,
   task/index, mdBook, Memory, and Knowledge Map are synchronized; no separate
   development note is warranted and both frozen status files stay untouched.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.839 — post-identifier selector activated
+
+- Activated one new parent selector only after clean grouped-assertion
+  expectation completion commit `5fb1c0d47`. No candidate is selected during
+  activation; completed identifier and assertion behavior remains unchanged.
+- Task/index, roadmap, mdBook, Memory, and changelog continuity are aligned.
+  The scheduled lifecycle review and every explicit director gate remain
+  inactive, both frozen status files remain untouched, and no separate
+  development note is warranted. Feature-backlog status, live-book-path, and
+  relative-path audits pass with `Files=3, Tests=40`; Knowledge Map, memory-
+  architecture, and diff-hygiene checks pass.

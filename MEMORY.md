@@ -5,18 +5,16 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3: synchronize grouped AXI assertion expectation`).
-- active_work_unit: none after this completion commit; the assertion repair
-  tree is exhausted through `.3`.
-- current_state: t1502 now freezes the grouped AXI write-request coordinator
-  implication emitted since `80aa203ab`; product assertion generation,
-  generated HDL, and runtime behavior are unchanged.
-- next_action: from this clean boundary, select the next parent
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER` leaf before any further behavior work.
-- in_flight_uncommitted: none after commit; no background job.
-- blockers: none. A confirmatory guarded preservation rerun was stopped before
-  test execution because host memory was 95.4% above the configured 88% cutoff;
-  the same focused preservation files had already passed in this slice.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.839: activate post identifier selector`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.839`
+  (continuity-only activation).
+- current_state: the identifier and grouped-assertion repair trees are clean
+  and complete; `.839` owns one new roadmap selection without selecting or
+  activating a candidate yet.
+- next_action: reconcile the current-HEAD eligible candidate set and select
+  exactly one smallest owner, preserving lifecycle-review/director gates.
+- in_flight_uncommitted: none after this activation commit; no background job.
+- blockers: none.
 
 ## Durable context
 
@@ -37,6 +35,9 @@ history; this file carries only the current bounded resume state.
 - `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3` is complete: t1502 passes at
   `Files=1, Tests=4`; t1410-t1412+t1544 pass at `Files=4, Tests=22`; test syntax
   is clean, and `.artifacts/tmp/tests` is empty.
+- Startup remeasurement after the identifier implementation reports 229
+  project files / 228 packages / 19 IAL2 owners; selection must reconcile that
+  live closure against the saved 228 / 227 / 19 import-tree baseline.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously

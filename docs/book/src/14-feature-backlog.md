@@ -11957,6 +11957,10 @@ Assertion repair `.3` is complete. Its one-line t1502 regex now expects the
 grouped antecedent and consequent emitted since `80aa203ab`; t1502's built-in
 Verilator, Yosys, and compiled structural-top behavior all pass. No builder,
 emitter, assertion, generated HDL, or AXI runtime output changed in `.3`.
+Clean grouped-assertion expectation completion commit `5fb1c0d47` activates
+parent selector `.839` continuity-only. No candidate is selected during
+activation; the scheduled lifecycle review and every director-gated direction
+remain inactive.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
