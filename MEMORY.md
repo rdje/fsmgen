@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1: activate workflow doctrine repair`).
-- active_work_unit: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1` (continuity-only activation).
-- current_state: clean selector commit `dc055558c` selects the no-behavior workflow doctrine repair. `.1` is active continuity-only; stale guidance and all four frozen blobs remain unchanged until this activation commits cleanly.
-- next_action: align `docs/TASK_TREE.md` and `docs/TASK_TREE_README.md` with decisions `0007`/`0019` and `COMMIT.md`, auditing the template and never editing frozen blobs.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1: align workflow memory layers`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER` (next selector pending).
+- current_state: workflow child `.1` is complete. Active task-tree guidance now uses the decision-`0007` memory layers, preserves decision `0019`, and leaves all four frozen blobs untouched.
+- next_action: activate one new parent selector leaf and reconcile the remaining roadmap directions before selecting exactly one next owner.
+- in_flight_uncommitted: none after this completion commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -26,10 +26,8 @@ bounded current-state pointer. Git preserves its prior history.
   per-count public fixture. Completed `.830` selected the protocol-neutral
   named-drive priority child, now complete through `.3`; decision `0020` stays
   separate.
-- Proposed startup-alignment owners remain:
-  `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
-  `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
-  `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC`.
+- Proposed startup-alignment owner `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`
+  remains; the mdBook VHDL-boundary and frozen-workflow repairs are complete.
 - Proposed `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` now durably owns the
   director's peer hardware/verification intent requirement, typed bridge,
   portable fixture semantics, native SV/UVM and VHDL extension model, backend

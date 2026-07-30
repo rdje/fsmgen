@@ -5918,9 +5918,14 @@ matrix, and separate assertion-enabled legal-bit-2 proof. Clean behavior commit
 `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1` as the next exact owner. That child
 now ships through clean documentation commit `0c9f402ca`. Parent selector
 `.834` now selects proposed no-behavior
-`TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1`. That child remains proposed until
-this selector commits cleanly; no broader roadmap owner or product behavior is
-implicitly activated.
+`TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1`. At selection time that child
+remained proposed until the selector committed cleanly; no broader roadmap
+owner or product behavior was implicitly activated.
+Clean selector commit `dc055558c` and continuity commit `65704ce5a` activated
+that child without changing behavior. The workflow child now completes the
+decision-`0007` layer-model repair while preserving decision `0019` and all
+four frozen blobs. The next clean action is a new parent selector; no broader
+owner is implicitly activated.
 
 The child selected by `.826` is complete through `.3`, and parent `.828` now
 closes the matching byte-identical two-subordinate exact-four `.ahb` alias.

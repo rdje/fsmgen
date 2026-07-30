@@ -22,7 +22,9 @@ State the exact outcome this top-level task must deliver.
 - The behavior, documentation, or infrastructure outcome is implemented.
 - Focused validation passes.
 - Broader validation runs when the blast radius warrants it.
-- Live docs and roadmap status are updated where project state changed.
+- The task index and bounded resume pointer are updated where project state
+  changed; durable decisions and user-facing docs are synchronized when
+  warranted.
 - Each completed leaf is committed through `COMMIT.md`.
 
 ## Task Tree

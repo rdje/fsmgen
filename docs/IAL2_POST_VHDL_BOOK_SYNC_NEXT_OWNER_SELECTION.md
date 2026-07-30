@@ -24,9 +24,10 @@ Decision `0007` freezes `CHANGES.md`, `DEVELOPMENT_NOTES.md`,
 and current practice obey that rule. Decision `0019` makes the task-tree node
 list, `docs/TASK_TREE.md`, and git the live frontier/history sources.
 
-## Exact Workflow Drift
+## Exact Workflow Drift At Selection Time
 
-The maintained workflow guidance still contradicts those accepted decisions:
+The maintained workflow guidance contradicted those accepted decisions when
+the selector was recorded:
 
 - `docs/TASK_TREE.md` requires all five old continuity/history files to be
   updated and calls the four frozen blobs canonical live records.
@@ -86,6 +87,13 @@ Clean selector commit `dc055558c` activates only
 `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1` through continuity changes. The
 stale guidance, all four frozen blobs, and every product behavior remain
 unchanged during activation.
+
+The selected child is now complete. `docs/TASK_TREE.md`,
+`docs/TASK_TREE_README.md`, and the reusable template consistently route live
+state through the current memory layers. The template's decision-`0019`
+historical-view comments were already correct; only its stale acceptance
+phrase changed. All four frozen blobs remain untouched, and no product
+behavior changes.
 
 ## Closeout Evidence
 

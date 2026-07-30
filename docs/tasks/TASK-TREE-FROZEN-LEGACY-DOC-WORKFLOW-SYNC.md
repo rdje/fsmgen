@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / task-tree doctrine alignment`
 - Created: `2026-07-29`
-- Last updated: `2026-07-29`
+- Last updated: `2026-07-30`
 - Owner: repo-local workflow
 
 ## Goal
@@ -35,16 +35,16 @@ blobs.
 ## Task Tree
 
 - ID: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC`
-  Status: `active`
+  Status: `done`
   Goal: `Align task-tree workflow instructions with the frozen legacy-doc rule.`
   Children: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1`
 
 - ID: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1`
-  Status: `active`
+  Status: `done`
   Goal: `Replace active frozen-blob write instructions with the current layer model.`
   Acceptance: `Task-tree workflow docs agree with decisions 0007/0019 and COMMIT.md without modifying frozen blobs.`
-  Verification: `Activated only after clean parent selector commit dc055558c. Activation changes continuity pointers only; the contradictory task-tree guidance and all four frozen legacy blobs remain unchanged until this commit is clean. Decisions 0007/0019, COMMIT.md, the node-list/frontier rule, and every product behavior remain unchanged. Book/status/path truth passes 5 files/329 tests. Knowledge Map generation/check passes at 1,063 facts/5,471 question keys. The mdBook renders exactly 72 files/16,540,065 bytes and its repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 49 lines, README.md is 2,351 lines, and diff hygiene passes. Activation-closeout canonical Stats-compatible capacity is 20,304,330,752/25,769,803,776 bytes = 18.910/24.000 GiB = 78.79%, with separate macOS kernel pressure level 1 and memory_pressure 75% free; guard occupancy is excluded from capacity truth. No background job remains.`
-  Commit: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1: activate workflow doctrine repair`
+  Verification: `Activated only after clean parent selector commit dc055558c through clean continuity commit 65704ce5a. docs/TASK_TREE.md and docs/TASK_TREE_README.md now route live state through the task index/node lists, decisions, bounded MEMORY.md, the mdBook, and git. The reusable template was audited: its decision-0019 historical-view comments were already correct, and only its stale acceptance phrase required repair. Exact scans leave the four legacy names only in docs/TASK_TREE.md's explicit decision-0007 frozen warning; none remains in the guide or template. Book/status/path truth passes 5 files/329 tests. Knowledge Map generation/check passes at 1,063 facts/5,471 question keys. The mdBook renders exactly 72 files/16,541,296 bytes and its repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 47 lines, README.md is 2,351 lines, diff hygiene passes, and all doctrine gates pass. Completion-closeout canonical Stats-compatible capacity is 17,093,181,440/25,769,803,776 bytes = 15.919/24.000 GiB = 66.33%, with separate macOS kernel pressure level 1 and memory_pressure 73% free; guard occupancy is excluded from capacity truth. All four frozen blobs, decisions 0007/0019, the node-list/frontier rule, and every product behavior remain unchanged. No background job remains.`
+  Commit: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1: align workflow memory layers`
 
 ## Decisions
 
@@ -55,5 +55,4 @@ blobs.
 
 ## Blockers
 
-- Active only after clean parent selector commit `dc055558c`; repair workflow
-  guidance without modifying any frozen legacy blob.
+- None. Tree complete; the next clean action returns to the parent selector.

@@ -8140,6 +8140,12 @@ Clean selector commit `dc055558c` activates only
 `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1` continuity-only. The stale
 workflow prose, decisions `0007`/`0019`, all four frozen blobs, and every
 product behavior remain unchanged during activation.
+Completed workflow leaf `.1` now routes task-tree guidance through the live
+task index/node lists, decisions, bounded `MEMORY.md`, the mdBook, and git.
+The reusable template retained its already-correct decision-`0019`
+historical-view comments and needed only its stale acceptance phrase repaired.
+All four frozen blobs remain untouched, and no product behavior changes. The
+next clean action returns to a new parent selector.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

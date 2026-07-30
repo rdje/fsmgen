@@ -18,12 +18,12 @@ Parent selector `.834` selects proposed no-behavior
 `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1` after the VHDL book boundary is
 aligned.
 
-Current task-tree guidance still tells maintainers to update or treat as
-canonical the four decision-`0007`-frozen legacy blobs. The authoritative
-`COMMIT.md`, bootstrap instructions, and current practice correctly route live
-state through task trees, decisions, bounded `MEMORY.md`, the mdBook, and git.
-The selected leaf repairs that tracked guidance while preserving decision
-`0019`'s node-list/frontier rule and changing no product behavior.
+The selected leaf is complete: task-tree guidance no longer tells maintainers
+to update or treat as canonical the four decision-`0007`-frozen legacy blobs.
+It now routes live state through task trees, decisions, bounded `MEMORY.md`,
+the mdBook, and git while preserving decision `0019`'s node-list/frontier rule
+and changing no product behavior. The template's decision-`0019` comments were
+already correct; only its stale acceptance phrase required repair.
 
 HIAL/VIAL, end-to-end scale, import-tree refresh, public-test drift, other
 protocol/backend and simulator work, and all director-gated owners remain
@@ -32,3 +32,5 @@ independent.
 Clean selector commit `dc055558c` activates only the selected workflow leaf
 through continuity changes. The stale guidance, all four frozen blobs, and
 every product behavior remain unchanged during activation.
+
+The workflow leaf subsequently completes without modifying any frozen blob.

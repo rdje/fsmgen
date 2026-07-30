@@ -11814,16 +11814,20 @@ continuity-only. This aligned VHDL boundary and every shipped behavior remain
 unchanged while the next roadmap owner is selected.
 Completed `.834` selects proposed no-behavior
 [frozen-legacy task-tree workflow sync](../../tasks/TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.md).
-Active workflow prose still requires writes to or calls canonical the four
-decision-`0007`-frozen blobs. The selected leaf will route guidance through
-task trees, decisions, bounded Memory, this book, and git while preserving
-decision `0019`'s node-list/frontier rule. See the
+At selection time, active workflow prose still required writes to or called
+canonical the four decision-`0007`-frozen blobs. The selected leaf was scoped
+to route guidance through task trees, decisions, bounded Memory, this book,
+and git while preserving decision `0019`'s node-list/frontier rule. See the
 [selection record](../../IAL2_POST_VHDL_BOOK_SYNC_NEXT_OWNER_SELECTION.md).
 Import-tree refresh, HIAL/VIAL, scale, public-test drift, other protocols/
 backends, simulator profiles, and decision `0020` remain separate.
 Clean selector commit `dc055558c` activates only the selected workflow leaf
 continuity-only. The stale guidance, all four frozen blobs, and every product
 behavior remain unchanged during activation.
+That child is now complete. The task-tree workflow uses the current layered
+memory model, the reusable template preserves decision `0019`'s live node-list
+rule, and all four frozen blobs remain untouched. No product behavior changes;
+the next clean action returns to a new parent selector.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

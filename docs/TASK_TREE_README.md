@@ -3,10 +3,9 @@
 This guide explains how to add the repo-local task-tree tracking workflow to a
 new project.
 
-Use this document when a project already has, or wants to add, a roadmap and a
-live roadmap-status file, but also needs a precise way to track task
-decomposition over time without losing subtasks, blockers, decisions, or
-completion evidence.
+Use this document when a project already has, or wants to add, a roadmap but
+also needs a precise way to track task decomposition over time without losing
+subtasks, blockers, decisions, or completion evidence.
 
 ## What The Task Tree Is For
 
@@ -24,8 +23,9 @@ The task tree answers:
 - What decisions, blockers, and open questions belong to this task?
 - What validation and commit evidence closed each executable leaf?
 
-The task tree is therefore a companion to the roadmap and roadmap-status file.
-It does not replace them.
+The task tree is therefore a companion to roadmap intent. Its node list and
+cross-tree index are the live work-status sources; it does not require a second
+hand-maintained roadmap-status narrative.
 
 ## Files To Add
 
@@ -41,23 +41,26 @@ Recommended project integration files:
 
 ```text
 README.md
-ROADMAP_STATUS.md
+ROADMAP.md
 COMMIT.md
 SESSION_BOOTSTRAP.md
 MEMORY.md
-CHANGES.md
-DEVELOPMENT_NOTES.md
-LIVE_ACHIEVEMENT_STATUS.md
+MEMORY_ARCHITECTURE.md
+docs/decisions/INDEX.md
+docs/book/
 ```
 
 The exact live-doc names can differ in another project. What matters is that
 the project has:
 
 - one front-door navigation file,
-- one roadmap-status file,
+- one high-level roadmap-intent file,
 - one commit-workflow file,
 - one session-start/bootstrap file,
-- and one or more continuity/history files.
+- one bounded resume pointer,
+- one durable decision store,
+- one user-facing documentation surface,
+- and git as the chronological history.
 
 ## File Roles
 
@@ -67,11 +70,14 @@ the project has:
 | `docs/TASK_TREE.md` | Local operating spec, active task-tree index, and PNT selection rules. |
 | `docs/tasks/TEMPLATE.md` | Copyable skeleton for each new top-level task tree. |
 | `docs/tasks/<TREE>.md` | One task tree for one top-level task. |
-| `ROADMAP_STATUS.md` | High-level status board; links active lanes to active task trees. |
+| roadmap-intent file | High-level direction; links task trees when useful without mirroring their live frontier. |
 | `COMMIT.md` | Commit workflow; requires task-file updates and leaf-ID traceability. |
 | `README.md` | Project entry point; links the task-tree docs. |
 | `SESSION_BOOTSTRAP.md` | Session startup ritual; tells agents to read active task trees. |
-| live history docs | Recovery and rationale logs; summarize task-tree state changes without duplicating the tree. |
+| `MEMORY.md` | Bounded overwrite-only recovery pointer to the latest commit, active leaf, and next action. |
+| `docs/decisions/` | Durable accepted rationale and cross-cutting decisions. |
+| mdBook or equivalent | User-facing behavior, examples, and supported-boundary documentation. |
+| git | Chronological audit trail for completed work. |
 
 ## Minimum Setup
 
@@ -98,10 +104,10 @@ docs/tasks/*.md file and identify the leaf ID in the commit subject or first
 body line.
 ```
 
-8. Add one line to the roadmap-status file for the active lane:
+8. If useful, add one link from the high-level roadmap to the active tree:
 
 ```text
-Active task tree: docs/tasks/<FIRST-TREE>.md; current frontier: <TREE>.1.
+Task tree: docs/tasks/<FIRST-TREE>.md.
 ```
 
 At that point the workflow is usable.
@@ -125,27 +131,25 @@ continuity, and PNT-style execution.
 7. Update `SESSION_BOOTSTRAP.md` or equivalent:
    - Read `README.md`.
    - Read `COMMIT.md`.
-   - Read `ROADMAP_STATUS.md`.
+   - Read the bounded `MEMORY.md` resume pointer.
    - Read `docs/TASK_TREE.md`.
    - Read active task files listed in `docs/TASK_TREE.md`.
    - Pick work from the current frontier when the user asks for PNT.
-8. Update `ROADMAP_STATUS.md`:
-   - Keep roadmap lanes high-level.
-   - For each active lane with task-tree-managed work, link the owning task
-     file and name the current frontier leaf.
-   - Do not copy the whole task tree into the roadmap.
+8. Update the roadmap-intent file only when high-level intent changes:
+   - Link the owning task tree when useful.
+   - Do not mirror node status, the current frontier, or git history.
 9. Update `COMMIT.md`:
    - Require task-tree files to be updated when node status, frontier,
      blockers, decisions, validation, or completion evidence changes.
    - Require the commit subject or first body line to include the leaf ID for
      task-tree-managed work.
    - Require one commit per completed leaf before selecting another leaf.
-10. Update continuity/history docs:
-    - `MEMORY.md`: record the current active tree and frontier for recovery.
-    - `CHANGES.md`: log creation of the workflow and any task-tree status
-      transition that changes project state.
-    - `DEVELOPMENT_NOTES.md`: record rationale and policy decisions.
-    - `LIVE_ACHIEVEMENT_STATUS.md`: record the latest completed slice.
+10. Route continuity and history through explicit layers:
+    - `MEMORY.md`: overwrite the bounded latest-commit/active-leaf/next-action
+      pointer.
+    - `docs/decisions/`: record accepted durable rationale when warranted.
+    - mdBook or equivalent: synchronize user-facing behavior and examples.
+    - git: retain the chronological implementation and completion history.
 11. Commit the setup as one documentation/workflow slice.
 
 ## Adapting `docs/TASK_TREE.md`
@@ -231,8 +235,8 @@ Use these rules once the workflow is installed:
 - Record blockers with unblock conditions.
 - Record decisions where they are made.
 - Record validation in the owning task file.
-- Update live docs only with summaries and links, not a duplicate of the whole
-  task tree.
+- Update the bounded resume pointer and user-facing docs only where state or
+  behavior changes; never duplicate the whole task tree or git history.
 - Commit every completed leaf before selecting another leaf.
 
 ## Completion Evidence
@@ -243,9 +247,9 @@ A completed leaf should leave these traces:
 - The verification log names the checks run.
 - The commit log names the commit subject or reference.
 - The commit subject or first body line contains the leaf ID.
-- Live docs summarize any project-state change.
-- The roadmap-status file reflects any active-lane, done, left, or frontier
-  change.
+- The bounded resume pointer names the latest commit, active leaf, and next
+  action.
+- Durable decisions and user-facing docs are synchronized when warranted.
 
 Commit hashes do not have to be written into the same task-file update. The
 hash is only known after commit. The reliable join key is the leaf ID in the
@@ -257,7 +261,7 @@ wants that extra index.
 - Do not use the roadmap as the detailed task ledger.
 - Do not put broad container tasks in the current frontier.
 - Do not create vague children that cannot be verified.
-- Do not duplicate the whole task tree into `ROADMAP_STATUS.md`.
+- Do not duplicate the task tree or git history into a roadmap/status blob.
 - Do not leave completed leaves uncommitted.
 - Do not silently continue when a discovered subtask changes the scope; split
   the node and update the frontier.
@@ -275,10 +279,11 @@ Use this checklist when enabling the workflow in a new project.
 [ ] docs/tasks/<FIRST-TREE>.md exists.
 [ ] docs/TASK_TREE.md lists the first active tree.
 [ ] README.md links docs/TASK_TREE_README.md and docs/TASK_TREE.md.
-[ ] ROADMAP_STATUS.md links active roadmap lane(s) to active task tree(s).
+[ ] The high-level roadmap links task trees where useful without mirroring live status.
 [ ] COMMIT.md requires task-file updates and leaf-ID commit traceability.
 [ ] SESSION_BOOTSTRAP.md reads docs/TASK_TREE.md and active task files.
-[ ] Continuity/history docs summarize the setup.
+[ ] MEMORY.md is bounded and points to the active leaf and next action.
+[ ] Durable decisions, user-facing docs, and git each have explicit roles.
 [ ] The setup is committed as one documentation/workflow slice.
 ```
 
