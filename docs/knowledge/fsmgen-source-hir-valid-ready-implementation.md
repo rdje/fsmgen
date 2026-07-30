@@ -32,4 +32,5 @@ generator call.
 Post-prototype audit `.5` keeps the implementation private: its healthy
 equivalence proof rejects retirement, while one test producer, one schema, and
 only an IAL2 renderer reject immediate public promotion. The next design leaf
-selects a concrete-control-to-IAL1 route.
+selects a concrete-control-to-IAL1 route; clean audit commit `5d018edbd`
+activates that leaf continuity-only.

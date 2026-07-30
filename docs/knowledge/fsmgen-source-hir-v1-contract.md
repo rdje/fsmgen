@@ -33,4 +33,5 @@ Completed implementation leaf `.4` owns the three packages and focused
 `t/1547-source-hir-valid-ready.t`; no public API/report/accounting surface is
 selected. Audit `.5` retains this version-1 path privately and selects a
 separate concrete-control-to-IAL1 design leaf before promotion is
-reconsidered.
+reconsidered. Clean audit commit `5d018edbd` activates that design leaf only;
+version 1 stays unchanged.

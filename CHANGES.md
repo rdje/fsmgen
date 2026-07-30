@@ -31139,3 +31139,19 @@ task tree and git.
 - Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
   and the 72-file HTML build pass; Knowledge Map passes at 1,079 facts / 5,563
   keys; memory, diff, output cleanup, and all seven staged doctrine gates pass.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.6 — private SourceHIR IAL1 selection activated
+
+- Activated only the design leaf selected by clean post-prototype audit commit
+  `5d018edbd`.
+- Task/index, architecture/audit/decision/fact continuity, roadmap, mdBook
+  backlog, Memory, and changelog are aligned. Exact IAL1 fixture, SourceHIR
+  schema, package/API, renderer, provenance/source-map/diagnostic contract,
+  focused test, code, parser, artifacts, public surfaces, HDL/runtime, and
+  behavior remain unselected and unchanged until activation commits cleanly.
+- Public builder, HIAL/VIAL, scale, MCP-write, and every director-gated owner
+  remain inactive; both frozen status files stay untouched and no separate
+  development note is warranted for continuity-only activation.
+- Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
+  and the 72-file HTML build pass; Knowledge Map passes at 1,079 facts / 5,563
+  keys; memory, diff, output cleanup, and all seven staged doctrine gates pass.

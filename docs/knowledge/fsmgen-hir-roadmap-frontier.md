@@ -39,6 +39,6 @@ exact version-1 contract in `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md` without
 implementation. Leaf `.4` now implements and proves the private
 three-package/t1547 valid-ready path. Audit `.5` keeps that healthy path
 private because one test producer, one schema, and only the IAL2 route are not
-enough to freeze a public contract. Proposed `.6` selects the exact private
-concrete-control-to-IAL1 boundary, `.7` implements it, and `.8` re-audits
-promotion.
+enough to freeze a public contract. Clean audit commit `5d018edbd` activates
+`.6` continuity-only to select the exact private concrete-control-to-IAL1
+boundary; `.7` implements it and `.8` re-audits promotion.

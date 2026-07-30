@@ -15,6 +15,9 @@ FSM/control intent that renders canonical IAL1 and enters the existing
 package boundary, renderer handoff, provenance mapping, diagnostics, and one
 tracked IAL1 golden before implementation.
 
+Clean audit commit `5d018edbd` activates that design-only `.6` selection
+continuity-only; activation chooses none of its exact contract fields.
+
 Public host-language selection remains owned by proposed
 `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`. No Perl, Python, Julia, C, CLI, raw-HIR,
 serialization, report, manifest, or support-accounting contract is promoted by

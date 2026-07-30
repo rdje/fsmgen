@@ -969,8 +969,9 @@ Source-facing HIR roadmap phase:
   bypass. Audit `.5` keeps SourceHIR private: the working IAL2 valid-ready path
   is sufficient to reject retirement, but one test producer, one schema, and
   no concrete-control-to-IAL1 route are insufficient to freeze a public API.
-  Proposed design-only `.6` selects that exact second private boundary and
-  golden, `.7` implements it, and `.8` repeats the promotion audit. Public
+  Clean audit commit `5d018edbd` activates design-only `.6` continuity-only to
+  select that exact second private boundary and golden; `.7` implements it,
+  and `.8` repeats the promotion audit. Public
   language, packaging, versioning, and compatibility remain separately owned
   by proposed `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`.
 

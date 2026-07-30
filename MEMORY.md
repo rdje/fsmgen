@@ -5,14 +5,13 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.5: keep SourceHIR private through IAL1 proof`).
-- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.6` (proposed; not active).
-- current_state: `.5` retains the healthy private IAL2 valid-ready prototype;
-  decision `0029` defers promotion until a concrete-control-to-IAL1 proof and
-  keeps public builder ownership separate.
-- next_action: after this audit commit is clean, activate `.6` continuity-only
-  to select the exact private concrete-control-to-IAL1 boundary and golden.
-- in_flight_uncommitted: none after this audit commit; no background job.
+- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.6: activate private SourceHIR IAL1 selection`).
+- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.6` (active continuity-only).
+- current_state: clean audit commit `5d018edbd` activates `.6` without selecting
+  an exact IAL1 fixture, schema, package API, renderer, or test contract.
+- next_action: audit the shipped IAL1 parser/lowering contract and small
+  concrete-control fixtures, then freeze or reject one exact private route.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -39,7 +38,7 @@ history; this file carries only the current bounded resume state.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
 - Decisions `0028`/`0029`, the architecture/audit records, and v1 contract are
-  canonical. `.6` remains proposed; public builder, HIAL/VIAL, scale,
+  canonical. `.6` is active continuity-only; public builder, HIAL/VIAL, scale,
   MCP-write, and every director-gated owner remain inactive.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.

@@ -29,3 +29,6 @@ Public host-language choice, packaging, versioning, compatibility, and
 diagnostic promises remain owned by proposed
 `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`. A second private route is necessary
 evidence for reconsideration, not authorization to publish an API.
+
+Clean audit commit `5d018edbd` activates `.6` continuity-only. Its exact
+second-route contract remains unselected until activation commits cleanly.

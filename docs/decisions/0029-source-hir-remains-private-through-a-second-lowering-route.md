@@ -32,6 +32,9 @@ Public host-language and package selection remains separately owned by
 necessary evidence for another promotion audit, but does not itself authorize
 a public API.
 
+Clean decision commit `5d018edbd` activates only the separate `.6` design
+leaf; activation selects no exact schema, fixture, or package API.
+
 ## Consequences
 
 - The current valid-ready packages and t1547 remain intact and private.
