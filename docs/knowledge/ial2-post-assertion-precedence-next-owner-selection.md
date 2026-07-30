@@ -39,3 +39,7 @@ The selected leaf is now complete. Chapters 00/10 describe bounded direct plus
 exact C1/C2/C3/APB-C4 composition VHDL support and preserve the full-backend,
 external-compiler, and unsupported-shape boundaries. Product behavior remains
 unchanged.
+
+Clean documentation commit `0c9f402ca` activates only parent selector `.834`
+through continuity changes. The aligned book and every product behavior remain
+unchanged while selection continues.

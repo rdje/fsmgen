@@ -11809,6 +11809,9 @@ C1 standalone-DT, C2 generated-FSM, C3 external-RTL, and APB/C4 generated-FSM
 VHDL families are shipped while full parity, external compiler qualification,
 broader composition, aggregate/package emission, and unsupported shapes remain
 deferred or fail closed. No product behavior changes.
+Clean documentation commit `0c9f402ca` activates parent selector `.834`
+continuity-only. This aligned VHDL boundary and every shipped behavior remain
+unchanged while the next roadmap owner is selected.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

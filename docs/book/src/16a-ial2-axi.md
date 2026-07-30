@@ -1036,6 +1036,8 @@ Clean selector commit `191a65151` activates only that documentation leaf
 continuity-only; the AXI contract remains unchanged.
 That documentation leaf is complete with no AXI source, HDL, assertion, or
 runtime change. Parent selection may continue from a new clean selector.
+Clean documentation commit `0c9f402ca` activates only parent selector `.834`
+continuity-only; the AXI contract remains unchanged.
 
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and

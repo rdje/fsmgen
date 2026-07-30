@@ -60,6 +60,8 @@ shipped.
   preserving the bounded-subset/full-backend distinction, absent external
   compiler qualification, fail-closed unsupported shapes, and all behavior.
   The shipped composition summary includes C1/C2/C3/APB-C4.
+- `2026-07-30`: Clean documentation commit `0c9f402ca` hands continuity back
+  to parent selector `.834`; this tree remains complete and unchanged.
 
 ## Blockers
 

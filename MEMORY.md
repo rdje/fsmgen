@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1: align shipped VHDL boundary`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER` (next clean selector pending).
-- current_state: VHDL book truth-sync `.1` is complete. Chapters 00/10 now match Chapter 14's bounded direct plus exact C1/C2/C3/APB-C4 subset and preserve full-backend/GHDL/external-compiler deferrals; product behavior is unchanged.
-- next_action: after this documentation commit is clean, activate a new parent IAL2 roadmap selector and choose exactly one next evidence-backed owner.
-- in_flight_uncommitted: none after this documentation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.834: activate post VHDL book selector`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.834` (continuity-only selector).
+- current_state: clean documentation commit `0c9f402ca` completes the VHDL book truth-sync. Parent `.834` is active continuity-only; no broader roadmap owner or behavior change is active.
+- next_action: reconcile the remaining roadmap candidates from their durable facts and task trees, select exactly one smallest evidence-backed owner, and commit the selector cleanly before activating that owner.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

@@ -113,6 +113,10 @@ direct plus exact C1/C2/C3/APB-C4 composition VHDL truth. Full parity and
 external compiler qualification remain deferred, and product behavior is
 unchanged.
 
+Clean documentation commit `0c9f402ca` activates only parent selector `.834`
+through continuity changes. The aligned book and every product behavior remain
+unchanged while the next owner is selected.
+
 ## Closeout Evidence
 
 - Book/status/path truth passes 5 files/329 tests. Knowledge Map generation and

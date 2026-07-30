@@ -8123,6 +8123,10 @@ generated-FSM VHDL families. Chapter 14 stays canonical; full parity, GHDL or
 other external compiler qualification, broader composition, aggregate/package
 emission, and unsupported shapes remain deferred or fail closed. No product
 behavior changes. The next clean action returns to a new parent selector.
+Clean documentation commit `0c9f402ca` activates parent selector `.834`
+continuity-only. The aligned VHDL book boundary and every shipped behavior
+remain unchanged while `.834` reconciles the remaining directions and selects
+exactly one next owner.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
