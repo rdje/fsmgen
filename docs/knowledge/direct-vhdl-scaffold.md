@@ -476,13 +476,11 @@ beyond the exact shipped fixtures, internal nets/generic maps, packages,
 multi-clock domains, broad expression parity, GHDL validation, and full
 SystemVerilog parity remain deferred or fail-closed.
 
-The scaffold does not yet translate or reject SystemVerilog unary reduction
-syntax in a scheduled enable expression. A named-drive probe emitted
-`drive_zero_en and (|drive_zero_start)`, so generation success is explicitly
-not a valid-VHDL claim for that shape. Decision `0023` and active task
-`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own the exact correction. Its
-completed no-behavior audit `.1` selects scalar identity/complement and
-deterministic rejection of vector, range, unresolved, compound, malformed, or
-residual reductions. Clean audit commit `16f6140c4` activates `.2`, which must
-implement that contract before it is shipped. GHDL validation remains
-unavailable.
+The scaffold now translates generated unary reduction OR/AND/XOR before
+generic rewrites. Scalars/static bits use identity/complement; declared vectors
+use required-only backend-owned `std_logic` folds with signed casts. Range,
+invalid-select, unresolved/compound/malformed/residual shapes and helper-name
+collisions fail closed. t1542/t1543 plus real AMBA/APB t1420/t386 output prove
+the historical `(|drive_zero_start)`, `(~|HRESP)`, `(~|wait_ctr)`, and
+`(|addr_q)` foreign tokens are gone. Public one-operand source arity is
+unchanged. GHDL validation remains unavailable under decision `0023`.

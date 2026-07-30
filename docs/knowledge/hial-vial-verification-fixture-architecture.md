@@ -82,3 +82,9 @@ lowerings, simulator profiles, or architecture.
 
 Clean audit commit `16f6140c4` activates only that direct-VHDL implementation;
 the HIAL/VIAL architecture remains proposed and unchanged.
+
+Completed direct-VHDL implementation `.2` closes one synthesizable
+HIAL-to-VHDL reduction seam with scalar/static-bit identity and explicit vector
+folds. It does not select any VIAL layer, fixture semantics, verification
+lowering, or simulator authority; proposed parent selector `.832` compares
+HIAL/VIAL independently.

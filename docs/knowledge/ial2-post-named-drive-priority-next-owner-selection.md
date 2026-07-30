@@ -37,11 +37,16 @@ Clean selector commit `5f904d2d2` activates only audit `.1`; activation is
 continuity-only and leaves product behavior unchanged.
 
 Completed audit `.1` selects proposed `.2` to lower declaration-proven scalar
-and static-bit-select reductions by identity/complement and reject vector,
-range, unresolved, compound, malformed, or residual reductions before VHDL
-emission. Public source arity and all shipped behavior remain unchanged until a
-separate clean `.2` activation and implementation.
+and static-bit-select reductions by identity/complement. Implementation-time
+preservation reconciles declared vectors to backend-owned folds while ranges,
+invalid selects, unresolved/compound/malformed/residual forms reject. Public
+source arity remains unchanged.
 
 Clean audit commit `16f6140c4` activates only `.2` continuity state. The
 foreign-token leak and all shipped behavior remain unchanged until the
 implementation slice completes.
+
+Completed `.2` now ships the reconciled scalar/static-bit/vector-fold contract,
+token-free named-drive/AMBA/APB output, and unchanged public syntax. Proposed
+parent selector `.832` owns the next roadmap choice after the clean behavior
+commit.

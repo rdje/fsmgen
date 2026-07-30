@@ -2593,6 +2593,13 @@ See the
 [reduction readiness audit](../../DIRECT_VHDL_REDUCTION_EXPRESSION_READINESS_AUDIT.md).
 Clean audit commit `16f6140c4` activates only that separate `.2`; AHB source,
 runtime, generated artifacts, and accounting remain unchanged.
+Completed `.2` now lowers scalar/static-bit reductions and required declared
+vectors without foreign tokens. The implementation-time helper reconciliation
+preserves existing AMBA requester `HRESP` truthiness and APB generated-child
+`wait_ctr`/`addr_q` truthiness; it does not change AHB source intent, runtime,
+artifacts, requester `2..16`, or 332/373/56 split 28/28 accounting. External
+VHDL compiler qualification remains separate. See the
+[shipped reduction behavior](../../DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

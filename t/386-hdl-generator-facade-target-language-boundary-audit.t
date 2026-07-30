@@ -1875,10 +1875,15 @@ subtest 'facade target_language option routes bounded APB/C4 composition VHDL st
         qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\b/s,
         'explicit VHDL facade generation emits the APB completer port map',
     );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\(not fsmgen_direct_vhdl_reduce_or\(wait_ctr\)\)\s+and\s+\(fsmgen_direct_vhdl_reduce_or\(addr_q\)\)/s,
+        'explicit VHDL APB completer lowers vector truthiness through the OR fold helper',
+    );
     unlike(
         $vhdl_result->{hdl_code},
-        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b/s,
-        'explicit VHDL APB/C4 composition generation does not leak SystemVerilog structural syntax',
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\(\s*~?\|\s*(?:wait_ctr|addr_q)/s,
+        'explicit VHDL APB/C4 composition generation does not leak SystemVerilog structural or reduction syntax',
     );
 };
 

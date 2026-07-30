@@ -11733,6 +11733,18 @@ This audit changes no current output; `.2` requires a clean activation commit.
 Clean audit commit `16f6140c4` activates only implementation `.2`. Product
 output remains unchanged during this continuity transition; `.2` now owns the
 selected adapter change and regression proof.
+Implementation `.2` now ships the reconciled contract. Scalars and static bit
+selects lower by identity/complement; declared vectors use required-only
+backend-owned `std_logic` OR/AND/XOR fold helpers, with signed casts and
+helper-name collision protection. Range, invalid-select, unresolved,
+compound, malformed, and residual forms fail closed. The initial blanket
+vector rejection was rejected by preservation evidence because existing AMBA
+`HRESP` and APB `wait_ctr`/`addr_q` direct paths require vector truthiness.
+t1542/t1543 plus real t1420/t386 prove token-free output while public
+one-operand source syntax remains rejected. See the
+[shipped behavior](../../DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md).
+No external VHDL compiler qualification is claimed; proposed parent selector
+`.832` owns the next roadmap choice after the clean behavior commit.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
@@ -17116,16 +17128,15 @@ struct outputs as VHDL `std_logic_vector` ports with the generated packed
 widths.
 It is covered by direct pipeline, CLI, and facade tests.
 
-The current direct-VHDL expression boundary is not yet truthful for unary
-reductions: a scheduled named-drive enable can emit
-`drive_zero_en and (|drive_zero_start)`, carrying SystemVerilog syntax into
-VHDL. Decision `0023` prevents generation success from being treated as syntax
-or runtime validation. Completed no-behavior audit `.1` selects scalar
-OR/AND/XOR identity, complemented scalar `not`, and deterministic rejection of
-vector, range, unresolved, compound, malformed, or residual reductions for
-active implementation `.2`. Public source arity remains unchanged. This is
-not shipped until `.2` completes; no native vector syntax or external compiler
-qualification is claimed because no `ghdl`, `nvc`, or `vcom` is installed.
+The direct-VHDL expression adapter now recognizes generated unary reductions
+before generic rewrites. Scalars/static bits use identity/complement; declared
+vectors use required-only backend-owned `std_logic` OR/AND/XOR fold helpers,
+with signed casts and helper-collision rejection. Range slices, invalid
+selects, unresolved/compound/malformed/residual shapes fail closed. The real
+named-drive, AMBA `HRESP`, and APB `wait_ctr`/`addr_q` outputs contain no
+SystemVerilog reduction token. Public source arity remains unchanged. Decision
+`0023` still prevents textual generation from being called executable VHDL
+qualification because no `ghdl`, `nvc`, or `vcom` is installed.
 
 Composition VHDL now includes the bounded C3 external-RTL literal/concat top
 for `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1

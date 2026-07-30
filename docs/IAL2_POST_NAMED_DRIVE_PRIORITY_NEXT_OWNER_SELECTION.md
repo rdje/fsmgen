@@ -143,3 +143,11 @@ compiler; activation of `.2` requires the clean audit commit.
 Clean audit commit `16f6140c4` activates only implementation `.2` through
 continuity changes. The current reduction-token leak and every shipped
 named-drive/AHB/HIAL/VIAL/scale behavior remain unchanged during activation.
+
+Completed implementation `.2` now removes the foreign reduction tokens.
+Scalars/static bits use identity/complement; declared vectors use required-only
+backend-owned `std_logic` folds after preservation proved blanket rejection
+would regress AMBA/APB paths. Range/invalid/unresolved/compound/residual shapes
+remain fail-closed, public source syntax is unchanged, and external VHDL
+compiler qualification remains unclaimed. Proposed parent selector `.832`
+owns the next clean roadmap choice.

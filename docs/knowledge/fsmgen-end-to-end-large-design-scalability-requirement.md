@@ -45,3 +45,7 @@ large-design tree remains proposed.
 
 Clean audit commit `16f6140c4` activates only that bounded direct-VHDL
 implementation; it is not capacity evidence, and scale remains proposed.
+
+Completed direct-VHDL implementation `.2` supplies bounded backend correctness,
+not large-design capacity evidence. The scale tree remains proposed for parent
+selector `.832` to compare independently.

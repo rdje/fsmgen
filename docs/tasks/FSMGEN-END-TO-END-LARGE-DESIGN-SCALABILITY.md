@@ -130,6 +130,9 @@ and diagnostic behavior per stage while proving semantic/output correctness.
   with its workload, measurement, budget, and graceful-failure contract intact.
 - `2026-07-30`: Clean audit commit `16f6140c4` activates only direct-VHDL
   implementation `.2`; the scale tree remains proposed and unchanged.
+- `2026-07-30`: Direct-VHDL implementation `.2` ships its bounded reduction
+  repair. Functional preservation is not end-to-end capacity evidence; scale
+  remains proposed for independent comparison by parent selector `.832`.
 
 ## Open Questions
 
@@ -143,7 +146,8 @@ and diagnostic behavior per stage while proving semantic/output correctness.
 ## Blockers
 
 - None for durable capture. Activation awaits a later roadmap selector; the
-  selected direct-VHDL reduction-expression correctness audit proceeds first.
+  completed direct-VHDL reduction tree returns independent comparison to
+  proposed parent selector `.832`.
 
 ## Capture Verification
 

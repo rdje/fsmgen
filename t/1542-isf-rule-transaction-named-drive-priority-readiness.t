@@ -435,7 +435,7 @@ ISF
     );
 };
 
-subtest 'native Verilog qualifies the repair while direct VHDL remains explicitly unqualified' => sub {
+subtest 'native Verilog qualifies priority and direct VHDL removes scalar reduction tokens' => sub {
     my $path = data_path('isf_rule_transaction_named_drive_priority_probe.isf');
     my $source = slurp($path);
     my $verilog = generate_hdl('named_drive_priority_probe', $source, $path, 'verilog');
@@ -454,8 +454,28 @@ subtest 'native Verilog qualifies the repair while direct VHDL remains explicitl
     );
 
     my $vhdl = generate_hdl('named_drive_priority_probe', $source, $path, 'vhdl');
-    like($vhdl, qr/\(\|drive_zero_start/, 'direct VHDL characterization retains the separately owned unary-reduction residue');
-    note('decision 0023 owns VHDL translation/compiler qualification; this test makes no valid-VHDL claim');
+    like(
+        $vhdl,
+        qr/drive_zero_side_1_en <= drive_zero_en and \(drive_zero_start\);/,
+        'direct VHDL lowers the scalar named-drive reduction by identity',
+    );
+    unlike($vhdl, qr/\(\s*[~]?[|&^]\s*drive_zero_start/, 'direct VHDL emits no named-drive reduction token');
+
+    my $reverse_path = data_path('isf_rule_transaction_named_drive_transaction_priority.isf');
+    my $reverse_source = slurp($reverse_path);
+    my $reverse_vhdl = generate_hdl(
+        'named_drive_transaction_priority',
+        $reverse_source,
+        $reverse_path,
+        'vhdl',
+    );
+    like(
+        $reverse_vhdl,
+        qr/not_drive_zero_start <= \(not drive_zero_start\);/,
+        'direct VHDL lowers the complemented scalar named-drive reduction to not',
+    );
+    unlike($reverse_vhdl, qr/\(\s*[~]?[|&^]\s*drive_zero_start/, 'complemented direct VHDL emits no reduction token');
+    note('decision 0023 still requires an authoritative compiler for executable VHDL qualification');
 };
 
 done_testing();

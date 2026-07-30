@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2: activate scalar reduction implementation`).
-- active_work_unit: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2` activation.
-- current_state: clean audit commit `16f6140c4` selected scalar identity/complement and unsupported-reduction rejection; activation changes continuity only.
-- next_action: commit activation, then implement and verify `.2`'s selected direct-VHDL adapter contract.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2: ship reduction lowering`).
+- active_work_unit: none; the direct-VHDL reduction tree is done.
+- current_state: `.2` ships scalar/static-bit identity, required-only vector folds, condition context, and targeted unsupported-shape rejection with token-free named-drive/AMBA/APB output.
+- next_action: after this clean behavior commit, activate proposed parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.832` and choose one next roadmap owner.
+- in_flight_uncommitted: none after this behavior commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -36,13 +36,13 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. HIAL/VIAL remains proposed while
-  `.831` selects the narrower direct-VHDL reduction-expression audit.
+  mixed-language claims qualified separately. HIAL/VIAL remains proposed for
+  parent selector `.832` after the narrower direct-VHDL tree completes.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc
-  fences, and guard metric repair. Parked findings do not pivot the selected
-  direct-VHDL audit.
+  fences, and guard metric repair. Parked findings await the next clean parent
+  selector.
 - Task-tree live truth is the node list + `docs/TASK_TREE.md` + git (decision
   `0019`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.
 - Push only on explicit request (decision `0005`). PNT runs autonomously without

@@ -18,7 +18,7 @@ my $repo_root = repository_root();
 configure_project_temp_environment(purpose => 'tests');
 my $workspace = create_project_tempdir(purpose => 'tests');
 
-subtest 'public scalar and vector truthiness expose the exact direct VHDL seam' => sub {
+subtest 'public scalar and vector truthiness lower without foreign tokens' => sub {
     my $path = File::Spec->catfile($workspace, 'direct_vhdl_reduction_truthiness.fsm');
     write_file(
         $path,
@@ -68,7 +68,28 @@ FSM
         'vector zero truthiness emits complemented unary reduction OR',
     );
 
-    my $vhdl = generate_hdl($path, 'vhdl');
+    my $scalar_path = File::Spec->catfile($workspace, 'direct_vhdl_scalar_reduction_truthiness.fsm');
+    write_file(
+        $scalar_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_reduction_truthiness
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (SCALAR 1)
+    (SCALAR_SEEN 1)
+    (SCALAR_CLEAR 1)
+  )
+  (idle
+    (<SCALAR (= (SCALAR_SEEN 1)))
+    (<!SCALAR (= (SCALAR_CLEAR 1)))
+  )
+)
+FSM
+    );
+    my $vhdl = generate_hdl($scalar_path, 'vhdl');
     like(
         $vhdl,
         qr/idle_scalar_seen_1_en <= idle_en and SCALAR;/,
@@ -79,40 +100,41 @@ FSM
         qr/idle_scalar_clear_1_en <= idle_en and not SCALAR;/,
         'direct VHDL preserves scalar complement truthiness',
     );
+    my $vector_vhdl = generate_hdl($path, 'vhdl');
     like(
-        $vhdl,
-        qr/idle_vector_seen_1_en <= idle_en and \(\|VECTOR\);/,
-        'current direct VHDL leaks vector unary reduction OR',
+        $vector_vhdl,
+        qr/idle_vector_seen_1_en <= idle_en and \(fsmgen_direct_vhdl_reduce_or\(VECTOR\)\);/,
+        'vector truthiness lowers through the backend-owned OR fold',
     );
     like(
-        $vhdl,
-        qr/idle_vector_clear_1_en <= idle_en and \(~\|VECTOR\);/,
-        'current direct VHDL leaks complemented vector unary reduction OR',
+        $vector_vhdl,
+        qr/idle_vector_clear_1_en <= idle_en and \(not fsmgen_direct_vhdl_reduce_or\(VECTOR\)\);/,
+        'complemented vector truthiness applies not to the folded result',
     );
 };
 
-subtest 'converter matrix characterizes scalar and vector OR AND XOR reductions' => sub {
+subtest 'converter matrix lowers scalar and vector OR AND XOR reductions' => sub {
     my $backend = FSM::HDL::FlattenedDT::Backend::VHDL->new(
         flattened_dt => bless({}, 'FSMGenReductionAuditDummy'),
     );
 
-    my @cases = (
-        [scalar => '',      '|', output => qr/Y <= \(\|X\);/],
-        [scalar => '',      '&', output => qr/Y <= \( and X\);/],
-        [scalar => '',      '^', error  => qr/arithmetic expression '\(\^X\)' is outside the direct VHDL scaffold/],
-        [vector => '[3:0] ', '|', output => qr/Y <= \(\|X\);/],
-        [vector => '[3:0] ', '&', output => qr/Y <= \( and X\);/],
-        [vector => '[3:0] ', '^', error  => qr/arithmetic expression '\(\^X\)' is outside the direct VHDL scaffold/],
-    );
+    my @cases;
+    for my $operator ('|', '&', '^') {
+        push @cases,
+            ["scalar unary $operator", '', "(${operator}X)", output => qr/Y <= \(X\);/],
+            ["scalar complemented unary $operator", '', "(~${operator}X)", output => qr/Y <= \(not X\);/],
+            ["vector unary $operator", '[3:0] ', "(${operator}X)", output => vector_pattern($operator, 0)],
+            ["vector complemented unary $operator", '[3:0] ', "(~${operator}X)", output => vector_pattern($operator, 1)];
+    }
 
     for my $case (@cases) {
-        my ($shape, $range, $operator, $expectation, $pattern) = @$case;
+        my ($label, $range, $expression, $expectation, $pattern) = @$case;
         my $systemverilog = <<"SV";
-module reduction_$shape (
+module reduction_matrix (
   input wire ${range}X
 );
 wire Y;
-assign Y = (${operator}X);
+assign Y = $expression;
 endmodule
 SV
 
@@ -124,14 +146,167 @@ SV
         $error = $@ unless $ok;
 
         if ($expectation eq 'output') {
-            ok($ok, "$shape unary $operator currently returns output");
-            like($vhdl, $pattern, "$shape unary $operator current output is characterized");
+            ok($ok, "$label lowers");
+            like($vhdl, $pattern, "$label has the selected fold or scalar semantics");
         }
         else {
-            ok(!$ok, "$shape unary $operator currently fails closed");
-            like($error, $pattern, "$shape unary $operator current diagnostic is characterized");
+            ok(!$ok, "$label fails closed");
+            like($error, $pattern, "$label names the vector reduction boundary");
         }
     }
+};
+
+subtest 'vector helpers use explicit four-state std_logic folds' => sub {
+    my $backend = FSM::HDL::FlattenedDT::Backend::VHDL->new(
+        flattened_dt => bless({}, 'FSMGenReductionHelperContractDummy'),
+    );
+    my $systemverilog = <<'SV';
+module reduction_helper_contract (
+  input wire [3:0] X
+);
+wire OR_Y;
+wire AND_Y;
+wire XOR_Y;
+assign OR_Y = (|X);
+assign AND_Y = (&X);
+assign XOR_Y = (^X);
+endmodule
+SV
+    my $vhdl = $backend->convert_systemverilog_to_vhdl($systemverilog);
+    for my $case (
+        ['or',  '0'],
+        ['and', '1'],
+        ['xor', '0'],
+    ) {
+        my ($operator, $identity) = @$case;
+        like(
+            $vhdl,
+            qr/function fsmgen_direct_vhdl_reduce_$operator\(value : std_logic_vector\) return std_logic is\s+variable result : std_logic := '$identity';\s+begin\s+for index in value'range loop\s+result := result $operator value\(index\);\s+end loop;\s+return result;\s+end function fsmgen_direct_vhdl_reduce_$operator;/s,
+            "vector $operator helper folds std_logic from the correct identity",
+        );
+    }
+    unlike(
+        $vhdl,
+        qr/<=\s*\(~?[|&^]X\)/,
+        'helper-backed output contains no SystemVerilog reduction token',
+    );
+};
+
+subtest 'static bit selects lower and every other operand shape fails closed' => sub {
+    my $backend = FSM::HDL::FlattenedDT::Backend::VHDL->new(
+        flattened_dt => bless({}, 'FSMGenReductionOperandContractDummy'),
+    );
+
+    for my $operator ('|', '&', '^') {
+        for my $complement ('', '~') {
+            my $expression = "(${complement}${operator}X[2])";
+            my $vhdl = convert_expression(
+                $backend,
+                "input wire [3:0] X",
+                $expression,
+            );
+            my $expected = $complement ? 'Y <= (not X(2));' : 'Y <= (X(2));';
+            like(
+                $vhdl,
+                qr/\Q$expected\E/,
+                "$expression lowers through the static bit-select contract",
+            );
+        }
+    }
+
+    my @unsupported = (
+        ["(|X[2:2])", "input wire [3:0] X", qr/operand 'X\[2:2\]' is a 1-bit range slice/],
+        ["(|X[5])", "input wire [3:0] X", qr/operand 'X\[5\]' selects outside declared range \[3:0\]/],
+        ["(|X[0])", "input wire X", qr/operand 'X\[0\]' selects a scalar declaration/],
+        ["(|UNKNOWN)", "input wire X", qr/operand 'UNKNOWN' has no resolved declaration/],
+        ["(|(X & X))", "input wire X", qr/operand shape is unresolved or compound/],
+        ["(|X[INDEX])", "input wire [3:0] X,\n  input wire [1:0] INDEX", qr/operand shape is unresolved or compound/],
+    );
+
+    for my $case (@unsupported) {
+        my ($expression, $declarations, $pattern) = @$case;
+        my $error;
+        my $ok = eval {
+            convert_expression($backend, $declarations, $expression);
+            1;
+        };
+        $error = $@ unless $ok;
+        ok(!$ok, "$expression fails closed");
+        like($error, $pattern, "$expression receives its targeted operand diagnostic");
+    }
+
+    my $signed_vhdl = convert_expression(
+        $backend,
+        'input logic signed [3:0] X',
+        '(^X)',
+    );
+    like(
+        $signed_vhdl,
+        qr/Y <= \(fsmgen_direct_vhdl_reduce_xor\(std_logic_vector\(X\)\)\);/,
+        'signed vector reduction casts explicitly into the std_logic fold helper',
+    );
+
+    my $collision_error;
+    my $collision_ok = eval {
+        convert_expression(
+            $backend,
+            "input wire [3:0] X,\n  input wire fsmgen_direct_vhdl_reduce_or",
+            '(|X)',
+        );
+        1;
+    };
+    $collision_error = $@ unless $collision_ok;
+    ok(!$collision_ok, 'vector helper name collision fails closed');
+    like(
+        $collision_error,
+        qr/vector reduction helper name 'fsmgen_direct_vhdl_reduce_or' collides with a generated declaration/,
+        'helper collision receives the targeted direct-scaffold diagnostic',
+    );
+};
+
+subtest 'condition conversion receives declaration context' => sub {
+    my $backend = FSM::HDL::FlattenedDT::Backend::VHDL->new(
+        flattened_dt => bless({}, 'FSMGenReductionConditionContractDummy'),
+    );
+
+    my $scalar_systemverilog = <<'SV';
+module scalar_reduction_condition (
+  input logic X,
+  output reg Y
+);
+always_comb begin
+  Y = 1'b0;
+  if ((|X)) begin
+    Y = 1'b1;
+  end
+end
+endmodule
+SV
+    my $scalar_vhdl = $backend->convert_systemverilog_to_vhdl($scalar_systemverilog);
+    like(
+        $scalar_vhdl,
+        qr/if \(\(X\)\) = '1' then/,
+        'scalar reduction in a generated condition lowers with declaration context',
+    );
+    unlike(
+        $scalar_vhdl,
+        qr/function fsmgen_direct_vhdl_reduce_/,
+        'scalar-only conditions do not emit an unused vector helper',
+    );
+
+    my $vector_systemverilog = $scalar_systemverilog;
+    $vector_systemverilog =~ s/input logic X/input logic [3:0] X/;
+    my $vector_vhdl = $backend->convert_systemverilog_to_vhdl($vector_systemverilog);
+    like(
+        $vector_vhdl,
+        qr/if \(\(fsmgen_direct_vhdl_reduce_or\(X\)\)\) = '1' then/,
+        'vector reduction in a generated condition uses the declaration-aware helper',
+    );
+    like(
+        $vector_vhdl,
+        qr/function fsmgen_direct_vhdl_reduce_or\(value : std_logic_vector\) return std_logic is/,
+        'condition lowering emits its required vector helper',
+    );
 };
 
 subtest 'explicit unary reduction source forms remain outside the public language' => sub {
@@ -168,6 +343,31 @@ sub generate_hdl {
         target_language => $target_language,
         quiet => 1,
     )->generate_hdl_from_file($path)->{hdl_code};
+}
+
+sub convert_expression {
+    my ($backend, $declarations, $expression) = @_;
+    my $systemverilog = <<"SV";
+module reduction_operand_contract (
+  $declarations
+);
+wire Y;
+assign Y = $expression;
+endmodule
+SV
+    return $backend->convert_systemverilog_to_vhdl($systemverilog);
+}
+
+sub vector_pattern {
+    my ($operator, $complement) = @_;
+    my %names = (
+        '|' => 'or',
+        '&' => 'and',
+        '^' => 'xor',
+    );
+    my $call = "fsmgen_direct_vhdl_reduce_$names{$operator}(X)";
+    my $expression = $complement ? "(not $call)" : "($call)";
+    return qr/Y <= \Q$expression\E;/;
 }
 
 sub failed_check_json {

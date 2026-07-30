@@ -34,6 +34,15 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
     my @constants = _parse_constants($body);
     my @signals = _parse_signal_declarations($body, { map { $_->{name} => 1 } @ports });
     my %decls_by_name = map { $_->{name} => $_ } (@ports, @signals);
+    my %vector_reduction_helpers = _required_vector_reduction_helpers($body, \%decls_by_name);
+    _validate_vector_reduction_helper_names(
+        \%vector_reduction_helpers,
+        $module->{name},
+        \@generics,
+        \@constants,
+        \@ports,
+        \@signals,
+    );
     my @assigns = _parse_continuous_assignments($body);
     my @processes = _parse_processes($body, \%decls_by_name);
 
@@ -46,6 +55,7 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
         assigns => \@assigns,
         processes => \@processes,
         decls_by_name => \%decls_by_name,
+        vector_reduction_helpers => \%vector_reduction_helpers,
     );
 }
 
@@ -333,7 +343,8 @@ sub _convert_comb_process ($decls_by_name, @block) {
         next unless length $line;
 
         if ($line =~ /^if\s*\((.+)\)\s+begin$/) {
-            push @out, _indent(2 + $indent_level) . 'if ' . _sv_condition_to_vhdl($1) . ' then';
+            push @out, _indent(2 + $indent_level) . 'if '
+                . _sv_condition_to_vhdl($1, { decls_by_name => $decls_by_name }) . ' then';
             $indent_level++;
             next;
         }
@@ -376,7 +387,7 @@ sub _convert_ff_process ($decls_by_name, $sensitivity, @block) {
         return (
             "  process($clock) begin",
             "    if rising_edge($clock) then",
-            '      if ' . _sv_condition_to_vhdl($reset_condition) . ' then',
+            '      if ' . _sv_condition_to_vhdl($reset_condition, { decls_by_name => $decls_by_name }) . ' then',
             @reset_lines,
             '      else',
             @clock_lines,
@@ -389,7 +400,7 @@ sub _convert_ff_process ($decls_by_name, $sensitivity, @block) {
     if ($sensitivity =~ /^\s*posedge\s+([A-Za-z_][A-Za-z0-9_]*)\s+or\s+(posedge|negedge)\s+([A-Za-z_][A-Za-z0-9_]*)\s*$/) {
         my ($clock, $edge, $reset) = ($1, $2, $3);
         my $expected_reset = $edge eq 'negedge' ? "$reset = '0'" : "$reset = '1'";
-        my $reset_vhdl = _sv_condition_to_vhdl($reset_condition);
+        my $reset_vhdl = _sv_condition_to_vhdl($reset_condition, { decls_by_name => $decls_by_name });
         confess _unsupported("asynchronous reset condition '$reset_condition' does not match sensitivity '$sensitivity'")
             unless $reset_vhdl eq $expected_reset;
 
@@ -499,7 +510,7 @@ sub _convert_sequential_branch_statements ($decls_by_name, @raw_lines) {
                 if $nested_depth != 0;
 
             my @nested_lines = _convert_sequential_branch_statements($decls_by_name, @nested_raw_lines);
-            push @out, 'if ' . _sv_condition_to_vhdl($condition) . ' then';
+            push @out, 'if ' . _sv_condition_to_vhdl($condition, { decls_by_name => $decls_by_name }) . ' then';
             push @out, map { '  ' . $_ } @nested_lines;
             push @out, 'end if;';
             next;
@@ -576,12 +587,22 @@ sub _render_vhdl (%args) {
         push @lines, "  signal $signal->{name} : " . _vhdl_type_for_decl($signal) . ';';
     }
 
+    my @reduction_operators = grep { $args{vector_reduction_helpers}{$_} } ('|', '&', '^');
+    if (@reduction_operators) {
+        push @lines, '' if @{$args{constants}} || @{$args{signals}};
+        for my $index (0 .. $#reduction_operators) {
+            push @lines, _render_vector_reduction_helper($reduction_operators[$index]);
+            push @lines, '' if $index != $#reduction_operators;
+        }
+    }
+
     push @lines, 'begin', '';
 
     for my $assign (@{$args{assigns}}) {
         my $expr = $assign->{expr};
         if ($expr =~ /==/) {
-            push @lines, '  ' . $assign->{lhs} . " <= '1' when " . _sv_condition_to_vhdl($expr) . " else '0';";
+            push @lines, '  ' . $assign->{lhs} . " <= '1' when "
+                . _sv_condition_to_vhdl($expr, { decls_by_name => $args{decls_by_name} }) . " else '0';";
         } else {
             push @lines, '  ' . $assign->{lhs} . ' <= '
                 . _sv_expr_to_vhdl($expr, { decls_by_name => $args{decls_by_name}, target_lhs => $assign->{raw_lhs} }) . ';';
@@ -626,7 +647,7 @@ sub _sv_lvalue_to_vhdl ($lhs) {
     return $converted;
 }
 
-sub _sv_condition_to_vhdl ($expr) {
+sub _sv_condition_to_vhdl ($expr, $ctx = {}) {
     my $trimmed = _trim($expr);
 
     if ($trimmed =~ /^!([A-Za-z_][A-Za-z0-9_]*)$/) {
@@ -637,13 +658,14 @@ sub _sv_condition_to_vhdl ($expr) {
         return "$trimmed = '1'";
     }
 
-    my $converted = _sv_expr_to_vhdl($trimmed);
+    my $converted = _sv_expr_to_vhdl($trimmed, $ctx);
     return $converted if $converted =~ /=/;
     return "($converted) = '1'";
 }
 
 sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     my $trimmed = _trim($expr);
+    $trimmed = _sv_reduction_expressions_to_vhdl($trimmed, $ctx);
     my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $ctx->{decls_by_name} || {});
     if ($target_decl && $target_decl->{scalar} && $trimmed =~ /^-?\d+$/) {
         my $low_bit = substr($trimmed, -1) =~ /[13579]\z/ ? 1 : 0;
@@ -675,6 +697,141 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     confess _unsupported("arithmetic expression '$expr' is outside the direct VHDL scaffold")
         if $converted =~ /[+\-*\/%]/ || $converted =~ /\bmod\b/i;
     return _trim($converted);
+}
+
+sub _sv_reduction_expressions_to_vhdl ($expr, $ctx) {
+    my $decls_by_name = $ctx->{decls_by_name} || {};
+    my $identifier = qr/[A-Za-z_][A-Za-z0-9_]*/;
+    my $candidate_operand = qr/$identifier(?:\[[0-9]+(?::[0-9]+)?\])?/;
+    my $converted = $expr;
+
+    $converted =~ s{
+        (\(\s*(~?)\s*([|&^])\s*($candidate_operand)\s*\))
+    }{
+        _sv_reduction_to_vhdl($1, $2, $3, $4, $decls_by_name)
+    }gex;
+
+    if ($converted =~ /\(\s*~?\s*[|&^]/) {
+        my $authored = _first_parenthesized_reduction_expression($converted);
+        confess _unsupported(
+            "unary reduction expression '$authored' is outside the direct VHDL scaffold: "
+            . 'operand shape is unresolved or compound; only scalar identifiers and in-range static bit selects are supported'
+        );
+    }
+
+    return $converted;
+}
+
+sub _sv_reduction_to_vhdl ($authored, $complement, $operator, $operand, $decls_by_name) {
+    my ($base, $select) = $operand =~ /^([A-Za-z_][A-Za-z0-9_]*)(?:\[([^\]]+)\])?$/;
+    my $decl = defined($base) ? $decls_by_name->{$base} : undef;
+    confess _unsupported(
+        "unary reduction expression '$authored' is outside the direct VHDL scaffold: "
+        . "operand '$operand' has no resolved declaration; only scalar identifiers and in-range static bit selects are supported"
+    ) unless $decl;
+
+    my $operand_vhdl;
+    if (!defined $select) {
+        if ($decl->{scalar}) {
+            $operand_vhdl = $operand;
+        }
+        else {
+            my $helper_name = _vector_reduction_helper_name($operator);
+            my $vector_operand = $decl->{signed} ? "std_logic_vector($operand)" : $operand;
+            $operand_vhdl = "$helper_name($vector_operand)";
+        }
+    }
+    elsif ($select =~ /^([0-9]+)$/) {
+        my $index = $1 + 0;
+        confess _unsupported(
+            "unary reduction expression '$authored' is outside the direct VHDL scaffold: "
+            . "operand '$operand' selects a scalar declaration; only scalar identifiers and in-range static bit selects are supported"
+        ) if $decl->{scalar};
+
+        my $low = $decl->{msb} < $decl->{lsb} ? $decl->{msb} : $decl->{lsb};
+        my $high = $decl->{msb} > $decl->{lsb} ? $decl->{msb} : $decl->{lsb};
+        confess _unsupported(
+            "unary reduction expression '$authored' is outside the direct VHDL scaffold: "
+            . "operand '$operand' selects outside declared range [$decl->{msb}:$decl->{lsb}]; "
+            . 'only scalar identifiers and in-range static bit selects are supported'
+        ) if $index < $low || $index > $high;
+        $operand_vhdl = _sv_lvalue_to_vhdl($operand);
+    }
+    else {
+        my ($range_msb, $range_lsb) = split /:/, $select, 2;
+        my $width = abs($range_msb - $range_lsb) + 1;
+        confess _unsupported(
+            "unary reduction expression '$authored' is outside the direct VHDL scaffold: "
+            . "operand '$operand' is a $width-bit range slice; only scalar identifiers and in-range static bit selects are supported"
+        );
+    }
+
+    return $complement ? "(not $operand_vhdl)" : "($operand_vhdl)";
+}
+
+sub _required_vector_reduction_helpers ($body, $decls_by_name) {
+    my %required;
+    while ($body =~ /\(\s*~?\s*([|&^])\s*([A-Za-z_][A-Za-z0-9_]*)\s*\)/g) {
+        my ($operator, $operand) = ($1, $2);
+        my $decl = $decls_by_name->{$operand};
+        $required{$operator} = 1
+            if $decl && !$decl->{scalar};
+    }
+    return %required;
+}
+
+sub _validate_vector_reduction_helper_names ($required, $module_name, @declaration_groups) {
+    my %declared_names = ($module_name => 1);
+    for my $group (@declaration_groups) {
+        $declared_names{$_->{name}} = 1 for @$group;
+    }
+
+    for my $operator (grep { $required->{$_} } ('|', '&', '^')) {
+        my $helper_name = _vector_reduction_helper_name($operator);
+        confess _unsupported(
+            "vector reduction helper name '$helper_name' collides with a generated declaration"
+        ) if $declared_names{$helper_name};
+    }
+}
+
+sub _vector_reduction_helper_name ($operator) {
+    return 'fsmgen_direct_vhdl_reduce_or' if $operator eq '|';
+    return 'fsmgen_direct_vhdl_reduce_and' if $operator eq '&';
+    return 'fsmgen_direct_vhdl_reduce_xor' if $operator eq '^';
+    confess _unsupported("unknown unary reduction operator '$operator'");
+}
+
+sub _render_vector_reduction_helper ($operator) {
+    my $helper_name = _vector_reduction_helper_name($operator);
+    my $identity = $operator eq '&' ? '1' : '0';
+    my $vhdl_operator = $operator eq '|' ? 'or' : $operator eq '&' ? 'and' : 'xor';
+    return (
+        "  function $helper_name(value : std_logic_vector) return std_logic is",
+        "    variable result : std_logic := '$identity';",
+        '  begin',
+        "    for index in value'range loop",
+        "      result := result $vhdl_operator value(index);",
+        '    end loop;',
+        '    return result;',
+        "  end function $helper_name;",
+    );
+}
+
+sub _first_parenthesized_reduction_expression ($expr) {
+    $expr =~ /\(\s*~?\s*[|&^]/g
+        or return $expr;
+    my $start = $-[0];
+    my $depth = 0;
+    for my $index ($start .. length($expr) - 1) {
+        my $character = substr($expr, $index, 1);
+        $depth++ if $character eq '(';
+        if ($character eq ')') {
+            $depth--;
+            return substr($expr, $start, $index - $start + 1)
+                if $depth == 0;
+        }
+    }
+    return substr($expr, $start);
 }
 
 sub _has_arithmetic_operator ($expr) {

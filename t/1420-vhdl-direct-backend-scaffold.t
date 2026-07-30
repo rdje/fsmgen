@@ -2876,7 +2876,12 @@ subtest 'direct VHDL scaffold lowers bounded AMBA wrap unsigned arithmetic shape
         qr/\bwrap_high_q_next\s+<=\s+std_logic_vector\(unsigned\(addr_q\)\s+-\s+\(unsigned\(addr_q\)\s+mod\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\)\s+\+\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\);/s,
         'AMBA wrap high lowers the bounded base plus product expression',
     );
-    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\baddr_q\s*-\s*addr_q\s*%/s, 'AMBA wrap VHDL output does not leak SystemVerilog arithmetic syntax');
+    like(
+        $hdl,
+        qr/HREADY\s+and\s+\(not fsmgen_direct_vhdl_reduce_or\(HRESP\)\)/s,
+        'AMBA response-zero truthiness lowers through the vector OR fold helper',
+    );
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\baddr_q\s*-\s*addr_q\s*%|\(\s*~?\|\s*HRESP/s, 'AMBA wrap VHDL output does not leak SystemVerilog arithmetic or reduction syntax');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, repo_file('fsm/amba_requester.fsm')],
@@ -2897,6 +2902,11 @@ subtest 'direct VHDL scaffold lowers bounded AMBA wrap unsigned arithmetic shape
         $cli_hdl,
         qr/\bwrap_high_q_next\s+<=\s+std_logic_vector\(unsigned\(addr_q\)\s+-\s+\(unsigned\(addr_q\)\s+mod\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\)\s+\+\s+resize\(resize\(unsigned\(beats_total_q\),\s+32\)\s+\*\s+unsigned\(addr_step_q\),\s+32\)\);/s,
         'CLI AMBA requester VHDL output includes bounded wrap-high arithmetic',
+    );
+    like(
+        $cli_hdl,
+        qr/HREADY\s+and\s+\(not fsmgen_direct_vhdl_reduce_or\(HRESP\)\)/s,
+        'CLI AMBA requester VHDL output includes helper-backed response reduction',
     );
 };
 

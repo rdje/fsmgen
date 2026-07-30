@@ -2,27 +2,30 @@
 
 ## Outcome
 
-`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1` selects proposed implementation
-`.2` with a deliberately compiler-independent boundary:
+`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1` selected a deliberately
+compiler-independent boundary, reconciled during `.2` preservation:
 
 - a parenthesized generated-SystemVerilog unary OR, AND, or XOR reduction over
   a declaration-proven scalar identifier or a static bit select lowers to the
   scalar operand itself;
 - the complemented forms `~|`, `~&`, and `~^` over those same scalar shapes
   lower to VHDL `not` of the scalar operand; and
-- every vector, range-slice, unresolved, compound, or malformed unary-reduction
-  operand fails closed before VHDL emission with a targeted direct-scaffold
-  diagnostic.
+- declared vectors lower through backend-owned `std_logic` OR/AND/XOR fold
+  helpers, with signed vectors explicitly cast and complemented forms applying
+  `not` to the one-bit fold result; and
+- every range-slice, invalid select, unresolved, compound, malformed, residual,
+  or helper-colliding reduction fails closed with a targeted diagnostic.
 
-The public `.fsm` expression grammar does not widen. Vector reductions remain
-unsupported until an authoritative VHDL analyzer/simulator can qualify a
-separate vector contract. This audit changes no parser, backend, generated
-output, diagnostic, or runtime behavior.
+The public `.fsm` expression grammar does not widen. No unqualified native
+VHDL vector-reduction syntax or executable compiler qualification is claimed.
+The audit itself changed no parser, backend, output, diagnostic, or runtime;
+the reconciled behavior belongs only to implementation `.2`.
 
 ## Reproduced Public Pipeline Boundary
 
 A repository-local direct-root fixture exercised positive and zero truthiness
 for a one-bit `SCALAR` and four-bit `VECTOR` through both generated HDL paths.
+This table records the pre-implementation defect:
 
 | Source truthiness | Generated SystemVerilog | Current direct VHDL | Finding |
 | --- | --- | --- | --- |
@@ -85,8 +88,8 @@ The defect is isolated to the direct SystemVerilog-to-VHDL adapter:
 A plain declared scalar identifier and a static bit select lower to VHDL
 `std_logic`, so identity/complement is type-correct. A SystemVerilog range
 select, including a one-bit `[N:N]` range, lowers as a VHDL vector slice rather
-than `std_logic`; it therefore remains in the fail-closed vector class. Target
-LHS width is not evidence for the reduction operand's type.
+than `std_logic`; it therefore remains fail-closed. Target LHS width is not
+evidence for the reduction operand's type.
 
 ## Selected `.2` Contract
 
@@ -101,37 +104,39 @@ whitespace:
 ```text
 ( | SCALAR )   ( & SCALAR )   ( ^ SCALAR )
 ( ~| SCALAR )  ( ~& SCALAR )  ( ~^ SCALAR )
+( | VECTOR )   ( & VECTOR )   ( ^ VECTOR )
+( ~| VECTOR )  ( ~& VECTOR )  ( ~^ VECTOR )
 ```
 
-The operand must resolve through `%decls_by_name` as a scalar identifier or be
-a static bit select of a declared signal. Convert bit-select brackets through
-the existing lvalue syntax helper. Positive reductions become a parenthesized
-operand; complemented reductions become parenthesized `not operand`.
+The operand must resolve through `%decls_by_name`. Scalars and in-range static
+bit selects use identity/complement. Declared vectors call only the required
+backend-owned `std_logic_vector` fold helper; signed vectors cast explicitly.
+Complemented vector forms apply `not` to the helper's `std_logic` result.
 
 ### Fail-closed shapes
 
 Before the general binary/arithmetic rewrites, reject:
 
-- any reduction over a declared vector or any range slice;
+- any reduction over a range slice or invalid static select;
 - any reduction whose base declaration or width cannot be resolved;
 - compound, concatenated, indexed-by-expression, or otherwise unselected
   operands; and
 - any remaining parenthesized unary `|`, `&`, or `^` token that the bounded
-  recognizer did not consume.
+  recognizer did not consume, plus required helper-name collisions.
 
 The diagnostic family remains the existing direct-scaffold exception prefix.
 The selected detail must name the full authored generated expression, operand,
-resolved shape when known, and the width-one-only boundary, for example:
+resolved shape when known, and the selected operand boundary, for example:
 
 ```text
-unary reduction expression '(|VECTOR)' is outside the direct VHDL scaffold:
-operand 'VECTOR' is a 4-bit vector; only scalar identifiers and static bit
-selects are supported
+unary reduction expression '(|VECTOR[2:2])' is outside the direct VHDL
+scaffold: operand 'VECTOR[2:2]' is a 1-bit range slice; only scalar
+identifiers and in-range static bit selects are supported
 ```
 
 No stable public diagnostic code or report/semantic schema is added.
 
-## Why Vector Translation Is Not Selected
+## Why Native Vector Operators Are Not Selected
 
 `ghdl`, `nvc`, and `vcom` are all unavailable in the current environment. The
 direct scaffold already uses some VHDL-2008-shaped constructs such as
@@ -140,9 +145,11 @@ operator is accepted with the intended `std_logic_vector`/`signed` overloads
 by an authoritative configured toolchain. Decision `0023` specifically forbids
 using generation success as qualification.
 
-Failing vector reductions before emission is therefore the smallest truthful
-repair. A future exact owner may select native VHDL vector-reduction syntax or
-a backend-owned helper after analyzer/runtime evidence exists. `.2` must not
+The initial audit therefore selected vector rejection. The first implementation
+preservation gate then proved that would regress already-supported AMBA/APB
+direct outputs. `.2` resolves the conflict with explicit backend-owned loops
+over `std_logic_vector`, not native reduction syntax. A future exact owner may
+qualify native operators after analyzer/runtime evidence exists. `.2` must not
 emit unqualified `or VECTOR`, `and VECTOR`, or `xor VECTOR` syntax.
 
 ## Preservation And Validation Contract
@@ -161,9 +168,9 @@ Implementation `.2` must preserve:
   `0020` boundaries.
 
 Focused implementation proof must update t1543 from defect characterization to
-the selected scalar-identity/vector-fail-closed contract, update t1542 so the
-tracked named-drive VHDL contains no reduction token, and run t1420 plus the
-t386/t404 facade boundaries. External VHDL compile/runtime evidence is added
+the reconciled scalar/static-bit/vector-fold/fail-closed contract, update t1542
+so the tracked named-drive VHDL contains no reduction token, and run t1420 plus
+the t386/t404 facade boundaries. External VHDL compile/runtime evidence is added
 only if an authoritative compiler becomes available; otherwise the limitation
 stays explicit. All workspaces and temporary output remain repository-local,
 use the authorized host100/process4096 profile, receive exact census/cleanup,
@@ -199,9 +206,29 @@ Clean audit commit `16f6140c4` activates implementation `.2` through
 continuity changes only. The selected contract and current product behavior
 remain unchanged until that separate implementation slice ships.
 
+## Implementation-Time Preservation Reconciliation
+
+The first `.2` preservation run exposed a broader shipped dependency that the
+audit probes did not enumerate. Direct AMBA requester generation reaches
+`(~|HRESP)`, and APB generated-child VHDL reaches `(~|wait_ctr) & (|addr_q)`.
+Blanket vector rejection therefore stops t1420 and t386 before their existing
+supported VHDL outputs are produced. That would violate `.2`'s explicit
+preservation requirement and shrink shipped scope.
+
+Implementation `.2` consequently retains the audit's compiler-independent
+principle but revises the vector mechanism: declaration-proven vectors lower
+through backend-owned OR/AND/XOR fold helpers over `std_logic_vector`, with
+signed operands explicitly cast and complemented forms applying `not` to the
+one-bit result. These loops use ordinary `std_logic` operators, retain unknown
+value propagation, and avoid unqualified native VHDL vector-reduction syntax.
+Only helpers actually required by the module are emitted, and helper-name
+collisions fail closed. Range slices, unresolved, compound, malformed, and
+residual reductions remain rejected. No external VHDL compiler qualification
+is claimed.
+
 ## Rollback
 
 Audit rollback removes this record/fact/t1543 characterization, restores `.1`
 to active, and leaves the current leak unchanged. After `.2` activation,
-rollback follows the selected scalar-identity/vector-rejection boundary and
-must never restore silent foreign-token emission.
+rollback follows the reconciled scalar-identity/vector-fold/range-rejection
+boundary and must never restore silent foreign-token emission.
