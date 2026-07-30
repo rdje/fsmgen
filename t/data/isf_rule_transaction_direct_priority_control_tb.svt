@@ -1,0 +1,39 @@
+module direct_priority_control_tb;
+  logic clk = 0;
+  logic reset = 1;
+  logic start = 0;
+  logic override_req = 0;
+  logic done;
+  logic out;
+
+  direct_priority_control dut (
+    .clk(clk),
+    .reset(reset),
+    .start(start),
+    .override_req(override_req),
+    .done(done),
+    .out(out)
+  );
+
+  always #5 clk = ~clk;
+
+  initial begin
+    repeat (2) @(negedge clk);
+    reset = 0;
+    start = 1;
+    @(negedge clk);
+    start = 0;
+    override_req = 1;
+    @(posedge clk);
+    #1;
+    if (out !== 1'b1)
+      $fatal(1, "higher-priority rule did not win direct assignment overlap");
+    $display("PASS direct rule/transaction priority out=%0d", out);
+    $finish;
+  end
+
+  initial begin
+    #200;
+    $fatal(1, "direct priority control timed out");
+  end
+endmodule

@@ -332,4 +332,7 @@ not pre-empt that evidence-backed correctness handoff.
   authority, VHDL/mixed-language, migration, parity, and scale gates intact.
 - `2026-07-30`: Clean selector commit `f67705356` activates only that audit
   `.1`; HIAL/VIAL remains proposed and unchanged during activation.
+- `2026-07-30`: Named-drive priority audit `.1` selects its narrower
+  unique-caller target-local contract `.2`; HIAL/VIAL remains proposed with
+  all architecture and validation requirements unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

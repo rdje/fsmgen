@@ -131,3 +131,7 @@ kernel pressure level 1 and `memory_pressure` 69% free.
 Clean selector commit `f67705356` activates only the selected audit `.1`.
 Activation changes continuity pointers and no scheduler, selector, generated
 HDL, runtime, AHB, HIAL/VIAL, VHDL, scale, or transaction behavior.
+
+Completed audit `.1` selects proposed no-behavior contract `.2` for
+unique-caller target-local named-drive priority and ambiguous-caller
+fail-closed handling. Current lowering and all AHB behavior remain unchanged.

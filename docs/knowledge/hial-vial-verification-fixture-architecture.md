@@ -63,3 +63,6 @@ inert skeletons. Parking the architecture does not activate it or change
 current product behavior. Completed parent selector `.830` chooses the
 narrower assertion-backed transaction-invoked named-drive priority audit;
 HIAL/VIAL remains proposed and independently gated.
+
+That audit now selects its bounded unique-caller target-local contract `.2`;
+the HIAL/VIAL architecture remains unchanged and proposed.

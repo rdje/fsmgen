@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: clean `.830` selector commit `f67705356`.
-- active_work_unit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1` activation.
-- current_state: `.830` is done and `.1` activation is continuity-only; direct assignment priority still works and the transaction-invoked named-drive selector seam remains unchanged.
-- next_action: commit activation, then execute `.1`'s protocol-neutral direct-control/named-drive reproducer and lowering-boundary audit.
-- in_flight_uncommitted: `.1` activation continuity synchronization; no background job.
+- latest_commit: clean `.1` activation commit `b52e2efc6`.
+- active_work_unit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1` audit closeout.
+- current_state: t1542 proves direct assignment priority passes, named-drive overlap fails its selector assertion, and shared callers lose identity at the drive body; a disposable unique-caller target-local candidate passes `out=1 side=1`. `.1` selects proposed no-behavior contract `.2` with ambiguous callers fail closed.
+- next_action: finish gates and commit `.1`, then activate only contract `.2` from the clean audit boundary.
+- in_flight_uncommitted: `.1` fixtures/test, audit/fact, and live-doc/book synchronization; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

@@ -11663,6 +11663,17 @@ gated until a clean activation commit.
 Clean selector commit `f67705356` activates only audit `.1`. This is a
 continuity transition; direct assignment behavior, the unresolved named-drive
 seam, all AHB behavior, and every broader roadmap owner remain unchanged.
+Audit `.1` now selects proposed no-behavior contract `.2`. Focused t1542
+proves the direct assignment control passes with the higher rule value, while
+the named-drive form reports only an unproved warning and fails the generated
+different-value selector assertion. Shared drive bodies collapse multiple
+transaction callers into one request, so whole-drive masking is unsafe. A
+disposable unique-caller candidate instead masks only the conflicting target
+and passes with both `out=1` and unrelated `side=1`. The contract will freeze
+that bidirectional target-local rule for exactly one local caller and fail
+closed for ambiguous callers. See the
+[readiness audit](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_READINESS_AUDIT.md).
+No lowering or runtime behavior changes until a later implementation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

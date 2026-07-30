@@ -1,0 +1,35 @@
+module named_drive_priority_probe_tb;
+  logic clk = 0;
+  logic reset = 1;
+  logic start = 0;
+  logic override_req = 0;
+  logic done;
+  logic out;
+
+  named_drive_priority_probe dut (
+    .clk(clk),
+    .reset(reset),
+    .start(start),
+    .override_req(override_req),
+    .done(done),
+    .out(out)
+  );
+
+  always #5 clk = ~clk;
+
+  initial begin
+    repeat (2) @(negedge clk);
+    reset = 0;
+    start = 1;
+    @(negedge clk);
+    start = 0;
+    override_req = 1;
+    #1;
+    $fatal(1, "expected named-drive selector assertion did not fire");
+  end
+
+  initial begin
+    #200;
+    $fatal(1, "named-drive priority probe timed out");
+  end
+endmodule

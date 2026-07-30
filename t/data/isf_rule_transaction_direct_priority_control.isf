@@ -1,0 +1,15 @@
+(actor direct_priority_control
+  (clock clk)
+  (reset reset)
+  (interface
+    (input start)
+    (input override_req)
+    (output done)
+    (output out))
+  (priority force_out over main)
+  (transaction main
+    (on start)
+    (update out 0)
+    (complete done))
+  (rule force_out override_req
+    (out 1)))

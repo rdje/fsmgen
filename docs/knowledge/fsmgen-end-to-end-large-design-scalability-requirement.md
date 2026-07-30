@@ -27,3 +27,6 @@ The requirement is durably parked, not active. Completed selector `.830`
 chooses the smaller assertion-backed transaction-invoked named-drive priority
 audit first; a later roadmap selector must activate scale from a clean
 boundary.
+
+The priority audit's bounded `.2` contract selection does not change this
+status or count as large-design evidence.

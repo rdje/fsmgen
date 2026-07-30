@@ -7971,6 +7971,17 @@ BUSY policy, HIAL/VIAL, VHDL, scale, other protocols/backends, and decision
 Clean selector commit `f67705356` activates only priority audit `.1`.
 Activation changes continuity pointers; all product behavior remains
 unchanged while the protocol-neutral reproducer and lowering trace are built.
+Audit `.1` now selects proposed no-behavior contract `.2`. Tracked t1542 proves
+the direct assignment control is priority-suppressed and assertion-clean while
+the transaction-invoked named drive retains separate `drive` provenance,
+reports only `isf_unproven_rule_drive_overlap`, and fails the generated
+different-value selector assertion. A two-caller probe proves shared drive
+activation loses caller identity, while a disposable unique-caller candidate
+passes target-local one- and multi-output runtime (`out=1`, `side=1`) without
+suppressing unrelated outputs. Contract `.2` must freeze bidirectional
+per-target masking for exactly one local transaction caller and fail closed for
+zero/multiple/generated-child/ambiguous callers before implementation `.3`.
+Current lowering and all broader roadmap behavior remain unchanged.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

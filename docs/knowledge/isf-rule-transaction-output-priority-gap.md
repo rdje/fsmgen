@@ -37,3 +37,8 @@ assertions or change behavior.
 
 Clean selector commit `f67705356` activates audit `.1` without changing the
 working direct-assignment path or unresolved named-drive behavior.
+
+Completed audit `.1` adds tracked t1542 proof and selects proposed contract
+`.2`: mask only conflicting named-drive targets for exactly one local
+transaction caller, and fail closed when caller ownership is ambiguous.
+Current lowering remains unchanged until implementation.

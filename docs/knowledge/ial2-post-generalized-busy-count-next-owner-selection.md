@@ -39,3 +39,7 @@ and decision `0020` remain separate.
 
 Clean selector commit `f67705356` activates only audit `.1`; activation is
 continuity-only and leaves all product behavior unchanged.
+
+Completed audit `.1` selects proposed no-behavior contract `.2` for
+unique-caller target-local masking and ambiguous-caller fail-closed handling;
+current behavior remains unchanged.

@@ -2550,6 +2550,12 @@ This selection changes no AHB source, generated artifact, runtime behavior, or
 332/373/56 split 28/28 accounting.
 Clean selector commit `f67705356` activates only the separate protocol-neutral
 audit `.1`; AHB behavior and accounting remain unchanged.
+The completed audit now selects no-behavior contract `.2`: unique local
+transaction callers can be masked per conflicting named-drive target, while
+shared or otherwise ambiguous drive ownership must fail closed. t1542 and a
+disposable target-local candidate prove this outside AHB; requester `2..16`
+and 332/373/56 split 28/28 remain unchanged. See the
+[protocol-neutral audit](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_READINESS_AUDIT.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

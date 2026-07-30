@@ -109,6 +109,9 @@ and diagnostic behavior per stage while proving semantic/output correctness.
   end-to-end workload, correctness, resource, or graceful-failure contract.
 - `2026-07-30`: Clean selector commit `f67705356` activates only that audit
   `.1`; the scale tree remains proposed and unchanged during activation.
+- `2026-07-30`: Named-drive priority audit `.1` selects its bounded
+  unique-caller target-local contract `.2`; scale remains proposed and
+  independently gated.
 
 ## Open Questions
 
