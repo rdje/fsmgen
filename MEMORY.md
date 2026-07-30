@@ -5,16 +5,12 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW: capture deferred document-policy review`).
-- active_work_unit: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW` capture
-  (complete; review tree remains proposed and inactive).
-- current_state: proposed leaf `.1` durably owns the later evidence-based
-  lifecycle review of `CHANGES.md`, `DEVELOPMENT_NOTES.md`,
-  `ROADMAP_STATUS.md`, and `LIVE_ACHIEVEMENT_STATUS.md`. No policy or reviewed
-  file changed; checked-in decision 0007 remains in force pending review.
-- next_action: from the clean tree, resume roadmap PNT by selecting the
-  smallest exact roadmap-aligned owner after completed parent frontier `.835`;
-  create/activate its task-tree leaf before any implementation change.
+- latest_commit: this commit (`README-POLICY-STORAGE-LOCATION.1: activate policy-location clarification`).
+- active_work_unit: `README-POLICY-STORAGE-LOCATION.1` (active).
+- current_state: the director-requested documentation leaf now owns the exact
+  repository-root storage clarification for the reusable README policy.
+- next_action: amend `README_POLICY.md` and its mdBook reference to identify
+  the tracked repository-root copy beside `README.md`, validate, and commit.
 - in_flight_uncommitted: none after this policy commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
