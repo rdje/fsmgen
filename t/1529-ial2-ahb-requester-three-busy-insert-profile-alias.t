@@ -4,7 +4,6 @@ use warnings;
 use Test::More;
 use Cwd qw(abs_path);
 use File::Spec;
-use File::Temp qw(tempdir);
 use FindBin;
 use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
@@ -12,9 +11,11 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::IAL2::PPIF;
+use FSM::ProjectDataLocality qw(configure_project_temp_environment create_project_tempdir);
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 
 my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
+configure_project_temp_environment(purpose => 'tests');
 
 subtest 'exact-three requester .ahb alias mirrors generic source, lowering, and report' => sub {
     ok(-f alias_path(), 'tracked exact-three requester .ahb alias exists');
@@ -96,7 +97,7 @@ subtest 'schedule, review artifacts, HDL, and verifier preserve exact-three iden
     ok(!exists $residue{ahb_profile_alias_deferred}, 'schedule JSON removes alias-deferred residue');
     ok($residue{ahb_requester_busy_insert_support}, 'schedule JSON keeps exact-three support residue');
 
-    my $tempdir = tempdir(CLEANUP => 1);
+    my $tempdir = create_project_tempdir(purpose => 'tests');
     my $outdir = File::Spec->catdir($tempdir, 'out');
     my $hdl = File::Spec->catfile($tempdir, 'amba_requester_busy_insert_three.sv');
     run_command_ok(

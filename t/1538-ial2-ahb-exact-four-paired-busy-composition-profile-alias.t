@@ -13,9 +13,11 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::IAL2::PPIF;
+use FSM::ProjectDataLocality qw(configure_project_temp_environment);
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 
 my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
+configure_project_temp_environment(purpose => 'tests');
 
 subtest 'exact-four paired .ahb alias mirrors generic source and lowering' => sub {
     ok(-f alias_path(), 'tracked exact-four paired .ahb alias exists');

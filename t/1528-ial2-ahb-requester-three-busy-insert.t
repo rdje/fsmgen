@@ -4,7 +4,6 @@ use warnings;
 use Test::More;
 use Cwd qw(abs_path);
 use File::Spec;
-use File::Temp qw(tempdir);
 use FindBin;
 use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
@@ -12,9 +11,11 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::IAL2::PPIF;
+use FSM::ProjectDataLocality qw(configure_project_temp_environment create_project_tempdir);
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 
 my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
+configure_project_temp_environment(purpose => 'tests');
 
 subtest 'adapter parses and lowers the exact-three requester source' => sub {
     ok(-f sample_path(), 'tracked exact-three requester PPIF sample exists');
@@ -59,11 +60,10 @@ subtest 'adapter parses and lowers the exact-three requester source' => sub {
 
     is($result->{report}{transfer}{busy_beats}, 3, 'report records exact event count three');
     is($result->{report}{busy_insertion}{beats}, 3, 'report exposes exact-three as a numeric count');
-    like(join(' ', @{$result->{report}{enforced_static_rules}}), qr/literal busy-beats values 2\.\.4/, 'static rule reports the bounded public count range');
+    like(join(' ', @{$result->{report}{enforced_static_rules}}), qr/canonical decimal literal busy-beats values 2\.\.16/, 'static rule reports the bounded public count range');
     my %residue = map { $_->{id} => $_->{detail} } @{$result->{report}{unsupported_residue}};
-    like($residue{ahb_requester_busy_insert_support}, qr/exact-three qualified requester HTRANS BUSY events/, 'report states the shipped exact-three behavior');
-    like($residue{ahb_requester_busy_insert_support}, qr/additive exact-four behavior is supported/, 'report names the additive exact-four source');
-    like($residue{ahb_requester_busy_insert_support}, qr/counts beyond four/, 'report keeps only larger counts deferred');
+    like($residue{ahb_requester_busy_insert_support}, qr/exactly 3 qualified requester HTRANS BUSY events/, 'report states exact-three behavior numerically');
+    like($residue{ahb_requester_busy_insert_support}, qr/counts above 16/, 'report keeps only out-of-profile counts deferred');
 };
 
 subtest 'malformed bounded-count declarations fail closed' => sub {
@@ -71,7 +71,7 @@ subtest 'malformed bounded-count declarations fail closed' => sub {
         ['missing insertion point', sub { replace_clause(sample_source(), qr/\n      \(busy-before-beat 2\)/, '') }, qr/busy_beats requires transfer\.busy_before_beat/],
         ['zero event count', sub { replace_clause(sample_source(), qr/\(busy-beats 3\)/, '(busy-beats 0)') }, range_diagnostic()],
         ['single event count', sub { replace_clause(sample_source(), qr/\(busy-beats 3\)/, '(busy-beats 1)') }, range_diagnostic()],
-        ['larger event count', sub { replace_clause(sample_source(), qr/\(busy-beats 3\)/, '(busy-beats 5)') }, range_diagnostic()],
+        ['larger event count', sub { replace_clause(sample_source(), qr/\(busy-beats 3\)/, '(busy-beats 17)') }, range_diagnostic()],
         ['symbolic event count', sub { replace_clause(sample_source(), qr/\(busy-beats 3\)/, '(busy-beats cmd_count)') }, range_diagnostic()],
         ['duplicate event count', sub { replace_clause(sample_source(), qr/\(busy-beats 3\)/, "(busy-beats 3)\n      (busy-beats 3)") }, qr/duplicate \(busy-beats \.\.\.\) clause/],
     );
@@ -121,7 +121,7 @@ subtest 'CLI, semantic, MCP, schedule, review, and verify surfaces agree' => sub
     is($schedule->{generated_artifacts}{ial1}{name}, 'amba_requester_busy_insert_three.isf', 'schedule JSON names exact IAL1 artifact');
     is_deeply($schedule->{generated_artifacts}{ial0}{files}, ['amba_requester_busy_insert_three.fsm'], 'schedule JSON names exact IAL0 artifact');
 
-    my $tempdir = tempdir(CLEANUP => 1);
+    my $tempdir = create_project_tempdir(purpose => 'tests');
     my $outdir = File::Spec->catdir($tempdir, 'out');
     my $hdl = File::Spec->catfile($tempdir, 'amba_requester_busy_insert_three.sv');
     run_command_ok(
@@ -138,7 +138,7 @@ subtest 'CLI, semantic, MCP, schedule, review, and verify surfaces agree' => sub
 };
 
 subtest 'generated HDL retires exactly three qualified BUSY events and resumes SEQ' => sub {
-    my $tempdir = tempdir(CLEANUP => 1);
+    my $tempdir = create_project_tempdir(purpose => 'tests');
     my $hdl = File::Spec->catfile($tempdir, 'amba_requester_busy_insert_three.sv');
     my $objdir = File::Spec->catdir($tempdir, 'obj');
     run_command_ok(
@@ -184,13 +184,13 @@ subtest 'exact-one, exact-two, and base requester behavior remain distinct' => s
     is($two->{report}{busy_insertion}{beats}, 2, 'exact-two source keeps numeric report value two');
     like($two->{generated_ial1}{text}, qr/\(set ahb_busy_remaining_q 2\)/, 'exact-two source keeps literal-two initialization');
     my %two_residue = map { $_->{id} => $_->{detail} } @{$two->{report}{unsupported_residue}};
-    like($two_residue{ahb_requester_busy_insert_support}, qr/additive exact-three and exact-four behavior is supported/, 'exact-two residue acknowledges exact-three and exact-four support');
+    like($two_residue{ahb_requester_busy_insert_support}, qr/exactly 2 qualified requester HTRANS BUSY events/, 'exact-two residue reports its numeric count');
 
     my $single = FSM::Adapter::IAL2::PPIF->new()->parse_file(single_path());
     is($single->{report}{busy_insertion}{beats}, 'single', 'existing source keeps the exact-one report token');
     unlike($single->{generated_ial1}{text}, qr/ahb_busy_remaining_q|ahb_busy_continue/, 'exact-one IAL1 has no multiple-event counter or rule');
     my %single_residue = map { $_->{id} => $_->{detail} } @{$single->{report}{unsupported_residue}};
-    like($single_residue{ahb_requester_busy_insert_support}, qr/exact-two, exact-three, and exact-four behavior is supported/, 'exact-one residue names all additive bounded-count sources');
+    like($single_residue{ahb_requester_busy_insert_support}, qr/exactly 1 qualified requester HTRANS BUSY event/, 'exact-one residue reports its numeric count');
 
     my $base = FSM::Adapter::IAL2::PPIF->new()->parse_file(base_path());
     ok(!exists($base->{report}{busy_insertion}), 'base requester remains BUSY-insertion free');
@@ -218,7 +218,7 @@ sub sample_source { return slurp(sample_path()) }
 sub module_name { return 'amba_requester_busy_insert_three' }
 sub support_id { return 'intent.ppif_ahb_requester_busy_insert_three' }
 sub coverage_key { return 'ial2_ppif_ahb_requester_busy_insert_three_pipeline_cli' }
-sub range_diagnostic { return qr/busy_beats must be a literal integer in 2\.\.4 in this slice/ }
+sub range_diagnostic { return qr/busy_beats must be a canonical decimal literal integer in 2\.\.16 in this slice/ }
 
 sub replace_clause {
     my ($source, $pattern, $replacement) = @_;

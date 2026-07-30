@@ -96,6 +96,10 @@ and diagnostic behavior per stage while proving semantic/output correctness.
   do not pivot from the selected AHB subordinate correctness audit.
 - `2026-07-29`: Capacity claims require complete pipeline evidence and
   correctness oracles. Scale labels and budgets remain unselected until `.1`.
+- `2026-07-30`: Shipping the bounded AHB requester literal `2..16` range is a
+  correctness/expressiveness slice, not end-to-end scale evidence. The
+  large-design tree remains proposed for independent comparison by parent
+  selector `.830` after the generalized-count behavior commit.
 
 ## Open Questions
 

@@ -34,12 +34,13 @@ semantic root:   fsm
 
 ## Public Count Boundary
 
-The optional transfer count accepts literal integers `2..4`; absence remains
-canonical exact-one. Zero, one, values above four, symbolic/non-literal forms,
+The optional transfer count accepts canonical decimal literal integers
+`2..16`; absence remains canonical exact-one. Zero, one, values above 16,
+non-canonical/non-literal forms,
 missing prerequisites, and duplicates fail closed. The range diagnostic is:
 
 ```text
-AHB requester transfer.busy_beats must be a literal integer in 2..4 in this slice
+AHB requester transfer.busy_beats must be a canonical decimal literal integer in 2..16 in this slice
 ```
 
 `busy-beats 4` means exactly four rising events satisfying:
@@ -85,10 +86,10 @@ and the IAL1 language are unchanged.
 
 The source reports numeric `transfer.busy_beats=4` and
 `busy_insertion.beats=4`, with `before_beat=2`, generated behavior enabled, and
-BUSY encoding `2'b01`. Exact-one residue names exact-two, exact-three, and
-exact-four support; exact-two names exact-three and exact-four; exact-three
-names exact-four; exact-four says four events ship. Counts above four and
-generalized runtime/policy/random or multiple-point insertion remain deferred.
+BUSY encoding `2'b01`. Shared residue uses a numeric singular/plural template,
+states canonical decimal `2..16` support without one catalog fixture per count,
+and defers counts above 16 plus symbolic/runtime/policy/random or multiple-point
+insertion.
 
 The generic source established 327 protocol fixtures, 368 supported-smoke plus
 strict fixtures, and 51 AHB IAL2 paths split 26 generic `.ppif` sources and 25
@@ -131,7 +132,7 @@ Generated outputs must use a repository-derived same-volume path.
 Parent selector `.823` selected the one-window exact-four paired readiness
 audit. That audit and contract now culminate in the shipped generic/profile
 pair with shared assertion-enabled 5/4/1/4/1/`44332211` runtime. Two-window
-exact-four, counts above four, arbitrary/runtime/policy/random counts,
+exact-four, counts above 16, arbitrary/runtime/policy/random/symbolic counts,
 multiple insertion points, local
 bus-BUSY status, new burst/signal/topology behavior, HIAL/VIAL activation,
 VHDL, verification generation, and decision 0020 remain separate.

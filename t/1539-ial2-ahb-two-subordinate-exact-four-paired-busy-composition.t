@@ -12,9 +12,11 @@ use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::ProjectDataLocality qw(configure_project_temp_environment);
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 
 my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
+configure_project_temp_environment(purpose => 'tests');
 
 subtest 'source is the exact selected two-subordinate exact-four paired BUSY transform' => sub {
     ok(-f sample_path(), 'tracked two-subordinate exact-four paired BUSY PPIF sample exists');
@@ -75,7 +77,7 @@ subtest 'source is the exact selected two-subordinate exact-four paired BUSY tra
     like($broader, qr/with BUSY-in-burst parking/, 'broader residue reports shipped BUSY parking');
     unlike($broader, qr/BUSY-in-burst continuation/, 'broader residue no longer defers BUSY continuation');
     like(residue_detail($report, 'ahb_burst_seq_support_deferred'), qr/with BUSY-in-burst parking/, 'burst residue reports shipped BUSY parking');
-    like(residue_detail($requester, 'ahb_requester_busy_insert_support'), qr/exact-four qualified requester HTRANS BUSY events/, 'requester child keeps exact-four BUSY support residue');
+    like(residue_detail($requester, 'ahb_requester_busy_insert_support'), qr/exactly 4 qualified requester HTRANS BUSY events/, 'requester child keeps numeric exact-four BUSY support residue');
     ok(residue_id_occurs($report, 'ahb_aggregate_profile_alias_deferred'), 'generic source keeps aggregate alias residue');
     ok(!exists $report->{composition}{busy_flow}, 'report adds no duplicate top busy_flow summary');
 };

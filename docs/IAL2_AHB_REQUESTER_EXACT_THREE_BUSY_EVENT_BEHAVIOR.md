@@ -44,7 +44,8 @@ Canonical alias behavior is documented in
 
 ## Public Count Boundary
 
-The optional transfer clause now accepts exact literal integers `2..4`:
+The optional transfer clause now accepts canonical decimal literal integers
+`2..16`:
 
 ```text
 (busy-before-beat 2)
@@ -52,11 +53,11 @@ The optional transfer clause now accepts exact literal integers `2..4`:
 ```
 
 Absence remains canonical exact-one. Literal two retains its existing
-exact-two behavior. Zero, one, values above four, symbolic/non-literal forms,
+exact-two behavior. Zero, one, values above 16, non-canonical/non-literal forms,
 missing prerequisites, and duplicates fail closed. The range diagnostic is:
 
 ```text
-AHB requester transfer.busy_beats must be a literal integer in 2..4 in this slice
+AHB requester transfer.busy_beats must be a canonical decimal literal integer in 2..16 in this slice
 ```
 
 `busy-beats 3` means exactly three rising events satisfying:
@@ -97,12 +98,11 @@ busy_insertion.before_beat          = 2
 busy_insertion.beats                = 3
 ```
 
-Exact-one keeps `beats=single`; exact-two keeps numeric `beats=2`. Shared
-residue now tells the complete truth: exact-one names all three additive
-generic sources, exact-two acknowledges exact-three and exact-four, exact-three
-acknowledges exact-four, and all defer only counts above four plus generalized
-policy/runtime/random and multiple-point insertion. Existing `.ahb` suffix
-cleanup remains unchanged.
+Exact-one keeps `beats=single`; exact-two and exact-three keep numeric counts.
+Shared residue now uses one numeric singular/plural template, states canonical
+decimal `2..16` support without one catalog fixture per count, and defers counts
+above 16 plus symbolic/policy/runtime/random and multiple-point insertion.
+Existing `.ahb` suffix cleanup remains unchanged.
 
 The generic source established the 321/362/45 checkpoint and the matching alias
 established 322/363/46. The generic exact-three paired source established
@@ -196,7 +196,8 @@ Generated outputs should use a repository-derived same-volume path.
 ## Explicit Deferrals
 
 The matching exact-three `.ahb` alias and the generic exact-four requester now
-ship. Counts above four, runtime/policy/random count selection, multiple
+ship. Canonical decimal literal counts `2..16` also ship without count-specific
+fixtures. Counts above 16, runtime/policy/random/symbolic count selection, multiple
 insertion points, distinct local bus-BUSY status, broader
 bursts/signals/managers/fabrics, AXI/APB/VHDL, and decision 0020 remain separate
 and inactive. The generic one-subordinate exact-three paired source now ships

@@ -255,8 +255,8 @@ sub _normalize_transfer($raw) {
 
     if (exists($raw->{busy_beats})) {
         my $value = $raw->{busy_beats};
-        confess "AHB requester transfer.busy_beats must be a literal integer in 2..4 in this slice\n"
-            if ref($value) || !defined($value) || $value !~ /\A[234]\z/;
+        confess "AHB requester transfer.busy_beats must be a canonical decimal literal integer in 2..16 in this slice\n"
+            if ref($value) || !defined($value) || $value !~ /\A(?:[2-9]|1[0-6])\z/;
         $transfer{busy_beats} = 0 + $value;
     }
 
@@ -725,7 +725,7 @@ sub _build_report(%args) {
                 ? 'BUSY insertion requires HTRANS BUSY 2\'b01 and a literal before-beat index in 1..15'
                 : ()),
             (defined($contract->{transfer}{busy_beats})
-                ? 'multiple BUSY insertion is bounded to literal busy-beats values 2..4 in this slice'
+                ? 'multiple BUSY insertion is bounded to canonical decimal literal busy-beats values 2..16 in this slice'
                 : ()),
             'direct IAL2-to-IAL0 lowering is forbidden',
         ],
@@ -770,13 +770,9 @@ sub _unsupported_residue($contract) {
 
     if (defined($contract->{transfer}{busy_before_beat})) {
         my $busy_beats = $contract->{transfer}{busy_beats};
-        my $detail = !defined($busy_beats)
-            ? 'This source ships one exact qualified requester HTRANS BUSY event before one literal SEQ beat; additive exact-two, exact-three, and exact-four behavior is supported by ppif/ahb_requester_busy_insert_two.ppif, ppif/ahb_requester_busy_insert_three.ppif, and ppif/ahb_requester_busy_insert_four.ppif, while counts beyond four, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.'
-            : $busy_beats == 2
-                ? 'This source ships bounded exact-two qualified requester HTRANS BUSY events before one literal SEQ beat; additive exact-three and exact-four behavior is supported by ppif/ahb_requester_busy_insert_three.ppif and ppif/ahb_requester_busy_insert_four.ppif, while counts beyond four, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.'
-                : $busy_beats == 3
-                    ? 'This source ships bounded exact-three qualified requester HTRANS BUSY events before one literal SEQ beat; additive exact-four behavior is supported by ppif/ahb_requester_busy_insert_four.ppif, while counts beyond four, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.'
-                    : 'This source ships bounded exact-four qualified requester HTRANS BUSY events before one literal SEQ beat; counts beyond four, policy/runtime/random BUSY throttling, and multiple insertion points remain future work.';
+        my $busy_count = $busy_beats // 1;
+        my $event_word = $busy_count == 1 ? 'event' : 'events';
+        my $detail = "This source ships exactly $busy_count qualified requester HTRANS BUSY $event_word before one literal SEQ beat; compile-time canonical decimal busy-beats values 2..16 are supported without one catalog source per count, while counts above 16, symbolic/policy/runtime/random BUSY throttling, and multiple insertion points remain future work.";
         push @residue, {
             id => 'ahb_requester_busy_insert_support',
             detail => $detail,

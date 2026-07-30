@@ -5,10 +5,10 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: clean generalized-count `.2` contract commit `7e2b436cf`.
-- active_work_unit: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.3`.
-- current_state: `.3` is active to ship canonical decimal 2..16 admission, numeric residue, focused t1541/runtime, and t1535 same-volume repair; shipping remains 2..4 and 332/373/56 split 28/28 until implementation.
-- next_action: implement only the frozen three-region AhbRequester change plus t1535/t1541/generic testbench and synchronized behavior truth.
+- latest_commit: this generalized-count `.3` behavior commit, activated from clean commit `bb5f35ae8`.
+- active_work_unit: none after this commit; proposed parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.830` is next.
+- current_state: `.3` ships canonical decimal 2..16 admission, numeric residue, t1541 5/8/16 assertion/MCP/verifier proof, same-volume touched verification, and unchanged 332/373/56 split 28/28.
+- next_action: after verifying this behavior commit is clean, activate only parent selector `.830`, commit that activation, then execute its no-behavior next-owner comparison.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -33,9 +33,9 @@ bounded current-state pointer. Git preserves its prior history.
   10/8/2/8/2 runtime and 331/372/55 accounting. `.827` selected `.828`, which
   now ships the matching alias with focused t1540 parity at 332/373/56 split
   28/28. `.829` now selects a reusable finite literal-count readiness audit;
-  audit `.1` proves future bounded literal `2..16` readiness; contract `.2`
-  freezes one lowerer/test-only implementation with no per-count public fixture
-  and unchanged accounting. Active `.3` owns behavior; decision `0020` stays separate.
+  audit `.1` proved bounded literal `2..16` readiness; contract `.2` froze one
+  lowerer/test-only implementation with no per-count public fixture. Completed
+  `.3` ships it with t1541; `.830` is proposed next and decision `0020` stays separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
@@ -46,7 +46,7 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. Active generalized-count `.3`
+  mixed-language claims qualified separately. Shipped generalized-count `.3`
   keeps HIAL/VIAL proposed and independently gated.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, end-to-end big-design

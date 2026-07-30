@@ -58,3 +58,7 @@ public fixture is selected and current accounting remains unchanged.
 
 Clean contract commit `7e2b436cf` activates only `.3`; current behavior and
 accounting remain unchanged.
+
+Implementation `.3` now ships the selected canonical decimal `2..16` range
+with t1541 assertion/semantic/MCP/verifier proof and unchanged 332/373/56 split
+28/28. Proposed parent selector `.830` owns the next clean-boundary comparison.

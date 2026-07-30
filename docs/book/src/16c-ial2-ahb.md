@@ -181,7 +181,7 @@ states, without a pending bank/relaunch. See the direct-seed section below.
 | --- | --- | --- |
 | Guided mode | The fifty-six public AHB sources listed above, including generic plus matching `.ahb` exact-one through exact-four requesters and paired exact-one through exact-four one- and two-subordinate source pairs | Bounded requester/subordinate/interconnect sources, exact-one through exact-four requester BUSY insertion across generic and alias surfaces, selected byte-lane and HBURST `SEQ` endpoint/aggregate families, selected BUSY-parking families and aliases, and paired exact-one through exact-four BUSY-inserting-requester/BUSY-parking-subordinate aggregates across one or two windows. |
 | More-control mode | The same bounded IAL2 sources plus direct `fsm/amba_requester.fsm` and `fsm/ahb_lite_subordinate.fsm` for cycle-level comparison | Requester knobs are exposed as `local-command`, `local-status`, `bus`, `burst`, `transfer`, and `response` clauses. Subordinate knobs cover selected byte/halfword/word lanes, in-word `SEQ`, HBURST `WRAP4`/`INCR4`, and BUSY parking. The selected generic and matching `.ahb` aggregate HBURST-aware byte-lane `SEQ` sources include non-parking and BUSY-park variants, plus paired BUSY-inserting-requester compositions across one or two static windows. Interconnect knobs are exposed as `children`, static `address-map` windows, `decode`, and `wiring` clauses. |
-| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, and retained one-hot interconnect data ownership. The separate direct subordinate seed now retains completion-edge active NONSEQ/SEQ through Q-named `<-` loads in its existing four states, without pending/relaunch. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, BUSY counts beyond four, policy/runtime BUSY insertion, distinct bus-BUSY status, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
+| Raw/full-control mode | Direct `.fsm` seeds and the generated `.isf`/`.fsm` review artifacts emitted from IAL2 | The generated family ships one accepted active address/control slot per subordinate, separated requester address/data ownership, retained one-hot interconnect data ownership, exact-one requester BUSY insertion by absence, and canonical decimal literal counts `2..16` without a fixture per count. The separate direct subordinate seed now retains completion-edge active NONSEQ/SEQ through Q-named `<-` loads in its existing four states, without pending/relaunch. AHB completer behavior, broader interconnect/decode beyond selected static-window aggregates, optional signals beyond the shipped HBURST endpoint binding, wider/indefinite HBURST continuation beyond bounded byte-only `WRAP4`/`INCR4`, literal BUSY counts above 16, policy/runtime/random/symbolic BUSY count selection, multiple insertion points, distinct bus-BUSY status, general/deeper queues, multiple outstanding transfers, full manager behavior, direct backend behavior, verification-output generation, backend-language variants, and VHDL remain future task-tree-owned work. |
 
 ## Guided PPIF Requester
 
@@ -1310,8 +1310,9 @@ the insertion index, and the `single` bound. The source generates
 `intent.ppif_ahb_requester_busy_insert`. The base requester and its `.ahb` alias
 remain BUSY-insertion free. The matching additive alias
 `ppif/ahb_requester_busy_insert.ahb` now ships with identical generated
-behavior. Runtime/policy-driven or multi-beat BUSY throttling and a separate
-local bus-BUSY status output remain deferred. The one-subordinate paired
+behavior. Literal counts `2..16` now use this same requester lowerer; counts
+above 16, runtime/policy/random/symbolic selection, multiple insertion points,
+and a separate local bus-BUSY status output remain deferred. The one-subordinate paired
 generic/alias and two-subordinate paired generic sources are described below.
 
 > **Generated endpoint assertion boundary:** the subordinate arbitration audit
@@ -1400,9 +1401,10 @@ data beats. Existing exact-one and base requesters retain their generated
 shape. This source reuses the current AHB requester generator; it is not a new
 generator.
 
-Literal values two through four are now accepted by the bounded count clause.
-Absence remains the canonical exact-one form; zero, one, values above four,
-non-literals, missing prerequisites, and duplicates fail closed. The exact-two `.ahb` requester alias
+Canonical decimal literal values `2..16` are accepted by the bounded count
+clause. Absence remains the canonical exact-one form; zero, one, values above
+16, non-canonical/non-literal forms, missing prerequisites, and duplicates fail
+closed. The exact-two `.ahb` requester alias
 now ships through `.7`, and the first generic one-subordinate exact-two paired
 composition now ships through the paired tree's `.3`; its matching aggregate
 alias now ships through `.5`. The generic two-subordinate exact-two sibling and
@@ -2522,6 +2524,17 @@ workspaces also move to `.artifacts/tmp/tests`. See the
 Clean contract commit `7e2b436cf` activates only implementation `.3`; public
 literal `2..4`, generated HDL/runtime, source bytes, and accounting remain
 unchanged during activation.
+Implementation `.3` now ships canonical decimal literal `busy-beats` values
+`2..16` through the existing minimum-width and qualified-retirement lowerer.
+No count-specific public fixture or support entry is added, so accounting stays
+332/373/56 split 28 `.ppif`/28 `.ahb`. Focused t1541 proves absence,
+2/4/5/7/8/15/16 boundaries, exact malformed diagnostics, strict/schedule/
+artifact/normalized-semantic/real read-only MCP/public-verifier parity, and
+seven assertion-enabled 5/8/16 runtime scenarios. All eight touched
+exact-one-through-four requester generic/profile tests now use explicit
+repository-local workspaces and subprocess temp roots; the four paired
+generic/profile tests configure those subprocess roots too. See the
+[shipped behavior](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_BEHAVIOR.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

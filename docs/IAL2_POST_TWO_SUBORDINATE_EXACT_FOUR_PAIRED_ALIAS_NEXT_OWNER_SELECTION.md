@@ -139,3 +139,9 @@ public fixture per count; behavior and 332/373/56 accounting remain unchanged.
 
 Clean contract commit `7e2b436cf` activates only `.3`; activation is
 continuity-only.
+
+Implementation `.3` now ships canonical decimal `busy-beats` values `2..16`
+through the selected lowerer/test-only boundary, adds focused t1541 rather
+than one fixture per count, and preserves 332/373/56 split 28/28. Proposed
+parent selector `.830` is the next clean-boundary owner; every broader owner
+compared here remains independent until that selector executes.

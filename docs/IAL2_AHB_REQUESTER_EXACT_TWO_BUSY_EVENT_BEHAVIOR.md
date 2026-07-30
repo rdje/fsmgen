@@ -68,9 +68,9 @@ write data, beat index, and remaining data-beat count stay stable for the whole
 BUSY episode. Neither BUSY event completes a data beat or consumes a response.
 After the second event, the same pending transfer resumes as `SEQ`.
 
-The parser now accepts literal integers `2..4`. `busy-beats` requires
+The parser now accepts canonical decimal literal integers `2..16`. `busy-beats` requires
 `busy-before-beat`, and the existing insertion point requires BUSY encoding
-`2'b01`. Zero, one, values above four, symbols, expressions, missing
+`2'b01`. Zero, one, values above 16, non-canonical/non-literal forms, missing
 prerequisites, and duplicate clauses fail closed. Absence of `busy-beats`
 remains the canonical exact-one source spelling. The additive literal-three
 source is documented in
@@ -134,11 +134,11 @@ busy_insertion.beats                = 2
 
 `busy_insertion.beats` is numeric for exact-two. Existing exact-one sources
 still report the string `single`. The shared
-`ahb_requester_busy_insert_support` residue is source-specific: exact-one names
-the additive exact-two, exact-three, and exact-four sources; exact-two says two
-events ship and points to exact-three and exact-four; all defer counts beyond
-four, multiple
-insertion points, and policy/runtime/random throttling.
+`ahb_requester_busy_insert_support` residue uses one numeric singular/plural
+template: exact-one reports one event, exact-two reports two, and every source
+states canonical decimal `2..16` support without one catalog fixture per count.
+Counts above 16, multiple insertion points, and symbolic/policy/runtime/random
+selection remain deferred.
 
 The generic source moved the support corpus to 315 protocol fixtures and 356
 supported-smoke/strict-supported fixtures. Follow-on alias `.7` moved that
@@ -192,7 +192,7 @@ that path in the same commands. See
 
 ## Explicit Deferrals
 
-Literal counts beyond four, arbitrary/runtime count selection, multiple insertion
+Literal counts above 16, arbitrary/runtime count selection, multiple insertion
 points, runtime-selected count/point, policy/random throttling, distinct local
 bus-BUSY status, the two-subordinate exact-four paired form,
 larger/broader bursts, optional AHB signals, managers, queues/outstanding

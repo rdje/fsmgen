@@ -31,6 +31,11 @@ volume.
 Clean contract commit `7e2b436cf` activates only `.3`; current literal `2..4`
 and 332/373/56 split 28/28 remain unchanged during activation.
 
+Implementation `.3` now ships the selected canonical decimal `2..16` range
+without count-specific public fixtures or support entries. Focused t1541 owns
+the final boundary, diagnostic, semantic/MCP/verifier, and seven-run assertion
+proof; the generalized-count behavior fact is the canonical current result.
+
 The repo-local Arm AHB specification constrains where BUSY occurs and requires
 fixed-length bursts to finish with `SEQ`, but does not impose a numeric BUSY-
 cycle maximum. Sixteen is therefore FSMGen's bounded-profile choice: it aligns

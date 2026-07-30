@@ -92,10 +92,11 @@ busy_insertion.beats                 = single
 ```
 
 The generic source also carries `ahb_requester_busy_insert_support`, recording
-the shipped exact-one qualified-event subset and pointing to the additive
-exact-two, exact-three, and exact-four generic sources. Counts above four,
-policy/runtime/random throttling, multiple insertion points, and broader
-requester BUSY behavior remain deferred.
+exactly one qualified event with singular grammar and the canonical decimal
+literal `2..16` range without one catalog fixture per count. The additive
+exact-two, exact-three, and exact-four generic sources remain the checked-in
+examples. Counts above 16, policy/runtime/random/symbolic selection, multiple
+insertion points, and broader requester BUSY behavior remain deferred.
 
 ```text
 support id:      intent.ppif_ahb_requester_busy_insert
@@ -190,8 +191,9 @@ one-subordinate paired composition. The matching exact-two paired aggregate
 alias and the generic plus alias two-subordinate exact-two siblings now ship.
 The generic exact-three requester, its matching `.ahb` alias, both
 generic/profile exact-three paired topologies, and the generic/profile
-exact-four requester pair also ship. Counts above four, policy/runtime/random
-throttling, multiple or runtime-selected insertion points, distinct
+exact-four requester pair also ship. Canonical decimal literal requester counts
+`2..16` now ship without one fixture per count. Counts above 16,
+policy/runtime/random/symbolic selection, multiple or runtime-selected insertion points, distinct
 `local-status.bus_busy`,
 halfword/word burst `SEQ`, wider/indefinite bursts, multi-word/register-bank
 progression, optional AHB signals, broader AHB manager behavior, direct

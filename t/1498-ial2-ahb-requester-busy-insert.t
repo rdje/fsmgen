@@ -3,7 +3,6 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
-use File::Temp qw(tempdir);
 use FindBin;
 use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
@@ -11,6 +10,9 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::IAL2::PPIF;
+use FSM::ProjectDataLocality qw(configure_project_temp_environment create_project_tempdir);
+
+configure_project_temp_environment(purpose => 'tests');
 
 subtest 'adapter parses the bounded requester BUSY-insertion source' => sub {
     ok(-f sample_path(), 'tracked requester BUSY-insertion PPIF sample exists');
@@ -53,9 +55,8 @@ subtest 'adapter parses the bounded requester BUSY-insertion source' => sub {
     is($result->{report}{busy_insertion}{beats}, 'single', 'report bounds insertion to one held beat');
 
     my %residue = map { $_->{id} => $_->{detail} } @{$result->{report}{unsupported_residue}};
-    like($residue{ahb_requester_busy_insert_support}, qr/one exact qualified requester HTRANS BUSY event/, 'report records the shipped bounded BUSY insertion');
-    like($residue{ahb_requester_busy_insert_support}, qr/additive exact-two, exact-three, and exact-four behavior is supported by ppif\/ahb_requester_busy_insert_two\.ppif, ppif\/ahb_requester_busy_insert_three\.ppif, and ppif\/ahb_requester_busy_insert_four\.ppif/, 'report points to all additive bounded-count sources');
-    like($residue{ahb_requester_busy_insert_support}, qr/counts beyond four/, 'report keeps broader BUSY policy deferred');
+    like($residue{ahb_requester_busy_insert_support}, qr/exactly 1 qualified requester HTRANS BUSY event/, 'report states exact-one behavior numerically');
+    like($residue{ahb_requester_busy_insert_support}, qr/counts above 16/, 'report keeps broader BUSY policy deferred');
 };
 
 subtest 'malformed requester BUSY-insertion declarations fail closed' => sub {
@@ -92,7 +93,7 @@ subtest 'CLI, support accounting, and report surfaces agree' => sub {
     is($schedule->{busy_insertion}{before_beat}, 2, 'schedule JSON exposes the insertion index');
     is($schedule->{busy_insertion}{beats}, 'single', 'schedule JSON exposes the one-beat bound');
 
-    my $tempdir = tempdir(CLEANUP => 1);
+    my $tempdir = create_project_tempdir(purpose => 'tests');
     my $outdir = File::Spec->catdir($tempdir, 'out');
     my $hdl = File::Spec->catfile($tempdir, 'amba_requester_busy_insert.sv');
     my ($success, undef, undef, undef, $stderr) = run(
@@ -106,7 +107,7 @@ subtest 'CLI, support accounting, and report surfaces agree' => sub {
 };
 
 subtest 'generated HDL retires exactly one qualified BUSY event and resumes SEQ' => sub {
-    my $tempdir = tempdir(CLEANUP => 1);
+    my $tempdir = create_project_tempdir(purpose => 'tests');
     my $hdl = File::Spec->catfile($tempdir, 'amba_requester_busy_insert.sv');
     my $objdir = File::Spec->catdir($tempdir, 'obj');
     my ($generate_ok, undef, undef, $generate_stdout, $generate_stderr) = run(

@@ -319,4 +319,9 @@ evidence-backed handoff.
   full-language authority, VHDL/mixed-language, migration, and scale gates.
 - `2026-07-30`: Clean contract commit `7e2b436cf` activates only `.3`;
   HIAL/VIAL remains proposed and unchanged.
+- `2026-07-30`: Generalized-count implementation `.3` ships canonical decimal
+  `2..16` plus t1541 assertion/semantic/MCP/verifier proof at unchanged
+  332/373/56 split 28/28. It generates no verification HDL and does not
+  activate or narrow HIAL/VIAL; proposed parent selector `.830` must compare
+  this architecture independently after the clean behavior commit.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

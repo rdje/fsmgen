@@ -126,8 +126,8 @@ subtest 'current AHB surfaces include exact-two/three/four requester aliases' =>
     );
     like(
         $navigation,
-        qr/exact-one through exact-four BUSY insertion across generic `\.ppif` and matching `\.ahb` requester surfaces/,
-        'protocol navigation includes exact-two/three/four requester aliases',
+        qr/exact-one BUSY insertion by absence, and canonical decimal literal `busy-beats` values `2\.\.16` without a fixture per count/,
+        'protocol navigation includes generalized literal requester support',
     );
     unlike(
         $navigation,
@@ -212,6 +212,8 @@ subtest 'current AHB surfaces include exact-two/three/four requester aliases' =>
         'AHB chapter preserves the shipped generic exact-two paired checkpoint',
     );
     like($ahb_chapter, qr/Current accounting is 332\/373\/56 split 28 `\.ppif`\/28 `\.ahb`/, 'AHB chapter records current two-subordinate exact-four alias accounting');
+    like($ahb_chapter, qr/Implementation `\.3` now ships canonical decimal literal `busy-beats` values\s+`2\.\.16`/s, 'AHB chapter records the shipped generalized literal range');
+    like($ahb_chapter, qr/t1541 proves absence,\s+2\/4\/5\/7\/8\/15\/16 boundaries.*?seven assertion-enabled 5\/8\/16 runtime scenarios/s, 'AHB chapter records generalized boundary and runtime proof');
     like($ahb_chapter, qr/t\/1531.*?(?:5|five) presentations.*?(?:3|three)\s+qualified BUSY events.*?44332211/s, 'AHB chapter records the exact-three paired assertion-enabled runtime');
     like($ahb_chapter, qr/t\/1537.*?(?:five|5) presentations.*?(?:four|4)\s+qualified BUSY events.*?44332211/s, 'AHB chapter records the exact-four paired assertion-enabled runtime');
     unlike($ahb_chapter, qr/The next extension is selected but \*\*not yet shipped\*\*/, 'AHB requester guide removes stale pre-implementation wording');
@@ -227,7 +229,7 @@ subtest 'current AHB surfaces include exact-two/three/four requester aliases' =>
     like($behavior, qr/IAL2_AHB_REQUESTER_EXACT_TWO_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR/, 'canonical behavior links the shipped exact-two alias owner');
 
     my $exact_one_behavior = slurp('docs/IAL2_AHB_REQUESTER_BUSY_INSERTION_BEHAVIOR.md');
-    like($exact_one_behavior, qr/additive\s+exact-two, exact-three, and exact-four generic sources/s, 'canonical exact-one behavior points at all additive bounded-count sources');
+    like($exact_one_behavior, qr/canonical decimal\s+literal `2\.\.16` range without one catalog fixture per count/s, 'canonical exact-one behavior points at generalized literal support');
     unlike($exact_one_behavior, qr/[Cc]ounts beyond two/, 'canonical exact-one behavior does not retain the stale exact-two ceiling');
     my $exact_one_fact = slurp('docs/knowledge/ial2-ahb-requester-busy-insertion-behavior.md');
     like($exact_one_fact, qr/generic exact-four requester also ships/s, 'canonical exact-one fact points at shipped exact-four behavior');
@@ -284,6 +286,13 @@ subtest 'current AHB surfaces include exact-two/three/four requester aliases' =>
     like($two_window_exact_four_behavior, qr/332 protocol fixtures, 373 supported-smoke fixtures,\s+373 strict-supported fixtures, and 56 AHB IAL2 paths/s, 'two-window exact-four behavior owns current accounting');
     like($two_window_exact_four_behavior, qr/t\/1540.*?byte-identical.*?read-only MCP.*?`--verify-hdl`/s, 'two-window exact-four behavior records focused alias parity');
     like($two_window_exact_four_behavior, qr/PASS commands=2 transfers=10 beats=8 busy=2 qualified_busy=8 resumed_seq=2 status=44332211 control=88776655/, 'two-window exact-four behavior records assertion-enabled runtime');
+
+    my $generalized_behavior = slurp('docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_BEHAVIOR.md');
+    like($generalized_behavior, qr/accepts canonical unsigned decimal `busy-beats` literals\s+`2\.\.16`/s, 'generalized behavior records current public admission');
+    like($generalized_behavior, qr/All seven runs observe five non-IDLE presentations, four completed data beats,\s+one BUSY episode, exactly N qualified events/s, 'generalized behavior records exact runtime result');
+    like($generalized_behavior, qr/Support accounting therefore\s+stays exactly 332 protocol fixtures, 373 supported-smoke plus strict entries,\s+and 56 AHB paths split 28 `\.ppif` \/ 28 `\.ahb`/s, 'generalized behavior records unchanged accounting');
+    my $generalized_fact = slurp('docs/knowledge/ial2-ahb-requester-generalized-busy-count-range-behavior.md');
+    like($generalized_fact, qr/Focused t1541 proves parse\/report\/schedule\/artifact\/semantic\/real read-only\s+MCP\/public-verifier surfaces and seven assertion-enabled 5\/8\/16 runtime/s, 'generalized fact records focused proof');
 };
 
 subtest 'canonical current behavior records point to later alias owners' => sub {

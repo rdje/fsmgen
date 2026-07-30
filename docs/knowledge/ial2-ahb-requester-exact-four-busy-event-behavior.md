@@ -16,9 +16,9 @@ reverify: scripts/run_with_ram_guard.sh --host-max-pct 100 --process-max-rss-mb 
 ---
 
 `ppif/ahb_requester_busy_insert_four.ppif` ships literal `(busy-beats 4)`
-beside `(busy-before-beat 2)`. The bounded public count accepts literal
-integers `2..4`; absence remains exact-one and 0/1/5+ or non-literals fail
-closed.
+beside `(busy-before-beat 2)`. The bounded public count now accepts canonical
+decimal literals `2..16`; absence remains exact-one and 0/1/17+,
+non-canonical, or non-literal forms fail closed.
 
 The existing requester generator emits `amba_requester_busy_insert_four`
 through IAL2 -> IAL1 -> IAL0. Integer-loop minimum-width derivation preserves

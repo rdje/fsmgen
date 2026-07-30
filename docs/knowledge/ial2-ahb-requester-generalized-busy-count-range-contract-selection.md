@@ -26,14 +26,19 @@ Proposed `.3` changes only normalizer admission, static-rule wording, unified
 numeric residue, and focused verification. The current integer-loop width and
 qualified retirement logic stay unchanged. New t1541 plus one generic
 assertion-enabled testbench own boundary coverage and 5/8/16 runtime.
+Malformed scalar tokens receive the exact canonical-range diagnostic; nested
+reference/expression forms fail earlier at the PPIF scalar-shape gate.
 
-Contract review found that t1535 still creates two default `File::Temp`
-workspaces without a repository-derived `DIR`. Because `.3` must update t1535
-for the widened diagnostic anyway, the same proposed leaf now owns migration
-of both workspaces to `.artifacts/tmp/tests`; this is verification-local and
-does not widen product scope.
+Contract review first found that t1535 still created two default `File::Temp`
+workspaces without a repository-derived `DIR`. Implementation review expanded
+that finding across all eight touched exact-one through exact-four requester
+generic/profile tests; they now use `FSM::ProjectDataLocality` explicit
+workspaces and subprocess temp roots. The four paired generic/profile tests
+also configure subprocess temp roots. This remains verification-local.
 
-Current public behavior remains literal `2..4` until `.3` activates and ships.
+Implementation `.3` now ships canonical decimal literal `2..16` with focused
+t1541 proof and unchanged 332/373/56 split 28/28 accounting. Canonical current
+behavior lives in the generalized-count behavior record/fact.
 Dynamic/policy/runtime/random/symbolic counts, multiple insertion points,
 generic priority, HIAL/VIAL, VHDL, scale, and decision `0020` remain separate.
 

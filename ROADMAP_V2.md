@@ -7932,6 +7932,22 @@ support, test, artifact, report, semantic/MCP API, HDL/runtime, simulator,
 backend, protocol, HIAL/VIAL, VHDL, verification-generation, portability,
 scale, decision-0020, or transaction behavior. Current literal `2..4` and
 332/373/56 split 28/28 remain authoritative during implementation activation.
+Implementation `.3` now ships canonical decimal literal requester
+`busy-beats` values `2..16` through the existing minimum-width and
+grant-and-ready-qualified retirement logic. It adds no public fixture or
+support identity per count, so exact-one-through-four source bytes and
+332/373/56 split 28 `.ppif`/28 `.ahb` accounting remain unchanged. Focused
+t1541 proves absence and 2/4/5/7/8/15/16 boundaries, exact malformed scalar
+diagnostics, layered reference/expression/duplicate diagnostics, strict/
+schedule/artifact/semantic/real read-only MCP/public-verifier surfaces, and
+seven assertion-enabled 5/8/16 runtime scenarios with required 32-clock
+ready/grant stalls. Verification-local review also moves all eight touched
+requester generic/profile tests to explicit `FSM::ProjectDataLocality`
+workspaces and configures subprocess temp roots in those tests plus the four
+paired generic/profile tests. Counts above 16 and every broader BUSY policy,
+HIAL/VIAL, VHDL/portability, scale, priority, protocol/backend, and
+decision-0020 owner remain separate. Proposed parent selector `.830` is the
+next clean-boundary owner after the `.3` behavior commit.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

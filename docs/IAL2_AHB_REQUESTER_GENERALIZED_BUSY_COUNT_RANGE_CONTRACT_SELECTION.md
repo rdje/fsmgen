@@ -46,6 +46,11 @@ The selected exact diagnostic is:
 AHB requester transfer.busy_beats must be a canonical decimal literal integer in 2..16 in this slice
 ```
 
+That diagnostic applies to malformed scalar tokens. Nested reference and
+expression forms fail earlier at the PPIF literal-block gate with its existing
+`requires exactly one scalar value` diagnostic; duplicate clauses likewise
+retain the existing scalar-duplicate diagnostic.
+
 Existing prerequisites remain exact: `busy_beats` requires
 `busy_before_beat`; the insertion point requires BUSY encoding `2'b01`; and
 `busy_before_beat` remains a literal `1..15` position within the declared
@@ -177,6 +182,22 @@ Clean contract commit `7e2b436cf` activates only implementation `.3`.
 Activation changes continuity and no current parser, generator, source,
 support, report, semantic/MCP, generated HDL/runtime, or simulator behavior;
 literal `2..4` and 332/373/56 split 28/28 remain current until `.3` ships.
+
+## Implementation Outcome
+
+Implementation `.3` ships the frozen contract. In addition to the selected
+t1535 repair, review of every test touched by the shared report/residue change
+found the same implicit-temp risk in the exact-one through exact-four
+requester generic/profile tests. All eight now use
+`FSM::ProjectDataLocality` for explicit workspaces and subprocess temp roots.
+The four paired exact-four generic/profile tests already had explicit
+repository-local workspaces and now configure subprocess temp roots as well.
+This verification-local expansion changes no public source, support identity,
+HDL, simulator, report schema, or semantic/MCP contract.
+
+The implementation result, runtime proof, current diagnostics, unchanged
+accounting, and exact rollback are canonical in
+`docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_BEHAVIOR.md`.
 
 ## Rollback
 

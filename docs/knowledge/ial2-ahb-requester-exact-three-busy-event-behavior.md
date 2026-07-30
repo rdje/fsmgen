@@ -16,9 +16,9 @@ reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -v t/1528-ial2-ahb-reque
 ---
 
 `ppif/ahb_requester_busy_insert_three.ppif` now ships literal
-`(busy-beats 3)` beside `(busy-before-beat 2)`. The public optional count is
-bounded to literal integers `2..4`; absence remains exact-one and 0/1/5+ or
-non-literals fail closed.
+`(busy-beats 3)` beside `(busy-before-beat 2)`. The public optional count now
+accepts canonical decimal literals `2..16`; absence remains exact-one and
+0/1/17+, non-canonical, or non-literal forms fail closed.
 
 The source generates `amba_requester_busy_insert_three` through the existing
 requester generator and mandatory IAL2 -> IAL1 -> IAL0 path. The unchanged

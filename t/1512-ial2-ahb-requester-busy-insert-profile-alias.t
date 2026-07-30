@@ -3,7 +3,6 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
-use File::Temp qw(tempdir);
 use FindBin;
 use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
@@ -11,6 +10,9 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::IAL2::PPIF;
+use FSM::ProjectDataLocality qw(configure_project_temp_environment create_project_tempdir);
+
+configure_project_temp_environment(purpose => 'tests');
 
 subtest 'requester BUSY-insertion .ahb alias mirrors the generic source and lowering' => sub {
     ok(-f alias_path(), 'tracked requester BUSY-insertion .ahb alias exists');
@@ -42,7 +44,7 @@ subtest 'requester BUSY-insertion .ahb alias mirrors the generic source and lowe
 
     my %alias_residue = map { $_->{id} => $_->{detail} } @{$alias->{report}{unsupported_residue}};
     ok(!exists $alias_residue{ahb_profile_alias_deferred}, 'alias removes source-surface profile-alias residue');
-    like($alias_residue{ahb_requester_busy_insert_support}, qr/one exact qualified requester HTRANS BUSY event/, 'alias keeps shipped BUSY subset residue');
+    like($alias_residue{ahb_requester_busy_insert_support}, qr/exactly 1 qualified requester HTRANS BUSY event/, 'alias keeps numeric exact-one BUSY residue');
 
     my %ppif_residue = map { $_->{id} => $_->{detail} } @{$ppif->{report}{unsupported_residue}};
     ok($ppif_residue{ahb_profile_alias_deferred}, 'generic source keeps its alias-deferred residue');
@@ -78,7 +80,7 @@ subtest 'schedule JSON and outdir preserve BUSY report and review artifacts' => 
     ok(!exists $residue{ahb_profile_alias_deferred}, 'schedule JSON removes alias-deferred residue');
     ok($residue{ahb_requester_busy_insert_support}, 'schedule JSON keeps BUSY support residue');
 
-    my $tempdir = tempdir(CLEANUP => 1);
+    my $tempdir = create_project_tempdir(purpose => 'tests');
     my $outdir = File::Spec->catdir($tempdir, 'out');
     my $hdl = File::Spec->catfile($tempdir, 'amba_requester_busy_insert.sv');
     my ($success, undef, undef, $stdout, $stderr) = run(

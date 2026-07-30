@@ -12,9 +12,11 @@ use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::ProjectDataLocality qw(configure_project_temp_environment);
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 
 my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
+configure_project_temp_environment(purpose => 'tests');
 
 subtest 'adapter composes exact-four requester BUSY insertion with subordinate BUSY parking' => sub {
     ok(-f sample_path(), 'tracked exact-four paired BUSY aggregate PPIF sample exists');
@@ -62,7 +64,7 @@ subtest 'adapter composes exact-four requester BUSY insertion with subordinate B
     is($requester->{transfer}{busy_beats}, 4, 'requester child transfer keeps exact-four cardinality');
     is($requester->{busy_insertion}{beats}, 4, 'requester child exposes numeric exact-four cardinality');
     my %requester_residue = map { $_->{id} => $_->{detail} } @{$requester->{unsupported_residue}};
-    like($requester_residue{ahb_requester_busy_insert_support}, qr/exact-four qualified requester HTRANS BUSY events/, 'requester child keeps exact-four BUSY-insertion residue');
+    like($requester_residue{ahb_requester_busy_insert_support}, qr/exactly 4 qualified requester HTRANS BUSY events/, 'requester child keeps numeric exact-four BUSY-insertion residue');
 
     my $subordinate = $report->{children}[2];
     is($subordinate->{transfer}{seq_policy}{mode}, 'hburst_in_word_progressive', 'subordinate child keeps HBURST SEQ progression');

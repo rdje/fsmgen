@@ -73,6 +73,7 @@ Historical audit `ial2-ahb-requester-multi-busy-insertion-readiness-audit`
 records the pre-repair ten-qualified-edge contradiction. Repair fact
 `ial2-ahb-requester-single-busy-event-cardinality-repair` owns the shipped
 exact-one result. Generic/profile one- and two-subordinate exact-three paired
-compositions and the generic/profile exact-four requester pair ship. Counts above four,
-policy/runtime-selected BUSY behavior,
+compositions and the generic/profile exact-four requester pair ship. Canonical
+decimal literal counts `2..16` now ship without one fixture per count. Counts
+above 16, policy/runtime/random/symbolic BUSY behavior,
 distinct local bus-BUSY status, and broader requester behavior remain deferred.

@@ -170,6 +170,15 @@ Clean contract commit `7e2b436cf` activates only implementation `.3`. This is
 a continuity-only transition; current literal `2..4`, generated behavior,
 source bytes, and 332/373/56 split 28/28 remain unchanged during activation.
 
+Implementation `.3` subsequently ships the selected canonical decimal
+`2..16` range through the existing minimum-width and qualified-retirement
+logic. Focused t1541 proves the selected boundaries, layered diagnostics,
+report/artifact/semantic/read-only-MCP/verifier surfaces, and the complete
+seven-run assertion matrix. No count-specific public source or support entry
+is added, and accounting remains 332/373/56 split 28/28. Canonical current
+truth is recorded in
+`docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_BEHAVIOR.md`.
+
 ## Resource And Cleanup Evidence
 
 The exact disposable audit workspace contained 92 files and 7,016,808 bytes,
@@ -184,6 +193,7 @@ formula and kernel pressure state; guard occupancy is not capacity truth.
 
 ## Rollback
 
-Rollback of the activation reverts its continuity pointers only. It leaves
-current literal `2..4`, exact-one-through-four sources, all generated behavior,
-reports, tests, support accounting, and simulator profiles unchanged.
+Rollback of the completed implementation restores the three AhbRequester
+admission/static-rule/residue regions and affected expectations, removes t1541
+and its testbench, and preserves exact-one-through-four sources and support
+accounting. The same-volume test migrations are independently safe to retain.

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `IAL2 / AHB requester BUSY insertion`
 - Created: `2026-07-30`
 - Last updated: `2026-07-30`
@@ -17,8 +17,8 @@ that range without continuing an unbounded exact-count fixture cadence.
 
 ## Current Boundary
 
-The shipped requester accepts absence as exact-one and literal `busy-beats`
-values `2..4`. Exact-one through exact-four generic/profile requester sources
+The shipped requester accepts absence as exact-one and canonical decimal
+literal `busy-beats` values `2..16`. Exact-one through exact-four generic/profile requester sources
 and one-/two-window paired generic/profile sources ship at 332 protocol
 fixtures, 373 supported-smoke plus strict fixtures, and 56 AHB paths split 28
 `.ppif` / 28 `.ahb`.
@@ -49,7 +49,7 @@ the exact-four ceiling and therefore require deliberate contract work.
 ## Task Tree
 
 - ID: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT`
-  Status: `active`
+  Status: `done`
   Goal: `Select and prove a reusable bounded literal BUSY-count range above four before any public widening.`
   Children: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.1`, `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.2`, `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.3`
 
@@ -68,10 +68,10 @@ the exact-four ceiling and therefore require deliberate contract work.
   Commit: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.2: select generalized BUSY count contract`
 
 - ID: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.3`
-  Status: `active`
+  Status: `done`
   Goal: `Ship the selected canonical literal 2..16 AHB requester BUSY-count range through the existing lowerer without adding count-specific public fixtures.`
   Acceptance: `Activate only after the clean .2 contract-selection commit. Implement exactly the frozen contract record/fact: change only AhbRequester canonical-decimal admission from 2..4 to 2..16, its static-rule text, and the ahb_requester_busy_insert_support residue to one numeric singular/plural template; preserve absence as exact-one, busy-before-beat prerequisites, duplicate rejection, qualified >1/==1 retirement, ceil(log2(count+1)) integer-loop widths, report/schema/artifact/semantic/MCP shapes, and every existing public source byte/support identity at 332/373/56 split 28 .ppif/28 .ahb. Use exact diagnostic 'AHB requester transfer.busy_beats must be a canonical decimal literal integer in 2..16 in this slice'; accept only 2..9 and 10..16 without sign, leading zero, base prefix, fraction, symbol, reference, or expression. Add focused t/1541-ial2-ahb-requester-generalized-busy-count-range.t and t/data/ahb_requester_generalized_busy_count_tb.svt without a public fixture per count. Cover absence and 2/4/5/7/8/15/16/17 boundaries, widths 2/3/3/3/4/4/5 for admitted values, exact numeric reports, unified residue, strict/check/schedule/artifacts/semantic/real read-only shell-disabled MCP/public verifier for repository-local unmatched 5/8/16 candidates, and assertion-enabled Verilator 5.046 -j1 runtime for 5/8/16 continuous plus 32-clock ready/grant stalls at 5 and 16. Require exactly N qualified BUSY events, one episode, five presentations, four data beats, stable pending ownership/state, one resumed SEQ, zero final counter, no --no-assert, and no warning-specific suppression beyond standard -Wno-fatal. Update t1535 expectations from a 5 rejection to a 17 rejection and migrate its two File::Temp workspaces to .artifacts/tmp/tests so all touched verification is same-volume. Preserve exact-one-through-four source hashes, t1498/t1512/t1521-t1540 behavior, t248/t297 accounting, focused docs, mdBook, Knowledge Map, canonical Stats-compatible RAM plus separate pressure, exact cleanup/residue, rollback, and COMMIT.md. Keep runtime/policy/random/symbolic counts, multiple insertion points, bus-BUSY status, new burst/signal/topology semantics, generic priority, other protocols/backends, HIAL/VIAL, verification generation, VHDL, portability, scale, and decision 0020 separate.`
-  Verification: `Activated only after clean .2 contract-selection commit 7e2b436cf. Activation changes task/index/Memory/roadmap/mdBook/audit/contract/facts/related-owner continuity only; current literal 2..4 behavior, 332/373/56 split 28/28 accounting, parser, generator, sources, support, tests, artifacts, reports, semantic/MCP APIs, HDL/runtime, simulator profiles, HIAL/VIAL, VHDL, portability, scale, decision 0020, and transaction behavior remain unchanged. Focused t1518+t1256+t1414 pass 3 files/22 tests. Knowledge Map generation/check passes at 1,050 facts/5,386 question keys. The mdBook builds under authorized host100/process4096 to exactly 72 files/16,408,362 bytes and the exact render is removed. MEMORY.md is 60 lines, README.md is 2,334 lines, .artifacts/tmp/tests is empty, and only the pre-existing 491-byte xcrun_db cache contains data. Diff hygiene, memory architecture, and all six doctrine gates pass, including project-data locality. Final canonical Stats-compatible capacity is 12,663,750,656/25,769,803,776 bytes = 11.794/24.000 GiB = 49.14%, with separate macOS kernel pressure level 1 and memory_pressure 67% free; guard occupancy is excluded from capacity truth. Implementation is active with no background job.`
+  Verification: `Activated only after clean .2 contract-selection commit 7e2b436cf through clean activation commit bb5f35ae8. AhbRequester now admits only canonical decimal 2..16, preserves absence as exact-one, emits the frozen exact diagnostic and static rule, keeps the existing minimum-width integer loop plus qualified >1/==1 retirement, and uses one numeric singular/plural residue template. Focused t1541 passes 4 top-level subtests in 123 seconds: absence and 2/4/5/7/8/15/16 plus malformed boundaries, widths 2/3/3/3/4/4/5, strict/check/schedule/artifacts/semantic/real repo-relative read-only shell-disabled MCP/public verifier for unmatched 5/8/16 candidates, and seven assertion-enabled Verilator 5.046 --timing -j1 runs. The runs cover continuous 5/8/16 plus 32-clock ready-low and grant-low at 5/16 and observe exact N qualified events, one BUSY episode, five presentations, four data beats, stable ownership/state, one resumed SEQ, and zero final counter without --no-assert or warning-specific suppression. Exact requester generic preservation passes 4 files/20 top-level tests in 162 seconds; exact-four paired preservation passes 2 files/8 top-level tests in 1,038 seconds. All six requester/paired alias tests pass, and t248+t297 pass 7,031 tests at unchanged 332/373/56 split 28/28. Exact-one-through-four public source blobs remain db5ebaac37735cbb80a3ed7c5954eee9112e7cf8, 82d4649e24eb3da3010e1a06b529861e60491fa1, ed40621f07dc89e5cd92563d4d1c4da228baaeab, and 2f01702633a8698f7057e6f5b663f8bca6d29989. Implementation review expanded the t1535 locality finding: eight exact-one-through-four requester generic/profile tests now use FSM::ProjectDataLocality explicit workspaces and subprocess temp configuration, while the four already-explicit paired tests now also configure subprocess temp roots. Focused documentation gates pass 3 files/22 tests. Knowledge Map generation/check passes at 1,051 facts/5,395 question keys. The mdBook builds under authorized host100/process4096 to exactly 72 files/16,417,280 bytes and the exact render is removed. MEMORY.md is 60 lines, README.md is 2,335 lines, .artifacts/tmp/tests is empty, and only the pre-existing 491-byte xcrun_db cache contains data. Final canonical Stats-compatible capacity is 14,508,310,528/25,769,803,776 bytes = 13.512/24.000 GiB = 56.30%, with separate macOS kernel pressure level 1 and memory_pressure 69% free; guard occupancy is excluded from capacity truth. No public source/support identity, report schema, semantic/MCP API, backend, protocol, HIAL/VIAL, VHDL, verification-generation, portability, scale, decision-0020, or transaction contract changes.`
   Commit: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.3: ship generalized AHB BUSY count range`
 
 ## Dependencies
@@ -88,10 +88,11 @@ continuity pointers only; all public and generated behavior remains unchanged.
 
 ## Current Frontier
 
-Audit `.1` selected literal `2..16`; completed contract `.2` freezes exact
+Audit `.1` selected literal `2..16`; completed contract `.2` froze exact
 admission, diagnostics, numeric residue, verification, preservation, and
-rollback. Implementation `.3` is active from clean contract commit
-`7e2b436cf`; current public behavior remains `2..4` until `.3` ships.
+rollback. Implementation `.3` now ships that contract without count-specific
+public fixtures or support entries. Parent selector `.830` is proposed for
+activation only after the clean `.3` behavior commit.
 
 ## Decisions
 
@@ -107,11 +108,17 @@ rollback. Implementation `.3` is active from clean contract commit
 - `2026-07-30`: Contract `.2` selects one lowerer/test-only `.3` implementation
   with no count-specific catalog source or support entry. It also brings the
   touched t1535 disposable workspaces onto `.artifacts/tmp/tests`.
+- `2026-07-30`: Implementation `.3` ships canonical decimal `2..16` with
+  unchanged 332/373/56 split 28/28 accounting and no count-specific public
+  fixture. Verification review expanded the contract-time locality repair to
+  all eight touched requester generic/profile tests and subprocess temp
+  configuration in the four paired generic/profile tests.
+- `2026-07-30`: Propose parent selector `.830` as the next clean-boundary
+  owner; do not activate it until this behavior commit is clean.
 
 ## Rollback
 
-Before `.3`, rollback removes the contract record/fact and proposed leaf,
-restores `.2` active, and leaves literal `2..4` behavior untouched. After `.3`,
-restore the three AhbRequester text/code regions plus t1535 expectations,
-remove t1541 and its testbench, retain the existing source/support corpus, and
-rerun every named preservation gate.
+Rollback restores the three AhbRequester text/code regions plus affected
+report/diagnostic expectations, removes t1541 and its testbench, retains the
+existing source/support corpus, and reruns every named preservation gate. The
+same-volume test migrations are independently safe to retain.

@@ -11636,6 +11636,15 @@ behavior remains `2..4` until `.3` ships; see the
 Clean contract commit `7e2b436cf` activates only implementation `.3`.
 Activation is continuity-only: public literal `2..4`, generated behavior,
 existing source bytes, and 332/373/56 split 28/28 remain unchanged.
+Implementation `.3` now ships canonical decimal literal counts `2..16`
+through the existing lowerer, unified numeric residue, t1541 boundaries, and
+seven all-assertion 5/8/16 runtimes. It adds no count-specific public fixture
+or support identity, so accounting remains 332/373/56 split 28/28. The touched
+eight exact-one-through-four requester generic/profile tests use explicit
+repository-local workspaces and subprocess temp storage; the four exact-four
+paired generic/profile tests configure repository-local subprocess temp roots.
+See the
+[shipped behavior](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
