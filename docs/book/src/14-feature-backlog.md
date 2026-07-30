@@ -11648,6 +11648,18 @@ See the
 Clean behavior commit `2f64611ca` activates no-behavior parent selector
 `.830`; public `2..16` behavior and 332/373/56 split 28/28 remain unchanged
 while it selects one next roadmap owner.
+Completed selector `.830` chooses proposed no-behavior
+`ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1`. The evidence narrows the
+gap: direct rule/transaction data assignments already honor declared priority,
+while a transaction-invoked named drive is lowered with separate `drive`
+provenance and can remain enabled beside a conflicting rule selector. The
+audit will reproduce both cases protocol-neutrally and select exact masking or
+a fail-closed prerequisite without weakening generated selector assertions.
+See the
+[selection record](../../IAL2_POST_GENERALIZED_BUSY_COUNT_NEXT_OWNER_SELECTION.md).
+Canonical AHB `2..16`, accounting 332/373/56 split 28/28, HIAL/VIAL, VHDL,
+scale, broader BUSY policy, and decision `0020` remain unchanged and separately
+gated until a clean activation commit.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
@@ -16982,9 +16994,10 @@ budgets, graceful beyond-capacity behavior, and stable local/CI qualification
 gates. Correctness, diagnostics, deterministic artifacts, locality, and
 recoverability remain part of the capacity contract.
 
-This requirement is parked rather than active. It does not displace the
-selected AHB subordinate correctness audit; a later roadmap selector must
-activate it from a clean boundary.
+This requirement is parked rather than active. Completed selector `.830`
+chooses the smaller assertion-backed transaction-invoked named-drive priority
+audit first; a later roadmap selector must activate scale from a clean
+boundary.
 
 ## Backends And Validation
 

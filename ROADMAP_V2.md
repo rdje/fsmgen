@@ -1061,9 +1061,10 @@ Proposed task
 owns evidence-backed `big`/`really_big` structural profiles, deterministic
 workloads, per-stage correctness oracles, peak descendant RSS/time/artifact
 metrics, bottleneck analysis, budgets, graceful beyond-capacity behavior, and
-stable local/CI qualification gates. The requirement is parked and does not
-pivot current priority away from the selected AHB subordinate correctness
-audit; a later roadmap selector must activate it.
+stable local/CI qualification gates. The requirement is parked. Completed
+selector `.830` chooses the smaller assertion-backed transaction-invoked
+named-drive priority audit first; a later roadmap selector must activate the
+scale tree independently.
 
 ## Current intent
 The active immediate priority is now first-class semantic introspection and
@@ -7953,6 +7954,20 @@ Clean generalized-count behavior commit `2f64611ca` activates parent selector
 `busy-beats` `2..16`, t1541 proof, exact-one-through-four public source bytes,
 332/373/56 split 28/28 accounting, and all broader owner boundaries remain
 unchanged while the selector performs its comparison.
+Completed selector `.830` selects proposed no-behavior
+`ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1`. Direct transaction data
+assignments already honor actor-level rule/transaction priority and t1220
+proves that schedule projection. The remaining assertion-backed seam is
+specifically a transaction-invoked named drive: its lowering owner kind is
+`drive`, it remains outside the direct assignment suppression pass, conflict
+analysis reports `isf_unproven_rule_drive_overlap`, and different-value rule
+and drive selectors can remain enabled together. Audit `.1` must reduce both
+the working control and failing named-drive case to a protocol-neutral fixture,
+trace provenance and activation through the unified selector, and select exact
+masking or the smallest fail-closed prerequisite without weakening generated
+assertions. Canonical AHB `2..16`, accounting 332/373/56 split 28/28, dynamic
+BUSY policy, HIAL/VIAL, VHDL, scale, other protocols/backends, and decision
+`0020` remain unchanged and separately gated until a clean activation commit.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

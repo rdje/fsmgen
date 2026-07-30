@@ -65,3 +65,7 @@ with t1541 assertion/semantic/MCP/verifier proof and unchanged 332/373/56 split
 
 Clean behavior commit `2f64611ca` activates `.830` without changing public or
 generated behavior.
+
+Completed selector `.830` chooses the separate protocol-neutral
+transaction-invoked named-drive priority audit. Canonical requester `2..16`
+and 332/373/56 split 28/28 remain current.

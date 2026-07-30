@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: clean generalized-count `.3` behavior commit `2f64611ca`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.830`.
-- current_state: `.830` activation is continuity-only; shipped canonical decimal 2..16, t1541 proof, same-volume verification, and 332/373/56 split 28/28 remain unchanged.
-- next_action: execute `.830`'s exact no-behavior post-generalized-count owner comparison and select one smallest roadmap-aligned next owner.
-- in_flight_uncommitted: none after this commit; no background job.
+- latest_commit: clean `.830` activation commit `6f7cc3922`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.830` selection closeout.
+- current_state: `.830` selects proposed no-behavior `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1`; direct rule/transaction assignments already honor priority, while a transaction-invoked named drive retains owner kind `drive` and can conflict with a rule selector. Shipped 2..16 and 332/373/56 split 28/28 remain unchanged.
+- next_action: finish gates and commit `.830`, then activate only the selected priority audit `.1` from the clean selector boundary.
+- in_flight_uncommitted: `.830` selector docs/fact/task-tree/book synchronization; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -20,22 +20,12 @@ bounded current-state pointer. Git preserves its prior history.
 
 - Director authorization (`2026-07-29`): keep the four legacy blobs frozen,
   complete the same-volume adoption tree, then resume roadmap PNT.
-- The IAL2 frontier completed exact-three families, AHB fabric/endpoint/direct
-  arbitration repairs, and exact-four requester generic/alias at 328/369/52.
-  The generic one-window exact-four paired source now ships through existing
-  generators with semantic/read-only-MCP parity and repository-local t1537
-  assertion runtime 5/4/1/4/1/`44332211`. `.825` now ships its byte-identical
-  alias with t1538 parity at 330/371/54. Completed `.826` selects proposed
-  two-window exact-four readiness `.1`; the audit now proves strict/artifact/
-  semantic/read-only-MCP/verifier plus assertion-enabled two-command
-  10/8/2/8/2/`44332211`/`88776655` runtime. `.2` now freezes the exact generic
-  source/support/t1539 contract; `.3` now ships the selected path with exact
-  10/8/2/8/2 runtime and 331/372/55 accounting. `.827` selected `.828`, which
-  now ships the matching alias with focused t1540 parity at 332/373/56 split
-  28/28. `.829` now selects a reusable finite literal-count readiness audit;
-  audit `.1` proved bounded literal `2..16` readiness; contract `.2` froze one
-  lowerer/test-only implementation with no per-count public fixture. Completed
-  `.3` ships it with t1541; `.830` is active and decision `0020` stays separate.
+- The IAL2 frontier ships exact-one-through-four requester and one-/two-window
+  paired generic/profile families at 332/373/56 split 28/28. Generalized-count
+  `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
+  per-count public fixture. Completed `.830` selects the protocol-neutral
+  transaction-invoked named-drive priority audit and decision `0020` stays
+  separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
@@ -46,8 +36,8 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. Shipped generalized-count `.3`
-  keeps HIAL/VIAL proposed and independently gated.
+  mixed-language claims qualified separately. Completed selector `.830` keeps
+  HIAL/VIAL proposed and selects the narrower priority correctness audit.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc

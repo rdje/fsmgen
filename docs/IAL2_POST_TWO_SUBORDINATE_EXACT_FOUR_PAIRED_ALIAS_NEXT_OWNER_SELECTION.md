@@ -148,3 +148,7 @@ compared here remains independent until that selector executes.
 
 Clean behavior commit `2f64611ca` activates `.830`; this is a continuity-only
 transition with no change to the selected generalized-count shipment.
+
+Completed selector `.830` chooses the separately proposed protocol-neutral
+transaction-invoked named-drive priority audit. Canonical requester `2..16`,
+332/373/56 split 28/28, and the other broader owners remain unchanged.

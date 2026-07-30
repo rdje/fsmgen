@@ -6,7 +6,7 @@
 - Status: `proposed`
 - Roadmap lane: `performance/scalability / end-to-end design capacity`
 - Created: `2026-07-29`
-- Last updated: `2026-07-29`
+- Last updated: `2026-07-30`
 - Owner: repo-local workflow
 
 ## Goal
@@ -18,11 +18,11 @@ quality, artifact integrity, or workflow recoverability.
 This is a parked product requirement, not an active priority change. A later
 roadmap selector must activate it explicitly from a clean boundary.
 
-Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.829` keeps this requirement
-proposed while selecting the smaller adjacent generalized literal AHB
-BUSY-count readiness audit. That audit must still measure and bound its own
-resource/verification cost; it does not claim or replace end-to-end big-to-
-really-big qualification.
+Completed selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.830` keeps this
+requirement proposed while selecting the smaller assertion-backed
+transaction-invoked named-drive priority audit. Every active slice must still
+measure and bound its own resource/verification cost; that does not claim or
+replace end-to-end big-to-really-big qualification.
 
 ## Requirement
 
@@ -103,6 +103,10 @@ and diagnostic behavior per stage while proving semantic/output correctness.
 - `2026-07-30`: Clean generalized-count behavior commit `2f64611ca` activates
   parent selector `.830`; the scale tree remains proposed and unchanged while
   `.830` compares it with the other exact owners.
+- `2026-07-30`: Completed selector `.830` chooses the smaller assertion-backed
+  transaction-invoked named-drive priority audit. The scale requirement stays
+  proposed and independently gated; the selector does not weaken its
+  end-to-end workload, correctness, resource, or graceful-failure contract.
 
 ## Open Questions
 
@@ -116,7 +120,7 @@ and diagnostic behavior per stage while proving semantic/output correctness.
 ## Blockers
 
 - None for durable capture. Activation awaits a later roadmap selector; the
-  current AHB correctness frontier remains first.
+  selected named-drive priority correctness audit proceeds first.
 
 ## Capture Verification
 

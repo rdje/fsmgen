@@ -41,3 +41,7 @@ remain separate.
 
 Clean behavior commit `2f64611ca` activates no-behavior parent selector `.830`;
 current behavior and 332/373/56 split 28/28 accounting remain unchanged.
+
+Completed selector `.830` chooses the separate protocol-neutral
+transaction-invoked named-drive priority audit. Canonical `2..16` behavior and
+accounting remain unchanged.

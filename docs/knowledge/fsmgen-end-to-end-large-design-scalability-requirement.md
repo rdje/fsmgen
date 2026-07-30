@@ -6,7 +6,7 @@ answers:
   - "what does big to really big design support mean for FSMGen?"
   - "is FSMGen large-design scalability an active priority?"
   - "which task owns end-to-end FSMGen scalability?"
-date: 2026-07-29
+date: 2026-07-30
 status: current
 tags: [scalability, performance, large-design, end-to-end, requirement]
 evidence: docs/tasks/FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; MEMORY.md
@@ -23,6 +23,7 @@ Proposed task `FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY` owns measurable
 descendant RSS/time/artifact metrics, bottleneck analysis, evidence-backed
 budgets, graceful beyond-capacity behavior, and stable regression gates.
 
-The requirement is durably parked, not active. It does not pivot priority away
-from the selected AHB subordinate correctness audit; a later roadmap selector
-must activate it from a clean boundary.
+The requirement is durably parked, not active. Completed selector `.830`
+chooses the smaller assertion-backed transaction-invoked named-drive priority
+audit first; a later roadmap selector must activate scale from a clean
+boundary.

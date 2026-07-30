@@ -146,3 +146,7 @@ Clean behavior commit `2f64611ca` activates parent selector `.830` as a
 continuity-only transition. Shipped `2..16` behavior, t1541 proof, public
 source bytes, support accounting, and every deferred boundary remain
 unchanged during selection.
+
+Completed selector `.830` chooses the separate protocol-neutral
+transaction-invoked named-drive priority audit. It changes no AHB behavior:
+canonical decimal `2..16`, t1541, and 332/373/56 split 28/28 remain current.

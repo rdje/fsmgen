@@ -6,7 +6,7 @@
 - Status: `proposed`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-07-29`
+- Last updated: `2026-07-30`
 - Owner: repo-local workflow
 
 ## Goal
@@ -112,12 +112,11 @@ architecture needed to move beyond that bounded foundation.
 
 This tree is proposed and inactive. `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
 is the first executable leaf only after a future clean-boundary roadmap selector
-activates it. The smaller adjacent two-subordinate exact-three paired AHB
-readiness audit `.1` now passes and clean audit commit `c2aa63c3e` activates
-generic contract `.2`. Completed `.2` selects proposed data-only implementation
-`.3`, now active after clean contract commit `129d52967`. This architecture
-stays proposed; the simulator profile agreement does not pre-empt that
-evidence-backed handoff.
+activates it. Completed parent selector `.830` chooses the smaller
+assertion-backed transaction-invoked named-drive priority audit after the AHB
+requester generalized count range ships. This architecture stays proposed;
+its simulator-profile, backend, migration, parity, and scale requirements do
+not pre-empt that evidence-backed correctness handoff.
 
 ## Decisions
 
@@ -327,4 +326,8 @@ evidence-backed handoff.
 - `2026-07-30`: Clean generalized-count behavior commit `2f64611ca` activates
   parent selector `.830`; HIAL/VIAL remains proposed and unchanged while the
   selector performs its independent comparison.
+- `2026-07-30`: Completed selector `.830` chooses the narrower assertion-backed
+  transaction-invoked named-drive priority audit. HIAL/VIAL remains proposed
+  with its typed bridge, portable/native semantics, full-language UVM
+  authority, VHDL/mixed-language, migration, parity, and scale gates intact.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

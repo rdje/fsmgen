@@ -2538,6 +2538,16 @@ generic/profile tests configure those subprocess roots too. See the
 Clean behavior commit `2f64611ca` activates parent selector `.830` without a
 public behavior change. Canonical decimal `2..16`, t1541 proof, existing
 source bytes, and 332/373/56 split 28/28 remain current during selection.
+Completed selector `.830` chooses the separate protocol-neutral
+transaction-invoked named-drive priority audit. Direct transaction output
+assignments already honor a higher-priority rule; the unresolved case is a
+transaction calling a named drive whose separate `drive` provenance can leave
+its selector active beside the rule selector. The audit will keep generated
+multi-value assertions authoritative and select a precise masking or
+fail-closed contract before implementation. See the
+[post-generalized-count selection](../../IAL2_POST_GENERALIZED_BUSY_COUNT_NEXT_OWNER_SELECTION.md).
+This selection changes no AHB source, generated artifact, runtime behavior, or
+332/373/56 split 28/28 accounting.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

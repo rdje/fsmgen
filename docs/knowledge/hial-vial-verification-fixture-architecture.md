@@ -16,7 +16,7 @@ answers:
   - "is Verilator a traditional event-driven simulator?"
   - "does Verilator support events with timing enabled?"
   - "is the HIAL VIAL architecture active now?"
-date: 2026-07-29
+date: 2026-07-30
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
 evidence: docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; https://verilator.org/guide/latest/overview.html; https://verilator.org/guide/latest/languages.html; https://verilator.org/guide/latest/connecting.html
@@ -59,5 +59,7 @@ capabilities do not widen Verilator into the authoritative full-LRM/UVM tier.
 This requirement is parked under proposed, inactive task tree
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`. It extends the bounded completed
 IAL1 verification-output frontier, whose shipped UVM and VHDL artifacts remain
-inert skeletons. Parking the architecture does not activate it and does not
-change the current IAL2 roadmap priority.
+inert skeletons. Parking the architecture does not activate it or change
+current product behavior. Completed parent selector `.830` chooses the
+narrower assertion-backed transaction-invoked named-drive priority audit;
+HIAL/VIAL remains proposed and independently gated.
