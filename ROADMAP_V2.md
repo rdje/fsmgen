@@ -7794,6 +7794,21 @@ as continuity only. The public boundary remains 330/371/54 split 27/27 while
 the selector compares the remaining exact AHB, HIAL/VIAL, verification,
 portability, priority, and scale owners. No public or generated behavior
 changes in activation.
+Selector `.826` now chooses proposed
+`IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
+as the smallest adjacent owner. A repository-derived same-volume candidate
+changes only the shipped two-window exact-three identity/requester/cardinality
+to exact-four, then passes strict check at `ahb_tb`/4 children/29 signals,
+exact 4 IAL1/5 IAL0 lowering, width-three load four, both BUSY-parking child
+contexts, one-hot response ownership, normalized semantic root `top`, real
+repo-relative read-only shell-disabled MCP, and public `--verify-hdl` with
+unmatched support. Its exact 11-file/2,180,377-byte workspace was removed
+without residue. The audit must still prove assertion-enabled two-command
+10/8/2/8/2/`44332211`/`88776655` runtime before a separate generic contract
+may project 331/372/55 split 28 `.ppif`/27 `.ahb`. Counts above four, new BUSY
+semantics, generic priority, HIAL/VIAL, verification generation, VHDL,
+portability, scale, and decision 0020 remain separate. See
+`docs/IAL2_POST_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

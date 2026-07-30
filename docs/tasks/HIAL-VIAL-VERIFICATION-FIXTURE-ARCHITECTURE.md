@@ -270,4 +270,7 @@ evidence-backed handoff.
   remains proposed for pending post-behavior selector `.826` to compare.
 - `2026-07-30`: Clean alias behavior commit `40b8ead71` activates no-behavior
   selector `.826`; HIAL/VIAL remains proposed while `.826` compares it.
+- `2026-07-30`: Selector `.826` chooses the smaller adjacent two-subordinate
+  exact-four paired AHB readiness audit; HIAL/VIAL remains proposed with its
+  portable-fast/full-language/VHDL/mixed-language/scale requirements intact.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

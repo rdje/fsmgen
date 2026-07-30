@@ -11528,6 +11528,17 @@ another simulation; t1537 remains shared runtime. Pending `.826` owns the next
 no-behavior selection after the clean `.825` commit.
 Clean behavior commit `40b8ead71` now activates `.826` as continuity only;
 selection has not changed public behavior.
+Selector `.826` now chooses proposed two-subordinate exact-four paired-BUSY
+readiness audit `.1`. A repository-local candidate passes strict checking,
+exact 4 IAL1/5 IAL0 lowering, width-three exact-four requester state,
+normalized semantic `ahb_tb`/`top`/4-child identity, real read-only shell-
+disabled MCP, and public HDL verification while remaining intentionally
+unmatched by support accounting. The exact 11-file/2,180,377-byte workspace
+was removed. The audit must directly prove assertion-enabled two-command
+10 presentations / 8 beats / 2 BUSY episodes / 8 qualified BUSY events / 2
+resumed `SEQ` / status `44332211` / control `88776655` before any projected
+331/372/55 generic contract. See the
+[selection record](../../IAL2_POST_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -2407,6 +2407,18 @@ assertions without a second simulation. Current accounting is 330/371/54
 split 27 `.ppif`/27 `.ahb`; t1537 remains the shared assertion-enabled runtime.
 Clean behavior commit `40b8ead71` now activates no-behavior selector `.826`.
 The 330/371/54 boundary remains unchanged while it chooses one next owner.
+Selector `.826` chooses proposed two-subordinate exact-four paired-BUSY
+readiness audit `.1`. The future generic candidate changes only the shipped
+two-window exact-three identity/requester/cardinality, then passes strict
+checking at `ahb_tb`/4 children/29 signals, exact 4 IAL1/5 IAL0 lowering,
+width-three load four, two-window BUSY parking and one-hot response ownership,
+normalized semantics, real repo-relative read-only shell-disabled MCP, and
+public HDL verification with intentionally unmatched support. Its exact
+11-file/2,180,377-byte same-volume workspace was removed. The audit must still
+prove assertion-enabled 10/8/2/8/2/`44332211`/`88776655` runtime before a
+separate generic contract may project 331/372/55 split 28 `.ppif`/27 `.ahb`.
+See the
+[next-owner selection](../../IAL2_POST_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

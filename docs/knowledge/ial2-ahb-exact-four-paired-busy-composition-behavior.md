@@ -52,3 +52,8 @@ support and t1538/shared-t1537 boundary.
 
 Clean alias behavior commit `40b8ead71` activates no-behavior selector `.826`
 without changing the 330/371/54 boundary.
+
+Completed `.826` selects proposed two-subordinate exact-four paired readiness
+audit `.1` after strict/lowering/semantic/real-MCP/HDL feasibility. The audit,
+not this selector, owns assertion-enabled two-command
+10/8/2/8/2/`44332211`/`88776655` runtime before a public contract.

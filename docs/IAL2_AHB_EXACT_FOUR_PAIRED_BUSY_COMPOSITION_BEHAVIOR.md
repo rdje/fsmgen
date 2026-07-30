@@ -145,6 +145,14 @@ enabled runtime. See
 Clean alias behavior commit `40b8ead71` activates no-behavior selector `.826`
 without changing the shipped 330/371/54 generic/profile boundary.
 
+Completed selector `.826` chooses proposed two-subordinate exact-four paired
+readiness audit `.1`. The disposable future generic path passes strict,
+lowering, normalized-semantic, real read-only MCP, and public HDL-verifier
+gates at four children/29 signals and exact 4 IAL1/5 IAL0 artifacts. The audit
+still owns assertion-enabled two-command 10/8/2/8/2/`44332211`/`88776655`
+runtime before public expansion. See
+`docs/IAL2_POST_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md`.
+
 ## Rollback
 
 Rollback of `.825` removes only the alias source, its support entry, t1538, and
