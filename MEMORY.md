@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.834: activate post VHDL book selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.834` (continuity-only selector).
-- current_state: clean documentation commit `0c9f402ca` completes the VHDL book truth-sync. Parent `.834` is active continuity-only; no broader roadmap owner or behavior change is active.
-- next_action: reconcile the remaining roadmap candidates from their durable facts and task trees, select exactly one smallest evidence-backed owner, and commit the selector cleanly before activating that owner.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.834: select frozen workflow sync`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.834` (selector complete in this commit).
+- current_state: `.834` selects proposed no-behavior `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1` because active guidance contradicts decisions `0007`/`0019` and `COMMIT.md`. The child is not active until a separate clean continuity commit.
+- next_action: after this selector commit is clean, activate only `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1`, then repair the workflow prose without editing frozen blobs.
+- in_flight_uncommitted: none after this selector commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

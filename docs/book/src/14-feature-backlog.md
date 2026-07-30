@@ -11812,6 +11812,15 @@ deferred or fail closed. No product behavior changes.
 Clean documentation commit `0c9f402ca` activates parent selector `.834`
 continuity-only. This aligned VHDL boundary and every shipped behavior remain
 unchanged while the next roadmap owner is selected.
+Completed `.834` selects proposed no-behavior
+[frozen-legacy task-tree workflow sync](../../tasks/TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.md).
+Active workflow prose still requires writes to or calls canonical the four
+decision-`0007`-frozen blobs. The selected leaf will route guidance through
+task trees, decisions, bounded Memory, this book, and git while preserving
+decision `0019`'s node-list/frontier rule. See the
+[selection record](../../IAL2_POST_VHDL_BOOK_SYNC_NEXT_OWNER_SELECTION.md).
+Import-tree refresh, HIAL/VIAL, scale, public-test drift, other protocols/
+backends, simulator profiles, and decision `0020` remain separate.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
