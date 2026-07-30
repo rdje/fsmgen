@@ -2422,6 +2422,14 @@ See the
 Clean selector commit `4abb0a357` activates only readiness audit `.1` with no
 public behavior change. The two-window exact-four source remains absent while
 the audit owns assertion-enabled combined runtime proof.
+Audit `.1` now proves direct exact-four two-window composition through strict/
+artifact/normalized-semantic/real read-only-MCP/public-verifier surfaces and
+Verilator 5.046 `--timing` with all assertions. Runtime observes 2 commands /
+10 presentations / 8 data beats / 2 BUSY episodes / 8 qualified BUSY events /
+2 resumed `SEQ` / status `0x44332211` / control `0x88776655`. No repair is
+required. Pending `.2` owns a separate generic contract projecting 331/372/55
+split 28 `.ppif`/27 `.ahb`. See the
+[readiness audit](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

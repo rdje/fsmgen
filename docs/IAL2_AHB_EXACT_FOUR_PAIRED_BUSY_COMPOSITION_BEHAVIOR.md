@@ -153,6 +153,11 @@ still owns assertion-enabled two-command 10/8/2/8/2/`44332211`/`88776655`
 runtime before public expansion. See
 `docs/IAL2_POST_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md`.
 
+Completed two-window audit `.1` now proves that exact combined runtime plus
+strict/artifact/semantic/read-only-MCP/public-verifier parity and selects
+pending no-behavior generic contract `.2`. The shipped one-window 330/371/54
+boundary remains unchanged.
+
 ## Rollback
 
 Rollback of `.825` removes only the alias source, its support entry, t1538, and

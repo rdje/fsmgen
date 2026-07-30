@@ -275,4 +275,7 @@ evidence-backed handoff.
   portable-fast/full-language/VHDL/mixed-language/scale requirements intact.
 - `2026-07-30`: Clean selector commit `4abb0a357` activates only two-window
   exact-four readiness `.1`; HIAL/VIAL remains proposed and unchanged.
+- `2026-07-30`: Two-window exact-four audit `.1` proves assertion-enabled
+  10/8/2/8/2 runtime plus semantic/read-only-MCP parity and selects pending
+  generic contract `.2`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

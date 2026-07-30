@@ -57,3 +57,7 @@ Completed `.826` selects proposed two-subordinate exact-four paired readiness
 audit `.1` after strict/lowering/semantic/real-MCP/HDL feasibility. The audit,
 not this selector, owns assertion-enabled two-command
 10/8/2/8/2/`44332211`/`88776655` runtime before a public contract.
+
+Completed two-window audit `.1` proves that exact runtime and selects pending
+generic contract `.2`; the shipped one-window 330/371/54 boundary is
+unchanged until a later implementation.

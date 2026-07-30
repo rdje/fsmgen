@@ -145,6 +145,12 @@ under repository-derived same-volume paths and is counted before deletion.
 Clean selector commit `4abb0a357` now activates only selected readiness audit
 `.1`; activation changes continuity documentation and no behavior.
 
+Completed audit `.1` directly proves real read-only shell-disabled MCP,
+public `--verify-hdl`, and assertion-enabled two-command
+10/8/2/8/2/`44332211`/`88776655` runtime. It selects pending generic contract
+`.2` at projected 331/372/55 split 28 `.ppif`/27 `.ahb`; `.2` remains inactive
+until the clean audit commit and separate activation.
+
 ## Rollback
 
 Rollback removes this selection record/fact, the proposed audit tree, and the

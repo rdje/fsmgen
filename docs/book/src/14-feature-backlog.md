@@ -11542,6 +11542,13 @@ resumed `SEQ` / status `44332211` / control `88776655` before any projected
 Clean selector commit `4abb0a357` activates only readiness audit `.1`.
 Activation adds no public source, support, test, or behavior; assertion-enabled
 two-command exact-four runtime remains pending.
+Audit `.1` now proves strict/artifact/normalized-semantic/real read-only-MCP/
+public-verifier surfaces plus assertion-enabled two-command 10 presentations /
+8 beats / 2 BUSY episodes / 8 qualified BUSY events / 2 resumed `SEQ` / status
+`44332211` / control `88776655`. No lower-layer repair is required. Pending
+`.2` owns a separate generic contract projecting 331/372/55 split 28 `.ppif`/
+27 `.ahb`. See the
+[readiness audit](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

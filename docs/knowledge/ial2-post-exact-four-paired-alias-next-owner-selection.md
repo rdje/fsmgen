@@ -42,3 +42,8 @@ independently qualified VHDL/mixed-language profiles.
 
 Clean selector commit `4abb0a357` activates only readiness audit `.1`; the
 public 330/371/54 boundary remains unchanged during activation.
+
+Completed audit `.1` directly proves real read-only shell-disabled MCP,
+public `--verify-hdl`, and assertion-enabled two-command
+10/8/2/8/2/`44332211`/`88776655` runtime. It selects pending generic contract
+`.2` at projected 331/372/55 split 28 `.ppif`/27 `.ahb`.

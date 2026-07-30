@@ -5,15 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this two-subordinate exact-four paired `.1` activation;
-  predecessor selector `4abb0a357`.
-- active_work_unit:
-  `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`.
+- latest_commit: this two-subordinate exact-four paired `.1` audit; predecessor
+  activation `df19ed89a`.
+- active_work_unit: none after this commit; selected pending two-subordinate
+  exact-four generic public-contract leaf `.2` is next.
 - current_state: exact-four paired generic/profile paths ship at 330/371/54
   split 27/27 with t1538 parity and shared assertion-enabled t1537 runtime.
-- next_action: execute the same-volume assertion-enabled two-command exact-four
-  paired readiness audit and select either a generic contract or the smallest
-  prerequisite.
+- next_action: from this clean audit commit, activate `.2` separately and
+  freeze the generic two-window exact-four public contract before implementation.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -31,9 +30,10 @@ bounded current-state pointer. Git preserves its prior history.
   generators with semantic/read-only-MCP parity and repository-local t1537
   assertion runtime 5/4/1/4/1/`44332211`. `.825` now ships its byte-identical
   alias with t1538 parity at 330/371/54. Completed `.826` selects proposed
-  two-window exact-four readiness `.1`; static/lowering/semantic/real-MCP/HDL
-  feasibility passes, while assertion-enabled two-command 10/8/2/8/2 runtime
-  remains for the audit. Decision `0020` remains separate.
+  two-window exact-four readiness `.1`; the audit now proves strict/artifact/
+  semantic/read-only-MCP/verifier plus assertion-enabled two-command
+  10/8/2/8/2/`44332211`/`88776655` runtime and selects pending `.2`. Decision
+  `0020` remains separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and

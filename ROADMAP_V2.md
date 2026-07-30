@@ -7815,6 +7815,16 @@ source, support, test, artifact, report/semantic/MCP API, HDL/runtime,
 simulator, backend, protocol, HIAL/VIAL, VHDL, verification-generation,
 portability, scale, decision-0020, or transaction behavior; assertion-enabled
 two-command runtime remains pending.
+Audit `.1` now proves direct two-window exact-four readiness through strict,
+exact 4 IAL1/5 IAL0 artifacts, normalized semantics, real repo-relative read-
+only shell-disabled MCP, public `--verify-hdl`, and Verilator 5.046 `--timing`
+with all assertions. Runtime is exactly 2 commands / 10 presentations / 8
+beats / 2 BUSY episodes / 8 qualified BUSY events / 2 resumed `SEQ` / status
+`0x44332211` / control `0x88776655`. t1533+t1537 preserve both adjacent
+shipped authorities; t248+t297 reconfirm 330/371/54 split 27/27. No lower-
+layer repair is required. Pending `.2` owns the no-behavior generic contract
+at projected 331/372/55 split 28 `.ppif`/27 `.ahb`. See
+`docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
