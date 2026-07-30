@@ -72,11 +72,11 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.2: select private SourceHIR boundary`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.3`
-  Status: `active`
+  Status: `done`
   Goal: `Freeze the exact SourceHIR version-1 contract before implementation.`
   Acceptance: `Define the exact immutable object keys/types/order, valid-ready-only constraints, provenance/source-span shape, semantic paths, diagnostic and downstream-remap fallback rules, renderer result/source-map shape, byte-equivalence oracle, negative cases, package APIs, and focused test ownership for the private internal Perl builder. Change no code, parser, source fixture, generated artifact, config, public API/report schema, support accounting, HDL/runtime, or behavior.`
-  Verification: `Activated continuity-only after clean architecture-selection commit f0e88e9f7. Activation changes only task/index, architecture/fact continuity, roadmap, mdBook backlog, Memory, and changelog. Exact object keys/types, diagnostics, source-map shape, package APIs, tests, code, parser, source fixture, generated artifacts, config, public APIs/reports, support accounting, HDL/runtime, and behavior remain unchanged until the activation commits cleanly. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1076 facts / 5547 question keys; memory architecture passes with MEMORY.md at 47 lines; the 72-file mdBook HTML build passes and its exact repository-local output is removed; diff hygiene and all seven doctrine gates pass.`
-  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.3: activate SourceHIR v1 contract`
+  Verification: `Clean activation commit 63fe1c716 permits only exact contract selection. docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md freezes the closed v1 tree, class-method and immutable-object APIs, normalization/validation order, semantic paths, same-volume provenance, private diagnostic hashes/codes/formatting, renderer result/source map, line-remap/root-fallback algorithm, t/1547 ownership, and exact 14-line/428-byte/SHA-256 valid-ready fixture oracle. Independent line/byte/SHA checks pass. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; all 36 mdBook chapters pass executable-example testing; the 72-file HTML build passes and its exact repository-local output is removed. Knowledge Map generation/check passes at 1077 facts / 5553 question keys; memory architecture passes with MEMORY.md at 47 lines; diff hygiene and all seven doctrine gates pass. No code, test, parser, fixture, artifact, config, CLI/API/report/accounting, HDL/runtime, frozen status file, or behavior changes.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.3: freeze SourceHIR v1 contract`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.4`
   Status: `proposed`
@@ -94,15 +94,14 @@ and future IAL evolution.
 
 ## Current Frontier
 
-Clean architecture-selection commit `f0e88e9f7` activates `.3`
-continuity-only. The leaf must now freeze the exact private version-1 contract
-without implementation.
+Leaf `.3` freezes the exact private version-1 contract without implementation.
+Leaf `.4` remains proposed until a separate clean activation commit.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `done` | Captured the roadmap phase and activation criteria without behavior changes. |
 | 2 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `done` | Selected a distinct private SourceHIR, internal Perl builder, canonical PPIF handoff, and valid-ready golden. |
-| 3 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `active` | Freeze the exact version-1 object and diagnostic contract before code. |
+| 3 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `done` | Froze the exact closed object, APIs, provenance/diagnostics, renderer/source-map, test, and golden oracle. |
 | 4 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `proposed` | Implement and prove the private valid-ready golden path. |
 | 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `proposed` | Audit promotion, continued private iteration, or retirement from evidence. |
 
@@ -149,19 +148,21 @@ without implementation.
 - `2026-07-30`: Clean architecture-selection commit `f0e88e9f7` activates
   `.3` continuity-only. The exact version-1 contract remains unselected until
   this activation commits cleanly.
+- `2026-07-30`: `.3` freezes the private v1 contract in
+  `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md`: one closed valid-ready object,
+  immutable access, deterministic canonical rendering, structured private
+  diagnostics, JSON-Pointer provenance, current-adapter no-line fallback, and
+  `t/1547` implementation ownership.
 
 ## Open Questions
 
-- What exact version-1 Perl key/type schema best expresses the selected
-  valid-ready-only semantics without claiming broader HIR support?
-- What exact diagnostic object and fallback rule should translate a generated
-  PPIF line back to a SourceHIR semantic path and original source location?
 - After the private prototype, does evidence justify a public host-language
   builder, another private fixture, or retirement?
 
 ## Blockers
 
-- None. `.3` is active continuity-only after clean commit `f0e88e9f7`.
+- None. `.3` is complete; `.4` remains proposed until a separate clean
+  activation commit.
 
 ## Verification Log
 
@@ -170,6 +171,7 @@ without implementation.
 | `2026-06-28` | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed` |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | public PPIF strict check + schedule JSON; `prove -Iperl t/155-forward-intent-hir-surface.t t/156-forward-lowered-rtl-ir-surface.t t/163-forward-structural-rtl-ir-surface.t t/334-normalized-semantic-forward-ir-contract.t t/339-normalized-semantic-intent-hir-contract.t t/1435-axi-ial2-valid-ready-generator.t`; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; diff hygiene; `scripts/check_doctrines.sh` | `passed`; no implementation or behavior change |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.3` activation | documentation audits; Knowledge Map; memory architecture; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; continuity-only |
+| `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.3` contract | fixture line/byte/SHA oracle; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; exact private contract only |
 
 ## Commit Log
 
@@ -180,6 +182,7 @@ without implementation.
 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `FSMGEN-HIR-ROADMAP-FRONTIER.2: select private SourceHIR boundary` | Selects the complete IR-policy boundary, first internal builder, and valid-ready golden without implementation. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `pending` | Proposed exact-contract leaf; not active during `.2`. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `FSMGEN-HIR-ROADMAP-FRONTIER.3: activate SourceHIR v1 contract` | Continuity-only activation after the clean architecture selection. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `FSMGEN-HIR-ROADMAP-FRONTIER.3: freeze SourceHIR v1 contract` | Freezes the exact private contract and test oracle without implementation. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `pending` | Proposed private implementation leaf. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `pending` | Proposed evidence-based promotion/retirement audit. |
 
@@ -194,3 +197,5 @@ without implementation.
   public behavior changed.
 - `2026-07-30`: Activated `.3` continuity-only after clean architecture
   selection; exact contract and implementation remain unchanged.
+- `2026-07-30`: Froze the exact private v1 object/API/provenance/diagnostic/
+  renderer/test contract and golden hash without implementation.

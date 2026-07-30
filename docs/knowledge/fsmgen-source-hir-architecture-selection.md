@@ -28,6 +28,7 @@ The first golden is `ppif/valid_ready_handshake.ppif`, reproduced byte-for-
 byte. The raw object, builder input, and source map remain private; no public
 host-language API or report schema is selected.
 
-Clean architecture commit `f0e88e9f7` activates design-only leaf `.3`
-continuity-only. Exact keys, diagnostics, renderer APIs, and tests remain
-unselected until that activation commits cleanly.
+Leaf `.3` freezes the exact keys, private package APIs, provenance,
+diagnostics, renderer/source-map result, t1547 owner, and byte-equivalence
+oracle in `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md`. Implementation remains
+proposed under `.4`.

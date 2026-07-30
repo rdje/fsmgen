@@ -31046,3 +31046,22 @@ task tree and git.
 - Documentation audits pass with `Files=3, Tests=40`; Knowledge Map passes at
   1,076 facts / 5,547 keys; memory architecture, the 72-file mdBook build,
   output cleanup, diff hygiene, and all seven doctrine gates pass.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.3 — SourceHIR v1 contract frozen
+
+- Froze one closed immutable private valid-ready SourceHIR object and the exact
+  three-package class/accessor/renderer API after clean activation commit
+  `63fe1c716`.
+- Selected deterministic field validation, JSON-Pointer-style provenance,
+  structured private diagnostics, generated-line remapping with current
+  adapter root fallback, canonical PPIF/source-map output, and focused t1547
+  ownership.
+- The golden is exactly 14 lines / 428 bytes / SHA-256
+  `6cbc68152c9e1658a341994bc2ccdd83bdb94b26aedd20d4180c996b5124f7ac`.
+  Code, tests, parser, fixture, artifacts, config, CLI/API/report/accounting,
+  HDL/runtime, and behavior remain unchanged; `.4` remains proposed.
+- Independent golden checks, documentation audits (`Files=3, Tests=40`), all
+  36 mdBook chapters, the 72-file HTML build, Knowledge Map at 1,077 facts /
+  5,553 keys, memory, diff, and all seven doctrine gates pass. Scratch is
+  removed, both frozen status files remain untouched, and the contract record
+  is the rationale owner instead of a duplicate development note.

@@ -2,10 +2,11 @@
 
 Date: 2026-07-30
 Owner: `FSMGEN-HIR-ROADMAP-FRONTIER.2`
-Status: selected; implementation not started
+Status: selected; version-1 private contract selected; implementation not started
 
-Clean architecture commit `f0e88e9f7` activates the separate design-only
-`.3` contract leaf. Its activation selects no exact field/API/diagnostic shape.
+`docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md` now freezes the exact private v1
+field, package API, provenance, diagnostic, renderer-result, source-map, test,
+and golden-equivalence contract selected by `.3`.
 
 ## Outcome
 
@@ -125,9 +126,9 @@ Version 1 of the prototype is deliberately narrower than the eventual HIR:
   lowered behavior, or structural connectivity; and
 - deterministic ordering and rendering independent of Perl hash order.
 
-The exact version-1 field/key contract is owned by the next no-behavior
-contract leaf. That leaf may tighten this set but may not expand the first
-protocol/fixture boundary without a new task-tree owner.
+The exact version-1 field/key contract is frozen in
+`docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md`. It stays within this
+protocol/fixture boundary.
 
 ### Mutation policy
 
@@ -173,8 +174,8 @@ forbidden in persisted objects and diagnostics.
 SourceHIR validation errors cite both the semantic path and the best original
 source location. The renderer preserves a private generated-line-to-source
 map so a downstream PPIF diagnostic can be translated back to the originating
-SourceHIR path/location. The exact diagnostic object and fallback rules are
-frozen by the contract leaf before implementation.
+  SourceHIR path/location. The exact private diagnostic hashes and fallback
+  rules are frozen by the version-1 contract.
 
 ### Validation
 

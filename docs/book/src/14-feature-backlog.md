@@ -85,7 +85,7 @@ changes.
 
 ### Source-Facing FSMGEN HIR
 
-Status: architecture selected; private prototype contract audit active.
+Status: architecture and private version-1 contract selected; implementation proposed.
 
 Goal: give future high-level language frontends and builder APIs one checked
 FSMGEN-native semantic target above IAL2 and IAL1. The intended architecture is
@@ -109,10 +109,12 @@ canonical `.ppif`, and then use the existing PPIF parser and
 `ppif/valid_ready_handshake.ppif`, reproduced byte-for-byte.
 
 This selection does not expose a public builder, CLI mode, raw HIR object, or
-report schema. Active design-only leaf `.3` now owns the exact version-1
-private object, source-span diagnostic, source-map, renderer, and negative-test
-contract before implementation. Public host-language ergonomics remain a
-separate later decision.
+report schema. Version 1 is now frozen as one closed immutable valid-ready
+object with JSON-Pointer-style provenance, structured private diagnostics,
+deterministic canonical PPIF text and source map, and byte equality with the
+14-line/428-byte tracked fixture. The private three-package implementation and
+focused t1547 proof remain proposed under `.4`. Public host-language
+ergonomics remain a separate later decision.
 
 ### Inference-First Scalar Authoring
 
