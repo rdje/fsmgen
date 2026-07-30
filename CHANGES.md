@@ -30431,3 +30431,16 @@ task tree and git.
   memory architecture; full six-doctrine driver; mdBook build; frozen-file and
   conditional-file diff checks; diff hygiene. Generated book output was
   removed after verification.
+
+### TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1 — neutral acceptance design selected
+
+- Created and activated a three-leaf doctrine tree for the missing portable
+  `TASK-ACCEPTANCE` layer: neutral contract, checker/registry probes, then
+  driver/bootstrap/toolbox/mdBook integration.
+- Repository and all-history searches found no prior FSMGen owner. Read-only
+  same-volume source-project inspection confirmed that the reusable discipline
+  is box-scoped root-cause/addressed/no-regression evidence, while its concrete
+  tool tokens are project-specific and must not be copied.
+- This selector changes no doctrine enforcement or product behavior. Focused
+  doctrine, Memory, Knowledge Map, relative-path, and diff gates remain the
+  verification boundary before the selector commit.

@@ -5,15 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2: adopt split interim document policy`).
-- active_work_unit: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2` (complete;
-  tree returns to proposed `.1`).
-- current_state: decision 0025 and active workflow surfaces now require one
-  concise `CHANGES.md` entry per slice, conditional `DEVELOPMENT_NOTES.md`, and
-  no changes to either status file pending their scheduled review.
-- next_action: from the clean tree, create and activate the missing neutral
-  `TASK-ACCEPTANCE` doctrine-design owner before changing enforcement code.
-- in_flight_uncommitted: none after the policy commit; no background job.
+- latest_commit: this commit (`TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1: select neutral acceptance design`).
+- active_work_unit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1` (active).
+- current_state: an exact three-leaf tree now owns the previously missing
+  neutral project-declared `TASK-ACCEPTANCE` contract, checker/probes, and
+  doctrine/public integration. No enforcement or product behavior changed.
+- next_action: complete `.1` by selecting and recording the data-only registry,
+  staged-change matching, box-scoped checklist, and fail-closed contract.
+- in_flight_uncommitted: none after the selector commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -25,6 +24,9 @@ bounded current-state pointer. Git preserves its prior history.
 - Director direction (`2026-07-30`) is durable in decision `0025`: update
   `CHANGES.md` every slice, update `DEVELOPMENT_NOTES.md` only when warranted,
   and leave both status files untouched. Proposed `.1` owns the later review.
+- `TASK-ACCEPTANCE` was not durably ported or backlogged by the June doctrine
+  adoption; active `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1` now owns the neutral
+  project-declared signature design before any enforcement code changes.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
