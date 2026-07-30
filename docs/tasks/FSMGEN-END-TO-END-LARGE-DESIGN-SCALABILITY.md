@@ -114,6 +114,9 @@ and diagnostic behavior per stage while proving semantic/output correctness.
   independently gated.
 - `2026-07-30`: Clean audit commit `e715a34c7` activates only that no-behavior
   contract `.2`; the scale tree remains proposed and unchanged.
+- `2026-07-30`: Named-drive priority contract `.2` selects bounded `.3` and
+  separately routes a direct-VHDL reduction-expression defect; neither result
+  is end-to-end large-design evidence, so scale remains proposed.
 
 ## Open Questions
 

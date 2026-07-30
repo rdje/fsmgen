@@ -5929,6 +5929,11 @@ different-value selector assertion. The audit must reproduce and contract that
 protocol-neutral boundary before any implementation. Canonical requester
 `2..16`, accounting 332/373/56 split 28/28, and all broader owners remain
 unchanged until a clean activation commit.
+Clean selector commit `f67705356`, audit commit `e715a34c7`, and activation
+commit `9c2439f05` advance the selected child through contract `.2`. The
+contract selects proposed `.3` for exact-one-local-caller target-local
+priority, with direct VHDL reduction syntax separately routed under decision
+`0023`; parent IAL2 behavior and accounting remain unchanged.
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25

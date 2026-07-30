@@ -164,6 +164,18 @@ active together.
 That status is explicit: the compiler is flagging that the proof is NOT doable
 for the current analysis rather than claiming the overlap is safe.
 
+The selected, not-yet-implemented named-drive priority contract narrows one
+part of that boundary. A drive with exactly one local transaction caller and
+no generated source will inherit that transaction only for actor-priority
+analysis while retaining `drive` provenance. Declared priority will guard only
+the conflicting target in either direction; an unordered unique-caller
+different-value overlap or prioritized ambiguous ownership will fail closed.
+Shared/generated ownership stays outside the first repair, and selector
+assertions remain. See the
+[contract record](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md).
+Until implementation `.3` ships, the current warning and runtime assertion
+behavior described above remains authoritative.
+
 Rule priority can resolve the supported rule/rule data-conflict case. If
 `high` has priority over `low` and both rules drive the same target to
 different values, the lowerer keeps `high` unchanged and suppresses `low`'s

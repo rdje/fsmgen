@@ -2558,6 +2558,12 @@ and 332/373/56 split 28/28 remain unchanged. See the
 [protocol-neutral audit](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_READINESS_AUDIT.md).
 Clean audit commit `e715a34c7` activates only that separate no-behavior
 contract `.2`; AHB behavior and accounting remain unchanged.
+The completed contract selects protocol-neutral implementation `.3` with
+exact-one-local-caller target-local priority and fail-closed ambiguous
+ownership. Its SV/Verilog gates and separately tracked direct-VHDL reduction
+residue do not change AHB requester `2..16` behavior or 332/373/56 split 28/28
+accounting. See the
+[contract record](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

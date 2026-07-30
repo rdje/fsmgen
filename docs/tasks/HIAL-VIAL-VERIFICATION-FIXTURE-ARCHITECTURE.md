@@ -337,4 +337,9 @@ not pre-empt that evidence-backed correctness handoff.
   all architecture and validation requirements unchanged.
 - `2026-07-30`: Clean audit commit `e715a34c7` activates only that no-behavior
   contract `.2`; HIAL/VIAL remains proposed and unchanged during selection.
+- `2026-07-30`: Named-drive priority contract `.2` selects proposed `.3` with
+  SV/Verilog executable gates. Its backend probe separately exposes invalid
+  direct-VHDL unary-reduction residue under decision `0023`; proposed
+  `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` owns that HIAL backend defect,
+  while HIAL/VIAL architecture scope remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

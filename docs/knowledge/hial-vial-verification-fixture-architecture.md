@@ -69,3 +69,8 @@ the HIAL/VIAL architecture remains unchanged and proposed.
 
 Clean audit commit `e715a34c7` activates only that contract; HIAL/VIAL remains
 proposed and unchanged.
+
+Completed named-drive contract `.2` selects SV/Verilog-backed `.3` and records
+the invalid direct-VHDL unary-reduction residue under decision `0023` plus
+proposed `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING`. That repair is required
+for truthful HIAL-to-VHDL qualification but does not activate HIAL/VIAL.

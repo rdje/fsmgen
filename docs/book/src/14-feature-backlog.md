@@ -11677,6 +11677,18 @@ No lowering or runtime behavior changes until a later implementation.
 Clean audit commit `e715a34c7` activates only contract `.2`. This continuity
 transition does not alter the direct path, named-drive conflict, generated
 assertions, AHB behavior, or any broader roadmap owner.
+Contract `.2` now selects proposed implementation `.3`: retain drive
+provenance, carry one exact local transaction caller privately into priority
+analysis, mask only the conflicting target in either priority direction, and
+fail unique unordered or prioritized ambiguous ownership before HDL. Public
+schedule/semantic schemas remain bounded and selector assertions remain.
+SystemVerilog and native Verilog are executable qualification lanes. The
+direct VHDL scaffold currently leaks the unary reduction token in
+`drive_zero_en and (|drive_zero_start)`; this is not valid-VHDL evidence and is
+separately owned by decision `0023` plus proposed
+`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING`. See the
+[contract](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md).
+No product behavior changes during selection.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
@@ -16994,7 +17006,7 @@ single-event fixture, and a dual opposite-direction event fixture are shipped;
 both fixture families now reach plain generated HDL with concrete CDC
 children.
 
-## End-To-End Large-Design Scalability
+### End-To-End Large-Design Scalability
 
 FSMGen has a foundational requirement to handle end-to-end big to really big
 designs. That means the complete source-to-HDL/verification path: parsing and

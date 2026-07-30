@@ -41,3 +41,8 @@ selector assertions. Audit `.1` changes no lowering or runtime behavior.
 
 Clean audit commit `e715a34c7` activates only contract `.2`; current lowering
 and generated behavior remain unchanged during contract selection.
+
+Completed contract `.2` selects proposed implementation `.3` with exact-one-
+local-caller bidirectional target-local semantics and deterministic ambiguity
+failure. Decision `0023` and a separate proposed task own the direct-VHDL
+unary-reduction defect discovered during backend qualification.

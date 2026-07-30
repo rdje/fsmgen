@@ -33,3 +33,7 @@ status or count as large-design evidence.
 
 Clean audit commit `e715a34c7` activates only that no-behavior contract; the
 scale tree remains proposed and unchanged.
+
+Completed contract `.2` selects bounded priority implementation `.3` and
+separately records a direct-VHDL expression defect. Neither is large-design
+capacity evidence; the scale tree remains independently proposed.

@@ -100,6 +100,14 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   parity, aggregate record/array lowering, package emission, GHDL validation,
   composition parity, and full backend parity remain future-owner work, not
   active VHDL scope.
+- A `2026-07-30` named-drive backend probe exposed an additional exact direct-
+  scaffold boundary: an enable expression containing SystemVerilog unary
+  reduction OR is emitted as `drive_zero_en and (|drive_zero_start)` rather
+  than translated or rejected. File emission is not a VHDL syntax/semantic
+  qualification for this shape. Decision `0023` and proposed task
+  `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own the separate bounded audit;
+  the named-drive priority implementation remains SV/Verilog-qualified and
+  must not claim VHDL validity.
 - `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5` selected no VHDL-oriented
   verification artifact. The current VHDL path is synthesizable scaffold-only,
   the external validation contract remains SystemVerilog-only, and

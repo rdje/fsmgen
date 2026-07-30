@@ -145,6 +145,11 @@ Clean audit commit `e715a34c7` activates only contract `.2`. That activation
 changes continuity pointers and leaves all behavior characterized above
 unchanged.
 
+Completed contract `.2` selects proposed implementation `.3` under
+`docs/ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md`. The
+separate direct-VHDL reduction-expression defect discovered during backend
+qualification is owned by decision `0023` and its proposed task tree.
+
 ## Validation And Cleanup
 
 Focused t1542 passes three top-level subtests with 33 internal assertions: the

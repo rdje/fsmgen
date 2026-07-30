@@ -137,3 +137,8 @@ unique-caller target-local named-drive priority and ambiguous-caller
 fail-closed handling. Current lowering and all AHB behavior remain unchanged.
 Clean audit commit `e715a34c7` activates only contract `.2`; activation is
 continuity-only and changes no product behavior.
+
+Completed contract `.2` selects proposed implementation `.3` for unique local
+caller target-local priority and deterministic ambiguous ownership rejection.
+SystemVerilog and native Verilog are executable gates; the separately owned
+direct-VHDL unary-reduction defect does not alter AHB behavior.
