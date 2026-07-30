@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `infra/continuity / project-document lifecycle`
 - Created: `2026-07-30`
 - Last updated: `2026-07-30`
@@ -27,17 +27,25 @@ The director requested this deferred review on `2026-07-30`. In particular:
 - the continuing usefulness of `ROADMAP_STATUS.md` and
   `LIVE_ACHIEVEMENT_STATUS.md` is an open question that requires review.
 
-Decision `0007` and the current doctrine files remain the checked-in policy
-until this tree is deliberately activated and a replacement decision is
-approved. Recording the review does not endorse that policy permanently and
-does not predetermine the review's result.
+The director clarified the interim policy later on `2026-07-30`:
+
+- update `CHANGES.md` for every completed slice;
+- update `DEVELOPMENT_NOTES.md` only when a slice produces engineering
+  rationale, constraints, or working decisions worth preserving;
+- do not update `ROADMAP_STATUS.md` or `LIVE_ACHIEVEMENT_STATUS.md` before the
+  scheduled lifecycle review.
+
+Leaf `.2` owns the exact doctrine and continuity synchronization needed to
+make that clarified boundary durable. The broader evidence-based review in
+`.1` remains proposed and does not lose any of its per-file questions.
 
 ## Non-Goals
 
-- Do not edit any of the four reviewed files in this proposed-tree capture.
-- Do not change decision `0007`, `COMMIT.md`, `README.md`, `TOOLBOX.md`,
-  doctrine checks, hooks, CI, or current write routing before the review has
-  evidence and an approved outcome.
+- Do not edit `ROADMAP_STATUS.md` or `LIVE_ACHIEVEMENT_STATUS.md` before their
+  scheduled review selects an outcome.
+- Do not append development rationale to `DEVELOPMENT_NOTES.md` when the
+  task-tree, a decision record, a fact card, the mdBook, or git already owns
+  the durable information more precisely.
 - Do not assume that all four files need the same lifecycle policy.
 - Do not duplicate task-tree state, bounded `MEMORY.md` state, decision
   rationale, Knowledge Map facts, mdBook product contract, or git history
@@ -79,9 +87,9 @@ does not predetermine the review's result.
 ## Task Tree
 
 - ID: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select evidence-backed long-term roles for the four legacy project documents without presupposing one shared policy.`
-  Children: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`
+  Children: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`, `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2`
 
 - ID: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`
   Status: `proposed`
@@ -90,14 +98,22 @@ does not predetermine the review's result.
   Verification: `pending activation`
   Commit: `pending activation`
 
+- ID: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2`
+  Status: `active`
+  Goal: `Synchronize the director-confirmed interim lifecycle policy before the next ordinary slice.`
+  Acceptance: `Checked-in policy requires one concise CHANGES.md entry for every completed slice, requires DEVELOPMENT_NOTES.md only for durable engineering rationale/constraints/working decisions, keeps ROADMAP_STATUS.md and LIVE_ACHIEVEMENT_STATUS.md untouched pending .1, supersedes only the conflicting parts of decision 0007, aligns bootstrap/commit/toolbox/task-tree/mdBook/Memory/Knowledge Map surfaces, and changes no product behavior.`
+  Verification: `focused policy-reference searches; Knowledge Map generation/check; mdbook build docs/book; scripts/check_doctrines.sh; scripts/check_memory_architecture.sh; git diff --check`
+  Commit: `pending`
+
 ## Current Frontier
 
-This tree is proposed and intentionally deferred. It is not PNT-eligible until
-the director or a clean-boundary roadmap selector activates it.
+The director activated the bounded interim-policy synchronization on
+`2026-07-30`. The full lifecycle audit remains proposed for later discussion.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` | `proposed` | Establish evidence and distinct file roles before selecting or implementing any policy change. |
+| 1 | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2` | `active` | Make the director-confirmed per-file interim policy durable before any later slice relies on it. |
+| 2 | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` | `proposed` | Audit the files' long-term roles later without disturbing the interim boundary. |
 
 ## Decisions
 
@@ -109,6 +125,11 @@ the director or a clean-boundary roadmap selector activates it.
 - `2026-07-30`: Keep the checked-in decision-0007 behavior unchanged until the
   review is activated and a replacement decision is approved; this is a
   continuity boundary, not a judgment that the current policy should persist.
+- `2026-07-30`: Director clarification supersedes that temporary boundary:
+  `CHANGES.md` is per-slice, `DEVELOPMENT_NOTES.md` is rationale-only, and
+  `ROADMAP_STATUS.md` plus `LIVE_ACHIEVEMENT_STATUS.md` remain untouched until
+  the scheduled discussion. Activate `.2` to synchronize the checked-in
+  policy before continuing ordinary work; retain `.1` for the later review.
 
 ## Open Questions
 
@@ -123,4 +144,4 @@ the director or a clean-boundary roadmap selector activates it.
 
 ## Blockers
 
-- None. The tree is deliberately proposed for later review.
+- None. Leaf `.2` is active; leaf `.1` remains deliberately proposed.
