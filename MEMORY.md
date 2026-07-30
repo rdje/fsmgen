@@ -5,15 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.843: enforce live task-tree integrity`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.844` (proposed next
-  selector; not yet active).
-- current_state: `.843` repairs the authoritative IAL2 ledger and ships eighth
-  doctrine `TASK-TREE-INTEGRITY`; product behavior is unchanged.
-- next_action: after the clean `.843` commit, activate only proposed `.844`
-  through a separate continuity commit.
-- in_flight_uncommitted: none after this implementation commit; no background
-  job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.844: activate post-integrity selector`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.844` (active
+  continuity-only).
+- current_state: clean integrity commit `c21765214` activates only the exact
+  post-integrity roadmap selector; no candidate reconciliation or selection
+  occurs during activation.
+- next_action: reconcile all ungated roadmap candidates and select exactly one
+  smallest PNT-eligible owner without product behavior changes.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -41,7 +41,7 @@ history; this file carries only the current bounded resume state.
   documentation commit `3fb84b23e` without behavior/accounting changes.
 - Decisions `0028`-`0031` and the private HIR records remain canonical. Public
   builder, HIAL/VIAL, scale, MCP-write, and every director-gated owner remain
-  inactive; proposed `.844` owns exact-one next-owner selection.
+  inactive; active `.844` owns exact-one next-owner selection.
 - Live ledger is 844 numbered nodes / 844 unique root references. `.73` is
   canonical `done`; `.705` is live `done` after `.706`-.709; `.758` has its
   canonical commit field. The checker reports one active tree / 845 total nodes.

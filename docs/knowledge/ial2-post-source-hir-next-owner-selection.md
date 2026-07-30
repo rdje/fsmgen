@@ -39,3 +39,6 @@ repair and eighth doctrine. The live census is now 844 numbered nodes / 844
 unique root references; `.73` is canonical `done`, `.705` is live `done` after
 its `.706`-`.709` resolution chain, and `.758` has its canonical commit field.
 Proposed `.844` owns the next selector. Product behavior remains unchanged.
+
+Clean integrity commit `c21765214` activates only `.844` continuity-only.
+Candidate reconciliation and selection remain unperformed during activation.

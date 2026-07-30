@@ -12063,6 +12063,9 @@ decision-`0019` historical views outside enforcement. Proposed `.844` owns the
 next exact roadmap selector; no public product behavior or architecture owner
 is activated. See the
 [integrity record](../../TASK_TREE_LIVE_NODE_INTEGRITY.md).
+Clean integrity commit `c21765214` activates only `.844` through continuity
+changes. Candidate reconciliation/selection, every product surface, and every
+broader architecture owner remain unchanged until activation commits cleanly.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -8361,6 +8361,9 @@ roadmap selector after this infrastructure slice commits cleanly. HIAL/VIAL
 remains the strongest later product candidate; no architecture candidate,
 director gate, frozen status file, or product behavior changes. See
 `docs/TASK_TREE_LIVE_NODE_INTEGRITY.md`.
+Clean integrity commit `c21765214` activates only `.844` through a separate
+continuity transition. Exact candidate reconciliation and selection remain
+unperformed; product behavior and every broader owner remain unchanged.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

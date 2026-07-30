@@ -5974,11 +5974,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.843: enforce live task-tree integrity`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.844`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the next exact roadmap-aligned owner after live task-tree integrity ships.`
   Acceptance: `Activate only after the clean .843 integrity implementation commit. Reconcile the repaired authoritative IAL2 ledger, the new active-tree integrity doctrine, decision 0031 and completed private HIR boundary, HIAL/VIAL verification architecture, the intentionally proposed public host-language builder, scale, MCP-write, transaction layering, protocols/backends, simulator profiles, project-document lifecycle review, current support/accounting and import baselines, roadmap, mdBook, Knowledge Map, and every explicit director gate. Choose exactly one smallest evidence-backed PNT-eligible owner, freeze scope/validation/rollback, and make no product behavior change. Preserve decision 0019 historical views, keep PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 proposed, leave ROADMAP_STATUS.md and LIVE_ACHIEVEMENT_STATUS.md untouched, and keep every explicitly director-gated owner inactive. Do not activate or modify the selected child until this selector commits cleanly.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean .843 implementation commit c21765214. Activation changes task/index, integrity and selector record/fact continuity, roadmap, mdBook backlog, Memory, changelog, and regenerated Knowledge Map only. Candidate reconciliation/selection, product source, parser/generator, support/accounting, artifacts, API/report/manifest, HDL/runtime, protocols/backends, public builder, HIAL/VIAL, scale, MCP-write, transaction/lifecycle horizons, director gates, and frozen status files remain unchanged until this activation commits cleanly. The eighth TASK-TREE-INTEGRITY doctrine reports one active tree / 845 total nodes; feature-backlog, live-book-path, and relative-path audits pass at Files=3, Tests=40; all 36 mdBook chapters test and the 72-file / 16,666,702-byte HTML build passes; Knowledge Map generation/check passes at 1084 facts / 5589 question keys; memory, diff, repository-local output cleanup, and all eight doctrine gates complete continuity closeout.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.844: activate post-integrity selector`
 
 ## Acceptance Checklist (enforced) — `.843` implementation
 

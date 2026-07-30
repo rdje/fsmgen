@@ -71,3 +71,8 @@ record/fact, and reverts the `.633`, `.73`, `.705`, and `.758` live-node
 repairs plus proposed `.844`. That rollback would intentionally restore known
 authoritative-ledger drift and is therefore not recommended. Product behavior
 is unchanged in either direction.
+
+Clean implementation commit `c21765214` activates only `.844` through a
+separate continuity transition. The integrity implementation remains complete;
+candidate comparison and exact-one next-owner selection remain unperformed
+during activation.

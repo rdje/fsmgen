@@ -24,3 +24,6 @@ The repair restores missing root child `.633`, normalizes `.73` from
 `completed` to `done`, marks historical/resolved blocker `.705` live `done`,
 and restores `.758`'s canonical commit field. Proposed `.844` is the next
 selector. No product behavior changes.
+
+Clean implementation commit `c21765214` activates only `.844` through a
+separate continuity transition; it does not perform candidate selection.

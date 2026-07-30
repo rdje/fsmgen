@@ -31339,3 +31339,18 @@ task tree and git.
   acceptance, all eight doctrines, and exact output cleanup pass. Product
   behavior, architecture candidates, director gates, and frozen files do not
   change; no separate development note is warranted.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.844 — post-integrity selector activated
+
+- Activated only the exact post-integrity roadmap selector after clean `.843`
+  implementation commit `c21765214`.
+- Task/index, integrity and selector records/facts, roadmap, mdBook backlog,
+  Memory, changelog, and regenerated Knowledge Map continuity are aligned.
+- Candidate reconciliation/selection, public builder, HIAL/VIAL, scale,
+  MCP-write, transaction/lifecycle horizons, protocols/backends, director
+  gates, both frozen status files, and all product behavior remain unchanged
+  until activation commits cleanly. No separate development note is warranted.
+- Documentation audits pass at `Files=3, Tests=40`; all 36 mdBook chapters and
+  the 72-file / 16,666,702-byte HTML build pass; Knowledge Map passes at 1,084
+  facts / 5,589 keys; memory, diff, repository-local cleanup, task-tree
+  integrity, and all eight doctrine gates complete activation closeout.

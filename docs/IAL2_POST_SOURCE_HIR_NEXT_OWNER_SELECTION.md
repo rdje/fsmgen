@@ -98,3 +98,7 @@ references; the doctrine reports one active tree and 845 total nodes including
 the root. Optional historical views remain untouched under decision `0019`.
 Proposed `.844` owns the next exact roadmap selector; no candidate is activated
 by this infrastructure repair, and no product behavior changes.
+
+Clean integrity commit `c21765214` activates only `.844` through a separate
+continuity transition. Candidate reconciliation and selection remain
+unperformed until that activation commits cleanly.
