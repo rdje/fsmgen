@@ -8173,6 +8173,14 @@ commit `d5b371184` activates parent selector `.836` continuity-only. It will
 choose one smallest PNT-eligible proposed owner while leaving the scheduled
 four-document lifecycle review and all director-gated items inactive; no
 product behavior changes during activation.
+Completed `.836` selects proposed `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1`. Current
+HEAD lacks exactly three verification-observation public presence-family keys;
+the focused t1131 gate fails while the payload already ships all three. The
+selected child will synchronize only that authoritative list after a separate
+clean activation. Public-sync `.2`/`.3`, the four-fence mdBook rustdoc repair,
+the scheduled four-document lifecycle review, HIAL/VIAL, HIR, scale, and all
+director-gated items remain separate. See
+`docs/IAL2_POST_TASK_ACCEPTANCE_NEXT_OWNER_SELECTION.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

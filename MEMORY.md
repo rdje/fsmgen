@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.836: activate post doctrine selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.836` (active selector).
-- current_state: clean post-doctrine continuity activates one no-behavior
-  selector; no proposed child or product behavior is activated yet.
-- next_action: execute `.836`, choose exactly one smallest PNT-eligible owner,
-  and commit the selector before activating the selected child.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.836: select public presence sync`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.836` (selector complete).
+- current_state: `.836` selects proposed `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1`;
+  the child and public contract remain unchanged until separate activation.
+- next_action: after this selector commits cleanly, activate only public-sync
+  `.1`, then add the three missing verification-observation presence keys.
+- in_flight_uncommitted: none after this selector commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -26,6 +26,8 @@ bounded current-state pointer. Git preserves its prior history.
 - `TASK-ACCEPTANCE` was not durably ported or backlogged by the June doctrine
   adoption; decision `0026` plus completed `.1`-.3 now ship the neutral
   contract, checker/registries/probes, and seventh-doctrine integration.
+- Current-HEAD probes keep all three public-sync leaves real. `.836` selects
+  only `.1`; mdBook's four untyped rustdoc fences remain independently proposed.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a

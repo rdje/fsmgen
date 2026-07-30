@@ -11848,6 +11848,15 @@ portable TASK-ACCEPTANCE doctrine work are complete. Clean integration commit
 choose one smallest PNT-eligible proposed owner without activating the
 scheduled four-document lifecycle review or a director-gated item. Product
 behavior remains unchanged during activation.
+Completed `.836` selects proposed
+[public-sync repair `.1`](../../tasks/PUBLIC-SYNC-TEST-DRIFT-REPAIR.md).
+Current HEAD's public ISF contract payload contains three verification-
+observation discovery families that its authoritative top-level presence list
+omits, so t1131 fails. The selected child will synchronize only that list after
+a separate clean activation. Public-sync `.2`/`.3`, the four-fence rustdoc
+repair, the scheduled four-document lifecycle review, architecture horizons,
+and director-gated items remain separate. See the
+[selection record](../../IAL2_POST_TASK_ACCEPTANCE_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -30509,3 +30509,20 @@ task tree and git.
   Tests=17`, Knowledge Map validation passes at 1067 facts / 5493 keys, and
   mdBook HTML builds cleanly. This slice does not warrant a development-note
   entry.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.836 — public presence sync selected
+
+- Re-proved both smallest parked defects on current HEAD. `mdbook test` fails
+  at exactly four untyped plain-text diagrams; guarded t1131/t1250/t1474 fail
+  at their three already-owned public-sync mismatches.
+- Selected only `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1`: the public ISF payload ships
+  three verification-observation key families that its authoritative presence
+  list omits. The child remains proposed until a separate clean activation.
+- Public-sync `.2`/`.3`, the mdBook fence repair, scheduled four-document
+  review, and director-gated owners remain independent. No product behavior or
+  test changed, and the selection record/fact own the rationale, so no
+  development-note entry is warranted.
+- Feature-backlog status plus relative-path audits pass with `Files=2,
+  Tests=17`; Knowledge Map generation/check passes at 1068 facts / 5499 keys;
+  mdBook HTML build and diff hygiene pass, and the rustdoc probe output was
+  removed.
