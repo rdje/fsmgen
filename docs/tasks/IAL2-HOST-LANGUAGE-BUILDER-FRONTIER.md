@@ -95,6 +95,10 @@ package, module, parser, source, or generated-artifact implementation work.
   through a second concrete-control-to-IAL1 proof. This tree remains proposed
   and still solely owns any later public language, package, versioning, and
   compatibility selection; the second private route will not activate it.
+- `2026-07-30`: HIR `.6` selects a private semantic concrete-control-to-IAL1
+  contract and phase-test golden. This tree remains proposed: the internal
+  second route selects no supported host language, package, version, or public
+  compatibility promise.
 
 ## Open Questions
 

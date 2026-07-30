@@ -15,8 +15,10 @@ FSM/control intent that renders canonical IAL1 and enters the existing
 package boundary, renderer handoff, provenance mapping, diagnostics, and one
 tracked IAL1 golden before implementation.
 
-Clean audit commit `5d018edbd` activates that design-only `.6` selection
-continuity-only; activation chooses none of its exact contract fields.
+Leaf `.6` now selects that second route as semantic SourceHIR version 2 with
+canonical byte-identical `isf/phase_test.isf` rendering and existing-adapter/
+scheduler re-entry. The exact contract is
+`docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md`.
 
 Public host-language selection remains owned by proposed
 `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`. No Perl, Python, Julia, C, CLI, raw-HIR,

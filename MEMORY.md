@@ -5,13 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.6: activate private SourceHIR IAL1 selection`).
-- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.6` (active continuity-only).
-- current_state: clean audit commit `5d018edbd` activates `.6` without selecting
-  an exact IAL1 fixture, schema, package API, renderer, or test contract.
-- next_action: audit the shipped IAL1 parser/lowering contract and small
-  concrete-control fixtures, then freeze or reject one exact private route.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.6: select private SourceHIR IAL1 boundary`).
+- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.7` (proposed; not active).
+- current_state: `.6` selects semantic SourceHIR v2, exact phase-test ISF/IAL0
+  oracles, existing adapter/scheduler re-entry, private ISF renderer, and
+  t1548 ownership without code or public behavior changes.
+- next_action: after this contract commit is clean, activate `.7`
+  continuity-only for exact private implementation.
+- in_flight_uncommitted: none after this contract commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -37,9 +38,9 @@ history; this file carries only the current bounded resume state.
   packages / 19 IAL2 owners and Support 71.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
-- Decisions `0028`/`0029`, the architecture/audit records, and v1 contract are
-  canonical. `.6` is active continuity-only; public builder, HIAL/VIAL, scale,
-  MCP-write, and every director-gated owner remain inactive.
+- Decisions `0028`-`0030` and the architecture/audit/v1/v2 contract records are
+  canonical. `.7` remains proposed; public builder, HIAL/VIAL, scale, MCP-write,
+  and every director-gated owner remain inactive.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously

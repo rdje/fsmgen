@@ -34,5 +34,6 @@ oracle in `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md`. Implementation remains
 private; `.4` implements the exact three-package/t1547 contract without a
 public surface. Audit `.5` now retains the boundary privately through one
 concrete-control-to-IAL1 proof; decision `0029` owns that refinement and keeps
-public builder selection separate. Clean commit `5d018edbd` activates only
-the `.6` design leaf.
+public builder selection separate. Decision `0030` now selects that proof as a
+semantic version-2 concrete-control subset rendered to the existing phase-test
+IAL1 path; raw ISF and parser-AST storage remain rejected.

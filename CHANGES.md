@@ -31155,3 +31155,33 @@ task tree and git.
 - Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
   and the 72-file HTML build pass; Knowledge Map passes at 1,079 facts / 5,563
   keys; memory, diff, output cleanup, and all seven staged doctrine gates pass.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.6 — private SourceHIR IAL1 boundary selected
+
+- Selected schema version 2/root kind `concrete_control` as a closed semantic
+  actor subset—clock/reset, ordered typed ports, one parameter-to-output named
+  drive, and one linear trigger/phase/completion transaction. Raw ISF forms,
+  arbitrary expressions, and a copy of the parser AST are explicitly rejected.
+- Selected new private `FSM::IR::SourceHIRISFRenderer` and existing SourceHIR
+  object/builder version dispatch. Canonical text must enter the shipped
+  `FSM::Adapter::ISF` and `FSM::Scheduler::ISF`; the renderer may not depend on
+  the parser, scheduler, IAL0 emitter, or backend.
+- Selected tracked `isf/phase_test.isf` at exactly 17 lines/395 bytes/SHA-256
+  `6eeab6c6f2e87c4a91f97fd8c0f2535334a163a7ccf263f30dfcefae51b0d2f2`.
+  Its downstream oracle is one `phase_test.fsm` at 45 lines/484 bytes/SHA-256
+  `8b82ddb329a6b625d0ec271d9611b35140414a2c84e775c1615e442cdfa65047`.
+- The v2 contract freezes validation/cross-references, immutable access,
+  provenance, a 14-nonblank-line-plus-root source map, truthful current-parser
+  root fallback, t1548 ownership, v1 and phase regressions, deferrals, cleanup,
+  and the fail/retirement rule. Existing t1179+t1312+t1547 pass
+  `Files=3, Tests=16` using repository-local temporary storage; strict check
+  reports five states/five signals and schedule reports one five-state
+  transaction/three ports.
+- No code, test, parser, fixture, artifact, config, public API/report/manifest/
+  accounting, HDL/runtime, frozen status file, or behavior changes. Decision
+  `0030` and the v2 contract own the rationale; no duplicate development note
+  is warranted.
+- Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
+  and the 72-file HTML build pass; Knowledge Map passes at 1,080 facts / 5,568
+  keys; memory, diff, repository-local scratch cleanup, and all seven staged
+  doctrine gates pass.

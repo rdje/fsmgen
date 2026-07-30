@@ -85,7 +85,7 @@ changes.
 
 ### Source-Facing FSMGEN HIR
 
-Status: private version-1 valid-ready prototype retained; concrete-control-to-IAL1 selection active.
+Status: private version-2 concrete-control contract selected; implementation next.
 
 Goal: give future high-level language frontends and builder APIs one checked
 FSMGEN-native semantic target above IAL2 and IAL1. The intended architecture is
@@ -119,10 +119,15 @@ There is still no public builder, CLI mode, HIR report/manifest/accounting
 surface, or direct generator path. The post-prototype audit keeps SourceHIR
 private: the working valid-ready path warrants retention, while one test
 producer, one schema, and only the IAL2 route do not justify a public contract.
-The active design-only leaf selects one concrete FSM/control-to-canonical-IAL1
-golden; separate leaves implement it and then re-audit promotion. Public host-
-language choice, packaging, versioning, and compatibility remain owned by the
-separate proposed builder frontier.
+The design leaf now selects version 2 as a semantic concrete-control subset:
+clock/reset, ordered typed ports, one parameter-to-output named drive, and one
+linear trigger/phase/completion transaction. It must reproduce the existing
+17-line/395-byte `isf/phase_test.isf`, re-enter the shipped ISF adapter and
+scheduler, and preserve the one-file 45-line/484-byte IAL0 result. It stores no
+raw ISF form, arbitrary expression, or parser AST. Separate proposed leaves
+implement it and then re-audit promotion. Public host-language choice,
+packaging, versioning, and compatibility remain owned by the separate proposed
+builder frontier.
 
 ### Inference-First Scalar Authoring
 

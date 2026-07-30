@@ -11,6 +11,10 @@ Post-prototype audit `.5` retains this version-1 contract privately and selects
 a separate concrete-control-to-IAL1 design leaf before promotion is
 reconsidered. This version-1 contract remains unchanged.
 
+That separate `.6` design leaf now selects schema version 2 as an additive
+discriminated concrete-control root. Version 2 has its own contract and cannot
+change any version-1 validation, access, rendering, diagnostics, or bytes.
+
 ## Scope
 
 This document freezes the first executable contract for the private

@@ -11,8 +11,8 @@ answers:
 date: 2026-06-28
 status: current
 tags: [architecture, hir, ial1, ial2, frontend, task-tree, roadmap]
-evidence: docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md; docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md; docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md; docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; MEMORY.md; docs/IR_POLICY.md; docs/tasks/FSMGEN-IR-AUDIT.md; docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md
-reverify: rg -n 'FSMGEN-HIR-ROADMAP-FRONTIER|FSM::IR::SourceHIR|valid_ready_handshake\.ppif|private|IAL2 -> IAL1 -> IAL0' docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md docs/TASK_TREE.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md MEMORY.md
+evidence: docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md; docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md; docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md; docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md; docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md; docs/decisions/0030-source-hir-v2-is-a-semantic-concrete-control-subset.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; MEMORY.md; docs/IR_POLICY.md; docs/tasks/FSMGEN-IR-AUDIT.md; docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md
+reverify: rg -n 'FSMGEN-HIR-ROADMAP-FRONTIER|FSM::IR::SourceHIR|valid_ready_handshake\.ppif|phase_test\.isf|private|IAL2 -> IAL1 -> IAL0' docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md docs/TASK_TREE.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md MEMORY.md
 ---
 
 `FSMGEN-HIR-ROADMAP-FRONTIER` owns the source-facing FSMGEN HIR roadmap phase.
@@ -39,6 +39,7 @@ exact version-1 contract in `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md` without
 implementation. Leaf `.4` now implements and proves the private
 three-package/t1547 valid-ready path. Audit `.5` keeps that healthy path
 private because one test producer, one schema, and only the IAL2 route are not
-enough to freeze a public contract. Clean audit commit `5d018edbd` activates
-`.6` continuity-only to select the exact private concrete-control-to-IAL1
-boundary; `.7` implements it and `.8` re-audits promotion.
+enough to freeze a public contract. Leaf `.6` selects semantic SourceHIR
+version 2 with canonical `isf/phase_test.isf` rendering through the existing
+ISF adapter/scheduler. Proposed `.7` implements it and `.8` re-audits
+promotion.

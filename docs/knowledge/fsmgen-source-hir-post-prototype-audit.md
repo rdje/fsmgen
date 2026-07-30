@@ -10,7 +10,7 @@ answers:
 date: 2026-07-30
 status: current
 tags: [source-hir, architecture, promotion, private, ial1, audit]
-evidence: docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md; docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md; docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; perl/FSM/IR/SourceHIR.pm; perl/FSM/IR/SourceHIRBuilder.pm; perl/FSM/IR/SourceHIRPPIFRenderer.pm; t/1547-source-hir-valid-ready.t; isf/phase_test.isf; docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md
+evidence: docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md; docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md; docs/decisions/0029-source-hir-remains-private-through-a-second-lowering-route.md; docs/decisions/0030-source-hir-v2-is-a-semantic-concrete-control-subset.md; docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; perl/FSM/IR/SourceHIR.pm; perl/FSM/IR/SourceHIRBuilder.pm; perl/FSM/IR/SourceHIRPPIFRenderer.pm; t/1547-source-hir-valid-ready.t; isf/phase_test.isf; docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md
 reverify: prove -Iperl t/1547-source-hir-valid-ready.t && ./bin/fsmgen --strict --check --json isf/phase_test.isf && ./bin/fsmgen --emit-schedule-json isf/phase_test.isf
 ---
 
@@ -30,5 +30,6 @@ diagnostic promises remain owned by proposed
 `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`. A second private route is necessary
 evidence for reconsideration, not authorization to publish an API.
 
-Clean audit commit `5d018edbd` activates `.6` continuity-only. Its exact
-second-route contract remains unselected until activation commits cleanly.
+Leaf `.6` selects the exact second route as semantic SourceHIR version 2 with
+byte-identical `isf/phase_test.isf` rendering and existing ISF adapter/scheduler
+re-entry. Implementation remains proposed under `.7`.

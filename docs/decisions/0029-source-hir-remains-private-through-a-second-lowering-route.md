@@ -32,8 +32,9 @@ Public host-language and package selection remains separately owned by
 necessary evidence for another promotion audit, but does not itself authorize
 a public API.
 
-Clean decision commit `5d018edbd` activates only the separate `.6` design
-leaf; activation selects no exact schema, fixture, or package API.
+Decision `0030` now selects the separate `.6` route: semantic SourceHIR version
+2 renders `isf/phase_test.isf` canonically through the shipped ISF adapter and
+scheduler. This decision's private-before-promotion rule remains unchanged.
 
 ## Consequences
 

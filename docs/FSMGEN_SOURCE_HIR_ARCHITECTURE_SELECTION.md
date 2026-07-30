@@ -284,3 +284,9 @@ evidence.
   premature, and retirement is rejected.
 - `.6` selects the exact private concrete-control-to-IAL1 boundary, `.7`
   implements it, and `.8` repeats the evidence audit across both routes.
+
+Leaf `.6` now selects that boundary in
+`docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md`: semantic SourceHIR
+version 2 renders `isf/phase_test.isf` exactly and must use the existing ISF
+adapter and scheduler. Decision `0030` records why raw ISF and typed-parser-AST
+storage remain rejected.

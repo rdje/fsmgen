@@ -969,9 +969,11 @@ Source-facing HIR roadmap phase:
   bypass. Audit `.5` keeps SourceHIR private: the working IAL2 valid-ready path
   is sufficient to reject retirement, but one test producer, one schema, and
   no concrete-control-to-IAL1 route are insufficient to freeze a public API.
-  Clean audit commit `5d018edbd` activates design-only `.6` continuity-only to
-  select that exact second private boundary and golden; `.7` implements it,
-  and `.8` repeats the promotion audit. Public
+  Design leaf `.6` selects semantic SourceHIR version 2: one closed concrete-
+  control actor subset renders `isf/phase_test.isf` byte-for-byte, then enters
+  the existing ISF adapter/scheduler and preserves the exact IAL0 result. It
+  stores no raw ISF or parser AST. Proposed `.7` implements that private
+  contract, and `.8` repeats the promotion audit. Public
   language, packaging, versioning, and compatibility remain separately owned
   by proposed `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`.
 
