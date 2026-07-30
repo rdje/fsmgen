@@ -1,0 +1,29 @@
+---
+id: fsmgen-source-hir-architecture-selection
+title: SourceHIR selected as a private pre-IAL semantic boundary
+answers:
+  - "what is the selected source-facing FSMGEN HIR boundary?"
+  - "does source-facing HIR extend IntentHIR?"
+  - "what is the first SourceHIR builder?"
+  - "what is the first SourceHIR golden fixture?"
+  - "is SourceHIR public?"
+  - "how does SourceHIR lower into IAL2?"
+date: 2026-07-30
+status: current
+tags: [architecture, source-hir, hir, ial2, ppif, valid-ready, diagnostics]
+evidence: docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md; docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md; docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md; docs/IR_POLICY.md; perl/FSM/IR/IntentHIR.pm; perl/FSM/IR/LoweredRTLIR.pm; perl/FSM/IR/StructuralRTLIR.pm; ppif/valid_ready_handshake.ppif
+reverify: rg -n 'FSM::IR::SourceHIR|valid_ready_handshake\.ppif|private|canonical.*PPIF|IntentHIR' docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md docs/decisions/0028-source-facing-hir-is-a-distinct-private-pre-ial-layer.md docs/tasks/FSMGEN-HIR-ROADMAP-FRONTIER.md docs/book/src/14-feature-backlog.md
+---
+
+`FSMGEN-HIR-ROADMAP-FRONTIER.2` selects a distinct private
+`FSM::IR::SourceHIR` above IAL2/IAL1. It does not extend the existing
+post-parse `IntentHIR`.
+
+The first producer is a repository-internal constrained Perl builder. It
+constructs exactly one protocol-neutral valid-ready object, validates it, and
+renders canonical `.ppif` text. That text must pass through the existing PPIF
+parser/validator and normal `IAL2 -> IAL1 -> IAL0` chain.
+
+The first golden is `ppif/valid_ready_handshake.ppif`, reproduced byte-for-
+byte. The raw object, builder input, and source map remain private; no public
+host-language API or report schema is selected.

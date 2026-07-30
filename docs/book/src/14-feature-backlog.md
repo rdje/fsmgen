@@ -85,27 +85,34 @@ changes.
 
 ### Source-Facing FSMGEN HIR
 
-Status: proposed critical roadmap phase.
+Status: architecture selected; private prototype contract remains proposed.
 
 Goal: give future high-level language frontends and builder APIs one checked
 FSMGEN-native semantic target above IAL2 and IAL1. The intended architecture is
 `high-level frontend -> FSMGEN HIR -> validation/canonicalization -> IAL2 or
 IAL1 -> existing lowering`.
 
-Current boundary: `FSMGEN-HIR-ROADMAP-FRONTIER` owns the phase as a proposed
-task tree. HIR does not replace IAL2 or IAL1; it should lower to IAL2 for
+Current boundary: `FSMGEN-HIR-ROADMAP-FRONTIER` owns the phase. HIR does not
+replace IAL2 or IAL1; it should lower to IAL2 for
 protocol/platform intent and to IAL1 for concrete FSM/control logic. Direct
 frontend lowering to IAL2 or IAL1 can still be acceptable for one bounded
 prototype, but multiple high-level frontends should not each reimplement every
 IAL target rule, scheduling rule, width/reset convention, diagnostic rule, and
 future IAL evolution.
 
-Activation rule: the first HIR activation is an architecture selection leaf,
-not implementation. It must decide whether the source-facing HIR extends the
-existing `Intent HIR` family, creates a new named surface, or remains a textual
-IAL handoff for the first prototype, and it must satisfy `docs/IR_POLICY.md`
-before parser, compiler, source, generated-artifact, config, or behavior
-changes begin.
+Selected architecture: the source-facing layer is a distinct private
+`FSM::IR::SourceHIR`, not an extension of the existing post-parse
+`IntentHIR`. The first repository-internal constrained Perl builder will
+construct one protocol-neutral valid-ready object, validate it, render
+canonical `.ppif`, and then use the existing PPIF parser and
+`IAL2 -> IAL1 -> IAL0` pipeline. The golden output is
+`ppif/valid_ready_handshake.ppif`, reproduced byte-for-byte.
+
+This selection does not expose a public builder, CLI mode, raw HIR object, or
+report schema. The next proposed slice freezes the exact version-1 private
+object, source-span diagnostic, source-map, renderer, and negative-test
+contract before implementation. Public host-language ergonomics remain a
+separate later decision.
 
 ### Inference-First Scalar Authoring
 

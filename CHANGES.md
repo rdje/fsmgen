@@ -31009,3 +31009,24 @@ task tree and git.
   Focused documentation audits pass with `Files=3, Tests=40`; Knowledge Map,
   memory architecture, the 72-file mdBook HTML build, output cleanup, and diff
   hygiene pass.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.2 — private SourceHIR boundary selected
+
+- Selected a distinct private pre-IAL `FSM::IR::SourceHIR` after auditing the
+  current forward IRs, public normalized projections, and IAL1/IAL2 surfaces.
+  The existing post-parse `IntentHIR` remains unchanged.
+- Selected a repository-internal constrained Perl builder, canonical `.ppif`
+  rendering through the existing parser/validator, and byte-for-byte
+  `ppif/valid_ready_handshake.ppif` as the first golden.
+- Decision `0028` and the architecture record freeze every IR-policy field,
+  source-location/source-map direction, validation plan, privacy rule, and
+  retirement condition. Proposed `.3`-.5 own exact contract, private
+  implementation, and evidence-based promotion/retirement.
+- No compiler/source/test/config/artifact/API/report/accounting/HDL/runtime
+  behavior changes. Baseline strict PPIF check and schedule reporting succeed;
+  focused current IR/contract/valid-ready tests pass with `Files=6, Tests=12`.
+- Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
+  and the 72-file HTML build pass; Knowledge Map passes at 1,076 facts / 5,547
+  keys; memory, diff, and all seven doctrine gates pass. Repository-local
+  scratch is removed, both frozen status files stay untouched, and decision
+  `0028` is the canonical rationale instead of a duplicate development note.

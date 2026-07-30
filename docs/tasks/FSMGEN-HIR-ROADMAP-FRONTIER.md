@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `architecture / high-level frontend IR`
 - Created: `2026-06-28`
-- Last updated: `2026-06-28`
+- Last updated: `2026-07-30`
 - Owner: repo-local workflow
 
 ## Goal
@@ -55,7 +55,7 @@ and future IAL evolution.
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER`
   Status: `active`
   Goal: `Own the source-facing FSMGEN HIR roadmap phase above IAL2 and IAL1.`
-  Children: `FSMGEN-HIR-ROADMAP-FRONTIER.1`, `FSMGEN-HIR-ROADMAP-FRONTIER.2`
+  Children: `FSMGEN-HIR-ROADMAP-FRONTIER.1`, `FSMGEN-HIR-ROADMAP-FRONTIER.2`, `FSMGEN-HIR-ROADMAP-FRONTIER.3`, `FSMGEN-HIR-ROADMAP-FRONTIER.4`, `FSMGEN-HIR-ROADMAP-FRONTIER.5`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.1`
   Status: `done`
@@ -65,22 +65,46 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.1: capture FSMGEN HIR roadmap phase`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.2`
-  Status: `active`
+  Status: `done`
   Goal: `Select the first source-facing HIR architecture boundary.`
   Acceptance: `Audit docs/IR_POLICY.md, docs/tasks/FSMGEN-IR-AUDIT.md, existing IntentHIR/LoweredRTLIR/StructuralRTLIR owners, IAL1 and IAL2 public source surfaces, normalized semantic/report contracts, and IAL2-HOST-LANGUAGE-BUILDER-FRONTIER. Decide whether the first source-facing HIR should extend an existing IntentHIR-adjacent layer, create a new named surface, or remain a textual IAL handoff for the first prototype. Define producers, consumers, invariants, mutation policy, public/private status, source-span diagnostics, validation, docs impact, migration/retirement rules, first exact frontend or builder, and first golden fixture. No implementation begins in this leaf unless split into a later active implementation leaf.`
-  Verification: `Activated only after clean parent selector commit b4e66c067. Activation changes task/index, selector record/facts, roadmap, mdBook backlog, Memory, and changelog continuity only. The source-facing HIR shape, first frontend/builder, golden fixture, and every IR-policy field remain unselected until this activation commits cleanly. Existing IR owners, IAL1/IAL2 sources, code, tests, artifacts, APIs, HDL/runtime, and public behavior remain unchanged. Feature-backlog status, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1075 facts / 5540 question keys; memory architecture passes with MEMORY.md at 46 lines; the 72-file mdBook HTML build passes and its exact repository-local output is removed; diff hygiene passes.`
-  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.2: activate source-facing HIR boundary`
+  Verification: `IR-policy audit selects distinct private FSM::IR::SourceHIR rather than extending the post-parse IntentHIR or using a text-only semantic model. Exact owner family, first internal Perl builder, canonical PPIF handoff, source-location/source-map policy, validation, privacy, no-public-schema rule, migration/retirement rule, and byte-identical ppif/valid_ready_handshake.ppif golden are recorded in docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md and decision 0028. Baseline public PPIF strict check and schedule JSON succeed; focused current IR/contract/valid-ready tests pass with Files=6, Tests=12. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; all 36 mdBook chapters pass executable-example testing; the 72-file HTML build passes and its exact repository-local output is removed. Knowledge Map generation/check passes at 1076 facts / 5547 question keys; memory architecture passes with MEMORY.md at 47 lines; diff hygiene and all seven doctrine gates pass. No implementation, source fixture, generated artifact, config, API/report schema, support accounting, HDL/runtime, frozen status file, or public behavior changes.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.2: select private SourceHIR boundary`
+
+- ID: `FSMGEN-HIR-ROADMAP-FRONTIER.3`
+  Status: `proposed`
+  Goal: `Freeze the exact SourceHIR version-1 contract before implementation.`
+  Acceptance: `Define the exact immutable object keys/types/order, valid-ready-only constraints, provenance/source-span shape, semantic paths, diagnostic and downstream-remap fallback rules, renderer result/source-map shape, byte-equivalence oracle, negative cases, package APIs, and focused test ownership for the private internal Perl builder. Change no code, parser, source fixture, generated artifact, config, public API/report schema, support accounting, HDL/runtime, or behavior.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `FSMGEN-HIR-ROADMAP-FRONTIER.4`
+  Status: `proposed`
+  Goal: `Implement the private valid-ready SourceHIR golden path.`
+  Acceptance: `Implement only the policy-selected SourceHIR, SourceHIRBuilder, and SourceHIRPPIFRenderer private package family after .3 is done. Prove construction/rejection, immutability, deterministic byte-identical rendering of ppif/valid_ready_handshake.ppif, provenance diagnostics, PPIF reparse, and unchanged generated IAL1/IAL0 semantics. Add no public frontend, CLI mode, report key, manifest field, or support-accounting entry.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `FSMGEN-HIR-ROADMAP-FRONTIER.5`
+  Status: `proposed`
+  Goal: `Audit private SourceHIR prototype promotion or retirement.`
+  Acceptance: `After .4, decide from evidence whether to promote a first public frontend/builder and bounded projection, keep the prototype private for another fixture, or retire it. Coordinate any public-host-language selection with IAL2-HOST-LANGUAGE-BUILDER-FRONTIER; do not assume promotion.`
+  Verification: `pending`
+  Commit: `pending`
 
 ## Current Frontier
 
-Clean parent selector commit `b4e66c067` activates `.2` continuity-only. The
-leaf is deliberately a design selection leaf because the HIR must satisfy the
-repo IR policy before source or compiler behavior changes.
+Leaf `.2` has selected and documented the policy-complete private SourceHIR
+boundary without implementation. Leaf `.3` is the next proposed clean slice;
+it must be activated separately before freezing the exact version-1 contract.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `done` | Captured the roadmap phase and activation criteria without behavior changes. |
-| 2 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `active` | Select the first exact source-facing HIR boundary before implementation. |
+| 2 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `done` | Selected a distinct private SourceHIR, internal Perl builder, canonical PPIF handoff, and valid-ready golden. |
+| 3 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `proposed` | Freeze the exact version-1 object and diagnostic contract before code. |
+| 4 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `proposed` | Implement and prove the private valid-ready golden path. |
+| 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `proposed` | Audit promotion, continued private iteration, or retirement from evidence. |
 
 ## Decisions
 
@@ -113,32 +137,36 @@ repo IR policy before source or compiler behavior changes.
 - `2026-07-30`: Clean selector commit `b4e66c067` activates `.2`
   continuity-only. Architecture choices and all implementation remain
   unchanged until the activation commit is clean.
+- `2026-07-30`: `.2` selects a distinct private pre-IAL
+  `FSM::IR::SourceHIR`; the existing post-parse `IntentHIR` remains unchanged.
+  The first internal Perl builder renders canonical `.ppif` and must use the
+  existing parser/validator and `IAL2 -> IAL1 -> IAL0` path.
+- `2026-07-30`: `ppif/valid_ready_handshake.ppif` is the byte-for-byte first
+  golden. The prototype exposes no CLI, public host-language API, public raw
+  object, normalized-report key, support-accounting promise, or new behavior.
+  Decision `0028` and
+  `docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md` are canonical.
 
 ## Open Questions
 
-- Should the first source-facing HIR reuse or extend the current
-  `FSM::IR::IntentHIR`, or should it be a separate HIR that lowers into
-  `IntentHIR`/IAL2/IAL1?
-- What is the safest first frontend or builder: a constrained embedded DSL, a
-  host-language builder API, or a small standalone source language?
-- What first golden fixture best proves value: a protocol-neutral valid-ready
-  source, a simple APB completer, or a small concrete FSM/control example?
-- How should source spans and diagnostics map from frontend source through HIR
-  to IAL2/IAL1 and generated artifacts?
-- What public projection, if any, should expose HIR facts without exporting raw
-  private compiler objects?
+- What exact version-1 Perl key/type schema best expresses the selected
+  valid-ready-only semantics without claiming broader HIR support?
+- What exact diagnostic object and fallback rule should translate a generated
+  PPIF line back to a SourceHIR semantic path and original source location?
+- After the private prototype, does evidence justify a public host-language
+  builder, another private fixture, or retirement?
 
 ## Blockers
 
-- None. `.2` is active after clean selector commit `b4e66c067`; perform the
-  IR-policy audit and choose one exact boundary and fixture without
-  implementation.
+- None. `.2` is complete; `.3` remains proposed until a separate clean
+  activation commit.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-28` | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed` |
+| `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | public PPIF strict check + schedule JSON; `prove -Iperl t/155-forward-intent-hir-surface.t t/156-forward-lowered-rtl-ir-surface.t t/163-forward-structural-rtl-ir-surface.t t/334-normalized-semantic-forward-ir-contract.t t/339-normalized-semantic-intent-hir-contract.t t/1435-axi-ial2-valid-ready-generator.t`; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; diff hygiene; `scripts/check_doctrines.sh` | `passed`; no implementation or behavior change |
 
 ## Commit Log
 
@@ -146,9 +174,17 @@ repo IR policy before source or compiler behavior changes.
 | --- | --- | --- |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `FSMGEN-HIR-ROADMAP-FRONTIER.1: capture FSMGEN HIR roadmap phase` | Captures the HIR roadmap phase; no compiler behavior changed. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `FSMGEN-HIR-ROADMAP-FRONTIER.2: activate source-facing HIR boundary` | Continuity-only activation; architecture selection follows after this commit is clean. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `FSMGEN-HIR-ROADMAP-FRONTIER.2: select private SourceHIR boundary` | Selects the complete IR-policy boundary, first internal builder, and valid-ready golden without implementation. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `pending` | Proposed exact-contract leaf; not active during `.2`. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `pending` | Proposed private implementation leaf. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `pending` | Proposed evidence-based promotion/retirement audit. |
 
 ## Changelog
 
 - `2026-06-28`: Captured FSMGEN HIR as a critical proposed roadmap phase above
   IAL2 and IAL1, with activation gated on an IR-policy-compliant boundary
   selection leaf.
+- `2026-07-30`: Selected distinct private `SourceHIR`, canonical PPIF
+  rendering through the existing parser, an internal Perl builder, and the
+  byte-identical protocol-neutral valid-ready golden. No implementation or
+  public behavior changed.

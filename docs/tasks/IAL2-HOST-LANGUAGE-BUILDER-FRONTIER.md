@@ -84,6 +84,10 @@ package, module, parser, source, or generated-artifact implementation work.
 - `2026-07-30`: Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.841`
   selects the prerequisite source-facing HIR boundary. This builder remains
   proposed and does not activate implicitly.
+- `2026-07-30`: `FSMGEN-HIR-ROADMAP-FRONTIER.2` selects a private internal
+  Perl `SourceHIRBuilder` prototype, not a public Perl API. This tree still
+  owns later selection of any supported host language, ergonomic package,
+  compatibility/versioning contract, and public promotion.
 
 ## Open Questions
 

@@ -948,11 +948,20 @@ Source-facing HIR roadmap phase:
   high-level frontends because each frontend would otherwise need to learn
   every IAL target, protocol-intent rule, scheduling rule, width/reset rule,
   diagnostic rule, and future IAL evolution.
-- The first activation leaf must select whether the source-facing HIR extends
-  the existing `IntentHIR` family, creates a new named surface, or remains a
-  textual IAL handoff for the first prototype. It must satisfy
+- The first activation leaf was required to select whether the source-facing
+  HIR extends the existing `IntentHIR` family, creates a new named surface, or
+  remains a textual IAL handoff for the first prototype. It had to satisfy
   [docs/IR_POLICY.md](docs/IR_POLICY.md) before parser, compiler, source,
   generated-artifact, config, or behavior changes begin.
+- Architecture selection now chooses a distinct private pre-IAL
+  `FSM::IR::SourceHIR`, because the existing `IntentHIR` is a post-parse
+  `.fsm`/composition semantic summary. The first repository-internal Perl
+  builder validates SourceHIR and renders canonical `.ppif`, which must then
+  pass through the existing PPIF parser and `IAL2 -> IAL1 -> IAL0` chain.
+- The first golden is `ppif/valid_ready_handshake.ppif`, reproduced byte-for-
+  byte. No public builder language, CLI/API, report schema, support-accounting
+  promise, or concrete-FSM-to-IAL1 route is selected yet. The next proposed
+  leaf freezes the exact private version-1 object and diagnostic contract.
 
 Advanced synthesizable targets worth considering later, not rejecting upfront:
 - macro/preprocessor-heavy RTL after preprocessing with provenance retained,
