@@ -5910,11 +5910,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.834: select frozen workflow sync`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.835`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact roadmap-aligned owner after the frozen-legacy task-tree workflow repair ships.`
   Acceptance: `Activate only after clean TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1 completion commit 771d2918c. Reconcile the shipped workflow memory-layer repair and unchanged decisions 0007/0019; aligned mdBook VHDL boundary; grouped assertion repair; AHB requester literal 2..16 and 332/373/56 split 28/28; remaining startup alignment, HIAL/VIAL, end-to-end scale, public-test drift, known defects, other protocols/backends, simulator profiles, roadmap, mdBook, Knowledge Map, and decisions 0020/0023. Compare exactly one smallest evidence-backed next owner, freeze scope/validation/rollback, make no behavior change, and preserve repository-local storage plus host100/process4096 and canonical RAM/pressure reporting. Do not activate or modify the selected child until this selector commits cleanly.`
-  Verification: `Activated only after clean workflow completion commit 771d2918c. This continuity leaf changes no parser, generator, source, support accounting, test, artifact, report/semantic/MCP API, HDL/runtime, backend, protocol, HIAL/VIAL, verification generation, portability, scale, decision-0020, or transaction behavior. No child is selected or modified during activation. Book/status/path truth passes 5 files/329 tests. Knowledge Map generation/check passes at 1,063 facts/5,471 question keys. The mdBook renders exactly 72 files/16,542,309 bytes and its repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 47 lines, README.md is 2,351 lines, diff hygiene passes, and all six doctrine gates pass. Activation-closeout canonical Stats-compatible capacity is 17,391,550,464/25,769,803,776 bytes = 16.197/24.000 GiB = 67.49%, with separate macOS kernel pressure level 1 and memory_pressure 73% free; guard occupancy is excluded from capacity truth. No background job remains.`
-  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.835: activate post workflow selector`
+  Verification: `Activated only after clean workflow completion commit 771d2918c through clean continuity commit 075ff6ae5. Reconciled the workflow memory-layer repair, aligned VHDL/book and assertion boundaries, AHB requester literal 2..16 at 332/373/56 split 28/28, remaining startup alignment, HIAL/VIAL, end-to-end scale, public-test drift, known defects, other protocols/backends, simulator profiles, roadmap, mdBook, Knowledge Map, and decisions 0007/0019/0020/0023. The live Module::ScanDeps probe reports 228 project files / 227 packages / 19 IAL2 owners while the canonical note still claims 213 / 212 / IAL2 5; the one-file movement from the proposed child's 227/226 startup measurement is explained by same-volume commit 017153eac adding reachable singleton ProjectDataLocality.pm. Selected proposed no-behavior BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1 as the smallest exact owner. HIAL/VIAL, scale, public-test drift, rustdoc fences, other protocols/backends, and simulator work remain independent; RAM-guard refinement, t1436, and decision 0020 retain explicit gates. The selected child remains unchanged until this selector commits cleanly. Book/status/path truth passes 5 files/329 tests. Knowledge Map generation/check passes at 1,064 facts/5,477 question keys. The mdBook renders exactly 72 files/16,544,855 bytes and its repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 47 lines, README.md is 2,353 lines, diff hygiene passes, and all six doctrine gates pass. Final canonical Stats-compatible capacity is 18,000,412,672/25,769,803,776 bytes = 16.764/24.000 GiB = 69.85%, with separate macOS kernel pressure level 1 and memory_pressure 74% free; guard occupancy is excluded from capacity truth. No background job remains.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.835: select import tree refresh`
 
 Parent selector `.832` is complete and handed off to
 `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`. That child now ships the selected
@@ -5936,6 +5936,11 @@ owner is implicitly activated.
 Clean workflow completion commit `771d2918c` activates `.835`
 continuity-only. No candidate is selected during activation; reconciliation
 and exact-one selection begin only after this activation commits cleanly.
+Completed `.835` selects proposed no-behavior
+`BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` after a live `228` / `227` / `IAL2 19`
+probe proves the canonical note's `213` / `212` / `IAL2 5` snapshot stale. The
+selected child remains unchanged until the selector commits cleanly; no broader
+owner or product behavior is implicitly activated.
 
 The child selected by `.826` is complete through `.3`, and parent `.828` now
 closes the matching byte-identical two-subordinate exact-four `.ahb` alias.

@@ -11831,6 +11831,14 @@ the next clean action returns to a new parent selector.
 Clean workflow completion commit `771d2918c` activates parent selector `.835`
 continuity-only. The workflow repair and every product behavior remain
 unchanged while the next roadmap owner is selected.
+Completed `.835` selects the proposed no-behavior
+[`bin/fsmgen` import-tree refresh](../../tasks/BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.md).
+The live closure is `228` project files / `227` packages / `19` IAL2 owners,
+while the maintained note still records `213` / `212` / `IAL2: 5`. The child
+will refresh only the architecture note and fact after a separate clean
+activation. HIAL/VIAL, scale, public-test drift, rustdoc fences, other
+protocols/backends, simulator profiles, and decision `0020` remain separate.
+See the [selection record](../../IAL2_POST_FROZEN_WORKFLOW_SYNC_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

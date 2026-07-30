@@ -8151,6 +8151,16 @@ Clean workflow completion commit `771d2918c` activates parent selector `.835`
 continuity-only. The shipped workflow repair and every product behavior remain
 unchanged while `.835` reconciles the remaining directions and selects exactly
 one next owner.
+Completed `.835` selects proposed no-behavior
+`BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1`. The activation-time live closure is
+`228` project files / `227` packages / `19` IAL2 owners, while the maintained
+note still says `213` / `212` / `IAL2: 5`; the additional file beyond the
+parked task's startup `227` / `226` measurement is the reachable same-volume
+`ProjectDataLocality.pm` singleton. The child will remeasure and synchronize
+only the architecture note/fact after a separate clean activation. HIAL/VIAL,
+scale, public-test drift, rustdoc fences, other protocols/backends, simulator
+profiles, and decision `0020` remain separate. See
+`docs/IAL2_POST_FROZEN_WORKFLOW_SYNC_NEXT_OWNER_SELECTION.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.835: activate post workflow selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.835` (continuity-only activation).
-- current_state: clean workflow commit `771d2918c` completes the decision-`0007` layer repair. `.835` is active continuity-only; no next child is selected or modified during activation.
-- next_action: reconcile remaining roadmap directions and select exactly one smallest evidence-backed owner without changing its child.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.835: select import tree refresh`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.835` (selector completion).
+- current_state: `.835` selects proposed no-behavior `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` after live closure measures 228 files / 227 packages / 19 IAL2 owners versus the maintained note's 213 / 212 / 5 snapshot. The child remains unchanged until this selector commits cleanly.
+- next_action: after the clean selector commit, activate only the selected import-tree child through a continuity commit.
+- in_flight_uncommitted: none after this selector commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -26,8 +26,8 @@ bounded current-state pointer. Git preserves its prior history.
   per-count public fixture. Completed `.830` selected the protocol-neutral
   named-drive priority child, now complete through `.3`; decision `0020` stays
   separate.
-- Proposed startup-alignment owner `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`
-  remains; the mdBook VHDL-boundary and frozen-workflow repairs are complete.
+- Remaining startup-alignment owner `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1`
+  is selected by `.835`; the mdBook VHDL and frozen-workflow repairs are done.
 - Proposed `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` now durably owns the
   director's peer hardware/verification intent requirement, typed bridge,
   portable fixture semantics, native SV/UVM and VHDL extension model, backend
