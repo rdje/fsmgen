@@ -35,3 +35,7 @@ Current accounting is 331 protocol / 372 supported+strict / 55 AHB paths split
 generic/profile families. The matching alias, counts above four, broader BUSY
 semantics, generic priority, HIAL/VIAL, VHDL, verification generation,
 portability, scale, and decision `0020` remain separate.
+
+Clean behavior commit `a62ddb705` activates no-behavior parent selector
+`.827`; current 331/372/55 behavior is unchanged while that selector chooses
+one exact next roadmap owner.

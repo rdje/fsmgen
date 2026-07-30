@@ -52,3 +52,7 @@ Clean audit commit `a5d162d60` plus activation `93a7f2089` satisfy the contract
 boundary. `.2` froze the exact source/support/t1539/testbench contract, and
 completed `.3` now ships it at 331/372/55 split 28 `.ppif`/27 `.ahb` with the
 selected assertion-enabled runtime.
+
+Clean child behavior commit `a62ddb705` activates no-behavior parent selector
+`.827`; the `.826` handoff is complete and public behavior remains 331/372/55
+while `.827` owns the next exact selection.

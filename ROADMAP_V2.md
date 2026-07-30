@@ -7844,6 +7844,10 @@ accounting is 331 protocol / 372 supported+strict / 55 AHB paths split 28
 `.ppif`/27 `.ahb`. The child tree is complete; the next parent selector may
 activate only after this behavior commit is clean. See
 `docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
+Clean behavior commit `a62ddb705` now activates no-behavior parent selector
+`.827`. Public accounting remains 331/372/55 split 28 `.ppif`/27 `.ahb` while
+the selector compares one exact next roadmap owner; no source, support, test,
+artifact, API, HDL/runtime, backend, protocol, or HIAL/VIAL behavior changes.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

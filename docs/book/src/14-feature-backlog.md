@@ -11570,6 +11570,9 @@ and assertion-enabled 10/8/2/8/2/`44332211`/`88776655` runtime. Current
 accounting is 331/372/55 split 28 `.ppif`/27 `.ahb`; t1533/t1534/t1537/t1538
 preserve both adjacent generic/profile families. See the
 [behavior record](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
+Clean behavior commit `a62ddb705` activates parent selector `.827` without a
+public behavior change. Accounting remains 331/372/55 split 28 `.ppif`/27
+`.ahb` while it selects one exact next roadmap owner.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

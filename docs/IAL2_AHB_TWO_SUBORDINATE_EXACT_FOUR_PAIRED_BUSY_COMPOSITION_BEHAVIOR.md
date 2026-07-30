@@ -22,6 +22,10 @@ Public accounting is now 331 protocol fixtures, 372 supported-smoke fixtures,
 372 strict-supported fixtures, and 55 AHB IAL2 paths split 28 generic `.ppif`
 sources / 27 `.ahb` aliases.
 
+Clean behavior commit `a62ddb705` activates no-behavior parent selector
+`.827`. The selector, not this behavior record, owns the next exact roadmap
+choice; the shipped 331/372/55 boundary remains unchanged during activation.
+
 ## Exact Source Delta
 
 The 6,645-byte source is the frozen identity/requester/cardinality-only

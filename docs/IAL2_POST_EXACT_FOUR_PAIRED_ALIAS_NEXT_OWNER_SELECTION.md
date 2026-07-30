@@ -154,6 +154,10 @@ contract `.2` froze the exact source/support/t1539/testbench contract. Completed
 `.3` now ships it through existing generators at 331/372/55 split 28 `.ppif`/
 27 `.ahb`, with assertion-enabled 10/8/2/8/2/`44332211`/`88776655` runtime.
 
+Clean child behavior commit `a62ddb705` activates no-behavior parent selector
+`.827`. The former `.826` selection is complete; `.827` independently owns the
+next exact roadmap choice while public behavior remains at 331/372/55.
+
 ## Rollback
 
 Rollback removes this selection record/fact, the proposed audit tree, and the

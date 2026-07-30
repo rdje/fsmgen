@@ -2460,6 +2460,9 @@ resumed `SEQ` / status `0x44332211` / control `0x88776655`, while requester,
 selected/unselected subordinate, and one-hot fabric ownership stay stable.
 Current accounting is 331/372/55 split 28 `.ppif`/27 `.ahb`. See the
 [two-window exact-four behavior](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
+Clean behavior commit `a62ddb705` activates parent selector `.827` without a
+public behavior change. The 331/372/55 split 28 `.ppif`/27 `.ahb` boundary
+remains fixed while it compares one exact next roadmap owner.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

@@ -288,4 +288,7 @@ evidence-backed handoff.
 - `2026-07-30`: Two-window exact-four implementation `.3` ships generic
   source/support/t1539 at 331/372/55; HIAL/VIAL remains proposed and unchanged
   for the next parent selector to compare.
+- `2026-07-30`: Clean child behavior commit `a62ddb705` activates parent
+  selector `.827`; HIAL/VIAL remains proposed and unchanged while `.827`
+  compares it with smaller adjacent and cross-lane owners.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.
