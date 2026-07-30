@@ -72,8 +72,11 @@ The repository still keeps a few focused technical references:
   transfer
 - `docs/COMPOSITION_SCOPE.md`: precise composition support boundary
 - `docs/EXTENSION_MODEL.md`: typed extension boundary
-- `ROADMAP_STATUS.md`: live roadmap and current implementation lane for the
-  maintainer side
+- `ROADMAP_V2.md`: high-level roadmap direction and sequencing
+- `MEMORY.md` plus `docs/TASK_TREE.md`: bounded current state and the exact
+  live implementation frontier for maintainers
+
+`ROADMAP_STATUS.md` is a frozen legacy record, not a live status source.
 
 The goal is not to duplicate every narrow maintainer artifact here immediately.
 

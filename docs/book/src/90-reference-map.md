@@ -39,11 +39,16 @@ Some docs are intentionally still focused references:
 - [../../TASK_TREE.md](../../TASK_TREE.md)
 - [../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md](../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
 - [../../COMPOSITION_LEGACY_MAPPING.md](../../COMPOSITION_LEGACY_MAPPING.md)
-- [../../../ROADMAP_STATUS.md](../../../ROADMAP_STATUS.md)
+- [../../../MEMORY.md](../../../MEMORY.md)
 - [../../../ROADMAP_V2.md](../../../ROADMAP_V2.md)
 - [../../../COMMIT.md](../../../COMMIT.md)
 
 These should stay precise and sometimes narrower than the book.
+
+`MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
+work frontier. `ROADMAP_V2.md` carries high-level direction.
+`ROADMAP_STATUS.md` is retained only as a frozen legacy record under decision
+0007 and must not be used as current status.
 
 `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is the canonical human handoff contract
 for SPECFORGE-style downstream consumers. The book includes that file directly

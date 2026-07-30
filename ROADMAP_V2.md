@@ -1,16 +1,18 @@
 # FSMGen Roadmap v2
 
-This is the detailed companion to [ROADMAP_STATUS.md](ROADMAP_STATUS.md).
+This file records FSMGen's high-level roadmap direction and sequencing.
 
 Use this file for:
 - the detailed post-`R0`..`R7` roadmap shape,
 - sequencing and dependency rationale,
 - and the concrete intent behind the active `R8+` workstreams.
 
-Use [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for:
-- the canonical live status,
-- current active lane,
-- and done/left tracking.
+Use [MEMORY.md](MEMORY.md) for the bounded current resume pointer and
+[docs/TASK_TREE.md](docs/TASK_TREE.md) plus the owning tree under
+[docs/tasks/](docs/tasks/) for live status, the active lane, exact frontier,
+and completion evidence. `ROADMAP_STATUS.md` is a frozen legacy record under
+decision [0007](docs/decisions/0007-memory-architecture-supersedes-blob-narration.md),
+not a live status source.
 
 ## Why roadmap v2 exists
 `R0` through `R7` closed the first major modernization roadmap:

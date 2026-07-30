@@ -52,14 +52,14 @@ their own README files from growing into histories or documentation catalogs.
   Commit: `README-STATIC-LANDING-PAGE.1: activate nearly-static README contract`
 
 - ID: `README-STATIC-LANDING-PAGE.2`
-  Status: `active`
+  Status: `done`
   Goal: `Rewrite README.md as a concise GitHub landing page and synchronize its live navigation truth.`
   Acceptance: `README.md keeps only stable objective, layer model, quick start, key commands, repository orientation, contribution invariants, and curated canonical navigation; exhaustive indexes, status narration, and duplicated detailed contracts are removed rather than relocated; stale live/canonical references are corrected in the README, roadmap/bootstrap guidance, and mdBook; all links and examples are verified.`
-  Verification: `Pending.`
+  Verification: `README.md is reduced from 2,353 lines / 377,853 bytes to 242 lines / 9,566 bytes. It keeps the stable objective, IAL model, backend boundary, requirements, tested quick start, CLI discovery, curated documentation, canonical truth routing, concise repository orientation, development workflow, maintenance rule, and license. The 1,362-line hand-maintained Markdown inventory plus detailed implementation/status narration were deleted without relocation; canonical book/task/decision/fact/git/source surfaces remain linked. ROADMAP_V2.md, SESSION_BOOTSTRAP.md, and mdBook chapters 00/90 now route live status to MEMORY.md plus docs/TASK_TREE.md and identify ROADMAP_STATUS.md as frozen. Every retained README local link exists. Executable check, IAL1 schedule, IAL2 schedule, manifest, and semantic examples pass. Focused docs verification passes 329 tests across t/1256, t/1303, t/1305, t/1332, and t/1414 under the RAM guard. The mdBook builds and generated docs/book/book is removed. Diff hygiene passes; runtime behavior is unchanged.`
   Commit: `README-STATIC-LANDING-PAGE.2: reduce README to stable landing page`
 
 - ID: `README-STATIC-LANDING-PAGE.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Add a small project-neutral README maintenance standard and ratchet mechanical enforcement to the reduced shape.`
   Acceptance: `A self-contained git-tracked Markdown standard explains the stable landing-page contract, dynamic-content routing, line/byte budgets, deterministic pre-commit/CI enforcement, exception rule, and adoption checklist without FSMGen-specific assumptions; FSMGen's doctrine check enforces the reduced budget; doctrine/tooling docs, decision record, task tree, Memory, mdBook when relevant, and Knowledge Map are synchronized.`
   Verification: `Pending.`
@@ -86,6 +86,9 @@ recoverable in git; no replacement append-log file is created.
   changes.
 - `2026-07-30`: Prefer deletion plus canonical links over moving duplicated
   README narration into another large file.
+- `2026-07-30`: The reduced landing page is 242 lines / 9,566 bytes. Its
+  quick-start commands and every retained local link were verified before
+  closeout; detailed dynamic content remains in existing canonical homes.
 
 ## Blockers
 

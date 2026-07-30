@@ -19,8 +19,9 @@ It is the explicit session-start ritual for ongoing FSMGen architecture work.
 ## Default start-of-session task
 Before doing anything else, perform this task first:
 
-> Read `README.md` and all the referenced `.md` files, then thoroughly,
-> meticulously and precisely analyze `bin/fsmgen` and its import tree.
+> Read `README.md`, the mandatory continuity/doctrine documents, the roadmap,
+> and the mdBook, then thoroughly, meticulously and precisely analyze
+> `bin/fsmgen` and its import tree.
 > Treat `COMMIT.md` as a hard safety invariant, not a suggestion.
 > Do not start code, test, generated-artifact, source, or config changes unless
 > the selected work already has task-tree ownership.
@@ -33,22 +34,32 @@ For a normal new session, the agent should:
 
 1. Read [README.md](README.md).
 2. Read [COMMIT.md](COMMIT.md) early and adopt it as a non-negotiable session rule.
-3. Read [docs/TASK_TREE.md](docs/TASK_TREE.md) and any active task files it lists.
-4. Read the Markdown files referenced from [README.md](README.md).
-5. Rebuild a current understanding of:
+3. Read [MEMORY_ARCHITECTURE.md](MEMORY_ARCHITECTURE.md),
+   [DOCTRINE_ENFORCEMENT.md](DOCTRINE_ENFORCEMENT.md),
+   [TOOLBOX.md](TOOLBOX.md), and resume from [MEMORY.md](MEMORY.md).
+4. Read [docs/TASK_TREE.md](docs/TASK_TREE.md) and the active task files it
+   lists.
+5. Read [ROADMAP_V2.md](ROADMAP_V2.md), the mdBook table of contents at
+   [docs/book/src/SUMMARY.md](docs/book/src/SUMMARY.md), and the book chapters
+   relevant to the active work. Pull other focused references from the README
+   only when the current question needs them.
+6. Consult [KNOWLEDGE_MAP.md](KNOWLEDGE_MAP.md) before re-deriving an existing
+   durable fact.
+7. Rebuild a current understanding of:
    - the live roadmap state,
    - the active task-tree frontier, if one exists,
    - the current architecture,
    - the current active lane,
    - and the continuity/history notes that matter for the ongoing work.
-6. Before any future code, test, generated-artifact, source, or config change,
+8. Before any future code, test, generated-artifact, source, or config change,
    verify the owning task-tree leaf or create one first.
-7. Analyze [bin/fsmgen](bin/fsmgen) and the project-owned transitive `FSM::...` import tree from source.
-8. Compare that live source picture against [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md).
-9. Update [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) if the saved picture is stale, incomplete, or no longer honest.
-10. Then continue by helping fulfil the objectives captured in [ROADMAP_V2.md](ROADMAP_V2.md) and tracked live in [ROADMAP_STATUS.md](ROADMAP_STATUS.md).
-11. After every completed task, slice, lane, or task-scoped activity from that point on, run the full workflow in [COMMIT.md](COMMIT.md) before starting or switching to another one.
-12. When that workflow reaches git write steps, run them sequentially and treat a stale `.git/index.lock` as a recovery event governed by [COMMIT.md](COMMIT.md).
+9. Analyze [bin/fsmgen](bin/fsmgen) and the project-owned transitive `FSM::...` import tree from source.
+10. Compare that live source picture against [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md).
+11. Update [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) if the saved picture is stale, incomplete, or no longer honest.
+12. Then continue the high-level objectives in [ROADMAP_V2.md](ROADMAP_V2.md)
+    through the exact live frontier in [docs/TASK_TREE.md](docs/TASK_TREE.md).
+13. After every completed task, slice, lane, or task-scoped activity from that point on, run the full workflow in [COMMIT.md](COMMIT.md) before starting or switching to another one.
+14. When that workflow reaches git write steps, run them sequentially and treat a stale `.git/index.lock` as a recovery event governed by [COMMIT.md](COMMIT.md).
 
 ## Expected close-out from that startup task
 After completing the bootstrap task, the agent should report:
