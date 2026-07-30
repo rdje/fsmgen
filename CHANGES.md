@@ -30938,3 +30938,17 @@ task tree and git.
 - Feature-backlog status, live-book-path, and relative-path audits pass with
   `Files=3, Tests=40`; Knowledge Map, memory architecture, and diff hygiene
   pass.
+
+### MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1 — AHB busy-count residue sync activated
+
+- Activated only the selected no-behavior Chapter 16c truth repair after clean
+  parent selector commit `6e1c73d8c`.
+- Task/index, selector record/fact, roadmap, mdBook backlog, Memory, and
+  changelog continuity are aligned. The stale Chapter 16c bullet, code, public
+  sources, support accounting, tests, generated artifacts, APIs, HDL/runtime,
+  broader roadmap owners, and both frozen status files remain unchanged.
+- The next clean slice changes only the selected residue wording; no separate
+  development note is warranted for this continuity activation. Focused
+  documentation audits pass with `Files=3, Tests=40`; Knowledge Map, memory
+  architecture, the 72-file mdBook HTML build, output cleanup, and diff hygiene
+  pass.

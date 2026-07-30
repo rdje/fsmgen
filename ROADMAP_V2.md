@@ -8281,6 +8281,11 @@ canonical literal `2..16` requester BUSY counts and above-16 residue, but one
 later bullet still says counts beyond four are unshipped. The selected leaf
 will synchronize only that contradictory residue wording after a clean
 activation. See `docs/IAL2_POST_IMPORT_MAP_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `6e1c73d8c` activates only
+`MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1` continuity-only. The stale Chapter 16c
+bullet, exact-one-through-four fixtures, generic literal `2..16` behavior,
+above-16 residue, support accounting, and every broader owner remain unchanged
+during activation.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

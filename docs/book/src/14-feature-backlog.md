@@ -11986,6 +11986,9 @@ per count, but one later residue bullet still says counts beyond four are
 unshipped. The child will synchronize only that contradiction after clean
 activation. See the
 [selection record](../../IAL2_POST_IMPORT_MAP_NEXT_OWNER_SELECTION.md).
+Clean selector commit `6e1c73d8c` activates only the selected Chapter 16c
+residue-sync leaf continuity-only. The stale bullet, support accounting, and
+every product behavior remain unchanged during activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

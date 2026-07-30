@@ -77,6 +77,11 @@ passes at `1074` facts / `5534` question keys, memory architecture passes with
 reserved for the selected implementation leaf because this selector changes
 no Chapter 16c content.
 
+Clean selector commit `6e1c73d8c` activates only
+`MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1` through continuity changes. Chapter
+16c's stale bullet and every product behavior remain unchanged during
+activation.
+
 Rollback removes this selector record/fact and restores `.840` to active. The
 stale Chapter 16c bullet and every product behavior remain unchanged until a
 clean follow-up commit creates and activates the selected child.

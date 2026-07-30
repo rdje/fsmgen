@@ -27,3 +27,8 @@ The selected leaf may synchronize only that residue wording after separate
 clean activation. Exact-one-through-four fixtures, accounting, code, generated
 artifacts, runtime behavior, values above 16, and every broader owner remain
 unchanged.
+
+Clean selector commit `6e1c73d8c` activates only
+`MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1` through continuity changes. The stale
+Chapter 16c bullet and every product behavior remain unchanged during
+activation.
