@@ -88,6 +88,9 @@ package, module, parser, source, or generated-artifact implementation work.
   Perl `SourceHIRBuilder` prototype, not a public Perl API. This tree still
   owns later selection of any supported host language, ergonomic package,
   compatibility/versioning contract, and public promotion.
+- `2026-07-30`: Private SourceHIR v1 is implemented and proved against the
+  valid-ready golden. It remains an internal Perl construction path; this tree
+  is still proposed and no public language/package is implied.
 
 ## Open Questions
 

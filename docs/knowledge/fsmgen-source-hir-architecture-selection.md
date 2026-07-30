@@ -31,4 +31,5 @@ host-language API or report schema is selected.
 Leaf `.3` freezes the exact keys, private package APIs, provenance,
 diagnostics, renderer/source-map result, t1547 owner, and byte-equivalence
 oracle in `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md`. Implementation remains
-private; clean contract commit `3244f8817` activates `.4` continuity-only.
+private; `.4` implements the exact three-package/t1547 contract without a
+public surface.

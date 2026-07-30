@@ -2,14 +2,15 @@
 
 Date: 2026-07-30
 Owner: `FSMGEN-HIR-ROADMAP-FRONTIER.2`
-Status: selected; version-1 private contract selected; implementation not started
+Status: selected and privately implemented for version-1 valid-ready
 
 `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md` now freezes the exact private v1
 field, package API, provenance, diagnostic, renderer-result, source-map, test,
 and golden-equivalence contract selected by `.3`.
 
-Clean contract commit `3244f8817` activates `.4` continuity-only for the
-private implementation; activation itself adds no packages or behavior.
+The three selected packages now implement the private valid-ready path.
+Focused t1547 proves canonical rendering through the existing parser and
+unchanged downstream artifacts/reports; no public surface is added.
 
 ## Outcome
 

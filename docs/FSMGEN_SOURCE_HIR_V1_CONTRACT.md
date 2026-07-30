@@ -2,10 +2,10 @@
 
 Date: 2026-07-30
 Owner: `FSMGEN-HIR-ROADMAP-FRONTIER.3`
-Status: selected; implementation active continuity-only under `.4`
+Status: selected and implemented privately by `.4`
 
-Clean contract commit `3244f8817` activates `.4`; no implementation exists
-until that separate activation commits cleanly.
+The three private packages and `t/1547-source-hir-valid-ready.t` implement and
+prove this exact contract without adding a public surface.
 
 ## Scope
 
@@ -360,7 +360,7 @@ SourceHIR root location. The original first-line downstream message remains in
 ## Focused implementation test owner
 
 Implementation leaf `.4` creates only
-`t/1547-source-hir-valid-ready.t` for this new boundary. The test must prove:
+`t/1547-source-hir-valid-ready.t` for this new boundary. The test proves:
 
 - three packages compile and enforce class/argument boundaries;
 - golden validation/build/accessors and defensive clones;

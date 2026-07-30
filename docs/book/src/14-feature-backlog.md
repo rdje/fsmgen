@@ -85,7 +85,7 @@ changes.
 
 ### Source-Facing FSMGEN HIR
 
-Status: architecture and private version-1 contract selected; implementation active.
+Status: private version-1 valid-ready prototype implemented; public promotion unselected.
 
 Goal: give future high-level language frontends and builder APIs one checked
 FSMGEN-native semantic target above IAL2 and IAL1. The intended architecture is
@@ -113,9 +113,11 @@ report schema. Version 1 is now frozen as one closed immutable valid-ready
 object with JSON-Pointer-style provenance, structured private diagnostics,
 deterministic canonical PPIF text and source map, and byte equality with the
 14-line/428-byte tracked fixture. The private three-package implementation and
-focused t1547 proof are active under `.4`; activation itself changes no code
-or behavior. Public host-language
-ergonomics remain a separate later decision.
+focused t1547 proof now ship internally: rendered text re-enters the existing
+PPIF parser and produces equal IAL1, IAL0, schedule, and protocol reports.
+There is still no public builder, CLI mode, HIR report/manifest/accounting
+surface, or direct generator path. Public host-language ergonomics and any
+promotion remain a separate later decision.
 
 ### Inference-First Scalar Authoring
 

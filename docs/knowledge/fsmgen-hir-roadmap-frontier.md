@@ -36,5 +36,6 @@ golden is `ppif/valid_ready_handshake.ppif`, reproduced byte-for-byte.
 The prototype remains private and adds no CLI, public host-language API,
 normalized-report key, or support-accounting promise. Leaf `.3` freezes the
 exact version-1 contract in `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md` without
-implementation. Clean contract commit `3244f8817` activates `.4`
-continuity-only for the private three-package/t1547 slice.
+implementation. Leaf `.4` now implements and proves the private
+three-package/t1547 valid-ready path; `.5` remains proposed for promotion or
+retirement audit.

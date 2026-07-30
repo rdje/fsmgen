@@ -79,11 +79,11 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.3: freeze SourceHIR v1 contract`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.4`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the private valid-ready SourceHIR golden path.`
   Acceptance: `Implement only the policy-selected SourceHIR, SourceHIRBuilder, and SourceHIRPPIFRenderer private package family after .3 is done. Prove construction/rejection, immutability, deterministic byte-identical rendering of ppif/valid_ready_handshake.ppif, provenance diagnostics, PPIF reparse, and unchanged generated IAL1/IAL0 semantics. Add no public frontend, CLI mode, report key, manifest field, or support-accounting entry.`
-  Verification: `Activated continuity-only after clean v1-contract commit 3244f8817. Activation changes only task/index, architecture/contract/fact continuity, roadmap, mdBook backlog, Memory, and changelog. The three private packages, t/1547, parser, fixture, generated artifacts, config, CLI/API/report/accounting, HDL/runtime, and behavior remain unchanged until this activation commits cleanly. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1077 facts / 5553 question keys; memory architecture passes with MEMORY.md at 47 lines; the 72-file mdBook HTML build passes and its exact repository-local output is removed; diff hygiene and all seven doctrine gates pass.`
-  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.4: activate private SourceHIR implementation`
+  Verification: `Clean activation commit b9d0c9fba permits only the contract-selected private implementation. The three SourceHIR packages and t1547 implement closed deterministic validation, immutable defensive access, exact/ancestor/root provenance, canonical ordered PPIF plus source map, stack-sanitized line-remap/root-fallback diagnostics, alternate role/reset/list variants, and byte-identical 14-line/428-byte/SHA-256 golden output. Generated text reparses through the existing adapter with equal IAL1, IAL0, schedule, and protocol reports and no direct generator dependency. Focused plus current IR/contract/valid-ready baseline passes with Files=7, Tests=21; all four new Perl/test files report syntax OK. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; all 36 mdBook chapters pass executable-example testing; the 72-file HTML build passes and its exact repository-local output is removed. Knowledge Map generation/check passes at 1078 facts / 5558 question keys; memory architecture passes with MEMORY.md at 47 lines; diff hygiene and all seven staged doctrine gates pass. No CLI, parser, fixture, config, public API/report/manifest/accounting, HDL/runtime, frozen status file, or existing behavior changes.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.4: implement private SourceHIR golden path`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.5`
   Status: `proposed`
@@ -94,15 +94,15 @@ and future IAL evolution.
 
 ## Current Frontier
 
-Clean v1-contract commit `3244f8817` activates `.4` continuity-only. The leaf
-must implement only the selected private packages and focused proof.
+Leaf `.4` implements and proves the selected private valid-ready golden path.
+Leaf `.5` remains proposed until a separate clean activation commit.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `done` | Captured the roadmap phase and activation criteria without behavior changes. |
 | 2 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `done` | Selected a distinct private SourceHIR, internal Perl builder, canonical PPIF handoff, and valid-ready golden. |
 | 3 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `done` | Froze the exact closed object, APIs, provenance/diagnostics, renderer/source-map, test, and golden oracle. |
-| 4 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `active` | Implement and prove the private valid-ready golden path. |
+| 4 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `done` | Implemented the three private packages and t1547 exact golden/downstream-equivalence proof. |
 | 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `proposed` | Audit promotion, continued private iteration, or retirement from evidence. |
 
 ## Decisions
@@ -156,15 +156,20 @@ must implement only the selected private packages and focused proof.
 - `2026-07-30`: Clean v1-contract commit `3244f8817` activates `.4`
   continuity-only. Implementation remains unchanged until the activation
   commits cleanly.
+- `2026-07-30`: `.4` implements the private closed SourceHIR object, builder,
+  PPIF renderer/source map, and structured diagnostic remapper. T1547 proves
+  exact fixture bytes and unchanged existing-parser downstream results.
 
 ## Open Questions
 
-- After the private prototype, does evidence justify a public host-language
-  builder, another private fixture, or retirement?
+- Leaf `.5` must decide from the private prototype evidence whether to promote
+  a public host-language builder, keep SourceHIR private for another fixture,
+  or retire the prototype.
 
 ## Blockers
 
-- None. `.4` is active continuity-only after clean commit `3244f8817`.
+- None. `.4` is complete; `.5` remains proposed until a separate clean
+  activation commit.
 
 ## Verification Log
 
@@ -175,6 +180,7 @@ must implement only the selected private packages and focused proof.
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.3` activation | documentation audits; Knowledge Map; memory architecture; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; continuity-only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.3` contract | fixture line/byte/SHA oracle; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; exact private contract only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.4` activation | documentation audits; Knowledge Map; memory architecture; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; continuity-only |
+| `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.4` implementation | t1547 plus current forward-IR/contract/valid-ready baseline; four syntax checks; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; private golden path only |
 
 ## Commit Log
 
@@ -188,6 +194,7 @@ must implement only the selected private packages and focused proof.
 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `FSMGEN-HIR-ROADMAP-FRONTIER.3: freeze SourceHIR v1 contract` | Freezes the exact private contract and test oracle without implementation. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `pending` | Proposed private implementation leaf. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `FSMGEN-HIR-ROADMAP-FRONTIER.4: activate private SourceHIR implementation` | Continuity-only activation after the clean v1 contract. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `FSMGEN-HIR-ROADMAP-FRONTIER.4: implement private SourceHIR golden path` | Implements only the private three-package/t1547 contract. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `pending` | Proposed evidence-based promotion/retirement audit. |
 
 ## Changelog
@@ -205,3 +212,11 @@ must implement only the selected private packages and focused proof.
   renderer/test contract and golden hash without implementation.
 - `2026-07-30`: Activated `.4` continuity-only after the clean v1 contract;
   implementation and behavior remain unchanged.
+- `2026-07-30`: Implemented and proved the private SourceHIR valid-ready
+  golden path without advertising or changing any public surface.
+
+## Acceptance Checklist (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Baseline `./bin/fsmgen --strict --check --json ppif/valid_ready_handshake.ppif` and `./bin/fsmgen --emit-schedule-json ppif/valid_ready_handshake.ppif` succeed only after the hand-written PPIF text enters `FSM::Adapter::IAL2::PPIF->parse_source`; source inspection locates that text-to-generator handoff at `perl/FSM/Adapter/IAL2/PPIF.pm` and confirms there was no pre-IAL structured producer.
+- [x] **ADDRESSED (verified)** — `prove -Iperl t/1547-source-hir-valid-ready.t` reports `Files=1, Tests=9` and proves the closed private object/builder/renderer, exact 14-line/428-byte/SHA golden, provenance diagnostics, parser re-entry, ordered variants, and equal downstream artifacts/reports.
+- [x] **NO REGRESSION** — `prove -Iperl t/1547-source-hir-valid-ready.t t/155-forward-intent-hir-surface.t t/156-forward-lowered-rtl-ir-surface.t t/163-forward-structural-rtl-ir-surface.t t/334-normalized-semantic-forward-ir-contract.t t/339-normalized-semantic-intent-hir-contract.t t/1435-axi-ial2-valid-ready-generator.t` reports `All tests successful` and `Files=7, Tests=21`; all new Perl/test files report `syntax OK`, and the staged doctrine driver reports `[doctrine] all doctrine checks passed`.

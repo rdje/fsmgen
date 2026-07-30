@@ -2,7 +2,7 @@
 
 - Date: 2026-07-30
 - Type: architecture
-- Status: accepted; implementation pending under `FSMGEN-HIR-ROADMAP-FRONTIER`
+- Status: accepted and privately implemented by `FSMGEN-HIR-ROADMAP-FRONTIER.4`
 
 ## Context
 
@@ -45,3 +45,11 @@ family, alternatives, and retirement conditions live in
 - SourceHIR may be removed without migration if it does not justify another
   producer or public promotion, because the first prototype exposes no public
   raw-object contract.
+
+## Implementation
+
+`FSM::IR::SourceHIR`, `FSM::IR::SourceHIRBuilder`, and
+`FSM::IR::SourceHIRPPIFRenderer` implement the private valid-ready boundary.
+Focused t1547 proves the byte-identical golden, existing-parser handoff,
+diagnostic provenance, immutability, and unchanged IAL1/IAL0/report results.
+No public surface is advertised.

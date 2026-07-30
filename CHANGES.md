@@ -31080,3 +31080,22 @@ task tree and git.
 - Documentation audits pass with `Files=3, Tests=40`; Knowledge Map passes at
   1,077 facts / 5,553 keys; memory architecture, the 72-file mdBook build,
   output cleanup, diff hygiene, and all seven doctrine gates pass.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.4 — private SourceHIR golden path implemented
+
+- Added the private immutable `SourceHIR`, closed validating builder, and
+  canonical PPIF renderer/source map exactly as selected by the v1 contract.
+- Added focused t1547 coverage for defensive copies, deterministic diagnostics,
+  same-volume provenance, line/root remapping with stack sanitization, ordered
+  alternate role/reset/list variants, and exact 14-line/428-byte/SHA output.
+- Rendered output reparses through the existing PPIF adapter and matches the
+  hand-written fixture's IAL1, IAL0, schedule, and protocol reports; there is
+  no direct generator dependency or public CLI/report/manifest/accounting
+  exposure. Focused plus current IR/contract baseline passes with
+  `Files=7, Tests=21`; all four new Perl/test files report `syntax OK`.
+- Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
+  and the 72-file HTML build pass; Knowledge Map passes at 1,078 facts / 5,558
+  keys; memory, diff, task acceptance, and all seven doctrine gates pass.
+  Repository-local scratch is removed, both frozen status files remain
+  untouched, and the decision/contract records own the rationale instead of a
+  duplicate development note.
