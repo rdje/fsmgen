@@ -75,8 +75,9 @@ choice, implementation-bearing file, broader proposed horizon, and
 director-gated lane remains unchanged during activation.
 
 The selected HIR tree is now complete through clean private-disposition commit
-`24fbf3882`. Parent `.842` is active continuity-only to reconcile the next
-roadmap owner; it does not implicitly activate the proposed public builder.
+`24fbf3882`. Parent `.842` subsequently selected proposed `.843`, the narrower
+authoritative IAL2 task-ledger reconciliation, before any product architecture.
+It does not implicitly activate the proposed public builder.
 
 Rollback removes this selector record/fact and restores `.841` to active. Every
 candidate remains proposed or director-gated, and product behavior is unchanged.

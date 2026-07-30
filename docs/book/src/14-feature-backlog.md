@@ -12040,6 +12040,16 @@ The HIR tree is now complete through clean private-disposition commit
 `24fbf3882`. Parent selector `.842` is active continuity-only to choose one
 next roadmap-aligned owner; it does not implicitly activate the proposed public
 builder or any director-gated direction.
+Completed `.842` selects proposed no-product-behavior `.843`, a bounded repair
+of the authoritative IAL2 task ledger before any architecture activation. An
+exact census finds 842 numbered nodes but only 840 root child references:
+`.633` and `.842` are missing. The sole live `blocked` node, `.705`, also has a
+source-reference condition already resolved and consumed by `.706`-`.709`.
+The selected leaf will reconcile that state and mechanically lock direct-child
+node integrity. HIAL/VIAL remains the strongest later product-architecture
+candidate; the public builder, scale, MCP-write, transaction layering, and
+every director-gated direction remain inactive. See the
+[selection record](../../IAL2_POST_SOURCE_HIR_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

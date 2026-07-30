@@ -8339,6 +8339,16 @@ The HIR tree is now complete through clean private-disposition commit
 `24fbf3882`. Parent selector `.842` is active continuity-only to reconcile the
 remaining roadmap owners and choose exactly one next PNT-eligible direction;
 the proposed public builder and every director-gated lane remain inactive.
+Completed `.842` selects proposed no-product-behavior `.843`, the exact live
+IAL2 task-ledger repair. The authoritative task node list has 842 numbered
+nodes but only 840 root child references (`.633` and `.842` are omitted), and
+`.705` still says `blocked` although `.706`-`.709` resolved and consumed its
+source-reference prerequisite. `.843` will reconcile that exact state and add
+bounded mechanical node-integrity protection before any broader architecture
+activation. HIAL/VIAL remains the strongest later product candidate; public
+builder, scale, MCP-write, protocols/backends, simulator profiles, lifecycle
+review, decision `0020`, and every director-gated lane remain inactive. See
+`docs/IAL2_POST_SOURCE_HIR_NEXT_OWNER_SELECTION.md`.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

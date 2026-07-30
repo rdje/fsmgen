@@ -5,16 +5,16 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.842: activate post-HIR selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.842` (active
-  continuity-only).
-- current_state: clean HIR disposition commit `24fbf3882` closes that child
-  tree and activates parent `.842` without selecting or changing any candidate
-  or product behavior.
-- next_action: reconcile remaining eligible roadmap owners and select exactly
-  one smallest next owner; do not implicitly activate the proposed public
-  builder or any director-gated lane.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.842: select live task-ledger repair`).
+- active_work_unit: none until proposed
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.843` activates cleanly.
+- current_state: `.842` selects the exact authoritative IAL2 node-enumeration
+  and resolved-blocker repair before any product architecture; `.843` remains
+  proposed and unchanged until this selector commits cleanly.
+- next_action: activate only `.843` through a separate continuity commit, then
+  repair the exact `.633`/`.842` child omissions and stale `.705` live status
+  with bounded mechanical integrity protection.
+- in_flight_uncommitted: none after this selector commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -41,9 +41,15 @@ history; this file carries only the current bounded resume state.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
 - Decisions `0028`-`0031` and the architecture/two audits/v1/v2 contract
-  records are canonical. The HIR tree is complete; parent `.842` is active
-  continuity-only. Public builder, HIAL/VIAL, scale, MCP-write, and every
-  director-gated owner remain inactive.
+  records are canonical. The HIR tree is complete; parent `.842` selects
+  proposed live-ledger repair `.843`. Public builder, HIAL/VIAL, scale,
+  MCP-write, and every director-gated owner remain inactive.
+- Exact pre-repair ledger census: 842 numbered IAL2 nodes / 840 root child
+  references, missing only `.633` and `.842`; `.705` is the sole blocked node
+  although canonical records prove `.706`-`.709` resolved its condition.
+- Selector verification: docs audits `Files=3, Tests=40`; all 36 mdBook
+  chapters and 72-file / 16,659,112-byte build pass; Knowledge Map is current
+  at 1,083 facts / 5,584 keys; generated outputs are removed.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously

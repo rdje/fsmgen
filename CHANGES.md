@@ -31282,3 +31282,24 @@ task tree and git.
   the 72-file HTML build pass; Knowledge Map passes at 1,082 facts / 5,579
   question keys; memory, diff, repository-local scratch/output cleanup, and
   all seven staged doctrine gates pass.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.842 — live task-ledger repair selected
+
+- An exact authoritative census found 842 numbered IAL2 nodes but only 840
+  root child references: `.633` and `.842` are the only omissions.
+- `.705` is the sole live `blocked` node although canonical records and commits
+  prove `.706` imported the approved source, `.707` extracted facts, `.708`
+  selected the direct seed, and `.709` shipped it. Its blocker is historical,
+  not live.
+- Selected proposed `.843` to reconcile the exact ledger and add bounded
+  mechanical active-tree node-integrity protection before any broader product
+  architecture. The child remains inactive until a separate clean commit.
+- HIAL/VIAL remains the strongest later product candidate. Public builder,
+  scale, MCP-write, protocols/backends, simulator profiles, lifecycle review,
+  decision `0020`, every director gate, both frozen status files, and product
+  behavior remain unchanged; no separate development note is warranted because
+  the selector record/fact own the rationale.
+- Documentation audits pass at `Files=3, Tests=40`; all 36 mdBook chapters and
+  the 72-file / 16,659,112-byte HTML build pass; Knowledge Map generation
+  writes 1,083 facts / 5,584 keys; memory, diff, repository-local cleanup, and
+  all staged doctrine gates complete the selector closeout.
