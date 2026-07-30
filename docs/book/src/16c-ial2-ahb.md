@@ -2471,6 +2471,9 @@ public-verifier behavior, while removing only alias residue. Implementation
 projects 332/373/56 split 28 `.ppif`/28 `.ahb`; t1540 will prove parity without
 a second runtime. See the
 [next-owner selection](../../IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
+Clean selector commit `bc29c2e49` activates only implementation `.828`.
+The selected alias, support entry, and t1540 remain absent during activation;
+the 331/372/55 split 28 `.ppif`/27 `.ahb` boundary is unchanged.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

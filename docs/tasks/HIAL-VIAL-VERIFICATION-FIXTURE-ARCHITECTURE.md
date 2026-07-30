@@ -294,4 +294,6 @@ evidence-backed handoff.
 - `2026-07-30`: Selector `.827` chooses pending data-only exact-four
   two-window `.ahb` alias `.828`; HIAL/VIAL remains proposed with its complete
   portable-fast/full-language/VHDL/mixed-language/scale boundary intact.
+- `2026-07-30`: Clean selector commit `bc29c2e49` activates only `.828`;
+  HIAL/VIAL remains proposed and unchanged during alias activation.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

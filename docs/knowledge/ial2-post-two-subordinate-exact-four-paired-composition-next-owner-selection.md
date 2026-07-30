@@ -40,3 +40,6 @@ VHDL, portability, scale, and other protocol/backend work remain separate.
 HIAL/VIAL retains portable-fast event-capable compiled Verilator versus a
 separately qualified full-language/SystemVerilog-UVM simulator, with independent
 VHDL and mixed-language profiles.
+
+Clean selector commit `bc29c2e49` activates only `.828`; the alias remains
+absent and public behavior stays at 331/372/55 during activation.

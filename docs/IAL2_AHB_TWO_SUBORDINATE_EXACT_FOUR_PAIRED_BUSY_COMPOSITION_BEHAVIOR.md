@@ -31,6 +31,9 @@ Completed selector `.827` now selects pending data-only alias implementation
 t1540 will own alias parity while t1539 remains the sole assertion-enabled
 runtime. No alias ships in selection.
 
+Clean selector commit `bc29c2e49` activates only `.828`; activation preserves
+the shipped generic source and 331/372/55 boundary without adding the alias.
+
 ## Exact Source Delta
 
 The 6,645-byte source is the frozen identity/requester/cardinality-only

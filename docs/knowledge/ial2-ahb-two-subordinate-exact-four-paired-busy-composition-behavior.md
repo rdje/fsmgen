@@ -43,3 +43,6 @@ one exact next roadmap owner.
 Completed `.827` selects pending data-only alias implementation `.828` at
 projected 332/373/56 split 28/28. The alias remains absent in selection; future
 t1540 owns parity and t1539 remains the shared assertion-enabled runtime.
+
+Clean selector commit `bc29c2e49` activates only `.828`; the alias remains
+absent and current 331/372/55 behavior is unchanged during activation.

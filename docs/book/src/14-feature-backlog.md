@@ -11580,6 +11580,9 @@ alias-only residue removal. Implementation projects 332/373/56 split 28/28;
 t1540 will own parity without another simulation while t1539 remains the
 shared assertion-enabled runtime. See the
 [next-owner selection](../../IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md).
+Clean selector commit `bc29c2e49` activates only implementation `.828`.
+The alias/support/t1540 remain absent during activation, so public behavior
+stays at 331/372/55 split 28 `.ppif`/27 `.ahb`.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

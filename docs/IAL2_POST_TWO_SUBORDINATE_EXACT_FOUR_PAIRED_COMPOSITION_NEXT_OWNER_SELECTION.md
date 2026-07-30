@@ -122,6 +122,10 @@ reports/schemas, semantic/MCP APIs, runtime/HDL behavior, ports, existing source
 bytes, other aliases, BUSY semantics, backends, VHDL, verification generation,
 HIAL/VIAL activation, scale, or decision `0020`.
 
+Clean selector commit `bc29c2e49` activates only `.828`. Activation adds no
+alias, support entry, t1540, artifact, API, or runtime behavior; current
+accounting remains 331/372/55 split 28 `.ppif`/27 `.ahb`.
+
 ## Validation And Resource Boundary
 
 The selector changes documentation and task ownership only. Focused

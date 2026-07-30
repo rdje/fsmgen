@@ -7859,6 +7859,10 @@ will own parity without simulation while t1539 remains the assertion-enabled
 10/8/2/8/2/`44332211`/`88776655` runtime authority. HIAL/VIAL and broader
 owners remain separate. See
 `docs/IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_COMPOSITION_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `bc29c2e49` activates only data-only alias
+implementation `.828`. Activation adds no source, support entry, test,
+artifact, API, HDL/runtime, backend, protocol, or HIAL/VIAL behavior; current
+accounting remains 331/372/55 split 28 `.ppif`/27 `.ahb`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
