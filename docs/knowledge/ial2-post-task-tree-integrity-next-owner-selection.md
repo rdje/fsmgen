@@ -10,8 +10,8 @@ answers:
 date: 2026-07-31
 status: current
 tags: [ial2, selector, hial, vial, verification, architecture, task-tree]
-evidence: docs/IAL2_POST_TASK_TREE_INTEGRITY_NEXT_OWNER_SELECTION.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/knowledge/hial-vial-verification-fixture-architecture.md; docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md; docs/tasks/FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON.md; docs/decisions/0031-source-hir-remains-a-private-validated-architecture-boundary.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
-reverify: scripts/check_task_tree_integrity.pl && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.844|HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE\.1|selected|remains proposed|director' docs/IAL2_POST_TASK_TREE_INTEGRITY_NEXT_OWNER_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md
+evidence: docs/IAL2_POST_TASK_TREE_INTEGRITY_NEXT_OWNER_SELECTION.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/knowledge/hial-vial-verification-fixture-architecture.md; docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md; docs/tasks/FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON.md; docs/decisions/0031-source-hir-remains-a-private-validated-architecture-boundary.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
+reverify: scripts/check_task_tree_integrity.pl && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.844|HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE\.1|decision `0032`|Proposed `\.2`|remains proposed|director' docs/IAL2_POST_TASK_TREE_INTEGRITY_NEXT_OWNER_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md
 ---
 
 Parent selector `.844` selects proposed no-product-behavior
@@ -23,5 +23,10 @@ The public builder remains a separate future producer/projection choice under
 decision `0031`; whole-product scale retains its independent workload and
 measurement contract; MCP write retains its trust boundary. Clean selector
 commit `031b21d4f` activates only the selected audit through a separate
-continuity transition. The architecture audit remains unperformed and product
-behavior is unchanged during activation.
+continuity transition. At that activation boundary the architecture audit was
+still unperformed and product behavior was unchanged.
+
+The audit has since completed under decision `0032`, selected the exact
+one-source/two-private-IR/versioned-bridge architecture, and decomposed leaves
+`.2`-.18. Proposed `.2` is the only selected next leaf and requires separate
+clean activation; the parent-selection rationale remains unchanged.

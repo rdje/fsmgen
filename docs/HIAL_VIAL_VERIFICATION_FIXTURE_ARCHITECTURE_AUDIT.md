@@ -1,0 +1,457 @@
+# HIAL/VIAL Verification-Fixture Architecture Audit
+
+## Metadata
+
+- Owner leaf: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
+- Date: `2026-07-31`
+- Status: `complete`
+- Decision: `docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md`
+- Product behavior: unchanged; this is an architecture/decomposition slice
+
+## Outcome
+
+FSMGen will retain the current synthesizable IAL0/IAL1/IAL2 stack under the
+architectural name **HIAL** and add one peer verification language, **VIAL**.
+VIAL will not mirror the three numbered HIAL source layers. The selected
+topology is:
+
+```text
+HIAL source/review artifacts                 VIAL source
+(.fsm / .isf / .ppif -> .isf -> .fsm)       (.vial)
+                |                               |
+                v                               v
+        HIALVIALBridgeManifest           VIALSemanticIR
+                \                               /
+                 +---- bind + elaborate -------+
+                              |
+                              v
+                      VIALExecutionIR
+                              |
+           +------------------+------------------+
+           |                  |                  |
+           v                  v                  v
+   plain SystemVerilog   SystemVerilog/UVM   VHDL verification
+   portable profile     qualified profile   qualified profile
+```
+
+The public `.vial` source is the reviewable verification-intent boundary.
+`VIALSemanticIR` and `VIALExecutionIR` are private immutable compiler
+boundaries. `HIALVIALBridgeManifest` is a bounded versioned public projection,
+not raw compiler IR. A sanitized `vial-plan.json` and normalized
+`verification-result-manifest.json` will provide review and parity surfaces
+without exposing either private IR.
+
+## Evidence Read
+
+### HIAL layers and lowerings
+
+- `README.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, and mdBook Chapters 13h, 15, and
+  16 establish `IAL2 -> IAL1 -> IAL0 -> HDL`, reviewable generated `.isf` and
+  `.fsm`, and no direct IAL2-to-IAL0 route.
+- `perl/FSM/Adapter/IAL2/PPIF.pm` parses `.ppif` and selected aliases, selects
+  protocol-intent generators, emits generated IAL1 plus IAL0 bundles, and
+  reports `direct_ial2_to_ial0 => 0`.
+- `perl/FSM/Adapter/ISF.pm`, `perl/FSM/Scheduler/ISF.pm`, and
+  `perl/FSM/Scheduler/ISF/LoweringIR.pm` own parsed IAL1 and private scheduled
+  lowering before `Emitter/FSM.pm` writes reviewable IAL0.
+- `perl/FSM/Adapter/FSMGenFull.pm` coordinates IAL0/CoreAST parsing and signal
+  analysis before the HDL pipeline.
+- The SystemVerilog backend remains the broad reference backend. Direct VHDL
+  currently converts the SystemVerilog-first scaffold through
+  `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; bounded composition VHDL uses
+  `perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`. `docs/VHDL_SCOPE.md`
+  records the bounded and fail-closed boundary.
+
+### Current verification-output boundary
+
+- IAL1 `(observe NAME (role passive_monitor) (signals ...))` is single-clock,
+  public-interface-only, parser-validated metadata. Lowering preserves it in
+  `verification_observations[]`; it creates no scheduled state or HDL by
+  itself.
+- `perl/FSM/VerificationOutput/UVM/PassiveMonitorSkeleton.pm` emits UVM 1.2
+  snapshot and monitor declarations plus an analysis port, but no `run_phase`,
+  virtual interface, sampling, publication, driver, agent, scoreboard, or
+  coverage behavior.
+- `perl/FSM/VerificationOutput/VHDL/ObservationPackageSkeleton.pm` emits only
+  declaration constants for observation metadata; it has no entity,
+  architecture, process, assertion, PSL, sampling, scoreboard, or coverage.
+- `perl/FSM/Support/VerificationOutputsSection.pm` and
+  `VerificationOutputsContract.pm` publish two bounded targets and explicit
+  UVM/VHDL compile, VHDL syntax, and PSL non-claims.
+- `bin/fsmgen` accepts the two explicit `.isf`-only
+  `--emit-verification-output` targets and keeps them separate from
+  synthesizable `--language`, `--output`, and `--verify-hdl` modes.
+- `docs/IAL1_DIRECT_IAL2_VERIFICATION_ROUTE_AUDIT.md` requires future IAL2
+  protocol verification facts to lower or annotate generated IAL1 before
+  verification output consumes them.
+
+### Reference and tool constraints
+
+- The tracked Accellera UVM 1.2 source mirror confirms distinct monitor,
+  active/passive agent, sequence-item, analysis-port, and scoreboard roles.
+  The existing skeleton has enough truth for class identity and fields, but
+  not for executable component topology or sampled transaction flow.
+- Accellera now publishes IEEE 1800.2 reference implementations in addition
+  to historical UVM 1.2. Existing UVM 1.2 output therefore remains a
+  compatibility fact, not an automatic version choice for future native VIAL:
+  <https://www.accellera.org/downloads/standards/uvm>.
+- Verilator documents that `--timing` supports its implemented delays, event
+  controls, waits, and forks and supplies a timing evaluation loop. That makes
+  it suitable for a fast event-capable compiled subset, not a complete
+  SystemVerilog/UVM authority:
+  <https://verilator.org/guide/latest/languages.html> and
+  <https://verilator.org/guide/latest/connecting.html>.
+- GHDL requires an explicit VHDL standard selection; VHDL-2008 and VHDL-2019
+  are partially implemented, and PSL is a documented subset. A successful
+  GHDL run must therefore report exact standard/options/capabilities instead
+  of implying full VHDL/PSL coverage:
+  <https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html>.
+- OSVVM and UVVM both demonstrate that advanced VHDL verification is a
+  methodology/library concern, not merely VHDL syntax. Methodology-provider
+  selection belongs to a later VHDL backend contract:
+  <https://osvvm.org/about-os-vvm> and <https://uvvm.github.io/>.
+- Local audit tools: Verilator `5.046` is available; Yosys and Icarus Verilog
+  are available; GHDL, NVC, `vcom`/`vsim`, VCS, Xcelium, and Qrun are absent.
+  No absent tool is selected as current runnable evidence.
+
+## Why VIAL Is Not VIAL0/VIAL1/VIAL2
+
+HIAL's three source layers correspond to useful hardware authoring levels:
+protocol/platform intent, scheduled actors/transactions, and explicit cycles.
+Verification intent has different orthogonal axes: reusable type/transaction
+declarations, DUT binding, scenarios, concurrency, checking, models,
+scoreboards, coverage, and backend methodology. Splitting those axes into
+three public source languages would force users to choose an artificial
+abstraction level and would multiply migration, syntax, report, and backend
+contracts before the first executable fixture exists.
+
+One `.vial` language keeps reusable declarations and scenarios composable.
+The necessary compiler separation is private and phase-based:
+
+| Boundary | Phase | Owner | Invariant | Exposure |
+| --- | --- | --- | --- | --- |
+| `.vial` | authored source | future VIAL parser package | complete source identity and deterministic order | public/versioned |
+| `VIALSemanticIR` | semantic intent | future `FSM::VIAL::SemanticIR` family | typed, validated, immutable, not DUT-bound | private |
+| `HIALVIALBridgeManifest` | report/contract projection | future HIAL bridge owner | sanitized HIAL truth with stable logical IDs and source maps | bounded public/versioned |
+| `VIALExecutionIR` | bound execution plan | future VIAL binder/elaborator | every reference bound, capability checked, deterministic schedule | private |
+| `vial-plan.json` | report projection | future plan-report owner | sanitized binding/schedule/capability/source-map view | bounded public/versioned |
+
+`VIALSemanticIR` is distinct from SourceHIR and HIAL IR because it represents
+pure verification semantics, not a source route to synthesizable hardware.
+`VIALExecutionIR` is distinct because DUT binding, logical clock phases,
+scenario fibers, runtime models, and backend capability requirements do not
+belong in unbound semantic intent. Both return defensive copies or sanitized
+projections at caller boundaries; raw objects are not serialized publicly.
+
+## HIAL/VIAL Bridge Contract
+
+`HIALVIALBridgeManifest` is generated from the canonical HIAL pipeline and is
+the only portable DUT-binding authority. Version 1 must contain these logical
+families before a backend can claim support:
+
+| Family | Required facts |
+| --- | --- |
+| Identity | schema version; HIAL source kind and repo-relative identity; generated `.isf`/`.fsm` review identities; content/source-map identities |
+| Units | stable logical unit IDs; module/entity names per supported HIAL backend; hierarchy/composition identity |
+| Configuration | parameters/generics; resolved values; types; provenance |
+| Types | two-state/four-state logic, signedness, width/range, enums, records/lists, and portable value encoding |
+| Endpoints | logical endpoint IDs; direction; type; owning unit/interface; semantic role; backend port/binding names |
+| Time domains | clock endpoint, active edge, reset endpoint, polarity, synchronous/asynchronous policy, and domain identity |
+| Transactions/events | transaction ID; fields; request/accept/complete/sample events; ordering/correlation; endpoint mapping |
+| Protocol facts | protocol/profile/version; channel/role facts; legal-value or timing facts; explicitly retained unsupported residue |
+| Observations/probes | existing IAL1 observations; public-port observation sets; explicit HIAL verification probes; access/portability class |
+| Backend bindings | logical ID to SystemVerilog module/path/interface and VHDL entity/port/adapter mapping |
+| Capabilities | required backend/profile capabilities and explicit unsupported combinations |
+| Source map | every bridge fact back to HIAL source and generated review artifacts |
+
+The bridge distinguishes three access classes:
+
+1. `public_port` is the mandatory cross-backend portable baseline.
+2. `verification_probe` is explicitly declared by HIAL and carries a profile
+   support matrix; it may be portable only when every claimed backend supplies
+   a semantically equivalent adapter.
+3. `native_hierarchy` is backend-specific and may appear only through a typed
+   native extension. It cannot contribute to a portable parity claim.
+
+For IAL2, the bridge may consume only facts present in or deliberately
+annotated onto the generated IAL1 review route. It may retain original IAL2
+provenance, but it does not call a verification backend directly from
+`PPIF.pm` or create a second protocol truth source.
+
+## Portable VIAL Semantics
+
+The core semantic model includes:
+
+| Family | Portable contract |
+| --- | --- |
+| Values and types | booleans, integers with selected bounds, two-/four-state scalars/vectors, enums, records, lists, and typed transaction records |
+| DUT binding | bridge unit/interface/endpoint/domain/transaction IDs, configuration overrides, and capability requirements |
+| Stimulus | typed drives, transactions, reset actions, waits, and bounded fault actions |
+| Scenarios | reusable procedures, ordered steps, bounded loops, timeouts, setup/teardown, and deterministic parameters |
+| Concurrency | logical fibers with join-all/join-any/cancel policies and deterministic tie-breaking; no host-thread semantics |
+| Observation | explicit sample events and logical clock phase; public-port observations plus qualified probes |
+| Expectations | immediate predicates, temporal windows, event counts, stable/changed checks, expected transaction streams, and termination contracts |
+| Models | pure functions and explicitly declared deterministic state machines with typed state |
+| Scoreboards | in-order, keyed, and explicitly bounded unordered matching with typed actual/expected streams |
+| Coverage | points, bins, transitions, crosses, illegal/ignore bins, goals, and exact hit/count reporting; no implicit cross explosion |
+| Fault injection | bounded value substitution, omission, delay, corruption, and protocol-event faults on declared targets; raw HDL force/release is native only |
+| Randomization | explicit seeds, typed domains/distributions/constraints, stable decision IDs, and replay records |
+| Diagnostics | source span, scenario/fiber/event identity, logical time, expected/actual values, backend profile, and stable code |
+
+Portable logic distinguishes two-state and four-state values. The VHDL
+backend must map additional `std_logic` states through an explicit policy
+(normally unknown/error), and the SystemVerilog backend must not silently
+coerce four-state checks into two-state UVM fields. Exact mapping is part of
+the source/IR contract leaf.
+
+## Logical Time And Determinism
+
+Portable execution uses domain cycles and four logical phases rather than
+target-language scheduling regions:
+
+1. `drive`: actions become visible before the selected active edge;
+2. `sample`: the backend captures the stable post-edge DUT observation;
+3. `react`: scenario/model/scoreboard state consumes the sample; and
+4. `check`: expectations, coverage, transcript, and termination commit.
+
+Backend implementations may use clocking blocks, program blocks, processes,
+delta cycles, or methodology callbacks, but must implement the same logical
+ordering without races. Simultaneous events use stable domain ID, phase, fiber
+ID, and source order. Zero-time unbounded loops fail closed.
+
+Random choices are keyed by stable source/scenario/fiber/decision identity,
+not by host thread or incidental callback order. A later contract must select
+the exact cross-language algorithm and replay encoding before randomness ships.
+Every generated artifact uses canonical ordering, stable names, normalized
+line endings, and source maps.
+
+## Typed Native Extensions
+
+Portable `.vial` must not contain anonymous raw SV/UVM or VHDL blocks. A
+native extension is an external repository-relative artifact with a typed
+contract:
+
+```text
+id
+backend_profile_ids[]
+lifecycle_hook
+typed_inputs[] / typed_outputs[]
+required_capabilities[]
+source_relpath / content_identity / source_span
+deterministic_side_effects[]
+required_or_fallback_policy
+generated_artifacts[]
+```
+
+Lifecycle hooks are a closed family such as elaborate, build, drive, sample,
+predict, compare, cover, and finalize. Extensions cannot mutate private IR or
+undeclared DUT state. Their outputs and diagnostics enter the same result
+manifest. Portable parity excludes backend-only extension behavior unless the
+fixture supplies paired implementations and a shared logical outcome oracle.
+
+## Backend And Validation Profiles
+
+| Profile | Generated target | Required gate | Honest limit |
+| --- | --- | --- | --- |
+| `sv_portable_verilator` | plain SystemVerilog fixture, no UVM dependency | exact Verilator version; compile/elaborate/run with `--binary --timing`; transcript/result checks | only exercised Verilator-supported syntax/timing; not full LRM/UVM |
+| `sv_uvm_qualified` | native SystemVerilog/UVM components, sequences, monitors, scoreboards, subscribers/coverage | named simulator/version, selected UVM revision, compile/elaborate/simulate, exercised capability list | unavailable locally; no claim until external profile runs |
+| `vhdl_portable_ghdl` | VHDL-2008 testbench/packages/processes | installed GHDL/version, `--std=08`, analyze/elaborate/run, exercised capability list | unavailable locally; GHDL's VHDL/PSL implementation is explicitly partial |
+| `vhdl_methodology_qualified` | VHDL plus selected methodology provider | provider/revision, compatible simulator/version, compile/elaborate/run, feature list | OSVVM versus UVVM and exact provider mapping remain a later choice |
+| `mixed_language_qualified` | HIAL and VIAL in different HDLs | named mixed-language tool/version, binding adapter, compile/elaborate/run | never inferred from single-language success |
+
+Plain SystemVerilog is the first implementation target because the AHB
+harness already proves the relevant behavioral substrate under Verilator.
+The UVM backend is a separate native target, not the portable runtime. Verilog
+may remain a synthesizable HIAL compatibility output but is not a selected VIAL
+fixture backend.
+
+The current UVM 1.2 skeleton and VHDL observation package stay unchanged. A
+future UVM backend contract must select its UVM revision instead of inheriting
+`1.2` accidentally. A future VHDL contract must select pure VHDL-2008 versus
+OSVVM/UVVM provider mapping and must first make GHDL or another analyzer
+runnable. No full-language, PSL, methodology, or mixed-language claim can be
+derived from artifact-shape tests.
+
+## Cross-Backend Parity
+
+Every backend emits `verification-result-manifest.json` with a normalized
+logical transcript. Equivalent portable intent must agree on:
+
+- VIAL source, bridge, plan, scenario, and capability-profile identities;
+- seed and stable random-decision identities/values;
+- logical domain-cycle/phase and event identities;
+- driven and sampled portable values;
+- transaction identity, fields, ordering, and correlation;
+- expectation and temporal-check pass/fail plus expected/actual values;
+- model and scoreboard outcomes;
+- coverage point/bin/cross hit counts and goals;
+- timeout, cancellation, completion, and final status; and
+- unsupported/native-only exclusions stated in the manifest.
+
+Backend text need not be byte-identical to another language. Waveforms remain
+diagnostic evidence, not the semantic oracle. Parity compares canonical result
+projections after target-specific paths, timestamps, and tool chatter are
+normalized. A backend cannot claim a portable feature whose manifest contains
+an unqualified native-only dependency.
+
+## Worked AHB Arbitration Mapping
+
+The source fixture is
+`t/data/ahb_generated_subordinate_base_output_arbitration_tb.svt`. The notation
+below is architecture pseudocode, **not accepted `.vial` syntax**:
+
+```text
+fixture ahb_base_output_arbitration
+  bind dut ahb_lite_subordinate via bridge ahb_base
+  clock clk period 10
+  reset rst_n active_low for 3 falling_edges
+
+  scenario success timeout 256 cycles
+    drive AHB_WRITE(address=0, transfer=NONSEQ, size=WORD,
+                    data=0xcafebabe, wait_cycles=2)
+    after accept: drive transfer=IDLE
+    expect count(accept) == 1
+    expect count(ready_low) >= 1
+    expect count(completion) == 1
+    expect always(response == OKAY and read_data == 0)
+    expect storage_after == 0xcafebabe
+
+  scenario unsupported_size timeout 256 cycles
+    drive AHB_WRITE(address=0, transfer=NONSEQ, size=7,
+                    data=0xffffffff, wait_cycles=1)
+    after accept: drive transfer=IDLE
+    expect count(accept) == 1
+    expect count(error_response) == 2
+    expect always(read_data == 0)
+    expect storage_after == 0
+```
+
+Exact mapping:
+
+| Handwritten fixture construct | Portable VIAL meaning | Native/probe boundary |
+| --- | --- | --- |
+| `always #5 clk = ~clk` | bridge-bound clock generator with period 10 | generated backend clock process |
+| `reset_dut` and three negedges | reusable reset/setup procedure with domain-phase actions | none |
+| public AHB signals | typed bridge endpoints and one AHB write transaction | protocol fields must be reviewable through generated IAL1 before bridge publication |
+| `@(posedge clk)` counter updates | sample-phase events and counters | none |
+| `@(negedge clk)` plus IDLE after accept | drive-phase reaction after sampled accept | none |
+| `while (...) && cycles < 256` | timeout-bounded scenario wait/termination | raw hierarchy term must be replaced or qualified |
+| bus acceptance predicate | portable event `HSEL && HREADY && HTRANS[1]` | none |
+| HREADYOUT-low, HRESP, HRDATA | portable public-port samples and expectations | none |
+| `$fatal` | typed expectation failure with code/source/logical time | none |
+| `$display BASE_ASSERT_*` | normalized result metrics/transcript | backend text is not the parity oracle |
+| `dut.ahb_phase_capture_en`, `hold_en`, `access_done_q` | optional named HIAL verification probes for capture/hold/completion | not portable until equivalent SV and VHDL probe adapters exist |
+| `dut.ahb_phase_pending_q` | optional progress/termination probe | portable scenario should prefer externally observable ready/completion; hierarchy is native-only |
+| `dut.reg_data_q` | optional storage probe | portable oracle should prefer a bridge-declared architectural-state probe or a follow-up bus read |
+
+The portable pass/fail core uses public AHB behavior: exactly one acceptance,
+stall observation, response timing, data behavior, completion/ready return,
+and a readback or declared architectural-state probe. Exact internal capture,
+hold, and completion counts remain useful diagnostic/coverage evidence, but
+they cannot be called cross-backend portable while expressed as raw hierarchy.
+
+The plain-SystemVerilog backend may render tasks, timed clock generation,
+edge-controlled processes, counters, `$fatal`, and result emission much like
+the current harness. The UVM backend maps the transaction to a sequence item,
+driver, passive monitor, analysis stream, and scoreboard. The VHDL backend maps
+it to typed records/procedures, clocked processes, assertions/results, and the
+later-selected methodology provider. All must emit the same normalized
+portable result projection for the shared scenario.
+
+## Migration And Compatibility
+
+1. Keep IAL0/IAL1/IAL2 public names, suffixes, commands, diagnostics, and
+   synthesized output unchanged; HIAL is an architectural collective name.
+2. Keep IAL1 checks/properties and decision `0008`'s one property language on
+   the HIAL path. A later typed projection may reuse them in VIAL plans without
+   creating a second grammar.
+3. Treat current `(observe ...)` metadata as an initial bridge observation
+   source. Do not make it a substitute for VIAL stimulus/scenario semantics.
+4. Preserve `uvm_passive_monitor_skeleton` and
+   `vhdl_observation_package_skeleton`, their CLI targets, paths, manifest v1,
+   support entries, and explicit non-claims until a migration leaf selects a
+   compatible replacement/version.
+5. Add `HIALVIALBridgeManifest` and VIAL reports as new versioned artifacts;
+   do not widen raw schedule/semantic hashes ad hoc.
+6. Keep `.ppif` verification-output unsupported. IAL2 protocol facts enter the
+   bridge only after a generated-IAL1 annotation contract makes them
+   reviewable.
+7. Keep native extensions external, typed, capability-qualified, and recorded
+   in artifact/result manifests.
+
+## Public Artifacts, Reports, And Accounting
+
+Later exact owners must select and regression-lock:
+
+```text
+<out>/hial-vial-bridge.json
+<out>/vial-plan.json
+<out>/verification-output-manifest.json
+<out>/verification-result-manifest.json
+<out>/<backend-profile>/...
+```
+
+The existing verification manifest filename stays available for generated
+artifacts; schema migration must be explicit and compatibility-tested. The
+bridge, plan, and result each need their own schema/contract owner, presence
+key families, defensive-copy boundary, capability-manifest discovery,
+diagnostics, and source maps. Support accounting distinguishes source/parser,
+bridge, plan, backend artifact, compile/elaboration, runtime, parity, and scale
+coverage; one source fixture cannot silently satisfy every family.
+
+No output path may escape repository-derived same-volume policy in project
+tests or default examples. External simulator libraries/licenses are exact
+toolchain dependencies, not locations for project-owned outputs.
+
+## Scalability Contract
+
+Before claiming large VIAL designs, measure at least:
+
+- HIAL units, bridge endpoints/types/domains/transactions/probes;
+- VIAL declarations, scenarios, fibers, events, checks, model state, and
+  transaction streams;
+- scoreboard queue depth and match policy;
+- coverage points, bins, explicit crosses, and hit-state size;
+- random decisions and replay-log size;
+- VIALSemanticIR/VIALExecutionIR nodes and source-map entries;
+- generated files, lines, and bytes per backend;
+- parse/type/bind/elaborate/emit/compile/simulate wall and CPU time;
+- peak descendant RSS and external-tool resource use; and
+- diagnostic completeness and bounded failure beyond qualified capacity.
+
+Implementation must avoid implicit coverage-cross expansion, unbounded
+scoreboards, schedule-order-dependent randomness, and one monolithic generated
+file. Immutable shared IR, per-unit/package emission, streaming result events,
+explicit caps, and deterministic failure are required design constraints.
+Budgets and `big`/`really_big` workloads remain for exact scale leaves and the
+separate `FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY` tree; this audit does not
+invent capacity numbers.
+
+## Selected Follow-On Order
+
+The owning task tree now decomposes exact leaves for:
+
+1. `.vial` and `VIALSemanticIR` contract, then implementation;
+2. `HIALVIALBridgeManifest` contract, then implementation;
+3. `VIALExecutionIR`, deterministic execution, native extension, result, and
+   parity contract, then implementation;
+4. public CLI/artifact/report/capability/support-accounting selection;
+5. plain-SystemVerilog/Verilator contract and implementation;
+6. AHB fixture migration and portable runtime parity;
+7. UVM contract/migration and qualified implementation;
+8. VHDL/provider contract/migration and qualified implementation;
+9. mixed-language qualification;
+10. architecture-specific large-fixture scale proof; and
+11. full user documentation and end-to-end matrix closeout.
+
+Only the first source/IR contract is selected next. Every behavior-bearing
+leaf requires separate clean activation and normal acceptance evidence.
+
+## Rollback
+
+Rollback of this audit removes decision `0032`, this record, the selected
+topology/book/fact continuity, and the proposed child decomposition, then
+returns `.1` to active. It does not touch current IAL names, parsers, lowerings,
+HDL backends, verification skeletons, CLI, manifests, support accounting,
+tests, runtime behavior, or generated artifacts.

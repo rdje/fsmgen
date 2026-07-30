@@ -1,107 +1,71 @@
 ---
 id: hial-vial-verification-fixture-architecture
-title: HIAL and VIAL own the future dual-intent verification-fixture architecture
+title: VIAL uses one public source, two private IRs, and a versioned HIAL bridge
 answers:
   - "what do HIAL and VIAL mean in FSMGen?"
   - "does FSMGen plan a Verification IAL?"
   - "where is powerful verification fixture generation tracked?"
   - "should HIAL lower to SystemVerilog and VHDL?"
-  - "should VIAL lower to SV/UVM and VHDL verification code?"
+  - "should VIAL lower to SV UVM and VHDL verification code?"
   - "will VIAL have VIAL0 VIAL1 and VIAL2 layers?"
-  - "how should HIAL designs connect to VIAL fixtures?"
-  - "how can VIAL use full SV/UVM or VHDL power without cloning those languages?"
+  - "what is VIALSemanticIR?"
+  - "what is VIALExecutionIR?"
+  - "what is HIALVIALBridgeManifest?"
+  - "how do HIAL designs connect to VIAL fixtures?"
+  - "how can VIAL use native SV UVM or VHDL power?"
+  - "how is portable VIAL backend parity judged?"
+  - "what are VIAL drive sample react check phases?"
+  - "what is the first runnable VIAL backend?"
   - "is Verilator enough to validate full SystemVerilog and UVM VIAL output?"
   - "what simulator capability profiles does VIAL require?"
-  - "is Verilator the only planned VIAL simulator?"
   - "is Verilator a traditional event-driven simulator?"
   - "does Verilator support events with timing enabled?"
-  - "is the HIAL VIAL architecture active now?"
+  - "is the HIAL VIAL architecture selected now?"
+  - "what is the next HIAL VIAL task?"
 date: 2026-07-31
 status: current
-tags: [hial, vial, ial0, ial1, ial2, verification, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
-evidence: docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; https://verilator.org/guide/latest/overview.html; https://verilator.org/guide/latest/languages.html; https://verilator.org/guide/latest/connecting.html
-reverify: rg -n 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE|Hardware IAL|Verification IAL|typed, language-neutral HIAL/VIAL bridge|VIAL0/VIAL1/VIAL2|typed native extension|portable SystemVerilog|full-language.SystemVerilog-UVM|full-LRM|capability profiles|event-capable compiled|traditional full-language event-driven' docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/hial-vial-verification-fixture-architecture.md
+tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
+evidence: docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://verilator.org/guide/latest/languages.html; https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
+reverify: scripts/check_task_tree_integrity.pl && rg -n 'one public.*\.vial|VIALSemanticIR|VIALExecutionIR|HIALVIALBridgeManifest|drive.*sample.*react.*check|sv_portable_verilator|sv_uvm_qualified|vhdl_portable_ghdl|vhdl_methodology_qualified|mixed_language_qualified|normalized.*result|Proposed `\.2`' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md ROADMAP_V2.md docs/book/src/16d-hial-vial-verification-architecture.md
 ---
 
-The director established a peer-intent architecture requirement on
-`2026-07-29`. Hardware IAL (HIAL) is the architectural name for the current
-synthesizable IAL0/IAL1/IAL2 stack and must lower to synthesizable
-SystemVerilog or synthesizable VHDL. Verification IAL (VIAL) is a proposed
-pure-verification intent system that must lower to native SystemVerilog/UVM or
-VHDL verification code for extensive test fixtures around HIAL-generated
-designs.
+Hardware IAL (HIAL) is the collective architecture name for FSMGen's current
+synthesizable IAL0/IAL1/IAL2 stack. Its public names and review route remain
+unchanged. Verification IAL (VIAL) is its future pure-verification peer.
 
-HIAL and VIAL must meet at a typed, language-neutral bridge. Portable VIAL
-must cover stimulus, transactions, scenarios, concurrency, expected outcomes,
-temporal checks, reference models, scoreboards, coverage, and fault injection.
-Typed native extensions preserve backend-specific expressive power without
-recreating SystemVerilog/UVM or VHDL inside VIAL. VIAL0/VIAL1/VIAL2 is only a
-layering hypothesis; the first architecture audit must select the minimum
-useful topology and define parity, mixed-language, readability, traceability,
-migration, validation, and large-design scalability contracts.
+Decision `0032` selects one public, reviewable `.vial` source language rather
+than VIAL0/VIAL1/VIAL2. Private immutable `VIALSemanticIR` owns unbound typed
+verification meaning. A bounded versioned `HIALVIALBridgeManifest` supplies
+sanitized HIAL units, configuration, types, endpoints, clocks/resets,
+transactions/events, protocol facts, observations/probes, backend bindings,
+capabilities, source identity, and source maps. Private immutable
+`VIALExecutionIR` owns the bound, capability-checked deterministic plan.
 
-Validation is explicitly multi-profile. Verilator is the fast, portable
-SystemVerilog execution tier for the synthesis-oriented language subset it
-supports; it is not evidence that generated native VIAL exercises the complete
-SystemVerilog LRM or UVM. Advanced SystemVerilog/UVM output therefore requires
-a separate, capability-qualified full-language/UVM simulator profile, with the
-tool version and exercised capabilities recorded. VHDL and mixed-language
-verification use the same claim-by-capability discipline: portable,
-full-language, and mixed-language validation are distinct gates.
+Portable VIAL covers typed stimulus, transactions, scenarios, deterministic
+fibers, expected outcomes, temporal checks, reference models, scoreboards,
+coverage, bounded fault injection, and reproducible randomness. Execution uses
+logical `drive`, `sample`, `react`, and `check` phases. Native target power is
+provided by typed external repository-relative extensions, never anonymous raw
+SV/UVM or VHDL embedded in portable source.
 
-Verilator is not a traditional full-language event-driven simulator. It
-compiles the design into a model that is explicitly evaluated. With
-`--timing`, supported delays, event controls, waits, forks, and delayed
-processes participate in a timing-aware evaluation loop, so "event-capable
-compiled simulation" is the useful precise description. Those scheduling
-capabilities do not widen Verilator into the authoritative full-LRM/UVM tier.
+Portable backend parity compares normalized logical result manifests, not
+generated source or waveforms. Public ports are the portable access baseline;
+declared HIAL verification probes require capability-qualified equivalent
+adapters; raw hierarchy is native-only. IAL2 facts must remain reviewable
+through generated IAL1 before the bridge consumes them, so there is still no
+direct `.ppif` verification-output path.
 
-This requirement is parked under proposed, inactive task tree
-`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`. It extends the bounded completed
-IAL1 verification-output frontier, whose shipped UVM and VHDL artifacts remain
-inert skeletons. Parking the architecture does not activate it or change
-current product behavior. Completed parent selector `.830` chooses the
-narrower assertion-backed transaction-invoked named-drive priority audit;
-HIAL/VIAL remains proposed and independently gated.
+The first runnable profile is `sv_portable_verilator`, using plain generated
+SystemVerilog and exact `--binary --timing` compile/elaborate/run evidence.
+Verilator is event-capable compiled simulation for its supported features, not
+complete SystemVerilog or UVM authority. `sv_uvm_qualified`,
+`vhdl_portable_ghdl`, `vhdl_methodology_qualified`, and
+`mixed_language_qualified` remain separate claims with exact tools, versions,
+providers, and exercised capabilities. Existing UVM 1.2 and VHDL observation
+outputs remain inert compatibility surfaces until later migration leaves.
 
-That audit now selects its bounded unique-caller target-local contract `.2`;
-the HIAL/VIAL architecture remains unchanged and proposed.
-
-Clean audit commit `e715a34c7` activates only that contract; HIAL/VIAL remains
-proposed and unchanged.
-
-Completed named-drive contract `.2` selects SV/Verilog-backed `.3` and records
-the invalid direct-VHDL unary-reduction residue under decision `0023` plus
-proposed `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING`. That repair is required
-for truthful HIAL-to-VHDL qualification but does not activate HIAL/VIAL.
-
-The completed direct-VHDL reduction audit selects scalar identity/complement
-and unsupported-reduction rejection for proposed implementation `.2`. This is
-one bounded synthesizable HIAL backend repair; it does not select VIAL syntax,
-lowerings, simulator profiles, or architecture.
-
-Clean audit commit `16f6140c4` activates only that direct-VHDL implementation;
-the HIAL/VIAL architecture remains proposed and unchanged.
-
-Completed direct-VHDL implementation `.2` closes one synthesizable
-HIAL-to-VHDL reduction seam with scalar/static-bit identity and explicit vector
-folds. It does not select any VIAL layer, fixture semantics, verification
-lowering, or simulator authority. HIAL/VIAL therefore remained independently
-proposed for the next parent comparison.
-
-Parent selector `.832` selects the smaller shipped nested-bitwise concurrent-
-assertion correctness audit first. HIAL/VIAL remains proposed with its typed
-bridge, portable/native semantics, SV/UVM and VHDL lowerings, capability-
-qualified simulator profiles, parity, migration, and scale requirements
-unchanged.
-
-After the private HIR boundary and live task-tree integrity close, parent
-selector `.844` selects proposed no-behavior HIAL/VIAL architecture audit `.1`
-as the strongest ungated product-architecture owner. It remains inactive until
-a separate clean activation and changes no product behavior.
-
-Clean parent selector commit `031b21d4f` activates only architecture audit
-`.1` through a separate continuity transition. Topology, bridge, portable and
-native semantics, backend profiles, migration, parity, scale contract,
-implementation decomposition, and product behavior remain unchanged until the
-audit executes in a later slice.
+The architecture audit is complete and maps the handwritten AHB arbitration
+fixture, migration, public artifacts, parity, and scale boundaries. Proposed
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2` is the only selected next leaf:
+it must freeze the exact `.vial` and `VIALSemanticIR` contract before any
+implementation, and it requires a separate clean activation commit.

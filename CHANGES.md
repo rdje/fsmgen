@@ -31391,3 +31391,29 @@ task tree and git.
   16,671,894-byte build pass; Knowledge Map passes at 1,085 facts / 5,594
   keys; memory, diff, staged acceptance, all eight doctrines, and exact
   repository-local output cleanup complete activation closeout.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1 — one-source dual-IR architecture selected
+
+- Accepted decision `0032`: one public `.vial` language lowers through private
+  immutable `VIALSemanticIR` and `VIALExecutionIR`, joined to HIAL through a
+  bounded versioned `HIALVIALBridgeManifest`; public VIAL0/VIAL1/VIAL2 layers
+  are rejected as an artificial copy of hardware authoring levels.
+- Froze portable stimulus/scenario/check/model/scoreboard/coverage/fault and
+  deterministic drive/sample/react/check semantics, typed external native
+  extensions, public-port/probe/native access classes, generated-IAL1 review
+  provenance for IAL2 facts, sanitized plan/report surfaces, and normalized
+  result-manifest parity.
+- Selected plain SystemVerilog/Verilator as the first runnable profile while
+  keeping UVM, VHDL methodology, and mixed-language qualification separate.
+  Existing inert UVM 1.2 and VHDL targets remain unchanged compatibility
+  surfaces; no parser, output, report, support, HDL, test runtime, or product
+  behavior changes.
+- Mapped the handwritten AHB arbitration fixture into portable outcomes versus
+  qualified probes/native hierarchy, defined migration and architecture-scale
+  constraints, decomposed exact leaves `.2`-.18, and selected proposed `.2`
+  alone for a separate clean source/semantic-IR contract activation.
+- Task-tree integrity passes at two active trees / 864 nodes; docs audits pass
+  at `Files=3, Tests=40`; all 37 mdBook chapters and the 73-file /
+  16,810,633-byte HTML build pass; Knowledge Map generation/check passes at
+  1,085 facts / 5,600 question keys; memory, diff, staged docs-only acceptance,
+  all eight doctrines, and exact repository-local output cleanup pass.

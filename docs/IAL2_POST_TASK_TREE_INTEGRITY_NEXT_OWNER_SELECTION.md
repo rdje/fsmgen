@@ -85,3 +85,11 @@ Clean selector commit `031b21d4f` activates only selected architecture audit
 bridge, verification semantics, profiles, migration, parity, scale contract,
 implementation decomposition, and all product behavior remain unchanged until
 that activation commits cleanly.
+
+The activated audit has since completed under decision `0032`. It selects one
+public `.vial` language, two private immutable IR boundaries, a bounded
+versioned HIAL/VIAL bridge, normalized result parity, and capability-qualified
+backend profiles, then decomposes exact leaves `.2`-.18. Proposed `.2` alone
+owns the next source/semantic-IR contract and still requires its own clean
+activation. The canonical outcome is
+`docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md`.

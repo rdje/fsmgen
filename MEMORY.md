@@ -5,56 +5,42 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1: activate architecture audit`).
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
-  (active architecture audit; continuity-only activation complete).
-- current_state: clean parent selector `031b21d4f` activates only the HIAL/VIAL
-  architecture audit; no architecture finding or product behavior changed.
-- next_action: execute `.1`: audit the live hardware/verification stack and AHB
-  fixture, decide the architecture, then create exact implementation leaves.
-- in_flight_uncommitted: none after this activation commit; no background job.
-- blockers: none.
+- latest_commit: this commit
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1: select one-source dual-IR architecture`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`
+  (proposed source/semantic-IR contract; selected, not yet activated).
+- current_state: architecture audit `.1` is complete under decision `0032`;
+  one `.vial` source, private `VIALSemanticIR`/`VIALExecutionIR`, the versioned
+  HIAL/VIAL bridge, portable/native semantics, result parity, profiles,
+  migration, AHB mapping, scale constraints, and leaves `.2`-.18 are selected.
+- next_action: after this clean commit, activate only proposed `.2` through a
+  separate continuity commit; then execute its exact documentation-only
+  `.vial`/`VIALSemanticIR` version-1 contract.
+- in_flight_uncommitted: none after this commit; no background job.
+- blockers: none for `.2`; later UVM/VHDL/mixed-language qualification retains
+  explicit external-tool prerequisites.
 
 ## Durable context
 
-- Director direction (`2026-07-30`) is implemented by decision `0025`:
-  `CHANGES.md` updates every slice, `DEVELOPMENT_NOTES.md` only when warranted,
-  and `ROADMAP_STATUS.md` plus `LIVE_ACHIEVEMENT_STATUS.md` remain untouched.
-  Proposed `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` owns their later
-  four-file lifecycle discussion.
-- The quoted June TASK-ACCEPTANCE non-port statement is stale. Decision `0026`
-  and completed `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1`-.3 ship the neutral
-  standard, FSMGen-owned token registries/probes, checker, and seventh doctrine.
-  `.843` adds `TASK-TREE-INTEGRITY` as the eighth registered doctrine.
-- Identifier implementation verification: t1546 `Files=1, Tests=7`; full APB
-  t1472 `Files=1, Tests=101`; focused AHB/library/ATL/composition/emitter
-  preservation tests pass; ten changed Perl/test files report `syntax OK`.
-  All 36 mdBook chapters pass test/build; documentation audits pass at
-  `Files=3, Tests=40`; Knowledge Map passes at 1,072 facts / 5,523 keys.
-- `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3` is complete: t1502 passes at
-  `Files=1, Tests=4`; t1410-t1412+t1544 pass at `Files=4, Tests=22`; test syntax
-  is clean, and `.artifacts/tmp/tests` is empty.
-- The identifier-era import-map baseline is current at 229 project files / 228
-  packages / 19 IAL2 owners and Support 71.
-- The Chapter 16c counts-beyond-four contradiction is resolved through clean
-  documentation commit `3fb84b23e` without behavior/accounting changes.
-- Decisions `0028`-`0031` and the private HIR records remain canonical. HIAL/
-  VIAL `.1` is active for architecture audit only; public builder,
-  whole-product scale, MCP-write, and every director-gated owner remain
-  proposed/inactive.
-- Live ledger is 844 numbered nodes / 844 unique root references. `.73` is
-  canonical `done`; `.705` is live `done` after `.706`-.709; `.758` has its
-  canonical commit field. The checker reports one active tree / 845 total nodes.
-- `.843` verification: t1549 `Files=1, Tests=11`; docs audits `Files=3,
-  Tests=40`; all 36 mdBook chapters and 72-file / 16,665,035-byte build pass;
-  Knowledge Map is current at 1,084 facts / 5,589 keys; all output is removed.
-- `.844` selection verification: one active tree / 845 nodes; docs `Files=3,
-  Tests=40`; 36 chapters and 72-file / 16,670,326-byte build; Knowledge Map
-  1,085 facts / 5,594 keys; exact outputs removed.
-- HIAL/VIAL `.1` activation: two active trees / 847 nodes; docs `Files=3,
-  Tests=40`; 36 chapters and 72-file / 16,671,894-byte build; Knowledge Map
-  1,085 facts / 5,594 keys; exact output removed.
-- Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
-  Knowledge Map are aligned. The repository-local mdBook scratch is removed.
+- Decision `0032` is canonical: VIAL does not mirror HIAL as public
+  VIAL0/VIAL1/VIAL2. Plain SystemVerilog/Verilator is first; UVM, VHDL
+  methodology, and mixed-language profiles are independently qualified.
+- Existing `uvm_passive_monitor_skeleton` (UVM 1.2) and
+  `vhdl_observation_package_skeleton` remain inert compatibility surfaces.
+  IAL2 verification facts still require generated-IAL1 reviewable annotation;
+  direct `.ppif` verification output remains unsupported.
+- Audit closeout: task-tree integrity reports two active trees / 864 nodes;
+  docs audits pass at `Files=3, Tests=40`; all 37 mdBook chapters and the
+  73-file / 16,810,633-byte HTML build pass; Knowledge Map passes at 1,085
+  facts / 5,600 keys; exact repository-local output is removed.
+- Decisions `0028`-`0031` remain canonical for SourceHIR/IR policy. Public
+  builder, whole-product scale, MCP-write, and every director-gated owner
+  remain separately proposed/inactive.
+- Decision `0025` freezes `ROADMAP_STATUS.md` and
+  `LIVE_ACHIEVEMENT_STATUS.md`; update `CHANGES.md` every slice and
+  `DEVELOPMENT_NOTES.md` only for durable engineering rationale.
+- The live IAL2 ledger is mechanically protected by the eighth doctrine,
+  `TASK-TREE-INTEGRITY`; current `.73`, `.705`, and `.758` repairs remain
+  canonical.
 - Push only on explicit request (decision `0005`). PNT runs autonomously
   (decision `0003`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.

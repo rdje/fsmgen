@@ -8379,6 +8379,19 @@ Clean selector commit `031b21d4f` activates only
 transition. Architecture findings, implementation decomposition, all product
 surfaces, and every other proposed or gated owner remain unchanged until the
 audit executes after activation commits cleanly.
+Completed architecture audit `.1` selects one public `.vial` source language,
+private immutable `VIALSemanticIR` and `VIALExecutionIR` compiler boundaries,
+and a bounded versioned `HIALVIALBridgeManifest`; it rejects public
+VIAL0/VIAL1/VIAL2 layering as an artificial match to the hardware stack.
+Portable semantics, logical drive/sample/react/check phases, typed external
+native extensions, normalized result parity, public-port/probe/native access
+classes, and independently qualified SystemVerilog, UVM, VHDL methodology,
+and mixed-language profiles are frozen by decision `0032`. Plain
+SystemVerilog/Verilator is the first runnable backend; the current inert UVM
+1.2 and VHDL targets remain unchanged compatibility surfaces. Proposed `.2`
+alone is selected next for the exact `.vial`/`VIALSemanticIR` contract and
+requires a separate clean activation. See
+`docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md`.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
@@ -9354,33 +9367,40 @@ modes, and future protocol-specific verification facts should first lower or
 annotate generated IAL1 `.isf` review artifacts unless a later exact owner
 proves a direct route is required.
 
-The larger verification-fixture destination is now parked under proposed,
-inactive `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`. In that architecture,
-Hardware IAL (HIAL) names the current IAL0/IAL1/IAL2 hardware-intent stack and
-must lower to synthesizable SystemVerilog or synthesizable VHDL. Its peer,
-Verification IAL (VIAL), is pure verification intent and must be capable of
-describing extensive fixtures that lower to native SystemVerilog/UVM or VHDL
-verification code. A typed, language-neutral HIAL/VIAL bridge must bind DUT
-interfaces, transactions, protocol facts, clocks/resets, configuration, and
-source identity across the two domains. Portable VIAL must cover stimulus,
-scenarios, concurrency, expected outcomes, temporal checks, reference models,
-scoreboards, coverage, and fault injection, while typed native extension
-points preserve the full power of SV/UVM and VHDL without recreating either
-language. VIAL0/VIAL1/VIAL2 is a topology hypothesis to audit, not a selected
-layering. Backend semantic parity, readable generated code, mixed-language
-qualification, migration from current passive observation metadata/skeletons,
-and large-to-very-large-design scale proof all require exact later owners. The
-validation matrix must keep Verilator as a fast portable synthesis-oriented
-SystemVerilog subset tier. Verilator compiles a model that is explicitly
-evaluated; `--timing` schedules supported delays, event controls, waits, forks,
-and delayed processes, so it is event-capable compiled simulation rather than
-a traditional full-language event-driven authority. A separately
-capability-qualified simulator tier remains required for advanced
-full-language/SystemVerilog-UVM output; every profile must report tool versions
-and exercised capabilities rather than infer full LRM/UVM coverage.
-VHDL portability, full-language qualification, and mixed-language validation
-are likewise separate claims. Parent selector `.817` kept this destination
-proposed and selected the smaller adjacent exact-three AHB profile alias.
+The larger verification-fixture destination is now selected and decomposed
+under active `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`. Hardware IAL
+(HIAL) remains the collective architecture name for the public synthesizable
+IAL0/IAL1/IAL2 stack. Its peer, Verification IAL (VIAL), uses one public,
+reviewable `.vial` source language rather than VIAL0/VIAL1/VIAL2. Private
+immutable `VIALSemanticIR` owns unbound typed verification meaning;
+`VIALExecutionIR` owns the fully bound, capability-checked deterministic plan.
+A bounded versioned `HIALVIALBridgeManifest` carries sanitized unit,
+configuration, type, endpoint, clock/reset, transaction/event, protocol,
+observation/probe, backend-binding, capability, and source-map facts between
+the domains. IAL2 facts may enter only after generated-IAL1 reviewable
+annotation; no direct PPIF-to-verification route is created.
+
+Portable VIAL covers typed stimulus, transactions, scenarios, deterministic
+fibers, expected outcomes, temporal checks, models, scoreboards, coverage,
+bounded faults, and reproducible random decisions. Logical
+drive/sample/react/check phases define backend-independent ordering. Native
+power uses typed repository-relative extension contracts rather than anonymous
+raw target-language blocks. Portable parity is the normalized logical result
+manifest, not generated text or waveforms. Public ports are the portable
+baseline; declared verification probes are capability-qualified; raw hierarchy
+is native-only.
+
+Decision `0032` selects plain SystemVerilog/Verilator as the first runnable
+backend, with separate `sv_uvm_qualified`, `vhdl_portable_ghdl`,
+`vhdl_methodology_qualified`, and `mixed_language_qualified` claims. Verilator
+remains event-capable compiled simulation for its supported `--timing` subset,
+not full-LRM/UVM authority. Current UVM 1.2 and VHDL observation artifacts stay
+inert compatibility surfaces until exact migration leaves select replacements.
+The architecture audit maps the handwritten AHB arbitration harness and
+decomposes source/IR, bridge, execution, public tooling, backends, parity,
+migration, scale, and closeout across `.2`-.18. Proposed `.2` is the only
+selected next leaf. See decision `0032` and
+`docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md`.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile

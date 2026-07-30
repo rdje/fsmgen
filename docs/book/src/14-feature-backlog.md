@@ -4329,11 +4329,12 @@ verification-output path unless a later exact owner proves a direct route is
 required. Scoreboard behavior, coverage behavior, and reusable VIP behavior
 remain deferred behind later selector leaves.
 
-### Proposed HIAL/VIAL architecture
+### Selected HIAL/VIAL architecture
 
-The durable destination for full fixture generation is proposed, not shipped.
+The architecture for full fixture generation is selected and decomposed, but
+its source language and executable backends are not shipped yet.
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` names current synthesizable
-IAL0/IAL1/IAL2 collectively as **Hardware IAL (HIAL)** and proposes a peer
+IAL0/IAL1/IAL2 collectively as **Hardware IAL (HIAL)** and defines a peer
 **Verification IAL (VIAL)** for pure verification intent:
 
 | Intent system | Required target family | Contract boundary |
@@ -4341,14 +4342,25 @@ IAL0/IAL1/IAL2 collectively as **Hardware IAL (HIAL)** and proposes a peer
 | HIAL | synthesizable SystemVerilog and synthesizable VHDL | hardware behavior only |
 | VIAL | native SystemVerilog/UVM or VHDL verification code | non-synthesizable fixture behavior |
 
-A typed, language-neutral bridge must connect VIAL fixtures to HIAL-generated
-DUT interfaces, clocks/resets, transactions, protocol facts, configuration,
-and source identity. Portable VIAL should be able to express stimulus,
-transactions, scenarios, concurrency, expected outcomes, temporal checks,
-reference models, scoreboards, functional coverage, and fault injection. It
-must also provide typed, scoped, traceable native extension points so advanced
-SV/UVM or VHDL code remains available without turning VIAL into a copy of
-those languages.
+A single public, reviewable `.vial` language carries declarations and
+scenarios. It lowers first to private immutable `VIALSemanticIR`, then binds
+through a bounded versioned `HIALVIALBridgeManifest` into private immutable
+`VIALExecutionIR`. VIAL deliberately does **not** mirror HIAL as
+VIAL0/VIAL1/VIAL2: verification declarations, DUT binding, scenarios,
+concurrency, checking, models, scoreboards, coverage, and backend methodology
+are orthogonal concerns rather than three useful authoring levels.
+
+The bridge carries sanitized, stable identities for HIAL sources/review
+artifacts, units, configuration, types, endpoints, clocks/resets,
+transactions/events, protocol facts, observations/probes, backend bindings,
+capabilities, and source maps. IAL2 facts must first remain reviewable through
+generated IAL1; the architecture does not add a direct `.ppif` verification
+output route. Portable VIAL covers typed stimulus, transactions, scenarios,
+deterministic fibers, expected outcomes, temporal checks, models,
+scoreboards, functional coverage, bounded faults, and reproducible random
+decisions. Anonymous raw target-language blocks are excluded; advanced
+SV/UVM or VHDL behavior uses typed, scoped, repository-relative native
+extensions with explicit profile and fallback contracts.
 
 Verification is qualified through explicit simulator capability profiles. A
 fast portable profile uses Verilator only for the synthesis-oriented
@@ -4363,19 +4375,23 @@ portability, full-language qualification, and mixed-language qualification are
 distinct profiles as well, so one successful tool run never silently widens
 the support claim.
 
-The VIAL layer topology is deliberately undecided. A future architecture audit
-must determine whether VIAL0/VIAL1/VIAL2 is the right split or whether
-verification elaboration, scenario intent, and backend realization need a
-different minimum set of layers. That audit must also define backend semantic
-parity, readable and deterministic output, mixed-language qualification,
-migration from the current `(observe ...)` metadata and inert UVM/VHDL
-skeletons, and performance/scale gates for large to very large designs. Its
-worked example will map the handwritten AHB subordinate arbitration fixture
-to proposed portable VIAL plus typed native extensions; it will not claim that
-the fixture is generated today. The architecture tree remains proposed and
-inactive. Parent selector `.817` kept it proposed and selected the smaller
-adjacent exact-three AHB profile alias; the simulator-profile requirement
-survives that priority decision.
+Portable execution uses logical `drive`, `sample`, `react`, and `check` phases
+so backend scheduling regions or delta cycles do not change intent. Backend
+parity compares a normalized result manifest containing scenario/event
+identity, logical cycle/phase, transaction values, checks, scoreboard results,
+coverage, timeout/termination, and stable random decisions. It does not
+require identical target text or waveforms.
+
+Decision `0032` selects plain SystemVerilog/Verilator as the first runnable
+profile. Native UVM, VHDL-2008/GHDL, VHDL methodology, and mixed-language
+profiles remain separately qualified claims. The shipped UVM 1.2 passive
+monitor and VHDL observation package stay inert compatibility surfaces until
+exact migration leaves replace or version them. The architecture audit maps
+the handwritten AHB subordinate arbitration fixture, distinguishes portable
+public-port outcomes from qualified probes and native hierarchy, and defines
+exact source/IR, bridge, execution, tooling, backend, parity, migration, and
+scale leaves. See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
+for the topology, profile matrix, worked mapping, and current boundaries.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -12080,6 +12096,15 @@ audit through a separate continuity transition. The audit findings, typed
 bridge, verification semantics, backend profiles, migration, parity, scale
 contract, exact implementation leaves, and all user-visible behavior remain
 unchanged until the audit executes after activation commits cleanly.
+Completed audit `.1` accepts decision `0032`: VIAL uses one public `.vial`
+language, private `VIALSemanticIR` and `VIALExecutionIR`, and a versioned
+`HIALVIALBridgeManifest`, with normalized result parity and independently
+qualified backend profiles. Plain SystemVerilog/Verilator is the first
+runnable target; current inert UVM/VHDL artifacts remain unchanged. The audit
+decomposes exact leaves `.2`-.18 and selects proposed source/semantic-IR
+contract `.2` alone for a separate clean activation. See the
+[architecture audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md)
+and [architecture chapter](16d-hial-vial-verification-architecture.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

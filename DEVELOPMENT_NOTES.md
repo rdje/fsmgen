@@ -34253,3 +34253,29 @@ is just "jump to the check." Lesson: when two constructs differ only in a target
 them as one decision kind parameterized by the stamped target, not two parallel kinds —
 the emitter/linker/safety code stays single-sourced and exit-when's behavior is provably
 unchanged.
+
+## HIAL/VIAL architecture — source levels and compiler phases are different axes (2026-07-31)
+
+The HIAL0/HIAL1/HIAL2 shape should not be copied into VIAL. Hardware intent has
+useful protocol, scheduled-transaction, and cycle-explicit authoring levels;
+verification intent instead composes orthogonal declarations, DUT binding,
+scenarios, concurrency, checking, models, coverage, and backend methodology.
+Three public VIAL languages would expose compiler staging as user-facing
+abstraction and multiply syntax/migration/backend contracts before proving one
+executable fixture.
+
+Decision `0032` therefore selects one reviewable `.vial` language around two
+private immutable stages: `VIALSemanticIR` for unbound typed meaning and
+`VIALExecutionIR` for a bound capability-checked deterministic plan. The
+versioned `HIALVIALBridgeManifest` between them is a sanitized contract, not a
+raw IR serialization. This separation also keeps IAL2 protocol facts on the
+generated-IAL1 review route and lets result-manifest parity remain independent
+of target-language scheduling, source text, and waveforms.
+
+Portable execution is defined as logical `drive`, `sample`, `react`, and
+`check` phases with stable random-decision identities. Plain
+SystemVerilog/Verilator is the first runnable proof because the handwritten AHB
+harness already exercises that substrate locally. UVM, VHDL methodology, and
+mixed-language output remain independently capability-qualified profiles;
+existing inert UVM 1.2 and VHDL outputs are compatibility surfaces rather than
+implicit version or simulator selections.

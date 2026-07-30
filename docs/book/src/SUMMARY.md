@@ -35,4 +35,5 @@
   - [AXI IAL2 Examples](16a-ial2-axi.md)
   - [APB IAL2 Examples](16b-ial2-apb.md)
   - [AHB Current Boundary](16c-ial2-ahb.md)
+  - [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 - [Reference Map](90-reference-map.md)
