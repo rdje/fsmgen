@@ -5934,6 +5934,8 @@ commit `9c2439f05` advance the selected child through contract `.2`. The
 contract selects proposed `.3` for exact-one-local-caller target-local
 priority, with direct VHDL reduction syntax separately routed under decision
 `0023`; parent IAL2 behavior and accounting remain unchanged.
+Clean contract commit `b44afcc51` activates only child implementation `.3`;
+the parent remains behavior- and accounting-unchanged during activation.
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25

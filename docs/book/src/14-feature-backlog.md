@@ -11677,7 +11677,7 @@ No lowering or runtime behavior changes until a later implementation.
 Clean audit commit `e715a34c7` activates only contract `.2`. This continuity
 transition does not alter the direct path, named-drive conflict, generated
 assertions, AHB behavior, or any broader roadmap owner.
-Contract `.2` now selects proposed implementation `.3`: retain drive
+Contract `.2` selects implementation `.3`: retain drive
 provenance, carry one exact local transaction caller privately into priority
 analysis, mask only the conflicting target in either priority direction, and
 fail unique unordered or prioritized ambiguous ownership before HDL. Public
@@ -11688,7 +11688,8 @@ direct VHDL scaffold currently leaks the unary reduction token in
 separately owned by decision `0023` plus proposed
 `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING`. See the
 [contract](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md).
-No product behavior changes during selection.
+Clean contract commit `b44afcc51` activates `.3` continuity-only. No product
+behavior changes during selection or activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

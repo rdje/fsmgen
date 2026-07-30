@@ -277,3 +277,7 @@ its selection references. During `.3`, rollback restores the current warning
 and assertion-failing named-drive behavior together with the tracked t1542
 characterization. It must not delete the separate VHDL defect task, fact, or
 decision unless independent evidence disproves that finding.
+
+Clean contract commit `b44afcc51` activates implementation `.3` continuity-
+only. The frozen contract above remains unchanged, and activation changes no
+lowering or runtime behavior.

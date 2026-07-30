@@ -7994,6 +7994,9 @@ Verilog are executable gates. A same-volume probe found the direct VHDL
 scaffold emits invalid `(|drive_start)` reduction residue; decision `0023` and
 proposed `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own that independent
 backend defect. Contract selection changes no current behavior.
+Clean contract commit `b44afcc51` activates only implementation `.3`.
+Activation changes continuity state without changing current lowering, AHB,
+support accounting, or any broader roadmap owner.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

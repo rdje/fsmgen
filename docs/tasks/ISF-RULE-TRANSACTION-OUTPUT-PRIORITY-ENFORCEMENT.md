@@ -70,24 +70,25 @@ Canonical evidence is
   Commit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.2: freeze named-drive priority contract`
 
 - ID: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the contract selected by .2 without weakening selector assertions.`
   Acceptance: `Activate only after .2 commits cleanly and selects this leaf. In LoweringIR, collect sorted distinct local_transaction_callers per named drive and keep generated_call_sources separate; carry private invoking_transactions into drive assignment provenance without changing its drive owner/kind/source. Add priority-analysis records only for exactly one local caller and zero generated sources, using the logical transaction actor plus the drive-body activation condition. Reuse existing target-local suppression in both directions, so only conflicting assignments receive inverse winner guards and non-conflicting drive outputs/request/parameters/transaction/done survive. Emit logical actor priority_resolutions with no compile issue for resolved cases. Fail unique-caller different-value no-priority/cycle/mixed-timing cases through the existing conflict families; fail prioritized multiple/generated/mixed ambiguity with isf_ambiguous_rule_transaction_drive_priority, severity error, proof_status ambiguous_drive_caller, deterministic reason naming rule/drive/sorted callers/generated sources/ambiguity and source summaries retaining operators/values; preserve ambiguous no-priority warning and unused drives. Expand t1542 or an adjacent focused owner for rule-over-drive, drive-over-rule, multi-output, same-value, no-priority, cycle, mixed timing, multiple/generated ambiguity, structural FSM/SV/Verilog, Icarus compile/runtime, assertion-enabled Verilator, strict/check/schedule/semantic/provenance, and exact cleanup. Update t1207/t1209/t1212/t1219/t1220 and other affected conflict/report preservation only as contractually required. Keep normalized semantic output-family fields, report/public/MCP schemas, support accounting, direct assignments, rule/rule and transaction/transaction conflicts, resource priority, selector assertions, parser/source syntax, protocols/AHB, HIAL/VIAL, VHDL backend, scale, decision 0020, and transaction behavior outside the exact fix unchanged. Characterize VHDL honestly under decision 0023 without claiming validity or absorbing DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING. Synchronize durable docs/mdBook/Knowledge Map; use repository-local same-volume artifacts, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup, focused/broader gates, and commit.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean contract commit b44afcc51. Activation changes continuity pointers only; the current unresolved named-drive warning/assertion behavior, direct-assignment priority path, parser, lowerer, scheduler, selector, generator, tracked source/tests, public surfaces, support accounting, reports/semantic/MCP schemas, HDL/runtime, simulator profiles, backends, protocols/AHB, HIAL/VIAL, VHDL, scale, decision 0020, and transaction behavior remain unchanged. Focused t1542 plus book/status/path gates pass 5 files/308 top-level tests. Knowledge Map remains synchronized at 1,055 facts/5,420 question keys. The mdBook builds under authorized host100/process4096 to exactly 72 files/16,444,639 bytes and the exact render is removed. MEMORY.md is 50 lines, README.md is 2,339 lines, .artifacts/tmp/tests is empty, git_message_brief.txt is zero bytes, diff hygiene passes, and all six doctrine gates pass. Final canonical Stats-compatible capacity is 16,135,307,264/25,769,803,776 bytes = 15.027/24.000 GiB = 62.61%, with separate macOS kernel pressure level 1 and memory_pressure 73% free; guard occupancy is excluded from capacity truth. No behavior changes and no background job remains.`
+  Commit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3: activate named-drive priority implementation`
 
 ## Current Frontier
 
-Contract `.2` is complete and selects proposed implementation `.3`. The
+Contract `.2` is complete through clean commit `b44afcc51`; implementation
+`.3` is active. The
 contract freezes unique-local-caller metadata, bidirectional per-target
 priority, exact fail-closed ambiguity behavior, unchanged public report and
 semantic schemas, SV/Verilog gates, and an explicit unqualified VHDL boundary.
-`.3` remains pending until the contract commits cleanly; current lowering is
-unchanged.
+Activation is continuity-only; current lowering is unchanged until `.3`
+implements that exact contract.
 
 ## Rollback
 
-Rollback of contract selection restores `.2` active and removes its contract
-record/fact/selection references. It retains the tracked direct control,
-named-drive assertion failure, shared-caller evidence, and independently owned
-VHDL reduction-expression defect.
+Rollback before `.3` implementation restores `.3` to proposed while retaining
+the committed `.2` contract, tracked direct control, named-drive assertion
+failure, shared-caller evidence, and independently owned VHDL reduction-
+expression defect.

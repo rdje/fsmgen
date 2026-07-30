@@ -47,6 +47,7 @@ current behavior remains unchanged.
 Clean audit commit `e715a34c7` activates only contract `.2` without changing
 product behavior.
 
-Completed contract `.2` selects proposed implementation `.3` for the bounded
-unique-caller repair. A separately owned direct-VHDL unary-reduction defect
-does not alter the shipped AHB range or accounting.
+Completed contract `.2` selects bounded unique-caller implementation `.3`.
+Clean contract commit `b44afcc51` activates it continuity-only. A separately
+owned direct-VHDL unary-reduction defect does not alter the shipped AHB range
+or accounting.

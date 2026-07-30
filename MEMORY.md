@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: clean `.2` activation commit `9c2439f05`.
-- active_work_unit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.2` contract closeout.
-- current_state: `.2` selects proposed `.3` for exact-one-local-caller bidirectional target-local priority plus fail-closed ambiguous ownership. SV/Verilog are executable gates; direct VHDL leaked `(|drive_start)` and is separately owned by decision `0023` plus proposed `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING`.
-- next_action: finish gates and commit `.2`, then activate only implementation `.3` from the clean contract boundary.
-- in_flight_uncommitted: `.2` contract record/fact, VHDL finding/decision/task, and live-doc/book synchronization; no background job.
+- latest_commit: clean `.2` contract commit `b44afcc51`.
+- active_work_unit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3` activation.
+- current_state: `.2` is durably complete; `.3` is being activated continuity-only to implement exact-one-local-caller bidirectional target-local priority plus fail-closed ambiguous ownership. SV/Verilog remain the executable gates; decision `0023` separately owns the direct-VHDL `(|drive_start)` defect.
+- next_action: commit `.3` activation cleanly, then implement only the frozen caller-aware target-local priority contract.
+- in_flight_uncommitted: `.3` activation continuity synchronization; no product/test change and no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

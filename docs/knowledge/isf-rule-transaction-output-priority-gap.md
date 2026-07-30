@@ -45,7 +45,8 @@ Current lowering remains unchanged until implementation.
 
 Clean audit commit `e715a34c7` activates only no-behavior contract `.2`.
 
-Completed contract `.2` selects proposed `.3`; it preserves drive provenance,
-uses private unique-caller metadata for priority analysis, and fails prioritized
-ambiguous ownership before HDL. The separately found direct-VHDL reduction
-token leak does not change current lowering behavior.
+Completed contract `.2` selects `.3`; it preserves drive provenance, uses
+private unique-caller metadata for priority analysis, and fails prioritized
+ambiguous ownership before HDL. Clean contract commit `b44afcc51` activates
+`.3` continuity-only. The separately found direct-VHDL reduction token leak
+does not change current lowering behavior.

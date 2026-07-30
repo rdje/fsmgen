@@ -2564,6 +2564,8 @@ ownership. Its SV/Verilog gates and separately tracked direct-VHDL reduction
 residue do not change AHB requester `2..16` behavior or 332/373/56 split 28/28
 accounting. See the
 [contract record](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md).
+Clean contract commit `b44afcc51` activates only that protocol-neutral `.3`;
+AHB behavior and accounting remain unchanged during activation.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

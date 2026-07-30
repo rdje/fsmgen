@@ -149,6 +149,8 @@ Completed contract `.2` selects proposed implementation `.3` under
 `docs/ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md`. The
 separate direct-VHDL reduction-expression defect discovered during backend
 qualification is owned by decision `0023` and its proposed task tree.
+Clean contract commit `b44afcc51` activates only `.3`; activation leaves the
+audit characterization and current product behavior unchanged.
 
 ## Validation And Cleanup
 
