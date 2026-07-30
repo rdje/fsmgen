@@ -56,10 +56,10 @@ tops, showing that the issue may be cross-protocol rather than AHB-only.
   Commit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1: select portable identifier contract`
 
 - ID: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement and verify the selected portable child-instance identifier contract.`
   Acceptance: `From a separate clean activation, add one shared portable keyword registry and deterministic generated-name allocator; fail authored C4/spawn/library/ATL instance keywords at their nearest bounded source boundary; add structural-emitter defenses; integrate APB/AHB generated allocation; preserve every legal non-colliding AHB/AXI/ISF label; update APB generated interconnect wiring/report identity to interconnect_instance; cover direct, protocol, reusable-library, actor-network, SystemVerilog, and VHDL emitter routes with focused regressions; update user docs and public report expectations. Do not expand into module/top/port/net/parameter identifier families.`
-  Verification: `Pending separate clean activation after .1 commits.`
+  Verification: `Activated only from clean audit/decision commit 53a54c6c9. This continuity slice changes task/index/Memory/changelog pointers only; the shared registry/allocator, source diagnostics, emitters, protocol generators, reports, tests, generated HDL, and target behavior remain unchanged. Decision 0027 and the audited implementation boundary are unchanged. Feature-backlog/live-book/relative-path audits pass with Files=3, Tests=40; Knowledge Map, Memory architecture at 60 lines, mdBook HTML build, and diff hygiene pass; exact book scratch is removed. The lifecycle review and all director-gated directions remain inactive; ROADMAP_STATUS.md and LIVE_ACHIEVEMENT_STATUS.md remain untouched.`
   Commit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2: enforce portable instance identifiers`
 
 ## Decisions
@@ -72,8 +72,9 @@ tops, showing that the issue may be cross-protocol rather than AHB-only.
   portable keyword union, authored fail-closed diagnostics, and deterministic
   generated allocation; proposed `.2` owns implementation and the explicit APB
   generated-label/report delta.
+- `2026-07-30`: Clean audit commit `53a54c6c9` activates only `.2` so source
+  implementation can begin from an explicit continuity boundary.
 
 ## Blockers
 
-- None. `.1` is complete; `.2` remains proposed until separately activated
-  from the clean audit commit.
+- None. `.2` is active from clean audit commit `53a54c6c9`.

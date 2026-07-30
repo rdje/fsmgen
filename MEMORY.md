@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1: select portable identifier contract`).
-- active_work_unit: none; identifier audit `.1` is complete.
-- current_state: decision `0027` and the audit record select one portable,
-  origin-aware instance-label contract without changing product behavior.
-- next_action: separately activate proposed
-  `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2` from this clean commit.
-- in_flight_uncommitted: none after the audit commit; no background job.
+- latest_commit: this commit (`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2: activate portable identifier implementation`).
+- active_work_unit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2` (continuity-only activation).
+- current_state: clean audit commit `53a54c6c9` activates only decision `0027`
+  implementation; all source/test/report/generated-HDL behavior is unchanged.
+- next_action: implement the shared registry/allocator, source/emitter guards,
+  protocol integration, report delta, and focused regressions owned by `.2`.
+- in_flight_uncommitted: none after activation; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

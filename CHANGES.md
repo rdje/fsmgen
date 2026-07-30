@@ -30795,3 +30795,16 @@ task tree and git.
   architecture and diff hygiene pass. The decision/audit are the canonical
   rationale, so no development-note entry is warranted. Both legacy status
   files remain untouched.
+
+### PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2 — portable identifier implementation activated
+
+- Activated only `.2` from clean audit/decision commit `53a54c6c9`.
+  Decision `0027` and the bounded registry/allocator, source-diagnostic,
+  emitter-defense, protocol/report, and focused-regression scope are unchanged.
+- This continuity slice changes task/index/Memory/changelog pointers only. It
+  changes no source, test, config, generated artifact, report/API, HDL/runtime,
+  backend, protocol, transaction, or target behavior and creates no separate
+  development-note rationale. The lifecycle review remains inactive and both
+  legacy status files remain untouched. Feature-backlog/live-book/relative-path
+  audits pass at `Files=3, Tests=40`; Knowledge Map, 60-line Memory, mdBook HTML
+  build, and diff hygiene pass; exact build scratch is removed.
