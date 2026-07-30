@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `R14 / generated verification correctness`
 - Created: `2026-07-23`
 - Last updated: `2026-07-30`
@@ -55,7 +55,7 @@ the assertion condition roundtrip/inlining path involving
 ## Task Tree
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`
-  Status: `proposed`
+  Status: `active`
   Goal: `Preserve nested bitwise expression semantics across concurrent-property inlining and repair the shipped AXI read false assertion.`
   Children: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`, `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2`, `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`
 
@@ -74,10 +74,10 @@ the assertion condition roundtrip/inlining path involving
   Commit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2: ship substitution grouping`
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Synchronize the AXI write-request assertion-text regression with grouped inline-intermediate rendering.`
   Acceptance: `From a separate clean activation, reproduce t/1502-ial2-axi-write-request-composition.t line 293 against grouped condition_sv emitted after commit 80aa203ab; prove generated behavior, Verilator/Yosys verification, and AXI instance labels remain unchanged; update only the stale exact assertion-text expectation plus its task/fact continuity unless the reproduction finds a product defect. Do not weaken or remove the assertion.`
-  Verification: `Proposed after PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2 preservation testing ran t1502. Its first three top-level subtests and behavior generation pass, but the fourth subtest's exact regex expects the pre-80aa ungrouped implication while current HDL correctly carries the grouped inline-intermediate boundaries. The identifier slice changes no assertion builder/emitter output: its Verilog structural-emitter diff adds only a fail-closed instance-label validation call. Commit 80aa203ab is the exact git-history owner that added grouping at GeneratedModuleInfoBuilder.pm:127; t1502 line 293 still blames to its earlier d722ed071 introduction. This leaf remains inactive until the identifier slice commits cleanly.`
+  Verification: `Proposed after PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2 preservation testing ran t1502. Its first three top-level subtests and behavior generation pass, but the fourth subtest's exact regex expects the pre-80aa ungrouped implication while current HDL correctly carries the grouped inline-intermediate boundaries. The identifier slice changes no assertion builder/emitter output: its Verilog structural-emitter diff adds only a fail-closed instance-label validation call. Commit 80aa203ab is the exact git-history owner that added grouping at GeneratedModuleInfoBuilder.pm:127; t1502 line 293 still blames to its earlier d722ed071 introduction. Clean identifier completion commit 299db4cae activates only this leaf continuity-only. Feature-backlog/live-book/relative-path audits pass with Files=3, Tests=40; Knowledge Map validation, mdBook HTML build, 44-line Memory, and diff hygiene pass; exact book scratch is removed. No source/test/config/artifact/report/API/HDL/runtime behavior changes during activation; DEVELOPMENT_NOTES.md and both frozen status files remain untouched.`
   Commit: `pending`
 
 ## Current Frontier
@@ -87,7 +87,8 @@ preserves grouping, the AXI legal-bit-2 assertion agrees with unchanged
 behavioral admission, and separate negative-behavior/all-assertion t1507
 harnesses preserve both contracts. Proposed follow-up `.3` owns the stale AXI
 write-request exact-text expectation found later by identifier-policy
-preservation testing; it remains inactive until a clean selector activates it.
+preservation testing; clean identifier completion commit `299db4cae` activates
+only `.3` for that bounded test-truth repair.
 
 ## Decisions
 
@@ -137,7 +138,10 @@ preservation testing; it remains inactive until a clean selector activates it.
   `80aa203ab` as the output owner and original AXI test commit `d722ed071` as
   the unchanged expectation owner. Add proposed `.3`; do not mix that test-only
   truth repair into the active identifier implementation.
+- `2026-07-30`: Clean identifier completion commit `299db4cae` activates only
+  `.3`. The assertion builder/emitter and generated AXI behavior remain
+  unchanged during this continuity slice.
 
 ## Blockers
 
-- None technical. `.3` is proposed and inactive.
+- None technical. `.3` is active from clean commit `299db4cae`.

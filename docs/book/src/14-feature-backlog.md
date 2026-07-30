@@ -11949,6 +11949,10 @@ assertion text from before grouped inline-intermediate rendering commit
 [assertion repair `.3`](../../tasks/ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.md)
 owns that exact test-truth synchronization after a separate clean activation;
 the identifier slice does not weaken or change the assertion.
+Clean identifier completion commit `299db4cae` activates only assertion repair
+`.3`. This continuity step changes task/book/Memory/changelog pointers only;
+the assertion builder/emitter, expected text, generated AXI HDL, and runtime
+behavior remain unchanged until the test-truth repair commits separately.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

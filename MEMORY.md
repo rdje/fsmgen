@@ -5,17 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2: enforce portable instance identifiers`).
-- active_work_unit: none after this completion commit; the identifier audit
-  tree is exhausted through `.2`.
-- current_state: decision `0027` is implemented. Direct C4, spawn,
-  reusable-library, ATL, APB/AHB, and both structural emitters share the
-  portable child-instance-label policy. Public APB now uses
-  `interconnect_instance`; legal AHB/AXI labels remain stable.
-- next_action: from this clean boundary, select/activate proposed
-  `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3` to synchronize t1502's stale
-  exact AXI assertion-output expectation with grouped rendering commit
-  `80aa203ab`, unless a higher-priority clean selector is chosen.
+- latest_commit: this commit (`ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3: activate AXI assertion expectation sync`).
+- active_work_unit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`
+  (continuity-only activation).
+- current_state: clean identifier completion commit `299db4cae` activates only
+  the test-truth repair; assertion generation, emitted AXI HDL, runtime
+  behavior, and t1502 expectations remain unchanged during activation.
+- next_action: reproduce t1502 line 293, update only its stale pre-grouping
+  exact assertion-text regex to the grouped output shipped by commit
+  `80aa203ab`, then run focused AXI/assertion preservation gates.
 - in_flight_uncommitted: none after commit; no background job.
 - blockers: none. A confirmatory guarded preservation rerun was stopped before
   test execution because host memory was 95.4% above the configured 88% cutoff;

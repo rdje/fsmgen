@@ -30827,3 +30827,15 @@ task tree and git.
   `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`. Decision `0027` owns the
   engineering rationale, so `DEVELOPMENT_NOTES.md` is unchanged; both frozen
   status files remain untouched.
+
+### ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3 — AXI assertion expectation sync activated
+
+- Activated only `.3` from clean identifier completion commit `299db4cae`.
+  The leaf owns t1502's stale pre-grouping exact assertion-text expectation;
+  product assertion generation, emitted HDL, AXI behavior, and tests remain
+  unchanged in this continuity commit.
+- Task/index, mdBook backlog, Memory, and changelog pointers are aligned. No
+  separate engineering rationale is created, so `DEVELOPMENT_NOTES.md` remains
+  unchanged; both frozen status files remain untouched. Documentation audits
+  pass at `Files=3, Tests=40`; Knowledge Map validation and mdBook HTML build
+  pass, and exact build scratch is removed.
