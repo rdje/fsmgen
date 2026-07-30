@@ -174,7 +174,7 @@ answers:
 date: 2026-06-07
 status: current
 tags: [vhdl, backend, direct-generation, composition, validation]
-evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl/FSM/Composition/GenerationOrchestrator.pm; perl/FSM/Composition/PlanBuilder.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; t/114-composition-target-support-diagnostics.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
+evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl/FSM/Composition/GenerationOrchestrator.pm; perl/FSM/Composition/PlanBuilder.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; t/114-composition-target-support-diagnostics.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md; docs/tasks/MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.md; docs/book/src/00-introduction.md; docs/book/src/10-errors-strict-mode-and-troubleshooting.md; docs/book/src/14-feature-backlog.md
 reverify: prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t
 ---
 
@@ -484,3 +484,10 @@ collisions fail closed. t1542/t1543 plus real AMBA/APB t1420/t386 output prove
 the historical `(|drive_zero_start)`, `(~|HRESP)`, `(~|wait_ctr)`, and
 `(|addr_q)` foreign tokens are gone. Public one-operand source arity is
 unchanged. GHDL validation remains unavailable under decision `0023`.
+
+The mdBook introduction and backend-expectations summary now describe this as
+a bounded shipped direct/exact-composition VHDL subset rather than blanket
+non-implementation. Chapter 10 names the exact C1 standalone-DT, C2 generated-
+FSM, C3 external-RTL, and APB/C4 generated-FSM families and points to Chapter
+14 for the canonical matrix. Full parity and external compiler qualification
+remain explicitly deferred.

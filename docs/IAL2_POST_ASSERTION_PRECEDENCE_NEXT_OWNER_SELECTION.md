@@ -25,7 +25,7 @@ The dated direct-VHDL facts establish that the CLI and pipeline already ship a
 bounded direct single-FSM scaffold plus exact composition families. The direct
 backend includes scalar/vector ports, resets, state/update structure, selected
 arithmetic and aggregate forms, and explicit scalar/static-bit/vector unary-
-reduction lowering. Exact C1/C2/APB-C4 composition subsets are also shipped.
+reduction lowering. Exact C1/C2/C3/APB-C4 composition subsets are also shipped.
 Decision `0023` still forbids treating successful text generation as external
 VHDL qualification: no authoritative VHDL compiler is installed, and full
 backend/parity, broad composition, record/array/package emission, and GHDL
@@ -76,7 +76,7 @@ truth, this intra-book drift is the smallest current roadmap-integrity defect.
 - replace Chapter 00's blanket VHDL non-implementation statement with a concise
   bounded-subset/full-backend distinction and a Chapter 14 pointer;
 - align Chapter 10's backend summary and composition wording with the shipped
-  direct/C1/C2/APB-C4 subsets;
+  direct/C1/C2/C3/APB-C4 subsets;
 - preserve decision `0023`, the absent external compiler, GHDL deferral, full-
   backend/parity deferral, and unsupported-shape fail-closed boundaries;
 - keep Chapter 14 canonical rather than duplicating its long feature matrix;
@@ -107,6 +107,11 @@ Clean selector commit `191a65151` activates only
 `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1` through continuity changes. The
 contradictory summaries and every shipped product behavior remain unchanged
 during activation.
+
+Completed book leaf `.1` aligns Chapters 00/10 with Chapter 14's bounded
+direct plus exact C1/C2/C3/APB-C4 composition VHDL truth. Full parity and
+external compiler qualification remain deferred, and product behavior is
+unchanged.
 
 ## Closeout Evidence
 

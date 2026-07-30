@@ -11793,7 +11793,7 @@ Completed `.833` selects proposed no-behavior
 [mdBook VHDL introduction boundary sync](../../tasks/MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.md).
 Chapter 00's blanket VHDL non-implementation claim and Chapter 10's blanket
 composition-rejection wording contradict this chapter's canonical partially
-shipped direct/C1/C2/APB-C4 boundary. The selected leaf will align only those
+shipped direct/C1/C2/C3/APB-C4 boundary. The selected leaf will align only those
 summaries while preserving full-backend, external-compiler, GHDL, broad-
 composition, aggregate/package, and parity deferrals. See the
 [selection record](../../IAL2_POST_ASSERTION_PRECEDENCE_NEXT_OWNER_SELECTION.md).
@@ -11803,6 +11803,12 @@ separate.
 Clean selector commit `191a65151` activates only the selected book leaf
 continuity-only. The stale summaries, this canonical boundary, and all product
 behavior remain unchanged during activation.
+Completed book leaf `.1` now aligns Chapters 00 and 10 with this canonical
+boundary. The concise summaries state that bounded direct single-FSM and exact
+C1 standalone-DT, C2 generated-FSM, C3 external-RTL, and APB/C4 generated-FSM
+VHDL families are shipped while full parity, external compiler qualification,
+broader composition, aggregate/package emission, and unsupported shapes remain
+deferred or fail closed. No product behavior changes.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -2,9 +2,12 @@
 
 FSMGen compiles Lisp-like `.fsm` sources into synthesizable HDL.
 
-Today, the primary backend is SystemVerilog. Verilog compatibility exists, and
-explicit VHDL support is still intentionally not implemented yet. That backend
-work is tracked in [Feature Backlog](14-feature-backlog.md).
+Today, the primary backend is SystemVerilog, with Verilog compatibility through
+the existing path. FSMGen also ships bounded VHDL generation for documented
+direct single-FSM and exact composition subsets. VHDL is not yet a full-parity
+backend and is not locally qualified by GHDL or another external VHDL compiler;
+unsupported shapes fail closed. The exact shipped subset and remaining work are
+tracked under [Backends And Validation](14-feature-backlog.md#backends-and-validation).
 
 This book is the progressive front door for FSMGen:
 

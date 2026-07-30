@@ -34,3 +34,8 @@ independently proposed, deferred, or gated.
 Clean selector commit `191a65151` activates only the selected book leaf through
 continuity changes. The stale summaries and every product behavior remain
 unchanged during activation.
+
+The selected leaf is now complete. Chapters 00/10 describe bounded direct plus
+exact C1/C2/C3/APB-C4 composition VHDL support and preserve the full-backend,
+external-compiler, and unsupported-shape boundaries. Product behavior remains
+unchanged.

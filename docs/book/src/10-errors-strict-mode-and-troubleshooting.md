@@ -379,16 +379,21 @@ Current backend truth:
 
 - SystemVerilog: primary live backend
 - Verilog: supported through the existing path
-- VHDL: recognized by the CLI, but explicitly not implemented as a full backend
+- VHDL: bounded direct single-FSM and exact composition subsets are shipped;
+  full-backend parity and external compiler qualification remain backlog
 
-So a VHDL request currently failing is not a mystery bug. It is the honest
-current boundary. Full VHDL support is tracked in
-[Feature Backlog](14-feature-backlog.md).
+For a supported root, `--language vhdl` routes through the live VHDL backend.
+Unsupported expressions, declarations, generic maps, aggregate shapes,
+packages, or composition forms fail closed instead of silently falling back to
+SystemVerilog. Text generation alone is not external qualification: this
+environment has no GHDL or equivalent VHDL compiler lane. The exact shipped
+matrix and remaining full-backend work are canonical under
+[Backends And Validation](14-feature-backlog.md#backends-and-validation).
 
-Composition has the same backend boundary: active composition lanes emit
-SystemVerilog/Verilog tops. A composition source requested with
-`--language vhdl` is rejected before HDL emission with an explicit target
-support diagnostic.
+Composition VHDL is intentionally exact rather than general. The shipped
+families cover the documented C1 standalone-DT, C2 generated-FSM, C3 external-
+RTL, and APB/C4 generated-FSM fixtures; other composition shapes are rejected
+before HDL emission with an explicit target-support diagnostic.
 
 ## Explicitly Out Of Active Support
 

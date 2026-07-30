@@ -8106,7 +8106,7 @@ exactly one next owner.
 Completed `.833` selects proposed no-behavior
 `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1`. Chapters 00 and 10 currently make
 blanket VHDL non-implementation/composition-rejection claims that contradict
-Chapter 14's canonical partially shipped direct/C1/C2/APB-C4 subset. The child
+Chapter 14's canonical partially shipped direct/C1/C2/C3/APB-C4 subset. The child
 will align only those summaries, preserving full-backend, external-compiler,
 GHDL, broad-composition, aggregate/package, and parity deferrals. HIAL/VIAL,
 scale, other startup maintenance, known defects, protocol/backend expansion,
@@ -8116,6 +8116,13 @@ Clean selector commit `191a65151` activates only
 `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1` continuity-only. The stale Chapter
 00/10 wording, canonical Chapter 14 boundary, and every product behavior remain
 unchanged until the book leaf commits its repair.
+Completed book leaf `.1` now replaces the blanket non-implementation and
+composition-rejection summaries with the bounded shipped truth: direct single-
+FSM plus exact C1 standalone-DT, C2 generated-FSM, C3 external-RTL, and APB/C4
+generated-FSM VHDL families. Chapter 14 stays canonical; full parity, GHDL or
+other external compiler qualification, broader composition, aggregate/package
+emission, and unsupported shapes remain deferred or fail closed. No product
+behavior changes. The next clean action returns to a new parent selector.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
