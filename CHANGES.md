@@ -31318,3 +31318,24 @@ task tree and git.
   the 72-file / 16,660,600-byte HTML build pass; Knowledge Map passes at 1,083
   facts / 5,584 keys; memory, diff, repository-local cleanup, and all seven
   staged doctrine gates complete the activation closeout.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.843 — live task-tree integrity enforced
+
+- Repaired the authoritative IAL2 node list to 844 numbered nodes / 844 unique
+  root references: restored `.633`, normalized `.73` to `done`, marked resolved
+  historical blocker `.705` live `done`, and restored `.758`'s canonical commit
+  field. Optional decision-`0019` historical views remain untouched.
+- Added read-only project-neutral `scripts/check_task_tree_integrity.pl` and
+  focused `t/1549`; live/valid positives and nine negative groups cover
+  duplicate/malformed IDs, ancestry, direct-child parity, canonical statuses,
+  container terminality, leaf fields, and active-root shape.
+- Registered `TASK-TREE-INTEGRITY` as the eighth doctrine and synchronized the
+  bootstrap meta-check, doctrine/toolbox/task guidance, canonical record/fact,
+  roadmap, mdBook backlog, task/index, Memory, and Knowledge Map. Proposed
+  `.844` owns the next exact selector and remains inactive until clean commit.
+- T1549 passes at `Files=1, Tests=11`; docs audits pass at `Files=3, Tests=40`;
+  all 36 mdBook chapters test and the 72-file / 16,665,035-byte build passes;
+  Knowledge Map passes at 1,084 facts / 5,589 keys; memory, diff, staged task
+  acceptance, all eight doctrines, and exact output cleanup pass. Product
+  behavior, architecture candidates, director gates, and frozen files do not
+  change; no separate development note is warranted.

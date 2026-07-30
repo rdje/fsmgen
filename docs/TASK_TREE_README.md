@@ -112,6 +112,12 @@ Task tree: docs/tasks/<FIRST-TREE>.md.
 
 At that point the workflow is usable.
 
+For repositories that adopt FSMGEN's mechanical enforcement layer, copy
+`scripts/check_task_tree_integrity.pl`, add it to the local doctrine/CI driver,
+and add focused fixture tests. The checker derives active task paths from the
+`Active Task Trees` table and validates only authoritative `## Task Tree` node
+lists; it intentionally ignores optional historical views.
+
 ## Recommended Full Setup
 
 Use this for a project where agents need reliable crash recovery, handoff
@@ -151,6 +157,11 @@ continuity, and PNT-style execution.
     - mdBook or equivalent: synchronize user-facing behavior and examples.
     - git: retain the chronological implementation and completion history.
 11. Commit the setup as one documentation/workflow slice.
+
+12. When mechanical doctrine enforcement is available, run
+    `scripts/check_task_tree_integrity.pl` in the local hook/CI path so active
+    root, node, ancestry, child-reference, status, container, and leaf-field
+    drift fails closed.
 
 ## Adapting `docs/TASK_TREE.md`
 

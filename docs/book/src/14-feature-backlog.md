@@ -12054,6 +12054,15 @@ Clean selector commit `bd1ef6765` activates only `.843` through continuity
 changes. The exact node/status drift, future integrity check, all product
 surfaces, and every broader architecture candidate remain unchanged during
 activation.
+Completed `.843` repairs the live task ledger to 844 numbered nodes / 844
+unique root child references, normalizes `.73` to `done`, marks the resolved
+historical `.705` blocker live `done`, restores `.758`'s commit field, and
+ships eighth doctrine `TASK-TREE-INTEGRITY`. The read-only check validates
+active-tree root/node/ancestry/child/status/container/leaf shape and keeps
+decision-`0019` historical views outside enforcement. Proposed `.844` owns the
+next exact roadmap selector; no public product behavior or architecture owner
+is activated. See the
+[integrity record](../../TASK_TREE_LIVE_NODE_INTEGRITY.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

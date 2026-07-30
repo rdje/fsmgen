@@ -74,6 +74,7 @@ Current registered checks:
 | `DOC-PATHS` | `scripts/check_docs_relative_paths.sh` | Live docs and the Knowledge Map do not leak machine-local absolute home paths. |
 | `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | `README.md` stays within its 300-line / 16,384-byte landing-page budget and no line enumerates two or more narrated work-unit leaves (`docs/decisions/0021` and `0024`; reusable standard: `README_POLICY.md`). |
 | `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
+| `TASK-TREE-INTEGRITY` | `scripts/check_task_tree_integrity.pl` | Every active indexed tree has one active root, unique valid nodes, exact direct-child enumeration, canonical statuses, valid ancestry/container state, and complete leaf evidence fields. |
 | `TASK-ACCEPTANCE` | `scripts/check_task_acceptance.sh` | A staged implementation change has one staged owning task file with fresh checked ROOT CAUSE, ADDRESSED, and NO REGRESSION boxes plus box-scoped declared root/no-regression evidence (`TASK_ACCEPTANCE.md`, decision `0026`). |
 
 List the registry with:
@@ -114,6 +115,25 @@ Documentation-only commits remain exempt when no configured implementation
 path is staged, but both registries are still validated. The gate checks
 evidence presence, freshness, and shape; the cited focused/broader commands
 remain the behavioral oracle.
+
+## Task-Tree Integrity Gate
+
+`scripts/check_task_tree_integrity.pl` reads active rows from
+`docs/TASK_TREE.md` and checks only each linked file's authoritative
+`## Task Tree` node list. Optional historical frontier, verification, commit,
+and changelog views remain outside live-state enforcement under decision
+`0019`.
+
+The check fails on duplicate or malformed node IDs, unknown statuses, missing
+parents, missing/extra/duplicate direct-child references, non-active indexed
+roots, invalid container states, nonterminal children under a done container,
+or leaves without exactly one `Acceptance`, `Verification`, and `Commit`
+field. Its `--root PATH` option exists for repository-local focused fixtures;
+ordinary use needs no argument:
+
+```bash
+scripts/check_task_tree_integrity.pl
+```
 
 ## Enforcement Layers
 

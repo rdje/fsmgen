@@ -66,6 +66,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need README entry-point hygiene | `scripts/check_readme_entrypoint.sh`. |
 | Need Knowledge Map sync | `knowledge-map/scripts/gen_knowledge_map.sh` then `knowledge-map/scripts/check_knowledge_map.sh`. |
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
+| Need authoritative active task-tree structure truth | `scripts/check_task_tree_integrity.pl`. |
 | Need code-slice evidence acceptance | Stage the intended slice, then run `scripts/check_task_acceptance.sh`. |
 | Need diff hygiene before commit | `git --no-pager diff --check` and `git status --short`. |
 | Need a downstream repro bundle | `./bin/fsmgen-issue-bundle --case PATH --issue-id ID -- [FSMGEN_OPTIONS...]`. |
@@ -223,6 +224,7 @@ scripts/check_readme_entrypoint.sh
 knowledge-map/scripts/gen_knowledge_map.sh
 knowledge-map/scripts/check_knowledge_map.sh
 scripts/check_memory_architecture.sh
+scripts/check_task_tree_integrity.pl
 scripts/check_doctrines.sh
 ```
 
@@ -235,6 +237,9 @@ Expected signals:
   and `0024`; reusable policy: `README_POLICY.md`).
 - Knowledge Map check says facts are valid, IDs are unique, and the map is in sync.
 - memory architecture check confirms `MEMORY.md` is bounded and bootstrap/task/decision stores exist.
+- task-tree integrity reports measured active-tree/node counts and rejects
+  live node/reference/status/shape drift while ignoring optional historical
+  views under decision `0019`.
 - doctrine bootstrap check confirms root doctrine/toolbox docs, bootstrap
   pointers, hook wiring, and CI wiring exist.
 - doctrine driver reports every registered doctrine as `PASS`.
@@ -246,6 +251,7 @@ the owning task-tree leaf:
 
 ```bash
 rg -n 'Current Frontier|<LEAF-ID>|Verification Log|Commit Log' docs/tasks docs/TASK_TREE.md
+scripts/check_task_tree_integrity.pl
 ```
 
 Before commit, follow `COMMIT.md`; after staging the intended paths, run the

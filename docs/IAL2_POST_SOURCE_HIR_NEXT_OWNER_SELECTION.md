@@ -81,3 +81,20 @@ the owning task node and commit workflow.
 Clean selector commit `bd1ef6765` activates only `.843` through a separate
 continuity transition. The exact ledger repair and mechanical protection stay
 unimplemented until that activation commits cleanly.
+
+## Implementation Closeout
+
+After clean activation commit `38e928e7b`, `.843` restores complete root
+enumeration through proposed `.844`, normalizes `.73` to `done`, closes the
+historical/resolved `.705` live blocker, and restores `.758`'s canonical
+commit field. `TASK-TREE-INTEGRITY` is now the eighth registered doctrine; its
+read-only checker and focused `t/1549` matrix mechanically enforce active-tree
+root, node, ancestry, direct-child, status, container, and leaf-field shape.
+See `docs/TASK_TREE_LIVE_NODE_INTEGRITY.md` for the canonical implementation
+contract and rollback.
+
+The post-repair live census is 844 numbered nodes and 844 unique root child
+references; the doctrine reports one active tree and 845 total nodes including
+the root. Optional historical views remain untouched under decision `0019`.
+Proposed `.844` owns the next exact roadmap selector; no candidate is activated
+by this infrastructure repair, and no product behavior changes.

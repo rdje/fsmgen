@@ -51,6 +51,12 @@ else
   note "doctrine registry does not include TASK-ACCEPTANCE"
 fi
 
+if grep -q 'TASK-TREE-INTEGRITY|scripts/check_task_tree_integrity.pl' scripts/check_doctrines.sh; then
+  ok "doctrine registry includes TASK-TREE-INTEGRITY"
+else
+  note "doctrine registry does not include TASK-TREE-INTEGRITY"
+fi
+
 for file in "${bootstrap_files[@]}"; do
   if [[ ! -f "${file}" ]]; then
     note "${file} bootstrap pointer is missing"

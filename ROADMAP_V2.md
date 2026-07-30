@@ -8353,6 +8353,14 @@ Clean selector commit `bd1ef6765` activates only `.843` through a separate
 continuity transition. The `.633` child-enumeration omission, `.705` live
 status, integrity-check implementation, all product surfaces, and every
 broader architecture candidate remain unchanged during activation.
+Completed `.843` restores 844/844 numbered-node/root-reference parity,
+normalizes `.73` to `done`, closes resolved historical blocker `.705`, restores
+`.758`'s commit field, and registers eighth doctrine `TASK-TREE-INTEGRITY` with
+focused deterministic negative probes. Proposed `.844` owns the next exact
+roadmap selector after this infrastructure slice commits cleanly. HIAL/VIAL
+remains the strongest later product candidate; no architecture candidate,
+director gate, frozen status file, or product behavior changes. See
+`docs/TASK_TREE_LIVE_NODE_INTEGRITY.md`.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
