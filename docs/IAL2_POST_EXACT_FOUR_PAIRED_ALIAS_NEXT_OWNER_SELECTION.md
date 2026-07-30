@@ -148,8 +148,10 @@ Clean selector commit `4abb0a357` now activates only selected readiness audit
 Completed audit `.1` directly proves real read-only shell-disabled MCP,
 public `--verify-hdl`, and assertion-enabled two-command
 10/8/2/8/2/`44332211`/`88776655` runtime. It selects pending generic contract
-`.2` at projected 331/372/55 split 28 `.ppif`/27 `.ahb`; `.2` remains inactive
-until the clean audit commit and separate activation.
+`.2` at projected 331/372/55 split 28 `.ppif`/27 `.ahb`. Clean audit commit
+`a5d162d60` and activation commit `93a7f2089` satisfy its activation boundary;
+contract `.2` now freezes the exact source/support/t1539/testbench contract and
+selects pending data-only implementation `.3` without shipping behavior.
 
 ## Rollback
 

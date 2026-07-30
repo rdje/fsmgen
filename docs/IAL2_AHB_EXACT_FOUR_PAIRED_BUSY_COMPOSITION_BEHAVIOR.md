@@ -158,6 +158,10 @@ strict/artifact/semantic/read-only-MCP/public-verifier parity and selects
 pending no-behavior generic contract `.2`. The shipped one-window 330/371/54
 boundary remains unchanged.
 
+Contract `.2` now freezes the adjacent two-window generic source/support/t1539
+boundary at projected 331/372/55 split 28 `.ppif`/27 `.ahb` and selects
+pending data-only implementation `.3`. The two-window source remains unshipped.
+
 ## Rollback
 
 Rollback of `.825` removes only the alias source, its support entry, t1538, and

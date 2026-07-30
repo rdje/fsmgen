@@ -5,14 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this two-subordinate exact-four paired `.2` activation;
-  predecessor audit `a5d162d60`.
-- active_work_unit:
-  `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`.
+- latest_commit: this two-subordinate exact-four paired `.2` contract;
+  predecessor activation `93a7f2089`.
+- active_work_unit: none after this commit; selected pending data-only
+  two-window exact-four implementation `.3` is next.
 - current_state: exact-four paired generic/profile paths ship at 330/371/54
   split 27/27 with t1538 parity and shared assertion-enabled t1537 runtime.
-- next_action: freeze the exact generic two-window exact-four public contract,
-  preservation gates, rollback boundary, and separate implementation owner.
+- next_action: from this clean contract commit, activate `.3` separately and
+  ship the selected generic source/support/t1539 behavior.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -32,8 +32,9 @@ bounded current-state pointer. Git preserves its prior history.
   alias with t1538 parity at 330/371/54. Completed `.826` selects proposed
   two-window exact-four readiness `.1`; the audit now proves strict/artifact/
   semantic/read-only-MCP/verifier plus assertion-enabled two-command
-  10/8/2/8/2/`44332211`/`88776655` runtime and selects pending `.2`. Decision
-  `0020` remains separate.
+  10/8/2/8/2/`44332211`/`88776655` runtime. `.2` now freezes the exact generic
+  source/support/t1539 contract and selects pending `.3`. Decision `0020`
+  remains separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and

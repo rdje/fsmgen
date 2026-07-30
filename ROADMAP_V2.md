@@ -7830,6 +7830,16 @@ Activation changes continuity documentation and no parser, generator, public
 source, support, test, artifact, report/semantic/MCP API, HDL/runtime,
 simulator, backend, protocol, HIAL/VIAL, VHDL, verification-generation,
 portability, scale, decision-0020, or transaction behavior.
+Contract `.2` now freezes exactly one additive generic source,
+`ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
+as the identity/requester/cardinality-only transform of the shipped exact-three
+authority. It selects exact object/anchor/support/coverage identities, 4 IAL1/
+5 IAL0 artifacts, four children, two windows, width-three `4 -> 3 -> 2 -> 1 ->
+0`, normalized semantic/read-only-MCP parity, and all-assertion t1539 runtime
+at 10/8/2/8/2/`44332211`/`88776655`. Projected accounting is 331/372/55 split
+28 `.ppif`/27 `.ahb`. Pending `.3` owns data-only implementation; the source
+remains unshipped during selection. See
+`docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -2433,6 +2433,15 @@ split 28 `.ppif`/27 `.ahb`. See the
 Clean audit commit `a5d162d60` activates only generic contract selector `.2`.
 The selected source/support/t1539/testbench remain absent during activation;
 public behavior stays at 330/371/54 split 27 `.ppif`/27 `.ahb`.
+Contract `.2` now selects the topology-first generic source
+`ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`.
+It freezes exact intent/object/anchor/support/coverage identities, four IAL1
+and five IAL0 artifacts, two `[0,4)`/`[4,8)` windows, width-three
+`4 -> 3 -> 2 -> 1 -> 0`, child/propagated BUSY parking, one-hot retained
+ownership, normalized semantic/read-only-MCP parity, and assertion-enabled
+t1539 runtime at 10/8/2/8/2/`44332211`/`88776655`. Projected accounting is
+331/372/55 split 28 `.ppif`/27 `.ahb`; pending `.3` owns implementation. See
+the [selected contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

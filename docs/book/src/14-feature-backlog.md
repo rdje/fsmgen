@@ -11552,6 +11552,13 @@ public-verifier surfaces plus assertion-enabled two-command 10 presentations /
 Clean audit commit `a5d162d60` activates only generic contract selector `.2`.
 Activation adds no public source, support, test, artifact, or behavior; the
 audit remains the runtime authority while `.2` freezes the future contract.
+Contract `.2` now freezes one generic two-window exact-four source through the
+existing four-child architecture, exact support/semantic identities, 4 IAL1/5
+IAL0 artifacts, and all-assertion t1539 10/8/2/8/2/`44332211`/`88776655`
+runtime. Projected accounting is 331/372/55 split 28 `.ppif`/27 `.ahb`.
+Pending `.3` is the separate data-only implementation; no source ships in
+selection. See the
+[contract](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

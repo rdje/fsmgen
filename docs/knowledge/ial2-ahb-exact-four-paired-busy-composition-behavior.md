@@ -61,3 +61,7 @@ not this selector, owns assertion-enabled two-command
 Completed two-window audit `.1` proves that exact runtime and selects pending
 generic contract `.2`; the shipped one-window 330/371/54 boundary is
 unchanged until a later implementation.
+
+Contract `.2` now freezes the two-window generic source/support/t1539 boundary
+at projected 331/372/55 split 28 `.ppif`/27 `.ahb` and selects pending
+data-only implementation `.3`; no two-window source ships in selection.

@@ -188,6 +188,14 @@ Activation changes continuity documentation only: public accounting remains
 entry, t1539, and testbench remain absent until a separately selected
 implementation leaf ships them.
 
+Contract `.2` now freezes that exact generic source, support/coverage identity,
+four-IAL1/five-IAL0 architecture, semantic/read-only-MCP surface, all-assertion
+t1539 10/8/2/8/2/`44332211`/`88776655` runtime, preservation set, projected
+331/372/55 split 28 `.ppif`/27 `.ahb`, and exact rollback. Pending data-only
+implementation `.3` is separate; selection itself ships no source or behavior.
+See
+`docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md`.
+
 The future matching `.ahb` alias remains separate. Counts above four,
 runtime/policy/random/multiple-point insertion, distinct bus-BUSY status,
 wider/indefinite bursts, optional signals, generic priority changes, other

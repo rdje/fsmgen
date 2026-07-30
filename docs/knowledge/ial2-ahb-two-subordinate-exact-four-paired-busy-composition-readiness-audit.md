@@ -38,3 +38,9 @@ Clean audit commit `a5d162d60` activates only contract selector `.2`. This
 continuity-only activation leaves public accounting at 330/371/54 split 27
 `.ppif`/27 `.ahb`; the future source, support entry, t1539, and testbench remain
 absent while `.2` freezes their exact contract.
+
+Contract `.2` now freezes one topology-first generic source, its exact
+support/coverage identity, four IAL1/five IAL0 artifacts, normalized semantic/
+read-only-MCP parity, assertion-enabled t1539 runtime, preservation gates, and
+rollback at projected 331/372/55 split 28 `.ppif`/27 `.ahb`. Pending `.3`
+owns implementation; selection ships no public behavior.
