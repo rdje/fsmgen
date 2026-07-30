@@ -11895,6 +11895,15 @@ behavior changed; the public-sync `.1`-.4 tree is complete.
 Clean public-sync completion commit `b2c114e2e` activates parent selector `.837`
 continuity-only. It selects no candidate during activation; the known four-
 fence mdBook rustdoc repair remains proposed pending current-HEAD comparison.
+Completed `.837` selects proposed
+[mdBook rustdoc fence repair `.1`](../../tasks/MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.md).
+Current-HEAD full-book doctests fail only at the four already-owned untyped
+plain-text diagrams in Chapters 13, 13b, 13f, and 13h. After a separate clean
+activation, the child will add only explicit `text` annotations and prove
+diagram-content preservation plus clean doctest/HTML builds. The scheduled
+four-document lifecycle review and every director-gated direction stay
+inactive. See the
+[selection record](../../IAL2_POST_PUBLIC_SYNC_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

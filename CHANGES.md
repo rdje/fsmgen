@@ -30668,3 +30668,23 @@ task tree and git.
   `Files=3, Tests=40`; Knowledge Map generation/check passes at 1,069 facts /
   5,502 keys; mdBook HTML build and diff hygiene pass. No product or test
   behavior changes, and no development-note entry is warranted.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.837 — mdBook rustdoc fence repair selected
+
+- Re-ran `mdbook test docs/book` on clean activation commit `9cacba136` with
+  an absolute repository-derived `TMPDIR`. It fails only at the four already-
+  owned untyped plain-text diagrams in Chapters 13, 13b, 13f, and 13h; the
+  exact scratch directory was removed.
+- Selected only proposed `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1`: four
+  one-line `text` annotations will restore the full-book doctest gate while
+  preserving diagram contents. The child remains unchanged until a separate
+  clean activation.
+- The scheduled four-document lifecycle review and every director-gated owner
+  remain inactive. `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain
+  untouched; the selection record/fact owns the rationale, so no development-
+  note entry is warranted.
+- Feature-backlog status, live-book-path, and relative-path audits pass with
+  `Files=3, Tests=40`; Knowledge Map generation/check passes at 1,070 facts /
+  5,507 keys; mdBook HTML-build and diff-hygiene gates pass. No source, test,
+  artifact, API, HDL/runtime, product behavior, prose, or example content
+  changes.

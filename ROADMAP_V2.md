@@ -8223,6 +8223,13 @@ Clean public-sync completion commit `b2c114e2e` activates parent selector `.837`
 continuity-only. No candidate is selected during activation; the known four-
 fence mdBook rustdoc repair remains proposed pending current-HEAD reconciliation.
 The project-document lifecycle discussion and every director gate stay inactive.
+Completed `.837` selects proposed `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1`.
+Current-HEAD `mdbook test` fails only at the four task-owned untyped diagrams
+in Chapters 13, 13b, 13f, and 13h; the selected child will add only explicit
+`text` annotations after a separate clean activation. The scheduled four-
+document lifecycle review, architecture/product horizons, and every director-
+gated item remain inactive. See
+`docs/IAL2_POST_PUBLIC_SYNC_NEXT_OWNER_SELECTION.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
