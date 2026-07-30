@@ -8296,6 +8296,14 @@ Clean AHB book completion commit `3fb84b23e` activates parent selector `.841`
 continuity-only. It selects no candidate during activation; the scheduled
 lifecycle review and every explicit director gate remain inactive, and both
 frozen status files stay untouched.
+Completed `.841` selects proposed no-behavior
+`FSMGEN-HIR-ROADMAP-FRONTIER.2`. The source-facing semantic boundary above
+IAL2/IAL1 is the narrow prerequisite for future high-level frontends and the
+host-language builder; the selected leaf must satisfy `docs/IR_POLICY.md`,
+choose reuse/new/textual handoff, one first frontend or builder, and one golden
+fixture before implementation. HIAL/VIAL, scale, MCP-write, and every
+director-gated lane remain inactive. See
+`docs/IAL2_POST_AHB_BOOK_SYNC_NEXT_OWNER_SELECTION.md`.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

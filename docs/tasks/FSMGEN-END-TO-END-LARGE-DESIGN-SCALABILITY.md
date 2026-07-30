@@ -140,6 +140,9 @@ and diagnostic behavior per stage while proving semantic/output correctness.
 - `2026-07-30`: Parent selector `.833` chooses the smaller mdBook VHDL
   introduction/backend-summary truth repair after assertion precedence ships.
   Scale remains proposed with its full capacity-methodology contract unchanged.
+- `2026-07-30`: Parent selector `.841` chooses the narrower source-facing HIR
+  boundary selection before this independent workload/capacity methodology.
+  Scale remains proposed with its full contract unchanged.
 
 ## Open Questions
 

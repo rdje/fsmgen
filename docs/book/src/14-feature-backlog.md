@@ -11997,6 +11997,14 @@ unchanged.
 Clean AHB book completion commit `3fb84b23e` activates parent selector `.841`
 continuity-only. No candidate is selected during activation; the scheduled
 lifecycle review and every director-gated direction remain inactive.
+Completed `.841` selects proposed no-behavior
+`FSMGEN-HIR-ROADMAP-FRONTIER.2`. The source-facing HIR boundary is the narrow
+prerequisite for future high-level frontends and the host-language builder.
+The selected leaf will apply `docs/IR_POLICY.md`, choose reuse/new/textual
+handoff, one first frontend or builder, and one golden fixture before any
+implementation. HIAL/VIAL, scale, MCP-write, and every director-gated direction
+remain inactive. See the
+[selection record](../../IAL2_POST_AHB_BOOK_SYNC_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

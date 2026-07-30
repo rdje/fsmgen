@@ -118,7 +118,8 @@ is now complete. Parent selector `.832` chooses the smaller shipped
 concurrent-assertion correctness audit first. This architecture stays proposed;
 its source-model, typed-bridge, native-extension, simulator-profile, backend,
 migration, parity, and scale requirements remain intact for a later clean
-selector.
+selector. Parent `.841` now chooses the narrower source-facing HIR boundary
+selection first; HIAL/VIAL remains independent and proposed.
 
 ## Decisions
 
@@ -155,6 +156,9 @@ selector.
 - `2026-07-30`: Parent selector `.833` selects the smaller mdBook VHDL
   introduction/backend-summary truth repair after assertion precedence ships.
   HIAL/VIAL remains proposed with its complete architecture contract unchanged.
+- `2026-07-30`: Parent selector `.841` selects the narrower IR-policy-governed
+  source-facing HIR boundary before this comprehensive dual-intent audit.
+  HIAL/VIAL remains proposed with every architecture requirement unchanged.
 
 ## Open Questions
 

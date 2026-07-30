@@ -81,6 +81,9 @@ package, module, parser, source, or generated-artifact implementation work.
   assumptions as the preferred long-term architecture for multiple high-level
   frontends. Host-language builder activation should consult the HIR boundary
   selection before choosing direct IAL2 or IAL1 emission.
+- `2026-07-30`: Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.841`
+  selects the prerequisite source-facing HIR boundary. This builder remains
+  proposed and does not activate implicitly.
 
 ## Open Questions
 

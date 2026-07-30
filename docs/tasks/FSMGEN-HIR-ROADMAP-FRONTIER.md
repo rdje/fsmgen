@@ -73,10 +73,12 @@ and future IAL evolution.
 
 ## Current Frontier
 
-This tree is proposed and not PNT-eligible until explicitly activated by the
-user or roadmap selection. The first activation leaf is deliberately a design
-selection leaf because the HIR must satisfy the repo IR policy before source or
-compiler behavior changes.
+Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.841` selects `.2` as the
+next exact no-behavior architecture owner. The tree and leaf remain proposed
+until that selector commits cleanly and a separate continuity commit activates
+them. The first activation leaf is deliberately a design selection leaf because
+the HIR must satisfy the repo IR policy before source or compiler behavior
+changes.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
@@ -108,6 +110,9 @@ compiler behavior changes.
   `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` remains relevant, but future host
   language builder work should activate through or after this HIR boundary
   selection instead of assuming direct IAL emission is the final architecture.
+- `2026-07-30`: Parent selector `.841` selects proposed `.2` as the smallest
+  foundational owner after the Chapter 16c AHB truth repair. `.2` remains
+  inactive until the selector commits cleanly; no IR or behavior changes.
 
 ## Open Questions
 

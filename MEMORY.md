@@ -5,14 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.841: activate post AHB book selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.841`
-  (continuity-only activation).
-- current_state: clean AHB book completion commit `3fb84b23e` activates `.841`
-  without selecting a candidate or changing behavior.
-- next_action: after this activation commits cleanly, reconcile current-HEAD
-  eligible candidates and select exactly one smallest roadmap owner.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.841: select source-facing HIR boundary`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.841` (complete).
+- current_state: `.841` selects proposed no-behavior
+  `FSMGEN-HIR-ROADMAP-FRONTIER.2` as the IR-policy-governed prerequisite for
+  future high-level frontends and the host-language builder.
+- next_action: after this selector commits cleanly, activate only selected HIR
+  architecture leaf `.2` through a separate continuity commit.
+- in_flight_uncommitted: none after this selection commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -38,6 +38,8 @@ history; this file carries only the current bounded resume state.
   packages / 19 IAL2 owners and Support 71.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
+- HIR `.2` is selected but remains proposed; HIAL/VIAL, scale, MCP-write, and
+  every director-gated owner remain inactive.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously

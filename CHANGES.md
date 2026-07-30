@@ -30981,3 +30981,17 @@ task tree and git.
   documentation audits pass with `Files=3, Tests=40`; Knowledge Map, memory
   architecture, the 72-file mdBook HTML build, output cleanup, and diff hygiene
   pass.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.841 — source-facing HIR boundary selected
+
+- Selected proposed no-behavior `FSMGEN-HIR-ROADMAP-FRONTIER.2` as the
+  smallest foundational owner after comparing the live candidate frontier.
+- The selected leaf applies the existing IR policy to choose one source-facing
+  HIR boundary, one first frontend or builder, and one golden fixture before
+  implementation. The host-language builder waits on this prerequisite.
+- HIAL/VIAL, scale, beyond-read-only MCP, and every director-gated candidate
+  remain inactive. The selected child remains proposed until a separate clean
+  activation; no product behavior or support accounting changes. Focused
+  documentation audits pass with `Files=3, Tests=40`; Knowledge Map at 1,075
+  facts / 5,539 keys, memory architecture, the 72-file mdBook HTML build,
+  output cleanup, and diff hygiene pass.
