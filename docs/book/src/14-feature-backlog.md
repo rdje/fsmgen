@@ -11596,6 +11596,18 @@ Clean behavior commit `3519cde33` activates parent selector `.829` as
 continuity only. Accounting remains 332/373/56 split 28 `.ppif`/28 `.ahb`;
 the selector will choose exactly one smallest next owner without changing
 public behavior.
+Selector `.829` chooses the proposed
+[`IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.md).
+The no-behavior audit will select a reusable finite literal count range above
+four and prove representative counter-width transitions, qualified runtime,
+stalls, diagnostics, and preservation before any public widening. The current
+exact-five transform fails only at the intentional `2..4` gate, while minimum
+width derivation is already generic; an open-ended exact-count fixture cadence
+is not selected. See the
+[selection record](../../IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
+Accounting and behavior remain 332/373/56 split 28/28. HIAL/VIAL, dynamic BUSY
+policy, generic priority, VHDL/portability, scale, and decision `0020` stay
+separate.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

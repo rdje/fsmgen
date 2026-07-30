@@ -5,12 +5,10 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: clean `.828` behavior commit `3519cde33`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.829`.
-- current_state: `.829` is active as a no-behavior parent selector after the
-  two-window exact-four generic/profile pair reached 332/373/56 split 28/28.
-- next_action: reconcile remaining roadmap owners, choose exactly one smallest
-  evidence-backed slice, synchronize durable layers, and commit the selection.
+- latest_commit: this `.829` selector commit; predecessor `f56a6b5ca`.
+- active_work_unit: none after clean `.829` closeout.
+- current_state: `.829` selects generalized AHB BUSY-count readiness `.1` at unchanged 332/373/56 split 28/28.
+- next_action: activate only `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.1` from the clean tree.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -34,8 +32,10 @@ bounded current-state pointer. Git preserves its prior history.
   source/support/t1539 contract; `.3` now ships the selected path with exact
   10/8/2/8/2 runtime and 331/372/55 accounting. `.827` selected `.828`, which
   now ships the matching alias with focused t1540 parity at 332/373/56 split
-  28/28. Clean `.828` now activates parent selector `.829`; decision `0020`
-  remains separate.
+  28/28. `.829` now selects a reusable finite literal-count readiness audit;
+  exact five currently fails only at the `2..4` gate while minimum-width
+  lowering is already generic. The safe upper bound remains audit-owned;
+  decision `0020` remains separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
@@ -46,8 +46,8 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. Active `.829` keeps the tree
-  proposed while comparing it with the remaining exact roadmap owners.
+  mixed-language claims qualified separately. Completed `.829` keeps the tree
+  proposed while selecting the smaller adjacent generalized-count audit.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc

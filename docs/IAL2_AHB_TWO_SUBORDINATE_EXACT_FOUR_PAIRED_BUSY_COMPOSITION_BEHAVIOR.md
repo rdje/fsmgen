@@ -46,6 +46,12 @@ Clean behavior commit `3519cde33` activates no-behavior parent selector
 `.829`. The shipped 332/373/56 split 28/28 boundary and all behavior above
 remain unchanged while `.829` chooses one exact next roadmap owner.
 
+Selector `.829` chooses proposed generalized literal requester BUSY-count
+readiness `.1`, not an exact-five fixture. The audit must select and prove one
+finite public range above four before any widening; this behavior and current
+332/373/56 split 28/28 accounting remain unchanged. HIAL/VIAL and the other
+broader owners stay separate.
+
 ## Exact Source Delta
 
 The 6,645-byte source is the frozen identity/requester/cardinality-only

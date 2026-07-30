@@ -7877,6 +7877,19 @@ Clean behavior commit `3519cde33` now activates no-behavior parent selector
 the selector reconciles the remaining BUSY count/semantics, generic priority,
 HIAL/VIAL, verification, VHDL/portability, scale, other protocol/backend, and
 decision-0020 owners and chooses exactly one next slice.
+Selector `.829` now chooses proposed
+`IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.1`, a
+no-behavior audit for one reusable finite literal `busy-beats` range above
+four. An in-memory exact-five transform fails only at the current literal
+`2..4` gate; existing integer width derivation already maps 5/7 to width 3,
+8/15 to width 4, and 16/31 to width 5, while qualified retirement contains no
+exact-four branch. The audit must select the safe public upper bound, prove
+representative width-transition and assertion-enabled stall/runtime behavior,
+and avoid a count-by-count fixture expansion. Accounting remains 332/373/56
+split 28/28. Runtime/policy/random/symbolic and multiple-point BUSY semantics,
+generic priority, HIAL/VIAL, VHDL/portability, scale, other protocols/backends,
+and decision 0020 remain separate. See
+`docs/IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

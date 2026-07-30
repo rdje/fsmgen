@@ -52,6 +52,12 @@ Canonical evidence is
 Proposed and inactive. It requires an explicit clean-tree selection after the
 current AHB requester BUSY activity dries out.
 
+Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.829` keeps this tree
+proposed while selecting the smaller adjacent generalized literal BUSY-count
+readiness audit. The current qualified multi-BUSY requester path does not use
+the conflicting concurrent-rule selector mechanism, so this repair is not a
+prerequisite to the selected audit.
+
 ## Rollback
 
 Before activation, rollback removes this proposed tracking tree and its fact.

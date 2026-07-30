@@ -303,4 +303,8 @@ evidence-backed handoff.
 - `2026-07-30`: Clean `.828` behavior commit `3519cde33` activates parent
   selector `.829`; HIAL/VIAL remains proposed and unchanged while `.829`
   compares it with the remaining roadmap owners.
+- `2026-07-30`: Selector `.829` chooses the smaller adjacent no-behavior
+  generalized literal AHB BUSY-count readiness audit. HIAL/VIAL remains
+  proposed with its typed bridge, portable/native semantics, full-language
+  UVM authority, VHDL/mixed-language, migration, and scale gates unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

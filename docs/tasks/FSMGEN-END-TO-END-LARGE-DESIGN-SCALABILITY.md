@@ -18,6 +18,12 @@ quality, artifact integrity, or workflow recoverability.
 This is a parked product requirement, not an active priority change. A later
 roadmap selector must activate it explicitly from a clean boundary.
 
+Parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.829` keeps this requirement
+proposed while selecting the smaller adjacent generalized literal AHB
+BUSY-count readiness audit. That audit must still measure and bound its own
+resource/verification cost; it does not claim or replace end-to-end big-to-
+really-big qualification.
+
 ## Requirement
 
 “Large-design support” means the complete user path, not a parser-only or

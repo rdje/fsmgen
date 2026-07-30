@@ -2486,6 +2486,16 @@ Current accounting is 332/373/56 split 28 `.ppif`/28 `.ahb`.
 Clean behavior commit `3519cde33` activates parent selector `.829` without a
 public behavior change. The 332/373/56 split 28/28 boundary remains fixed
 while it chooses one exact next roadmap owner.
+Selector `.829` chooses a no-behavior
+[generalized literal BUSY-count readiness audit](../../IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
+Exact five currently fails only at the intentional `2..4` admission gate;
+minimum-width lowering is already generic across later width transitions. The
+audit must select and prove one finite public range, representative assertion-
+enabled retirement/stall behavior, diagnostics, reports, and preservation
+without adding one catalog fixture per count. Current behavior and accounting
+remain 332/373/56 split 28/28. Runtime/policy/random/symbolic counts, multiple
+insertion points, HIAL/VIAL, generic priority, VHDL, scale, and decision `0020`
+remain separate.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

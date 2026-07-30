@@ -141,3 +141,9 @@ restores literal `2..3` normalization and diagnostics, removes the width
 helper, restores the former residue text and 326/367/50 accounting, then reruns
 the requester preservation boundary. Exact-one/two/three generated behavior
 otherwise remains unchanged.
+
+Parent selector `.829` now selects proposed generalized literal requester
+BUSY-count readiness `.1`. The selected audit must choose and prove one finite
+range above four rather than add an exact-five-only fixture. Until a separate
+contract and implementation ship, the public `2..4` boundary and all behavior
+in this record remain unchanged.

@@ -40,3 +40,8 @@ separate.
 Parent `.823` selected the separate one-window exact-four paired readiness
 audit. Completed audit/contract/implementation leaves now ship its generic/
 profile pair with shared assertion-enabled runtime and focused alias parity.
+
+Parent selector `.829` now selects proposed generalized literal requester
+BUSY-count readiness `.1`. It must prove one finite reusable public range above
+four; an exact-five-only fixture is not selected. The current `2..4` behavior
+and 332/373/56 split 28/28 project boundary remain unchanged during selection.

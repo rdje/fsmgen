@@ -55,3 +55,7 @@ absent and current 331/372/55 behavior is unchanged during activation.
 Clean behavior commit `3519cde33` activates parent selector `.829` without a
 behavior change. Current 332/373/56 split 28/28 behavior remains fixed while
 the selector chooses one exact next roadmap owner.
+
+Selector `.829` chooses proposed generalized literal requester BUSY-count
+readiness `.1`. It changes no behavior or accounting; the selected audit must
+prove a finite reusable range above four before any public widening.
