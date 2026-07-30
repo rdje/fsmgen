@@ -136,3 +136,6 @@ continuity and no public or generated behavior.
 
 Completed contract `.2` selects proposed lowerer/test-only `.3` without a
 public fixture per count; behavior and 332/373/56 accounting remain unchanged.
+
+Clean contract commit `7e2b436cf` activates only `.3`; activation is
+continuity-only.

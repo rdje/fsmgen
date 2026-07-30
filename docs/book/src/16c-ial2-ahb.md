@@ -2519,6 +2519,9 @@ lowerer. It adds no public fixture per count and keeps 332/373/56 split 28/28;
 t1541 and one generic assertion harness own 5/8/16 proof. The touched t1535
 workspaces also move to `.artifacts/tmp/tests`. See the
 [contract record](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_CONTRACT_SELECTION.md).
+Clean contract commit `7e2b436cf` activates only implementation `.3`; public
+literal `2..4`, generated HDL/runtime, source bytes, and accounting remain
+unchanged during activation.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

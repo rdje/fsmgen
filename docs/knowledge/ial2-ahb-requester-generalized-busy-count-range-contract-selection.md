@@ -36,3 +36,6 @@ does not widen product scope.
 Current public behavior remains literal `2..4` until `.3` activates and ships.
 Dynamic/policy/runtime/random/symbolic counts, multiple insertion points,
 generic priority, HIAL/VIAL, VHDL, scale, and decision `0020` remain separate.
+
+Clean contract commit `7e2b436cf` activates only `.3`; activation is
+continuity-only and leaves current behavior and accounting unchanged.

@@ -11633,6 +11633,9 @@ fixture per count, t1541 plus generic 5/8/16 assertion runtime, and migration
 of t1535's touched temporary workspaces to `.artifacts/tmp/tests`. Public
 behavior remains `2..4` until `.3` ships; see the
 [contract record](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_CONTRACT_SELECTION.md).
+Clean contract commit `7e2b436cf` activates only implementation `.3`.
+Activation is continuity-only: public literal `2..4`, generated behavior,
+existing source bytes, and 332/373/56 split 28/28 remain unchanged.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

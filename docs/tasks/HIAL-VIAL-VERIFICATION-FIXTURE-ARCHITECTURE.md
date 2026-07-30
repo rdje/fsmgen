@@ -317,4 +317,6 @@ evidence-backed handoff.
 - `2026-07-30`: Generalized-count contract `.2` selects the smaller
   lowerer/test-only `.3`; HIAL/VIAL remains proposed with its architecture,
   full-language authority, VHDL/mixed-language, migration, and scale gates.
+- `2026-07-30`: Clean contract commit `7e2b436cf` activates only `.3`;
+  HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

@@ -159,3 +159,6 @@ behavior remains unchanged while the future implementation contract is frozen.
 Completed contract `.2` selects proposed `.3` without changing this source or
 behavior. `.3` widens the shared lowerer and verification only; no per-count
 public fixture is added and current accounting remains 332/373/56 split 28/28.
+
+Clean contract commit `7e2b436cf` activates only `.3`; this exact-four source
+and behavior remain unchanged during activation.

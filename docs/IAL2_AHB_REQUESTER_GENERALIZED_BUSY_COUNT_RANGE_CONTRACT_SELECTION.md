@@ -173,6 +173,11 @@ semantics, generic rule/transaction priority, HIAL/VIAL, verification
 generation, VHDL, portability, scale, other protocols/backends, and decision
 `0020` remain separately owned.
 
+Clean contract commit `7e2b436cf` activates only implementation `.3`.
+Activation changes continuity and no current parser, generator, source,
+support, report, semantic/MCP, generated HDL/runtime, or simulator behavior;
+literal `2..4` and 332/373/56 split 28/28 remain current until `.3` ships.
+
 ## Rollback
 
 Before `.3`, rollback removes this contract record/fact and proposed `.3`,

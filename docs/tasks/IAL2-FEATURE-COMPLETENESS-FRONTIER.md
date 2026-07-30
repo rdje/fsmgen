@@ -5905,6 +5905,8 @@ decimal `2..16` lowerer admission, numeric residue, focused t1541 plus generic
 5/8/16 assertion runtime, no per-count public fixture, touched t1535
 same-volume temp migration, and unchanged 332/373/56 split 28/28. Current
 behavior remains `2..4` until `.3` ships.
+Clean contract commit `7e2b436cf` activates only implementation `.3` with
+continuity changes; literal `2..4` and 332/373/56 split 28/28 remain unchanged.
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25

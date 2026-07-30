@@ -166,6 +166,10 @@ found two default `File::Temp` workspaces in touched t1535; `.3` owns their
 move to `.artifacts/tmp/tests`. See
 `docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_CONTRACT_SELECTION.md`.
 
+Clean contract commit `7e2b436cf` activates only implementation `.3`. This is
+a continuity-only transition; current literal `2..4`, generated behavior,
+source bytes, and 332/373/56 split 28/28 remain unchanged during activation.
+
 ## Resource And Cleanup Evidence
 
 The exact disposable audit workspace contained 92 files and 7,016,808 bytes,

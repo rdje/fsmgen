@@ -55,3 +55,6 @@ behavior remains unchanged while the contract is frozen.
 
 Completed contract `.2` selects lowerer/test-only proposed `.3`; this
 exact-four source byte and behavior remain frozen.
+
+Clean contract commit `7e2b436cf` activates only `.3`; exact-four remains
+unchanged during activation.

@@ -7926,6 +7926,12 @@ per-count public fixture/support entry is added; exact-one-through-four source
 bytes and 332/373/56 split 28/28 remain fixed. Current behavior remains `2..4`
 until `.3` activates and ships. See
 `docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_CONTRACT_SELECTION.md`.
+Clean contract commit `7e2b436cf` activates only implementation `.3`.
+Activation changes continuity pointers and no parser, generator, public source,
+support, test, artifact, report, semantic/MCP API, HDL/runtime, simulator,
+backend, protocol, HIAL/VIAL, VHDL, verification-generation, portability,
+scale, decision-0020, or transaction behavior. Current literal `2..4` and
+332/373/56 split 28/28 remain authoritative during implementation activation.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
