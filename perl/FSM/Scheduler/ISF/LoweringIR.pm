@@ -1121,7 +1121,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         _actor_interface_signal_type_refs($actor),
         _declared_storage_signal_type_refs($actor),
     );
-    my %local_drive_uses;
+    my %local_drive_callers;
     my %spawn_drive_sources;
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
     $pruned_transactions ||= {};
@@ -1145,7 +1145,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         _merge_signal_type_refs(\%signal_type_refs, { _transaction_port_signal_type_refs($tx) });
         _merge_storage_roles(\%storage_roles, $roles, $tx->{name});
         my %tx_drive_uses = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
-        $local_drive_uses{$_} = 1 for keys %tx_drive_uses;
+        $local_drive_callers{$_}{$tx->{name}} = 1 for keys %tx_drive_uses;
         push @states, @$ss;
         for my $k (sort keys %$cs) {
             $ctrs{$k} = $cs->{$k};
@@ -1199,8 +1199,18 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     push @dts, @rule_trigger_dts;
     $self->_wire_do_children(\@states, \%ctrs, $actor, $generated_children);
     $self->_wire_external_activations(\@states, \@ports, \%ctrs, $actor);
-    my $local_drive_filter = keys(%$generated_children) ? \%local_drive_uses : undef;
-    $self->_build_drive_dts($actor, \@dts, \%ctrs, $local_drive_filter, \%spawn_drive_sources, \%storage_roles);
+    my $local_drive_filter = keys(%$generated_children)
+        ? { map { $_ => 1 } keys %local_drive_callers }
+        : undef;
+    $self->_build_drive_dts(
+        $actor,
+        \@dts,
+        \%ctrs,
+        $local_drive_filter,
+        \%local_drive_callers,
+        \%spawn_drive_sources,
+        \%storage_roles,
+    );
 
     # ISF-TRIGGER-ANCHOR.5: all transactions lowered — resolve (at NAME) leaves in checks to the
     # named point/activation's `state_active` (module-wide; an (at …) may reference a point in
@@ -1502,10 +1512,14 @@ sub _register_generated_activation_instance {
         my $prefix = "${instance}_${drive_name}";
         my @payloads;
         push @{$spawn_drive_sources->{$drive_name}}, {
-            instance    => $instance,
-            drive       => $drive_name,
-            prefix      => $prefix,
-            source_kind => 'spawn_drive_body',
+            activation_kind   => $activation_kind,
+            child_transaction => $child,
+            drive             => $drive_name,
+            instance          => $instance,
+            owner             => $owner,
+            owner_kind        => $owner_kind,
+            prefix            => $prefix,
+            source_kind       => 'spawn_drive_body',
         };
         _ensure_port(
             $ports,
@@ -9952,8 +9966,13 @@ sub _apply_rule_priority_resolution {
 sub _apply_rule_transaction_priority_resolution {
     my ($ir, $actor) = @_;
     my $model = _build_owner_priority_model($actor);
-    my @records = (_rule_data_assignment_refs($ir), _transaction_data_assignment_refs($ir));
+    my @records = (
+        _rule_data_assignment_refs($ir),
+        _transaction_data_assignment_refs($ir),
+        _drive_data_assignment_refs($ir),
+    );
     my %by_target;
+    my %ambiguous_issue_seen;
     my @issues;
     my @resolutions;
 
@@ -9969,8 +9988,32 @@ sub _apply_rule_transaction_priority_resolution {
             my $left = $target_records->[$left_idx];
             for my $right_idx ($left_idx + 1 .. $#$target_records) {
                 my $right = $target_records->[$right_idx];
-                next unless _owner_kind_pair($left, $right, 'rule', 'transaction');
                 next if _rule_assignment_pair_compatible($left, $right);
+
+                if (_owner_kind_pair($left, $right, 'rule', 'drive')) {
+                    my ($rule_record, $drive_record) = ($left->{owner_kind} // '') eq 'rule'
+                        ? ($left, $right)
+                        : ($right, $left);
+                    next unless _ambiguous_drive_priority_is_declared(
+                        $model,
+                        $rule_record,
+                        $drive_record,
+                    );
+
+                    my $issue_key = join "\0",
+                        $target,
+                        _priority_record_owner($rule_record),
+                        $drive_record->{drive} // _priority_record_owner($drive_record);
+                    next if $ambiguous_issue_seen{$issue_key}++;
+                    push @issues, _ambiguous_rule_drive_priority_issue(
+                        $target,
+                        $rule_record,
+                        $drive_record,
+                    );
+                    next;
+                }
+
+                next unless _owner_kind_pair($left, $right, 'rule', 'transaction');
 
                 if (($left->{operator} // '') ne ($right->{operator} // '')) {
                     push @issues, _priority_conflict_issue(
@@ -10206,6 +10249,126 @@ sub _transaction_data_assignment_refs {
     }
 
     return @records;
+}
+
+sub _drive_data_assignment_refs {
+    my ($ir) = @_;
+    my @records;
+
+    for my $dt (@{$ir->{dt_blocks} || []}) {
+        next unless ($dt->{kind} // '') eq 'drive';
+
+        my @local_callers = @{$dt->{local_transaction_callers} || []};
+        my @generated_sources = @{$dt->{generated_call_sources} || []};
+        my $has_unique_local_owner = @local_callers == 1 && !@generated_sources;
+        my $assignment_index = 0;
+
+        for my $assignment (@{$dt->{assignments} || []}) {
+            my $current_index = $assignment_index++;
+            my $source_kind = _dt_assignment_source_kind($dt, $assignment);
+            next unless _assignment_domain_hint($assignment, $source_kind) eq 'data';
+            next unless defined $assignment->{lhs};
+
+            my $logical_owner = $has_unique_local_owner ? $local_callers[0] : $dt->{name};
+            push @records, {
+                transaction              => $has_unique_local_owner ? $local_callers[0] : undef,
+                owner                    => $logical_owner,
+                owner_kind               => $has_unique_local_owner ? 'transaction' : 'drive',
+                drive                    => $dt->{name},
+                source_kind              => $source_kind,
+                target                   => $assignment->{lhs},
+                operator                 => $assignment->{op},
+                rhs                      => $assignment->{rhs},
+                assignment               => $assignment,
+                state                    => $dt->{name},
+                state_kind               => $dt->{kind},
+                owner_condition          => _combine_condition_exprs(
+                    _guard_condition_expr($dt->{dte_guard}) // '1',
+                    _guard_condition_expr($assignment->{guard}) // '1',
+                ),
+                local_transaction_callers => [@local_callers],
+                generated_call_sources    => [map { _clone_provenance_value($_) } @generated_sources],
+                assignment_index          => $current_index,
+            };
+        }
+    }
+
+    return @records;
+}
+
+sub _ambiguous_drive_priority_is_declared {
+    my ($model, $rule_record, $drive_record) = @_;
+    my $rule = _priority_record_owner($rule_record);
+
+    for my $candidate (_ambiguous_drive_priority_candidates($drive_record)) {
+        return 1 if _priority_dominates($model, $rule, $candidate);
+        return 1 if _priority_dominates($model, $candidate, $rule);
+    }
+
+    return 0;
+}
+
+sub _ambiguous_drive_priority_candidates {
+    my ($record) = @_;
+    my %candidates = map { $_ => 1 } @{$record->{local_transaction_callers} || []};
+    for my $source (@{$record->{generated_call_sources} || []}) {
+        next unless ref($source) eq 'HASH';
+        my $transaction = $source->{child_transaction};
+        $candidates{$transaction} = 1
+            if defined($transaction) && !ref($transaction) && length($transaction);
+    }
+    return sort keys %candidates;
+}
+
+sub _ambiguous_rule_drive_priority_issue {
+    my ($target, $rule_record, $drive_record) = @_;
+    my $rule = _priority_record_owner($rule_record);
+    my $drive = $drive_record->{drive} // _priority_record_owner($drive_record);
+    my @local_callers = @{$drive_record->{local_transaction_callers} || []};
+    my @generated_sources = @{$drive_record->{generated_call_sources} || []};
+    my @generated_descriptors = map {
+        _format_generated_drive_source_descriptor($_)
+    } @generated_sources;
+    my @candidate_transactions = _ambiguous_drive_priority_candidates($drive_record);
+    my $ambiguity_class = _drive_priority_ambiguity_class(\@local_callers, \@generated_sources);
+    my $reason = "actor priority between rule '$rule' and drive '$drive' has ambiguous drive caller ownership"
+        . "; ambiguity_class=$ambiguity_class"
+        . '; local_callers=[' . _format_diagnostic_list(@local_callers) . ']'
+        . '; generated_sources=[' . _format_diagnostic_list(@generated_descriptors) . ']'
+        . '; candidate_transactions=[' . _format_diagnostic_list(@candidate_transactions) . ']';
+
+    return _priority_conflict_issue(
+        code         => 'isf_ambiguous_rule_transaction_drive_priority',
+        proof_status => 'ambiguous_drive_caller',
+        target       => $target,
+        reason       => $reason,
+        left         => $rule_record,
+        right        => $drive_record,
+    );
+}
+
+sub _drive_priority_ambiguity_class {
+    my ($local_callers, $generated_sources) = @_;
+    my $local_count = @{$local_callers || []};
+    my $generated_count = @{$generated_sources || []};
+    return 'multiple_local_and_generated_sources' if $local_count > 1 && $generated_count;
+    return 'mixed_local_and_generated_sources' if $local_count == 1 && $generated_count;
+    return 'multiple_local_callers' if $local_count > 1;
+    return 'generated_sources' if $generated_count;
+    return 'unused_drive';
+}
+
+sub _format_generated_drive_source_descriptor {
+    my ($source) = @_;
+    return '' unless ref($source) eq 'HASH';
+    return join ',', map {
+        $_ . '=' . ($source->{$_} // '')
+    } qw(source_kind activation_kind child_transaction instance owner_kind owner prefix);
+}
+
+sub _format_diagnostic_list {
+    return 'none' unless @_;
+    return join ', ', @_;
 }
 
 sub _state_active_condition_expr {
@@ -10668,7 +10831,7 @@ sub _dt_assignment_provenance {
     my ($dt, $assignment, $assignment_index) = @_;
     my $source_kind = _dt_assignment_source_kind($dt, $assignment);
 
-    return {
+    my $record = {
         owner            => _dt_assignment_owner($dt),
         owner_kind       => _dt_assignment_owner_kind($dt),
         source_kind      => $source_kind,
@@ -10691,6 +10854,9 @@ sub _dt_assignment_provenance {
             assignment_guard => _clone_provenance_value($assignment->{guard}),
         },
     };
+    $record->{invoking_transactions} = _clone_provenance_value($assignment->{invoking_transactions})
+        if ref($assignment->{invoking_transactions}) eq 'ARRAY';
+    return $record;
 }
 
 sub _transaction_owner_from_state_name {
@@ -11032,16 +11198,31 @@ sub _compatible_record_pair {
 
 sub _priority_resolved_record_pair {
     my ($left, $right) = @_;
-    return 0 unless _priority_resolvable_owner_pair($left, $right);
-    return 1 if _record_priority_suppressed_by($left, $right->{owner});
-    return 1 if _record_priority_suppressed_by($right, $left->{owner});
+    my ($left_owner, $left_kind) = _record_logical_priority_identity($left);
+    my ($right_owner, $right_kind) = _record_logical_priority_identity($right);
+    return 0 unless _priority_resolvable_owner_kind_pair($left_kind, $right_kind);
+    return 1 if _record_priority_suppressed_by($left, $right_owner);
+    return 1 if _record_priority_suppressed_by($right, $left_owner);
     return 0;
 }
 
-sub _priority_resolvable_owner_pair {
-    my ($left, $right) = @_;
+sub _priority_resolvable_owner_kind_pair {
+    my ($left_kind, $right_kind) = @_;
     my %allowed = map { $_ => 1 } qw(rule transaction);
-    return $allowed{$left->{owner_kind} // ''} && $allowed{$right->{owner_kind} // ''};
+    return $allowed{$left_kind // ''} && $allowed{$right_kind // ''};
+}
+
+sub _record_logical_priority_identity {
+    my ($record) = @_;
+    my $owner = $record->{owner};
+    my $owner_kind = $record->{owner_kind} // '';
+    if ($owner_kind eq 'drive'
+        && ref($record->{invoking_transactions}) eq 'ARRAY'
+        && @{$record->{invoking_transactions}} == 1)
+    {
+        return ($record->{invoking_transactions}[0], 'transaction');
+    }
+    return ($owner, $owner_kind);
 }
 
 sub _resource_resolved_record_pair {
@@ -12272,17 +12453,31 @@ sub _substitute_named_drive_body_expr {
 }
 
 sub _build_drive_dts {
-    my ($self, $actor, $dts, $ctrs, $local_drive_uses, $extra_drive_sources, $storage_roles) = @_;
+    my (
+        $self,
+        $actor,
+        $dts,
+        $ctrs,
+        $local_drive_filter,
+        $local_drive_callers,
+        $extra_drive_sources,
+        $storage_roles,
+    ) = @_;
     my $drives = $actor->{drives} || {};
     for my $name (sort keys %$drives) {
         my $def = $drives->{$name};
         my $body = $def->{body};
         my @params = @{$def->{params}};
+        my @local_callers = sort keys %{($local_drive_callers || {})->{$name} || {}};
+        my @extra_sources = @{($extra_drive_sources || {})->{$name} || []};
+        my @generated_call_sources = sort {
+            _generated_drive_source_sort_key($a) cmp _generated_drive_source_sort_key($b)
+        } map { _generated_drive_source_metadata($_) } @extra_sources;
         my @sources;
 
         push @sources, { prefix => $name, source_kind => 'drive_body' }
-            if !$local_drive_uses || $local_drive_uses->{$name};
-        push @sources, @{$extra_drive_sources->{$name} || []};
+            if !$local_drive_filter || $local_drive_filter->{$name};
+        push @sources, @extra_sources;
         next unless @sources;
 
         my @assignments;
@@ -12309,12 +12504,39 @@ sub _build_drive_dts {
                     op          => '<-',
                     guard       => { port => "${prefix}_start" },
                     source_kind => $source->{source_kind} || 'drive_body',
+                    invoking_transactions => [@local_callers],
                 };
             }
         }
 
-        push @$dts, { name => $name, kind => 'drive', assignments => \@assignments };
+        push @$dts, {
+            name                      => $name,
+            kind                      => 'drive',
+            local_transaction_callers => \@local_callers,
+            generated_call_sources    => \@generated_call_sources,
+            assignments               => \@assignments,
+        };
     }
+}
+
+sub _generated_drive_source_metadata {
+    my ($source) = @_;
+    return {
+        activation_kind   => $source->{activation_kind} // 'spawn',
+        child_transaction => $source->{child_transaction} // '',
+        instance          => $source->{instance} // '',
+        owner             => $source->{owner} // '',
+        owner_kind        => $source->{owner_kind} // '',
+        prefix            => $source->{prefix} // '',
+        source_kind       => $source->{source_kind} // 'spawn_drive_body',
+    };
+}
+
+sub _generated_drive_source_sort_key {
+    my ($source) = @_;
+    return join "\0", map { $source->{$_} // '' } qw(
+        source_kind activation_kind child_transaction instance owner_kind owner prefix
+    );
 }
 
 # ISF-LOCAL-VARIABLES: `(local NAME (width N))` declares an internal register at an

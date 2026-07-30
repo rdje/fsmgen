@@ -47,3 +47,9 @@ local implementation `.3` with deterministic ambiguity failure. Clean contract
 commit `b44afcc51` activates `.3` continuity-only. Decision `0023` and a
 separate proposed task own the direct-VHDL unary-reduction defect discovered
 during backend qualification.
+
+Implementation `.3` now ships the selected repair and expands t1542 to both
+priority directions, ambiguity/fail-closed boundaries, assertion-enabled
+SystemVerilog, native Verilog, and the explicit direct-VHDL non-qualification.
+See `isf-rule-transaction-named-drive-priority-behavior` for current behavior;
+this card remains the dated readiness evidence.

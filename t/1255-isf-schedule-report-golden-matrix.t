@@ -3,7 +3,6 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
-use File::Temp qw(tempdir);
 use FindBin;
 use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
@@ -11,12 +10,14 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::ISF;
+use FSM::ProjectDataLocality qw(configure_project_temp_environment create_project_tempdir);
 use FSM::Scheduler::ISF;
 use FSM::Support::ISFPublicInterfaceContract qw(
     build_isf_public_interface_contract
 );
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
+configure_project_temp_environment(purpose => 'tests');
 my $contract = build_isf_public_interface_contract();
 my %matrix_coverage;
 
@@ -387,7 +388,7 @@ sub reports_for_case {
         $path = repo_file($case->{fixture});
     }
     else {
-        my $dir = tempdir(CLEANUP => 1);
+        my $dir = create_project_tempdir(purpose => 'tests');
         $path = File::Spec->catfile($dir, $case->{filename});
         write_file($path, $case->{source});
     }
@@ -856,8 +857,10 @@ sub compile_issue_source {
   (clock clk)
   (interface
     (input start)
+    (input auxiliary_start)
     (input ready)
     (output done)
+    (output auxiliary_done)
     (output out))
   (drive (set_out val)
     (out val))
@@ -865,6 +868,10 @@ sub compile_issue_source {
     (on start)
     (drive set_out 0)
     (complete done))
+  (transaction auxiliary
+    (on auxiliary_start)
+    (drive set_out 0)
+    (complete auxiliary_done))
   (rule force_out ready
     (out 1)))
 ISF

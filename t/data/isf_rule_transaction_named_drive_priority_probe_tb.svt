@@ -5,6 +5,7 @@ module named_drive_priority_probe_tb;
   logic override_req = 0;
   logic done;
   logic out;
+  logic side;
 
   named_drive_priority_probe dut (
     .clk(clk),
@@ -12,7 +13,8 @@ module named_drive_priority_probe_tb;
     .start(start),
     .override_req(override_req),
     .done(done),
-    .out(out)
+    .out(out),
+    .side(side)
   );
 
   always #5 clk = ~clk;
@@ -24,8 +26,14 @@ module named_drive_priority_probe_tb;
     @(negedge clk);
     start = 0;
     override_req = 1;
+    @(posedge clk);
     #1;
-    $fatal(1, "expected named-drive selector assertion did not fire");
+    if (out !== 1'b1)
+      $fatal(1, "higher-priority rule did not win named-drive overlap");
+    if (side !== 1'b1)
+      $fatal(1, "non-conflicting named-drive output was suppressed");
+    $display("PASS named-drive rule priority out=%0d side=%0d", out, side);
+    $finish;
   end
 
   initial begin

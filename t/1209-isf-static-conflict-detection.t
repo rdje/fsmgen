@@ -72,8 +72,10 @@ subtest 'rule/drive overlap is flagged when proof is not doable' => sub {
   (clock clk)
   (interface
     (input start)
+    (input auxiliary_start)
     (input ready)
     (output done)
+    (output auxiliary_done)
     (output out))
   (drive (set_out val)
     (out val))
@@ -81,6 +83,10 @@ subtest 'rule/drive overlap is flagged when proof is not doable' => sub {
     (on start)
     (drive set_out 0)
     (complete done))
+  (transaction auxiliary
+    (on auxiliary_start)
+    (drive set_out 0)
+    (complete auxiliary_done))
   (rule force_out ready
     (out 1)))
 ISF

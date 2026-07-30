@@ -5936,6 +5936,13 @@ priority, with direct VHDL reduction syntax separately routed under decision
 `0023`; parent IAL2 behavior and accounting remain unchanged.
 Clean contract commit `b44afcc51` activates only child implementation `.3`;
 the parent remains behavior- and accounting-unchanged during activation.
+Child implementation `.3` now completes the protocol-neutral named-drive
+priority tree with exact-one-local-caller bidirectional target-local masking,
+logical actor reporting, fail-closed prioritized ambiguity, executable
+SystemVerilog/native-Verilog proof, and the separately owned decision-0023
+direct-VHDL boundary. AHB requester `2..16` and 332/373/56 split 28/28
+accounting remain unchanged. The next parent action is to create and activate
+one clean-boundary roadmap selector after the `.3` behavior commit.
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25

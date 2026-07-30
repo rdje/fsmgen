@@ -2566,6 +2566,13 @@ accounting. See the
 [contract record](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md).
 Clean contract commit `b44afcc51` activates only that protocol-neutral `.3`;
 AHB behavior and accounting remain unchanged during activation.
+Protocol-neutral implementation `.3` now ships exact-one-local-caller
+named-drive priority in both actor-priority directions with target-local
+masking and fail-closed ambiguous ownership. It does not alter AHB requester
+`2..16` behavior, generated AHB artifacts, or 332/373/56 split 28/28
+accounting. Executable qualification is SystemVerilog and native Verilog;
+direct VHDL remains separately gated by decision `0023`. See the
+[shipped behavior](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_BEHAVIOR.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

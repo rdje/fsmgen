@@ -11690,6 +11690,19 @@ separately owned by decision `0023` plus proposed
 [contract](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md).
 Clean contract commit `b44afcc51` activates `.3` continuity-only. No product
 behavior changes during selection or activation.
+Implementation `.3` now ships the protocol-neutral named-drive repair. An
+exactly-one-local-caller drive participates in actor-level rule/transaction
+priority under that transaction's logical identity while retaining raw drive
+provenance. Suppression is target-local in either direction, so the drive
+request, transaction lifecycle, parameters, and unrelated drive outputs
+survive. Unique unordered different-value overlap fails closed; same-value
+fan-in remains compatible; prioritized shared, generated, or mixed ownership
+fails as `isf_ambiguous_rule_transaction_drive_priority`; and unprioritized
+ambiguous/unused overlap keeps the bounded `not_doable` warning. t1542 proves
+both directions with assertion-enabled SystemVerilog, proves native Verilog,
+and keeps direct VHDL explicitly unqualified under decision `0023`. The public
+report/semantic key sets do not widen. See the
+[shipped behavior](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
@@ -15633,13 +15646,22 @@ creating fake state-related input ports. Priority cycles, incomparable rule
 conflicts, unordered rule/transaction conflicts, and mixed timing conflicts
 fail closed.
 
-Rule/drive overlap is still tracked because compile-time proof is not doable.
+A named drive with exactly one distinct local transaction caller and no
+generated source now participates in that same bidirectional target-local
+rule/transaction priority under its caller's logical transaction identity.
+Unique unordered different-value overlap fails closed. Prioritized
+shared/generated/mixed drive ownership fails closed through
+`isf_ambiguous_rule_transaction_drive_priority`; unprioritized ambiguous or
+unused-drive overlap remains the explicit `not_doable` warning. This is
+assignment-level conflict resolution, not the broader `named_drive` resource
+kind and lifetime/fairness policy listed above.
 
 Generated SystemVerilog now includes verification-only selector assertions
 derived from backend assignment analysis: same-value source selectors and
 whole-mux value selectors are checked with `$onehot0` under
-`` `ifndef SYNTHESIS``. Transaction/transaction priority, drive/rule
-arbitration policy, and broader resource arbitration remain backlog items.
+`` `ifndef SYNTHESIS``. Transaction/transaction priority, broader shared-drive
+arbitration/lifetime policy, and broader resource arbitration remain backlog
+items.
 
 ### Expression-Valued Rule Assignments
 
@@ -17024,10 +17046,10 @@ budgets, graceful beyond-capacity behavior, and stable local/CI qualification
 gates. Correctness, diagnostics, deterministic artifacts, locality, and
 recoverability remain part of the capacity contract.
 
-This requirement is parked rather than active. Completed selector `.830`
-chooses the smaller assertion-backed transaction-invoked named-drive priority
-audit first; a later roadmap selector must activate scale from a clean
-boundary.
+This requirement is parked rather than active. Selector `.830` chose the
+smaller assertion-backed transaction-invoked named-drive priority tree first;
+that separate tree now completes through implementation `.3`. A later roadmap
+selector must still activate scale from a clean boundary.
 
 ## Backends And Validation
 

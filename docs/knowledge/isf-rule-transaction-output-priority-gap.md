@@ -1,6 +1,6 @@
 ---
 id: isf-rule-transaction-output-priority-gap
-title: Transaction-level priority does not yet propagate through a conflicting named-drive output selector
+title: Historical named-drive rule/transaction priority gap before implementation .3
 answers:
   - "does ISF priority resolve a rule and transaction driving different output values?"
   - "does direct rule versus transaction assignment priority already work?"
@@ -8,7 +8,7 @@ answers:
   - "why did the generated HTRANS selector report a multi-value conflict?"
   - "what owns rule versus transaction output priority enforcement?"
 date: 2026-07-30
-status: current
+status: superseded
 tags: [isf, scheduler, priority, rule, transaction, drive, output, selector, assertion]
 evidence: docs/IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md; docs/IAL2_POST_GENERALIZED_BUSY_COUNT_NEXT_OWNER_SELECTION.md; docs/tasks/ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.md; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1220-isf-arbitration-schedule-report.t
 reverify: rg -n 'selector multi-value conflict|_apply_rule_transaction_priority_resolution|isf_unproven_rule_drive_overlap|transaction-invoked named drive|priority_resolutions records rule-over-transaction' docs/IAL2_AHB_REQUESTER_MULTI_BUSY_INSERTION_READINESS_AUDIT.md docs/IAL2_POST_GENERALIZED_BUSY_COUNT_NEXT_OWNER_SELECTION.md docs/tasks/ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.md perl/FSM/Scheduler/ISF/LoweringIR.pm t/1220-isf-arbitration-schedule-report.t
@@ -50,3 +50,7 @@ private unique-caller metadata for priority analysis, and fails prioritized
 ambiguous ownership before HDL. Clean contract commit `b44afcc51` activates
 `.3` continuity-only. The separately found direct-VHDL reduction token leak
 does not change current lowering behavior.
+
+This gap is closed by implementation `.3`. Current behavior is canonical in
+`isf-rule-transaction-named-drive-priority-behavior`; this card remains only as
+the dated root-cause record.

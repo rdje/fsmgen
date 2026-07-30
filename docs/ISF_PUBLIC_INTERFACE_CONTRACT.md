@@ -1143,9 +1143,9 @@ inferred-storage summaries for the generated trigger sources.
 The static rule-conflict path is checked by
 [t/1209-isf-static-conflict-detection.t](../t/1209-isf-static-conflict-detection.t)
 so provable incompatible rule/rule data writes fail closed, compatible
-same-value rule writes remain accepted, rule/drive overlap is flagged
-internally as `proof_status => not_doable`, and ordinary transaction state
-mux behavior remains accepted.
+same-value rule writes remain accepted, shared-caller rule/drive overlap is
+flagged internally as `proof_status => not_doable`, and ordinary transaction
+state mux behavior remains accepted.
 The rule-priority conflict-resolution path is checked by
 [t/1210-isf-priority-conflict-resolution.t](../t/1210-isf-priority-conflict-resolution.t)
 so rule-local and actor-level rule priorities can suppress lower-priority
@@ -1406,6 +1406,13 @@ The first rule/transaction priority path is checked by
 for accepted rule-over-transaction suppression, accepted transaction-over-rule
 suppression through scheduled `.fsm` state-active guards, unordered conflict
 rejection, and cycle rejection.
+The named-drive rule/transaction priority path is checked by
+[t/1542-isf-rule-transaction-named-drive-priority-readiness.t](../t/1542-isf-rule-transaction-named-drive-priority-readiness.t)
+for exact-one-local-caller ownership, target-local suppression in both priority
+directions, non-conflicting-output survival, same-value compatibility,
+unordered/cycle/ambiguous fail-closed behavior, unchanged public report key
+sets, assertion-enabled SystemVerilog execution, native Verilog execution, and
+the separately tracked direct-VHDL reduction-expression boundary.
 The arbitration schedule-report projection is checked by
 [t/1220-isf-arbitration-schedule-report.t](../t/1220-isf-arbitration-schedule-report.t)
 for bounded successful `priority_resolutions` and `resource_arbitration`
@@ -2946,11 +2953,15 @@ provable incompatible rule/rule writes to the same target fail closed, while
 same-target rule writes with direct contradictory guard facts are accepted as
 disjoint. This proof is conservative and currently recognizes simple signal
 and negated-signal terms plus equality facts, including conjunctions used by
-FIFO fire predicates and pointer/occupancy matrix cases. Rule/drive
-same-target overlap is marked internally because
-compile-time proof is not doable in that case. Nonfatal rule/drive overlap is
-now projected into successful schedule-report `compile_issues`; reports with
-no nonfatal issues still keep that array empty.
+FIFO fire predicates and pointer/occupancy matrix cases. A named drive with
+exactly one distinct local transaction caller and no generated caller uses
+that transaction as its logical conflict/priority actor while keeping raw
+drive provenance. Different-value overlap without priority then fails closed
+as `isf_conflicting_rule_transaction_writes`. Shared, generated, mixed-source,
+or unused-drive overlap without an applicable priority remains nonfatal and is
+projected into successful schedule-report `compile_issues` as
+`isf_unproven_rule_drive_overlap/not_doable`; reports with no nonfatal issues
+still keep that array empty.
 For same-target rule/rule data conflicts, rule-local and actor-level priority
 edges can now select a target-local winner by guarding the lower-priority
 assignment with the inverse higher-priority rule condition. This changes the
@@ -2969,6 +2980,17 @@ That predicate lowers to an internal `current_state == STATE` comparison
 without creating fake module inputs for `current_state`, state constants, or
 generated state-enable names. Unordered rule/transaction conflicts, priority
 cycles, and mixed timing operators still fail closed.
+The same actor-level priority declarations cover a uniquely owned named-drive
+assignment. Rule-over-transaction adds the inverse rule condition only to the
+conflicting drive-body assignment; transaction-over-rule guards only the
+conflicting rule assignment with the inverse full drive activation. Drive
+request fan-in, transaction progress, completion, parameters, and unrelated
+drive outputs are not masked. A priority involving shared, generated, or mixed
+drive ownership fails before HDL as
+`isf_ambiguous_rule_transaction_drive_priority` because no unique logical
+transaction owner can be proved. Private drive caller/source metadata and
+invoking-transaction provenance do not widen the public schedule-report or
+normalized-semantic schemas.
 After scheduled `.fsm` reaches the HDL backend, generated SystemVerilog now
 adds verification-only selector assertions derived from backend assignment
 analysis. Same-value source selectors for one `LHS`/`VAL` selector and

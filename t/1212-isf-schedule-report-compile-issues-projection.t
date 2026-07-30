@@ -3,7 +3,6 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
-use File::Temp qw(tempdir);
 use FindBin;
 use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
@@ -11,15 +10,20 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::ISF;
+use FSM::ProjectDataLocality qw(configure_project_temp_environment create_project_tempdir);
 use FSM::Scheduler::ISF;
+
+configure_project_temp_environment(purpose => 'tests');
 
 my $source = <<'ISF';
 (actor rule_drive_unproven
   (clock clk)
   (interface
     (input start)
+    (input auxiliary_start)
     (input ready)
     (output done)
+    (output auxiliary_done)
     (output out))
   (drive (set_out val)
     (out val))
@@ -27,6 +31,10 @@ my $source = <<'ISF';
     (on start)
     (drive set_out 0)
     (complete done))
+  (transaction auxiliary
+    (on auxiliary_start)
+    (drive set_out 0)
+    (complete auxiliary_done))
   (rule force_out ready
     (out 1)))
 ISF
@@ -39,7 +47,7 @@ subtest 'in-process report projects nonfatal conflict issues' => sub {
 };
 
 subtest 'CLI schedule report projects nonfatal conflict issues' => sub {
-    my $dir = tempdir(CLEANUP => 1);
+    my $dir = create_project_tempdir(purpose => 'tests');
     my $path = File::Spec->catfile($dir, 'rule_drive_unproven.isf');
 
     open my $fh, '>', $path or die "cannot write $path: $!";

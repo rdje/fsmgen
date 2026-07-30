@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `ISF / scheduler and output-selector correctness`
 - Created: `2026-07-24`
 - Last updated: `2026-07-30`
@@ -51,7 +51,7 @@ Canonical evidence is
 ## Task Tree
 
 - ID: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT`
-  Status: `active`
+  Status: `done`
   Goal: `Make declared transaction-level priority mechanically exclusive when a lower-priority transaction invokes a conflicting named-drive output selector.`
   Children: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1, ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.2, ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3`
 
@@ -70,25 +70,25 @@ Canonical evidence is
   Commit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.2: freeze named-drive priority contract`
 
 - ID: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the contract selected by .2 without weakening selector assertions.`
   Acceptance: `Activate only after .2 commits cleanly and selects this leaf. In LoweringIR, collect sorted distinct local_transaction_callers per named drive and keep generated_call_sources separate; carry private invoking_transactions into drive assignment provenance without changing its drive owner/kind/source. Add priority-analysis records only for exactly one local caller and zero generated sources, using the logical transaction actor plus the drive-body activation condition. Reuse existing target-local suppression in both directions, so only conflicting assignments receive inverse winner guards and non-conflicting drive outputs/request/parameters/transaction/done survive. Emit logical actor priority_resolutions with no compile issue for resolved cases. Fail unique-caller different-value no-priority/cycle/mixed-timing cases through the existing conflict families; fail prioritized multiple/generated/mixed ambiguity with isf_ambiguous_rule_transaction_drive_priority, severity error, proof_status ambiguous_drive_caller, deterministic reason naming rule/drive/sorted callers/generated sources/ambiguity and source summaries retaining operators/values; preserve ambiguous no-priority warning and unused drives. Expand t1542 or an adjacent focused owner for rule-over-drive, drive-over-rule, multi-output, same-value, no-priority, cycle, mixed timing, multiple/generated ambiguity, structural FSM/SV/Verilog, Icarus compile/runtime, assertion-enabled Verilator, strict/check/schedule/semantic/provenance, and exact cleanup. Update t1207/t1209/t1212/t1219/t1220 and other affected conflict/report preservation only as contractually required. Keep normalized semantic output-family fields, report/public/MCP schemas, support accounting, direct assignments, rule/rule and transaction/transaction conflicts, resource priority, selector assertions, parser/source syntax, protocols/AHB, HIAL/VIAL, VHDL backend, scale, decision 0020, and transaction behavior outside the exact fix unchanged. Characterize VHDL honestly under decision 0023 without claiming validity or absorbing DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING. Synchronize durable docs/mdBook/Knowledge Map; use repository-local same-volume artifacts, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup, focused/broader gates, and commit.`
-  Verification: `Activated only after clean contract commit b44afcc51. Activation changes continuity pointers only; the current unresolved named-drive warning/assertion behavior, direct-assignment priority path, parser, lowerer, scheduler, selector, generator, tracked source/tests, public surfaces, support accounting, reports/semantic/MCP schemas, HDL/runtime, simulator profiles, backends, protocols/AHB, HIAL/VIAL, VHDL, scale, decision 0020, and transaction behavior remain unchanged. Focused t1542 plus book/status/path gates pass 5 files/308 top-level tests. Knowledge Map remains synchronized at 1,055 facts/5,420 question keys. The mdBook builds under authorized host100/process4096 to exactly 72 files/16,444,639 bytes and the exact render is removed. MEMORY.md is 50 lines, README.md is 2,339 lines, .artifacts/tmp/tests is empty, git_message_brief.txt is zero bytes, diff hygiene passes, and all six doctrine gates pass. Final canonical Stats-compatible capacity is 16,135,307,264/25,769,803,776 bytes = 15.027/24.000 GiB = 62.61%, with separate macOS kernel pressure level 1 and memory_pressure 73% free; guard occupancy is excluded from capacity truth. No behavior changes and no background job remains.`
-  Commit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3: activate named-drive priority implementation`
+  Verification: `Activated only after clean contract commit b44afcc51 through clean activation commit 6300fda6f. LoweringIR now inventories sorted distinct local_transaction_callers and generated_call_sources on drive DTs, retains raw drive owner/kind/source provenance plus private invoking_transactions, and maps only exact-one-local/zero-generated drive ownership into logical transaction priority analysis. Rule-over-transaction masks only the conflicting drive assignment; transaction-over-rule masks only the conflicting rule under full drive activation. Unique unordered different-value, cycle, and mixed-timing cases fail closed through existing families; same-value fan-in remains compatible; prioritized shared/generated/mixed ownership fails before HDL as isf_ambiguous_rule_transaction_drive_priority/ambiguous_drive_caller with deterministic detail; ambiguous/unused unprioritized overlap retains isf_unproven_rule_drive_overlap/not_doable. Logical priority_resolutions ship without public schema widening, normalized semantic identities remain stable, and selector assertions remain enabled. SystemVerilog/Verilator proves both directions and multi-output survival; native Verilog/Icarus compiles and runs; direct VHDL remains explicitly unqualified under decision 0023. Focused t1542 passes 7 top-level subtests/92 nested assertions. The final affected preservation set passes 13 files/145 tests; accounting/capability passes 2 files/7,031 tests; bounded book/status/path gates pass 4 files/305 tests. A full supported-corpus public JSON/semantic attempt was correctly stopped by the authorized 4,096-MiB descendant guard when the unrelated existing axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue check reached 5,082.6 MiB RSS; the guard terminated the process tree before t303, the exact empty repository-local workspace was removed, targeted strict/check-failure/schedule/semantic surfaces remain covered by t1542, and no cap increase or unguarded retry was used. Knowledge Map generation/check reaches 1,056 facts/5,426 question keys. The mdBook builds under authorized host100/process4096 to exactly 72 files/16,468,460 bytes and the exact render is removed. README.md remains within its bounded line gate, .artifacts/tmp/tests is empty, git_message_brief.txt is zero bytes, diff hygiene passes, and all six doctrine gates pass. Final canonical Stats-compatible capacity is 15,157,477,376/25,769,803,776 bytes = 14.117/24.000 GiB = 58.82%, with separate macOS kernel pressure level 1 and memory_pressure 71% free; guard occupancy is excluded from capacity truth. No parser/source-syntax, public support identity/accounting, report/semantic/MCP schema, protocol/AHB, HIAL/VIAL, decision-0020, scale, transaction behavior outside the exact repair, or separately owned VHDL behavior changed, and no background job remains.`
+  Commit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3: implement named-drive priority`
 
 ## Current Frontier
 
-Contract `.2` is complete through clean commit `b44afcc51`; implementation
-`.3` is active. The
-contract freezes unique-local-caller metadata, bidirectional per-target
-priority, exact fail-closed ambiguity behavior, unchanged public report and
-semantic schemas, SV/Verilog gates, and an explicit unqualified VHDL boundary.
-Activation is continuity-only; current lowering is unchanged until `.3`
-implements that exact contract.
+Implementation `.3` completes this tree: exact-one-local-caller named drives
+now honor bidirectional target-local rule/transaction priority, ambiguous
+prioritized ownership fails closed, public report/semantic schemas remain
+bounded, and SystemVerilog/native-Verilog execution is qualified without
+claiming direct-VHDL validity. The next action belongs to a new parent-roadmap
+selector activated only from the clean post-`.3` commit boundary.
 
 ## Rollback
 
-Rollback before `.3` implementation restores `.3` to proposed while retaining
-the committed `.2` contract, tracked direct control, named-drive assertion
-failure, shared-caller evidence, and independently owned VHDL reduction-
+Rollback removes the `.3` caller/source metadata, logical priority mapping,
+ambiguity diagnostic, shipped fixtures, behavior record, and book/spec sync,
+restoring the pre-repair named-drive warning/assertion behavior while retaining
+the committed `.2` contract and the independently owned VHDL reduction-
 expression defect.

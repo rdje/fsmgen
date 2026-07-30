@@ -155,27 +155,64 @@ reduced to direct contradictory signal or equality facts, the pair remains
 unproved and uses the existing compatible fan-in, priority-resolution, or
 fail-closed conflict path.
 
-This check is intentionally best-effort. Rule/drive same-target overlap is
-recorded internally as `isf_unproven_rule_drive_overlap` with
-`proof_status => not_doable` because the current compile-time analysis does
-not prove that the rule guard and generated drive-start guard can or cannot be
-active together.
+This check is intentionally best-effort. A named drive with exactly one
+distinct local transaction caller and no generated activation source now uses
+that transaction as its logical owner for rule/transaction conflict and
+priority analysis. The scheduled assignments retain their raw `drive`
+provenance. Calling the same drive more than once from the same transaction
+still counts as one distinct caller.
 
-That status is explicit: the compiler is flagging that the proof is NOT doable
-for the current analysis rather than claiming the overlap is safe.
+Priority is target-local in both directions. In this complete actor, the rule
+has priority over `main`:
 
-The active, not-yet-implemented named-drive priority contract narrows one
-part of that boundary. A drive with exactly one local transaction caller and
-no generated source will inherit that transaction only for actor-priority
-analysis while retaining `drive` provenance. Declared priority will guard only
-the conflicting target in either direction; an unordered unique-caller
-different-value overlap or prioritized ambiguous ownership will fail closed.
-Shared/generated ownership stays outside the first repair, and selector
-assertions remain. See the
+```lisp
+(actor named_drive_priority_example
+  (clock clk)
+  (reset reset)
+  (interface
+    (input start)
+    (input override_req)
+    (output done)
+    (output out)
+    (output side))
+  (priority force_out over main)
+  (drive drive_zero
+    (out 0)
+    (side 1))
+  (transaction main
+    (on start)
+    (drive drive_zero)
+    (complete done))
+  (rule force_out override_req
+    (out 1)))
+```
+
+When `override_req` and the drive request are active together, the lowerer adds
+the inverse rule guard only to `drive_zero`'s `out=0` assignment. The `side=1`
+assignment, drive request, transaction progress, parameter flow, and completion
+are not masked. Reversing the declaration to
+`(priority main over force_out)` leaves the drive assignment unchanged and
+guards only the conflicting rule assignment with the inverse full drive
+activation.
+
+Different-value overlap from a unique caller without a priority now fails
+closed as `isf_conflicting_rule_transaction_writes`; a cycle remains
+`isf_priority_cycle_conflict`, and same-value fan-in remains compatible. A
+declared priority cannot safely choose a transaction for a drive with multiple
+local callers, generated callers, or mixed local/generated ownership, so that
+case fails before HDL as
+`isf_ambiguous_rule_transaction_drive_priority`. Unprioritized ambiguous or
+unused-drive overlap remains a nonfatal
+`isf_unproven_rule_drive_overlap/not_doable` issue: the compiler explicitly
+says the proof is unavailable rather than claiming the overlap is safe.
+
+Generated SystemVerilog selector assertions remain authoritative and pass for
+both resolved directions; native Verilog is also runtime-qualified. Direct
+VHDL remains unqualified for this expression family under decision `0023`.
+The public report and normalized-semantic key sets do not widen. See the
+[shipped behavior](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_BEHAVIOR.md)
+and the preceding
 [contract record](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_CONTRACT_SELECTION.md).
-Clean contract commit `b44afcc51` activates implementation `.3` without a
-behavior change. Until `.3` ships, the current warning and runtime assertion
-behavior described above remains authoritative.
 
 Rule priority can resolve the supported rule/rule data-conflict case. If
 `high` has priority over `low` and both rules drive the same target to
@@ -358,7 +395,9 @@ fallbacks.
 Inline priority is accepted and structurally validated by the parser, then
 used by current lowering for same-target rule/rule data conflicts. The
 `other_rule` target must name a declared rule in the same actor; forward
-references are accepted. It does not resolve rule/drive conflicts yet.
+references are accepted. Named-drive rule/transaction priority uses the
+actor-level `(priority lhs over rhs)` form because a drive is not itself a
+legal priority actor.
 
 ## Priorities
 

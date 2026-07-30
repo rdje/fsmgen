@@ -7997,6 +7997,21 @@ backend defect. Contract selection changes no current behavior.
 Clean contract commit `b44afcc51` activates only implementation `.3`.
 Activation changes continuity state without changing current lowering, AHB,
 support accounting, or any broader roadmap owner.
+Implementation `.3` now ships the selected protocol-neutral repair. A named
+drive with exactly one distinct local transaction caller and no generated
+source participates in actor-level rule/transaction priority under that
+transaction's logical identity while retaining raw drive provenance. The
+lowerer masks only the conflicting assignment in either priority direction;
+drive request, transaction lifecycle, parameters, completion, and unrelated
+outputs survive. Unique unordered different-value conflicts fail closed,
+same-value fan-in remains compatible, and prioritized shared/generated/mixed
+ownership fails as `isf_ambiguous_rule_transaction_drive_priority` before HDL.
+Unprioritized ambiguous/unused overlap retains the bounded `not_doable`
+warning. t1542 provides assertion-enabled SystemVerilog and native-Verilog
+runtime proof with unchanged public report/semantic key sets. Direct VHDL is
+explicitly unqualified under decision `0023` and remains owned separately.
+AHB requester `2..16`, 332/373/56 split 28/28 accounting, and all broader
+roadmap owners remain unchanged.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

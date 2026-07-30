@@ -1,0 +1,53 @@
+module named_drive_transaction_priority_tb;
+  logic clk = 0;
+  logic reset = 1;
+  logic start = 0;
+  logic override_req = 0;
+  logic done;
+  logic out;
+
+  named_drive_transaction_priority dut (
+    .clk(clk),
+    .reset(reset),
+    .start(start),
+    .override_req(override_req),
+    .done(done),
+    .out(out)
+  );
+
+  always #5 clk = ~clk;
+
+  initial begin
+    repeat (2) @(negedge clk);
+    reset = 0;
+
+    override_req = 1;
+    @(posedge clk);
+    #1;
+    if (out !== 1'b1)
+      $fatal(1, "rule did not drive while the transaction drive was inactive");
+
+    @(negedge clk);
+    override_req = 0;
+    start = 1;
+    @(negedge clk);
+    start = 0;
+    override_req = 1;
+    @(posedge clk);
+    #1;
+    if (out !== 1'b0)
+      $fatal(1, "higher-priority transaction drive did not win overlap");
+
+    @(posedge clk);
+    #1;
+    if (out !== 1'b1)
+      $fatal(1, "lower-priority rule did not resume after drive deactivation");
+    $display("PASS named-drive transaction priority out=%0d", out);
+    $finish;
+  end
+
+  initial begin
+    #300;
+    $fatal(1, "named-drive transaction priority timed out");
+  end
+endmodule

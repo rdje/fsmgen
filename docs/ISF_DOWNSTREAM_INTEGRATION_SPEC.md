@@ -2393,6 +2393,14 @@ Rules:
   the lower-priority rule assignment while the winning transaction state is
   active; that guard lowers to internal state-register comparison logic, not
   downstream-visible module input ports.
+- The same actor-level rule/transaction priority covers a named drive with
+  exactly one distinct local transaction caller and no generated caller.
+  Suppression remains target-local in both directions; a unique unordered
+  different-value overlap and prioritized ambiguous drive ownership fail
+  closed. Shared/generated/mixed or unused-drive overlap without an applicable
+  priority remains the explicit `isf_unproven_rule_drive_overlap/not_doable`
+  warning. Private caller/source/provenance metadata does not widen downstream
+  report or semantic schemas.
 - Rule triggers emit one-cycle delayed per-rule trigger sources.
 - Multiple rules triggering the same local transaction lower through a
   deterministic trigger fan-in DT unless the target is generated.

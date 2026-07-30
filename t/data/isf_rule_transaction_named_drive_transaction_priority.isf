@@ -1,16 +1,14 @@
-(actor named_drive_priority_probe
+(actor named_drive_transaction_priority
   (clock clk)
   (reset reset)
   (interface
     (input start)
     (input override_req)
     (output done)
-    (output out)
-    (output side))
-  (priority force_out over main)
+    (output out))
+  (priority main over force_out)
   (drive drive_zero
-    (out 0)
-    (side 1))
+    (out 0))
   (transaction main
     (on start)
     (drive drive_zero)

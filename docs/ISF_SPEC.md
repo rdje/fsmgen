@@ -3930,9 +3930,16 @@ Current lowering:
   the assignments cannot fire in the same cycle. This disjointness proof is
   intentionally conservative; guards that are not proved disjoint still use the existing
   compatible fan-in, priority-resolution, or fail-closed conflict paths.
-  Rule/drive overlap is tracked internally as
-  `isf_unproven_rule_drive_overlap` with `proof_status => not_doable` because
-  that compile-time proof is not doable in the current analysis.
+  Named-drive calls are included in this analysis. When exactly one local
+  transaction calls a drive and no generated child activation also calls it,
+  the scheduler treats that transaction as the logical writer while retaining
+  the raw drive provenance. A different-value rule/drive conflict without an
+  applicable priority therefore fails closed as
+  `isf_conflicting_rule_transaction_writes`. Shared, generated, mixed-source,
+  and unused drives do not have one provable transaction owner; their
+  unprioritized overlap remains the nonfatal
+  `isf_unproven_rule_drive_overlap` issue with
+  `proof_status => not_doable`.
 - Rule-local `(priority over other_rule)` and actor-level
   `(priority high over low)` can resolve same-target rule/rule data conflicts
   when the priority graph selects one winner for that target. The lowerer
@@ -3955,6 +3962,20 @@ Current lowering:
   creating fake input ports for `current_state`, state constants, or generated
   state-enable names. Priority cycles still fail with
   `isf_priority_cycle_conflict`.
+- Actor-level priority also covers a rule assignment that conflicts with a
+  data assignment in a uniquely owned named drive. For
+  `(priority rule over transaction)`, the inverse rule condition is added only
+  to the conflicting drive assignment; other outputs in the same drive and
+  the drive-request fan-in remain unchanged. For
+  `(priority transaction over rule)`, the conflicting rule assignment is
+  guarded by the inverse full drive-activation condition. Same-value writes
+  remain compatible fan-in. A declared priority involving a drive with
+  multiple local callers, generated callers, or mixed local/generated callers
+  fails closed as `isf_ambiguous_rule_transaction_drive_priority`, because a
+  single logical transaction owner cannot be proved. Drive DTs retain sorted
+  private caller/source metadata and drive-assignment provenance retains its
+  invoking transactions; successful public schedule-report schemas are not
+  widened.
 - Generated SystemVerilog includes verification-only selector assertions for
   analyzed muxes after ISF lowers through scheduled `.fsm`. Same-value
   `LHS`/`VAL` source selectors and whole-`LHS` value selectors are checked
@@ -5067,7 +5088,11 @@ Nonfatal conflict issues are projected into `compile_issues` as bounded objects
 with stable `code`, `severity`, `target`, `domain`, `proof_status`,
 human-readable `reason`, and capped `sources` summaries. The important current
 proof status is `not_doable`, used when the scheduler is explicitly flagging
-that a compile-time proof is NOT doable for a case such as rule/drive overlap.
+that a compile-time proof is NOT doable. For rule/drive overlap this applies
+when a drive is shared, generated, mixed-source, or unused and no declared
+priority requires a unique logical transaction owner. An
+exactly-one-local-caller drive instead participates in ordinary
+rule/transaction priority resolution or fail-closed conflict diagnostics.
 The public contract advertises the bounded issue keys, source-summary keys,
 severity values, and proof-status values. Fail-closed conflicts still produce
 targeted diagnostics instead of successful schedule reports.

@@ -38,5 +38,5 @@ direct output leaks unary reduction syntax; decision `0023` and proposed
 `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own that separate repair.
 
 Clean contract commit `b44afcc51` activates implementation `.3` continuity-
-only. The selected contract is unchanged, and current lowering retains the
-pre-implementation warning/assertion behavior until `.3` ships.
+only. Implementation `.3` now ships this unchanged contract; current behavior
+is canonical in `isf-rule-transaction-named-drive-priority-behavior`.

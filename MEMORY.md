@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: clean `.2` contract commit `b44afcc51`.
-- active_work_unit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3` activation.
-- current_state: `.2` is durably complete; `.3` is being activated continuity-only to implement exact-one-local-caller bidirectional target-local priority plus fail-closed ambiguous ownership. SV/Verilog remain the executable gates; decision `0023` separately owns the direct-VHDL `(|drive_start)` defect.
-- next_action: commit `.3` activation cleanly, then implement only the frozen caller-aware target-local priority contract.
-- in_flight_uncommitted: `.3` activation continuity synchronization; no product/test change and no background job.
+- latest_commit: this commit, `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3: implement named-drive priority` (resolve with `git log -1`).
+- active_work_unit: none; `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3` completes the selected child tree.
+- current_state: exact-one-local-caller named drives now honor bidirectional target-local actor priority with logical transaction reports; unique unordered and prioritized ambiguous ownership fail closed; selector assertions remain. SV/Verilog are executable-qualified, and decision `0023` separately owns the unqualified direct-VHDL `(|drive_start)` defect. IAL2 AHB `2..16` and 332/373/56 split 28/28 accounting are unchanged.
+- next_action: from the clean `.3` behavior commit, create and activate one roadmap-aligned parent IAL2 selector before changing any new behavior.
+- in_flight_uncommitted: none after this commit workflow; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -23,8 +23,8 @@ bounded current-state pointer. Git preserves its prior history.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
-  per-count public fixture. Completed `.830` selects the protocol-neutral
-  transaction-invoked named-drive priority audit and decision `0020` stays
+  per-count public fixture. Completed `.830` selected the protocol-neutral
+  named-drive priority child, now complete through `.3`; decision `0020` stays
   separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
@@ -36,10 +36,10 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. Completed selector `.830` keeps
-  HIAL/VIAL proposed and selects the narrower priority correctness audit.
+  mixed-language claims qualified separately. HIAL/VIAL remains proposed after
+  `.830`'s narrower priority correctness child completes.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
-  priority enforcement, end-to-end big-design
+  end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc
   fences, and guard metric repair. Parked findings do not pivot active AHB
   priority.

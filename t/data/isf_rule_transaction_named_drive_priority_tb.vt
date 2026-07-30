@@ -1,0 +1,52 @@
+module named_drive_priority_probe_tb;
+  reg clk;
+  reg reset;
+  reg start;
+  reg override_req;
+  wire done;
+  wire out;
+  wire side;
+
+  named_drive_priority_probe dut (
+    .clk(clk),
+    .reset(reset),
+    .start(start),
+    .override_req(override_req),
+    .done(done),
+    .out(out),
+    .side(side)
+  );
+
+  always #5 clk = ~clk;
+
+  initial begin
+    clk = 0;
+    reset = 1;
+    start = 0;
+    override_req = 0;
+    repeat (2) @(negedge clk);
+    reset = 0;
+    start = 1;
+    @(negedge clk);
+    start = 0;
+    override_req = 1;
+    @(posedge clk);
+    #1;
+    if (out !== 1'b1) begin
+      $display("FAIL native Verilog rule priority out=%0d", out);
+      $finish;
+    end
+    if (side !== 1'b1) begin
+      $display("FAIL native Verilog non-conflicting side=%0d", side);
+      $finish;
+    end
+    $display("PASS native Verilog named-drive priority out=%0d side=%0d", out, side);
+    $finish;
+  end
+
+  initial begin
+    #200;
+    $display("FAIL native Verilog named-drive priority timeout");
+    $finish;
+  end
+endmodule
