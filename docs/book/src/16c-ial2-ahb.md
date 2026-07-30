@@ -2513,6 +2513,12 @@ Clean audit commit `18f63a971` activates only no-behavior contract `.2`.
 Literal `2..4`, generated HDL/runtime, existing source bytes, and accounting
 remain unchanged while the precise future `2..16` implementation boundary is
 frozen.
+Completed contract `.2` selects proposed `.3` to admit only canonical decimal
+literals `2..16` through the existing minimum-width/qualified-retirement
+lowerer. It adds no public fixture per count and keeps 332/373/56 split 28/28;
+t1541 and one generic assertion harness own 5/8/16 proof. The touched t1535
+workspaces also move to `.artifacts/tmp/tests`. See the
+[contract record](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_CONTRACT_SELECTION.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

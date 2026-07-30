@@ -52,3 +52,6 @@ unchanged until later implementation.
 
 Clean audit commit `18f63a971` activates only contract `.2`; current behavior
 and accounting remain unchanged.
+
+Completed contract `.2` selects proposed lowerer/test-only `.3`; no per-count
+public fixture is selected and current accounting remains unchanged.

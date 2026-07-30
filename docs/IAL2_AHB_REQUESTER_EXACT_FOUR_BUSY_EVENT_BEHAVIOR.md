@@ -155,3 +155,7 @@ until that contract and a separate implementation commit.
 
 Clean audit commit `18f63a971` activates only contract `.2`; this exact-four
 behavior remains unchanged while the future implementation contract is frozen.
+
+Completed contract `.2` selects proposed `.3` without changing this source or
+behavior. `.3` widens the shared lowerer and verification only; no per-count
+public fixture is added and current accounting remains 332/373/56 split 28/28.

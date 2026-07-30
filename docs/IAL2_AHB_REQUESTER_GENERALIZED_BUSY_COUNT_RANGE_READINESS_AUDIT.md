@@ -157,6 +157,15 @@ continuity-only: current literal `2..4`, all generated behavior and source
 bytes, and 332/373/56 split 28 `.ppif`/28 `.ahb` remain unchanged while the
 contract is frozen before implementation.
 
+Completed contract `.2` selects proposed lowerer/test-only implementation
+`.3`. It freezes canonical decimal `2..16` admission, the exact diagnostic,
+unchanged minimum-width and qualified-retirement logic, unified numeric
+residue, no count-specific public fixture, focused t1541 plus generic 5/8/16
+assertion runtime, and unchanged 332/373/56 split 28/28. Contract review also
+found two default `File::Temp` workspaces in touched t1535; `.3` owns their
+move to `.artifacts/tmp/tests`. See
+`docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_CONTRACT_SELECTION.md`.
+
 ## Resource And Cleanup Evidence
 
 The exact disposable audit workspace contained 92 files and 7,016,808 bytes,

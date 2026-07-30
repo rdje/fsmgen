@@ -133,3 +133,6 @@ and seven all-assertion count-5/8/16 runtime scenarios. Current `2..4` and
 
 Clean audit commit `18f63a971` activates only contract `.2`; activation changes
 continuity and no public or generated behavior.
+
+Completed contract `.2` selects proposed lowerer/test-only `.3` without a
+public fixture per count; behavior and 332/373/56 accounting remain unchanged.

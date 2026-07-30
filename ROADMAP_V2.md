@@ -7918,6 +7918,14 @@ artifact, report, semantic/MCP API, HDL/runtime, simulator, backend, protocol,
 HIAL/VIAL, VHDL, verification-generation, portability, scale, decision-0020,
 or transaction behavior. Literal `2..4` and 332/373/56 split 28/28 remain
 authoritative while the exact `2..16` implementation contract is frozen.
+Completed contract `.2` selects proposed implementation `.3`: widen only
+AhbRequester canonical-decimal admission/static-rule/residue, add focused
+t1541 plus one generic assertion-enabled 5/8/16 harness, and migrate the two
+touched t1535 default File::Temp workspaces to `.artifacts/tmp/tests`. No
+per-count public fixture/support entry is added; exact-one-through-four source
+bytes and 332/373/56 split 28/28 remain fixed. Current behavior remains `2..4`
+until `.3` activates and ships. See
+`docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_CONTRACT_SELECTION.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

@@ -11626,6 +11626,13 @@ Clean audit commit `18f63a971` activates only contract `.2`. This continuity
 change leaves generated behavior and accounting unchanged while `.2` freezes
 the exact admission, diagnostic, residue, test, runtime, preservation, and
 rollback boundary before a separate implementation.
+Completed contract `.2` selects proposed lowerer/test-only `.3`. It freezes
+canonical decimal literals `2..16`, the exact diagnostic, unchanged minimum-
+width and qualified-retirement logic, one numeric residue template, no public
+fixture per count, t1541 plus generic 5/8/16 assertion runtime, and migration
+of t1535's touched temporary workspaces to `.artifacts/tmp/tests`. Public
+behavior remains `2..4` until `.3` ships; see the
+[contract record](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_CONTRACT_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

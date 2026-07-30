@@ -52,3 +52,6 @@ implementation ships.
 
 Clean audit commit `18f63a971` activates only contract `.2`; exact-four
 behavior remains unchanged while the contract is frozen.
+
+Completed contract `.2` selects lowerer/test-only proposed `.3`; this
+exact-four source byte and behavior remain frozen.

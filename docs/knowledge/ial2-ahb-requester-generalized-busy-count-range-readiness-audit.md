@@ -22,6 +22,12 @@ values `2..16`, with absence remaining exact-one. Clean audit commit
 `18f63a971` activates `.2`; current public behavior stays `2..4` until a later
 implementation commit.
 
+Completed contract `.2` selects proposed `.3`: one canonical-decimal
+AhbRequester widening, numeric residue, focused t1541 plus generic 5/8/16
+runtime, no public fixture per count, and unchanged 332/373/56 split 28/28.
+The same implementation also moves touched t1535 tempdirs onto the repository
+volume.
+
 The repo-local Arm AHB specification constrains where BUSY occurs and requires
 fixed-length bursts to finish with `SEQ`, but does not impose a numeric BUSY-
 cycle maximum. Sixteen is therefore FSMGen's bounded-profile choice: it aligns
