@@ -90,3 +90,8 @@ clean follow-up commit creates and activates the selected child.
 - Knowledge Map generation/checking passes at `1,073` facts / `5,529` question
   keys; memory architecture passes with `MEMORY.md` at `48` lines, and diff
   hygiene passes.
+
+Clean selector commit `28d3e777a` activates only the selected identifier-era
+import-map child through a separate continuity transition. The stale note/fact,
+the AHB residue contradiction, and every product behavior remain unchanged
+during activation.

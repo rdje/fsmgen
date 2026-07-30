@@ -8262,6 +8262,10 @@ implementation commit `299db4cae` added reachable
 package lower. Chapter 16c's stale counts-beyond-four residue is preserved as a
 separate next documentation candidate. See
 `docs/IAL2_POST_IDENTIFIER_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `28d3e777a` activates only
+`BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1` continuity-only. The stale
+note/fact, separate AHB residue, and every product behavior remain unchanged
+during activation.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

@@ -5,15 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.839: select identifier import-map refresh`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.839` (complete).
-- current_state: live entrypoint closure is 229 project files / 228 packages /
-  19 IAL2 owners; `.839` selects proposed no-behavior
-  `BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1` to repair the one-package
-  canonical note/fact drift.
-- next_action: after this selector commits cleanly, create and activate only
-  the selected import-map refresh task tree before changing its note/fact.
-- in_flight_uncommitted: none after this selection commit; no background job.
+- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1: activate identifier import-map refresh`).
+- active_work_unit: `BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1`
+  (continuity-only activation).
+- current_state: the exact identifier-era import-map task tree now owns the
+  measured 229-file / 228-package / 19-IAL2 note/fact synchronization; the
+  stale canonical baseline is deliberately unchanged during activation.
+- next_action: remeasure the live closure, synchronize only the canonical
+  import-tree note/fact and continuity docs, validate, and commit `.1`.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none.
 
 ## Durable context

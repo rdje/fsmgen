@@ -30883,3 +30883,16 @@ task tree and git.
   remain inactive, and both frozen status files remain untouched. Focused
   documentation audits pass with `Files=3, Tests=40`; Knowledge Map passes at
   1,073 facts / 5,529 keys; memory architecture and diff hygiene pass.
+
+### BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1 — identifier import-map refresh activated
+
+- Created and activated only the exact documentation-only child selected by
+  clean parent commit `28d3e777a`. The leaf owns synchronization of the
+  measured 229-file / 228-package / 19-IAL2 closure after the portable
+  identifier package became reachable.
+- Task/index, selector record/fact, roadmap, mdBook, Memory, and changelog
+  continuity are aligned. The stale architecture note/fact, separate Chapter
+  16c AHB residue, product behavior, public accounting, and both frozen status
+  files remain unchanged during activation; no development note is warranted.
+  Focused documentation audits pass with `Files=3, Tests=40`; Knowledge Map,
+  memory architecture, and diff hygiene pass.

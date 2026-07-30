@@ -28,3 +28,7 @@ clean activation. Chapter 16c's later claim that counts beyond four remain
 outside the shipped surface contradicts its current canonical literal `2..16`
 sections; `.839` preserves that as the next independent documentation
 candidate rather than mixing it into the import-map refresh.
+
+Clean selector commit `28d3e777a` activates only the selected import-map child
+continuity-only. The canonical note/fact, AHB residue, and every product
+behavior remain unchanged during activation.

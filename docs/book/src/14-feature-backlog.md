@@ -11968,6 +11968,9 @@ portable identifier implementation added one reachable Support owner; the
 canonical note/fact remain one package lower. The separate stale AHB
 counts-beyond-four residue stays an independent next documentation candidate.
 See the [selection record](../../IAL2_POST_IDENTIFIER_NEXT_OWNER_SELECTION.md).
+Clean selector commit `28d3e777a` activates only the selected identifier-era
+import-map child continuity-only. The stale note/fact, separate AHB residue,
+and every product behavior remain unchanged during activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
