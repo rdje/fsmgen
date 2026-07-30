@@ -5890,6 +5890,9 @@ minimum-width lowering is already generic across later width transitions. The
 audit must choose and prove a finite reusable range without count-by-count
 fixture growth. All broader owners remain separate and behavior stays at
 332/373/56 split 28/28 until a later implementation ships.
+Clean selector commit `a2750d8a6` activates only the selected audit `.1` with
+continuity changes; current literal `2..4` and 332/373/56 split 28/28 behavior
+remain unchanged during activation.
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25

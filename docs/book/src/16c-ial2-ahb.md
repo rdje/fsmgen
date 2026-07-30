@@ -2496,6 +2496,9 @@ without adding one catalog fixture per count. Current behavior and accounting
 remain 332/373/56 split 28/28. Runtime/policy/random/symbolic counts, multiple
 insertion points, HIAL/VIAL, generic priority, VHDL, scale, and decision `0020`
 remain separate.
+Clean selector commit `a2750d8a6` activates only generalized-count audit `.1`.
+The public literal `2..4` contract, generated behavior, and 332/373/56 split
+28/28 accounting remain unchanged during the audit.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

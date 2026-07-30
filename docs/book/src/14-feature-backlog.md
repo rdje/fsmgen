@@ -11608,6 +11608,10 @@ is not selected. See the
 Accounting and behavior remain 332/373/56 split 28/28. HIAL/VIAL, dynamic BUSY
 policy, generic priority, VHDL/portability, scale, and decision `0020` stay
 separate.
+Clean selector commit `a2750d8a6` activates only audit `.1`. This is a
+continuity change: literal `2..4`, accounting 332/373/56 split 28/28, generated
+HDL/runtime, reports, and all broader owners remain unchanged while the audit
+chooses a finite range and verification contract.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

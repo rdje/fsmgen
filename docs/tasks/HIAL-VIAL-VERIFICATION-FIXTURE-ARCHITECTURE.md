@@ -307,4 +307,6 @@ evidence-backed handoff.
   generalized literal AHB BUSY-count readiness audit. HIAL/VIAL remains
   proposed with its typed bridge, portable/native semantics, full-language
   UVM authority, VHDL/mixed-language, migration, and scale gates unchanged.
+- `2026-07-30`: Clean selector commit `a2750d8a6` activates only the
+  generalized-count audit `.1`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

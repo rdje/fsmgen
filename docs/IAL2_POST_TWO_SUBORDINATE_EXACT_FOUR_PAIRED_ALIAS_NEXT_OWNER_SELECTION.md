@@ -121,3 +121,7 @@ same-volume paths.
 
 Rollback removes this selector/fact and proposed audit tree only. All shipped
 exact-one-through-four behavior and 332/373/56 accounting remain unchanged.
+
+Clean selector commit `a2750d8a6` activates only the selected audit `.1`.
+Activation changes continuity pointers and no public or generated behavior;
+literal `2..4` and 332/373/56 split 28/28 remain current.

@@ -41,3 +41,7 @@ Runtime/policy/random/symbolic counts, multiple insertion points, generic
 rule/transaction priority, HIAL/VIAL, verification generation, VHDL,
 portability, scale, other protocols/backends, and decision `0020` remain
 separate. Selection changes no behavior; 332/373/56 split 28/28 remains current.
+
+Clean selector commit `a2750d8a6` activates only generalized-count audit `.1`.
+Activation is continuity-only; literal `2..4` and current accounting remain
+unchanged while the audit determines the finite range and proof contract.

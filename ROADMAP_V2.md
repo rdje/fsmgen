@@ -7890,6 +7890,13 @@ split 28/28. Runtime/policy/random/symbolic and multiple-point BUSY semantics,
 generic priority, HIAL/VIAL, VHDL/portability, scale, other protocols/backends,
 and decision 0020 remain separate. See
 `docs/IAL2_POST_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `a2750d8a6` activates only generalized-count readiness
+audit `.1`. Activation changes continuity pointers and no parser, generator,
+public source, support, test, artifact, report, semantic/MCP API, HDL/runtime,
+simulator, backend, protocol, HIAL/VIAL, VHDL, verification-generation,
+portability, scale, decision-0020, or transaction behavior. Current
+332/373/56 split 28/28 and literal `2..4` behavior remain authoritative while
+the audit chooses the finite range and proof boundary.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
