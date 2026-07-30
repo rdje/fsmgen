@@ -2419,6 +2419,9 @@ prove assertion-enabled 10/8/2/8/2/`44332211`/`88776655` runtime before a
 separate generic contract may project 331/372/55 split 28 `.ppif`/27 `.ahb`.
 See the
 [next-owner selection](../../IAL2_POST_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
+Clean selector commit `4abb0a357` activates only readiness audit `.1` with no
+public behavior change. The two-window exact-four source remains absent while
+the audit owns assertion-enabled combined runtime proof.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

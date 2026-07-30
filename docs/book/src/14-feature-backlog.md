@@ -11539,6 +11539,9 @@ was removed. The audit must directly prove assertion-enabled two-command
 resumed `SEQ` / status `44332211` / control `88776655` before any projected
 331/372/55 generic contract. See the
 [selection record](../../IAL2_POST_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md).
+Clean selector commit `4abb0a357` activates only readiness audit `.1`.
+Activation adds no public source, support, test, or behavior; assertion-enabled
+two-command exact-four runtime remains pending.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

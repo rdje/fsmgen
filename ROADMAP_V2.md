@@ -7809,6 +7809,12 @@ may project 331/372/55 split 28 `.ppif`/27 `.ahb`. Counts above four, new BUSY
 semantics, generic priority, HIAL/VIAL, verification generation, VHDL,
 portability, scale, and decision 0020 remain separate. See
 `docs/IAL2_POST_EXACT_FOUR_PAIRED_ALIAS_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `4abb0a357` activates only readiness audit `.1`.
+Activation changes continuity documentation and no parser, generator, public
+source, support, test, artifact, report/semantic/MCP API, HDL/runtime,
+simulator, backend, protocol, HIAL/VIAL, VHDL, verification-generation,
+portability, scale, decision-0020, or transaction behavior; assertion-enabled
+two-command runtime remains pending.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

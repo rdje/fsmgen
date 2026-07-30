@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `IAL2 / AHB paired requester-subordinate BUSY composition`
 - Created: `2026-07-30`
 - Last updated: `2026-07-30`
@@ -74,16 +74,16 @@ any public two-subordinate exact-four source or contract is selected.
 ## Task Tree
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit assertion-enabled two-window exact-four requester/BUSY-parking composition before public expansion.`
   Children: `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Audit generic two-subordinate exact-four paired AHB BUSY readiness and select the next exact owner.`
   Acceptance: `Activate only after clean parent selector .826 commit. Reconcile the shipped exact-four requester and one-window generic/profile paired behavior, generic/profile two-window exact-three paired behavior, assertion-clean interconnect/generated-subordinate/direct-seed repairs, public generators, report residue, support/language/capability surfaces, normalized semantic JSON, real read-only MCP, t1533/t1534/t1537/t1538, roadmap, mdBook, Knowledge Map, HIAL/VIAL, generic priority, scale, and decisions 0004/0008/0020. Recreate only the repository-derived same-volume generic candidate with exact future identity, four children, 29 signals, 4 IAL1/5 IAL0 artifacts, width-three requester load four, before_beat=2/beats=4, both child/propagated parks_on=[busy], two windows, one-hot ownership, no top busy_flow, normalized semantic/MCP parity, and unmatched support. Compile with selector assertions enabled and execute an adapted two-command runtime proving 10 presentations/8 beats/2 BUSY episodes/8 qualified BUSY events/2 resumed SEQ/status 0x44332211/control 0x88776655 with stable selected/unselected endpoint and fabric state. Decide whether a separate generic contract can follow, a lower-layer repair is required, or the candidate must fail closed. If ready, freeze projected 331/372/55 split 28 .ppif/27 .ahb and exact future support/test/diagnostic/preservation/cleanup/rollback boundaries. Keep aliases, counts above four, new BUSY policy/status/burst/signal semantics, generic priority, other protocols/backends, HIAL/VIAL, VHDL, verification generation, scale implementation, and decision 0020 separate. Use authorized host100/process4096, canonical Stats-compatible capacity, separate kernel pressure, repository-local artifacts, exact census, and residue proof.`
-  Verification: `Pending clean activation after parent selector .826 commits.`
-  Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: audit two-window exact-four AHB readiness`
+  Verification: `Activated only after clean parent selector commit 4abb0a357. Activation changes task/index/Memory/roadmap/mdBook/selection-fact/HIAL-VIAL continuity state only. Public behavior remains 330 protocol / 371 supported+strict / 54 AHB paths split 27 .ppif/27 .ahb; no two-subordinate exact-four source, support entry, focused test, or testbench exists. The selector's strict/schedule/artifact/normalized-semantic/real read-only shell-disabled MCP/public-verifier evidence remains static feasibility only; assertion-enabled two-command 10/8/2/8/2/status-44332211/control-88776655 runtime remains pending in this audit. Focused t1518+t1256+t1414 pass 3 files/22 tests. Knowledge Map remains synchronized at 1,043 facts/5,334 keys. mdBook builds exactly 72 files/16,339,335 bytes and the exact render tree is removed. Memory is bounded; diff and all six doctrine gates pass. Final canonical Stats-compatible RAM is 71.2% (17.082/24.000 GiB; 18,341,380,096 bytes), kernel pressure is separately 1 (normal), and guard occupancy is excluded from capacity truth. No parser, generator, public source, support, test, artifact, report/semantic/MCP API, HDL/runtime, simulator, backend, protocol, verification-generation, HIAL/VIAL, VHDL, portability, scale, decision-0020, or transaction behavior changed.`
+  Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: activate two-window exact-four AHB audit`
 
 ## Dependencies
 
@@ -100,3 +100,12 @@ any public two-subordinate exact-four source or contract is selected.
 Before public implementation, rollback removes this proposed tree and its
 selection pointers only. Any later contract or implementation leaf must define
 its own exact rollback surface.
+
+## Decisions
+
+- `2026-07-30`: Clean parent selector commit `4abb0a357` activates `.1`
+  without changing public or generated behavior.
+
+## Blockers
+
+- None after clean parent selector commit `4abb0a357`.

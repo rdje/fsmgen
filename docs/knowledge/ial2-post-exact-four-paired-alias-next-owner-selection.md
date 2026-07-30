@@ -39,3 +39,6 @@ HIAL/VIAL, verification generation, VHDL, and scale remain separate. HIAL/VIAL
 retains event-capable compiled Verilator as the portable-fast supported-subset
 profile, separate from full-language/SystemVerilog-UVM authority and
 independently qualified VHDL/mixed-language profiles.
+
+Clean selector commit `4abb0a357` activates only readiness audit `.1`; the
+public 330/371/54 boundary remains unchanged during activation.

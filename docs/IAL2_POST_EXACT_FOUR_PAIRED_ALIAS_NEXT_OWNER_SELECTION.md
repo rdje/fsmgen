@@ -142,6 +142,9 @@ canonical Stats-compatible Mach-page formula; kernel pressure is reported
 separately and guard occupancy is not capacity truth. Generated data stays
 under repository-derived same-volume paths and is counted before deletion.
 
+Clean selector commit `4abb0a357` now activates only selected readiness audit
+`.1`; activation changes continuity documentation and no behavior.
+
 ## Rollback
 
 Rollback removes this selection record/fact, the proposed audit tree, and the

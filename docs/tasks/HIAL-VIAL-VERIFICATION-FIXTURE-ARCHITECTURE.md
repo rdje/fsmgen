@@ -273,4 +273,6 @@ evidence-backed handoff.
 - `2026-07-30`: Selector `.826` chooses the smaller adjacent two-subordinate
   exact-four paired AHB readiness audit; HIAL/VIAL remains proposed with its
   portable-fast/full-language/VHDL/mixed-language/scale requirements intact.
+- `2026-07-30`: Clean selector commit `4abb0a357` activates only two-window
+  exact-four readiness `.1`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.
