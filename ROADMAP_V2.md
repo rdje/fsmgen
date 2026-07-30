@@ -7825,6 +7825,11 @@ shipped authorities; t248+t297 reconfirm 330/371/54 split 27/27. No lower-
 layer repair is required. Pending `.2` owns the no-behavior generic contract
 at projected 331/372/55 split 28 `.ppif`/27 `.ahb`. See
 `docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md`.
+Clean audit commit `a5d162d60` activates only contract selector `.2`.
+Activation changes continuity documentation and no parser, generator, public
+source, support, test, artifact, report/semantic/MCP API, HDL/runtime,
+simulator, backend, protocol, HIAL/VIAL, VHDL, verification-generation,
+portability, scale, decision-0020, or transaction behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

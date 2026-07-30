@@ -11549,6 +11549,9 @@ public-verifier surfaces plus assertion-enabled two-command 10 presentations /
 `.2` owns a separate generic contract projecting 331/372/55 split 28 `.ppif`/
 27 `.ahb`. See the
 [readiness audit](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
+Clean audit commit `a5d162d60` activates only generic contract selector `.2`.
+Activation adds no public source, support, test, artifact, or behavior; the
+audit remains the runtime authority while `.2` freezes the future contract.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

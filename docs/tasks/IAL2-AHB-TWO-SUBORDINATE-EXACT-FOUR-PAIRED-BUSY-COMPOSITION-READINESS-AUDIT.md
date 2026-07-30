@@ -86,11 +86,11 @@ any public two-subordinate exact-four source or contract is selected.
   Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.1: audit two-window exact-four AHB readiness`
 
 - ID: `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the first generic two-subordinate exact-four paired AHB BUSY public contract before implementation.`
   Acceptance: `Activate only after the clean .1 audit commit. Read the canonical .1 audit record/fact and exact disposable strict/schedule/artifact/normalized-semantic/real read-only MCP/public-verifier/assertion-runtime evidence; reconcile shipped one-window exact-four and two-window exact-three generic/profile contracts, RegressionCorpus/language/capability/current-doc surfaces, roadmap, mdBook, Knowledge Map, HIAL/VIAL, generic priority, scalability, and decisions 0004/0008/0020. Freeze exactly one future generic source ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif as the identity/requester/cardinality-only transform of the shipped exact-three source, with exact intent/source object/bounded anchor, embedded requester amba_requester_busy_insert_four, status/control ahb_*_subordinate_byte_lane_hburst_seq children, fabric ahb_interconnect, top ahb_tb, exact 4 IAL1/5 IAL0 artifacts, width-three 4->3->2->1->0 requester behavior, before_beat=2/beats=4, child/propagated parks_on=[busy], two [0,4)/[4,8) windows, one-hot accepted-subordinate ownership, and no top busy_flow. Select support id intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park, coverage ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park_pipeline_cli, ppif/supported_smoke/strict/module ahb_tb/root top/4 children, and projected 331 protocol / 372 supported+strict / 55 AHB paths split 28 .ppif/27 .ahb only if reconfirmed. Freeze future t/1539-ial2-ahb-two-subordinate-exact-four-paired-busy-composition.t plus t/data/ahb_two_subordinate_exact_four_paired_busy_composition_tb.svt for source delta, strict/check/schedule/artifacts/verifier/diagnostics/normalized semantic/real read-only MCP/repository-local output and assertion-enabled 10/8/2/8/2/0x44332211/0x88776655 proof, preservation of t1533/t1534/t1537/t1538, docs/KM/resource/same-volume cleanup/rollback, and a separate implementation leaf. Make no parser, generator, public source, support, test, artifact, report/semantic/MCP API, HDL/runtime, simulator integration, backend, protocol, HIAL/VIAL, VHDL, verification-generation, portability, scale, decision-0020, or transaction behavior change in contract selection. Keep the matching alias, counts above four, policy/status/burst/signal semantics, generic priority, other protocols/backends, and decision 0020 separate/inactive.`
-  Verification: `Pending clean .1 audit commit and separate activation.`
-  Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: select two-window exact-four AHB contract`
+  Verification: `Activated only after clean .1 audit commit a5d162d60. Activation changes task/index/Memory/roadmap/mdBook/audit-fact/HIAL-VIAL continuity state only. Public behavior remains 330 protocol / 371 supported+strict / 54 AHB paths split 27 .ppif/27 .ahb; the selected future source, support entry, focused t1539, and exact-four two-subordinate testbench remain absent. The .1 strict/artifact/semantic/real read-only MCP/public-verifier/assertion-enabled 10/8/2/8/2/0x44332211/0x88776655 audit remains the readiness authority. Focused documentation validation passes 3 files/22 tests; the Knowledge Map remains valid and synchronized at 1,044 facts/5,340 question keys; mdBook renders 72 files/16,346,170 bytes and its disposable output is removed; MEMORY.md remains bounded at 57 lines and README.md at 2,328 lines; all six doctrine gates pass. The canonical Stats-compatible reading is 18,826,706,944/25,769,803,776 bytes = 17.534/24.000 GiB = 73.06% RAM usage, with separate macOS pressure level 1. No parser, generator, public source, support, test, checked-in artifact, report/semantic/MCP API, shipped HDL/runtime, simulator integration, backend, protocol, verification-generation, HIAL/VIAL, VHDL, portability, scale, decision-0020, or transaction behavior changed.`
+  Commit: `IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.2: activate two-window exact-four AHB contract`
 
 ## Dependencies
 
@@ -114,7 +114,9 @@ its own exact rollback surface.
   without changing public or generated behavior.
 - `2026-07-30`: `.1` proves direct assertion-enabled two-window exact-four
   readiness and selects pending no-behavior generic contract `.2`.
+- `2026-07-30`: Clean audit commit `a5d162d60` activates `.2` without changing
+  public or generated behavior.
 
 ## Blockers
 
-- `.2` must wait for the clean `.1` audit commit.
+- None after clean `.1` audit commit `a5d162d60`.

@@ -182,6 +182,12 @@ assertion-enabled 10/8/2/8/2/`44332211`/`88776655` runtime, preservation gates,
 diagnostics, support projection, documentation, cleanup, rollback, and a
 separate implementation leaf before any source ships.
 
+Clean audit commit `a5d162d60` activates only contract selector `.2`.
+Activation changes continuity documentation only: public accounting remains
+330/371/54 split 27 `.ppif`/27 `.ahb`, and the future generic source, support
+entry, t1539, and testbench remain absent until a separately selected
+implementation leaf ships them.
+
 The future matching `.ahb` alias remains separate. Counts above four,
 runtime/policy/random/multiple-point insertion, distinct bus-BUSY status,
 wider/indefinite bursts, optional signals, generic priority changes, other

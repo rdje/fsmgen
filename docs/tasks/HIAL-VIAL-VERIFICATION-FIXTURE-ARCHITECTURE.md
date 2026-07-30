@@ -278,4 +278,6 @@ evidence-backed handoff.
 - `2026-07-30`: Two-window exact-four audit `.1` proves assertion-enabled
   10/8/2/8/2 runtime plus semantic/read-only-MCP parity and selects pending
   generic contract `.2`; HIAL/VIAL remains proposed and unchanged.
+- `2026-07-30`: Clean audit commit `a5d162d60` activates only two-window
+  exact-four contract `.2`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

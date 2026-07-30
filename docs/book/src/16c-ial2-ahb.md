@@ -2430,6 +2430,9 @@ Verilator 5.046 `--timing` with all assertions. Runtime observes 2 commands /
 required. Pending `.2` owns a separate generic contract projecting 331/372/55
 split 28 `.ppif`/27 `.ahb`. See the
 [readiness audit](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md).
+Clean audit commit `a5d162d60` activates only generic contract selector `.2`.
+The selected source/support/t1539/testbench remain absent during activation;
+public behavior stays at 330/371/54 split 27 `.ppif`/27 `.ahb`.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

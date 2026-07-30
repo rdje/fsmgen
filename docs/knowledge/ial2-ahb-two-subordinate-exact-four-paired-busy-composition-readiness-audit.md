@@ -33,3 +33,8 @@ selects a separate generic public-contract leaf with projected 331 protocol /
 372 supported+strict / 55 AHB paths split 28 `.ppif` / 27 `.ahb`. Alias,
 counts above four, broader BUSY semantics, HIAL/VIAL, VHDL, verification
 generation, portability, scale, and decision `0020` remain separate.
+
+Clean audit commit `a5d162d60` activates only contract selector `.2`. This
+continuity-only activation leaves public accounting at 330/371/54 split 27
+`.ppif`/27 `.ahb`; the future source, support entry, t1539, and testbench remain
+absent while `.2` freezes their exact contract.
