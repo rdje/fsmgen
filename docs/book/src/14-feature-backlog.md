@@ -11979,6 +11979,13 @@ Clean identifier-era import-map completion commit `ae2f75648` activates parent
 selector `.840` continuity-only. No candidate is selected during activation;
 the scheduled lifecycle review and every director-gated direction remain
 inactive.
+Completed `.840` selects proposed no-behavior
+`MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1`. Chapter 16c's current sections and the
+requester lowerer agree that canonical literal `2..16` ships without a fixture
+per count, but one later residue bullet still says counts beyond four are
+unshipped. The child will synchronize only that contradiction after clean
+activation. See the
+[selection record](../../IAL2_POST_IMPORT_MAP_NEXT_OWNER_SELECTION.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

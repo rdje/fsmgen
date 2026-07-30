@@ -30923,3 +30923,18 @@ task tree and git.
   development note is warranted. Focused documentation audits pass with
   `Files=3, Tests=40`; Knowledge Map, memory architecture, and diff hygiene
   pass.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.840 — AHB busy-count residue sync selected
+
+- Proved Chapter 16c's current/raw/requester/history sections and the shipped
+  lowerer agree on canonical literal `busy-beats` `2..16`, while one later
+  residue bullet still says counts beyond four are outside the shipped surface.
+- Selected proposed no-behavior `MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1` to
+  synchronize only that bullet. Exact-one-through-four fixtures, 332/373/56
+  split 28/28 accounting, runtime behavior, and above-16 residue remain fixed.
+- The selected child remains inactive until a separate clean activation.
+  Lifecycle review and director gates remain inactive, and both frozen status
+  files remain untouched.
+- Feature-backlog status, live-book-path, and relative-path audits pass with
+  `Files=3, Tests=40`; Knowledge Map, memory architecture, and diff hygiene
+  pass.

@@ -8275,6 +8275,12 @@ Clean identifier-era import-map completion commit `ae2f75648` activates parent
 selector `.840` continuity-only. It selects no candidate during activation;
 the scheduled lifecycle review and every explicit director gate remain
 inactive, and both frozen status files stay untouched.
+Completed `.840` selects proposed no-behavior
+`MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1`. Chapter 16c repeatedly records shipped
+canonical literal `2..16` requester BUSY counts and above-16 residue, but one
+later bullet still says counts beyond four are unshipped. The selected leaf
+will synchronize only that contradictory residue wording after a clean
+activation. See `docs/IAL2_POST_IMPORT_MAP_NEXT_OWNER_SELECTION.md`.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

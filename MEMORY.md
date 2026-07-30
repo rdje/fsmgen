@@ -5,14 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.840: activate post import-map selector`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.840`
-  (continuity-only activation).
-- current_state: the identifier-era import map is clean and current; `.840`
-  owns one new roadmap selection without selecting or activating a candidate.
-- next_action: reconcile current-HEAD eligible candidates, beginning with the
-  preserved Chapter 16c AHB residue, and select exactly one smallest owner.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.840: select AHB busy-count residue sync`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.840` (complete).
+- current_state: `.840` proves one Chapter 16c residue bullet contradicts the
+  shipped canonical literal 2..16 requester contract and selects proposed
+  no-behavior `MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1`.
+- next_action: after this selector commits cleanly, create and activate only
+  the selected mdBook residue-sync task before changing Chapter 16c.
+- in_flight_uncommitted: none after this selection commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -36,10 +36,8 @@ history; this file carries only the current bounded resume state.
   is clean, and `.artifacts/tmp/tests` is empty.
 - The identifier-era import-map baseline is current at 229 project files / 228
   packages / 19 IAL2 owners and Support 71.
-- Chapter 16c still says counts beyond four are outside the shipped surface,
-  contradicting its current canonical literal 2..16 sections; the next parent
-  selector must preserve or select that independent documentation repair after
-  import-map synchronization.
+- Chapter 16c's counts-beyond-four contradiction is selected by `.840` for one
+  exact no-behavior residue-wording repair; implementation remains inactive.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously
