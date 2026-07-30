@@ -73,11 +73,11 @@ changed loop lowering and requester terminal-count paths.
   Commit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.2: synchronize focused-test index`
 
 - ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Synchronize the AHB alias wrong-object diagnostic expectation.`
   Acceptance: `After .2 commits, update only t/1474's stale aggregate-cardinality diagnostic regex to include the already-shipped two-subordinate shape; prove t/1474 and direct strict checking of ppif/ahb_requester.ahb.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean .2 implementation commit 4ba108b3d. Current-HEAD t/1474 fails exactly one assertion at line 82: the stale regex ends after the one-requester/one-subordinate aggregate shape, while the parser already reports both that shipped shape and the shipped one-requester/two-subordinate aggregate shape. The unchanged canonical ppif/ahb_requester.ahb passes ./bin/fsmgen --quiet --strict --check --json with success=true, zero diagnostics, support entry intent.ahb_profile_alias_requester, and no generated output. Feature-backlog status, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1,068 facts / 5,499 question keys; mdBook HTML build and diff hygiene pass. Activation changes continuity surfaces only; t/1474, parser/scheduler sources, fixtures, generated artifacts, and HDL/runtime behavior remain unchanged until this commit is clean.`
+  Commit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.3: activate alias diagnostic sync`
 
 ## Decisions
 
@@ -94,11 +94,14 @@ changed loop lowering and requester terminal-count paths.
   current-HEAD boundary is five missing focused-test links and zero extras.
 - `2026-07-30`: `.2` adds exactly those five links, restores a 332/332 exact
   index, and passes the full guarded ISF regression without behavior changes.
+- `2026-07-30`: Clean `.2` commit `4ba108b3d` activates `.3`; the exact
+  current-HEAD failure is one stale t1474 diagnostic assertion while the
+  canonical public `.ahb` source remains strict-check clean.
 
 ## Blockers
 
-- `.1` is complete at clean `012660f90`; `.2` is complete in this commit. `.3`
-  may activate only after `.2` commits cleanly.
+- `.1` is complete at clean `012660f90`; `.2` is complete at clean
+  `4ba108b3d`; `.3` is active continuity-only.
 
 ## Acceptance Checklist (enforced for implementation changes)
 

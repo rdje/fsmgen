@@ -11875,6 +11875,11 @@ Public-sync `.2` is now complete: the authoritative ISF focused-test index
 contains all 332 current paths exactly, focused t1250 passes, and the guarded
 295-file / 2,037-test ISF regression is green. No test or product behavior
 changed. `.3` remains pending until the clean `.2` commit.
+Clean `.2` implementation commit `4ba108b3d` activates public-sync `.3`
+continuity-only. Current t1474 has one stale diagnostic regex: it names the
+one-subordinate aggregate but not the parser's already-shipped two-subordinate
+aggregate wording. The canonical public `.ahb` source remains strict-check
+clean; no test or product behavior changes during activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

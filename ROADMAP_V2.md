@@ -8201,6 +8201,11 @@ the authoritative ISF focused-test index from 327/332 to 332/332 with zero
 missing or extra paths. Focused t1250 and the guarded 295-file / 2,037-test ISF
 regression pass. No test or product behavior changed; `.3` remains pending
 until the clean `.2` commit.
+Clean `.2` implementation commit `4ba108b3d` activates only public-sync `.3`
+continuity-only. Current-HEAD t1474 fails one assertion because its diagnostic
+regex stops after the one-subordinate aggregate shape while the shipped parser
+also names the two-subordinate shape. The canonical public `.ahb` source passes
+strict JSON checking; test and product behavior remain unchanged in activation.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

@@ -44,3 +44,7 @@ has five missing focused-test links and zero extras. `.3` stays pending.
 
 Completed `.2` restores the exact 332/332 focused-test index and passes t1250
 plus the guarded 295-file / 2,037-test ISF regression. `.3` remains pending.
+
+Clean `.2` commit `4ba108b3d` activates only `.3`: current t1474 has one stale
+aggregate-cardinality regex while the canonical public `.ahb` strict check is
+green.

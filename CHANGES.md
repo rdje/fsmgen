@@ -30583,3 +30583,19 @@ task tree and git.
 - No test or product behavior changed. `.3` remains pending; task/book/fact/
   Memory/changelog surfaces are synchronized, and no development note is
   warranted.
+
+### PUBLIC-SYNC-TEST-DRIFT-REPAIR.3 — alias diagnostic sync activated
+
+- Activated only `.3` from clean `.2` implementation commit `4ba108b3d`.
+  Current-HEAD t1474 fails exactly one assertion at line 82: its regex stops
+  after the one-requester/one-subordinate aggregate, while the shipped parser
+  also names the one-requester/two-subordinate aggregate.
+- The unchanged canonical `ppif/ahb_requester.ahb` passes strict JSON checking
+  with zero diagnostics and no generated output. The test, parser, scheduler,
+  fixtures, generated artifacts, and product behavior remain unchanged during
+  activation.
+- Task/index, roadmap, mdBook, selector fact, Memory, and changelog continuity
+  are synchronized. Feature-backlog status, live-book-path, and relative-path
+  audits pass with `Files=3, Tests=40`; Knowledge Map generation/check passes
+  at 1,068 facts / 5,499 keys; mdBook HTML build and diff hygiene pass. This
+  activation does not warrant a development-note entry.
