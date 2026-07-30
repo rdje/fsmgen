@@ -30458,3 +30458,22 @@ task tree and git.
   FSMGen-registry, and probe implementation. No enforcement or product behavior
   changes in this contract slice; no development-note entry is warranted
   because the architecture rationale is canonical in decision `0026`.
+
+### TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2 — declarative checker and probes implemented
+
+- Added the neutral staged-index checker plus FSMGen-native data-only path and
+  evidence TSV registries. Matching implementation work now has a proven
+  mechanism for fresh one-file ROOT CAUSE / ADDRESSED / NO REGRESSION boxes and
+  box-scoped project-declared root/no-regression evidence.
+- Added `t/1545-task-acceptance-doctrine.t` with 9 isolated-Git probe groups for
+  docs-only control, native literal/ERE success, missing owner, unchecked box,
+  cross-file and out-of-box leakage, stale boxes, malformed/empty registry
+  cases, and staged-index isolation from unstaged worktree text.
+- `bash -n` and Perl syntax pass; t/1545 reports `All tests successful`,
+  `Files=1, Tests=9`; combined locality plus checker proof reports
+  `Files=2, Tests=29`; locality and all six existing doctrines pass. Shellcheck
+  is unavailable on this host, so no shellcheck result is claimed. A run
+  against the actual staged `.2` index passes with `root=git_history` and
+  `no-regression=prove_summary`. The gate is intentionally not registered until
+  `.3`; no product behavior changed and decision `0026` already owns the
+  rationale, so no development note is needed.

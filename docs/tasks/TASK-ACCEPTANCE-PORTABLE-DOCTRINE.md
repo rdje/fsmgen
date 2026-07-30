@@ -87,14 +87,14 @@ project-native evidence signatures. No external file was modified or copied.
   Commit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1: select declarative evidence contract`
 
 - ID: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the neutral checker, FSMGen registry, and focused RED/GREEN/control probes.`
   Acceptance: `The data-driven checker and registry satisfy the selected contract, probes cover the failure and success matrix, existing doctrines remain green, and no product behavior changes.`
-  Verification: `pending activation`
-  Commit: `pending activation`
+  Verification: `Implemented executable scripts/check_task_acceptance.sh plus data-only FSMGen change-path and evidence-signature TSV registries. The checker validates staged registry snapshots, reads staged paths/task contents/fresh line positions from the Git index, requires all three fresh boxes in one task file, enforces box-scoped declared root/no-regression signatures, uses repository-local self-cleaning scratch, and reports explicit success/failure. t/1545 supplies 9 top-level isolated-Git RED/GREEN/control groups: docs-only exemption, literal/ERE positive, missing owner, unchecked box, cross-file leakage, out-of-box leakage, stale boxes, invalid/unknown/empty registry cases, and unstaged-worktree isolation. bash -n and Perl syntax pass; focused t/1545 passes Files=1 Tests=9; combined locality+checker proof passes Files=2 Tests=29; locality doctrine and existing six-doctrine driver pass. The checker run against the actual staged .2 index passes with root=git_history and no-regression=prove_summary, proving its own fresh task evidence and declarations. shellcheck is unavailable on this host, so no shellcheck claim is made. No product behavior changed.`
+  Commit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2: implement declarative acceptance checker`
 
 - ID: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Register TASK-ACCEPTANCE and synchronize the reusable/public workflow contract.`
   Acceptance: `The doctrine driver, hook/CI inheritance, TOOLBOX checklist, bootstrap/commit docs, mdBook, decision/fact/Knowledge Map surfaces, task tree, Memory, and changelog agree; focused and broader doctrine gates pass.`
   Verification: `pending activation`
@@ -105,8 +105,8 @@ project-native evidence signatures. No external file was modified or copied.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1` | `done` | Decision 0026 and TASK_ACCEPTANCE.md freeze the neutral contract. |
-| 2 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2` | `active` | Implement the selected data-driven checker, FSMGen registries, and focused probes. |
-| 3 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3` | `proposed` | Integrate only after probes prove the checker and registry. |
+| 2 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2` | `done` | The checker, FSMGen registries, and 9-group isolated-Git probe suite satisfy decision 0026. |
+| 3 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3` | `active` | Register the proven checker and synchronize the reusable/public workflow contract. |
 
 ## Decisions
 
@@ -132,3 +132,9 @@ project-native evidence signatures. No external file was modified or copied.
 ## Blockers
 
 - None.
+
+## Acceptance Checklist — `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'TASK-ACCEPTANCE' -- .` and repository-wide searches found no FSMGen gate/owner; the June adoption tree's explicit PGEN-tool non-goal explains the omission locus, while decision `0026` identifies the missing declarative layer.
+- [x] **ADDRESSED (verified)** — `prove -Iperl -v t/1545-task-acceptance-doctrine.t` exercises the selected checker contract through 9 isolated-Git RED/GREEN/control groups and reports every expected verdict.
+- [x] **NO REGRESSION** — `prove -Iperl t/1527-project-data-locality.t t/1545-task-acceptance-doctrine.t` reports `All tests successful` and `Files=2, Tests=29`; the project-locality doctrine and the existing six-doctrine driver also pass.

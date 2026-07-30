@@ -1,0 +1,4 @@
+path_ere	description
+^(bin|perl|rust|grammars|fsm|isf|ppif|plugin|specs|svg|scripts|t|knowledge-map/scripts)/	Implementation, source, fixture, checker, and executable test paths
+^(\.githooks|\.github/workflows|doctrine/task_acceptance)/	Commit/CI enforcement and task-acceptance declaration paths
+^(Makefile|\.proverc|cpanfile|cpanfile\.snapshot|fsmgen\.spec|shell\.nix|flake\.nix|flake\.lock)$	Root build and test configuration files

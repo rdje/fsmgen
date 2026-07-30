@@ -1,0 +1,17 @@
+scope	family	match	case	pattern	description
+root_cause	fsmgen_trace	literal	sensitive	--trace-log	FSMGen trace-log command identifies the executed diagnostic path
+root_cause	fsmgen_trace	literal	sensitive	--trace-verbosity	FSMGen trace verbosity exposes the diagnostic mechanism
+root_cause	fsmgen_check	literal	sensitive	--check --json	Structured FSMGen check output locates validation failures
+root_cause	fsmgen_schedule	literal	sensitive	--emit-schedule-json	Schedule JSON exposes lowering and ownership structure
+root_cause	fsmgen_semantic	literal	sensitive	--emit-semantic-json	Normalized semantic JSON exposes resolved contract structure
+root_cause	perl_diagnostic	ere	sensitive	 at [^[:space:]]+ line [0-9]+	Perl diagnostic output names a concrete failing locus
+root_cause	git_history	literal	sensitive	git log -S	Git pickaxe identifies the change that introduced or removed a mechanism
+root_cause	hdl_compiler	ere	sensitive	(%Error-|ERROR: [^[:space:]])	Verilator or Yosys diagnostic output identifies an HDL failure
+no_regression	prove_summary	literal	sensitive	All tests successful	Prove reports the focused or broader test set successful
+no_regression	prove_summary	ere	sensitive	Files=[0-9]+, Tests=[0-9]+	Prove reports measured file and assertion counts
+no_regression	doctrine_driver	literal	sensitive	[doctrine] all doctrine checks passed	The complete registered doctrine driver is green
+no_regression	knowledge_map	literal	sensitive	knowledge-map: OK	Knowledge Map validation is green
+no_regression	readme_guard	literal	sensitive	readme-entrypoint: all README entry-point invariants hold	README stability validation is green
+no_regression	perl_syntax	ere	sensitive	 syntax OK$	Perl syntax validation reports success
+no_regression	hdl_verification	literal	sensitive	verilator_lint	FSMGen HDL verification reports the Verilator lint stage
+no_regression	hdl_verification	literal	sensitive	yosys_synthesis	FSMGen HDL verification reports the Yosys synthesis stage

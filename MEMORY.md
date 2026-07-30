@@ -5,14 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1: select declarative evidence contract`).
-- active_work_unit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2` (active).
-- current_state: TASK_ACCEPTANCE.md plus decision 0026 freeze a neutral
-  Git-index-only contract with data-only path/signature registries, fresh
-  required boxes, and box-scoped project-native evidence. No gate ships yet.
-- next_action: implement `.2` checker, FSMGen registries, and focused
-  RED/GREEN/control probes without registering the doctrine until `.3`.
-- in_flight_uncommitted: none after the contract commit; no background job.
+- latest_commit: this commit (`TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2: implement declarative acceptance checker`).
+- active_work_unit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3` (active).
+- current_state: the neutral Git-index checker, FSMGen path/signature TSVs, and
+  9-group isolated-Git probe suite now satisfy decision 0026; the gate remains
+  deliberately unregistered until public/integration closeout.
+- next_action: complete `.3`: register `TASK-ACCEPTANCE`, add the toolbox/task
+  template, and sync bootstrap/commit/mdBook/decision/fact surfaces.
+- in_flight_uncommitted: none after the checker commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -26,7 +26,7 @@ bounded current-state pointer. Git preserves its prior history.
   and leave both status files untouched. Proposed `.1` owns the later review.
 - `TASK-ACCEPTANCE` was not durably ported or backlogged by the June doctrine
   adoption; decision `0026` now owns the neutral declarative contract and
-  active `.2` owns checker/registry/probe implementation.
+  `.2` proves the checker/registries; active `.3` owns registration/integration.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
