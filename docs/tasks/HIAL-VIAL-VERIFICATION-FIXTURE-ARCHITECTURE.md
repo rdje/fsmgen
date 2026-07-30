@@ -300,4 +300,7 @@ evidence-backed handoff.
   exact-four `.ahb` alias/support/t1540 parity at 332/373/56 split 28/28;
   HIAL/VIAL remains proposed with its portable-fast/full-language/VHDL/
   mixed-language/large-design boundary unchanged.
+- `2026-07-30`: Clean `.828` behavior commit `3519cde33` activates parent
+  selector `.829`; HIAL/VIAL remains proposed and unchanged while `.829`
+  compares it with the remaining roadmap owners.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

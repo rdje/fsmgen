@@ -51,3 +51,7 @@ runtime.
 
 Clean selector commit `bc29c2e49` activates only `.828`; the alias remains
 absent and current 331/372/55 behavior is unchanged during activation.
+
+Clean behavior commit `3519cde33` activates parent selector `.829` without a
+behavior change. Current 332/373/56 split 28/28 behavior remains fixed while
+the selector chooses one exact next roadmap owner.

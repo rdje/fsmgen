@@ -11592,6 +11592,10 @@ all-assertion runtime. Current accounting is 332/373/56 split 28 `.ppif`/28
 `.ahb`. Counts above four, broader BUSY semantics, generic priority,
 HIAL/VIAL, verification generation, VHDL, portability, scale, other
 protocols/backends, and decision `0020` remain separate.
+Clean behavior commit `3519cde33` activates parent selector `.829` as
+continuity only. Accounting remains 332/373/56 split 28 `.ppif`/28 `.ahb`;
+the selector will choose exactly one smallest next owner without changing
+public behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

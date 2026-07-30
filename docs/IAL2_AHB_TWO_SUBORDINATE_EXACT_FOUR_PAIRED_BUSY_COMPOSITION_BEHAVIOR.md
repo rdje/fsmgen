@@ -42,6 +42,10 @@ runtime behavior, port, existing source byte, backend, simulator integration,
 HIAL/VIAL state, verification-generation surface, VHDL boundary, or decision
 `0020`.
 
+Clean behavior commit `3519cde33` activates no-behavior parent selector
+`.829`. The shipped 332/373/56 split 28/28 boundary and all behavior above
+remain unchanged while `.829` chooses one exact next roadmap owner.
+
 ## Exact Source Delta
 
 The 6,645-byte source is the frozen identity/requester/cardinality-only

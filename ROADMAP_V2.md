@@ -7872,6 +7872,11 @@ another simulation; t1539 remains the sole assertion-enabled runtime.
 Accounting is 332/373/56 split 28 `.ppif`/28 `.ahb`. No lower-layer repair,
 new BUSY semantics, backend, HIAL/VIAL, verification-generation, VHDL,
 portability, scale, or decision-0020 activation is included.
+Clean behavior commit `3519cde33` now activates no-behavior parent selector
+`.829`. Public accounting remains 332/373/56 split 28 `.ppif`/28 `.ahb` while
+the selector reconciles the remaining BUSY count/semantics, generic priority,
+HIAL/VIAL, verification, VHDL/portability, scale, other protocol/backend, and
+decision-0020 owners and chooses exactly one next slice.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

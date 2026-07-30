@@ -2483,6 +2483,9 @@ strict/schedule/artifact/semantic/real read-only MCP/repository-local-output/
 `--verify-hdl`/diagnostic parity and adjacent-family preservation. It adds no
 testbench or simulation; t1539 remains the sole assertion-enabled runtime.
 Current accounting is 332/373/56 split 28 `.ppif`/28 `.ahb`.
+Clean behavior commit `3519cde33` activates parent selector `.829` without a
+public behavior change. The 332/373/56 split 28/28 boundary remains fixed
+while it chooses one exact next roadmap owner.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).
