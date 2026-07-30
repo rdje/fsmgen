@@ -43,3 +43,6 @@ continuity-only and leaves all product behavior unchanged.
 Completed audit `.1` selects proposed no-behavior contract `.2` for
 unique-caller target-local masking and ambiguous-caller fail-closed handling;
 current behavior remains unchanged.
+
+Clean audit commit `e715a34c7` activates only contract `.2` without changing
+product behavior.

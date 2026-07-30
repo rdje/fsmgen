@@ -11674,6 +11674,9 @@ that bidirectional target-local rule for exactly one local caller and fail
 closed for ambiguous callers. See the
 [readiness audit](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_READINESS_AUDIT.md).
 No lowering or runtime behavior changes until a later implementation.
+Clean audit commit `e715a34c7` activates only contract `.2`. This continuity
+transition does not alter the direct path, named-drive conflict, generated
+assertions, AHB behavior, or any broader roadmap owner.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

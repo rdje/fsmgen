@@ -112,6 +112,8 @@ and diagnostic behavior per stage while proving semantic/output correctness.
 - `2026-07-30`: Named-drive priority audit `.1` selects its bounded
   unique-caller target-local contract `.2`; scale remains proposed and
   independently gated.
+- `2026-07-30`: Clean audit commit `e715a34c7` activates only that no-behavior
+  contract `.2`; the scale tree remains proposed and unchanged.
 
 ## Open Questions
 

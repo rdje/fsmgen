@@ -135,3 +135,5 @@ HDL, runtime, AHB, HIAL/VIAL, VHDL, scale, or transaction behavior.
 Completed audit `.1` selects proposed no-behavior contract `.2` for
 unique-caller target-local named-drive priority and ambiguous-caller
 fail-closed handling. Current lowering and all AHB behavior remain unchanged.
+Clean audit commit `e715a34c7` activates only contract `.2`; activation is
+continuity-only and changes no product behavior.

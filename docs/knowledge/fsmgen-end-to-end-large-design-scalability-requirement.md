@@ -30,3 +30,6 @@ boundary.
 
 The priority audit's bounded `.2` contract selection does not change this
 status or count as large-design evidence.
+
+Clean audit commit `e715a34c7` activates only that no-behavior contract; the
+scale tree remains proposed and unchanged.

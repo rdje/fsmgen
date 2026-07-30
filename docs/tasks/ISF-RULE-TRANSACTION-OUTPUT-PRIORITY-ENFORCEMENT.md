@@ -63,11 +63,11 @@ Canonical evidence is
   Commit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1: audit named-drive priority readiness`
 
 - ID: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Freeze unique-caller target-local named-drive priority plus ambiguous-caller fail-closed behavior before implementation.`
   Acceptance: `Activate only after .1 commits cleanly and selects this leaf. Freeze the first repair to local named drives with exactly one invoking transaction; preserve drive provenance while carrying explicit caller metadata into priority analysis. Apply declared rule/transaction priority in both directions and only to conflicting drive-body targets, never the whole drive request, so unrelated drive outputs and transaction execution survive. Fail closed before HDL for zero/multiple/generated-child/otherwise ambiguous caller ownership and freeze a stable diagnostic naming the rule, drive, candidate callers, target, values, and ambiguity. Keep no-priority different-value unique-caller overlap, cycles, and mixed timing fail closed; preserve current same-value fan-in/assertions. Freeze exact schedule resolution, compile-issue, provenance, normalized-semantic, SystemVerilog/Verilog/VHDL qualification, diagnostics, t1542-derived structural/assertion runtime matrix, broader preservation, docs, resource profile, same-volume cleanup, rollback, and separate .3 implementation owner. Make no product behavior change.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean audit commit e715a34c7. Activation changes continuity pointers only; the working direct-assignment path, unresolved named-drive selector behavior, tracked t1542 characterization, generated assertions, parser, scheduler, selector, generator, public sources, support, tests, reports, semantic/MCP APIs, HDL/runtime, simulator profiles, backends, protocols, HIAL/VIAL, VHDL, scale, decision 0020, and transaction behavior remain unchanged. Focused t1542 passes 3 top-level subtests/33 internal assertions; an initial combined invocation used nonexistent shorthand documentation-test names after t1542 passed, then rg resolves the exact tracked filenames and the authoritative t1518+t1256+t1414 invocation passes 3 files/22 top-level tests. Knowledge Map generation/check remains synchronized at 1,053 facts/5,409 question keys. The mdBook builds to exactly 72 files/16,433,453 bytes; both the initial same-volume repository-root render and the final canonical docs/book/book render are removed without residue. MEMORY.md is 50 lines, README.md is 2,337 lines, and .artifacts/tmp/tests is empty. Diff hygiene and all six doctrine gates pass, including project-data locality. Final canonical Stats-compatible capacity is 15,424,667,648/25,769,803,776 bytes = 14.365/24.000 GiB = 59.86%, with separate macOS kernel pressure level 1 and memory_pressure 72% free; guard occupancy is excluded from capacity truth. No behavior changes and no background job remains.`
+  Commit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.2: activate named-drive priority contract`
 
 - ID: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3`
   Status: `proposed`
@@ -78,15 +78,14 @@ Canonical evidence is
 
 ## Current Frontier
 
-Audit `.1` is complete and selects proposed no-behavior contract `.2`. The
-tracked control/reproducer plus disposable target-local candidate prove the
-unique-caller repair, while the shared-drive probe requires ambiguous callers
-to fail closed. `.2` remains pending until this audit commits cleanly; current
-lowering behavior is unchanged.
+Contract `.2` is active after clean audit commit `e715a34c7`. It must freeze
+the exact caller metadata, bidirectional per-target priority, ambiguous-caller
+diagnostic, preservation, reporting, backend qualification, and implementation
+gates proved by `.1`, without changing current lowering behavior.
 
 ## Rollback
 
-Rollback of activation restores this tree to proposed, `.1` to pending, and
-the clean selector as the resume boundary. During the audit, rollback follows
-the selected leaf contract and retains the failing assertion-enabled evidence
-until the issue is either repaired or explicitly failed closed.
+Rollback of `.2` activation restores `.2` to proposed and clean audit commit
+`e715a34c7` as the resume boundary. The tracked direct control, named-drive
+assertion failure, and shared-caller evidence remain authoritative until the
+issue is repaired or explicitly failed closed.

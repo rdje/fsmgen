@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: clean `.1` activation commit `b52e2efc6`.
-- active_work_unit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1` audit closeout.
-- current_state: t1542 proves direct assignment priority passes, named-drive overlap fails its selector assertion, and shared callers lose identity at the drive body; a disposable unique-caller target-local candidate passes `out=1 side=1`. `.1` selects proposed no-behavior contract `.2` with ambiguous callers fail closed.
-- next_action: finish gates and commit `.1`, then activate only contract `.2` from the clean audit boundary.
-- in_flight_uncommitted: `.1` fixtures/test, audit/fact, and live-doc/book synchronization; no background job.
+- latest_commit: clean `.1` audit commit `e715a34c7`.
+- active_work_unit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.2` activation.
+- current_state: `.1` is done and `.2` activation is continuity-only; t1542 still proves the direct control, named-drive assertion failure, shared-caller ambiguity, and bounded unique-caller target-local route.
+- next_action: commit activation, then freeze `.2`'s exact caller-aware target-local and ambiguous-caller fail-closed contract without changing behavior.
+- in_flight_uncommitted: `.2` activation continuity synchronization; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

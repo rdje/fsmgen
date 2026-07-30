@@ -42,3 +42,5 @@ Completed audit `.1` adds tracked t1542 proof and selects proposed contract
 `.2`: mask only conflicting named-drive targets for exactly one local
 transaction caller, and fail closed when caller ownership is ambiguous.
 Current lowering remains unchanged until implementation.
+
+Clean audit commit `e715a34c7` activates only no-behavior contract `.2`.

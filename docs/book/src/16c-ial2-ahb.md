@@ -2556,6 +2556,8 @@ shared or otherwise ambiguous drive ownership must fail closed. t1542 and a
 disposable target-local candidate prove this outside AHB; requester `2..16`
 and 332/373/56 split 28/28 remain unchanged. See the
 [protocol-neutral audit](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_READINESS_AUDIT.md).
+Clean audit commit `e715a34c7` activates only that separate no-behavior
+contract `.2`; AHB behavior and accounting remain unchanged.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

@@ -38,3 +38,6 @@ otherwise ambiguous callers. It must preserve direct assignment semantics,
 same-value assertions, rule/rule and transaction/transaction conflicts,
 storage/resource priorities, reports, semantic surfaces, backends, and all
 selector assertions. Audit `.1` changes no lowering or runtime behavior.
+
+Clean audit commit `e715a34c7` activates only contract `.2`; current lowering
+and generated behavior remain unchanged during contract selection.

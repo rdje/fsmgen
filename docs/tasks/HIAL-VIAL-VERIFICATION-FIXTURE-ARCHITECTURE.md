@@ -335,4 +335,6 @@ not pre-empt that evidence-backed correctness handoff.
 - `2026-07-30`: Named-drive priority audit `.1` selects its narrower
   unique-caller target-local contract `.2`; HIAL/VIAL remains proposed with
   all architecture and validation requirements unchanged.
+- `2026-07-30`: Clean audit commit `e715a34c7` activates only that no-behavior
+  contract `.2`; HIAL/VIAL remains proposed and unchanged during selection.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

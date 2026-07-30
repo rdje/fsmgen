@@ -141,6 +141,10 @@ Contract `.2` must freeze these semantics before implementation:
 The implementation owner remains `.3` and is not active until `.2` commits a
 complete contract.
 
+Clean audit commit `e715a34c7` activates only contract `.2`. That activation
+changes continuity pointers and leaves all behavior characterized above
+unchanged.
+
 ## Validation And Cleanup
 
 Focused t1542 passes three top-level subtests with 33 internal assertions: the

@@ -66,3 +66,6 @@ HIAL/VIAL remains proposed and independently gated.
 
 That audit now selects its bounded unique-caller target-local contract `.2`;
 the HIAL/VIAL architecture remains unchanged and proposed.
+
+Clean audit commit `e715a34c7` activates only that contract; HIAL/VIAL remains
+proposed and unchanged.

@@ -7982,6 +7982,9 @@ suppressing unrelated outputs. Contract `.2` must freeze bidirectional
 per-target masking for exactly one local transaction caller and fail closed for
 zero/multiple/generated-child/ambiguous callers before implementation `.3`.
 Current lowering and all broader roadmap behavior remain unchanged.
+Clean audit commit `e715a34c7` activates only no-behavior contract `.2`.
+Activation changes continuity pointers while the caller-aware, target-local,
+and fail-closed behavior is specified; current product behavior is unchanged.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
