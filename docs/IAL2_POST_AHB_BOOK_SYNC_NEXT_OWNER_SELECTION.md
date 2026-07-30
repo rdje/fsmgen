@@ -74,5 +74,9 @@ Clean selector commit `b4e66c067` activates only
 choice, implementation-bearing file, broader proposed horizon, and
 director-gated lane remains unchanged during activation.
 
+The selected HIR tree is now complete through clean private-disposition commit
+`24fbf3882`. Parent `.842` is active continuity-only to reconcile the next
+roadmap owner; it does not implicitly activate the proposed public builder.
+
 Rollback removes this selector record/fact and restores `.841` to active. Every
 candidate remains proposed or director-gated, and product behavior is unchanged.

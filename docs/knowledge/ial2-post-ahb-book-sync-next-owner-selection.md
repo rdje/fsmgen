@@ -32,3 +32,8 @@ until a separate clean activation commit.
 Clean selector commit `b4e66c067` activates only HIR `.2` through continuity
 changes. The source-facing boundary and every implementation choice remain
 unselected during activation.
+
+The selected HIR tree is now complete through clean private-disposition commit
+`24fbf3882`. Parent `.842` is active continuity-only to select the next exact
+roadmap owner; HIR completion does not implicitly activate the proposed public
+builder or any director-gated lane.

@@ -31265,3 +31265,20 @@ task tree and git.
   the 72-file HTML build pass; Knowledge Map passes at 1,082 facts / 5,579
   question keys; memory, diff, repository-local scratch/output cleanup, and
   all seven staged doctrine gates pass.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.842 — post-HIR selector activated
+
+- Activated only the next parent roadmap selector after clean HIR completion
+  commit `24fbf3882`.
+- Task/index, roadmap, mdBook backlog, parent-selection fact continuity,
+  Memory, and changelog are aligned. Candidate reconciliation and exact-one
+  selection remain unperformed until activation commits cleanly.
+- The proposed public builder, HIAL/VIAL, scale, MCP-write, project-document
+  lifecycle review, protocols/backends, every director-gated owner, code,
+  tests, parser, fixtures, artifacts, config, API/report/manifest/accounting,
+  HDL/runtime, and behavior remain unselected and unchanged. Both frozen
+  status files stay untouched; no separate development note is warranted.
+- Documentation audits pass at `Files=3, Tests=40`; all 36 mdBook chapters and
+  the 72-file HTML build pass; Knowledge Map passes at 1,082 facts / 5,579
+  question keys; memory, diff, repository-local scratch/output cleanup, and
+  all seven staged doctrine gates pass.

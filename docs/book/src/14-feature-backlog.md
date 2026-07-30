@@ -12036,6 +12036,10 @@ remain inactive. See the
 Clean selector commit `b4e66c067` activates only HIR `.2` continuity-only.
 The architecture boundary, first frontend/builder, golden fixture, current IR
 owners, and every product behavior remain unchanged during activation.
+The HIR tree is now complete through clean private-disposition commit
+`24fbf3882`. Parent selector `.842` is active continuity-only to choose one
+next roadmap-aligned owner; it does not implicitly activate the proposed public
+builder or any director-gated direction.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

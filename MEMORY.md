@@ -5,16 +5,16 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.8: retain private SourceHIR architecture`).
-- active_work_unit: none in `FSMGEN-HIR-ROADMAP-FRONTIER` (tree complete).
-- current_state: `.8` retains the coherent two-route SourceHIR seam as a
-  private validated architecture boundary, selects no third architecture-only
-  route, and rejects current promotion/narrowing/retirement. Decision `0031`
-  leaves public producer/projection selection to the proposed builder owner.
-- next_action: after this clean audit commit, select the next PNT-eligible
-  active frontier from `docs/TASK_TREE.md`; do not activate the proposed public
-  builder implicitly.
-- in_flight_uncommitted: none after this audit commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.842: activate post-HIR selector`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.842` (active
+  continuity-only).
+- current_state: clean HIR disposition commit `24fbf3882` closes that child
+  tree and activates parent `.842` without selecting or changing any candidate
+  or product behavior.
+- next_action: reconcile remaining eligible roadmap owners and select exactly
+  one smallest next owner; do not implicitly activate the proposed public
+  builder or any director-gated lane.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -41,8 +41,9 @@ history; this file carries only the current bounded resume state.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
 - Decisions `0028`-`0031` and the architecture/two audits/v1/v2 contract
-  records are canonical. The HIR tree is complete; public builder, HIAL/VIAL,
-  scale, MCP-write, and every director-gated owner remain inactive.
+  records are canonical. The HIR tree is complete; parent `.842` is active
+  continuity-only. Public builder, HIAL/VIAL, scale, MCP-write, and every
+  director-gated owner remain inactive.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously

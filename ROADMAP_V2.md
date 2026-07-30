@@ -8335,6 +8335,10 @@ Clean selector commit `b4e66c067` activates only
 `FSMGEN-HIR-ROADMAP-FRONTIER.2` continuity-only. The source-facing HIR shape,
 first frontend/builder, golden fixture, current IR owners, and all product
 behavior remain unchanged during activation.
+The HIR tree is now complete through clean private-disposition commit
+`24fbf3882`. Parent selector `.842` is active continuity-only to reconcile the
+remaining roadmap owners and choose exactly one next PNT-eligible direction;
+the proposed public builder and every director-gated lane remain inactive.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
