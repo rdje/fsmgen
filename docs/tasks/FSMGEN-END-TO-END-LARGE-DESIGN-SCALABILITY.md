@@ -124,6 +124,10 @@ and diagnostic behavior per stage while proving semantic/output correctness.
   graceful-failure contract unchanged.
 - `2026-07-30`: Clean selector commit `5f904d2d2` activates only the selected
   direct-VHDL audit `.1`; this scale tree remains proposed and unchanged.
+- `2026-07-30`: Direct-VHDL audit `.1` selects bounded scalar-identity and
+  unsupported-reduction fail-closed implementation `.2`. This correctness
+  result is not end-to-end capacity evidence; the scale tree remains proposed
+  with its workload, measurement, budget, and graceful-failure contract intact.
 
 ## Open Questions
 

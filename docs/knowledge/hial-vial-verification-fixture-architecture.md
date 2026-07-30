@@ -74,3 +74,8 @@ Completed named-drive contract `.2` selects SV/Verilog-backed `.3` and records
 the invalid direct-VHDL unary-reduction residue under decision `0023` plus
 proposed `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING`. That repair is required
 for truthful HIAL-to-VHDL qualification but does not activate HIAL/VIAL.
+
+The completed direct-VHDL reduction audit selects scalar identity/complement
+and unsupported-reduction rejection for proposed implementation `.2`. This is
+one bounded synthesizable HIAL backend repair; it does not select VIAL syntax,
+lowerings, simulator profiles, or architecture.

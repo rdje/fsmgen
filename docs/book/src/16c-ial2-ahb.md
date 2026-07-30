@@ -2585,6 +2585,12 @@ remain independently gated. See the
 [post-named-drive selection](../../IAL2_POST_NAMED_DRIVE_PRIORITY_NEXT_OWNER_SELECTION.md).
 Clean selector commit `5f904d2d2` activates only that separate no-behavior
 direct-VHDL audit; AHB behavior and accounting remain unchanged.
+That audit now selects scalar reduction identity/complement and deterministic
+rejection of unsupported reductions for proposed implementation `.2`. The
+result changes no AHB source, generated artifact, runtime, or 332/373/56 split
+28/28 accounting; `.2` still requires a separate clean activation and commit.
+See the
+[reduction readiness audit](../../DIRECT_VHDL_REDUCTION_EXPRESSION_READINESS_AUDIT.md).
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

@@ -29,3 +29,10 @@ Active task `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` owns the exact audit
 and repair independently from named-drive priority lowering. Parent selector
 `.831` chooses `.1`, and clean selector commit `5f904d2d2` activates that
 no-behavior audit without changing the leak or any generated output.
+
+Completed audit `.1` proves the original named-drive operand is declared
+scalar and selects proposed `.2`: positive scalar unary OR/AND/XOR becomes
+identity, complemented scalar reduction becomes VHDL `not`, and vector,
+range-slice, unresolved, compound, malformed, or residual reductions fail
+closed before emission. The leak remains present until `.2` activates and
+ships; no native vector syntax or executable-VHDL claim was selected.

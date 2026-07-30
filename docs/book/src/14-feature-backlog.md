@@ -11721,6 +11721,15 @@ clean activation commit.
 Clean selector commit `5f904d2d2` activates only the direct-VHDL audit `.1`.
 The reduction-token leak and all parser, backend, HDL, runtime, AHB, and
 broader-roadmap behavior remain unchanged during this continuity transition.
+Completed audit `.1` now selects proposed implementation `.2`. The original
+named-drive operand is a declared scalar, so positive unary OR/AND/XOR lowers
+by identity and complemented reduction lowers to VHDL `not`; static bit
+selects share that scalar rule. Vectors, range slices, unresolved or compound
+operands, malformed shapes, and residual reduction tokens must fail closed
+before emission. Public one-operand source operators remain rejected, and no
+native vector-reduction or compiler-qualification claim is made. See the
+[readiness audit](../../DIRECT_VHDL_REDUCTION_EXPRESSION_READINESS_AUDIT.md).
+This audit changes no current output; `.2` requires a clean activation commit.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
@@ -17108,10 +17117,12 @@ The current direct-VHDL expression boundary is not yet truthful for unary
 reductions: a scheduled named-drive enable can emit
 `drive_zero_en and (|drive_zero_start)`, carrying SystemVerilog syntax into
 VHDL. Decision `0023` prevents generation success from being treated as syntax
-or runtime validation. Selector `.831` therefore chooses a no-behavior audit of
-scalar/vector unary OR, AND, and XOR before any repair. The audit must select a
-semantic translation or explicit rejection; it cannot claim external compiler
-qualification because no `ghdl`, `nvc`, or `vcom` is installed.
+or runtime validation. Completed no-behavior audit `.1` selects scalar
+OR/AND/XOR identity, complemented scalar `not`, and deterministic rejection of
+vector, range, unresolved, compound, malformed, or residual reductions for
+proposed implementation `.2`. Public source arity remains unchanged. This is
+not shipped until `.2`; no native vector syntax or external compiler
+qualification is claimed because no `ghdl`, `nvc`, or `vcom` is installed.
 
 Composition VHDL now includes the bounded C3 external-RTL literal/concat top
 for `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1

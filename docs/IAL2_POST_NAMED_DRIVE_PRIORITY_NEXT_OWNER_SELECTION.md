@@ -131,3 +131,11 @@ the selected audit `.1` through continuity changes.
 Clean selector commit `5f904d2d2` activates only the selected audit `.1`.
 Activation changes continuity pointers and no parser, scheduler, backend,
 generated HDL, runtime, AHB, HIAL/VIAL, scale, or transaction behavior.
+
+Audit `.1` is now complete. It proves the original named-drive operand is a
+declared scalar and selects proposed implementation `.2`: positive scalar
+unary OR/AND/XOR is identity, complemented scalar reduction is VHDL `not`, and
+vector, range, unresolved, compound, malformed, or residual reductions fail
+closed before emission. Public source arity remains unchanged. No native
+vector-reduction or executable-VHDL qualification is claimed without a
+compiler; activation of `.2` requires the clean audit commit.

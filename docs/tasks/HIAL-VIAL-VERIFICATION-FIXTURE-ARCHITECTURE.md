@@ -349,4 +349,8 @@ pre-empt that exact invalid-output handoff.
   requirement intact.
 - `2026-07-30`: Clean selector commit `5f904d2d2` activates only the selected
   direct-VHDL audit `.1`; HIAL/VIAL remains proposed and unchanged.
+- `2026-07-30`: Direct-VHDL audit `.1` selects proposed scalar-identity and
+  unsupported-reduction fail-closed implementation `.2`. This repairs one
+  synthesizable HIAL-to-VHDL correctness seam but neither activates nor
+  narrows the broader HIAL/VIAL verification-fixture architecture.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

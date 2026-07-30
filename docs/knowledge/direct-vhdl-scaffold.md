@@ -479,7 +479,9 @@ SystemVerilog parity remain deferred or fail-closed.
 The scaffold does not yet translate or reject SystemVerilog unary reduction
 syntax in a scheduled enable expression. A named-drive probe emitted
 `drive_zero_en and (|drive_zero_start)`, so generation success is explicitly
-not a valid-VHDL claim for that shape. Decision `0023`, fact
-`direct-vhdl-reduction-expression-token-leak`, and proposed task
-`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own the exact correction; GHDL
-validation remains unavailable.
+not a valid-VHDL claim for that shape. Decision `0023` and active task
+`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own the exact correction. Its
+completed no-behavior audit `.1` selects scalar identity/complement and
+deterministic rejection of vector, range, unresolved, compound, malformed, or
+residual reductions; proposed `.2` must implement that contract before it is
+shipped. GHDL validation remains unavailable.

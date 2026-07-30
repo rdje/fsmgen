@@ -35,3 +35,9 @@ protocols/backends, and decision `0020` remain separate.
 
 Clean selector commit `5f904d2d2` activates only audit `.1`; activation is
 continuity-only and leaves product behavior unchanged.
+
+Completed audit `.1` selects proposed `.2` to lower declaration-proven scalar
+and static-bit-select reductions by identity/complement and reject vector,
+range, unresolved, compound, malformed, or residual reductions before VHDL
+emission. Public source arity and all shipped behavior remain unchanged until a
+separate clean `.2` activation and implementation.

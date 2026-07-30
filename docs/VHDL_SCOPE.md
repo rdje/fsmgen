@@ -104,10 +104,13 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   scaffold boundary: an enable expression containing SystemVerilog unary
   reduction OR is emitted as `drive_zero_en and (|drive_zero_start)` rather
   than translated or rejected. File emission is not a VHDL syntax/semantic
-  qualification for this shape. Decision `0023` and proposed task
-  `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own the separate bounded audit;
-  the named-drive priority implementation remains SV/Verilog-qualified and
-  must not claim VHDL validity.
+  qualification for this shape. Completed no-behavior audit
+  `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1` proves that operand is scalar
+  and selects scalar unary OR/AND/XOR identity, complemented scalar `not`, and
+  deterministic rejection of vector, range, unresolved, compound, malformed,
+  or residual reductions. That contract is not shipped yet: proposed `.2`
+  owns implementation after a clean activation commit. Named-drive priority
+  therefore remains SV/Verilog-qualified and must not claim VHDL validity.
 - `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5` selected no VHDL-oriented
   verification artifact. The current VHDL path is synthesizable scaffold-only,
   the external validation contract remains SystemVerilog-only, and

@@ -37,3 +37,8 @@ scale tree remains proposed and unchanged.
 Completed contract `.2` selects bounded priority implementation `.3` and
 separately records a direct-VHDL expression defect. Neither is large-design
 capacity evidence; the scale tree remains independently proposed.
+
+The completed direct-VHDL reduction audit selects a bounded scalar repair and
+unsupported-reduction rejection for proposed implementation `.2`. It supplies
+backend correctness evidence only, not an end-to-end scalability result; the
+large-design tree remains proposed.

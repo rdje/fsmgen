@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: clean `.831` selector commit `5f904d2d2`.
-- active_work_unit: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1` activation.
-- current_state: `.831` is done and `.1` activation is continuity-only; the direct-VHDL unary-reduction leak and all generated-output behavior remain unchanged.
-- next_action: commit activation, then execute `.1`'s scalar/vector OR/AND/XOR width/context audit and select exact translation or deterministic rejection.
-- in_flight_uncommitted: `.1` activation continuity synchronization; no background job.
+- latest_commit: this commit (`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1: select scalar reduction boundary`).
+- active_work_unit: none; `.1` is done and proposed `.2` awaits clean activation.
+- current_state: `.1` selects scalar reduction identity/complement and deterministic rejection of vector/range/unresolved/compound/malformed reductions; product behavior is unchanged.
+- next_action: commit the audit, then cleanly activate proposed implementation `.2` and ship the selected direct-VHDL contract.
+- in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

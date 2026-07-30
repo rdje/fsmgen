@@ -8033,6 +8033,16 @@ Clean selector commit `5f904d2d2` activates only
 `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1`. This continuity transition
 changes no backend or generated-output behavior; the exact unary-reduction
 leak remains the active audit evidence, and all broader owners remain separate.
+Audit `.1` selects proposed implementation `.2` without changing behavior.
+The tracked named-drive operand is a declared scalar, so unary OR/AND/XOR is
+scalar identity and complemented reduction is scalar `not`; static bit selects
+share that contract. Declared vectors, range slices, unresolved or compound
+operands, malformed shapes, and any residual unary-reduction token must instead
+fail closed before VHDL emission. Public one-operand source operators remain
+rejected. With no authoritative VHDL compiler installed, the audit deliberately
+does not select native vector-reduction syntax. See
+`docs/DIRECT_VHDL_REDUCTION_EXPRESSION_READINESS_AUDIT.md`. Implementation
+requires a separate clean activation commit.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
