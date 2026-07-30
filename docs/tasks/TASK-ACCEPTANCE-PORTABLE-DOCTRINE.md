@@ -80,14 +80,14 @@ project-native evidence signatures. No external file was modified or copied.
   Children: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1`, `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2`, `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3`
 
 - ID: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1`
-  Status: `active`
+  Status: `done`
   Goal: `Audit the source discipline and select the neutral registry/checker contract.`
   Acceptance: `Record an evidence-backed decision for data-only project-declared signature families, staged-change and task-leaf matching, box-scoped checklist semantics, fail-closed validation, probe obligations, and honest limits without changing enforcement code.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `TASK_ACCEPTANCE.md and decision 0026 select two data-only TSV declarations (staged implementation-path EREs plus scoped evidence signatures), Git-index-only matching, fresh changed box headers, one-file checklist ownership, box-scoped root-cause/no-regression evidence, fail-closed validation, repository-local probes, calibration rules, adoption steps, and honest enforcement limits. Repository/all-history absence and read-only source-discipline evidence are recorded without importing external tokens. Knowledge Map generation/check, docs relative paths, memory architecture, full doctrines, mdBook, and diff hygiene pass; no enforcement or product behavior changes.`
+  Commit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1: select declarative evidence contract`
 
 - ID: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the neutral checker, FSMGen registry, and focused RED/GREEN/control probes.`
   Acceptance: `The data-driven checker and registry satisfy the selected contract, probes cover the failure and success matrix, existing doctrines remain green, and no product behavior changes.`
   Verification: `pending activation`
@@ -104,8 +104,8 @@ project-native evidence signatures. No external file was modified or copied.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1` | `active` | The neutral data contract must be selected before any checker or FSMGen token registry is written. |
-| 2 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2` | `proposed` | Implement only after `.1` freezes the portable contract. |
+| 1 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1` | `done` | Decision 0026 and TASK_ACCEPTANCE.md freeze the neutral contract. |
+| 2 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2` | `active` | Implement the selected data-driven checker, FSMGen registries, and focused probes. |
 | 3 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3` | `proposed` | Integrate only after probes prove the checker and registry. |
 
 ## Decisions
@@ -117,16 +117,17 @@ project-native evidence signatures. No external file was modified or copied.
   PGEN-named tool regexes with a project-declared, data-only registry.
 - `2026-07-30`: Keep the source-project inspection read-only and same-volume;
   derive a neutral design rather than copying external project data.
+- `2026-07-30`: Use two TSV registries: path EREs and scoped evidence
+  signatures with literal/ERE plus explicit case modes. Never source config as
+  shell.
+- `2026-07-30`: Require all hard-gated box headers to be fresh in the staged
+  diff and read checklist content from the index, closing stale-checklist and
+  unstaged-worktree ambiguity.
 
 ## Open Questions
 
-- Which data-only schema gives reviewers precise literal/regex control without
-  turning the registry into executable shell configuration? Owned by `.1`.
 - Which FSMGen-native tool-output tokens are narrow enough to prove evidence
-  shape without matching ordinary prose? Owned by `.1` and corpus-calibrated
-  in `.2`.
-- Should configured change scope use path prefixes, extended regexes, or both?
-  Owned by `.1`; it does not block the selector commit.
+  shape without matching ordinary prose? Corpus-calibrated in `.2`.
 
 ## Blockers
 

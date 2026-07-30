@@ -30444,3 +30444,17 @@ task tree and git.
 - This selector changes no doctrine enforcement or product behavior. Focused
   doctrine, Memory, Knowledge Map, relative-path, and diff gates remain the
   verification boundary before the selector commit.
+
+### TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1 — declarative evidence contract selected
+
+- Added project-neutral `TASK_ACCEPTANCE.md` and decision `0026`: a neutral
+  checker reads data-only `change_paths.tsv` plus scoped
+  `evidence_signatures.tsv` rather than embedding PGEN or FSMGen tool names.
+- Matching code slices must carry fresh checked ROOT CAUSE, ADDRESSED, and NO
+  REGRESSION boxes in one staged task file. Root-cause/no-regression signatures
+  are box-scoped, all content comes from the Git index, and an old checklist
+  cannot satisfy later work merely because its task file changed.
+- Added the canonical Knowledge Map fact and activated `.2` for checker,
+  FSMGen-registry, and probe implementation. No enforcement or product behavior
+  changes in this contract slice; no development-note entry is warranted
+  because the architecture rationale is canonical in decision `0026`.

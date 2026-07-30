@@ -5,14 +5,14 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1: select neutral acceptance design`).
-- active_work_unit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1` (active).
-- current_state: an exact three-leaf tree now owns the previously missing
-  neutral project-declared `TASK-ACCEPTANCE` contract, checker/probes, and
-  doctrine/public integration. No enforcement or product behavior changed.
-- next_action: complete `.1` by selecting and recording the data-only registry,
-  staged-change matching, box-scoped checklist, and fail-closed contract.
-- in_flight_uncommitted: none after the selector commit; no background job.
+- latest_commit: this commit (`TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1: select declarative evidence contract`).
+- active_work_unit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2` (active).
+- current_state: TASK_ACCEPTANCE.md plus decision 0026 freeze a neutral
+  Git-index-only contract with data-only path/signature registries, fresh
+  required boxes, and box-scoped project-native evidence. No gate ships yet.
+- next_action: implement `.2` checker, FSMGen registries, and focused
+  RED/GREEN/control probes without registering the doctrine until `.3`.
+- in_flight_uncommitted: none after the contract commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -25,8 +25,8 @@ bounded current-state pointer. Git preserves its prior history.
   `CHANGES.md` every slice, update `DEVELOPMENT_NOTES.md` only when warranted,
   and leave both status files untouched. Proposed `.1` owns the later review.
 - `TASK-ACCEPTANCE` was not durably ported or backlogged by the June doctrine
-  adoption; active `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1` now owns the neutral
-  project-declared signature design before any enforcement code changes.
+  adoption; decision `0026` now owns the neutral declarative contract and
+  active `.2` owns checker/registry/probe implementation.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
