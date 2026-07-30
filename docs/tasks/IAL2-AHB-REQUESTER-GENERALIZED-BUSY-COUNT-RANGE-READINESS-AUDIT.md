@@ -91,8 +91,8 @@ continuity pointers only; all public and generated behavior remains unchanged.
 Audit `.1` selected literal `2..16`; completed contract `.2` froze exact
 admission, diagnostics, numeric residue, verification, preservation, and
 rollback. Implementation `.3` now ships that contract without count-specific
-public fixtures or support entries. Parent selector `.830` is proposed for
-activation only after the clean `.3` behavior commit.
+public fixtures or support entries. Clean behavior commit `2f64611ca`
+activates parent selector `.830` without changing shipped behavior.
 
 ## Decisions
 
@@ -113,8 +113,8 @@ activation only after the clean `.3` behavior commit.
   fixture. Verification review expanded the contract-time locality repair to
   all eight touched requester generic/profile tests and subprocess temp
   configuration in the four paired generic/profile tests.
-- `2026-07-30`: Propose parent selector `.830` as the next clean-boundary
-  owner; do not activate it until this behavior commit is clean.
+- `2026-07-30`: Clean behavior commit `2f64611ca` activates parent selector
+  `.830`; activation changes continuity only.
 
 ## Rollback
 

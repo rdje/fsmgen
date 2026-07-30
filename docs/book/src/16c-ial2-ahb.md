@@ -2535,6 +2535,9 @@ exact-one-through-four requester generic/profile tests now use explicit
 repository-local workspaces and subprocess temp roots; the four paired
 generic/profile tests configure those subprocess roots too. See the
 [shipped behavior](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_BEHAVIOR.md).
+Clean behavior commit `2f64611ca` activates parent selector `.830` without a
+public behavior change. Canonical decimal `2..16`, t1541 proof, existing
+source bytes, and 332/373/56 split 28/28 remain current during selection.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

@@ -5875,10 +5875,10 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.829: select generalized AHB BUSY count audit`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.830`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the next exact roadmap-aligned owner after generalized literal AHB requester BUSY-count shipment.`
   Acceptance: `Activate only after the clean IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.3 behavior commit. Reconcile canonical decimal requester BUSY counts 2..16, absence exact-one, exact-one-through-four checked-in requester and paired generic/profile sources, unchanged 332/373/56 split 28/28 accounting, focused t1541 5/8/16 assertion runtime, reports/residue/diagnostics/artifacts/semantic/read-only-MCP/verifier surfaces, same-volume verification migration, roadmap, mdBook, Knowledge Map, and relevant decisions. Compare counts above 16 against symbolic/policy/runtime/random count selection, multiple insertion points, bus-BUSY status, burst/signal/topology owners, generic rule/transaction priority, HIAL/VIAL and verification generation, VHDL/portability, end-to-end large-design scalability, other protocols/backends, and decision 0020. Choose exactly one smallest evidence-backed next owner, freeze ownership/validation/rollback, and make no behavior change. Preserve event-capable compiled Verilator as the portable-fast supported-subset profile separately from a qualified full-language/SystemVerilog-UVM authority, with VHDL and mixed-language qualification independent. Use repository-derived same-volume workspaces, authorized host100/process4096, exact Stats-compatible capacity plus separate kernel pressure, exact cleanup, focused/broader gates, and COMMIT.md.`
-  Verification: `pending activation after clean generalized-count behavior commit`
+  Verification: `Activated only after clean generalized-count behavior commit 2f64611ca. Activation changes continuity pointers only; canonical decimal requester busy-beats 2..16, absence exact-one, exact-one-through-four public source bytes, focused t1541 assertion/semantic/MCP/verifier proof, 332/373/56 split 28/28 accounting, parser, generator, support, reports, artifacts, HDL/runtime, simulator profiles, backends, protocols, HIAL/VIAL, VHDL, verification generation, portability, scale, decision 0020, and transaction behavior remain unchanged. Focused t1518+t1256+t1414 pass 3 files/22 tests. Knowledge Map generation/check passes at 1,051 facts/5,395 question keys. The mdBook builds under authorized host100/process4096 to exactly 72 files/16,419,135 bytes and the exact render is removed. MEMORY.md is 60 lines, README.md is 2,335 lines, .artifacts/tmp/tests is empty, and only the pre-existing 491-byte xcrun_db cache contains data. Diff hygiene, memory architecture, and all six doctrine gates pass, including project-data locality. Final canonical Stats-compatible capacity is 16,419,323,904/25,769,803,776 bytes = 15.292/24.000 GiB = 63.72%, with separate macOS kernel pressure level 1 and memory_pressure 69% free; guard occupancy is excluded from capacity truth. The selector is active to compare exactly the owners frozen in its acceptance contract and no background job remains.`
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.830: select post generalized AHB BUSY count owner`
 
 The child selected by `.826` is complete through `.3`, and parent `.828` now
@@ -5918,8 +5918,8 @@ Implementation `.3` now ships canonical decimal requester `busy-beats` values
 `2..16` through the existing width-generic qualified-retirement lowerer. It
 adds no per-count public fixture or support entry, keeps 332/373/56 split
 28/28, and adds focused t1541 boundary/MCP/verifier plus seven all-assertion
-5/8/16 runtime scenarios. Proposed parent selector `.830` must activate only
-after the clean `.3` behavior commit.
+5/8/16 runtime scenarios. Clean behavior commit `2f64611ca` now activates
+parent selector `.830`; this activation changes continuity only.
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25

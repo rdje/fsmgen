@@ -145,3 +145,6 @@ through the selected lowerer/test-only boundary, adds focused t1541 rather
 than one fixture per count, and preserves 332/373/56 split 28/28. Proposed
 parent selector `.830` is the next clean-boundary owner; every broader owner
 compared here remains independent until that selector executes.
+
+Clean behavior commit `2f64611ca` activates `.830`; this is a continuity-only
+transition with no change to the selected generalized-count shipment.

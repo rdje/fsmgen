@@ -62,3 +62,6 @@ accounting remain unchanged.
 Implementation `.3` now ships the selected canonical decimal `2..16` range
 with t1541 assertion/semantic/MCP/verifier proof and unchanged 332/373/56 split
 28/28. Proposed parent selector `.830` owns the next clean-boundary comparison.
+
+Clean behavior commit `2f64611ca` activates `.830` without changing public or
+generated behavior.

@@ -7948,6 +7948,11 @@ paired generic/profile tests. Counts above 16 and every broader BUSY policy,
 HIAL/VIAL, VHDL/portability, scale, priority, protocol/backend, and
 decision-0020 owner remain separate. Proposed parent selector `.830` is the
 next clean-boundary owner after the `.3` behavior commit.
+Clean generalized-count behavior commit `2f64611ca` activates parent selector
+`.830`. Activation changes continuity pointers only: canonical decimal
+`busy-beats` `2..16`, t1541 proof, exact-one-through-four public source bytes,
+332/373/56 split 28/28 accounting, and all broader owner boundaries remain
+unchanged while the selector performs its comparison.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

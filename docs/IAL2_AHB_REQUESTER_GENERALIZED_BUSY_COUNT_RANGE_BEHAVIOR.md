@@ -141,3 +141,8 @@ Rollback restores the three AhbRequester admission/static-rule/residue regions
 to literal `2..4`, restores affected report/diagnostic expectations, removes
 t1541 and its generic testbench, and retains every existing public source and
 support entry. The same-volume test migrations are independently safe to keep.
+
+Clean behavior commit `2f64611ca` activates parent selector `.830` as a
+continuity-only transition. Shipped `2..16` behavior, t1541 proof, public
+source bytes, support accounting, and every deferred boundary remain
+unchanged during selection.

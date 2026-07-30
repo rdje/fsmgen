@@ -5,10 +5,10 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this generalized-count `.3` behavior commit, activated from clean commit `bb5f35ae8`.
-- active_work_unit: none after this commit; proposed parent selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.830` is next.
-- current_state: `.3` ships canonical decimal 2..16 admission, numeric residue, t1541 5/8/16 assertion/MCP/verifier proof, same-volume touched verification, and unchanged 332/373/56 split 28/28.
-- next_action: after verifying this behavior commit is clean, activate only parent selector `.830`, commit that activation, then execute its no-behavior next-owner comparison.
+- latest_commit: clean generalized-count `.3` behavior commit `2f64611ca`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.830`.
+- current_state: `.830` activation is continuity-only; shipped canonical decimal 2..16, t1541 proof, same-volume verification, and 332/373/56 split 28/28 remain unchanged.
+- next_action: execute `.830`'s exact no-behavior post-generalized-count owner comparison and select one smallest roadmap-aligned next owner.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -35,7 +35,7 @@ bounded current-state pointer. Git preserves its prior history.
   28/28. `.829` now selects a reusable finite literal-count readiness audit;
   audit `.1` proved bounded literal `2..16` readiness; contract `.2` froze one
   lowerer/test-only implementation with no per-count public fixture. Completed
-  `.3` ships it with t1541; `.830` is proposed next and decision `0020` stays separate.
+  `.3` ships it with t1541; `.830` is active and decision `0020` stays separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and

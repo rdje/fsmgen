@@ -100,6 +100,9 @@ and diagnostic behavior per stage while proving semantic/output correctness.
   correctness/expressiveness slice, not end-to-end scale evidence. The
   large-design tree remains proposed for independent comparison by parent
   selector `.830` after the generalized-count behavior commit.
+- `2026-07-30`: Clean generalized-count behavior commit `2f64611ca` activates
+  parent selector `.830`; the scale tree remains proposed and unchanged while
+  `.830` compares it with the other exact owners.
 
 ## Open Questions
 

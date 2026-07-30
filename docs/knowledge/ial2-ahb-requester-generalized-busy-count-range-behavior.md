@@ -38,3 +38,6 @@ Focused runs leave `.artifacts/tmp/tests` empty.
 Counts above 16, symbolic/policy/runtime/random count selection, multiple
 insertion points, generic priority, HIAL/VIAL, VHDL, scale, and decision `0020`
 remain separate.
+
+Clean behavior commit `2f64611ca` activates no-behavior parent selector `.830`;
+current behavior and 332/373/56 split 28/28 accounting remain unchanged.

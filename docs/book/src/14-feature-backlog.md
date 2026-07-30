@@ -11645,6 +11645,9 @@ repository-local workspaces and subprocess temp storage; the four exact-four
 paired generic/profile tests configure repository-local subprocess temp roots.
 See the
 [shipped behavior](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_BEHAVIOR.md).
+Clean behavior commit `2f64611ca` activates no-behavior parent selector
+`.830`; public `2..16` behavior and 332/373/56 split 28/28 remain unchanged
+while it selects one next roadmap owner.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

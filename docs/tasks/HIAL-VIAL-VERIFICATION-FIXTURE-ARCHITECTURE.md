@@ -324,4 +324,7 @@ evidence-backed handoff.
   332/373/56 split 28/28. It generates no verification HDL and does not
   activate or narrow HIAL/VIAL; proposed parent selector `.830` must compare
   this architecture independently after the clean behavior commit.
+- `2026-07-30`: Clean generalized-count behavior commit `2f64611ca` activates
+  parent selector `.830`; HIAL/VIAL remains proposed and unchanged while the
+  selector performs its independent comparison.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.
