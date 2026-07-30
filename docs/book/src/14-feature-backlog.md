@@ -12050,6 +12050,10 @@ node integrity. HIAL/VIAL remains the strongest later product-architecture
 candidate; the public builder, scale, MCP-write, transaction layering, and
 every director-gated direction remain inactive. See the
 [selection record](../../IAL2_POST_SOURCE_HIR_NEXT_OWNER_SELECTION.md).
+Clean selector commit `bd1ef6765` activates only `.843` through continuity
+changes. The exact node/status drift, future integrity check, all product
+surfaces, and every broader architecture candidate remain unchanged during
+activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

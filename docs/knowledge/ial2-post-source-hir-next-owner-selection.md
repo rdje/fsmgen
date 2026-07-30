@@ -30,5 +30,6 @@ Private SourceHIR completion does not implicitly activate the public builder.
 Scale, MCP-write, protocols/backends, simulator profiles, lifecycle review,
 decision `0020`, and every director-gated owner remain unchanged.
 
-The selected `.843` leaf remains proposed until a separate clean activation.
-This selector changes no product behavior.
+Clean selector commit `bd1ef6765` activates only `.843` through a separate
+continuity transition. The selected repair remains unimplemented during
+activation, and no product behavior changes.

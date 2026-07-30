@@ -31303,3 +31303,18 @@ task tree and git.
   the 72-file / 16,659,112-byte HTML build pass; Knowledge Map generation
   writes 1,083 facts / 5,584 keys; memory, diff, repository-local cleanup, and
   all staged doctrine gates complete the selector closeout.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.843 — live task-ledger repair activated
+
+- Activated only the exact authoritative-node enumeration/resolved-blocker
+  repair selected by clean `.842` commit `bd1ef6765`.
+- Task/index, selector record/fact, roadmap, mdBook backlog, Memory, changelog,
+  and regenerated Knowledge Map continuity are aligned.
+- The `.633` omission, `.705` live status, integrity-check design/code/tests/
+  doctrine registration, product surfaces, broader architecture candidates,
+  director gates, and both frozen status files remain unchanged until this
+  activation commits cleanly; no separate development note is warranted.
+- Documentation audits pass at `Files=3, Tests=40`; all 36 mdBook chapters and
+  the 72-file / 16,660,600-byte HTML build pass; Knowledge Map passes at 1,083
+  facts / 5,584 keys; memory, diff, repository-local cleanup, and all seven
+  staged doctrine gates complete the activation closeout.

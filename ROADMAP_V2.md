@@ -8349,6 +8349,10 @@ activation. HIAL/VIAL remains the strongest later product candidate; public
 builder, scale, MCP-write, protocols/backends, simulator profiles, lifecycle
 review, decision `0020`, and every director-gated lane remain inactive. See
 `docs/IAL2_POST_SOURCE_HIR_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `bd1ef6765` activates only `.843` through a separate
+continuity transition. The `.633` child-enumeration omission, `.705` live
+status, integrity-check implementation, all product surfaces, and every
+broader architecture candidate remain unchanged during activation.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

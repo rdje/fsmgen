@@ -77,3 +77,7 @@ HTML book builds to 72 files / 16,659,112 bytes and is removed without residue;
 Knowledge Map generation writes 1,083 facts / 5,584 question keys. Memory,
 diff, generated-map, staged-index, and full-doctrine results are recorded in
 the owning task node and commit workflow.
+
+Clean selector commit `bd1ef6765` activates only `.843` through a separate
+continuity transition. The exact ledger repair and mechanical protection stay
+unimplemented until that activation commits cleanly.

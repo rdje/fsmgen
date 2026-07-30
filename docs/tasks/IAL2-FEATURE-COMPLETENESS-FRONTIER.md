@@ -5966,11 +5966,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.842: select live task-ledger repair`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.843`
-  Status: `proposed`
+  Status: `active`
   Goal: `Reconcile the active IAL2 task ledger and mechanically lock direct-child node integrity.`
   Acceptance: `Activate only after the clean .842 selector commit. Reproduce the exact authoritative census of 842 pre-repair numbered nodes versus 840 root child references, with only .633 and .842 missing, and the sole blocked .705 node whose named source-reference condition is resolved by .706-.709. Preserve the historical blocker outcome while changing .705 to the correct live terminal state and recording its resolution evidence; restore complete, unique direct-child enumeration including the new .843 owner; add the smallest repository-native check that fails on duplicate node IDs, missing/extra direct-child references, unknown statuses, or malformed active-tree root/leaf relationships; integrate it with the existing doctrine workflow and focused regression surface without inventing a second task-tree parser where an existing helper can be reused. Keep optional historical views historical under decision 0019. Preserve public product behavior, roadmap architecture priority, 229/228/19 import baseline, 332/373/56 split 28/28 accounting, all proposed architecture trees, director gates, and frozen status files. Update task/index, docs, mdBook, Knowledge Map, Memory, changelog, and exact rollback; run focused, documentation, mdBook, Knowledge Map, memory, diff, task-acceptance, and full doctrine gates from repository-derived same-volume paths.`
-  Verification: `pending activation`
-  Commit: `pending activation`
+  Verification: `Activated only after clean .842 selector commit bd1ef6765. Activation changes task/index, selector record/fact continuity, roadmap, mdBook backlog, Memory, changelog, and regenerated Knowledge Map only. The exact .633 child-enumeration omission and stale .705 blocked status remain unchanged; integrity-check design/code/tests/doctrine registration, product source, parser/generator, support/accounting, artifacts, API/report/manifest, HDL/runtime, protocols/backends, architecture candidates, director gates, and frozen status files remain unchanged until this activation commits cleanly. Feature-backlog, live-book-path, and relative-path audits pass at Files=3, Tests=40; all 36 mdBook chapters test and the 72-file / 16,660,600-byte HTML build passes; Knowledge Map generation/check passes at 1083 facts / 5584 question keys; memory, diff, repository-local output cleanup, and all seven staged doctrine gates complete the continuity closeout.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.843: activate live task-ledger repair`
 
 Parent selector `.832` is complete and handed off to
 `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`. That child now ships the selected
