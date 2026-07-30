@@ -8128,11 +8128,12 @@ continuity-only. The aligned VHDL book boundary and every shipped behavior
 remain unchanged while `.834` reconciles the remaining directions and selects
 exactly one next owner.
 Completed `.834` selects proposed no-behavior
-`TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1`. Active task-tree guidance still
-requires writes to or calls canonical the four decision-`0007`-frozen legacy
-blobs, despite `COMMIT.md`, bootstrap instructions, enforcement, and current
-practice using the layered memory model. The child will repair only workflow
-prose and preserve decision `0019`'s node-list/frontier rule. Import-tree
+`TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1`. At selection time, active
+task-tree guidance still required writes to or called canonical the four
+decision-`0007`-frozen legacy blobs, despite `COMMIT.md`, bootstrap
+instructions, enforcement, and current practice using the layered memory
+model. The child was scoped to repair only workflow prose and preserve decision
+`0019`'s node-list/frontier rule. Import-tree
 refresh, HIAL/VIAL, scale, public-test drift, other protocols/backends,
 simulator profiles, and decision `0020` remain separate. See
 `docs/IAL2_POST_VHDL_BOOK_SYNC_NEXT_OWNER_SELECTION.md`.
@@ -8146,6 +8147,10 @@ The reusable template retained its already-correct decision-`0019`
 historical-view comments and needed only its stale acceptance phrase repaired.
 All four frozen blobs remain untouched, and no product behavior changes. The
 next clean action returns to a new parent selector.
+Clean workflow completion commit `771d2918c` activates parent selector `.835`
+continuity-only. The shipped workflow repair and every product behavior remain
+unchanged while `.835` reconciles the remaining directions and selects exactly
+one next owner.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

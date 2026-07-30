@@ -33,4 +33,6 @@ Clean selector commit `dc055558c` activates only the selected workflow leaf
 through continuity changes. The stale guidance, all four frozen blobs, and
 every product behavior remain unchanged during activation.
 
-The workflow leaf subsequently completes without modifying any frozen blob.
+The workflow leaf subsequently completes through clean commit `771d2918c`
+without modifying any frozen blob. That clean completion activates parent
+selector `.835` continuity-only; it does not select or modify the next child.

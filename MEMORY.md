@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1: align workflow memory layers`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER` (next selector pending).
-- current_state: workflow child `.1` is complete. Active task-tree guidance now uses the decision-`0007` memory layers, preserves decision `0019`, and leaves all four frozen blobs untouched.
-- next_action: activate one new parent selector leaf and reconcile the remaining roadmap directions before selecting exactly one next owner.
-- in_flight_uncommitted: none after this completion commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.835: activate post workflow selector`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.835` (continuity-only activation).
+- current_state: clean workflow commit `771d2918c` completes the decision-`0007` layer repair. `.835` is active continuity-only; no next child is selected or modified during activation.
+- next_action: reconcile remaining roadmap directions and select exactly one smallest evidence-backed owner without changing its child.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

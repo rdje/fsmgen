@@ -95,6 +95,9 @@ historical-view comments were already correct; only its stale acceptance
 phrase changed. All four frozen blobs remain untouched, and no product
 behavior changes.
 
+Clean workflow completion commit `771d2918c` activates parent selector `.835`
+continuity-only. No next candidate is selected or modified during activation.
+
 ## Closeout Evidence
 
 - Book/status/path truth passes 5 files/329 tests. Knowledge Map generation and
