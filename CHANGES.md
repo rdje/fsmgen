@@ -31153,6 +31153,9 @@ task tree and git.
   remain inactive; both frozen status files stay untouched and no separate
   development note is warranted for continuity-only activation.
 - Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
+  and the 72-file HTML build pass; Knowledge Map passes at 1,080 facts / 5,568
+  keys; memory, diff, output cleanup, and all seven staged doctrine gates pass.
+- Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
   and the 72-file HTML build pass; Knowledge Map passes at 1,079 facts / 5,563
   keys; memory, diff, output cleanup, and all seven staged doctrine gates pass.
 
@@ -31185,3 +31188,15 @@ task tree and git.
   and the 72-file HTML build pass; Knowledge Map passes at 1,080 facts / 5,568
   keys; memory, diff, repository-local scratch cleanup, and all seven staged
   doctrine gates pass.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.7 — private SourceHIR IAL1 implementation activated
+
+- Activated only the exact private version-2 implementation leaf after clean
+  contract commit `f42fb033d`.
+- Task/index, contract/decision/fact continuity, roadmap, mdBook backlog,
+  Memory, and changelog are aligned. SourceHIR/Builder code, new ISF renderer,
+  t1548, parser, fixture, artifacts, public surfaces, HDL/runtime, and behavior
+  remain unchanged until activation commits cleanly.
+- Public builder, HIAL/VIAL, scale, MCP-write, and every director-gated owner
+  remain inactive; both frozen status files stay untouched and no separate
+  development note is warranted for continuity-only activation.

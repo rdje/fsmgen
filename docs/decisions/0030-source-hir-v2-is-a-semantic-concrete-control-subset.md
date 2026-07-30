@@ -33,6 +33,9 @@ The exact schema, APIs, validation, provenance, diagnostics, source map,
 golden hashes, test owner, and deferrals live in
 `docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md`.
 
+Clean decision commit `f42fb033d` activates only the separate `.7` private
+implementation leaf; activation changes none of the selected code or behavior.
+
 ## Consequences
 
 - Version 1 remains unchanged and private.

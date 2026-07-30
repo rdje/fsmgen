@@ -36,4 +36,5 @@ public surface. Audit `.5` now retains the boundary privately through one
 concrete-control-to-IAL1 proof; decision `0029` owns that refinement and keeps
 public builder selection separate. Decision `0030` now selects that proof as a
 semantic version-2 concrete-control subset rendered to the existing phase-test
-IAL1 path; raw ISF and parser-AST storage remain rejected.
+IAL1 path; raw ISF and parser-AST storage remain rejected. Clean contract
+commit `f42fb033d` activates only its private implementation leaf.

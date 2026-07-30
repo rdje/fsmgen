@@ -33,4 +33,5 @@ Post-prototype audit `.5` keeps the implementation private: its healthy
 equivalence proof rejects retirement, while one test producer, one schema, and
 only an IAL2 renderer reject immediate public promotion. The next design leaf
 now selects semantic SourceHIR version 2 and a phase-test IAL1 golden. The
-version-1 implementation remains unchanged while `.7` stays proposed.
+version-1 implementation remains unchanged while clean v2-contract commit
+`f42fb033d` activates `.7` continuity-only.

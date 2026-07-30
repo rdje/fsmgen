@@ -32,4 +32,4 @@ evidence for reconsideration, not authorization to publish an API.
 
 Leaf `.6` selects the exact second route as semantic SourceHIR version 2 with
 byte-identical `isf/phase_test.isf` rendering and existing ISF adapter/scheduler
-re-entry. Implementation remains proposed under `.7`.
+re-entry. Clean contract commit `f42fb033d` activates `.7` continuity-only.

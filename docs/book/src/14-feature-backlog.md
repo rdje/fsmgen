@@ -85,7 +85,7 @@ changes.
 
 ### Source-Facing FSMGEN HIR
 
-Status: private version-2 concrete-control contract selected; implementation next.
+Status: private version-2 concrete-control implementation active.
 
 Goal: give future high-level language frontends and builder APIs one checked
 FSMGEN-native semantic target above IAL2 and IAL1. The intended architecture is
@@ -124,8 +124,8 @@ clock/reset, ordered typed ports, one parameter-to-output named drive, and one
 linear trigger/phase/completion transaction. It must reproduce the existing
 17-line/395-byte `isf/phase_test.isf`, re-enter the shipped ISF adapter and
 scheduler, and preserve the one-file 45-line/484-byte IAL0 result. It stores no
-raw ISF form, arbitrary expression, or parser AST. Separate proposed leaves
-implement it and then re-audit promotion. Public host-language choice,
+raw ISF form, arbitrary expression, or parser AST. The active private leaf
+implements it; a separate proposed leaf then re-audits promotion. Public host-language choice,
 packaging, versioning, and compatibility remain owned by the separate proposed
 builder frontier.
 

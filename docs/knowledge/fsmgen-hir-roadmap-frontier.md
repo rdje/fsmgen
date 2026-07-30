@@ -41,5 +41,5 @@ three-package/t1547 valid-ready path. Audit `.5` keeps that healthy path
 private because one test producer, one schema, and only the IAL2 route are not
 enough to freeze a public contract. Leaf `.6` selects semantic SourceHIR
 version 2 with canonical `isf/phase_test.isf` rendering through the existing
-ISF adapter/scheduler. Proposed `.7` implements it and `.8` re-audits
-promotion.
+ISF adapter/scheduler. Clean contract commit `f42fb033d` activates `.7`
+continuity-only to implement it; `.8` re-audits promotion.

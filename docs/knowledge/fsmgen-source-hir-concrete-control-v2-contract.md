@@ -29,3 +29,4 @@ current IAL0 oracle is one 45-line, 484-byte `phase_test.fsm` with SHA-256
 Implementation remains private under `.7` using the existing SourceHIR object
 and builder, new `FSM::IR::SourceHIRISFRenderer`, and focused t1548. Version 1
 and every public CLI/report/manifest/accounting surface remain unchanged.
+Clean contract commit `f42fb033d` activates `.7` continuity-only.

@@ -35,3 +35,5 @@ selected. Audit `.5` retains this version-1 path privately and selects a
 separate concrete-control-to-IAL1 design leaf before promotion is
 reconsidered. Leaf `.6` now selects additive discriminated schema version 2
 for that route; version 1 stays unchanged.
+Clean version-2 contract commit `f42fb033d` activates its separate private
+implementation leaf without changing version 1.

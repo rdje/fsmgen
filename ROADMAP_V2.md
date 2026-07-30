@@ -972,8 +972,9 @@ Source-facing HIR roadmap phase:
   Design leaf `.6` selects semantic SourceHIR version 2: one closed concrete-
   control actor subset renders `isf/phase_test.isf` byte-for-byte, then enters
   the existing ISF adapter/scheduler and preserves the exact IAL0 result. It
-  stores no raw ISF or parser AST. Proposed `.7` implements that private
-  contract, and `.8` repeats the promotion audit. Public
+  stores no raw ISF or parser AST. Clean contract commit `f42fb033d` activates
+  `.7` continuity-only to implement that private contract; `.8` repeats the
+  promotion audit. Public
   language, packaging, versioning, and compatibility remain separately owned
   by proposed `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`.
 
