@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1: activate generated identifier audit`).
-- active_work_unit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` (continuity-only activation).
-- current_state: clean selector `b0bcb12b5` activates only the no-behavior
-  identifier inventory/probe audit; all producers remain unchanged.
-- next_action: inventory AHB/APB/AXI/library/actor-network instance-name
-  producers, probe SV/VHDL keywords/collisions, and select one shared contract.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1: select portable identifier contract`).
+- active_work_unit: none; identifier audit `.1` is complete.
+- current_state: decision `0027` and the audit record select one portable,
+  origin-aware instance-label contract without changing product behavior.
+- next_action: separately activate proposed
+  `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2` from this clean commit.
+- in_flight_uncommitted: none after the audit commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -26,8 +26,8 @@ bounded current-state pointer. Git preserves its prior history.
 - `TASK-ACCEPTANCE` was not durably ported or backlogged by the June doctrine
   adoption; decision `0026` plus completed `.1`-.3 now ship the neutral
   contract, checker/registries/probes, and seventh-doctrine integration.
-- Public-sync `.1`-.4 and the four-annotation mdBook rustdoc repair are
-  complete; the scheduled lifecycle review stays proposed and inactive.
+- Public-sync `.1`-.4, the four-annotation mdBook rustdoc repair, and identifier
+  audit `.1` are complete; lifecycle review `.1` stays proposed and inactive.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
@@ -49,8 +49,8 @@ bounded current-state pointer. Git preserves its prior history.
   mixed-language claims qualified separately. HIAL/VIAL remains proposed after
   `.833` selects the smaller mdBook VHDL truth repair.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
-  end-to-end big-design
-  scalability, t/1436 failures, protocol identifiers, and guard metric repair.
+  end-to-end big-design scalability, t/1436 failures, identifier implementation
+  `.2`, and guard metric repair.
   Parked findings await a later clean parent selector.
 - Task-tree live truth is the node list + `docs/TASK_TREE.md` + git (decision
   `0019`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.

@@ -30771,3 +30771,27 @@ task tree and git.
   at 1,071 facts / 5,513 keys; mdBook HTML build and diff hygiene pass. No
   separate engineering rationale is created, so no development-note entry is
   warranted.
+
+### PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1 — portable identifier contract selected
+
+- Inventoried direct C4, APB, AHB, all five AXI composition producers,
+  reusable-library use, spawn/generated activation, ATL/static network,
+  parent/domain/CDC, and both structural-emitter instance-label paths.
+- Strict focused probes reproduce Verilator `unexpected interconnect` through
+  direct C4, public APB, reusable-library, and spawn routes. Public AHB
+  (`fabric`) and AXI read-composition labels pass Verilator plus Yosys. The
+  syntax-only VHDL emitter accepts `process` and renders it as an invalid entity
+  label; no VHDL parser is installed and the full probed VHDL shapes stop at
+  their existing bounded target gates.
+- Decision `0027` selects a portable target-case-aware keyword union: authored
+  labels fail closed without silent renaming, while generator-owned labels use
+  stable keyword, role, and numeric suffixes. Proposed `.2` owns implementation and
+  the explicit APB generated-label/report change to `interconnect_instance`.
+- This audit is documentation-only and changes no parser, generator, test,
+  config, generated artifact, report/API, HDL/runtime, backend, protocol, or
+  transaction behavior. The exact repository-local probe tree was removed;
+  all 36 mdBook chapters pass rustdoc plus HTML build; doc audits pass at
+  `Files=3, Tests=40`; Knowledge Map passes at 1,072 facts / 5,521 keys; memory
+  architecture and diff hygiene pass. The decision/audit are the canonical
+  rationale, so no development-note entry is warranted. Both legacy status
+  files remain untouched.

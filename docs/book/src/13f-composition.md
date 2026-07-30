@@ -267,6 +267,36 @@ The `--outdir DIR` flag writes all generated `.fsm` files:
 # If --output is also provided, HDL generation uses spawn_parent_top.fsm.
 ```
 
+## Instance-Identifier Portability (Current Limitation)
+
+Composition child labels currently accept the simple spelling
+`[A-Za-z_][A-Za-z0-9_]*`, but the released parser does not yet reject HDL
+reserved words. This applies to direct `?fsmc`, `?dtc`, and `?rtl` aliases as
+well as names authored by `spawn ... as`, reusable-library `use ... as`, and
+selected static actor-network instances. The structural emitters preserve the
+label unchanged.
+
+Consequently, an otherwise valid source can fail only when the generated HDL
+reaches the target parser. For example, `interconnect` is a SystemVerilog
+keyword:
+
+```text
+(?fsmc:interconnect child_module)
+```
+
+The current APB multi-peripheral generator also selects that label and is
+known to fail strict Verilator verification. AHB uses the legal label `fabric`,
+and the shipped fixed AXI composition labels are legal. The VHDL emitter has
+the same latent syntax-only boundary; for example, `process` can reach an
+entity-instance label even though it is a VHDL keyword.
+
+Until the implementation owned by
+`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2` ships, choose child
+instance labels that are not reserved in SystemVerilog, Verilog, or VHDL. The
+selected remediation will reject authored keyword labels rather than silently
+renaming public identities, while generator-owned collisions receive stable
+portable suffixes.
+
 ## Reusable ISF Libraries
 
 ISF libraries are reusable source-intent roots. They are not textual includes:

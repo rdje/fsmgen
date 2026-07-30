@@ -46,21 +46,34 @@ tops, showing that the issue may be cross-protocol rather than AHB-only.
 - ID: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT`
   Status: `active`
   Goal: `Audit generated child instance names against target-language reserved words before selecting a shared policy.`
-  Children: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1`
+  Children: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1`, `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2`
 
 - ID: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1`
-  Status: `active`
+  Status: `done`
   Goal: `Inventory and probe reserved generated instance identifiers without changing behavior.`
   Acceptance: `Enumerate composition instance-name producers, run focused target-language parser/lint probes for every risky identifier, and select a bounded shared remediation contract or close the concern with evidence. Make no behavior change in this audit.`
-  Verification: `Activated only after clean selector commit b0bcb12b5. Current-HEAD evidence remains exact: APB seeds the generated interconnect role as interconnect, AHB seeds fabric, both local helpers avoid only declared-name collisions, and strict verification of public ppif/apb_composition_multi_peripheral.ppif fails Verilator at generated line 3134 on apb_interconnect interconnect (. Activation updates continuity surfaces only and changes no source, test, artifact, report/API, generated HDL, target behavior, or selected remediation. Feature-backlog status, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1,071 facts / 5,513 question keys; mdBook HTML build and diff hygiene pass; Memory remains 60 lines and README remains 246 lines. The scheduled lifecycle review and every director gate remain inactive, both legacy status files remain untouched, and no probe artifact remains.`
-  Commit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1: activate generated identifier audit`
+  Verification: `Activated only after clean selector commit b0bcb12b5 through clean continuity commit dc8df309c. Inventory covers direct C4, APB one-to-one/multi-peripheral, AHB, five AXI compositions, reusable-library use, spawn/generated do/rule-trigger, ATL static network, parent/domain/CDC producers, and both structural emitters. Strict focused probes reproduce Verilator unexpected interconnect through direct C4 (line 78), public APB (3134), reusable use (924), and spawn (598); public AHB fabric and AXI read labels pass Verilator plus Yosys. The syntax-only VHDL emitter accepts process and renders process : entity work.child_module; ghdl/nvc are unavailable and the full probed VHDL composition shapes remain separately target-gated. Decision 0027 selects a target-case-aware portable keyword union, fail-closed authored labels, deterministic generated keyword/collision allocation, authored/generated report separation, and emitter defenses. The exact repository-local audit and gate scratch is removed. All 36 mdBook chapters pass rustdoc and HTML build; feature-backlog/live-book/relative-path audits pass with Files=3, Tests=40; Knowledge Map validation passes at 1,072 facts / 5,521 question keys; memory architecture, diff hygiene, README 246-line and Memory 60-line caps pass. No parser, generator, test, config, artifact, report/API, HDL/runtime, backend, protocol, transaction, or target behavior changes in .1.`
+  Commit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1: select portable identifier contract`
+
+- ID: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2`
+  Status: `proposed`
+  Goal: `Implement and verify the selected portable child-instance identifier contract.`
+  Acceptance: `From a separate clean activation, add one shared portable keyword registry and deterministic generated-name allocator; fail authored C4/spawn/library/ATL instance keywords at their nearest bounded source boundary; add structural-emitter defenses; integrate APB/AHB generated allocation; preserve every legal non-colliding AHB/AXI/ISF label; update APB generated interconnect wiring/report identity to interconnect_instance; cover direct, protocol, reusable-library, actor-network, SystemVerilog, and VHDL emitter routes with focused regressions; update user docs and public report expectations. Do not expand into module/top/port/net/parameter identifier families.`
+  Verification: `Pending separate clean activation after .1 commits.`
+  Commit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2: enforce portable instance identifiers`
 
 ## Decisions
 
 - `2026-07-30`: Clean parent selector commit `b0bcb12b5` selects only `.1`;
   this continuity slice activates the no-behavior inventory/probe audit while
   leaving all identifier producers and generated outputs unchanged.
+- `2026-07-30`: `.1` finds one shared syntax-only boundary across direct C4,
+  protocol, library, spawn, and ATL producers. Decision `0027` selects a
+  portable keyword union, authored fail-closed diagnostics, and deterministic
+  generated allocation; proposed `.2` owns implementation and the explicit APB
+  generated-label/report delta.
 
 ## Blockers
 
-- None. `.1` is active from the clean selector boundary.
+- None. `.1` is complete; `.2` remains proposed until separately activated
+  from the clean audit commit.
