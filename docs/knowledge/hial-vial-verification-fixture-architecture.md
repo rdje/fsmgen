@@ -99,3 +99,9 @@ After the private HIR boundary and live task-tree integrity close, parent
 selector `.844` selects proposed no-behavior HIAL/VIAL architecture audit `.1`
 as the strongest ungated product-architecture owner. It remains inactive until
 a separate clean activation and changes no product behavior.
+
+Clean parent selector commit `031b21d4f` activates only architecture audit
+`.1` through a separate continuity transition. Topology, bridge, portable and
+native semantics, backend profiles, migration, parity, scale contract,
+implementation decomposition, and product behavior remain unchanged until the
+audit executes in a later slice.

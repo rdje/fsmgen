@@ -21,6 +21,7 @@ fixture, no blocker, and a bounded documentation-only first audit.
 
 The public builder remains a separate future producer/projection choice under
 decision `0031`; whole-product scale retains its independent workload and
-measurement contract; MCP write retains its trust boundary. The selected audit
-remains proposed until a separate clean activation and changes no product
-behavior.
+measurement contract; MCP write retains its trust boundary. Clean selector
+commit `031b21d4f` activates only the selected audit through a separate
+continuity transition. The architecture audit remains unperformed and product
+behavior is unchanged during activation.

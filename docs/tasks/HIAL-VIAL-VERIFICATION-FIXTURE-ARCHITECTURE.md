@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
 - Last updated: `2026-07-31`
@@ -97,16 +97,16 @@ architecture needed to move beyond that bounded foundation.
 ## Task Tree
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`
-  Status: `proposed`
+  Status: `active`
   Goal: `Define peer HIAL and VIAL intent systems and their typed bridge so synthesizable hardware and powerful generated verification share one traceable architecture.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit and select the HIAL/VIAL architecture, VIAL layer topology, typed bridge, portable verification semantics, native extension model, backend matrix, migration path, scalability contract, and validation gates.`
   Acceptance: `The audit reads the current IAL0/IAL1/IAL2 contracts and lowerings, SystemVerilog and VHDL hardware backends, IAL1 verification metadata and generated skeletons, public artifact/report/support surfaces, the handwritten AHB arbitration fixture, UVM and VHDL reference constraints, and large-design doctrine; it produces a reviewable architecture decision and decomposes implementation into exact source-model, bridge, backend, tooling, validation, migration, documentation, and scale-proof leaves. It makes no parser, lowering, generated artifact, CLI, report, support-accounting, HDL, UVM, VHDL, test, or runtime behavior change.`
-  Verification: `pending activation`
-  Commit: `pending activation`
+  Verification: `Activated only after clean parent selector commit 031b21d4f. Activation changes task/index, selection record/fact continuity, roadmap, mdBook backlog, Memory, changelog, and regenerated Knowledge Map only. Architecture audit findings, topology, typed bridge, portable/native semantics, backend/simulator profiles, migration, parity, scale contract, implementation leaves, parser/lowering/source/artifacts, CLI/API/report/manifest/accounting, HDL/UVM/VHDL, tests/runtime, and all product behavior remain unchanged until this activation commits cleanly. Task-tree integrity passes at two active trees / 847 nodes; documentation audits pass at Files=3, Tests=40; all 36 mdBook chapters and the 72-file / 16,671,894-byte HTML build pass; Knowledge Map passes at 1,085 facts / 5,594 keys; memory, diff, exact repository-local output cleanup, staged acceptance, and all eight doctrines complete activation closeout.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1: activate architecture audit`
 
 ## Current Frontier
 
@@ -123,6 +123,9 @@ selection first; HIAL/VIAL remains independent and proposed.
 Parent `.844` now selects proposed audit `.1` after the private HIR and live
 task-tree-integrity prerequisites close. The tree remains inactive until a
 separate clean activation commit.
+Clean parent selector commit `031b21d4f` activates only `.1` through a separate
+continuity transition. The architecture audit remains unperformed during
+activation.
 
 ## Decisions
 
@@ -165,6 +168,9 @@ separate clean activation commit.
 - `2026-07-31`: Parent selector `.844` selects proposed no-behavior audit `.1`
   after the private HIR boundary closes and live task-tree integrity ships.
   The audit remains inactive until a separate clean activation commit.
+- `2026-07-31`: Clean parent selector commit `031b21d4f` activates only audit
+  `.1`; architecture selection and decomposition remain unperformed until the
+  activation commits cleanly.
 
 ## Open Questions
 
@@ -186,8 +192,8 @@ separate clean activation commit.
 
 ## Blockers
 
-- None for future architecture audit. Activation and priority remain
-  intentionally unselected.
+- None. Parent `.844` selected `.1`, and clean selector commit `031b21d4f`
+  activates only the architecture audit.
 
 ## Verification Log
 

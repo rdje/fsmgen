@@ -5,14 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.844: select HIAL VIAL architecture audit`).
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1: activate architecture audit`).
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
-  (proposed selected audit; not yet active).
-- current_state: `.844` selects only the no-product-behavior HIAL/VIAL
-  architecture audit after private HIR and live-ledger prerequisites close.
-- next_action: after the clean `.844` commit, activate only selected HIAL/VIAL
-  `.1` through a separate continuity commit.
-- in_flight_uncommitted: none after this selector commit; no background job.
+  (active architecture audit; continuity-only activation complete).
+- current_state: clean parent selector `031b21d4f` activates only the HIAL/VIAL
+  architecture audit; no architecture finding or product behavior changed.
+- next_action: execute `.1`: audit the live hardware/verification stack and AHB
+  fixture, decide the architecture, then create exact implementation leaves.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -39,8 +39,9 @@ history; this file carries only the current bounded resume state.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
 - Decisions `0028`-`0031` and the private HIR records remain canonical. HIAL/
-  VIAL `.1` is selected but inactive; public builder, whole-product scale,
-  MCP-write, and every director-gated owner remain proposed/inactive.
+  VIAL `.1` is active for architecture audit only; public builder,
+  whole-product scale, MCP-write, and every director-gated owner remain
+  proposed/inactive.
 - Live ledger is 844 numbered nodes / 844 unique root references. `.73` is
   canonical `done`; `.705` is live `done` after `.706`-.709; `.758` has its
   canonical commit field. The checker reports one active tree / 845 total nodes.
@@ -50,6 +51,9 @@ history; this file carries only the current bounded resume state.
 - `.844` selection verification: one active tree / 845 nodes; docs `Files=3,
   Tests=40`; 36 chapters and 72-file / 16,670,326-byte build; Knowledge Map
   1,085 facts / 5,594 keys; exact outputs removed.
+- HIAL/VIAL `.1` activation: two active trees / 847 nodes; docs `Files=3,
+  Tests=40`; 36 chapters and 72-file / 16,671,894-byte build; Knowledge Map
+  1,085 facts / 5,594 keys; exact output removed.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously

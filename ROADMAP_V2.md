@@ -8374,6 +8374,11 @@ protocol/backend implementation, lifecycle/transaction horizons, and every
 director gate remain proposed or inactive; both frozen files and product
 behavior stay unchanged. See
 `docs/IAL2_POST_TASK_TREE_INTEGRITY_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `031b21d4f` activates only
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1` through a separate continuity
+transition. Architecture findings, implementation decomposition, all product
+surfaces, and every other proposed or gated owner remain unchanged until the
+audit executes after activation commits cleanly.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

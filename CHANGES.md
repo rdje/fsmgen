@@ -31374,3 +31374,20 @@ task tree and git.
   `Files=3, Tests=40`; all 36 mdBook chapters and the 72-file / 16,670,326-byte
   build pass; Knowledge Map passes at 1,085 facts / 5,594 keys; memory, diff,
   all eight doctrines, and exact repository-local output cleanup pass.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1 — architecture audit activated
+
+- Activated only the selected documentation/architecture audit after clean
+  parent selector commit `031b21d4f`.
+- Task/index, selection record/facts, roadmap, mdBook backlog, Memory,
+  changelog, and regenerated Knowledge Map continuity are aligned.
+- Architecture findings, topology, typed bridge, portable/native semantics,
+  backend and simulator profiles, migration, parity, scale contract,
+  implementation leaves, product surfaces, other candidates, director gates,
+  and frozen status files remain unchanged until this activation commits
+  cleanly. No separate development note is warranted.
+- Task-tree integrity passes at two active trees / 847 nodes; documentation
+  audits pass at `Files=3, Tests=40`; all 36 mdBook chapters and the 72-file /
+  16,671,894-byte build pass; Knowledge Map passes at 1,085 facts / 5,594
+  keys; memory, diff, staged acceptance, all eight doctrines, and exact
+  repository-local output cleanup complete activation closeout.

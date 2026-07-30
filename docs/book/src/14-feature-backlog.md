@@ -12075,6 +12075,11 @@ whole-product scale, MCP-write, protocols/backends, lifecycle/transaction
 horizons, and all director-gated work remain inactive; the selected audit
 requires separate clean activation. See the
 [selection record](../../IAL2_POST_TASK_TREE_INTEGRITY_NEXT_OWNER_SELECTION.md).
+Clean selector commit `031b21d4f` activates only that HIAL/VIAL architecture
+audit through a separate continuity transition. The audit findings, typed
+bridge, verification semantics, backend profiles, migration, parity, scale
+contract, exact implementation leaves, and all user-visible behavior remain
+unchanged until the audit executes after activation commits cleanly.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

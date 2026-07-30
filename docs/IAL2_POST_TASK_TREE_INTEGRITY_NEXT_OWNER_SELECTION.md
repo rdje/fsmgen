@@ -79,3 +79,9 @@ documentation audits at `Files=3, Tests=40`; all 36 mdBook chapters and the
 72-file / 16,670,326-byte HTML build; Knowledge Map generation/check at 1,085
 facts / 5,594 question keys; memory, diff, exact output cleanup, and all eight
 doctrines.
+
+Clean selector commit `031b21d4f` activates only selected architecture audit
+`.1` through a separate continuity transition. The audit findings, topology,
+bridge, verification semantics, profiles, migration, parity, scale contract,
+implementation decomposition, and all product behavior remain unchanged until
+that activation commits cleanly.
