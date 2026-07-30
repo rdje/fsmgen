@@ -509,9 +509,9 @@ support IDs are `intent.ppif_ahb_requester_busy_insert_four` and
 `amba_requester_busy_insert_four` with semantic root `fsm`. Focused t/1535 owns
 exact artifacts, normalized semantic/read-only-MCP parity, and assertion-
 enabled continuous/ready-low/grant-low `4 -> 3 -> 2 -> 1 -> 0` runtime;
-t/1536 owns alias parity without a second simulation. Current totals are 328
-protocol fixtures and 369 supported-smoke/strict-supported fixtures at that
-requester-pair checkpoint.
+t/1536 owns alias parity without a second simulation. Totals at that requester-
+pair checkpoint were 328 protocol fixtures and 369 supported-smoke/strict-
+supported fixtures.
 
 The generic exact-four paired source at
 `ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`
@@ -521,8 +521,21 @@ BUSY-parking subordinate and one-window interconnect. Focused t/1537 owns
 strict, schedule, exact-artifact, normalized-semantic, repo-relative read-only
 MCP, public-verifier, repository-local-output, and assertion-enabled
 5/4/1/4/1/`44332211` runtime proof. The byte-identical `.ahb` alias adds t1538
-parity without another simulation. Current totals are 330 protocol fixtures
-and 371 supported-smoke/strict-supported fixtures.
+parity without another simulation. Totals at that one-window generic/profile
+checkpoint were 330 protocol fixtures and 371 supported-smoke/strict-supported
+fixtures.
+
+The generic two-window exact-four source at
+`ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`
+is strict-supported, selects `ahb_tb` with semantic root `top` and four
+children, and composes the width-three exact-four requester with both existing
+BUSY-parking subordinates and the two-window interconnect. Focused t/1539 owns
+the six-field source delta, strict support, schedule/artifacts, normalized
+semantic JSON, repo-relative read-only MCP, public verifier, repository-local
+output, explicit unmatched-neighbor diagnostics, and assertion-enabled
+10/8/2/8/2/`44332211`/`88776655` runtime. Current totals are 331 protocol
+fixtures and 372 supported-smoke/strict-supported fixtures; the AHB inventory
+is 55 paths split 28 `.ppif` / 27 `.ahb`.
 
 ## Capability manifest
 

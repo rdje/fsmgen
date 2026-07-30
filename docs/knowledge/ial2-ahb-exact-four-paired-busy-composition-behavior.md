@@ -37,9 +37,9 @@ semantic/real read-only MCP/repository-local-output/HDL-verifier/diagnostic
 parity in 4 top-level subtests and 88 nested assertions. It adds no testbench
 or simulation; t1537 remains the shared assertion-enabled runtime.
 
-Current accounting is 330 protocol fixtures, 371 supported-smoke/strict
-fixtures, and 54 AHB IAL2 paths split 27 `.ppif` / 27 `.ahb`. The
-two-subordinate exact-four topology remains separate.
+That one-window checkpoint established 330 protocol fixtures, 371
+supported-smoke/strict fixtures, and 54 AHB IAL2 paths split 27 `.ppif` / 27
+`.ahb`. The two-subordinate exact-four topology was still separate then.
 
 Clean behavior commit `c42347a5e` activates no-behavior parent selector
 `.824`; it must choose one exact next roadmap owner before further expansion.
@@ -62,6 +62,9 @@ Completed two-window audit `.1` proves that exact runtime and selects pending
 generic contract `.2`; the shipped one-window 330/371/54 boundary is
 unchanged until a later implementation.
 
-Contract `.2` now freezes the two-window generic source/support/t1539 boundary
-at projected 331/372/55 split 28 `.ppif`/27 `.ahb` and selects pending
-data-only implementation `.3`; no two-window source ships in selection.
+Contract `.2` froze the two-window generic source/support/t1539 boundary at
+projected 331/372/55 split 28 `.ppif`/27 `.ahb` and selected data-only `.3`;
+no two-window source shipped in selection.
+
+Completed `.3` now ships that two-window generic source and t1539 runtime.
+Current accounting is 331/372/55 split 28 `.ppif`/27 `.ahb`.

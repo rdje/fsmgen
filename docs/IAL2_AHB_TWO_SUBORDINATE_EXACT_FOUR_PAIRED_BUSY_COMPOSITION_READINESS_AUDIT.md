@@ -196,6 +196,12 @@ implementation `.3` is separate; selection itself ships no source or behavior.
 See
 `docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_CONTRACT_SELECTION.md`.
 
+Implementation `.3` now ships that exact generic source and support entry.
+t1539 passes strict/artifact/semantic/read-only-MCP/public-verifier/
+unmatched-neighbor diagnostic surfaces plus assertion-enabled
+10/8/2/8/2/`44332211`/`88776655` runtime. Current accounting is 331/372/55
+split 28 `.ppif`/27 `.ahb`; the child tree is complete.
+
 The future matching `.ahb` alias remains separate. Counts above four,
 runtime/policy/random/multiple-point insertion, distinct bus-BUSY status,
 wider/indefinite bursts, optional signals, generic priority changes, other

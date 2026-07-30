@@ -7830,6 +7830,20 @@ Activation changes continuity documentation and no parser, generator, public
 source, support, test, artifact, report/semantic/MCP API, HDL/runtime,
 simulator, backend, protocol, HIAL/VIAL, VHDL, verification-generation,
 portability, scale, decision-0020, or transaction behavior.
+Implementation `.3` now ships the selected 6,645-byte generic source and exact
+support entry through existing generators. t1539 passes exact six-field source
+delta, strict/report/4-IAL1/5-IAL0 artifact, normalized-semantic, repo-relative
+read-only shell-disabled MCP, public-verifier, repository-local-output, and
+unmatched-neighbor diagnostic surfaces plus Verilator 5.046 `--timing`/`-j 1`
+with all assertions. Runtime is exactly 2 commands / 10 presentations / 8
+beats / 2 BUSY episodes / 8 qualified BUSY events / 2 resumed `SEQ` / status
+`0x44332211` / control `0x88776655`, with two internal `4 -> 3 -> 2 -> 1 -> 0`
+retirements and stable selected/unselected subordinate plus fabric state.
+t1533/t1534/t1537/t1538 preserve both adjacent generic/profile pairs. Current
+accounting is 331 protocol / 372 supported+strict / 55 AHB paths split 28
+`.ppif`/27 `.ahb`. The child tree is complete; the next parent selector may
+activate only after this behavior commit is clean. See
+`docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

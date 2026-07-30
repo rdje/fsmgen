@@ -294,3 +294,13 @@ Clean contract commit `4d0cc34bd` activates only selected data-only
 implementation `.3`. Activation changes continuity documentation only; the
 source, support entry, t1539, and testbench remain absent and public accounting
 remains 330/371/54 split 27 `.ppif`/27 `.ahb` until `.3` ships.
+
+## Implementation Outcome
+
+Completed `.3` now ships the selected generic source and exact support entry.
+t1539 proves the six-field source delta, strict/report/artifact/normalized-
+semantic/repo-relative read-only-MCP/public-verifier/unmatched-neighbor
+diagnostic surfaces and assertion-enabled 10/8/2/8/2/`44332211`/`88776655`
+runtime through repository-local workspaces. Current accounting is 331/372/55
+split 28 `.ppif`/27 `.ahb`. See
+`docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md`.

@@ -44,3 +44,7 @@ support/coverage identity, four IAL1/five IAL0 artifacts, normalized semantic/
 read-only-MCP parity, assertion-enabled t1539 runtime, preservation gates, and
 rollback at projected 331/372/55 split 28 `.ppif`/27 `.ahb`. Pending `.3`
 owns implementation; selection ships no public behavior.
+
+Completed `.3` now ships the selected generic path. t1539 proves the exact
+strict/artifact/semantic/read-only-MCP/verifier/diagnostic/runtime contract,
+and current accounting is 331/372/55 split 28 `.ppif`/27 `.ahb`.

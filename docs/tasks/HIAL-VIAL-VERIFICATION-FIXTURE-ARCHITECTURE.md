@@ -285,4 +285,7 @@ evidence-backed handoff.
   unchanged.
 - `2026-07-30`: Clean contract commit `4d0cc34bd` activates only data-only
   implementation `.3`; HIAL/VIAL remains proposed and unchanged.
+- `2026-07-30`: Two-window exact-four implementation `.3` ships generic
+  source/support/t1539 at 331/372/55; HIAL/VIAL remains proposed and unchanged
+  for the next parent selector to compare.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

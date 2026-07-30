@@ -32,6 +32,7 @@ expose that same bounded public payload; no alias-specific API was added.
 Focused t1536 proves byte/report/artifact/check/schedule/semantic/MCP/verifier/
 diagnostic and requester/paired preservation parity without compiling a second
 simulation. Assertion-enabled t1535 remains the sole shared continuous/ready-
-low/grant-low runtime proof. The later exact-four paired generic/profile pair
-moves current accounting to 330 protocol fixtures / 371 supported+strict / 54
-AHB paths split 27 `.ppif` / 27 `.ahb`.
+low/grant-low runtime proof. The later one-window exact-four paired
+generic/profile pair established the 330/371/54 checkpoint split 27 `.ppif` /
+27 `.ahb`; the still-later two-window generic path moves the current boundary
+to 331/372/55 split 28 `.ppif` / 27 `.ahb`.

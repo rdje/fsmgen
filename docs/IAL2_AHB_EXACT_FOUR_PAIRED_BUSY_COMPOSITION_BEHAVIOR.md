@@ -71,7 +71,7 @@ child count:   3
 semantic root: top
 ```
 
-The alias moves current accounting to 330 protocol fixtures, 371
+The alias moves that one-window checkpoint to 330 protocol fixtures, 371
 supported-smoke and strict-supported fixtures, and 54 AHB IAL2 paths split
 between 27 generic `.ppif` sources and 27 `.ahb` aliases.
 
@@ -158,9 +158,10 @@ strict/artifact/semantic/read-only-MCP/public-verifier parity and selects
 pending no-behavior generic contract `.2`. The shipped one-window 330/371/54
 boundary remains unchanged.
 
-Contract `.2` now freezes the adjacent two-window generic source/support/t1539
-boundary at projected 331/372/55 split 28 `.ppif`/27 `.ahb` and selects
-pending data-only implementation `.3`. The two-window source remains unshipped.
+Contract `.2` froze the adjacent two-window generic source/support/t1539
+boundary at projected 331/372/55 split 28 `.ppif`/27 `.ahb`. Completed `.3`
+now ships the generic source with assertion-enabled
+10/8/2/8/2/`44332211`/`88776655` runtime at that current boundary.
 
 ## Rollback
 

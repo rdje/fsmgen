@@ -49,6 +49,6 @@ public `--verify-hdl`, and assertion-enabled two-command
 `.2` at projected 331/372/55 split 28 `.ppif`/27 `.ahb`.
 
 Clean audit commit `a5d162d60` plus activation `93a7f2089` satisfy the contract
-boundary. `.2` now freezes the exact source/support/t1539/testbench contract
-and selects pending data-only implementation `.3`; no public source ships in
-selection.
+boundary. `.2` froze the exact source/support/t1539/testbench contract, and
+completed `.3` now ships it at 331/372/55 split 28 `.ppif`/27 `.ahb` with the
+selected assertion-enabled runtime.

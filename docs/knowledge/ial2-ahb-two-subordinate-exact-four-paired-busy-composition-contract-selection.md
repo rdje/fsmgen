@@ -35,3 +35,8 @@ generation, portability, scale, and decision `0020` remain separate.
 Clean contract commit `4d0cc34bd` activates only selected data-only
 implementation `.3`. The source, support entry, t1539, and testbench remain
 absent during activation; public accounting stays 330/371/54 split 27/27.
+
+Completed `.3` now ships the selected source, support entry, t1539, and
+repository-local assertion-enabled testbench at 331/372/55 split 28 `.ppif`/
+27 `.ahb`. Canonical shipped facts live in
+`ial2-ahb-two-subordinate-exact-four-paired-busy-composition-behavior`.

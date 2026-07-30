@@ -11562,6 +11562,14 @@ selection. See the
 Clean contract commit `4d0cc34bd` activates only data-only implementation
 `.3`. The selected source/support/t1539/testbench remain absent during
 activation, so public behavior stays at 330/371/54 split 27/27.
+Implementation `.3` now ships that generic source and exact support through
+existing generators. t1539 proves the six-field source delta, strict/report/
+4-IAL1/5-IAL0 artifacts, normalized semantic/read-only-MCP/public-verifier
+surfaces, explicit unmatched-neighbor diagnostics, repository-local output,
+and assertion-enabled 10/8/2/8/2/`44332211`/`88776655` runtime. Current
+accounting is 331/372/55 split 28 `.ppif`/27 `.ahb`; t1533/t1534/t1537/t1538
+preserve both adjacent generic/profile families. See the
+[behavior record](../../IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_BEHAVIOR.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -13,9 +13,9 @@ testbench, generated artifact, or runtime claim.
 ## Reconciled Boundary
 
 Clean behavior commit `40b8ead71` completes the one-subordinate exact-four
-paired generic/profile pair. Current accounting is 330 protocol fixtures, 371
-supported-smoke plus strict fixtures, and 54 AHB paths split 27 `.ppif` / 27
-`.ahb`.
+paired generic/profile pair. At this selector checkpoint, accounting was 330
+protocol fixtures, 371 supported-smoke plus strict fixtures, and 54 AHB paths
+split 27 `.ppif` / 27 `.ahb`.
 
 The directly adjacent shipped foundations are:
 
@@ -150,8 +150,9 @@ public `--verify-hdl`, and assertion-enabled two-command
 10/8/2/8/2/`44332211`/`88776655` runtime. It selects pending generic contract
 `.2` at projected 331/372/55 split 28 `.ppif`/27 `.ahb`. Clean audit commit
 `a5d162d60` and activation commit `93a7f2089` satisfy its activation boundary;
-contract `.2` now freezes the exact source/support/t1539/testbench contract and
-selects pending data-only implementation `.3` without shipping behavior.
+contract `.2` froze the exact source/support/t1539/testbench contract. Completed
+`.3` now ships it through existing generators at 331/372/55 split 28 `.ppif`/
+27 `.ahb`, with assertion-enabled 10/8/2/8/2/`44332211`/`88776655` runtime.
 
 ## Rollback
 
