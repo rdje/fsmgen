@@ -2591,6 +2591,8 @@ result changes no AHB source, generated artifact, runtime, or 332/373/56 split
 28/28 accounting; `.2` still requires a separate clean activation and commit.
 See the
 [reduction readiness audit](../../DIRECT_VHDL_REDUCTION_EXPRESSION_READINESS_AUDIT.md).
+Clean audit commit `16f6140c4` activates only that separate `.2`; AHB source,
+runtime, generated artifacts, and accounting remain unchanged.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

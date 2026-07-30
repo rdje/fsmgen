@@ -353,4 +353,6 @@ pre-empt that exact invalid-output handoff.
   unsupported-reduction fail-closed implementation `.2`. This repairs one
   synthesizable HIAL-to-VHDL correctness seam but neither activates nor
   narrows the broader HIAL/VIAL verification-fixture architecture.
+- `2026-07-30`: Clean audit commit `16f6140c4` activates only direct-VHDL
+  implementation `.2`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

@@ -195,6 +195,10 @@ This audit changes no parser, backend, generated output, diagnostic, runtime,
 public API, support accounting, HIAL/VIAL, scale, or decision-0020 behavior.
 No background job remains.
 
+Clean audit commit `16f6140c4` activates implementation `.2` through
+continuity changes only. The selected contract and current product behavior
+remain unchanged until that separate implementation slice ships.
+
 ## Rollback
 
 Audit rollback removes this record/fact/t1543 characterization, restores `.1`

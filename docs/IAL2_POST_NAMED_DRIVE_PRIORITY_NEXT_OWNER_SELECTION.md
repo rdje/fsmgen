@@ -139,3 +139,7 @@ vector, range, unresolved, compound, malformed, or residual reductions fail
 closed before emission. Public source arity remains unchanged. No native
 vector-reduction or executable-VHDL qualification is claimed without a
 compiler; activation of `.2` requires the clean audit commit.
+
+Clean audit commit `16f6140c4` activates only implementation `.2` through
+continuity changes. The current reduction-token leak and every shipped
+named-drive/AHB/HIAL/VIAL/scale behavior remain unchanged during activation.

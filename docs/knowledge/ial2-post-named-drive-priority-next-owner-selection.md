@@ -41,3 +41,7 @@ and static-bit-select reductions by identity/complement and reject vector,
 range, unresolved, compound, malformed, or residual reductions before VHDL
 emission. Public source arity and all shipped behavior remain unchanged until a
 separate clean `.2` activation and implementation.
+
+Clean audit commit `16f6140c4` activates only `.2` continuity state. The
+foreign-token leak and all shipped behavior remain unchanged until the
+implementation slice completes.

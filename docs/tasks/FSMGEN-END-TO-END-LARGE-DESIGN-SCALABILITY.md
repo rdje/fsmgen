@@ -128,6 +128,8 @@ and diagnostic behavior per stage while proving semantic/output correctness.
   unsupported-reduction fail-closed implementation `.2`. This correctness
   result is not end-to-end capacity evidence; the scale tree remains proposed
   with its workload, measurement, budget, and graceful-failure contract intact.
+- `2026-07-30`: Clean audit commit `16f6140c4` activates only direct-VHDL
+  implementation `.2`; the scale tree remains proposed and unchanged.
 
 ## Open Questions
 

@@ -32,4 +32,5 @@ a targeted direct-scaffold rejection.
 No VHDL compiler is installed, so the audit does not select or qualify native
 VHDL vector-reduction syntax. t1543 durably characterizes the current scalar/
 vector pipeline, six-case converter matrix, and public parser boundary. The
-audit changes no behavior; `.2` requires a separate clean activation commit.
+audit changes no behavior. Clean audit commit `16f6140c4` activates `.2`
+continuity-only; behavior remains unchanged until implementation ships.

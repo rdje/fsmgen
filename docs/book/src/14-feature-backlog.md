@@ -11730,6 +11730,9 @@ before emission. Public one-operand source operators remain rejected, and no
 native vector-reduction or compiler-qualification claim is made. See the
 [readiness audit](../../DIRECT_VHDL_REDUCTION_EXPRESSION_READINESS_AUDIT.md).
 This audit changes no current output; `.2` requires a clean activation commit.
+Clean audit commit `16f6140c4` activates only implementation `.2`. Product
+output remains unchanged during this continuity transition; `.2` now owns the
+selected adapter change and regression proof.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
@@ -17120,8 +17123,8 @@ VHDL. Decision `0023` prevents generation success from being treated as syntax
 or runtime validation. Completed no-behavior audit `.1` selects scalar
 OR/AND/XOR identity, complemented scalar `not`, and deterministic rejection of
 vector, range, unresolved, compound, malformed, or residual reductions for
-proposed implementation `.2`. Public source arity remains unchanged. This is
-not shipped until `.2`; no native vector syntax or external compiler
+active implementation `.2`. Public source arity remains unchanged. This is
+not shipped until `.2` completes; no native vector syntax or external compiler
 qualification is claimed because no `ghdl`, `nvc`, or `vcom` is installed.
 
 Composition VHDL now includes the bounded C3 external-RTL literal/concat top

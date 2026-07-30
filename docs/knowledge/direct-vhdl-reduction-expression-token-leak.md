@@ -34,5 +34,6 @@ Completed audit `.1` proves the original named-drive operand is declared
 scalar and selects proposed `.2`: positive scalar unary OR/AND/XOR becomes
 identity, complemented scalar reduction becomes VHDL `not`, and vector,
 range-slice, unresolved, compound, malformed, or residual reductions fail
-closed before emission. The leak remains present until `.2` activates and
-ships; no native vector syntax or executable-VHDL claim was selected.
+closed before emission. Clean audit commit `16f6140c4` activates `.2`, but the
+leak remains present until its implementation ships; no native vector syntax
+or executable-VHDL claim was selected.

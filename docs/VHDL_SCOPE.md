@@ -108,8 +108,8 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1` proves that operand is scalar
   and selects scalar unary OR/AND/XOR identity, complemented scalar `not`, and
   deterministic rejection of vector, range, unresolved, compound, malformed,
-  or residual reductions. That contract is not shipped yet: proposed `.2`
-  owns implementation after a clean activation commit. Named-drive priority
+  or residual reductions. That contract is not shipped yet: `.2` is active
+  after clean audit commit `16f6140c4` and owns implementation. Named-drive priority
   therefore remains SV/Verilog-qualified and must not claim VHDL validity.
 - `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5` selected no VHDL-oriented
   verification artifact. The current VHDL path is synthesizable scaffold-only,

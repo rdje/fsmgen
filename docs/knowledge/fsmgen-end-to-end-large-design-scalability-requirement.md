@@ -42,3 +42,6 @@ The completed direct-VHDL reduction audit selects a bounded scalar repair and
 unsupported-reduction rejection for proposed implementation `.2`. It supplies
 backend correctness evidence only, not an end-to-end scalability result; the
 large-design tree remains proposed.
+
+Clean audit commit `16f6140c4` activates only that bounded direct-VHDL
+implementation; it is not capacity evidence, and scale remains proposed.

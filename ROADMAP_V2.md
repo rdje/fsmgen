@@ -8043,6 +8043,11 @@ rejected. With no authoritative VHDL compiler installed, the audit deliberately
 does not select native vector-reduction syntax. See
 `docs/DIRECT_VHDL_REDUCTION_EXPRESSION_READINESS_AUDIT.md`. Implementation
 requires a separate clean activation commit.
+Clean audit commit `16f6140c4` activates only
+`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2`. This continuity transition
+changes no parser, backend, generated output, diagnostic, runtime, public API,
+HIAL/VIAL, scale, or decision-0020 behavior; `.2` now owns implementation and
+regression proof of the selected scalar/rejection boundary.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

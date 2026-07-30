@@ -483,5 +483,6 @@ not a valid-VHDL claim for that shape. Decision `0023` and active task
 `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING` own the exact correction. Its
 completed no-behavior audit `.1` selects scalar identity/complement and
 deterministic rejection of vector, range, unresolved, compound, malformed, or
-residual reductions; proposed `.2` must implement that contract before it is
-shipped. GHDL validation remains unavailable.
+residual reductions. Clean audit commit `16f6140c4` activates `.2`, which must
+implement that contract before it is shipped. GHDL validation remains
+unavailable.

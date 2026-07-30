@@ -79,3 +79,6 @@ The completed direct-VHDL reduction audit selects scalar identity/complement
 and unsupported-reduction rejection for proposed implementation `.2`. This is
 one bounded synthesizable HIAL backend repair; it does not select VIAL syntax,
 lowerings, simulator profiles, or architecture.
+
+Clean audit commit `16f6140c4` activates only that direct-VHDL implementation;
+the HIAL/VIAL architecture remains proposed and unchanged.

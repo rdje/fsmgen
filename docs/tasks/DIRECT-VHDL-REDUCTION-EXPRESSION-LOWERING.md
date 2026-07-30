@@ -55,18 +55,18 @@ removed after its three-file/19,070-byte census.
   Commit: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1: select scalar reduction boundary`
 
 - ID: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the reduction-expression contract selected by .1.`
   Acceptance: `Activate only after .1 commits cleanly. In the generated-expression adapter, lower parenthesized unary OR/AND/XOR over declaration-proven scalar identifiers or static bit selects to scalar identity and lower complemented forms to VHDL not. Thread declaration context into condition conversion. Before generic rewrites, reject every vector, range-slice, unresolved, compound, malformed, or residual unary reduction with a targeted direct-scaffold diagnostic. Do not widen the public source grammar or claim native vector-reduction/VHDL-compiler qualification. Update t1543 to the selected contract and t1542 to require token-free named-drive VHDL; preserve t1420 plus t386/t404 and all other expression/backend/public boundaries; synchronize docs/Knowledge Map/mdBook, clean exact same-volume artifacts, run focused and broader gates, and commit with a clean handoff.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean audit commit 16f6140c4. Activation changes continuity pointers only; the selected scalar identity/complement and unsupported-reduction fail-closed behavior is not implemented yet. Book/status/path truth gates pass 4 files/45 tests. Knowledge Map generation/check remains synchronized at 1,058 facts/5,440 question keys. The mdBook renders exactly 72 files/16,487,572 bytes and the exact repository-local output is removed. MEMORY.md is 50 lines, README.md is 2,342 lines, .artifacts/tmp/tests is empty, diff hygiene passes, and all six doctrine gates pass. Final canonical Stats-compatible capacity is 16,281,305,088/25,769,803,776 bytes = 15.163/24.000 GiB = 63.18%, with separate macOS kernel pressure level 1 and memory_pressure 74% free; guard occupancy is excluded from capacity truth. No product behavior changes and no background job remains.`
+  Commit: `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2: activate scalar reduction implementation`
 
 ## Current Frontier
 
-Audit `.1` is done and selects proposed implementation `.2`. The audit commit
-must land cleanly before `.2` can activate. `.2` then owns scalar reduction
-identity/complement, deterministic rejection of every unsupported reduction,
-declaration-context threading, and executable regression proof.
+Implementation `.2` is active after clean audit commit `16f6140c4`. It owns
+scalar reduction identity/complement, deterministic rejection of every
+unsupported reduction, declaration-context threading, and executable
+regression proof. Product behavior remains unchanged during activation.
 
 ## Decisions
 
@@ -86,6 +86,9 @@ declaration-context threading, and executable regression proof.
   selects pre-emission rejection for vector, range, unresolved, compound,
   malformed, or residual reductions. Public source arity remains unchanged;
   implementation belongs only to `.2` after this audit commits cleanly.
+- `2026-07-30`: Clean audit commit `16f6140c4` activates implementation `.2`
+  through continuity changes only. The current foreign-token leak remains
+  unchanged until the implementation slice ships.
 
 ## Open Questions
 
@@ -99,8 +102,7 @@ declaration-context threading, and executable regression proof.
 
 ## Rollback
 
-Rollback of the audit removes its record, fact, and t1543 characterization;
-restores `.1` to active at clean activation commit `77bcc9680`; and leaves the
-current leak unchanged. After `.2` activates, rollback must preserve the
-selected scalar-identity/vector-rejection boundary rather than restore silent
-foreign-token emission.
+Rollback of activation restores `.2` to proposed at clean audit commit
+`16f6140c4`; it does not remove the completed audit or alter product behavior.
+Implementation rollback must preserve the selected scalar-identity/vector-
+rejection boundary rather than restore silent foreign-token emission.
