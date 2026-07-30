@@ -69,3 +69,7 @@ selector to active; every other candidate remains independently owned.
   question keys; mdBook HTML build and diff hygiene pass.
 - `MEMORY.md` is 60 lines, `README.md` remains 246 lines, neither legacy status
   file changed, and no background job remains.
+
+Clean selector commit `06c03e6bf` activates only public-sync `.1` through
+continuity changes. The authoritative list, payload, tests, later public-sync
+leaves, and every product behavior remain unchanged during activation.

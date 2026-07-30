@@ -11857,6 +11857,10 @@ a separate clean activation. Public-sync `.2`/`.3`, the four-fence rustdoc
 repair, the scheduled four-document lifecycle review, architecture horizons,
 and director-gated items remain separate. See the
 [selection record](../../IAL2_POST_TASK_ACCEPTANCE_NEXT_OWNER_SELECTION.md).
+Clean selector commit `06c03e6bf` activates only public-sync `.1`
+continuity-only. The authoritative public presence list, payload, tests, and
+product behavior remain unchanged during activation; `.2` and `.3` stay
+pending.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

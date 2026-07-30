@@ -30526,3 +30526,17 @@ task tree and git.
   Tests=17`; Knowledge Map generation/check passes at 1068 facts / 5499 keys;
   mdBook HTML build and diff hygiene pass, and the rustdoc probe output was
   removed.
+
+### PUBLIC-SYNC-TEST-DRIFT-REPAIR.1 — public presence sync activated
+
+- Activated only `.1` from clean selector commit `06c03e6bf`; refined the
+  current mismatch to the three verification-observation discovery-family
+  names already present in the public ISF payload.
+- The authoritative list, payload, tests, and product behavior remain
+  unchanged during this continuity slice. `.2` and `.3` remain pending, and
+  the scheduled four-document review remains untouched.
+- Task/index, roadmap, mdBook, selector fact, Memory, and changelog continuity
+  are synchronized. Feature-backlog status plus relative-path audits pass with
+  `Files=2, Tests=17`; Knowledge Map generation/check passes at 1068 facts /
+  5499 keys; mdBook HTML build and diff hygiene pass. This activation does not
+  warrant a development-note entry.

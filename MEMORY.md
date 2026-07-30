@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.836: select public presence sync`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.836` (selector complete).
-- current_state: `.836` selects proposed `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1`;
-  the child and public contract remain unchanged until separate activation.
-- next_action: after this selector commits cleanly, activate only public-sync
-  `.1`, then add the three missing verification-observation presence keys.
-- in_flight_uncommitted: none after this selector commit; no background job.
+- latest_commit: this commit (`PUBLIC-SYNC-TEST-DRIFT-REPAIR.1: activate public presence sync`).
+- active_work_unit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1` (continuity-only activation).
+- current_state: clean selector `06c03e6bf` activates only `.1`; the public
+  presence list remains unchanged until the activation commit is clean.
+- next_action: add the three shipped verification-observation discovery-family
+  keys to the authoritative list and prove t1131 plus adjacent contract gates.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

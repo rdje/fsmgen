@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `public-contract, specification, and focused-test synchronization`
 - Created: `2026-07-23`
-- Last updated: `2026-07-23`
+- Last updated: `2026-07-30`
 - Owner: repo-local workflow
 
 ## Goal
@@ -54,16 +54,16 @@ changed loop lowering and requester terminal-count paths.
 ## Task Tree
 
 - ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR`
-  Status: `proposed`
+  Status: `active`
   Goal: `Restore the pre-existing public synchronization gates without behavior changes.`
   Children: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1`, `PUBLIC-SYNC-TEST-DRIFT-REPAIR.2`, `PUBLIC-SYNC-TEST-DRIFT-REPAIR.3`
 
 - ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1`
-  Status: `pending`
-  Goal: `Synchronize the shipped verification-observation public presence key.`
-  Acceptance: `Update only the authoritative public-contract key listing and directly prove t/1131 plus relevant schema/presence checks.`
-  Verification: `pending`
-  Commit: `pending`
+  Status: `active`
+  Goal: `Synchronize the shipped verification-observation public presence-key family.`
+  Acceptance: `Update only the authoritative public-contract key listing with the three already-shipped verification-observation key families and directly prove an empty payload/list difference, t/1131, plus relevant schema/presence checks.`
+  Verification: `Activated only after clean parent selector commit 06c03e6bf. Activation refines the current-HEAD mismatch to exactly schedule_report_verification_observation_keys, schedule_report_verification_observation_role_values, and schedule_report_verification_observation_signal_keys, updates continuity surfaces only, and leaves the authoritative list and public behavior unchanged until this commit is clean. Feature-backlog status plus relative-path audits pass with Files=2, Tests=17; Knowledge Map generation/check passes at 1,068 facts / 5,499 question keys; mdBook HTML build and diff hygiene pass; Memory remains at its 60-line cap and README at 246 lines.`
+  Commit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1: activate public presence sync`
 
 - ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.2`
   Status: `pending`
@@ -84,8 +84,12 @@ changed loop lowering and requester terminal-count paths.
 - `2026-07-23`: Keep all fixes behind one proposed, inactive public-sync tree;
   they are documentation/schema/test-expectation drift, not behavioral
   prerequisites for the active AHB slice.
+- `2026-07-30`: Clean parent selector commit `06c03e6bf` selects and activates
+  only `.1`; current-HEAD evidence refines its authoritative-list correction
+  to the three verification-observation discovery families. `.2` and `.3`
+  remain pending and unchanged.
 
 ## Blockers
 
-- Activation/order follows the task-tree pivot doctrine after ongoing active
-  work dries out.
+- `.1` is active from the clean selector boundary. `.2` may activate only
+  after `.1` commits cleanly; `.3` may activate only after `.2` commits cleanly.

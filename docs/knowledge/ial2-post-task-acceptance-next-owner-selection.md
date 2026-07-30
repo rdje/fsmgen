@@ -31,3 +31,7 @@ repair real, but they remain sequential or independent owners.
 
 The scheduled four-document lifecycle review stays proposed and both status
 files stay untouched. Explicitly director-gated items remain inactive.
+
+Clean selector commit `06c03e6bf` activates only public-sync `.1`
+continuity-only. The authoritative list and every product behavior remain
+unchanged during activation; `.2` and `.3` stay pending.

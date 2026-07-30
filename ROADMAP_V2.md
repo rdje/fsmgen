@@ -8181,6 +8181,10 @@ clean activation. Public-sync `.2`/`.3`, the four-fence mdBook rustdoc repair,
 the scheduled four-document lifecycle review, HIAL/VIAL, HIR, scale, and all
 director-gated items remain separate. See
 `docs/IAL2_POST_TASK_ACCEPTANCE_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `06c03e6bf` activates only
+`PUBLIC-SYNC-TEST-DRIFT-REPAIR.1` continuity-only. The authoritative presence
+list, payload, tests, and product behavior remain unchanged during activation;
+public-sync `.2` and `.3` remain pending.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three
