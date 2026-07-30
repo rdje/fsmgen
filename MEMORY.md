@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit, `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3: implement named-drive priority` (resolve with `git log -1`).
-- active_work_unit: none; `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3` completes the selected child tree.
-- current_state: exact-one-local-caller named drives now honor bidirectional target-local actor priority with logical transaction reports; unique unordered and prioritized ambiguous ownership fail closed; selector assertions remain. SV/Verilog are executable-qualified, and decision `0023` separately owns the unqualified direct-VHDL `(|drive_start)` defect. IAL2 AHB `2..16` and 332/373/56 split 28/28 accounting are unchanged.
-- next_action: from the clean `.3` behavior commit, create and activate one roadmap-aligned parent IAL2 selector before changing any new behavior.
-- in_flight_uncommitted: none after this commit workflow; no background job.
+- latest_commit: this commit, `IAL2-FEATURE-COMPLETENESS-FRONTIER.831: activate post named-drive priority selector` (resolve with `git log -1`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.831`.
+- current_state: clean named-drive priority behavior commit `1dbff8fc6` completes the selected child; `.831` is activated continuity-only to choose exactly one next roadmap owner. Exact-one-local-caller priority, SV/Verilog qualification, decision-0023 VHDL separation, IAL2 AHB `2..16`, and 332/373/56 split 28/28 accounting remain unchanged.
+- next_action: compare the `.831` candidate owners against durable roadmap/code/book evidence and select one exact child or prerequisite without changing behavior.
+- in_flight_uncommitted: none after this activation commit workflow; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

@@ -2573,6 +2573,9 @@ masking and fail-closed ambiguous ownership. It does not alter AHB requester
 accounting. Executable qualification is SystemVerilog and native Verilog;
 direct VHDL remains separately gated by decision `0023`. See the
 [shipped behavior](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_BEHAVIOR.md).
+Clean protocol-neutral behavior commit `1dbff8fc6` activates parent selector
+`.831` without changing AHB requester `2..16`, generated AHB artifacts, or
+332/373/56 split 28/28 accounting.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

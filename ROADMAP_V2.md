@@ -8012,6 +8012,11 @@ runtime proof with unchanged public report/semantic key sets. Direct VHDL is
 explicitly unqualified under decision `0023` and remains owned separately.
 AHB requester `2..16`, 332/373/56 split 28/28 accounting, and all broader
 roadmap owners remain unchanged.
+Clean named-drive priority behavior commit `1dbff8fc6` activates parent
+selector `.831`. This continuity-only transition changes no parser, lowerer,
+source, report/semantic/MCP schema, support accounting, HDL/runtime behavior,
+protocol/AHB behavior, HIAL/VIAL, VHDL, scale, or decision `0020`; `.831` owns
+the evidence-backed choice of exactly one next roadmap owner.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

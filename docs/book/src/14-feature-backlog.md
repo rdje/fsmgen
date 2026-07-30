@@ -11703,6 +11703,9 @@ both directions with assertion-enabled SystemVerilog, proves native Verilog,
 and keeps direct VHDL explicitly unqualified under decision `0023`. The public
 report/semantic key sets do not widen. See the
 [shipped behavior](../../ISF_RULE_TRANSACTION_NAMED_DRIVE_PRIORITY_BEHAVIOR.md).
+Clean behavior commit `1dbff8fc6` activates parent selector `.831`
+continuity-only. All shipped behavior and broader owner boundaries remain
+unchanged while `.831` compares and selects exactly one next roadmap owner.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
