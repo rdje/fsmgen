@@ -66,11 +66,11 @@ changed loop lowering and requester terminal-count paths.
   Commit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1: synchronize public presence keys`
 
 - ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Synchronize the ISF specification focused-test index through current HEAD.`
-  Acceptance: `After .1 commits, update the authoritative ISF spec focused-test index under the established policy and prove t/1250 plus guarded ISF regression.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `After .1 commits, add exactly the five current t/*-isf-*.t paths missing from the authoritative ISF spec focused-test index under its lexicographic policy and prove zero missing/extra paths, t/1250, plus guarded ISF regression.`
+  Verification: `Activated only after clean .1 implementation commit 012660f90. The exact current-HEAD set-difference probe reports listed=327, expected=332, no extra entries, and five missing paths: t1464 UVM passive monitor, t1465 VHDL observation package, t1476 output default reset, t1542 named-drive priority readiness, and t1544 assertion precedence readiness. Activation updates continuity surfaces only; docs/ISF_SPEC.md and every test remain unchanged until this commit is clean. Feature-backlog status plus relative-path audits pass with Files=2, Tests=17; Knowledge Map generation/check passes at 1,068 facts / 5,499 question keys; mdBook HTML build and diff hygiene pass; Memory remains at 60 lines and README at 246.`
+  Commit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.2: activate focused-test index sync`
 
 - ID: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.3`
   Status: `pending`
@@ -90,11 +90,13 @@ changed loop lowering and requester terminal-count paths.
   remain pending and unchanged.
 - `2026-07-30`: `.1` synchronizes the exact three-key verification-observation
   presence family and restores t1131 without changing the payload or behavior.
+- `2026-07-30`: Clean `.1` commit `012660f90` activates `.2`; its exact
+  current-HEAD boundary is five missing focused-test links and zero extras.
 
 ## Blockers
 
-- `.1` is complete in this implementation commit. `.2` may activate only after
-  `.1` commits cleanly; `.3` may activate only after `.2` commits cleanly.
+- `.1` is complete at clean `012660f90`; `.2` is active continuity-only. `.3`
+  may activate only after `.2` commits cleanly.
 
 ## Acceptance Checklist (enforced for implementation changes)
 

@@ -38,3 +38,6 @@ unchanged during activation; `.2` and `.3` stay pending.
 
 Selected leaf `.1` now synchronizes all three names and restores an empty
 payload/list difference plus t1131. `.2` and `.3` remain sequentially pending.
+
+Clean `.1` commit `012660f90` activates only `.2`; the current ISF spec index
+has five missing focused-test links and zero extras. `.3` stays pending.

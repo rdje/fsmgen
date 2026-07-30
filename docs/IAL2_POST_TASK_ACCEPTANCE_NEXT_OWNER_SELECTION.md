@@ -77,3 +77,7 @@ leaves, and every product behavior remain unchanged during activation.
 The selected child now adds the exact three list entries and restores an empty
 payload/list difference plus t1131. Public-sync `.2` and `.3` remain sequential
 owners; the mdBook fence repair and every other candidate remain independent.
+
+Clean `.1` implementation commit `012660f90` activates only public-sync `.2`
+continuity-only. Its measured boundary is five missing ISF focused-test links
+and zero extras; `.3` remains pending.

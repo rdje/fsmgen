@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`PUBLIC-SYNC-TEST-DRIFT-REPAIR.1: synchronize public presence keys`).
-- active_work_unit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1` (complete in this commit).
-- current_state: the public ISF presence list now includes the exact three
-  shipped verification-observation discovery families and t1131 is green.
-- next_action: after this implementation commits cleanly, activate only
-  `PUBLIC-SYNC-TEST-DRIFT-REPAIR.2` for the ISF focused-test index sync.
-- in_flight_uncommitted: none after this implementation commit; no background job.
+- latest_commit: this commit (`PUBLIC-SYNC-TEST-DRIFT-REPAIR.2: activate focused-test index sync`).
+- active_work_unit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.2` (continuity-only activation).
+- current_state: clean `.1` commit `012660f90` activates only `.2`; the ISF
+  spec still lists 327 of 332 focused tests until this activation is clean.
+- next_action: add the exact five missing focused-test links to docs/ISF_SPEC.md
+  in lexicographic order and prove t1250 plus a guarded ISF regression.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

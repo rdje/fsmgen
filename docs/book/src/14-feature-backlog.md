@@ -11867,6 +11867,10 @@ payload/list difference is empty, and t1131 plus adjacent contract gates pass.
 No payload, schema, parser/scheduler, generated artifact, or product behavior
 changed. `.2` remains pending until the clean `.1` commit; `.3` stays behind
 `.2`.
+Clean `.1` implementation commit `012660f90` activates public-sync `.2`
+continuity-only. The authoritative ISF spec currently indexes 327 of 332
+focused tests: five links are missing and none is extra. The spec, tests, and
+product behavior remain unchanged during activation; `.3` stays pending.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

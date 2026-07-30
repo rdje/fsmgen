@@ -30556,3 +30556,17 @@ task tree and git.
 - Feature-backlog status, live-book-path, and relative-path audits pass with
   `Files=3, Tests=40`; Knowledge Map generation/check passes at 1068 facts /
   5499 keys; mdBook HTML build and diff hygiene pass.
+
+### PUBLIC-SYNC-TEST-DRIFT-REPAIR.2 — focused-test index sync activated
+
+- Activated only `.2` from clean `.1` implementation commit `012660f90`.
+  Exact current-HEAD comparison reports 327 listed versus 332 expected ISF
+  focused tests, with five missing paths and no extras.
+- The missing links are t1464, t1465, t1476, t1542, and t1544; the ISF spec,
+  tests, and product behavior remain unchanged during activation. `.3` stays
+  pending.
+- Task/index, roadmap, mdBook, selector fact, Memory, and changelog continuity
+  are synchronized. Feature-backlog status plus relative-path audits pass with
+  `Files=2, Tests=17`; Knowledge Map generation/check passes at 1068 facts /
+  5499 keys; mdBook HTML build and diff hygiene pass. This activation does not
+  warrant a development-note entry.
