@@ -7,8 +7,9 @@ Status: selected and implemented privately by `.4`
 The three private packages and `t/1547-source-hir-valid-ready.t` implement and
 prove this exact contract without adding a public surface.
 
-Clean prototype commit `b4733b879` activates `.5` continuity-only to audit
-promotion, another private fixture, or retirement.
+Post-prototype audit `.5` retains this version-1 contract privately and selects
+a separate concrete-control-to-IAL1 design leaf before promotion is
+reconsidered. This version-1 contract remains unchanged.
 
 ## Scope
 
@@ -395,7 +396,8 @@ internal object contract, not a public schema advertisement. The implementation
 must not add SourceHIR to CLI help, capability manifests, normalized reports,
 `module_info`, support accounting, or installed public-language packages.
 
-If `.5` later chooses retirement, these packages and `t/1547` can be removed
-without compatibility migration. Any public promotion or second producer must
-create a separately versioned public contract and coordinate with
+Audit `.5` rejects retirement and immediate promotion. These packages and
+`t/1547` remain private while separate `.6` selects a concrete-control-to-IAL1
+contract. That later contract must select its own migration/versioning rules;
+version 1 does not imply them, and any public promotion must coordinate with
 `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`.

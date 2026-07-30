@@ -85,7 +85,7 @@ changes.
 
 ### Source-Facing FSMGEN HIR
 
-Status: private version-1 valid-ready prototype implemented; promotion audit active.
+Status: private version-1 valid-ready prototype retained; concrete-control-to-IAL1 selection next.
 
 Goal: give future high-level language frontends and builder APIs one checked
 FSMGEN-native semantic target above IAL2 and IAL1. The intended architecture is
@@ -116,9 +116,13 @@ deterministic canonical PPIF text and source map, and byte equality with the
 focused t1547 proof now ship internally: rendered text re-enters the existing
 PPIF parser and produces equal IAL1, IAL0, schedule, and protocol reports.
 There is still no public builder, CLI mode, HIR report/manifest/accounting
-surface, or direct generator path. Public host-language ergonomics and any
-promotion remain unselected while active evidence-audit leaf `.5` compares
-promotion, another private fixture, and retirement.
+surface, or direct generator path. The post-prototype audit keeps SourceHIR
+private: the working valid-ready path warrants retention, while one test
+producer, one schema, and only the IAL2 route do not justify a public contract.
+The next design-only leaf selects one concrete FSM/control-to-canonical-IAL1
+golden; separate leaves implement it and then re-audit promotion. Public host-
+language choice, packaging, versioning, and compatibility remain owned by the
+separate proposed builder frontier.
 
 ### Inference-First Scalar Authoring
 

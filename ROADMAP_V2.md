@@ -966,8 +966,13 @@ Source-facing HIR roadmap phase:
   14-line/428-byte golden hash. Leaf `.4` now implements that private path and
   proves existing-parser IAL1/IAL0/schedule/report equivalence. It adds no
   public frontend, CLI/report/manifest/accounting surface, or direct generator
-  bypass. Leaf `.5` is active continuity-only for the evidence-based choice
-  among promotion, another private fixture, or retirement.
+  bypass. Audit `.5` keeps SourceHIR private: the working IAL2 valid-ready path
+  is sufficient to reject retirement, but one test producer, one schema, and
+  no concrete-control-to-IAL1 route are insufficient to freeze a public API.
+  Proposed design-only `.6` selects that exact second private boundary and
+  golden, `.7` implements it, and `.8` repeats the promotion audit. Public
+  language, packaging, versioning, and compatibility remain separately owned
+  by proposed `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`.
 
 Advanced synthesizable targets worth considering later, not rejecting upfront:
 - macro/preprocessor-heavy RTL after preprocessing with provenance retained,

@@ -31115,3 +31115,27 @@ task tree and git.
 - Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
   and the 72-file HTML build pass; Knowledge Map passes at 1,078 facts / 5,558
   keys; memory, diff, output cleanup, and all seven staged doctrine gates pass.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.5 — SourceHIR remains private through IAL1 proof
+
+- Rejected both immediate promotion and retirement from the private prototype
+  evidence. T1547 still passes `Files=1, Tests=9` and proves a healthy checked,
+  immutable, provenance-preserving, byte-identical IAL2 path, so retirement is
+  unwarranted.
+- Promotion is premature because repository source usage is limited to the
+  three private packages plus their focused test: one test producer, one
+  valid-ready schema, one PPIF renderer, and no public language/versioning/
+  compatibility contract do not prove a stable shared API.
+- Decision `0029` and the post-prototype audit select continued private work:
+  proposed `.6` chooses the exact concrete-control-to-IAL1 boundary, `.7`
+  implements it, and `.8` repeats the audit. A read-only
+  `isf/phase_test.isf` readiness probe passes strict check at five states/five
+  signals and schedule generation at one five-state transaction/three ports;
+  `.6`, not this audit, owns the exact golden choice.
+- Public host-language ownership remains separately proposed. No code, tests,
+  parser, fixture, artifact, config, CLI/API/report/manifest/accounting,
+  HDL/runtime, frozen status file, or existing behavior changes, and the audit
+  record/decision own the rationale instead of a duplicate development note.
+- Documentation audits pass with `Files=3, Tests=40`; all 36 mdBook chapters
+  and the 72-file HTML build pass; Knowledge Map passes at 1,079 facts / 5,563
+  keys; memory, diff, output cleanup, and all seven staged doctrine gates pass.

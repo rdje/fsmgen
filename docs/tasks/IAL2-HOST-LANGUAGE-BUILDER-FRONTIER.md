@@ -91,6 +91,10 @@ package, module, parser, source, or generated-artifact implementation work.
 - `2026-07-30`: Private SourceHIR v1 is implemented and proved against the
   valid-ready golden. It remains an internal Perl construction path; this tree
   is still proposed and no public language/package is implied.
+- `2026-07-30`: SourceHIR post-prototype audit `.5` keeps the boundary private
+  through a second concrete-control-to-IAL1 proof. This tree remains proposed
+  and still solely owns any later public language, package, versioning, and
+  compatibility selection; the second private route will not activate it.
 
 ## Open Questions
 

@@ -42,6 +42,9 @@ family, alternatives, and retirement conditions live in
   only. Concrete FSM-to-IAL1 and other protocol shapes require later owners.
 - Public builder-language selection remains proposed under
   `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` until the private boundary is proved.
+- Decision `0029` refines the post-prototype state: the proved valid-ready
+  boundary remains private through a second concrete-control-to-IAL1 route and
+  another evidence audit.
 - SourceHIR may be removed without migration if it does not justify another
   producer or public promotion, because the first prototype exposes no public
   raw-object contract.
@@ -53,3 +56,6 @@ family, alternatives, and retirement conditions live in
 Focused t1547 proves the byte-identical golden, existing-parser handoff,
 diagnostic provenance, immutability, and unchanged IAL1/IAL0/report results.
 No public surface is advertised.
+
+The post-prototype outcome is recorded separately by decision `0029`; this
+record's original first-prototype selection remains intact.

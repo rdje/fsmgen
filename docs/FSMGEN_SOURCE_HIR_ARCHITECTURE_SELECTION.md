@@ -12,8 +12,10 @@ The three selected packages now implement the private valid-ready path.
 Focused t1547 proves canonical rendering through the existing parser and
 unchanged downstream artifacts/reports; no public surface is added.
 
-Clean prototype commit `b4733b879` activates the separate `.5` evidence audit;
-its activation selects no promotion, expansion, or retirement outcome.
+Post-prototype audit `.5` now retains the healthy boundary privately and
+selects a second private concrete-control-to-IAL1 proof before promotion is
+reconsidered. `docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md` and decision
+`0029` own that refinement.
 
 ## Outcome
 
@@ -278,5 +280,7 @@ evidence.
 - `.3` freezes the exact version-1 data, validation, provenance, diagnostic,
   renderer-result, and golden-test contract without behavior changes.
 - `.4` implements the private packages and proves the golden pipeline.
-- `.5` audits whether the prototype warrants a first public frontend/builder
-  and public projection; it does not assume promotion.
+- `.5` keeps SourceHIR private: retention is warranted, promotion is
+  premature, and retirement is rejected.
+- `.6` selects the exact private concrete-control-to-IAL1 boundary, `.7`
+  implements it, and `.8` repeats the evidence audit across both routes.

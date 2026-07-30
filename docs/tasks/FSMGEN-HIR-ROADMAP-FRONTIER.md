@@ -55,7 +55,7 @@ and future IAL evolution.
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER`
   Status: `active`
   Goal: `Own the source-facing FSMGEN HIR roadmap phase above IAL2 and IAL1.`
-  Children: `FSMGEN-HIR-ROADMAP-FRONTIER.1`, `FSMGEN-HIR-ROADMAP-FRONTIER.2`, `FSMGEN-HIR-ROADMAP-FRONTIER.3`, `FSMGEN-HIR-ROADMAP-FRONTIER.4`, `FSMGEN-HIR-ROADMAP-FRONTIER.5`
+  Children: `FSMGEN-HIR-ROADMAP-FRONTIER.1`, `FSMGEN-HIR-ROADMAP-FRONTIER.2`, `FSMGEN-HIR-ROADMAP-FRONTIER.3`, `FSMGEN-HIR-ROADMAP-FRONTIER.4`, `FSMGEN-HIR-ROADMAP-FRONTIER.5`, `FSMGEN-HIR-ROADMAP-FRONTIER.6`, `FSMGEN-HIR-ROADMAP-FRONTIER.7`, `FSMGEN-HIR-ROADMAP-FRONTIER.8`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.1`
   Status: `done`
@@ -86,17 +86,39 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.4: implement private SourceHIR golden path`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.5`
-  Status: `active`
+  Status: `done`
   Goal: `Audit private SourceHIR prototype promotion or retirement.`
   Acceptance: `After .4, decide from evidence whether to promote a first public frontend/builder and bounded projection, keep the prototype private for another fixture, or retire it. Coordinate any public-host-language selection with IAL2-HOST-LANGUAGE-BUILDER-FRONTIER; do not assume promotion.`
-  Verification: `Activated continuity-only after clean private implementation commit b4733b879. Activation changes only task/index, architecture/contract/implementation fact continuity, roadmap, mdBook backlog, Memory, changelog, and regenerated Knowledge Map. Promotion, another fixture, retirement, public builder/API/report/accounting, code, tests, parser, fixture, artifacts, config, HDL/runtime, and behavior remain unselected and unchanged. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; all 36 mdBook chapters pass executable-example testing; the 72-file HTML build passes and its exact repository-local output is removed. Knowledge Map generation/check passes at 1078 facts / 5558 question keys; memory architecture passes with MEMORY.md at 46 lines; diff hygiene and all seven staged doctrine gates pass. Both frozen status files remain untouched.`
-  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.5: activate SourceHIR promotion audit`
+  Verification: `Clean activation commit 2881a664c permits only the evidence audit. docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md and decision 0029 select continued private iteration: t1547 passes Files=1, Tests=9 and proves a healthy deterministic IAL2 valid-ready boundary, so retirement is rejected; repository source usage remains limited to the three private packages plus t1547, with one test-only producer, one schema, no concrete-control-to-IAL1 route, and no public host-language/versioning/compatibility contract, so promotion is premature. A read-only isf/phase_test.isf readiness probe passes strict check at five states/five signals and schedule generation at one five-state transaction/three ports, proving a second-route candidate class exists without selecting the fixture. Proposed design-only .6 selects the exact private concrete-control-to-IAL1 boundary, .7 implements it, and .8 repeats the evidence audit. Public builder ownership remains proposed and separate. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; all 36 mdBook chapters pass executable-example testing; the 72-file HTML build passes and its exact repository-local output is removed. Knowledge Map generation/check passes at 1079 facts / 5563 question keys; memory architecture passes with MEMORY.md at 47 lines; diff hygiene and all seven staged doctrine gates pass. No code, test, parser, fixture, artifact, config, CLI/API/report/manifest/accounting, HDL/runtime, frozen status file, or behavior changes.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.5: keep SourceHIR private through IAL1 proof`
+
+- ID: `FSMGEN-HIR-ROADMAP-FRONTIER.6`
+  Status: `proposed`
+  Goal: `Select the private concrete-control-to-IAL1 SourceHIR boundary.`
+  Acceptance: `After .5 commits cleanly, audit the shipped IAL1 source/parser/lowering contract and small checked concrete-control fixtures. Select or reject one exact version-2 SourceHIR object/schema evolution, private builder and canonical IAL1 renderer API, provenance/source-map/diagnostic rules, tracked byte-identical IAL1 golden, focused test owner, downstream IAL0/schedule equivalence oracle, migration/retirement rule, and complete non-goals. Prefer the smallest representative concrete FSM/control fixture; do not merely add another valid-ready/PPIF variant. Change no code, tests, parser, fixture, generated artifact, configuration, public API/report/manifest/accounting, HDL/runtime, or behavior.`
+  Verification: `pending`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.6: select private SourceHIR IAL1 boundary`
+
+- ID: `FSMGEN-HIR-ROADMAP-FRONTIER.7`
+  Status: `proposed`
+  Goal: `Implement the selected private concrete-control-to-IAL1 SourceHIR golden path.`
+  Acceptance: `Only after .6 selects a viable exact contract, implement that private contract and focused equivalence proof. Preserve the version-1 valid-ready path and all public surfaces. If .6 rejects a coherent shared boundary, do not activate this leaf.`
+  Verification: `pending`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.7: implement private SourceHIR IAL1 golden path`
+
+- ID: `FSMGEN-HIR-ROADMAP-FRONTIER.8`
+  Status: `proposed`
+  Goal: `Re-audit SourceHIR promotion after both private lowering routes.`
+  Acceptance: `After .7, compare promotion, continued private iteration, narrowing/renaming, and retirement using both private route proofs. Coordinate any public selection with IAL2-HOST-LANGUAGE-BUILDER-FRONTIER; a second route alone does not authorize a public API.`
+  Verification: `pending`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.8: audit SourceHIR promotion after IAL1 proof`
 
 ## Current Frontier
 
-Clean private implementation commit `b4733b879` activates `.5`
-continuity-only. The leaf must now choose promotion, another private fixture,
-or retirement from the recorded evidence.
+Leaf `.5` selects continued private iteration: the working valid-ready path is
+retained, public promotion is premature, and retirement is unwarranted.
+Proposed `.6` is the next clean activation and owns the exact private
+concrete-control-to-IAL1 boundary selection.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
@@ -104,7 +126,10 @@ or retirement from the recorded evidence.
 | 2 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `done` | Selected a distinct private SourceHIR, internal Perl builder, canonical PPIF handoff, and valid-ready golden. |
 | 3 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `done` | Froze the exact closed object, APIs, provenance/diagnostics, renderer/source-map, test, and golden oracle. |
 | 4 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `done` | Implemented the three private packages and t1547 exact golden/downstream-equivalence proof. |
-| 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `active` | Audit promotion, continued private iteration, or retirement from evidence. |
+| 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `done` | Kept SourceHIR private because one IAL2 schema is healthy but insufficient for promotion. |
+| 6 | `FSMGEN-HIR-ROADMAP-FRONTIER.6` | `proposed` | Select the exact concrete-control-to-IAL1 private boundary and golden. |
+| 7 | `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `proposed` | Implement only the selected second private route. |
+| 8 | `FSMGEN-HIR-ROADMAP-FRONTIER.8` | `proposed` | Repeat the promotion audit across both lowering routes. |
 
 ## Decisions
 
@@ -163,16 +188,21 @@ or retirement from the recorded evidence.
 - `2026-07-30`: Clean private implementation commit `b4733b879` activates
   `.5` continuity-only. Promotion, continued-private expansion, and retirement
   remain unselected until the activation commits cleanly.
+- `2026-07-30`: `.5` keeps SourceHIR private through a second lowering-route
+  proof. The valid-ready prototype is healthy enough to retain, but one test
+  producer, one schema, and only the IAL2 route are insufficient evidence for
+  public language/API/versioning compatibility. Decision `0029` refines
+  `0028`; proposed `.6` selects concrete control to canonical IAL1, `.7`
+  implements it, and `.8` repeats the audit.
 
 ## Open Questions
 
-- Leaf `.5` must decide from the private prototype evidence whether to promote
-  a public host-language builder, keep SourceHIR private for another fixture,
-  or retire the prototype.
+- Leaf `.6` must select or reject one coherent private concrete-control-to-IAL1
+  SourceHIR contract and exact golden after `.5` commits cleanly.
 
 ## Blockers
 
-- None. `.5` is active continuity-only after clean commit `b4733b879`.
+- None. `.6` remains proposed until the `.5` audit commit is clean.
 
 ## Verification Log
 
@@ -185,6 +215,7 @@ or retirement from the recorded evidence.
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.4` activation | documentation audits; Knowledge Map; memory architecture; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; continuity-only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.4` implementation | t1547 plus current forward-IR/contract/valid-ready baseline; four syntax checks; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; private golden path only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.5` activation | documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; continuity-only |
+| `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.5` audit | t1547; read-only candidate strict/schedule probes; implementation-reference census; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; remain private and select second route |
 
 ## Commit Log
 
@@ -201,6 +232,7 @@ or retirement from the recorded evidence.
 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `FSMGEN-HIR-ROADMAP-FRONTIER.4: implement private SourceHIR golden path` | Implements only the private three-package/t1547 contract. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `pending` | Proposed evidence-based promotion/retirement audit. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `FSMGEN-HIR-ROADMAP-FRONTIER.5: activate SourceHIR promotion audit` | Continuity-only activation after the clean private prototype. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `FSMGEN-HIR-ROADMAP-FRONTIER.5: keep SourceHIR private through IAL1 proof` | Retains the healthy prototype privately and selects a second lowering-route proof before promotion. |
 
 ## Changelog
 
@@ -221,6 +253,9 @@ or retirement from the recorded evidence.
   golden path without advertising or changing any public surface.
 - `2026-07-30`: Activated `.5` continuity-only for evidence-based promotion,
   continued-private, or retirement selection.
+- `2026-07-30`: Kept SourceHIR private, rejected retirement and premature
+  promotion, and selected proposed `.6`/`.7`/`.8` for concrete IAL1 design,
+  implementation, and the next promotion audit.
 
 ## Acceptance Checklist (enforced)
 
