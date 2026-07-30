@@ -11842,6 +11842,12 @@ See the [selection record](../../IAL2_POST_FROZEN_WORKFLOW_SYNC_NEXT_OWNER_SELEC
 Clean selector commit `23a987e06` activates only the import-tree child
 continuity-only. The stale note/fact, live import closure, and every product
 behavior remain unchanged until the documentation repair commits.
+The import refresh and intervening README, project-document lifecycle, and
+portable TASK-ACCEPTANCE doctrine work are complete. Clean integration commit
+`d5b371184` activates parent selector `.836` continuity-only. The selector will
+choose one smallest PNT-eligible proposed owner without activating the
+scheduled four-document lifecycle review or a director-gated item. Product
+behavior remains unchanged during activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

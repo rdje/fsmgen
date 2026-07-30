@@ -8167,6 +8167,12 @@ Clean selector commit `23a987e06` activates only
 `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` continuity-only. The stale note/fact,
 live import closure, and every product behavior remain unchanged until the
 child commits its documentation repair.
+The import refresh and intervening README, project-document lifecycle, and
+portable TASK-ACCEPTANCE doctrine work are now complete. Clean integration
+commit `d5b371184` activates parent selector `.836` continuity-only. It will
+choose one smallest PNT-eligible proposed owner while leaving the scheduled
+four-document lifecycle review and all director-gated items inactive; no
+product behavior changes during activation.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

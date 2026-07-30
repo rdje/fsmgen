@@ -5,14 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3: enforce portable task acceptance`).
-- active_work_unit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3` (complete; tree done).
-- current_state: TASK-ACCEPTANCE is the seventh doctrine. Matching staged work
-  now requires fresh one-file box-scoped evidence through the neutral checker;
-  hook/CI, toolbox/template, README/mdBook, decision, and fact surfaces agree.
-- next_action: from the clean tree, resume roadmap PNT by selecting the smallest
-  exact roadmap-aligned owner after completed parent frontier `.835`.
-- in_flight_uncommitted: none after the integration commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.836: activate post doctrine selector`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.836` (active selector).
+- current_state: clean post-doctrine continuity activates one no-behavior
+  selector; no proposed child or product behavior is activated yet.
+- next_action: execute `.836`, choose exactly one smallest PNT-eligible owner,
+  and commit the selector before activating the selected child.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

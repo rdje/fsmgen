@@ -30495,3 +30495,17 @@ task tree and git.
   `root=git_history` and `no-regression=prove_summary`. Generated book output
   was removed. No product behavior changed; the decision/fact own the
   rationale, so no development note is warranted.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.836 — post-doctrine selector activated
+
+- Activated one no-behavior parent selector from clean TASK-ACCEPTANCE
+  integration commit `d5b371184`; no proposed child or product behavior is
+  activated by this continuity slice.
+- The selector must choose the smallest PNT-eligible proposed owner while
+  leaving the scheduled four-document lifecycle review and every explicitly
+  director-gated item inactive.
+- Task-tree, roadmap, mdBook, Memory, and changelog continuity are synchronized;
+  feature-backlog status plus relative-path audits pass with `Files=2,
+  Tests=17`, Knowledge Map validation passes at 1067 facts / 5493 keys, and
+  mdBook HTML builds cleanly. This slice does not warrant a development-note
+  entry.
