@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1: activate precedence audit`).
-- active_work_unit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`.
-- current_state: clean selector commit `1be57f7bd` selects the no-behavior precedence audit; `.1` is active continuity-only. The AXI fixed-four behavioral guard remains correct, the malformed concurrent assertion remains unchanged, and every other shipped surface is preserved.
-- next_action: trace the assertion carrier/CoreAST/intermediate-inlining/emitter path, reproduce direct versus inlined mixed-precedence semantics, and select the smallest general repair plus exact assertion-enabled coverage without changing behavior.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1: select AST-preserving substitution repair`).
+- active_work_unit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2` (selected; awaiting clean continuity activation).
+- current_state: audit `.1` is complete. An all-CoreAST trace isolates lost child-parent precedence when an inlineable SignalRef is replaced with standalone driving-expression text. The selected general repair groups every successful intermediate replacement; tracked t1544 freezes the current defect. Product behavior remains unchanged.
+- next_action: activate implementation `.2` continuity-only, commit cleanly, then implement the one-branch grouping repair and reconcile t1410-t1412/t1544 plus assertion-enabled legal-0x00000004 t1507.
+- in_flight_uncommitted: none after this audit commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

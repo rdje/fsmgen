@@ -1003,6 +1003,16 @@ Clean selector commit `1be57f7bd` activates only that no-behavior audit. AXI
 admission, generated HDL, and the current assertion defect remain unchanged
 during activation.
 
+That audit is now complete. A recursive carrier trace proves the property and
+its nested operands are all CoreAST: direct nested rendering is correct, while
+inline-intermediate substitution turns a child AST into standalone text and
+loses its former parent precedence. The selected repair explicitly groups
+every substituted intermediate expression. Tracked t1544 freezes the current
+malformed property and correct behavioral intermediate; a separate cleanly
+activated implementation must enable t1507 assertions and add legal address
+`0x00000004` without changing the admission set. See the
+[readiness audit](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_READINESS_AUDIT.md).
+
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and
 back-to-back reads, ID queues/demux/interleaving, aliases, and decision 0020's

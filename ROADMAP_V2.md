@@ -8075,6 +8075,18 @@ See `docs/IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md`.
 Clean selector commit `1be57f7bd` activates only the no-behavior assertion
 precedence audit `.1`. The malformed property and all shipped behavior remain
 unchanged during this continuity transition.
+Completed audit `.1` proves the generated AXI property is an all-CoreAST graph
+and isolates the defect to textual replacement of an inlineable `SignalRef`:
+the driving OR renders correctly as a standalone expression, but its original
+child-parent precedence context is gone when the replacement is inserted into
+the parent AND. It selects explicit grouping around every successfully
+rendered inline-intermediate replacement as the smallest general repair.
+Tracked t1544 now freezes correct direct rendering, the malformed inlined
+condition/property, and correct behavioral factoring. Separate `.2` must
+reconcile t1410-t1412/t1544 and enable t1507 assertions with legal address
+`0x00000004`; no product behavior changes until `.2` is cleanly activated and
+implemented. See
+`docs/ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_READINESS_AUDIT.md`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

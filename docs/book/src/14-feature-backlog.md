@@ -11761,6 +11761,17 @@ and decision-`0020` owners remain independent.
 Clean selector commit `1be57f7bd` activates only audit `.1` continuity-only.
 The malformed concurrent property and every shipped behavior remain unchanged
 while the audit selects a general repair contract.
+Completed audit `.1` proves there is no mixed legacy/CoreAST expression graph:
+the loss occurs when concurrent-check rendering substitutes an inlineable
+CoreAST signal with standalone driving-expression text after its parent
+precedence context has been erased. The selected general repair groups every
+successfully substituted intermediate expression, preserving that AST boundary
+for any operator pair without changing the canonical CoreAST renderer or AXI
+source. Tracked t1544 characterizes the current defect; separate `.2` owns the
+t1410-t1412/t1544 reconciliation and assertion-enabled legal-`0x00000004`
+t1507 proof. See the
+[readiness audit](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_READINESS_AUDIT.md).
+No generated behavior changes during this audit slice.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
