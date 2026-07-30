@@ -30540,3 +30540,19 @@ task tree and git.
   `Files=2, Tests=17`; Knowledge Map generation/check passes at 1068 facts /
   5499 keys; mdBook HTML build and diff hygiene pass. This activation does not
   warrant a development-note entry.
+
+### PUBLIC-SYNC-TEST-DRIFT-REPAIR.1 — public presence keys synchronized
+
+- Added the exact three already-shipped verification-observation discovery
+  families to the authoritative public ISF top-level presence list. The direct
+  payload/list difference moves from three missing / zero extra to zero/zero.
+- Guarded direct, JSON-roundtrip, defensive-copy, CLI-manifest, key-family,
+  t1131, verification-observation, capability-manifest, and embedding tests
+  report `All tests successful`, `Files=9, Tests=21`; Perl syntax passes.
+- The payload, schema version, parser/scheduler, generated artifacts, and
+  product runtime behavior are unchanged. `.2`/`.3` remain sequentially
+  pending; the public-contract fact/book/task/Memory surfaces are synchronized,
+  and no separate development-note entry is warranted.
+- Feature-backlog status, live-book-path, and relative-path audits pass with
+  `Files=3, Tests=40`; Knowledge Map generation/check passes at 1068 facts /
+  5499 keys; mdBook HTML build and diff hygiene pass.

@@ -11861,6 +11861,12 @@ Clean selector commit `06c03e6bf` activates only public-sync `.1`
 continuity-only. The authoritative public presence list, payload, tests, and
 product behavior remain unchanged during activation; `.2` and `.3` stay
 pending.
+Public-sync `.1` is now complete: the authoritative presence list advertises
+all three already-shipped verification-observation discovery families, its
+payload/list difference is empty, and t1131 plus adjacent contract gates pass.
+No payload, schema, parser/scheduler, generated artifact, or product behavior
+changed. `.2` remains pending until the clean `.1` commit; `.3` stays behind
+`.2`.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -8185,6 +8185,12 @@ Clean selector commit `06c03e6bf` activates only
 `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1` continuity-only. The authoritative presence
 list, payload, tests, and product behavior remain unchanged during activation;
 public-sync `.2` and `.3` remain pending.
+Completed public-sync `.1` adds the exact three already-shipped verification-
+observation discovery families to the authoritative public ISF presence list.
+The payload/list difference is now empty and t1131 plus adjacent public-
+contract/capability gates pass. Payload, schema, parser/scheduler, generated
+artifacts, and product behavior are unchanged. `.2` remains pending until this
+implementation commits cleanly; `.3` remains behind `.2`.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

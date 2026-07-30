@@ -35,6 +35,9 @@ child endpoints, unknown signals, unsupported roles, duplicate signals, and
 duplicate observation names fail closed.
 
 The schedule report exposes the metadata through `verification_observations[]`.
+The bounded public ISF contract's exact `public_top_level_presence_keys` list
+also advertises the entry, signal-entry, and role-value discovery families, so
+manifest consumers can discover all three schemas without raw-hash inference.
 Each observation entry reports `name`, `role`, inherited `clock`, `reset`, and
 `signals`; each signal entry reports `name`, `direction`, and resolved scalar
 `width`.

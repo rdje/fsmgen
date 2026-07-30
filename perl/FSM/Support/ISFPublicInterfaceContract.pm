@@ -705,6 +705,9 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_transaction_wait_count_kind_values
             schedule_report_transaction_stage_keys
             schedule_report_transaction_stage_kind_values
+            schedule_report_verification_observation_keys
+            schedule_report_verification_observation_role_values
+            schedule_report_verification_observation_signal_keys
             schedule_report_temporal_contract_keys
             schedule_report_temporal_contract_kind_values
             schedule_report_temporal_contract_overlap_policy_values

@@ -73,3 +73,7 @@ selector to active; every other candidate remains independently owned.
 Clean selector commit `06c03e6bf` activates only public-sync `.1` through
 continuity changes. The authoritative list, payload, tests, later public-sync
 leaves, and every product behavior remain unchanged during activation.
+
+The selected child now adds the exact three list entries and restores an empty
+payload/list difference plus t1131. Public-sync `.2` and `.3` remain sequential
+owners; the mdBook fence repair and every other candidate remain independent.

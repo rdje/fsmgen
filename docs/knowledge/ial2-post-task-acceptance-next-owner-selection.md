@@ -35,3 +35,6 @@ files stay untouched. Explicitly director-gated items remain inactive.
 Clean selector commit `06c03e6bf` activates only public-sync `.1`
 continuity-only. The authoritative list and every product behavior remain
 unchanged during activation; `.2` and `.3` stay pending.
+
+Selected leaf `.1` now synchronizes all three names and restores an empty
+payload/list difference plus t1131. `.2` and `.3` remain sequentially pending.

@@ -2304,6 +2304,11 @@ isf/verification_observation_metadata.isf` reports one
 `rst_n` context and source-ordered signal summaries for `valid`, `ready`, and
 `data`.
 
+The capability manifest's bounded public ISF contract advertises the entry,
+signal-entry, and role-value discovery families through its exact
+`public_top_level_presence_keys` list. Consumers can therefore discover all
+three verification-observation schemas without comparing raw contract hashes.
+
 ```lisp
 (stage accept
   (ready ready)

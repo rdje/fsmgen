@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`PUBLIC-SYNC-TEST-DRIFT-REPAIR.1: activate public presence sync`).
-- active_work_unit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1` (continuity-only activation).
-- current_state: clean selector `06c03e6bf` activates only `.1`; the public
-  presence list remains unchanged until the activation commit is clean.
-- next_action: add the three shipped verification-observation discovery-family
-  keys to the authoritative list and prove t1131 plus adjacent contract gates.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`PUBLIC-SYNC-TEST-DRIFT-REPAIR.1: synchronize public presence keys`).
+- active_work_unit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.1` (complete in this commit).
+- current_state: the public ISF presence list now includes the exact three
+  shipped verification-observation discovery families and t1131 is green.
+- next_action: after this implementation commits cleanly, activate only
+  `PUBLIC-SYNC-TEST-DRIFT-REPAIR.2` for the ISF focused-test index sync.
+- in_flight_uncommitted: none after this implementation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -26,8 +26,8 @@ bounded current-state pointer. Git preserves its prior history.
 - `TASK-ACCEPTANCE` was not durably ported or backlogged by the June doctrine
   adoption; decision `0026` plus completed `.1`-.3 now ship the neutral
   contract, checker/registries/probes, and seventh-doctrine integration.
-- Current-HEAD probes keep all three public-sync leaves real. `.836` selects
-  only `.1`; mdBook's four untyped rustdoc fences remain independently proposed.
+- Public-sync `.1` now restores the public presence list; `.2`/`.3` remain
+  current and sequential. mdBook's four rustdoc fences remain independently proposed.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
