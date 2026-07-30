@@ -82,6 +82,11 @@ stale workflow prose and all product behavior remain unchanged. A clean
 selector commit may activate only the selected documentation leaf through a
 separate continuity commit.
 
+Clean selector commit `dc055558c` activates only
+`TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1` through continuity changes. The
+stale guidance, all four frozen blobs, and every product behavior remain
+unchanged during activation.
+
 ## Closeout Evidence
 
 - Book/status/path truth passes 5 files/329 tests. Knowledge Map generation and

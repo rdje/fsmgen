@@ -8136,6 +8136,10 @@ prose and preserve decision `0019`'s node-list/frontier rule. Import-tree
 refresh, HIAL/VIAL, scale, public-test drift, other protocols/backends,
 simulator profiles, and decision `0020` remain separate. See
 `docs/IAL2_POST_VHDL_BOOK_SYNC_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `dc055558c` activates only
+`TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1` continuity-only. The stale
+workflow prose, decisions `0007`/`0019`, all four frozen blobs, and every
+product behavior remain unchanged during activation.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

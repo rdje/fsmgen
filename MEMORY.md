@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.834: select frozen workflow sync`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.834` (selector complete in this commit).
-- current_state: `.834` selects proposed no-behavior `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1` because active guidance contradicts decisions `0007`/`0019` and `COMMIT.md`. The child is not active until a separate clean continuity commit.
-- next_action: after this selector commit is clean, activate only `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1`, then repair the workflow prose without editing frozen blobs.
-- in_flight_uncommitted: none after this selector commit; no background job.
+- latest_commit: this commit (`TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1: activate workflow doctrine repair`).
+- active_work_unit: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1` (continuity-only activation).
+- current_state: clean selector commit `dc055558c` selects the no-behavior workflow doctrine repair. `.1` is active continuity-only; stale guidance and all four frozen blobs remain unchanged until this activation commits cleanly.
+- next_action: align `docs/TASK_TREE.md` and `docs/TASK_TREE_README.md` with decisions `0007`/`0019` and `COMMIT.md`, auditing the template and never editing frozen blobs.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

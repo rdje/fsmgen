@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `infra/continuity / task-tree doctrine alignment`
 - Created: `2026-07-29`
 - Last updated: `2026-07-29`
@@ -35,16 +35,16 @@ blobs.
 ## Task Tree
 
 - ID: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC`
-  Status: `proposed`
+  Status: `active`
   Goal: `Align task-tree workflow instructions with the frozen legacy-doc rule.`
   Children: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1`
 
 - ID: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Replace active frozen-blob write instructions with the current layer model.`
   Acceptance: `Task-tree workflow docs agree with decisions 0007/0019 and COMMIT.md without modifying frozen blobs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean parent selector commit dc055558c. Activation changes continuity pointers only; the contradictory task-tree guidance and all four frozen legacy blobs remain unchanged until this commit is clean. Decisions 0007/0019, COMMIT.md, the node-list/frontier rule, and every product behavior remain unchanged. Book/status/path truth passes 5 files/329 tests. Knowledge Map generation/check passes at 1,063 facts/5,471 question keys. The mdBook renders exactly 72 files/16,540,065 bytes and its repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 49 lines, README.md is 2,351 lines, and diff hygiene passes. Activation-closeout canonical Stats-compatible capacity is 20,304,330,752/25,769,803,776 bytes = 18.910/24.000 GiB = 78.79%, with separate macOS kernel pressure level 1 and memory_pressure 75% free; guard occupancy is excluded from capacity truth. No background job remains.`
+  Commit: `TASK-TREE-FROZEN-LEGACY-DOC-WORKFLOW-SYNC.1: activate workflow doctrine repair`
 
 ## Decisions
 
@@ -55,4 +55,5 @@ blobs.
 
 ## Blockers
 
-- Inactive until selected from a clean tree after the current adoption closes.
+- Active only after clean parent selector commit `dc055558c`; repair workflow
+  guidance without modifying any frozen legacy blob.

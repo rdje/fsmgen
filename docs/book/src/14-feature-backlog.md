@@ -11821,6 +11821,9 @@ decision `0019`'s node-list/frontier rule. See the
 [selection record](../../IAL2_POST_VHDL_BOOK_SYNC_NEXT_OWNER_SELECTION.md).
 Import-tree refresh, HIAL/VIAL, scale, public-test drift, other protocols/
 backends, simulator profiles, and decision `0020` remain separate.
+Clean selector commit `dc055558c` activates only the selected workflow leaf
+continuity-only. The stale guidance, all four frozen blobs, and every product
+behavior remain unchanged during activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

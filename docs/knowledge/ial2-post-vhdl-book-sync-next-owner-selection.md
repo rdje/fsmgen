@@ -29,3 +29,6 @@ HIAL/VIAL, end-to-end scale, import-tree refresh, public-test drift, other
 protocol/backend and simulator work, and all director-gated owners remain
 independent.
 
+Clean selector commit `dc055558c` activates only the selected workflow leaf
+through continuity changes. The stale guidance, all four frozen blobs, and
+every product behavior remain unchanged during activation.
