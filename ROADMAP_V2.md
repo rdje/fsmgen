@@ -8196,6 +8196,11 @@ continuity-only. The authoritative ISF spec still lists 327 of 332 current
 `t/*-isf-*.t` paths; five links are missing and no extra link exists. The spec,
 tests, and product behavior remain unchanged during activation; `.3` stays
 pending.
+Completed public-sync `.2` adds exactly the five measured links and restores
+the authoritative ISF focused-test index from 327/332 to 332/332 with zero
+missing or extra paths. Focused t1250 and the guarded 295-file / 2,037-test ISF
+regression pass. No test or product behavior changed; `.3` remains pending
+until the clean `.2` commit.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

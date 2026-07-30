@@ -30570,3 +30570,16 @@ task tree and git.
   `Files=2, Tests=17`; Knowledge Map generation/check passes at 1068 facts /
   5499 keys; mdBook HTML build and diff hygiene pass. This activation does not
   warrant a development-note entry.
+
+### PUBLIC-SYNC-TEST-DRIFT-REPAIR.2 — focused-test index synchronized
+
+- Added exactly the five measured missing links—t1464, t1465, t1476, t1542,
+  and t1544—to the authoritative ISF spec index in lexicographic order. Exact
+  comparison moves from 327/332 with five missing to 332/332 with zero missing
+  and zero extra paths.
+- Focused t1250 reports `All tests successful`, `Files=1, Tests=2`; the
+  host100/process4096 guarded ISF regression reports `All tests successful`,
+  `Files=295, Tests=2037` in 618 seconds.
+- No test or product behavior changed. `.3` remains pending; task/book/fact/
+  Memory/changelog surfaces are synchronized, and no development note is
+  warranted.

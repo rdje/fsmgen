@@ -41,3 +41,6 @@ payload/list difference plus t1131. `.2` and `.3` remain sequentially pending.
 
 Clean `.1` commit `012660f90` activates only `.2`; the current ISF spec index
 has five missing focused-test links and zero extras. `.3` stays pending.
+
+Completed `.2` restores the exact 332/332 focused-test index and passes t1250
+plus the guarded 295-file / 2,037-test ISF regression. `.3` remains pending.

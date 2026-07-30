@@ -11871,6 +11871,10 @@ Clean `.1` implementation commit `012660f90` activates public-sync `.2`
 continuity-only. The authoritative ISF spec currently indexes 327 of 332
 focused tests: five links are missing and none is extra. The spec, tests, and
 product behavior remain unchanged during activation; `.3` stays pending.
+Public-sync `.2` is now complete: the authoritative ISF focused-test index
+contains all 332 current paths exactly, focused t1250 passes, and the guarded
+295-file / 2,037-test ISF regression is green. No test or product behavior
+changed. `.3` remains pending until the clean `.2` commit.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

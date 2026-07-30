@@ -6022,7 +6022,12 @@ Focused tests:
 - [t/1433-isf-until-pending-spawn-local-do-effect-widening.t](../t/1433-isf-until-pending-spawn-local-do-effect-widening.t)
 - [t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t](../t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t)
 - [t/1453-isf-storage-field-metadata.t](../t/1453-isf-storage-field-metadata.t)
+- [t/1464-isf-verification-output-uvm-passive-monitor.t](../t/1464-isf-verification-output-uvm-passive-monitor.t)
+- [t/1465-isf-verification-output-vhdl-observation-package.t](../t/1465-isf-verification-output-vhdl-observation-package.t)
+- [t/1476-isf-output-default-reset.t](../t/1476-isf-output-default-reset.t)
 - [t/1510-isf-multibit-loop-predicate-truthiness.t](../t/1510-isf-multibit-loop-predicate-truthiness.t)
+- [t/1542-isf-rule-transaction-named-drive-priority-readiness.t](../t/1542-isf-rule-transaction-named-drive-priority-readiness.t)
+- [t/1544-isf-assert-nested-bitwise-precedence-readiness.t](../t/1544-isf-assert-nested-bitwise-precedence-readiness.t)
 
 ## 12. Explicitly Deferred
 

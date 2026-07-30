@@ -81,3 +81,7 @@ owners; the mdBook fence repair and every other candidate remain independent.
 Clean `.1` implementation commit `012660f90` activates only public-sync `.2`
 continuity-only. Its measured boundary is five missing ISF focused-test links
 and zero extras; `.3` remains pending.
+
+Public-sync `.2` now adds exactly those five links, restores the exact 332/332
+index, and passes focused t1250 plus the guarded 295-file ISF regression. `.3`
+remains pending until the clean `.2` commit.
