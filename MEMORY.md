@@ -5,16 +5,15 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1: refresh live import map`).
-- active_work_unit: `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` (complete).
-- current_state: the import-tree note and canonical fact match the exact live
-  `bin/fsmgen` closure: 228 total modules, 227 `.pm` modules, and 19 IAL2
-  modules. Every live package has one linked note entry; runtime is unchanged.
-- next_action: create and cleanly activate the smallest exact task-tree owner
-  for the director-requested nearly-static GitHub README reduction and a small,
-  project-neutral, git-tracked README growth-control standard; do not edit
-  `README.md` before that owner exists.
-- in_flight_uncommitted: none after this refresh commit; no background job.
+- latest_commit: this commit (`README-STATIC-LANDING-PAGE.1: activate nearly-static README contract`).
+- active_work_unit: `README-STATIC-LANDING-PAGE.2` (active after this clean activation).
+- current_state: `README-STATIC-LANDING-PAGE` owns the director-requested
+  reduction from the measured 2,353-line / 377,853-byte README and the later
+  project-neutral tracked maintenance standard. Runtime remains unchanged.
+- next_action: rewrite `README.md` as a concise stable GitHub landing page,
+  deriving dynamic detail from canonical maintained surfaces, and synchronize
+  stale navigation truth in the roadmap/bootstrap guidance and mdBook.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
