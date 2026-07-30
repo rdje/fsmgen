@@ -8219,6 +8219,10 @@ Completed public-sync `.4` updates exactly those four patterns to require the
 shipped inverse-winner masks. t1475/t1482 and the guarded five-file named-drive/
 AHB preservation cluster pass; both canonical public sources strict-check.
 No product behavior changed, and the `.1`-.4 public-sync tree is complete.
+Clean public-sync completion commit `b2c114e2e` activates parent selector `.837`
+continuity-only. No candidate is selected during activation; the known four-
+fence mdBook rustdoc repair remains proposed pending current-HEAD reconciliation.
+The project-document lifecycle discussion and every director gate stay inactive.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

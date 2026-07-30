@@ -11892,6 +11892,9 @@ Public-sync `.4` is now complete: t1475/t1482 require the exact shipped
 inverse-winner masks, both focused files and the named-drive/AHB preservation
 cluster pass, and both canonical public sources strict-check. No product
 behavior changed; the public-sync `.1`-.4 tree is complete.
+Clean public-sync completion commit `b2c114e2e` activates parent selector `.837`
+continuity-only. It selects no candidate during activation; the known four-
+fence mdBook rustdoc repair remains proposed pending current-HEAD comparison.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

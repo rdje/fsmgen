@@ -30653,3 +30653,18 @@ task tree and git.
   at 1,069 facts / 5,502 keys; mdBook HTML build and diff hygiene pass. No
   development-note entry is warranted. The staged seven-doctrine driver passes
   with fresh `perl_diagnostic` / `prove_summary` task-acceptance evidence.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.837 — post-public-sync selector activated
+
+- Activated one new parent selector only after clean public-sync completion
+  commit `b2c114e2e`. No candidate is selected during activation; the known
+  four-fence mdBook rustdoc repair remains proposed pending current-HEAD
+  reconciliation.
+- `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` and every director-gated item
+  remain proposed/inactive; `ROADMAP_STATUS.md` and
+  `LIVE_ACHIEVEMENT_STATUS.md` remain untouched.
+- Task/index, roadmap, mdBook, Memory, and changelog continuity are synchronized.
+  Feature-backlog status, live-book-path, and relative-path audits pass with
+  `Files=3, Tests=40`; Knowledge Map generation/check passes at 1,069 facts /
+  5,502 keys; mdBook HTML build and diff hygiene pass. No product or test
+  behavior changes, and no development-note entry is warranted.

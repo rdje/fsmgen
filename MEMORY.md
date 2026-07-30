@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`PUBLIC-SYNC-TEST-DRIFT-REPAIR.4: synchronize named-drive expectations`).
-- active_work_unit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.4` (complete in this commit).
-- current_state: public-sync `.1`-.4 are complete; t1475/t1482 now require the
-  shipped inverse-winner masks and focused/priority/AHB gates are green.
-- next_action: after this commit is clean, append and activate parent selector
-  `IAL2-FEATURE-COMPLETENESS-FRONTIER.837` before selecting another owner.
-- in_flight_uncommitted: none after this implementation commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.837: activate post public-sync selector`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.837` (continuity-only activation).
+- current_state: public-sync `.1`-.4 are clean and complete; `.837` owns one
+  post-public-sync roadmap selection without selecting a candidate yet.
+- next_action: reconcile the current-HEAD candidate set and select exactly one
+  smallest owner; the four-fence mdBook rustdoc repair is the known candidate.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
