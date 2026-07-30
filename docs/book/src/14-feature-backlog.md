@@ -11923,6 +11923,9 @@ token, while AHB already carries a local `fabric` avoidance. The child will
 inventory all producers/targets and select a shared contract after a separate
 clean activation; the lifecycle review and every director gate stay inactive.
 See the [selection record](../../IAL2_POST_RUSTDOC_NEXT_OWNER_SELECTION.md).
+Clean selector commit `b0bcb12b5` activates only the identifier audit `.1`
+continuity-only. All composition name producers, reports, generated HDL, tests,
+and target behavior remain unchanged during activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

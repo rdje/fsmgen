@@ -8250,6 +8250,11 @@ fails Verilator on the reserved instance token, while AHB already uses local
 target languages after a separate clean activation. The scheduled lifecycle
 review and every director gate remain inactive. See
 `docs/IAL2_POST_RUSTDOC_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `b0bcb12b5` activates only
+`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
+name producers, reports, generated HDL, tests, and target behavior remain
+unchanged during activation; the lifecycle review and director gates stay
+inactive.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

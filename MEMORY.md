@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.838: select HDL instance-identifier audit`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.838` (selector complete).
-- current_state: `.838` selects proposed instance-identifier audit `.1` after
-  reproducing APB's generated `interconnect` SystemVerilog keyword failure.
-- next_action: after this selector commits cleanly, activate only the selected
-  audit and inventory/probe all composition name producers without behavior change.
-- in_flight_uncommitted: none after this selector commit; no background job.
+- latest_commit: this commit (`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1: activate generated identifier audit`).
+- active_work_unit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` (continuity-only activation).
+- current_state: clean selector `b0bcb12b5` activates only the no-behavior
+  identifier inventory/probe audit; all producers remain unchanged.
+- next_action: inventory AHB/APB/AXI/library/actor-network instance-name
+  producers, probe SV/VHDL keywords/collisions, and select one shared contract.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

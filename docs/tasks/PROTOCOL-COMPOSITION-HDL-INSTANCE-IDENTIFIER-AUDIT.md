@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `HDL quality / protocol composition identifiers`
 - Created: `2026-07-23`
-- Last updated: `2026-07-23`
+- Last updated: `2026-07-30`
 - Owner: repo-local workflow
 
 ## Goal
@@ -44,18 +44,23 @@ tops, showing that the issue may be cross-protocol rather than AHB-only.
 ## Task Tree
 
 - ID: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit generated child instance names against target-language reserved words before selecting a shared policy.`
   Children: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1`
 
 - ID: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Inventory and probe reserved generated instance identifiers without changing behavior.`
   Acceptance: `Enumerate composition instance-name producers, run focused target-language parser/lint probes for every risky identifier, and select a bounded shared remediation contract or close the concern with evidence. Make no behavior change in this audit.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean selector commit b0bcb12b5. Current-HEAD evidence remains exact: APB seeds the generated interconnect role as interconnect, AHB seeds fabric, both local helpers avoid only declared-name collisions, and strict verification of public ppif/apb_composition_multi_peripheral.ppif fails Verilator at generated line 3134 on apb_interconnect interconnect (. Activation updates continuity surfaces only and changes no source, test, artifact, report/API, generated HDL, target behavior, or selected remediation. Feature-backlog status, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1,071 facts / 5,513 question keys; mdBook HTML build and diff hygiene pass; Memory remains 60 lines and README remains 246 lines. The scheduled lifecycle review and every director gate remain inactive, both legacy status files remain untouched, and no probe artifact remains.`
+  Commit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1: activate generated identifier audit`
+
+## Decisions
+
+- `2026-07-30`: Clean parent selector commit `b0bcb12b5` selects only `.1`;
+  this continuity slice activates the no-behavior inventory/probe audit while
+  leaving all identifier producers and generated outputs unchanged.
 
 ## Blockers
 
-- Activation/order follows the task-tree pivot doctrine after ongoing active
-  work dries out.
+- None. `.1` is active from the clean selector boundary.

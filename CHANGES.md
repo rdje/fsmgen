@@ -30755,3 +30755,19 @@ task tree and git.
   5,513 keys; mdBook HTML-build and diff-hygiene gates pass. No source, test,
   artifact, API, HDL/runtime, product, lifecycle-policy, prose, or example
   behavior changes.
+
+### PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1 — generated identifier audit activated
+
+- Activated only `.1` from clean selector commit `b0bcb12b5`. Current evidence
+  remains APB `interconnect` versus AHB `fabric`, local collision-only helpers,
+  and the public APB Verilator `unexpected interconnect` failure.
+- All instance-name producers, source/tests, generated artifacts, reports/APIs,
+  HDL/runtime, target behavior, and remediation policy remain unchanged during
+  this continuity slice. The lifecycle review and every director gate stay
+  inactive; both legacy status files remain untouched.
+- Task/index, roadmap, mdBook, selector fact, Memory, and changelog continuity
+  are synchronized. Feature-backlog status, live-book-path, and relative-path
+  audits pass with `Files=3, Tests=40`; Knowledge Map generation/check passes
+  at 1,071 facts / 5,513 keys; mdBook HTML build and diff hygiene pass. No
+  separate engineering rationale is created, so no development-note entry is
+  warranted.

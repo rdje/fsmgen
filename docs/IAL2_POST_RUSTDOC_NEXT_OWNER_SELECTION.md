@@ -64,3 +64,8 @@ selector.
   mdBook HTML build and diff hygiene pass.
 - `MEMORY.md` remains at its 60-line cap, `README.md` remains 246 lines,
   neither legacy status file changed, and no background job remains.
+
+Clean selector commit `b0bcb12b5` activates only the selected no-behavior
+identifier audit through continuity changes. APB/AHB/AXI/library/actor-network
+name producers, generated outputs, tests, reports, and target behavior remain
+unchanged during activation.

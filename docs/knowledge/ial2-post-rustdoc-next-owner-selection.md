@@ -36,3 +36,6 @@ The scheduled four-document lifecycle review stays proposed under interim
 decision `0025`; both legacy status files remain untouched. Explicitly
 director-gated directions remain inactive.
 
+Clean selector commit `b0bcb12b5` activates only the selected identifier audit
+continuity-only. Source producers, reports, generated HDL, and target behavior
+remain unchanged during activation.
