@@ -64,6 +64,16 @@ State the exact outcome this top-level task must deliver.
 
 - None.
 
+## Acceptance Checklist (enforced for implementation changes)
+
+<!-- Required and freshly checked in the staged slice whenever a path declared
+     by doctrine/task_acceptance/change_paths.tsv changes. See
+     TASK_ACCEPTANCE.md and TOOLBOX.md. Documentation-only slices are exempt. -->
+
+- [ ] **ROOT CAUSE (WHY + WHERE)** — `<tool output naming the mechanism and locus>`
+- [ ] **ADDRESSED (verified)** — `<before→after result from a named command>`
+- [ ] **NO REGRESSION** — `<named broader gate and deterministic result>`
+
 ## Verification Log
 
 <!-- Optional historical snapshot (decision 0019). Each leaf's Verification field

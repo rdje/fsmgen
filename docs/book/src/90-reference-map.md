@@ -42,6 +42,7 @@ Some docs are intentionally still focused references:
 - [../../../MEMORY.md](../../../MEMORY.md)
 - [../../../ROADMAP_V2.md](../../../ROADMAP_V2.md)
 - [../../../README_POLICY.md](../../../README_POLICY.md)
+- [../../../TASK_ACCEPTANCE.md](../../../TASK_ACCEPTANCE.md)
 - [../../../COMMIT.md](../../../COMMIT.md)
 
 These should stay precise and sometimes narrower than the book.
@@ -59,6 +60,12 @@ pending their scheduled lifecycle review.
 adopting projects keep the canonical tracked copy at repository root beside
 `README.md`. It defines stable content, routes dynamic detail elsewhere, and
 requires deterministic line/byte budgets in both pre-commit and CI.
+
+`TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
+standard. FSMGen's registered checker reads data-only staged-path and evidence
+registries, requires fresh one-file ROOT CAUSE / ADDRESSED / NO REGRESSION
+boxes for matching implementation changes, and leaves actual behavioral proof
+to the cited focused and CI oracles.
 
 `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is the canonical human handoff contract
 for SPECFORGE-style downstream consumers. The book includes that file directly

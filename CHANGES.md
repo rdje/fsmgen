@@ -30477,3 +30477,21 @@ task tree and git.
   `no-regression=prove_summary`. The gate is intentionally not registered until
   `.3`; no product behavior changed and decision `0026` already owns the
   rationale, so no development note is needed.
+
+### TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3 — portable task acceptance enforced
+
+- Registered `TASK-ACCEPTANCE` as FSMGen's seventh doctrine. The existing
+  pre-commit hook and hosted regression workflow inherit the checker through
+  `scripts/check_doctrines.sh`; bootstrap enforcement now requires the neutral
+  standard, workflow pointers, and registry row.
+- Synchronized the enforced checklist and FSMGen family chooser in TOOLBOX,
+  added the checklist to the task template, corrected staged-index ordering in
+  COMMIT, and aligned AGENTS, README, mdBook, decision `0026`, the Knowledge
+  Map fact, task tree, and Memory.
+- Bash/Perl syntax, locality plus checker tests (`All tests successful`,
+  `Files=2, Tests=29`), all seven doctrines, README at 246 lines / 9952 bytes,
+  Knowledge Map at 1067 facts / 5493 keys, docs paths, mdBook, and diff hygiene
+  pass. The final driver run against the actual staged `.3` index reports
+  `root=git_history` and `no-regression=prove_summary`. Generated book output
+  was removed. No product behavior changed; the decision/fact own the
+  rationale, so no development note is warranted.

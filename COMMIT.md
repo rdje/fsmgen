@@ -11,6 +11,9 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - No code, test, source, generated-artifact, or config change may start unless
   the activity already has task-tree ownership, either through an existing
   leaf or a newly created `docs/tasks/*.md` tree/leaf.
+- Every matching implementation change must satisfy `TASK_ACCEPTANCE.md` in
+  the owning staged task file: fresh checked ROOT CAUSE, ADDRESSED, and NO
+  REGRESSION boxes with the required box-scoped project-declared evidence.
 - Run this workflow after every completed task, slice, lane, or task-scoped activity without exception.
 - Do not let a long `pnt` streak, apparent momentum, or "just one more small thing" override this rule.
 - Do not expect the user to remind you. The workflow must be followed automatically.
@@ -61,6 +64,10 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - `LIVE_ACHIEVEMENT_STATUS.md`
   - **FROZEN legacy blob** (do not append) pending the scheduled lifecycle
     review in `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`.
+- `TASK_ACCEPTANCE.md`
+  - Project-neutral code-slice acceptance contract. Its checker reads staged
+    paths, task snapshots, and changed-line freshness from the Git index using
+    the data-only declarations under `doctrine/task_acceptance/`.
 - `git_message_brief.txt`
   - Short-lived commit message input file for `git commit -F`.
   - Must be overwritten for each commit and truncated to zero bytes after commit.
@@ -90,21 +97,25 @@ Ignoring it is not a style issue; it is a project-safety failure.
 4. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.
-   - For all completed task-scoped changes: `scripts/check_doctrines.sh`.
-5. Write `git_message_brief.txt` with:
+5. For a matching implementation change, complete the owning task file's
+   fresh `TASK_ACCEPTANCE.md` checklist with tool-backed ROOT CAUSE, ADDRESSED,
+   and NO REGRESSION evidence.
+6. Write `git_message_brief.txt` with:
    - concise subject line,
    - key body lines or bullet points,
    - no attribution trailer unless the user explicitly asks for one.
    - If the completed activity belongs to a task-tree leaf, identify the leaf ID in the subject or first body line.
-6. Stage intended tracked files (`git add ...`).
+7. Stage intended tracked files (`git add ...`).
    - This and every later git write step must run sequentially.
-7. Commit using:
+8. Run `scripts/check_doctrines.sh` against the staged index. This includes
+   `TASK-ACCEPTANCE`; do not treat its docs-only exemption as a code-slice pass.
+9. Commit using:
    - `git --no-pager commit -F git_message_brief.txt`
-8. Truncate message file:
+10. Truncate message file:
    - `truncate -s 0 git_message_brief.txt`
-9. Verify final state:
+11. Verify final state:
    - `git --no-pager status --short`
-10. The user-facing close-out should include the current live status from the
+12. The user-facing close-out should include the current live status from the
    task-trees (`docs/TASK_TREE.md` Active table + the owning `docs/tasks/*.md`
    frontier), since `ROADMAP_STATUS.md` is now a frozen legacy blob
    (`docs/decisions/0007`).

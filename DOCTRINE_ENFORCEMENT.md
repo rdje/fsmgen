@@ -50,7 +50,7 @@ FSMGEN uses the same three archetypes as the portable model:
 | --- | --- | --- |
 | Structural | Re-derive an invariant from tracked files. | `MEMORY.md` line cap, `README.md` line/byte caps and chronology density, bootstrap pointers, relative-path docs audit. |
 | Oracle | Re-run a deterministic tool. | Focused `prove` tests, `mdbook build docs/book`, `./bin/ci-regression`, HDL validation. |
-| Evidence | Require a task-tree leaf to carry tool-backed diagnosis and verification evidence. | Future diagnosis-evidence checks can cite `TOOLBOX.md` commands and rerunnable gates. |
+| Evidence | Require a task-tree leaf to carry tool-backed diagnosis and verification evidence. | `TASK-ACCEPTANCE` requires fresh box-scoped project-declared evidence for staged implementation changes. |
 
 Prefer structural checks when they prove the rule directly. Use oracle checks
 when behavior must be re-executed. Use evidence checks only for process rules
@@ -74,6 +74,7 @@ Current registered checks:
 | `DOC-PATHS` | `scripts/check_docs_relative_paths.sh` | Live docs and the Knowledge Map do not leak machine-local absolute home paths. |
 | `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | `README.md` stays within its 300-line / 16,384-byte landing-page budget and no line enumerates two or more narrated work-unit leaves (`docs/decisions/0021` and `0024`; reusable standard: `README_POLICY.md`). |
 | `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
+| `TASK-ACCEPTANCE` | `scripts/check_task_acceptance.sh` | A staged implementation change has one staged owning task file with fresh checked ROOT CAUSE, ADDRESSED, and NO REGRESSION boxes plus box-scoped declared root/no-regression evidence (`TASK_ACCEPTANCE.md`, decision `0026`). |
 
 List the registry with:
 
@@ -86,6 +87,33 @@ Run the local doctrine gate with:
 ```bash
 scripts/check_doctrines.sh
 ```
+
+## Task-Acceptance Evidence Gate
+
+`TASK_ACCEPTANCE.md` is the project-neutral standard. The checker embeds no
+FSMGen or source-project tool vocabulary. FSMGen declares its staged
+implementation-path scope in `doctrine/task_acceptance/change_paths.tsv` and
+its native evidence families in
+`doctrine/task_acceptance/evidence_signatures.tsv`.
+
+For matching staged work, the checker reads task content and changed-line
+freshness from the Git index. All three required box headers must be newly
+added or changed in the current slice, and one task file must satisfy the
+entire checklist. Root-cause and no-regression signatures must occur inside
+their corresponding box bodies. This prevents stale checklists, co-staged
+cross-file evidence, incidental prose, and unstaged worktree text from
+satisfying the gate.
+
+Run the focused checker after staging intended files:
+
+```bash
+scripts/check_task_acceptance.sh
+```
+
+Documentation-only commits remain exempt when no configured implementation
+path is staged, but both registries are still validated. The gate checks
+evidence presence, freshness, and shape; the cited focused/broader commands
+remain the behavioral oracle.
 
 ## Enforcement Layers
 
@@ -129,7 +157,8 @@ doctrine check only when a deterministic invariant is available.
 ## Honest Limits
 
 - Local hooks can be bypassed; CI is the real merge backstop.
-- Evidence checks can be faked unless they cite rerunnable oracles.
+- Evidence signatures can be fabricated; focused tests and CI must re-run the
+  named oracles cited in each task checklist.
 - A check proves repository state, not private intent.
 - Heavy or environment-dependent checks belong in focused validation or CI, not
   in the fast pre-commit path unless their dependencies are always available.

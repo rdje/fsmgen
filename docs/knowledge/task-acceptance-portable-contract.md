@@ -7,6 +7,7 @@ answers:
   - "what checklist does a code-changing task need?"
   - "how does task acceptance prevent an old checklist from passing new work?"
   - "why was PGEN TASK-ACCEPTANCE not copied directly?"
+  - "is TASK-ACCEPTANCE enforced in FSMGen?"
 date: 2026-07-30
 status: current
 tags: [doctrine, task-acceptance, evidence, checklist, portability]
@@ -28,4 +29,6 @@ old completed checklist cannot satisfy a later slice merely because its task
 file changed.
 
 The checker establishes presence, freshness, box scope, and declared evidence
-shape. Existing deterministic test/CI commands remain the truth oracle.
+shape. FSMGen registers it in `scripts/check_doctrines.sh`, so the existing
+pre-commit hook and hosted workflow run it. Existing deterministic test/CI
+commands remain the truth oracle.

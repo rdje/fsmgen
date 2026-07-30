@@ -2,8 +2,7 @@
 
 - Date: 2026-07-30
 - Type: architecture
-- Status: accepted (contract selected in
-  `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1`; enforcement pending `.2`/`.3`)
+- Status: accepted (executed in `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1`-`.3`)
 
 ## Context
 
@@ -54,4 +53,5 @@ and shape, not truth or human understanding.
 - A stale checked checklist cannot satisfy a new implementation slice merely
   because the same task file changed.
 - Local enforcement remains bypassable; the existing hosted doctrine driver is
-  the merge backstop once `.3` registers the gate.
+  the merge backstop. Leaf `.3` registers the checker in the shared driver, so
+  the existing pre-commit hook and hosted workflow enforce the same rule.

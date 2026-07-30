@@ -11,6 +11,44 @@ driver must pass:
 scripts/check_doctrines.sh
 ```
 
+## Code-Change Task Acceptance
+
+`TASK_ACCEPTANCE.md` defines the neutral enforced contract. Any staged code,
+test, source, generated-artifact, enforcement, or configuration change matching
+`doctrine/task_acceptance/change_paths.tsv` must update one owning task file
+with this current-slice checklist:
+
+```markdown
+## Acceptance Checklist (enforced)
+
+- [ ] **ROOT CAUSE (WHY + WHERE)** — <tool output naming the mechanism and locus>
+- [ ] **ADDRESSED (verified)** — <before→after result from a named command>
+- [ ] **NO REGRESSION** — <named broader gate and deterministic result>
+```
+
+Before staging the final slice, tick all three. After staging, run:
+
+```bash
+scripts/check_task_acceptance.sh
+scripts/check_doctrines.sh
+```
+
+The required box headers must be added or changed in the current staged diff;
+an old checklist does not count. ROOT CAUSE and NO REGRESSION must each carry a
+matching signature inside that box's own body. FSMGen's canonical signature
+rows live in `doctrine/task_acceptance/evidence_signatures.tsv`:
+
+| Scope | Families | Representative evidence |
+| --- | --- | --- |
+| Root cause | `fsmgen_trace`, `fsmgen_check`, `fsmgen_schedule`, `fsmgen_semantic` | `--trace-log`, `--check --json`, `--emit-schedule-json`, `--emit-semantic-json` |
+| Root cause | `perl_diagnostic`, `git_history`, `hdl_compiler` | a Perl diagnostic locus, `git log -S`, Verilator/Yosys error output |
+| No regression | `prove_summary`, `doctrine_driver`, `knowledge_map`, `readme_guard` | `All tests successful`, measured `Files/Tests`, all doctrines passed, `knowledge-map: OK` |
+| No regression | `perl_syntax`, `hdl_verification` | `syntax OK`, `verilator_lint`, `yosys_synthesis` |
+
+The TSV is authoritative; the table is a chooser. If a legitimate defect class
+has no fitting family, open a task-tree leaf to calibrate a narrow native
+signature instead of pasting unrelated evidence or weakening the checklist.
+
 ## Quick Chooser
 
 | Symptom or question | First tool |
@@ -28,6 +66,7 @@ scripts/check_doctrines.sh
 | Need README entry-point hygiene | `scripts/check_readme_entrypoint.sh`. |
 | Need Knowledge Map sync | `knowledge-map/scripts/gen_knowledge_map.sh` then `knowledge-map/scripts/check_knowledge_map.sh`. |
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
+| Need code-slice evidence acceptance | Stage the intended slice, then run `scripts/check_task_acceptance.sh`. |
 | Need diff hygiene before commit | `git --no-pager diff --check` and `git status --short`. |
 | Need a downstream repro bundle | `./bin/fsmgen-issue-bundle --case PATH --issue-id ID -- [FSMGEN_OPTIONS...]`. |
 
@@ -209,11 +248,13 @@ the owning task-tree leaf:
 rg -n 'Current Frontier|<LEAF-ID>|Verification Log|Commit Log' docs/tasks docs/TASK_TREE.md
 ```
 
-Before commit:
+Before commit, follow `COMMIT.md`; after staging the intended paths, run the
+staged-index acceptance check and full doctrine driver:
 
 ```bash
 git status --short
 git --no-pager diff --check
+scripts/check_task_acceptance.sh
 scripts/check_doctrines.sh
 ```
 

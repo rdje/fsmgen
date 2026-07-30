@@ -15,6 +15,7 @@ required_docs=(
   README.md
   MEMORY_ARCHITECTURE.md
   DOCTRINE_ENFORCEMENT.md
+  TASK_ACCEPTANCE.md
   TOOLBOX.md
 )
 
@@ -35,6 +36,20 @@ for doc in "${required_docs[@]}"; do
     note "${doc} is missing"
   fi
 done
+
+for file in AGENTS.md COMMIT.md DOCTRINE_ENFORCEMENT.md TOOLBOX.md; do
+  if grep -q 'TASK_ACCEPTANCE.md' "${file}"; then
+    ok "${file} points at TASK_ACCEPTANCE.md"
+  else
+    note "${file} does not point at TASK_ACCEPTANCE.md"
+  fi
+done
+
+if grep -q 'TASK-ACCEPTANCE|scripts/check_task_acceptance.sh' scripts/check_doctrines.sh; then
+  ok "doctrine registry includes TASK-ACCEPTANCE"
+else
+  note "doctrine registry does not include TASK-ACCEPTANCE"
+fi
 
 for file in "${bootstrap_files[@]}"; do
   if [[ ! -f "${file}" ]]; then

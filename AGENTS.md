@@ -31,6 +31,9 @@ The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`** +
 
 - **No code/test/source/artifact/config change without an owning task-tree leaf first**
   (`docs/TASK_TREE.md` + a `docs/tasks/*.md` tree, from `docs/tasks/TEMPLATE.md`).
+- **Every staged implementation slice must pass `TASK_ACCEPTANCE.md`** — add
+  fresh checked ROOT CAUSE, ADDRESSED, and NO REGRESSION boxes to one owning
+  task file, with box-scoped declared evidence, then run the staged-index gate.
 - **Route every durable thing to a layer and commit before the turn ends** — task-trees
   (`docs/tasks/`, layer B) / decision records (`docs/decisions/`, layer C) / the bounded
   `MEMORY.md` pointer (layer A, overwrite-only, capped) / git history (layer D). Nothing

@@ -132,6 +132,7 @@ useful:
 | Typed extension boundary | [docs/EXTENSION_MODEL.md](docs/EXTENSION_MODEL.md) |
 | Supported sample corpus | [docs/REGRESSION_CORPUS.md](docs/REGRESSION_CORPUS.md) |
 | Live CLI import architecture | [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) |
+| Code-change acceptance discipline | [TASK_ACCEPTANCE.md](TASK_ACCEPTANCE.md) |
 
 This README deliberately does not hand-maintain an exhaustive file index.
 Derive it from the repository when needed:

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / doctrine enforcement`
 - Created: `2026-07-30`
 - Last updated: `2026-07-30`
@@ -75,7 +75,7 @@ project-native evidence signatures. No external file was modified or copied.
 ## Task Tree
 
 - ID: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE`
-  Status: `active`
+  Status: `done`
   Goal: `Ship a neutral project-declared evidence gate plus an FSMGen-native TASK-ACCEPTANCE deployment.`
   Children: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1`, `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2`, `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3`
 
@@ -94,11 +94,11 @@ project-native evidence signatures. No external file was modified or copied.
   Commit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2: implement declarative acceptance checker`
 
 - ID: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3`
-  Status: `active`
+  Status: `done`
   Goal: `Register TASK-ACCEPTANCE and synchronize the reusable/public workflow contract.`
   Acceptance: `The doctrine driver, hook/CI inheritance, TOOLBOX checklist, bootstrap/commit docs, mdBook, decision/fact/Knowledge Map surfaces, task tree, Memory, and changelog agree; focused and broader doctrine gates pass.`
-  Verification: `pending activation`
-  Commit: `pending activation`
+  Verification: `Registered TASK-ACCEPTANCE as the seventh doctrine; the existing hook and hosted workflow inherit it through the shared driver. Bootstrap enforcement now requires TASK_ACCEPTANCE.md plus AGENTS/COMMIT/doctrine/toolbox pointers and the registry row. TOOLBOX carries the checklist and FSMGen family chooser; the task template, AGENTS, COMMIT workflow, README, mdBook reference map, decision 0026, fact/Knowledge Map, task tree, Memory, and changelog are synchronized. Bash syntax, Perl syntax, t/1527+t/1545 Files=2 Tests=29, seven-doctrine driver, README guard at 246 lines / 9952 bytes, Knowledge Map at 1067 facts / 5493 keys, docs paths, mdBook build, and diff hygiene pass. The final driver run against the actual staged .3 index passes TASK-ACCEPTANCE with root=git_history and no-regression=prove_summary. Generated book output was removed; no product behavior changed.`
+  Commit: `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3: enforce portable task acceptance`
 
 ## Current Frontier
 
@@ -106,7 +106,7 @@ project-native evidence signatures. No external file was modified or copied.
 | --- | --- | --- | --- |
 | 1 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1` | `done` | Decision 0026 and TASK_ACCEPTANCE.md freeze the neutral contract. |
 | 2 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.2` | `done` | The checker, FSMGen registries, and 9-group isolated-Git probe suite satisfy decision 0026. |
-| 3 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3` | `active` | Register the proven checker and synchronize the reusable/public workflow contract. |
+| 3 | `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3` | `done` | The seventh doctrine, bootstrap/commit/toolbox/template contract, README/mdBook, and durable decision/fact surfaces are synchronized. |
 
 ## Decisions
 
@@ -138,3 +138,9 @@ project-native evidence signatures. No external file was modified or copied.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'TASK-ACCEPTANCE' -- .` and repository-wide searches found no FSMGen gate/owner; the June adoption tree's explicit PGEN-tool non-goal explains the omission locus, while decision `0026` identifies the missing declarative layer.
 - [x] **ADDRESSED (verified)** — `prove -Iperl -v t/1545-task-acceptance-doctrine.t` exercises the selected checker contract through 9 isolated-Git RED/GREEN/control groups and reports every expected verdict.
 - [x] **NO REGRESSION** — `prove -Iperl t/1527-project-data-locality.t t/1545-task-acceptance-doctrine.t` reports `All tests successful` and `Files=2, Tests=29`; the project-locality doctrine and the existing six-doctrine driver also pass.
+
+## Acceptance Checklist — `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.3`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — pre-integration `scripts/check_doctrines.sh --list` exposed only six rows; `git log -S'TASK-ACCEPTANCE' -- .` locates the contract/checker commits but no registration before this leaf, pinning the remaining gap to driver and public-workflow integration.
+- [x] **ADDRESSED (verified)** — `scripts/check_doctrines.sh --list` now reports `TASK-ACCEPTANCE` as row seven, while `scripts/check_doctrine_bootstrap.sh` confirms the standard, four required pointers, registry row, hook, and hosted-workflow inheritance.
+- [x] **NO REGRESSION** — `scripts/check_doctrines.sh` reports `[doctrine] all doctrine checks passed`; `prove -Iperl t/1527-project-data-locality.t t/1545-task-acceptance-doctrine.t` reports `All tests successful` and `Files=2, Tests=29`; README, Knowledge Map, docs paths, mdBook, and diff gates pass.
