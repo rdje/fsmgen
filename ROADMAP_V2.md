@@ -8238,6 +8238,10 @@ Completed `.1` changes exactly those four opening markers to explicit `text`.
 Zero-context diff proves no diagram/prose/example-content change; all 36
 chapters pass `mdbook test`, and the HTML build remains clean. The repair tree
 is complete without product or lifecycle-policy changes.
+Clean four-fence completion commit `59fcaa99e` activates parent selector `.838`
+continuity-only. It selects no candidate during activation; the scheduled
+four-document lifecycle review and every explicit director gate remain
+inactive, and both legacy status files stay untouched.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

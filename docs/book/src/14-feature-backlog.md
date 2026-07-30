@@ -11911,6 +11911,10 @@ The four-fence repair is complete: exactly those four openings now use
 explicit `text`, every diagram byte is preserved, and all 36 chapters pass
 full-book doctest plus HTML build. No product or lifecycle-policy behavior
 changed.
+Clean four-fence completion commit `59fcaa99e` activates parent selector `.838`
+continuity-only. No candidate is selected during activation; the scheduled
+four-document lifecycle review and every director-gated direction stay
+inactive.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

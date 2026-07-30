@@ -30720,3 +30720,18 @@ task tree and git.
   README caps, and doctrine gates pass. No source/test code, artifact, API,
   HDL/runtime, product behavior, or lifecycle policy changed; no development-
   note entry is warranted, and both legacy status files remain untouched.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.838 — post-rustdoc selector activated
+
+- Activated one new parent selector only after clean four-fence completion
+  commit `59fcaa99e`. No candidate is selected during activation; all 36
+  mdBook chapters remain doctest/HTML clean.
+- `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` and every explicitly director-
+  gated owner remain proposed/inactive. `ROADMAP_STATUS.md` and
+  `LIVE_ACHIEVEMENT_STATUS.md` remain untouched.
+- Task/index, roadmap, mdBook, Memory, and changelog continuity are synchronized.
+  Feature-backlog status, live-book-path, and relative-path audits pass with
+  `Files=3, Tests=40`; Knowledge Map generation/check passes at 1,070 facts /
+  5,507 keys; mdBook HTML build and diff hygiene pass. No product, test,
+  lifecycle-policy, prose, or example behavior changes, and no development-
+  note entry is warranted.
