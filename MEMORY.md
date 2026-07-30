@@ -5,15 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1: refresh identifier-era import map`).
-- active_work_unit: `BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.1`
-  (complete).
-- current_state: canonical note/fact now match the live 229-file / 228-package /
-  19-IAL2 closure, Support 71, portable identifier-policy reachability, and
-  current selected line counts; product behavior is unchanged.
-- next_action: return to the parent frontier and activate one clean selector;
-  reconcile the preserved Chapter 16c counts-beyond-four contradiction first.
-- in_flight_uncommitted: none after this completion commit; no background job.
+- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.840: activate post import-map selector`).
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.840`
+  (continuity-only activation).
+- current_state: the identifier-era import map is clean and current; `.840`
+  owns one new roadmap selection without selecting or activating a candidate.
+- next_action: reconcile current-HEAD eligible candidates, beginning with the
+  preserved Chapter 16c AHB residue, and select exactly one smallest owner.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none.
 
 ## Durable context

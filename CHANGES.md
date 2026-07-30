@@ -30911,3 +30911,15 @@ task tree and git.
   five focused documentation audits (`Files=5, Tests=329`), Knowledge Map at
   1,073 facts / 5,530 keys, memory architecture, mdBook HTML build, and diff
   hygiene pass; the exact repository-local book render is removed.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.840 — post-import-map selector activated
+
+- Activated one new parent selector only after clean identifier-era import-map
+  completion commit `ae2f75648`. No candidate is selected during activation;
+  the canonical import baseline and every product behavior remain unchanged.
+- Task/index, roadmap, mdBook, Memory, and changelog continuity are aligned.
+  The scheduled lifecycle review and every explicit director gate remain
+  inactive, both frozen status files remain untouched, and no separate
+  development note is warranted. Focused documentation audits pass with
+  `Files=3, Tests=40`; Knowledge Map, memory architecture, and diff hygiene
+  pass.

@@ -11975,6 +11975,10 @@ The identifier-era import-map child is complete. The canonical architecture
 note/fact now match the live `229` / `228` / `19` closure, `Support 71`, and
 portable identifier-policy reachability. Product behavior is unchanged; the
 separate Chapter 16c AHB residue remains for the next clean parent selector.
+Clean identifier-era import-map completion commit `ae2f75648` activates parent
+selector `.840` continuity-only. No candidate is selected during activation;
+the scheduled lifecycle review and every director-gated direction remain
+inactive.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
