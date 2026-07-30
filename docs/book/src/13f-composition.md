@@ -247,7 +247,7 @@ before sync-state emission.
 
 ## Composition Architecture
 
-```
+```text
 spawn_parent.isf
     │
     ▼ LoweringIR

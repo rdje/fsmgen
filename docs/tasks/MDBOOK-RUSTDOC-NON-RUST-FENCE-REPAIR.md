@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `documentation validation / mdBook`
 - Created: `2026-07-23`
 - Last updated: `2026-07-30`
@@ -48,26 +48,28 @@ docs/book` remains clean; only the doctest classification is wrong.
 ## Task Tree
 
 - ID: `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR`
-  Status: `active`
+  Status: `done`
   Goal: `Repair the four pre-existing untyped plain-text fences so mdbook test is a trustworthy gate again.`
   Children: `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1`
 
 - ID: `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1`
-  Status: `active`
+  Status: `done`
   Goal: `Classify the four known diagrams as text and restore clean mdBook doctests.`
   Acceptance: `Change only the four opening fences from untyped to text; prove no diagram-content drift; run mdbook test/build and doctrine gates; synchronize task/index/MEMORY/Knowledge Map and commit.`
-  Verification: `Activated only after clean selector commit 9e3308e5c. Current-HEAD evidence remains exactly four untyped opening fences at docs/book/src/13-intent-scheduling.md line 307, 13b-transactions.md line 121, 13f-composition.md line 250, and 13h-lowering-reference.md line 2217; every matching close remains intact. Activation changes continuity documentation only and leaves all four fences, their contents, tests, product behavior, and the scheduled lifecycle review unchanged until this commit is clean. Feature-backlog status, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1,070 facts / 5,507 question keys; mdBook HTML build and diff hygiene pass; Memory remains 60 lines and README remains 246 lines.`
-  Commit: `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1: activate plain-text fence repair`
+  Verification: `Activated only after clean selector commit 9e3308e5c through clean continuity commit 79256c52f. Changed exactly the four owned opening markers at docs/book/src/13-intent-scheduling.md line 307, 13b-transactions.md line 121, 13f-composition.md line 250, and 13h-lowering-reference.md line 2217 from bare triple backticks to triple backticks plus text. Git numstat reports 1 insertion/1 deletion in each file, and zero-context diff proves those four marker substitutions are the entire book-source change, so all diagram/prose/example bytes are preserved. With absolute repository-derived TMPDIR, mdbook test docs/book exits zero after testing all 36 SUMMARY chapters; repository-local-output mdbook build docs/book exits zero. Feature-backlog status, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check, diff hygiene, Memory/README caps, and all doctrine gates pass; exact generated scratch is removed. No source/test code, generated artifact, parser/generator, API, HDL/runtime, product behavior, lifecycle policy, DEVELOPMENT_NOTES.md, ROADMAP_STATUS.md, or LIVE_ACHIEVEMENT_STATUS.md changed.`
+  Commit: `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1: classify plain-text diagrams`
 
 ## Decisions
 
 - `2026-07-23`: Keep this proposed and outside the active AXI PNT frontier;
   tracking the discovered validation defect must not silently pivot product
   scope while `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.23` is active.
-- `2026-07-30`: Clean parent selector commit `9e3308e5c` selects and activates
-  only `.1`; the four opening fences remain unchanged until the continuity
-  commit is clean.
+- `2026-07-30`: Clean parent selector commit `9e3308e5c` selects only `.1`;
+  clean continuity commit `79256c52f` activates it while leaving all four
+  opening fences unchanged.
+- `2026-07-30`: `.1` annotates exactly the four owned openings as `text`,
+  preserves every diagram byte, and restores the full 36-chapter doctest gate.
 
 ## Blockers
 
-- None. `.1` is active from the clean selector boundary.
+- None. `.1` and this tree are complete.

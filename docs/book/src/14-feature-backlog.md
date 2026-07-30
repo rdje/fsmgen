@@ -11907,6 +11907,10 @@ inactive. See the
 Clean selector commit `9e3308e5c` activates only the four-fence repair `.1`
 continuity-only. All four openings and diagram contents remain unchanged
 during activation; the scheduled lifecycle review stays inactive.
+The four-fence repair is complete: exactly those four openings now use
+explicit `text`, every diagram byte is preserved, and all 36 chapters pass
+full-book doctest plus HTML build. No product or lifecycle-policy behavior
+changed.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

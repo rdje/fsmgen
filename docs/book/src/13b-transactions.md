@@ -118,7 +118,7 @@ for the full surface and the cross-domain staging.
 
 ## How Transactions Become Hardware
 
-```
+```text
 (transaction name
   clause_1     → state_0  (entry)
   clause_2     → state_1  (1 cycle)

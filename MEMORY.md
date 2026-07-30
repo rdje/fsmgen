@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1: activate plain-text fence repair`).
-- active_work_unit: `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1` (continuity-only activation).
-- current_state: clean selector `9e3308e5c` activates only the four-fence child;
-  every affected opening fence remains untyped until this commit is clean.
-- next_action: change exactly the four owned opening fences to `text`, prove
-  diagram-content identity, then run full-book doctest/build and doctrine gates.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1: classify plain-text diagrams`).
+- active_work_unit: `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1` (complete).
+- current_state: exactly four opening markers now say `text`; every diagram
+  byte is preserved and all 36 mdBook chapters pass doctest plus HTML build.
+- next_action: after this child commits cleanly, return to the parent IAL2
+  frontier and activate one new exact selector from the clean boundary.
+- in_flight_uncommitted: none after this implementation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -26,8 +26,8 @@ bounded current-state pointer. Git preserves its prior history.
 - `TASK-ACCEPTANCE` was not durably ported or backlogged by the June doctrine
   adoption; decision `0026` plus completed `.1`-.3 now ship the neutral
   contract, checker/registries/probes, and seventh-doctrine integration.
-- Public-sync `.1`-.4 are complete. Current-HEAD proof selects only the four-
-  annotation mdBook rustdoc repair next; the lifecycle review stays inactive.
+- Public-sync `.1`-.4 and the four-annotation mdBook rustdoc repair are
+  complete; the scheduled lifecycle review stays proposed and inactive.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
@@ -50,7 +50,7 @@ bounded current-state pointer. Git preserves its prior history.
   `.833` selects the smaller mdBook VHDL truth repair.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   end-to-end big-design
-  scalability, t/1436 failures, mdBook rustdoc fences, and guard metric repair.
+  scalability, t/1436 failures, protocol identifiers, and guard metric repair.
   Parked findings await a later clean parent selector.
 - Task-tree live truth is the node list + `docs/TASK_TREE.md` + git (decision
   `0019`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.

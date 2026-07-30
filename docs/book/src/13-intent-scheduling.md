@@ -304,7 +304,7 @@ invalid latency bounds.
 
 ## Pipeline
 
-```
+```text
 ISF Source (.isf)
     │
     ▼

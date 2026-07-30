@@ -30704,3 +30704,19 @@ task tree and git.
   at 1,070 facts / 5,507 keys; mdBook HTML build and diff hygiene pass. The
   activation creates no separate engineering rationale, so no development-
   note entry is warranted.
+
+### MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1 — plain-text diagrams classified
+
+- Changed exactly four opening markers from bare triple backticks to explicit
+  `text`: the Pipeline, transaction-to-state, Composition Architecture, and APB
+  state-summary diagrams. Git numstat reports `1/1` per file, and zero-context
+  diff contains only those marker substitutions, proving diagram/prose/example
+  content is byte-preserved.
+- With an absolute repository-derived `TMPDIR`, `mdbook test docs/book` exits
+  zero after testing all 36 SUMMARY chapters. The HTML book builds cleanly to
+  repository-local scratch, and all exact generated outputs are removed.
+- Feature-backlog status, live-book-path, and relative-path audits remain green
+  at `Files=3, Tests=40`; Knowledge Map generation/check, diff hygiene, Memory/
+  README caps, and doctrine gates pass. No source/test code, artifact, API,
+  HDL/runtime, product behavior, or lifecycle policy changed; no development-
+  note entry is warranted, and both legacy status files remain untouched.

@@ -8234,6 +8234,10 @@ Clean selector commit `9e3308e5c` activates only
 `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1` continuity-only. The four opening
 fences, diagram contents, doctest result, and product behavior remain unchanged
 during activation; the scheduled lifecycle review stays inactive.
+Completed `.1` changes exactly those four opening markers to explicit `text`.
+Zero-context diff proves no diagram/prose/example-content change; all 36
+chapters pass `mdbook test`, and the HTML build remains clean. The repair tree
+is complete without product or lifecycle-policy changes.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

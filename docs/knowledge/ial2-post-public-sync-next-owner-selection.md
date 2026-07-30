@@ -11,7 +11,7 @@ date: 2026-07-30
 status: current
 tags: [ial2, selector, mdbook, rustdoc, documentation, validation]
 evidence: docs/IAL2_POST_PUBLIC_SYNC_NEXT_OWNER_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/tasks/MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.md; docs/knowledge/mdbook-test-plain-text-fence-rustdoc-failure.md; docs/book/src/13-intent-scheduling.md; docs/book/src/13b-transactions.md; docs/book/src/13f-composition.md; docs/book/src/13h-lowering-reference.md
-reverify: mkdir -p .artifacts/tmp/mdbook-rustdoc-reverify && TMPDIR="$PWD/.artifacts/tmp/mdbook-rustdoc-reverify" mdbook test docs/book
+reverify: scratch=.artifacts/tmp/mdbook-rustdoc-reverify; trap 'rm -rf "$scratch"' EXIT; mkdir -p "$scratch"; TMPDIR="$PWD/$scratch" mdbook test docs/book
 ---
 
 Parent selector `.837` chooses proposed
@@ -37,3 +37,7 @@ Explicitly director-gated items remain inactive.
 Clean selector commit `9e3308e5c` activates only the selected four-fence
 repair continuity-only. All fence and diagram bytes remain unchanged during
 activation; the lifecycle review and every product behavior remain inactive.
+
+Completed child `.1` changes only the four opening markers to explicit `text`,
+preserves all diagram content, and restores clean doctest and HTML builds for
+all 36 mdBook chapters. The repair tree is complete.

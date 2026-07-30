@@ -2214,7 +2214,7 @@ All constructs together:
 
 Generates 7 state DTs + non-state DTs:
 
-```
+```text
 idle_0          ← (on start ...) : guards on start, samples, can_accept
 drive_1         ← (drive setup_phase)
 drive_2         ← (drive access_phase)

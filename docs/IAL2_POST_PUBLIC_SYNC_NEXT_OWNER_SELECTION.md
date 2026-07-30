@@ -64,3 +64,8 @@ Clean selector commit `9e3308e5c` activates only the selected four-fence
 repair through continuity changes. The fences, diagram contents, doctest
 result, scheduled lifecycle review, and every product behavior remain
 unchanged during activation.
+
+The selected child now classifies exactly the four owned openings as `text`.
+All diagram bytes are preserved, and the full 36-chapter mdBook doctest plus
+HTML build pass. The repair tree is complete; the next action returns to the
+clean parent IAL2 selector.
