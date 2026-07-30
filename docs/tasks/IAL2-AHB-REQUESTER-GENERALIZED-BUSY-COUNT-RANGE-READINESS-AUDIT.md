@@ -61,10 +61,10 @@ the exact-four ceiling and therefore require deliberate contract work.
   Commit: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.1: audit generalized AHB BUSY count range`
 
 - ID: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Freeze the generalized literal AHB requester BUSY-count 2..16 public contract before implementation.`
   Acceptance: `Activate only after clean .1 audit commit. Read the canonical audit record/fact, repo-local Arm AHB BUSY rules, current AhbRequester normalization/minimum-width/qualified retirement/report/residue, exact-one-through-four sources/tests/runtime, support/language/capability surfaces, roadmap, mdBook, Knowledge Map, generic priority, HIAL/VIAL, VHDL/portability, scale, and decisions 0004/0008/0020. Freeze canonical decimal literal busy-beats values 2..16, absence as exact-one, zero/one/17+/leading-zero/signed/symbolic/expression/duplicate fail-closed behavior, exact diagnostic, unchanged ceil(log2(count+1)) integer-loop widths, generic qualified retirement, unified numeric residue wording, and unchanged reports/schema/artifact shapes. Freeze one future implementation that changes only AhbRequester admission/static-rule/residue plus focused t1541 and a generic assertion-enabled harness covering parse/report/diagnostic boundaries 2/4/5/7/8/15/16/17, generated widths 2/3/3/3/4/4/5, strict/schedule/artifact/semantic/real read-only MCP/public verifier, 5/8/16 runtime with required continuous and 32-clock ready/grant stalls, exact qualified events, stable ownership, one resumed SEQ, four data beats, and zero final counter. Preserve all existing source bytes and support identities, leave accounting at 332/373/56 split 28/28, require no public sample per count, and select a separate implementation leaf only if reconfirmed. Keep dynamic/policy/random/symbolic counts, multiple insertion points, bus-BUSY status, new burst/signal/topology semantics, generic priority, other protocols/backends, HIAL/VIAL, VHDL, verification generation, portability implementation, scale implementation, and decision 0020 separate. Use repository-derived same-volume workspaces, authorized host100/process4096, canonical Stats-compatible capacity plus separate kernel pressure, exact cleanup, preservation gates, docs/Knowledge Map, rollback, and COMMIT.md. Make no behavior change in contract selection.`
-  Verification: `pending activation`
+  Verification: `Activated only after clean .1 audit commit 18f63a971. Activation changes task/index/Memory/roadmap/mdBook/audit/fact/related-owner continuity only; the current literal 2..4 contract, 332/373/56 split 28/28 accounting, parser, generator, sources, support, tests, artifacts, reports, semantic/MCP APIs, HDL/runtime, simulator profiles, HIAL/VIAL, VHDL, portability, scale, decision 0020, and transaction behavior remain unchanged. Focused current-surface/backlog/relative-path gates pass 3 files/22 tests. Knowledge Map generation/check passes at 1,049 facts/5,378 question keys. The mdBook builds under the authorized host100/process4096 profile to exactly 72 files/16,401,820 bytes; its exact repository-local render is removed. MEMORY.md is 60 lines, README.md is 2,333 lines, .artifacts/tmp/tests is empty, and only the pre-existing 491-byte xcrun_db cache contains data. Diff hygiene, memory architecture, and all six doctrine gates pass, including project-data locality. Final canonical Stats-compatible capacity is 21,239,529,472/25,769,803,776 bytes = 19.781/24.000 GiB = 82.42%, with separate macOS kernel pressure level 1 and memory_pressure 67% free; guard occupancy is excluded from capacity truth. Contract selection is active with no background job.`
   Commit: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.2: select generalized BUSY count contract`
 
 ## Dependencies
@@ -81,9 +81,9 @@ continuity pointers only; all public and generated behavior remains unchanged.
 
 ## Current Frontier
 
-Audit `.1` selects proposed no-behavior contract `.2` for literal `2..16`.
-Current public behavior remains `2..4`; `.2` may activate only after the clean
-audit commit.
+Audit `.1` selected no-behavior contract `.2` for literal `2..16`. Contract
+leaf `.2` is active from clean audit commit `18f63a971`; current public behavior
+remains `2..4` while the contract is frozen before implementation.
 
 ## Decisions
 
@@ -99,7 +99,7 @@ audit commit.
 
 ## Rollback
 
-Before activation, rollback removes this proposed tree plus its selector/fact
-references. After activation, rollback retains the current literal `2..4`
-public boundary and all shipped exact-one-through-four sources until a separate
-contract and implementation prove a wider range.
+Rollback retains the current literal `2..4` public boundary and all shipped
+exact-one-through-four sources until a separate contract and implementation
+prove a wider range; activation itself can be reverted as a continuity-only
+commit.

@@ -5,10 +5,10 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this generalized-count `.1` audit commit; activation predecessor `9ff1e6ba0`.
-- active_work_unit: none after clean `.1` audit closeout.
-- current_state: `.1` proves literal 2..16 readiness and selects proposed no-behavior contract `.2`; current shipping stays 2..4 and 332/373/56 split 28/28.
-- next_action: activate only `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.2` from the clean audit commit.
+- latest_commit: clean generalized-count `.1` audit commit `18f63a971`.
+- active_work_unit: `IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.2`.
+- current_state: `.2` is active to freeze the no-behavior literal 2..16 contract; current shipping stays 2..4 and 332/373/56 split 28/28.
+- next_action: freeze exact admission/diagnostic/residue/test/runtime/preservation boundaries, then select one separate implementation leaf.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -33,9 +33,9 @@ bounded current-state pointer. Git preserves its prior history.
   10/8/2/8/2 runtime and 331/372/55 accounting. `.827` selected `.828`, which
   now ships the matching alias with focused t1540 parity at 332/373/56 split
   28/28. `.829` now selects a reusable finite literal-count readiness audit;
-  exact five currently fails only at the `2..4` gate while minimum-width
-  lowering is already generic. The safe upper bound remains audit-owned;
-  decision `0020` remains separate.
+  audit `.1` proves future bounded literal `2..16` readiness while minimum-width
+  lowering remains generic. Active contract `.2` owns the exact no-behavior
+  implementation boundary; decision `0020` remains separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
@@ -46,8 +46,8 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. Completed generalized-count
-  audit `.1` keeps HIAL/VIAL proposed while selecting bounded contract `.2`.
+  mixed-language claims qualified separately. Active generalized-count
+  contract `.2` keeps HIAL/VIAL proposed and independently gated.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc

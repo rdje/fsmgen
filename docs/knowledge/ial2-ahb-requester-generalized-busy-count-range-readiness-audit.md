@@ -17,9 +17,10 @@ evidence: docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_READINESS_AUDIT.m
 reverify: rg -n 'literal 2\.\.16|92 files|7,016,808|count 5|count 8|count 16|max_beats=16|qualified BUSY' docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_READINESS_AUDIT.md docs/tasks/IAL2-AHB-REQUESTER-GENERALIZED-BUSY-COUNT-RANGE-READINESS-AUDIT.md
 ---
 
-Audit `.1` selects proposed no-behavior contract `.2` for canonical literal
-`busy-beats` values `2..16`, with absence remaining exact-one. Current public
-behavior stays `2..4` until a later contract and implementation commit.
+Audit `.1` selects no-behavior contract `.2` for canonical literal `busy-beats`
+values `2..16`, with absence remaining exact-one. Clean audit commit
+`18f63a971` activates `.2`; current public behavior stays `2..4` until a later
+implementation commit.
 
 The repo-local Arm AHB specification constrains where BUSY occurs and requires
 fixed-length bursts to finish with `SEQ`, but does not impose a numeric BUSY-

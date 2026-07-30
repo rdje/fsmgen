@@ -2509,6 +2509,10 @@ AHB protocol sets no numeric BUSY cap; FSMGen's selected 16 is the bounded
 [readiness audit](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_READINESS_AUDIT.md).
 Current shipping remains literal `2..4` at 332/373/56 split 28/28 until later
 contract and implementation commits.
+Clean audit commit `18f63a971` activates only no-behavior contract `.2`.
+Literal `2..4`, generated HDL/runtime, existing source bytes, and accounting
+remain unchanged while the precise future `2..16` implementation boundary is
+frozen.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

@@ -49,3 +49,6 @@ unchanged while the audit determines the finite range and proof contract.
 Completed audit `.1` selects proposed no-behavior contract `.2` for future
 canonical literal `2..16`. Current `2..4` and 332/373/56 split 28/28 remain
 unchanged until later implementation.
+
+Clean audit commit `18f63a971` activates only contract `.2`; current behavior
+and accounting remain unchanged.

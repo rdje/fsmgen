@@ -49,3 +49,6 @@ and 332/373/56 split 28/28 project-wide boundary remain unchanged during selecti
 Completed generalized-count audit `.1` selects proposed contract `.2` for
 future literal `2..16`; exact-four behavior remains unchanged until a separate
 implementation ships.
+
+Clean audit commit `18f63a971` activates only contract `.2`; exact-four
+behavior remains unchanged while the contract is frozen.

@@ -152,3 +152,6 @@ Completed generalized-count audit `.1` selects proposed contract `.2` for a
 future canonical literal `2..16` range after width-transition and assertion-
 enabled runtime proof. This exact-four behavior remains unchanged and current
 until that contract and a separate implementation commit.
+
+Clean audit commit `18f63a971` activates only contract `.2`; this exact-four
+behavior remains unchanged while the future implementation contract is frozen.

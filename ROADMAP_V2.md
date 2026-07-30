@@ -7912,6 +7912,12 @@ diagnostics, unified numeric residue, future t1541/generic harness,
 preservation, unchanged source bytes, and unchanged 332/373/56 split 28/28
 before separate implementation. Current shipping remains literal `2..4`.
 See `docs/IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_READINESS_AUDIT.md`.
+Clean audit commit `18f63a971` activates only contract `.2`. Activation changes
+continuity pointers and no parser, generator, public source, support, test,
+artifact, report, semantic/MCP API, HDL/runtime, simulator, backend, protocol,
+HIAL/VIAL, VHDL, verification-generation, portability, scale, decision-0020,
+or transaction behavior. Literal `2..4` and 332/373/56 split 28/28 remain
+authoritative while the exact `2..16` implementation contract is frozen.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

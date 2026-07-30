@@ -312,4 +312,6 @@ evidence-backed handoff.
 - `2026-07-30`: Generalized-count audit `.1` selects bounded literal `2..16`
   contract `.2`; HIAL/VIAL remains proposed with its independent architecture,
   simulator-profile, VHDL/mixed-language, migration, and scale gates intact.
+- `2026-07-30`: Clean audit commit `18f63a971` activates only generalized-count
+  contract `.2`; HIAL/VIAL remains proposed and unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

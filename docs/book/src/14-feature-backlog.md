@@ -11622,6 +11622,10 @@ numeric BUSY cap; FSMGen selects 16 to match its bounded `max_beats=16` profile.
 See the [readiness audit](../../IAL2_AHB_REQUESTER_GENERALIZED_BUSY_COUNT_RANGE_READINESS_AUDIT.md).
 Current literal `2..4`, existing source bytes, and 332/373/56 split 28/28 stay
 unchanged until a later contract and implementation.
+Clean audit commit `18f63a971` activates only contract `.2`. This continuity
+change leaves generated behavior and accounting unchanged while `.2` freezes
+the exact admission, diagnostic, residue, test, runtime, preservation, and
+rollback boundary before a separate implementation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -130,3 +130,6 @@ Completed audit `.1` selects proposed contract `.2` for future canonical
 literal `2..16` behavior after 46 structural/report/MCP/diagnostic assertions
 and seven all-assertion count-5/8/16 runtime scenarios. Current `2..4` and
 332/373/56 split 28/28 remain unchanged until later implementation.
+
+Clean audit commit `18f63a971` activates only contract `.2`; activation changes
+continuity and no public or generated behavior.

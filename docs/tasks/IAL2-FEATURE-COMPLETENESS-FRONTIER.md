@@ -5897,6 +5897,9 @@ Completed generalized-count audit `.1` now selects proposed no-behavior
 contract `.2` for future canonical literal `2..16` after structural/report/
 read-only-MCP/diagnostic and all-assertion 5/8/16 proof. Current public behavior
 remains `2..4` at 332/373/56 split 28/28 until separate implementation.
+Clean audit commit `18f63a971` activates only contract `.2` with continuity
+changes; current literal `2..4` behavior and accounting remain unchanged while
+the exact implementation boundary is frozen.
 
 The exact-three paired generic/profile pair now extends through the
 two-subordinate source and matching alias at 326/367/50 split 25 `.ppif`/25

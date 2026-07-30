@@ -152,6 +152,11 @@ semantics, generic rule/transaction priority, HIAL/VIAL, verification
 generation, VHDL, portability, scale, other protocols/backends, and decision
 `0020` remain separately owned.
 
+Clean audit commit `18f63a971` activates only contract `.2`. The activation is
+continuity-only: current literal `2..4`, all generated behavior and source
+bytes, and 332/373/56 split 28 `.ppif`/28 `.ahb` remain unchanged while the
+contract is frozen before implementation.
+
 ## Resource And Cleanup Evidence
 
 The exact disposable audit workspace contained 92 files and 7,016,808 bytes,
@@ -166,6 +171,6 @@ formula and kernel pressure state; guard occupancy is not capacity truth.
 
 ## Rollback
 
-Rollback of this audit removes this record/fact and proposed `.2` handoff only.
-It leaves current literal `2..4`, exact-one-through-four sources, all generated
-behavior, reports, tests, support accounting, and simulator profiles unchanged.
+Rollback of the activation reverts its continuity pointers only. It leaves
+current literal `2..4`, exact-one-through-four sources, all generated behavior,
+reports, tests, support accounting, and simulator profiles unchanged.
