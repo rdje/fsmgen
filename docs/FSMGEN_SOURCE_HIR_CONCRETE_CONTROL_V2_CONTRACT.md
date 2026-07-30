@@ -441,7 +441,8 @@ Implementation preserves the semantic closed subset, deterministic provenance,
 exact canonical fixture, existing parser/scheduler re-entry, and version-1
 behavior without embedding raw ISF syntax or duplicating the parser AST. The
 failure rule remains the guardrail for later changes. Only `.8` may reconsider
-promotion.
+promotion. Clean private implementation commit `8876adb0b` activates `.8`
+continuity-only without selecting an outcome.
 
 ## Implementation evidence
 

@@ -31223,3 +31223,21 @@ task tree and git.
   the 72-file HTML build pass; Knowledge Map passes at 1,081 facts / 5,574
   question keys; memory, diff, repository-local scratch/output cleanup, task
   acceptance, and all seven staged doctrine gates pass.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.8 — SourceHIR two-route promotion audit activated
+
+- Activated only the evidence-based promotion/continued-private/narrowing/
+  retirement audit after clean private second-route implementation commit
+  `8876adb0b`.
+- Task/index, architecture/audit/contract/fact continuity, roadmap, mdBook
+  backlog, Memory, and changelog are aligned. The audit outcome, public host
+  language/API/schema/versioning/packaging, code, tests, parser, fixtures,
+  artifacts, CLI/report/manifest/accounting, HDL/runtime, and behavior remain
+  unselected and unchanged until activation commits cleanly.
+- Public builder, HIAL/VIAL, scale, MCP-write, and every director-gated owner
+  remain inactive; both frozen status files stay untouched and no separate
+  development note is warranted for continuity-only activation.
+- Documentation audits pass at `Files=3, Tests=40`; all 36 mdBook chapters and
+  the 72-file HTML build pass; Knowledge Map passes at 1,081 facts / 5,574
+  question keys; memory, diff, repository-local scratch/output cleanup, and
+  all seven staged doctrine gates pass.

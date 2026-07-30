@@ -85,7 +85,7 @@ changes.
 
 ### Source-Facing FSMGEN HIR
 
-Status: two private lowering-route proofs implemented; promotion re-audit next.
+Status: two private lowering-route proofs implemented; promotion re-audit active.
 
 Goal: give future high-level language frontends and builder APIs one checked
 FSMGEN-native semantic target above IAL2 and IAL1. The intended architecture is
@@ -127,9 +127,10 @@ scheduler, and preserve the one-file 45-line/484-byte IAL0 result. It stores no
 raw ISF form, arbitrary expression, or parser AST. The private implementation
 now reproduces the exact ISF and IAL0 bytes, re-enters the existing adapter and
 scheduler with equal typed actor/schedule results, and adds no public surface.
-A separate proposed leaf then re-audits promotion. Public host-language choice,
-packaging, versioning, and compatibility remain owned by the separate proposed
-builder frontier.
+The active audit leaf now compares promotion, continued-private iteration,
+narrowing/renaming, and retirement without preselecting an outcome. Public
+host-language choice, packaging, versioning, and compatibility remain owned by
+the separate proposed builder frontier.
 
 ### Inference-First Scalar Authoring
 

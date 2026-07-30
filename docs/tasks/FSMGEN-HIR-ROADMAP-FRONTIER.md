@@ -107,18 +107,18 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.7: implement private SourceHIR IAL1 path`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.8`
-  Status: `proposed`
+  Status: `active`
   Goal: `Re-audit SourceHIR promotion after both private lowering routes.`
   Acceptance: `After .7, compare promotion, continued private iteration, narrowing/renaming, and retirement using both private route proofs. Coordinate any public selection with IAL2-HOST-LANGUAGE-BUILDER-FRONTIER; a second route alone does not authorize a public API.`
-  Verification: `pending`
-  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.8: audit SourceHIR promotion after IAL1 proof`
+  Verification: `Activated continuity-only after clean private second-route implementation commit 8876adb0b. Activation changes only task/index, architecture/audit/contract/fact continuity, roadmap, mdBook backlog, Memory, changelog, and regenerated Knowledge Map. Documentation audits pass with Files=3, Tests=40; all 36 mdBook chapters and the 72-file HTML build pass; Knowledge Map generation/check passes at 1081 facts / 5574 question keys; memory architecture passes at 49 lines; diff hygiene and all seven staged doctrine gates pass; repository-local scratch and generated book output are removed. Promotion, continued-private iteration, narrowing/renaming, retirement, public host language/API/schema/versioning/packaging, code, tests, parser, fixtures, artifacts, CLI/report/manifest/accounting, HDL/runtime, frozen status files, and behavior remain unselected and unchanged.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.8: activate SourceHIR two-route promotion audit`
 
 ## Current Frontier
 
-The contract-selected private `.7` implementation and t1548 equivalence proof
-are complete. After this slice commits cleanly, the precise next action is a
-continuity-only activation commit for proposed `.8`; no promotion conclusion
-is selected by `.7`.
+Clean private implementation commit `8876adb0b` activates `.8`
+continuity-only. The leaf now owns an evidence-based comparison of promotion,
+continued-private iteration, narrowing/renaming, and retirement; no outcome is
+selected by activation.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
@@ -129,7 +129,7 @@ is selected by `.7`.
 | 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `done` | Kept SourceHIR private because one IAL2 schema is healthy but insufficient for promotion. |
 | 6 | `FSMGEN-HIR-ROADMAP-FRONTIER.6` | `done` | Selected semantic SourceHIR v2 and the exact phase-test IAL1/IAL0 oracles. |
 | 7 | `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `done` | Implemented and proved the selected second private route without public exposure. |
-| 8 | `FSMGEN-HIR-ROADMAP-FRONTIER.8` | `proposed` | Repeat the promotion audit across both lowering routes. |
+| 8 | `FSMGEN-HIR-ROADMAP-FRONTIER.8` | `active` | Compare the four disposition options across both lowering routes. |
 
 ## Decisions
 
@@ -207,15 +207,19 @@ is selected by `.7`.
   canonical private ISF renderer/source map, and t1548 exact fixture/IAL0/
   schedule proof. Version 1 and every public surface remain unchanged; `.8`
   remains the sole owner of the next promotion audit.
+- `2026-07-30`: Clean private implementation commit `8876adb0b` activates
+  `.8` continuity-only. The audit conclusion remains unselected until this
+  activation commits cleanly.
 
 ## Open Questions
 
-- `.8` must decide promotion, continued-private iteration, narrowing/renaming,
-  or retirement from both route proofs; `.7` authorizes none of those outcomes.
+- Active `.8` must decide promotion, continued-private iteration,
+  narrowing/renaming, or retirement from both route proofs; activation
+  authorizes none of those outcomes.
 
 ## Blockers
 
-- None. `.8` remains proposed until the completed `.7` slice commits cleanly.
+- None. `.8` is active continuity-only after clean commit `8876adb0b`.
 
 ## Verification Log
 
@@ -233,6 +237,7 @@ is selected by `.7`.
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.6` contract | phase fixture/source hashes; strict check and schedule; t1179+t1312+t1547 with repository-local scratch; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; exact semantic v2 contract only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.7` activation | documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; continuity-only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.7` implementation | t1548+t1547+t1179+t1312; four syntax checks; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; private exact SourceHIR-to-IAL1 path only |
+| `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.8` activation | documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; continuity-only |
 
 ## Commit Log
 
@@ -254,6 +259,7 @@ is selected by `.7`.
 | `FSMGEN-HIR-ROADMAP-FRONTIER.6` | `FSMGEN-HIR-ROADMAP-FRONTIER.6: select private SourceHIR IAL1 boundary` | Freezes semantic version 2, exact phase-test ISF/IAL0 oracles, and private implementation ownership. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `FSMGEN-HIR-ROADMAP-FRONTIER.7: activate private SourceHIR IAL1 implementation` | Continuity-only activation after the clean version-2 contract. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `FSMGEN-HIR-ROADMAP-FRONTIER.7: implement private SourceHIR IAL1 path` | Implements only the closed version-2 object/builder/renderer and t1548 proof. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.8` | `FSMGEN-HIR-ROADMAP-FRONTIER.8: activate SourceHIR two-route promotion audit` | Continuity-only activation after the clean second-route proof. |
 
 ## Changelog
 
@@ -286,6 +292,8 @@ is selected by `.7`.
 - `2026-07-30`: Implemented and proved the private semantic
   concrete-control-to-IAL1 route, preserving exact phase fixture/IAL0 bytes,
   version 1, and all public surfaces.
+- `2026-07-30`: Activated `.8` continuity-only for the evidence-based
+  two-route disposition audit.
 
 ## Acceptance Checklist (enforced)
 

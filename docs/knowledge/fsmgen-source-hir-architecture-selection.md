@@ -38,4 +38,5 @@ public builder selection separate. Decision `0030` now selects that proof as a
 semantic version-2 concrete-control subset rendered to the existing phase-test
 IAL1 path; raw ISF and parser-AST storage remain rejected. Clean contract
 commit `f42fb033d` activated its private implementation leaf, and `.7` now
-proves that route without adding a public surface.
+proves that route without adding a public surface. Clean implementation commit
+`8876adb0b` activates `.8` continuity-only for the two-route audit.

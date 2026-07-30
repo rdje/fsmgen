@@ -34,3 +34,5 @@ source map. Because current parser failures may omit a generated position, the
 remapper truthfully falls back to SourceHIR root provenance instead of
 inventing a field location. The implementation adds no CLI, public schema,
 serialization, report, manifest, capability, or support-accounting surface.
+Clean implementation commit `8876adb0b` activates `.8` continuity-only for the
+evidence-based two-route disposition audit.

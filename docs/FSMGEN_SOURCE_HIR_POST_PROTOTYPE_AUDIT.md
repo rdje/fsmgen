@@ -21,7 +21,8 @@ scheduler re-entry. The exact contract is
 `docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md`.
 
 Leaf `.7` now implements and proves that route privately. Leaf `.8` remains
-the sole owner of the next promotion/continued-private/retirement decision.
+the sole owner of the next promotion/continued-private/retirement decision;
+clean implementation commit `8876adb0b` activates that audit continuity-only.
 
 Public host-language selection remains owned by proposed
 `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`. No Perl, Python, Julia, C, CLI, raw-HIR,

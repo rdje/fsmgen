@@ -974,7 +974,8 @@ Source-facing HIR roadmap phase:
   the existing ISF adapter/scheduler and preserves the exact IAL0 result. It
   stores no raw ISF or parser AST. Leaf `.7` now implements that private
   contract and proves exact ISF/IAL0 bytes plus equal typed actor and schedule;
-  `.8` repeats the promotion audit after `.7` commits cleanly. Public
+  clean commit `8876adb0b` activates `.8` continuity-only to repeat the
+  promotion audit. Public
   language, packaging, versioning, and compatibility remain separately owned
   by proposed `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`.
 

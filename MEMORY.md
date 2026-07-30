@@ -5,15 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.7: implement private SourceHIR IAL1 path`).
-- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.8` (proposed; activation next).
-- current_state: `.7` implements the closed private SourceHIR version-2
-  concrete-control object/builder/ISF renderer and t1548 exact fixture/IAL0/
-  schedule proof without public exposure or existing behavior change.
-- next_action: after this clean implementation commit, activate `.8`
-  continuity-only for the evidence-based two-route promotion audit.
-- in_flight_uncommitted: none after this implementation commit; no background
-  job.
+- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.8: activate SourceHIR two-route promotion audit`).
+- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.8` (active continuity-only).
+- current_state: clean private implementation commit `8876adb0b` activates
+  `.8` without selecting promotion, continued-private iteration,
+  narrowing/renaming, retirement, or any public surface.
+- next_action: audit both private lowering routes and select one evidence-based
+  disposition while coordinating any public outcome with the separate builder
+  frontier.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -40,9 +40,9 @@ history; this file carries only the current bounded resume state.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
 - Decisions `0028`-`0030` and the architecture/audit/v1/v2 contract records are
-  canonical. `.7` is implemented privately; `.8` remains proposed until the
-  next activation commit. Public builder, HIAL/VIAL, scale, MCP-write, and
-  every director-gated owner remain inactive.
+  canonical. `.7` is implemented privately and `.8` is active continuity-only.
+  Public builder, HIAL/VIAL, scale, MCP-write, and every director-gated owner
+  remain inactive.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously
