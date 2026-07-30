@@ -8292,6 +8292,10 @@ fixtures from generic canonical literal counts `5..16` without per-count
 fixtures, while keeping counts above 16 and symbolic/policy/runtime/random or
 multiple-point insertion deferred. Product behavior and 332/373/56 split
 28/28 accounting are unchanged.
+Clean AHB book completion commit `3fb84b23e` activates parent selector `.841`
+continuity-only. It selects no candidate during activation; the scheduled
+lifecycle review and every explicit director gate remain inactive, and both
+frozen status files stay untouched.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

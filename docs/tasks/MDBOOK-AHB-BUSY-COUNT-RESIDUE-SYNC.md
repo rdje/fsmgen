@@ -60,6 +60,8 @@ product behavior or overstating the public fixture catalog.
 - `2026-07-30`: Clean activation commit `76a7424fa` permits the exact
   no-behavior repair. `.1` changes only the contradictory residue wording and
   preserves the shipped/runtime/catalog distinction selected by the parent.
+- `2026-07-30`: Clean documentation commit `3fb84b23e` completes `.1` and
+  hands continuity back to parent selector `.841`; this tree remains complete.
 
 ## Blockers
 

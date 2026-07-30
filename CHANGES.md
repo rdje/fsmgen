@@ -30968,3 +30968,16 @@ task tree and git.
   pass with `Files=6, Tests=334`; all 36 mdBook chapters pass executable-example
   testing; the 72-file HTML build, Knowledge Map at 1,074 facts / 5,534 keys,
   memory architecture, output cleanup, and diff hygiene pass.
+
+### IAL2-FEATURE-COMPLETENESS-FRONTIER.841 — post-AHB-book selector activated
+
+- Activated one new parent selector only after clean AHB book completion commit
+  `3fb84b23e`. No candidate is selected during activation; the corrected
+  Chapter 16c boundary and every product behavior remain unchanged.
+- Task/index, completed-child handoff, selector record/fact, roadmap, mdBook,
+  Memory, and changelog continuity are aligned. The scheduled lifecycle review
+  and every explicit director gate remain inactive, both frozen status files
+  remain untouched, and no separate development note is warranted. Focused
+  documentation audits pass with `Files=3, Tests=40`; Knowledge Map, memory
+  architecture, the 72-file mdBook HTML build, output cleanup, and diff hygiene
+  pass.

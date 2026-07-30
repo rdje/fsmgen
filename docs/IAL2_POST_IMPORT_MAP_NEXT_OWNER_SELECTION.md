@@ -95,6 +95,10 @@ Child closeout finds the corrected current boundary and no remaining
 the 72-file HTML build, Knowledge Map at `1074` facts / `5534` question keys,
 memory architecture, output cleanup, and diff hygiene pass.
 
+Clean documentation commit `3fb84b23e` completes the selected child and hands
+continuity to parent selector `.841`. This selection record is complete and
+the corrected Chapter 16c boundary remains current.
+
 The pre-activation rollback removed this selector record/fact and restored
 `.840` to active without changing Chapter 16c. After child completion, rollback
 reverts only the corrected Chapter 16c wording plus its task/continuity records;

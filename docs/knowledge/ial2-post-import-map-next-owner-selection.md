@@ -39,3 +39,7 @@ from canonical literal counts `5..16` that reuse the shipped lowerer without
 per-count fixtures. Counts above 16 and symbolic/policy/runtime/random or
 multiple-point insertion remain deferred; product behavior and accounting do
 not change.
+
+Clean documentation commit `3fb84b23e` completes the selected child and hands
+continuity to parent selector `.841`. This selector fact remains the durable
+history for the completed no-behavior repair.

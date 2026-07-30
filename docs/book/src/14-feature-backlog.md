@@ -11994,6 +11994,9 @@ bullet. Chapter 16c now separates exact-one-through-four catalog fixtures from
 generic canonical literal counts `5..16` without per-count fixtures and keeps
 all above-16/runtime residue explicit; product behavior and accounting remain
 unchanged.
+Clean AHB book completion commit `3fb84b23e` activates parent selector `.841`
+continuity-only. No candidate is selected during activation; the scheduled
+lifecycle review and every director-gated direction remain inactive.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
