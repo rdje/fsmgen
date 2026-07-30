@@ -5,14 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.2: select private SourceHIR boundary`).
-- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.3` (proposed; not active).
-- current_state: `.2` selects a distinct private pre-IAL `SourceHIR`, internal
-  Perl builder, canonical PPIF handoff, and byte-identical valid-ready golden;
-  no code or public behavior changed.
-- next_action: after this selection commits cleanly, activate `.3` separately
-  and freeze the exact version-1 object/diagnostic/renderer test contract.
-- in_flight_uncommitted: none after this selection commit; no background job.
+- latest_commit: this commit (`FSMGEN-HIR-ROADMAP-FRONTIER.3: activate SourceHIR v1 contract`).
+- active_work_unit: `FSMGEN-HIR-ROADMAP-FRONTIER.3`
+  (continuity-only activation).
+- current_state: clean architecture commit `f0e88e9f7` activates `.3` without
+  selecting exact SourceHIR fields, diagnostics, APIs, tests, or behavior.
+- next_action: after this activation commits cleanly, freeze the exact private
+  version-1 object/diagnostic/renderer contract without implementation.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -39,7 +39,7 @@ history; this file carries only the current bounded resume state.
 - The Chapter 16c counts-beyond-four contradiction is resolved through clean
   documentation commit `3fb84b23e` without behavior/accounting changes.
 - Decision `0028` and the SourceHIR architecture record are canonical. `.3`
-  remains proposed; the public host-language builder, HIAL/VIAL, scale,
+  is active continuity-only; the public host-language builder, HIAL/VIAL, scale,
   MCP-write, and every director-gated owner remain inactive.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.

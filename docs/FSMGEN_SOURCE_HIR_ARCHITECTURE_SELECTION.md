@@ -4,6 +4,9 @@ Date: 2026-07-30
 Owner: `FSMGEN-HIR-ROADMAP-FRONTIER.2`
 Status: selected; implementation not started
 
+Clean architecture commit `f0e88e9f7` activates the separate design-only
+`.3` contract leaf. Its activation selects no exact field/API/diagnostic shape.
+
 ## Outcome
 
 FSMGen will add a distinct, private, pre-IAL semantic-intent layer named

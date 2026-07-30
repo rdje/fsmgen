@@ -72,11 +72,11 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.2: select private SourceHIR boundary`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Freeze the exact SourceHIR version-1 contract before implementation.`
   Acceptance: `Define the exact immutable object keys/types/order, valid-ready-only constraints, provenance/source-span shape, semantic paths, diagnostic and downstream-remap fallback rules, renderer result/source-map shape, byte-equivalence oracle, negative cases, package APIs, and focused test ownership for the private internal Perl builder. Change no code, parser, source fixture, generated artifact, config, public API/report schema, support accounting, HDL/runtime, or behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated continuity-only after clean architecture-selection commit f0e88e9f7. Activation changes only task/index, architecture/fact continuity, roadmap, mdBook backlog, Memory, and changelog. Exact object keys/types, diagnostics, source-map shape, package APIs, tests, code, parser, source fixture, generated artifacts, config, public APIs/reports, support accounting, HDL/runtime, and behavior remain unchanged until the activation commits cleanly. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; Knowledge Map generation/check passes at 1076 facts / 5547 question keys; memory architecture passes with MEMORY.md at 47 lines; the 72-file mdBook HTML build passes and its exact repository-local output is removed; diff hygiene and all seven doctrine gates pass.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.3: activate SourceHIR v1 contract`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.4`
   Status: `proposed`
@@ -94,15 +94,15 @@ and future IAL evolution.
 
 ## Current Frontier
 
-Leaf `.2` has selected and documented the policy-complete private SourceHIR
-boundary without implementation. Leaf `.3` is the next proposed clean slice;
-it must be activated separately before freezing the exact version-1 contract.
+Clean architecture-selection commit `f0e88e9f7` activates `.3`
+continuity-only. The leaf must now freeze the exact private version-1 contract
+without implementation.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `done` | Captured the roadmap phase and activation criteria without behavior changes. |
 | 2 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `done` | Selected a distinct private SourceHIR, internal Perl builder, canonical PPIF handoff, and valid-ready golden. |
-| 3 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `proposed` | Freeze the exact version-1 object and diagnostic contract before code. |
+| 3 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `active` | Freeze the exact version-1 object and diagnostic contract before code. |
 | 4 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `proposed` | Implement and prove the private valid-ready golden path. |
 | 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `proposed` | Audit promotion, continued private iteration, or retirement from evidence. |
 
@@ -146,6 +146,9 @@ it must be activated separately before freezing the exact version-1 contract.
   object, normalized-report key, support-accounting promise, or new behavior.
   Decision `0028` and
   `docs/FSMGEN_SOURCE_HIR_ARCHITECTURE_SELECTION.md` are canonical.
+- `2026-07-30`: Clean architecture-selection commit `f0e88e9f7` activates
+  `.3` continuity-only. The exact version-1 contract remains unselected until
+  this activation commits cleanly.
 
 ## Open Questions
 
@@ -158,8 +161,7 @@ it must be activated separately before freezing the exact version-1 contract.
 
 ## Blockers
 
-- None. `.2` is complete; `.3` remains proposed until a separate clean
-  activation commit.
+- None. `.3` is active continuity-only after clean commit `f0e88e9f7`.
 
 ## Verification Log
 
@@ -167,6 +169,7 @@ it must be activated separately before freezing the exact version-1 contract.
 | --- | --- | --- | --- |
 | `2026-06-28` | `FSMGEN-HIR-ROADMAP-FRONTIER.1` | `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed` |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | public PPIF strict check + schedule JSON; `prove -Iperl t/155-forward-intent-hir-surface.t t/156-forward-lowered-rtl-ir-surface.t t/163-forward-structural-rtl-ir-surface.t t/334-normalized-semantic-forward-ir-contract.t t/339-normalized-semantic-intent-hir-contract.t t/1435-axi-ial2-valid-ready-generator.t`; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; diff hygiene; `scripts/check_doctrines.sh` | `passed`; no implementation or behavior change |
+| `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.3` activation | documentation audits; Knowledge Map; memory architecture; `mdbook build docs/book`; output cleanup; diff hygiene; `scripts/check_doctrines.sh` | `passed`; continuity-only |
 
 ## Commit Log
 
@@ -176,6 +179,7 @@ it must be activated separately before freezing the exact version-1 contract.
 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `FSMGEN-HIR-ROADMAP-FRONTIER.2: activate source-facing HIR boundary` | Continuity-only activation; architecture selection follows after this commit is clean. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.2` | `FSMGEN-HIR-ROADMAP-FRONTIER.2: select private SourceHIR boundary` | Selects the complete IR-policy boundary, first internal builder, and valid-ready golden without implementation. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `pending` | Proposed exact-contract leaf; not active during `.2`. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.3` | `FSMGEN-HIR-ROADMAP-FRONTIER.3: activate SourceHIR v1 contract` | Continuity-only activation after the clean architecture selection. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `pending` | Proposed private implementation leaf. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `pending` | Proposed evidence-based promotion/retirement audit. |
 
@@ -188,3 +192,5 @@ it must be activated separately before freezing the exact version-1 contract.
   rendering through the existing parser, an internal Perl builder, and the
   byte-identical protocol-neutral valid-ready golden. No implementation or
   public behavior changed.
+- `2026-07-30`: Activated `.3` continuity-only after clean architecture
+  selection; exact contract and implementation remain unchanged.

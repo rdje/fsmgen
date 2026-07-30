@@ -960,8 +960,9 @@ Source-facing HIR roadmap phase:
   pass through the existing PPIF parser and `IAL2 -> IAL1 -> IAL0` chain.
 - The first golden is `ppif/valid_ready_handshake.ppif`, reproduced byte-for-
   byte. No public builder language, CLI/API, report schema, support-accounting
-  promise, or concrete-FSM-to-IAL1 route is selected yet. The next proposed
-  leaf freezes the exact private version-1 object and diagnostic contract.
+  promise, or concrete-FSM-to-IAL1 route is selected yet. Active design-only
+  leaf `.3` now owns the exact private version-1 object and diagnostic contract;
+  implementation remains a later proposed leaf.
 
 Advanced synthesizable targets worth considering later, not rejecting upfront:
 - macro/preprocessor-heavy RTL after preprocessing with provenance retained,

@@ -27,3 +27,7 @@ parser/validator and normal `IAL2 -> IAL1 -> IAL0` chain.
 The first golden is `ppif/valid_ready_handshake.ppif`, reproduced byte-for-
 byte. The raw object, builder input, and source map remain private; no public
 host-language API or report schema is selected.
+
+Clean architecture commit `f0e88e9f7` activates design-only leaf `.3`
+continuity-only. Exact keys, diagnostics, renderer APIs, and tests remain
+unselected until that activation commits cleanly.

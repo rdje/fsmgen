@@ -31030,3 +31030,19 @@ task tree and git.
   keys; memory, diff, and all seven doctrine gates pass. Repository-local
   scratch is removed, both frozen status files stay untouched, and decision
   `0028` is the canonical rationale instead of a duplicate development note.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.3 — SourceHIR v1 contract activated
+
+- Activated only the selected design-only contract leaf after clean
+  architecture commit `f0e88e9f7`.
+- Task/index, architecture record/facts, roadmap, mdBook backlog, Memory, and
+  changelog continuity are aligned. Exact SourceHIR keys/types, diagnostic and
+  source-map shapes, renderer/package APIs, tests, code, parser, fixture,
+  generated artifacts, config, public contracts/accounting, HDL/runtime, and
+  behavior remain unchanged until this activation commits cleanly.
+- The public host-language builder and broader HIAL/VIAL, scale, and MCP-write
+  owners remain inactive; both frozen status files stay untouched and no
+  separate development note is warranted for continuity-only activation.
+- Documentation audits pass with `Files=3, Tests=40`; Knowledge Map passes at
+  1,076 facts / 5,547 keys; memory architecture, the 72-file mdBook build,
+  output cleanup, diff hygiene, and all seven doctrine gates pass.

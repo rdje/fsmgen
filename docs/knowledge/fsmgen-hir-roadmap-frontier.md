@@ -34,5 +34,6 @@ and uses the existing parser plus `IAL2 -> IAL1 -> IAL0` chain. The first
 golden is `ppif/valid_ready_handshake.ppif`, reproduced byte-for-byte.
 
 The prototype remains private and adds no CLI, public host-language API,
-normalized-report key, or support-accounting promise. Proposed `.3` freezes
-the exact version-1 contract before implementation.
+normalized-report key, or support-accounting promise. Clean architecture
+commit `f0e88e9f7` activates `.3` continuity-only to freeze the exact version-1
+contract before implementation.
