@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `README-POLICY-STORAGE-LOCATION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / entry-point documentation`
 - Created: `2026-07-30`
 - Last updated: `2026-07-30`
@@ -38,16 +38,16 @@ project stores the policy file.
 ## Task Tree
 
 - ID: `README-POLICY-STORAGE-LOCATION`
-  Status: `active`
+  Status: `done`
   Goal: `Define the canonical repository-local home of README_POLICY.md.`
   Children: `README-POLICY-STORAGE-LOCATION.1`
 
 - ID: `README-POLICY-STORAGE-LOCATION.1`
-  Status: `active`
+  Status: `done`
   Goal: `Document the tracked repository-root storage rule and synchronize its book pointer.`
   Acceptance: `README_POLICY.md and the mdBook reference entry identify <repository-root>/README_POLICY.md beside README.md as the canonical project-owned copy, without changing the existing content or growth policy.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `README_POLICY.md now has an explicit Storage location section and first adoption step naming the tracked <repository-root>/README_POLICY.md beside README.md. It explains the shared discoverability/versioning benefit and limits external copies to templates rather than canonical project policy. The mdBook reference map states the same rule. README_POLICY.md is 71 lines / 2,920 bytes. Exact wording scans and diff hygiene pass. The mdBook renders 72 files / approximately 16 MiB, and generated docs/book/book is removed. All six doctrine gates pass, including bounded Memory, Knowledge Map, relative documentation paths, README limits, and project-data locality. README.md, TOOLBOX.md, COMMIT.md, growth caps, hooks, CI, and runtime behavior are unchanged.`
+  Commit: `README-POLICY-STORAGE-LOCATION.1: define canonical policy home`
 
 ## Decisions
 
@@ -60,4 +60,4 @@ project stores the policy file.
 
 ## Blockers
 
-- None.
+- None. Tree complete; the next clean action returns to the roadmap selector.

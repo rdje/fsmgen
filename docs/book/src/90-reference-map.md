@@ -52,8 +52,9 @@ work frontier. `ROADMAP_V2.md` carries high-level direction.
 0007 and must not be used as current status.
 
 `README_POLICY.md` is the project-neutral landing-page maintenance standard:
-it defines stable content, routes dynamic detail elsewhere, and requires
-deterministic line/byte budgets in both pre-commit and CI.
+adopting projects keep the canonical tracked copy at repository root beside
+`README.md`. It defines stable content, routes dynamic detail elsewhere, and
+requires deterministic line/byte budgets in both pre-commit and CI.
 
 `ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is the canonical human handoff contract
 for SPECFORGE-style downstream consumers. The book includes that file directly
