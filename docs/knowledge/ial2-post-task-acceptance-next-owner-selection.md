@@ -48,3 +48,7 @@ plus the guarded 295-file / 2,037-test ISF regression. `.3` remains pending.
 Clean `.2` commit `4ba108b3d` activates only `.3`: current t1474 has one stale
 aggregate-cardinality regex while the canonical public `.ahb` strict check is
 green.
+
+Completed `.3` restores t1474 and the six-file alias gate. Adjacent verification
+roots four stale t1475/t1482 generated-IAL0 expectations to named-drive priority
+commit `1dbff8fc6`; pending `.4` owns that separate repair.

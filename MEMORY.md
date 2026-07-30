@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`PUBLIC-SYNC-TEST-DRIFT-REPAIR.3: activate alias diagnostic sync`).
-- active_work_unit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.3` (continuity-only activation).
-- current_state: clean `.2` commit `4ba108b3d` activates only `.3`; t1474 has
-  one stale aggregate-cardinality regex while canonical AHB strict check passes.
-- next_action: update only t1474 line 84's regex for the already-shipped
-  two-subordinate aggregate wording, then prove t1474 and direct strict check.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`PUBLIC-SYNC-TEST-DRIFT-REPAIR.3: synchronize alias diagnostic expectation`).
+- active_work_unit: `PUBLIC-SYNC-TEST-DRIFT-REPAIR.3` (complete in this commit).
+- current_state: t1474 now matches both shipped aggregate shapes; the six-file
+  alias gate and canonical AHB strict JSON check are green.
+- next_action: after this commit is clean, activate only
+  `PUBLIC-SYNC-TEST-DRIFT-REPAIR.4` for the four stale t1475/t1482 IAL0 regexes.
+- in_flight_uncommitted: none after this implementation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
@@ -26,8 +26,8 @@ bounded current-state pointer. Git preserves its prior history.
 - `TASK-ACCEPTANCE` was not durably ported or backlogged by the June doctrine
   adoption; decision `0026` plus completed `.1`-.3 now ship the neutral
   contract, checker/registries/probes, and seventh-doctrine integration.
-- Public-sync `.1` restores the public presence list, `.2` restores the exact
-  ISF test index, and `.3` is active for one stale assertion only.
+- Public-sync `.1`-.3 restore presence, exact ISF index, and alias diagnostics;
+  discovered `.4` owns four post-named-drive-priority structural assertions.
 - The IAL2 frontier ships exact-one-through-four requester and one-/two-window
   paired generic/profile families at 332/373/56 split 28/28. Generalized-count
   `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a

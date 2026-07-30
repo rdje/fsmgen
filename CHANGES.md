@@ -30599,3 +30599,24 @@ task tree and git.
   audits pass with `Files=3, Tests=40`; Knowledge Map generation/check passes
   at 1,068 facts / 5,499 keys; mdBook HTML build and diff hygiene pass. This
   activation does not warrant a development-note entry.
+
+### PUBLIC-SYNC-TEST-DRIFT-REPAIR.3 — alias diagnostic expectation synchronized
+
+- Updated exactly t1474's stale wrong-object regex to include the parser's
+  already-shipped one-requester/two-subordinate aggregate wording beside the
+  one-subordinate shape. Focused t1474 moves from one failed assertion to
+  `All tests successful`, `Files=1, Tests=5`.
+- The serial t1469/t1470/t1474/t1477/t1479/t1481 cross-protocol/profile-alias
+  set reports `All tests successful`, `Files=6, Tests=36` in 727 seconds. The
+  unchanged canonical `ppif/ahb_requester.ahb` passes strict JSON checking with
+  zero diagnostics and no generated output.
+- Adjacent verification exposed four separate stale unguarded ERROR-drive
+  expectations in t1475/t1482. History roots them to the named-drive priority
+  masks added by `1dbff8fc6`; a durable fact and pending `.4` own that repair.
+  This `.3` slice changes no parser/scheduler source, fixture, schema/accounting,
+  generated artifact, HDL/runtime, or product behavior, and does not warrant a
+  development-note entry. Perl syntax passes; focused-index, feature-backlog,
+  live-book-path, and relative-path audits pass with `Files=4, Tests=42`;
+  Knowledge Map generation/check passes at 1,069 facts / 5,502 keys; mdBook
+  HTML build and diff hygiene pass; the staged seven-doctrine driver passes
+  with fresh `perl_diagnostic` / `prove_summary` task-acceptance evidence.

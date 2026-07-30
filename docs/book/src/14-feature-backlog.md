@@ -11880,6 +11880,11 @@ continuity-only. Current t1474 has one stale diagnostic regex: it names the
 one-subordinate aggregate but not the parser's already-shipped two-subordinate
 aggregate wording. The canonical public `.ahb` source remains strict-check
 clean; no test or product behavior changes during activation.
+Public-sync `.3` is now complete: exactly one t1474 regex names both shipped
+aggregate shapes, the six-file profile-alias gate passes 36 tests, and the
+canonical public `.ahb` strict check stays clean. Adjacent verification found
+four old generated-IAL0 ERROR-drive patterns in t1475/t1482 that predate
+named-drive priority masks; pending `.4` owns them without changing behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

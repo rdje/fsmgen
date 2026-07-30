@@ -89,3 +89,8 @@ remains pending until the clean `.2` commit.
 Clean `.2` implementation commit `4ba108b3d` activates only public-sync `.3`
 continuity-only. Its exact boundary is one stale t1474 aggregate-cardinality
 regex; the canonical public `.ahb` source remains strict-check clean.
+
+Public-sync `.3` updates exactly that regex and restores the six-file alias
+gate without product changes. Adjacent proof discovers four stale generated-
+IAL0 ERROR-drive expectations in t1475/t1482; pending `.4` owns them after the
+clean `.3` commit.

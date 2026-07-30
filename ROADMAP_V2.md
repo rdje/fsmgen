@@ -8206,6 +8206,11 @@ continuity-only. Current-HEAD t1474 fails one assertion because its diagnostic
 regex stops after the one-subordinate aggregate shape while the shipped parser
 also names the two-subordinate shape. The canonical public `.ahb` source passes
 strict JSON checking; test and product behavior remain unchanged in activation.
+Completed public-sync `.3` updates exactly that one t1474 regex, restores the
+six-file cross-protocol/profile-alias gate at 36 tests, and retains canonical
+AHB strict-check success without product changes. Adjacent verification roots
+four stale generated-IAL0 ERROR-drive expectations in t1475/t1482 to named-drive
+priority commit `1dbff8fc6`; pending `.4` owns that separate synchronization.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

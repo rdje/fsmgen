@@ -81,7 +81,7 @@ subtest 'adapter rejects .ahb profile and behavior boundaries' => sub {
     ok(!$wrong_object_ok, '.ahb profile with non-AHB behavior is rejected');
     like(
         $@,
-        qr/profile ahb requires exactly one \(ahb-requester \.\.\.\) object, exactly one \(ahb-subordinate \.\.\.\) object, or the selected aggregate one-requester\/one-subordinate \(ahb-interconnect \.\.\.\) shape in this slice/,
+        qr/profile ahb requires exactly one \(ahb-requester \.\.\.\) object, exactly one \(ahb-subordinate \.\.\.\) object, the selected aggregate one-requester\/one-subordinate \(ahb-interconnect \.\.\.\) shape, or the selected aggregate one-requester\/two-subordinate \(ahb-interconnect \.\.\.\) shape in this slice/,
         '.ahb unsupported object diagnostic names the selected aggregate shape',
     );
 
