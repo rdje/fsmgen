@@ -22,6 +22,7 @@ use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::Parser;
 use FSM::Package::Symbols;
 use FSM::SourcePathResolver;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFResourceCatalog qw(
     isf_resource_arbiter_values
     isf_resource_kind_values
@@ -7235,6 +7236,11 @@ sub _parse_use($self, $clause, $actor_name) {
             && !ref($clause->[3])
             && _is_hdl_identifier($clause->[3]);
 
+    FSM::Support::HDLInstanceIdentifierPolicy->assert_authored_instance_identifier(
+        $clause->[3],
+        origin => "Actor '$actor_name' library use instance",
+    );
+
     my %seen_subclause;
     my @params;
     my @bindings;
@@ -9788,6 +9794,10 @@ sub _actor_network_from_instance_parts {
     my ($actor_name, $name, $actor_type, $declaration) = @_;
     confess "Error: actor '$actor_name' static actor instance name must be a scalar HDL identifier\n"
         unless _is_hdl_identifier($name);
+    FSM::Support::HDLInstanceIdentifierPolicy->assert_authored_instance_identifier(
+        $name,
+        origin => "Actor '$actor_name' static actor instance",
+    );
     confess "Error: actor '$actor_name' static actor instance '$name' type must be a scalar HDL identifier or selected ATL library-qualified 'ALIAS.EXPORT' token\n"
         unless _is_hdl_identifier($actor_type) || _is_library_qualified_actor_type($actor_type);
     confess "Error: actor '$actor_name' static actor instance '$name' cannot instantiate its own enclosing actor type '$actor_type'\n"

@@ -34,6 +34,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_expr_text);
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub emit_module ($class, $structural_rtl_ir) {
     my $structural = blessed($structural_rtl_ir) && $structural_rtl_ir->can('as_hashref')
@@ -134,7 +135,10 @@ sub _render_instance_block ($instance) {
             || $is_supported_standalone_dt_generic_map;
     }
 
-    my $instance_name = _identifier($instance->{instance_name}, 'instance name');
+    my $instance_name = FSM::Support::HDLInstanceIdentifierPolicy->assert_authored_instance_identifier(
+        $instance->{instance_name},
+        origin => 'StructuralRTLIR VHDL child instance',
+    );
     my $module_name = _identifier($instance->{module_name}, 'instance module name');
     my @bindings = @{$instance->{port_bindings} || []};
     my @generic_lines;

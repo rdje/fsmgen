@@ -30808,3 +30808,22 @@ task tree and git.
   legacy status files remain untouched. Feature-backlog/live-book/relative-path
   audits pass at `Files=3, Tests=40`; Knowledge Map, 60-line Memory, mdBook HTML
   build, and diff hygiene pass; exact build scratch is removed.
+
+### PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2 — portable child-instance identifiers enforced
+
+- Added one shared SystemVerilog/VHDL-2008 keyword registry, authored-label
+  validator, and deterministic case-safe generated-name allocator. Direct C4,
+  spawn, reusable-library, ATL, APB/AHB, and structural-emitter routes now
+  enforce the same child-instance-label contract.
+- APB multi-peripheral generation now emits, wires, and reports
+  `interconnect_instance`; legal AHB `fabric` and fixed AXI labels remain
+  unchanged. Policy t1546 passes at `Files=1, Tests=7`, full APB t1472 passes at
+  `Files=1, Tests=101`, the preservation cluster is green, and all changed Perl
+  and test files report `syntax OK`.
+- All 36 mdBook chapters pass test/build; doc audits pass at `Files=3,
+  Tests=40`; Knowledge Map validation passes at 1,072 facts / 5,523 keys. A
+  pre-existing stale t1502 exact assertion expectation is traced to commit
+  `80aa203ab` and owned by proposed inactive
+  `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`. Decision `0027` owns the
+  engineering rationale, so `DEVELOPMENT_NOTES.md` is unchanged; both frozen
+  status files remain untouched.

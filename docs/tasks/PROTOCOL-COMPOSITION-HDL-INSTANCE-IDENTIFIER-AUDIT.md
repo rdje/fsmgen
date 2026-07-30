@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `HDL quality / protocol composition identifiers`
 - Created: `2026-07-23`
 - Last updated: `2026-07-30`
@@ -44,7 +44,7 @@ tops, showing that the issue may be cross-protocol rather than AHB-only.
 ## Task Tree
 
 - ID: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT`
-  Status: `active`
+  Status: `done`
   Goal: `Audit generated child instance names against target-language reserved words before selecting a shared policy.`
   Children: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1`, `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2`
 
@@ -56,10 +56,10 @@ tops, showing that the issue may be cross-protocol rather than AHB-only.
   Commit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1: select portable identifier contract`
 
 - ID: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement and verify the selected portable child-instance identifier contract.`
   Acceptance: `From a separate clean activation, add one shared portable keyword registry and deterministic generated-name allocator; fail authored C4/spawn/library/ATL instance keywords at their nearest bounded source boundary; add structural-emitter defenses; integrate APB/AHB generated allocation; preserve every legal non-colliding AHB/AXI/ISF label; update APB generated interconnect wiring/report identity to interconnect_instance; cover direct, protocol, reusable-library, actor-network, SystemVerilog, and VHDL emitter routes with focused regressions; update user docs and public report expectations. Do not expand into module/top/port/net/parameter identifier families.`
-  Verification: `Activated only from clean audit/decision commit 53a54c6c9. This continuity slice changes task/index/Memory/changelog pointers only; the shared registry/allocator, source diagnostics, emitters, protocol generators, reports, tests, generated HDL, and target behavior remain unchanged. Decision 0027 and the audited implementation boundary are unchanged. Feature-backlog/live-book/relative-path audits pass with Files=3, Tests=40; Knowledge Map, Memory architecture at 60 lines, mdBook HTML build, and diff hygiene pass; exact book scratch is removed. The lifecycle review and all director-gated directions remain inactive; ROADMAP_STATUS.md and LIVE_ACHIEVEMENT_STATUS.md remain untouched.`
+  Verification: `Activated only from clean audit/decision commit 53a54c6c9. One shared SystemVerilog/VHDL-2008 keyword registry, authored-label validator, and case-safe generated allocator now cover direct C4, spawn, reusable-library use, ATL static instances, APB/AHB protocol children, and both structural emitters. Public APB uses interconnect_instance consistently in generated IAL0, derived HDL carriers, wiring, and reports; legal AHB fabric and fixed AXI labels remain stable. t1546 passes with Files=1, Tests=7 and exact verifier-stage assertions for verilator_lint/yosys_synthesis; the complete APB t1472 suite passes with Files=1, Tests=101; AHB, library, ATL, composition, and structural-emitter preservation tests pass. All ten changed Perl/test files report syntax OK. A confirmatory six-file guarded rerun was stopped before test execution because host memory measured 95.4% above the configured 88% cutoff; the already-recorded green focused results are retained rather than rerunning unbounded. Preservation testing exposed only an unrelated stale exact assertion expectation in t1502, traced by git log -S to grouped-rendering commit 80aa203ab and durably owned by proposed inactive ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3. All 36 mdBook chapters pass mdbook test and HTML build; feature-backlog/live-book/relative-path audits pass with Files=3, Tests=40; Knowledge Map passes at 1,072 facts / 5,523 question keys. Repository-local book scratch is removed. Decision 0027, the audit, fact card, user docs, task/index, Memory, and changelog are synchronized. DEVELOPMENT_NOTES.md is unchanged because decision 0027 owns the rationale; ROADMAP_STATUS.md and LIVE_ACHIEVEMENT_STATUS.md remain untouched.`
   Commit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2: enforce portable instance identifiers`
 
 ## Decisions
@@ -74,7 +74,29 @@ tops, showing that the issue may be cross-protocol rather than AHB-only.
   generated-label/report delta.
 - `2026-07-30`: Clean audit commit `53a54c6c9` activates only `.2` so source
   implementation can begin from an explicit continuity boundary.
+- `2026-07-30`: `.2` implements decision `0027`; public APB changes only its
+  generated interconnect child identity to `interconnect_instance`, while legal
+  AHB/AXI labels stay stable and authored keyword labels now fail at source.
 
 ## Blockers
 
-- None. `.2` is active from clean audit commit `53a54c6c9`.
+- None. `.1` and `.2` are complete; the tree is exhausted.
+
+## Acceptance Checklist — `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-fix strict direct-C4, public-APB,
+  reusable-library, and spawn probes produced Verilator `%Error-` diagnostics
+  for `unexpected interconnect` at generated lines 78, 3134, 924, and 598;
+  source inspection localized the bypass to syntax-only validators and
+  collision-only APB/AHB allocators.
+- [x] **ADDRESSED (verified)** — `prove -Iperl
+  t/1546-hdl-instance-identifier-policy.t` moves every authored route to an
+  origin/target-aware early diagnostic, emits APB `interconnect_instance`, and
+  passes public APB `verilator_lint` plus `yosys_synthesis`; the test reports
+  `Files=1, Tests=7`.
+- [x] **NO REGRESSION** — Focused policy and full APB runs report `All tests
+  successful` at `Files=1, Tests=7` and `Files=1, Tests=101`; the AHB, library,
+  ATL, composition, and structural-emitter preservation set is green, all ten
+  changed Perl/test files report `syntax OK`, and Knowledge Map validation
+  reports `knowledge-map: OK`. The final staged doctrine driver remains
+  required before commit.

@@ -2,7 +2,7 @@
 
 - Date: 2026-07-30
 - Type: architecture
-- Status: accepted (implementation pending in `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2`)
+- Status: accepted and implemented by `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2`
 
 ## Context
 
@@ -53,3 +53,13 @@ escaping would make wiring/report identity depend on the selected target.
   stable structural identity.
 - Module/top/port/net/parameter identifier families remain outside this
   decision's implementation slice and require separate owners if audited.
+
+## Implementation
+
+`FSM::Support::HDLInstanceIdentifierPolicy` now owns the SystemVerilog and
+VHDL-2008 keyword registries, authored-label diagnostic, and generated-label
+allocator. Direct C4, spawn, reusable-library, ATL, APB/AHB normalization, and
+both structural emitters call the shared policy. APB public composition/report
+identity is `interconnect_instance`; AHB `fabric` and fixed AXI labels remain
+unchanged. Focused regressions include public APB Verilator lint plus Yosys
+synthesis and direct VHDL-emitter defense coverage.

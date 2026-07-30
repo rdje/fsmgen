@@ -35,7 +35,13 @@ rather than being left for HDL emission.
 
 Duplicate names are rejected before scheduling or wiring inference starts. A
 top port name may appear only once in `?ports`, and each realized child
-instance name must be unique within the `?top`.
+instance name must be unique within the `?top`. Child instance labels must also
+be portable non-keywords across the shipped HDL targets: SystemVerilog lookup
+is case-sensitive and VHDL-2008 lookup is case-insensitive. For example,
+`?fsmc:interconnect` and `?rtl:process` fail during composition parsing instead
+of reaching a backend as invalid HDL. See
+[Portable Instance Identifiers](13f-composition.md#portable-instance-identifiers)
+for authored diagnostics and generated-name allocation.
 
 ## The Minimal Shape
 

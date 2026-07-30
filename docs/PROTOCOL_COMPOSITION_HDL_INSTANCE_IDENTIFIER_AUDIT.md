@@ -119,10 +119,23 @@ per backend. It preserves one composition identity and one report across
 SystemVerilog, Verilog, and VHDL, matching the backend-neutral IAL contract in
 decision `0018`.
 
-## Implementation Boundary
+## Implementation Outcome
 
-Proposed leaf `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2` owns the
-shared registry/allocator, source-boundary diagnostics, emitter defenses,
-APB/AHB integration, focused direct/library/spawn/ATL and emitter regressions,
-the APB report/golden delta, public APB/AHB/AXI HDL gates, and final mdBook
-behavior update. It must preserve every currently legal non-colliding label.
+Leaf `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2` implements the
+selected contract in `perl/FSM/Support/HDLInstanceIdentifierPolicy.pm`.
+SystemVerilog keywords retain case-sensitive matching; VHDL-2008 keywords and
+portable name collisions use case-insensitive matching. Authored direct C4,
+spawn, reusable-library, ATL, APB, and AHB labels fail at their bounded source
+boundary, and both structural emitters enforce the same rule for direct IR
+callers.
+
+APB/AHB now share the allocator. Public APB multi-peripheral tops use
+`interconnect_instance` consistently across child declaration, wiring,
+derived HDL carriers, and report fields. AHB `fabric` and the fixed AXI
+`aw_driver`, `w_driver`, and `coordinator` labels remain byte-stable. Focused
+public APB generation passes Verilator parse/lint with its separately owned
+warnings non-fatal and passes Yosys synthesis. The VHDL emitter rejects
+case-folded `PROCESS` before rendering an invalid entity label.
+
+The implementation intentionally leaves module/top/port/net/parameter
+identifier families outside this child-instance-label contract.

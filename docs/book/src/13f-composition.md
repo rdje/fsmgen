@@ -267,35 +267,59 @@ The `--outdir DIR` flag writes all generated `.fsm` files:
 # If --output is also provided, HDL generation uses spawn_parent_top.fsm.
 ```
 
-## Instance-Identifier Portability (Current Limitation)
+## Portable Instance Identifiers
 
-Composition child labels currently accept the simple spelling
-`[A-Za-z_][A-Za-z0-9_]*`, but the released parser does not yet reject HDL
-reserved words. This applies to direct `?fsmc`, `?dtc`, and `?rtl` aliases as
-well as names authored by `spawn ... as`, reusable-library `use ... as`, and
-selected static actor-network instances. The structural emitters preserve the
-label unchanged.
+Every composition child label uses the simple unescaped spelling
+`[A-Za-z_][A-Za-z0-9_]*` and must be non-reserved across the shipped HDL
+targets. FSMGen applies SystemVerilog/Verilog keyword matching case-sensitively
+and VHDL-2008 keyword matching case-insensitively. The portable union means a
+label is rejected even when it is a keyword only in a backend other than the
+one selected for the current command; backend-neutral intent therefore keeps
+one stable structural identity.
 
-Consequently, an otherwise valid source can fail only when the generated HDL
-reaches the target parser. For example, `interconnect` is a SystemVerilog
-keyword:
+The rule applies at the nearest authored boundary for:
+
+- direct `?fsmc`, `?dtc`, and `?rtl` child labels;
+- `(spawn child as instance)` labels;
+- reusable-library `(use alias.actor as instance ...)` labels;
+- ATL static actor-instance labels; and
+- authored APB/AHB protocol child labels.
+
+For example, this direct child fails during composition parsing because
+`interconnect` is reserved by SystemVerilog:
 
 ```text
 (?fsmc:interconnect child_module)
 ```
 
-The current APB multi-peripheral generator also selects that label and is
-known to fail strict Verilator verification. AHB uses the legal label `fabric`,
-and the shipped fixed AXI composition labels are legal. The VHDL emitter has
-the same latent syntax-only boundary; for example, `process` can reach an
-entity-instance label even though it is a VHDL keyword.
+Similarly, `process`, `PROCESS`, or any other case variant fails as a VHDL
+keyword. FSMGen reports the source origin, rejected label, and reserving target
+family, then asks the author to choose a non-keyword simple identifier. It does
+not silently rename an authored identity and does not use target-specific
+escaped/extended identifiers.
 
-Until the implementation owned by
-`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2` ships, choose child
-instance labels that are not reserved in SystemVerilog, Verilog, or VHDL. The
-selected remediation will reject authored keyword labels rather than silently
-renaming public identities, while generator-owned collisions receive stable
-portable suffixes.
+Generator-owned labels use one deterministic allocator:
+
+- a legal non-colliding label is preserved byte-for-byte;
+- a keyword seed gains `_instance`;
+- an ordinary top-port or sibling collision gains `_<role>`; and
+- a further collision gains `_2`, `_3`, and so on.
+
+Collision lookup is case-insensitive so generated identities are also unique
+under VHDL rules. The APB multi-peripheral generator therefore emits and
+reports its interconnect as `interconnect_instance`:
+
+```text
+(?fsmc:interconnect_instance apb_interconnect)
+```
+
+All wiring uses that same generated identity. AHB's legal `fabric` label and
+the shipped fixed AXI labels remain unchanged. Both structural emitters repeat
+the portable validation as defense in depth for callers that construct
+`StructuralRTLIR` directly.
+
+This contract covers child *instance labels*. Module/top names, ports, nets,
+parameters, and other identifier families remain separate contracts.
 
 ## Reusable ISF Libraries
 

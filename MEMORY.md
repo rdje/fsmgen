@@ -1,60 +1,46 @@
 # MEMORY — resume pointer (layer A; overwrite-only, keep ≤ ~60 lines)
 
-See `MEMORY_ARCHITECTURE.md` for the four-layer system. This file is only the
-bounded current-state pointer. Git preserves its prior history.
+See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior
+history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2: activate portable identifier implementation`).
-- active_work_unit: `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2` (continuity-only activation).
-- current_state: clean audit commit `53a54c6c9` activates only decision `0027`
-  implementation; all source/test/report/generated-HDL behavior is unchanged.
-- next_action: implement the shared registry/allocator, source/emitter guards,
-  protocol integration, report delta, and focused regressions owned by `.2`.
-- in_flight_uncommitted: none after activation; no background job.
-- blockers: none. The director authorized canonical macOS host-max 100 plus
-  the correct 4096-MiB descendant cap. Report capacity with the exact
-  Stats-compatible Mach formula and safety with kernel pressure state
-  separately; never use the faulty guard percentage or inactive-cache
-  approximation as RAM usage.
+- latest_commit: this commit (`PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2: enforce portable instance identifiers`).
+- active_work_unit: none after this completion commit; the identifier audit
+  tree is exhausted through `.2`.
+- current_state: decision `0027` is implemented. Direct C4, spawn,
+  reusable-library, ATL, APB/AHB, and both structural emitters share the
+  portable child-instance-label policy. Public APB now uses
+  `interconnect_instance`; legal AHB/AXI labels remain stable.
+- next_action: from this clean boundary, select/activate proposed
+  `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3` to synchronize t1502's stale
+  exact AXI assertion-output expectation with grouped rendering commit
+  `80aa203ab`, unless a higher-priority clean selector is chosen.
+- in_flight_uncommitted: none after commit; no background job.
+- blockers: none. A confirmatory guarded preservation rerun was stopped before
+  test execution because host memory was 95.4% above the configured 88% cutoff;
+  the same focused preservation files had already passed in this slice.
 
 ## Durable context
 
-- Director direction (`2026-07-30`) is durable in decision `0025`: update
-  `CHANGES.md` every slice, update `DEVELOPMENT_NOTES.md` only when warranted,
-  and leave both status files untouched. Proposed `.1` owns the later review.
-- `TASK-ACCEPTANCE` was not durably ported or backlogged by the June doctrine
-  adoption; decision `0026` plus completed `.1`-.3 now ship the neutral
-  contract, checker/registries/probes, and seventh-doctrine integration.
-- Public-sync `.1`-.4, the four-annotation mdBook rustdoc repair, and identifier
-  audit `.1` are complete; lifecycle review `.1` stays proposed and inactive.
-- The IAL2 frontier ships exact-one-through-four requester and one-/two-window
-  paired generic/profile families at 332/373/56 split 28/28. Generalized-count
-  `.1`-.3 then ship reusable literal `2..16` lowering plus t1541 without a
-  per-count public fixture. Completed `.830` selected the protocol-neutral
-  named-drive priority child, now complete through `.3`; decision `0020` stays
-  separate.
-- Startup alignment through `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.1` is done;
-  the import-tree note/fact now cover the exact 228 / 227 / 19 live closure.
-- Director direction (`2026-07-30`): make `README.md` a concise, nearly static
-  GitHub landing page, derive dynamic detail from existing canonical files,
-  and add a small project-neutral tracked standard that other repositories can
-  adopt to prevent README growth.
-- Proposed `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` now durably owns the
-  director's peer hardware/verification intent requirement, typed bridge,
-  portable fixture semantics, native SV/UVM and VHDL extension model, backend
-  parity, VIAL layer-topology audit, and large-design scale gates. Director
-  agreement also requires event-capable compiled Verilator to remain separate
-  from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. HIAL/VIAL remains proposed after
-  `.833` selects the smaller mdBook VHDL truth repair.
-- Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
-  end-to-end big-design scalability, t/1436 failures, identifier implementation
-  `.2`, and guard metric repair.
-  Parked findings await a later clean parent selector.
-- Task-tree live truth is the node list + `docs/TASK_TREE.md` + git (decision
-  `0019`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.
-- Push only on explicit request (decision `0005`). PNT runs autonomously without
-  mid-flow pauses (decision `0003`). Heavy commands use the unchanged RAM guard.
-- Decision `0007` still governs bounded Memory and canonical routing; decision
-  `0025` supersedes only its prospective changelog/development-note freeze.
+- Director direction (`2026-07-30`) is implemented by decision `0025`:
+  `CHANGES.md` updates every slice, `DEVELOPMENT_NOTES.md` only when warranted,
+  and `ROADMAP_STATUS.md` plus `LIVE_ACHIEVEMENT_STATUS.md` remain untouched.
+  Proposed `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` owns their later
+  four-file lifecycle discussion.
+- The quoted June TASK-ACCEPTANCE non-port statement is stale. Decision `0026`
+  and completed `TASK-ACCEPTANCE-PORTABLE-DOCTRINE.1`-.3 ship the neutral
+  standard, FSMGen-owned token registries/probes, checker, and seventh-doctrine
+  integration.
+- Identifier implementation verification: t1546 `Files=1, Tests=7`; full APB
+  t1472 `Files=1, Tests=101`; focused AHB/library/ATL/composition/emitter
+  preservation tests pass; ten changed Perl/test files report `syntax OK`.
+  All 36 mdBook chapters pass test/build; documentation audits pass at
+  `Files=3, Tests=40`; Knowledge Map passes at 1,072 facts / 5,523 keys.
+- The unrelated t1502 expectation drift is durably owned by proposed inactive
+  `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`; it is not folded into the
+  identifier implementation.
+- Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
+  Knowledge Map are aligned. The repository-local mdBook scratch is removed.
+- Push only on explicit request (decision `0005`). PNT runs autonomously
+  (decision `0003`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.

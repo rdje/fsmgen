@@ -11,6 +11,7 @@ no warnings 'experimental::signatures';
 
 use FSM::IAL2::ProtocolIntent::AhbRequester;
 use FSM::IAL2::ProtocolIntent::AhbSubordinate;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub new($class, @constructor_args) {
     _validate_constructor_receiver($class);
@@ -271,22 +272,11 @@ sub _assign_generated_instance_names($contract) {
 }
 
 sub _unique_generated_instance_name($desired, $role, $reserved) {
-    my $candidate = $desired;
-    if (!$reserved->{$candidate}) {
-        $reserved->{$candidate} = 1;
-        return $candidate;
-    }
-
-    my $base = "${desired}_$role";
-    $candidate = $base;
-    my $suffix = 2;
-    while ($reserved->{$candidate}) {
-        $candidate = "${base}_$suffix";
-        ++$suffix;
-    }
-
-    $reserved->{$candidate} = 1;
-    return $candidate;
+    return FSM::Support::HDLInstanceIdentifierPolicy->allocate_generated_instance_identifier(
+        desired => $desired,
+        role => $role,
+        reserved => $reserved,
+    );
 }
 
 sub _generated_instance_name($child) {
@@ -1523,8 +1513,13 @@ sub _normalize_children($raw) {
 }
 
 sub _normalize_child($raw, $role) {
+    my $instance_name = _required_identifier($raw, 'instance_name');
+    FSM::Support::HDLInstanceIdentifierPolicy->assert_authored_instance_identifier(
+        $instance_name,
+        origin => "AHB interconnect $role child instance",
+    );
     return {
-        instance_name => _required_identifier($raw, 'instance_name'),
+        instance_name => $instance_name,
         object_name   => _required_identifier($raw, 'object_name'),
         role          => $role,
     };

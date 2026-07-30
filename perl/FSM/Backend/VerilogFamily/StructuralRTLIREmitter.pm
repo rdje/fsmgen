@@ -23,6 +23,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Backend::VerilogFamily::TypeDeclarationSupport;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_expr_text);
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub emit_module ($class, $structural_rtl_ir) {
     my $structural = blessed($structural_rtl_ir) && $structural_rtl_ir->can('as_hashref')
@@ -50,6 +51,10 @@ sub emit_module ($class, $structural_rtl_ir) {
 
     my @instance_blocks = map {
         my $instance = $_;
+        FSM::Support::HDLInstanceIdentifierPolicy->assert_authored_instance_identifier(
+            $instance->{instance_name},
+            origin => "StructuralRTLIR verilog-family child instance",
+        );
         my @connection_lines = map {
             sprintf("        .%s(%s)", $_->{port_name}, binding_expr_text($_, $target_language))
         } @{$instance->{port_bindings} || []};

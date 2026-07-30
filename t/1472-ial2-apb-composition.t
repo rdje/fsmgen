@@ -580,6 +580,7 @@ subtest 'adapter parses the selected APB multi-peripheral composition PPIF shape
     is($result->{report}{composition}{endpoint_child_instance_count}, 3, 'multi-peripheral report counts requester plus endpoint peripherals');
     is($result->{report}{composition}{generated_interconnect}{ial1_artifact}, 'apb_interconnect.isf', 'multi-peripheral report names generated interconnect IAL1 artifact');
     is($result->{report}{composition}{generated_interconnect}{ial0_artifact}, 'apb_interconnect.fsm', 'multi-peripheral report names generated interconnect IAL0 artifact');
+    is($result->{report}{composition}{generated_interconnect}{instance_name}, 'interconnect_instance', 'multi-peripheral report names the portable generated interconnect instance');
 
     is_deeply(
         [map { $_->{name} } @{$result->{generated_ial1}{items}}],
@@ -594,11 +595,11 @@ subtest 'adapter parses the selected APB multi-peripheral composition PPIF shape
 
     my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
     like($top, qr/\(\?fsmc:requester apb_requester\)/, 'multi-peripheral top instantiates requester');
-    like($top, qr/\(\?fsmc:interconnect apb_interconnect\)/, 'multi-peripheral top instantiates generated interconnect');
+    like($top, qr/\(\?fsmc:interconnect_instance apb_interconnect\)/, 'multi-peripheral top instantiates generated interconnect');
     like($top, qr/\(\?fsmc:status_peripheral apb_status_regs\)/, 'multi-peripheral top gives colliding status peripheral a deterministic generated instance name');
     like($top, qr/\(\?fsmc:control apb_control_regs\)/, 'multi-peripheral top preserves non-colliding control peripheral instance name');
-    like($top, qr/\(interconnect\.PSEL_STATUS status_peripheral\.PSEL_STATUS\)/, 'multi-peripheral top wires decoded status select to the status peripheral');
-    like($top, qr/\(status_peripheral\.PREADY_STATUS interconnect\.PREADY_STATUS\)/, 'multi-peripheral top wires status response back to the interconnect');
+    like($top, qr/\(interconnect_instance\.PSEL_STATUS status_peripheral\.PSEL_STATUS\)/, 'multi-peripheral top wires decoded status select to the status peripheral');
+    like($top, qr/\(status_peripheral\.PREADY_STATUS interconnect_instance\.PREADY_STATUS\)/, 'multi-peripheral top wires status response back to the interconnect');
 
     my $interconnect = $result->{generated_ial0}{files}{'apb_interconnect.fsm'};
     like($interconnect, qr/\(<- \(PSEL_STATUS> PSEL\) <\(& PSEL \(>= PADDR 0\) \(< PADDR 256\)\)\)/, 'interconnect decodes the status window select');
@@ -608,6 +609,7 @@ subtest 'adapter parses the selected APB multi-peripheral composition PPIF shape
 
     is($result->{report}{children}[0]{role}, 'requester', 'multi-peripheral report carries requester child first');
     is($result->{report}{children}[1]{role}, 'interconnect', 'multi-peripheral report carries generated interconnect second');
+    is($result->{report}{children}[1]{instance_name}, 'interconnect_instance', 'multi-peripheral child report carries the portable generated interconnect identity');
     is($result->{report}{children}[2]{role}, 'peripheral', 'multi-peripheral report carries first peripheral third');
     is($result->{report}{children}[2]{instance_name}, 'status', 'multi-peripheral report preserves authored status peripheral name');
     is($result->{report}{children}[2]{generated_instance_name}, 'status_peripheral', 'multi-peripheral report exposes generated status peripheral instance name');
@@ -684,10 +686,10 @@ subtest 'adapter parses the sideband APB multi-peripheral composition PPIF shape
     my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
     like($top, qr/=req_prot<3/, 'sideband multi-peripheral APB composition top exposes 3-bit request protection input');
     like($top, qr/=req_wstrb<4/, 'sideband multi-peripheral APB composition top exposes 4-bit request strobe input');
-    like($top, qr/\(requester\.PPROT interconnect\.PPROT\)/, 'sideband multi-peripheral top wires requester PPROT to interconnect PPROT');
-    like($top, qr/\(requester\.PSTRB interconnect\.PSTRB\)/, 'sideband multi-peripheral top wires requester PSTRB to interconnect PSTRB');
-    like($top, qr/\(interconnect\.PPROT_STATUS status_peripheral\.PPROT_STATUS\)/, 'sideband multi-peripheral top wires status-window PPROT');
-    like($top, qr/\(interconnect\.PSTRB_CONTROL control\.PSTRB_CONTROL\)/, 'sideband multi-peripheral top wires control-window PSTRB');
+    like($top, qr/\(requester\.PPROT interconnect_instance\.PPROT\)/, 'sideband multi-peripheral top wires requester PPROT to interconnect PPROT');
+    like($top, qr/\(requester\.PSTRB interconnect_instance\.PSTRB\)/, 'sideband multi-peripheral top wires requester PSTRB to interconnect PSTRB');
+    like($top, qr/\(interconnect_instance\.PPROT_STATUS status_peripheral\.PPROT_STATUS\)/, 'sideband multi-peripheral top wires status-window PPROT');
+    like($top, qr/\(interconnect_instance\.PSTRB_CONTROL control\.PSTRB_CONTROL\)/, 'sideband multi-peripheral top wires control-window PSTRB');
     like($top, qr/\(<= \(prot_q PPROT_STATUS\) <\(& PSEL_STATUS \(! PENABLE_STATUS\)\)\)/, 'sideband multi-peripheral top embeds status peripheral PPROT sampling');
     like($top, qr/\(<= \(strb_q PSTRB_CONTROL\) <\(& PSEL_CONTROL \(! PENABLE_CONTROL\)\)\)/, 'sideband multi-peripheral top embeds control peripheral PSTRB sampling');
 
@@ -1555,8 +1557,8 @@ subtest 'adapter parses the sideband protection APB multi-peripheral composition
     is($result->{report}{children}[3]{protection_policy}{registers}[0]{read}{predicate}{value}, 1, 'control peripheral report preserves read policy');
 
     my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
-    like($top, qr/\(interconnect\.PPROT_STATUS status_peripheral\.PPROT_STATUS\)/, 'sideband protection multi-peripheral top wires status PPROT');
-    like($top, qr/\(interconnect\.PSTRB_CONTROL control\.PSTRB_CONTROL\)/, 'sideband protection multi-peripheral top wires control PSTRB');
+    like($top, qr/\(interconnect_instance\.PPROT_STATUS status_peripheral\.PPROT_STATUS\)/, 'sideband protection multi-peripheral top wires status PPROT');
+    like($top, qr/\(interconnect_instance\.PSTRB_CONTROL control\.PSTRB_CONTROL\)/, 'sideband protection multi-peripheral top wires control PSTRB');
     like($top, qr/\(\?\(& write_q \(== addr 0\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-peripheral top embeds denied status write branch');
     like($top, qr/\(\?\(& \(! write_q\) \(== addr 0\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-peripheral top embeds denied control read branch');
 
@@ -1644,7 +1646,7 @@ subtest 'adapter parses the sideband APB multi-peripheral data16 composition PPI
     my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
     like($top, qr/=req_wdata<16/, 'sideband multi-peripheral data16 APB composition top exposes 16-bit request write-data input');
     like($top, qr/=req_wstrb<2/, 'sideband multi-peripheral data16 APB composition top exposes 2-bit request strobe input');
-    like($top, qr/\(interconnect\.PSTRB_CONTROL control\.PSTRB_CONTROL\)/, 'sideband multi-peripheral data16 top wires control-window PSTRB');
+    like($top, qr/\(interconnect_instance\.PSTRB_CONTROL control\.PSTRB_CONTROL\)/, 'sideband multi-peripheral data16 top wires control-window PSTRB');
     like($top, qr/\(<= \(strb_q PSTRB_CONTROL\) <\(& PSEL_CONTROL \(! PENABLE_CONTROL\)\)\)/, 'sideband multi-peripheral data16 top embeds control peripheral PSTRB sampling');
     like($top, qr/\(control_data_q 16 \(reset 0\)\)/, 'sideband multi-peripheral data16 top embeds 16-bit control register');
 
@@ -1686,7 +1688,7 @@ subtest 'adapter parses the sideband protection APB multi-peripheral data16 comp
     my $top = $result->{generated_ial0}{files}{'apb_tb.fsm'};
     like($top, qr/=req_wdata<16/, 'sideband protection multi-peripheral data16 top exposes 16-bit request write-data input');
     like($top, qr/=req_wstrb<2/, 'sideband protection multi-peripheral data16 top exposes 2-bit request strobe input');
-    like($top, qr/\(interconnect\.PSTRB_CONTROL control\.PSTRB_CONTROL\)/, 'sideband protection multi-peripheral data16 top wires control-window PSTRB');
+    like($top, qr/\(interconnect_instance\.PSTRB_CONTROL control\.PSTRB_CONTROL\)/, 'sideband protection multi-peripheral data16 top wires control-window PSTRB');
     like($top, qr/\(\?\(& \(! write_q\) \(== addr 0\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-peripheral data16 top embeds denied control read branch');
     like($top, qr/\(<- \(control_shadow_data_q \(\| \(& control_shadow_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'sideband protection multi-peripheral data16 top embeds high-byte control shadow write mask');
 
@@ -3294,7 +3296,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose multi-peripheral APB c
     my $sv = slurp($hdl);
     like($sv, qr/\bmodule\s+apb_tb\b/, 'multi-peripheral APB composition HDL contains the generated top module');
     like($sv, qr/\bmodule\s+apb_interconnect\b/, 'multi-peripheral APB composition HDL contains the generated interconnect module');
-    like($sv, qr/\bapb_interconnect\s+interconnect\s+\(/, 'multi-peripheral APB composition top instantiates generated interconnect');
+    like($sv, qr/\bapb_interconnect\s+interconnect_instance\s+\(/, 'multi-peripheral APB composition top instantiates generated interconnect');
     like($sv, qr/\bapb_status_regs\s+status_peripheral\s+\(/, 'multi-peripheral APB composition top instantiates status peripheral with generated alias');
     like($sv, qr/PSLVERR_next = 1;/, 'multi-peripheral APB composition HDL includes unmapped-error PSLVERR drive');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 256;/, 'multi-peripheral APB composition HDL includes control-window local address translation');
@@ -3407,7 +3409,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband multi-periphe
     my $sv = slurp($hdl);
     like($sv, qr/\boutput\s+accepted\b/, 'sideband multi-peripheral status back-to-back HDL top exposes accepted');
     like($sv, qr/\breg\s+\[2:0\]\s+queued_prot\b/, 'sideband multi-peripheral status back-to-back HDL keeps queued PPROT state');
-    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband multi-peripheral status back-to-back HDL declares control PSTRB link');
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'sideband multi-peripheral status back-to-back HDL declares control PSTRB link');
 
     ok(-f sample_apb_composition_multi_peripheral_sideband_status_back_to_back_apb_path(), 'tracked runnable sideband multi-peripheral status back-to-back APB composition .apb sample exists');
     my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_status_back_to_back_apb_path());
@@ -3473,7 +3475,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband no-policy mul
     like($top, qr/\(control_reg1_data_q 32 \(reset 0\)\)/, 'sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg1 storage');
     like($top, qr/\(<- \(control_reg1_data_q \(\| \(& control_reg1_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, 'sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg1 high-byte write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 256;/, 'sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL includes 256-byte local address translation');
     like($sv, qr/\breg\s+\[31:0\]\s+status_reg1_data_q\b/, 'sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit status reg1 storage');
     like($sv, qr/\breg\s+\[31:0\]\s+control_reg1_data_q\b/, 'sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit control reg1 storage');
@@ -3550,7 +3552,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized five-regis
     like($top, qr/\(control_reg4_data_q 32 \(reset 0\)\)/, 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg4 storage');
     like($top, qr/\(<- \(control_reg4_data_q \(\| \(& control_reg4_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg4 high-byte write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 256;/, 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL includes 256-byte local address translation');
     like($sv, qr/\breg\s+\[31:0\]\s+status_reg4_data_q\b/, 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit status reg4 storage');
     like($sv, qr/\breg\s+\[31:0\]\s+control_reg4_data_q\b/, 'generalized five-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit control reg4 storage');
@@ -3627,7 +3629,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized six-regist
     like($top, qr/\(control_reg5_data_q 32 \(reset 0\)\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg5 storage');
     like($top, qr/\(<- \(control_reg5_data_q \(\| \(& control_reg5_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg5 high-byte write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 256;/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL includes 256-byte local address translation');
     like($sv, qr/\breg\s+\[31:0\]\s+status_reg5_data_q\b/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit status reg5 storage');
     like($sv, qr/\breg\s+\[31:0\]\s+control_reg5_data_q\b/, 'generalized six-register sideband no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit control reg5 storage');
@@ -3707,7 +3709,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection mu
     like($top, qr/\(\?\(& \(! write_q\) \(== addr 4\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-peripheral multi-register back-to-back outdir top embeds denied protected reg1 read branch');
     like($top, qr/\(<- \(control_reg1_data_q \(\| \(& control_reg1_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, 'sideband protection multi-peripheral multi-register back-to-back outdir top embeds control reg1 high-byte write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband protection multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'sideband protection multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 256;/, 'sideband protection multi-peripheral multi-register back-to-back APB composition HDL includes 256-byte local address translation');
     like($sv, qr/\breg\s+\[31:0\]\s+status_reg1_data_q\b/, 'sideband protection multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit status reg1 storage');
     like($sv, qr/\breg\s+\[31:0\]\s+control_reg1_data_q\b/, 'sideband protection multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit control reg1 storage');
@@ -3788,7 +3790,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized sideband p
     like($top, qr/\(\?\(& \(! write_q\) \(== addr 8\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'generalized sideband protection multi-peripheral multi-register back-to-back outdir top embeds denied protected reg2 read branch');
     like($top, qr/\(\?\(& write_q \(== addr 8\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'generalized sideband protection multi-peripheral multi-register back-to-back outdir top embeds denied protected reg2 write branch');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized sideband protection multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'generalized sideband protection multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 256;/, 'generalized sideband protection multi-peripheral multi-register back-to-back APB composition HDL includes 256-byte local address translation');
     like($sv, qr/\breg\s+\[31:0\]\s+status_reg2_data_q\b/, 'generalized sideband protection multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit status reg2 storage');
     like($sv, qr/\breg\s+\[31:0\]\s+control_reg2_data_q\b/, 'generalized sideband protection multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit control reg2 storage');
@@ -3866,7 +3868,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized five-regis
     like($top, qr/\(\?\(& \(! write_q\) \(== addr 16\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'generalized five-register sideband protection multi-peripheral multi-register back-to-back outdir top embeds denied protected reg4 read branch');
     like($top, qr/\(\?\(& write_q \(== addr 16\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'generalized five-register sideband protection multi-peripheral multi-register back-to-back outdir top embeds denied protected reg4 write branch');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized five-register sideband protection multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'generalized five-register sideband protection multi-peripheral multi-register back-to-back APB composition HDL declares 4-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 256;/, 'generalized five-register sideband protection multi-peripheral multi-register back-to-back APB composition HDL includes 256-byte local address translation');
     like($sv, qr/\breg\s+\[31:0\]\s+status_reg4_data_q\b/, 'generalized five-register sideband protection multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit status reg4 storage');
     like($sv, qr/\breg\s+\[31:0\]\s+control_reg4_data_q\b/, 'generalized five-register sideband protection multi-peripheral multi-register back-to-back APB composition HDL carries 32-bit control reg4 storage');
@@ -3942,7 +3944,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband data16 no-pol
     like($top, qr/\(control_reg1_data_q 16 \(reset 0\)\)/, 'sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg1 storage');
     like($top, qr/\(<- \(control_reg1_data_q \(\| \(& control_reg1_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg1 high-byte write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL includes 258-byte local address translation');
     like($sv, qr/\breg\s+\[15:0\]\s+status_reg1_data_q\b/, 'sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit status reg1 storage');
     like($sv, qr/\breg\s+\[15:0\]\s+control_reg1_data_q\b/, 'sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit control reg1 storage');
@@ -4018,7 +4020,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized sideband d
     like($top, qr/\(control_reg2_data_q 16 \(reset 0\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg2 storage');
     like($top, qr/\(<- \(control_reg2_data_q \(\| \(& control_reg2_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg2 high-byte write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL includes 258-byte local address translation');
     like($sv, qr/\breg\s+\[15:0\]\s+status_reg2_data_q\b/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit status reg2 storage');
     like($sv, qr/\breg\s+\[15:0\]\s+control_reg2_data_q\b/, 'generalized sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit control reg2 storage');
@@ -4088,7 +4090,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized five-regis
     like($top, qr/\(control_reg4_data_q 16 \(reset 0\)\)/, 'generalized five-register sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg4 storage');
     like($top, qr/\(<- \(control_reg4_data_q \(\| \(& control_reg4_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'generalized five-register sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg4 high-byte write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized five-register sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'generalized five-register sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'generalized five-register sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL includes 258-byte local address translation');
     like($sv, qr/\breg\s+\[15:0\]\s+status_reg4_data_q\b/, 'generalized five-register sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit status reg4 storage');
     like($sv, qr/\breg\s+\[15:0\]\s+control_reg4_data_q\b/, 'generalized five-register sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit control reg4 storage');
@@ -4165,7 +4167,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized six-regist
     like($top, qr/\(control_reg5_data_q 16 \(reset 0\)\)/, 'generalized six-register sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg5 storage');
     like($top, qr/\(<- \(control_reg5_data_q \(\| \(& control_reg5_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'generalized six-register sideband data16 no-policy multi-peripheral multi-register back-to-back outdir top embeds control reg5 high-byte write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized six-register sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'generalized six-register sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'generalized six-register sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL includes 258-byte local address translation');
     like($sv, qr/\breg\s+\[15:0\]\s+status_reg5_data_q\b/, 'generalized six-register sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit status reg5 storage');
     like($sv, qr/\breg\s+\[15:0\]\s+control_reg5_data_q\b/, 'generalized six-register sideband data16 no-policy multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit control reg5 storage');
@@ -4245,7 +4247,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband data16 protec
     like($top, qr/\(control_reg1_data_q 16 \(reset 0\)\)/, 'sideband data16 protection multi-peripheral multi-register back-to-back outdir top embeds control reg1 storage');
     like($top, qr/\(<- \(control_reg1_data_q \(\| \(& control_reg1_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'sideband data16 protection multi-peripheral multi-register back-to-back outdir top embeds control reg1 high-byte write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL includes 258-byte local address translation');
     like($sv, qr/\breg\s+\[15:0\]\s+status_reg1_data_q\b/, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit status reg1 storage');
     like($sv, qr/\breg\s+\[15:0\]\s+control_reg1_data_q\b/, 'sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit control reg1 storage');
@@ -4327,7 +4329,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized sideband d
     like($top, qr/\(\?\(& \(! write_q\) \(== addr 4\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'generalized sideband data16 protection multi-peripheral multi-register back-to-back outdir top embeds denied protected reg2 read branch');
     like($top, qr/\(\?\(& write_q \(== addr 4\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'generalized sideband data16 protection multi-peripheral multi-register back-to-back outdir top embeds denied protected reg2 write branch');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'generalized sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'generalized sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL includes 258-byte local address translation');
     like($sv, qr/\breg\s+\[15:0\]\s+status_reg2_data_q\b/, 'generalized sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit status reg2 storage');
     like($sv, qr/\breg\s+\[15:0\]\s+control_reg2_data_q\b/, 'generalized sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit control reg2 storage');
@@ -4412,7 +4414,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose generalized five-regis
     like($top, qr/\(\?\(& write_q \(== addr 8\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'generalized five-register sideband data16 protection multi-peripheral multi-register back-to-back outdir top embeds denied protected reg4 write branch');
     like($top, qr/\(<- \(control_reg4_data_q \(\| \(& control_reg4_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'generalized five-register sideband data16 protection multi-peripheral multi-register back-to-back outdir top embeds control reg4 high-byte write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'generalized five-register sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'generalized five-register sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL declares 2-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'generalized five-register sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL includes 258-byte local address translation');
     like($sv, qr/\breg\s+\[15:0\]\s+status_reg4_data_q\b/, 'generalized five-register sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit status reg4 storage');
     like($sv, qr/\breg\s+\[15:0\]\s+control_reg4_data_q\b/, 'generalized five-register sideband data16 protection multi-peripheral multi-register back-to-back APB composition HDL carries 16-bit control reg4 storage');
@@ -4467,8 +4469,8 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband multi-periphe
     like($interconnect, qr/\(<- \(PPROT_STATUS> PPROT\)\)/, 'sideband multi-peripheral outdir interconnect fans out PPROT to status');
     like($interconnect, qr/\(<- \(PSTRB_CONTROL> PSTRB\)\)/, 'sideband multi-peripheral outdir interconnect fans out PSTRB to control');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[2:0\]\s+comp_link_interconnect_PPROT_STATUS\b/, 'sideband multi-peripheral APB composition HDL declares status PPROT link');
-    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband multi-peripheral APB composition HDL declares control PSTRB link');
+    like($sv, qr/\bwire\s+\[2:0\]\s+comp_link_interconnect_instance_PPROT_STATUS\b/, 'sideband multi-peripheral APB composition HDL declares status PPROT link');
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'sideband multi-peripheral APB composition HDL declares control PSTRB link');
 
     ok(-f sample_apb_composition_multi_peripheral_sideband_apb_path(), 'tracked runnable sideband multi-peripheral APB composition .apb sample exists');
     my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_multi_peripheral_sideband_apb_path());
@@ -4576,7 +4578,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection mu
     like($top, qr/\(\?\(& \(! write_q\) \(== addr 0\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-peripheral back-to-back outdir top embeds denied control read branch');
     like($top, qr/\(<- \(control_shadow_data_q \(\| \(& control_shadow_data_q 32'h00ffffff\) \(& wdata_q 32'hff000000\)\)\)\)/, 'sideband protection multi-peripheral back-to-back outdir top embeds high-byte control shadow write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband protection multi-peripheral back-to-back APB composition HDL declares 4-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[3:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'sideband protection multi-peripheral back-to-back APB composition HDL declares 4-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 256;/, 'sideband protection multi-peripheral back-to-back APB composition HDL includes 256-byte local address translation');
     like($sv, qr/\breg\s+\[31:0\]\s+control_shadow_data_q\b/, 'sideband protection multi-peripheral back-to-back APB composition HDL carries 32-bit control shadow register');
     like($sv, qr/\breg\s+\[3:0\]\s+queued_wstrb\b/, 'sideband protection multi-peripheral back-to-back APB composition HDL carries 4-bit queued PSTRB');
@@ -4627,7 +4629,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband multi-periphe
     like($interconnect, qr/\(PSTRB_CONTROL 2\)/, 'sideband multi-peripheral data16 outdir interconnect preserves 2-bit control PSTRB');
     like($interconnect, qr/\(<- \(PADDR_CONTROL> \(- PADDR 258\)\) <\(& PSEL \(>= PADDR 258\) \(< PADDR 516\)\)\)/, 'sideband multi-peripheral data16 outdir interconnect uses control base 258');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband multi-peripheral data16 APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'sideband multi-peripheral data16 APB composition HDL declares 2-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'sideband multi-peripheral data16 APB composition HDL includes 258-byte local address translation');
     like($sv, qr/\breg\s+\[15:0\]\s+control_data_q\b/, 'sideband multi-peripheral data16 APB composition HDL carries 16-bit control register');
 
@@ -4681,7 +4683,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection mu
     like($top, qr/\(\?\(& \(! write_q\) \(== addr 0\) \(! \(!= \(& prot_q 3'd1\) 3'd0\)\)\)/, 'sideband protection multi-peripheral data16 outdir top embeds denied control read branch');
     like($top, qr/\(<- \(control_shadow_data_q \(\| \(& control_shadow_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'sideband protection multi-peripheral data16 outdir top embeds high-byte control shadow write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband protection multi-peripheral data16 APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'sideband protection multi-peripheral data16 APB composition HDL declares 2-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'sideband protection multi-peripheral data16 APB composition HDL includes 258-byte local address translation');
     like($sv, qr/\breg\s+\[15:0\]\s+control_shadow_data_q\b/, 'sideband protection multi-peripheral data16 APB composition HDL carries 16-bit control shadow register');
     like($sv, qr/prot_q\s*&\s*3'd1/, 'sideband protection multi-peripheral data16 APB composition HDL preserves endpoint PPROT predicate logic');
@@ -4748,7 +4750,7 @@ subtest 'CLI schedule JSON, outdir, and .apb alias expose sideband protection mu
     like($top, qr/\(queued_wstrb 2\)/, 'sideband protection multi-peripheral data16 back-to-back outdir top embeds queued 2-bit PSTRB');
     like($top, qr/\(<- \(control_shadow_data_q \(\| \(& control_shadow_data_q 16'h00ff\) \(& wdata_q 16'hff00\)\)\)\)/, 'sideband protection multi-peripheral data16 back-to-back outdir top embeds high-byte control shadow write mask');
     my $sv = slurp($hdl);
-    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_PSTRB_CONTROL\b/, 'sideband protection multi-peripheral data16 back-to-back APB composition HDL declares 2-bit control PSTRB link');
+    like($sv, qr/\bwire\s+\[1:0\]\s+comp_link_interconnect_instance_PSTRB_CONTROL\b/, 'sideband protection multi-peripheral data16 back-to-back APB composition HDL declares 2-bit control PSTRB link');
     like($sv, qr/PADDR_CONTROL_next = PADDR - 258;/, 'sideband protection multi-peripheral data16 back-to-back APB composition HDL includes 258-byte local address translation');
     like($sv, qr/\breg\s+\[15:0\]\s+control_shadow_data_q\b/, 'sideband protection multi-peripheral data16 back-to-back APB composition HDL carries 16-bit control shadow register');
     like($sv, qr/\breg\s+\[1:0\]\s+queued_wstrb\b/, 'sideband protection multi-peripheral data16 back-to-back APB composition HDL carries 2-bit queued PSTRB');

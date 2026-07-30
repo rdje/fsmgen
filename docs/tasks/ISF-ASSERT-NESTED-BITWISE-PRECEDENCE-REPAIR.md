@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`
-- Status: `done`
+- Status: `proposed`
 - Roadmap lane: `R14 / generated verification correctness`
 - Created: `2026-07-23`
 - Last updated: `2026-07-30`
@@ -55,9 +55,9 @@ the assertion condition roundtrip/inlining path involving
 ## Task Tree
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`
-  Status: `done`
+  Status: `proposed`
   Goal: `Preserve nested bitwise expression semantics across concurrent-property inlining and repair the shipped AXI read false assertion.`
-  Children: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`, `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2`
+  Children: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`, `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2`, `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`
   Status: `done`
@@ -73,13 +73,21 @@ the assertion condition roundtrip/inlining path involving
   Verification: `Activated only after clean audit commit 628ca0c33 through clean continuity commit a2f99f848. GeneratedModuleInfoBuilder now keeps every successfully rendered inline-intermediate replacement inside one explicit grouping boundary, preserving AST semantics independently of parent/child operator pairs while leaving direct CoreAST rendering, cycle fallback, property operators, and emitter behavior unchanged. t1410 freezes the authored carrier and factored all-CoreAST AND/OR graph; t1411 proves exact grouped builder/emitter output; t1412 proves overlapping and next-cycle wrappers plus unchanged formal-only classification; t1544 proves corrected AXI condition/final property and unchanged behavioral factoring. t1507 preserves two illegal behavioral rejections under --no-assert, adds legal 0x00000004 to exact 5/17/5/17/4 behavior, and adds a separate all-assertion legal-only 1/4/1/4/1 harness. The first attempt to enable assertions on the combined negative harness correctly failed on its intentional illegal command, so the final split keeps both contracts executable without weakening either. Production/test syntax passes for the builder plus t1410-t1412/t1507/t1544. Final focused t1410-t1412+t1544+t1507 passes 5 files/27 top-level tests. Trigger/sampled/window/facade preservation t1413+t1416-t1418+t404 passes 5 files/34 tests. Book matrix/status/path truth gates pass 5 files/329 tests. Knowledge Map generation/check passes at 1,061 facts/5,461 question keys. The mdBook renders exactly 72 files/16,519,726 bytes and its repository-local output is removed. .artifacts/tmp/tests is empty, MEMORY.md is 49 lines, README.md is 2,347 lines, diff hygiene and all six doctrine gates pass. Final canonical Stats-compatible capacity is 18,161,516,544/25,769,803,776 bytes = 16.914/24.000 GiB = 70.48%, with separate macOS kernel pressure level 1 and memory_pressure 75% free; guard occupancy is excluded from capacity truth. No background job remains.`
   Commit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2: ship substitution grouping`
 
+- ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`
+  Status: `proposed`
+  Goal: `Synchronize the AXI write-request assertion-text regression with grouped inline-intermediate rendering.`
+  Acceptance: `From a separate clean activation, reproduce t/1502-ial2-axi-write-request-composition.t line 293 against grouped condition_sv emitted after commit 80aa203ab; prove generated behavior, Verilator/Yosys verification, and AXI instance labels remain unchanged; update only the stale exact assertion-text expectation plus its task/fact continuity unless the reproduction finds a product defect. Do not weaken or remove the assertion.`
+  Verification: `Proposed after PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2 preservation testing ran t1502. Its first three top-level subtests and behavior generation pass, but the fourth subtest's exact regex expects the pre-80aa ungrouped implication while current HDL correctly carries the grouped inline-intermediate boundaries. The identifier slice changes no assertion builder/emitter output: its Verilog structural-emitter diff adds only a fail-closed instance-label validation call. Commit 80aa203ab is the exact git-history owner that added grouping at GeneratedModuleInfoBuilder.pm:127; t1502 line 293 still blames to its earlier d722ed071 introduction. This leaf remains inactive until the identifier slice commits cleanly.`
+  Commit: `pending`
+
 ## Current Frontier
 
 Implementation `.2` is complete. Concurrent-check intermediate substitution
-preserves grouping, the AXI legal-bit-2 assertion now agrees with unchanged
+preserves grouping, the AXI legal-bit-2 assertion agrees with unchanged
 behavioral admission, and separate negative-behavior/all-assertion t1507
-harnesses preserve both contracts. After this behavior commit is clean, return
-roadmap choice to a new parent `IAL2-FEATURE-COMPLETENESS-FRONTIER` selector.
+harnesses preserve both contracts. Proposed follow-up `.3` owns the stale AXI
+write-request exact-text expectation found later by identifier-policy
+preservation testing; it remains inactive until a clean selector activates it.
 
 ## Decisions
 
@@ -123,7 +131,13 @@ roadmap choice to a new parent `IAL2-FEATURE-COMPLETENESS-FRONTIER` selector.
   separate legal-only all-assertion harness. This proves both illegal admission
   rejection and assertion correctness without weakening or suppressing either
   contract.
+- `2026-07-30`: Identifier-policy preservation testing finds that t1502's
+  exact AXI write-request assertion regex still expects the pre-repair text.
+  Git history isolates grouped inline-intermediate substitution commit
+  `80aa203ab` as the output owner and original AXI test commit `d722ed071` as
+  the unchanged expectation owner. Add proposed `.3`; do not mix that test-only
+  truth repair into the active identifier implementation.
 
 ## Blockers
 
-- None technical. Tree complete.
+- None technical. `.3` is proposed and inactive.

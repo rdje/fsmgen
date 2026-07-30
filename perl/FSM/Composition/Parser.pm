@@ -24,6 +24,7 @@ use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeResolver;
 use FSM::Package::Symbols;
 use FSM::Package::SignalManagerProjectionSupport;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub new ($class, %args) {
     return bless {
@@ -649,6 +650,11 @@ sub parse_generated_child ($self, %args) {
     }
 
     if (!@scalar_items && $child_name) {
+        $self->assert_portable_child_instance_identifier(
+            $top_name,
+            $child_kind_label,
+            $child_name,
+        );
         return FSM::Composition::Instance->new(
             kind => $kind,
             name => $child_name,
@@ -667,6 +673,13 @@ sub parse_generated_child ($self, %args) {
             " with $count $source_family source names, but composition child source count is blocked because the active composition parser currently requires exactly one $source_family source name per '$child_kind_label'.".
             $self->scope_docs_suffix;
     }
+
+    my $instance_name = $child_name // $scalar_items[0];
+    $self->assert_portable_child_instance_identifier(
+        $top_name,
+        $child_kind_label,
+        $instance_name,
+    );
 
     return FSM::Composition::Instance->new(
         kind => $kind,
@@ -719,6 +732,11 @@ sub parse_rtl_child ($self, $top_name, $child_ast, $child_name, $items) {
     }
 
     if (!@scalar_items) {
+        $self->assert_portable_child_instance_identifier(
+            $top_name,
+            '?rtl',
+            $child_name,
+        );
         return FSM::Composition::Instance->new(
             kind => 'rtl',
             name => (defined($module_name) ? $child_name : undef),
@@ -744,6 +762,12 @@ sub parse_rtl_child ($self, $top_name, $child_ast, $child_name, $items) {
         $self->scope_docs_suffix
         if defined $module_name;
 
+    $self->assert_portable_child_instance_identifier(
+        $top_name,
+        '?rtl',
+        $child_name,
+    );
+
     return FSM::Composition::Instance->new(
         kind => 'rtl',
         name => $child_name,
@@ -751,6 +775,13 @@ sub parse_rtl_child ($self, $top_name, $child_ast, $child_name, $items) {
         parameter_overrides => \@parameter_overrides,
         raw_items => $items,
         raw_ast => $child_ast,
+    );
+}
+
+sub assert_portable_child_instance_identifier ($self, $top_name, $child_kind_label, $instance_name) {
+    return FSM::Support::HDLInstanceIdentifierPolicy->assert_authored_instance_identifier(
+        $instance_name,
+        origin => "Composition top '$top_name' $child_kind_label child instance",
     );
 }
 

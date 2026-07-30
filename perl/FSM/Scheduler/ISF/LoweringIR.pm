@@ -14,6 +14,7 @@ use FSM::Scheduler::ISF::ATLGeneratedTop qw(
     mark_atl_data_link_child_interface_ports
 );
 use FSM::Scheduler::ISF::ControlFlowEffects;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 
@@ -5953,6 +5954,11 @@ sub _validate_child_action_clause {
             && defined($clause->[3])
             && !ref($clause->[3])
             && length($clause->[3]);
+
+    FSM::Support::HDLInstanceIdentifierPolicy->assert_authored_instance_identifier(
+        $clause->[3],
+        origin => "Transaction '$tn' spawn instance",
+    );
 
     my %seen_subclause;
     for my $subclause (@{$clause}[4 .. $#$clause]) {

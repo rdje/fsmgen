@@ -11926,6 +11926,29 @@ See the [selection record](../../IAL2_POST_RUSTDOC_NEXT_OWNER_SELECTION.md).
 Clean selector commit `b0bcb12b5` activates only the identifier audit `.1`
 continuity-only. All composition name producers, reports, generated HDL, tests,
 and target behavior remain unchanged during activation.
+The identifier audit is complete. Direct C4, APB/AHB/AXI, reusable-library,
+spawn/generated activation, ATL, parent/domain/CDC, and both structural
+emitters were inventoried. Decision `0027` selects one target-case-aware
+portable keyword union, fail-closed authored labels, and deterministic
+generated keyword/role/numeric suffixes. Public AHB `fabric` and fixed AXI
+labels already pass target tools; public APB `interconnect` reproduces the
+SystemVerilog failure and is the explicit implementation delta.
+Clean audit commit `53a54c6c9` activates only identifier implementation `.2`.
+The selected registry/allocator, source diagnostics, emitter defenses, APB/AHB
+integration, report delta, and focused regressions are unchanged during that
+continuity commit.
+Identifier implementation `.2` is complete. Direct C4, spawn, reusable-library,
+ATL, APB/AHB normalization, and both structural emitters share the portable
+policy. APB now emits, wires, and reports `interconnect_instance`; AHB
+`fabric` and fixed AXI labels remain byte-stable. Public APB generation passes
+Verilator parse/lint and Yosys synthesis. Module/top/port/net/parameter names
+remain outside this child-instance-label contract.
+Preservation testing also found that t1502 still expects the AXI write-request
+assertion text from before grouped inline-intermediate rendering commit
+`80aa203ab`. Proposed inactive
+[assertion repair `.3`](../../tasks/ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.md)
+owns that exact test-truth synchronization after a separate clean activation;
+the identifier slice does not weaken or change the assertion.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

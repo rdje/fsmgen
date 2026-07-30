@@ -270,6 +270,11 @@ General source rules:
 - Names that identify actors, ports, storage, transactions, rules, drives,
   parameters, domains, and instances are scalar HDL identifiers. Current
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
+  Child instance labels authored by `spawn ... as`, reusable-library
+  `use ... as`, or ATL static instance declarations must additionally be
+  non-reserved across the shipped HDL targets. SystemVerilog keyword matching
+  is case-sensitive; VHDL-2008 matching is case-insensitive. Reserved labels
+  fail at their source boundary and are not silently renamed.
 - Widths and depths are positive integer literals unless a specific clause says
   otherwise. Actor top-level interface port widths, actor-owned scalar storage
   widths, actor-owned bank storage widths, actor-owned bank storage depths,

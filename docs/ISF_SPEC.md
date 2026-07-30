@@ -2308,6 +2308,13 @@ Current transaction clauses:
   decimal literal, actor constant, actor-local scalar parameter default, or
   qualified imported package scalar constant
 
+Authored child instance labels in `spawn ... as`, reusable-library
+`use ... as`, and ATL static instance declarations use the simple spelling
+`[A-Za-z_][A-Za-z0-9_]*` and must be non-reserved across SystemVerilog and
+VHDL-2008. SystemVerilog keyword matching is case-sensitive; VHDL matching is
+case-insensitive. FSMGen rejects a reserved label at the nearest source
+boundary rather than silently renaming it.
+
 Unsupported transaction clause heads now fail closed during lowering instead
 of being silently ignored. The same applies inside currently lowered body
 contexts: `when` bodies, `switch` branches, and `repeat` bodies each have a
@@ -4377,7 +4384,8 @@ parser/schedule-report metadata:
 Verbose instance declarations report `declaration: "actor"`. Compact
 `(NAME : ACTOR_TYPE)` aliases report `declaration: "instance_alias"` so
 downstream consumers can audit the original source spelling. Instance names
-and actor types must be scalar HDL identifiers, except that selected
+must also satisfy the portable child-instance keyword policy. Instance actor
+types must be scalar HDL identifiers, except that selected
 library-qualified actor types may use `ALIAS.EXPORT` as described below.
 Multiple direct static instances are accepted only by shipped bounded subsets:
 scalar or exact-width vector actor-to-actor handoff routes and report-only
