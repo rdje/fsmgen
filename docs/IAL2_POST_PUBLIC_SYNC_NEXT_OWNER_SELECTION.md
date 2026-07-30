@@ -59,3 +59,8 @@ independently owned.
   mdBook HTML build and diff hygiene pass.
 - `MEMORY.md` remains at its 60-line cap, `README.md` remains 246 lines,
   neither legacy status file changed, and no background job remains.
+
+Clean selector commit `9e3308e5c` activates only the selected four-fence
+repair through continuity changes. The fences, diagram contents, doctest
+result, scheduled lifecycle review, and every product behavior remain
+unchanged during activation.

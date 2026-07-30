@@ -30688,3 +30688,19 @@ task tree and git.
   5,507 keys; mdBook HTML-build and diff-hygiene gates pass. No source, test,
   artifact, API, HDL/runtime, product behavior, prose, or example content
   changes.
+
+### MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1 — plain-text fence repair activated
+
+- Activated only `.1` from clean selector commit `9e3308e5c`. Current HEAD
+  still has exactly four untyped opening fences at Chapters 13, 13b, 13f, and
+  13h; all four matching closes remain intact.
+- The fences, diagram contents, doctest result, source/tests, generated
+  artifacts, and product behavior remain unchanged during this continuity
+  slice. The scheduled four-document lifecycle review stays inactive and both
+  legacy status files remain untouched.
+- Task/index, roadmap, mdBook, selector fact, Memory, and changelog continuity
+  are synchronized. Feature-backlog status, live-book-path, and relative-path
+  audits pass with `Files=3, Tests=40`; Knowledge Map generation/check passes
+  at 1,070 facts / 5,507 keys; mdBook HTML build and diff hygiene pass. The
+  activation creates no separate engineering rationale, so no development-
+  note entry is warranted.

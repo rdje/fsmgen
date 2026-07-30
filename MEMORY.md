@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.837: select mdBook rustdoc fence repair`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.837` (selector complete).
-- current_state: `.837` selects proposed `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1`;
-  the four book fences remain unchanged until separate child activation.
-- next_action: after this selector commits cleanly, activate only the selected
-  child, then label exactly four plain-text fences and run full-book doctests.
-- in_flight_uncommitted: none after this selector commit; no background job.
+- latest_commit: this commit (`MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1: activate plain-text fence repair`).
+- active_work_unit: `MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1` (continuity-only activation).
+- current_state: clean selector `9e3308e5c` activates only the four-fence child;
+  every affected opening fence remains untyped until this commit is clean.
+- next_action: change exactly the four owned opening fences to `text`, prove
+  diagram-content identity, then run full-book doctest/build and doctrine gates.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

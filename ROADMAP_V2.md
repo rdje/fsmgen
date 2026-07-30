@@ -8230,6 +8230,10 @@ in Chapters 13, 13b, 13f, and 13h; the selected child will add only explicit
 document lifecycle review, architecture/product horizons, and every director-
 gated item remain inactive. See
 `docs/IAL2_POST_PUBLIC_SYNC_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `9e3308e5c` activates only
+`MDBOOK-RUSTDOC-NON-RUST-FENCE-REPAIR.1` continuity-only. The four opening
+fences, diagram contents, doctest result, and product behavior remain unchanged
+during activation; the scheduled lifecycle review stays inactive.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

@@ -34,3 +34,6 @@ The scheduled four-document lifecycle review stays proposed. Interim decision
 and leave `ROADMAP_STATUS.md` plus `LIVE_ACHIEVEMENT_STATUS.md` untouched.
 Explicitly director-gated items remain inactive.
 
+Clean selector commit `9e3308e5c` activates only the selected four-fence
+repair continuity-only. All fence and diagram bytes remain unchanged during
+activation; the lifecycle review and every product behavior remain inactive.

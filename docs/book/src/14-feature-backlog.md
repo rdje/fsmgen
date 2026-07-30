@@ -11904,6 +11904,9 @@ diagram-content preservation plus clean doctest/HTML builds. The scheduled
 four-document lifecycle review and every director-gated direction stay
 inactive. See the
 [selection record](../../IAL2_POST_PUBLIC_SYNC_NEXT_OWNER_SELECTION.md).
+Clean selector commit `9e3308e5c` activates only the four-fence repair `.1`
+continuity-only. All four openings and diagram contents remain unchanged
+during activation; the scheduled lifecycle review stays inactive.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
