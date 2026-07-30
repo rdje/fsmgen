@@ -290,7 +290,7 @@ subtest 'generated structural top preserves atomic payload and independent AW W 
     is(join('', @{$generate_stderr || []}), '', 'behavior HDL generation keeps stderr clean');
     like(
         slurp($hdl),
-        qr/assert property \(@\(posedge clk\) disable iff \(!rst_n\) \(\(!\(active_q\) & write_cmd_valid\) \|-> \(!\(cmd_awaddr\[0\]\) & !\(cmd_awaddr\[1\]\)\)\)\)/,
+        qr/assert property \(@\(posedge clk\) disable iff \(!rst_n\) \(\(\(!\(active_q\) & write_cmd_valid\)\) \|-> \(\(!\(cmd_awaddr\[0\]\) & !\(cmd_awaddr\[1\]\)\)\)\)\)/,
         'emitted coordinator assertion is the exact aligned idle-admission implication',
     );
 

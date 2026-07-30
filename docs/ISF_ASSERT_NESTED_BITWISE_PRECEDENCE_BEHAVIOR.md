@@ -116,6 +116,8 @@ executable without weakening either contract.
 - t1507 proves unchanged public/report/schedule/semantic/verifier surfaces,
   the expanded negative/positive `5/17/5/17/4` behavior matrix, and separate
   assertion-enabled legal-`0x00000004` `1/4/1/4/1` runtime.
+- t1502 freezes the grouped AXI write-request coordinator implication while
+  preserving its Verilator/Yosys proof and atomic AW/W structural-top runtime.
 - t1413, t1416-t1418, and t404 preserve trigger anchors, sampled values,
   property windows, and HDL-facade behavior.
 
@@ -152,6 +154,8 @@ must choose exactly one next roadmap owner before another tree is activated.
 Completed `.833` selects no-behavior
 `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1`; this repair remains complete and
 unchanged while that separate documentation leaf waits for clean activation.
+Follow-up `.3` later synchronized only t1502's stale pre-grouping expected text
+with the already-shipped output; no product assertion or AXI behavior changed.
 
 ## Rollback
 

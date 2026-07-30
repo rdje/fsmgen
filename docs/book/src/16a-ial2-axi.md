@@ -1193,7 +1193,9 @@ four-subtest
 public/report/fail-closed/CLI artifact contract and executes the structural top
 for misaligned no-launch, atomic capture, simultaneous-ready, AW-first, W-first,
 long-stall stability, ignored-busy-command, zero-strobe, fixed-metadata, and
-exact three-AW/three-W/three-done behavior.
+exact three-AW/three-W/three-done behavior. It also freezes the coordinator's
+grouped aligned-idle implication, so inline-intermediate parentheses remain
+covered alongside Verilator/Yosys and compiled-runtime behavior.
 
 The four-subtest `t/1508-ial2-axi-w-burst4-driver.t` proves the additive
 fixed-four W path independently: exact report/schedule and fail-closed

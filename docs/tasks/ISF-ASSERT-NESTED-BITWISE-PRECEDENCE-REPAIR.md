@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14 / generated verification correctness`
 - Created: `2026-07-23`
 - Last updated: `2026-07-30`
@@ -55,7 +55,7 @@ the assertion condition roundtrip/inlining path involving
 ## Task Tree
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve nested bitwise expression semantics across concurrent-property inlining and repair the shipped AXI read false assertion.`
   Children: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1`, `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2`, `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`
 
@@ -74,10 +74,10 @@ the assertion condition roundtrip/inlining path involving
   Commit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.2: ship substitution grouping`
 
 - ID: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`
-  Status: `active`
+  Status: `done`
   Goal: `Synchronize the AXI write-request assertion-text regression with grouped inline-intermediate rendering.`
   Acceptance: `From a separate clean activation, reproduce t/1502-ial2-axi-write-request-composition.t line 293 against grouped condition_sv emitted after commit 80aa203ab; prove generated behavior, Verilator/Yosys verification, and AXI instance labels remain unchanged; update only the stale exact assertion-text expectation plus its task/fact continuity unless the reproduction finds a product defect. Do not weaken or remove the assertion.`
-  Verification: `Proposed after PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2 preservation testing ran t1502. Its first three top-level subtests and behavior generation pass, but the fourth subtest's exact regex expects the pre-80aa ungrouped implication while current HDL correctly carries the grouped inline-intermediate boundaries. The identifier slice changes no assertion builder/emitter output: its Verilog structural-emitter diff adds only a fail-closed instance-label validation call. Commit 80aa203ab is the exact git-history owner that added grouping at GeneratedModuleInfoBuilder.pm:127; t1502 line 293 still blames to its earlier d722ed071 introduction. Clean identifier completion commit 299db4cae activates only this leaf continuity-only. Feature-backlog/live-book/relative-path audits pass with Files=3, Tests=40; Knowledge Map validation, mdBook HTML build, 44-line Memory, and diff hygiene pass; exact book scratch is removed. No source/test/config/artifact/report/API/HDL/runtime behavior changes during activation; DEVELOPMENT_NOTES.md and both frozen status files remain untouched.`
+  Verification: `Proposed after PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.2 preservation testing ran t1502 and activated continuity-only from clean commit 299db4cae through 7227c76b4. The clean reproduction passes its first three top-level groups and six of seven nested behavior assertions, including generation, Verilator build, compiled simulation, and exact behavioral scenarios; only the line-291 regex rejects the grouped property emitted since 80aa203ab. Git blame keeps that expectation at pre-repair d722ed071. The one-line regex now freezes the exact grouped antecedent and consequent without touching source, builder, emitter, HDL, or runtime behavior. t1502 then reports All tests successful, Files=1, Tests=4; its built-in CLI path passes verilator_lint and yosys_synthesis and its compiled harness preserves misalignment, atomic capture, simultaneous/AW-first/W-first completion, busy-ignore, stability, and cardinality. t1410-t1412+t1544 report All tests successful, Files=4, Tests=22; t1502 syntax is OK. The 15 exact ignored repository-local scratch/cache directories left by this run's earlier t1472/t1546 verification (109 files / 3,118,716 bytes) were classified by creation time and removed; .artifacts/tmp/tests has zero residue. Feature-backlog/live-book/relative-path audits, Knowledge Map validation, mdBook test/build, Memory/README caps, diff hygiene, and the staged doctrine driver pass. Task/index, behavior record/fact, book, Memory, and changelog are synchronized. No product/API/HDL/runtime behavior changes, no separate DEVELOPMENT_NOTES.md rationale, and both frozen status files remain untouched.`
   Commit: `pending`
 
 ## Current Frontier
@@ -85,10 +85,9 @@ the assertion condition roundtrip/inlining path involving
 Implementation `.2` is complete. Concurrent-check intermediate substitution
 preserves grouping, the AXI legal-bit-2 assertion agrees with unchanged
 behavioral admission, and separate negative-behavior/all-assertion t1507
-harnesses preserve both contracts. Proposed follow-up `.3` owns the stale AXI
-write-request exact-text expectation found later by identifier-policy
-preservation testing; clean identifier completion commit `299db4cae` activates
-only `.3` for that bounded test-truth repair.
+harnesses preserve both contracts. Follow-up `.3` synchronizes the one stale
+AXI write-request exact-text expectation with the already-shipped grouped
+output and leaves product behavior unchanged. The tree is exhausted.
 
 ## Decisions
 
@@ -141,7 +140,25 @@ only `.3` for that bounded test-truth repair.
 - `2026-07-30`: Clean identifier completion commit `299db4cae` activates only
   `.3`. The assertion builder/emitter and generated AXI behavior remain
   unchanged during this continuity slice.
+- `2026-07-30`: `.3` updates only t1502's exact grouped assertion regex. Its
+  verifier stages and full structural-top runtime remain green; no assertion
+  or product output changes.
 
 ## Blockers
 
-- None technical. `.3` is active from clean commit `299db4cae`.
+- None. `.1`-.3 are complete; the tree is exhausted.
+
+## Acceptance Checklist — `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean pre-fix prove output reports the
+  sole failing exact-property assertion at
+  t/1502-ial2-axi-write-request-composition.t line 291; `git blame` assigns its
+  pre-grouping regex to `d722ed071`, while `git log -S` and commit `80aa203ab`
+  identify the later general inline-intermediate grouping repair.
+- [x] **ADDRESSED (verified)** — Updating only that regex from the ungrouped
+  implication to the exact grouped antecedent/consequent moves t1502 from
+  `Files=1, Tests=4` failure to `All tests successful`, `Files=1, Tests=4`;
+  built-in `verilator_lint`, `yosys_synthesis`, and compiled runtime all pass.
+- [x] **NO REGRESSION** — The unchanged t1410-t1412+t1544 assertion-owner set
+  reports `All tests successful`, `Files=4, Tests=22`; t1502 reports `syntax
+  OK`, and the final staged doctrine driver remains required before commit.

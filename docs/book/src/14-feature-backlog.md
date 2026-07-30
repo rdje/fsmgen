@@ -11953,6 +11953,10 @@ Clean identifier completion commit `299db4cae` activates only assertion repair
 `.3`. This continuity step changes task/book/Memory/changelog pointers only;
 the assertion builder/emitter, expected text, generated AXI HDL, and runtime
 behavior remain unchanged until the test-truth repair commits separately.
+Assertion repair `.3` is complete. Its one-line t1502 regex now expects the
+grouped antecedent and consequent emitted since `80aa203ab`; t1502's built-in
+Verilator, Yosys, and compiled structural-top behavior all pass. No builder,
+emitter, assertion, generated HDL, or AXI runtime output changed in `.3`.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

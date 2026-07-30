@@ -30839,3 +30839,19 @@ task tree and git.
   unchanged; both frozen status files remain untouched. Documentation audits
   pass at `Files=3, Tests=40`; Knowledge Map validation and mdBook HTML build
   pass, and exact build scratch is removed.
+
+### ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3 — grouped AXI assertion expectation synchronized
+
+- Updated only t1502's stale pre-`80aa203ab` exact regex to require the grouped
+  AXI write-request coordinator antecedent and consequent already emitted by
+  the repaired inline-intermediate renderer. No source, builder, emitter,
+  generated HDL, assertion, or runtime behavior changed.
+- t1502 passes at `Files=1, Tests=4`, including Verilator lint, Yosys synthesis,
+  compiled structural-top simulation, and every AW/W ordering/cardinality
+  scenario. Assertion-owner preservation t1410-t1412+t1544 passes at
+  `Files=4, Tests=22`; test syntax is clean.
+- Removed 15 exact ignored repository-local scratch/cache directories left by
+  this run's earlier t1472/t1546 verification (109 files / 3,118,716 bytes),
+  leaving `.artifacts/tmp/tests` empty. The existing behavior record/fact,
+  task/index, mdBook, Memory, and Knowledge Map are synchronized; no separate
+  development note is warranted and both frozen status files stay untouched.

@@ -5,15 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3: activate AXI assertion expectation sync`).
-- active_work_unit: `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`
-  (continuity-only activation).
-- current_state: clean identifier completion commit `299db4cae` activates only
-  the test-truth repair; assertion generation, emitted AXI HDL, runtime
-  behavior, and t1502 expectations remain unchanged during activation.
-- next_action: reproduce t1502 line 293, update only its stale pre-grouping
-  exact assertion-text regex to the grouped output shipped by commit
-  `80aa203ab`, then run focused AXI/assertion preservation gates.
+- latest_commit: this commit (`ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3: synchronize grouped AXI assertion expectation`).
+- active_work_unit: none after this completion commit; the assertion repair
+  tree is exhausted through `.3`.
+- current_state: t1502 now freezes the grouped AXI write-request coordinator
+  implication emitted since `80aa203ab`; product assertion generation,
+  generated HDL, and runtime behavior are unchanged.
+- next_action: from this clean boundary, select the next parent
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER` leaf before any further behavior work.
 - in_flight_uncommitted: none after commit; no background job.
 - blockers: none. A confirmatory guarded preservation rerun was stopped before
   test execution because host memory was 95.4% above the configured 88% cutoff;
@@ -35,9 +34,9 @@ history; this file carries only the current bounded resume state.
   preservation tests pass; ten changed Perl/test files report `syntax OK`.
   All 36 mdBook chapters pass test/build; documentation audits pass at
   `Files=3, Tests=40`; Knowledge Map passes at 1,072 facts / 5,523 keys.
-- The unrelated t1502 expectation drift is durably owned by proposed inactive
-  `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3`; it is not folded into the
-  identifier implementation.
+- `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.3` is complete: t1502 passes at
+  `Files=1, Tests=4`; t1410-t1412+t1544 pass at `Files=4, Tests=22`; test syntax
+  is clean, and `.artifacts/tmp/tests` is empty.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously
