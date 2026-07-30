@@ -8112,6 +8112,10 @@ GHDL, broad-composition, aggregate/package, and parity deferrals. HIAL/VIAL,
 scale, other startup maintenance, known defects, protocol/backend expansion,
 simulator profiles, and decision `0020` remain separate. See
 `docs/IAL2_POST_ASSERTION_PRECEDENCE_NEXT_OWNER_SELECTION.md`.
+Clean selector commit `191a65151` activates only
+`MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1` continuity-only. The stale Chapter
+00/10 wording, canonical Chapter 14 boundary, and every product behavior remain
+unchanged until the book leaf commits its repair.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

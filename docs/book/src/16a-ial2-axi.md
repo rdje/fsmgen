@@ -1032,6 +1032,8 @@ remain unchanged while the next roadmap owner is selected.
 Completed `.833` selects a no-behavior mdBook VHDL introduction/backend-summary
 truth repair. It changes no AXI source, generated HDL, assertion, or runtime
 contract; broader AXI work remains separately owned.
+Clean selector commit `191a65151` activates only that documentation leaf
+continuity-only; the AXI contract remains unchanged.
 
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and

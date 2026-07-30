@@ -11800,6 +11800,9 @@ composition, aggregate/package, and parity deferrals. See the
 HIAL/VIAL, end-to-end scale, other startup maintenance, known defects,
 protocol/backend expansion, simulator profiles, and decision `0020` remain
 separate.
+Clean selector commit `191a65151` activates only the selected book leaf
+continuity-only. The stale summaries, this canonical boundary, and all product
+behavior remain unchanged during activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

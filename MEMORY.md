@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this commit (`IAL2-FEATURE-COMPLETENESS-FRONTIER.833: select mdBook VHDL boundary sync`).
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.833` (selector complete in this commit).
-- current_state: `.833` selects proposed no-behavior `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1` because Chapters 00/10 contradict Chapter 14's bounded shipped VHDL truth. The child is not active until a separate clean continuity commit.
-- next_action: after this selector commit is clean, activate only `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1`, then align the two summaries while preserving full-backend/GHDL/external-compiler deferrals.
-- in_flight_uncommitted: none after this selector commit; no background job.
+- latest_commit: this commit (`MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1: activate book truth repair`).
+- active_work_unit: `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1` (continuity-only activation).
+- current_state: clean selector commit `191a65151` selects the no-behavior book truth repair. `.1` is active continuity-only; Chapters 00/10 retain their stale wording until this activation commits cleanly.
+- next_action: align Chapters 00 and 10 with Chapter 14's bounded shipped direct/composition VHDL subset while preserving full-backend/GHDL/external-compiler deferrals.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state

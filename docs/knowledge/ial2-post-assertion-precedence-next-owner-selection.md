@@ -31,3 +31,6 @@ HIAL/VIAL, end-to-end scale, other startup maintenance, known defects,
 protocol/backend expansion, simulator profiles, and decision `0020` remain
 independently proposed, deferred, or gated.
 
+Clean selector commit `191a65151` activates only the selected book leaf through
+continuity changes. The stale summaries and every product behavior remain
+unchanged during activation.

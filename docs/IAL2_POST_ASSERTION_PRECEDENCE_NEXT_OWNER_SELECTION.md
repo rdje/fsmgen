@@ -103,6 +103,11 @@ leaving the contradictory book wording and every shipped behavior unchanged.
 A clean selector commit may activate only the selected book-sync leaf through
 a separate continuity commit.
 
+Clean selector commit `191a65151` activates only
+`MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC.1` through continuity changes. The
+contradictory summaries and every shipped product behavior remain unchanged
+during activation.
+
 ## Closeout Evidence
 
 - Book/status/path truth passes 5 files/329 tests. Knowledge Map generation and
