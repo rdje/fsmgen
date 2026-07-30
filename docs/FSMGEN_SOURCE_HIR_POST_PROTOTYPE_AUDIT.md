@@ -20,6 +20,9 @@ canonical byte-identical `isf/phase_test.isf` rendering and existing-adapter/
 scheduler re-entry. The exact contract is
 `docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md`.
 
+Leaf `.7` now implements and proves that route privately. Leaf `.8` remains
+the sole owner of the next promotion/continued-private/retirement decision.
+
 Public host-language selection remains owned by proposed
 `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER`. No Perl, Python, Julia, C, CLI, raw-HIR,
 serialization, report, manifest, or support-accounting contract is promoted by
@@ -53,23 +56,24 @@ independent frontend producer, public package, CLI entry, language-surface
 entry, capability-manifest entry, normalized-report projection, or support-
 accounting entry.
 
-The only SourceHIR root kind is one protocol-neutral valid-ready object and
-the only renderer targets PPIF/IAL2. It therefore proves only this half of the
-selected architecture:
+At the time of this audit, the only SourceHIR root kind was one
+protocol-neutral valid-ready object and the only renderer targeted PPIF/IAL2.
+The evidence then proved only this half of the selected architecture:
 
 ```text
 SourceHIR protocol intent -> canonical IAL2 -> IAL1 -> IAL0
 ```
 
-It does not yet prove the other promised route:
+It did not yet prove the other promised route:
 
 ```text
 SourceHIR concrete FSM/control -> canonical IAL1 -> IAL0
 ```
 
-Publishing the object now would freeze names, versioning, error contracts, and
-package ergonomics from one semantic shape before the common abstraction has
-survived a second lowering target.
+Publishing the object at that point would have frozen names, versioning, error
+contracts, and package ergonomics from one semantic shape before the common
+abstraction survived a second lowering target. Leaf `.7` has since supplied
+that second private proof; `.8` owns the fresh conclusion.
 
 ### Concrete-route readiness
 
@@ -94,7 +98,8 @@ fixture choice.
 - `.6` selects the exact private concrete-control-to-IAL1 version-2 boundary
   and golden. It is design-only and may reject the route if a genuinely shared
   SourceHIR cannot represent the candidate without IAL1 syntax leakage.
-- `.7` implements only the `.6`-selected private route and equivalence proof.
+- `.7` implements only the `.6`-selected private route and equivalence proof;
+  it is now complete.
 - `.8` repeats the promotion/continued-private/retirement audit from evidence
   across both lowering routes.
 

@@ -100,11 +100,11 @@ and future IAL evolution.
   Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.6: select private SourceHIR IAL1 boundary`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.7`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected private concrete-control-to-IAL1 SourceHIR golden path.`
   Acceptance: `Implement docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md exactly after .6 commits cleanly: extend only SourceHIR and SourceHIRBuilder for schema-version 2/root-kind concrete_control, add private SourceHIRISFRenderer, and add t/1548-source-hir-phase-control.t. Model only the closed semantic actor/reset/ordered-port/one-drive/one-linear-transaction subset; accept no raw ISF/AST/expression fragments. Reproduce isf/phase_test.isf at 17 lines/395 bytes/SHA-256 6eeab6c6f2e87c4a91f97fd8c0f2535334a163a7ccf263f30dfcefae51b0d2f2, reparse through FSM::Adapter::ISF, lower through independent FSM::Scheduler::ISF instances, and prove identical typed actor, schedule, and one 45-line/484-byte/SHA-256 8b82ddb329a6b625d0ec271d9611b35140414a2c84e775c1615e442cdfa65047 phase_test.fsm. Prove deterministic validation, defensive access, version dispatch, provenance, 14-nonblank-line-plus-root source map, line/root diagnostic remapping, ordered variants, exact v1 preservation through t1547, phase preservation through t1179/t1312, syntax, docs, Knowledge Map, memory, task acceptance, doctrine, same-volume scratch, and cleanup. Add no CLI, public API/schema/serialization, report/manifest/accounting, parser/fixture/config, HDL/runtime, or existing behavior change.`
-  Verification: `Activated continuity-only after clean version-2 contract commit f42fb033d. Activation changes only task/index, contract/decision/fact continuity, roadmap, mdBook backlog, Memory, changelog, and regenerated Knowledge Map. SourceHIR/Builder code, new ISF renderer, t1548, parser, fixture, artifacts, public surfaces, HDL/runtime, and behavior remain unchanged. Feature-backlog, live-book-path, and relative-path audits pass with Files=3, Tests=40; all 36 mdBook chapters pass executable-example testing; the 72-file HTML build passes and its exact repository-local output is removed. Knowledge Map generation/check passes at 1080 facts / 5568 question keys; memory architecture passes with MEMORY.md at 47 lines; diff hygiene and all seven staged doctrine gates pass. Both frozen status files remain untouched.`
-  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.7: activate private SourceHIR IAL1 implementation`
+  Verification: `Clean activation commit e2de40cd3 permits only the contract-selected private implementation. SourceHIR now dispatches root-appropriate immutable access; SourceHIRBuilder implements closed deterministic schema-version-2 validation/build with typed cross-references and no raw expression storage; SourceHIRISFRenderer emits canonical ISF plus a private 14-nonblank-line-plus-root source map and structured line/root diagnostic remapping. T1548 proves exact 17-line/395-byte/SHA-256 ISF, equal typed actor and schedule, exact one-file 45-line/484-byte/SHA-256 IAL0, ordered variants, all nested malformed-input rejection families, provenance, deterministic rendering, and no public exposure. T1548+t1547+t1179+t1312 pass with Files=4, Tests=25; all four changed/new Perl/test files report syntax OK. Documentation audits pass with Files=3, Tests=40; all 36 mdBook chapters and the 72-file HTML build pass; Knowledge Map generation/check passes at 1081 facts / 5574 question keys; memory architecture passes at 49 lines; diff hygiene, task acceptance, and all seven staged doctrine gates pass; repository-local scratch and generated book output are removed. No CLI, public API/schema/serialization, report/manifest/accounting, parser/fixture/config, HDL/runtime, frozen status file, or existing behavior changes.`
+  Commit: `FSMGEN-HIR-ROADMAP-FRONTIER.7: implement private SourceHIR IAL1 path`
 
 - ID: `FSMGEN-HIR-ROADMAP-FRONTIER.8`
   Status: `proposed`
@@ -115,9 +115,10 @@ and future IAL evolution.
 
 ## Current Frontier
 
-Clean version-2 contract commit `f42fb033d` activates `.7` continuity-only.
-The leaf owns only the contract-selected private implementation and t1548
-equivalence proof.
+The contract-selected private `.7` implementation and t1548 equivalence proof
+are complete. After this slice commits cleanly, the precise next action is a
+continuity-only activation commit for proposed `.8`; no promotion conclusion
+is selected by `.7`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
@@ -127,7 +128,7 @@ equivalence proof.
 | 4 | `FSMGEN-HIR-ROADMAP-FRONTIER.4` | `done` | Implemented the three private packages and t1547 exact golden/downstream-equivalence proof. |
 | 5 | `FSMGEN-HIR-ROADMAP-FRONTIER.5` | `done` | Kept SourceHIR private because one IAL2 schema is healthy but insufficient for promotion. |
 | 6 | `FSMGEN-HIR-ROADMAP-FRONTIER.6` | `done` | Selected semantic SourceHIR v2 and the exact phase-test IAL1/IAL0 oracles. |
-| 7 | `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `active` | Implement only the selected second private route. |
+| 7 | `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `done` | Implemented and proved the selected second private route without public exposure. |
 | 8 | `FSMGEN-HIR-ROADMAP-FRONTIER.8` | `proposed` | Repeat the promotion audit across both lowering routes. |
 
 ## Decisions
@@ -202,15 +203,19 @@ equivalence proof.
   typed-AST duplication, arbitrary control, and public surfaces are deferred.
 - `2026-07-30`: Clean v2-contract commit `f42fb033d` activates `.7`
   continuity-only. Implementation remains unchanged until activation commits.
+- `2026-07-30`: `.7` implements the closed semantic concrete-control root,
+  canonical private ISF renderer/source map, and t1548 exact fixture/IAL0/
+  schedule proof. Version 1 and every public surface remain unchanged; `.8`
+  remains the sole owner of the next promotion audit.
 
 ## Open Questions
 
-- `.7` must implement only the frozen version-2 contract after activation
-  commits cleanly.
+- `.8` must decide promotion, continued-private iteration, narrowing/renaming,
+  or retirement from both route proofs; `.7` authorizes none of those outcomes.
 
 ## Blockers
 
-- None. `.7` is active continuity-only after clean commit `f42fb033d`.
+- None. `.8` remains proposed until the completed `.7` slice commits cleanly.
 
 ## Verification Log
 
@@ -227,6 +232,7 @@ equivalence proof.
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.6` activation | documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; continuity-only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.6` contract | phase fixture/source hashes; strict check and schedule; t1179+t1312+t1547 with repository-local scratch; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; exact semantic v2 contract only |
 | `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.7` activation | documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; continuity-only |
+| `2026-07-30` | `FSMGEN-HIR-ROADMAP-FRONTIER.7` implementation | t1548+t1547+t1179+t1312; four syntax checks; documentation audits; Knowledge Map; memory architecture; `mdbook test docs/book`; `mdbook build docs/book`; output cleanup; diff hygiene; staged `scripts/check_doctrines.sh` | `passed`; private exact SourceHIR-to-IAL1 path only |
 
 ## Commit Log
 
@@ -247,6 +253,7 @@ equivalence proof.
 | `FSMGEN-HIR-ROADMAP-FRONTIER.6` | `FSMGEN-HIR-ROADMAP-FRONTIER.6: activate private SourceHIR IAL1 selection` | Continuity-only activation after the clean post-prototype audit. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.6` | `FSMGEN-HIR-ROADMAP-FRONTIER.6: select private SourceHIR IAL1 boundary` | Freezes semantic version 2, exact phase-test ISF/IAL0 oracles, and private implementation ownership. |
 | `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `FSMGEN-HIR-ROADMAP-FRONTIER.7: activate private SourceHIR IAL1 implementation` | Continuity-only activation after the clean version-2 contract. |
+| `FSMGEN-HIR-ROADMAP-FRONTIER.7` | `FSMGEN-HIR-ROADMAP-FRONTIER.7: implement private SourceHIR IAL1 path` | Implements only the closed version-2 object/builder/renderer and t1548 proof. |
 
 ## Changelog
 
@@ -276,9 +283,12 @@ equivalence proof.
   rendering, exact downstream equivalence, and proposed `.7` implementation.
 - `2026-07-30`: Activated `.7` continuity-only for the exact private v2
   implementation and t1548 proof.
+- `2026-07-30`: Implemented and proved the private semantic
+  concrete-control-to-IAL1 route, preserving exact phase fixture/IAL0 bytes,
+  version 1, and all public surfaces.
 
 ## Acceptance Checklist (enforced)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Baseline `./bin/fsmgen --strict --check --json ppif/valid_ready_handshake.ppif` and `./bin/fsmgen --emit-schedule-json ppif/valid_ready_handshake.ppif` succeed only after the hand-written PPIF text enters `FSM::Adapter::IAL2::PPIF->parse_source`; source inspection locates that text-to-generator handoff at `perl/FSM/Adapter/IAL2/PPIF.pm` and confirms there was no pre-IAL structured producer.
-- [x] **ADDRESSED (verified)** — `prove -Iperl t/1547-source-hir-valid-ready.t` reports `Files=1, Tests=9` and proves the closed private object/builder/renderer, exact 14-line/428-byte/SHA golden, provenance diagnostics, parser re-entry, ordered variants, and equal downstream artifacts/reports.
-- [x] **NO REGRESSION** — `prove -Iperl t/1547-source-hir-valid-ready.t t/155-forward-intent-hir-surface.t t/156-forward-lowered-rtl-ir-surface.t t/163-forward-structural-rtl-ir-surface.t t/334-normalized-semantic-forward-ir-contract.t t/339-normalized-semantic-intent-hir-contract.t t/1435-axi-ial2-valid-ready-generator.t` reports `All tests successful` and `Files=7, Tests=21`; all new Perl/test files report `syntax OK`, and the staged doctrine driver reports `[doctrine] all doctrine checks passed`.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'build_concrete_control' --oneline e2de40cd3 -- perl/FSM/IR/SourceHIRBuilder.pm` returns no commit: the clean activation baseline contained only schema-version-1 builder/accessors plus `FSM::IR::SourceHIRPPIFRenderer`, although the selected architecture promises both `SourceHIR protocol intent -> canonical IAL2` and `SourceHIR concrete control -> canonical IAL1`. There was no `build_concrete_control`, `control_actor`, `SourceHIRISFRenderer`, or t1548 route; `docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md` declares the exact missing boundary and phase-test oracle.
+- [x] **ADDRESSED (verified)** — `prove -Iperl t/1548-source-hir-phase-control.t` reports `Files=1, Tests=9` and proves the closed version-2 object/builder/renderer, defensive access, fail-closed cross-references including malformed input, deterministic ordered variants, exact 17-line/395-byte/SHA ISF, equal typed actor/schedule, exact 45-line/484-byte/SHA IAL0, provenance remapping, truthful root fallback, and no public exposure.
+- [x] **NO REGRESSION** — `prove -Iperl t/1548-source-hir-phase-control.t t/1547-source-hir-valid-ready.t t/1179-isf-phase-stage-boundary.t t/1312-isf-phase-fixture-coverage.t` reports `All tests successful` and `Files=4, Tests=25`; `perl -Iperl -c` reports `syntax OK` for the two changed modules, new renderer, and t1548, and the staged doctrine driver reports `[doctrine] all doctrine checks passed`.

@@ -2,7 +2,7 @@ package FSM::IR::SourceHIRBuilder;
 
 =head1 NAME
 
-FSM::IR::SourceHIRBuilder - Validate and build private SourceHIR v1 objects
+FSM::IR::SourceHIRBuilder - Validate and build private SourceHIR objects
 
 =cut
 
@@ -26,6 +26,16 @@ my @RESET_KEYS = qw(signal active_level kind);
 my @PAYLOAD_KEYS = qw(name width);
 my @PROVENANCE_KEYS = qw(source_name spans);
 my @SPAN_KEYS = qw(start_line start_column end_line end_column);
+my @CONTROL_TOP_KEYS = qw(schema_version root_kind actor provenance);
+my @ACTOR_KEYS = qw(name clock reset ports drive_blocks transactions);
+my @PORT_KEYS = qw(direction name width);
+my @DRIVE_KEYS = qw(name parameters assignments);
+my @ASSIGNMENT_KEYS = qw(target value);
+my @TRANSACTION_KEYS = qw(name trigger phases completion);
+my @TRIGGER_KEYS = qw(signal);
+my @PHASE_KEYS = qw(name outputs next);
+my @COMPLETION_KEYS = qw(signal);
+our $DIAGNOSTIC_SCHEMA_VERSION;
 
 sub validate_valid_ready ($class, @args) {
     _validate_class_call($class, 'validate_valid_ready', \@args);
@@ -36,6 +46,21 @@ sub validate_valid_ready ($class, @args) {
 sub build_valid_ready ($class, @args) {
     _validate_class_call($class, 'build_valid_ready', \@args);
     my ($diagnostics, $normalized) = _validate_and_normalize($args[0]);
+    confess _format_diagnostic($diagnostics->[0]) if @$diagnostics;
+    return FSM::IR::SourceHIR->_new_validated($normalized);
+}
+
+sub validate_concrete_control ($class, @args) {
+    _validate_class_call($class, 'validate_concrete_control', \@args);
+    local $DIAGNOSTIC_SCHEMA_VERSION = 2;
+    my ($diagnostics) = _validate_and_normalize_concrete_control($args[0]);
+    return _clone($diagnostics);
+}
+
+sub build_concrete_control ($class, @args) {
+    _validate_class_call($class, 'build_concrete_control', \@args);
+    local $DIAGNOSTIC_SCHEMA_VERSION = 2;
+    my ($diagnostics, $normalized) = _validate_and_normalize_concrete_control($args[0]);
     confess _format_diagnostic($diagnostics->[0]) if @$diagnostics;
     return FSM::IR::SourceHIR->_new_validated($normalized);
 }
@@ -76,6 +101,35 @@ sub _validate_and_normalize ($raw_input) {
     for my $payload (@{$normalized->{valid_ready_channel}{payload}}) {
         $payload->{width} = int($payload->{width});
     }
+    for my $span (values %{$normalized->{provenance}{spans}}) {
+        $span->{$_} = int($span->{$_}) for @SPAN_KEYS;
+    }
+
+    return (\@diagnostics, $normalized);
+}
+
+sub _validate_and_normalize_concrete_control ($raw_input) {
+    my @diagnostics;
+
+    unless (ref($raw_input) eq 'HASH') {
+        _add_diagnostic(\@diagnostics, $raw_input, '/', 'input must be a hash reference');
+        return (\@diagnostics, undef);
+    }
+
+    my $input = _clone($raw_input);
+    _validate_unknown_keys(\@diagnostics, $input, \@CONTROL_TOP_KEYS, '/', $input);
+    _validate_exact_integer(\@diagnostics, $input, '/schema_version', 'schema_version', 2, 2);
+    _validate_exact_scalar(\@diagnostics, $input, '/root_kind', 'root_kind', 'concrete_control');
+    _validate_control_actor(\@diagnostics, $input);
+    _validate_provenance(\@diagnostics, $input);
+
+    return (\@diagnostics, undef) if @diagnostics;
+
+    my $normalized = _clone($input);
+    $normalized->{schema_version} = int($normalized->{schema_version});
+    $normalized->{actor}{reset}{active_level}
+        = int($normalized->{actor}{reset}{active_level});
+    $_->{width} = int($_->{width}) for @{$normalized->{actor}{ports}};
     for my $span (values %{$normalized->{provenance}{spans}}) {
         $span->{$_} = int($span->{$_}) for @SPAN_KEYS;
     }
@@ -197,6 +251,305 @@ sub _validate_interface_uniqueness ($diagnostics, $input) {
     }
 }
 
+sub _validate_control_actor ($diagnostics, $input) {
+    my $actor = $input->{actor};
+    unless (ref($actor) eq 'HASH') {
+        _add_diagnostic($diagnostics, $input, '/actor', "field 'actor' must be a hash reference");
+        return;
+    }
+
+    _validate_unknown_keys($diagnostics, $actor, \@ACTOR_KEYS, '/actor', $input);
+    _validate_identifier_field($diagnostics, $actor, '/actor/name', 'name', $input);
+    _validate_identifier_field($diagnostics, $actor, '/actor/clock', 'clock', $input);
+
+    my $reset = $actor->{reset};
+    if (ref($reset) eq 'HASH') {
+        _validate_unknown_keys($diagnostics, $reset, \@RESET_KEYS, '/actor/reset', $input);
+        _validate_identifier_field($diagnostics, $reset, '/actor/reset/signal', 'signal', $input);
+        _validate_exact_integer(
+            $diagnostics, $reset, '/actor/reset/active_level',
+            'active_level', 0, 1, $input,
+        );
+        _validate_enum_field(
+            $diagnostics, $reset, '/actor/reset/kind', 'kind',
+            [qw(async sync)], $input,
+        );
+    } else {
+        _add_diagnostic($diagnostics, $input, '/actor/reset', "field 'reset' must be a hash reference");
+    }
+
+    _validate_control_ports($diagnostics, $input, $actor);
+    _validate_control_drives($diagnostics, $input, $actor);
+    _validate_control_transactions($diagnostics, $input, $actor);
+    _validate_control_cross_references($diagnostics, $input, $actor);
+}
+
+sub _validate_control_ports ($diagnostics, $input, $actor) {
+    my $ports = $actor->{ports};
+    unless (ref($ports) eq 'ARRAY' && @$ports) {
+        _add_diagnostic($diagnostics, $input, '/actor/ports', "field 'ports' must be a non-empty array reference");
+        return;
+    }
+
+    my (%names, %directions);
+    for my $index (0 .. $#$ports) {
+        my $port = $ports->[$index];
+        my $base = "/actor/ports/$index";
+        unless (ref($port) eq 'HASH') {
+            _add_diagnostic($diagnostics, $input, $base, 'port must be a hash reference');
+            next;
+        }
+        _validate_unknown_keys($diagnostics, $port, \@PORT_KEYS, $base, $input);
+        _validate_enum_field(
+            $diagnostics, $port, "$base/direction", 'direction',
+            [qw(input output)], $input,
+        );
+        _validate_identifier_field($diagnostics, $port, "$base/name", 'name', $input);
+        _validate_positive_integer_field($diagnostics, $port, "$base/width", 'width', $input);
+
+        if (_is_identifier($port->{name}) && $names{$port->{name}}++) {
+            _add_diagnostic($diagnostics, $input, "$base/name", "port name '$port->{name}' is duplicated");
+        }
+        $directions{$port->{direction}}++
+            if defined($port->{direction}) && !ref($port->{direction})
+                && ($port->{direction} eq 'input' || $port->{direction} eq 'output');
+    }
+
+    _add_diagnostic($diagnostics, $input, '/actor/ports', "field 'ports' must contain at least one input")
+        unless $directions{input};
+    _add_diagnostic($diagnostics, $input, '/actor/ports', "field 'ports' must contain at least one output")
+        unless $directions{output};
+}
+
+sub _validate_control_drives ($diagnostics, $input, $actor) {
+    my $drives = $actor->{drive_blocks};
+    unless (ref($drives) eq 'ARRAY' && @$drives == 1) {
+        _add_diagnostic($diagnostics, $input, '/actor/drive_blocks', "field 'drive_blocks' must contain exactly one drive block");
+        return;
+    }
+
+    my $drive = $drives->[0];
+    my $base = '/actor/drive_blocks/0';
+    unless (ref($drive) eq 'HASH') {
+        _add_diagnostic($diagnostics, $input, $base, 'drive block must be a hash reference');
+        return;
+    }
+
+    _validate_unknown_keys($diagnostics, $drive, \@DRIVE_KEYS, $base, $input);
+    _validate_identifier_field($diagnostics, $drive, "$base/name", 'name', $input);
+
+    my $parameters = $drive->{parameters};
+    if (ref($parameters) eq 'ARRAY' && @$parameters) {
+        my %seen;
+        for my $index (0 .. $#$parameters) {
+            my $parameter = $parameters->[$index];
+            my $path = "$base/parameters/$index";
+            unless (_is_identifier($parameter)) {
+                _add_diagnostic($diagnostics, $input, $path, 'drive parameter must be an ISF identifier');
+                next;
+            }
+            _add_diagnostic($diagnostics, $input, $path, "drive parameter '$parameter' is duplicated")
+                if $seen{$parameter}++;
+        }
+    } else {
+        _add_diagnostic($diagnostics, $input, "$base/parameters", "field 'parameters' must be a non-empty array reference");
+    }
+
+    my $assignments = $drive->{assignments};
+    unless (ref($assignments) eq 'ARRAY' && @$assignments) {
+        _add_diagnostic($diagnostics, $input, "$base/assignments", "field 'assignments' must be a non-empty array reference");
+        return;
+    }
+
+    my %targets;
+    for my $index (0 .. $#$assignments) {
+        my $assignment = $assignments->[$index];
+        my $assignment_base = "$base/assignments/$index";
+        unless (ref($assignment) eq 'HASH') {
+            _add_diagnostic($diagnostics, $input, $assignment_base, 'drive assignment must be a hash reference');
+            next;
+        }
+        _validate_unknown_keys($diagnostics, $assignment, \@ASSIGNMENT_KEYS, $assignment_base, $input);
+        _validate_identifier_field($diagnostics, $assignment, "$assignment_base/target", 'target', $input);
+        _validate_identifier_field($diagnostics, $assignment, "$assignment_base/value", 'value', $input);
+        if (_is_identifier($assignment->{target}) && $targets{$assignment->{target}}++) {
+            _add_diagnostic(
+                $diagnostics, $input, "$assignment_base/target",
+                "drive target '$assignment->{target}' is duplicated",
+            );
+        }
+    }
+}
+
+sub _validate_control_transactions ($diagnostics, $input, $actor) {
+    my $transactions = $actor->{transactions};
+    unless (ref($transactions) eq 'ARRAY' && @$transactions == 1) {
+        _add_diagnostic($diagnostics, $input, '/actor/transactions', "field 'transactions' must contain exactly one transaction");
+        return;
+    }
+
+    my $transaction = $transactions->[0];
+    my $base = '/actor/transactions/0';
+    unless (ref($transaction) eq 'HASH') {
+        _add_diagnostic($diagnostics, $input, $base, 'transaction must be a hash reference');
+        return;
+    }
+
+    _validate_unknown_keys($diagnostics, $transaction, \@TRANSACTION_KEYS, $base, $input);
+    _validate_identifier_field($diagnostics, $transaction, "$base/name", 'name', $input);
+    _validate_signal_ref($diagnostics, $input, $transaction->{trigger}, "$base/trigger", \@TRIGGER_KEYS);
+    _validate_signal_ref($diagnostics, $input, $transaction->{completion}, "$base/completion", \@COMPLETION_KEYS);
+
+    my $phases = $transaction->{phases};
+    unless (ref($phases) eq 'ARRAY' && @$phases) {
+        _add_diagnostic($diagnostics, $input, "$base/phases", "field 'phases' must be a non-empty array reference");
+        return;
+    }
+
+    my %phase_names;
+    for my $index (0 .. $#$phases) {
+        my $phase = $phases->[$index];
+        my $phase_base = "$base/phases/$index";
+        unless (ref($phase) eq 'HASH') {
+            _add_diagnostic($diagnostics, $input, $phase_base, 'phase must be a hash reference');
+            next;
+        }
+        _validate_unknown_keys($diagnostics, $phase, \@PHASE_KEYS, $phase_base, $input);
+        _validate_identifier_field($diagnostics, $phase, "$phase_base/name", 'name', $input);
+        if (_is_identifier($phase->{name}) && $phase_names{$phase->{name}}++) {
+            _add_diagnostic($diagnostics, $input, "$phase_base/name", "phase name '$phase->{name}' is duplicated");
+        }
+
+        my $outputs = $phase->{outputs};
+        if (ref($outputs) eq 'ARRAY' && @$outputs) {
+            my %seen;
+            for my $output_index (0 .. $#$outputs) {
+                my $output = $outputs->[$output_index];
+                my $path = "$phase_base/outputs/$output_index";
+                unless (_is_identifier($output)) {
+                    _add_diagnostic($diagnostics, $input, $path, 'phase output must be an ISF identifier');
+                    next;
+                }
+                _add_diagnostic($diagnostics, $input, $path, "phase output '$output' is duplicated")
+                    if $seen{$output}++;
+            }
+        } else {
+            _add_diagnostic($diagnostics, $input, "$phase_base/outputs", "field 'outputs' must be a non-empty array reference");
+        }
+
+        if ($index < $#$phases) {
+            my $expected = ref($phases->[$index + 1]) eq 'HASH'
+                ? $phases->[$index + 1]{name}
+                : undef;
+            unless (_is_identifier($phase->{next}) && _is_identifier($expected)
+                && $phase->{next} eq $expected) {
+                _add_diagnostic(
+                    $diagnostics, $input, "$phase_base/next",
+                    "field 'next' must name the immediately following phase",
+                );
+            }
+        } elsif (exists $phase->{next}) {
+            _add_diagnostic($diagnostics, $input, "$phase_base/next", "final phase must omit field 'next'");
+        }
+    }
+}
+
+sub _validate_signal_ref ($diagnostics, $input, $value, $path, $allowed_keys) {
+    unless (ref($value) eq 'HASH') {
+        _add_diagnostic($diagnostics, $input, $path, 'signal reference must be a hash reference');
+        return;
+    }
+    _validate_unknown_keys($diagnostics, $value, $allowed_keys, $path, $input);
+    _validate_identifier_field($diagnostics, $value, "$path/signal", 'signal', $input);
+}
+
+sub _validate_control_cross_references ($diagnostics, $input, $actor) {
+    return unless ref($actor->{ports}) eq 'ARRAY';
+
+    my (%ports, %inputs, %outputs, %widths);
+    for my $port (@{$actor->{ports}}) {
+        next unless ref($port) eq 'HASH' && _is_identifier($port->{name});
+        $ports{$port->{name}} = 1;
+        $widths{$port->{name}} = $port->{width} if _is_positive_integer($port->{width});
+        $inputs{$port->{name}} = 1 if ($port->{direction} // '') eq 'input';
+        $outputs{$port->{name}} = 1 if ($port->{direction} // '') eq 'output';
+    }
+
+    my @reserved = grep { _is_identifier($_) } (
+        $actor->{name}, $actor->{clock},
+        ref($actor->{reset}) eq 'HASH' ? $actor->{reset}{signal} : undef,
+    );
+    my %reserved;
+    for my $index (0 .. $#reserved) {
+        my $name = $reserved[$index];
+        _add_diagnostic($diagnostics, $input, '/actor', "actor, clock, and reset identifiers must be distinct")
+            if $reserved{$name}++;
+        _add_diagnostic($diagnostics, $input, '/actor/ports', "clock/reset identifier '$name' must not collide with a port")
+            if $index > 0 && $ports{$name};
+    }
+
+    my $drive = ref($actor->{drive_blocks}) eq 'ARRAY' ? $actor->{drive_blocks}[0] : undef;
+    if (ref($drive) eq 'HASH') {
+        my %parameters = ref($drive->{parameters}) eq 'ARRAY'
+            ? map { _is_identifier($_) ? ($_ => 1) : () } @{$drive->{parameters}}
+            : ();
+        my %used;
+        if (ref($drive->{assignments}) eq 'ARRAY') {
+            for my $index (0 .. $#{$drive->{assignments}}) {
+                my $assignment = $drive->{assignments}[$index];
+                next unless ref($assignment) eq 'HASH';
+                my $base = "/actor/drive_blocks/0/assignments/$index";
+                if (_is_identifier($assignment->{target}) && !$outputs{$assignment->{target}}) {
+                    _add_diagnostic($diagnostics, $input, "$base/target", "drive target '$assignment->{target}' must name a declared output port");
+                }
+                if (_is_identifier($assignment->{value}) && !$parameters{$assignment->{value}}) {
+                    _add_diagnostic($diagnostics, $input, "$base/value", "drive value '$assignment->{value}' must name a declared parameter");
+                }
+                $used{$assignment->{value}} = 1 if _is_identifier($assignment->{value});
+            }
+        }
+        if (ref($drive->{parameters}) eq 'ARRAY') {
+            for my $index (0 .. $#{$drive->{parameters}}) {
+                my $parameter = $drive->{parameters}[$index];
+                next unless _is_identifier($parameter);
+                _add_diagnostic(
+                    $diagnostics, $input, "/actor/drive_blocks/0/parameters/$index",
+                    "drive parameter '$parameter' must be used by an assignment",
+                ) unless $used{$parameter};
+            }
+        }
+    }
+
+    my $transaction = ref($actor->{transactions}) eq 'ARRAY' ? $actor->{transactions}[0] : undef;
+    return unless ref($transaction) eq 'HASH';
+
+    my $trigger = ref($transaction->{trigger}) eq 'HASH' ? $transaction->{trigger}{signal} : undef;
+    if (_is_identifier($trigger) && (!$inputs{$trigger} || ($widths{$trigger} // 0) != 1)) {
+        _add_diagnostic($diagnostics, $input, '/actor/transactions/0/trigger/signal', "trigger signal '$trigger' must name a declared width-1 input port");
+    }
+    my $completion = ref($transaction->{completion}) eq 'HASH'
+        ? $transaction->{completion}{signal}
+        : undef;
+    if (_is_identifier($completion) && (!$outputs{$completion} || ($widths{$completion} // 0) != 1)) {
+        _add_diagnostic($diagnostics, $input, '/actor/transactions/0/completion/signal', "completion signal '$completion' must name a declared width-1 output port");
+    }
+
+    return unless ref($transaction->{phases}) eq 'ARRAY';
+    for my $phase_index (0 .. $#{$transaction->{phases}}) {
+        my $phase = $transaction->{phases}[$phase_index];
+        next unless ref($phase) eq 'HASH' && ref($phase->{outputs}) eq 'ARRAY';
+        for my $output_index (0 .. $#{$phase->{outputs}}) {
+            my $output = $phase->{outputs}[$output_index];
+            next unless _is_identifier($output);
+            _add_diagnostic(
+                $diagnostics, $input,
+                "/actor/transactions/0/phases/$phase_index/outputs/$output_index",
+                "phase output '$output' must name a declared output port",
+            ) unless $outputs{$output};
+        }
+    }
+}
+
 sub _validate_provenance ($diagnostics, $input) {
     my $provenance = $input->{provenance};
     unless (ref($provenance) eq 'HASH') {
@@ -224,7 +577,8 @@ sub _validate_provenance ($diagnostics, $input) {
     my $recognized = _recognized_paths($input);
     for my $path (sort keys %$spans) {
         unless ($recognized->{$path}) {
-            _add_diagnostic($diagnostics, $input, '/provenance/spans', "span path '$path' is not present in SourceHIR v1");
+            my $version_label = ($DIAGNOSTIC_SCHEMA_VERSION // 1) == 2 ? 'version 2' : 'v1';
+            _add_diagnostic($diagnostics, $input, '/provenance/spans', "span path '$path' is not present in SourceHIR $version_label");
             next;
         }
 
@@ -252,6 +606,9 @@ sub _validate_provenance ($diagnostics, $input) {
 }
 
 sub _recognized_paths ($input) {
+    return _recognized_control_paths($input)
+        if ($DIAGNOSTIC_SCHEMA_VERSION // 1) == 2;
+
     my %paths = map { $_ => 1 } qw(
         / /schema_version /root_kind /intent_name /profile
         /source_object /source_object/id /source_object/anchors
@@ -279,6 +636,69 @@ sub _recognized_paths ($input) {
             my $base = "/valid_ready_channel/payload/$index";
             $paths{$base} = 1;
             $paths{"$base/$_"} = 1 for @PAYLOAD_KEYS;
+        }
+    }
+
+    return \%paths;
+}
+
+sub _recognized_control_paths ($input) {
+    my %paths = map { $_ => 1 } qw(
+        / /schema_version /root_kind /actor /actor/name /actor/clock
+        /actor/reset /actor/reset/signal /actor/reset/active_level
+        /actor/reset/kind /actor/ports /actor/drive_blocks
+        /actor/transactions /provenance /provenance/source_name
+        /provenance/spans
+    );
+
+    my $actor = $input->{actor};
+    return \%paths unless ref($actor) eq 'HASH';
+
+    if (ref($actor->{ports}) eq 'ARRAY') {
+        for my $index (0 .. $#{$actor->{ports}}) {
+            my $base = "/actor/ports/$index";
+            $paths{$base} = 1;
+            $paths{"$base/$_"} = 1 for @PORT_KEYS;
+        }
+    }
+
+    if (ref($actor->{drive_blocks}) eq 'ARRAY') {
+        for my $index (0 .. $#{$actor->{drive_blocks}}) {
+            my $base = "/actor/drive_blocks/$index";
+            $paths{$base} = 1;
+            $paths{"$base/$_"} = 1 for @DRIVE_KEYS;
+            my $drive = $actor->{drive_blocks}[$index];
+            next unless ref($drive) eq 'HASH';
+            if (ref($drive->{parameters}) eq 'ARRAY') {
+                $paths{"$base/parameters/$_"} = 1 for 0 .. $#{$drive->{parameters}};
+            }
+            if (ref($drive->{assignments}) eq 'ARRAY') {
+                for my $assignment_index (0 .. $#{$drive->{assignments}}) {
+                    my $assignment_base = "$base/assignments/$assignment_index";
+                    $paths{$assignment_base} = 1;
+                    $paths{"$assignment_base/$_"} = 1 for @ASSIGNMENT_KEYS;
+                }
+            }
+        }
+    }
+
+    if (ref($actor->{transactions}) eq 'ARRAY') {
+        for my $index (0 .. $#{$actor->{transactions}}) {
+            my $base = "/actor/transactions/$index";
+            $paths{$base} = 1;
+            $paths{"$base/$_"} = 1 for @TRANSACTION_KEYS;
+            $paths{"$base/trigger/signal"} = 1;
+            $paths{"$base/completion/signal"} = 1;
+            my $transaction = $actor->{transactions}[$index];
+            next unless ref($transaction) eq 'HASH' && ref($transaction->{phases}) eq 'ARRAY';
+            for my $phase_index (0 .. $#{$transaction->{phases}}) {
+                my $phase_base = "$base/phases/$phase_index";
+                $paths{$phase_base} = 1;
+                $paths{"$phase_base/$_"} = 1 for @PHASE_KEYS;
+                my $phase = $transaction->{phases}[$phase_index];
+                next unless ref($phase) eq 'HASH' && ref($phase->{outputs}) eq 'ARRAY';
+                $paths{"$phase_base/outputs/$_"} = 1 for 0 .. $#{$phase->{outputs}};
+            }
         }
     }
 
@@ -329,7 +749,7 @@ sub _validate_enum_field ($diagnostics, $hash, $path, $key, $allowed, $input) {
 
 sub _add_diagnostic ($diagnostics, $input, $path, $message) {
     push @$diagnostics, {
-        schema_version => 1,
+        schema_version => $DIAGNOSTIC_SCHEMA_VERSION // 1,
         severity => 'error',
         code => 'FSMGEN_SOURCE_HIR_INVALID',
         phase => 'source_hir_validation',
@@ -427,5 +847,14 @@ Returns all deterministic private version-1 validation diagnostics.
 
 Returns an immutable validated C<FSM::IR::SourceHIR> or throws the formatted
 first diagnostic.
+
+=head2 validate_concrete_control
+
+Returns all deterministic private version-2 validation diagnostics.
+
+=head2 build_concrete_control
+
+Returns an immutable validated concrete-control C<FSM::IR::SourceHIR> or
+throws the formatted first diagnostic.
 
 =cut

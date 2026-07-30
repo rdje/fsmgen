@@ -2,10 +2,11 @@
 
 Date: 2026-07-30
 Owner: `FSMGEN-HIR-ROADMAP-FRONTIER.6`
-Status: selected; implementation active under `.7`
+Status: selected and privately implemented under `.7`
 
-Clean contract commit `f42fb033d` activates `.7` continuity-only. No code,
-test, renderer, parser, fixture, or behavior changes until activation commits.
+Clean contract commit `f42fb033d` activated `.7` continuity-only. The private
+implementation now satisfies this contract without changing the parser,
+fixture, public surface, or existing behavior.
 
 ## Outcome
 
@@ -60,7 +61,7 @@ scheduler. It merely constructs the already shipped transaction-phase subset.
 
 ## Private package and method surface
 
-Implementation leaf `.7` may change only this private package family:
+Implementation leaf `.7` changed only this private package family:
 
 - extend `FSM::IR::SourceHIR` for the discriminated version-2 root;
 - extend `FSM::IR::SourceHIRBuilder` with concrete-control validation/build;
@@ -157,6 +158,7 @@ width: positive integer
 
 Names are unique across all ports. At least one input and one output are
 required. The actor name, clock, and reset signal are distinct identifiers.
+The clock and reset signal must not collide with any port name.
 The selected fixture uses, in order:
 
 ```text
@@ -311,7 +313,7 @@ input. A scalar width of 1 renders without `(width 1)`; widths greater than 1
 render as `(width N)`. Reset renders as
 `(<signal> async|sync active_low|active_high)`, matching canonical ISF order.
 
-For the selected input the renderer must reproduce
+For the selected input the renderer reproduces
 `isf/phase_test.isf` byte-for-byte:
 
 - 17 lines;
@@ -360,7 +362,7 @@ remapper must not invent a semantic field from message text.
 
 ## Existing-pipeline equivalence oracle
 
-Focused t1548 must:
+Focused t1548 does:
 
 1. build and render the selected version-2 object;
 2. compare rendered bytes to `isf/phase_test.isf`;
@@ -390,7 +392,7 @@ scheduler re-entry.
 ## Focused implementation coverage
 
 Leaf `.7` adds only `t/1548-source-hir-phase-control.t` for the new boundary.
-It must cover:
+It covers:
 
 - exact class/argument boundaries and version/root dispatch;
 - version-1 behavior preservation through t1547;
@@ -435,8 +437,19 @@ Version 1 remains accepted by its existing methods and renderer without byte,
 diagnostic, accessor, or downstream changes. Version 2 is additive and private;
 no existing source migrates.
 
-If implementation cannot preserve the semantic closed subset, deterministic
-provenance, exact canonical fixture, existing parser/scheduler re-entry, and
-version-1 behavior without embedding raw ISF syntax or duplicating the parser
-AST, `.7` must stop and return to the `.6` decision rather than widening the
-contract. Only a later `.8` audit may reconsider promotion.
+Implementation preserves the semantic closed subset, deterministic provenance,
+exact canonical fixture, existing parser/scheduler re-entry, and version-1
+behavior without embedding raw ISF syntax or duplicating the parser AST. The
+failure rule remains the guardrail for later changes. Only `.8` may reconsider
+promotion.
+
+## Implementation evidence
+
+`FSM::IR::SourceHIR` now dispatches immutable access by root kind;
+`FSM::IR::SourceHIRBuilder` validates/builds the complete closed version-2
+shape; and `FSM::IR::SourceHIRISFRenderer` emits canonical ISF plus a private
+source map and diagnostic remapper. T1548 proves exact fixture and IAL0 hashes,
+equal typed actors/schedules, ordered variants, malformed-input rejection,
+provenance, deterministic rendering, truthful no-position root fallback, and
+absence from public surfaces. T1547, t1179, and t1312 preserve version 1 and the
+existing phase path. Repository-local test scratch is removed after use.

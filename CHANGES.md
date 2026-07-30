@@ -31200,3 +31200,26 @@ task tree and git.
 - Public builder, HIAL/VIAL, scale, MCP-write, and every director-gated owner
   remain inactive; both frozen status files stay untouched and no separate
   development note is warranted for continuity-only activation.
+
+### FSMGEN-HIR-ROADMAP-FRONTIER.7 — private SourceHIR IAL1 path implemented
+
+- Extended the private immutable SourceHIR object and closed builder with
+  schema-version-2 `concrete_control` root dispatch, typed actor/port/drive/
+  linear-transaction validation, cross-references, and deterministic
+  provenance diagnostics. Malformed input fails through structured validation.
+- Added private `FSM::IR::SourceHIRISFRenderer` with canonical ISF rendering,
+  a 14-nonblank-line-plus-root source map, generated-position remapping, and
+  truthful root fallback when the existing parser supplies no position.
+- Added t1548 proof of exact 17-line/395-byte/SHA `phase_test.isf`, equal typed
+  actor and schedule, exact one-file 45-line/484-byte/SHA `phase_test.fsm`,
+  ordered variants, immutability, deterministic rejection, and no public
+  surface. T1548+t1547+t1179+t1312 pass at `Files=4, Tests=25`; all four
+  changed/new Perl/test files report `syntax OK`.
+- The parser, fixture, CLI, public API/schema/serialization, report/manifest/
+  accounting, config, HDL/runtime, frozen status files, and existing behavior
+  remain unchanged. The contract/decision/fact records own the rationale; no
+  duplicate development note is warranted.
+- Documentation audits pass at `Files=3, Tests=40`; all 36 mdBook chapters and
+  the 72-file HTML build pass; Knowledge Map passes at 1,081 facts / 5,574
+  question keys; memory, diff, repository-local scratch/output cleanup, task
+  acceptance, and all seven staged doctrine gates pass.

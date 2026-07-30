@@ -36,6 +36,12 @@ golden hashes, test owner, and deferrals live in
 Clean decision commit `f42fb033d` activates only the separate `.7` private
 implementation leaf; activation changes none of the selected code or behavior.
 
+Leaf `.7` subsequently implemented the exact decision in
+`FSM::IR::SourceHIR`, `FSM::IR::SourceHIRBuilder`, and
+`FSM::IR::SourceHIRISFRenderer`. Focused t1548 proves byte-identical ISF,
+equal typed-actor/schedule results, the exact IAL0 hash, provenance remapping,
+and no public exposure; t1547/t1179/t1312 preserve the existing routes.
+
 ## Consequences
 
 - Version 1 remains unchanged and private.

@@ -2,7 +2,8 @@
 
 Date: 2026-07-30
 Owner: `FSMGEN-HIR-ROADMAP-FRONTIER.2`
-Status: selected and privately implemented for version-1 valid-ready
+Status: selected and privately implemented for version-1 valid-ready and
+version-2 concrete control
 
 `docs/FSMGEN_SOURCE_HIR_V1_CONTRACT.md` now freezes the exact private v1
 field, package API, provenance, diagnostic, renderer-result, source-map, test,
@@ -12,10 +13,11 @@ The three selected packages now implement the private valid-ready path.
 Focused t1547 proves canonical rendering through the existing parser and
 unchanged downstream artifacts/reports; no public surface is added.
 
-Post-prototype audit `.5` now retains the healthy boundary privately and
-selects a second private concrete-control-to-IAL1 proof before promotion is
-reconsidered. `docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md` and decision
-`0029` own that refinement.
+Post-prototype audit `.5` retained the healthy boundary privately and selected
+a second private concrete-control-to-IAL1 proof before promotion is
+reconsidered. Leaves `.6` and `.7` have now selected and implemented that
+proof; `.8` owns the next audit. `docs/FSMGEN_SOURCE_HIR_POST_PROTOTYPE_AUDIT.md`
+and decision `0029` own the original refinement.
 
 ## Outcome
 
@@ -287,6 +289,6 @@ evidence.
 
 Leaf `.6` now selects that boundary in
 `docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md`: semantic SourceHIR
-version 2 renders `isf/phase_test.isf` exactly and must use the existing ISF
+version 2 renders `isf/phase_test.isf` exactly and uses the existing ISF
 adapter and scheduler. Decision `0030` records why raw ISF and typed-parser-AST
-storage remain rejected.
+storage remain rejected; t1548 now proves the implementation.

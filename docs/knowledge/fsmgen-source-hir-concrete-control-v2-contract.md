@@ -26,7 +26,9 @@ Rendered text re-enters `FSM::Adapter::ISF` and `FSM::Scheduler::ISF`; the
 current IAL0 oracle is one 45-line, 484-byte `phase_test.fsm` with SHA-256
 `8b82ddb329a6b625d0ec271d9611b35140414a2c84e775c1615e442cdfa65047`.
 
-Implementation remains private under `.7` using the existing SourceHIR object
-and builder, new `FSM::IR::SourceHIRISFRenderer`, and focused t1548. Version 1
-and every public CLI/report/manifest/accounting surface remain unchanged.
-Clean contract commit `f42fb033d` activates `.7` continuity-only.
+Implementation is complete and remains private under `.7`, using the existing
+SourceHIR object and builder, new `FSM::IR::SourceHIRISFRenderer`, and focused
+t1548. The golden ISF and IAL0 hashes, equal typed actor/schedule, provenance,
+ordered variants, and no-public-surface rule are proved. Version 1 and every
+public CLI/report/manifest/accounting surface remain unchanged. Clean contract
+commit `f42fb033d` activated `.7` continuity-only before implementation.

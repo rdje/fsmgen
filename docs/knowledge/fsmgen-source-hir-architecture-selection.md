@@ -37,4 +37,5 @@ concrete-control-to-IAL1 proof; decision `0029` owns that refinement and keeps
 public builder selection separate. Decision `0030` now selects that proof as a
 semantic version-2 concrete-control subset rendered to the existing phase-test
 IAL1 path; raw ISF and parser-AST storage remain rejected. Clean contract
-commit `f42fb033d` activates only its private implementation leaf.
+commit `f42fb033d` activated its private implementation leaf, and `.7` now
+proves that route without adding a public surface.

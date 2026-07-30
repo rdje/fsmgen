@@ -85,7 +85,7 @@ changes.
 
 ### Source-Facing FSMGEN HIR
 
-Status: private version-2 concrete-control implementation active.
+Status: two private lowering-route proofs implemented; promotion re-audit next.
 
 Goal: give future high-level language frontends and builder APIs one checked
 FSMGEN-native semantic target above IAL2 and IAL1. The intended architecture is
@@ -119,13 +119,15 @@ There is still no public builder, CLI mode, HIR report/manifest/accounting
 surface, or direct generator path. The post-prototype audit keeps SourceHIR
 private: the working valid-ready path warrants retention, while one test
 producer, one schema, and only the IAL2 route do not justify a public contract.
-The design leaf now selects version 2 as a semantic concrete-control subset:
+The design leaf selects version 2 as a semantic concrete-control subset:
 clock/reset, ordered typed ports, one parameter-to-output named drive, and one
-linear trigger/phase/completion transaction. It must reproduce the existing
+linear trigger/phase/completion transaction. It reproduces the existing
 17-line/395-byte `isf/phase_test.isf`, re-enter the shipped ISF adapter and
 scheduler, and preserve the one-file 45-line/484-byte IAL0 result. It stores no
-raw ISF form, arbitrary expression, or parser AST. The active private leaf
-implements it; a separate proposed leaf then re-audits promotion. Public host-language choice,
+raw ISF form, arbitrary expression, or parser AST. The private implementation
+now reproduces the exact ISF and IAL0 bytes, re-enters the existing adapter and
+scheduler with equal typed actor/schedule results, and adds no public surface.
+A separate proposed leaf then re-audits promotion. Public host-language choice,
 packaging, versioning, and compatibility remain owned by the separate proposed
 builder frontier.
 
