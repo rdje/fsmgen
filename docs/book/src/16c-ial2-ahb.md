@@ -2548,6 +2548,8 @@ fail-closed contract before implementation. See the
 [post-generalized-count selection](../../IAL2_POST_GENERALIZED_BUSY_COUNT_NEXT_OWNER_SELECTION.md).
 This selection changes no AHB source, generated artifact, runtime behavior, or
 332/373/56 split 28/28 accounting.
+Clean selector commit `f67705356` activates only the separate protocol-neutral
+audit `.1`; AHB behavior and accounting remain unchanged.
 
 After both generated and direct phase repairs, `.808` selected the
 [`IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT`](../../tasks/IAL2-AHB-REQUESTER-MULTI-BUSY-INSERTION-READINESS-AUDIT.md).

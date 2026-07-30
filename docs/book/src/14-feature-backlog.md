@@ -11660,6 +11660,9 @@ See the
 Canonical AHB `2..16`, accounting 332/373/56 split 28/28, HIAL/VIAL, VHDL,
 scale, broader BUSY policy, and decision `0020` remain unchanged and separately
 gated until a clean activation commit.
+Clean selector commit `f67705356` activates only audit `.1`. This is a
+continuity transition; direct assignment behavior, the unresolved named-drive
+seam, all AHB behavior, and every broader roadmap owner remain unchanged.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

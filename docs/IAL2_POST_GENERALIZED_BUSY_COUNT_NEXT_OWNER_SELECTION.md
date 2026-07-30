@@ -127,3 +127,7 @@ keys, and all six doctrine gates. The mdBook builds to exactly 72 files/
 empty. Canonical Stats-compatible capacity is
 14,837,874,688/25,769,803,776 bytes = 13.819/24.000 GiB = 57.58%, with separate
 kernel pressure level 1 and `memory_pressure` 69% free.
+
+Clean selector commit `f67705356` activates only the selected audit `.1`.
+Activation changes continuity pointers and no scheduler, selector, generated
+HDL, runtime, AHB, HIAL/VIAL, VHDL, scale, or transaction behavior.

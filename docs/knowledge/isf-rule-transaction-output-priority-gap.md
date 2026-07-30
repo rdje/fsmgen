@@ -34,3 +34,6 @@ protocol-neutral direct-assignment control, named-drive reproducer,
 provenance/activation trace, and later choice between exact selector masking
 and a fail-closed prerequisite. It may not weaken generated selector
 assertions or change behavior.
+
+Clean selector commit `f67705356` activates audit `.1` without changing the
+working direct-assignment path or unresolved named-drive behavior.

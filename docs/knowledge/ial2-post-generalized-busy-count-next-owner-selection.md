@@ -36,3 +36,6 @@ contract or the smallest fail-closed prerequisite. It may not weaken selector
 assertions and makes no behavior change. Counts above 16, dynamic BUSY policy,
 multiple insertion points, HIAL/VIAL, VHDL, scale, other protocols/backends,
 and decision `0020` remain separate.
+
+Clean selector commit `f67705356` activates only audit `.1`; activation is
+continuity-only and leaves all product behavior unchanged.

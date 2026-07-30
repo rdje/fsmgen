@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `ISF / scheduler and output-selector correctness`
 - Created: `2026-07-24`
 - Last updated: `2026-07-30`
@@ -51,16 +51,16 @@ Canonical evidence is
 ## Task Tree
 
 - ID: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Make declared transaction-level priority mechanically exclusive when a lower-priority transaction invokes a conflicting named-drive output selector.`
   Children: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1, ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.2, ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.3`
 
 - ID: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Audit the exact transaction-invoked named-drive selector seam without changing behavior.`
   Acceptance: `Starting only after explicit activation from a clean tree, reduce the AHB disposable finding to a protocol-neutral ISF actor with one concurrent rule, one transaction that invokes a named drive, a declared actor-level priority, and different values for one registered output. Include a direct transaction-assignment control proving the existing priority path still works. Reproduce the named-drive selector assertion failure and trace schedule metadata, lowering IR, provenance, drive activation, output-family unification, selector enables, reports, normalized semantics, and diagnostics. Compare masking the lower named-drive enable with failing closed; select exactly one contract or smallest prerequisite for a later leaf. Preserve same-value fan-in, direct rule/transaction assignment suppression, rule/rule and transaction/transaction conflicts, storage/resource priorities, reports, backends, and diagnostics. Make no parser, scheduler, selector, generator, public source, support, test-fixture behavior, semantic/MCP API, HDL/runtime, backend, protocol, HIAL/VIAL, VHDL, scale, or transaction behavior change in the audit.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated only after clean parent selector commit f67705356. Activation changes continuity pointers only; direct rule/transaction assignment suppression, the transaction-invoked named-drive gap, generated selector assertions, parser, scheduler, selector, generator, public sources, support, tests, reports, semantic/MCP APIs, HDL/runtime, simulator profiles, backends, protocols, HIAL/VIAL, VHDL, scale, decision 0020, and transaction behavior remain unchanged. Focused t1220+t1518+t1256+t1414 pass 4 files/24 top-level tests. Knowledge Map check remains green at 1,052 facts/5,403 question keys. The mdBook builds under authorized host100/process4096 to exactly 72 files/16,427,244 bytes and the exact render is removed. MEMORY.md is 50 lines, README.md is 2,336 lines, and .artifacts/tmp/tests is empty. Diff hygiene and all six doctrine gates pass, including project-data locality. Final canonical Stats-compatible capacity is 15,007,744,000/25,769,803,776 bytes = 13.977/24.000 GiB = 58.24%, with separate macOS kernel pressure level 1 and memory_pressure 70% free; guard occupancy is excluded from capacity truth. No background job remains.`
+  Commit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1: activate named-drive priority audit`
 
 - ID: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.2`
   Status: `proposed`
@@ -76,18 +76,16 @@ Canonical evidence is
   Verification: `pending`
   Commit: `pending`
 
-## Activation Gate
+## Current Frontier
 
-Proposed and inactive until parent selector
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.830` commits cleanly. That selector chooses
-audit `.1` now that generalized literal BUSY counts `2..16` have shipped and
-the adjacent AHB requester activity has dried out. A later clean activation
-commit may change continuity pointers only; no product behavior belongs in the
-activation slice.
+Audit `.1` is active after clean parent selector commit `f67705356`. It must
+build the protocol-neutral working direct-assignment control and failing
+transaction-invoked named-drive case, trace the exact lowering boundary, and
+select one later contract or prerequisite without changing product behavior.
 
 ## Rollback
 
-Before activation, rollback restores `.830` to active and removes its selection
-record/fact updates. After activation, rollback follows the selected leaf
-contract and retains the failing assertion-enabled reproducer until the issue
-is either repaired or explicitly failed closed.
+Rollback of activation restores this tree to proposed, `.1` to pending, and
+the clean selector as the resume boundary. During the audit, rollback follows
+the selected leaf contract and retains the failing assertion-enabled evidence
+until the issue is either repaired or explicitly failed closed.

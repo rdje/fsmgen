@@ -330,4 +330,6 @@ not pre-empt that evidence-backed correctness handoff.
   transaction-invoked named-drive priority audit. HIAL/VIAL remains proposed
   with its typed bridge, portable/native semantics, full-language UVM
   authority, VHDL/mixed-language, migration, parity, and scale gates intact.
+- `2026-07-30`: Clean selector commit `f67705356` activates only that audit
+  `.1`; HIAL/VIAL remains proposed and unchanged during activation.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

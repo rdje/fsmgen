@@ -107,6 +107,8 @@ and diagnostic behavior per stage while proving semantic/output correctness.
   transaction-invoked named-drive priority audit. The scale requirement stays
   proposed and independently gated; the selector does not weaken its
   end-to-end workload, correctness, resource, or graceful-failure contract.
+- `2026-07-30`: Clean selector commit `f67705356` activates only that audit
+  `.1`; the scale tree remains proposed and unchanged during activation.
 
 ## Open Questions
 

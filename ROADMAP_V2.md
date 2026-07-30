@@ -7968,6 +7968,9 @@ masking or the smallest fail-closed prerequisite without weakening generated
 assertions. Canonical AHB `2..16`, accounting 332/373/56 split 28/28, dynamic
 BUSY policy, HIAL/VIAL, VHDL, scale, other protocols/backends, and decision
 `0020` remain unchanged and separately gated until a clean activation commit.
+Clean selector commit `f67705356` activates only priority audit `.1`.
+Activation changes continuity pointers; all product behavior remains
+unchanged while the protocol-neutral reproducer and lowering trace are built.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

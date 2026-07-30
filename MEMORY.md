@@ -5,11 +5,11 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: clean `.830` activation commit `6f7cc3922`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.830` selection closeout.
-- current_state: `.830` selects proposed no-behavior `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1`; direct rule/transaction assignments already honor priority, while a transaction-invoked named drive retains owner kind `drive` and can conflict with a rule selector. Shipped 2..16 and 332/373/56 split 28/28 remain unchanged.
-- next_action: finish gates and commit `.830`, then activate only the selected priority audit `.1` from the clean selector boundary.
-- in_flight_uncommitted: `.830` selector docs/fact/task-tree/book synchronization; no background job.
+- latest_commit: clean `.830` selector commit `f67705356`.
+- active_work_unit: `ISF-RULE-TRANSACTION-OUTPUT-PRIORITY-ENFORCEMENT.1` activation.
+- current_state: `.830` is done and `.1` activation is continuity-only; direct assignment priority still works and the transaction-invoked named-drive selector seam remains unchanged.
+- next_action: commit activation, then execute `.1`'s protocol-neutral direct-control/named-drive reproducer and lowering-boundary audit.
+- in_flight_uncommitted: `.1` activation continuity synchronization; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
   Stats-compatible Mach formula and safety with kernel pressure state
