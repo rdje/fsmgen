@@ -67,4 +67,5 @@ projected 331/372/55 split 28 `.ppif`/27 `.ahb` and selected data-only `.3`;
 no two-window source shipped in selection.
 
 Completed `.3` now ships that two-window generic source and t1539 runtime.
-Current accounting is 331/372/55 split 28 `.ppif`/27 `.ahb`.
+Completed parent `.828` later ships the matching alias. Current accounting is
+332/373/56 split 28 `.ppif`/28 `.ahb`.

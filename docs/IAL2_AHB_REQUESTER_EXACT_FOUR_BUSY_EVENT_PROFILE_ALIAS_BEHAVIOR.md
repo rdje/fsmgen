@@ -81,8 +81,8 @@ HDL module:      amba_requester_busy_insert_four
 The alias established 328 protocol fixtures, 369 supported-smoke and strict-
 supported fixtures, and 52 AHB IAL2 paths. The later one-window exact-four
 paired generic/profile pair established the 330/371/54 checkpoint split 27
-`.ppif` / 27 `.ahb`; the still-later two-window generic path moves the current
-boundary to 331/372/55 split 28 `.ppif` / 27 `.ahb`.
+`.ppif` / 27 `.ahb`; the still-later two-window generic/profile pair moves the
+current boundary to 332/373/56 split 28 `.ppif` / 28 `.ahb`.
 
 Strict check and normalized semantic JSON expose the alias path, support ID,
 coverage, source kind, module, and `fsm` semantic root. The existing read-only

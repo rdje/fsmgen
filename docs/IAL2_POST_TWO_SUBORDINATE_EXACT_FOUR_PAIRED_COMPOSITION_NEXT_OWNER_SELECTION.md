@@ -126,6 +126,17 @@ Clean selector commit `bc29c2e49` activates only `.828`. Activation adds no
 alias, support entry, t1540, artifact, API, or runtime behavior; current
 accounting remains 331/372/55 split 28 `.ppif`/27 `.ahb`.
 
+## Implementation Outcome
+
+Completed `.828` ships the selected 6,645-byte alias byte-identically, the
+exact `ial2_profile_alias` support entry, and focused t1540. The test passes 4
+top-level subtests and 97 nested assertions in 751 seconds, covering byte and
+parsed lowering identity, report/residue/strict/schedule/artifact/semantic/
+real read-only MCP/repository-local-output/HDL-verifier/diagnostic parity and
+adjacent-family preservation. It adds no testbench or simulation; t1539
+remains the sole all-assertion runtime. Accounting reaches the projected
+332/373/56 split 28 `.ppif`/28 `.ahb` with no lower-layer repair.
+
 ## Validation And Resource Boundary
 
 The selector changes documentation and task ownership only. Focused

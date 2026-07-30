@@ -199,11 +199,12 @@ See
 Implementation `.3` now ships that exact generic source and support entry.
 t1539 passes strict/artifact/semantic/read-only-MCP/public-verifier/
 unmatched-neighbor diagnostic surfaces plus assertion-enabled
-10/8/2/8/2/`44332211`/`88776655` runtime. Current accounting is 331/372/55
-split 28 `.ppif`/27 `.ahb`; the child tree is complete.
+10/8/2/8/2/`44332211`/`88776655` runtime. Parent `.828` later ships the
+matching byte-identical `.ahb` alias with focused t1540 parity and no second
+simulation. Current accounting is 332/373/56 split 28 `.ppif`/28 `.ahb`; the
+child tree and adjacent alias closure are complete.
 
-The future matching `.ahb` alias remains separate. Counts above four,
-runtime/policy/random/multiple-point insertion, distinct bus-BUSY status,
+Counts above four, runtime/policy/random/multiple-point insertion, distinct bus-BUSY status,
 wider/indefinite bursts, optional signals, generic priority changes, other
 protocols/backends, HIAL/VIAL, VHDL, verification generation, portability,
 scale implementation, and decision `0020` remain separate/inactive.

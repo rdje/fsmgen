@@ -11583,6 +11583,15 @@ shared assertion-enabled runtime. See the
 Clean selector commit `bc29c2e49` activates only implementation `.828`.
 The alias/support/t1540 remain absent during activation, so public behavior
 stays at 331/372/55 split 28 `.ppif`/27 `.ahb`.
+Implementation `.828` now ships the byte-identical two-window exact-four
+`.ahb` alias and exact support entry. Focused t1540 passes 4 top-level
+subtests and 97 nested assertions across byte/lowering/report/residue/strict/
+schedule/artifact/semantic/read-only-MCP/repository-local-output/verifier/
+diagnostic parity without another simulation; t1539 remains the shared
+all-assertion runtime. Current accounting is 332/373/56 split 28 `.ppif`/28
+`.ahb`. Counts above four, broader BUSY semantics, generic priority,
+HIAL/VIAL, verification generation, VHDL, portability, scale, other
+protocols/backends, and decision `0020` remain separate.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

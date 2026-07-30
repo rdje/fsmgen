@@ -96,8 +96,8 @@ strict fixtures, and 51 AHB IAL2 paths split 26 generic `.ppif` sources and 25
 `docs/IAL2_AHB_REQUESTER_EXACT_FOUR_BUSY_EVENT_PROFILE_ALIAS_BEHAVIOR.md` and
 established 328/369/52. The later one-window exact-four paired generic/profile
 pair established the 330/371/54 checkpoint split 27 `.ppif` / 27 `.ahb`;
-the still-later two-window generic path moves the current boundary to
-331/372/55 split 28 `.ppif` / 27 `.ahb`.
+the still-later two-window generic/profile pair moves the current boundary to
+332/373/56 split 28 `.ppif` / 28 `.ahb`.
 
 ## Verification
 

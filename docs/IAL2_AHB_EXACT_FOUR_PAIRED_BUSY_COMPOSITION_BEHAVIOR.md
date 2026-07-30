@@ -161,7 +161,9 @@ boundary remains unchanged.
 Contract `.2` froze the adjacent two-window generic source/support/t1539
 boundary at projected 331/372/55 split 28 `.ppif`/27 `.ahb`. Completed `.3`
 now ships the generic source with assertion-enabled
-10/8/2/8/2/`44332211`/`88776655` runtime at that current boundary.
+10/8/2/8/2/`44332211`/`88776655` runtime at that checkpoint. Completed parent
+`.828` later adds its matching alias and moves current accounting to
+332/373/56 split 28 `.ppif`/28 `.ahb`.
 
 ## Rollback
 

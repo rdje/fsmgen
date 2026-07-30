@@ -7863,6 +7863,15 @@ Clean selector commit `bc29c2e49` activates only data-only alias
 implementation `.828`. Activation adds no source, support entry, test,
 artifact, API, HDL/runtime, backend, protocol, or HIAL/VIAL behavior; current
 accounting remains 331/372/55 split 28 `.ppif`/27 `.ahb`.
+Implementation `.828` now ships the byte-identical matching two-window
+exact-four `.ahb` alias, exact support identity, and focused t1540 parity.
+t1540 passes 4 top-level subtests and 97 nested assertions across byte/parse/
+report/residue/strict/schedule/artifact/semantic/real read-only MCP/repository-
+local output/HDL-verifier/diagnostic and adjacent-family preservation without
+another simulation; t1539 remains the sole assertion-enabled runtime.
+Accounting is 332/373/56 split 28 `.ppif`/28 `.ahb`. No lower-layer repair,
+new BUSY semantics, backend, HIAL/VIAL, verification-generation, VHDL,
+portability, scale, or decision-0020 activation is included.
 Contract `.2` now freezes exactly one additive generic source,
 `ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif`,
 as the identity/requester/cardinality-only transform of the shipped exact-three

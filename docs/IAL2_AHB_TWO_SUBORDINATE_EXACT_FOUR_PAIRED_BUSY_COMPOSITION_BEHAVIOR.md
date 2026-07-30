@@ -7,10 +7,12 @@ Date: 2026-07-30
 
 ## Shipped Outcome
 
-FSMGEN now ships the generic two-subordinate exact-four paired AHB source:
+FSMGEN now ships the generic two-subordinate exact-four paired AHB source and
+its byte-identical profile alias:
 
 ```text
 ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif
+ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ahb
 ```
 
 It composes the existing width-three exact-four requester, status and control
@@ -18,21 +20,27 @@ byte-lane/HBURST-SEQ/BUSY-parking subordinates, and two-window interconnect
 through the existing generators. No parser, generator algorithm, report or
 semantic/MCP API, simulator integration, backend, or existing source changed.
 
-Public accounting is now 331 protocol fixtures, 372 supported-smoke fixtures,
-372 strict-supported fixtures, and 55 AHB IAL2 paths split 28 generic `.ppif`
-sources / 27 `.ahb` aliases.
+Public accounting is now 332 protocol fixtures, 373 supported-smoke fixtures,
+373 strict-supported fixtures, and 56 AHB IAL2 paths split 28 generic `.ppif`
+sources / 28 `.ahb` aliases.
 
 Clean behavior commit `a62ddb705` activates no-behavior parent selector
 `.827`. The selector, not this behavior record, owns the next exact roadmap
 choice; the shipped 331/372/55 boundary remains unchanged during activation.
 
-Completed selector `.827` now selects pending data-only alias implementation
-`.828`. The future byte-identical `.ahb` path projects 332/373/56 split 28/28;
-t1540 will own alias parity while t1539 remains the sole assertion-enabled
-runtime. No alias ships in selection.
+Completed selector `.827` selected data-only alias implementation `.828`. The
+byte-identical `.ahb` path now ships at 332/373/56 split 28/28; t1540 owns
+alias parity while t1539 remains the sole assertion-enabled runtime.
 
 Clean selector commit `bc29c2e49` activates only `.828`; activation preserves
 the shipped generic source and 331/372/55 boundary without adding the alias.
+
+Implementation `.828` now adds only the 6,645-byte alias, its exact support
+entry, t1540 parity, and synchronized public/accounting documentation. It
+changes no parser or generator algorithm, report/semantic/MCP schema, HDL or
+runtime behavior, port, existing source byte, backend, simulator integration,
+HIAL/VIAL state, verification-generation surface, VHDL boundary, or decision
+`0020`.
 
 ## Exact Source Delta
 
@@ -94,10 +102,11 @@ BUSY episode.
 ## Semantic And MCP Surfaces
 
 Normalized semantic JSON reports schema version 1, module `ahb_tb`, source
-root `top`, four children, and support identity:
+root `top`, four children, and the source-appropriate support identity:
 
 ```text
 intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park
+intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park
 ```
 
 Real repo-relative `fsmgen_semantic_introspect` returns the same facts with:
@@ -110,6 +119,16 @@ shell_access = false
 
 Public `--verify-hdl` passes. No feature-specific MCP method, mutation surface,
 private raw dump, transport change, or shell-enabled adapter was added.
+
+Focused `t/1540` passes 4 top-level subtests and 97 nested assertions in 751
+seconds. It proves byte-identical source and parsed IAL1/IAL0 identity,
+alias-only residue removal, strict/check/schedule/artifact parity, the
+width-three requester declaration, normalized semantic JSON, real repository-
+relative read-only MCP with shell access disabled, repository-local temporary
+output, public `--verify-hdl`,
+targeted profile diagnostics, and preservation of the generic, adjacent
+two-window exact-three alias, one-window exact-four alias, and base aggregate.
+It adds no testbench or simulator run.
 
 ## Assertion-Enabled Runtime
 
@@ -149,8 +168,14 @@ module / semantic root / children:
   ahb_tb / top / 4
 ```
 
-t248+t297 pass 2 files / 7,019 tests at 331 protocol and 372 supported+strict
-entries. The AHB inventory is 55 paths split 28 `.ppif` / 27 `.ahb`.
+The matching alias entry uses the same module/root/child expectations with
+source kind `ial2_profile_alias`, support ID
+`intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park`,
+and coverage
+`ial2_ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park_pipeline_cli`.
+
+t248+t297 pass 2 files / 7,031 tests at 332 protocol and 373 supported+strict
+entries. The AHB inventory is 56 paths split 28 `.ppif` / 28 `.ahb`.
 
 Adjacent preservation passes 4 files / 15 top-level tests in 2,113 seconds:
 
@@ -163,8 +188,8 @@ Existing source and alias bytes remain unchanged.
 
 ## Locality, Cleanup, And Resources
 
-t1539 derives every temporary workspace from `.artifacts/tmp/tests`; the test
-leaves that directory empty. All heavy validation uses the authorized
+t1539 and t1540 derive every temporary workspace from `.artifacts/tmp/tests`;
+the tests leave that directory empty. All heavy validation uses the authorized
 `--host-max-pct 100 --process-max-rss-mb 4096` profile. The only remaining
 repository-local temporary file is the pre-existing 491-byte
 `.artifacts/tmp/xcrun_db` tool cache.
@@ -173,17 +198,19 @@ Capacity uses the canonical Stats-compatible Mach-page formula
 `active + inactive + speculative + wired + compressor-occupied - purgeable -
 file-backed`. Kernel pressure is reported separately; guard occupancy and
 inverted `memory_pressure -Q` free percentage are not capacity truth.
+Final closeout measured 13,348,536,320 / 25,769,803,776 bytes = 12.432 / 24.000
+GiB = 51.80%, with separate macOS kernel pressure level 1.
 
 ## Deferrals And Rollback
 
-The matching `.ahb` alias, BUSY counts above four, broader insertion policy,
-distinct bus-BUSY status, wider/indefinite bursts, optional signals, generic
+BUSY counts above four, broader insertion policy, distinct bus-BUSY status,
+wider/indefinite bursts, optional signals, generic
 priority, other protocols/backends, HIAL/VIAL, verification generation, VHDL,
 portability, large-design scale implementation, and decision `0020` remain
 separate task-tree-owned work.
 
-Rollback removes exactly the new `.ppif` source, its RegressionCorpus entry,
-t1539, its testbench, this record/fact, and synchronized public/accounting
-updates. Accounting returns to 330/371/54 split 27 `.ppif`/27 `.ahb`.
-Existing requester, subordinate, interconnect, paired, semantic/MCP, simulator,
-backend, HIAL/VIAL, and VHDL behavior remains unchanged.
+Rollback of `.828` removes exactly the new `.ahb` alias, its RegressionCorpus
+entry, t1540, and synchronized public/accounting updates. Accounting returns
+to 331/372/55 split 28 `.ppif`/27 `.ahb`; the generic source, t1539 and its
+testbench, requester/subordinate/interconnect generators, semantic/MCP APIs,
+simulator, backend, HIAL/VIAL, and VHDL behavior remain unchanged.

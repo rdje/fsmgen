@@ -11,7 +11,7 @@ answers:
 date: 2026-07-30
 status: current
 tags: [ial2, ahb, requester, subordinate, interconnect, busy, exact-four, two-subordinate, runtime, readiness, semantics, mcp]
-evidence: docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md; docs/tasks/IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.md; ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif; ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; t/1533-ial2-ahb-two-subordinate-exact-three-paired-busy-composition.t; t/1537-ial2-ahb-exact-four-paired-busy-composition.t; docs/book/src/16c-ial2-ahb.md
+evidence: docs/IAL2_AHB_TWO_SUBORDINATE_EXACT_FOUR_PAIRED_BUSY_COMPOSITION_READINESS_AUDIT.md; docs/tasks/IAL2-AHB-TWO-SUBORDINATE-EXACT-FOUR-PAIRED-BUSY-COMPOSITION-READINESS-AUDIT.md; ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif; ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif; ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; t/1533-ial2-ahb-two-subordinate-exact-three-paired-busy-composition.t; t/1537-ial2-ahb-exact-four-paired-busy-composition.t; t/1540-ial2-ahb-two-subordinate-exact-four-paired-busy-composition-profile-alias.t; docs/book/src/16c-ial2-ahb.md
 reverify: scripts/run_with_ram_guard.sh --host-max-pct 100 --process-max-rss-mb 4096 -- prove -v t/1533-ial2-ahb-two-subordinate-exact-three-paired-busy-composition.t t/1537-ial2-ahb-exact-four-paired-busy-composition.t
 ---
 
@@ -46,5 +46,7 @@ rollback at projected 331/372/55 split 28 `.ppif`/27 `.ahb`. Pending `.3`
 owns implementation; selection ships no public behavior.
 
 Completed `.3` now ships the selected generic path. t1539 proves the exact
-strict/artifact/semantic/read-only-MCP/verifier/diagnostic/runtime contract,
-and current accounting is 331/372/55 split 28 `.ppif`/27 `.ahb`.
+strict/artifact/semantic/read-only-MCP/verifier/diagnostic/runtime contract.
+Parent `.828` later ships the matching byte-identical alias with t1540 parity
+and no second simulation; current accounting is 332/373/56 split 28 `.ppif`/
+28 `.ahb`.

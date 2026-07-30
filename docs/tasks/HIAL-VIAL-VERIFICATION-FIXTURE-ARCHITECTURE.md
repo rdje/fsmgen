@@ -296,4 +296,8 @@ evidence-backed handoff.
   portable-fast/full-language/VHDL/mixed-language/scale boundary intact.
 - `2026-07-30`: Clean selector commit `bc29c2e49` activates only `.828`;
   HIAL/VIAL remains proposed and unchanged during alias activation.
+- `2026-07-30`: Implementation `.828` ships only the byte-identical two-window
+  exact-four `.ahb` alias/support/t1540 parity at 332/373/56 split 28/28;
+  HIAL/VIAL remains proposed with its portable-fast/full-language/VHDL/
+  mixed-language/large-design boundary unchanged.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.

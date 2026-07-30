@@ -34,8 +34,8 @@ read-only shell-disabled MCP parity pass. The generic source established
 `ial2-ahb-requester-exact-four-busy-event-profile-alias-behavior` and
 established 328/369/52. The later one-window exact-four paired generic/profile
 pair established the 330/371/54 checkpoint split 27 `.ppif` / 27 `.ahb`;
-the still-later two-window generic path moves the current boundary to
-331/372/55 split 28 `.ppif` / 27 `.ahb`. Broader count and policy work stays
+the still-later two-window generic/profile pair moves the current boundary to
+332/373/56 split 28 `.ppif` / 28 `.ahb`. Broader count and policy work stays
 separate.
 Parent `.823` selected the separate one-window exact-four paired readiness
 audit. Completed audit/contract/implementation leaves now ship its generic/

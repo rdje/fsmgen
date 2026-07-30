@@ -5,13 +5,13 @@ bounded current-state pointer. Git preserves its prior history.
 
 ## Resume
 
-- latest_commit: this task-scoped `.828` activation; predecessor selector
-  `bc29c2e49`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.828`.
-- current_state: `.828` is active for the byte-identical two-window exact-four
-  `.ahb` alias at projected 332/373/56 split 28/28; no behavior changed yet.
-- next_action: implement exactly the selected alias/support/t1540 contract,
-  verify without a second runtime, synchronize durable layers, and commit.
+- latest_commit: this task-scoped `.828` behavior commit; predecessor
+  activation `71544d7d5`.
+- active_work_unit: none after clean `.828` closeout.
+- current_state: `.828` ships the byte-identical two-window exact-four `.ahb`
+  alias and t1540 parity at 332/373/56 split 28/28; t1539 remains shared runtime.
+- next_action: from the clean tree, create the next parent IAL2 selector leaf,
+  reconcile remaining roadmap owners, and choose one exact next slice.
 - in_flight_uncommitted: none after this commit; no background job.
 - blockers: none. The director authorized canonical macOS host-max 100 plus
   the correct 4096-MiB descendant cap. Report capacity with the exact
@@ -33,8 +33,9 @@ bounded current-state pointer. Git preserves its prior history.
   semantic/read-only-MCP/verifier plus assertion-enabled two-command
   10/8/2/8/2/`44332211`/`88776655` runtime. `.2` now freezes the exact generic
   source/support/t1539 contract; `.3` now ships the selected path with exact
-  10/8/2/8/2 runtime and 331/372/55 accounting. `.827` selected and cleanly
-  activated data-only alias implementation `.828`; decision `0020` remains separate.
+  10/8/2/8/2 runtime and 331/372/55 accounting. `.827` selected `.828`, which
+  now ships the matching alias with focused t1540 parity at 332/373/56 split
+  28/28; decision `0020` remains separate.
 - Proposed startup-alignment owners remain:
   `BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH`,
   `MDBOOK-VHDL-INTRODUCTION-BOUNDARY-SYNC`, and
@@ -45,8 +46,8 @@ bounded current-state pointer. Git preserves its prior history.
   parity, VIAL layer-topology audit, and large-design scale gates. Director
   agreement also requires event-capable compiled Verilator to remain separate
   from an authoritative full-language/UVM simulator profile, with VHDL and
-  mixed-language claims qualified separately. Active `.828` keeps the tree
-  proposed while implementing the smaller adjacent alias closure.
+  mixed-language claims qualified separately. Completed `.828` keeps the tree
+  proposed while closing the smaller adjacent alias family.
 - Other proposed owners remain indexed in `docs/TASK_TREE.md`, including
   priority enforcement, end-to-end big-design
   scalability, nested assertion precedence, t/1436 failures, mdBook rustdoc
