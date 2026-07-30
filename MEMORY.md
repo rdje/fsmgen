@@ -5,14 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1: activate AHB busy-count residue sync`).
-- active_work_unit: `MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1`
-  (continuity-only activation).
-- current_state: clean selector commit `6e1c73d8c` selects the no-behavior
-  Chapter 16c repair; `.1` is active without changing the stale bullet.
-- next_action: after this activation commits cleanly, correct only the stale
-  Chapter 16c counts-beyond-four residue and run the full book closeout.
-- in_flight_uncommitted: none after this activation commit; no background job.
+- latest_commit: this commit (`MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1: synchronize generalized BUSY residue`).
+- active_work_unit: `MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1` (complete).
+- current_state: Chapter 16c now distinguishes exact-one-through-four catalog
+  fixtures from shipped generic canonical literal counts `5..16` without
+  per-count fixtures; all above-16/runtime residue remains explicit.
+- next_action: after this completion commits cleanly, activate one new parent
+  selector `.841` continuity-only before reconciling the next exact owner.
+- in_flight_uncommitted: none after this completion commit; no background job.
 - blockers: none.
 
 ## Durable context
@@ -36,9 +36,8 @@ history; this file carries only the current bounded resume state.
   is clean, and `.artifacts/tmp/tests` is empty.
 - The identifier-era import-map baseline is current at 229 project files / 228
   packages / 19 IAL2 owners and Support 71.
-- Chapter 16c's counts-beyond-four contradiction is owned by active
-  `MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1`; content remains unchanged in this
-  activation slice.
+- The Chapter 16c counts-beyond-four contradiction is resolved without product
+  behavior or 332/373/56 split 28/28 accounting changes.
 - Decision `0027`, the audit, fact card, user docs, task tree, changelog, and
   Knowledge Map are aligned. The repository-local mdBook scratch is removed.
 - Push only on explicit request (decision `0005`). PNT runs autonomously

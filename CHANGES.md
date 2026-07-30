@@ -30952,3 +30952,19 @@ task tree and git.
   documentation audits pass with `Files=3, Tests=40`; Knowledge Map, memory
   architecture, the 72-file mdBook HTML build, output cleanup, and diff hygiene
   pass.
+
+### MDBOOK-AHB-BUSY-COUNT-RESIDUE-SYNC.1 — generalized BUSY residue synchronized
+
+- Corrected Chapter 16c's one stale counts-beyond-four bullet after clean
+  activation commit `76a7424fa`. It now distinguishes exact-one-through-four
+  catalog fixtures from shipped canonical literal counts `5..16` that reuse
+  the requester lowerer without one fixture per count.
+- Counts above 16, symbolic/policy/runtime/random throttling, multiple insertion
+  points, code, public sources, tests, artifacts, APIs, HDL/runtime behavior,
+  and 332/373/56 split 28/28 accounting remain unchanged.
+- Task/index, selector record/fact, roadmap, mdBook, Memory, and changelog are
+  aligned. No separate development note is warranted for this documentation-
+  only repair. Exact positive/negative wording scans pass; six focused audits
+  pass with `Files=6, Tests=334`; all 36 mdBook chapters pass executable-example
+  testing; the 72-file HTML build, Knowledge Map at 1,074 facts / 5,534 keys,
+  memory architecture, output cleanup, and diff hygiene pass.

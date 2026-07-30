@@ -8286,6 +8286,12 @@ Clean selector commit `6e1c73d8c` activates only
 bullet, exact-one-through-four fixtures, generic literal `2..16` behavior,
 above-16 residue, support accounting, and every broader owner remain unchanged
 during activation.
+The selected AHB book child is complete after clean activation commit
+`76a7424fa`. Chapter 16c now distinguishes its exact-one-through-four catalog
+fixtures from generic canonical literal counts `5..16` without per-count
+fixtures, while keeping counts above 16 and symbolic/policy/runtime/random or
+multiple-point insertion deferred. Product behavior and 332/373/56 split
+28/28 accounting are unchanged.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

@@ -2666,9 +2666,10 @@ The following are not shipped by the current AHB IAL2 surface:
   ship. Generic exact-three requester BUSY insertion ships on `.ppif` and its
   matching `.ahb` alias; generic exact-four requester BUSY insertion and its
   matching `.ahb` alias ship. The one- and two-subordinate exact-three and
-  exact-four paired generic/profile forms ship. Counts beyond four,
-  policy/runtime/random throttling, and multiple insertion points remain
-  outside the shipped surface;
+  exact-four paired generic/profile forms ship. Canonical decimal literal
+  counts `5..16` reuse the same requester lowerer without one catalog fixture
+  per count. Counts above 16, symbolic/policy/runtime/random throttling, and
+  multiple insertion points remain outside the shipped surface;
 - legacy two-bit `HRESP` compatibility for the subordinate;
 - AHB scoreboards;
 - full AHB manager behavior beyond the bounded requester;

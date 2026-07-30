@@ -11989,6 +11989,11 @@ activation. See the
 Clean selector commit `6e1c73d8c` activates only the selected Chapter 16c
 residue-sync leaf continuity-only. The stale bullet, support accounting, and
 every product behavior remain unchanged during activation.
+After clean activation commit `76a7424fa`, the child corrects only that stale
+bullet. Chapter 16c now separates exact-one-through-four catalog fixtures from
+generic canonical literal counts `5..16` without per-count fixtures and keeps
+all above-16/runtime residue explicit; product behavior and accounting remain
+unchanged.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -21,9 +21,9 @@ paths split `28` `.ppif` / `28` `.ahb`. Exact-one through exact-four public
 requester fixtures remain the catalog surface; canonical literal counts
 `5..16` deliberately reuse the same lowerer without one fixture per count.
 
-## Contradiction Evidence
+## Selection-Time Contradiction Evidence
 
-Chapter 16c currently states:
+At selection time, Chapter 16c stated:
 
 - at its mode table and requester sections, canonical literal counts `2..16`
   ship without a fixture per count and values above 16 remain deferred;
@@ -82,6 +82,20 @@ Clean selector commit `6e1c73d8c` activates only
 16c's stale bullet and every product behavior remain unchanged during
 activation.
 
-Rollback removes this selector record/fact and restores `.840` to active. The
-stale Chapter 16c bullet and every product behavior remain unchanged until a
-clean follow-up commit creates and activates the selected child.
+After clean activation commit `76a7424fa`, the selected child synchronizes
+only that bullet: exact-one-through-four catalog fixtures remain explicit,
+canonical literal counts `5..16` reuse the shipped lowerer without per-count
+fixtures, and counts above 16 plus symbolic/policy/runtime/random selection and
+multiple insertion points remain deferred. Product behavior and accounting do
+not change.
+
+Child closeout finds the corrected current boundary and no remaining
+`Counts beyond four` claim. Six focused book/status/path/AHB audits pass with
+`Files=6, Tests=334`; all 36 mdBook chapters pass executable-example testing;
+the 72-file HTML build, Knowledge Map at `1074` facts / `5534` question keys,
+memory architecture, output cleanup, and diff hygiene pass.
+
+The pre-activation rollback removed this selector record/fact and restored
+`.840` to active without changing Chapter 16c. After child completion, rollback
+reverts only the corrected Chapter 16c wording plus its task/continuity records;
+product behavior remains unchanged in either direction.
