@@ -12279,7 +12279,8 @@ separate pure validator checks closed canonical prefixed JSONL trace bytes and
 returns a trace projection without replaying verification semantics. Public
 artifact publication, external compile/simulation, runtime trace capture,
 normalized result production, and parity do not ship; `.10.4` owns the first
-four and `.11` retains parity.
+four and `.11` retains parity. Clean `.10.3` implementation commit
+`201590d84` activates `.10.4` alone without changing product behavior.
 See [the public tooling contract](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md) and
 the [architecture chapter](16d-hial-vial-verification-architecture.md).
 

@@ -6,8 +6,8 @@ Status: selected; active parent `.10` owns implementation after clean
 activation from commit `ab3e73b72`. Clean activation commit `5fd766600`
 decomposes that work into completed `.10.1` public source tooling, completed
 `.10.2` planning/artifact transactions, completed `.10.3` private backend
-emission/trace projection after clean commit `045629c97`, and proposed `.10.4`
-Verilator run/result integration
+emission/trace projection after clean commit `045629c97`, and active `.10.4`
+Verilator run/result integration after clean commit `201590d84`
 Decision: `0043`
 
 ## Outcome
@@ -576,8 +576,10 @@ Completed `.10.3` now provides the private deterministic runtime package,
 fixture module, generated HIAL DUT handoff, backend/source-map/profile/command
 records, and pure closed-trace validator. It creates no filesystem publication,
 Verilator invocation, runtime trace, result producer, or parity claim. Clean
-`.10.2` implementation commit `045629c97` was the separate activation
-predecessor; proposed `.10.4` retains every tool-execution/result gate.
+`.10.2` implementation commit `045629c97` was the separate `.10.3` activation
+predecessor; active `.10.4` retains every tool-execution/result gate.
+Clean `.10.3` implementation commit `201590d84` activates `.10.4` alone;
+activation adds no tool execution or result evidence.
 
 Selection signoff requires current source/bridge/execution tests, the existing
 AHB Verilator oracle, task/roadmap/audit/decision/book/fact continuity, relative

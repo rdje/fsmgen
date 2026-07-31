@@ -32103,3 +32103,13 @@ task tree and git.
   passes at Files=27/Tests=7,190 and docs/live/path/task checks at
   Files=8/Tests=378; all 37 mdBook chapters and the repository-local 73-file
   build pass.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4 — Verilator run integration activated
+
+- From clean `.10.3` implementation commit `201590d84`, activated `.10.4`
+  alone for public atomic backend publication, exact Verilator 5.046 compile/
+  run, runtime-trace capture, and normalized result production.
+- This continuity-only slice changes no VIAL/HIAL source, parser, plan,
+  artifact, target code, tool invocation, trace, result, public action,
+  capability/support claim, parity, UVM, VHDL, mixed-language, scale, README
+  landing content, or product behavior.

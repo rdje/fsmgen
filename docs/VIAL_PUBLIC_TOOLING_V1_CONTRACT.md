@@ -5,8 +5,8 @@ Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
 Status: selected and partially implemented; `.10.1` ships public
 capabilities/check/normal-terse formatting and `.10.2` ships canonical
 planning plus virtual/repository-local atomic artifacts. Parent `.10` retains
-completed private `.10.3` backend/trace and proposed `.10.4` public Verilator
-runtime/results
+completed private `.10.3` backend/trace and active `.10.4` public Verilator
+runtime/results after clean commit `201590d84`
 Decision: `0039`
 
 ## Outcome
@@ -556,7 +556,7 @@ Completed `.10.2` proves:
   memory, relative paths, task acceptance, doctrines, and exact output cleanup.
 
 Completed `.10.3` independently proves deterministic backend emission and pure
-trace projection without executing a simulator. Proposed `.10.4` must prove
+trace projection without executing a simulator. Active `.10.4` must prove
 public atomic publication, exact tool qualification, runtime capture, and
 result ownership without borrowing `.10.2` planning or `.10.3` emission
 evidence as runtime evidence.

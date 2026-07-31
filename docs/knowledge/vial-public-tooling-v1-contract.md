@@ -61,5 +61,6 @@ capabilities, and distinct public-plan support accounting. Completed `.10.3`
 ships deterministic portable-SystemVerilog emission and pure trace validation
 only through a private compiler API; neither action is added to the public
 tool request. Public `run`, backend-artifact publication, compile, simulation,
-runtime capture, and results remain unavailable. Proposed `.10.4` owns those
-surfaces; `.11` retains parity.
+runtime capture, and results remain unavailable. Active `.10.4` owns those
+surfaces after clean `.10.3` commit `201590d84`; activation itself changes no
+behavior. `.11` retains parity.

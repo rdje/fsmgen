@@ -708,6 +708,11 @@ returns `fsmgen.vial_sv_trace_projection.v1`; it explicitly records
 and projects it—it never replays scheduling, models, scoreboards, coverage,
 faults, or random decisions.
 
+Clean `.10.3` implementation commit `201590d84` activates `.10.4` alone for
+public artifact publication, exact Verilator compile/run, trace capture, and
+normalized result production. Activation itself changes none of the shipped
+surfaces described above.
+
 Backend-only caps remain in the backend capability contract rather than
 ExecutionIR's `limits`. This preserves the target-neutral plan identity:
 selecting a SystemVerilog emission limit cannot silently change the semantic
@@ -993,4 +998,5 @@ private exact-profile emitter, eight-artifact virtual graph, complete source
 map, one-scheduler plain-SystemVerilog fixture, selected-but-unexecuted command
 records, and pure closed-trace projection. Public target publication, compile,
 runtime, and normalized result production remain `.10.4`; `.11` retains
-runtime parity.
+runtime parity. Clean `.10.3` implementation commit `201590d84` now activates
+`.10.4` for that work without changing product behavior.

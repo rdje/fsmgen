@@ -579,7 +579,8 @@ runtime execution. Completed `.10.3` now ships the private deterministic
 portable-SV emitter, eight-artifact virtual graph, full operation/state-family
 source map, one-scheduler lowering, selected-but-unexecuted command records,
 and pure closed-trace validator. Public publication, compile/run, runtime
-capture, and normalized results remain `.10.4`; `.11` retains parity.
+capture, and normalized results are active `.10.4` after clean `.10.3` commit
+`201590d84`; activation changes no behavior. `.11` retains parity.
 
 ## Rollback
 
