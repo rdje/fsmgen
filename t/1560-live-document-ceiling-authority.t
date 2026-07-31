@@ -159,6 +159,50 @@ subtest 'unrelated lifecycle relabeling cannot rewrite the baseline' => sub {
         'narrow migration exception cannot be reused');
 };
 
+subtest 'line-byte schema introduction preserves old baselines and authority registry is bounded' => sub {
+    my $migration = make_fixture();
+    mutate_surface($migration, sub {
+        delete $_[0]{enforcement_ceilings}{line_bytes_each};
+        delete $_[0]{baseline}{line_bytes_each};
+    });
+    stage($migration, 'doctrine/live_document_size/surfaces.jsonl');
+    git_ok($migration, 'commit', '--no-verify', '-q', '-m', 'legacy five-axis schema');
+    mutate_surface($migration, sub {
+        $_[0]{enforcement_ceilings}{line_bytes_each} = 1024;
+        $_[0]{baseline}{line_bytes_each} = 512;
+    });
+    stage($migration, 'doctrine/live_document_size/surfaces.jsonl');
+    my ($migration_ok, $migration_output) = run_checker($migration);
+    ok($migration_ok, 'new line-byte axis may be introduced without rewriting prior axes')
+        or diag($migration_output);
+
+    my $unbounded = make_fixture();
+    mutate_jsonl_record(
+        $unbounded,
+        'doctrine/live_document_size/ceiling_increase_authorities.jsonl',
+        'record_type', 'registry',
+        sub { $_[0]{max_records} = 0 },
+    );
+    stage($unbounded, 'doctrine/live_document_size/ceiling_increase_authorities.jsonl');
+    my ($unbounded_ok, $unbounded_output) = run_checker($unbounded);
+    ok(!$unbounded_ok, 'authority registry without a positive record cap is rejected');
+    like($unbounded_output, qr/invalid positive max_records/,
+        'authority control-plane bound is explicit');
+
+    my $incoherent = make_fixture();
+    mutate_jsonl_record(
+        $incoherent,
+        'doctrine/live_document_size/ceiling_increase_authorities.jsonl',
+        'record_type', 'registry',
+        sub { $_[0]{max_record_bytes} = $_[0]{max_bytes} + 1 },
+    );
+    stage($incoherent, 'doctrine/live_document_size/ceiling_increase_authorities.jsonl');
+    my ($incoherent_ok, $incoherent_output) = run_checker($incoherent);
+    ok(!$incoherent_ok, 'record cap cannot exceed its enclosing file cap');
+    like($incoherent_output, qr/max_record_bytes exceeds its max_bytes/,
+        'incoherent nested bound is explicit');
+};
+
 done_testing();
 
 sub make_fixture {
@@ -166,7 +210,7 @@ sub make_fixture {
     write_file(
         $root,
         'doctrine/live_document_size/surfaces.jsonl',
-        json_line({
+        registry_header(8, 8192, 4096) . json_line({
             surface_id => 'guide',
             lifecycle => 'partitioned_canonical',
             enforcement_ceilings => pressure(1, 100, 4096, 100, 4096),
@@ -176,7 +220,7 @@ sub make_fixture {
     write_file(
         $root,
         'doctrine/live_document_size/ceiling_increase_authorities.jsonl',
-        json_line({ record_type => 'registry', schema_version => 1 }),
+        registry_header(8, 8192, 2048),
     );
     git_ok($root, 'init', '-q');
     git_ok($root, 'config', 'user.name', 'Fixture');
@@ -199,9 +243,7 @@ sub set_ceiling {
 sub mutate_surface {
     my ($root, $mutator) = @_;
     my $relative = 'doctrine/live_document_size/surfaces.jsonl';
-    my $record = decode_json(slurp(File::Spec->catfile($root, split m{/}, $relative)));
-    $mutator->($record);
-    write_file($root, $relative, json_line($record));
+    mutate_jsonl_record($root, $relative, 'surface_id', 'guide', $mutator);
 }
 
 sub add_authority {
@@ -222,13 +264,36 @@ sub pressure {
     my ($files, $lines_each, $bytes_each, $lines_total, $bytes_total) = @_;
     return {
         files => $files, lines_each => $lines_each, bytes_each => $bytes_each,
-        lines_total => $lines_total, bytes_total => $bytes_total,
+        line_bytes_each => 1024, lines_total => $lines_total, bytes_total => $bytes_total,
     };
 }
 
 sub json_line {
     my ($record) = @_;
     return $json->encode($record) . "\n";
+}
+
+sub registry_header {
+    my ($max_records, $max_bytes, $max_record_bytes) = @_;
+    return json_line({
+        record_type => 'registry', schema_version => 1,
+        max_records => $max_records, max_bytes => $max_bytes,
+        max_record_bytes => $max_record_bytes,
+    });
+}
+
+sub mutate_jsonl_record {
+    my ($root, $relative, $key, $value, $mutator) = @_;
+    my $path = File::Spec->catfile($root, split m{/}, $relative);
+    my @records = map { decode_json($_) } grep { $_ ne '' } split /\n/, slurp($path);
+    my $found = 0;
+    for my $record (@records) {
+        next if ($record->{$key} // '') ne $value;
+        $mutator->($record);
+        $found++;
+    }
+    die "record $key=$value not found in $relative" if !$found;
+    write_file($root, $relative, join('', map { json_line($_) } @records));
 }
 
 sub write_file {

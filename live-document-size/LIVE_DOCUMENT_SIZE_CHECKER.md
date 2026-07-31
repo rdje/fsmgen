@@ -6,12 +6,27 @@ adopting-project paths, thresholds, owners, document names, or tool vendors.
 Every non-empty registry line is exactly one JSON object. Blank lines,
 comments, malformed JSON, missing required keys, and unknown keys fail closed.
 
+Every common registry begins with exactly one bounded metadata record:
+
+```json
+{"record_type":"registry","schema_version":1,"max_records":32,"max_bytes":65536,"max_record_bytes":8192}
+```
+
+`max_records` counts data records after the metadata record. `max_bytes`
+counts the entire file, including metadata and line terminators.
+`max_record_bytes` counts the raw JSON content bytes on each line, excluding
+its line terminator. All three values are positive, the record cap cannot
+exceed the file cap, and the neutral core also imposes fail-safe portable
+ceilings of 10,000 records, 16 MiB per registry, and 64 KiB per record. Local
+registries normally declare much tighter limits. This makes the control plane
+itself finite rather than using bounded documents with an unbounded registry.
+
 ## Inputs
 
 Each surface record has this shape:
 
 ```json
-{"surface_id":"guide","lifecycle":"partitioned_canonical","locator":"collection","targets":["guide/*.md"],"index":"guide/INDEX.md","index_contract":{"kind":"membership","verifier":"builtin:markdown_links"},"canonical_inputs":[],"routes_to":[],"owner":"guide-maintainers","health_targets":{"files":32,"lines_each":1000,"bytes_each":65536,"lines_total":12000,"bytes_total":1048576},"enforcement_ceilings":{"files":32,"lines_each":1100,"bytes_each":73728,"lines_total":13000,"bytes_total":1179648},"milestones":{"warning_pct":80,"rollover_pct":90},"containment_status":"steady","state":"normal","baseline":null,"verifier":"builtin:budget","currency":{"contract_id":"guide_source_alignment","verifier":"core:tools/check-guide-alignment"}}
+{"surface_id":"guide","lifecycle":"partitioned_canonical","locator":"collection","targets":["guide/*.md"],"index":"guide/INDEX.md","index_contract":{"kind":"membership","verifier":"builtin:markdown_links"},"canonical_inputs":[],"routes_to":[],"owner":"guide-maintainers","health_targets":{"files":32,"lines_each":1000,"bytes_each":65536,"line_bytes_each":1024,"lines_total":12000,"bytes_total":1048576},"enforcement_ceilings":{"files":32,"lines_each":1100,"bytes_each":73728,"line_bytes_each":2048,"lines_total":13000,"bytes_total":1179648},"milestones":{"warning_pct":80,"rollover_pct":90},"containment_status":"steady","state":"normal","baseline":null,"verifier":"builtin:budget","currency":{"contract_id":"guide_source_alignment","verifier":"core:tools/check-guide-alignment"}}
 ```
 
 `lifecycle` is one of `bounded_snapshot`, `partitioned_canonical`,
@@ -36,7 +51,7 @@ dominate health reporting. `containment_status` is `steady`, `migrated`, or
 Debt states (`warning_debt`, `rollover_debt`, `structural_debt`) require an
 owner and exact adoption-baseline measurements. An optional `transition`
 object names one containment owner, nonnegative `max_growth`, and positive
-`ratchet_step` values in the same five dimensions. The checker never rewrites
+`ratchet_step` values in the same six dimensions. The checker never rewrites
 the baseline: actual measurements may exceed it only within that separately
 declared bounded allowance, and baseline plus allowance must not exceed the
 ceiling. A debt ceiling also satisfies
@@ -53,10 +68,11 @@ the `collection` locator and semantic partitions, but it is not merely a
 synonym for `partitioned_canonical`: a timeless aggregate size cap would be
 decorative or would eventually force deletion of unique material.
 
-Its ordinary pressure objects keep the exact five keys but use JSON `null` for
+Its ordinary pressure objects keep the exact six keys but use JSON `null` for
 `files`, `lines_total`, and `bytes_total`. The `lines_each` and `bytes_each`
-values remain positive fixed health targets and inclusive ceilings. A debt
-baseline, growth allowance, and ratchet use the same nullable aggregate shape.
+and `line_bytes_each` values remain positive fixed health targets and inclusive
+ceilings. A debt baseline, growth allowance, and ratchet use the same nullable
+aggregate shape.
 `null` means that the fixed pressure axis is inapplicable; it does not mean the
 aggregate is unmeasured or may change without review.
 
@@ -84,7 +100,10 @@ silently. This makes aggregate change attributable without inventing a fixed
 product-size ceiling.
 
 `targets`, `canonical_inputs`, and `routes_to` are arrays, avoiding delimiter
-and escaping conventions inside values. All local paths and patterns are
+and escaping conventions inside values. Each array has a finite cardinality
+and each element has a byte limit; identifiers, paths, owners, rationales,
+markers, guarantees, and recovery text likewise have field-specific byte and
+syntax bounds. Newlines are forbidden inside scalar strings. All local paths and patterns are
 interpreted from the supplied project root. Generated projections name their
 canonical input patterns in `canonical_inputs`; partitioned collections name
 their bounded `index`, except an explicitly owned debt may use `null` until its
@@ -136,11 +155,11 @@ table evidence cell has one backticked repository-relative file path. A map
 with no path rows, an unsafe path, or a missing/non-regular/off-volume file
 fails closed.
 
-The archive registry begins with one durable metadata record so a valid empty
+The archive registry uses the same bounded metadata contract so a valid empty
 registry remains trackable, followed by zero or more descriptor records:
 
 ```json
-{"record_type":"registry","schema_version":1}
+{"record_type":"registry","schema_version":1,"max_records":32,"max_bytes":65536,"max_record_bytes":4096}
 {"record_type":"descriptor","schema_version":1,"descriptor_id":"guide_0001","surface_id":"guide","former_path":"guide/old.md","range_id":"entries-1-20","revision":"0123456789abcdef","lines":500,"bytes":32000,"sha256":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","retrieval_kind":"file","retrieval_locator":"archive/guide-0001.md","current_pointer":"guide/INDEX.md","sealed_on":"2030-01-01","verifier":"builtin:file"}
 ```
 
@@ -154,7 +173,7 @@ separate bounded registry named by `--retention-contracts` begins with one
 metadata row and then declares its owner, guarantee, and recovery action:
 
 ```json
-{"record_type":"registry","schema_version":1,"max_records":16,"max_bytes":8192}
+{"record_type":"registry","schema_version":1,"max_records":16,"max_bytes":8192,"max_record_bytes":4096}
 {"record_type":"contract","schema_version":1,"contract_id":"required_history","owner":"repository-maintainers","guarantee":"Referenced objects remain reachable from the authoritative repository or its controlled backup.","recovery":"Fetch complete history; if rewriting removed the object, restore it from the controlled backup or materialize a content-addressed repository file, then rerun the gate."}
 ```
 
@@ -183,10 +202,11 @@ does not assume a version-control system.
 ## Guarantees and limits
 
 The checker validates schema, lifecycle/locator compatibility, repository-
-relative and same-volume local targets, non-symlink files, per-part and
+relative and same-volume local targets, non-symlink files, bounded control
+registries and scalar/array shapes, per-part and
 applicable aggregate targets/ceilings, maintained-reference classification and
 exact aggregate authority, inclusive equality, debt acknowledgement and
-ratchets, generated/version-object verifier execution, opt-in currency-oracle
+ratchets, maximum content-line bytes, generated/version-object verifier execution, opt-in currency-oracle
 execution, frozen identity, typed route closure, collection-index contracts,
 evidence-map paths, retention-contract and archive-descriptor shape, and
 optional inventory coverage. It reports actual, target, ceiling, and

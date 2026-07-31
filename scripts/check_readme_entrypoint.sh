@@ -160,6 +160,7 @@ else
       my $record = eval { decode_json($_) };
       die "line $line is invalid JSON: $@" if $@;
       die "line $line must be an object\n" if ref($record) ne q{HASH};
+      next if ($record->{record_type} // q{}) eq q{registry};
       for my $key (@keys) {
         die "line $line is missing $key\n" if !exists($record->{$key});
         die "line $line has invalid $key\n"

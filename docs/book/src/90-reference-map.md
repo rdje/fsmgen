@@ -91,8 +91,10 @@ sharding never substitutes for file-count and aggregate containment. Decision
 selection commit `139efbf90` completes `.1` continuity activation and leaves
 `.2` as the common-enforcement owner. `.2` now ships a neutral checker plus
 local JSONL data: one named object per line, path and route arrays, nested
-target/ceiling/milestone/baseline objects, and strict rejection of malformed, missing,
-or unknown fields. This retains line-oriented diffs and streaming without the
+target/ceiling/milestone/baseline objects, and strict rejection of malformed,
+missing, or unknown fields. Every common registry now starts with declared
+record-count, file-byte, and maximum-record-byte limits; field byte bounds and
+array cardinalities make the control plane finite. This retains line-oriented diffs and streaming without the
 positional ambiguity of the discarded 22-column TSV prototype. The resulting
 unconditional census covers every tracked Markdown path, including README
 itself, broad root/focused/ancillary collections, and canonical knowledge
@@ -184,7 +186,7 @@ keep each correction atomic. No review suggestion changes a threshold,
 lifecycle, frozen file, or product behavior merely by being accepted.
 Clean disposition commit `3b782fc10` activates `.18` alone to implement the
 health-target versus enforcement-ceiling correction without widening a limit.
-The completed implementation gives every measured surface separate five-axis
+The completed implementation gives every measured surface separate six-axis
 `health_targets` and inclusive `enforcement_ceilings`. Warning and rollover are
 health signals; equality at the ceiling passes and any excess fails. Debt
 baselines are cross-revision immutable, owned allowances fit below the ceiling,
@@ -193,7 +195,10 @@ and a banded downward ratchet rejects stale headroom after pressure falls.
 exact new append-only authority row plus a new decision in the same Git change,
 while lowering is free. Checker output shows actual/target/ceiling values and
 separates migrated, pinned/deferred, and steady surface pressure. This first
-schema migration raises no predecessor ceiling.
+schema migration raises no predecessor ceiling. The sixth axis measures the
+largest raw content line in bytes, excluding LF and optional CR; it catches
+dense generated/table rows that can hide beneath total-line and total-byte
+limits.
 Leaf `.19` now requires generated freshness and version-object retrieval to
 declare `core:`, `adapter:`, or `external:` execution. Core programs execute
 from the repository root. The registry-driven local runner executes every
@@ -271,6 +276,16 @@ mixed `focused_documents` collection with the existing ceilings and debt.
 Leaf `.13` must first create stable semantic parts and a bounded complete index.
 Classification alone never waives current controls or turns a monolithic file
 into a compliant maintained reference.
+
+Leaf `.15` closes the neighboring control-plane gap. Each common JSONL
+registry has a schema-versioned metadata record declaring positive maximum
+data records, whole-file bytes, and raw JSON bytes per record. The neutral
+checker also applies portable fail-safe bounds of 10,000 records, 16 MiB per
+registry, and 64 KiB per record; FSMGen's declarations are tighter. Identifiers
+use closed domains, scalar strings have field-specific byte limits, and arrays
+stop at 128 entries. Focused fixtures reject missing/incoherent metadata,
+record/file overflow, oversized fields and arrays, over-wide Markdown lines,
+and CRLF mismeasurement. No predecessor pressure ceiling is widened.
 
 ## What The Old User Guide Still Does
 

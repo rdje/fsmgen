@@ -1,3 +1,4 @@
+{"record_type":"registry","schema_version":1,"max_records":64,"max_bytes":16384,"max_record_bytes":1024}
 {"route_id":"shipped_behavior","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"docs/book/src/SUMMARY.md","target_surface_id":"shipped_behavior"}
 {"route_id":"reported_capabilities","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"./bin/fsmgen --capability-manifest","target_surface_id":"reported_capabilities"}
 {"route_id":"high_level_direction","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"ROADMAP_V2.md","target_surface_id":"high_level_direction"}

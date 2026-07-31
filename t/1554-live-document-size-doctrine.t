@@ -96,7 +96,7 @@ subtest 'JSONL schema rejects malformed, blank, missing, and unknown data' => su
     append_file($malformed, 'registry/surfaces.jsonl', "{not-json}\n");
     my ($malformed_ok, $malformed_output) = run_checker($malformed);
     ok(!$malformed_ok, 'malformed JSON is rejected');
-    like($malformed_output, qr/surface registry line 11 is invalid JSON/, 'line is named');
+    like($malformed_output, qr/surface registry line 12 is invalid JSON/, 'line is named');
 
     my $blank = make_fixture();
     append_file($blank, 'registry/routes.jsonl', "\n");
@@ -157,8 +157,70 @@ subtest 'JSONL schema rejects malformed, blank, missing, and unknown data' => su
     write_file($archive_metadata, 'registry/archive.jsonl', join("\n", @archive_lines) . "\n");
     my ($metadata_ok, $metadata_output) = run_checker($archive_metadata);
     ok(!$metadata_ok, 'archive registry without durable metadata is rejected');
-    like($metadata_output, qr/lacks its schema metadata record/,
+    like($metadata_output, qr/must begin with a schema-version 1 registry metadata record/,
         'missing archive metadata is explicit');
+};
+
+subtest 'common JSONL and Markdown line pressure are finite on every axis' => sub {
+    my $records = make_fixture();
+    mutate_record($records, 'registry/surfaces.jsonl', 'registry', sub {
+        $_[0]{max_records} = 1;
+    }, 'record_type');
+    my ($records_ok, $records_output) = run_checker($records);
+    ok(!$records_ok, 'registry record-count overflow is rejected');
+    like($records_output, qr/record count 10 exceeds declared max_records 1/,
+        'record-count bound is explicit');
+
+    my $bytes = make_fixture();
+    mutate_record($bytes, 'registry/routes.jsonl', 'registry', sub {
+        $_[0]{max_bytes} = 128;
+    }, 'record_type');
+    my ($bytes_ok, $bytes_output) = run_checker($bytes);
+    ok(!$bytes_ok, 'registry byte overflow is rejected');
+    like($bytes_output, qr/route registry size .* exceeds declared max_bytes 128/,
+        'registry-byte bound is explicit');
+
+    my $record_bytes = make_fixture();
+    mutate_record($record_bytes, 'registry/routes.jsonl', 'registry', sub {
+        $_[0]{max_record_bytes} = 128;
+    }, 'record_type');
+    my ($record_ok, $record_output) = run_checker($record_bytes);
+    ok(!$record_ok, 'oversized individual JSONL record is rejected');
+    like($record_output, qr/route registry line 2 is .* \(> max_record_bytes 128\)/,
+        'maximum-record bound is explicit');
+
+    my $array = make_fixture();
+    mutate_record($array, 'registry/surfaces.jsonl', 'bounded_entry', sub {
+        $_[0]{targets} = [('entry.md') x 129];
+    });
+    my ($array_ok, $array_output) = run_checker($array);
+    ok(!$array_ok, 'identity-list displacement is rejected');
+    like($array_output, qr/targets line 2 has 129 entries \(> maximum 128\)/,
+        'array cardinality bound is explicit');
+
+    my $scalar = make_fixture();
+    mutate_record($scalar, 'registry/surfaces.jsonl', 'bounded_entry', sub {
+        $_[0]{owner} = 'x' x 257;
+    });
+    my ($scalar_ok, $scalar_output) = run_checker($scalar);
+    ok(!$scalar_ok, 'oversized scalar is rejected');
+    like($scalar_output, qr/invalid string key: owner/,
+        'scalar-byte bound is explicit');
+
+    my $line = make_fixture();
+    write_file($line, 'destination.md', ('x' x 1025) . "\n");
+    my ($line_ok, $line_output) = run_checker($line);
+    ok(!$line_ok, 'oversized Markdown line is rejected independently of file bytes');
+    like($line_output, qr/max line bytes is 1025 \(> inclusive enforcement ceiling 1024\)/,
+        'maximum-line-byte dimension is explicit');
+
+    my $crlf = make_fixture();
+    write_file($crlf, 'destination.md', ('x' x 700) . "\r\n");
+    my ($crlf_ok, $crlf_output) = run_checker($crlf);
+    ok($crlf_ok, 'CRLF terminator bytes do not inflate deterministic content-line width')
+        or diag($crlf_output);
+    like($crlf_output, qr/bounded_destination: actual .* line_bytes_each=700,/,
+        'reported line width excludes CRLF bytes');
 };
 
 subtest 'currency contracts are opt-in, lifecycle-scoped, and locally calibrated' => sub {
@@ -349,7 +411,8 @@ subtest 'targets, ceilings, pressure states, ownership, and debt ratchets fail c
         $_[0]{containment_status} = 'pinned_deferred';
         $_[0]{baseline} = {
             files => 1, lines_each => 100, bytes_each => length($equality_contents),
-            lines_total => 100, bytes_total => length($equality_contents),
+            line_bytes_each => 8, lines_total => 100,
+            bytes_total => length($equality_contents),
         };
         $_[0]{transition} = transition(0, 0, 0, 0, 0);
     });
@@ -370,7 +433,7 @@ subtest 'targets, ceilings, pressure states, ownership, and debt ratchets fail c
         $_[0]{containment_status} = 'pinned_deferred';
         $_[0]{baseline} = {
             files => 1, lines_each => 80, bytes_each => 10000,
-            lines_total => 80, bytes_total => 10000,
+            line_bytes_each => 1024, lines_total => 80, bytes_total => 10000,
         };
     });
     my ($debt_ok, $debt_output) = run_checker($debt);
@@ -386,7 +449,8 @@ subtest 'targets, ceilings, pressure states, ownership, and debt ratchets fail c
         $_[0]{containment_status} = 'pinned_deferred';
         $_[0]{baseline} = {
             files => 1, lines_each => 80, bytes_each => length($allowed_contents),
-            lines_total => 80, bytes_total => length($allowed_contents),
+            line_bytes_each => 8, lines_total => 80,
+            bytes_total => length($allowed_contents),
         };
         $_[0]{transition} = transition(0, 1, 0, 1, 0);
     });
@@ -399,13 +463,13 @@ subtest 'targets, ceilings, pressure states, ownership, and debt ratchets fail c
         $_[0]{containment_status} = 'pinned_deferred';
         $_[0]{baseline} = {
             files => 1, lines_each => 1, bytes_each => 12,
-            lines_total => 1, bytes_total => 12,
+            line_bytes_each => 12, lines_total => 1, bytes_total => 12,
         };
         $_[0]{transition} = {
             owner => '',
             max_growth => {
                 files => 0, lines_each => 1, bytes_each => 1,
-                lines_total => 1, bytes_total => 1,
+                line_bytes_each => 1, lines_total => 1, bytes_total => 1,
             },
             ratchet_step => pressure(1, 10, 1024, 10, 1024),
         };
@@ -422,13 +486,13 @@ subtest 'targets, ceilings, pressure states, ownership, and debt ratchets fail c
         $_[0]{containment_status} = 'pinned_deferred';
         $_[0]{baseline} = {
             files => 1, lines_each => 80, bytes_each => 1000,
-            lines_total => 80, bytes_total => 1000,
+            line_bytes_each => 1024, lines_total => 80, bytes_total => 1000,
         };
         $_[0]{transition} = {
             owner => 'containment-program',
             max_growth => {
                 files => 0, lines_each => 21, bytes_each => 0,
-                lines_total => 21, bytes_total => 0,
+                line_bytes_each => 0, lines_total => 21, bytes_total => 0,
             },
             ratchet_step => pressure(1, 10, 1024, 10, 1024),
         };
@@ -673,7 +737,7 @@ subtest 'version-object descriptors require bounded named retention contracts' =
     }, 'contract_id');
     my ($unbounded_ok, $unbounded_output) = run_checker($unbounded);
     ok(!$unbounded_ok, 'unbounded retention registry is rejected');
-    like($unbounded_output, qr/max_records must be positive/,
+    like($unbounded_output, qr/metadata has invalid positive max_records/,
         'retention control-plane bound is explicit');
 };
 
@@ -757,19 +821,20 @@ sub make_fixture {
             'external:documented-contract'),
         frozen('frozen_record', 'frozen.md', sha256_hex("frozen\n")),
     );
-    write_file($root, 'registry/surfaces.jsonl', join('', map { json_line($_) } @surfaces));
-    write_file($root, 'registry/routes.jsonl', json_line({
+    write_file($root, 'registry/surfaces.jsonl', registry_header(16, 32768, 4096)
+        . join('', map { json_line($_) } @surfaces));
+    write_file($root, 'registry/routes.jsonl', registry_header(8, 4096, 1024) . json_line({
         route_id => 'destination', route_kind => 'reader_navigation',
         source_path => 'entry.md', source_surface_id => 'bounded_entry',
         marker => 'destination.md', target_surface_id => 'bounded_destination',
     }));
-    write_file($root, 'registry/evidence.jsonl', json_line({
+    write_file($root, 'registry/evidence.jsonl', registry_header(8, 4096, 1024) . json_line({
         map_id => 'fixture', source_path => 'evidence.md',
         begin_marker => '<!-- EVIDENCE:BEGIN -->',
         end_marker => '<!-- EVIDENCE:END -->',
     }));
     write_file($root, 'registry/archive.jsonl',
-        json_line({ record_type => 'registry', schema_version => 1 }) . json_line({
+        registry_header(8, 8192, 2048) . json_line({
         record_type => 'descriptor', schema_version => 1,
         descriptor_id => 'ledger_0001', surface_id => 'ledger', former_path => 'ledger-old.md',
         range_id => 'entries-1-1', revision => 'fixture-revision', lines => 1,
@@ -788,7 +853,7 @@ sub make_fixture {
     write_file($root, 'registry/retention.jsonl',
         json_line({
             record_type => 'registry', schema_version => 1,
-            max_records => 4, max_bytes => 4096,
+            max_records => 4, max_bytes => 4096, max_record_bytes => 2048,
         }) . json_line({
             record_type => 'contract', schema_version => 1,
             contract_id => 'fixture_history', owner => 'fixture-maintainers',
@@ -874,7 +939,7 @@ sub pressure {
     my ($files, $lines_each, $bytes_each, $lines_total, $bytes_total) = @_;
     return {
         files => $files, lines_each => $lines_each, bytes_each => $bytes_each,
-        lines_total => $lines_total, bytes_total => $bytes_total,
+        line_bytes_each => 1024, lines_total => $lines_total, bytes_total => $bytes_total,
     };
 }
 
@@ -882,7 +947,7 @@ sub reference_pressure {
     my ($lines_each, $bytes_each) = @_;
     return {
         files => undef, lines_each => $lines_each, bytes_each => $bytes_each,
-        lines_total => undef, bytes_total => undef,
+        line_bytes_each => 1024, lines_total => undef, bytes_total => undef,
     };
 }
 
@@ -890,8 +955,14 @@ sub transition {
     my ($files, $lines_each, $bytes_each, $lines_total, $bytes_total) = @_;
     return {
         owner => 'containment-program',
-        max_growth => pressure($files, $lines_each, $bytes_each, $lines_total, $bytes_total),
-        ratchet_step => pressure(1, 10, 1024, 10, 1024),
+        max_growth => {
+            %{pressure($files, $lines_each, $bytes_each, $lines_total, $bytes_total)},
+            line_bytes_each => 0,
+        },
+        ratchet_step => {
+            %{pressure(1, 10, 1024, 10, 1024)},
+            line_bytes_each => 128,
+        },
     };
 }
 
@@ -942,6 +1013,15 @@ sub mutate_record {
 sub json_line {
     my ($record) = @_;
     return $json->encode($record) . "\n";
+}
+
+sub registry_header {
+    my ($max_records, $max_bytes, $max_record_bytes) = @_;
+    return json_line({
+        record_type => 'registry', schema_version => 1,
+        max_records => $max_records, max_bytes => $max_bytes,
+        max_record_bytes => $max_record_bytes,
+    });
 }
 
 sub write_file {

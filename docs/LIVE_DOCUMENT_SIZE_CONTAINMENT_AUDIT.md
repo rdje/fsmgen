@@ -101,6 +101,18 @@ or banked aggregate change. `docs/ISF_SPEC.md` is explicitly classified as a
 candidate, not silently exempted: its existing focused-document debt remains
 until `.13` supplies semantic parts and a bounded complete index.
 
+Completed `.15` now bounds the control plane that enforces those documents.
+Each common JSONL registry starts with exact schema-versioned caps for data
+records, total bytes, and raw JSON bytes per record; the neutral core also
+applies portable fail-safe ceilings. Field-specific scalar byte limits, closed
+identifier domains, and 128-element array caps prevent prose and identity-list
+displacement. Markdown pressure now has a sixth axis, maximum content bytes in
+one line (excluding LF and optional CR). The activation census exposed why it
+is independent: the largest current rows are 10,275 bytes in the generated
+Knowledge Map, 7,542 in the mdBook, and 6,264 in task evidence even though
+those surfaces also have line-count and total-byte controls. These values are
+captured without widening any predecessor ceiling.
+
 Completed `.18` now separates the two pressure meanings. Health targets are
 reviewed working-set acceptance goals: 2,000 lines / 256 KiB for monolithic
 human-maintained snapshots or ledgers, 2,000 lines / 1 MiB for the generated
@@ -171,8 +183,8 @@ normal collection density.
 
 | Family | Selected bounded view and durable store | Exact owner |
 | --- | --- | --- |
-| Common enforcement | JSONL surface records declare every class, path array, owner, independent health targets and inclusive ceilings, 80/90 target milestones, containment status, immutable adoption baseline, bounded growth/ratchet, topology, index/currency contracts, and verifier; separate JSONL route/evidence/archive/ceiling-authority records carry only their own mappings; one unconditional adapter proves tracked-Markdown coverage, source-derived typed routes, evidence paths, staged-result agreement, delegated execution, and cross-revision ceiling authority | `.2` ships the common graph; `.18` separates health/quarantine and authorizes increases; `.19` closes execution/driver reachability; `.20` adds opt-in lifecycle currency; `.21` closes route/index/evidence completeness |
-| Control-plane self-containment | Specialized task manifests enforce record/byte caps, but the common surface, route, archive, and ceiling-authority JSONL registries do not yet bound their own record/value/line pressure | Active `.15`, selected from clean `.23` commit `425cd7fef`, enforces finite reviewable common-registry bounds; activation changes no schema or limit |
+| Common enforcement | JSONL surface records declare every class, path array, owner, six-axis health targets and inclusive ceilings, 80/90 target milestones, containment status, immutable adoption baseline, bounded growth/ratchet, topology, index/currency contracts, and verifier; separate JSONL route/evidence/archive/ceiling-authority records carry only their own mappings; one unconditional adapter proves tracked-Markdown coverage, source-derived typed routes, evidence paths, staged-result agreement, delegated execution, and cross-revision ceiling authority | `.2` ships the common graph; `.18` separates health/quarantine and authorizes increases; `.19` closes execution/driver reachability; `.20` adds opt-in lifecycle currency; `.21` closes route/index/evidence completeness |
+| Control-plane self-containment | Every common registry declares finite data-record, whole-file-byte, and raw-record-byte caps; scalar bytes, identifier domains, and array cardinality are closed; every Markdown surface measures maximum content-line bytes independently | Completed `.15`; portable hard bounds are 10,000 data records, 16 MiB per registry, 64 KiB per record, and local declarations are tighter; no predecessor ceiling widened |
 | Document utility and retirement | Before a family is partitioned, classify its current audience, canonical role, unique value, duplication, staleness, and historical retention; select retain, merge, supersede, archive, or delete with evidence | `.16` audits all families and assigns separate atomic content migrations or retirements; the existing four-file review retains authority over its named files |
 | GitHub landing page and root collection | Preserve README's direct project-introduction/quick-start/architecture/navigation role while removing only proved duplicate dynamic detail; let semantic family owners remove root-ledger pressure before final retained-surface calibration | `.12` performs the final README/root re-audit after semantic migrations |
 | Change and rationale ledgers | The existing four-file lifecycle review retains authority over their long-term audiences. If change/rationale ledgers remain live, root files become bounded current/index views; records seal on semantic entry boundaries into repository-local range shards, then leave the live collection only through digest-verified version-archive descriptors | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` selects the roles; `.3` consumes that decision and proves the schema; `.4`/`.5` perform only selected migrations |
@@ -188,8 +200,9 @@ normal collection density.
 Decision 0045 and `.23` select the distinct maintained-reference lifecycle.
 The mdBook changes classification without losing prose or weakening its
 per-part debt; the focused ISF specification remains under the prior controls.
-Clean `.23` commit `425cd7fef` activates `.15` alone for common JSONL
-self-containment; no schema, value, or enforcement changes in activation.
+Clean `.23` commit `425cd7fef` activated `.15` alone; `.15` now enforces common
+JSONL self-containment and maximum-line-byte pressure without widening a
+predecessor threshold.
 
 ## Why this is containment rather than displacement
 

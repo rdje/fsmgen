@@ -156,10 +156,68 @@ sub positive_integer {
     return !ref($value) && defined($value) && $value =~ /\A[1-9][0-9]*\z/;
 }
 
+sub bounded_registry_rows {
+    my ($contents, $label, $allow_legacy) = @_;
+    my @rows = @{parse_jsonl($contents, $label, $allow_legacy)};
+    return \@rows if !@rows && $allow_legacy;
+    problem("$label exceeds portable file bound 16777216")
+        if defined($contents) && length($contents) > 16 * 1024 * 1024;
+    problem("$label exceeds portable record-count bound 10000")
+        if @rows > 10_001;
+    for my $line (split /\n/, $contents // '') {
+        problem("$label has a record exceeding portable bound 65536")
+            if length($line) > 64 * 1024;
+    }
+    my $metadata = $rows[0];
+    if (($metadata->{record_type} // '') ne 'registry') {
+        if ($allow_legacy) {
+            return \@rows;
+        }
+        problem("$label must begin with bounded schema-version 1 registry metadata");
+        return \@rows;
+    }
+    shift @rows;
+    my @keys = qw(record_type schema_version max_records max_bytes max_record_bytes);
+    if ($allow_legacy && !exists($metadata->{max_record_bytes})) {
+        return \@rows;
+    }
+    exact_keys($metadata, "$label metadata", @keys);
+    problem("$label metadata has unsupported schema_version")
+        if ($metadata->{schema_version} // '') ne '1';
+    for my $key (qw(max_records max_bytes max_record_bytes)) {
+        problem("$label metadata has invalid positive $key")
+            if !positive_integer($metadata->{$key});
+    }
+    if (positive_integer($metadata->{max_records})) {
+        problem("$label record count exceeds max_records $metadata->{max_records}")
+            if @rows > $metadata->{max_records};
+        problem("$label max_records exceeds portable bound 10000")
+            if $metadata->{max_records} > 10_000;
+    }
+    if (positive_integer($metadata->{max_bytes})) {
+        problem("$label size exceeds max_bytes $metadata->{max_bytes}")
+            if defined($contents) && length($contents) > $metadata->{max_bytes};
+        problem("$label max_bytes exceeds portable bound 16777216")
+            if $metadata->{max_bytes} > 16 * 1024 * 1024;
+    }
+    if (positive_integer($metadata->{max_record_bytes})) {
+        problem("$label max_record_bytes exceeds portable bound 65536")
+            if $metadata->{max_record_bytes} > 64 * 1024;
+        problem("$label max_record_bytes exceeds its max_bytes")
+            if positive_integer($metadata->{max_bytes})
+                && $metadata->{max_record_bytes} > $metadata->{max_bytes};
+        for my $line (split /\n/, $contents // '') {
+            problem("$label has a record exceeding max_record_bytes $metadata->{max_record_bytes}")
+                if length($line) > $metadata->{max_record_bytes};
+        }
+    }
+    return \@rows;
+}
+
 sub registry_ceilings {
     my ($contents, $label, $allow_absent) = @_;
     my %by_surface;
-    for my $record (@{parse_jsonl($contents, $label, $allow_absent)}) {
+    for my $record (@{bounded_registry_rows($contents, $label, $allow_absent)}) {
         my $id = $record->{surface_id};
         next if !defined($id) || ref($id) || $id eq '';
         my $values = $record->{enforcement_ceilings};
@@ -180,16 +238,8 @@ sub registry_ceilings {
 
 sub authority_records {
     my ($contents, $label, $allow_absent) = @_;
-    my @rows = @{parse_jsonl($contents, $label, $allow_absent)};
+    my @rows = @{bounded_registry_rows($contents, $label, $allow_absent)};
     return [] if !@rows && $allow_absent;
-    my $metadata = shift @rows;
-    if (!defined($metadata)
-            || ($metadata->{record_type} // '') ne 'registry'
-            || ($metadata->{schema_version} // '') ne '1') {
-        problem("$label must begin with schema-version 1 registry metadata");
-    } else {
-        exact_keys($metadata, "$label metadata", qw(record_type schema_version));
-    }
     my %ids;
     for my $index (0 .. $#rows) {
         my $record = $rows[$index];
@@ -204,18 +254,20 @@ sub authority_records {
             if ($record->{schema_version} // '') ne '1';
         my $id = $record->{authority_id} // '';
         problem("$row_label has invalid authority_id")
-            if ref($id) || $id !~ /\A[A-Z][A-Z0-9_.-]*\z/;
+            if ref($id) || length($id) > 128 || $id !~ /\A[A-Z][A-Z0-9_.-]*\z/;
         problem("$row_label repeats authority_id $id") if $ids{$id}++;
         problem("$row_label has invalid surface_id")
-            if ref($record->{surface_id}) || ($record->{surface_id} // '') !~ /\A[a-z][a-z0-9_]*\z/;
+            if ref($record->{surface_id}) || length($record->{surface_id} // '') > 128
+                || ($record->{surface_id} // '') !~ /\A[a-z][a-z0-9_]*\z/;
         problem("$row_label has invalid dimension")
             if ref($record->{dimension})
-                || ($record->{dimension} // '') !~ /\A(?:files|lines_each|bytes_each|lines_total|bytes_total)\z/;
+                || ($record->{dimension} // '') !~ /\A(?:files|lines_each|bytes_each|line_bytes_each|lines_total|bytes_total)\z/;
         problem("$row_label previous/new values must be positive integers with new > previous")
             if !positive_integer($record->{previous}) || !positive_integer($record->{new})
                 || $record->{new} <= $record->{previous};
         problem("$row_label decision must be a project-relative docs/decisions Markdown path")
-            if ref($record->{decision}) || !relative_path_ok($record->{decision})
+            if ref($record->{decision}) || length($record->{decision} // '') > 512
+                || !relative_path_ok($record->{decision})
                 || $record->{decision} !~ m{\Adocs/decisions/[0-9]{4}[-a-z0-9]*\.md\z};
         problem("$row_label has invalid approved_on date")
             if ref($record->{approved_on})
@@ -282,7 +334,7 @@ my @new_authorities = $#{$all_authorities} >= $#{$old_authorities} + 1
     ? @{$all_authorities}[scalar(@{$old_authorities}) .. $#{$all_authorities}]
     : ();
 
-my @dimensions = qw(files lines_each bytes_each lines_total bytes_total);
+my @dimensions = qw(files lines_each bytes_each line_bytes_each lines_total bytes_total);
 my @increases;
 for my $surface (sort keys %{$current}) {
     next if !exists $prior->{$surface};
@@ -290,9 +342,21 @@ for my $surface (sort keys %{$current}) {
         ($prior->{$surface}{lifecycle} // '') eq 'partitioned_canonical'
         && ($current->{$surface}{lifecycle} // '') eq 'maintained_reference';
     if (!$maintained_reference_migration
-            && defined($prior->{$surface}{baseline}) && defined($current->{$surface}{baseline})
-            && $json->encode($prior->{$surface}{baseline}) ne $json->encode($current->{$surface}{baseline})) {
-        problem("surface $surface changed its immutable transition baseline");
+            && defined($prior->{$surface}{baseline}) && defined($current->{$surface}{baseline})) {
+        my %keys = map { $_ => 1 }
+            (keys %{$prior->{$surface}{baseline}}, keys %{$current->{$surface}{baseline}});
+        for my $key (sort keys %keys) {
+            next if $key eq 'line_bytes_each'
+                && !exists($prior->{$surface}{baseline}{$key})
+                && exists($current->{$surface}{baseline}{$key});
+            my $before = $prior->{$surface}{baseline}{$key};
+            my $after = $current->{$surface}{baseline}{$key};
+            if (!defined($before) != !defined($after)
+                    || (defined($before) && defined($after) && $before ne $after)) {
+                problem("surface $surface changed its immutable transition baseline");
+                last;
+            }
+        }
     }
     for my $dimension (@dimensions) {
         my $before = $prior->{$surface}{ceilings}{$dimension};

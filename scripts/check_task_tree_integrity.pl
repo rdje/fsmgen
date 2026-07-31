@@ -1443,7 +1443,7 @@ sub load_retention_contracts {
     my $registry = shift @records;
     check_keys(
         $registry,
-        [qw(record_type schema_version max_records max_bytes)], [],
+        [qw(record_type schema_version max_records max_bytes max_record_bytes)], [],
         "$retention_registry_relative: registry record",
     );
     check_equal($registry->{record_type}, 'registry',
@@ -1454,6 +1454,8 @@ sub load_retention_contracts {
         "$retention_registry_relative: registry max_records");
     check_integer($registry->{max_bytes}, 1, undef,
         "$retention_registry_relative: registry max_bytes");
+    check_integer($registry->{max_record_bytes}, 1, undef,
+        "$retention_registry_relative: registry max_record_bytes");
     push @errors,
         "$retention_registry_relative: contract count " . scalar(@records)
             . " exceeds max_records $registry->{max_records}"
@@ -1464,6 +1466,16 @@ sub load_retention_contracts {
             . " exceeds max_bytes $registry->{max_bytes}"
         if is_positive_integer($registry->{max_bytes})
             && length($raw) > $registry->{max_bytes};
+    if (is_positive_integer($registry->{max_record_bytes})) {
+        my $line = 0;
+        for my $encoded (split /\n/, $raw) {
+            $line++;
+            push @errors,
+                "$retention_registry_relative: record $line exceeds max_record_bytes "
+                    . $registry->{max_record_bytes}
+                if length($encoded) > $registry->{max_record_bytes};
+        }
+    }
     my $number = 1;
     for my $record (@records) {
         $number++;

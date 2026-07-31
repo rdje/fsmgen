@@ -20,7 +20,7 @@ The architecture separates:
    or generated projections used during ordinary work.
 3. **Retained evidence** — immutable content-addressed files or exact version
    objects used for uncommon historical retrieval.
-4. **Mechanical contracts** — JSONL registries and executed checks proving dimensions, routes, identity, maintained-reference change authority, currency where claimed, and lifecycle rules.
+4. **Mechanical contracts** — self-bounded JSONL registries and executed checks proving six pressure axes (including maximum line bytes), routes, identity, maintained-reference change authority, claimed currency, and lifecycle rules.
 
 The neutral policy and checker are
 [LIVE_DOCUMENT_SIZE_CONTAINMENT.md](../LIVE_DOCUMENT_SIZE_CONTAINMENT.md) and

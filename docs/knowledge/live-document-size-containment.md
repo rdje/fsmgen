@@ -92,10 +92,12 @@ supersession of the mdBook compatibility guide, the frozen status candidates,
 the rationale/change ledgers, the generated Knowledge Map, and focused
 contract/audit collections. No file is deleted by the review task.
 
-The same review found two mechanical gaps. Specialized task manifests enforce
-their own record/byte caps, but the common surface, route, archive, and ceiling-
-authority JSONL registries do not yet self-bound; leaf `.15` owns that gap.
-Leaf `.16` owns the general utility/retirement audit.
+The same review found two mechanical gaps. Completed leaf `.15` now gives every
+common registry a bounded schema-versioned metadata row, finite record/file/
+record-byte limits, field-specific scalar byte limits, identifier domains, and
+array cardinalities. It also adds maximum Markdown content-line bytes as a
+sixth pressure axis. Leaf `.16` owns the remaining general utility/retirement
+audit.
 
 PGEN and ANVIL returned independent reviews of the packet. Completed leaf `.17`
 publishes an evidence-backed accept/refine/reject/already-satisfied disposition
@@ -168,9 +170,14 @@ missing history reports that recovery action. The 79-line review front door is
 capped at 100 lines / 5 KiB and routes to the detailed 1,311-line packet, whose
 SHA-256 is frozen as retained evidence.
 
-Clean `.23` commit `425cd7fef` activates `.15` alone to make common JSONL
-control data finite and reviewable. Activation changes no checker, registry,
-schema, pressure limit, document content, or product behavior.
+Clean `.23` commit `425cd7fef` activated `.15` alone. The completed
+implementation self-bounds common surface, route, evidence, retention,
+archive, and ceiling-authority registries. Portable hard limits are 10,000 data
+records, 16 MiB per registry, and 64 KiB per raw record; FSMGen declares tighter
+local caps. All measured Markdown surfaces now report maximum content-line
+bytes excluding LF and optional CR. The initial census found 10,275-byte
+Knowledge Map, 7,542-byte mdBook, and 6,264-byte task-evidence rows, proving this
+axis is independent from total lines and bytes. No predecessor ceiling rises.
 
 Decision `0045` and `.23` now make `maintained_reference` distinct from
 `partitioned_canonical`. Unique product/specification prose keeps fixed

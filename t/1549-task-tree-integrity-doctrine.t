@@ -744,7 +744,7 @@ sub write_retention_registry {
             "\n",
             $json->encode({
                 record_type => 'registry', schema_version => 1,
-                max_records => 4, max_bytes => 4096,
+                max_records => 4, max_bytes => 4096, max_record_bytes => 1024,
             }),
             $json->encode({
                 record_type => 'contract', schema_version => 1,

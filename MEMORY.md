@@ -6,13 +6,13 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15:
-  activate common JSONL bounds`).
-- active_work_unit: `.15` alone is active from clean `.23` commit `425cd7fef`.
-- current_state: decision `0045` and `.23` classify the mdBook as maintained
-  reference with bounded direct reading/parts and exact aggregate authority;
-  `.15` changes no schema, registry, or limit yet.
-- next_action: inventory every common JSONL scalar/array/record/registry and
-  implement finite byte/cardinality/line controls plus portable negative cases.
+  enforce common JSONL bounds`).
+- active_work_unit: `.15` is complete; `.16` is the next clean selection.
+- current_state: every common JSONL registry has tighter declared record/file/
+  record-byte bounds beneath portable hard stops; field and array limits plus
+  deterministic maximum-content-line bytes close control-plane displacement.
+- next_action: activate `.16` alone for the project-wide document utility and
+  retirement audit, then commit that clean continuity selection before audit.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: `.8`-`.10`/`.13` wait for utility or
@@ -34,5 +34,5 @@ history; this file carries only the current bounded resume state.
   runtime, and normalized results; `.11` now qualifies only the selected AHB
   handwritten-oracle comparison, not general cross-backend parity.
 - Decisions `0041`/`0042`/`0044`/`0045`, the packet, and its disposition own
-  feedback-sensitive containment work; `.15` owns common JSONL self-bounds.
+  feedback-sensitive containment work; `.15` closes common JSONL self-bounds.
   Push only on request (`0005`); PNT runs autonomously (`0003`).

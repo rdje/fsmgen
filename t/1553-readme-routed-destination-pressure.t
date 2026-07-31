@@ -267,7 +267,8 @@ sub make_fixture {
     write_file(
         $root,
         'doctrine/live_document_size/surfaces.jsonl',
-        join('', map { json_line($_) } @surface_rows),
+        registry_header(32, 32768, 4096)
+            . join('', map { json_line($_) } @surface_rows),
     );
 
     my @route_rows = map {{
@@ -286,25 +287,26 @@ sub make_fixture {
     write_file(
         $root,
         'doctrine/readme_entrypoint/routed_destinations.jsonl',
-        join('', map { json_line($_) } @route_rows),
+        registry_header(32, 16384, 1024)
+            . join('', map { json_line($_) } @route_rows),
     );
     write_file(
         $root,
         'doctrine/live_document_size/archive_descriptors.jsonl',
-        json_line({ record_type => 'registry', schema_version => 1 }),
+        registry_header(8, 8192, 2048),
     );
     write_file(
         $root,
         'doctrine/live_document_size/version_retention_contracts.jsonl',
         json_line({
             record_type => 'registry', schema_version => 1,
-            max_records => 4, max_bytes => 4096,
+            max_records => 4, max_bytes => 4096, max_record_bytes => 2048,
         }),
     );
     write_file(
         $root,
         'doctrine/live_document_size/evidence_maps.jsonl',
-        json_line({
+        registry_header(8, 4096, 1024) . json_line({
             map_id => 'fixture', source_path => 'evidence.md',
             begin_marker => '<!-- EVIDENCE:BEGIN -->',
             end_marker => '<!-- EVIDENCE:END -->',
@@ -342,6 +344,7 @@ sub measured {
             files       => $max_files,
             lines_each  => $max_lines,
             bytes_each  => $max_bytes,
+            line_bytes_each => 1024,
             lines_total => $total_lines,
             bytes_total => $total_bytes,
         },
@@ -349,6 +352,7 @@ sub measured {
             files       => $max_files,
             lines_each  => $max_lines,
             bytes_each  => $max_bytes,
+            line_bytes_each => 1024,
             lines_total => $total_lines,
             bytes_total => $total_bytes,
         },
@@ -389,6 +393,15 @@ sub frozen {
 sub json_line {
     my ($record) = @_;
     return $json->encode($record) . "\n";
+}
+
+sub registry_header {
+    my ($max_records, $max_bytes, $max_record_bytes) = @_;
+    return json_line({
+        record_type => 'registry', schema_version => 1,
+        max_records => $max_records, max_bytes => $max_bytes,
+        max_record_bytes => $max_record_bytes,
+    });
 }
 
 sub write_file {

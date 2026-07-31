@@ -10430,7 +10430,7 @@ The first honest `R11` slices are now:
   and maintained-reference selection now precede affected `.8`-`.10`/`.13`
   family migrations. Clean disposition commit `3b782fc10` activates `.18`
   alone for unambiguous health-target, inclusive-ceiling, ratchet, and increase-
-  authority semantics. Completed `.18` now reports five-axis actual/target/
+  authority semantics. Completed `.18` now reports six-axis actual/target/
   ceiling values, uses target pressure for 80/90 health state, admits equality
   at the separately enforced ceiling, and removes inert `hard_pct`. Immutable
   debt baselines, bounded owned growth, and banded downward ratchets close both
@@ -10447,4 +10447,5 @@ The first honest `R11` slices are now:
   residue independently; version objects name recovery contracts and a bounded
   front door routes to the frozen packet. Decision `0045` and `.23` now bound
   maintained-reference reads/parts plus exact aggregate change. Clean `.23`
-  commit `425cd7fef` activates `.15` alone for common JSONL self-containment.
+  commit `425cd7fef` activated `.15`; completed `.15` now self-bounds common
+  JSONL and maximum-line pressure without widening a ceiling. `.16` is next.

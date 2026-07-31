@@ -34492,14 +34492,15 @@ non-identical trees. `.10.4` executes static meaning under exact Verilator.
 invent evidence. It compares 19 shared public/probe outcomes on identical DUT
 bytes, excludes undeclared internals, and leaves general parity unclaimed.
 
-## Maintained reference — bound reading, authorize product scope (2026-07-31)
+## Maintained reference and bounded control data (2026-07-31)
 
-Decision `0045` separates unique maintained product prose from history-shaped
-containment. Fixed aggregate caps would either move with every feature or force
-loss; instead, parts and the complete mandatory index stay fixed and bounded.
+Decision `0045` keeps unique product prose in bounded semantic parts behind a
+bounded complete index, while exact signed aggregate authority accounts for
+legitimate scope change. The Git adapter rejects stale, inexact, reused, or
+banked authority; `ISF_SPEC.md` remains debt until semantic partitioning lands.
 
-The mdBook records exact aggregate baseline plus signed slice delta, and the
-Git adapter forbids stale, inexact, reused, or banked authority. `ISF_SPEC.md`
-remains a candidate under existing debt until semantic partitioning lands.
-Migration proof still separates source, closure, working set, and loss; history
-still requires an owned guarantee and recovery path.
+Leaf `.15` applies the same containment rule to its control plane. Common JSONL
+registries cap data records, whole-file bytes, raw-record bytes, scalars, and
+arrays. Maximum Markdown content-line bytes is a sixth axis because the census
+found 10,275-byte generated rows beneath total-line and total-byte controls. LF
+and CRLF yield the same width; no predecessor ceiling is widened.

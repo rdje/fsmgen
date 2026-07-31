@@ -68,6 +68,11 @@
   mdBook is the first classified surface; `docs/ISF_SPEC.md` remains a candidate
   under its existing focused-document debt until its separately owned semantic
   partition lands.
+  Leaf `.15` now makes every common JSONL registry self-bounded by data-record,
+  whole-file-byte, and raw-record-byte declarations under tighter portable
+  hard caps; scalar byte limits, identifier domains, array cardinalities, and
+  maximum Markdown content-line bytes close the remaining displacement paths.
+  No predecessor pressure ceiling is widened.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---
@@ -107,9 +112,9 @@ Every governed surface must declare:
 - its stable identifier, owner, audience, and canonical authority;
 - its lifecycle and storage topology;
 - independent reviewed health targets and inclusive enforcement ceilings for
-  lines and bytes, plus file-count and aggregate dimensions for collections
-  unless a product-sized maintained-reference contract replaces fixed
-  aggregate caps with exact per-change authority;
+  lines, bytes, and maximum content-line bytes, plus file-count and aggregate
+  dimensions for collections unless a product-sized maintained-reference
+  contract replaces fixed aggregate caps with exact per-change authority;
 - warning and rollover-required milestones measured against health targets;
 - the operation that bounds it: overwrite, partition, regenerate, seal,
   rotate, archive, supersede, or freeze;
@@ -200,11 +205,14 @@ collection's long-term aggregate change according to information role.
 
 ## Derive pressure limits from the retained surface
 
-Measure the deliberately reviewed live survivor and set independent line and
-byte health targets. For collections, also set per-part, file-count, and
-aggregate targets. Do not copy illustrative numbers from another adoption,
-and do not treat a current legacy size as healthy merely because it was
-measured.
+Measure the deliberately reviewed live survivor and set independent line,
+byte, and maximum content-line-byte health targets. For collections, also set
+per-part, file-count, and aggregate targets. Maximum line width is a separate
+pressure axis: a generated table or dense record can remain pathological while
+the file still passes total-line and total-byte limits. Measure raw content
+bytes deterministically, excluding LF and an optional preceding CR. Do not copy
+illustrative numbers from another adoption, and do not treat a current legacy
+size as healthy merely because it was measured.
 
 The exception is unique maintained product/specification prose. A fixed
 aggregate target there is dishonest because legitimate scope changes with the
@@ -295,15 +303,22 @@ content into an opaque dump.
 
 ## Registry and mechanical enforcement
 
-Keep local declarations in a data-only registry consumed by one deterministic
-checker. The registry is the local authority for class, paths, limits,
-milestones, generation or retrieval checks, and dependency routes. The checker
-must run on the resulting tree for every commit and continuous-integration
-build, independent of which paths changed.
+Keep local declarations in data-only registries consumed by one deterministic
+checker. Each registry must itself be finite: begin with schema-versioned
+metadata declaring positive maximum data-record count, total file bytes, and
+raw JSON bytes per record; impose portable fail-safe ceilings as well as the
+adopter's tighter limits. Arrays need finite cardinalities, scalar fields need
+byte limits, identifiers need closed domains, and unknown fields fail closed.
+The registries are the local authority for class, paths, limits, milestones,
+generation or retrieval checks, and dependency routes. The checker must run
+on the resulting tree for every commit and continuous-integration build,
+independent of which paths changed.
 
 At minimum, fail on:
 
 - an undeclared live surface or routing destination;
+- missing, malformed, oversized, or over-populated control-plane registry
+  metadata, record, scalar, or array;
 - an absolute, escaping, or otherwise forbidden persisted path;
 - a missing owner, lifecycle, limit, or retrieval/freshness control;
 - a route cycle or a route ending at an uncontrolled neighbor;
@@ -327,7 +342,8 @@ and never the canonical copy.
 2. Inventory every live document, generated view, collection, route, and
    historical terminal; follow routes transitively.
 3. Classify each surface by lifecycle and identify its actual canonical source.
-4. Measure lines, bytes, file counts, aggregates, structure, and read path.
+4. Measure lines, bytes, maximum content-line bytes, file counts, aggregates,
+   structure, and read path.
 5. Derive health targets from reviewed survivors and set separate inclusive
    ceilings with only transaction-sized headroom.
 6. Open an owner for every surface already at warning or structurally

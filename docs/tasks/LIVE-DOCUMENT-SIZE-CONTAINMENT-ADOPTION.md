@@ -161,11 +161,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14: publish external review packet`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15`
-  Status: `active`
+  Status: `done`
   Goal: `Make the common JSONL control plane finite, reviewable, and schema-constrained.`
   Acceptance: `The surface, route, and common archive-descriptor registries declare and enforce finite record/byte/maximum-record controls; scalar bytes, identifier domains, and array cardinalities prevent prose or identity-list displacement; Markdown surfaces gain a deterministic maximum-line-byte dimension where applicable; strict parser semantics and the portable negative fixture corpus remain the executable schema; neutrality remains mechanically tested; no threshold is widened.`
-  Verification: `Activated alone from clean `.23` implementation commit `425cd7fef`. Paths/task pass Files=2/Tests=43; 22 surfaces cover 2,784/2,784 paths; Knowledge Map is 1,096 facts/5,759 keys; Memory is 38 lines; all 37 chapters test; the repository-local 73-file/17,020-KiB build passes and is removed exactly. Common-control-plane inventory and enforcement remain pending; no schema, registry value, limit, lifecycle, frozen identity, landing content, or product behavior changes.`
-  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: activate common JSONL bounds`
+  Verification: `Every common registry now starts with exact positive max_records/max_bytes/max_record_bytes metadata under portable 10,000-record/16-MiB/64-KiB fail-safe ceilings; local caps are tighter. Strict scalar byte/identifier/128-item array controls and the sixth line_bytes_each pressure axis reject count/file/record/value/array/line overflow, including exact CRLF content width. The initial census records 10,275-byte Knowledge Map, 7,542-byte mdBook, and 6,264-byte task-evidence high-water lines without widening a predecessor ceiling. Perl/Bash syntax is clean; focused t1549+t1553+t1554+t1560+t1561 passes Files=5/Tests=76; path/locality/task passes Files=3/Tests=63. The real wrapper covers 22 surfaces and 2,784/2,784 Markdown paths, executes adapter/core proofs, accepts exact mdBook delta 0/+15/+1,041, and reports zero ceiling increases. Knowledge Map is 1,096 facts/5,759 keys; Memory is 38 lines; all 37 chapters test and the 73-file/17,284,414-byte repository-local build is removed exactly. Final staged acceptance/doctrines pass; no document lifecycle, frozen identity, README landing content, compiler/runtime artifact, or product behavior changes.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: enforce common JSONL bounds`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
@@ -379,6 +379,12 @@ no routed destination becomes the next uninstrumented blob.
 - [x] **ADDRESSED (verified)** — clean commit `425cd7fef` is the exact predecessor; only task/index/roadmap/book/fact/Memory/audit/changelog continuity activates `.15`, leaving the inventory and enforcement implementation pending.
 - [x] **NO REGRESSION** — focused path/task/live-size, Knowledge Map, Memory, mdBook, staged acceptance, and all-doctrine checks pass; `.15` alone is active and no checker, registry, schema, pressure limit, document content/lifecycle, frozen identity, README landing content, or product behavior changes.
 
+## Acceptance Checklist (enforced) — `.15` common JSONL bounds
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'max_records' --oneline -- live-document-size scripts doctrine/live_document_size doctrine/readme_entrypoint` plus direct parser inspection shows only specialized task manifests and the retention registry had partial self-bounds; common surface/route/evidence/archive/authority inputs could grow in records, record width, scalar prose, or arrays. Measuring the governed Markdown also exposes 10,275-byte single generated lines, proving total line and byte axes do not bound row reviewability.
+- [x] **ADDRESSED (verified)** — `prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t t/1561-live-document-reference-authority.t` reports `All tests successful` at `Files=4, Tests=35`; positive and fail-closed fixtures cover metadata presence/shape, record/file/line bounds, 128-item arrays, scalar UTF-8 bytes, exact CRLF width, and cross-revision authority compatibility.
+- [x] **NO REGRESSION** — `scripts/check_live_document_size.sh` passes 22 surfaces and complete tracked-Markdown coverage, executes the real task/Knowledge Map adapters, accepts the exact fresh mdBook delta, and reports zero ceiling increases; final staged `scripts/check_doctrines.sh` reports `[doctrine] all doctrine checks passed`, with Memory, Knowledge Map, task integrity, path, and mdBook evidence recorded below. No predecessor threshold, lifecycle, frozen identity, landing content, or product behavior changes.
+
 ## Acceptance Checklist (enforced) — `.20`
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'baseline verifier' --oneline -- live-document-size/scripts/check_live_document_size.pl` identifies `18e2dcbc6`; source inspection shows that the introduced exact surface schema had no currency contract or execution path, so bounded/route-closed output could not make or refute a scoped current-state claim and any date scan would have lived outside lifecycle ownership.
@@ -456,6 +462,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.23` activation | clean `2bfb32c02` predecessor; task/index/roadmap/book/fact/Memory/audit/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=55; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces and complete Markdown coverage; Knowledge Map 1,096 facts/5,758 keys; Memory 40 lines; all 37 chapters test; removed 73-file/17,012-KiB repository-local build; `.23` alone active; no checker, registry, lifecycle value, limit, maintained content, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.23` maintained-reference contract | decision 0045; neutral lifecycle/schema/core; Git aggregate authority; mdBook and ISF classification; UTF-8 byte bounds; focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=24; maintained mdBook exact prior 38/47,377/2,511,665 plus delta 0/+35/+2,124; mandatory index 39/1,999/depth 1; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096 facts/5,759 keys; Memory 38 lines; review front door 78 and TOOLBOX 315 lines; all 37 chapters test; removed 73-file/17,020-KiB build; all nine doctrines pass; no unique prose deletion, non-reference limit/frozen/landing/product change |
 | `2026-07-31` | `.15` activation | clean `425cd7fef` predecessor; task/index/roadmap/fact/Memory/audit/changelog sync; focused path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; Files=2/Tests=43; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096 facts/5,759 keys; Memory 38 lines; all 37 chapters test; removed 73-file/17,020-KiB build; `.15` alone active; no checker, registry, schema/value/limit, lifecycle/content, frozen identity, landing content, or product behavior change |
+| `2026-07-31` | `.15` common JSONL bounds | bounded headers/scalars/arrays; six-axis pressure and CRLF semantics; Git authority compatibility; neutral/local docs; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; portable 10,000-record/16-MiB/64-KiB hard stops plus tighter local declarations; focused Files=5/Tests=76; paths/locality/task Files=3/Tests=63; 22 surfaces/2,784 paths; exact reference delta 0/+15/+1,041; Knowledge Map 1,096/5,759; Memory 38; all 37 chapters; removed build 73 files/17,284,414 bytes; zero ceiling increases; all doctrines pass; no predecessor threshold, lifecycle, frozen identity, landing content, or product behavior change |
 
 ## Commit Log
 
@@ -485,6 +492,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.23` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23: activate maintained-reference selection` | Activate only the maintained product-reference lifecycle and classification contract from clean `.22` commit `2bfb32c02`; implementation remains pending. |
 | `.23` maintained-reference contract | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23: enforce maintained-reference contracts` | Bound the mandatory read and every part, authorize exact aggregate change, classify the mdBook, and preserve ISF-spec debt without deleting unique prose. |
 | `.15` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: activate common JSONL bounds` | Activate only common-control-plane inventory and finite schema pressure from clean `.23` commit `425cd7fef`; implementation remains pending. |
+| `.15` common JSONL bounds | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: enforce common JSONL bounds` | Self-bound every common registry, cap fields/arrays, and add deterministic maximum-content-line-byte pressure without widening a predecessor ceiling. |
 
 ## Changelog
 
@@ -494,6 +502,10 @@ no routed destination becomes the next uninstrumented blob.
   and the complete tracked-Markdown inventory while preserving README's
   landing content, all existing hard limits/topologies, frozen identities, and
   product behavior; `.6` is the next clean selection frontier.
+- `2026-07-31`: `.15` self-bounds every common JSONL registry and adds the
+  sixth maximum-content-line-byte pressure axis; all predecessor ceilings,
+  document lifecycles, frozen identities, landing content, and product behavior
+  remain unchanged, and `.16` is the next clean selection frontier.
 - `2026-07-31`: Clean commit `18e2dcbc6` activates `.6` alone to extend the
   task-tree schema and checker; no schema, checker, tree topology, threshold,
   document-family content, frozen identity, or product behavior changes in

@@ -35,7 +35,10 @@ documentation family. Decision `0041` and the local audit select bounded live
 views over semantic partitions, generated projections, rolling ledgers, or
 exact archive terminals according to information role. The data-only JSONL
 registries under `doctrine/` hold all FSMGen paths, health targets, enforcement
-ceilings, states, owners, routes, and descriptors.
+ceilings, states, owners, routes, and descriptors. Every common registry
+declares finite record-count, file-byte, and record-byte caps; closed scalar
+domains and array cardinalities prevent the control plane from becoming the
+next unbounded document.
 `scripts/check_live_document_size.sh` adapts those declarations to the neutral
 contract and checker package under `live-document-size/`; it inventories every
 tracked Markdown path, executes all locally delegated verifiers through the
@@ -93,7 +96,7 @@ Current registered checks:
 | `MEMORY-ARCH` | `scripts/check_memory_architecture.sh` | `MEMORY_ARCHITECTURE.md`, bounded `MEMORY.md`, bootstrap pointers, decision store, and task-tree index are present and compliant. |
 | `KNOWLEDGE-MAP` | `knowledge-map/scripts/check_knowledge_map.sh` | Fact cards are valid and `KNOWLEDGE_MAP.md` is in sync with them. |
 | `DOC-PATHS` | `scripts/check_docs_relative_paths.sh` | Live docs and the Knowledge Map do not leak machine-local absolute home paths. |
-| `LIVE-DOCUMENT-SIZE` | `scripts/check_live_document_size.sh` | JSONL schema, lifecycle/locator compatibility, project-relative same-volume targets, applicable fixed pressure axes and inclusive ceilings, maintained-reference classification/bounded reads/per-part limits/exact aggregate-change authority, 80/90 target pressure, immutable transition baselines, owned debt/ratchets, separately authorized ceiling increases, typed source-derived routes, collection-index contracts, evidence-map paths, staged/resulting-tree agreement, bounded version-retention contracts, executed core/adapter freshness, retrieval, and opt-in currency verifiers, fail-closed external degradation, frozen identities, archive descriptors, and complete tracked-Markdown coverage. |
+| `LIVE-DOCUMENT-SIZE` | `scripts/check_live_document_size.sh` | Bounded JSONL control data, strict schema/lifecycle/locator compatibility, project-relative same-volume targets, six fixed pressure axes including maximum content-line bytes, inclusive ceilings, maintained-reference classification/bounded reads/parts/exact aggregate-change authority, 80/90 target pressure, immutable transition baselines, owned debt/ratchets, separately authorized ceiling increases, typed source-derived routes, collection-index contracts, evidence-map paths, staged/resulting-tree agreement, bounded version-retention contracts, executed core/adapter freshness, retrieval, and opt-in currency verifiers, fail-closed external degradation, frozen identities, archive descriptors, and complete tracked-Markdown coverage. |
 | `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | On every commit/CI tree, the rendered GitHub landing page stays within its locally derived 275-line / 12,288-byte budget, retains its first-use contract, avoids narrated work-unit chronology, and keeps every route in `doctrine/readme_entrypoint/routed_destinations.jsonl` marker-linked to the common surface graph (`docs/decisions/0021`, `0024`, `0038`, `0040`, and `0041`; reusable standard: `README_POLICY.md`). |
 | `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
 | `TASK-TREE-INTEGRITY` | `scripts/check_task_tree_integrity.pl` | Every active indexed tree has one live active root, unique valid nodes, exact direct-child enumeration, canonical statuses, valid ancestry/container state, and complete leaf evidence across the live list plus optional bounded exact-source sealed segments; compact terminals and completed-index manifests use named retention contracts, while migration manifests independently prove complete source, semantic nodes, working-set dimensions, and loss residue. |

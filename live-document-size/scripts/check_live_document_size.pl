@@ -37,6 +37,9 @@ if (!defined($root) || !-d $root) {
 }
 my $root_device = (stat($root))[0];
 my $fail = 0;
+my $PORTABLE_MAX_REGISTRY_BYTES = 16 * 1024 * 1024;
+my $PORTABLE_MAX_RECORD_BYTES = 64 * 1024;
+my $PORTABLE_MAX_RECORDS = 10_000;
 
 sub usage {
     my ($status) = @_;
@@ -159,21 +162,22 @@ sub file_measurement {
     my ($path) = @_;
     open my $fh, '<:raw', $path or do {
         problem("cannot read " . display_path($path) . ": $!");
-        return (0, 0);
+        return (0, 0, 0);
     };
-    my ($lines, $bytes) = (0, 0);
-    while (1) {
-        my $read = read($fh, my $chunk, 65536);
-        if (!defined $read) {
-            problem("cannot read " . display_path($path) . ": $!");
-            last;
+    my ($lines, $bytes, $max_line_bytes) = (0, 0, 0);
+    while (my $line = <$fh>) {
+        my $line_bytes = length($line);
+        $bytes += $line_bytes;
+        if ($line =~ /\n\z/) {
+            $lines++;
+            $line_bytes--;
+            $line_bytes-- if $line_bytes > 0 && substr($line, $line_bytes - 1, 1) eq "\r";
         }
-        last if $read == 0;
-        $bytes += $read;
-        $lines += ($chunk =~ tr/\n//);
+        $max_line_bytes = $line_bytes if $line_bytes > $max_line_bytes;
     }
+    problem("cannot read " . display_path($path) . ": $!") if !eof($fh);
     close $fh or problem("cannot close " . display_path($path) . ": $!");
-    return ($lines, $bytes);
+    return ($lines, $bytes, $max_line_bytes);
 }
 
 sub file_sha256 {
@@ -275,15 +279,26 @@ sub read_jsonl {
         problem("$label is not on the project-root volume: $relative");
         return [];
     }
+    my $file_bytes = -s $path;
+    if (!defined($file_bytes) || $file_bytes > $PORTABLE_MAX_REGISTRY_BYTES) {
+        problem("$label exceeds portable file bound $PORTABLE_MAX_REGISTRY_BYTES bytes");
+        return [];
+    }
     open my $fh, '<:raw', $path or do {
         problem("cannot read $label $relative: $!");
         return [];
     };
-    my @rows;
+    my @decoded;
+    my @record_bytes;
     my $line_number = 0;
     while (my $line = <$fh>) {
         $line_number++;
         $line =~ s/\r?\n\z//;
+        my $encoded_bytes = length($line);
+        if ($encoded_bytes > $PORTABLE_MAX_RECORD_BYTES) {
+            problem("$label line $line_number exceeds portable record bound $PORTABLE_MAX_RECORD_BYTES bytes");
+            next;
+        }
         if ($line eq '') {
             problem("$label line $line_number is blank; every JSONL line must be a JSON object");
             next;
@@ -299,10 +314,57 @@ sub read_jsonl {
             problem("$label line $line_number must be a JSON object");
             next;
         }
-        push @rows, [$line_number, $record];
+        push @decoded, [$line_number, $record];
+        push @record_bytes, [$line_number, $encoded_bytes];
     }
     close $fh or problem("cannot close $label $relative: $!");
-    return \@rows;
+    if (!@decoded) {
+        problem("$label lacks its bounded registry metadata record");
+        return [];
+    }
+    my ($metadata_line, $metadata) = @{shift @decoded};
+    my ($ignored_metadata_line, $metadata_bytes) = @{shift @record_bytes};
+    my @metadata_keys = qw(
+        record_type schema_version max_records max_bytes max_record_bytes
+    );
+    my $metadata_valid = validate_keys(
+        $label, $metadata_line, $metadata, \@metadata_keys, [],
+    );
+    if (($metadata->{record_type} // '') ne 'registry'
+            || !nonnegative_integer($metadata->{schema_version})
+            || $metadata->{schema_version} ne '1') {
+        problem("$label must begin with a schema-version 1 registry metadata record");
+        $metadata_valid = 0;
+    }
+    for my $key (qw(max_records max_bytes max_record_bytes)) {
+        if (!positive_integer($metadata->{$key})) {
+            problem("$label metadata has invalid positive $key");
+            $metadata_valid = 0;
+        }
+    }
+    if ($metadata_valid) {
+        problem("$label max_records $metadata->{max_records} exceeds portable bound $PORTABLE_MAX_RECORDS")
+            if $metadata->{max_records} > $PORTABLE_MAX_RECORDS;
+        problem("$label max_bytes $metadata->{max_bytes} exceeds portable bound $PORTABLE_MAX_REGISTRY_BYTES")
+            if $metadata->{max_bytes} > $PORTABLE_MAX_REGISTRY_BYTES;
+        problem("$label max_record_bytes $metadata->{max_record_bytes} exceeds portable bound $PORTABLE_MAX_RECORD_BYTES")
+            if $metadata->{max_record_bytes} > $PORTABLE_MAX_RECORD_BYTES;
+        problem("$label max_record_bytes exceeds its max_bytes")
+            if $metadata->{max_record_bytes} > $metadata->{max_bytes};
+        problem("$label metadata line is $metadata_bytes bytes (> max_record_bytes $metadata->{max_record_bytes})")
+            if $metadata_bytes > $metadata->{max_record_bytes};
+        problem("$label record count " . scalar(@decoded)
+            . " exceeds declared max_records $metadata->{max_records}")
+            if @decoded > $metadata->{max_records};
+        problem("$label size $file_bytes exceeds declared max_bytes $metadata->{max_bytes}")
+            if $file_bytes > $metadata->{max_bytes};
+        for my $measurement (@record_bytes) {
+            my ($record_line, $bytes) = @{$measurement};
+            problem("$label line $record_line is $bytes bytes (> max_record_bytes $metadata->{max_record_bytes})")
+                if $bytes > $metadata->{max_record_bytes};
+        }
+    }
+    return \@decoded;
 }
 
 sub validate_keys {
@@ -325,15 +387,20 @@ sub validate_keys {
 }
 
 sub string_array {
-    my ($label, $line_number, $value, $allow_empty) = @_;
+    my ($label, $line_number, $value, $allow_empty, $max_items, $max_entry_bytes) = @_;
     if (ref($value) ne 'ARRAY' || (!$allow_empty && !@{$value})) {
         problem("$label line $line_number must be a "
             . ($allow_empty ? '' : 'non-empty ') . 'array of strings');
         return [];
     }
+    if (@{$value} > $max_items) {
+        problem("$label line $line_number has " . scalar(@{$value})
+            . " entries (> maximum $max_items)");
+        return [];
+    }
     for my $entry (@{$value}) {
-        if (ref($entry) || !defined($entry) || $entry eq '') {
-            problem("$label line $line_number must contain only non-empty strings");
+        if (!bounded_nonempty_string($entry, $max_entry_bytes)) {
+            problem("$label line $line_number must contain only non-empty single-line strings <= $max_entry_bytes bytes");
             return [];
         }
     }
@@ -362,7 +429,7 @@ sub exact_numeric_object {
 
 sub reference_pressure_object {
     my ($label, $line_number, $value, $allow_zero) = @_;
-    my @keys = qw(files lines_each bytes_each lines_total bytes_total);
+    my @keys = qw(files lines_each bytes_each line_bytes_each lines_total bytes_total);
     if (ref($value) ne 'HASH') {
         problem("$label line $line_number must be an object");
         return undef;
@@ -372,7 +439,7 @@ sub reference_pressure_object {
         problem("$label line $line_number must use null $aggregate for product-bounded aggregate scope")
             if defined $value->{$aggregate};
     }
-    for my $part (qw(lines_each bytes_each)) {
+    for my $part (qw(lines_each bytes_each line_bytes_each)) {
         my $valid = $allow_zero
             ? nonnegative_integer($value->{$part})
             : positive_integer($value->{$part});
@@ -423,7 +490,7 @@ for my $row (@{$surface_rows}) {
     );
 
     my $id = $json->{surface_id};
-    if (ref($id) || !defined($id) || $id !~ /\A[a-z][a-z0-9_]*\z/) {
+    if (!bounded_nonempty_string($id, 128) || $id !~ /\A[a-z][a-z0-9_]*\z/) {
         problem("surface registry line $line_number has invalid surface_id");
         next;
     }
@@ -432,17 +499,21 @@ for my $row (@{$surface_rows}) {
         next;
     }
     for my $key (qw(lifecycle locator owner containment_status state verifier)) {
-        if (ref($json->{$key}) || !defined($json->{$key}) || $json->{$key} eq '') {
+        if (!bounded_nonempty_string($json->{$key}, $key eq 'verifier' ? 1024 : 256)) {
             problem("surface $id has invalid string key: $key");
         }
     }
-    my $targets = string_array("surface $id targets", $line_number, $json->{targets}, 0);
-    my $routes = string_array("surface $id routes_to", $line_number, $json->{routes_to}, 1);
-    my $canonical = string_array(
-        "surface $id canonical_inputs", $line_number, $json->{canonical_inputs}, 1,
+    my $targets = string_array(
+        "surface $id targets", $line_number, $json->{targets}, 0, 128, 512,
     );
-    if (defined($json->{index}) && ref($json->{index})) {
-        problem("surface $id index must be a string or null");
+    my $routes = string_array(
+        "surface $id routes_to", $line_number, $json->{routes_to}, 1, 128, 128,
+    );
+    my $canonical = string_array(
+        "surface $id canonical_inputs", $line_number, $json->{canonical_inputs}, 1, 128, 512,
+    );
+    if (defined($json->{index}) && !bounded_nonempty_string($json->{index}, 512)) {
+        problem("surface $id index must be a non-empty single-line string <= 512 bytes or null");
     }
 
     my %record = (
@@ -506,8 +577,9 @@ for my $row (@{$surface_rows}) {
                 "surface $id mandatory_read", $line_number, $mandatory,
                 [qw(path lines_ceiling bytes_ceiling)], [],
             )) {
-                problem("surface $id mandatory_read path must stay project-relative")
-                    if ref($mandatory->{path}) || !relative_path_ok($mandatory->{path});
+                problem("surface $id mandatory_read path must be a project-relative string <= 512 bytes")
+                    if !bounded_nonempty_string($mandatory->{path}, 512)
+                        || !relative_path_ok($mandatory->{path});
                 problem("surface $id mandatory_read lines_ceiling must be positive")
                     if !positive_integer($mandatory->{lines_ceiling});
                 problem("surface $id mandatory_read bytes_ceiling must be positive")
@@ -530,7 +602,8 @@ for my $row (@{$surface_rows}) {
             )) {
                 problem("surface $id aggregate_change authority_id is invalid")
                     if ref($change->{authority_id})
-                        || ($change->{authority_id} // '') !~ /\A[A-Z][A-Z0-9_.-]*\z/;
+                        || !bounded_nonempty_string($change->{authority_id}, 128)
+                        || $change->{authority_id} !~ /\A[A-Z][A-Z0-9_.-]*\z/;
                 for my $key (qw(owner rationale)) {
                     problem("surface $id aggregate_change has invalid or oversized $key")
                         if !bounded_nonempty_string($change->{$key}, 512);
@@ -577,9 +650,10 @@ for my $row (@{$surface_rows}) {
             my ($contract_id, $currency_verifier) =
                 @{$json->{currency}}{qw(contract_id verifier)};
             if (ref($contract_id) || !defined($contract_id)
+                    || !bounded_nonempty_string($contract_id, 128)
                     || $contract_id !~ /\A[a-z][a-z0-9_.-]*\z/) {
                 problem("surface $id currency has invalid contract_id");
-            } elsif (ref($currency_verifier) || !defined($currency_verifier)
+            } elsif (!bounded_nonempty_string($currency_verifier, 1024)
                     || $currency_verifier !~ /\A(?:core|adapter|external):.+\z/) {
                 problem("surface $id currency verifier must declare core:, adapter:, or external: execution");
             } elsif ($record{lifecycle} =~ /\A(?:archive_terminal|external_terminal|frozen_legacy)\z/) {
@@ -591,15 +665,15 @@ for my $row (@{$surface_rows}) {
         }
     }
 
-    my @pressure_keys = qw(files lines_each bytes_each lines_total bytes_total);
+    my @pressure_keys = qw(files lines_each bytes_each line_bytes_each lines_total bytes_total);
     my @milestone_keys = qw(warning_pct rollover_pct);
     my $measured = $record{locator} eq 'file' || $record{locator} eq 'collection'
         || $record{locator} eq 'generated_file';
     if ($measured) {
         problem("surface $id measured locator has invalid state: $record{state}")
             if $record{state} !~ /\A(?:normal|warning_debt|rollover_debt|structural_debt)\z/;
-        @record{qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total)} = (0) x 5;
-        @record{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total)} = (0) x 5;
+        @record{qw(target_files target_lines_each target_bytes_each target_line_bytes_each target_lines_total target_bytes_total)} = (0) x 6;
+        @record{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_line_bytes_each ceiling_lines_total ceiling_bytes_total)} = (0) x 6;
         @record{@milestone_keys} = (0) x 2;
         my $targets_object = $record{lifecycle} eq 'maintained_reference'
             ? reference_pressure_object(
@@ -621,18 +695,18 @@ for my $row (@{$surface_rows}) {
             "surface $id milestones", $line_number, $json->{milestones}, \@milestone_keys,
         );
         if (defined $targets_object) {
-            @record{qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total)}
+            @record{qw(target_files target_lines_each target_bytes_each target_line_bytes_each target_lines_total target_bytes_total)}
                 = @{$targets_object}{@pressure_keys};
         }
         if (defined $ceilings) {
-            @record{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total)}
+            @record{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_line_bytes_each ceiling_lines_total ceiling_bytes_total)}
                 = @{$ceilings}{@pressure_keys};
         }
         if (defined $milestones) {
             @record{@milestone_keys} = @{$milestones}{@milestone_keys};
         }
         if ($record{state} =~ /\A(?:warning_debt|rollover_debt|structural_debt)\z/) {
-            @record{qw(baseline_files baseline_lines_each baseline_bytes_each baseline_lines_total baseline_bytes_total)} = (0) x 5;
+            @record{qw(baseline_files baseline_lines_each baseline_bytes_each baseline_line_bytes_each baseline_lines_total baseline_bytes_total)} = (0) x 6;
             my $baseline = $record{lifecycle} eq 'maintained_reference'
                 ? reference_pressure_object(
                     "surface $id baseline", $line_number, $json->{baseline}, 0,
@@ -641,11 +715,11 @@ for my $row (@{$surface_rows}) {
                     "surface $id baseline", $line_number, $json->{baseline}, \@pressure_keys,
                 );
             if (defined $baseline) {
-                @record{qw(baseline_files baseline_lines_each baseline_bytes_each baseline_lines_total baseline_bytes_total)}
+                @record{qw(baseline_files baseline_lines_each baseline_bytes_each baseline_line_bytes_each baseline_lines_total baseline_bytes_total)}
                     = @{$baseline}{@pressure_keys};
             }
-            @record{qw(transition_files transition_lines_each transition_bytes_each transition_lines_total transition_bytes_total)} = (0) x 5;
-            @record{qw(ratchet_files ratchet_lines_each ratchet_bytes_each ratchet_lines_total ratchet_bytes_total)} = (0) x 5;
+            @record{qw(transition_files transition_lines_each transition_bytes_each transition_line_bytes_each transition_lines_total transition_bytes_total)} = (0) x 6;
+            @record{qw(ratchet_files ratchet_lines_each ratchet_bytes_each ratchet_line_bytes_each ratchet_lines_total ratchet_bytes_total)} = (0) x 6;
             if (defined $json->{transition}) {
                 if (ref($json->{transition}) ne 'HASH') {
                     problem("surface $id transition must be an object or null");
@@ -654,8 +728,7 @@ for my $row (@{$surface_rows}) {
                     [qw(owner max_growth ratchet_step)], [],
                 )) {
                     my $transition_owner = $json->{transition}{owner};
-                    if (ref($transition_owner) || !defined($transition_owner)
-                            || $transition_owner eq '') {
+                    if (!bounded_nonempty_string($transition_owner, 256)) {
                         problem("surface $id transition must declare a non-empty owner");
                     } else {
                         $record{transition_owner} = $transition_owner;
@@ -670,7 +743,7 @@ for my $row (@{$surface_rows}) {
                             $json->{transition}{max_growth}, \@pressure_keys, 1,
                         );
                     if (defined $growth) {
-                        @record{qw(transition_files transition_lines_each transition_bytes_each transition_lines_total transition_bytes_total)}
+                        @record{qw(transition_files transition_lines_each transition_bytes_each transition_line_bytes_each transition_lines_total transition_bytes_total)}
                             = @{$growth}{@pressure_keys};
                     }
                     my $ratchet = $record{lifecycle} eq 'maintained_reference'
@@ -683,7 +756,7 @@ for my $row (@{$surface_rows}) {
                             $json->{transition}{ratchet_step}, \@pressure_keys,
                         );
                     if (defined $ratchet) {
-                        @record{qw(ratchet_files ratchet_lines_each ratchet_bytes_each ratchet_lines_total ratchet_bytes_total)}
+                        @record{qw(ratchet_files ratchet_lines_each ratchet_bytes_each ratchet_line_bytes_each ratchet_lines_total ratchet_bytes_total)}
                             = @{$ratchet}{@pressure_keys};
                     }
                 }
@@ -725,7 +798,7 @@ for my $row (@{$surface_rows}) {
             if (ref($kind) || !defined($kind)
                     || $kind !~ /\A(?:membership|generated|query)\z/) {
                 problem("surface $id index_contract has invalid kind");
-            } elsif (ref($verifier) || !defined($verifier) || $verifier eq '') {
+            } elsif (!bounded_nonempty_string($verifier, 1024)) {
                 problem("surface $id index_contract must declare a verifier");
             } elsif ($kind eq 'membership' && $verifier ne 'builtin:markdown_links') {
                 problem("surface $id membership index must use builtin:markdown_links");
@@ -769,16 +842,16 @@ for my $id (@surface_order) {
     my $locator = $record->{locator};
     my $measured = $locator eq 'file' || $locator eq 'collection'
         || $locator eq 'generated_file';
-    my @target_fields = qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total);
-    my @ceiling_fields = qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total);
-    my @baseline_fields = qw(baseline_files baseline_lines_each baseline_bytes_each baseline_lines_total baseline_bytes_total);
+    my @target_fields = qw(target_files target_lines_each target_bytes_each target_line_bytes_each target_lines_total target_bytes_total);
+    my @ceiling_fields = qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_line_bytes_each ceiling_lines_total ceiling_bytes_total);
+    my @baseline_fields = qw(baseline_files baseline_lines_each baseline_bytes_each baseline_line_bytes_each baseline_lines_total baseline_bytes_total);
 
     if ($measured) {
         my @applicable_target_fields = $record->{lifecycle} eq 'maintained_reference'
-            ? qw(target_lines_each target_bytes_each)
+            ? qw(target_lines_each target_bytes_each target_line_bytes_each)
             : @target_fields;
         my @applicable_ceiling_fields = $record->{lifecycle} eq 'maintained_reference'
-            ? qw(ceiling_lines_each ceiling_bytes_each)
+            ? qw(ceiling_lines_each ceiling_bytes_each ceiling_line_bytes_each)
             : @ceiling_fields;
         for my $field (@applicable_target_fields, @applicable_ceiling_fields) {
             problem("surface $id has invalid positive $field: $record->{$field}")
@@ -805,7 +878,7 @@ for my $id (@surface_order) {
             if $record->{containment_status} !~ /\A(?:steady|migrated|pinned_deferred)\z/;
         if ($record->{state} =~ /\A(?:warning_debt|rollover_debt|structural_debt)\z/) {
             my @applicable_baseline_fields = $record->{lifecycle} eq 'maintained_reference'
-                ? qw(baseline_lines_each baseline_bytes_each)
+                ? qw(baseline_lines_each baseline_bytes_each baseline_line_bytes_each)
                 : @baseline_fields;
             for my $field (@applicable_baseline_fields) {
                 problem("surface $id debt has invalid positive $field: $record->{$field}")
@@ -813,14 +886,14 @@ for my $id (@surface_order) {
             }
             my @growth_fields = qw(
                 transition_files transition_lines_each transition_bytes_each
-                transition_lines_total transition_bytes_total
+                transition_line_bytes_each transition_lines_total transition_bytes_total
             );
             my @ratchet_fields = qw(
                 ratchet_files ratchet_lines_each ratchet_bytes_each
-                ratchet_lines_total ratchet_bytes_total
+                ratchet_line_bytes_each ratchet_lines_total ratchet_bytes_total
             );
             my @applicable_indexes = $record->{lifecycle} eq 'maintained_reference'
-                ? (1, 2)
+                ? (1, 2, 3)
                 : (0 .. $#ceiling_fields);
             for my $index (@applicable_indexes) {
                 next if !positive_integer($record->{$ceiling_fields[$index]})
@@ -895,14 +968,16 @@ for my $id (@surface_order) {
             problem("surface $id $locator target must match exactly one file");
             next;
         }
-        my ($total_lines, $total_bytes, $max_lines, $max_bytes) = (0, 0, 0, 0);
+        my ($total_lines, $total_bytes, $max_lines, $max_bytes, $max_line_bytes)
+            = (0, 0, 0, 0, 0);
         for my $file (@files) {
             next if !assert_local_regular_file($id, $file);
-            my ($lines, $bytes) = file_measurement($file);
+            my ($lines, $bytes, $line_bytes) = file_measurement($file);
             $total_lines += $lines;
             $total_bytes += $bytes;
             $max_lines = $lines if $lines > $max_lines;
             $max_bytes = $bytes if $bytes > $max_bytes;
+            $max_line_bytes = $line_bytes if $line_bytes > $max_line_bytes;
         }
         if ($record->{lifecycle} eq 'maintained_reference') {
             my @aggregate = (
@@ -945,6 +1020,9 @@ for my $id (@surface_order) {
                 $record->{ceiling_lines_each}, $record->{baseline_lines_each}],
             ['max bytes', 'bytes_each', $max_bytes, $record->{target_bytes_each},
                 $record->{ceiling_bytes_each}, $record->{baseline_bytes_each}],
+            ['max line bytes', 'line_bytes_each', $max_line_bytes,
+                $record->{target_line_bytes_each}, $record->{ceiling_line_bytes_each},
+                $record->{baseline_line_bytes_each}],
             ['total lines', 'lines_total', $total_lines, $record->{target_lines_total},
                 $record->{ceiling_lines_total}, $record->{baseline_lines_total}],
             ['total bytes', 'bytes_total', $total_bytes, $record->{target_bytes_total},
@@ -1023,20 +1101,22 @@ for my $id (@surface_order) {
         };
         if ($record->{lifecycle} eq 'maintained_reference') {
             ok_note(sprintf(
-                'surface %s: maintained reference actual files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; per-part health target lines_each=%d, bytes_each=%d; inclusive per-part ceiling lines_each=%d, bytes_each=%d; aggregate authority %s; target peak %.1f%%, ceiling peak %.1f%% (%s, %s)',
-                $id, scalar(@files), $max_lines, $max_bytes, $total_lines, $total_bytes,
-                @{$record}{qw(target_lines_each target_bytes_each)},
-                @{$record}{qw(ceiling_lines_each ceiling_bytes_each)},
+                'surface %s: maintained reference actual files=%d, lines_each=%d, bytes_each=%d, line_bytes_each=%d, lines_total=%d, bytes_total=%d; per-part health target lines_each=%d, bytes_each=%d, line_bytes_each=%d; inclusive per-part ceiling lines_each=%d, bytes_each=%d, line_bytes_each=%d; aggregate authority %s; target peak %.1f%%, ceiling peak %.1f%% (%s, %s)',
+                $id, scalar(@files), $max_lines, $max_bytes, $max_line_bytes,
+                $total_lines, $total_bytes,
+                @{$record}{qw(target_lines_each target_bytes_each target_line_bytes_each)},
+                @{$record}{qw(ceiling_lines_each ceiling_bytes_each ceiling_line_bytes_each)},
                 $record->{reference_authority_id} // 'invalid',
                 $target_peak_pct, $ceiling_peak_pct, $record->{state},
                 $record->{containment_status},
             ));
         } else {
             ok_note(sprintf(
-                'surface %s: actual files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; health target files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; inclusive enforcement ceiling files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; target peak %.1f%%, ceiling peak %.1f%% (%s, %s)',
-                $id, scalar(@files), $max_lines, $max_bytes, $total_lines, $total_bytes,
-                @{$record}{qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total)},
-                @{$record}{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total)},
+                'surface %s: actual files=%d, lines_each=%d, bytes_each=%d, line_bytes_each=%d, lines_total=%d, bytes_total=%d; health target files=%d, lines_each=%d, bytes_each=%d, line_bytes_each=%d, lines_total=%d, bytes_total=%d; inclusive enforcement ceiling files=%d, lines_each=%d, bytes_each=%d, line_bytes_each=%d, lines_total=%d, bytes_total=%d; target peak %.1f%%, ceiling peak %.1f%% (%s, %s)',
+                $id, scalar(@files), $max_lines, $max_bytes, $max_line_bytes,
+                $total_lines, $total_bytes,
+                @{$record}{qw(target_files target_lines_each target_bytes_each target_line_bytes_each target_lines_total target_bytes_total)},
+                @{$record}{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_line_bytes_each ceiling_lines_total ceiling_bytes_total)},
                 $target_peak_pct, $ceiling_peak_pct, $record->{state}, $record->{containment_status},
             ));
         }
@@ -1149,9 +1229,13 @@ for my $row (@{$route_rows}) {
     next if !validate_keys('route registry', $line_number, $record, \@route_keys, []);
     my ($route_id, $route_kind, $source_path, $source_id, $marker, $target_id) =
         @{$record}{@route_keys};
-    if (grep { ref($_) || !defined($_) || $_ eq '' }
-            ($route_id, $route_kind, $source_path, $source_id, $marker, $target_id)) {
-        problem("route registry line $line_number must contain non-empty strings");
+    if (!bounded_nonempty_string($route_id, 128)
+            || !bounded_nonempty_string($route_kind, 32)
+            || !bounded_nonempty_string($source_path, 512)
+            || !bounded_nonempty_string($source_id, 128)
+            || !bounded_nonempty_string($marker, 512)
+            || !bounded_nonempty_string($target_id, 128)) {
+        problem("route registry line $line_number contains an empty, multiline, or oversized scalar");
         next;
     }
     if ($route_id !~ /\A[a-z][a-z0-9_]*\z/) {
@@ -1247,8 +1331,11 @@ for my $row (@{$evidence_rows}) {
     my @keys = qw(map_id source_path begin_marker end_marker);
     next if !validate_keys('evidence-map registry', $line_number, $record, \@keys, []);
     my ($map_id, $source_path, $begin, $end) = @{$record}{@keys};
-    if (grep { ref($_) || !defined($_) || $_ eq '' } ($map_id, $source_path, $begin, $end)) {
-        problem("evidence-map registry line $line_number must contain non-empty strings");
+    if (!bounded_nonempty_string($map_id, 128)
+            || !bounded_nonempty_string($source_path, 512)
+            || !bounded_nonempty_string($begin, 512)
+            || !bounded_nonempty_string($end, 512)) {
+        problem("evidence-map registry line $line_number contains an empty, multiline, or oversized scalar");
         next;
     }
     if ($map_id !~ /\A[a-z][a-z0-9_]*\z/) {
@@ -1295,30 +1382,8 @@ my $retention_rows = read_jsonl(
     $retention_contracts_arg, 'version-object retention contract registry'
 );
 my %retention_contracts;
-my $retention_registry_metadata = 0;
-my ($retention_max_records, $retention_max_bytes);
 for my $row (@{$retention_rows}) {
     my ($line_number, $record) = @{$row};
-    if (($record->{record_type} // '') eq 'registry') {
-        my @keys = qw(record_type schema_version max_records max_bytes);
-        if (validate_keys(
-            'version-object retention contract registry', $line_number,
-            $record, \@keys, [],
-        )) {
-            problem('version-object retention contract registry metadata is declared more than once')
-                if $retention_registry_metadata++;
-            problem("version-object retention contract registry has unsupported schema_version: $record->{schema_version}")
-                if !nonnegative_integer($record->{schema_version})
-                    || $record->{schema_version} ne '1';
-            $retention_max_records = $record->{max_records};
-            $retention_max_bytes = $record->{max_bytes};
-            problem('version-object retention contract registry max_records must be positive')
-                if !positive_integer($retention_max_records);
-            problem('version-object retention contract registry max_bytes must be positive')
-                if !positive_integer($retention_max_bytes);
-        }
-        next;
-    }
     my @keys = qw(record_type schema_version contract_id owner guarantee recovery);
     next if !validate_keys(
         'version-object retention contract registry', $line_number,
@@ -1326,9 +1391,13 @@ for my $row (@{$retention_rows}) {
     );
     my ($type, $version, $id, $owner, $guarantee, $recovery) =
         @{$record}{@keys};
-    if (grep { ref($_) || !defined($_) || $_ eq '' || $_ =~ /[\t\r\n]/ }
-            ($type, $version, $id, $owner, $guarantee, $recovery)) {
-        problem("version-object retention contract registry line $line_number must contain non-empty single-line strings");
+    if (!bounded_nonempty_string($type, 32)
+            || !bounded_nonempty_string($version, 16)
+            || !bounded_nonempty_string($id, 128)
+            || !bounded_nonempty_string($owner, 256)
+            || !bounded_nonempty_string($guarantee, 1024)
+            || !bounded_nonempty_string($recovery, 1024)) {
+        problem("version-object retention contract registry line $line_number contains an empty, multiline, or oversized scalar");
         next;
     }
     problem("version-object retention contract registry line $line_number must use record_type contract")
@@ -1341,38 +1410,11 @@ for my $row (@{$retention_rows}) {
         if exists $retention_contracts{$id};
     $retention_contracts{$id} = $record;
 }
-problem('version-object retention contract registry lacks its schema metadata record')
-    if !$retention_registry_metadata;
-my $retention_contract_count = scalar keys %retention_contracts;
-problem("version-object retention contract count $retention_contract_count exceeds max_records $retention_max_records")
-    if positive_integer($retention_max_records)
-        && $retention_contract_count > $retention_max_records;
-if (relative_path_ok($retention_contracts_arg)
-    && -f root_path($retention_contracts_arg)
-    && positive_integer($retention_max_bytes)) {
-    my $actual_bytes = -s root_path($retention_contracts_arg);
-    problem("version-object retention contract registry size $actual_bytes exceeds max_bytes $retention_max_bytes")
-        if $actual_bytes > $retention_max_bytes;
-}
 
 my $archive_rows = read_jsonl($archives_arg, 'archive descriptor registry');
 my %descriptor_ids;
-my $archive_registry_metadata = 0;
 for my $row (@{$archive_rows}) {
     my ($line_number, $record) = @{$row};
-    if (($record->{record_type} // '') eq 'registry') {
-        my @metadata_keys = qw(record_type schema_version);
-        if (validate_keys(
-            'archive descriptor registry', $line_number, $record, \@metadata_keys, [],
-        )) {
-            problem('archive descriptor registry metadata is declared more than once')
-                if $archive_registry_metadata++;
-            problem("archive descriptor registry has unsupported schema_version: $record->{schema_version}")
-                if !nonnegative_integer($record->{schema_version})
-                    || $record->{schema_version} ne '1';
-        }
-        next;
-    }
     if (($record->{record_type} // '') ne 'descriptor') {
         problem("archive descriptor registry line $line_number has unknown record_type");
         next;
@@ -1391,6 +1433,16 @@ for my $row (@{$archive_rows}) {
     if (grep { ref($_) || !defined($_) } @{$record}{@archive_keys}) {
         problem("archive descriptor registry line $line_number must contain scalar values");
         next;
+    }
+    for my $field (
+        [record_type => 32], [descriptor_id => 128], [surface_id => 128],
+        [former_path => 512], [range_id => 128], [revision => 128],
+        [retrieval_kind => 32], [retrieval_locator => 1024],
+        [current_pointer => 512], [sealed_on => 32], [verifier => 1024],
+    ) {
+        my ($key, $max_bytes) = @{$field};
+        problem("archive descriptor $descriptor_id has empty, multiline, or oversized $key")
+            if !bounded_nonempty_string($record->{$key}, $max_bytes);
     }
     problem("archive descriptor $descriptor_id has unsupported schema_version: $schema_version")
         if $schema_version ne '1';
@@ -1464,8 +1516,6 @@ for my $row (@{$archive_rows}) {
         problem("archive descriptor $descriptor_id has unknown retrieval_kind: $retrieval_kind");
     }
 }
-problem('archive descriptor registry lacks its schema metadata record')
-    if !$archive_registry_metadata;
 
 for my $proof (sort keys %adapter_proof) {
     problem("adapter proof does not match a declared adapter verifier: $proof");

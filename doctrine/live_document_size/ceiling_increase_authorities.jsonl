@@ -1,1 +1,1 @@
-{"record_type":"registry","schema_version":1}
+{"record_type":"registry","schema_version":1,"max_records":128,"max_bytes":65536,"max_record_bytes":2048}

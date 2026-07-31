@@ -234,7 +234,9 @@ Expected signals:
 
 - mdBook completes without broken source or renderer errors.
 - docs relative-path audit reports no machine-local home-directory paths.
-- live-document size check reports actual/target/ceiling pressure, measures every lifecycle/path, proves bounded maintained-reference reads/parts plus exact fresh aggregate authority, and rejects schema, locality, coverage, pressure, immutable-baseline, stale-ratchet, unauthorized-increase, stale/reused authority, typed-route, index, evidence, staged-result, identity, or descriptor drift.
+- live-document size check reports all six pressure axes, proves bounded JSONL
+  control data and maintained-reference authority, and rejects scalar/array,
+  locality, coverage, pressure, route, index, evidence, and identity drift.
 - README entry-point check confirms `README.md` is under its line and byte caps
   while retaining the purpose, first-use path, architecture summary, and
   navigation expected of the rendered GitHub landing page; it also rejects
