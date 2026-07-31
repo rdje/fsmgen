@@ -32215,3 +32215,11 @@ task tree and git.
   values plus two migrated, nine pinned/deferred, and five steady measured
   surfaces. Focused equality/overflow/lowering/ratchet/authority tests pass at
   `Files=3, Tests=20`; the full doctrine and mdBook gates pass.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19 — verifier-execution closure activated
+
+- From clean `.18` commit `9bd081935`, activate `.19` alone to prove declared
+  freshness/retrieval verifier execution, unconditional doctrine-driver
+  reachability, and two-way deletion/vacuity controls.
+- This continuity slice changes no checker, schema, verifier, document
+  lifecycle, archive, generated artifact, or product behavior.

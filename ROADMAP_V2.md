@@ -10437,5 +10437,6 @@ The first honest `R11` slices are now:
   sides of transition pressure. Any widening needs an exact new append-only
   authority row plus a new decision in the same Git change; reductions are
   free. The migration raises no predecessor ceiling and reports two migrated,
-  nine pinned/deferred, and five steady measured surfaces. `.19` is the next
-  clean activation frontier for verifier execution and driver reachability.
+  nine pinned/deferred, and five steady measured surfaces. Clean `.18` commit
+  `9bd081935` now activates `.19` alone for verifier execution and driver
+  reachability; activation changes no schema, verifier, lifecycle, or behavior.

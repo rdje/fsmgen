@@ -192,7 +192,7 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19`
-  Status: `pending`
+  Status: `active`
   Goal: `Make verifier execution and doctrine-driver reachability mechanically closed.`
   Acceptance: `Generated freshness and version retrieval declare core, adapter, or external execution; a green result proves execution or prints a fail-closed declared degradation rather than executable presence; every adapter verifier is mechanically reachable through the single unconditional doctrine driver and CI invokes that driver instead of re-enumerating checks; deletion/vacuity and both-direction negative fixtures prove each control observes its intended subject.`
   Verification: `pending`
@@ -295,7 +295,7 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Open Questions
 
-- None for completed `.18` or next `.19`. The two reviews are fully reconciled
+- None for completed `.18` or active `.19`. The two reviews are fully reconciled
   in the tracked bounded disposition. The existing four-file review remains
   authoritative for those files' semantic roles.
 
@@ -362,6 +362,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.17` external review disposition | 17 findings plus Q1-Q31; review/source identity; IAL2 overlap root cause; pressure census; decision 0044; leaves `.15`-`.23`; evidence-map/neutrality source inspection; focused/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; disposition 333 lines/17,165 bytes/183-byte longest line; PGEN 393/26,788 and ANVIL 334/44,242 review identities; exact IAL2 source 21,726/4,662,385 at SHA-256 8cff8e7b... plus 844-node segment; pinned/deferred candidates 7,775,451/8,955,512 bytes (86.8%); focused Files=5/Tests=71; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 staged paths; Knowledge Map 1,096 facts/5,741 keys; 37 chapters; removed 73-file/16,984-KiB build; all 17 evidence paths resolve; no enforcement, registry value, threshold, packet content, lifecycle, frozen identity, landing content, or product change |
 | `2026-07-31` | `.18` activation | clean `3b782fc10` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; focused path/task/live-size, Knowledge Map, Memory, mdBook, diff, staged-doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=45; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,741 keys; all 37 chapters test; removed 73-file/16,984-KiB build; Memory 43 lines; `.18` alone active; no checker, test, schema/value/limit, document lifecycle/content, frozen identity, landing content, or product change |
 | `2026-07-31` | `.18` target/ceiling enforcement | explicit target/ceiling schema; inclusive equality; debt ratchet; append-only fresh decision authority; migrated/pinned/steady report; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; no predecessor ceiling increase; focused Files=3/Tests=20; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,743 keys; Memory 42 lines; 37 chapters; removed 73-file/16,996-KiB build; all nine doctrines pass; no lifecycle, frozen identity, landing content, archive, or product behavior change |
+| `2026-07-31` | `.19` activation | clean `9bd081935` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; Files=2/Tests=36; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,743 keys; Memory 43 lines; all 37 chapters test; removed 73-file/16,996-KiB build; `.19` alone active; no checker, schema, verifier, lifecycle, archive, or product behavior change |
 
 ## Commit Log
 
@@ -380,6 +381,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.17` external review disposition | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17: reconcile external containment reviews` | Publish decision 0044, corrected evidence, all finding/question dispositions, and atomic `.15`-`.23` remediation ownership without changing behavior. |
 | `.18` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18: activate health-target and ceiling semantics` | Activate only target/ceiling/ratchet/increase-authority implementation from clean disposition commit `3b782fc10`; implementation remains pending. |
 | `.18` target/ceiling enforcement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18: distinguish health targets from ceilings` | Separate health from quarantine, ratchet debt downward, and require fresh reviewed authority for widening without raising a predecessor ceiling. |
+| `.19` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19: activate verifier execution closure` | Activate only executed-verifier and unconditional-driver-reachability implementation from clean `.18` commit `9bd081935`; implementation remains pending. |
 
 ## Changelog
 
@@ -424,3 +426,6 @@ no routed destination becomes the next uninstrumented blob.
   health targets and inclusive ceilings, immutable debt baselines, banded
   ratchets, and exact fresh increase authority. No predecessor ceiling rises;
   `.19` is the next clean activation frontier.
+- `2026-07-31`: Clean `.18` commit `9bd081935` activates `.19` alone for
+  verifier execution, driver reachability, and vacuity controls; activation
+  changes no checker, schema, verifier, document lifecycle, or product behavior.

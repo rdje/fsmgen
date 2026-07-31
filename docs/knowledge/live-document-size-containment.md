@@ -111,3 +111,7 @@ raises no predecessor ceiling. Output names actual/target/ceiling values and
 separately summarizes two migrated surfaces, nine pinned/deferred surfaces,
 and five steady measured surfaces, avoiding a false claim that complete path
 classification means containment is complete.
+
+Clean `.18` commit `9bd081935` activates `.19` alone to close declared-verifier
+execution and unconditional doctrine-driver reachability. The activation does
+not yet change a verifier, checker, schema, lifecycle, or product behavior.
