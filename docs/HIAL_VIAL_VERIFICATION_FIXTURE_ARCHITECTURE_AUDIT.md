@@ -504,9 +504,11 @@ IDs, normalized types and facts, source/review identities, full provenance,
 defensive data, exact capabilities/limits, and explicit residue without a
 bridge file, public API, VIAL binding, execution plan, backend artifact, or
 runtime claim. Generated IAL0 and HIAL SV/VHDL behavior remain preserved.
-Proposed `.6` is selected next for separate clean activation of the exact
-`VIALExecutionIR`, logical-time, native-extension, plan, result, and parity
-contract.
+Clean bridge-implementation commit `51434a2ae` permits a separate continuity-
+only activation of `.6` for selection of the exact `VIALExecutionIR`, logical-
+time, native-extension, plan, result, and parity contract. Activation changes
+no compiler, schema, artifact, tool, runtime, parity, or product behavior;
+contract selection remains unperformed until it commits cleanly.
 
 ## Rollback
 

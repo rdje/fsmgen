@@ -553,9 +553,12 @@ evidence. The canonical architecture record is
 and the owning [task tree](../../tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md)
 tracks the exact frontier.
 
-The bounded source/SemanticIR implementation is complete. Bridge-contract leaf
-`.4` now selects version 1 under decision `0035`; clean contract commit
-`0366dfe30` activates `.5` as the private in-process/no-file implementation
-owner. Activation itself changes no HIAL producer, parser, generated-IAL1
-annotation, bridge object/report, artifact, capability/support entry, HIAL
-output, VIAL binding, or runtime behavior.
+The bounded source/SemanticIR and private bridge implementations are complete.
+Bridge leaf `.5` now ships the 27-key defensive in-process manifest through
+canonical HIAL review routes, including generated/reparsed IAL1 annotation for
+IAL2, without writing a bridge file or binding VIAL. Clean implementation
+commit `51434a2ae` permits a separate continuity-only activation of `.6` for
+the exact `VIALExecutionIR`, deterministic logical-time, typed native-
+extension, plan, result, and parity contract. Selection remains unperformed
+until activation commits cleanly. Activation changes no source/IR, bridge,
+artifact, scheduler, backend, runtime, parity, or product behavior.

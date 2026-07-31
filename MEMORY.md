@@ -6,18 +6,17 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5: implement review-routed bridge manifest`).
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.5` is
-  complete and proposed `.6` is selected next for clean activation.
-- current_state: private bridge v1 ships in-process through direct IAL0,
-  direct IAL1, and IAL2 only through generated/reparsed IAL1. The tree is
-  handoff-ready after this commit; VIAL remains unbound.
-- next_action: activate only documentation contract leaf
-  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6` from this clean predecessor,
-  then select the exact ExecutionIR/logical-time/native-extension/plan/result/
-  parity contract in a separate slice.
-- in_flight_uncommitted: none after this implementation commit; no background
-  job and repository-local mdBook output was removed exactly.
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6: activate VIAL execution contract`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.6` is
+  active for documentation-only execution-contract selection.
+- current_state: private bridge v1 ships in-process through canonical HIAL
+  review routes; this commit activates `.6` continuity only. VIAL remains
+  unbound and the execution contract remains unselected.
+- next_action: select the exact `VIALExecutionIR`/logical-time/typed-native-
+  extension/plan/result/parity contract under active `.6`, without product
+  behavior, then select `.7` for a separate clean activation.
+- in_flight_uncommitted: none after this activation commit; no background job
+  and repository-local mdBook output was removed exactly.
 - blockers: none for `.6`. Proposed
   `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.1` separately owns
   pre-existing t370 discovery-map drift; it does not block bridge completion.
@@ -42,10 +41,10 @@ history; this file carries only the current bounded resume state.
 - The scalar-only profile leaves transaction `type_id` null and uses field
   type IDs; bridge events use a closed backend-neutral canonical expression
   record because the public IAL1 report has no reusable expression AST.
-- Closeout: focused Files=6/Tests=7,058; adjacent Files=28/Tests=56; changed
-  modules compile; trees=2/nodes=865; docs Files=4/Tests=51; 37 chapters;
-  build 73 files/16,965,845 bytes; Knowledge Map 1,089 facts/5,643 keys; staged
-  acceptance and all eight doctrines pass.
+- `.6` activation closeout: trees=2/nodes=865; docs Files=4/Tests=51; all 37
+  chapters test; build 73 files/16,971,000 bytes; Knowledge Map 1,089 facts/
+  5,643 keys; Memory/diff/docs-only acceptance/all eight doctrines pass; exact
+  output cleanup passes. No execution behavior is claimed.
 - Guarded wider AHB verification stopped at 88.1% host use without a test
   failure; no unfinished broad-suite pass is claimed. t370 is durably parked.
 - Decisions `0025` freezes legacy status files. Push only on explicit request

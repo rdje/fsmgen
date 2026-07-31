@@ -4438,7 +4438,11 @@ logical names, capabilities, limits, and explicit residue. It resolves every
 checked AHB VIAL bridge reference without binding VIAL or exposing target
 hierarchy. There is still no public CLI/API, bridge file, execution plan,
 verification output, compile/simulation, backend-methodology, or parity claim.
-Proposed `.6` is next for separate clean activation of the execution contract.
+Clean bridge-implementation commit `51434a2ae` permits the separate
+continuity-only activation of `.6` for execution-contract selection. The
+contract itself remains unperformed until activation commits cleanly; no VIAL
+binding/ExecutionIR, plan/result artifact, scheduler, native extension,
+backend, runtime, parity, or product behavior changes during activation.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -12188,6 +12192,12 @@ no-file implementation `.5`. The parser, generated-IAL1 annotation, bridge
 object/report, capability/support entries, artifacts, HIAL output, VIAL
 binding, runtime, and product behavior remain unchanged until implementation
 executes after activation commits cleanly.
+Completed `.5` now ships that private producer through canonical HIAL review
+routes without writing a bridge file or binding VIAL. Clean implementation
+commit `51434a2ae` permits the continuity-only activation of `.6` for exact
+`VIALExecutionIR`, deterministic logical-time, native-extension, plan, result,
+and parity contract selection. Selection remains unperformed until activation
+commits cleanly, and activation changes no product behavior.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

@@ -31507,6 +31507,25 @@ task tree and git.
   54 lines; doctrines and exact output cleanup pass.
 - No separate development note is warranted for this continuity-only slice.
 
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6 — VIAL execution contract activated
+
+- Activated only documentation contract `.6` after clean bridge-
+  implementation commit `51434a2ae`; task/index, roadmap, audit, bridge-
+  contract boundary, mdBook, facts, bounded Memory, changelog, and Knowledge
+  Map continuity move together.
+- The exact `VIALExecutionIR`, deterministic logical-time, typed native-
+  extension, plan, result, and parity contract remains unperformed until this
+  activation commits cleanly.
+- VIAL source/SemanticIR, HIAL bridge/parser/annotation/report, binding,
+  ExecutionIR, schemas/artifacts, scheduler, extensions, target backends,
+  CLI/API, capability/support surfaces, compilation, simulation, parity, and
+  product behavior remain unchanged.
+- Task-tree integrity passes at two active trees / 865 nodes; docs pass at
+  `Files=4, Tests=51`; all 37 chapters and the 73-file / 16,971,000-byte local
+  build pass; Knowledge Map passes at 1,089 facts / 5,643 keys; Memory remains
+  51 lines; doctrines and exact output cleanup pass. No separate development
+  note is warranted for this activation-only slice.
+
 ### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5 — review-routed bridge manifest implemented
 
 - Added private immutable `FSM::HIAL::VIALBridge` Builder/Manifest/Report

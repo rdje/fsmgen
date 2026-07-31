@@ -59,4 +59,6 @@ concepts require exact capability mappings or fail before output. The bounded
 `.3` source/SemanticIR implementation remains the first profile unchanged.
 Every later feature must expose, compose, or compress verification intent; a
 one-to-one catalog of renamed SV/UVM/VHDL syntax, classes, or methods is
-explicitly out of scope.
+explicitly out of scope. Active documentation leaf `.6` owns selection of the
+execution contract that preserves this separation; its continuity-only
+activation selects no behavior.

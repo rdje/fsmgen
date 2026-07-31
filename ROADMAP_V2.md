@@ -8451,6 +8451,13 @@ preserved. No VIAL binding, bridge file, public API, plan, verification
 artifact, runtime, target-methodology, or parity claim is added. Proposed `.6`
 alone is selected next for a separate clean activation of execution-contract
 selection.
+Clean bridge-implementation commit `51434a2ae` permits a continuity-only
+activation of documentation contract `.6`. This transition changes no VIAL
+source/SemanticIR, HIAL bridge/parser/annotation/report, VIAL binding or
+`VIALExecutionIR`, plan/result schema or artifact, scheduler, native extension,
+target backend, CLI/API, capability/support surface, compilation, simulation,
+parity, or product behavior. Exact execution-contract selection remains
+unperformed until the activation commits cleanly.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
