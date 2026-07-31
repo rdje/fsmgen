@@ -8407,6 +8407,10 @@ boundaries, planned `vial/ahb_subordinate_base_output_arbitration.vial`, four
 implementation packages, and focused t1550 are selected. Proposed `.3` alone
 owns implementation after separate clean activation; no behavior changes in
 contract selection. See `docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md`.
+Clean contract commit `08f59167b` activates only `.3` through a separate
+continuity transition. The parser, builder, SemanticIR, report, AHB source,
+t1550, capability/support entries, and every product behavior remain unchanged
+during activation.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
@@ -9420,7 +9424,9 @@ Clean audit commit `2e2f7d25e` activates only `.2`; its exact source and
 semantic-IR contract remained unperformed during activation. Completed `.2`
 now selects the closed spanned VIAL v1 source and private typed semantic record
 under decision `0033`. Proposed `.3` is the only next implementation owner and
-requires separate clean activation.
+requires separate clean activation. Clean contract commit `08f59167b` now
+activates only `.3`; implementation remains unperformed until that continuity
+commit is clean.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile

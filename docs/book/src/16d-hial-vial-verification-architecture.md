@@ -126,6 +126,10 @@ type-check, and produce a sanitized semantic report. Bridge binding, execution
 plans, generated fixtures, simulation, and results remain later phases. See
 the exact [VIAL source and SemanticIR v1 contract](../../VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).
 
+Clean contract commit `08f59167b` activates only the bounded parser/SemanticIR
+implementation leaf. Activation itself adds no parser, source, report,
+capability, support, test, binding, output, or runtime behavior.
+
 ## The two private IR boundaries
 
 `VIALSemanticIR` owns parsed, typed, validated verification meaning before it

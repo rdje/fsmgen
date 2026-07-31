@@ -52,6 +52,7 @@ sample/event/model/choice references.
 `FSM::VIAL::SemanticBuilder` alone constructs private immutable
 `FSM::VIAL::SemanticIR`; all structured access and sanitized reports are
 defensive clones. The planned first source is
-`vial/ahb_subordinate_base_output_arbitration.vial`. Proposed `.3` alone owns
-the four implementation packages, source, and focused
-`t/1550-vial-semantic-ir.t` after a separate clean activation.
+`vial/ahb_subordinate_base_output_arbitration.vial`. Clean contract commit
+`08f59167b` activates only `.3`, which owns the four implementation packages,
+source, and focused `t/1550-vial-semantic-ir.t`; activation changes no product
+behavior.

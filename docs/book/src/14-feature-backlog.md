@@ -4408,6 +4408,9 @@ diagnostics/report projections are selected. Properties reuse the shared
 `vial/ahb_subordinate_base_output_arbitration.vial` remains unshipped until
 proposed `.3` is separately activated and implemented. The exact contract is
 [VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT](../../VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).
+Clean contract commit `08f59167b` activates only `.3`; no parser, source,
+semantic report, capability/support entry, test, or runtime behavior changes
+during the activation transition.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -12127,6 +12130,8 @@ Completed `.2` accepts decision `0033`, freezes the exact spanned source,
 typed semantic record, report/diagnostic, first-source, resource-limit, and
 negative-boundary contract, and selects proposed implementation `.3` alone for
 a separate clean activation. No source or parser ships in contract selection.
+Clean contract commit `08f59167b` activates only `.3`; the implementation
+remains unperformed until activation commits cleanly.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

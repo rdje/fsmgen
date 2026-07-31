@@ -69,6 +69,6 @@ fixture, migration, public artifacts, parity, and scale boundaries. Clean audit
 commit `2e2f7d25e` activated only
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`; completed `.2` now selects the
 exact spanned `.vial` version-1 language and private typed `VIALSemanticIR`
-under decision `0033`. Proposed `.3` alone owns implementation after separate
-clean activation; no parser, source, report, or product behavior ships in the
-contract slice.
+under decision `0033`. Clean contract commit `08f59167b` activates only `.3`
+through a separate continuity transition; no parser, source, report, or
+product behavior changes during activation.
