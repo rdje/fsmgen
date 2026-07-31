@@ -89,4 +89,7 @@ the bridge schema. `.7.3` now ships the private binder, immutable ExecutionIR,
 deterministic plan-time random/replay, defensive in-process plan, event/
 adapter binding, exact resource accounting, atomic diagnostics, and private
 capability discovery. It emits no file or backend and exposes no supported
-public API. Proposed `.8` is the next public-tooling contract activation.
+public API. Clean `.7.3` implementation commit `44dbecd1a` permits active `.8`
+to select the public-tooling contract after a separate continuity-only
+activation; no command, API, file, artifact, backend, or runtime ships in that
+transition.

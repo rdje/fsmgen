@@ -31716,3 +31716,17 @@ task tree and git.
   No public VIAL CLI/API, plan/result file, generated SV/UVM/VHDL artifact,
   compile, simulation, runtime, parity pass, mixed-language, or scale claim is
   added. Proposed `.8` is next for separate public-tooling contract activation.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8 — public VIAL tooling contract activated
+
+- Activated only documentation selection of the public VIAL CLI/API,
+  terse/verbose projection, repository-local artifact layout, manifest/report,
+  capability/diagnostic/support-accounting, and compatibility contract after
+  clean `.7.3` implementation commit `44dbecd1a`.
+- No parser, SemanticIR, bridge, binder, ExecutionIR, plan implementation,
+  public command/API/file, artifact, backend, compile, simulation, runtime,
+  result, parity, UVM/VHDL methodology, mixed-language, or product behavior
+  changes during activation.
+- Final task-tree, docs, mdBook, Knowledge Map, Memory, staged docs-only
+  acceptance, doctrine, and cleanup evidence is recorded in the owning task
+  tree. No separate development note is warranted for this continuity slice.

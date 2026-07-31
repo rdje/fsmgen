@@ -4467,8 +4467,9 @@ process `fsmgen.vial_plan.v1`, exact directional relation evidence, explicit
 event/adapter bindings, resource limits, and atomic diagnostics. The checked
 AHB plan has 21 operations, four total fibers, a three-fiber simultaneous
 maximum, ten type relations, and one shared scenario decision occurrence.
-Proposed `.8` is next for separate clean activation of the public tooling
-contract. No plan/result file, backend artifact, compile, simulation, runtime,
+Clean `.7.3` implementation commit `44dbecd1a` activates `.8` continuity-only
+for public tooling-contract selection. No plan/result file, backend artifact,
+compile, simulation, runtime,
 parity pass, or target-methodology behavior ships in `.7.3`. See the
 [type-binding mismatch audit](../../VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md).
 The already-selected result and parity schema names are recorded as future

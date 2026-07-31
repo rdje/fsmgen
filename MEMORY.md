@@ -6,18 +6,18 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3: implement private VIAL execution plan`).
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.7` and
-  implementation leaf `.7.3` are complete. Proposed `.8` is the next frontier.
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8: activate public VIAL tooling contract`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.7.3` is
+  complete and `.8` is active for public tooling-contract selection.
 - current_state: the private exact-class binder now produces immutable
   target-neutral ExecutionIR and a defensive in-process plan from checked VIAL
   SemanticIR plus the review-routed HIAL bridge. No backend/runtime ships.
-- next_action: from the clean `.7.3` implementation commit, activate only `.8`
-  for public VIAL CLI/API, repository-local artifact, manifest/report,
-  capability, diagnostic, support-accounting, and compatibility selection.
-- in_flight_uncommitted: none after this implementation commit; no background
+- next_action: audit and select the exact `.8` public VIAL CLI/API,
+  terse/verbose projection, repository-local artifact layout, manifest/report,
+  capability, diagnostic, support-accounting, and compatibility contract.
+- in_flight_uncommitted: none after this activation commit; no background
   job and repository-local mdBook output is removed exactly.
-- blockers: none for proposed `.8`. Proposed `CAPABILITY-MANIFEST-
+- blockers: none for active `.8`. Proposed `CAPABILITY-MANIFEST-
   VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.1` separately owns pre-existing t370
   discovery-map drift.
 

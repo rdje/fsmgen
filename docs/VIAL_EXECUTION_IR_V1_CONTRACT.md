@@ -1236,6 +1236,9 @@ not write a plan/result
 file, modify `.vial` syntax, change SemanticIR or bridge schema, emit target
 verification code, compile/simulate, or claim runtime/parity. `.8` owns public
 tooling and file placement; `.9` onward own backend contracts and execution.
+Clean `.7.3` implementation commit `44dbecd1a` permits `.8` to select that
+public tooling contract after a separate continuity-only activation; activation
+does not itself implement a command, API, file, layout, or artifact.
 
 This contract does not choose a UVM revision, simulator, VHDL methodology,
 GHDL profile, mixed-language tool, clocking-block/process implementation, UVM

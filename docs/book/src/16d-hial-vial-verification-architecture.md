@@ -699,7 +699,8 @@ logic carriers. Director-approved decision `0037` and `.7.2` select the
 directional proof rule described above. Clean selection commit `2a1b3cefc`
 activated `.7.3`, which now ships the private binder, immutable ExecutionIR,
 deterministic random/replay elaboration, defensive in-process plan, exact
-resource accounting, and fail-closed contract oracles. Proposed `.8` is next
-for a separate clean activation of public tooling-contract selection. No plan
-or result file, target artifact, compile, simulation, runtime, parity pass, or
-backend behavior is shipped by `.7.3`.
+resource accounting, and fail-closed contract oracles. Clean `.7.3`
+implementation commit `44dbecd1a` activates `.8` continuity-only for public
+tooling-contract selection. No plan or result file, target artifact, compile,
+simulation, runtime, parity pass, or backend behavior is shipped by `.7.3` or
+the activation transition.

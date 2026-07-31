@@ -8488,7 +8488,10 @@ atomic diagnostics, and private capability discovery. Proposed `.8` is next
 for separate public-tooling contract activation. No plan/result file, backend,
 compile, simulation, runtime, or parity pass is shipped. Selected result and
 parity schema names retain explicit `.10`/`.11` implementation owners and are
-not classified as satisfied `.7.3` capabilities.
+not classified as satisfied `.7.3` capabilities. Clean `.7.3` implementation
+commit `44dbecd1a` activates `.8` continuity-only for public tooling-contract
+selection; no command/API/file, artifact, backend, runtime, or product behavior
+changes during activation.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
@@ -9504,8 +9507,10 @@ only activation of `.7.3`. This transition changes no VIAL source/parser/
 SemanticIR or HIAL bridge/parser/annotation/report. The implementation remains
 private and writes no file; no plan/result artifact, scheduler/runtime,
 implemented native extension, backend, public CLI/API, compilation,
-simulation, parity pass, or target-methodology behavior is claimed. Proposed
-`.8` is the next separate activation for public tooling-contract selection.
+simulation, parity pass, or target-methodology behavior is claimed. `.8` is
+active after clean `.7.3` commit `44dbecd1a` and a separate continuity-only
+transition for public tooling-contract selection. Activation changes no
+product behavior.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

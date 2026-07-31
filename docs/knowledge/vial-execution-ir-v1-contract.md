@@ -63,7 +63,8 @@ portable/paired-native logical outcomes through a deep-validated parity
 projection/report. Audit `.7.1` proved that the checked transaction could not
 satisfy the former exact VIAL/HIAL field-type rule. Director-approved decision
 `0037` and `.7.2` selected closed directional identity, known-value injection,
-and enum-encoding proof records; `.7.3` implements them. Proposed `.8` is next
-for separate activation of public tooling-contract selection. Plan/result
+and enum-encoding proof records; `.7.3` implements them. Clean implementation
+commit `44dbecd1a` permits active `.8` to select the public tooling contract
+after a separate continuity-only activation. Plan/result
 files, generated backends, compile, simulation, runtime, and parity remain
 unshipped. See `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.

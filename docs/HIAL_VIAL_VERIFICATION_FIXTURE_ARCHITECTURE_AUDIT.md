@@ -528,8 +528,9 @@ defensive in-process plan, closed event/adapter bindings, exact resource
 accounting, atomic diagnostics, and private capability/support discovery.
 The result/parity schema names remain selected future contracts with explicit
 `.10`/`.11` owners rather than satisfied `.7.3` capabilities.
-Proposed `.8` is next for separate activation of public tooling-contract
-selection. No plan/result file, generated backend artifact, compile,
+Clean `.7.3` implementation commit `44dbecd1a` permits active `.8` to select
+the public tooling contract after a separate continuity-only activation. No
+plan/result file, generated backend artifact, compile,
 simulation, runtime, parity pass, or target-methodology behavior is shipped.
 
 ## Rollback
