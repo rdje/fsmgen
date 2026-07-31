@@ -232,11 +232,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24`
-  Status: `pending`
+  Status: `active`
   Goal: `Prove and execute supersession of the completed guide-migration waypoints.`
   Acceptance: `Against exact staged docs/USER_GUIDE.md and docs/BOOK_PLAN.md identities, run whole-document token/ID sweeps with enumerated residue and planted-orphan negative control; classify every documentation/code/test/script/registry consumer; migrate any unique accurate content to a named mdBook/decision/fact home; replace implementation, test, README, book, roadmap, and planning pointers with current canonical destinations; prove exact historical retention; remove each waypoint only if its independent replacement and resulting-tree gates pass, otherwise retain it with the failed proof recorded.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated alone from clean `.16` audit commit `b9f2f266c`. Only task/index/roadmap/audit/fact/Memory/changelog continuity selects the exact guide-waypoint proof and potential retirement; no candidate content, consumer, replacement, checker, registry, ceiling, lifecycle, frozen identity, README landing content, mdBook product prose, or product behavior changes in activation. Final selection gates are recorded below.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24: activate guide-waypoint supersession`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25`
@@ -350,6 +350,8 @@ no routed destination becomes the next uninstrumented blob.
   token/ID sweep, classified consumers across code/tests/scripts as well as
   docs, named replacement pointers, planted-orphan and planted-consumer
   negative controls, retention where needed, and resulting-tree gates.
+- `2026-07-31`: Clean `.16` audit commit `b9f2f266c` activates `.24` alone to
+  prove USER_GUIDE/BOOK_PLAN supersession before touching either candidate.
 
 ## Open Questions
 
@@ -367,16 +369,22 @@ no routed destination becomes the next uninstrumented blob.
 ## Blockers
 
 - `.3`-`.5` and `.11`: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` must first
-  select the four files' long-term roles. `.24` and `.25` are newly pending
-  atomic migrations after completed `.16`; `.13` additionally waits for `.24`
-  so it inventories the resulting focused collection. `.8`-`.10` are otherwise
-  unblocked; `.12` remains the final post-migration calibration.
+  select the four files' long-term roles. `.24` is active; `.25` remains the
+  next new atomic migration. `.13` waits for `.24` so it inventories the
+  resulting focused collection. `.8`-`.10` are otherwise unblocked; `.12`
+  remains the final post-migration calibration.
 
 ## Acceptance Checklist (enforced) — `.16` utility/retirement audit
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'compatibility waypoint' --oneline -- docs/USER_GUIDE.md` identifies `798aff26b`/`2b47ba40f`, while the 22-surface census and direct inspection show that USER_GUIDE/BOOK_PLAN describe a completed guide migration and WARP duplicates 183 lines below the tool-neutral bootstrap. Conversely, current ISF specifications changed on 2026-07-30 and have implementation/test consumers, so size-only retirement would destroy live contract value.
 - [x] **ADDRESSED (verified)** — `docs/LIVE_DOCUMENT_UTILITY_RETIREMENT_AUDIT.md` defines all six outcomes, classifies every surface and required named document/cohort, publishes the 1,004-file focused census and 212-token USER_GUIDE probe, defines utility triggers and seven-part deletion proof, and assigns `.24`/`.25` plus existing migrations without deleting or moving a file.
 - [x] **NO REGRESSION** — the focused cluster reports `All tests successful` at `Files=4, Tests=68`; final task/path/live-size, Knowledge Map, Memory, mdBook, staged acceptance, and all-doctrine checks are recorded below. Frozen identities, README landing content, maintained ISF/book prose, ceilings, runtime artifacts, and product behavior remain unchanged.
+
+## Acceptance Checklist (enforced) — `.24` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — completed `.16` classifies `docs/USER_GUIDE.md` and `docs/BOOK_PLAN.md` as probable completed migration waypoints, but its explicit deletion contract forbids acting on the preliminary census without fresh exact-identity, residue, consumer, replacement, negative-control, retention, and resulting-tree proof.
+- [x] **ADDRESSED (verified)** — clean `.16` commit `b9f2f266c` activates `.24` alone and names its exact two independent proof subjects; candidate bytes, consumers, replacements, and lifecycle remain untouched in this selection slice.
+- [x] **NO REGRESSION** — final path/task/live-size, Knowledge Map, Memory, mdBook, staged-diff, and all-doctrine results are recorded below; no candidate, implementation, test, README landing content, book product prose, registry, ceiling, frozen identity, or product behavior changes.
 
 ## Acceptance Checklist (enforced) — `.21`
 
@@ -494,6 +502,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.15` common JSONL bounds | bounded headers/scalars/arrays; six-axis pressure and CRLF semantics; Git authority compatibility; neutral/local docs; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; portable 10,000-record/16-MiB/64-KiB hard stops plus tighter local declarations; focused Files=5/Tests=76; paths/locality/task Files=3/Tests=63; 22 surfaces/2,784 paths; exact reference delta 0/+15/+1,041; Knowledge Map 1,096/5,759; Memory 38; all 37 chapters; removed build 73 files/17,284,414 bytes; zero ceiling increases; all doctrines pass; no predecessor threshold, lifecycle, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.16` activation | clean `2e10cc605` predecessor; task/index/roadmap/fact/audit/Memory/changelog sync; focused path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=43; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096/5,759; Memory 38; all 37 chapters; removed build 73 files/17,284,414 bytes; all doctrines pass; `.16` alone active; no audit outcome, migration, retirement, deletion, checker, registry, threshold, lifecycle/content, frozen identity, landing content, mdBook product prose, or product behavior change |
 | `2026-07-31` | `.16` utility/retirement audit | 22-family utility classification; named guide/status/ledger/roadmap/map/ISF/focused cohort evidence; exact external-review identity; token and consumer probes; outcome/trigger/deletion-proof contract; `.24`/`.25` decomposition; focused/task/path/live-size/Knowledge Map/Memory/mdBook/staged-doctrine gates; exact cleanup | `passed`; audit 272 lines/18,824 bytes; focused Files=4/Tests=68; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,785 paths; focused collection exactly 1,005 files; Knowledge Map 1,096/5,759; Memory 37; all 37 chapters; removed build 73 files/17,283,901 bytes; reference delta 0/-7/-257; zero ceiling increases; all doctrines pass; no deletion, movement, archive, lifecycle/ceiling/frozen/landing/product change |
+| `2026-07-31` | `.24` activation | clean `b9f2f266c` predecessor; task/index/roadmap/audit/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,785 paths; maintained reference unchanged at 38/47,420/2,514,573; Knowledge Map 1,096/5,759; Memory 37; all 37 chapters; removed build 73 files/17,283,901 bytes; all doctrines pass; `.24` alone active; candidate and consumer bytes unchanged |
 
 ## Commit Log
 
@@ -526,6 +535,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.15` common JSONL bounds | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: enforce common JSONL bounds` | Self-bound every common registry, cap fields/arrays, and add deterministic maximum-content-line-byte pressure without widening a predecessor ceiling. |
 | `.16` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16: activate utility and retirement audit` | Activate only the evidence-backed retain/merge/supersede/archive/delete/re-form audit from clean `.15`; audit remains pending. |
 | `.16` utility/retirement audit | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16: audit utility before containment` | Select evidence-backed outcomes for every family, assign guide/WARP follow-ups, and require fail-closed deletion proof without deleting a file. |
+| `.24` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24: activate guide-waypoint supersession` | Activate only the independent USER_GUIDE/BOOK_PLAN proof from clean `.16`; candidate and consumer changes remain pending. |
 
 ## Changelog
 
@@ -546,6 +556,8 @@ no routed destination becomes the next uninstrumented blob.
   current ISF/book/doctrine roles, selects structural re-forms, and assigns
   guide-waypoint supersession plus WARP compaction to `.24`/`.25`; the audit
   itself deletes or moves nothing.
+- `2026-07-31`: Clean `.16` commit `b9f2f266c` activates `.24` alone; neither
+  guide waypoint nor any consumer/replacement changes in this selection slice.
 - `2026-07-31`: Clean commit `18e2dcbc6` activates `.6` alone to extend the
   task-tree schema and checker; no schema, checker, tree topology, threshold,
   document-family content, frozen identity, or product behavior changes in

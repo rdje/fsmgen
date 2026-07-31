@@ -209,3 +209,7 @@ requires fresh identity, whole-document token/ID residue, classified consumers
 including code/tests/scripts, named replacements, planted negative controls,
 retention where needed, and staged resulting-tree proof. The audit deletes and
 migrates nothing.
+
+Clean `.16` commit `b9f2f266c` activates `.24` alone. The selected leaf must
+prove `docs/USER_GUIDE.md` and `docs/BOOK_PLAN.md` independently against exact
+identities before either completed migration waypoint can be removed.

@@ -5,14 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16:
-  audit utility before containment`).
-- active_work_unit: `.16` is complete; the tree has no active child in this
-  commit and clean selection should activate `.24` next.
-- current_state: all 22 surfaces have outcomes; current ISF/book/doctrine roles
-  stay, structural views re-form, and no file was deleted or migrated.
-- next_action: activate `.24` alone, then prove USER_GUIDE/BOOK_PLAN
-  supersession with fresh token, consumer, replacement, and negative controls.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24:
+  activate guide-waypoint supersession`).
+- active_work_unit: `.24` alone is active from clean `.16` commit `b9f2f266c`.
+- current_state: selection changes continuity only; both guide waypoints and
+  all their consumers remain byte-for-byte untouched pending independent proof.
+- next_action: prove USER_GUIDE, then BOOK_PLAN, with fresh exact identity,
+  token/ID residue, consumer, replacement, negative-control, retention, and
+  resulting-tree evidence; remove only candidates whose own proof passes.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: frozen/ledger work keeps its separate owner; `.13` waits for `.24`.

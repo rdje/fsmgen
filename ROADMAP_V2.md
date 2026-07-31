@@ -10448,4 +10448,4 @@ The first honest `R11` slices are now:
   front door routes to the frozen packet. Decision `0045` and `.23` now bound
   maintained-reference reads/parts plus exact aggregate change. Clean `.23`
   commit `425cd7fef` activated `.15`; `.15` bounds common JSONL/line pressure;
-  completed `.16` classifies all families and assigns `.24`/`.25` migrations.
+  `.16` classifies all families, and clean `b9f2f266c` activates `.24` alone.

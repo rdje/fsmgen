@@ -263,7 +263,7 @@ generated aggregate change.
 | `.10` | Re-form oversized cards and the generated map while keeping facts canonical. |
 | `.11` | Execute only the separately selected frozen-status decision. |
 | `.13` | Re-form/index focused evidence and `docs/ISF_SPEC.md`; retire only per-file proved duplicates. |
-| `.24` | Prove and execute supersession of `docs/USER_GUIDE.md` and `docs/BOOK_PLAN.md`. |
+| `.24` | Active from clean commit `b9f2f266c`; prove each USER_GUIDE/BOOK_PLAN supersession independently before removal. |
 | `.25` | Re-form `WARP.md` as a compact tool-neutral-authority bootstrap pointer. |
 | `.12` | Re-audit and lower steady-state ceilings only after all selected migrations. |
 
