@@ -98,5 +98,6 @@ clean selection commit `ab3e73b72` activates `.10` as the first implementation
 owner. Clean activation commit `5fd766600` decomposes it into public source,
 planning/artifact, backend/trace, and runtime/result children. Completed
 `.10.1` ships the defensive capabilities/check/normal-terse source CLI/API and
-exact discovery/support accounting without HIAL binding or writes. `.10.2` is
-the next proposed planning/artifact child, and `.11` retains runtime parity.
+exact discovery/support accounting without HIAL binding or writes. Clean
+`.10.1` implementation commit `50a0d7d39` activates `.10.2` as the planning/
+artifact child without behavior, and `.11` retains runtime parity.

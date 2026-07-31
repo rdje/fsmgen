@@ -53,5 +53,5 @@ backend contract. Clean commit `ab3e73b72` activates `.10` as the first
 implementation owner; clean activation commit `5fd766600` decomposes it.
 Completed `.10.1` now ships the source-only command/API and five exact public
 capabilities. `plan`/`run`, files, backend emission, compile, simulation, and
-runtime remain unavailable; proposed `.10.2` is the next planning/artifact
-owner.
+runtime remain unavailable. Clean `.10.1` implementation commit `50a0d7d39`
+activates `.10.2` as the planning/artifact owner without changing behavior.

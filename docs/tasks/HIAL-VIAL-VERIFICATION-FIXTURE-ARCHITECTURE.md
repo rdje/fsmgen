@@ -202,11 +202,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.1: ship public VIAL source tooling`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement public VIAL planning through canonical HIAL review routes and one deterministic repository-local or virtual artifact transaction.`
   Acceptance: `The selected direct IAL0, direct IAL1, and IAL2-via-generated/reparsed-IAL1 routes bind checked VIAL through the existing private bridge and execution builders; CLI paths are repository-relative, in-memory callers use the closed source-catalog/artifact-sink boundary, canonical bridge/plan/tool manifests and review artifacts are hash-ordered and byte-stable, and every failure publishes no partial tree.`
-  Verification: `selected next after completed .10.1; pending separate clean activation`
-  Commit: `pending activation`
+  Verification: `Clean .10.1 implementation commit 50a0d7d39 activates only canonical planning/artifact implementation .10.2. The selected plan/API/layout/manifest/transaction contract and all product behavior remain unchanged during activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2: activate VIAL planning artifacts`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.3`
   Status: `proposed`
@@ -327,8 +327,8 @@ activates `.10` alone for public-tool/backend/result implementation. Clean
 activation commit `5fd766600` decomposes that parent, and completed `.10.1`
 now ships public capabilities/check/canonical normal-terse formatting through
 one defensive source-only CLI/API with exact discovery/support accounting.
-Both source styles enter the unchanged typed semantic builder. Proposed
-`.10.2` owns planning and artifact transactions next; no HIAL binding, plan,
+Both source styles enter the unchanged typed semantic builder. Active `.10.2`
+now owns planning and artifact transactions; no HIAL binding, plan,
 artifact, backend, compile, runtime, result, or parity ships in `.10.1`.
 Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
@@ -435,10 +435,13 @@ compiler-owned beneath C/C++ or Rust.
   tooling boundary: capabilities/check/normal-terse formatting, closed
   request/result records, one semantic projection, exact discovery/support,
   atomic diagnostics, and no writes. Proposed `.10.2` owns planning/artifacts.
+- `2026-07-31`: Clean `.10.1` commit `50a0d7d39` activates only `.10.2`
+  canonical planning/artifact implementation. Activation changes no API,
+  plan/file, artifact transaction, backend, runtime, or product behavior.
 
 ## Open Questions
 
-- Active `.10` must continue with proposed `.10.2` planning/artifacts, then
+- Active `.10.2` must implement canonical planning/artifacts, then
   `.10.3` backend/trace and `.10.4` runtime/results, without widening the
   known-value profile or claiming `.11` parity.
 - `.12` must choose the UVM revision and an actually available qualified
@@ -453,8 +456,8 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for parent `.10`; `.10.1` is complete and proposed `.10.2` is selected
-  next for separate clean activation. Result parity remains owned by `.11`.
+- None for active `.10.2`; clean `.10.1` commit `50a0d7d39` satisfies its
+  activation prerequisite. Result parity remains owned by `.11`.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -487,6 +490,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.10` activation | clean `.9` predecessor `ab3e73b72`; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; task/docs/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.10` alone active; docs Files=4/Tests=323 and paths Files=1/Tests=2; trees=3/nodes=885/one segment/one index archive; 37 chapters; build 73 files/17,134,244 bytes; Knowledge Map 1,096 facts/5,733 keys; Memory 36 lines; all nine doctrines pass at 20 surfaces/2,780 paths; implementation and product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.10` decomposition | clean activation predecessor `5fd766600`; four child boundaries; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; task/live-doc/docs/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.10.1` alone active under parent `.10`; focused docs Files=7/Tests=56; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,880 KiB; Knowledge Map 1,096 facts/5,734 keys; Memory 36 lines; all nine doctrines pass at 20 surfaces/2,780 paths; no implementation or product behavior change; output removed exactly |
 | `2026-07-31` | `.10.1` implementation | source projection/CLI/API/discovery/support implementation and syntax; guarded semantic/bridge/execution/tool tests; README/live-doc/docs/path/task gates; mdBook test/build; Knowledge Map; Memory/diff; staged acceptance/doctrines; exact cleanup | `passed`; source suite Files=6/Tests=7,083; docs/live/path/task Files=11/Tests=106; 15 changed/new Perl/test paths report syntax OK; README is 245 lines/9,916 bytes, below its 246-line/9,952-byte predecessor baseline; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,900 KiB; Knowledge Map 1,096 facts/5,735 keys; Memory 37 lines; all nine staged doctrines pass at 20 live-document surfaces and 2,780/2,780 tracked Markdown paths; output removed exactly |
+| `2026-07-31` | `.10.2` activation | clean `.10.1` implementation predecessor `50a0d7d39`; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; task/docs/live/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.10.2` alone active for planning/artifacts; docs Files=4/Tests=8 and live/path/task Files=7/Tests=98; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,900 KiB; Knowledge Map 1,096 facts/5,735 keys; Memory 38 lines; implementation and product behavior unchanged; output removed exactly |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -666,6 +670,7 @@ compiler-owned beneath C/C++ or Rust.
 | `.10` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10: activate portable SV backend implementation` | Activate only the selected public-tool/plain-SV/Verilator/result implementation after clean `.9`; implementation remains unperformed. |
 | `.10` decomposition | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10: decompose portable SV implementation` | Split the active parent into independently accepted source-tool, planning/artifact, backend/trace, and runtime/result children; activate `.10.1` alone without product behavior. |
 | `.10.1` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.1: ship public VIAL source tooling` | Ship capabilities/check/canonical normal-terse formatting through a defensive source-only CLI/API, with exact discovery/support and no HIAL binding, artifacts, backend, or runtime. |
+| `.10.2` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2: activate VIAL planning artifacts` | Activate only canonical HIAL review routing, public plan projection, and atomic repository-local/virtual artifact transactions after clean `.10.1`; implementation remains unperformed. |
 
 ## Changelog
 
@@ -695,6 +700,9 @@ compiler-owned beneath C/C++ or Rust.
 - `2026-07-31`: `.10.1` ships the public source-only CLI/API, equivalent
   normal/terse projections, exact discovery/support, and fail-closed no-write
   boundaries. `.10.2` is proposed next for separate activation.
+- `2026-07-31`: Clean `.10.1` implementation commit `50a0d7d39` activates only
+  `.10.2` planning/artifact implementation. The selected contract and all
+  product behavior remain unchanged during activation.
 
 - `2026-07-31`: `.7.3` ships the bounded private no-backend execution seam.
   The checked AHB SemanticIR and review-routed bridge now bind into immutable

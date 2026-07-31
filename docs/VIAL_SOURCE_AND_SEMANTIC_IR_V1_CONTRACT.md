@@ -864,7 +864,7 @@ Implemented by separate exact owners without widening this source contract:
 
 Deferred to later exact owners:
 
-- public plan/artifact layout and schema migration (`.10.2`); source-only
+- public plan/artifact layout and schema migration (active `.10.2`); source-only
   capabilities/check/format shipped in `.10.1`;
 - plain-SystemVerilog output/runtime/results (`.10.3`/`.10.4`), parity (`.11`),
   and UVM, VHDL, and mixed-language output/runtime;

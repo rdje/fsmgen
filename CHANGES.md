@@ -32043,3 +32043,18 @@ task tree and git.
 - Guarded semantic/bridge/execution/tooling/support/capability regression passes
   at Files=6/Tests=7,083, including legacy CLI dispatch and fail-closed style,
   request, option, path, host-object, and unavailable-plan boundaries.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2 — VIAL planning artifacts activated
+
+- From clean `.10.1` implementation commit `50a0d7d39`, activated `.10.2`
+  alone for canonical HIAL review routing, public planning projections, and
+  atomic repository-local or caller-owned virtual artifact transactions.
+- This continuity-only slice changes no source parser, command/API behavior,
+  HIAL binding, artifact, backend, compile/runtime path, result, capability or
+  support claim, parity, README landing content, or product behavior. `.10.2`
+  implementation is the next action; `.10.3`/`.10.4` and `.11` keep their
+  backend/runtime/parity ownership. Documentation gates pass at Files=4/
+  Tests=8 and live/path/task gates at Files=7/Tests=98; task integrity remains
+  three trees/889 nodes/one segment/one index archive; Knowledge Map validates
+  1,096 facts/5,735 keys; Memory is 38 lines; all 37 mdBook chapters test and
+  the 73-file/16,900-KiB repository-root build is removed exactly.

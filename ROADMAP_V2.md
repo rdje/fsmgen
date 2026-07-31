@@ -9539,8 +9539,9 @@ styles enter the unchanged typed semantic builder and produce one stable
 provenance-free semantic meaning digest. Exact discovery and support accounting
 advertise only those source surfaces; HIAL binding, plans, artifact writes,
 backend emission, compile, runtime, results, and parity remain unavailable.
-Proposed `.10.2` is the next planning/artifact child; `.10.3` and `.10.4` retain
-backend/trace and exact runtime/result implementation.
+Clean `.10.1` implementation commit `50a0d7d39` activates `.10.2` alone for
+planning/artifact implementation; `.10.3` and `.10.4` retain backend/trace and
+exact runtime/result implementation. Activation changes no product behavior.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

@@ -12255,8 +12255,9 @@ known-value `sv_portable_verilator` backend contract under decision `0043`.
 After clean activation and decomposition of `.10`, completed `.10.1` now ships
 source-only `capabilities`, `check`, and canonical normal/terse `format` through
 one defensive JSON-safe API. It adds no DUT binding, plan/artifact write,
-generated backend, compile, runtime, result, or parity claim. Proposed `.10.2`
-owns canonical planning and atomic repository-local or virtual artifacts next.
+generated backend, compile, runtime, result, or parity claim. Clean `.10.1`
+commit `50a0d7d39` activates `.10.2` alone for canonical planning and atomic
+repository-local or virtual artifacts, without changing product behavior.
 See [the public tooling contract](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md) and
 the [architecture chapter](16d-hial-vial-verification-architecture.md).
 

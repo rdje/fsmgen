@@ -4,7 +4,7 @@ Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
 Status: selected and partially implemented; `.10.1` ships public
 capabilities/check/normal-terse formatting and the closed source-only API.
-Parent `.10` retains `.10.2` planning/artifacts, `.10.3` backend/trace, and
+Parent `.10` retains active `.10.2` planning/artifacts, `.10.3` backend/trace, and
 `.10.4` Verilator runtime/results
 Decision: `0039`
 
@@ -513,7 +513,7 @@ Completed `.10.1` adds task-tree-approved
   diagnostics, no artifact writes, legacy dispatch preservation, and exact
   capability/support accounting.
 
-Remaining `.10.2` through `.10.4` must prove:
+Active `.10.2` and later `.10.3`/`.10.4` must prove:
 
 - all three HIAL review routes with the checked `.ppif` path proving the
   generated/reparsed IAL1 bridge boundary;

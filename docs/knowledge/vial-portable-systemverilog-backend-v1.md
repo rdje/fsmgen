@@ -28,9 +28,9 @@ the HIAL-generated DUT, complete generated-source maps, and normalized result
 artifacts. Clean selection commit `ab3e73b72` activates parent `.10`; clean
 activation commit `5fd766600` decomposes it into public source tooling,
 planning/artifact, backend/trace, and exact runtime/result children. Completed
-`.10.1` ships the public capabilities/check/normal-terse source surfaces;
-proposed `.10.2` owns planning/artifacts next, while `.10.3` still owns this
-backend and trace implementation.
+`.10.1` ships the public capabilities/check/normal-terse source surfaces.
+Clean implementation commit `50a0d7d39` activates `.10.2` for planning and
+artifacts, while `.10.3` still owns this backend and trace implementation.
 
 One scheduler samples at the clock's inactive edge, performs react/check work
 in exact plan order, then applies the next logical cycle's drives before the

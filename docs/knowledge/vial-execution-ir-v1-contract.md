@@ -69,8 +69,8 @@ decision `0039`. The public API returns only the sanitized plan, never
 ExecutionIR. Decision `0043` now selects the first known-value plain-
 SystemVerilog backend contract. Completed `.10.1` now ships only the public
 source-tooling boundary; plan/result files, generated backends, compile,
-simulation, runtime, and parity remain unshipped. Active parent `.10` retains
-those later children, with proposed `.10.2` owning planning/artifacts next and
-`.11` retaining parity.
+simulation, runtime, and parity remain unshipped. Clean `.10.1` implementation
+commit `50a0d7d39` activates `.10.2` for planning/artifacts without behavior;
+active parent `.10` retains the later children and `.11` retains parity.
 See
 `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.

@@ -871,6 +871,7 @@ that parent into `.10.1` public capabilities/check/normal-terse formatting,
 emission and trace projection, and `.10.4` exact Verilator run/results. `.10.1`
 now ships the first three source commands, equivalent normal and terse
 projections, the defensive source-only API, and exact discovery and support
-accounting. `.10.2` is the next proposed child; `.11` retains runtime parity.
+accounting. Clean `.10.1` commit `50a0d7d39` activates `.10.2` alone for
+planning/artifacts; `.11` retains runtime parity.
 No plan or result file, target artifact, compile/run path, runtime result,
 parity pass, or backend behavior ships in `.10.1`.
