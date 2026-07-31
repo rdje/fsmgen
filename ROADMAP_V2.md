@@ -10421,4 +10421,12 @@ The first honest `R11` slices are now:
   four-file lifecycle review. Returned PGEN and ANVIL reviews now activate
   `.17` for evidence-backed disposition before `.15` or `.16` changes
   enforcement or document lifecycle; receiving feedback itself changes no
-  checker, threshold, registry, document, or product behavior.
+  checker, threshold, registry, document, or product behavior. Decision 0044
+  now reconciles both reviews: the 15,727-line IAL2 arithmetic gap was a
+  misleading overlap presentation, because the exact complete former file is
+  still retrievable, while target/ceiling ambiguity, verifier reachability,
+  index/route completeness, and undeclared Git-retention assumptions are real.
+  Completed bounded disposition `.17` decomposes corrections into `.15`-`.23`; utility
+  and maintained-reference selection now precede affected `.8`-`.10`/`.13`
+  family migrations. `.18` is the next clean selection for unambiguous health
+  target, inclusive ceiling, ratchet, and increase-authority semantics.

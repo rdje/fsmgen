@@ -6,21 +6,22 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17:
-  activate external review reconciliation`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17` alone is active
-  from clean VIAL parity commit `c95160d53`.
-- current_state: PGEN and ANVIL returned independent reviews of the tracked
-  live-document packet. The IAL2 arithmetic concern is a real presentation/
-  evidence-accounting gap: 844 task nodes are retained in the sealed segment,
-  while the exact full former file remains retrievable from pinned revision
-  `44b5f1597`; information loss has not been demonstrated. Other findings still
-  require line-by-line local disposition before implementation.
-- next_action: publish `.17`'s tracked accept/refine/reject/already-satisfied
-  matrix with exact evidence and bounded remediation leaves.
-- in_flight_uncommitted: none after this activation commit; no background job
+  reconcile external containment reviews`).
+- active_work_unit: parent `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`; `.17` is
+  complete and no implementation leaf is active across this commit boundary.
+- current_state: decision `0044` and the 333-line bounded disposition reconcile
+  every PGEN/ANVIL finding plus Q1-Q31. Exact revision `44b5f1597` retains the
+  full former IAL2 file while the content-addressed segment retains all 844
+  authoritative nodes; the packet's 15,727-line gap was overlap accounting,
+  not demonstrated loss. Real pressure, execution, currency, route/index,
+  retention, utility, and maintained-reference gaps are owned by `.15`-`.23`.
+- next_action: from this clean commit activate `.18` alone, then implement
+  explicit health targets, inclusive enforcement ceilings, ratchets, and
+  separate increase authority without widening a current limit.
+- in_flight_uncommitted: none after this disposition commit; no background job
   and all repository-local mdBook output is removed exactly.
-- blockers: none for `.17`; `.15` and `.16` wait for its disposition. The
-  separate VIAL `.12` still needs a qualified native simulator/UVM profile.
+- blockers: none for `.15`-`.23`; `.8`-`.10`/`.13` wait for utility or
+  maintained-reference predecessors. Frozen/ledger work keeps its prior owner.
 
 ## Durable context
 
@@ -37,6 +38,6 @@ history; this file carries only the current bounded resume state.
   generated scheduler as semantic authority; `.10.4` now qualifies compile,
   runtime, and normalized results; `.11` now qualifies only the selected AHB
   handwritten-oracle comparison, not general cross-backend parity.
-- Decisions `0041`/`0042`, the external review packet, and active `.17` own
+- Decisions `0041`/`0042`/`0044`, the packet, and its bounded disposition own
   feedback-sensitive containment work. Push only on explicit request (`0005`);
   PNT runs autonomously (`0003`). Consult the Knowledge Map first.

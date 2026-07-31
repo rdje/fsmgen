@@ -37,6 +37,13 @@
   Leaf `.7` now applies those forms to the 844 terminal IAL2 children and the
   540-row completed cross-tree index: both task surfaces return to `normal`
   without deleting a completed task file or changing README landing content.
+- External review: PGEN and ANVIL accepted the architecture with corrections.
+  Decision 0044 and the bounded disposition separate coverage from health,
+  healthy targets from transition ceilings, verifier presence from execution,
+  full-source retention from sealed-node closure, and lifecycle currency from
+  global date heuristics. Leaves `.15`-`.23` own the changes; the current
+  checker, registry values, thresholds, and document lifecycles remain in force
+  until their individual commits land.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---

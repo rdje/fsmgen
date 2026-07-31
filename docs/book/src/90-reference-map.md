@@ -164,10 +164,21 @@ It also adds the missing first question: whether a live document still has a
 distinct current role. Its retain/merge/supersede/archive/delete examples are
 review proposals, not authorization to delete a file.
 
-PGEN and ANVIL returned independent reviews. Active leaf `.17` checks every
-finding against exact FSMGen evidence and records a disposition before any
-common-checker or document-lifecycle change; `.15` and `.16` therefore do not
-treat reviewer suggestions as automatic requirements.
+PGEN and ANVIL returned independent reviews. The tracked
+[disposition](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md)
+checks every finding against exact FSMGen evidence. It corrects two easy-to-
+misread claims: `2,780 / 2,780` path coverage proves classification, not healthy
+size or currency, and the IAL2 live root plus task segment are overlapping views
+rather than a line partition. The complete former 21,726-line source remains an
+exact Git object while the segment independently preserves all 844 task nodes.
+
+Decision `0044` accepts explicit health targets plus inclusive transition
+ceilings, removal of inert `hard_pct`, mechanically proved verifier execution,
+lifecycle-scoped currency without a global date heuristic, typed author versus
+reader routes, complete collection indexes, declared version-object retention,
+maximum line/record bytes, and utility outcome `re-form`. Leaves `.15`-`.23`
+keep each correction atomic. No review suggestion changes a threshold,
+lifecycle, frozen file, or product behavior merely by being accepted.
 
 ## What The Old User Guide Still Does
 

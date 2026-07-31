@@ -32167,3 +32167,24 @@ task tree and git.
   integrity is three trees/890 nodes/one segment/one index archive; all 2,780
   tracked document paths, Knowledge Map, 42-line Memory, all 37 mdBook chapter
   tests, and the 16,976-KiB removed repository-local build pass.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17 — external reviews reconciled
+
+- Added the bounded PGEN/ANVIL disposition and decision `0044`. All 17 findings
+  and Q1-Q31 now have exact local evidence, disposition, and an atomic owner in
+  `.15`-`.23`; current checker, registry values, thresholds, document
+  lifecycles, frozen files, README landing content, and product behavior remain
+  unchanged.
+- Corrected the packet's misleading IAL2 arithmetic: exact revision
+  `44b5f1597` retains all 21,726 former lines while the content-addressed
+  segment independently retains all 844 task nodes. The 15,727-line remainder
+  was not proved lost; the live root and segment were never disjoint line
+  ranges. Also reported that pinned/deferred families remain 86.8% of the
+  named non-generated candidate bytes despite complete path classification.
+- Selected explicit health targets/inclusive ceilings, executed verifier
+  reachability, scoped currency without global date heuristics, typed routes,
+  complete indexes/evidence maps, declared retention, maximum line/record
+  bytes, utility `re-form`, and maintained-product-reference selection. Focused
+  gates pass at `Files=5, Tests=71`; integrity is three trees/896 nodes; all
+  2,782 staged paths, 1,096-fact/5,741-key Knowledge Map, 37 mdBook chapters, and the
+  removed 73-file/16,984-KiB repository-local build pass.

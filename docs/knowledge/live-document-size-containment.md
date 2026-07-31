@@ -19,10 +19,15 @@ answers:
   - "which FSMGen live documents are retirement candidates?"
   - "are the common JSONL control-plane registries independently bounded?"
   - "does hard_pct currently enforce the hard pressure threshold?"
+  - "what did PGEN and ANVIL find in the live-document review?"
+  - "were 15727 IAL2 task lines lost during task-tree sealing?"
+  - "does tracked-document coverage prove that documents are healthy?"
+  - "is neutral live-document checker identity mechanically tested?"
+  - "how are health targets different from transition ceilings?"
 date: 2026-07-31
 status: current
 tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
-evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
+evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
 reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t
 ---
 
@@ -78,7 +83,19 @@ uses only warning/rollover percentages and rejects actual size only when it
 exceeds the absolute budget. Leaf `.15` owns those gaps; `.16` owns the general
 utility/retirement audit.
 
-PGEN and ANVIL have returned independent reviews of the packet. Active leaf
-`.17` owns an evidence-backed accept/refine/reject/already-satisfied disposition
-and decomposes accepted corrections before `.15` or `.16` changes enforcement
-or document lifecycle.
+PGEN and ANVIL returned independent reviews of the packet. Completed leaf `.17`
+publishes an evidence-backed accept/refine/reject/already-satisfied disposition
+and decomposes accepted corrections before `.15`-`.23` change enforcement or
+document lifecycle.
+
+Decision `0044` and the bounded disposition accept both reviews with local
+refinements. The apparent 15,727-line IAL2 loss is a packet-accounting defect:
+the exact 21,726-line former file remains retrievable, the 5,914-line segment
+independently preserves all 844 authoritative nodes, and the 85-line live root
+is a new overlapping view. Path coverage is only classification; 86.8% of the
+named non-generated candidate bytes remain frozen or deferred. Real gaps are
+split across `.15`-`.23`: finite/reviewable control data, utility plus `re-form`,
+health targets versus inclusive ceilings, executed verifiers, scoped currency,
+typed route/index/evidence completeness, retention/migration evidence, and the
+maintained-product-reference lifecycle. Neutral checker identity is already
+mechanically scanned by `t/1554`.
