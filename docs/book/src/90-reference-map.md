@@ -206,6 +206,9 @@ uses task-tree integrity as its source-alignment oracle. No universal newest-
 date, distinct-date, or file-age rule exists; legitimate closure dates and
 undeclared surfaces are not scanned, while archive/frozen lifecycles are
 structurally exempt.
+Clean `.20` commit `8cf8263a2` activates `.21` alone to type author-overflow
+versus reader-navigation routes and prove collection-index and review-evidence
+membership. This activation changes no checker, registry, or document content.
 
 ## What The Old User Guide Still Does
 

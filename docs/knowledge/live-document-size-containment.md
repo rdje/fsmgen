@@ -135,3 +135,7 @@ executes the existing task integrity oracle. Undeclared surfaces are not
 scanned; archive/external/frozen terminals cannot claim current-state currency;
 and no global newest-date, distinct-date, file-age, or semantic-truth inference
 is made from size compliance.
+
+Clean `.20` commit `8cf8263a2` activates `.21` alone for typed author-overflow
+and reader-navigation routes, complete collection indexes, and mechanically
+checked review evidence maps. Activation changes no enforcement or lifecycle.

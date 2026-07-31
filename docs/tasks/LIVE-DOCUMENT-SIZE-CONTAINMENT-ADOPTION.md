@@ -208,7 +208,7 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21`
-  Status: `pending`
+  Status: `active`
   Goal: `Close typed route, collection-index, and evidence-map completeness.`
   Acceptance: `Path-shaped destinations emitted by enforcers are inventoried and classified as author_overflow or reader_navigation; every candidate resolves to a governed surface while legitimate route-kind differences remain explicit; each collection index proves complete target membership or declares a generated/query contract; the packet/disposition evidence maps reject missing paths; checks are unconditional and staged/resulting-tree aware; fail-closed fixtures cover an undeclared hint, wrong route kind, omitted collection member, and missing evidence path.`
   Verification: `pending`
@@ -305,10 +305,13 @@ no routed destination becomes the next uninstrumented blob.
   Currency is an opt-in named local oracle; terminal/frozen history cannot
   declare it, undeclared surfaces are not scanned, and FSMGen calibrates the
   active-index contract to task/source alignment rather than date shape.
+- `2026-07-31`: Clean scoped-currency commit `8cf8263a2` activates `.21` alone
+  for typed author/reader routes, complete collection indexes, and checked
+  review evidence maps. The activation changes no checker or registry.
 
 ## Open Questions
 
-- None for completed `.18`-`.20`. The rereferenced PGEN/ANVIL
+- None for completed `.18`-`.20` or active `.21`. The rereferenced PGEN/ANVIL
   files exactly match the reviews already reconciled in the bounded disposition;
   the existing four-file review retains authority for its named semantic roles.
 
@@ -391,6 +394,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.19` verifier execution | core/adapter/external modes; registry-derived adapter runner; exact one-use proofs; CI/driver reachability; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=21; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; Knowledge Map 1,096 facts/5,745 keys; Memory 42 lines; real fact-index verifier executes; all 37 chapters test; removed 73-file/16,996-KiB build; no pressure value, lifecycle, archive content, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.20` activation | exact rereferenced-review identity; clean `25c815326` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; PGEN 393/26,788 at SHA-256 5057b147... and ANVIL 334/44,242 at 9dac9f1f... exactly match `.17`; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,745 keys; Memory 43 lines; all 37 chapters test; removed 73-file/16,996-KiB build; all nine doctrines pass; `.20` alone active; no checker, registry, currency contract, lifecycle, archive, document-family content, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.20` scoped currency | optional exact currency schema; lifecycle exemptions; independent proof namespace; real active-index oracle; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=17; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,748 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; real self-refutation and low-noise date fixtures pass in both directions; no global date heuristic, lifecycle/content, archive, frozen identity, landing content, or product behavior change |
+| `2026-07-31` | `.21` activation | clean `8cf8263a2` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,748 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; all nine doctrines pass; `.21` alone active; no checker, registry, route kind, index/evidence contract, document lifecycle/content, frozen identity, landing content, or product behavior change |
 
 ## Commit Log
 
@@ -413,6 +417,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.19` verifier execution | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19: execute declared verifiers` | Execute core and delegated adapter programs, consume exact one-use proofs, fail closed on external contracts, and prove the wrapper remains on the single CI doctrine path. |
 | `.20` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20: activate scoped currency contracts` | Confirm the supplied paths exactly match the disposed reviews and activate only opt-in lifecycle currency from clean `.19`. |
 | `.20` scoped currency | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20: enforce scoped currency contracts` | Add opt-in named local currency oracles, exempt terminal/frozen history, and calibrate FSMGen's active index to source alignment rather than date shape. |
+| `.21` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21: activate route and index completeness` | Activate only typed routes, complete collection indexes, and evidence-map checking from clean `.20` commit `8cf8263a2`; implementation remains pending. |
 
 ## Changelog
 
@@ -471,3 +476,6 @@ no routed destination becomes the next uninstrumented blob.
   adapter proofs, bans current-state claims on terminal/frozen history, and
   applies one real task-index/source-alignment contract without globally
   scanning dates or claiming semantic truth from boundedness.
+- `2026-07-31`: Clean `.20` commit `8cf8263a2` activates `.21` alone for typed
+  author/reader routes plus index/evidence-map completeness; activation changes
+  no checker, registry, document, frozen identity, or product behavior.

@@ -5,17 +5,17 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20:
-  enforce scoped currency contracts`).
-- active_work_unit: `.20` is complete; `.21` is the next clean selection for
-  typed author/reader routes plus index/evidence-map completeness.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21:
+  activate route and index completeness`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21` alone is active
+  from clean `.20` commit `8cf8263a2`.
 - current_state: Currency is now optional, named, lifecycle-scoped, and executed
   through core/adapter/external modes. The active task index runs the task-tree
   source-alignment oracle. Undeclared surfaces are not scanned; terminal/frozen
   history is exempt; no global date-shape or semantic-truth inference exists.
-- next_action: activate `.21` from this clean commit, then close undeclared
-  author routes, collection-index membership, and review evidence-map paths
-  with staged/resulting-tree negative fixtures.
+- next_action: inventory and type author-overflow versus reader-navigation
+  candidates, prove collection-index membership and both review evidence maps,
+  and add staged/resulting-tree fail-closed fixtures.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: `.8`-`.10`/`.13` wait for utility or

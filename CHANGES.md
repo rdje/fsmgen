@@ -32251,3 +32251,12 @@ task tree and git.
 - FSMGen's active task index now runs the task-tree source-alignment oracle.
   Self-refutation fails while legitimate closure/frozen dates pass; focused
   wrapper/core coverage is green at `Files=2, Tests=17`.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21 — completeness activated
+
+- From clean `.20` commit `8cf8263a2`, activated `.21` alone for typed author-
+  overflow versus reader-navigation routes, collection-index membership, and
+  review evidence-map integrity.
+- This continuity slice changes no checker, registry, route kind, index or
+  evidence contract, document content/lifecycle, frozen identity, or product
+  behavior.
