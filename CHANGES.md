@@ -32154,3 +32154,16 @@ task tree and git.
 - Capability/support truth claims only the selected AHB oracle; ordinary
   `run`, result bytes, HIAL behavior, and the general cross-backend/UVM/VHDL/
   mixed-language/four-state/scale non-claims remain unchanged.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17 — external review reconciliation activated
+
+- From clean VIAL parity commit `c95160d53`, activate `.17` alone to reconcile
+  the returned PGEN and ANVIL reviews against exact FSMGen evidence before
+  `.15` or `.16` changes enforcement or document lifecycle.
+- This continuity-only slice creates no disposition document yet and changes
+  no checker, schema, registry value, threshold, reviewed document, frozen
+  identity, README landing content, or product behavior.
+- Focused path/locality/task/live-size tests pass at `Files=4, Tests=65`;
+  integrity is three trees/890 nodes/one segment/one index archive; all 2,780
+  tracked document paths, Knowledge Map, 42-line Memory, all 37 mdBook chapter
+  tests, and the 16,976-KiB removed repository-local build pass.

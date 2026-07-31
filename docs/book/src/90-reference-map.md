@@ -164,6 +164,11 @@ It also adds the missing first question: whether a live document still has a
 distinct current role. Its retain/merge/supersede/archive/delete examples are
 review proposals, not authorization to delete a file.
 
+PGEN and ANVIL returned independent reviews. Active leaf `.17` checks every
+finding against exact FSMGen evidence and records a disposition before any
+common-checker or document-lifecycle change; `.15` and `.16` therefore do not
+treat reviewer suggestions as automatic requirements.
+
 ## What The Old User Guide Still Does
 
 [../../USER_GUIDE.md](../../USER_GUIDE.md) still remains the broad migration

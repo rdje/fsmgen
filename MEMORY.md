@@ -5,27 +5,22 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11:
-  prove portable AHB result parity`).
-- active_work_unit: parent `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`;
-  completed `.10.1`-.10.4 own public source/planning/run, portable-SV
-  emission, exact Verilator execution, trace validation, normalized results,
-  atomic publication, and bounded AHB handwritten-oracle parity.
-- current_state: decision `0043` and the portable-SystemVerilog contract remain
-  unchanged. Public `fsmgen vial capabilities|check|format|plan|run` and the
-  closed API ship normal/terse equivalence, all three HIAL review routes,
-  deterministic plain-SV emission, exact Verilator 5.046 compile/runtime,
-  validated JSONL, normalized result/output manifests, and deterministic
-  virtual or atomic repository-local artifacts. Both checked scenarios pass;
-  `.11` compares 19 shared outcomes over byte-identical DUT source and keeps
-  undeclared internals/general cross-backend parity explicitly out of scope.
-- next_action: after a separate clean activation, select `.12`'s exact native
-  SystemVerilog/UVM contract and qualified simulator/profile.
-- in_flight_uncommitted: none after this implementation commit; no background job
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17:
+  activate external review reconciliation`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17` alone is active
+  from clean VIAL parity commit `c95160d53`.
+- current_state: PGEN and ANVIL returned independent reviews of the tracked
+  live-document packet. The IAL2 arithmetic concern is a real presentation/
+  evidence-accounting gap: 844 task nodes are retained in the sealed segment,
+  while the exact full former file remains retrievable from pinned revision
+  `44b5f1597`; information loss has not been demonstrated. Other findings still
+  require line-by-line local disposition before implementation.
+- next_action: publish `.17`'s tracked accept/refine/reject/already-satisfied
+  matrix with exact evidence and bounded remediation leaves.
+- in_flight_uncommitted: none after this activation commit; no background job
   and all repository-local mdBook output is removed exactly.
-- blockers: `.12` must inventory the available qualified simulator/UVM profile;
-  VHDL/mixed-language leaves retain tool prerequisites. PGEN/ANVIL feedback is
-  pending for independent live-document `.15`/`.16`, not this VIAL slice.
+- blockers: none for `.17`; `.15` and `.16` wait for its disposition. The
+  separate VIAL `.12` still needs a qualified native simulator/UVM profile.
 
 ## Durable context
 
@@ -42,6 +37,6 @@ history; this file carries only the current bounded resume state.
   generated scheduler as semantic authority; `.10.4` now qualifies compile,
   runtime, and normalized results; `.11` now qualifies only the selected AHB
   handwritten-oracle comparison, not general cross-backend parity.
-- Decision `0041` and the external review packet remain durable for later
+- Decisions `0041`/`0042`, the external review packet, and active `.17` own
   feedback-sensitive containment work. Push only on explicit request (`0005`);
   PNT runs autonomously (`0003`). Consult the Knowledge Map first.

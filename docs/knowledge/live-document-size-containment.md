@@ -77,3 +77,8 @@ registries do not yet self-bound. The checker validates `hard_pct` ordering but
 uses only warning/rollover percentages and rejects actual size only when it
 exceeds the absolute budget. Leaf `.15` owns those gaps; `.16` owns the general
 utility/retirement audit.
+
+PGEN and ANVIL have returned independent reviews of the packet. Active leaf
+`.17` owns an evidence-backed accept/refine/reject/already-satisfied disposition
+and decomposes accepted corrections before `.15` or `.16` changes enforcement
+or document lifecycle.

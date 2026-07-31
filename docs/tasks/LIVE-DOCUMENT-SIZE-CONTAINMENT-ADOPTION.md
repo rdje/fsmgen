@@ -51,7 +51,7 @@ no routed destination becomes the next uninstrumented blob.
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`
   Status: `active`
   Goal: `Bound all live document families over durable, addressable storage.`
-  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
+  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1`
   Status: `done`
@@ -162,7 +162,7 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `The surface, route, and common archive-descriptor registries gain independently reviewed record/byte containment or an equally finite registered topology; positive and fail-closed tests prove the control plane cannot become an unbounded sink; one explicit inclusive/exclusive absolute-limit rule is selected; hard_pct is either executed correctly or removed; doctrine, checker contract, implementation, tests, local data, and book use identical semantics without silently widening a budget.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
   Status: `pending`
@@ -170,7 +170,14 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `Define reviewable retain/merge/supersede/archive/delete outcomes; audit each governed FSMGen document family for current audience, canonical role, unique value, duplication, staleness, and historical retention; explicitly assess USER_GUIDE.md, the two frozen status files, CHANGES.md, DEVELOPMENT_NOTES.md, ROADMAP_V2.md, generated KNOWLEDGE_MAP.md, ISF_SPEC.md, and focused readiness/contract collections; assign separate atomic migrations for unique content and proved retirement; do not delete or mechanically shard a candidate in this audit leaf.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
+
+- ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
+  Status: `active`
+  Goal: `Reconcile the returned PGEN and ANVIL reviews against current FSMGen evidence and decompose every accepted correction before implementation.`
+  Acceptance: `A tracked disposition records every reviewer finding and question as accept, refine, reject, or already satisfied with exact local evidence; it distinguishes misleading migration accounting from actual information loss, publishes measured retained/migrated/pinned pressure, selects portable semantics for targets versus ceilings, verifier execution, currency, retrieval retention, route roles, reviewability, and utility re-form, and assigns each accepted behavior change or retirement to a separate bounded leaf. The reconciliation changes no checker, schema, registry value, document lifecycle, file content under review, frozen identity, README landing content, or product behavior.`
+  Verification: `pending`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17: reconcile external containment reviews`
 
 ## Decisions
 
@@ -219,22 +226,25 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: Document size does not prove current utility. `.14` adds
   retain/merge/supersede/archive/delete analysis with measured FSMGen examples;
   `.16` owns the project-wide utility and retirement audit before final limits.
+- `2026-07-31`: Returned PGEN and ANVIL reviews are inputs, not self-executing
+  requirements. `.17` first reconciles every finding against exact local
+  evidence and creates bounded remediation leaves; `.15` and `.16` wait for
+  that disposition so implementation cannot silently mix review concerns.
 
 ## Open Questions
 
-- `.14` is complete and asks external reviewers 31 explicit architecture,
-  format, pressure, durability, usability, and utility questions. Returned
-  reviews can be routed from the packet's response template. The existing
-  four-file review remains authoritative for those files' semantic roles;
-  `.15` and `.16` retain the local findings without prejudging feedback.
+- `.14` is complete. PGEN and ANVIL returned detailed reviews; active `.17`
+  owns their evidence-backed disposition and remediation decomposition. The
+  existing four-file review remains authoritative for those files' semantic
+  roles; no returned suggestion changes behavior merely by being received.
 
 ## Blockers
 
 - `.3`-`.5` and `.11`: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` must first
   select the four files' long-term roles. `.1`, `.2`, `.6`-`.10`, and `.12`
   remain independently schedulable subject to their ordinary predecessor
-  dependencies; `.13` is independently schedulable and `.14` is unblocked.
-  `.15` and `.16` wait only for `.14` to publish the evidence they consume.
+  dependencies; `.13` is independently schedulable. `.17` is unblocked and
+  active; `.15` and `.16` wait for its review disposition.
 
 ## Acceptance Checklist (enforced) — `.7`
 
@@ -280,6 +290,8 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.14` activation | clean `7f05b41de` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/Knowledge Map/live-size/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths/task Files=2/Tests=36; trees=3/nodes=883/segments=1/compact=0/index archives=1; Knowledge Map 1,095 facts/5,717 keys; 20 surfaces and 2,776/2,776 paths; all 37 chapters test; removed build 73 files/17,111,406 bytes; Memory 36 lines; `.14` alone active; no review packet, schema, checker, threshold, archive, README landing-content, or product change |
 | `2026-07-31` | `.14` external review packet | tracked self-contained packet; neutral/local boundary; utility outcomes and measured examples; source-backed JSONL/threshold limitations; focused/path/locality/live-size/Knowledge Map/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; packet 1,309 lines/54,068 bytes and 31 questions; focused Files=3/Tests=49; paths/locality Files=2/Tests=22; 20 surfaces and 2,777/2,777 paths; Knowledge Map 1,095 facts/5,722 keys; all 37 chapters test; removed build 73 files/17,116,666 bytes; trees=3/nodes=885/segments=1/compact=0/index archives=1; Memory 36 lines; all nine staged doctrines pass; `.15`/`.16` tracked; no implementation, threshold, archive, deletion, frozen-content, landing-content, or product change |
 
+| `2026-07-31` | `.17` activation | clean `c95160d53` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; focused path/locality/task/live-size, Knowledge Map, Memory, mdBook, diff, staged-doctrine gates; exact cleanup | `passed`; focused Files=4/Tests=65; trees=3/nodes=890/segments=1/compact=0/index archives=1; 20 surfaces and 2,780/2,780 paths; all 37 mdBook chapters test; repository-local build 16,976 KiB and removed exactly; Memory 42 lines; `.17` alone active and `.15`/`.16` wait for its disposition; no disposition file, checker, schema, registry value, threshold, reviewed content, frozen identity, landing content, or product change |
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -292,6 +304,8 @@ no routed destination becomes the next uninstrumented blob.
 | `.7` bounded task evidence/index | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: bound task evidence and index` | Seal 844 exact-source IAL2 children and 540 unique terminal index rows while keeping current PNT and completed task files direct. |
 | `.14` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14: activate external review packet` | Activate only the tracked external-review-packet leaf from clean commit `7f05b41de`; the packet remains pending. |
 | `.14` external review packet | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14: publish external review packet` | Publish the self-contained review and response template; track control-plane/hard semantics in `.15` and utility/retirement in `.16`. |
+
+| `.17` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17: activate external review reconciliation` | Activate only evidence-backed PGEN/ANVIL disposition from clean commit `c95160d53`; implementation and the disposition document remain pending. |
 
 ## Changelog
 
@@ -323,3 +337,6 @@ no routed destination becomes the next uninstrumented blob.
   utility precede size containment, illustrates deliberate retirement with
   measured FSMGen candidates, and tracks the common JSONL/hard-threshold gaps
   in `.15` plus the general utility audit in `.16` without changing behavior.
+- `2026-07-31`: Clean VIAL parity commit `c95160d53` activates `.17` alone to
+  reconcile the returned PGEN and ANVIL reviews against exact local evidence;
+  `.15` and `.16` wait for its disposition, and activation changes no behavior.

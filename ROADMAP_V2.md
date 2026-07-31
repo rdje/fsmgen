@@ -10418,4 +10418,7 @@ The first honest `R11` slices are now:
   gaps: common JSONL control-plane self-bounds plus exact hard-threshold
   semantics (`.15`), and a general utility/retirement audit (`.16`). `.8`
   remains the next family migration and `.3` remains blocked by the existing
-  four-file lifecycle review.
+  four-file lifecycle review. Returned PGEN and ANVIL reviews now activate
+  `.17` for evidence-backed disposition before `.15` or `.16` changes
+  enforcement or document lifecycle; receiving feedback itself changes no
+  checker, threshold, registry, document, or product behavior.
