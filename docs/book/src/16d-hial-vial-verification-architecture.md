@@ -840,6 +840,10 @@ compatibility. Clean `.8` selection commit `d34da3254` activates `.9` alone
 for the separate plain-SystemVerilog/Verilator backend-contract selection.
 Decision `0043` and completed `.9` now select the exact deterministic known-
 value contract described above. Clean `.9` commit `ab3e73b72` activates `.10`
-alone for implementation, and `.11` retains runtime parity. No parser widening,
-command/API, plan or result file, target artifact, compile/run path, runtime
-result, parity pass, or backend behavior changes during activation.
+alone for implementation. Clean activation commit `5fd766600` then decomposes
+that parent into `.10.1` public capabilities/check/normal-terse formatting,
+`.10.2` canonical planning and artifact transactions, `.10.3` portable backend
+emission and trace projection, and `.10.4` exact Verilator run/results. `.10.1`
+is active; `.11` retains runtime parity. No parser widening, command/API, plan
+or result file, target artifact, compile/run path, runtime result, parity pass,
+or backend behavior changes during decomposition.

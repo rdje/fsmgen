@@ -2,8 +2,11 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9`
-Status: selected; active `.10` owns implementation after clean activation from
-commit `ab3e73b72`
+Status: selected; active parent `.10` owns implementation after clean
+activation from commit `ab3e73b72`. Clean activation commit `5fd766600`
+decomposes that work into `.10.1` public source tooling, `.10.2` planning and
+artifact transactions, `.10.3` backend emission/trace projection, and `.10.4`
+Verilator run/result integration
 Decision: `0043`
 
 ## Outcome

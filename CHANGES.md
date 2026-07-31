@@ -32010,3 +32010,21 @@ task tree and git.
   integrity is three trees/885 nodes/one segment/one index archive; Knowledge
   Map validates 1,096 facts/5,733 keys; Memory is 36 lines; all nine staged
   doctrines pass with 20 surfaces/2,780 paths. Exact cleanup is complete.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10 — portable SV implementation decomposed
+
+- Decomposed the active implementation parent into four independently
+  accepted, committed children: `.10.1` public capabilities/check/normal-terse
+  formatting, `.10.2` canonical planning and atomic artifact transactions,
+  `.10.3` deterministic portable-SystemVerilog emission and closed trace
+  projection, and `.10.4` exact Verilator run/result integration. `.10.1` is
+  active first; `.11` continues to own handwritten-AHB runtime parity.
+- This continuity slice changes no parser, CLI/API, artifact, backend,
+  compile/runtime behavior, capability/support claim, README landing content,
+  or product behavior. It creates explicit implementation and recovery
+  boundaries before code begins. Focused task/live-document/docs/path checks
+  pass at Files=7/Tests=56; task integrity is three trees/889 nodes/one
+  segment/one index archive; all 37 mdBook chapters test and the removed
+  repository-root build contains 73 files/16,880 KiB; Knowledge Map validates
+  1,096 facts/5,734 keys; Memory remains 36 lines; all nine doctrines pass at
+  20 live-document surfaces and 2,780/2,780 tracked Markdown paths.

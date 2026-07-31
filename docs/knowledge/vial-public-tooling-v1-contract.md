@@ -46,4 +46,6 @@ unchanged. Future VIAL `run` uses explicit
 filename. Decision `0043` now selects the first plain-SystemVerilog/Verilator
 backend contract, but selection still ships no parser widening, command, API,
 file, backend, or runtime. Clean commit `ab3e73b72` activates `.10` as the first
-implementation owner.
+implementation owner; clean activation commit `5fd766600` decomposes it, with
+`.10.1` active for capabilities/check/normal-terse formatting before the
+planning, backend, and runtime children.

@@ -95,4 +95,6 @@ repository-local artifacts, and explicit manifest compatibility. No command,
 API, parser widening, file, backend, or runtime ships in selection. Decision
 `0043` and completed `.9` now select the exact portable backend contract;
 clean selection commit `ab3e73b72` activates `.10` as the first implementation
-owner, and `.11` retains runtime parity.
+owner. Clean activation commit `5fd766600` decomposes it into public source,
+planning/artifact, backend/trace, and runtime/result children; `.10.1` is active
+first, and `.11` retains runtime parity.

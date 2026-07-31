@@ -9530,8 +9530,11 @@ qualification gates under Verilator 5.046. The profile is explicitly a known-
 value/two-state runtime tier: authored X/Z-sensitive meaning fails negotiation,
 and success cannot imply full four-state observation, full SystemVerilog LRM,
 UVM, parity, or scale. Clean `.9` selection commit `ab3e73b72` activates `.10`
-alone for the selected public-tool/backend/result implementation. Activation
-changes no backend/public/runtime behavior.
+alone for the selected public-tool/backend/result implementation. Clean
+activation commit `5fd766600` decomposes it into `.10.1` public source tooling,
+`.10.2` planning/artifacts, `.10.3` backend/trace projection, and `.10.4` exact
+runtime/results, with `.10.1` active first. Decomposition changes no backend,
+public-tool, or runtime behavior.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

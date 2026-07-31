@@ -564,7 +564,9 @@ parity pass, or target-methodology behavior is shipped by selection. Clean
 `.8` selection commit `d34da3254` activated `.9` alone for separate plain-
 SystemVerilog/Verilator backend-contract selection. Completed `.9` now accepts
 decision `0043` and the exact known-value backend/runtime contract. Clean `.9`
-commit `ab3e73b72` activates `.10` alone for implementation; `.11` retains
+commit `ab3e73b72` activates `.10` alone for implementation; clean activation
+commit `5fd766600` decomposes it into `.10.1` source tooling, `.10.2` planning,
+`.10.3` backend/trace projection, and `.10.4` runtime/results. `.11` retains
 runtime parity. No command, target artifact, compile/run path, result producer,
 capability, or product behavior changes during activation.
 
