@@ -580,9 +580,13 @@ portable-SV emitter, eight-artifact virtual graph, full operation/state-family
 source map, one-scheduler lowering, selected-but-unexecuted command records,
 and pure closed-trace validator. Completed `.10.4` now ships public
 publication, exact Verilator compile/run, validated runtime capture,
-normalized results, deterministic reruns, and atomic cleanup. `.11` retains
-cross-backend parity and is now active after clean `.10.4` implementation
-commit `dfe87f536`; activation changes no behavior or capability claim.
+normalized results, deterministic reruns, and atomic cleanup. Clean `.10.4`
+implementation commit `dfe87f536` activates `.11`. Completed `.11` now
+qualifies the bounded AHB migration oracle over 19
+public/shared result paths using independently executed handwritten and
+generated-VIAL harnesses on byte-identical DUT source. Undeclared internal
+capture/hold/completion observations are explicit exclusions, and general
+cross-backend parity remains unclaimed.
 
 ## Rollback
 

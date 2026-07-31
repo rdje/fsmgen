@@ -32130,6 +32130,9 @@ task tree and git.
   `unchanged`; a same-barrier `parallel any` tie proves deterministic
   authored-order winner/cancellation behavior; failures publish no partial
   graph.
+- Capability/support and the mdBook report the shipped bounded runtime and
+  result while preserving complete-four-state, parity, UVM, VHDL methodology,
+  mixed-language, and scale non-claims. `.11` retains cross-backend parity.
 
 ### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11 — portable AHB parity activated
 
@@ -32138,6 +32141,16 @@ task tree and git.
 - This continuity-only slice changes no VIAL/HIAL source, parser, bridge, plan,
   artifact, tool invocation, trace, result, parity report, public capability,
   HIAL behavior, backend qualification, or product behavior.
-- Capability/support and the mdBook now report the shipped bounded runtime and
-  result while preserving complete-four-state, parity, UVM, VHDL methodology,
-  mixed-language, and scale non-claims. `.11` retains cross-backend parity.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11 — portable AHB parity proved
+
+- Added the private closed `AHBBaseOutput` comparator and focused `t/1559`
+  qualification over independently executed handwritten and generated-VIAL
+  harnesses using byte-identical generated DUT source.
+- The deterministic parity report compares 19 public/shared success and ERROR
+  outcomes, records undeclared internal counters as explicit exclusions,
+  reports semantic mismatches, and rejects malformed, nonzero, ineligible, or
+  different-DUT evidence without widening the known-value profile.
+- Capability/support truth claims only the selected AHB oracle; ordinary
+  `run`, result bytes, HIAL behavior, and the general cross-backend/UVM/VHDL/
+  mixed-language/four-state/scale non-claims remain unchanged.

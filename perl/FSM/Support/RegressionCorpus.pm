@@ -115,6 +115,31 @@ my @REGRESSION_CORPUS = (
         )],
     },
     {
+        id => 'feature.vial_ahb_base_output_runtime_parity',
+        relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
+        family => 'verification_intent_tooling',
+        classification => 'supported_smoke',
+        coverage => 'vial_ahb_handwritten_oracle_parity',
+        source_kind => 'vial',
+        strict_supported => 0,
+        supported_phases => [qw(
+            parse typecheck hial_review bridge_binding execution_plan
+            artifact_generation backend_emission compile simulation runtime
+            result parity
+        )],
+        required_capabilities => [qw(
+            vial.backend.sv_portable_verilator.v1
+            vial.backend.sv_portable_verilator.runtime_trace_v1
+            vial.result_manifest.v1
+            vial.parity_report.v1
+            vial.parity.ahb_base_output_arbitration.v1
+        )],
+        explicit_nonclaims => [qw(
+            complete_four_state general_cross_backend_parity uvm vhdl
+            mixed_language scale
+        )],
+    },
+    {
         id => 'protocol.apb_requester',
         relpath => 'fsm/apb_requester.fsm',
         family => 'protocol_fixture',

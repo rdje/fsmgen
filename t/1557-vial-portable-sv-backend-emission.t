@@ -204,7 +204,7 @@ subtest 'pure trace validation projects a closed stream without executing semant
     trace_failure($bad_counts, 0, 'VIAL_TRACE_COUNT_ERROR', 'footer count mismatch');
 };
 
-subtest 'capability discovery distinguishes shipped runtime/result from parity' => sub {
+subtest 'capability discovery distinguishes bounded AHB parity from general parity' => sub {
     my $contract = build_vial_execution_contract();
     is_deeply([sort keys %$contract], [sort @{vial_execution_contract_keys()}], 'private execution/backend contract is closed');
     is($contract->{backend_profile}, 'sv_portable_verilator', 'capability contract names the exact backend');
@@ -213,7 +213,7 @@ subtest 'capability discovery distinguishes shipped runtime/result from parity' 
     is($contract->{backend_stage_status}{compile}, 'shipped_exact_verilator_5_046', 'exact Verilator compile is shipped');
     is($contract->{backend_stage_status}{runtime}, 'shipped_known_value_declared_probe_profile', 'bounded runtime is shipped');
     is($contract->{backend_stage_status}{result}, 'shipped_verification_result_manifest_v1', 'result production is shipped');
-    is($contract->{backend_stage_status}{parity}, 'not_implemented', 'parity remains unimplemented');
+    is($contract->{backend_stage_status}{parity}, 'shipped_handwritten_ahb_oracle', 'bounded handwritten AHB parity is shipped');
     ok($contract->{writes_files}, 'execution records operation-owned staging and publication');
     ok($contract->{public_embedding_api}, 'execution is exposed through the public VIAL tool API');
     my $manifest = build_capability_manifest();

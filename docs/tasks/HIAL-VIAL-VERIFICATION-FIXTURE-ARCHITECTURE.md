@@ -223,11 +223,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4: ship Verilator run results`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11`
-  Status: `active`
+  Status: `done`
   Goal: `Migrate the handwritten AHB base output-arbitration success/ERROR fixture to portable VIAL and prove runtime parity.`
   Acceptance: `A checked-in .vial fixture and bridge-backed generated plain-SV harness reproduce the portable public-port acceptance/stall/response/data/completion/storage-or-readback outcomes of t/data/ahb_generated_subordinate_base_output_arbitration_tb.svt; internal capture/hold/completion/storage references are either declared typed probes with explicit profile limits or excluded from the portable oracle; old and new harnesses run against the same generated DUT with normalized result parity and unchanged HIAL behavior.`
-  Verification: `Clean .10.4 implementation commit dfe87f536 activates only normalized comparison of the shipped generated-VIAL result with the handwritten AHB oracle. Activation changes no source, parser, bridge, plan, target artifact, tool invocation, trace, result, parity report, public action/capability/support claim, HIAL behavior, UVM, VHDL, mixed-language, scale, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11: activate portable AHB result parity`
+  Verification: `Clean .10.4 implementation commit dfe87f536 and activation commit 04f22f689 permit only bounded AHB parity. The private closed AHBBaseOutput comparator consumes an exact zero-exit handwritten oracle plus the shipped candidate result, requires byte-identical generated DUT digests, projects 19 public/shared success and unsupported-size outcome paths, emits deterministic fsmgen.vial_parity_report.v1, explicitly excludes undeclared internal capture/hold/completion observations, reports semantic mismatches, and fails closed on malformed/duplicate/nonzero/ineligible/different-DUT evidence. Focused t1559 independently compiles/runs both harnesses under exact Verilator 5.046; support/capability discovery claims only vial.parity.ahb_base_output_arbitration.v1 while general cross-backend parity remains unclaimed. Final task/docs/mdBook/Knowledge Map/live-doc/staged-doctrine and cleanup evidence is recorded below.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11: prove portable AHB result parity`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12`
   Status: `proposed`
@@ -336,8 +336,10 @@ graph, source-mapped one-scheduler fixture, honest emission-only tool records,
 and pure closed-JSONL trace validator. Completed `.10.4` now ships public run,
 exact Verilator 5.046 compile/runtime, validated trace capture, normalized
 results, deterministic reruns, and atomic cleanup. `.11` retains cross-backend
-parity and is now active after clean `.10.4` implementation commit
-`dfe87f536`; activation itself changes no behavior or capability claim.
+parity ownership after clean `.10.4` implementation commit `dfe87f536`.
+Completed `.11` now qualifies 19 shared AHB outcome paths against the
+handwritten oracle on byte-identical DUT source, while general cross-backend
+parity remains unclaimed.
 Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
@@ -479,11 +481,14 @@ compiler-owned beneath C/C++ or Rust.
   `.11` alone to compare the generated portable result with the handwritten
   AHB oracle. Activation changes continuity ownership only and introduces no
   parity report, capability claim, or product behavior.
+- `2026-07-31`: Completed `.11` executes the handwritten and generated-VIAL
+  harnesses independently over byte-identical generated DUT source, compares
+  19 public/shared success and ERROR outcome paths, and emits one deterministic
+  closed parity report. Undeclared internal capture/hold/completion signals
+  are explicit exclusions; general cross-backend parity remains unclaimed.
 
 ## Open Questions
 
-- Active `.11` must compare the shipped portable result with the handwritten AHB
-  oracle without widening the known-value profile or inventing parity.
 - `.12` must choose the UVM revision and an actually available qualified
   simulator before native UVM implementation can claim compile/runtime support.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
@@ -496,7 +501,8 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for active `.11` implementation.
+- None for completed `.11`; `.12` retains its exact simulator/UVM selection
+  prerequisite.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -536,6 +542,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.10.4` activation | clean `.10.3` implementation predecessor `201590d84`; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; task/docs/live/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.10.4` alone active for public publication, Verilator run integration, trace capture, and normalized results; docs/live/path/task Files=8/Tests=378; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,952 KiB; Knowledge Map 1,096 facts/5,736 keys; README unchanged at 245 lines/9,913 bytes; Memory 47 lines; implementation and product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.10.4` implementation | public API/CLI run; exact Verilator 5.046 version/argv/digests; bounded process/output/staging; both selected AHB scenarios; ten semantic trace/result streams; deterministic virtual and unchanged filesystem reruns; same-barrier any-join tie/cancellation; atomic failures/cleanup; syntax/focused/support/docs/live/path/task/mdBook/Knowledge Map/Memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; 19 changed/new Perl/test paths syntax OK; guarded VIAL/support Files=10/Tests=7,170; docs/live/path Files=5/Tests=323; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-local build 73 files/16,964 KiB; Knowledge Map 1,096 facts/5,736 keys; README 245 lines/9,917 bytes; Memory 44 lines; initial default RAM guard stopped on its conservative free-page estimate while kernel pressure reported 83% free, then bounded 100%-host/4,096-MiB-process mdBook gates passed; `.10` complete; `.11` retains parity; output removed exactly |
 | `2026-07-31` | `.11` activation | clean `.10.4` implementation predecessor `dfe87f536`; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; docs/live/path/task/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.11` alone active for normalized result parity against the handwritten AHB oracle; docs/live/path Files=5/Tests=323; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-local build 73 files/16,964 KiB; Knowledge Map 1,096 facts/5,736 keys; README unchanged at 245 lines/9,917 bytes; Memory 46 lines; implementation and product behavior unchanged; output removed exactly |
+| `2026-07-31` | `.11` implementation | private closed AHB oracle comparator; independent handwritten/generated execution over identical DUT bytes; exact result/oracle projections; mismatches/exclusions/failures; capability/support truth; syntax/focused/impacted/docs/live/path/task/mdBook/Knowledge Map/Memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; all 15 changed/new Perl/test paths syntax OK; exact Verilator 5.046 impacted suite Files=11/Tests=7,183; 19 shared paths compare equivalent across two scenarios while two undeclared-internal families are explicitly excluded; malformed, duplicate, nonzero, ineligible, different-DUT, and semantic-mismatch evidence is regression-locked; docs/live/path Files=5/Tests=323; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-local build 73 files/16,976 KiB before exact removal; Knowledge Map 1,096 facts/5,736 keys; README 245 lines/9,917 bytes; Memory 47 lines; general cross-backend parity remains unclaimed; final staged doctrines and residue census pass |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -789,6 +796,38 @@ compiler-owned beneath C/C++ or Rust.
   execution, and scale remain explicit non-claims; legacy HIAL and
   verification-output-v1 behavior is unchanged.
 
+## Acceptance Checklist (enforced) — `.11` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — On clean activation predecessor
+  `04f22f689`, `git log -S 'package FSM::VIAL::Parity::AHBBaseOutput' --
+  perl/FSM/VIAL/Parity/AHBBaseOutput.pm` returns no commit, while the
+  handwritten harness reports only its two aggregate
+  `BASE_ASSERT_SUCCESS`/`BASE_ASSERT_ERROR` records and the generated result
+  carries ten richer semantic streams. Comparing every generated stream would
+  therefore fabricate baseline evidence; the missing owner is a bounded
+  projection comparator over only the facts both executions genuinely expose.
+- [x] **ADDRESSED (verified)** — `t/1559-vial-ahb-runtime-parity.t` independently
+  compiles and runs the checked handwritten harness and public VIAL path under
+  exact Verilator 5.046, proves byte-identical DUT source, compares 19 shared
+  public/declared-probe outcome paths across both scenarios, and emits one
+  deterministic `fsmgen.vial_parity_report.v1`. It locks two explicit
+  undeclared-internal exclusions, a semantic storage mismatch with its source
+  identity, and fail-closed malformed, duplicate, nonzero, ineligible, and
+  different-DUT evidence. The guarded impacted suite reports `All tests
+  successful` at `Files=11, Tests=7183`.
+- [x] **NO REGRESSION** — All 15 changed/new Perl modules and test programs
+  report `syntax OK`; the guarded impacted suite passes at `Files=11,
+  Tests=7183`, and documentation/live/path checks pass at `Files=5, Tests=323`.
+  Task integrity remains three trees/889 nodes/one segment/one index archive;
+  all 37 mdBook chapters test and the repository-local 73-file/16,976-KiB build
+  passes before exact removal. `knowledge-map: OK` holds at 1,096 facts/5,736
+  keys; Memory is 47 lines and README remains 245 lines/9,917 bytes. Final
+  staged acceptance/doctrines and the repository-local artifact census close
+  the commit. General cross-backend parity, complete four-state observation,
+  UVM, VHDL methodology, mixed-language execution, and scale remain explicit
+  non-claims; HIAL generation and legacy verification-output behavior are
+  unchanged.
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -824,9 +863,15 @@ compiler-owned beneath C/C++ or Rust.
 | `.10.4` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4: activate Verilator run integration` | Activate only public backend publication, exact Verilator compile/run, trace capture, and normalized result integration after clean `.10.3`; implementation remains unperformed. |
 | `.10.4` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4: ship Verilator run results` | Ship public run, exact bounded Verilator execution, validated traces, normalized results, deterministic virtual/filesystem publication, cleanup, and exact capability/support truth without parity. |
 | `.11` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11: activate portable AHB result parity` | Activate only normalized comparison of the shipped generated result with the handwritten AHB oracle after clean `.10.4`; implementation and parity claims remain unperformed. |
+| `.11` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11: prove portable AHB result parity` | Ship the private closed AHB oracle comparator, independently execute both harnesses over byte-identical DUT source, compare 19 shared outcomes, exclude undeclared internals, and retain every broader parity/methodology non-claim. |
 
 ## Changelog
 
+- `2026-07-31`: `.11` ships bounded AHB handwritten-oracle parity over 19
+  normalized shared paths, exact same-DUT identity, deterministic reports,
+  explicit undeclared-internal exclusions, semantic mismatch evidence, and
+  fail-closed malformed/ineligible gates. General cross-backend parity remains
+  unclaimed.
 - `2026-07-31`: Clean `.10.4` implementation commit `dfe87f536` activates
   `.11` alone for normalized parity against the handwritten AHB oracle. This
   continuity transition changes no implementation, public capability/support

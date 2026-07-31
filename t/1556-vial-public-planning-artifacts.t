@@ -309,18 +309,18 @@ subtest 'filesystem CLI atomically publishes, detects identity, collision, and u
 
 subtest 'capability and support accounting retain planning while adding bounded runtime' => sub {
     my $contract = build_vial_tooling_contract();
-    is($contract->{status}, 'shipped_public_verilator_execution_and_result', 'tooling status includes bounded public execution');
+    is($contract->{status}, 'shipped_public_verilator_execution_result_and_ahb_parity', 'tooling status includes bounded execution/result and AHB parity');
     is_deeply($contract->{supported_actions}, [qw(capabilities check format plan run)], 'supported actions include plan and run');
     ok($contract->{writes_files}, 'tool contract records filesystem-adapter writes');
     my %capability = map { $_ => 1 } @{$contract->{capabilities}};
     ok($capability{'vial.artifact_layout.v1'} && $capability{'vial.tool_manifest.v1'} && $capability{'vial.verification_output_manifest.v2'}, 'planning capability family is exact');
     my %nonclaim = map { $_ => 1 } @{$contract->{explicit_nonclaims}};
-    ok($nonclaim{complete_four_state} && $nonclaim{parity_pass}, 'remaining runtime qualification non-claims are explicit');
+    ok($nonclaim{complete_four_state} && $nonclaim{general_cross_backend_parity}, 'remaining general qualification non-claims are explicit');
     my ($entry) = grep { $_->{id} eq 'feature.vial_public_plan' } regression_corpus_entries();
     is($entry->{coverage}, 'vial_public_plan_cli_api', 'planning support entry uses its own coverage identity');
     my $manifest = build_capability_manifest();
     is($manifest->{language_surface}{file_surfaces}{entries}[-1]{suffix}, '.vial', '.vial remains the final explicit file surface');
-    is($manifest->{language_surface}{file_surfaces}{entries}[-1]{status}, 'shipped_bounded_public_verilator_execution_and_result', 'file-surface status includes the bounded public runtime/result path');
+    is($manifest->{language_surface}{file_surfaces}{entries}[-1]{status}, 'shipped_bounded_public_verilator_execution_result_and_ahb_parity', 'file-surface status includes bounded runtime/result and AHB parity');
 };
 
 done_testing();

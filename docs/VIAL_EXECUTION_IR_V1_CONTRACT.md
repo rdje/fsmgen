@@ -1055,11 +1055,35 @@ mismatches[]
 diagnostics[]
 ```
 
-Both results must have the same plan ID and be parity-eligible. Comparison is
-deep normalized field comparison in canonical order; matching digests are a
-fast path, not permission to skip shape validation. Each mismatch contains
-exactly `path`, `baseline`, `candidate`, `semantic_id`, and `logical_time`.
-Generated text and waveform equivalence cannot override a semantic mismatch.
+Full result-to-result cross-backend comparison requires both results to have
+the same plan ID and be parity-eligible. Comparison is deep normalized field
+comparison in canonical order; matching digests are a fast path, not
+permission to skip shape validation. Each mismatch contains exactly `path`,
+`baseline`, `candidate`, `semantic_id`, and `logical_time`. Generated text and
+waveform equivalence cannot override a semantic mismatch.
+
+Leaf `.11` ships one narrower migration-qualification profile,
+`vial.parity.ahb_base_output_arbitration.v1`. It uses the same closed report
+envelope but does **not** pretend that the legacy handwritten harness produced
+all VIAL semantic streams. Instead, the independently executed, zero-exit
+handwritten oracle and the normalized generated-VIAL result are projected to
+19 shared outcome paths across the success and unsupported-size scenarios:
+scenario/pass identity, public bus acceptance, success stall cycles, response
+ERROR cycles, nonzero read-data cycles, final ready/response/read-data, and the
+declared `probe/reg_data_q` storage value. The two executions must consume
+byte-identical generated DUT source. The baseline ID is content-addressed from
+the checked harness digest, DUT digest, and normalized records; the candidate
+keeps its real result ID.
+
+The handwritten-only internal capture, hold, and completion counters are
+preserved as evidence but excluded as `native_only`, because those hierarchy
+signals are not declared typed VIAL probes. They cannot be used to manufacture
+portable equivalence. Malformed/duplicate oracle records, nonzero execution,
+wrong fixture/result identities, unknown candidate values, a different DUT
+digest, or an ineligible candidate fail closed. A semantic difference is a
+valid `equivalent: false` report with exact mismatch paths; it is never reduced
+to transcript equality. This bounded AHB migration proof does not implement or
+claim general cross-backend parity.
 
 ## Diagnostics
 
@@ -1217,7 +1241,7 @@ Focused `.7` oracles must prove at least:
   when a semantic input changes;
 - every implemented limit and malformed native descriptor/replay record fails
   closed; `.10.4` now owns closed result-manifest production/failures, while
-  parity-report malformed-record oracles remain mandatory for `.11`; and
+  `.11` now supplies bounded parity malformed/mismatch oracles; and
 - no public file/API, backend artifact, compile, simulation, UVM, VHDL,
   mixed-language, runtime pass, parity pass, or scale claim is emitted.
 
@@ -1236,11 +1260,13 @@ bounded private capability/support accounting
 ```
 
 The support contract publishes result status `shipped` with implementation
-owner `.10.4`; parity remains `selected_not_implemented` under active `.11`.
-Clean `.10.4` implementation commit `dfe87f536` activates that comparison
-owner without changing the status or adding a parity claim. Neither
-name is included in `.7.3`'s target-neutral plan ledger, while the public
-runtime support contract now advertises the result capability.
+owner `.10.4` and parity-report status `shipped_bounded_ahb_oracle` under
+`.11`. The private implementation is
+`FSM::VIAL::Parity::AHBBaseOutput->compare({...})`, covered by
+`t/1559-vial-ahb-runtime-parity.t`. Neither result nor parity capability is
+included in `.7.3`'s target-neutral plan ledger. Public discovery advertises
+the bounded qualification evidence, while `general_cross_backend_parity`
+remains an explicit non-claim.
 
 Exact file/package decomposition may be refined in a later task-tree-owned
 slice without changing the schemas or public/non-public boundary. `.7.3` does

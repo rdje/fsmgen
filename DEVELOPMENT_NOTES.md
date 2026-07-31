@@ -34501,7 +34501,7 @@ digest; source hashes and spans remain distinct. This makes â€œterse or normalâ€
 reversible and prevents convenience defaults from silently changing intent.
 
 Plan/run roots are content-addressed, same-volume, atomic, and never overwrite
-non-identical trees. `.10.4` executes static emitted meaning under one exact
-Verilator profile; it never reparses VIAL or reruns semantic machinery. The
-validated trace becomes ten methodology-free result streams, while `.11`
-retains parity. VIAL run uses manifest v2; `.isf` v1 remains unchanged.
+non-identical trees. `.10.4` executes static meaning under exact Verilator.
+`.11` cannot compare the legacy harness to all ten VIAL streams: that would
+invent evidence. It compares 19 shared public/probe outcomes on identical DUT
+bytes, excludes undeclared internals, and leaves general parity unclaimed.

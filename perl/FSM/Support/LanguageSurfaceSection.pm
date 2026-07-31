@@ -176,8 +176,8 @@ sub build_language_surface_section {
                 {
                     suffix => '.vial',
                     intent_layer => 'VIAL',
-                    status => 'shipped_bounded_public_verilator_execution_and_result',
-                    role => 'reviewable verification intent with public source/planning tooling and a bounded portable-SystemVerilog Verilator runtime/result path',
+                    status => 'shipped_bounded_public_verilator_execution_result_and_ahb_parity',
+                    role => 'reviewable verification intent with public source/planning tooling, a bounded portable-SystemVerilog Verilator runtime/result path, and selected AHB handwritten-oracle parity',
                     lowers_to => [],
                     generated_review_artifacts => [
                         'source/vial-normal.vial',
@@ -204,7 +204,8 @@ sub build_language_surface_section {
                         'The public plan CLI/API routes direct IAL0, direct IAL1, or IAL2 through generated/reparsed IAL1 review authority, binds the selected fixture through compiler-proved directional type relations into private immutable target-neutral VIALExecutionIR, and publishes only canonical bridge/plan/tool projections.',
                         'Virtual plan/run callers receive one complete defensive artifact sink; the filesystem adapter commits that graph atomically below a repository-relative same-volume root.',
                         'The public sv_portable_verilator run path negotiates the immutable ExecutionIR, emits deterministic plain-SystemVerilog DUT/runtime/fixture sources, executes exact Verilator 5.046 compile/runtime commands from operation-owned repository-local staging, validates the closed trace, publishes a verification-result manifest, and removes staging before return.',
-                        'The shipped bounded profile is one unit, one clock, declared probe adapters, and known-value observations. Complete four-state observation, cross-backend parity qualification, UVM, VHDL, mixed-language execution, and scale remain explicit non-claims.',
+                        'The selected AHB fixture additionally has a closed deterministic parity report over public/shared acceptance, stall, response, data, and declared-storage-probe outcomes from independently executed handwritten and generated-VIAL harnesses using byte-identical DUT source; internal capture/hold/completion signals remain explicitly excluded because they are not declared typed probes.',
+                        'The shipped bounded profile is one unit, one clock, declared probe adapters, and known-value observations. Complete four-state observation, general cross-backend parity beyond the selected AHB oracle, UVM, VHDL, mixed-language execution, and scale remain explicit non-claims.',
                     ),
                 },
             ],

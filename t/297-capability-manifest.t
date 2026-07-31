@@ -2855,8 +2855,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     my %file_surface_by_suffix = map { $_->{suffix} => $_ } @{$manifest->{language_surface}{file_surfaces}{entries}};
     is(
         $file_surface_by_suffix{'.vial'}{status},
-        'shipped_bounded_public_verilator_execution_and_result',
-        'manifest records bounded public Verilator execution and result production',
+        'shipped_bounded_public_verilator_execution_result_and_ahb_parity',
+        'manifest records bounded public Verilator execution/result and AHB parity',
     );
     is_deeply(
         $file_surface_by_suffix{'.vial'}{supported_cli_modes},
@@ -2871,8 +2871,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.vial'}{current_boundary},
-        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits that graph atomically.*public sv_portable_verilator run path.*exact Verilator 5\.046.*verification-result manifest.*Complete four-state observation.*parity qualification/,
-        'manifest distinguishes the shipped bounded runtime from remaining qualification non-claims',
+        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits that graph atomically.*public sv_portable_verilator run path.*exact Verilator 5\.046.*verification-result manifest.*selected AHB fixture.*parity report.*Complete four-state observation.*general cross-backend parity/,
+        'manifest distinguishes bounded AHB parity from remaining general qualification non-claims',
     );
     is_deeply(
         [sort keys %{$manifest->{language_surface}{hial_vial_bridge}}],

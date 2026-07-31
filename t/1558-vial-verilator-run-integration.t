@@ -251,10 +251,11 @@ subtest 'discovery and support accounting expose only the qualified shipped boun
     my %tool_cap = map { $_ => 1 } @{$tooling->{capabilities}};
     ok($tool_cap{'vial.backend.sv_portable_verilator.v1'}, 'tooling exposes the portable backend');
     ok($tool_cap{'vial.result_manifest.v1'}, 'tooling exposes result production');
+    ok($tool_cap{'vial.parity.ahb_base_output_arbitration.v1'}, 'tooling exposes bounded AHB qualification evidence');
     my %execution_cap = map { $_ => 1 } @{$execution->{capabilities}};
     ok($execution_cap{'vial.backend.sv_portable_verilator.runtime_trace_v1'}, 'execution exposes validated runtime traces');
     my %nonclaim = map { $_ => 1 } @{$execution->{explicit_nonclaims}};
-    ok($nonclaim{complete_four_state} && $nonclaim{parity_pass} && $nonclaim{uvm} && $nonclaim{vhdl_methodology}, 'four-state/parity/methodology non-claims remain explicit');
+    ok($nonclaim{complete_four_state} && $nonclaim{general_cross_backend_parity} && $nonclaim{uvm} && $nonclaim{vhdl_methodology}, 'four-state/general-parity/methodology non-claims remain explicit');
     my ($entry) = grep { $_->{id} eq 'feature.vial_sv_portable_verilator_runtime' } regression_corpus_entries();
     is($entry->{coverage}, 'vial_sv_portable_verilator_runtime_cli_api', 'runtime has a distinct support identity');
     is($entry->{classification}, 'supported_smoke', 'runtime support classification is exact');

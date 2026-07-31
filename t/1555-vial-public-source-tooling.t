@@ -308,7 +308,7 @@ subtest 'capability and support accounting compose source tooling with shipped p
     ok($contract->{writes_files}, 'tooling contract records atomic filesystem planning writes');
     ok($contract->{public_embedding_api}, 'tooling contract advertises bounded public API');
     my %nonclaim = map { $_ => 1 } @{$contract->{explicit_nonclaims}};
-    ok($nonclaim{complete_four_state} && $nonclaim{parity_pass}, 'four-state/parity non-claims remain explicit');
+    ok($nonclaim{complete_four_state} && $nonclaim{general_cross_backend_parity}, 'four-state/general-parity non-claims remain explicit');
 
     my $manifest = build_capability_manifest();
     is_deeply($manifest->{language_surface}{vial_tooling}, $contract, 'ordinary manifest embeds exact VIAL-only tooling contract');

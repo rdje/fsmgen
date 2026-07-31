@@ -303,12 +303,12 @@ subtest 'reference, access, type direction, event, invocation, and native bounda
         FSM::VIAL::ExecutionBuilder->build(build_args(semantic_ir => parse_vial($missing_event))));
 };
 
-subtest 'capability/support accounting distinguishes shipped runtime from parity' => sub {
+subtest 'capability/support accounting distinguishes bounded AHB parity from general parity' => sub {
     my $execution_result = FSM::VIAL::ExecutionBuilder->build(build_args());
     ok($execution_result->{ok}, 'execution plan remains available for capability-ledger checks');
     my $contract = build_vial_execution_contract();
     is_deeply([sort keys %$contract], [sort @{vial_execution_contract_keys()}], 'execution capability contract is closed');
-    is($contract->{status}, 'shipped_public_verilator_execution_and_result', 'execution support includes public bounded Verilator execution');
+    is($contract->{status}, 'shipped_public_verilator_execution_result_and_ahb_parity', 'execution support includes bounded Verilator execution/result and AHB parity');
     ok($contract->{writes_files}, 'execution contract records operation-owned staging and publication');
     ok($contract->{public_embedding_api}, 'execution contract exposes the supported public tool API');
     is_deeply(
@@ -321,26 +321,28 @@ subtest 'capability/support accounting distinguishes shipped runtime from parity
             },
             parity_report => {
                 schema => 'fsmgen.vial_parity_report.v1',
-                status => 'selected_not_implemented',
+                status => 'shipped_bounded_ahb_oracle',
                 implementation_owner => 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11',
             },
         },
-        'result is shipped while parity retains its explicit later owner',
+        'result and bounded AHB parity report carry exact shipped owners',
     );
     my %shipped_capability = map { $_ => 1 } @{$contract->{capabilities}};
     ok($shipped_capability{'vial.backend.sv_portable_verilator.emission.v1'}, 'private emission capability is explicit');
     ok($shipped_capability{'vial.backend.sv_portable_verilator.trace_validation.v1'}, 'private trace-validation capability is explicit');
     ok($shipped_capability{'vial.result_manifest.v1'}, 'execution support claims the shipped result-manifest implementation');
+    ok($shipped_capability{'vial.parity_report.v1'}, 'execution support claims bounded parity-report production');
+    ok($shipped_capability{'vial.parity.ahb_base_output_arbitration.v1'}, 'execution support claims only the selected AHB oracle');
     ok(!$shipped_capability{'vial.parity_projection.v1'}, 'private plan support does not claim parity-projection implementation');
     my %plan_capability = map { $_->{capability_id} => $_ } @{$execution_result->{plan}{capability_ledger}};
     ok(!$plan_capability{'vial.result_manifest.v1'}, 'plan ledger does not mark future result support satisfied');
     ok(!$plan_capability{'vial.parity_projection.v1'}, 'plan ledger does not mark future parity support satisfied');
     my %nonclaim = map { $_ => 1 } @{$contract->{explicit_nonclaims}};
-    ok($nonclaim{complete_four_state} && $nonclaim{parity_pass} && $nonclaim{uvm} && $nonclaim{vhdl_methodology}, 'remaining qualification/methodology nonclaims remain explicit');
+    ok($nonclaim{complete_four_state} && $nonclaim{general_cross_backend_parity} && $nonclaim{uvm} && $nonclaim{vhdl_methodology}, 'remaining general qualification/methodology nonclaims remain explicit');
     my $manifest = build_capability_manifest();
     is_deeply($manifest->{language_surface}{vial_execution}, $contract, 'capability manifest publishes the exact private execution contract');
     my ($surface) = grep { $_->{suffix} eq '.vial' } @{$manifest->{language_surface}{file_surfaces}{entries}};
-    is($surface->{status}, 'shipped_bounded_public_verilator_execution_and_result', '.vial status composes public planning with bounded execution/result');
+    is($surface->{status}, 'shipped_bounded_public_verilator_execution_result_and_ahb_parity', '.vial status composes public planning with bounded execution/result and AHB parity');
     is_deeply(
         $surface->{supported_cli_modes},
         [

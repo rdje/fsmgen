@@ -442,7 +442,7 @@ subtest 'semantic corpus claims stay bounded while capability accounting include
 
     my $surface = build_language_surface_section();
     my ($vial) = grep { $_->{suffix} eq '.vial' } @{$surface->{file_surfaces}{entries}};
-    is($vial->{status}, 'shipped_bounded_public_verilator_execution_and_result', 'capability manifest includes bounded public Verilator execution and results');
+    is($vial->{status}, 'shipped_bounded_public_verilator_execution_result_and_ahb_parity', 'capability manifest includes bounded public Verilator execution/results and AHB parity');
     is_deeply(
         $vial->{supported_cli_modes},
         [

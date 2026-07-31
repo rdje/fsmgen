@@ -34,6 +34,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     vial_public_check_format_cli_api
     vial_public_plan_cli_api
     vial_sv_portable_verilator_runtime_cli_api
+    vial_ahb_handwritten_oracle_parity
     direct_root_pipeline_cli
     composition_top_pipeline_cli
     isf_pipeline_cli
@@ -401,6 +402,7 @@ my %coverage_classification = (
     vial_public_check_format_cli_api => 'supported_smoke',
     vial_public_plan_cli_api => 'supported_smoke',
     vial_sv_portable_verilator_runtime_cli_api => 'supported_smoke',
+    vial_ahb_handwritten_oracle_parity => 'supported_smoke',
     direct_root_pipeline_cli => 'supported_smoke',
     composition_top_pipeline_cli => 'supported_smoke',
     isf_pipeline_cli => 'supported_smoke',
@@ -1317,6 +1319,23 @@ for my $entry (@entries) {
             "VIAL runtime entry '$entry->{id}' records every remaining qualification non-claim",
         );
     }
+    elsif ($entry->{source_kind} eq 'vial' && $entry->{coverage} eq 'vial_ahb_handwritten_oracle_parity') {
+        is_deeply(
+            $entry->{supported_phases},
+            [qw(parse typecheck hial_review bridge_binding execution_plan artifact_generation backend_emission compile simulation runtime result parity)],
+            "VIAL parity entry '$entry->{id}' claims the exact bounded comparison phases",
+        );
+        is_deeply(
+            $entry->{required_capabilities},
+            [qw(vial.backend.sv_portable_verilator.v1 vial.backend.sv_portable_verilator.runtime_trace_v1 vial.result_manifest.v1 vial.parity_report.v1 vial.parity.ahb_base_output_arbitration.v1)],
+            "VIAL parity entry '$entry->{id}' keeps exact result/oracle capabilities",
+        );
+        is_deeply(
+            $entry->{explicit_nonclaims},
+            [qw(complete_four_state general_cross_backend_parity uvm vhdl mixed_language scale)],
+            "VIAL parity entry '$entry->{id}' preserves every broader qualification non-claim",
+        );
+    }
     elsif (
         $entry->{source_kind} eq 'fsm'
             || $entry->{source_kind} eq 'dt'
@@ -1378,8 +1397,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    377,
-    'catalog now keeps three hundred seventy-seven named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL semantic/tooling/planning/runtime fixtures',
+    378,
+    'catalog now keeps three hundred seventy-eight named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL semantic/tooling/planning/runtime/parity fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),

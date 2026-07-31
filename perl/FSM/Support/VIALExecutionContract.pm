@@ -30,7 +30,7 @@ sub vial_execution_contract_keys {
 sub build_vial_execution_contract {
     return {
         schema_version => 1,
-        status => 'shipped_public_verilator_execution_and_result',
+        status => 'shipped_public_verilator_execution_result_and_ahb_parity',
         contract_source => vial_execution_contract_source(),
         implementation_entrypoints => [
             'FSM::VIAL::ExecutionBuilder->build({...})',
@@ -39,6 +39,7 @@ sub build_vial_execution_contract {
             'FSM::VIAL::Backend::TraceValidator->validate({...})',
             'FSM::VIAL::Backend::Runner->run({...})',
             'FSM::VIAL::Backend::ResultProducer->produce({...})',
+            'FSM::VIAL::Parity::AHBBaseOutput->compare({...})',
             'FSM::VIAL::Tool::execute_vial_tool_request($request, $environment)',
         ],
         execution_schema => 'fsmgen.vial_execution_ir.v1',
@@ -52,7 +53,7 @@ sub build_vial_execution_contract {
             },
             parity_report => {
                 schema => 'fsmgen.vial_parity_report.v1',
-                status => 'selected_not_implemented',
+                status => 'shipped_bounded_ahb_oracle',
                 implementation_owner => 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11',
             },
         },
@@ -68,7 +69,7 @@ sub build_vial_execution_contract {
             compile => 'shipped_exact_verilator_5_046',
             runtime => 'shipped_known_value_declared_probe_profile',
             result => 'shipped_verification_result_manifest_v1',
-            parity => 'not_implemented',
+            parity => 'shipped_handwritten_ahb_oracle',
         },
         capabilities => [qw(
             vial.binding.directional_representation.v1
@@ -83,6 +84,8 @@ sub build_vial_execution_contract {
             vial.execution_profile.core_directed_single_clock_execution_v1
             vial.logical_time.drive_sample_react_check_v1
             vial.plan.v1
+            vial.parity.ahb_base_output_arbitration.v1
+            vial.parity_report.v1
             vial.random.sha256_counter_rejection_v1
             vial.replay.v1
             vial.result_manifest.v1
@@ -128,15 +131,15 @@ sub build_vial_execution_contract {
         writes_files => JSON::PP::true,
         public_embedding_api => JSON::PP::true,
         explicit_nonclaims => [qw(
-            complete_four_state parity_pass uvm vhdl_methodology mixed_language scale
+            complete_four_state general_cross_backend_parity uvm vhdl_methodology mixed_language scale
         )],
         guidance => [
             'Use the public VIAL run CLI/API for the selected portable-SystemVerilog Verilator pipeline; the backend classes remain private compiler seams.',
             'Treat the directional relation records and normalized plan-time decisions as authoritative; do not reinterpret them as target casts or backend randomization.',
             'Run materializes only an operation-owned repository-local staging tree, invokes exact Verilator 5.046 commands without warning suppressions, and removes staging before publication.',
             'Trace validation projects the produced closed trace without executing VIAL meaning; ResultProducer converts that validated projection into the closed verification-result contract.',
-            'The result schema is shipped by leaf .10.4; the parity-report schema remains selected but unimplemented under leaf .11.',
-            'Do not infer complete four-state observation, cross-backend parity, UVM, VHDL, mixed-language execution, or scale qualification from the selected runtime profile.',
+            'Leaf .11 ships a closed deterministic parity report for the selected AHB fixture by comparing public/shared outcomes from the normalized result with the independently executed handwritten oracle on byte-identical generated DUT source.',
+            'Do not infer complete four-state observation, general cross-backend parity beyond the selected AHB oracle, UVM, VHDL, mixed-language execution, or scale qualification from the selected runtime profile.',
         ],
     };
 }

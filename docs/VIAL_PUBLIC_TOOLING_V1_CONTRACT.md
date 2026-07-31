@@ -454,6 +454,20 @@ vial.tool_manifest.v1
 vial.verification_output_manifest.v2
 ```
 
+Completed `.10.4` adds the exact portable backend/runtime/trace/result
+capabilities. Completed `.11` adds discovery-only qualification evidence:
+
+```text
+vial.parity_report.v1
+vial.parity.ahb_base_output_arbitration.v1
+```
+
+This does not add a sixth public action, a field to
+`fsmgen.vial_tool_result.v1`, or a parity artifact to ordinary `run`. The
+private comparator and focused regression qualify the selected checked-in AHB
+fixture; future public or general cross-backend comparison requires its own
+contracted action/artifact owner.
+
 Private bridge/execution capabilities remain separately reported and cannot be
 promoted by association. Backend, compile, runtime, result, parity, UVM, VHDL,
 mixed-language, and scale capabilities appear only after their exact owners
@@ -469,6 +483,7 @@ feature.vial_public_plan
   coverage: vial_public_plan_cli_api
 
 feature.vial_sv_portable_verilator_runtime # shipped by .10.4
+feature.vial_ahb_base_output_runtime_parity # shipped by .11
 ```
 
 The existing `verification.vial_ahb_subordinate_base_output_arbitration`
@@ -527,8 +542,8 @@ a downgraded pass.
   `.10.2` ships plan/artifact behavior. Clean `.10.2` commit `045629c97`
   activates `.10.3` for backend/trace emission. Completed `.10.3` ships that
   private seam; completed `.10.4` exposes its qualified execution through
-  public run/result publication. Active `.11` owns parity against the
-  handwritten AHB oracle.
+  public run/result publication. Completed `.11` qualifies the selected AHB
+  fixture against the handwritten oracle without adding a public action.
 - Factories, phases, objections, UVM component classes, VHDL process plumbing,
   target hierarchy, callbacks, and host-language escape hatches remain backend
   implementation details unless a later typed VIAL semantic owner selects an
@@ -549,9 +564,12 @@ manifests, deterministic virtual and filesystem reruns, atomic publication,
 and exact cleanup. It adds no complete-four-state, parity, UVM, VHDL,
 mixed-language, or scale claim.
 
-Clean `.10.4` implementation commit `dfe87f536` activates `.11` to compare
-the normalized result with the handwritten AHB oracle. Activation changes no
-public action, schema, support status, artifact, or parity claim.
+Completed `.11` independently executes the handwritten harness and generated-
+VIAL harness over byte-identical generated DUT source, then compares 19
+normalized public/shared outcome paths through the closed parity-report
+schema. Internal capture/hold/completion counters are explicitly excluded
+because they are not declared typed probes. This adds bounded qualification
+evidence, not a public command/artifact or a general cross-backend claim.
 
 ## Validation And Rollback
 
@@ -585,6 +603,10 @@ exact tool/argv qualification, bounded runtime capture, both selected scenario
 outcomes, all ten semantic result streams, result-byte identity, and exact
 staging cleanup without borrowing planning or emission evidence as runtime
 evidence.
+Completed `.11` independently proves exact-tool handwritten execution,
+byte-identical DUT identity, closed oracle parsing, deterministic comparison,
+positive equivalence, semantic mismatch reporting, explicit internal-signal
+exclusions, malformed/ineligible evidence rejection, and exact cleanup.
 
 Selection rollback remains the decision-`0039` path. `.10.1` implementation
 rollback removes only the `vial` source subcommand/API adapter, terse

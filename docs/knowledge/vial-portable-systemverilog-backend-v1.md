@@ -17,8 +17,8 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, systemverilog, verilator, backend, scheduler, known-value, four-state, source-map, result, jsonl]
-evidence: docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/Runner.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm; perl/FSM/VIAL/PlanBuilder.pm; t/1557-vial-portable-sv-backend-emission.t; t/1558-vial-verilator-run-integration.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; t/data/ahb_generated_subordinate_base_output_arbitration_tb.svt; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
-reverify: perl -Iperl -c perl/FSM/VIAL/Backend/SVPortableVerilator.pm && perl -Iperl -c perl/FSM/VIAL/Backend/Runner.pm && perl -Iperl -c perl/FSM/VIAL/Backend/TraceValidator.pm && perl -Iperl -c perl/FSM/VIAL/Backend/ResultProducer.pm && prove -Iperl t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t
+evidence: docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/Runner.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm; perl/FSM/VIAL/Parity/AHBBaseOutput.pm; perl/FSM/VIAL/PlanBuilder.pm; t/1557-vial-portable-sv-backend-emission.t; t/1558-vial-verilator-run-integration.t; t/1559-vial-ahb-runtime-parity.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; t/data/ahb_generated_subordinate_base_output_arbitration_tb.svt; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
+reverify: perl -Iperl -c perl/FSM/VIAL/Backend/SVPortableVerilator.pm && perl -Iperl -c perl/FSM/VIAL/Backend/Runner.pm && perl -Iperl -c perl/FSM/VIAL/Backend/TraceValidator.pm && perl -Iperl -c perl/FSM/VIAL/Backend/ResultProducer.pm && perl -Iperl -c perl/FSM/VIAL/Parity/AHBBaseOutput.pm && prove -Iperl t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t
 ---
 
 Decision `0043` selects `sv_portable_verilator` as VIAL's first executable
@@ -66,6 +66,7 @@ The runtime representation is a closed prefixed JSONL trace. The shipped runner
 captures it under exact bounded process/tool rules; the pure validator projects
 `fsmgen.vial_sv_trace_projection.v1` without rerunning VIAL scheduling, models,
 scoreboards, coverage, faults, or decisions; the result producer emits the
-closed normalized result. `.11` alone owns parity with the handwritten AHB
-oracle and is active after clean `.10.4` implementation commit `dfe87f536`;
-activation changes no backend or parity behavior.
+closed normalized result. `.11` owns parity with the handwritten AHB oracle;
+completed `.11` qualifies 19 shared outcome paths over byte-identical
+DUT source without changing backend/runtime behavior or claiming general
+cross-backend parity.

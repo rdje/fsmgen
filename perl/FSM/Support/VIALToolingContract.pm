@@ -28,7 +28,7 @@ sub vial_tooling_contract_keys {
 sub build_vial_tooling_contract {
     return {
         schema_version => 1,
-        status => 'shipped_public_verilator_execution_and_result',
+        status => 'shipped_public_verilator_execution_result_and_ahb_parity',
         contract_source => vial_tooling_contract_source(),
         implementation_entrypoints => [
             'fsmgen vial capabilities [--json]',
@@ -58,6 +58,8 @@ sub build_vial_tooling_contract {
             vial.backend.sv_portable_verilator.inactive_edge_scheduler_v1
             vial.backend.sv_portable_verilator.declared_probe_adapter_v1
             vial.backend.sv_portable_verilator.runtime_trace_v1
+            vial.parity.ahb_base_output_arbitration.v1
+            vial.parity_report.v1
             vial.result_manifest.v1
         )],
         diagnostics => [qw(
@@ -95,7 +97,7 @@ sub build_vial_tooling_contract {
         writes_files => JSON::PP::true,
         public_embedding_api => JSON::PP::true,
         explicit_nonclaims => [qw(
-            complete_four_state parity_pass uvm vhdl_methodology mixed_language scale
+            complete_four_state general_cross_backend_parity uvm vhdl_methodology mixed_language scale
         )],
         guidance => [
             'Normal and terse are deterministic projections of one typed VIAL meaning; they are not separate semantic profiles.',
@@ -103,7 +105,7 @@ sub build_vial_tooling_contract {
             'Capabilities, check, and format never bind HIAL or write an artifact; plan and run bind one canonical HIAL review route, while only run selects a backend.',
             'The in-memory plan/run API publishes one complete virtual artifact sink; the CLI atomically commits the same graph below a repository-relative same-volume root.',
             'Run selects the exact qualified Verilator profile, compiles and executes repository-local generated SystemVerilog, validates its closed trace, and publishes a verification result manifest.',
-            'Known-value runtime evidence is shipped for the selected one-unit, one-clock, declared-probe profile; complete four-state observation, parity qualification, UVM, VHDL, mixed-language execution, and scale remain explicit non-claims.',
+            'Known-value runtime evidence and bounded parity with the handwritten AHB oracle are shipped for the selected one-unit, one-clock, declared-probe profile; complete four-state observation, general cross-backend parity, UVM, VHDL, mixed-language execution, and scale remain explicit non-claims.',
         ],
     };
 }

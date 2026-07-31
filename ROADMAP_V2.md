@@ -9558,8 +9558,11 @@ Completed `.10.4` now ships public `run`, exact Verilator 5.046 execution,
 validated trace capture, normalized result/output manifests, deterministic
 virtual/filesystem reruns, atomic publication, and exact cleanup. Clean `.10.4`
 implementation commit `dfe87f536` activates `.11` alone for parity with the
-handwritten AHB oracle; activation itself changes no behavior or capability
-claim.
+handwritten AHB oracle. Completed `.11` now independently executes both
+harnesses over byte-identical DUT source and compares 19 normalized public/
+shared success and ERROR outcome paths. Internal capture/hold/completion
+signals are explicit `native_only` exclusions because they are not declared
+typed probes; general cross-backend parity remains unclaimed.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

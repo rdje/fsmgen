@@ -553,8 +553,12 @@ The implementation gate must prove:
   UVM/VHDL verification targets, legacy manifest v1, and every non-claim remain
   unchanged.
 
-`.10` proves one backend result. `.11` alone compares the generated result with
-the handwritten AHB oracle and implements/claims portable runtime parity.
+`.10` proves one backend result. Completed `.11` compares that normalized
+result with the independently executed handwritten AHB oracle on byte-identical
+generated DUT source. The bounded report covers 19 public/shared success and
+ERROR outcome paths; undeclared internal capture/hold/completion signals are
+explicit `native_only` exclusions. This qualifies only
+`vial.parity.ahb_base_output_arbitration.v1`, not general cross-backend parity.
 
 The local selection probe generated the existing AHB DUT and compiled the
 handwritten 178-line harness under the exact command options above. Verilator
@@ -581,9 +585,11 @@ in operation-owned repository-local staging, validates the captured trace,
 publishes the normalized result/output graph atomically, and removes staging.
 The exact runtime regression also forces a same-barrier `parallel any` tie and
 proves authored-order winner selection plus sibling cancellation. `.10.4`
-makes no parity claim. Clean implementation commit `dfe87f536` activates
-`.11` to compare this result with the handwritten AHB oracle; activation
-changes no backend behavior, support status, or parity claim.
+makes no parity claim. Completed `.11` adds the private closed
+`FSM::VIAL::Parity::AHBBaseOutput` comparator and `t/1559` proof without
+changing backend emission, runtime behavior, public `run`, or result bytes.
+Malformed/duplicate/nonzero/ineligible/different-DUT evidence fails closed; a
+real semantic difference produces an exact non-equivalent mismatch report.
 
 Selection signoff requires current source/bridge/execution tests, the existing
 AHB Verilator oracle, task/roadmap/audit/decision/book/fact continuity, relative

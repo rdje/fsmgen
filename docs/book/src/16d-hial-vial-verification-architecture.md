@@ -6,9 +6,9 @@ semantic frontend and public tooling, the shipped private HIAL bridge producer,
 the shipped portable-SystemVerilog/Verilator execution path, and the
 compatibility boundary. Public `run`, exact external compilation, simulation,
 closed runtime traces, and normalized results now ship for the bounded
-`sv_portable_verilator` profile. Cross-backend parity does **not** ship yet.
-Leaf `.11` is active to compare that result with the handwritten AHB oracle;
-activation itself adds no parity report or capability claim.
+`sv_portable_verilator` profile. The selected AHB fixture now has bounded
+runtime parity with its handwritten oracle; general cross-backend parity does
+**not** ship yet.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -938,6 +938,38 @@ shapes, random byte encoding, action/property timing, diagnostics, limits, and
 AHB oracle are in the
 [VIAL execution v1 contract](../../VIAL_EXECUTION_IR_V1_CONTRACT.md).
 
+### Bounded parity with the handwritten AHB oracle
+
+The old handwritten harness does not emit VIAL events, models, scoreboards,
+coverage, faults, or fiber records. Copying those records from the generated
+result would be circular, not parity. FSMGen therefore executes both harnesses
+against byte-identical generated DUT source and constructs one smaller shared
+AHB outcome oracle.
+
+For `success`, the comparison covers:
+
+- passing scenario identity and one public bus acceptance;
+- 15 sampled not-ready cycles;
+- zero response-error and nonzero-read-data samples;
+- final ready `1`, response `0`, and read data `00000000`; and
+- declared storage probe `probe/reg_data_q = cafebabe`.
+
+For `unsupported_size`, it covers the same observed final/public values, one
+acceptance, exactly two response-error samples, and unchanged storage
+`00000000`. The old harness's internal capture, hold, and completion counters
+remain preserved as evidence but are explicitly excluded: those hierarchy
+signals are not declared typed VIAL probes. Storage is compared because it is
+a declared probe.
+
+`FSM::VIAL::Parity::AHBBaseOutput` emits the closed
+`fsmgen.vial_parity_report.v1` envelope. Nineteen exact paths are compared; a
+changed value produces `equivalent: false` and a path/semantic-ID mismatch.
+Malformed or duplicate oracle lines, nonzero baseline exit, unknown candidate
+values, an ineligible result, or different DUT digests fail closed. This
+qualifies only `vial.parity.ahb_base_output_arbitration.v1`; it adds no public
+CLI action or ordinary-run artifact and cannot be generalized to UVM, VHDL,
+four-state, or arbitrary cross-backend parity.
+
 ## Mapping the AHB arbitration fixture
 
 The architecture audit uses
@@ -1028,6 +1060,6 @@ private exact-profile emitter, eight-artifact virtual graph, complete source
 map, one-scheduler plain-SystemVerilog fixture, selected-but-unexecuted command
 records, and pure closed-trace projection. Completed `.10.4` now ships public
 run, exact Verilator execution, trace capture, normalized results,
-deterministic reruns, and atomic cleanup. `.11` retains cross-backend runtime
-parity and is active after clean `.10.4` implementation commit `dfe87f536`;
-that continuity transition changes no product behavior.
+deterministic reruns, and atomic cleanup. Completed `.11` now qualifies the
+selected AHB handwritten-oracle
+comparison while leaving general cross-backend parity unclaimed.
