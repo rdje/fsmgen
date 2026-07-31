@@ -10447,5 +10447,5 @@ The first honest `R11` slices are now:
   residue independently; version objects name recovery contracts and a bounded
   front door routes to the frozen packet. Decision `0045` and `.23` now bound
   maintained-reference reads/parts plus exact aggregate change. Clean `.23`
-  commit `425cd7fef` activated `.15`; completed `.15` now self-bounds common
-  JSONL/maximum-line pressure; clean `2e10cc605` activates `.16`'s utility audit.
+  commit `425cd7fef` activated `.15`; `.15` bounds common JSONL/line pressure;
+  completed `.16` classifies all families and assigns `.24`/`.25` migrations.

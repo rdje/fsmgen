@@ -199,3 +199,13 @@ Clean `.15` commit `2e10cc605` activates `.16` alone for the project-wide
 utility/retirement audit. No retain/merge/supersede/archive/delete/re-form
 outcome, lifecycle, migration, retirement, deletion, or product behavior
 changes in activation.
+
+Completed `.16` now classifies all 22 governed surfaces before migration. It
+retains current canonical ISF/book/task/decision/doctrine roles, selects
+`re-form` for structural roadmap/map/spec/focused representations, preserves
+the four-file lifecycle owner's authority, and assigns USER_GUIDE/BOOK_PLAN
+supersession plus verbose WARP re-form to separate `.24`/`.25` leaves. Removal
+requires fresh identity, whole-document token/ID residue, classified consumers
+including code/tests/scripts, named replacements, planted negative controls,
+retention where needed, and staged resulting-tree proof. The audit deletes and
+migrates nothing.

@@ -287,22 +287,15 @@ stop at 128 entries. Focused fixtures reject missing/incoherent metadata,
 record/file overflow, oversized fields and arrays, over-wide Markdown lines,
 and CRLF mismeasurement. No predecessor pressure ceiling is widened.
 
-## What The Old User Guide Still Does
+## Old User Guide Supersession Candidate
 
-[../../USER_GUIDE.md](../../USER_GUIDE.md) still remains the broad migration
-reference during the migration, but it should no longer be the only home for
-normative user-facing contract. When the guide contains contractual language,
-that language should be dispatched into the chapter that owns the topic.
-Because all of its current sections now point into named book chapters, the
-external review packet identifies it as a strong retirement candidate. It
-remains live until a separate link-consumer and unique-content audit proves
-supersession and removes it atomically.
-
-Use it when:
-
-- checking whether a detail still needs to be split into the book
-- you want the current monolithic reference section
-- you are comparing older sections against the new chapter layout
+[../../USER_GUIDE.md](../../USER_GUIDE.md) is now a compatibility waypoint,
+not a normative product home. Every major section points to a chapter below.
+The completed utility audit selects `supersede`, but does not delete the file:
+leaf `.24` must freshly prove whole-document token coverage, classify code/test
+and navigation consumers, update replacements, exercise negative controls,
+and preserve exact history before removal. Until then, use this chapter map
+and `SUMMARY.md` as the current book entry points.
 
 ## Old Guide To Book Map
 
@@ -358,5 +351,5 @@ The migration discipline remains active:
 - sections 1-2.1 of the old guide have also been reduced to chapter pointers
   so product, direct-language, declaration/import, aggregate, composition, and
   diagnostic contract prose does not drift in two places
-- the remaining cleanup is duplication reduction and drift prevention, not
-  finding homes for the major guide sections from scratch
+- `.24` owns final consumer replacement and proof-based waypoint retirement;
+  no new normative wording belongs in the old guide

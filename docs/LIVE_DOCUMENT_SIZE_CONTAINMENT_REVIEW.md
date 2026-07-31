@@ -22,12 +22,10 @@ The architecture separates:
    objects used for uncommon historical retrieval.
 4. **Mechanical contracts** — self-bounded JSONL registries and executed checks proving six pressure axes (including maximum line bytes), routes, identity, maintained-reference change authority, claimed currency, and lifecycle rules.
 
-The neutral policy and checker are
-[LIVE_DOCUMENT_SIZE_CONTAINMENT.md](../LIVE_DOCUMENT_SIZE_CONTAINMENT.md) and
-[`live-document-size/`](../live-document-size/). FSMGen's measured adoption is
-recorded in the [audit](LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md); reviewer
-findings and accepted corrections are tracked in the
-[disposition](LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md).
+Contracts and evidence: [neutral doctrine](../LIVE_DOCUMENT_SIZE_CONTAINMENT.md),
+[`live-document-size/`](../live-document-size/), [size audit](LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md),
+[utility audit](LIVE_DOCUMENT_UTILITY_RETIREMENT_AUDIT.md), and
+[review disposition](LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md).
 
 ## Migration proof
 

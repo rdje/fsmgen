@@ -51,7 +51,7 @@ no routed destination becomes the next uninstrumented blob.
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`
   Status: `active`
   Goal: `Bound all live document families over durable, addressable storage.`
-  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23`
+  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1`
   Status: `done`
@@ -143,7 +143,7 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `Every registered surface is remeasured; all live roots and parts are below warning; aggregate transitions and retrieval/reconstruction probes pass; temporary legacy headroom is reduced through a reviewed local registry update; doctrine/book/fact/task/roadmap/Memory agree; no artifact residue remains.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13`
   Status: `pending`
@@ -151,7 +151,7 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `Every docs/*.md and ancillary Markdown surface has an audience/lifecycle owner and bounded complete index; the current 6,254-line focused outlier and any other semantic outliers are partitioned only at stable topic boundaries; unique maintained content remains in an appropriate browsable home; per-part/file-count/aggregate/freshness/link checks pass below warning without changing product behavior.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14`
   Status: `done`
@@ -169,11 +169,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
-  Status: `active`
+  Status: `done`
   Goal: `Make current utility and deliberate retirement precede size migration.`
   Acceptance: `Define reviewable retain/merge/supersede/archive/delete/re-form outcomes and require one before migration; audit each governed FSMGen document family for current audience, canonical role, unique value, duplication, staleness, consumers, and historical retention; explicitly assess USER_GUIDE.md, the two frozen status files, CHANGES.md, DEVELOPMENT_NOTES.md, ROADMAP_V2.md, generated KNOWLEDGE_MAP.md, ISF_SPEC.md, and focused readiness/contract collections; define role/canonical-input/replacement/consumer-change triggers; require fresh token/ID, classified-consumer, replacement-pointer, and negative-control proof before deletion; assign separate atomic migrations and delete nothing in this audit leaf.`
-  Verification: `Activated alone from clean `.15` implementation commit `2e10cc605`. The task/index/roadmap/fact/audit/Memory/changelog continuity update selects only the utility/retirement audit. Paths/task pass Files=2/Tests=43; task integrity remains trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces cover 2,784/2,784 paths; Knowledge Map is 1,096 facts/5,759 keys; Memory is 38 lines; all 37 chapters test and the repository-local 73-file/17,284,414-byte build passes then is removed exactly. Final staged doctrines pass. No utility outcome, consumer classification, replacement pointer, migration, retirement, deletion, checker, registry, threshold, lifecycle, frozen identity, README landing content, mdBook product prose, or product behavior changes.`
-  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16: activate utility and retirement audit`
+  Verification: `The 272-line/18,824-byte utility audit defines six outcomes, classifies all 22 governed surfaces, and records audience/role/value/duplication/currency/consumer/retention evidence for every family plus the named legacy and focused cohorts. Exact activation measurements cover 2,784 paths; the focused cohort census covers all 1,004 files and the USER_GUIDE token probe covers 212 normalized tokens with nine enumerated navigation-only residues. It retains active ISF contracts, selects re-form for structural representations, retains the four reviewed files only under their existing owner boundary, and selects supersession for USER_GUIDE/BOOK_PLAN plus re-form for WARP under new atomic `.24`/`.25` owners. Fresh identity/token/consumer/replacement/negative-control/resulting-tree proof is mandatory before deletion. Focused Files=4/Tests=68 pass; task integrity is trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces cover 2,785/2,785 paths, with focused files exactly 1,005/1,005; Knowledge Map is 1,096 facts/5,759 keys; Memory is 37 lines; all 37 chapters test and the 73-file/17,283,901-byte repository-local build is removed exactly; maintained-reference delta is 0/-7/-257 and zero ceilings increase; final staged doctrines pass. No file is deleted, moved, archived, reclassified, or content-migrated; no checker, ceiling, frozen identity, README landing content, compiler/runtime artifact, or product behavior changes.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16: audit utility before containment`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
@@ -230,6 +230,22 @@ no routed destination becomes the next uninstrumented blob.
   Verification: `Decision 0045 makes maintained_reference an information lifecycle distinct from partitioned_canonical topology. The neutral schema requires bounded audience/role/rationale, null fixed aggregate pressure axes, fixed per-part targets/ceilings, one independently capped complete mandatory index, direct membership navigation, and exact aggregate baseline plus signed delta. The Git adapter proves each current aggregate against the prior revision and rejects stale, inexact, reused, banked, or silently removed authority. FSMGen classifies the mdBook at exact prior 38 files/47,377 lines/2,511,665 bytes plus authorized 0/+35/+2,124 delta; SUMMARY remains 39 lines/1,999 bytes with depth one, all prose remains, and Chapter 14 debt is unchanged. The mixed focused collection records docs/ISF_SPEC.md as a candidate while retaining its existing ceilings and .13 migration owner. Final focused, path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine evidence and exact artifact cleanup are recorded below.`
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23: enforce maintained-reference contracts`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
+
+- ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24`
+  Status: `pending`
+  Goal: `Prove and execute supersession of the completed guide-migration waypoints.`
+  Acceptance: `Against exact staged docs/USER_GUIDE.md and docs/BOOK_PLAN.md identities, run whole-document token/ID sweeps with enumerated residue and planted-orphan negative control; classify every documentation/code/test/script/registry consumer; migrate any unique accurate content to a named mdBook/decision/fact home; replace implementation, test, README, book, roadmap, and planning pointers with current canonical destinations; prove exact historical retention; remove each waypoint only if its independent replacement and resulting-tree gates pass, otherwise retain it with the failed proof recorded.`
+  Verification: `pending`
+  Commit: `pending`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
+
+- ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25`
+  Status: `pending`
+  Goal: `Re-form the verbose WARP bootstrap as a compact pointer to tool-neutral authority.`
+  Acceptance: `Inventory every WARP.md claim and consumer, route any still-unique accurate guidance to README/TOOLBOX/mdBook/fact/decision homes, exercise planted-orphan and unresolved-consumer negative controls, then replace the duplicated project/architecture/command narrative with a bounded harness bootstrap pointer equivalent to the other vendor files; AGENTS authority, bootstrap enforcement, README landing behavior, and all project workflows remain unchanged.`
+  Verification: `pending`
+  Commit: `pending`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
 
 ## Decisions
 
@@ -326,12 +342,20 @@ no routed destination becomes the next uninstrumented blob.
   until its owned semantic partition lands.
 - `2026-07-31`: Clean `.23` implementation commit `425cd7fef` activates `.15`
   alone for finite common JSONL control-plane bounds before utility `.16`.
+- `2026-07-31`: `.16` selects utility outcomes for all 22 surfaces before
+  migration. Active canonical specifications stay; structural representations
+  re-form; the four-file policy owner remains authoritative; USER_GUIDE plus
+  BOOK_PLAN supersession moves to `.24`; verbose WARP re-form moves to `.25`.
+- `2026-07-31`: Deletion requires exact identity, a fresh whole-document
+  token/ID sweep, classified consumers across code/tests/scripts as well as
+  docs, named replacement pointers, planted-orphan and planted-consumer
+  negative controls, retention where needed, and resulting-tree gates.
 
 ## Open Questions
 
-- None for completed `.18`-`.23` or active `.15`. The rereferenced PGEN/ANVIL
-  files exactly match the reviews already reconciled in the bounded disposition;
-  the existing four-file review retains authority for its named semantic roles.
+- None for completed `.15`-`.23`. The rereferenced PGEN/ANVIL files exactly
+  match the reviews already reconciled in the bounded disposition. The
+  existing four-file review retains authority for its named semantic roles.
 - Verification finding already owned by proposed task
   `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT`: on macOS,
   `scripts/run_with_ram_guard.sh` computed 98.3% host use from only free plus
@@ -343,11 +367,16 @@ no routed destination becomes the next uninstrumented blob.
 ## Blockers
 
 - `.3`-`.5` and `.11`: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` must first
-  select the four files' long-term roles. `.1`, `.2`, `.6`-`.10`, and `.12`
-  remain independently schedulable subject to their ordinary predecessor
-  dependencies. `.17`-`.23` are complete except active `.15` and pending
-  `.16`; utility `.16` follows `.15` and unblocks affected
-  `.8`-`.10`/`.13` migrations.
+  select the four files' long-term roles. `.24` and `.25` are newly pending
+  atomic migrations after completed `.16`; `.13` additionally waits for `.24`
+  so it inventories the resulting focused collection. `.8`-`.10` are otherwise
+  unblocked; `.12` remains the final post-migration calibration.
+
+## Acceptance Checklist (enforced) — `.16` utility/retirement audit
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'compatibility waypoint' --oneline -- docs/USER_GUIDE.md` identifies `798aff26b`/`2b47ba40f`, while the 22-surface census and direct inspection show that USER_GUIDE/BOOK_PLAN describe a completed guide migration and WARP duplicates 183 lines below the tool-neutral bootstrap. Conversely, current ISF specifications changed on 2026-07-30 and have implementation/test consumers, so size-only retirement would destroy live contract value.
+- [x] **ADDRESSED (verified)** — `docs/LIVE_DOCUMENT_UTILITY_RETIREMENT_AUDIT.md` defines all six outcomes, classifies every surface and required named document/cohort, publishes the 1,004-file focused census and 212-token USER_GUIDE probe, defines utility triggers and seven-part deletion proof, and assigns `.24`/`.25` plus existing migrations without deleting or moving a file.
+- [x] **NO REGRESSION** — the focused cluster reports `All tests successful` at `Files=4, Tests=68`; final task/path/live-size, Knowledge Map, Memory, mdBook, staged acceptance, and all-doctrine checks are recorded below. Frozen identities, README landing content, maintained ISF/book prose, ceilings, runtime artifacts, and product behavior remain unchanged.
 
 ## Acceptance Checklist (enforced) — `.21`
 
@@ -464,6 +493,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.15` activation | clean `425cd7fef` predecessor; task/index/roadmap/fact/Memory/audit/changelog sync; focused path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; Files=2/Tests=43; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096 facts/5,759 keys; Memory 38 lines; all 37 chapters test; removed 73-file/17,020-KiB build; `.15` alone active; no checker, registry, schema/value/limit, lifecycle/content, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.15` common JSONL bounds | bounded headers/scalars/arrays; six-axis pressure and CRLF semantics; Git authority compatibility; neutral/local docs; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; portable 10,000-record/16-MiB/64-KiB hard stops plus tighter local declarations; focused Files=5/Tests=76; paths/locality/task Files=3/Tests=63; 22 surfaces/2,784 paths; exact reference delta 0/+15/+1,041; Knowledge Map 1,096/5,759; Memory 38; all 37 chapters; removed build 73 files/17,284,414 bytes; zero ceiling increases; all doctrines pass; no predecessor threshold, lifecycle, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.16` activation | clean `2e10cc605` predecessor; task/index/roadmap/fact/audit/Memory/changelog sync; focused path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=43; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096/5,759; Memory 38; all 37 chapters; removed build 73 files/17,284,414 bytes; all doctrines pass; `.16` alone active; no audit outcome, migration, retirement, deletion, checker, registry, threshold, lifecycle/content, frozen identity, landing content, mdBook product prose, or product behavior change |
+| `2026-07-31` | `.16` utility/retirement audit | 22-family utility classification; named guide/status/ledger/roadmap/map/ISF/focused cohort evidence; exact external-review identity; token and consumer probes; outcome/trigger/deletion-proof contract; `.24`/`.25` decomposition; focused/task/path/live-size/Knowledge Map/Memory/mdBook/staged-doctrine gates; exact cleanup | `passed`; audit 272 lines/18,824 bytes; focused Files=4/Tests=68; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,785 paths; focused collection exactly 1,005 files; Knowledge Map 1,096/5,759; Memory 37; all 37 chapters; removed build 73 files/17,283,901 bytes; reference delta 0/-7/-257; zero ceiling increases; all doctrines pass; no deletion, movement, archive, lifecycle/ceiling/frozen/landing/product change |
 
 ## Commit Log
 
@@ -495,6 +525,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.15` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: activate common JSONL bounds` | Activate only common-control-plane inventory and finite schema pressure from clean `.23` commit `425cd7fef`; implementation remains pending. |
 | `.15` common JSONL bounds | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: enforce common JSONL bounds` | Self-bound every common registry, cap fields/arrays, and add deterministic maximum-content-line-byte pressure without widening a predecessor ceiling. |
 | `.16` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16: activate utility and retirement audit` | Activate only the evidence-backed retain/merge/supersede/archive/delete/re-form audit from clean `.15`; audit remains pending. |
+| `.16` utility/retirement audit | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16: audit utility before containment` | Select evidence-backed outcomes for every family, assign guide/WARP follow-ups, and require fail-closed deletion proof without deleting a file. |
 
 ## Changelog
 
@@ -511,6 +542,10 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: clean `.15` commit `2e10cc605` activates `.16` alone for the
   utility/retirement audit; no outcome, migration, retirement, deletion,
   enforcement, document lifecycle/content, or product behavior changes.
+- `2026-07-31`: `.16` publishes the family-by-family utility audit, preserves
+  current ISF/book/doctrine roles, selects structural re-forms, and assigns
+  guide-waypoint supersession plus WARP compaction to `.24`/`.25`; the audit
+  itself deletes or moves nothing.
 - `2026-07-31`: Clean commit `18e2dcbc6` activates `.6` alone to extend the
   task-tree schema and checker; no schema, checker, tree topology, threshold,
   document-family content, frozen identity, or product behavior changes in

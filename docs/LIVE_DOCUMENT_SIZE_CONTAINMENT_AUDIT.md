@@ -37,13 +37,11 @@ other high-water or structural surface has an exact migration owner below.
 
 The external-review preparation in leaf `.14` adds a prior question that this
 size census alone cannot answer: whether a document still has a distinct
-current audience and canonical role. A no-longer-useful compatibility, status,
-or slice-narration file should have unique value migrated, duplicate value
-proved, and historical value archived before the live file is removed; it
-should not be mechanically partitioned merely because it is large. The tracked
-review packet illustrates retain/merge/supersede/archive/delete outcomes with
-FSMGen candidates. Leaf `.16` owns the general utility/retirement audit and
-performs no deletion in its audit slice.
+current audience and canonical role. The completed
+[utility/retirement audit](LIVE_DOCUMENT_UTILITY_RETIREMENT_AUDIT.md) selects
+retain/merge/supersede/archive/delete/re-form semantics for every governed
+family, identifies completed guide-migration and verbose harness-bootstrap
+representations, assigns separate atomic owners, and deletes nothing in `.16`.
 
 The returned [PGEN/ANVIL disposition](LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md)
 adds two interpretation constraints. First, full tracked-path coverage proves
@@ -185,7 +183,7 @@ normal collection density.
 | --- | --- | --- |
 | Common enforcement | JSONL surface records declare every class, path array, owner, six-axis health targets and inclusive ceilings, 80/90 target milestones, containment status, immutable adoption baseline, bounded growth/ratchet, topology, index/currency contracts, and verifier; separate JSONL route/evidence/archive/ceiling-authority records carry only their own mappings; one unconditional adapter proves tracked-Markdown coverage, source-derived typed routes, evidence paths, staged-result agreement, delegated execution, and cross-revision ceiling authority | `.2` ships the common graph; `.18` separates health/quarantine and authorizes increases; `.19` closes execution/driver reachability; `.20` adds opt-in lifecycle currency; `.21` closes route/index/evidence completeness |
 | Control-plane self-containment | Every common registry declares finite data-record, whole-file-byte, and raw-record-byte caps; scalar bytes, identifier domains, and array cardinality are closed; every Markdown surface measures maximum content-line bytes independently | Completed `.15`; portable hard bounds are 10,000 data records, 16 MiB per registry, 64 KiB per record, and local declarations are tighter; no predecessor ceiling widened |
-| Document utility and retirement | Before a family is partitioned, classify its current audience, canonical role, unique value, duplication, staleness, and historical retention; select retain, merge, supersede, archive, delete, or re-form with evidence | Active `.16`, selected from clean `.15` commit `2e10cc605`, audits all families and assigns separate atomic content migrations or retirements; activation chooses no outcome and deletes nothing |
+| Document utility and retirement | Before a family is partitioned, classify its current audience, canonical role, unique value, duplication, staleness, and historical retention; select retain, merge, supersede, archive, delete, or re-form with evidence | Completed `.16` audits all 22 families, assigns existing owners plus `.24`/`.25`, requires fail-closed deletion proof, and deletes nothing |
 | GitHub landing page and root collection | Preserve README's direct project-introduction/quick-start/architecture/navigation role while removing only proved duplicate dynamic detail; let semantic family owners remove root-ledger pressure before final retained-surface calibration | `.12` performs the final README/root re-audit after semantic migrations |
 | Change and rationale ledgers | The existing four-file lifecycle review retains authority over their long-term audiences. If change/rationale ledgers remain live, root files become bounded current/index views; records seal on semantic entry boundaries into repository-local range shards, then leave the live collection only through digest-verified version-archive descriptors | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` selects the roles; `.3` consumes that decision and proves the schema; `.4`/`.5` perform only selected migrations |
 | Task evidence and index | Each active root keeps metadata plus the live ancestor/frontier. Decision 0042's finite JSONL manifest addresses content-named exact-source terminal segments; a second finite manifest proves the former terminal cross-tree rows as one exact version object. The live index contains only active/proposed selection, completed task files remain direct, and PNT never reads history | `.6` ships the schema/checker; `.7` seals 844 IAL2 nodes and 540 unique terminal index rows, returning both registered surfaces to normal |

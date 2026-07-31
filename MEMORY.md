@@ -6,17 +6,16 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16:
-  activate utility and retirement audit`).
-- active_work_unit: `.16` alone is active from clean `.15` commit `2e10cc605`.
-- current_state: `.15` self-bounds common JSONL and maximum-line pressure;
-  `.16` changes no utility outcome, lifecycle, document content, or behavior yet.
-- next_action: inventory each governed family for audience, canonical role,
-  unique value, duplication, staleness, consumers, and retention, then select a
-  reviewable retain/merge/supersede/archive/delete/re-form outcome for each.
+  audit utility before containment`).
+- active_work_unit: `.16` is complete; the tree has no active child in this
+  commit and clean selection should activate `.24` next.
+- current_state: all 22 surfaces have outcomes; current ISF/book/doctrine roles
+  stay, structural views re-form, and no file was deleted or migrated.
+- next_action: activate `.24` alone, then prove USER_GUIDE/BOOK_PLAN
+  supersession with fresh token, consumer, replacement, and negative controls.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: `.8`-`.10`/`.13` wait for utility or
-  maintained-reference predecessors. Frozen/ledger work keeps its prior owner.
+- blockers: frozen/ledger work keeps its separate owner; `.13` waits for `.24`.
 
 ## Durable context
 

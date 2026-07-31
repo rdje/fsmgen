@@ -34492,15 +34492,16 @@ non-identical trees. `.10.4` executes static meaning under exact Verilator.
 invent evidence. It compares 19 shared public/probe outcomes on identical DUT
 bytes, excludes undeclared internals, and leaves general parity unclaimed.
 
-## Maintained reference and bounded control data (2026-07-31)
+## Reference, control data, and utility (2026-07-31)
 
-Decision `0045` keeps unique product prose in bounded semantic parts behind a
-bounded complete index, while exact signed aggregate authority accounts for
-legitimate scope change. The Git adapter rejects stale, inexact, reused, or
-banked authority; `ISF_SPEC.md` remains debt until semantic partitioning lands.
+Decision `0045` keeps unique product prose in bounded parts behind an index
+and exact aggregate authority. `.15` caps JSONL records/files/fields/arrays and
+Markdown line bytes without widening a ceiling.
 
-Leaf `.15` applies the same containment rule to its control plane. Common JSONL
-registries cap data records, whole-file bytes, raw-record bytes, scalars, and
-arrays. Maximum Markdown content-line bytes is a sixth axis because the census
-found 10,275-byte generated rows beneath total-line and total-byte controls. LF
-and CRLF yield the same width; no predecessor ceiling is widened.
+Leaf `.16` proves why size cannot select retirement: live ISF contracts are
+large but have current code/test consumers, while USER_GUIDE/BOOK_PLAN are
+completed migration waypoints and WARP duplicates tool-neutral bootstrap
+authority. It therefore selects re-form or supersession under separate
+`.24`/`.25` leaves. Any deletion needs fresh whole-document tokens, classified
+consumers, replacement pointers, planted negative controls, retention, and
+resulting-tree proof; the audit itself removes nothing.
