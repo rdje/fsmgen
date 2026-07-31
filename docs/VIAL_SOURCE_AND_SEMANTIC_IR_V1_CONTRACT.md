@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`
-Status: selected for implementation by proposed `.3`
+Status: implemented as the bounded semantic-only profile by `.3`
 
 ## Outcome
 
@@ -20,10 +20,13 @@ provenance, never the raw token tree. A bounded sanitized semantic report is
 the only projection. Decision `0033` records why VIAL owns a dedicated parser
 instead of publishing the current `Lispish` representation.
 
-This contract changes no parser, source, artifact, CLI/API, report, manifest,
-support accounting, HDL, UVM, VHDL, test runtime, or product behavior. The
-named source, packages, focused test, report, capability entries, and support
-entry are implementation targets for `.3`, not shipped claims in this slice.
+Implementation `.3` now ships the four private `FSM::VIAL` packages, the
+checked source, focused regression, `.vial` language-surface entry, and
+semantic-only support/capability accounting selected here. It still exposes no
+public CLI or supported embedding API and produces no bridge, execution plan,
+HDL/UVM/VHDL artifact, compile, simulation, result, parity, or scale claim.
+The checked source is 4,986 bytes / 123 lines with SHA-256
+`2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd`.
 
 ## Version And Profile Boundary
 
@@ -48,6 +51,20 @@ allocation, recursion, unbounded loops/queues/crosses, runtime-created names,
 and backend lifecycle hooks. Typed native extensions, execution scheduling,
 replay algorithm, result manifests, and backends remain owned by `.6` and
 later leaves.
+
+Decision `0034` makes this an initial-profile boundary, not VIAL's expressive
+ceiling. VIAL is not constrained by synthesizability: later typed native
+profiles may abstract full selected SV/UVM/VHDL verification semantics,
+including UVM event/callback behavior. Terse and verbose normal syntax will
+share one semantic model. None of that broader surface is silently accepted by
+the bounded version-1 parser in `.3`.
+
+“Abstract” means simplify for the author: learning this source language does
+not require prior SV/UVM/VHDL knowledge. Those languages are backend targets,
+analogous to assembly targets for C/C++ or Rust, rather than vocabulary that
+VIAL reproduces. Later lowering contracts own efficient, readable,
+source-mapped artifacts while preserving this target-independent semantic
+boundary.
 
 ## Lexical Contract
 
@@ -99,7 +116,7 @@ SCOREBOARDS := (scoreboards SCOREBOARD_DECL*)
 FIXTURES    := (fixtures FIXTURE+)
 ```
 
-The seven package sections are mandatory and appear in exactly that order.
+The six package sections are mandatory and appear in exactly that order.
 Empty sections are written explicitly. This keeps the version-1 grammar and
 normalized record stable and makes unknown or misplaced clauses errors rather
 than silently ignored extensions.
@@ -824,12 +841,17 @@ Deferred to later exact owners:
 
 ## Validation And Rollback
 
-This documentation-only selection must pass task-tree integrity, task/roadmap/
-book/fact consistency, docs audits, all mdBook chapters and HTML build,
-Knowledge Map generation/check, Memory, diff, staged docs-only acceptance, all
-doctrines, and exact repository-local output cleanup.
+Implementation signoff requires the focused parser/SemanticIR/report suite,
+support-accounting and capability-manifest tests, all four Perl syntax checks,
+task-tree integrity, task/roadmap/book/fact consistency, docs audits, every
+mdBook chapter and the repository-local HTML build, Knowledge Map generation/
+check, bounded Memory, diff, staged acceptance, all doctrines, and exact
+repository-local output cleanup. Broader failures not caused by this slice
+must be root-caused and routed to their own inactive task trees rather than
+silently attributed to VIAL.
 
-Rollback removes this contract, decision `0033`, its fact/book/roadmap/task
-continuity, returns `.2` to active, and removes the `.3` selection. It changes
-no current source, parser, output, report, manifest, support entry, generated
-artifact, HDL, verification skeleton, test runtime, or product behavior.
+Rollback removes the four `FSM::VIAL` packages, the checked `.vial` source,
+t1550, and the `.vial` support/capability/language-surface entries, then
+restores this contract and its book/fact/task continuity to selected-only
+state. It must not alter HIAL parsing/lowering, existing HDL or verification
+artifacts, or the separately tracked regression-oracle repairs.

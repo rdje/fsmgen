@@ -9,6 +9,34 @@ our @EXPORT_OK = qw(regression_corpus_entries protocol_fixture_entries);
 
 my @REGRESSION_CORPUS = (
     {
+        id => 'verification.vial_ahb_subordinate_base_output_arbitration',
+        relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
+        family => 'verification_intent_fixture',
+        classification => 'supported_smoke',
+        coverage => 'vial_semantic_report_private_api',
+        source_kind => 'vial',
+        strict_supported => 0,
+        supported_phases => [qw(parse typecheck semantic_report)],
+        required_capabilities => [qw(
+            vial.profile.core_directed_single_clock_v1
+            vial.semantic_ir.v1
+            vial.source.v1
+        )],
+        explicit_nonclaims => [qw(
+            bridge_binding
+            execution_plan
+            artifact_generation
+            compile
+            simulation
+            result
+            parity
+            uvm
+            vhdl
+            mixed_language
+            scale
+        )],
+    },
+    {
         id => 'protocol.apb_requester',
         relpath => 'fsm/apb_requester.fsm',
         family => 'protocol_fixture',

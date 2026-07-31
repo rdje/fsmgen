@@ -99,7 +99,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`
   Status: `active`
   Goal: `Define peer HIAL and VIAL intent systems and their typed bridge so synthesizable hardware and powerful generated verification share one traceable architecture.`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.16, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.16, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1`
   Status: `done`
@@ -116,11 +116,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: select spanned VIAL semantic contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected bounded .vial parser, validator, VIALSemanticIR, and check/semantic report surface.`
   Acceptance: `The exact .2 grammar and IR contract parse one checked-in directed single-clock fixture into immutable typed semantic intent with deterministic order/source maps, fail closed on the selected negative corpus, expose only the selected sanitized reports/diagnostics/capabilities/support entries, and emit no bridge, execution plan, HDL, UVM, or VHDL artifact.`
-  Verification: `Activated continuity-only after clean contract commit 08f59167b. Activation changes task/index, roadmap, mdBook, facts, bounded Memory, changelog, and regenerated Knowledge Map continuity only. Parser, builder, SemanticIR, report, AHB source, t1550, capabilities/support entries, diagnostics, reports, artifacts, runtime, and all product behavior remain unchanged until activation commits cleanly. Task-tree integrity passes at two active trees / 864 nodes; docs audits pass at Files=3, Tests=40; all 37 mdBook chapters test and the 73-file / 16,845,901-byte repository-local build passes; Knowledge Map generation/check passes at 1,086 facts / 5,617 question keys; Memory remains bounded at 43 lines; diff, docs-only staged acceptance, all eight doctrines, and exact output cleanup pass.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: activate VIAL semantic implementation`
+  Verification: `Implemented four private FSM::VIAL packages and the 4,986-byte / 123-line / SHA-256 2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd AHB fixture. Focused t1550 proves the selected grammar, typed immutable SemanticIR, authored-order multi-diagnostics with dependent-cascade suppression, resource limits, stable spans/order, defensive copies, exact report, symmetric contextual literal inference, and explicit no-output boundaries; t248/t297 prove semantic-only support/capability accounting at Files=3 / Tests=7,055. Four Perl syntax checks pass; nine adjacent accounting/runtime/defensive-copy audits pass at Files=9 / Tests=32; docs audits pass at Files=3 / Tests=40 and relative paths at Files=1 / Tests=2. Task-tree integrity, all 37 mdBook chapters/build, Knowledge Map generation/check, bounded Memory, diff, staged acceptance, all doctrines, and exact repository-local cleanup pass. The broader t261 and t296 failures reproduce independently as stale non-VIAL oracles and are durably owned by proposed SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC and SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT; no VIAL source owns those expectations. No bridge, execution plan, public CLI/API, HDL/UVM/VHDL artifact, compile, simulation, result, parity, mixed-language, or scale claim is emitted.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: implement VIAL semantic intent`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`
   Status: `proposed`
@@ -139,7 +139,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6`
   Status: `proposed`
   Goal: `Select VIALExecutionIR version 1, deterministic logical-time execution, typed native-extension, plan, result, and parity contracts.`
-  Acceptance: `A documentation-only contract freezes binder/elaborator ownership and invariants, drive/sample/react/check phases, fiber/tie/cancel/timeout behavior, stable random-decision/replay identity, model/scoreboard/coverage/fault execution, capability negotiation, native lifecycle hooks and typed external artifacts, sanitized vial-plan.json, normalized verification-result-manifest.json, cross-backend parity fields, defensive-copy policy, diagnostics, and negative boundaries.`
+  Acceptance: `A documentation-only contract freezes binder/elaborator ownership and invariants, drive/sample/react/check phases, fiber/tie/cancel/timeout behavior, stable random-decision/replay identity, model/scoreboard/coverage/fault execution, capability negotiation, methodology-owned native lifecycle hooks and typed external artifacts without imposing a synthesizability ceiling on VIAL, sanitized vial-plan.json, normalized verification-result-manifest.json, cross-backend parity fields, defensive-copy policy, diagnostics, and negative boundaries.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -153,21 +153,21 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
   Status: `proposed`
   Goal: `Select the public VIAL CLI/API, project-local artifact layout, manifest/report/capability/diagnostic/support-accounting contract, and compatibility rules.`
-  Acceptance: `The contract selects exact .vial plus HIAL/bridge inputs, output/profile options, in-memory source-catalog/artifact-sink equivalents, repository-derived path policy, bridge/plan/artifact/result layout and schemas, schema migration for existing verification-output-manifest v1, capability discovery, stable diagnostics, support families, incompatible options, cleanup, and rollback before backend implementation.`
+  Acceptance: `The contract selects exact .vial terse and verbose normal projections of one typed semantic model that can be learned and authored without SV/UVM/VHDL knowledge, plus HIAL/bridge inputs, output/profile options, in-memory source-catalog/artifact-sink equivalents, repository-derived path policy, bridge/plan/artifact/result layout and schemas, schema migration for existing verification-output-manifest v1, capability discovery, stable diagnostics, support families, incompatible options, cleanup, and rollback before backend implementation.`
   Verification: `pending`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9`
   Status: `proposed`
   Goal: `Select the plain-SystemVerilog sv_portable_verilator backend and runtime-library contract.`
-  Acceptance: `The contract maps the bounded VIALExecutionIR subset to readable deterministic non-UVM SystemVerilog, freezes clock/phase race avoidance, values/types, drivers/samplers, scenarios/fibers, checks/models/scoreboards/coverage/fault subset, artifacts/source maps/results, exact Verilator version/capabilities/options, compile/elaboration/runtime gates, non-claims, and implementation fixture.`
+  Acceptance: `The contract maps the bounded VIALExecutionIR subset to efficient, readable, deterministic, source-mapped non-UVM SystemVerilog without requiring SystemVerilog knowledge from a VIAL author, freezes clock/phase race avoidance, values/types, drivers/samplers, scenarios/fibers, checks/models/scoreboards/coverage/fault subset, artifacts/results, exact Verilator version/capabilities/options, compile/elaboration/runtime gates, non-claims, and implementation fixture.`
   Verification: `pending`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10`
   Status: `proposed`
   Goal: `Implement the bounded plain-SystemVerilog portable backend and Verilator behavioral profile.`
-  Acceptance: `The selected fixture emits deterministic readable SystemVerilog plus manifests, compiles and runs under the exact recorded Verilator --binary --timing profile, produces the normalized result oracle, preserves all non-claims, and leaves UVM/VHDL/mixed-language output unchanged.`
+  Acceptance: `The selected fixture emits efficient, deterministic, readable, source-mapped SystemVerilog plus manifests without requiring SystemVerilog knowledge from a VIAL author, compiles and runs under the exact recorded Verilator --binary --timing profile, produces the normalized result oracle, preserves all non-claims, and leaves UVM/VHDL/mixed-language output unchanged.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -181,28 +181,28 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12`
   Status: `proposed`
   Goal: `Select the native SystemVerilog/UVM backend, UVM revision, component/runtime mapping, existing-skeleton migration, and sv_uvm_qualified profile.`
-  Acceptance: `The contract chooses the exact UVM revision and qualified simulator/profile, maps VIAL transactions/scenarios/drivers/monitors/analysis streams/models/scoreboards/coverage/faults/results, freezes virtual-interface and phase behavior, records compile/elaboration/simulation capabilities and licensing/CI policy, and defines compatibility/versioning for the shipped UVM 1.2 inert skeleton without claiming unavailable validation.`
+  Acceptance: `The contract chooses the exact UVM revision and qualified simulator/profile; establishes typed VIAL intent families for notification/interception (identity, registration, ordering, filtering, lifecycle, reentrancy/cancellation, and effects), lifecycle control, stimulus orchestration, producer/observer communication, implementation selection/substitution, scoped configuration, register intent, constrained decisions, coverage/properties, timed interface interaction, transactions/scenarios/analysis/models/scoreboards/faults/results, and an explicit residual-intent taxonomy; maps those intents to UVM events/callbacks, phases/objections, sequences, TLM, factories/config DB, RAL, randomization/coverage/assertions, and virtual interfaces/clocking without leaking those mechanisms into the VIAL surface or requiring SV/UVM knowledge from a VIAL author; selects target-artifact efficiency/readability/source-map criteria; records compile/elaboration/simulation capabilities and licensing/CI policy; and defines compatibility/versioning for the shipped UVM 1.2 inert skeleton without treating the first bounded native implementation as VIAL's expressive ceiling.`
   Verification: `pending`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13`
   Status: `proposed`
   Goal: `Implement and capability-qualify the selected native SystemVerilog/UVM backend.`
-  Acceptance: `The selected bounded VIAL subset emits native UVM artifacts, compiles/elaborates/runs under the exact available qualified tool and UVM revision, matches the portable normalized result oracle, reports every exercised and missing capability, migrates or versions the inert skeleton exactly as contracted, and never treats Verilator-only evidence as UVM authority.`
+  Acceptance: `The selected first native VIAL subset emits efficient, readable, source-mapped native UVM artifacts, compiles/elaborates/runs under the exact available qualified tool and UVM revision, proves notification/interception semantics through UVM event/callback machinery without exposing target classes or requiring SV/UVM knowledge in authored VIAL, keeps factory/config/TLM plumbing backend-private, matches every applicable portable normalized result oracle, reports every exercised and missing capability, migrates or versions the inert skeleton exactly as contracted, and never treats Verilator-only evidence or this first subset as full UVM/VIAL breadth.`
   Verification: `pending qualified simulator availability`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14`
   Status: `proposed`
   Goal: `Select the VHDL-2008 verification backend, methodology-provider mapping, existing-package migration, and GHDL/qualified profiles.`
-  Acceptance: `The contract chooses pure VHDL-2008 portable responsibilities and an exact OSVVM/UVVM/no-provider decision for advanced semantics, maps drivers/samplers/scenarios/models/scoreboards/coverage/faults/results, freezes standard/library/options and GHDL plus broader qualified profiles, records PSL and language non-claims, and versions/migrates the inert VHDL observation package without inferring analyzer support.`
+  Acceptance: `The contract chooses pure VHDL-2008 portable responsibilities and an exact OSVVM/UVVM/no-provider decision for advanced semantics, maps drivers/samplers/scenarios/models/scoreboards/coverage/faults/results without requiring VHDL knowledge from a VIAL author, freezes efficient/readable/source-mapped artifact criteria plus standard/library/options and GHDL and broader qualified profiles, records PSL and language non-claims, and versions/migrates the inert VHDL observation package without inferring analyzer support.`
   Verification: `pending`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15`
   Status: `proposed`
   Goal: `Implement and capability-qualify the selected VHDL verification backend.`
-  Acceptance: `The bounded VIAL subset emits deterministic VHDL artifacts, analyzes/elaborates/runs under the exact installed profile, matches the portable normalized result oracle, reports exact standard/methodology/PSL capabilities and non-claims, migrates or versions the inert package exactly as contracted, and leaves HIAL VHDL synthesis output distinct.`
+  Acceptance: `The bounded VIAL subset emits deterministic, efficient, readable, source-mapped VHDL artifacts without requiring VHDL knowledge from a VIAL author, analyzes/elaborates/runs under the exact installed profile, matches the portable normalized result oracle, reports exact standard/methodology/PSL capabilities and non-claims, migrates or versions the inert package exactly as contracted, and leaves HIAL VHDL synthesis output distinct.`
   Verification: `pending GHDL or selected analyzer/simulator availability`
   Commit: `pending activation`
 
@@ -227,6 +227,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `pending`
   Commit: `pending activation`
 
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19`
+  Status: `proposed`
+  Goal: `Select and decompose the post-first-backend expressive VIAL frontier without a synthesizability ceiling.`
+  Acceptance: `Decision 0034 is converted into detailed task-tree leaves for terse/normal syntax equivalence and the complete selected verification-intent taxonomy: notification/interception, lifecycle control, stimulus orchestration, producer/observer communication, implementation selection/substitution, scoped configuration, register intent, constrained decisions, coverage/properties, timed interface interaction, debugging/introspection, and later justified intent families. Each records semantic compression, native/portable SV/UVM/VHDL mappings, backend-private mechanisms (including factories/config DB/TLM plumbing), fail-closed profiles, tests, docs, and non-claims; each applies the author test that no SV/UVM/VHDL knowledge is required and the backend test that generated artifacts remain efficient, readable, and source-mapped, without cloning raw target syntax or allowing the initial portable/native slices to masquerade as the language ceiling.`
+  Verification: `pending activation after the first bounded backend/profile evidence establishes concrete decomposition inputs`
+  Commit: `pending activation`
+
 ## Current Frontier
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
@@ -238,9 +245,14 @@ and mixed-language profiles. The canonical audit maps the handwritten AHB
 fixture and exact migration/scale/public-surface boundaries. Clean audit commit
 `2e2f7d25e` activated only `.2` through a separate continuity transition.
 Completed `.2` accepts decision `0033` and the exact source/semantic-IR v1
-contract. Clean contract commit `08f59167b` activates only `.3` through a
-separate continuity transition. Implementation and product behavior remain
-unchanged during activation.
+contract. Clean contract commit `08f59167b` activated `.3` through a separate
+continuity transition; `.3` now ships the bounded semantic-only parser,
+validator, immutable `VIALSemanticIR`, sanitized report, checked AHB source,
+and exact support/capability accounting. Decision `0034` records that this
+first profile is not VIAL's language ceiling: target SV/UVM/VHDL machinery is
+compiler-owned in the same architectural sense that assembly is compiler-
+owned beneath C/C++ or Rust. Proposed `.4` is the next architecture leaf and
+requires a separate clean activation.
 
 ## Decisions
 
@@ -301,6 +313,19 @@ unchanged during activation.
 - `2026-07-31`: Clean contract commit `08f59167b` activates only `.3`; every
   parser/source/report/capability/support/test implementation change remains
   unperformed until activation commits cleanly.
+- `2026-07-31`: Director clarification accepts decision `0034`: unlike HIAL,
+  VIAL follows “full power underneath, simpler intent above” and is not
+  synthesis-bounded. The portable core is an initial profile, not
+  the language ceiling; native typed VIAL must abstract the verification
+  intents enabled by full SV/UVM/VHDL capabilities while keeping
+  `uvm_event`/callbacks, phases/objections, factories/config DB/TLM, and similar
+  target plumbing behind backend mappings. Terse and verbose normal forms
+  share one semantic model. Bounded `.3` remains unchanged; proposed `.19`
+  owns durable post-first-backend intent taxonomy and task-tree decomposition.
+- `2026-07-31`: “Abstraction means simplification” is made an explicit VIAL
+  usability and backend criterion: an author need not know SV/UVM/VHDL; those
+  languages are conceptually backend targets, while the compiler owns target
+  expertise and emits efficient, readable, source-mapped artifacts.
 
 ## Open Questions
 
@@ -314,10 +339,12 @@ unchanged during activation.
 - `.16` must choose the first available mixed-language tool/profile.
 - `.17` must select measured architecture-specific capacity budgets; the
   separate whole-product scale tree retains big/really-big qualification.
+- `.19` must convert decision `0034` into detailed implementable native-
+  verification semantic-family leaves before the architecture closes.
 
 ## Blockers
 
-- None for selected `.3` after its required separate activation. Later UVM,
+- None for completed `.3`. Later UVM,
   VHDL, and mixed-language implementation/qualification leaves retain explicit
   tool availability prerequisites and cannot borrow the current Verilator
   result.
@@ -331,6 +358,32 @@ unchanged during activation.
 | `2026-07-31` | `.2` activation | clean `.1` predecessor; task/index/roadmap/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.2` alone active; trees=2 / nodes=864; docs Files=3 / Tests=40; 37 chapters; 73 files / 16,812,484 bytes; Knowledge Map 1,085 facts / 5,600 keys; Memory 46 lines; contract and product behavior unchanged |
 | `2026-07-31` | `.2` selection | decision `0033`; exact source/grammar/type/property/declaration/fixture/IR/report/diagnostic/limit/negative contract; task/roadmap/book/fact consistency; task-tree/docs/relative-path/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.3` alone selected; trees=2 / nodes=864; docs Files=3 / Tests=40; paths Files=1 / Tests=2; 37 chapters; 73 files / 16,842,038 bytes; Knowledge Map 1,086 facts / 5,617 keys; no product behavior change |
 | `2026-07-31` | `.3` activation | clean `.2` predecessor; task/index/roadmap/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.3` alone active; trees=2 / nodes=864; docs Files=3 / Tests=40; 37 chapters; 73 files / 16,845,901 bytes; Knowledge Map 1,086 facts / 5,617 keys; Memory 43 lines; implementation and product behavior unchanged |
+| `2026-07-31` | `.3` implementation | dedicated parser/builder/SemanticIR/report syntax; focused t1550; support/capability/accounting and defensive-copy audits; task-tree/docs/relative-path/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; checked AHB source is 4,986 bytes / 123 lines / SHA-256 2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd; focused Files=3 / Tests=7,055; adjacent Files=9 / Tests=32; docs Files=3 / Tests=40; paths Files=1 / Tests=2; 37 chapters; build 73 files / 16,896,993 bytes; Knowledge Map 1,087 facts / 5,631 keys; explicit semantic-only non-claims; unrelated t261/t296 failures routed to separate proposed task trees; output removed exactly |
+
+## Acceptance Checklist (enforced) — `.3` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — On clean activation commit `4ab91cc15`,
+  `perl -Iperl -e 'require FSM::VIAL::Parser'` reports `Can't locate
+  FSM/VIAL/Parser.pm ... at -e line 1.` The selected source/parser/SemanticIR/
+  report surface therefore has an exact absent implementation locus rather
+  than an ambiguous defect in an existing parser.
+- [x] **ADDRESSED (verified)** — `prove -Iperl t/1550-vial-semantic-ir.t
+  t/248-regression-corpus-accounting.t t/297-capability-manifest.t` passes at
+  `Files=3, Tests=7055`. Box-scoped evidence: t1550 loads the checked 4,986-byte
+  AHB source through the dedicated parser and builder, checks immutable typed
+  intent, stable spans/order, authored-order diagnostic aggregation with
+  dependent-cascade suppression, symmetric contextual inference, exact
+  resource limits, defensive reports, capabilities, and all explicit
+  bridge/plan/output/runtime non-claims.
+- [x] **NO REGRESSION** — All four `perl -Iperl -c perl/FSM/VIAL/*.pm` checks
+  pass; nine adjacent support/runtime/defensive-copy audits pass at
+  `Files=9, Tests=32`; the task/docs/path/mdBook/Knowledge Map/staged-doctrine
+  gates pass and repository-local outputs are removed exactly. Box-scoped
+  broader-gate evidence: t261's stale unary-expression shapes and t296's PPIF
+  pipeline-versus-CLI top-name oracle reproduce outside VIAL and are owned by
+  proposed `SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC`
+  and `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT`; this slice changes no
+  implicated generator or PPIF source and makes no broad-suite pass claim.
 
 ## Commit Log
 
@@ -341,6 +394,7 @@ unchanged during activation.
 | `.2` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: activate source semantic IR contract` | Activate only the documentation-only v1 source/semantic-IR contract after clean `.1`; contract findings remain unperformed. |
 | `.2` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: select spanned VIAL semantic contract` | Accept decision `0033`, freeze the complete v1 source/private-IR/report boundary, and select proposed `.3` implementation without product changes. |
 | `.3` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: activate VIAL semantic implementation` | Activate only bounded parser/SemanticIR implementation after clean `.2`; implementation remains unperformed. |
+| `.3` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: implement VIAL semantic intent` | Ship the bounded semantic-only frontend, one checked source, exact reports/capabilities/support, and focused negative/resource coverage without a bridge, plan, backend, or runtime claim. |
 
 ## Changelog
 

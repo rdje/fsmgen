@@ -34304,3 +34304,29 @@ but all bridge references remain opaque assertions and every queue, cross,
 fault, loop, source catalog, and source file is explicitly bounded. This makes
 `.3` a real semantic compiler slice without borrowing later binding, execution,
 backend, or scale claims.
+
+## VIAL expressiveness — full target power, simpler authored intent (2026-07-31)
+
+Decision `0034` separates the first portable profile from VIAL's long-term
+ceiling. HIAL is necessarily bounded by synthesizable lowering; VIAL is not.
+VIAL should cover the verification use cases enabled by qualified
+SystemVerilog/UVM and VHDL targets, including methodology behaviors such as
+event interception, while refusing to become a renamed catalog of target
+classes, functions, phases, or syntax.
+
+Abstraction here means simplification. A VIAL author must not need prior
+SV/UVM/VHDL knowledge. Conceptually those languages sit beneath VIAL as
+assembly languages sit beneath C/C++ or Rust: the compiler owns target syntax,
+methodology plumbing, scheduling expertise, and efficient realization, while
+generated artifacts remain readable and source-mapped for integration and
+diagnosis. Factories/config DB/TLM, phases/objections, and
+`uvm_event_callback` are possible lowering mechanisms, not authored VIAL
+vocabulary. VIAL instead names implementation substitution, scoped
+configuration, lifecycle/readiness/drain/finalization, and
+notification/interception/filtering/ordering/cancellation/transformation.
+
+This yields a durable admission test for new constructs: they must expose,
+compose, or compress verification intent. Terse and verbose normal forms may
+remove different amounts of ceremony, but they must lower to the same typed
+semantic record. If a proposed feature requires an author to understand the
+target plumbing to use it correctly, the abstraction is not finished.

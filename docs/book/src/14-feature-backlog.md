@@ -4331,8 +4331,9 @@ remain deferred behind later selector leaves.
 
 ### Selected HIAL/VIAL architecture
 
-The architecture for full fixture generation is selected and decomposed, but
-its source language and executable backends are not shipped yet.
+The architecture for full fixture generation is selected and decomposed. Its
+first bounded semantic-only source frontend is shipped; bridge binding,
+execution, public tooling, and executable backends are not shipped yet.
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` names current synthesizable
 IAL0/IAL1/IAL2 collectively as **Hardware IAL (HIAL)** and defines a peer
 **Verification IAL (VIAL)** for pure verification intent:
@@ -4361,6 +4362,24 @@ scoreboards, functional coverage, bounded faults, and reproducible random
 decisions. Anonymous raw target-language blocks are excluded; advanced
 SV/UVM or VHDL behavior uses typed, scoped, repository-relative native
 extensions with explicit profile and fallback contracts.
+
+Implementation `.3` now parses and type-checks the checked
+`vial/ahb_subordinate_base_output_arbitration.vial` source into private
+immutable `VIALSemanticIR` and exposes a defensive sanitized semantic report
+through a private checker. The `.vial` surface is support-accounted as
+semantic-only with no public CLI/API, bridge, plan, generated artifact,
+compile, simulation, result, parity, UVM, VHDL, mixed-language, or scale
+claim.
+
+Decision `0034` sets the longer-term rule: **full power underneath, simpler
+intent above**. Abstraction means simplification, so mastering VIAL does not
+require SV/UVM/VHDL knowledge; those are conceptually backend target languages,
+like assembly targets for C/C++ or Rust. Factories, config DB/TLM plumbing,
+phases/objections, callbacks, and comparable methodology details remain
+compiler choices beneath typed verification intent. Qualified backends must
+eventually emit efficient, readable, source-mapped output without defining
+VIAL in target-language terms. Proposed `.19` owns the detailed expressive-
+family decomposition after concrete backend evidence exists.
 
 Verification is qualified through explicit simulator capability profiles. A
 fast portable profile uses Verilator only for the synthesis-oriented
@@ -4404,13 +4423,12 @@ binding assertions, deterministic models and fibers, bounded scoreboards,
 coverage, substitution faults, stable random-decision identity, and directed
 scenarios. `VIALSemanticIR` is private and immutable; only defensive sanitized
 diagnostics/report projections are selected. Properties reuse the shared
-`=>`/`next`/`within` vocabulary. Planned source
-`vial/ahb_subordinate_base_output_arbitration.vial` remains unshipped until
-proposed `.3` is separately activated and implemented. The exact contract is
+`=>`/`next`/`within` vocabulary. Implementation `.3` now ships
+`vial/ahb_subordinate_base_output_arbitration.vial`, the private semantic
+frontend, defensive report, negative corpus, and bounded semantic-only support
+claims. The exact contract is
 [VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT](../../VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).
-Clean contract commit `08f59167b` activates only `.3`; no parser, source,
-semantic report, capability/support entry, test, or runtime behavior changes
-during the activation transition.
+There is still no public CLI/API, bridge, plan, output, or runtime behavior.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -12132,6 +12150,15 @@ negative-boundary contract, and selects proposed implementation `.3` alone for
 a separate clean activation. No source or parser ships in contract selection.
 Clean contract commit `08f59167b` activates only `.3`; the implementation
 remains unperformed until activation commits cleanly.
+Completed `.3` ships the dedicated span-aware VIAL parser, semantic builder,
+private immutable SemanticIR, defensive report, checked AHB source, exact
+diagnostics/resource boundaries, and semantic-only capability/support entries.
+It deliberately emits no bridge, execution plan, target artifact, or runtime
+result. Director clarification during the slice is durable in decision `0034`:
+VIAL is not synthesis-bounded, but it abstracts and simplifies the expressive
+verification use cases of SV/UVM/VHDL instead of cloning their mechanisms.
+Proposed `.4` is the next architecture leaf and still requires a separate clean
+activation.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

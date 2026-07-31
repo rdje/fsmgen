@@ -2832,11 +2832,27 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok($suffixes{'.axi'}, 'manifest advertises .axi as a shipped profile-alias file surface');
     ok($suffixes{'.apb'}, 'manifest advertises .apb as a shipped profile-alias file surface');
     ok($suffixes{'.ahb'}, 'manifest advertises .ahb as a shipped profile-alias file surface');
+    ok($suffixes{'.vial'}, 'manifest advertises .vial as a shipped bounded semantic-intent file surface');
     ok(
         !$manifest->{language_surface}{file_surfaces}{direct_ial2_to_ial0_allowed},
         'manifest states direct IAL2-to-IAL0 lowering is not allowed',
     );
     my %file_surface_by_suffix = map { $_->{suffix} => $_ } @{$manifest->{language_surface}{file_surfaces}{entries}};
+    is(
+        $file_surface_by_suffix{'.vial'}{status},
+        'shipped_bounded_semantic_only',
+        'manifest limits .vial to the shipped semantic-only surface',
+    );
+    is_deeply(
+        $file_surface_by_suffix{'.vial'}{supported_cli_modes},
+        [],
+        'manifest advertises no VIAL CLI before the public tooling contract',
+    );
+    like(
+        $file_surface_by_suffix{'.vial'}{current_boundary},
+        qr/no bridge binding, execution plan, artifact generation, compile, simulation, result, parity, UVM, VHDL, mixed-language, or scale claim/,
+        'manifest keeps every VIAL semantic-only non-claim explicit',
+    );
     my %isf_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.isf'}{supported_cli_modes} || []};
     ok(
         $isf_cli_modes{'--emit-verification-output uvm-passive-monitor --verification-outdir'},

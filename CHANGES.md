@@ -31473,3 +31473,22 @@ task tree and git.
   passes at 1,086 facts / 5,617 keys; Memory remains bounded at 43 lines; diff,
   docs-only staged acceptance, all eight doctrines, and exact output cleanup
   pass. No separate development note is warranted.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3 — VIAL semantic intent implemented
+
+- Added a dedicated bounded span-aware `.vial` parser, typed semantic builder,
+  immutable `VIALSemanticIR`, and defensive sanitized semantic report, plus a
+  checked 4,986-byte AHB arbitration fixture and focused positive/negative/
+  resource-limit regression.
+- Added `.vial` as a semantic-only language surface and one supported-smoke
+  corpus entry with exact parse/typecheck/report phases and explicit no-CLI,
+  no-bridge, no-plan, no-output, no-runtime, no-UVM/VHDL/parity/scale claims.
+- Accepted decision `0034`: VIAL is not synthesis-bounded, but abstracts the
+  expressive use cases of SV/UVM/VHDL rather than cloning their plumbing.
+  Those languages are compiler targets, analogous to assembly beneath C/C++
+  or Rust; authors express simpler intent while backends own efficient,
+  readable, source-mapped realization.
+- Focused VIAL/accounting/capability tests pass at `Files=3, Tests=7,055` and
+  nine adjacent support/runtime/defensive-copy audits at `Files=9, Tests=32`.
+  Two pre-existing broad-gate oracle failures are root-caused and durably
+  routed to separate proposed task trees; this slice changes neither locus.

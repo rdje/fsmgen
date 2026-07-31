@@ -14,6 +14,7 @@ use lib File::Spec->catdir($FindBin::Bin, 'lib');
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
+use FSM::Test::ProjectDataLocality;
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $tempdir = tempdir(CLEANUP => 1);
@@ -22,15 +23,20 @@ my @supported_entries = grep {
     $_->{classification} eq 'supported_smoke'
 } regression_corpus_entries();
 
-my @strict_entries = grep {
-    $_->{strict_supported}
+my @hdl_entries = grep {
+    _supports_phase($_, 'hdl_generation')
 } @supported_entries;
 
+my @strict_entries = grep {
+    $_->{strict_supported}
+} @hdl_entries;
+
 ok(@supported_entries, 'regression corpus records supported-smoke entries');
+ok(@hdl_entries, 'regression corpus records HDL-generating supported-smoke entries');
 ok(@strict_entries, 'regression corpus records strict-supported entries');
 
-subtest 'supported-smoke entries compile through default pipeline' => sub {
-    for my $entry (@supported_entries) {
+subtest 'HDL-generating supported-smoke entries compile through default pipeline' => sub {
+    for my $entry (@hdl_entries) {
         _assert_pipeline_acceptance(
             $entry,
             owner => 'default pipeline',
@@ -38,8 +44,8 @@ subtest 'supported-smoke entries compile through default pipeline' => sub {
     }
 };
 
-subtest 'supported-smoke entries compile through default CLI' => sub {
-    for my $entry (@supported_entries) {
+subtest 'HDL-generating supported-smoke entries compile through default CLI' => sub {
+    for my $entry (@hdl_entries) {
         _assert_cli_acceptance(
             $entry,
             owner => 'default CLI',
@@ -74,6 +80,12 @@ done_testing();
 sub _repo_path {
     my ($relpath) = @_;
     return File::Spec->catfile($repo_root, split m{/}, $relpath);
+}
+
+sub _supports_phase {
+    my ($entry, $phase) = @_;
+    return 1 unless exists $entry->{supported_phases};
+    return scalar grep { $_ eq $phase } @{$entry->{supported_phases}};
 }
 
 sub _source_search_paths_for_entry {

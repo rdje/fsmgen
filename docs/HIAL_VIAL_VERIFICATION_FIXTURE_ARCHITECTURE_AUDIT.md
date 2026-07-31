@@ -226,6 +226,51 @@ the exact cross-language algorithm and replay encoding before randomness ships.
 Every generated artifact uses canonical ordering, stable names, normalized
 line endings, and source maps.
 
+## VIAL Expressiveness Is Not Synthesis-Bounded
+
+HIAL's synthesizable lowering boundary does not apply to VIAL. The portable
+logical core is the first interoperable profile, not the definition or
+permanent expressive ceiling of verification intent. Qualified native profiles
+may carry the full selected verification semantics of SystemVerilog/UVM or
+VHDL, including methodology-level event and callback behavior.
+
+This power is admitted through semantic compression, not target-language
+cloning. A VIAL family must expose or compose verification intent; a one-to-one
+renaming of SV/UVM/VHDL syntax, classes, or methods is rejected. UVM event-
+callback intent, for example, owns interception, filtering, ordering,
+lifecycle, reentrancy/cancellation, transformation, and observation semantics;
+`uvm_event`/`uvm_event_callback` are backend mechanisms. The same rule keeps
+phases/objections, sequences/sequencers, TLM, factories/config DB, RAL,
+randomization/coverage/assertion facilities, and virtual interfaces/clocking
+as compiler choices beneath lifecycle, orchestration, communication,
+selection/substitution, configuration, register, decision, coverage/property,
+and timed-interface intent.
+
+In this architecture, abstraction specifically means simplification for the
+author. Someone who has never learned SystemVerilog, UVM, or VHDL must be able
+to master VIAL and obtain correct, efficient target implementations. The
+compiler and backend own target expertise, methodology plumbing, scheduling
+folklore, and artifact construction. Generated artifacts should remain
+readable for backend diagnosis, but target knowledge is not a prerequisite for
+authoring VIAL. Moving a gory target detail into VIAL under a different name is
+an architecture failure, not abstraction.
+
+The intended relationship is analogous to C/C++ or Rust and assembly:
+SV/UVM/VHDL are VIAL backend target languages. Their output remains readable
+and source-mapped for tool integration and diagnosis, but target idioms do not
+define VIAL semantics or its authored vocabulary.
+
+Specifically, VIAL lifecycle intent covers construction/configuration/readiness
+dependencies, stimulus start, background-service lifetime, completion/drain,
+shutdown, finalization ordering, deadlines, and failure policy. UVM phase
+selection, raise/drop objections, and phase-transition calls are compiler-
+generated backend plumbing rather than authored VIAL concepts.
+
+Terse and verbose normal source forms must produce the same typed semantic
+records. Capability negotiation fails before output when a backend has no
+selected equivalent. Decision `0034` records the rule; proposed `.19` owns the
+post-first-backend expressive-family taxonomy and detailed task decomposition.
+
 ## Typed Native Extensions
 
 Portable `.vial` must not contain anonymous raw SV/UVM or VHDL blocks. A

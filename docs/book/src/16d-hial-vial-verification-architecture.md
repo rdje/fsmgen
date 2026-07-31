@@ -1,9 +1,9 @@
 # HIAL/VIAL Verification Architecture
 
-FSMGen has selected the architecture for a future verification-intent language
-and generated executable fixtures. This chapter explains that destination and
-the compatibility boundary. It does **not** mean `.vial` input or runnable
-VIAL output ships today.
+FSMGen has selected the architecture for its verification-intent language and
+future generated executable fixtures. This chapter explains the shipped
+semantic frontend, the executable destination, and the compatibility boundary.
+It does **not** mean runnable VIAL output ships today.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -62,10 +62,10 @@ are orthogonal. One `.vial` language keeps those concerns composable; private
 compiler phases preserve strict boundaries without forcing users to choose an
 artificial source level.
 
-## Selected VIAL version-1 source contract
+## Shipped bounded VIAL version-1 semantic frontend
 
-The source/semantic-IR contract is now selected, but its parser and first
-source are not shipped yet. VIAL version 1 uses closed S-expressions and a
+The source/semantic-IR contract, parser, and first checked source now ship as a
+semantic-only frontend. VIAL version 1 uses closed S-expressions and a
 dedicated source-span-aware parser. It deliberately does not expose the
 repository's legacy raw Lispish arrays: exact byte/line/column provenance,
 stable semantic IDs, deterministic diagnostics, and later replay/source maps
@@ -117,18 +117,45 @@ reuse the canonical `=>`, `next`, and one-/two-bound `within` operators already
 selected for verification properties. New temporal operators must extend the
 shared property contract rather than appear only in VIAL.
 
-The planned first checked source is
-`vial/ahb_subordinate_base_output_arbitration.vial`. It will represent success
+The first checked source is
+`vial/ahb_subordinate_base_output_arbitration.vial`. It represents success
 and unsupported-size scenarios, a transaction, event counters, a bounded
 scoreboard, stall coverage, one bounded size-substitution fault, and stable
-wait-cycle decision identity. In the first implementation it can only parse,
+wait-cycle decision identity. The first implementation can only parse,
 type-check, and produce a sanitized semantic report. Bridge binding, execution
 plans, generated fixtures, simulation, and results remain later phases. See
 the exact [VIAL source and SemanticIR v1 contract](../../VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).
 
-Clean contract commit `08f59167b` activates only the bounded parser/SemanticIR
-implementation leaf. Activation itself adds no parser, source, report,
-capability, support, test, binding, output, or runtime behavior.
+The shipped checker is intentionally private until the public CLI/API contract
+is selected. This repository-local example shows its current shape; it is
+useful for development and tests, not a compatibility promise:
+
+```perl
+use FSM::VIAL::Parser;
+
+my $checked = FSM::VIAL::Parser->check_source({
+    text => $source_bytes,
+    source_name => 'vial/example.vial',
+    source_catalog => {},
+});
+
+die $checked->{diagnostics}[0]{message} unless $checked->{ok};
+my $report = $checked->{semantic_report};
+```
+
+Success returns stable source identity, package/fixture/declaration summaries,
+unresolved typed bridge references, and exactly these capabilities:
+`vial.source.v1`, `vial.semantic_ir.v1`, and
+`vial.profile.core_directed_single_clock_v1`. Diagnostics retain Unicode-aware
+source spans and stable semantic paths. Independent invalid declaration or
+fixture containers are reported in authored order; validation suppresses
+dependent cascades and never exposes partial IR. The source is 4,986 bytes / 123
+lines with SHA-256
+`2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd`.
+
+There is no public `.vial` command or supported embedding API yet. The checker
+does not read imports from disk: callers supply a closed in-memory source
+catalog. It emits no bridge, plan, target code, simulation, or result artifact.
 
 ## The two private IR boundaries
 
@@ -217,6 +244,59 @@ Random choices are keyed by stable source/scenario/fiber/decision identities,
 not host threads or callback order. The exact algorithm and replay encoding
 remain for the execution contract; the architecture requires schedule-
 independent reproducibility now.
+
+## Expressive ceiling: verification intent, not synthesis
+
+The governing rule is **full power underneath, simpler intent above**. VIAL
+covers expressive verification use cases enabled by qualified targets; it does
+not expose every target-language or methodology concept.
+
+For VIAL, **abstraction means simplification**. You do not need to know
+SystemVerilog, UVM, or VHDL to learn the language and obtain an efficient
+implementation for a qualified target. VIAL teaches verification intent; the
+compiler owns target syntax, methodology plumbing, scheduling conventions, and
+artifact construction. Generated target code stays readable for diagnosis,
+but it is output—not prerequisite knowledge for authoring the input.
+
+The useful analogy is C/C++ or Rust compiling to assembly: SV/UVM/VHDL are
+VIAL's backend target languages. You can inspect the generated artifacts when
+integrating or debugging them, aided by stable names and source maps, without
+writing or mentally executing VIAL in target-language terms. No one backend's
+idioms define VIAL semantics.
+
+HIAL is intentionally limited to intent that can become synthesizable HDL.
+VIAL is not. Its portable core is an initial interoperable profile, not the
+language definition or its permanent ceiling. Native profiles may express the
+full selected verification semantics of SystemVerilog/UVM or VHDL when an
+exact methodology/tool capability is qualified.
+
+That does not mean recreating SV/UVM/VHDL with parentheses. A VIAL construct
+must expose, compose, or compress verification intent; a one-to-one catalog of
+renamed target classes, methods, statements, or syntax is rejected. For
+example, VIAL event-callback intent describes interception, filtering,
+ordering, lifecycle, reentrancy/cancellation, transformation, and observation.
+The UVM backend may realize that intent with `uvm_event` and
+`uvm_event_callback`, but those target classes are mappings rather than VIAL's
+semantic definition.
+
+Lifecycle follows the same rule. VIAL states construction/configuration/
+readiness dependencies, stimulus start, background-service lifetime,
+completion and drain conditions, shutdown, finalization order, deadlines, and
+failure policy. The UVM backend owns phase selection, raise/drop objections,
+and phase-transition plumbing; authored VIAL does not expose `run_phase`,
+`raise_objection`, `drop_objection`, or `phase.jump()`.
+
+The same principle permits typed intent for stimulus orchestration,
+producer/observer communication, implementation selection/substitution,
+scoped configuration, register behavior, constrained decisions, coverage,
+properties, and timed interface interaction. Sequences/sequencers,
+drivers/monitors, TLM, factories/config DB, RAL, randomization/coverage/
+assertion facilities, and virtual interfaces/clocking remain possible backend
+mechanisms rather than automatic VIAL vocabulary. Terse authored forms and a
+verbose normal form must lower to the same typed SemanticIR; terseness removes
+ceremony, never meaning. A backend without an exact native mapping rejects the
+required capability before output instead of silently weakening it. Decision
+`0034` owns this long-term boundary; the bounded v1 profile remains unchanged.
 
 ## Native extensions
 

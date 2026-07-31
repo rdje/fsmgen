@@ -1,0 +1,123 @@
+(vial
+  (version 1)
+  (package ahb_subordinate_base_output_arbitration
+    (imports)
+    (types
+      (enum htrans_t (logic 2)
+        (idle #b00)
+        (nonseq #b10))
+      (type address_t (logic 32))
+      (type data_t (logic 32)))
+    (transactions
+      (transaction ahb_write
+        (fields
+          (address (type address_t))
+          (transfer (type htrans_t))
+          (write bool)
+          (size (logic 3))
+          (data (type data_t))
+          (wait_cycles (u 4)))
+        (events requested accepted captured held completed error)))
+    (models
+      (model event_counter
+        (inputs (tick event))
+        (state (count (u 32) 0))
+        (rules (on tick (set count (+ count 1))))))
+    (scoreboards
+      (scoreboard accepted_writes
+        (transaction ahb_write)
+        (policy in_order)
+        (capacity 4)))
+    (fixtures
+      (fixture base_output_arbitration
+        (dut dut
+          (unit "unit/ahb_lite_subordinate")
+          (domains (domain bus "domain/ahb_bus"))
+          (endpoints
+            (endpoint ready_out "endpoint/HREADYOUT" (logic 1) public_port)
+            (endpoint response "endpoint/HRESP" (logic 1) public_port)
+            (endpoint read_data "endpoint/HRDATA" (logic 32) public_port)
+            (endpoint stored_data "probe/reg_data_q" (logic 32) verification_probe))
+          (transactions
+            (transaction write "transaction/ahb_write" ahb_write)))
+        (instances
+          (model accepts event_counter (bind tick (event write accepted)))
+          (model completions event_counter (bind tick (event write completed)))
+          (scoreboard writes accepted_writes (actual write)))
+        (coverage
+          (coverpoint stall_seen
+            (sample bus)
+            (expr (same (sample ready_out) #b0))
+            (bins
+              (bin not_stalled normal (value false))
+              (bin stalled normal (value true)))))
+        (faults
+          (fault unsupported_size
+            (target (transaction write size))
+            (action (substitute #b111))
+            (duration (cycles bus 1))))
+        (randomness
+          (seed 1)
+          (choice success_wait (u 4)
+            (decision_id "success.wait_cycles")
+            (distribution (uniform 1 2))
+            (constraints (>= (choice success_wait) 1))))
+        (scenarios
+          (scenario success
+            (timeout (cycles bus 256))
+            (steps
+              (reset bus 3)
+              (scoreboard_expect writes
+                (fields
+                  (address #b00000000000000000000000000000000)
+                  (transfer htrans_t.nonseq)
+                  (write true)
+                  (size #b010)
+                  (data #b11001010111111101011101010111110)
+                  (wait_cycles (choice success_wait))))
+              (start success_write write
+                (fields
+                  (address #b00000000000000000000000000000000)
+                  (transfer htrans_t.nonseq)
+                  (write true)
+                  (size #b010)
+                  (data #b11001010111111101011101010111110)
+                  (wait_cycles (choice success_wait))))
+              (parallel all
+                (fiber complete
+                  (await (within (event success_write completed) 1 256)))
+                (fiber stall
+                  (await (within (same (sample ready_out) #b0) 1 256))))
+              (expect accepted_once
+                (value_eq (event_count success_write accepted) 1))
+              (expect completed_once
+                (value_eq (event_count success_write completed) 1))
+              (expect response_ok (same (sample response) #b0))
+              (expect read_zero
+                (same (sample read_data) #b00000000000000000000000000000000))
+              (expect storage_written
+                (same (sample stored_data) #b11001010111111101011101010111110))
+              (scoreboard_check writes)))
+          (scenario unsupported_size
+            (timeout (cycles bus 256))
+            (steps
+              (reset bus 3)
+              (inject unsupported_size)
+              (start error_write write
+                (fields
+                  (address #b00000000000000000000000000000000)
+                  (transfer htrans_t.nonseq)
+                  (write true)
+                  (size #b010)
+                  (data #b11111111111111111111111111111111)
+                  (wait_cycles 1)))
+              (await (within (event error_write completed) 1 256))
+              (expect accepted_once
+                (value_eq (event_count error_write accepted) 1))
+              (expect two_error_cycles
+                (value_eq (event_count error_write error) 2))
+              (expect response_returns_ok (same (sample response) #b0))
+              (expect read_zero
+                (same (sample read_data) #b00000000000000000000000000000000))
+              (expect storage_unchanged
+                (same (sample stored_data) #b00000000000000000000000000000000)))))))))

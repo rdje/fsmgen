@@ -8411,6 +8411,14 @@ Clean contract commit `08f59167b` activates only `.3` through a separate
 continuity transition. The parser, builder, SemanticIR, report, AHB source,
 t1550, capability/support entries, and every product behavior remain unchanged
 during activation.
+Completed `.3` ships the dedicated span-aware parser, typed semantic builder,
+private immutable SemanticIR, defensive sanitized report, checked 4,986-byte
+AHB source, focused negative corpus, and semantic-only capability/support
+accounting. Independent invalid declaration/fixture containers report in
+authored order without dependent cascades. No public CLI/API, bridge, plan,
+target artifact, compilation, simulation, result, parity, UVM, VHDL,
+mixed-language, or scale behavior is claimed. Proposed `.4` is the next
+architecture leaf and requires separate clean activation.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
@@ -9409,6 +9417,24 @@ manifest, not generated text or waveforms. Public ports are the portable
 baseline; declared verification probes are capability-qualified; raw hierarchy
 is native-only.
 
+Decision `0034` clarifies that the portable core is an initial profile, not
+VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the
+full verification use cases enabled by qualified SV/UVM/VHDL profiles. Typed
+notification/interception and lifecycle intent may lower through
+`uvm_event`/`uvm_event_callback`, UVM phases, and objections, but those classes
+and plumbing do not leak into authored VIAL; factories/config DB/TLM and other
+methodology mechanisms follow the same rule. VIAL exposes, composes, or
+compresses verification intent rather than cloning target syntax, classes, or
+methods. Terse and verbose normal forms share one typed semantic model.
+Abstraction explicitly means simplification: mastering and authoring VIAL does
+not require SystemVerilog, UVM, or VHDL knowledge. SV/UVM/VHDL are conceptually
+backend targets for VIAL, analogous to assembly targets for C/C++ or Rust;
+qualified backends own that expertise and must emit efficient, readable,
+source-mapped artifacts rather than leak target plumbing upward.
+Proposed architecture `.19` owns the detailed post-first-backend intent-family
+taxonomy and task-tree decomposition; bounded `.3` remains the initial
+parse/typecheck profile.
+
 Decision `0032` selects plain SystemVerilog/Verilator as the first runnable
 backend, with separate `sv_uvm_qualified`, `vhdl_portable_ghdl`,
 `vhdl_methodology_qualified`, and `mixed_language_qualified` claims. Verilator
@@ -9417,16 +9443,15 @@ not full-LRM/UVM authority. Current UVM 1.2 and VHDL observation artifacts stay
 inert compatibility surfaces until exact migration leaves select replacements.
 The architecture audit maps the handwritten AHB arbitration harness and
 decomposes source/IR, bridge, execution, public tooling, backends, parity,
-migration, scale, and closeout across `.2`-.18. Proposed `.2` is the only
-selected next leaf. See decision `0032` and
+migration, scale, and closeout across `.2`-.19. See decision `0032` and
 `docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md`.
 Clean audit commit `2e2f7d25e` activates only `.2`; its exact source and
 semantic-IR contract remained unperformed during activation. Completed `.2`
 now selects the closed spanned VIAL v1 source and private typed semantic record
-under decision `0033`. Proposed `.3` is the only next implementation owner and
-requires separate clean activation. Clean contract commit `08f59167b` now
-activates only `.3`; implementation remains unperformed until that continuity
-commit is clean.
+under decision `0033`. Clean contract commit `08f59167b` activated `.3`, which
+now ships the bounded semantic-only frontend and checked AHB source. Proposed
+`.4` is next for a separate bridge-contract activation; decision `0034` and
+proposed `.19` retain the non-synthesis-bounded expressive horizon.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile
