@@ -15,10 +15,10 @@ Each surface record has this shape:
 ```
 
 `lifecycle` is one of `bounded_snapshot`, `partitioned_canonical`,
-`generated_projection`, `rolling_ledger`, `archive_terminal`,
-`external_terminal`, or `frozen_legacy`. `locator` independently describes how
-the target is found: `file`, `collection`, `generated_file`, `query`,
-`archive`, `external`, or `frozen`.
+`maintained_reference`, `generated_projection`, `rolling_ledger`,
+`archive_terminal`, `external_terminal`, or `frozen_legacy`. `locator`
+independently describes how the target is found: `file`, `collection`,
+`generated_file`, `query`, `archive`, `external`, or `frozen`.
 
 Measured file and collection records carry independent positive
 `health_targets` and `enforcement_ceilings` plus ordered warning and rollover
@@ -44,6 +44,44 @@ ceiling. A debt ceiling also satisfies
 one atomic reduction step before the declaration must ratchet down. Healthy
 measured records use
 `normal`; query/archive/external rows use `terminal`; frozen rows use `frozen`.
+
+### Maintained product reference
+
+`maintained_reference` is an information lifecycle for unique prose whose
+aggregate legitimately follows product or specification scope. It still uses
+the `collection` locator and semantic partitions, but it is not merely a
+synonym for `partitioned_canonical`: a timeless aggregate size cap would be
+decorative or would eventually force deletion of unique material.
+
+Its ordinary pressure objects keep the exact five keys but use JSON `null` for
+`files`, `lines_total`, and `bytes_total`. The `lines_each` and `bytes_each`
+values remain positive fixed health targets and inclusive ceilings. A debt
+baseline, growth allowance, and ratchet use the same nullable aggregate shape.
+`null` means that the fixed pressure axis is inapplicable; it does not mean the
+aggregate is unmeasured or may change without review.
+
+Every maintained reference requires a bounded single-line `classification`
+object with `audience`, stable identifier `role`, and `rationale`, plus this
+contract:
+
+```json
+{"classification":{"audience":"tool users","role":"unique_product_reference","rationale":"These explanations are maintained here and grow only with the product contract."},"reference_contract":{"mandatory_read":{"path":"guide/SUMMARY.md","lines_ceiling":64,"bytes_ceiling":4096},"max_navigation_depth":1,"aggregate_change":{"authority_id":"GUIDE-CHANGE.7","owner":"guide-maintainers","rationale":"Document the newly shipped transaction feature.","baseline":{"files":12,"lines_total":4000,"bytes_total":240000},"delta":{"files":1,"lines_total":180,"bytes_total":10500}}}}
+```
+
+The mandatory-read path must equal the collection index. Its line and byte
+ceilings are checked independently. A membership index must link every matched
+part directly; this proves navigation depth one for a multi-part collection.
+The ordinary membership check remains responsible for completeness.
+
+The neutral core measures aggregate files, lines, and bytes and requires each
+to equal `baseline + delta`. A local revision-aware adapter must additionally
+prove that `baseline` is the prior tree measurement and `delta` is the exact
+current-minus-prior change whenever the aggregate moves. A nonzero change
+requires a fresh authority id. The resulting last-change record remains
+immutable across unrelated commits; unchanged content cannot modify or bank an
+authority, and an established maintained-reference lifecycle cannot disappear
+silently. This makes aggregate change attributable without inventing a fixed
+product-size ceiling.
 
 `targets`, `canonical_inputs`, and `routes_to` are arrays, avoiding delimiter
 and escaping conventions inside values. All local paths and patterns are
@@ -146,13 +184,13 @@ does not assume a version-control system.
 
 The checker validates schema, lifecycle/locator compatibility, repository-
 relative and same-volume local targets, non-symlink files, per-part and
-aggregate targets/ceilings, inclusive equality, debt acknowledgement and
+applicable aggregate targets/ceilings, maintained-reference classification and
+exact aggregate authority, inclusive equality, debt acknowledgement and
 ratchets, generated/version-object verifier execution, opt-in currency-oracle
 execution, frozen identity, typed route closure, collection-index contracts,
 evidence-map paths, retention-contract and archive-descriptor shape, and
-optional inventory coverage. It reports actual,
-target, ceiling, and migrated/pinned/steady pressure separately. It never
-mutates the project.
+optional inventory coverage. It reports actual, target, ceiling, and
+migrated/pinned/steady pressure separately. It never mutates the project.
 
 The neutral core validates one resulting tree. An adopting project that uses
 Git may add a separate diff-aware authority registry and checker: every ceiling
@@ -161,6 +199,12 @@ added reviewed decision in the same change; lowering needs no authority. That
 adapter may also enforce cross-revision baseline immutability. The authority
 mechanism is intentionally separate because a ceiling declaration must not
 authorize its own widening.
+
+That Git adapter must likewise compare each `maintained_reference` aggregate
+contract with the prior revision. Its per-change authority is separate from a
+ceiling-increase authority: the former accounts for legitimate product-scope
+change on deliberately uncapped aggregate axes, while the latter expands an
+otherwise fixed contract boundary.
 
 An adopting wrapper must discover and execute every `adapter:` verifier on
 every run, pass only the proof tokens emitted after successful execution, and

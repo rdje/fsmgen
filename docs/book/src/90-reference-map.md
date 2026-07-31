@@ -232,10 +232,45 @@ depend on history uses content-addressed repository files. The 79-line review
 front door has independent 100-line / 5-KiB caps and a typed route to the
 SHA-256-frozen 1,311-line detailed packet.
 
-Clean `.22` commit `2bfb32c02` activates `.23` alone. It now owns the lifecycle
-and auditable classification contract for unique maintained reference whose
-aggregate follows legitimate product scope; no content or lifecycle changes in
-this selection slice.
+Decision `0045` and leaf `.23` now select `maintained_reference` for unique
+product or specification prose whose legitimate aggregate scope follows the
+product. This is an information lifecycle, not a replacement name for the
+`partitioned_canonical` storage topology. Both use stable semantic files and a
+complete index, but only the ordinary partitioned collection claims that a
+fixed aggregate ceiling is meaningful.
+
+The distinction matters whenever a new supported feature needs a new chapter
+or more accurate examples. A timeless aggregate cap would have only two
+outcomes: maintainers repeatedly raise it, making the cap decorative, or they
+delete/displace unique explanation to satisfy a number unrelated to user
+value. Maintained reference instead fixes the costs a reader and reviewer must
+pay while making aggregate change explicit:
+
+- one complete mandatory index has independent line and byte ceilings;
+- every part is linked directly from that index, bounding navigation depth;
+- every part retains fixed line and byte health targets and inclusive ceilings;
+- aggregate files, lines, and bytes are measured against an exact prior
+  baseline plus the signed change authorized by the current work unit; and
+- unrecorded, inexact, reused, or pre-banked aggregate authority fails the
+  doctrine gate.
+
+The ordinary aggregate pressure keys are present as JSON `null`. That spelling
+means “a fixed product-size cap is inapplicable,” not “this dimension is
+ignored.” The separate aggregate-change contract still accounts for the exact
+files, lines, and bytes on every revision that changes the collection.
+
+The mdBook is FSMGen's first `maintained_reference`. Its `SUMMARY.md` mandatory
+read is capped at 64 lines and 4 KiB, every chapter is one direct link away,
+and the existing Chapter 14 per-part debt remains owned by `.8`; lifecycle
+selection does not bless that monolith. The book keeps all unique user-facing
+prose and examples.
+
+`docs/ISF_SPEC.md` demonstrates the opposite boundary. Its classification says
+that the prose is a maintained-reference candidate, but it remains inside the
+mixed `focused_documents` collection with the existing ceilings and debt.
+Leaf `.13` must first create stable semantic parts and a bounded complete index.
+Classification alone never waives current controls or turns a monolithic file
+into a compliant maintained reference.
 
 ## What The Old User Guide Still Does
 

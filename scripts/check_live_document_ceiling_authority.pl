@@ -172,6 +172,7 @@ sub registry_ceilings {
         $by_surface{$id} = {
             ceilings => $values,
             baseline => $record->{baseline},
+            lifecycle => $record->{lifecycle},
         };
     }
     return \%by_surface;
@@ -285,7 +286,11 @@ my @dimensions = qw(files lines_each bytes_each lines_total bytes_total);
 my @increases;
 for my $surface (sort keys %{$current}) {
     next if !exists $prior->{$surface};
-    if (defined($prior->{$surface}{baseline}) && defined($current->{$surface}{baseline})
+    my $maintained_reference_migration =
+        ($prior->{$surface}{lifecycle} // '') eq 'partitioned_canonical'
+        && ($current->{$surface}{lifecycle} // '') eq 'maintained_reference';
+    if (!$maintained_reference_migration
+            && defined($prior->{$surface}{baseline}) && defined($current->{$surface}{baseline})
             && $json->encode($prior->{$surface}{baseline}) ne $json->encode($current->{$surface}{baseline})) {
         problem("surface $surface changed its immutable transition baseline");
     }

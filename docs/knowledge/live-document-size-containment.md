@@ -39,11 +39,12 @@ answers:
   - "why are migration products not added as disjoint line counts?"
   - "what retention contract is required for a version object?"
   - "where is the bounded live-document architecture review front door?"
+  - "how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?"
 date: 2026-07-31
 status: current
 tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
-evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/evidence_maps.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_route_candidates.pl; scripts/check_live_document_resulting_tree.pl; scripts/check_live_document_ceiling_authority.pl; scripts/check_doctrine_bootstrap.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/tasks/segments/IAL2-FEATURE-COMPLETENESS-FRONTIER/migration.jsonl; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
-reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t
+evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/evidence_maps.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_route_candidates.pl; scripts/check_live_document_resulting_tree.pl; scripts/check_live_document_ceiling_authority.pl; scripts/check_live_document_reference_authority.pl; scripts/check_doctrine_bootstrap.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/tasks/segments/IAL2-FEATURE-COMPLETENESS-FRONTIER/migration.jsonl; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md; t/1561-live-document-reference-authority.t
+reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t t/1561-live-document-reference-authority.t
 ---
 
 `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the project-owned doctrine. Its reusable
@@ -171,3 +172,19 @@ Clean `.22` commit `2bfb32c02` activates `.23` alone to select the lifecycle
 and auditable classification contract for unique product-sized maintained
 reference. Activation changes no checker, registry, lifecycle, content, or
 product behavior.
+
+Decision `0045` and `.23` now make `maintained_reference` distinct from
+`partitioned_canonical`. Unique product/specification prose keeps fixed
+per-part line/byte targets and ceilings, a complete mandatory index with
+independent line/byte caps, and direct navigation. Fixed aggregate pressure
+keys are explicit JSON `null` because legitimate scope follows the product;
+exact aggregate files/lines/bytes remain governed by prior baseline plus a
+signed current-work-unit delta. The Git adapter rejects missing, stale,
+inexact, reused, or banked authority and silent lifecycle removal.
+
+FSMGen applies the class to `docs/book/src/*.md`: `SUMMARY.md` is the bounded
+mandatory read and all chapters remain direct members. Existing Chapter 14
+per-part debt remains unchanged. The mixed `docs/*.md` collection carries an
+auditable rationale naming `docs/ISF_SPEC.md` as a candidate only; its existing
+debt and ceilings remain until `.13` supplies semantic parts and a complete
+bounded index.

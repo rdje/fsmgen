@@ -90,6 +90,17 @@ bounded owner/guarantee/recovery contract. The new 79-line review front door
 routes to the SHA-256-frozen 1,311-line packet, so detailed evidence remains
 retrievable without remaining an append target.
 
+Completed `.23` selects `maintained_reference` as an information lifecycle
+distinct from semantic-partition storage. FSMGen's mdBook contains unique
+user-facing prose whose aggregate legitimately follows shipped product scope,
+so a timeless aggregate cap would be decorative. The complete `SUMMARY.md`
+mandatory read is capped at 64 lines / 4 KiB, every chapter retains fixed line
+and byte controls, all members remain one direct link from the index, and an
+exact Git-aware baseline/delta record rejects unowned, stale, inexact, reused,
+or banked aggregate change. `docs/ISF_SPEC.md` is explicitly classified as a
+candidate, not silently exempted: its existing focused-document debt remains
+until `.13` supplies semantic parts and a bounded complete index.
+
 Completed `.18` now separates the two pressure meanings. Health targets are
 reviewed working-set acceptance goals: 2,000 lines / 256 KiB for monolithic
 human-maintained snapshots or ledgers, 2,000 lines / 1 MiB for the generated
@@ -132,7 +143,7 @@ The checker therefore receives the full tracked Markdown list on every run.
 
 | Route/surface | Clean measurement | Limit utilization | Classification and disposition |
 | --- | --- | --- | --- |
-| mdBook collection | 38 files; 46,937 lines; 2,485,364 bytes | files 59.4%; aggregate lines 78.2%; aggregate bytes 59.3% | `partitioned_canonical`; aggregate is controlled, but Chapter 14 is a per-part high-water outlier |
+| mdBook collection | baseline 38 files; 46,937 lines; 2,485,364 bytes | fixed per-part pressure; exact aggregate baseline/delta authority | `maintained_reference`; `SUMMARY.md` is the bounded complete mandatory read, every chapter is directly linked, and Chapter 14 remains the separately owned per-part high-water outlier |
 | Chapter 14 feature backlog | 18,660 lines; 1,154,263 bytes | per-part lines 93.3%; bytes 88.1% | live debt; split by stable feature topic while preserving all user-facing content in the book |
 | capability query | `bin/fsmgen` query terminal | not size-budgeted | acceptable query/generation terminal with contract tests; no authored history sink |
 | `ROADMAP_V2.md` | 10,351 lines; 764,316 bytes; 7 level-two and 16 level-three sections | lines 86.3%; bytes 72.9% | live debt; bound current/future direction and prove shipped chronology against book/task/git homes before delete-with-link or archive |
@@ -167,15 +178,16 @@ normal collection density.
 | Change and rationale ledgers | The existing four-file lifecycle review retains authority over their long-term audiences. If change/rationale ledgers remain live, root files become bounded current/index views; records seal on semantic entry boundaries into repository-local range shards, then leave the live collection only through digest-verified version-archive descriptors | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` selects the roles; `.3` consumes that decision and proves the schema; `.4`/`.5` perform only selected migrations |
 | Task evidence and index | Each active root keeps metadata plus the live ancestor/frontier. Decision 0042's finite JSONL manifest addresses content-named exact-source terminal segments; a second finite manifest proves the former terminal cross-tree rows as one exact version object. The live index contains only active/proposed selection, completed task files remain direct, and PNT never reads history | `.6` ships the schema/checker; `.7` seals 844 IAL2 nodes and 540 unique terminal index rows, returning both registered surfaces to normal |
 | User-facing feature backlog | Split Chapter 14 by stable feature topic and retain all material in mdBook navigation; do not send user-facing reference content only to version history | `.8` |
+| Maintained product reference | Preserve unique prose in stable semantic parts; cap the complete mandatory index and each part, prove direct navigation, and require exact fresh aggregate-change authority instead of a decorative timeless aggregate cap | `.23` defines the lifecycle and classifies the mdBook; `.13` must partition and index `docs/ISF_SPEC.md` before any later promotion |
 | Roadmap | Keep current/future direction and concise milestone outcomes live; prove old shipped narration against the book, task records, and exact history, then delete-with-link or retain only verified archival descriptors | `.9` |
 | Knowledge cards and map | Keep facts canonical while splitting any oversized card on stable fact boundaries; generate a small root index plus deterministic prefix/topic shards and a repository-local query cache under `.artifacts/` | `.10` |
 | Focused and ancillary documents | Classify `docs/*.md` and ancillary families by audience/lifecycle, add a bounded complete index, and partition only semantic outliers without moving unique content out of its maintained home | `.13` |
 | Frozen status files | Remain identity-pinned and untouched until the already scheduled four-file lifecycle review chooses their audiences and fate | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`, then `.11` consumes that decision if migration is selected |
 | Final steady state | Remeasure all surfaces, prove retrieval/reconstruction, and lower health targets plus enforcement ceilings to the derived retained-surface working set | `.12` |
 
-Clean `.22` commit `2bfb32c02` activates `.23` alone to decide whether unique
-product-sized maintained reference needs a lifecycle distinct from storage-
-topology class `partitioned_canonical`; no audit classification changes yet.
+Decision 0045 and `.23` select the distinct maintained-reference lifecycle.
+The mdBook changes classification without losing prose or weakening its
+per-part debt; the focused ISF specification remains under the prior controls.
 
 ## Why this is containment rather than displacement
 
@@ -187,8 +199,9 @@ topology class `partitioned_canonical`; no audit classification changes yet.
   descriptor proves revision, path, digest, size, and reproducible retrieval.
 - Generated projections carry no unique information and can always be rebuilt
   from canonical small units.
-- Each collection has both per-part and aggregate transitions, so a thousand
-  small shards cannot silently replace one large blob.
+- Each collection has per-part controls and either fixed aggregate transitions
+  or exact fresh aggregate-change authority, so a thousand small shards cannot
+  silently replace one large blob.
 - All persistent local paths are repository-relative and same-volume; no
   machine-home, temporary-directory, or harness-private store becomes durable
   state.

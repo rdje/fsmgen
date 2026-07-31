@@ -76,6 +76,7 @@ live_document_files=(
   doctrine/task_tree/index_archives.jsonl
   scripts/check_live_document_size.sh
   scripts/check_live_document_ceiling_authority.pl
+  scripts/check_live_document_reference_authority.pl
   scripts/check_live_document_route_candidates.pl
   scripts/check_live_document_resulting_tree.pl
   scripts/run_live_document_adapter_verifiers.pl
@@ -104,6 +105,12 @@ if grep -q 'check_live_document_resulting_tree.pl' scripts/check_live_document_s
   ok "live-document adapter checks staged/resulting-tree agreement"
 else
   note "live-document adapter does not check staged/resulting-tree agreement"
+fi
+
+if grep -q 'check_live_document_reference_authority.pl' scripts/check_live_document_size.sh; then
+  ok "live-document adapter checks maintained-reference aggregate authority"
+else
+  note "live-document adapter does not check maintained-reference aggregate authority"
 fi
 
 if grep -q -- '--retention-contracts' scripts/check_live_document_size.sh \

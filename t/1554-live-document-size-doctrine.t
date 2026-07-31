@@ -31,6 +31,7 @@ subtest 'JSONL fixture covers every lifecycle and retrieval-file descriptor' => 
     ok($ok, 'complete lifecycle fixture passes') or diag($output);
     like($output, qr/surface bounded_entry: actual files=1,/, 'bounded snapshot is measured');
     like($output, qr/surface partitioned: actual files=2,/, 'partitioned canonical collection is measured');
+    like($output, qr/surface maintained: maintained reference actual files=2,/, 'maintained product reference is measured without a fixed aggregate cap');
     like($output, qr/surface projection: actual files=1,/, 'generated projection is measured');
     like($output, qr/surface query_terminal: query terminal/, 'query projection is validated');
     like($output, qr/surface ledger: actual files=1,/, 'rolling ledger is measured');
@@ -39,8 +40,55 @@ subtest 'JSONL fixture covers every lifecycle and retrieval-file descriptor' => 
     like($output, qr/surface frozen_record: frozen identity checked/, 'frozen identity is validated');
     ok(-f File::Spec->catfile($fixture, 'freshness-ran'), 'core freshness verifier actually ran');
     ok(-f File::Spec->catfile($fixture, 'version-ran'), 'core version retrieval verifier actually ran');
-    like($output, qr/all live-document size-containment invariants hold \(9 surfaces\)/,
+    like($output, qr/all live-document size-containment invariants hold \(10 surfaces\)/,
         'complete graph closes');
+};
+
+subtest 'maintained reference bounds reads and parts while authorizing exact aggregate change' => sub {
+    my $missing_rationale = make_fixture();
+    mutate_record($missing_rationale, 'registry/surfaces.jsonl', 'maintained', sub {
+        delete $_[0]{classification};
+    });
+    my ($rationale_ok, $rationale_output) = run_checker($missing_rationale);
+    ok(!$rationale_ok, 'maintained reference without classification rationale is rejected');
+    like($rationale_output, qr/requires an auditable classification rationale/,
+        'classification failure is explicit');
+
+    my $fixed_total = make_fixture();
+    mutate_record($fixed_total, 'registry/surfaces.jsonl', 'maintained', sub {
+        $_[0]{enforcement_ceilings}{lines_total} = 10;
+    });
+    my ($fixed_ok, $fixed_output) = run_checker($fixed_total);
+    ok(!$fixed_ok, 'decorative fixed aggregate ceiling is rejected');
+    like($fixed_output, qr/must use null lines_total for product-bounded aggregate scope/,
+        'aggregate cap misuse is explicit');
+
+    my $aggregate = make_fixture();
+    mutate_record($aggregate, 'registry/surfaces.jsonl', 'maintained', sub {
+        $_[0]{reference_contract}{aggregate_change}{delta}{lines_total} = 1;
+    });
+    my ($aggregate_ok, $aggregate_output) = run_checker($aggregate);
+    ok(!$aggregate_ok, 'aggregate drift beyond the exact authorization is rejected');
+    like($aggregate_output, qr/aggregate lines_total is 2 but contract authorizes 3/,
+        'exact aggregate mismatch is named');
+
+    my $mandatory = make_fixture();
+    mutate_record($mandatory, 'registry/surfaces.jsonl', 'maintained', sub {
+        $_[0]{reference_contract}{mandatory_read}{lines_ceiling} = 1;
+    });
+    my ($mandatory_ok, $mandatory_output) = run_checker($mandatory);
+    ok(!$mandatory_ok, 'oversized mandatory index is rejected');
+    like($mandatory_output, qr/mandatory read lines are 2 \(> ceiling 1\)/,
+        'mandatory-read pressure is explicit');
+
+    my $navigation = make_fixture();
+    mutate_record($navigation, 'registry/surfaces.jsonl', 'maintained', sub {
+        $_[0]{reference_contract}{max_navigation_depth} = 0;
+    });
+    my ($navigation_ok, $navigation_output) = run_checker($navigation);
+    ok(!$navigation_ok, 'invalid zero navigation depth is rejected');
+    like($navigation_output, qr/max_navigation_depth must be a positive integer/,
+        'navigation-depth contract is explicit');
 };
 
 subtest 'JSONL schema rejects malformed, blank, missing, and unknown data' => sub {
@@ -48,7 +96,7 @@ subtest 'JSONL schema rejects malformed, blank, missing, and unknown data' => su
     append_file($malformed, 'registry/surfaces.jsonl', "{not-json}\n");
     my ($malformed_ok, $malformed_output) = run_checker($malformed);
     ok(!$malformed_ok, 'malformed JSON is rejected');
-    like($malformed_output, qr/surface registry line 10 is invalid JSON/, 'line is named');
+    like($malformed_output, qr/surface registry line 11 is invalid JSON/, 'line is named');
 
     my $blank = make_fixture();
     append_file($blank, 'registry/routes.jsonl', "\n");
@@ -667,6 +715,10 @@ sub make_fixture {
     write_file($root, 'parts/a.md', "part a\n");
     write_file($root, 'parts/b.md', "part b\n");
     write_file($root, 'index.md', "[Part A](parts/a.md)\n[Part B](parts/b.md)\n");
+    write_file($root, 'reference/a.md', "reference a\n");
+    write_file($root, 'reference/b.md', "reference b\n");
+    write_file($root, 'reference-index.md',
+        "[Reference A](reference/a.md)\n[Reference B](reference/b.md)\n");
     write_file($root, 'canonical/source.md', "canonical\n");
     write_file($root, 'generated.md', "generated\n");
     write_file($root, 'ledger.md', "current entry\n");
@@ -693,6 +745,7 @@ sub make_fixture {
             ['bounded_destination']),
         measured('bounded_destination', 'bounded_snapshot', 'file', ['destination.md'], undef, [], []),
         measured('partitioned', 'partitioned_canonical', 'collection', ['parts/*.md'], 'index.md', [], []),
+        maintained_reference(),
         measured('projection', 'generated_projection', 'generated_file', ['generated.md'], undef,
             ['canonical/*.md'], [], 'core:bin/freshness'),
         terminal('query_terminal', 'generated_projection', 'query', 'bin/query',
@@ -763,6 +816,36 @@ sub measured {
     return $record;
 }
 
+sub maintained_reference {
+    my $record = measured(
+        'maintained', 'maintained_reference', 'collection',
+        ['reference/*.md'], 'reference-index.md', [], [],
+        'builtin:maintained_reference',
+    );
+    $record->{health_targets} = reference_pressure(100, 4096);
+    $record->{enforcement_ceilings} = reference_pressure(100, 4096);
+    $record->{classification} = {
+        audience => 'fixture readers', role => 'unique_product_reference',
+        rationale => 'Unique maintained prose grows only when the fixture product grows.',
+    };
+    $record->{reference_contract} = {
+        mandatory_read => {
+            path => 'reference-index.md', lines_ceiling => 10, bytes_ceiling => 1024,
+        },
+        max_navigation_depth => 1,
+        aggregate_change => {
+            authority_id => 'REFERENCE-FIXTURE.1', owner => 'fixture-owner',
+            rationale => 'Initial exact fixture classification.',
+            baseline => {
+                files => 2, lines_total => 2,
+                bytes_total => length("reference a\nreference b\n"),
+            },
+            delta => { files => 0, lines_total => 0, bytes_total => 0 },
+        },
+    };
+    return $record;
+}
+
 sub terminal {
     my ($id, $lifecycle, $locator, $target, $verifier) = @_;
     return {
@@ -792,6 +875,14 @@ sub pressure {
     return {
         files => $files, lines_each => $lines_each, bytes_each => $bytes_each,
         lines_total => $lines_total, bytes_total => $bytes_total,
+    };
+}
+
+sub reference_pressure {
+    my ($lines_each, $bytes_each) = @_;
+    return {
+        files => undef, lines_each => $lines_each, bytes_each => $bytes_each,
+        lines_total => undef, bytes_total => undef,
     };
 }
 

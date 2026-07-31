@@ -34456,26 +34456,14 @@ mistaking architectural foresight for executable runtime support.
 
 ## README policy adoption evidence — local authority above a neutral body (2026-07-31)
 
-ANVIL's adoption proved that the README stability policy works, but also
-revealed that delivery provenance can accidentally masquerade as authority.
-Agent and harness bootstrap files are discovery mechanisms; a git-enforced
-repository doctrine binds because the project adopted it. Decision `0038`
-therefore records owner/date plus the project-owned `README_POLICY.md` as the
-authority and treats the originating template as historical input, not an
-upstream to synchronize.
+ANVIL proved both the policy and a provenance hazard: bootstrap files discover
+rules, but the repository adopts them. Decision `0038` therefore makes owner,
+date, and project-owned `README_POLICY.md` authoritative; the origin is not an
+upstream. Local rulings and derived caps stay in a fence above the neutral body.
 
-The clean separation is structural: local owner, decisions, independence, and
-derived caps live in a fenced note above a neutral reusable body. This lets a
-project evolve its own policy without contaminating the shareable rule or
-inviting automated re-sync.
-
-The cap calibration is empirical, not templated. FSMGen's reviewed survivor is
-246 lines / 9,952 bytes, so the local guard now allows 275 lines / 12,288 bytes.
-Both dimensions remain mandatory: ANVIL measured 10,297 bytes at only 141
-lines, with materially different bytes-per-line density between numbered prose
-and path lists. The guard remains a resulting-tree invariant invoked on every
-commit/CI run; changed-path filtering would miss over-budget merge or revert
-results.
+Caps derive from the survivor, not a template: 246 lines / 9,952 bytes yields
+275 / 12,288 locally. Both axes remain unconditional because ANVIL reached
+10,297 bytes at 141 lines; changed-path filtering would miss merge/revert drift.
 
 ## VIAL public tooling — name intent, keep compiler seams private (2026-07-31)
 
@@ -34504,4 +34492,14 @@ non-identical trees. `.10.4` executes static meaning under exact Verilator.
 invent evidence. It compares 19 shared public/probe outcomes on identical DUT
 bytes, excludes undeclared internals, and leaves general parity unclaimed.
 
-**Live-document migration rule:** prove source, closure, working set, and loss separately; history needs owned guarantee/recovery.
+## Maintained reference — bound reading, authorize product scope (2026-07-31)
+
+Decision `0045` separates unique maintained product prose from history-shaped
+containment. Fixed aggregate caps would either move with every feature or force
+loss; instead, parts and the complete mandatory index stay fixed and bounded.
+
+The mdBook records exact aggregate baseline plus signed slice delta, and the
+Git adapter forbids stale, inexact, reused, or banked authority. `ISF_SPEC.md`
+remains a candidate under existing debt until semantic partitioning lands.
+Migration proof still separates source, closure, working set, and loss; history
+still requires an owned guarantee and recovery path.

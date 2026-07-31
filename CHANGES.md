@@ -32288,3 +32288,10 @@ task tree and git.
 - From clean `.22` commit `2bfb32c02`, activated `.23` alone to select the
   lifecycle and auditable classification contract for unique product-sized
   reference prose. No enforcement, lifecycle value, content, or behavior changes.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23 — maintained-reference contract enforced
+
+- Added decision `0045`, the neutral `maintained_reference` schema, bounded mandatory-read/direct-navigation/per-part controls, and exact fresh aggregate-change authority.
+- Classified the mdBook without deleting prose or weakening Chapter 14 debt;
+  `ISF_SPEC.md` remains a candidate under its existing focused-document owner.
+- Added fail-closed core/Git fixtures and synchronized doctrine, audit, book, fact, and tool guidance.

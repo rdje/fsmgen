@@ -63,7 +63,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
 | Need user-facing docs proof | `mdbook build docs/book`. |
 | Need docs path hygiene | `scripts/check_docs_relative_paths.sh`. |
-| Need live-document pressure, typed routes, index/evidence completeness, retention contracts, ceiling authority, or executed freshness/retrieval/currency truth | `scripts/check_live_document_size.sh`. |
+| Need live-document pressure, maintained-reference aggregate authority, typed routes, index/evidence completeness, retention contracts, ceiling authority, or executed freshness/retrieval/currency truth | `scripts/check_live_document_size.sh`. |
 | Need README entry-point hygiene | `scripts/check_readme_entrypoint.sh`. |
 | Need Knowledge Map sync | `knowledge-map/scripts/gen_knowledge_map.sh` then `knowledge-map/scripts/check_knowledge_map.sh`. |
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
@@ -234,11 +234,7 @@ Expected signals:
 
 - mdBook completes without broken source or renderer errors.
 - docs relative-path audit reports no machine-local home-directory paths.
-- live-document size check parses the local JSONL registries, reports actual,
-  health-target, inclusive-ceiling, and migrated/pinned/steady pressure,
-  measures every declared lifecycle and tracked Markdown path, and rejects
-  schema, locality, coverage, pressure, immutable-baseline, stale-ratchet,
-  unauthorized-increase, typed-route, index-membership, evidence-path, staged-result, identity, or descriptor drift.
+- live-document size check reports actual/target/ceiling pressure, measures every lifecycle/path, proves bounded maintained-reference reads/parts plus exact fresh aggregate authority, and rejects schema, locality, coverage, pressure, immutable-baseline, stale-ratchet, unauthorized-increase, stale/reused authority, typed-route, index, evidence, staged-result, identity, or descriptor drift.
 - README entry-point check confirms `README.md` is under its line and byte caps
   while retaining the purpose, first-use path, architecture summary, and
   navigation expected of the rendered GitHub landing page; it also rejects

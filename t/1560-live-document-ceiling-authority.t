@@ -129,6 +129,36 @@ subtest 'transition baseline is immutable across revisions' => sub {
         'immutable baseline failure is explicit');
 };
 
+subtest 'a lifecycle migration may replace an inapplicable baseline shape' => sub {
+    my $fixture = make_fixture();
+    mutate_surface($fixture, sub {
+        $_[0]{lifecycle} = 'maintained_reference';
+        for my $key (qw(files lines_total bytes_total)) {
+            $_[0]{baseline}{$key} = undef;
+            $_[0]{enforcement_ceilings}{$key} = undef;
+        }
+    });
+    stage($fixture, 'doctrine/live_document_size/surfaces.jsonl');
+    my ($ok, $output) = run_checker($fixture);
+    ok($ok, 'lifecycle-specific baseline replacement is not a ceiling increase')
+        or diag($output);
+    like($output, qr/0 increase\(s\), mode staged/,
+        'lifecycle migration does not manufacture a ceiling authority');
+};
+
+subtest 'unrelated lifecycle relabeling cannot rewrite the baseline' => sub {
+    my $fixture = make_fixture();
+    mutate_surface($fixture, sub {
+        $_[0]{lifecycle} = 'rolling_ledger';
+        $_[0]{baseline}{lines_total} = 79;
+    });
+    stage($fixture, 'doctrine/live_document_size/surfaces.jsonl');
+    my ($ok, $output) = run_checker($fixture);
+    ok(!$ok, 'an unrelated lifecycle label does not bypass baseline immutability');
+    like($output, qr/changed its immutable transition baseline/,
+        'narrow migration exception cannot be reused');
+};
+
 done_testing();
 
 sub make_fixture {
@@ -138,6 +168,7 @@ sub make_fixture {
         'doctrine/live_document_size/surfaces.jsonl',
         json_line({
             surface_id => 'guide',
+            lifecycle => 'partitioned_canonical',
             enforcement_ceilings => pressure(1, 100, 4096, 100, 4096),
             baseline => pressure(1, 80, 2048, 80, 2048),
         }),

@@ -54,6 +54,8 @@ else
 fi
 
 if [ "${GIT_TOP}" = "${PROJECT_ROOT}" ]; then
+  perl "${SCRIPT_DIR}/check_live_document_reference_authority.pl" \
+    --root "${PROJECT_ROOT}" || fail=1
   perl "${SCRIPT_DIR}/check_live_document_ceiling_authority.pl" \
     --root "${PROJECT_ROOT}" || fail=1
 fi

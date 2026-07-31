@@ -62,6 +62,12 @@
   working-set dimensions, and loss residue; binds version objects to bounded
   owner/guarantee/recovery contracts; and freezes the detailed review packet
   behind a bounded review front door.
+  Leaf `.23` adds the distinct `maintained_reference` lifecycle for unique
+  product-sized prose: bounded parts and direct mandatory index, exact fresh
+  aggregate-change authority, and no decorative fixed aggregate cap. The
+  mdBook is the first classified surface; `docs/ISF_SPEC.md` remains a candidate
+  under its existing focused-document debt until its separately owned semantic
+  partition lands.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---
@@ -101,7 +107,9 @@ Every governed surface must declare:
 - its stable identifier, owner, audience, and canonical authority;
 - its lifecycle and storage topology;
 - independent reviewed health targets and inclusive enforcement ceilings for
-  lines and bytes, plus file-count and aggregate dimensions for collections;
+  lines and bytes, plus file-count and aggregate dimensions for collections
+  unless a product-sized maintained-reference contract replaces fixed
+  aggregate caps with exact per-change authority;
 - warning and rollover-required milestones measured against health targets;
 - the operation that bounds it: overwrite, partition, regenerate, seal,
   rotate, archive, supersede, or freeze;
@@ -150,15 +158,17 @@ grammar and false-positive calibration belong to the adopting project.
 | Class | Purpose | Required containment |
 | --- | --- | --- |
 | `bounded_snapshot` | Current state, resume pointer, or concise landing/index view | Overwrite semantics, no embedded chronology, line/byte limits, and a stale-state check where derivable |
-| `partitioned_canonical` | Maintained reference material whose full content must remain directly browsable | Stable semantic partitions, bounded table of contents, per-part/file-count/aggregate limits, and link/reconstruction checks |
+| `partitioned_canonical` | Finite or contract-bounded canonical material whose full content remains directly browsable | Stable semantic partitions, bounded table of contents, per-part/file-count/aggregate limits, and link/reconstruction checks |
+| `maintained_reference` | Unique maintained product/specification prose whose aggregate follows legitimate product scope | Auditable audience/role/rationale, stable semantic parts, bounded complete mandatory index and navigation depth, per-part limits, and exact fresh authority for every aggregate change |
 | `generated_projection` | Search map, catalog, or index derived from smaller canonical units | Reproducible generation, freshness proof, bounded root view and shards, and no unique facts in generated output |
 | `rolling_ledger` | Ordered recent entries with historical value | Bounded current window, deterministic seal/rotation boundary, immutable segments, bounded index, and an archive transition before aggregate growth becomes unbounded |
 | `archive_terminal` | Exact historical evidence not needed in ordinary reading | Immutable locator, identity and size proof, tool-neutral retrieval procedure, retention owner, and exclusion from mandatory bootstrap reads |
 | `external_terminal` | History retained by an independently managed system | Named authority, retention commitment, stable query/export contract, and a failure policy if that contract disappears |
 | `frozen_legacy` | Existing record awaiting an owned lifecycle decision | Exact content identity or equivalent write prohibition; it cannot accept new content or act as an overflow destination |
 
-A local adoption may define additional classes, but each must make growth stop
-or become predictably partitioned. Renaming an append-only blob is not a new
+A local adoption may define additional classes, but each must make growth stop,
+become predictably partitioned under fixed bounds, or govern product-scope
+change through exact fresh authority. Renaming an append-only blob is not a new
 lifecycle.
 
 ## Choose the storage topology from the information role
@@ -168,7 +178,9 @@ first:
 
 1. Current state belongs in an overwritten bounded snapshot.
 2. Unique maintained material that people browse belongs in semantic,
-   navigable canonical partitions.
+   navigable partitions. If its aggregate follows legitimate product scope,
+   classify it as maintained reference and bound the read path plus each part
+   while authorizing every aggregate change exactly.
 3. A projection that can be recreated belongs in generated bounded shards; its
    smaller canonical inputs remain authoritative.
 4. Exact chronology or evidence that is rarely read belongs in a query-first
@@ -177,11 +189,14 @@ first:
    then removed with a link rather than copied into another store.
 
 Sharding controls per-read and per-file pressure, but it does not by itself
-control aggregate storage. A partitioned reference may retain all shards
-because direct browsing is part of its contract. A rolling ledger must also
-declare when sealed segments leave the live collection for an archive terminal.
-The chosen topology must therefore bound both the reader's working set and the
-collection's long-term aggregate growth.
+control aggregate storage. An ordinary partitioned collection keeps aggregate
+limits. A maintained product reference instead measures aggregate files/lines/
+bytes and requires an exact, newly owned change record whenever they move;
+fixed aggregate targets are explicitly inapplicable rather than silently
+unlimited. A rolling ledger must still declare when sealed segments leave the
+live collection for an archive terminal. The chosen topology must therefore
+bound the reader's working set and either bound or exactly govern the
+collection's long-term aggregate change according to information role.
 
 ## Derive pressure limits from the retained surface
 
@@ -190,6 +205,14 @@ byte health targets. For collections, also set per-part, file-count, and
 aggregate targets. Do not copy illustrative numbers from another adoption,
 and do not treat a current legacy size as healthy merely because it was
 measured.
+
+The exception is unique maintained product/specification prose. A fixed
+aggregate target there is dishonest because legitimate scope changes with the
+product. Require fixed per-part limits, a complete mandatory index with its own
+line/byte bounds, bounded direct navigation, and exact aggregate baseline plus
+signed per-change delta. A revision-aware adapter must reject stale, inexact,
+reused, or banked authority. Classification alone never waives a monolith's
+existing debt; semantic partition and complete navigation land first.
 
 For every measured dimension, declare two different values:
 
@@ -290,8 +313,10 @@ At minimum, fail on:
   action, or migration evidence that conflates overlapping products;
 - warning without an owned remediation, rollover-required without the atomic
   transition, actual usage above an inclusive ceiling, or stale debt headroom;
-  and
-- an unauthorized ceiling increase or rewritten debt baseline.
+- an unauthorized ceiling increase or rewritten debt baseline; and
+- an unclassified maintained reference, oversized part or mandatory index,
+  incomplete direct navigation, aggregate mismatch, or stale/reused/banked
+  aggregate-change authority.
 
 Generated caches may accelerate the checker or search, but they are disposable
 and never the canonical copy.
@@ -307,8 +332,9 @@ and never the canonical copy.
    ceilings with only transaction-sized headroom.
 6. Open an owner for every surface already at warning or structurally
    monolithic even if it remains below a numeric threshold.
-7. Choose bounded snapshot, semantic partitions, generated shards, rolling
-   ledger, archive, external, or frozen topology from the information role.
+7. Choose bounded snapshot, semantic partitions, maintained reference,
+   generated shards, rolling ledger, archive, external, or frozen topology
+   from the information role.
 8. Prove any duplicate before deletion and prove any archive before removing
    its live copy.
 9. Add the data registry, unconditional checker, positive/fail-closed tests,

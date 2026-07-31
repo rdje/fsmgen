@@ -4,6 +4,7 @@ use warnings;
 
 use Cwd qw(abs_path);
 use Digest::SHA;
+use Encode qw(encode_utf8);
 use File::Basename qw(dirname);
 use File::Glob qw(bsd_glob GLOB_NOSORT);
 use File::Spec;
@@ -79,6 +80,17 @@ sub positive_integer {
 sub nonnegative_integer {
     my ($value) = @_;
     return !ref($value) && defined($value) && $value =~ /\A[0-9]+\z/;
+}
+
+sub signed_integer {
+    my ($value) = @_;
+    return !ref($value) && defined($value) && $value =~ /\A-?[0-9]+\z/;
+}
+
+sub bounded_nonempty_string {
+    my ($value, $max_bytes) = @_;
+    return !ref($value) && defined($value) && $value ne ''
+        && $value !~ /[\r\n]/ && length(encode_utf8($value)) <= $max_bytes;
 }
 
 sub expand_patterns {
@@ -348,11 +360,35 @@ sub exact_numeric_object {
     return $value;
 }
 
+sub reference_pressure_object {
+    my ($label, $line_number, $value, $allow_zero) = @_;
+    my @keys = qw(files lines_each bytes_each lines_total bytes_total);
+    if (ref($value) ne 'HASH') {
+        problem("$label line $line_number must be an object");
+        return undef;
+    }
+    return undef if !validate_keys($label, $line_number, $value, \@keys, []);
+    for my $aggregate (qw(files lines_total bytes_total)) {
+        problem("$label line $line_number must use null $aggregate for product-bounded aggregate scope")
+            if defined $value->{$aggregate};
+    }
+    for my $part (qw(lines_each bytes_each)) {
+        my $valid = $allow_zero
+            ? nonnegative_integer($value->{$part})
+            : positive_integer($value->{$part});
+        problem("$label line $line_number has invalid "
+            . ($allow_zero ? 'nonnegative ' : 'positive ') . $part)
+            if !$valid;
+    }
+    return $value;
+}
+
 my $surface_rows = read_jsonl($registry_arg, 'surface registry');
 
 my %allowed_lifecycle = map { $_ => 1 } qw(
-    bounded_snapshot partitioned_canonical generated_projection rolling_ledger
-    archive_terminal external_terminal frozen_legacy
+    bounded_snapshot partitioned_canonical maintained_reference
+    generated_projection rolling_ledger archive_terminal external_terminal
+    frozen_legacy
 );
 my %allowed_locator = map { $_ => 1 } qw(
     file collection generated_file query archive external frozen
@@ -360,6 +396,7 @@ my %allowed_locator = map { $_ => 1 } qw(
 my %compatible = (
     bounded_snapshot      => { file => 1 },
     partitioned_canonical => { collection => 1 },
+    maintained_reference  => { collection => 1 },
     generated_projection  => { generated_file => 1, query => 1 },
     rolling_ledger        => { file => 1 },
     archive_terminal      => { archive => 1 },
@@ -381,7 +418,8 @@ for my $row (@{$surface_rows}) {
     );
     next if !validate_keys(
         'surface registry', $line_number, $json, \@required,
-        ['transition', 'currency', 'index_contract'],
+        ['transition', 'currency', 'index_contract', 'classification',
+            'reference_contract'],
     );
 
     my $id = $json->{surface_id};
@@ -432,6 +470,103 @@ for my $row (@{$surface_rows}) {
         problem("surface $id must declare an owner");
     }
 
+    if (defined $json->{classification}) {
+        if (ref($json->{classification}) ne 'HASH') {
+            problem("surface $id classification must be an object or null");
+        } elsif (validate_keys(
+            "surface $id classification", $line_number, $json->{classification},
+            [qw(audience role rationale)], [],
+        )) {
+            for my $key (qw(audience role rationale)) {
+                problem("surface $id classification has invalid or oversized $key")
+                    if !bounded_nonempty_string($json->{classification}{$key}, 512);
+            }
+            problem("surface $id classification role must be a stable identifier")
+                if bounded_nonempty_string($json->{classification}{role}, 512)
+                    && $json->{classification}{role} !~ /\A[a-z][a-z0-9_]*\z/;
+            $record{classification_audience} = $json->{classification}{audience};
+            $record{classification_role} = $json->{classification}{role};
+            $record{classification_rationale} = $json->{classification}{rationale};
+        }
+    }
+
+    if ($record{lifecycle} eq 'maintained_reference') {
+        problem("surface $id maintained_reference requires an auditable classification rationale")
+            if !defined $json->{classification};
+        if (ref($json->{reference_contract}) ne 'HASH') {
+            problem("surface $id maintained_reference requires a reference_contract object");
+        } elsif (validate_keys(
+            "surface $id reference_contract", $line_number, $json->{reference_contract},
+            [qw(mandatory_read max_navigation_depth aggregate_change)], [],
+        )) {
+            my $mandatory = $json->{reference_contract}{mandatory_read};
+            if (ref($mandatory) ne 'HASH') {
+                problem("surface $id mandatory_read must be an object");
+            } elsif (validate_keys(
+                "surface $id mandatory_read", $line_number, $mandatory,
+                [qw(path lines_ceiling bytes_ceiling)], [],
+            )) {
+                problem("surface $id mandatory_read path must stay project-relative")
+                    if ref($mandatory->{path}) || !relative_path_ok($mandatory->{path});
+                problem("surface $id mandatory_read lines_ceiling must be positive")
+                    if !positive_integer($mandatory->{lines_ceiling});
+                problem("surface $id mandatory_read bytes_ceiling must be positive")
+                    if !positive_integer($mandatory->{bytes_ceiling});
+                $record{mandatory_read_path} = $mandatory->{path};
+                $record{mandatory_read_lines_ceiling} = $mandatory->{lines_ceiling};
+                $record{mandatory_read_bytes_ceiling} = $mandatory->{bytes_ceiling};
+            }
+            my $depth = $json->{reference_contract}{max_navigation_depth};
+            problem("surface $id max_navigation_depth must be a positive integer")
+                if !positive_integer($depth);
+            $record{max_navigation_depth} = $depth;
+
+            my $change = $json->{reference_contract}{aggregate_change};
+            if (ref($change) ne 'HASH') {
+                problem("surface $id aggregate_change must be an object");
+            } elsif (validate_keys(
+                "surface $id aggregate_change", $line_number, $change,
+                [qw(authority_id owner rationale baseline delta)], [],
+            )) {
+                problem("surface $id aggregate_change authority_id is invalid")
+                    if ref($change->{authority_id})
+                        || ($change->{authority_id} // '') !~ /\A[A-Z][A-Z0-9_.-]*\z/;
+                for my $key (qw(owner rationale)) {
+                    problem("surface $id aggregate_change has invalid or oversized $key")
+                        if !bounded_nonempty_string($change->{$key}, 512);
+                }
+                my @aggregate_keys = qw(files lines_total bytes_total);
+                my $baseline = exact_numeric_object(
+                    "surface $id aggregate_change baseline", $line_number,
+                    $change->{baseline}, \@aggregate_keys,
+                );
+                if (defined $baseline) {
+                    @record{qw(reference_baseline_files reference_baseline_lines_total
+                        reference_baseline_bytes_total)} = @{$baseline}{@aggregate_keys};
+                }
+                my $delta = $change->{delta};
+                if (ref($delta) ne 'HASH') {
+                    problem("surface $id aggregate_change delta must be an object");
+                } elsif (validate_keys(
+                    "surface $id aggregate_change delta", $line_number, $delta,
+                    \@aggregate_keys, [],
+                )) {
+                    for my $key (@aggregate_keys) {
+                        problem("surface $id aggregate_change delta has invalid $key")
+                            if !signed_integer($delta->{$key});
+                    }
+                    @record{qw(reference_delta_files reference_delta_lines_total
+                        reference_delta_bytes_total)} = @{$delta}{@aggregate_keys};
+                }
+                $record{reference_authority_id} = $change->{authority_id};
+                $record{reference_authority_owner} = $change->{owner};
+                $record{reference_authority_rationale} = $change->{rationale};
+            }
+        }
+    } elsif (defined $json->{reference_contract}) {
+        problem("surface $id non-maintained lifecycle must use null or absent reference_contract");
+    }
+
     if (defined $json->{currency}) {
         if (ref($json->{currency}) ne 'HASH') {
             problem("surface $id currency must be an object or null");
@@ -466,13 +601,22 @@ for my $row (@{$surface_rows}) {
         @record{qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total)} = (0) x 5;
         @record{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total)} = (0) x 5;
         @record{@milestone_keys} = (0) x 2;
-        my $targets_object = exact_numeric_object(
-            "surface $id health_targets", $line_number, $json->{health_targets}, \@pressure_keys,
-        );
-        my $ceilings = exact_numeric_object(
-            "surface $id enforcement_ceilings", $line_number,
-            $json->{enforcement_ceilings}, \@pressure_keys,
-        );
+        my $targets_object = $record{lifecycle} eq 'maintained_reference'
+            ? reference_pressure_object(
+                "surface $id health_targets", $line_number, $json->{health_targets}, 0,
+            )
+            : exact_numeric_object(
+                "surface $id health_targets", $line_number, $json->{health_targets}, \@pressure_keys,
+            );
+        my $ceilings = $record{lifecycle} eq 'maintained_reference'
+            ? reference_pressure_object(
+                "surface $id enforcement_ceilings", $line_number,
+                $json->{enforcement_ceilings}, 0,
+            )
+            : exact_numeric_object(
+                "surface $id enforcement_ceilings", $line_number,
+                $json->{enforcement_ceilings}, \@pressure_keys,
+            );
         my $milestones = exact_numeric_object(
             "surface $id milestones", $line_number, $json->{milestones}, \@milestone_keys,
         );
@@ -489,9 +633,13 @@ for my $row (@{$surface_rows}) {
         }
         if ($record{state} =~ /\A(?:warning_debt|rollover_debt|structural_debt)\z/) {
             @record{qw(baseline_files baseline_lines_each baseline_bytes_each baseline_lines_total baseline_bytes_total)} = (0) x 5;
-            my $baseline = exact_numeric_object(
-                "surface $id baseline", $line_number, $json->{baseline}, \@pressure_keys,
-            );
+            my $baseline = $record{lifecycle} eq 'maintained_reference'
+                ? reference_pressure_object(
+                    "surface $id baseline", $line_number, $json->{baseline}, 0,
+                )
+                : exact_numeric_object(
+                    "surface $id baseline", $line_number, $json->{baseline}, \@pressure_keys,
+                );
             if (defined $baseline) {
                 @record{qw(baseline_files baseline_lines_each baseline_bytes_each baseline_lines_total baseline_bytes_total)}
                     = @{$baseline}{@pressure_keys};
@@ -512,18 +660,28 @@ for my $row (@{$surface_rows}) {
                     } else {
                         $record{transition_owner} = $transition_owner;
                     }
-                    my $growth = exact_numeric_object(
-                        "surface $id transition max_growth", $line_number,
-                        $json->{transition}{max_growth}, \@pressure_keys, 1,
-                    );
+                    my $growth = $record{lifecycle} eq 'maintained_reference'
+                        ? reference_pressure_object(
+                            "surface $id transition max_growth", $line_number,
+                            $json->{transition}{max_growth}, 1,
+                        )
+                        : exact_numeric_object(
+                            "surface $id transition max_growth", $line_number,
+                            $json->{transition}{max_growth}, \@pressure_keys, 1,
+                        );
                     if (defined $growth) {
                         @record{qw(transition_files transition_lines_each transition_bytes_each transition_lines_total transition_bytes_total)}
                             = @{$growth}{@pressure_keys};
                     }
-                    my $ratchet = exact_numeric_object(
-                        "surface $id transition ratchet_step", $line_number,
-                        $json->{transition}{ratchet_step}, \@pressure_keys,
-                    );
+                    my $ratchet = $record{lifecycle} eq 'maintained_reference'
+                        ? reference_pressure_object(
+                            "surface $id transition ratchet_step", $line_number,
+                            $json->{transition}{ratchet_step}, 0,
+                        )
+                        : exact_numeric_object(
+                            "surface $id transition ratchet_step", $line_number,
+                            $json->{transition}{ratchet_step}, \@pressure_keys,
+                        );
                     if (defined $ratchet) {
                         @record{qw(ratchet_files ratchet_lines_each ratchet_bytes_each ratchet_lines_total ratchet_bytes_total)}
                             = @{$ratchet}{@pressure_keys};
@@ -616,9 +774,22 @@ for my $id (@surface_order) {
     my @baseline_fields = qw(baseline_files baseline_lines_each baseline_bytes_each baseline_lines_total baseline_bytes_total);
 
     if ($measured) {
-        for my $field (@target_fields, @ceiling_fields) {
+        my @applicable_target_fields = $record->{lifecycle} eq 'maintained_reference'
+            ? qw(target_lines_each target_bytes_each)
+            : @target_fields;
+        my @applicable_ceiling_fields = $record->{lifecycle} eq 'maintained_reference'
+            ? qw(ceiling_lines_each ceiling_bytes_each)
+            : @ceiling_fields;
+        for my $field (@applicable_target_fields, @applicable_ceiling_fields) {
             problem("surface $id has invalid positive $field: $record->{$field}")
                 if !positive_integer($record->{$field});
+        }
+        if ($record->{lifecycle} eq 'maintained_reference') {
+            for my $field (qw(target_files target_lines_total target_bytes_total
+                    ceiling_files ceiling_lines_total ceiling_bytes_total)) {
+                problem("surface $id maintained_reference unexpectedly defines aggregate pressure field $field")
+                    if defined $record->{$field};
+            }
         }
         for my $field (qw(warning_pct rollover_pct)) {
             problem("surface $id has invalid positive $field: $record->{$field}")
@@ -633,7 +804,10 @@ for my $id (@surface_order) {
         problem("surface $id has invalid containment_status: $record->{containment_status}")
             if $record->{containment_status} !~ /\A(?:steady|migrated|pinned_deferred)\z/;
         if ($record->{state} =~ /\A(?:warning_debt|rollover_debt|structural_debt)\z/) {
-            for my $field (@baseline_fields) {
+            my @applicable_baseline_fields = $record->{lifecycle} eq 'maintained_reference'
+                ? qw(baseline_lines_each baseline_bytes_each)
+                : @baseline_fields;
+            for my $field (@applicable_baseline_fields) {
                 problem("surface $id debt has invalid positive $field: $record->{$field}")
                     if !positive_integer($record->{$field});
             }
@@ -645,7 +819,10 @@ for my $id (@surface_order) {
                 ratchet_files ratchet_lines_each ratchet_bytes_each
                 ratchet_lines_total ratchet_bytes_total
             );
-            for my $index (0 .. $#ceiling_fields) {
+            my @applicable_indexes = $record->{lifecycle} eq 'maintained_reference'
+                ? (1, 2)
+                : (0 .. $#ceiling_fields);
+            for my $index (@applicable_indexes) {
                 next if !positive_integer($record->{$ceiling_fields[$index]})
                     || !positive_integer($record->{$baseline_fields[$index]})
                     || !nonnegative_integer($record->{$growth_fields[$index]});
@@ -681,7 +858,8 @@ for my $id (@surface_order) {
         }
     }
 
-    if ($record->{lifecycle} eq 'partitioned_canonical') {
+    if ($record->{lifecycle} eq 'partitioned_canonical'
+            || $record->{lifecycle} eq 'maintained_reference') {
         if (!defined $record->{index}) {
             problem("surface $id lacks a bounded index without structural debt")
                 if $record->{state} ne 'structural_debt'
@@ -692,6 +870,11 @@ for my $id (@surface_order) {
             problem("surface $id has an invalid bounded index: $record->{index}");
         } elsif (!defined $record->{index_contract_kind}) {
             problem("surface $id bounded index lacks a valid index_contract");
+        }
+        if ($record->{lifecycle} eq 'maintained_reference'
+                && defined($record->{index}) && defined($record->{mandatory_read_path})
+                && $record->{index} ne $record->{mandatory_read_path}) {
+            problem("surface $id mandatory_read path must equal its bounded collection index");
         }
     } elsif ($record->{locator} eq 'generated_file') {
         my @canonical = expand_patterns($id, $record->{input_patterns});
@@ -720,6 +903,42 @@ for my $id (@surface_order) {
             $total_bytes += $bytes;
             $max_lines = $lines if $lines > $max_lines;
             $max_bytes = $bytes if $bytes > $max_bytes;
+        }
+        if ($record->{lifecycle} eq 'maintained_reference') {
+            my @aggregate = (
+                ['files', scalar(@files), 'reference_baseline_files', 'reference_delta_files'],
+                ['lines_total', $total_lines, 'reference_baseline_lines_total', 'reference_delta_lines_total'],
+                ['bytes_total', $total_bytes, 'reference_baseline_bytes_total', 'reference_delta_bytes_total'],
+            );
+            for my $dimension (@aggregate) {
+                my ($name, $actual, $baseline_key, $delta_key) = @{$dimension};
+                my $baseline = $record->{$baseline_key};
+                my $delta = $record->{$delta_key};
+                next if !positive_integer($baseline) || !signed_integer($delta);
+                my $authorized = $baseline + $delta;
+                problem("surface $id aggregate_change produces non-positive $name")
+                    if $authorized <= 0;
+                problem("surface $id aggregate $name is $actual but contract authorizes $authorized")
+                    if $actual != $authorized;
+            }
+            my $index_relative = $record->{mandatory_read_path};
+            if (defined($index_relative) && relative_path_ok($index_relative)) {
+                my $index_path = root_path($index_relative);
+                if (assert_local_regular_file($id, $index_path)) {
+                    my ($index_lines, $index_bytes) = file_measurement($index_path);
+                    problem("surface $id mandatory read lines are $index_lines (> ceiling $record->{mandatory_read_lines_ceiling})")
+                        if positive_integer($record->{mandatory_read_lines_ceiling})
+                            && $index_lines > $record->{mandatory_read_lines_ceiling};
+                    problem("surface $id mandatory read bytes are $index_bytes (> ceiling $record->{mandatory_read_bytes_ceiling})")
+                        if positive_integer($record->{mandatory_read_bytes_ceiling})
+                            && $index_bytes > $record->{mandatory_read_bytes_ceiling};
+                    my $navigation_depth = @files > 1 ? 1 : 0;
+                    problem("surface $id navigation depth $navigation_depth exceeds $record->{max_navigation_depth}")
+                        if positive_integer($record->{max_navigation_depth})
+                            && $navigation_depth > $record->{max_navigation_depth};
+                    ok_note("surface $id mandatory read $index_relative is $index_lines lines/$index_bytes bytes; navigation depth $navigation_depth");
+                }
+            }
         }
         my @dimensions = (
             ['max lines', 'lines_each', $max_lines, $record->{target_lines_each},
@@ -784,6 +1003,7 @@ for my $id (@surface_order) {
             }
         }
         if ($record->{verifier} ne 'builtin:budget'
+                && $record->{verifier} ne 'builtin:maintained_reference'
                 && $record->{verifier} !~ /\A(?:core|adapter|external):.+\z/) {
             problem("surface $id has invalid measured verifier: $record->{verifier}");
         }
@@ -792,19 +1012,34 @@ for my $id (@surface_order) {
                 if $record->{verifier} eq 'builtin:budget';
             verify_execution("surface $id freshness", "surface:$id", $record->{verifier})
                 if $record->{verifier} ne 'builtin:budget';
+        } elsif ($record->{lifecycle} eq 'maintained_reference') {
+            problem("surface $id maintained reference must use builtin:maintained_reference")
+                if $record->{verifier} ne 'builtin:maintained_reference';
         } elsif ($record->{verifier} ne 'builtin:budget') {
             problem("surface $id non-generated measurement must use builtin:budget");
         }
         push @{$containment_pressure{$record->{containment_status}}}, {
             id => $id, target_peak => $target_peak_pct, ceiling_peak => $ceiling_peak_pct,
         };
-        ok_note(sprintf(
-            'surface %s: actual files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; health target files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; inclusive enforcement ceiling files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; target peak %.1f%%, ceiling peak %.1f%% (%s, %s)',
-            $id, scalar(@files), $max_lines, $max_bytes, $total_lines, $total_bytes,
-            @{$record}{qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total)},
-            @{$record}{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total)},
-            $target_peak_pct, $ceiling_peak_pct, $record->{state}, $record->{containment_status},
-        ));
+        if ($record->{lifecycle} eq 'maintained_reference') {
+            ok_note(sprintf(
+                'surface %s: maintained reference actual files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; per-part health target lines_each=%d, bytes_each=%d; inclusive per-part ceiling lines_each=%d, bytes_each=%d; aggregate authority %s; target peak %.1f%%, ceiling peak %.1f%% (%s, %s)',
+                $id, scalar(@files), $max_lines, $max_bytes, $total_lines, $total_bytes,
+                @{$record}{qw(target_lines_each target_bytes_each)},
+                @{$record}{qw(ceiling_lines_each ceiling_bytes_each)},
+                $record->{reference_authority_id} // 'invalid',
+                $target_peak_pct, $ceiling_peak_pct, $record->{state},
+                $record->{containment_status},
+            ));
+        } else {
+            ok_note(sprintf(
+                'surface %s: actual files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; health target files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; inclusive enforcement ceiling files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; target peak %.1f%%, ceiling peak %.1f%% (%s, %s)',
+                $id, scalar(@files), $max_lines, $max_bytes, $total_lines, $total_bytes,
+                @{$record}{qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total)},
+                @{$record}{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total)},
+                $target_peak_pct, $ceiling_peak_pct, $record->{state}, $record->{containment_status},
+            ));
+        }
 
         if ($locator eq 'collection' && defined $record->{index_contract_kind}) {
             my $kind = $record->{index_contract_kind};

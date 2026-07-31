@@ -6,14 +6,13 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23:
-  activate maintained-reference selection`).
-- active_work_unit: `.23` alone is active from clean `.22` commit `2bfb32c02`.
-- current_state: `.22` closes independent migration, retention/recovery, and
-  bounded review-front-door proof. `.23` changes no lifecycle or content yet.
-- next_action: decide whether maintained product-reference prose needs a
-  distinct lifecycle, then implement auditable rationale and bounded index,
-  part-reviewability, navigation-depth, and authorized-growth contracts on the
-  mdBook and ISF-spec examples.
+  enforce maintained-reference contracts`).
+- active_work_unit: none; `.23` is complete and the tree is between slices.
+- current_state: decision `0045` and `.23` classify the mdBook as maintained
+  reference with bounded direct reading/parts and exact aggregate authority;
+  `docs/ISF_SPEC.md` remains a candidate under existing `.13` debt.
+- next_action: from the clean `.23` commit, activate `.15` alone to make the
+  common JSONL control plane finite, reviewable, and schema-constrained.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: `.8`-`.10`/`.13` wait for utility or
@@ -34,7 +33,6 @@ history; this file carries only the current bounded resume state.
   generated scheduler as semantic authority; `.10.4` now qualifies compile,
   runtime, and normalized results; `.11` now qualifies only the selected AHB
   handwritten-oracle comparison, not general cross-backend parity.
-- Decisions `0041`/`0042`/`0044`, the packet, and its bounded disposition own
-  feedback-sensitive containment work. `.23` now owns maintained-reference
-  selection. Push only on explicit request (`0005`); PNT runs autonomously
-  (`0003`). Consult the Knowledge Map first.
+- Decisions `0041`/`0042`/`0044`/`0045`, the packet, and its bounded
+  disposition own feedback-sensitive containment work. Push only on explicit
+  request (`0005`); PNT runs autonomously (`0003`). Consult the Knowledge Map.

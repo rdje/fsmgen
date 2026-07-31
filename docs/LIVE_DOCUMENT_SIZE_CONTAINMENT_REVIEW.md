@@ -20,8 +20,7 @@ The architecture separates:
    or generated projections used during ordinary work.
 3. **Retained evidence** — immutable content-addressed files or exact version
    objects used for uncommon historical retrieval.
-4. **Mechanical contracts** — JSONL registries and executed checks proving
-   dimensions, routes, identity, currency where claimed, and lifecycle rules.
+4. **Mechanical contracts** — JSONL registries and executed checks proving dimensions, routes, identity, maintained-reference change authority, currency where claimed, and lifecycle rules.
 
 The neutral policy and checker are
 [LIVE_DOCUMENT_SIZE_CONTAINMENT.md](../LIVE_DOCUMENT_SIZE_CONTAINMENT.md) and
@@ -63,7 +62,7 @@ bounded disposition; they do not reopen or append to the sealed packet.
 
 ## What reviewers should challenge
 
-- Does every live document still have a distinct audience and current value?
+- Does every live document, including maintained reference, still have a distinct audience and current value?
 - Is each overflow destination itself bounded, indexed, or explicitly
   terminal?
 - Are health targets distinct from temporary enforcement ceilings?

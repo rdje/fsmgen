@@ -10445,5 +10445,5 @@ The first honest `R11` slices are now:
   contracts and both review evidence maps, and rejects staged-tree divergence.
   `.22` proves source identity, 844 semantic nodes, the working set, and zero
   residue independently; version objects name recovery contracts and a bounded
-  front door routes to the frozen packet. Clean commit `2bfb32c02` activates
-  `.23` alone for maintained product-reference lifecycle selection.
+  front door routes to the frozen packet. Decision `0045` and `.23` now bound
+  maintained-reference reads/parts plus exact aggregate change; `.15` is next.
