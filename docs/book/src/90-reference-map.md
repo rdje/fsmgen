@@ -56,10 +56,14 @@ slice produces durable engineering rationale that lacks a better canonical
 home. `LIVE_ACHIEVEMENT_STATUS.md` remains frozen with `ROADMAP_STATUS.md`
 pending their scheduled lifecycle review.
 
-`README_POLICY.md` is the project-neutral landing-page maintenance standard:
-adopting projects keep the canonical tracked copy at repository root beside
-`README.md`. It defines stable content, routes dynamic detail elsewhere, and
-requires deterministic line/byte budgets in both pre-commit and CI.
+`README_POLICY.md` is the project- and harness-neutral landing-page maintenance
+standard. Adopting projects keep their authoritative tracked copy at repository
+root beside `README.md`; the originating template is not an upstream. Local
+owner/date, decision, and empirically derived cap metadata stays in a fenced
+adoption note above the neutral body. The policy defines stable content, routes
+proven duplicate detail to its canonical home, and requires independent line
+and byte budgets unconditionally on every commit and CI tree. FSMGen's reviewed
+local limits are 275 lines and 12,288 bytes.
 
 `TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
 standard. FSMGen's registered checker reads data-only staged-path and evidence

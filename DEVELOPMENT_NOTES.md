@@ -34453,3 +34453,26 @@ as `selected_not_implemented` with their exact later owners, while its shipped
 capability list and plan ledger stop at binding, ExecutionIR, logical time,
 random/replay, and plan construction. This prevents downstream discovery from
 mistaking architectural foresight for executable runtime support.
+
+## README policy adoption evidence — local authority above a neutral body (2026-07-31)
+
+ANVIL's adoption proved that the README stability policy works, but also
+revealed that delivery provenance can accidentally masquerade as authority.
+Agent and harness bootstrap files are discovery mechanisms; a git-enforced
+repository doctrine binds because the project adopted it. Decision `0038`
+therefore records owner/date plus the project-owned `README_POLICY.md` as the
+authority and treats the originating template as historical input, not an
+upstream to synchronize.
+
+The clean separation is structural: local owner, decisions, independence, and
+derived caps live in a fenced note above a neutral reusable body. This lets a
+project evolve its own policy without contaminating the shareable rule or
+inviting automated re-sync.
+
+The cap calibration is empirical, not templated. FSMGen's reviewed survivor is
+246 lines / 9,952 bytes, so the local guard now allows 275 lines / 12,288 bytes.
+Both dimensions remain mandatory: ANVIL measured 10,297 bytes at only 141
+lines, with materially different bytes-per-line density between numbered prose
+and path lists. The guard remains a resulting-tree invariant invoked on every
+commit/CI run; changed-path filtering would miss over-budget merge or revert
+results.

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
-# check_readme_entrypoint.sh - doctrine check for decisions 0021 and 0024:
+# check_readme_entrypoint.sh - doctrine check for decisions 0021, 0024, and
+# 0038 plus the project-owned README_POLICY.md:
 # README.md is a bounded, nearly static landing page, not an append log.
 #
 # README.md is the file every harness's bootstrap chain routes a fresh agent to
@@ -20,13 +21,16 @@
 #
 # Knobs (env): README_LINE_CAP, README_BYTE_CAP,
 #              README_MAX_LEAF_REFS_PER_LINE.
+#
+# The doctrine driver invokes this check unconditionally. Do not scope the
+# landing-page tree invariant to staged or changed paths.
 set -uo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT_DIR}"
 
-LINE_CAP="${README_LINE_CAP:-300}"
-BYTE_CAP="${README_BYTE_CAP:-16384}"
+LINE_CAP="${README_LINE_CAP:-275}"
+BYTE_CAP="${README_BYTE_CAP:-12288}"
 MAX_REFS="${README_MAX_LEAF_REFS_PER_LINE:-1}"
 fail=0
 
@@ -57,7 +61,7 @@ else
   note "README.md is ${bytes} bytes (> cap ${BYTE_CAP})"
   note "  README.md is a nearly static landing page (docs/decisions/0024)."
   note "  Move dynamic or detailed content to its canonical maintained surface;"
-  note "  README_POLICY.md defines the project-neutral routing and exception rule."
+  note "  README_POLICY.md defines the project- and harness-neutral routing and exception rule."
 fi
 
 # 2. Per-leaf chronology enumeration.

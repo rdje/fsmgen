@@ -31730,3 +31730,17 @@ task tree and git.
 - Final task-tree, docs, mdBook, Knowledge Map, Memory, staged docs-only
   acceptance, doctrine, and cleanup evidence is recorded in the owning task
   tree. No separate development note is warranted for this continuity slice.
+
+### README-POLICY-ANVIL-ADOPTION-FEEDBACK.1 — cross-project policy evidence integrated
+
+- Refined `README_POLICY.md` from ANVIL's successful 89% README reduction:
+  policy authority is now project- and harness-neutral, cited by local
+  owner/date and the repository-owned policy rather than a bootstrap file.
+- Made the adopted copy authoritative and independent of its originating
+  template, with local metadata fenced above the neutral reusable body.
+- Required proof of genuine duplication, delete-with-link when the canonical
+  home is richer, post-trim cap derivation, independent line/byte limits, and
+  unconditional every-commit/CI enforcement regardless of changed paths.
+- Accepted decision `0038` and recalibrated FSMGen's guard from the reviewed
+  246-line / 9,952-byte README to 275 lines / 12,288 bytes without changing
+  `README.md` or product behavior.

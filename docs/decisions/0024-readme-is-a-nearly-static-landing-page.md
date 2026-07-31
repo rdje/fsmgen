@@ -4,6 +4,7 @@
 - Type: convention
 - Status: accepted
 - Extends: [0021](0021-readme-is-a-bounded-discovery-entrypoint.md)
+- Refined by: [0038](0038-readme-policy-is-harness-neutral-and-locally-authoritative.md)
 
 ## Context
 
@@ -34,6 +35,10 @@ small reusable policy that other projects can adopt.
 4. [README_POLICY.md](../../README_POLICY.md) is the small, self-contained,
    project-neutral adoption standard. It is tracked for direct sharing and does
    not depend on FSMGen's task-tree or memory architecture.
+
+Decision 0038 refines the current local limits to 275 lines / 12,288 bytes and
+makes the reusable standard explicitly harness-neutral, locally authoritative,
+independent of its originating template, and unconditionally enforced.
 
 ## Consequences
 
