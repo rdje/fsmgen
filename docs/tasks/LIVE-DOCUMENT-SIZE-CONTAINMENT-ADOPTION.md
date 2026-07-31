@@ -224,11 +224,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the lifecycle contract for maintained product-bounded reference prose.`
   Acceptance: `Decide whether a maintained_reference class is distinct from partitioned_canonical; preserve unique user/specification prose whose aggregate grows with the product while bounding mandatory index/read units, per-part reviewability, navigation depth, and contract-authorized aggregate change; record an auditable classification rationale per affected surface; prove the selected rule on mdBook and ISF-spec examples without deleting content or weakening landing-page, ledger, projection, archive, or frozen controls.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated alone from clean `.22` implementation commit `2bfb32c02`; lifecycle selection remains pending.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23: activate maintained-reference selection`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 ## Decisions
@@ -316,6 +316,9 @@ no routed destination becomes the next uninstrumented blob.
   alone for migration completeness, retention guarantees, and a bounded review
   front door. This selection changes no checker, registry, migration evidence,
   archive contract, or document content.
+- `2026-07-31`: Clean `.22` implementation commit `2bfb32c02` activates `.23`
+  alone to select the maintained product-reference lifecycle and auditable
+  classification contract before affected family migrations.
 
 ## Open Questions
 
@@ -350,6 +353,12 @@ no routed destination becomes the next uninstrumented blob.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'source_revision' --oneline -- scripts/check_task_tree_integrity.pl` identifies `78adb81ae`, while `git log -S'retrieval_kind' --oneline -- live-document-size/scripts/check_live_document_size.pl` identifies `18e2dcbc6`; source inspection shows both mechanisms proved an object only while Git retained it, neither named an owner/guarantee/recovery contract, and the IAL2 packet compared overlapping full-source/semantic/live products without a separately checked migration record or loss-residue dimension.
 - [x] **ADDRESSED (verified)** — `prove -Iperl t/1549-task-tree-integrity-doctrine.t t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t` reports `All tests successful` at `Files=3, Tests=62`; the live migration retrieves 21,726 lines/4,662,385 bytes, checks 844 semantic nodes and a 6,002-line/2,438,733-byte working set, declares overlapping products and zero residue, while missing contracts/history, source/node/working-set mismatch, false partition arithmetic, and unretained residue fail closed. The 79-line/3,946-byte bounded review front door routes to the exact SHA-256-frozen 1,311-line packet.
 - [x] **NO REGRESSION** — `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`; all 22 surfaces and the complete tracked Markdown inventory remain covered, task/README/locality/Memory/Knowledge Map/mdBook contracts stay green, the 73-file/17,004-KiB render is removed exactly, and the frozen packet identity plus exact version-object retrieval remain unchanged.
+
+## Acceptance Checklist (enforced) — `.23` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — ANVIL Q2 shows that unique product-sized reference prose does not fit history-oriented containment: `partitioned_canonical` describes its storage topology but cannot justify a fixed aggregate ceiling that moves whenever the product gains a legitimate feature. The pending `.23` leaf already owns that unresolved lifecycle/classification boundary.
+- [x] **ADDRESSED (verified)** — clean commit `2bfb32c02` is the exact predecessor; only task/index/roadmap/book/fact/Memory/audit/changelog continuity selects `.23`, leaving its lifecycle decision and implementation pending.
+- [x] **NO REGRESSION** — focused path/task/live-size, Knowledge Map, Memory, mdBook, staged acceptance, and all-doctrine checks pass; `.23` alone is active, and no checker, registry, lifecycle value, pressure limit, maintained prose, frozen identity, README landing content, or product behavior changes.
 
 ## Acceptance Checklist (enforced) — `.20`
 
@@ -425,6 +434,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.21` route/index/evidence completeness | exact route kinds/source paths; source-derived author hints; membership/query/generated index contracts; two fenced evidence maps; staged-result agreement; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=25; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 4 author hints and 15 reader routes; 6 indexed collection contracts; packet/disposition paths 17+5; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,752 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; all declared negative controls and nine doctrines pass; the default RAM guard stopped safely on a false macOS 98.3%-used estimate while `memory_pressure` reported 83% free, so the successful retry retained process-tree/RSS monitoring and manually checked actual pressure under a recorded one-run host override; no pressure value, lifecycle, archive, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.22` activation | clean `9c63cf76b` predecessor; existing RAM-guard fact/task reuse; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,752 keys; Memory 40 lines; all 37 chapters test; removed 73-file/17,004-KiB build; all nine doctrines pass; `.22` alone active; no checker, registry, migration evidence, archive contract, review artifact content, lifecycle, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.22` migration/retention proof | exact IAL2 source/node/working-set/residue manifest; bounded retention contracts; actionable missing-history diagnostics; frozen packet plus bounded routed front door; focused/path/task/live-size/Knowledge Map/Memory/mdBook/staged-doctrine gates; exact cleanup | `passed`; source 21,726 lines/4,662,385 bytes/SHA-256 8cff8e7b...; 844 nodes; working set 6,002/2,438,733; zero residue; focused Files=3/Tests=62; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces; Knowledge Map 1,096 facts/5,758 keys; 37 chapters; removed 73-file/17,004-KiB build; packet frozen at SHA-256 49351a2a...; no README or product behavior change |
+| `2026-07-31` | `.23` activation | clean `2bfb32c02` predecessor; task/index/roadmap/book/fact/Memory/audit/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=55; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces and complete Markdown coverage; Knowledge Map 1,096 facts/5,758 keys; Memory 40 lines; all 37 chapters test; removed 73-file/17,012-KiB repository-local build; `.23` alone active; no checker, registry, lifecycle value, limit, maintained content, frozen identity, landing content, or product behavior change |
 
 ## Commit Log
 
@@ -451,6 +461,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.21` route/index/evidence completeness | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21: close route and index completeness` | Derive typed author hints, retain distinct reader routes, prove collection index/query/generated contracts and both evidence maps, and reject staged-result divergence. |
 | `.22` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22: activate migration and retention proof` | Activate only migration completeness, retention guarantees, and bounded review-front-door enforcement from clean `.21` commit `9c63cf76b`; implementation remains pending. |
 | `.22` migration/retention proof | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22: enforce migration and retention proof` | Prove four independent migration products, bind version objects to bounded recovery contracts, and freeze the detailed packet behind a bounded routed front door. |
+| `.23` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23: activate maintained-reference selection` | Activate only the maintained product-reference lifecycle and classification contract from clean `.22` commit `2bfb32c02`; implementation remains pending. |
 
 ## Changelog
 
@@ -526,3 +537,10 @@ no routed destination becomes the next uninstrumented blob.
   and zero unretained residue independently; history-backed objects name
   actionable retention contracts, and the frozen packet now sits behind a
   bounded review front door. `.23` is the next clean selection frontier.
+- `2026-07-31`: Clean `.22` commit `2bfb32c02` activates `.23` alone; no
+  lifecycle selection, enforcement, document content, or product behavior
+  changes in this selection slice.
+- `2026-07-31`: An initial mdBook destination argument resolved outside the
+  repository. The exact 73-file/17,012-KiB output and its newly created empty
+  parent were removed; the corrected repository-local build passed and was
+  also removed, with residue checks for both paths.

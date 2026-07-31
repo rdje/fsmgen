@@ -5,14 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22:
-  enforce migration and retention proof`).
-- active_work_unit: `.22` is complete; `.23` remains the next pending leaf.
-- current_state: `.22` independently proves IAL2 source identity, 844-node
-  closure, working-set size, and zero loss residue; version objects name bounded
-  recovery contracts, and the frozen packet sits behind a bounded front door.
-- next_action: from this clean `.22` commit, activate `.23` alone to select the
-  maintained product-reference lifecycle contract before affected migrations.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23:
+  activate maintained-reference selection`).
+- active_work_unit: `.23` alone is active from clean `.22` commit `2bfb32c02`.
+- current_state: `.22` closes independent migration, retention/recovery, and
+  bounded review-front-door proof. `.23` changes no lifecycle or content yet.
+- next_action: decide whether maintained product-reference prose needs a
+  distinct lifecycle, then implement auditable rationale and bounded index,
+  part-reviewability, navigation-depth, and authorized-growth contracts on the
+  mdBook and ISF-spec examples.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: `.8`-`.10`/`.13` wait for utility or
@@ -34,6 +35,6 @@ history; this file carries only the current bounded resume state.
   runtime, and normalized results; `.11` now qualifies only the selected AHB
   handwritten-oracle comparison, not general cross-backend parity.
 - Decisions `0041`/`0042`/`0044`, the packet, and its bounded disposition own
-  feedback-sensitive containment work. `.22` now closes migration/retention and
-  review-front-door proof; `.23` is next. Push only on explicit request (`0005`);
-  PNT runs autonomously (`0003`). Consult the Knowledge Map first.
+  feedback-sensitive containment work. `.23` now owns maintained-reference
+  selection. Push only on explicit request (`0005`); PNT runs autonomously
+  (`0003`). Consult the Knowledge Map first.

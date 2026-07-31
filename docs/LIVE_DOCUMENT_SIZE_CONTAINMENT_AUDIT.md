@@ -173,6 +173,10 @@ normal collection density.
 | Frozen status files | Remain identity-pinned and untouched until the already scheduled four-file lifecycle review chooses their audiences and fate | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`, then `.11` consumes that decision if migration is selected |
 | Final steady state | Remeasure all surfaces, prove retrieval/reconstruction, and lower health targets plus enforcement ceilings to the derived retained-surface working set | `.12` |
 
+Clean `.22` commit `2bfb32c02` activates `.23` alone to decide whether unique
+product-sized maintained reference needs a lifecycle distinct from storage-
+topology class `partitioned_canonical`; no audit classification changes yet.
+
 ## Why this is containment rather than displacement
 
 - The root/current views stop growing because they overwrite, rotate, or are

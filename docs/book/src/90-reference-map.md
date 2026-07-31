@@ -232,6 +232,11 @@ depend on history uses content-addressed repository files. The 79-line review
 front door has independent 100-line / 5-KiB caps and a typed route to the
 SHA-256-frozen 1,311-line detailed packet.
 
+Clean `.22` commit `2bfb32c02` activates `.23` alone. It now owns the lifecycle
+and auditable classification contract for unique maintained reference whose
+aggregate follows legitimate product scope; no content or lifecycle changes in
+this selection slice.
+
 ## What The Old User Guide Still Does
 
 [../../USER_GUIDE.md](../../USER_GUIDE.md) still remains the broad migration
