@@ -1236,7 +1236,9 @@ bounded private capability/support accounting
 ```
 
 The support contract publishes result status `shipped` with implementation
-owner `.10.4`; parity remains `selected_not_implemented` under `.11`. Neither
+owner `.10.4`; parity remains `selected_not_implemented` under active `.11`.
+Clean `.10.4` implementation commit `dfe87f536` activates that comparison
+owner without changing the status or adding a parity claim. Neither
 name is included in `.7.3`'s target-neutral plan ledger, while the public
 runtime support contract now advertises the result capability.
 

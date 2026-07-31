@@ -109,3 +109,5 @@ emission-only tool records, and a pure closed-JSONL trace validator. Completed
 `.10.4` now ships public run/publication, exact Verilator 5.046 compile/runtime,
 validated trace capture, normalized results, deterministic reruns, and atomic
 cleanup. `.11` retains cross-backend runtime parity.
+Clean `.10.4` implementation commit `dfe87f536` activates `.11` for that
+comparison without adding a parity report or changing product behavior.

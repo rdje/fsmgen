@@ -527,7 +527,7 @@ a downgraded pass.
   `.10.2` ships plan/artifact behavior. Clean `.10.2` commit `045629c97`
   activates `.10.3` for backend/trace emission. Completed `.10.3` ships that
   private seam; completed `.10.4` exposes its qualified execution through
-  public run/result publication. `.11` owns parity against the
+  public run/result publication. Active `.11` owns parity against the
   handwritten AHB oracle.
 - Factories, phases, objections, UVM component classes, VHDL process plumbing,
   target hierarchy, callbacks, and host-language escape hatches remain backend
@@ -548,6 +548,10 @@ repository-local bounded execution staging, normalized trace/result/output
 manifests, deterministic virtual and filesystem reruns, atomic publication,
 and exact cleanup. It adds no complete-four-state, parity, UVM, VHDL,
 mixed-language, or scale claim.
+
+Clean `.10.4` implementation commit `dfe87f536` activates `.11` to compare
+the normalized result with the handwritten AHB oracle. Activation changes no
+public action, schema, support status, artifact, or parity claim.
 
 ## Validation And Rollback
 

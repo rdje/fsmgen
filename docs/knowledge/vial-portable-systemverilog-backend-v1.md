@@ -67,4 +67,5 @@ captures it under exact bounded process/tool rules; the pure validator projects
 `fsmgen.vial_sv_trace_projection.v1` without rerunning VIAL scheduling, models,
 scoreboards, coverage, faults, or decisions; the result producer emits the
 closed normalized result. `.11` alone owns parity with the handwritten AHB
-oracle.
+oracle and is active after clean `.10.4` implementation commit `dfe87f536`;
+activation changes no backend or parity behavior.

@@ -62,4 +62,5 @@ ships deterministic portable-SystemVerilog emission and pure trace validation
 through a private compiler API. Completed `.10.4` adds public `run`, exact
 Verilator 5.046 qualification/execution, backend/result/output artifacts,
 validated runtime capture, deterministic reruns, and atomic cleanup. `.11`
-retains cross-backend parity.
+retains cross-backend parity and is active after clean `.10.4` implementation
+commit `dfe87f536`; activation adds no public surface or parity claim.

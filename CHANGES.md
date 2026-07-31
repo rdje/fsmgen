@@ -32130,6 +32130,14 @@ task tree and git.
   `unchanged`; a same-barrier `parallel any` tie proves deterministic
   authored-order winner/cancellation behavior; failures publish no partial
   graph.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11 — portable AHB parity activated
+
+- From clean `.10.4` implementation commit `dfe87f536`, activated `.11` alone
+  for normalized result comparison with the handwritten AHB oracle.
+- This continuity-only slice changes no VIAL/HIAL source, parser, bridge, plan,
+  artifact, tool invocation, trace, result, parity report, public capability,
+  HIAL behavior, backend qualification, or product behavior.
 - Capability/support and the mdBook now report the shipped bounded runtime and
   result while preserving complete-four-state, parity, UVM, VHDL methodology,
   mixed-language, and scale non-claims. `.11` retains cross-backend parity.

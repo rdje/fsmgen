@@ -9556,8 +9556,10 @@ selected-but-unexecuted command records, and pure closed-trace validation.
 Clean `.10.3` implementation commit `201590d84` activated `.10.4` alone.
 Completed `.10.4` now ships public `run`, exact Verilator 5.046 execution,
 validated trace capture, normalized result/output manifests, deterministic
-virtual/filesystem reruns, atomic publication, and exact cleanup. `.11` retains
-cross-backend parity.
+virtual/filesystem reruns, atomic publication, and exact cleanup. Clean `.10.4`
+implementation commit `dfe87f536` activates `.11` alone for parity with the
+handwritten AHB oracle; activation itself changes no behavior or capability
+claim.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

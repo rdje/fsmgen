@@ -7,6 +7,8 @@ the shipped portable-SystemVerilog/Verilator execution path, and the
 compatibility boundary. Public `run`, exact external compilation, simulation,
 closed runtime traces, and normalized results now ship for the bounded
 `sv_portable_verilator` profile. Cross-backend parity does **not** ship yet.
+Leaf `.11` is active to compare that result with the handwritten AHB oracle;
+activation itself adds no parity report or capability claim.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -1027,4 +1029,5 @@ map, one-scheduler plain-SystemVerilog fixture, selected-but-unexecuted command
 records, and pure closed-trace projection. Completed `.10.4` now ships public
 run, exact Verilator execution, trace capture, normalized results,
 deterministic reruns, and atomic cleanup. `.11` retains cross-backend runtime
-parity.
+parity and is active after clean `.10.4` implementation commit `dfe87f536`;
+that continuity transition changes no product behavior.

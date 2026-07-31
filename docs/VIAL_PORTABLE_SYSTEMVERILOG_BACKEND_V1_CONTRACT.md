@@ -581,7 +581,9 @@ in operation-owned repository-local staging, validates the captured trace,
 publishes the normalized result/output graph atomically, and removes staging.
 The exact runtime regression also forces a same-barrier `parallel any` tie and
 proves authored-order winner selection plus sibling cancellation. `.10.4`
-makes no parity claim.
+makes no parity claim. Clean implementation commit `dfe87f536` activates
+`.11` to compare this result with the handwritten AHB oracle; activation
+changes no backend behavior, support status, or parity claim.
 
 Selection signoff requires current source/bridge/execution tests, the existing
 AHB Verilator oracle, task/roadmap/audit/decision/book/fact continuity, relative
