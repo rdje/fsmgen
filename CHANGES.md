@@ -32084,3 +32084,22 @@ task tree and git.
 - This continuity-only slice changes no VIAL/HIAL source, parser, plan,
   artifact graph, target code, trace, capability/support claim, compile/run
   path, result, parity, UVM, VHDL, mixed-language, scale, or product behavior.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.3 — portable SV backend emission shipped
+
+- Added the private deterministic `sv_portable_verilator` emitter over the
+  exact immutable ExecutionIR, reviewed bridge, and normalized generated HIAL
+  DUT. It returns a sorted eight-artifact virtual graph with readable one-
+  scheduler plain SV, complete operation/state-family source maps, generated
+  declared-probe aliases, and selected-but-unexecuted tool command/profile
+  records.
+- Added a pure closed-trace validator for canonical prefixed JSONL. It checks
+  tool exit, schema, identities, ordering, logical time, counts, closure, and
+  limits without executing a simulator or replaying verification semantics;
+  its projection explicitly produces no normalized result manifest.
+- Discovery distinguishes private negotiation/emission/trace validation from
+  unimplemented compile/runtime/result/parity stages, while the public command
+  family remains capabilities/check/format/plan. Guarded impacted regression
+  passes at Files=27/Tests=7,190 and docs/live/path/task checks at
+  Files=8/Tests=378; all 37 mdBook chapters and the repository-local 73-file
+  build pass.

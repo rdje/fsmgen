@@ -9537,8 +9537,9 @@ runtime/results. Completed `.10.1` now ships capabilities, check, and canonical
 normal/terse formatting through one closed defensive source-only CLI/API. Both
 styles enter the unchanged typed semantic builder and produce one stable
 provenance-free semantic meaning digest. Exact discovery and support accounting
-advertise only those source surfaces; HIAL binding, plans, artifact writes,
-backend emission, compile, runtime, results, and parity remain unavailable.
+advertised only those source surfaces at `.10.1`; HIAL binding, plans,
+artifact writes, backend emission, compile, runtime, results, and parity were
+then unavailable.
 Clean `.10.1` implementation commit `50a0d7d39` activates `.10.2` alone for
 planning/artifact implementation. Completed `.10.2` now composes direct IAL0,
 direct IAL1, and IAL2-via-generated/reparsed-IAL1 review routes with the
@@ -9547,7 +9548,11 @@ defensive bridge/plan/tool-manifest projections through virtual or atomic
 repository-local graphs; and admits transaction-free direct-IAL0 endpoint
 fixtures without inventing transaction truth. Clean `.10.2` implementation
 commit `045629c97` activates `.10.3` alone for backend/trace emission without
-runtime execution; `.10.4` retains exact runtime/results and `.11` parity.
+runtime execution. Completed `.10.3` now ships private deterministic portable-
+SV emission, complete source maps, one-scheduler known-value lowering,
+selected-but-unexecuted command records, and pure closed-trace validation.
+Proposed `.10.4` retains public publication, exact compile/runtime/results,
+and `.11` retains parity.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

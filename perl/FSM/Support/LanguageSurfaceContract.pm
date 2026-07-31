@@ -152,7 +152,9 @@ sub language_surface_vial_execution_keys {
     return [qw(
         schema_version status contract_source implementation_entrypoints
         execution_schema plan_schema replay_schema selected_future_schemas
-        profile capabilities limits
+        profile backend_profile backend_schema runtime_trace_schema
+        trace_projection_schema backend_stage_status capabilities limits
+        backend_limits
         fixture writes_files public_embedding_api explicit_nonclaims
         guidance
     )];

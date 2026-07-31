@@ -21,6 +21,8 @@ my %allowed_status = map { $_ => 1 } qw(
     optional_when_tools_installed
     shipped_private_in_process
     shipped_private_target_neutral_no_backend
+    shipped_private_execution_and_portable_sv_emission
+    shipped_public_source_tooling_and_atomic_planning
 );
 
 for my $file (@contract_files) {

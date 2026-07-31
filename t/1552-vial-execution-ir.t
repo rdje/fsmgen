@@ -303,12 +303,12 @@ subtest 'reference, access, type direction, event, invocation, and native bounda
         FSM::VIAL::ExecutionBuilder->build(build_args(semantic_ir => parse_vial($missing_event))));
 };
 
-subtest 'private capability/support accounting is exact and makes no backend claim' => sub {
+subtest 'private capability/support accounting distinguishes emission from runtime' => sub {
     my $execution_result = FSM::VIAL::ExecutionBuilder->build(build_args());
     ok($execution_result->{ok}, 'execution plan remains available for capability-ledger checks');
     my $contract = build_vial_execution_contract();
     is_deeply([sort keys %$contract], [sort @{vial_execution_contract_keys()}], 'execution capability contract is closed');
-    is($contract->{status}, 'shipped_private_target_neutral_no_backend', 'execution support is private and target-neutral');
+    is($contract->{status}, 'shipped_private_execution_and_portable_sv_emission', 'execution support includes private portable-SystemVerilog emission');
     ok(!$contract->{writes_files}, 'execution contract writes no file');
     ok(!$contract->{public_embedding_api}, 'execution contract exposes no supported public embedding API');
     is_deeply(
@@ -328,17 +328,19 @@ subtest 'private capability/support accounting is exact and makes no backend cla
         'selected result/parity schemas retain explicit later implementation owners',
     );
     my %shipped_capability = map { $_ => 1 } @{$contract->{capabilities}};
+    ok($shipped_capability{'vial.backend.sv_portable_verilator.emission.v1'}, 'private emission capability is explicit');
+    ok($shipped_capability{'vial.backend.sv_portable_verilator.trace_validation.v1'}, 'private trace-validation capability is explicit');
     ok(!$shipped_capability{'vial.result_manifest.v1'}, 'private plan support does not claim result-manifest implementation');
     ok(!$shipped_capability{'vial.parity_projection.v1'}, 'private plan support does not claim parity-projection implementation');
     my %plan_capability = map { $_->{capability_id} => $_ } @{$execution_result->{plan}{capability_ledger}};
     ok(!$plan_capability{'vial.result_manifest.v1'}, 'plan ledger does not mark future result support satisfied');
     ok(!$plan_capability{'vial.parity_projection.v1'}, 'plan ledger does not mark future parity support satisfied');
     my %nonclaim = map { $_ => 1 } @{$contract->{explicit_nonclaims}};
-    ok($nonclaim{backend} && $nonclaim{runtime} && $nonclaim{parity_pass} && $nonclaim{uvm} && $nonclaim{vhdl_methodology}, 'backend/runtime/methodology nonclaims remain explicit');
+    ok($nonclaim{public_backend_action} && $nonclaim{compile} && $nonclaim{runtime} && $nonclaim{result} && $nonclaim{parity_pass} && $nonclaim{uvm} && $nonclaim{vhdl_methodology}, 'public/runtime/methodology nonclaims remain explicit');
     my $manifest = build_capability_manifest();
     is_deeply($manifest->{language_surface}{vial_execution}, $contract, 'capability manifest publishes the exact private execution contract');
     my ($surface) = grep { $_->{suffix} eq '.vial' } @{$manifest->{language_surface}{file_surfaces}{entries}};
-    is($surface->{status}, 'shipped_bounded_public_planning_and_private_execution', '.vial status composes public planning with private execution');
+    is($surface->{status}, 'shipped_bounded_public_planning_private_execution_and_sv_emission', '.vial status composes public planning with private execution/emission');
     is_deeply(
         $surface->{supported_cli_modes},
         [

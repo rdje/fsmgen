@@ -84,7 +84,7 @@ sub build_vial_tooling_contract {
             'Use the public request/result records or fsmgen vial subcommands; private parser forms and SemanticIR objects do not cross the public boundary.',
             'Capabilities, check, and format never bind HIAL or write an artifact; plan alone binds one canonical HIAL review route and publishes target-neutral projections.',
             'The in-memory plan API publishes one complete virtual artifact sink; the CLI atomically commits the same graph below a repository-relative same-volume root.',
-            'Portable-SystemVerilog emission and Verilator execution remain separately owned by .10.3 and .10.4.',
+            'Private portable-SystemVerilog emission is capability-discoverable through the execution contract; this public tool contract still exposes no backend action, while Verilator execution remains owned by .10.4.',
         ],
     };
 }

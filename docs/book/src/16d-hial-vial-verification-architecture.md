@@ -3,8 +3,10 @@
 FSMGen has selected the architecture for its verification-intent language and
 future generated executable fixtures. This chapter explains the shipped
 semantic frontend and public source tooling, the shipped private HIAL bridge
-producer, the executable destination, and the compatibility boundary. It does
-**not** mean generated or runnable VIAL backend output ships today.
+producer, the shipped private portable-SystemVerilog emitter, the executable
+destination, and the compatibility boundary. Generated backend artifacts now
+ship through a private compiler seam; public `run`, external compilation,
+simulation, normalized results, and parity do **not** ship yet.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -125,7 +127,8 @@ scoreboard, stall coverage, one bounded size-substitution fault, and stable
 wait-cycle decision identity. The public tool can check either source
 projection, produce a sanitized semantic report, format normal or terse
 source, and bind it to reviewed HIAL through `plan`. Generated target fixtures,
-simulation, and results remain later phases. See
+can now be produced through the private backend API described below;
+filesystem publication, simulation, and results remain later phases. See
 the exact [VIAL source and SemanticIR v1 contract](../../VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).
 
 The public source-only commands are:
@@ -500,10 +503,12 @@ wrong-access references, disallowed type direction, missing event, unknown
 capability, non-empty first-profile native catalog, bad scenario selection,
 invalid replay identity/value/constraint, random exhaustion, or a safety-limit
 violation. Completed `.10.2` now invokes this compiler elaboration behind a
-closed public planner and serializes only sanitized projections. There is still
-no result file, generated SV/UVM/VHDL fixture, compile, simulation, runtime,
+closed public planner and serializes only sanitized projections. Completed
+`.10.3` passes the exact immutable ExecutionIR, reviewed bridge, and normalized
+generated HIAL SystemVerilog to the private portable emitter. There is still no
+public target-artifact action, result file, compile, simulation, runtime,
 parity pass, mixed-language claim, or scale qualification. The public API does
-not expose this private elaborator or its IR objects.
+not expose either private elaborator or its IR objects.
 
 ## Shipped public source and planning tooling
 
@@ -519,9 +524,10 @@ fsmgen vial run --dut dut.ppif --backend PROFILE source.vial
 ```
 
 The first three commands ship through `.10.1`, and `plan` ships through
-`.10.2`. Clean `.10.2` commit `045629c97` activates `.10.3` for backend/trace
-emission, but `run` remains unavailable until `.10.3`/`.10.4` implement all
-backend, trace, tool-execution, and result owners; asking for it returns
+`.10.2`. Completed `.10.3` ships private backend emission and trace validation,
+but it deliberately does not widen the public tool request. `run` remains
+unavailable until `.10.4` implements publication, tool execution, and result
+production; asking for it returns
 `VIAL_BACKEND_UNAVAILABLE` without writing an artifact. The CLI is an adapter
 over the same closed, JSON-safe request/result contract available to embedding
 hosts.
@@ -635,6 +641,78 @@ than guessing from the shared filename. The full normative field, diagnostic,
 compatibility, and rollback contract is
 [VIAL Public Tooling Version 1](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md).
 
+## Shipped private portable-SystemVerilog emission
+
+Completed `.10.3` adds the first target-producing compiler seam without making
+that seam a public authoring API. The planner privately retains three exact,
+defensive inputs after successful binding:
+
+```text
+immutable VIALExecutionIR
+reviewed HIALVIALBridgeManifest
+normalized generated HIAL SystemVerilog source
+```
+
+`FSM::VIAL::Backend::SVPortableVerilator->emit(...)` accepts only those inputs,
+the exact `sv_portable_verilator` profile, and a repository-relative artifact
+root. It negotiates the bounded one-unit/one-domain known-value profile before
+producing anything. Unsupported capabilities, native extensions, unsafe paths,
+missing DUT source, unknown values, or backend-limit overflow return one
+sanitized diagnostic and no partial graph.
+
+Successful emission returns one deterministic virtual graph, sorted by path:
+
+```text
+backends/sv_portable_verilator/
+  backend-manifest.json
+  backend-source-map.json
+  commands/compile-command.json
+  commands/run-command.json
+  evidence/tool-profile.json
+  src/<fixture>_tb.sv
+  src/dut/<generated-hial-dut>.sv
+  src/fsmgen_vial_runtime_pkg.sv
+```
+
+The graph is virtual in this slice: `.10.3` does not publish it to disk or
+execute either command record. The manifest therefore says exactly
+`emission: passed`, `compile: not_run`, `runtime: not_run`,
+`result: not_produced`, and `parity: not_evaluated`. The selected Verilator
+5.046 profile and repository-local object path are reviewable data, not
+execution evidence.
+
+The fixture source is static partial evaluation of the immutable plan rather
+than a general VIAL interpreter. It contains meaningful generated identifiers,
+one declared-probe alias, operation-local comments, statically folded known
+values and selected faults, and a source map covering every operation and
+stateful semantic family. The HIAL generator's date comment is normalized at
+the private handoff so identical source meaning yields byte-identical backend
+artifacts across days.
+
+One generated scheduler remains the execution authority. It waits at the
+domain's inactive edge, samples, performs react/check work in plan order, and
+prepares the next drive. `parallel all` and `parallel any` children are
+materialized as condition bits whose satisfaction is latched in that same
+scheduler loop. A target-language `fork` cannot introduce a second ordering
+authority or make simulator process scheduling part of VIAL meaning.
+
+The emitted runtime package defines the closed prefixed JSONL representation,
+but no runtime trace exists yet. The pure
+`FSM::VIAL::Backend::TraceValidator` accepts only caller-supplied trace bytes,
+the exact ExecutionIR, and a simulator exit code. It requires canonical JSON,
+contiguous sequence numbers, exact plan/run/scenario identities, closed record
+kinds, ordered scenario boundaries, monotonic logical time, matching footer
+counts, and clean termination within the selected record/byte limits. Success
+returns `fsmgen.vial_sv_trace_projection.v1`; it explicitly records
+`result_manifest_status: not_produced`. The validator checks a trace envelope
+and projects it—it never replays scheduling, models, scoreboards, coverage,
+faults, or random decisions.
+
+Backend-only caps remain in the backend capability contract rather than
+ExecutionIR's `limits`. This preserves the target-neutral plan identity:
+selecting a SystemVerilog emission limit cannot silently change the semantic
+plan that a future VHDL or UVM backend consumes.
+
 ## Expressive ceiling: verification intent, not synthesis
 
 The governing rule is **full power underneath, simpler intent above**. VIAL
@@ -740,6 +818,9 @@ support.
 Decision `0043` selects the exact version-1 profile. The compiler partially
 evaluates the bound plan into a small runtime package plus one fixture module;
 it does not emit a general interpreter or make the author write target code.
+That deterministic emission now ships privately through `.10.3`. Exact tool
+version qualification, compilation, execution, and result evidence remain
+owned by `.10.4`.
 One scheduler uses the clock's inactive edge as a stable barrier:
 
 ```text
@@ -779,11 +860,13 @@ cannot prove that a DUT never produced X/Z. A later full four-state backend may
 disagree, and parity must report that mismatch. A Verilator pass can never
 override it or imply full-SystemVerilog/UVM support.
 
-The simulator emits a closed, prefixed line-delimited JSON trace. The host
-validates its plan/run identities, sequence, logical ordering, counts, and
-footer, then projects it into `fsmgen.verification_result_manifest.v1`. It
-does not rerun VIAL scheduling, models, scoreboards, coverage, faults, or
-random decisions. See the
+The generated runtime is designed to emit a closed, prefixed line-delimited
+JSON trace. The shipped pure validator checks its plan/run identities,
+sequence, logical ordering, counts, and footer without executing a simulator.
+`.10.4` must capture a real runtime trace and produce
+`fsmgen.verification_result_manifest.v1`; neither `.10.3` nor the validator
+claims that result. The host does not rerun VIAL scheduling, models,
+scoreboards, coverage, faults, or random decisions. See the
 [portable SystemVerilog backend contract](../../VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md)
 for exact artifacts, mappings, source maps, limits, diagnostics, non-claims,
 and implementation gates.
@@ -905,6 +988,9 @@ planning/artifacts. Completed `.10.2` now ships all three canonical review
 routes, defensive bridge/plan/tool-manifest projections, transaction-free
 direct-IAL0 endpoint fixtures, and virtual or atomic repository-local artifact
 graphs. Clean `.10.2` commit `045629c97` activates `.10.3` alone for backend/
-trace emission without simulator execution; `.11` retains runtime parity. The
-activation ships no target artifact, result file, compile/run path, runtime
-result, parity pass, or backend behavior.
+trace emission without simulator execution. Completed `.10.3` now ships the
+private exact-profile emitter, eight-artifact virtual graph, complete source
+map, one-scheduler plain-SystemVerilog fixture, selected-but-unexecuted command
+records, and pure closed-trace projection. Public target publication, compile,
+runtime, and normalized result production remain `.10.4`; `.11` retains
+runtime parity.

@@ -64,6 +64,8 @@ sub _build($raw) {
         ok => JSON::PP::false,
         bridge_manifest => undef,
         bridge_report => undef,
+        execution_ir => undef,
+        backend_inputs => undef,
         plan => undef,
         review_artifacts => [],
         diagnostics => [_bridge_diagnostics($bridge->{diagnostics})],
@@ -95,6 +97,8 @@ sub _build($raw) {
         ok => JSON::PP::false,
         bridge_manifest => undef,
         bridge_report => undef,
+        execution_ir => undef,
+        backend_inputs => undef,
         plan => undef,
         review_artifacts => [],
         diagnostics => [_execution_diagnostics($execution->{diagnostics})],
@@ -104,6 +108,8 @@ sub _build($raw) {
         ok => JSON::PP::true,
         bridge_manifest => $bridge->{manifest},
         bridge_report => _clone($bridge->{report}),
+        execution_ir => $execution->{execution_ir},
+        backend_inputs => _clone($route->{backend_inputs}),
         plan => _clone($execution->{plan}),
         review_artifacts => _clone($route->{review_artifacts}),
         diagnostics => [],
@@ -147,7 +153,16 @@ sub _build_ial0_route($source) {
         hdl_result => $hdl_result,
         backend_names => _backend_names_from_hdl_result($hdl_result),
     });
-    return { bridge_result => $bridge, review_artifacts => [] };
+    return {
+        bridge_result => $bridge,
+        review_artifacts => [],
+        backend_inputs => {
+            dut_systemverilog => [_systemverilog_artifact(
+                $hdl_result,
+                $source->{source_id},
+            )],
+        },
+    };
 }
 
 sub _build_ial1_route($source) {
@@ -168,6 +183,12 @@ sub _build_ial1_route($source) {
     return {
         bridge_result => $bridge,
         review_artifacts => _review_ial0_artifacts($lowered->{files}, $source->{source_id}),
+        backend_inputs => {
+            dut_systemverilog => [_systemverilog_artifact(
+                _generate_ial0_systemverilog($entry_text, $entry_name),
+                $source->{source_id},
+            )],
+        },
     };
 }
 
@@ -209,6 +230,60 @@ sub _build_ial2_route($source) {
             },
             @{_review_ial0_artifacts($ial2->{generated_ial0}{files}, $source->{source_id})},
         ],
+        backend_inputs => {
+            dut_systemverilog => [_systemverilog_artifact(
+                _generate_ial0_systemverilog($entry_text, $entry_name),
+                $source->{source_id},
+            )],
+        },
+    };
+}
+
+sub _generate_ial0_systemverilog($text, $artifact_name) {
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_source(
+        source_text => $text,
+        source_label => $artifact_name,
+        debug_level => 0,
+    );
+    my $source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
+    confess "generated IAL0 review artifact '$artifact_name' is not one direct FSM root"
+        unless ($source_info->{kind} // '') eq 'fsm'
+            && !@{$source_info->{package_import_names} || []};
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+        strict_mode => 1,
+    );
+    return FSM::Pipeline::DirectGenerationOrchestrator->generate_from_source(
+        pipeline => $pipeline,
+        raw_ast => $raw_ast,
+        source_info => $source_info,
+        fsm_file => undef,
+    );
+}
+
+sub _systemverilog_artifact($hdl_result, $source_id) {
+    confess 'HIAL SystemVerilog generation did not return module metadata and source'
+        unless ref($hdl_result) eq 'HASH'
+            && ref($hdl_result->{module_info}) eq 'HASH'
+            && defined($hdl_result->{module_info}{module_name})
+            && !ref($hdl_result->{module_info}{module_name})
+            && defined($hdl_result->{hdl_code})
+            && !ref($hdl_result->{hdl_code});
+    my $module_name = $hdl_result->{module_info}{module_name};
+    my $text = $hdl_result->{hdl_code};
+    $text =~ s{// Date: [^\r\n]*}{// Date: omitted by deterministic VIAL backend}g;
+    $text =~ s/\r\n?/\n/g;
+    $text .= "\n" unless $text =~ /\n\z/;
+    return {
+        unit_id => "unit/$module_name",
+        module_name => $module_name,
+        artifact_name => "$module_name.sv",
+        source_id => $source_id,
+        text => $text,
+        content_sha256 => sha256_hex($text),
+        byte_length => bytes::length($text),
     };
 }
 
@@ -384,6 +459,8 @@ sub _failure($code, $message, $path) {
         ok => JSON::PP::false,
         bridge_manifest => undef,
         bridge_report => undef,
+        execution_ir => undef,
+        backend_inputs => undef,
         plan => undef,
         review_artifacts => [],
         diagnostics => [{

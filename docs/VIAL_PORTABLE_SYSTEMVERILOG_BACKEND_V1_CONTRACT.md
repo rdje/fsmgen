@@ -5,9 +5,9 @@ Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9`
 Status: selected; active parent `.10` owns implementation after clean
 activation from commit `ab3e73b72`. Clean activation commit `5fd766600`
 decomposes that work into completed `.10.1` public source tooling, completed
-`.10.2` planning/artifact transactions, active `.10.3` backend emission/trace
-projection after clean commit `045629c97`, and proposed `.10.4` Verilator
-run/result integration
+`.10.2` planning/artifact transactions, completed `.10.3` private backend
+emission/trace projection after clean commit `045629c97`, and proposed `.10.4`
+Verilator run/result integration
 Decision: `0043`
 
 ## Outcome
@@ -571,12 +571,13 @@ substrate evidence for selection, not generated-VIAL backend evidence.
 ## Implementation Ownership, Validation, And Rollback
 
 The selection itself created no implementation. Completed `.10.1`/`.10.2`
-now provide source tooling, public planning, and atomic target-neutral
-artifacts; they create no backend module, runtime package, Verilator invocation
-in product code, result producer, or runtime/parity claim. Clean `.10.2`
-implementation commit `045629c97` activates `.10.3` alone; activation changes
-no backend, trace, capability/support, compile/runtime, result, parity, or
-product behavior.
+provide source tooling, public planning, and atomic target-neutral artifacts.
+Completed `.10.3` now provides the private deterministic runtime package,
+fixture module, generated HIAL DUT handoff, backend/source-map/profile/command
+records, and pure closed-trace validator. It creates no filesystem publication,
+Verilator invocation, runtime trace, result producer, or parity claim. Clean
+`.10.2` implementation commit `045629c97` was the separate activation
+predecessor; proposed `.10.4` retains every tool-execution/result gate.
 
 Selection signoff requires current source/bridge/execution tests, the existing
 AHB Verilator oracle, task/roadmap/audit/decision/book/fact continuity, relative
@@ -585,8 +586,10 @@ Memory, diff hygiene, staged docs-only acceptance, all doctrines, and exact
 cleanup.
 
 Selection rollback removes decision `0043` and this contract and returns `.9`
-to active. It preserves all shipped VIAL/HIAL implementation and public
-non-claims. Future implementation rollback removes only the exact `.10`
-backend/public-tool/result implementation and its owned artifacts/capability
-entries, retaining this selected contract, the private VIAL stages, and every
+to active. Implementation rollback removes the exact `.10.3` private emitter,
+trace validator, planner handoff, tests, and capability/support records while
+preserving public source/planning behavior and every runtime/result non-claim.
+Later `.10.4` rollback remains independently scoped to its tool/result
+implementation and owned artifact/capability entries, retaining this selected
+contract, the private VIAL stages, and every
 legacy verification-output surface.

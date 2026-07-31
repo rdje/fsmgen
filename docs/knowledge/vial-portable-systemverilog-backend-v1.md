@@ -17,8 +17,8 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, systemverilog, verilator, backend, scheduler, known-value, four-state, source-map, result, jsonl]
-evidence: docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; t/data/ahb_generated_subordinate_base_output_arbitration_tb.svt; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
-reverify: verilator --version && rg -n 'sv_portable_verilator|known-value|inactive edge|--binary|--timing|--assert|generated_hierarchical_read_alias_v1|fsmgen.vial_sv_runtime_trace.v1|completed `.10.2`|active `.10.3`|045629c97' docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+evidence: docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/PlanBuilder.pm; t/1557-vial-portable-sv-backend-emission.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; t/data/ahb_generated_subordinate_base_output_arbitration_tb.svt; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
+reverify: perl -Iperl -c perl/FSM/VIAL/Backend/SVPortableVerilator.pm && perl -Iperl -c perl/FSM/VIAL/Backend/TraceValidator.pm && prove -Iperl t/1557-vial-portable-sv-backend-emission.t && rg -n 'sv_portable_verilator|known-value|inactive edge|--binary|--timing|--assert|generated_hierarchical_read_alias_v1|fsmgen.vial_sv_runtime_trace.v1|completed `.10.3`|proposed `.10.4`|045629c97' docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
 Decision `0043` selects `sv_portable_verilator` as VIAL's first executable
@@ -31,8 +31,10 @@ planning/artifact, backend/trace, and exact runtime/result children. Completed
 `.10.1` ships the public capabilities/check/normal-terse source surfaces.
 Clean implementation commit `50a0d7d39` activates `.10.2`; completed `.10.2`
 ships planning and target-neutral artifacts. Clean `.10.2` commit `045629c97`
-activates `.10.3` alone for this backend and trace implementation without
-changing product behavior.
+activates `.10.3` alone for this backend and trace implementation. Completed
+`.10.3` now ships a private deterministic emitter and pure trace validator;
+`.10.4` remains proposed for public publication, exact tool execution, runtime
+capture, and normalized result production.
 
 One scheduler samples at the clock's inactive edge, performs react/check work
 in exact plan order, then applies the next logical cycle's drives before the
@@ -51,8 +53,17 @@ not supported. A later qualified backend may disagree with a Verilator trace;
 parity reports the mismatch. Verilator success never proves full SystemVerilog
 or UVM support.
 
-Only bridge-declared probes may receive generated source-mapped hierarchy
-adapters. The runtime emits a closed prefixed JSONL trace; the host validates
-and projects it into the selected result manifest without rerunning VIAL
-scheduling, models, scoreboards, coverage, faults, or decisions. `.11` alone
-owns parity with the handwritten AHB oracle.
+Only bridge-declared probes receive generated source-mapped hierarchy
+adapters. The private emitter returns one sorted eight-artifact virtual graph:
+the generated HIAL DUT, runtime package, fixture module, backend/source-map/
+tool-profile records, and selected-but-unexecuted compile/run commands. One
+inactive-edge scheduler also latches `parallel` child satisfaction, so target
+process ordering is never semantic authority. Backend caps stay outside
+target-neutral ExecutionIR limits and therefore do not change its plan ID.
+
+The runtime representation is a closed prefixed JSONL trace. The shipped pure
+validator accepts caller-supplied bytes and projects
+`fsmgen.vial_sv_trace_projection.v1` without rerunning VIAL scheduling, models,
+scoreboards, coverage, faults, or decisions. It produces no normalized result
+manifest and executes no simulator in `.10.3`. `.10.4` owns those gates;
+`.11` alone owns parity with the handwritten AHB oracle.

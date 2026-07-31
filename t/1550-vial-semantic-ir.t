@@ -442,7 +442,7 @@ subtest 'semantic corpus claims stay bounded while capability accounting include
 
     my $surface = build_language_surface_section();
     my ($vial) = grep { $_->{suffix} eq '.vial' } @{$surface->{file_surfaces}{entries}};
-    is($vial->{status}, 'shipped_bounded_public_planning_and_private_execution', 'capability manifest includes public planning plus private target-neutral execution');
+    is($vial->{status}, 'shipped_bounded_public_planning_private_execution_and_sv_emission', 'capability manifest includes public planning plus private execution and portable-SystemVerilog emission');
     is_deeply(
         $vial->{supported_cli_modes},
         [

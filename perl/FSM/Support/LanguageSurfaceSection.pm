@@ -176,8 +176,8 @@ sub build_language_surface_section {
                 {
                     suffix => '.vial',
                     intent_layer => 'VIAL',
-                    status => 'shipped_bounded_public_planning_and_private_execution',
-                    role => 'reviewable verification intent with public capabilities/check/normal-terse formatting and atomic target-neutral planning over private immutable VIALSemanticIR and VIALExecutionIR',
+                    status => 'shipped_bounded_public_planning_private_execution_and_sv_emission',
+                    role => 'reviewable verification intent with public source/planning tooling plus private immutable execution, portable-SystemVerilog emission, and pure trace validation',
                     lowers_to => [],
                     generated_review_artifacts => [
                         'source/vial-normal.vial',
@@ -198,7 +198,8 @@ sub build_language_surface_section {
                         'The bounded VIAL version-1 source surface supports dedicated span-aware parsing, exact type checking, private immutable VIALSemanticIR, a sanitized semantic report, and public capabilities/check/normal-terse formatting under core_directed_single_clock_v1.',
                         'Normal_v1 and terse_v1 deterministically normalize to one typed semantic model and prove equal provenance-free fsmgen.vial_semantic_projection.v1 digests.',
                         'The public plan CLI/API routes direct IAL0, direct IAL1, or IAL2 through generated/reparsed IAL1 review authority, binds the selected fixture through compiler-proved directional type relations into private immutable target-neutral VIALExecutionIR, and publishes only canonical bridge/plan/tool projections.',
-                        'Virtual callers receive one complete defensive artifact sink; the filesystem adapter commits the same graph atomically below a repository-relative same-volume root. There is no backend, compile, simulation, runtime result, parity pass, UVM, VHDL, mixed-language, or scale claim.',
+                        'Virtual planning callers receive one complete defensive target-neutral artifact sink; the filesystem adapter commits that graph atomically below a repository-relative same-volume root. There is no public backend action, compile, simulation, runtime result, parity pass, UVM, VHDL, mixed-language, or scale claim.',
+                        'The private sv_portable_verilator seam negotiates the immutable ExecutionIR, emits deterministic plain-SystemVerilog DUT/runtime/fixture sources plus source maps/manifests/command records, and validates closed caller-supplied runtime traces without executing VIAL meaning. It does not expose a public backend action and makes no compile, simulation, runtime, result-manifest, or parity claim.',
                     ),
                 },
             ],

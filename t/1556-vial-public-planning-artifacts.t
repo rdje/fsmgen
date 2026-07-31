@@ -320,7 +320,7 @@ subtest 'capability and support accounting advertise planning without runtime' =
     is($entry->{coverage}, 'vial_public_plan_cli_api', 'planning support entry uses its own coverage identity');
     my $manifest = build_capability_manifest();
     is($manifest->{language_surface}{file_surfaces}{entries}[-1]{suffix}, '.vial', '.vial remains the final explicit file surface');
-    is($manifest->{language_surface}{file_surfaces}{entries}[-1]{status}, 'shipped_bounded_public_planning_and_private_execution', 'file-surface status includes public planning');
+    is($manifest->{language_surface}{file_surfaces}{entries}[-1]{status}, 'shipped_bounded_public_planning_private_execution_and_sv_emission', 'file-surface status distinguishes public planning and private emission');
 };
 
 done_testing();

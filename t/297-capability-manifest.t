@@ -2855,8 +2855,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     my %file_surface_by_suffix = map { $_->{suffix} => $_ } @{$manifest->{language_surface}{file_surfaces}{entries}};
     is(
         $file_surface_by_suffix{'.vial'}{status},
-        'shipped_bounded_public_planning_and_private_execution',
-        'manifest records shipped VIAL public planning plus private target-neutral execution',
+        'shipped_bounded_public_planning_private_execution_and_sv_emission',
+        'manifest records public planning plus private execution and portable-SystemVerilog emission',
     );
     is_deeply(
         $file_surface_by_suffix{'.vial'}{supported_cli_modes},
@@ -2870,8 +2870,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.vial'}{current_boundary},
-        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits the same graph atomically.*no backend, compile, simulation, runtime result, parity pass, UVM, VHDL, mixed-language, or scale claim/,
-        'manifest keeps the public planning/private execution boundary and every runtime non-claim explicit',
+        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits that graph atomically.*private sv_portable_verilator seam.*no compile, simulation, runtime, result-manifest, or parity claim/,
+        'manifest distinguishes private emission from every unshipped public/runtime gate',
     );
     is_deeply(
         [sort keys %{$manifest->{language_surface}{hial_vial_bridge}}],

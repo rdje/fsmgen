@@ -575,8 +575,11 @@ normal source/review/bridge/plan/tool-manifest graphs virtually or through an
 atomic repository-local transaction, and admits transaction-free endpoint
 fixtures for direct IAL0 without inventing transaction meaning. Clean `.10.2`
 commit `045629c97` activates `.10.3` alone for backend/trace emission without
-runtime execution. `.11` retains runtime parity. Activation ships no target
-artifact, compile/run path, result producer, or backend behavior.
+runtime execution. Completed `.10.3` now ships the private deterministic
+portable-SV emitter, eight-artifact virtual graph, full operation/state-family
+source map, one-scheduler lowering, selected-but-unexecuted command records,
+and pure closed-trace validator. Public publication, compile/run, runtime
+capture, and normalized results remain `.10.4`; `.11` retains parity.
 
 ## Rollback
 

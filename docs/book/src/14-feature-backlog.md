@@ -4334,7 +4334,9 @@ remain deferred behind later selector leaves.
 The architecture for full fixture generation is selected and decomposed. Its
 bounded semantic frontend, review-routed private bridge, and private target-
 neutral execution elaborator are shipped. Public source tooling and canonical
-planning/artifacts now ship; executable backends do not.
+planning/artifacts now ship. The first private portable-SystemVerilog emitter
+and pure trace validator also ship; no executable backend, external tool run,
+runtime result, or public backend action ships yet.
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` names current synthesizable
 IAL0/IAL1/IAL2 collectively as **Hardware IAL (HIAL)** and defines a peer
 **Verification IAL (VIAL)** for pure verification intent:
@@ -4371,9 +4373,11 @@ through a private checker. The semantic corpus still claims only parse,
 typecheck, and semantic-report phases. Capability discovery additionally
 reports the private target-neutral binder and public source/plan surfaces. The
 public planner publishes only canonical normal source, generated HIAL review
-artifacts, defensive bridge/plan projections, and its tool manifest; it still
-exposes no private IR, target backend artifact, compile, simulation, runtime,
-result, parity pass, UVM, VHDL, mixed-language, or scale claim.
+artifacts, defensive bridge/plan projections, and its tool manifest; that
+public surface still exposes no private IR or target backend artifact. The
+separate private `.10.3` emitter returns deterministic virtual plain-SV
+artifacts and source maps, but compile, simulation, runtime, result, parity
+pass, UVM, VHDL, mixed-language, and scale remain unclaimed.
 
 Decision `0034` sets the longer-term rule: **full power underneath, simpler
 intent above**. Abstraction means simplification, so mastering VIAL does not
@@ -12265,6 +12269,17 @@ review routes. Transaction-free direct-IAL0 endpoint fixtures are admitted;
 transaction-bearing fixtures still require exact reviewed transaction truth.
 Clean `.10.2` commit `045629c97` activates `.10.3` alone as the portable
 backend/trace implementation owner without changing product behavior.
+Completed `.10.3` now ships a private deterministic
+`sv_portable_verilator` emitter over the exact immutable ExecutionIR, reviewed
+bridge, and normalized generated HIAL DUT source. It returns an eight-artifact
+virtual plain-SystemVerilog graph, complete operation/state-family source maps,
+one inactive-edge scheduler, generated declared-probe adapters, selected but
+unexecuted compile/run command records, and honest emission-only manifests. A
+separate pure validator checks closed canonical prefixed JSONL trace bytes and
+returns a trace projection without replaying verification semantics. Public
+artifact publication, external compile/simulation, runtime trace capture,
+normalized result production, and parity do not ship; `.10.4` owns the first
+four and `.11` retains parity.
 See [the public tooling contract](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md) and
 the [architecture chapter](16d-hial-vial-verification-architecture.md).
 

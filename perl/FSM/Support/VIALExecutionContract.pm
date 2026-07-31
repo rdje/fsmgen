@@ -19,7 +19,9 @@ sub vial_execution_contract_keys {
     return [qw(
         schema_version status contract_source implementation_entrypoints
         execution_schema plan_schema replay_schema selected_future_schemas
-        profile capabilities limits
+        profile backend_profile backend_schema runtime_trace_schema
+        trace_projection_schema backend_stage_status capabilities limits
+        backend_limits
         fixture writes_files public_embedding_api explicit_nonclaims
         guidance
     )];
@@ -28,11 +30,13 @@ sub vial_execution_contract_keys {
 sub build_vial_execution_contract {
     return {
         schema_version => 1,
-        status => 'shipped_private_target_neutral_no_backend',
+        status => 'shipped_private_execution_and_portable_sv_emission',
         contract_source => vial_execution_contract_source(),
         implementation_entrypoints => [
             'FSM::VIAL::ExecutionBuilder->build({...})',
             'FSM::VIAL::ExecutionReport->build($execution_ir)',
+            'FSM::VIAL::Backend::SVPortableVerilator->emit({...})',
+            'FSM::VIAL::Backend::TraceValidator->validate({...})',
         ],
         execution_schema => 'fsmgen.vial_execution_ir.v1',
         plan_schema => 'fsmgen.vial_plan.v1',
@@ -50,8 +54,23 @@ sub build_vial_execution_contract {
             },
         },
         profile => 'core_directed_single_clock_execution_v1',
+        backend_profile => 'sv_portable_verilator',
+        backend_schema => 'fsmgen.vial_backend.sv_portable_verilator.v1',
+        runtime_trace_schema => 'fsmgen.vial_sv_runtime_trace.v1',
+        trace_projection_schema => 'fsmgen.vial_sv_trace_projection.v1',
+        backend_stage_status => {
+            negotiation => 'shipped_private',
+            emission => 'shipped_private_virtual_artifact_graph',
+            trace_validation => 'shipped_private_pure_projection',
+            compile => 'not_implemented',
+            runtime => 'not_implemented',
+            result => 'not_implemented',
+            parity => 'not_implemented',
+        },
         capabilities => [qw(
             vial.binding.directional_representation.v1
+            vial.backend.sv_portable_verilator.emission.v1
+            vial.backend.sv_portable_verilator.trace_validation.v1
             vial.execution_ir.v1
             vial.execution_profile.core_directed_single_clock_execution_v1
             vial.logical_time.drive_sample_react_check_v1
@@ -85,19 +104,29 @@ sub build_vial_execution_contract {
             random_attempts => 1_000_000,
             serialized_plan_bytes => 16_777_216,
         },
+        backend_limits => {
+            generated_systemverilog_artifacts_base => 3,
+            generated_systemverilog_artifacts_per_unit => 1,
+            generated_systemverilog_bytes => 16_777_216,
+            source_map_entries => 1_000_000,
+            runtime_trace_records => 8_000_002,
+            runtime_trace_bytes => 67_108_864,
+        },
         fixture => 'vial/ahb_subordinate_base_output_arbitration.vial',
         writes_files => JSON::PP::false,
         public_embedding_api => JSON::PP::false,
         explicit_nonclaims => [qw(
             public_vial_cli public_vial_embedding_api plan_file result_file
-            verification_artifact_generation backend compile simulation runtime
-            parity_pass uvm vhdl_methodology mixed_language scale
+            public_backend_action compile simulation runtime result parity_pass
+            uvm vhdl_methodology mixed_language scale
         )],
         guidance => [
-            'Consume this contract only for capability discovery; VIAL execution construction remains a private no-file compiler seam.',
+            'Consume this contract only for capability discovery; VIAL execution, portable-SystemVerilog emission, and trace validation remain private no-file compiler seams.',
             'Treat the directional relation records and normalized plan-time decisions as authoritative; do not reinterpret them as target casts or backend randomization.',
+            'Emission returns a deterministic virtual artifact graph; it does not compile, run, publish a result manifest, or establish runtime/parity evidence.',
+            'Trace validation projects an already-produced closed trace without executing VIAL meaning; no simulator invocation is part of this slice.',
             'Treat result/parity schema names as selected future contracts, not shipped result or parity capabilities; their implementation owners remain leaves .10 and .11.',
-            'Do not infer a public VIAL CLI/API, generated verification artifact, backend, runtime, result, or parity pass from this target-neutral plan capability.',
+            'Do not infer a public VIAL backend action, compilation, runtime, result, or parity pass from private emission support.',
         ],
     };
 }
