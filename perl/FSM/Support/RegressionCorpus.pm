@@ -90,6 +90,31 @@ my @REGRESSION_CORPUS = (
         )],
     },
     {
+        id => 'feature.vial_sv_portable_verilator_runtime',
+        relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
+        family => 'verification_intent_tooling',
+        classification => 'supported_smoke',
+        coverage => 'vial_sv_portable_verilator_runtime_cli_api',
+        source_kind => 'vial',
+        strict_supported => 0,
+        supported_phases => [qw(
+            parse typecheck hial_review bridge_binding execution_plan
+            artifact_generation backend_emission compile simulation runtime
+            result atomic_publication
+        )],
+        required_capabilities => [qw(
+            vial.backend.sv_portable_verilator.v1
+            vial.backend.sv_portable_verilator.known_value_runtime_v1
+            vial.backend.sv_portable_verilator.inactive_edge_scheduler_v1
+            vial.backend.sv_portable_verilator.declared_probe_adapter_v1
+            vial.backend.sv_portable_verilator.runtime_trace_v1
+            vial.result_manifest.v1
+        )],
+        explicit_nonclaims => [qw(
+            complete_four_state parity uvm vhdl mixed_language scale
+        )],
+    },
+    {
         id => 'protocol.apb_requester',
         relpath => 'fsm/apb_requester.fsm',
         family => 'protocol_fixture',

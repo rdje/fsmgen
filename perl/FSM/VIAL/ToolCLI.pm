@@ -74,6 +74,7 @@ sub run {
         my $result = execute_vial_tool_request($request, {
             source_catalog => {},
             artifact_sink => [],
+            repository_root => $args->{repo_root},
         });
         return _emit_result($result, $json, $quiet);
     }
@@ -151,8 +152,9 @@ sub run {
     my $result = execute_vial_tool_request($request, {
         source_catalog => $catalog,
         artifact_sink => $sink,
+        repository_root => $args->{repo_root},
     });
-    if ($action eq 'plan' && $result->{success}) {
+    if (($action eq 'plan' || $action eq 'run') && $result->{success}) {
         my $published = FSM::VIAL::ArtifactTransaction->publish({
             repo_root => $args->{repo_root},
             artifact_root => $result->{tool_manifest}{artifact_root},
@@ -160,7 +162,9 @@ sub run {
             artifacts => $sink,
         });
         if (!$published->{ok}) {
-            $result = FSM::VIAL::Tool->_cli_artifact_error_result($published->{diagnostics});
+            $result = FSM::VIAL::Tool->_cli_artifact_error_result(
+                $action, $published->{diagnostics},
+            );
         }
         elsif ($published->{status} eq 'unchanged') {
             $result->{status} = 'unchanged';
@@ -334,13 +338,16 @@ sub _emit_result {
         print $result->{formatted_source};
     }
     elsif (!$quiet && $result->{action} eq 'capabilities') {
-        print "VIAL tooling: capabilities, check, format, plan\n";
+        print "VIAL tooling: capabilities, check, format, plan, run\n";
         print "Source styles: normal_v1, terse_v1\n";
         print "Planning artifacts: atomic repository-local or virtual\n";
-        print "Backend/runtime: not shipped by this slice\n";
+        print "Backend/runtime: sv_portable_verilator (Verilator 5.046)\n";
     }
     elsif (!$quiet && $result->{action} eq 'plan') {
         print "VIAL plan $result->{status} ($result->{tool_manifest}{artifact_root})\n";
+    }
+    elsif (!$quiet && $result->{action} eq 'run') {
+        print "VIAL run $result->{status} ($result->{tool_manifest}{artifact_root})\n";
     }
     elsif (!$quiet) {
         print "VIAL check passed ($result->{source_style})\n";
@@ -380,9 +387,16 @@ Usage:
     [--profile core_directed_single_clock_execution_v1]
     [--replay REPLAY.json] [--native-catalog CATALOG.json ...]
     [--outdir RELDIR] [--json] SOURCE.vial
+  ./bin/fsmgen vial run --dut SOURCE.fsm|SOURCE.isf|SOURCE.ppif
+    --backend sv_portable_verilator
+    [--fixture ID] [--scenario ID ...]
+    [--profile core_directed_single_clock_execution_v1]
+    [--replay REPLAY.json] [--native-catalog CATALOG.json ...]
+    [--outdir RELDIR] [--json] SOURCE.vial
 
-Planning writes one atomic repository-local artifact tree. Backend emission and
-run are implemented by later active children. All paths are repository-root-relative.
+Planning and execution write one atomic repository-local artifact tree. Runtime
+staging stays repository-local and is removed before publication. All persisted
+paths are repository-root-relative.
 USAGE
 }
 

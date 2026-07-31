@@ -26,12 +26,12 @@ date: 2026-07-31
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
 evidence: docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; t/1557-vial-portable-sv-backend-emission.t; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://verilator.org/guide/latest/languages.html; https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
-reverify: scripts/check_task_tree_integrity.pl && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t && rg -n 'one public.*\.vial|VIALSemanticIR|VIALExecutionIR|HIALVIALBridgeManifest|core_directed_single_clock_v1|core_single_unit_v1|core_directed_single_clock_execution_v1|verification-bridge|drive.*sample.*react.*check|sha256_counter_rejection_v1|bit_domain_identity_v1|known_value_injection_v1|enum_encoding_injection_v1|sv_portable_verilator|known-value|inactive-edge|sv_uvm_qualified|vhdl_portable_ghdl|vhdl_methodology_qualified|mixed_language_qualified|normalized.*result|decision `0043`|completed `.10.3`|active `.10.4`|201590d84' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md ROADMAP_V2.md docs/book/src/16d-hial-vial-verification-architecture.md
+reverify: scripts/check_task_tree_integrity.pl && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t
 ---
 
 Hardware IAL (HIAL) is the collective architecture name for FSMGen's current
 synthesizable IAL0/IAL1/IAL2 stack. Its public names and review route remain
-unchanged. Verification IAL (VIAL) is its future pure-verification peer.
+unchanged. Verification IAL (VIAL) is its pure-verification peer.
 
 Decision `0032` selects one public, reviewable `.vial` source language rather
 than VIAL0/VIAL1/VIAL2. Private immutable `VIALSemanticIR` owns unbound typed
@@ -105,8 +105,7 @@ atomic repository-local artifacts. Transaction-free direct-IAL0 endpoint
 fixtures are supported without inventing transaction truth. Completed `.10.3`
 ships the private deterministic portable-SystemVerilog emitter, complete
 operation/state-family source map, one-scheduler known-value fixture, honest
-non-executed tool records, and a pure closed-JSONL trace validator. It adds no
-public backend action, compile/simulation, normalized result, or parity claim.
-Active `.10.4` owns publication/tool execution/results after clean `.10.3`
-commit `201590d84`; activation itself changes no behavior. `.11` retains
-runtime parity.
+emission-only tool records, and a pure closed-JSONL trace validator. Completed
+`.10.4` now ships public run/publication, exact Verilator 5.046 compile/runtime,
+validated trace capture, normalized results, deterministic reruns, and atomic
+cleanup. `.11` retains cross-backend runtime parity.

@@ -204,18 +204,18 @@ subtest 'pure trace validation projects a closed stream without executing semant
     trace_failure($bad_counts, 0, 'VIAL_TRACE_COUNT_ERROR', 'footer count mismatch');
 };
 
-subtest 'capability discovery distinguishes emission, validation, and every later gate' => sub {
+subtest 'capability discovery distinguishes shipped runtime/result from parity' => sub {
     my $contract = build_vial_execution_contract();
     is_deeply([sort keys %$contract], [sort @{vial_execution_contract_keys()}], 'private execution/backend contract is closed');
     is($contract->{backend_profile}, 'sv_portable_verilator', 'capability contract names the exact backend');
-    is($contract->{backend_stage_status}{emission}, 'shipped_private_virtual_artifact_graph', 'emission stage is shipped privately');
-    is($contract->{backend_stage_status}{trace_validation}, 'shipped_private_pure_projection', 'trace validation is shipped privately');
-    is($contract->{backend_stage_status}{compile}, 'not_implemented', 'compile remains unimplemented');
-    is($contract->{backend_stage_status}{runtime}, 'not_implemented', 'runtime remains unimplemented');
-    is($contract->{backend_stage_status}{result}, 'not_implemented', 'result remains unimplemented');
+    is($contract->{backend_stage_status}{emission}, 'shipped_public_run_pipeline', 'emission participates in the public run pipeline');
+    is($contract->{backend_stage_status}{trace_validation}, 'shipped_public_run_pipeline', 'trace validation participates in the public run pipeline');
+    is($contract->{backend_stage_status}{compile}, 'shipped_exact_verilator_5_046', 'exact Verilator compile is shipped');
+    is($contract->{backend_stage_status}{runtime}, 'shipped_known_value_declared_probe_profile', 'bounded runtime is shipped');
+    is($contract->{backend_stage_status}{result}, 'shipped_verification_result_manifest_v1', 'result production is shipped');
     is($contract->{backend_stage_status}{parity}, 'not_implemented', 'parity remains unimplemented');
-    ok(!$contract->{writes_files}, 'private emission remains a no-file virtual seam');
-    ok(!$contract->{public_embedding_api}, 'private emission is not promoted to a public embedding API');
+    ok($contract->{writes_files}, 'execution records operation-owned staging and publication');
+    ok($contract->{public_embedding_api}, 'execution is exposed through the public VIAL tool API');
     my $manifest = build_capability_manifest();
     is_deeply($manifest->{language_surface}{vial_execution}, $contract, 'capability manifest publishes the exact private stage boundary');
 };
@@ -285,12 +285,19 @@ sub valid_trace {
                 static_operation_rank => 2, local_emission_index => 0,
                 semantic_id => 'event/ahb_write/accepted',
             },
-            event_id => 'event/ahb_write/accepted', count => 1,
+            event_id => 'event/ahb_write/accepted',
+            event_occurrence_index => 0,
+            record_id => 'record/' . $scenario_runs[0]{scenario_id}
+                . '/events/event/ahb_write/accepted/0',
+            run_id => $scenario_runs[0]{run_id},
+            semantic_id => (grep {
+                $_->{event_id} eq 'event/ahb_write/accepted'
+            } @{$execution->{events}})[0]{semantic_id},
         },
     );
     push @record, trace_record(
         'scenario_end', $execution->{plan_id}, $scenario_runs[0]{run_id},
-        {scenario_id => $scenario_runs[0]{scenario_id}, status => 'passed'},
+        {logical_cycle_count => 2, scenario_id => $scenario_runs[0]{scenario_id}, status => 'passed'},
     );
     push @record, trace_record(
         'scenario_start', $execution->{plan_id}, $scenario_runs[1]{run_id},
@@ -298,7 +305,7 @@ sub valid_trace {
     );
     push @record, trace_record(
         'scenario_end', $execution->{plan_id}, $scenario_runs[1]{run_id},
-        {scenario_id => $scenario_runs[1]{scenario_id}, status => 'passed'},
+        {logical_cycle_count => 1, scenario_id => $scenario_runs[1]{scenario_id}, status => 'passed'},
     );
     my %count;
     $count{$_->{record_kind}}++ for @record;

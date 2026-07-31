@@ -28,13 +28,14 @@ sub vial_tooling_contract_keys {
 sub build_vial_tooling_contract {
     return {
         schema_version => 1,
-        status => 'shipped_public_source_tooling_and_atomic_planning',
+        status => 'shipped_public_verilator_execution_and_result',
         contract_source => vial_tooling_contract_source(),
         implementation_entrypoints => [
             'fsmgen vial capabilities [--json]',
             'fsmgen vial check [--style auto|normal|terse] [--json] SOURCE.vial',
             'fsmgen vial format --style normal|terse SOURCE.vial',
             'fsmgen vial plan --dut HIAL_SOURCE [PLAN_OPTIONS] SOURCE.vial',
+            'fsmgen vial run --dut HIAL_SOURCE --backend sv_portable_verilator [RUN_OPTIONS] SOURCE.vial',
             'FSM::VIAL::Tool::vial_tool_capabilities()',
             'FSM::VIAL::Tool::execute_vial_tool_request($request, $environment)',
         ],
@@ -42,7 +43,7 @@ sub build_vial_tooling_contract {
         result_schema => 'fsmgen.vial_tool_result.v1',
         semantic_projection_schema => 'fsmgen.vial_semantic_projection.v1',
         source_styles => [qw(normal_v1 terse_v1)],
-        supported_actions => [qw(capabilities check format plan)],
+        supported_actions => [qw(capabilities check format plan run)],
         capabilities => [qw(
             vial.tooling.cli.v1
             vial.tooling.api.v1
@@ -52,15 +53,33 @@ sub build_vial_tooling_contract {
             vial.artifact_layout.v1
             vial.tool_manifest.v1
             vial.verification_output_manifest.v2
+            vial.backend.sv_portable_verilator.v1
+            vial.backend.sv_portable_verilator.known_value_runtime_v1
+            vial.backend.sv_portable_verilator.inactive_edge_scheduler_v1
+            vial.backend.sv_portable_verilator.declared_probe_adapter_v1
+            vial.backend.sv_portable_verilator.runtime_trace_v1
+            vial.result_manifest.v1
         )],
         diagnostics => [qw(
             VIAL_TOOL_INVOCATION_ERROR
             VIAL_SOURCE_STYLE_ERROR
             VIAL_HIAL_SOURCE_ERROR
-            VIAL_BACKEND_UNAVAILABLE
+            VIAL_BACKEND_UNSUPPORTED
             VIAL_ARTIFACT_PATH_ERROR
             VIAL_ARTIFACT_COLLISION
             VIAL_MANIFEST_SCHEMA_ERROR
+            VIAL_RUN_INVOCATION_ERROR
+            VIAL_RUN_PATH_ERROR
+            VIAL_RUN_TOOL_ERROR
+            VIAL_RUN_COMMAND_ERROR
+            VIAL_RUN_COLLISION
+            VIAL_RUN_COMPILE_ERROR
+            VIAL_RUN_RUNTIME_ERROR
+            VIAL_RUN_LIMIT_EXCEEDED
+            VIAL_RUN_TRACE_ERROR
+            VIAL_RUN_RESULT_ERROR
+            VIAL_RUN_CLEANUP_ERROR
+            VIAL_RUN_HOST_ERROR
             VIAL_HOST_ERROR
         )],
         limits => {
@@ -76,15 +95,15 @@ sub build_vial_tooling_contract {
         writes_files => JSON::PP::true,
         public_embedding_api => JSON::PP::true,
         explicit_nonclaims => [qw(
-            backend compile simulation runtime result parity_pass uvm vhdl_methodology
-            mixed_language scale
+            complete_four_state parity_pass uvm vhdl_methodology mixed_language scale
         )],
         guidance => [
             'Normal and terse are deterministic projections of one typed VIAL meaning; they are not separate semantic profiles.',
             'Use the public request/result records or fsmgen vial subcommands; private parser forms and SemanticIR objects do not cross the public boundary.',
-            'Capabilities, check, and format never bind HIAL or write an artifact; plan alone binds one canonical HIAL review route and publishes target-neutral projections.',
-            'The in-memory plan API publishes one complete virtual artifact sink; the CLI atomically commits the same graph below a repository-relative same-volume root.',
-            'Private portable-SystemVerilog emission is capability-discoverable through the execution contract; this public tool contract still exposes no backend action, while Verilator execution remains owned by .10.4.',
+            'Capabilities, check, and format never bind HIAL or write an artifact; plan and run bind one canonical HIAL review route, while only run selects a backend.',
+            'The in-memory plan/run API publishes one complete virtual artifact sink; the CLI atomically commits the same graph below a repository-relative same-volume root.',
+            'Run selects the exact qualified Verilator profile, compiles and executes repository-local generated SystemVerilog, validates its closed trace, and publishes a verification result manifest.',
+            'Known-value runtime evidence is shipped for the selected one-unit, one-clock, declared-probe profile; complete four-state observation, parity qualification, UVM, VHDL, mixed-language execution, and scale remain explicit non-claims.',
         ],
     };
 }

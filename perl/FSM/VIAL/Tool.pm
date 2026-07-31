@@ -10,6 +10,8 @@ use JSON::PP ();
 use Scalar::Util qw(blessed);
 
 use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
+use FSM::VIAL::Backend::Runner;
+use FSM::VIAL::Backend::SVPortableVerilator;
 use FSM::VIAL::Parser;
 use FSM::VIAL::PlanBuilder;
 use FSM::VIAL::SourceProjection;
@@ -53,11 +55,7 @@ sub execute_vial_tool_request {
 
     $action = $validated->{request}{action};
     return _capabilities_result() if $action eq 'capabilities';
-    return _error_result(
-        $action,
-        _diagnostic('VIAL_BACKEND_UNAVAILABLE', 'no public VIAL runtime backend is shipped yet', [], '/options/backend_profile'),
-    ) if $action eq 'run';
-    if ($action eq 'plan') {
+    if ($action eq 'plan' || $action eq 'run') {
         my $result = eval { _execute_plan_action($validated); };
         return $result if defined $result;
         return _error_result($action, _host_diagnostic(_sanitize_exception($@)));
@@ -82,17 +80,21 @@ sub _cli_error_result {
 }
 
 sub _cli_artifact_error_result {
-    my ($class, $diagnostics) = @_;
+    my ($class, $action, $diagnostics) = @_;
     die "VIAL artifact error construction is private to FSM::VIAL::ToolCLI\n"
         unless caller eq 'FSM::VIAL::ToolCLI';
+    die "artifact action must be plan or run\n"
+        unless defined($action) && !ref($action) && $action =~ /\A(?:plan|run)\z/;
     die "artifact diagnostics must be a non-empty array\n"
         unless ref($diagnostics) eq 'ARRAY' && @$diagnostics;
     return _finalize_result({
-        %{_empty_result('plan')},
+        %{_empty_result($action)},
         success => JSON::PP::false,
         status => 'error',
-        capability_evidence => _plan_capability_evidence(undef),
-        support_accounting => _plan_support_accounting(),
+        capability_evidence => $action eq 'run'
+            ? _run_capability_evidence(undef, undef) : _plan_capability_evidence(undef),
+        support_accounting => $action eq 'run'
+            ? _run_support_accounting() : _plan_support_accounting(),
         diagnostics => _clone($diagnostics),
     });
 }
@@ -182,6 +184,7 @@ sub _execute_source_action {
 sub _execute_plan_action {
     my ($validated) = @_;
     my $request = $validated->{request};
+    my $action = $request->{action};
     my $source = $request->{vial_source};
     my $options = $request->{options};
     my $parser_args = {
@@ -192,6 +195,7 @@ sub _execute_plan_action {
     my $checked = FSM::VIAL::Parser->check_source($parser_args);
     if (!$checked->{ok}) {
         return _plan_error_result(
+            action => $action,
             source_style => undef,
             diagnostics => [_public_diagnostics($checked->{diagnostics})],
         );
@@ -202,6 +206,7 @@ sub _execute_plan_action {
     });
     if ($options->{source_style} ne 'auto' && $options->{source_style} ne $style) {
         return _plan_error_result(
+            action => $action,
             source_style => $style . '_v1',
             diagnostics => [_style_diagnostic(
                 $source->{source_id},
@@ -227,6 +232,7 @@ sub _execute_plan_action {
         native_extension_catalog => $options->{native_extension_catalogs},
     });
     return _plan_error_result(
+        action => $action,
         source_style => $style . '_v1',
         diagnostics => $built->{diagnostics},
     ) unless $built->{ok};
@@ -241,7 +247,7 @@ sub _execute_plan_action {
         ? $policy->{artifact_root}
         : ".artifacts/vial/$fixture_slug/$plan_digest";
     my $operation_id = 'op-' . sha256_hex(_canonical_json({
-        action => 'plan',
+        action => $action,
         plan_id => $plan->{plan_id},
         artifact_root => $artifact_root,
         source_sha256 => sha256_hex($source->{text}),
@@ -267,8 +273,25 @@ sub _execute_plan_action {
     );
     if (my $diagnostic = _plan_artifact_graph_diagnostic($artifacts)) {
         return _plan_error_result(
+            action => $action,
             source_style => $style . '_v1',
             diagnostics => [$diagnostic],
+        );
+    }
+
+    if ($action eq 'run') {
+        return _execute_run_action(
+            validated => $validated,
+            request => $request,
+            checked => $checked,
+            built => $built,
+            plan => $plan,
+            normal_artifacts => $artifacts,
+            source_identities => $source_identities,
+            source_style => $style . '_v1',
+            artifact_root => $artifact_root,
+            operation_id => $operation_id,
+            meaning_sha256 => $meaning_sha256,
         );
     }
 
@@ -294,6 +317,184 @@ sub _execute_plan_action {
     });
     my $sink = $validated->{artifact_sink};
     push @$sink, map { _clone($_) } @$artifacts;
+    return $result;
+}
+
+sub _execute_run_action {
+    my (%args) = @_;
+    my $options = $args{request}{options};
+    my $emission = FSM::VIAL::Backend::SVPortableVerilator->emit({
+        execution_ir => $args{built}{execution_ir},
+        bridge_manifest => $args{built}{bridge_manifest},
+        backend_inputs => $args{built}{backend_inputs},
+        artifact_root => $args{artifact_root},
+        backend_profile => $options->{backend_profile},
+    });
+    return _plan_error_result(
+        action => 'run',
+        source_style => $args{source_style},
+        diagnostics => [_backend_diagnostics($emission->{diagnostics})],
+    ) unless $emission->{ok};
+
+    my $executed = FSM::VIAL::Backend::Runner->run({
+        repo_root => $args{validated}{repository_root},
+        execution_ir => $args{built}{execution_ir},
+        emission => $emission,
+    });
+    return _plan_error_result(
+        action => 'run',
+        source_style => $args{source_style},
+        diagnostics => [_backend_diagnostics($executed->{diagnostics})],
+    ) unless $executed->{ok};
+
+    my @artifact = grep { $_->{relpath} ne 'vial-tool-manifest.json' }
+        @{$args{normal_artifacts}};
+    push @artifact, map { _clone($_) } @{$executed->{artifacts}};
+    @artifact = sort { $a->{relpath} cmp $b->{relpath} } @artifact;
+    if (my $diagnostic = _plan_artifact_graph_diagnostic(\@artifact)) {
+        return _plan_error_result(
+            action => 'run', source_style => $args{source_style},
+            diagnostics => [$diagnostic],
+        );
+    }
+
+    my @before_output = map { _persisted_artifact($_) } @artifact;
+    my ($plan_artifact) = grep { $_->{role} eq 'vial_plan' } @before_output;
+    my ($result_artifact) = grep { $_->{role} eq 'verification_result_manifest' } @before_output;
+    die 'run artifact graph is missing its plan or result report'
+        unless $plan_artifact && $result_artifact;
+    my $verification_output = {
+        schema => 'fsmgen.verification_output_manifest.v2',
+        schema_version => 2,
+        manifest_id => undef,
+        mode => 'vial_run',
+        producer => {
+            component => 'FSM::VIAL::Tool',
+            version => 1,
+        },
+        source_set => _clone($args{source_identities}),
+        fixture => _clone($args{plan}{fixture}),
+        plan => {
+            plan_id => $args{plan}{plan_id},
+            relpath => $plan_artifact->{relpath},
+            sha256 => $plan_artifact->{sha256},
+        },
+        profile => {
+            backend_profile => $executed->{backend_profile},
+            execution_profile => $args{plan}{profile},
+            tool_name => $executed->{result_manifest}{backend_profile}{tool_name},
+            tool_version => $executed->{result_manifest}{backend_profile}{tool_version},
+        },
+        artifacts => \@before_output,
+        validation => {
+            compile => 'passed',
+            runtime => 'passed',
+            result => $executed->{result_manifest}{status},
+            parity => 'not_evaluated',
+        },
+        diagnostics => [],
+        compatibility => {
+            legacy_schema => 'fsmgen.verification_output_manifest.v1',
+            legacy_v1_projection_available => JSON::PP::false,
+            reason => 'legacy schema v1 cannot losslessly represent a VIAL plan/backend/result graph',
+        },
+    };
+    my $output_identity = _clone($verification_output);
+    delete $output_identity->{manifest_id};
+    $verification_output->{manifest_id} = 'verification-output/'
+        . sha256_hex(_canonical_json($output_identity));
+    push @artifact, _virtual_artifact(
+        relpath => 'verification-output-manifest.json',
+        kind => 'manifest',
+        language => 'json',
+        role => 'verification_output_manifest',
+        content => _canonical_pretty_json($verification_output),
+        source_layer => 'VIAL',
+        generated_from => [$args{plan}{plan_id}, $executed->{result_manifest}{result_id}],
+    );
+    @artifact = sort { $a->{relpath} cmp $b->{relpath} } @artifact;
+
+    my @persisted = map { _persisted_artifact($_) } @artifact;
+    my %by_path = map { $_->{relpath} => $_ } @persisted;
+    my ($verification_artifact) = grep {
+        $_->{role} eq 'verification_output_manifest'
+    } @persisted;
+    ($result_artifact) = grep { $_->{role} eq 'verification_result_manifest' } @persisted;
+    my $capability_evidence = _run_capability_evidence(
+        $args{meaning_sha256}, $executed,
+    );
+    my $support_accounting = _run_support_accounting();
+    my $policy = $options->{artifact_policy};
+    my $tool_manifest = {
+        schema => 'fsmgen.vial_tool_manifest.v1',
+        schema_version => 1,
+        operation_id => $args{operation_id},
+        status => 'executed',
+        action => 'run',
+        source_style => $args{source_style},
+        source_identities => _clone($args{source_identities}),
+        fixture_id => $args{plan}{fixture}{fixture_id},
+        scenario_ids => _clone($args{plan}{fixture}{scenario_ids}),
+        execution_profile => $args{plan}{profile},
+        backend_profile => $executed->{backend_profile},
+        artifact_root => $args{artifact_root},
+        artifacts => \@persisted,
+        reports => {
+            normal_source => _report_identity($by_path{'source/vial-normal.vial'}),
+            bridge => _report_identity($by_path{'hial-vial-bridge.json'}),
+            plan => _report_identity($by_path{'vial-plan.json'}),
+            verification_output => _report_identity($verification_artifact),
+            result => _report_identity($result_artifact),
+        },
+        capability_evidence => _clone($capability_evidence),
+        support_accounting => _clone($support_accounting),
+        diagnostics => [],
+        cleanup => {
+            staging_identity => $policy->{mode} eq 'repository'
+                ? ".artifacts/tmp/vial/$args{operation_id}" : undef,
+            staging_removed => $policy->{mode} eq 'repository'
+                ? JSON::PP::true : JSON::PP::false,
+            atomic_commit_completed => $policy->{mode} eq 'repository'
+                ? JSON::PP::true : JSON::PP::false,
+        },
+    };
+    push @artifact, _virtual_artifact(
+        relpath => 'vial-tool-manifest.json',
+        kind => 'manifest', language => 'json', role => 'vial_tool_manifest',
+        content => _canonical_pretty_json($tool_manifest), source_layer => 'VIAL',
+        generated_from => [$args{plan}{plan_id}, $executed->{result_manifest}{result_id}],
+    );
+    @artifact = sort { $a->{relpath} cmp $b->{relpath} } @artifact;
+    if (my $diagnostic = _plan_artifact_graph_diagnostic(\@artifact)) {
+        return _plan_error_result(
+            action => 'run', source_style => $args{source_style},
+            diagnostics => [$diagnostic],
+        );
+    }
+
+    my $result = _finalize_result({
+        %{_empty_result('run')},
+        success => JSON::PP::true,
+        status => 'executed',
+        source_identities => _clone($args{source_identities}),
+        source_style => $args{source_style},
+        semantic_report => _clone($args{checked}{semantic_report}),
+        bridge_manifest => _clone($args{built}{bridge_report}),
+        plan => _clone($args{plan}),
+        tool_manifest => _clone($tool_manifest),
+        verification_output_manifest => _clone($verification_output),
+        result_manifest => _clone($executed->{result_manifest}),
+        artifacts => _clone(\@artifact),
+        capability_evidence => $capability_evidence,
+        support_accounting => $support_accounting,
+        diagnostics => [],
+        implementation => {
+            component => 'FSM::VIAL::Tool',
+            version => 1,
+            stage => 'public_verilator_runtime',
+        },
+    });
+    push @{$args{validated}{artifact_sink}}, map { _clone($_) } @artifact;
     return $result;
 }
 
@@ -424,6 +625,12 @@ sub _persisted_artifact {
         if $artifact->{role} eq 'hial_vial_bridge_manifest';
     $entry->{schema} = 'fsmgen.vial_plan.v1'
         if $artifact->{role} eq 'vial_plan';
+    $entry->{schema} = 'fsmgen.verification_output_manifest.v2'
+        if $artifact->{role} eq 'verification_output_manifest';
+    $entry->{schema} = 'fsmgen.verification_result_manifest.v1'
+        if $artifact->{role} eq 'verification_result_manifest';
+    $entry->{backend_profile} = 'sv_portable_verilator'
+        if $artifact->{relpath} =~ m{\Abackends/sv_portable_verilator/};
     return $entry;
 }
 
@@ -546,7 +753,13 @@ sub _validate_invocation {
     die "environment must be one unblessed hash"
         unless ref($environment) eq 'HASH' && !blessed($environment);
     _assert_json_safe($environment, 'environment');
-    _require_exact_keys($environment, [qw(source_catalog artifact_sink)], 'environment');
+    my %environment_key = map { $_ => 1 } qw(
+        source_catalog artifact_sink repository_root
+    );
+    my @unknown_environment = sort grep { !$environment_key{$_} } keys %$environment;
+    die "environment has unknown key '$unknown_environment[0]'" if @unknown_environment;
+    die "environment is missing source_catalog or artifact_sink"
+        unless exists($environment->{source_catalog}) && exists($environment->{artifact_sink});
     die "source_catalog must be one unblessed hash"
         unless ref($environment->{source_catalog}) eq 'HASH' && !blessed($environment->{source_catalog});
     my %catalog;
@@ -559,11 +772,19 @@ sub _validate_invocation {
     }
     die "artifact_sink must be an empty array"
         unless ref($environment->{artifact_sink}) eq 'ARRAY' && !@{$environment->{artifact_sink}};
+    if ($request->{action} eq 'run') {
+        die "run environment requires a scalar repository_root"
+            unless exists($environment->{repository_root})
+                && defined($environment->{repository_root})
+                && !ref($environment->{repository_root})
+                && length($environment->{repository_root});
+    }
 
     return {
         request => _clone($request),
         source_catalog => \%catalog,
         artifact_sink => $environment->{artifact_sink},
+        repository_root => $environment->{repository_root},
     };
 }
 
@@ -780,18 +1001,21 @@ sub _source_result {
 
 sub _plan_error_result {
     my (%args) = @_;
+    my $action = $args{action} // 'plan';
     return _finalize_result({
-        %{_empty_result('plan')},
+        %{_empty_result($action)},
         success => JSON::PP::false,
         status => 'error',
         source_style => $args{source_style},
-        capability_evidence => _plan_capability_evidence(undef),
-        support_accounting => _plan_support_accounting(),
+        capability_evidence => $action eq 'run'
+            ? _run_capability_evidence(undef, undef) : _plan_capability_evidence(undef),
+        support_accounting => $action eq 'run'
+            ? _run_support_accounting() : _plan_support_accounting(),
         diagnostics => _clone($args{diagnostics} || []),
         implementation => {
             component => 'FSM::VIAL::Tool',
             version => 1,
-            stage => 'public_planning',
+            stage => $action eq 'run' ? 'public_verilator_runtime' : 'public_planning',
         },
     });
 }
@@ -804,14 +1028,19 @@ sub _error_result {
         success => JSON::PP::false,
         status => 'error',
         capability_evidence => $planning
-            ? _plan_capability_evidence(undef) : _source_capability_evidence(undef),
+            ? ($action eq 'run'
+                ? _run_capability_evidence(undef, undef)
+                : _plan_capability_evidence(undef))
+            : _source_capability_evidence(undef),
         support_accounting => $planning
-            ? _plan_support_accounting() : _support_accounting(),
+            ? ($action eq 'run' ? _run_support_accounting() : _plan_support_accounting())
+            : _support_accounting(),
         diagnostics => [$diagnostic],
         implementation => {
             component => 'FSM::VIAL::Tool',
             version => 1,
-            stage => $planning ? 'public_planning' : 'public_source_tooling',
+            stage => $action eq 'run' ? 'public_verilator_runtime'
+                : $planning ? 'public_planning' : 'public_source_tooling',
         },
     });
 }
@@ -868,6 +1097,26 @@ sub _plan_capability_evidence {
     };
 }
 
+sub _run_capability_evidence {
+    my ($meaning_sha256, $executed) = @_;
+    my $contract = build_vial_tooling_contract();
+    return {
+        contract_source => $contract->{contract_source},
+        capabilities => [@{$contract->{capabilities}}],
+        semantic_projection_sha256 => $meaning_sha256,
+        writes_files => JSON::PP::true,
+        atomic_artifacts => JSON::PP::true,
+        backend_profile => $executed ? $executed->{backend_profile} : 'sv_portable_verilator',
+        negotiation => $executed
+            ? _clone($executed->{backend_manifest}{capability_evidence}{negotiation})
+            : undef,
+        compile => $executed ? 'passed' : 'not_run',
+        runtime => $executed ? 'passed' : 'not_run',
+        result => $executed ? $executed->{result_manifest}{status} : 'not_produced',
+        parity => 'not_evaluated',
+    };
+}
+
 sub _support_accounting {
     return {
         feature_id => 'feature.vial_public_check_format',
@@ -884,6 +1133,25 @@ sub _plan_support_accounting {
         classification => 'supported_smoke',
         evidence => 't/1556-vial-public-planning-artifacts.t',
     };
+}
+
+sub _run_support_accounting {
+    return {
+        feature_id => 'feature.vial_sv_portable_verilator_runtime',
+        coverage => 'vial_sv_portable_verilator_runtime_cli_api',
+        classification => 'supported_smoke',
+        evidence => 't/1558-vial-verilator-run-integration.t',
+    };
+}
+
+sub _backend_diagnostics {
+    my ($diagnostics) = @_;
+    return map {
+        _diagnostic(
+            $_->{code}, $_->{message}, [],
+            defined($_->{path}) && !ref($_->{path}) ? $_->{path} : '/',
+        )
+    } @$diagnostics;
 }
 
 sub _public_diagnostics {

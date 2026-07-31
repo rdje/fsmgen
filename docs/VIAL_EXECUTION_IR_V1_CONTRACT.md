@@ -133,11 +133,12 @@ vial.parity_projection.v1
 
 Bounded `.7.3` implements and may classify as
 `satisfied_by_execution_profile` only the first seven entries through
-`vial.plan.v1`. The selected result-manifest and parity-projection schema names
-remain `selected_not_implemented`, owned by `.10` and `.11` respectively; they
-must not appear as satisfied capabilities in a `.7.3` plan or private support
-contract. This distinction preserves the phase boundary below: selecting a
-shared data contract is not implementing a runtime producer or parity oracle.
+`vial.plan.v1`; a target-neutral plan still cannot claim a later backend
+result. Completed `.10.4` implements `vial.result_manifest.v1` in the selected
+portable backend/public-run contract. `vial.parity_projection.v1` remains
+selected but unimplemented as a comparison under `.11`. This distinction
+preserves the phase boundary below: a shipped backend result does not rewrite
+the target-neutral plan ledger or establish a parity oracle.
 
 Capabilities from SemanticIR and the bridge remain recorded with their
 origin. A capability ledger entry contains exactly:
@@ -1215,8 +1216,8 @@ Focused `.7` oracles must prove at least:
 - canonical IDs/hashes are stable under Perl hash insertion order and change
   when a semantic input changes;
 - every implemented limit and malformed native descriptor/replay record fails
-  closed; result-manifest and parity-report malformed-record oracles remain
-  mandatory for their `.10` and `.11` implementation owners; and
+  closed; `.10.4` now owns closed result-manifest production/failures, while
+  parity-report malformed-record oracles remain mandatory for `.11`; and
 - no public file/API, backend artifact, compile, simulation, UVM, VHDL,
   mixed-language, runtime pass, parity pass, or scale claim is emitted.
 
@@ -1234,9 +1235,10 @@ t/1552-vial-execution-ir.t
 bounded private capability/support accounting
 ```
 
-The support contract publishes the selected future result/parity schema names
-with `selected_not_implemented` status and exact later owners. Neither name is
-included in `.7.3`'s shipped capability list or target-neutral plan ledger.
+The support contract publishes result status `shipped` with implementation
+owner `.10.4`; parity remains `selected_not_implemented` under `.11`. Neither
+name is included in `.7.3`'s target-neutral plan ledger, while the public
+runtime support contract now advertises the result capability.
 
 Exact file/package decomposition may be refined in a later task-tree-owned
 slice without changing the schemas or public/non-public boundary. `.7.3` does

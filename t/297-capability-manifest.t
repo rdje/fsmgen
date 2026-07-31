@@ -2855,8 +2855,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     my %file_surface_by_suffix = map { $_->{suffix} => $_ } @{$manifest->{language_surface}{file_surfaces}{entries}};
     is(
         $file_surface_by_suffix{'.vial'}{status},
-        'shipped_bounded_public_planning_private_execution_and_sv_emission',
-        'manifest records public planning plus private execution and portable-SystemVerilog emission',
+        'shipped_bounded_public_verilator_execution_and_result',
+        'manifest records bounded public Verilator execution and result production',
     );
     is_deeply(
         $file_surface_by_suffix{'.vial'}{supported_cli_modes},
@@ -2865,13 +2865,14 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
             'fsmgen vial check [--style auto|normal|terse] [--json] SOURCE.vial',
             'fsmgen vial format --style normal|terse SOURCE.vial',
             'fsmgen vial plan --dut HIAL_SOURCE [PLAN_OPTIONS] SOURCE.vial',
+            'fsmgen vial run --dut HIAL_SOURCE --backend sv_portable_verilator [RUN_OPTIONS] SOURCE.vial',
         ],
-        'manifest advertises exactly the shipped VIAL source and planning CLI modes',
+        'manifest advertises exactly the shipped VIAL source, planning, and run CLI modes',
     );
     like(
         $file_surface_by_suffix{'.vial'}{current_boundary},
-        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits that graph atomically.*private sv_portable_verilator seam.*no compile, simulation, runtime, result-manifest, or parity claim/,
-        'manifest distinguishes private emission from every unshipped public/runtime gate',
+        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits that graph atomically.*public sv_portable_verilator run path.*exact Verilator 5\.046.*verification-result manifest.*Complete four-state observation.*parity qualification/,
+        'manifest distinguishes the shipped bounded runtime from remaining qualification non-claims',
     );
     is_deeply(
         [sort keys %{$manifest->{language_surface}{hial_vial_bridge}}],
@@ -2908,8 +2909,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         'manifest names the VIAL execution capability contract owner',
     );
     ok(
-        !$manifest->{language_surface}{vial_execution}{public_embedding_api},
-        'manifest does not promote private VIAL execution to a supported embedding API',
+        $manifest->{language_surface}{vial_execution}{public_embedding_api},
+        'manifest exposes bounded VIAL execution through the supported tool API',
     );
     is_deeply(
         [sort keys %{$manifest->{language_surface}{vial_tooling}}],

@@ -212,8 +212,8 @@ subtest 'invocation, HIAL, runtime, and sink failures remain atomic and sanitize
     $run_request->{options}{backend_profile} = 'sv_portable_verilator';
     my $run_sink = [];
     my $run = execute_vial_tool_request($run_request, {source_catalog => {}, artifact_sink => $run_sink});
-    is($run->{diagnostics}[0]{code}, 'VIAL_BACKEND_UNAVAILABLE', 'run fails with exact backend-unavailable diagnostic');
-    is_deeply($run_sink, [], 'unavailable run produces no artifacts');
+    is($run->{diagnostics}[0]{code}, 'VIAL_TOOL_INVOCATION_ERROR', 'run without the required repository root fails closed');
+    is_deeply($run_sink, [], 'invalid run environment produces no artifacts');
 };
 
 subtest 'filesystem CLI atomically publishes, detects identity, collision, and unsafe paths' => sub {
@@ -307,20 +307,20 @@ subtest 'filesystem CLI atomically publishes, detects identity, collision, and u
     like($traversal_err, qr{Error \[VIAL_TOOL_INVOCATION_ERROR\]}, 'traversal outdir has invocation diagnostic');
 };
 
-subtest 'capability and support accounting advertise planning without runtime' => sub {
+subtest 'capability and support accounting retain planning while adding bounded runtime' => sub {
     my $contract = build_vial_tooling_contract();
-    is($contract->{status}, 'shipped_public_source_tooling_and_atomic_planning', 'tooling status includes atomic planning');
-    is_deeply($contract->{supported_actions}, [qw(capabilities check format plan)], 'supported actions include plan only, not run');
+    is($contract->{status}, 'shipped_public_verilator_execution_and_result', 'tooling status includes bounded public execution');
+    is_deeply($contract->{supported_actions}, [qw(capabilities check format plan run)], 'supported actions include plan and run');
     ok($contract->{writes_files}, 'tool contract records filesystem-adapter writes');
     my %capability = map { $_ => 1 } @{$contract->{capabilities}};
     ok($capability{'vial.artifact_layout.v1'} && $capability{'vial.tool_manifest.v1'} && $capability{'vial.verification_output_manifest.v2'}, 'planning capability family is exact');
     my %nonclaim = map { $_ => 1 } @{$contract->{explicit_nonclaims}};
-    ok($nonclaim{backend} && $nonclaim{runtime} && $nonclaim{result} && $nonclaim{parity_pass}, 'runtime non-claims remain explicit');
+    ok($nonclaim{complete_four_state} && $nonclaim{parity_pass}, 'remaining runtime qualification non-claims are explicit');
     my ($entry) = grep { $_->{id} eq 'feature.vial_public_plan' } regression_corpus_entries();
     is($entry->{coverage}, 'vial_public_plan_cli_api', 'planning support entry uses its own coverage identity');
     my $manifest = build_capability_manifest();
     is($manifest->{language_surface}{file_surfaces}{entries}[-1]{suffix}, '.vial', '.vial remains the final explicit file surface');
-    is($manifest->{language_surface}{file_surfaces}{entries}[-1]{status}, 'shipped_bounded_public_planning_private_execution_and_sv_emission', 'file-surface status distinguishes public planning and private emission');
+    is($manifest->{language_surface}{file_surfaces}{entries}[-1]{status}, 'shipped_bounded_public_verilator_execution_and_result', 'file-surface status includes the bounded public runtime/result path');
 };
 
 done_testing();

@@ -33,6 +33,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     vial_semantic_report_private_api
     vial_public_check_format_cli_api
     vial_public_plan_cli_api
+    vial_sv_portable_verilator_runtime_cli_api
     direct_root_pipeline_cli
     composition_top_pipeline_cli
     isf_pipeline_cli
@@ -399,6 +400,7 @@ my %coverage_classification = (
     vial_semantic_report_private_api => 'supported_smoke',
     vial_public_check_format_cli_api => 'supported_smoke',
     vial_public_plan_cli_api => 'supported_smoke',
+    vial_sv_portable_verilator_runtime_cli_api => 'supported_smoke',
     direct_root_pipeline_cli => 'supported_smoke',
     composition_top_pipeline_cli => 'supported_smoke',
     isf_pipeline_cli => 'supported_smoke',
@@ -1298,6 +1300,23 @@ for my $entry (@entries) {
             "VIAL planning entry '$entry->{id}' records every deferred runtime claim",
         );
     }
+    elsif ($entry->{source_kind} eq 'vial' && $entry->{coverage} eq 'vial_sv_portable_verilator_runtime_cli_api') {
+        is_deeply(
+            $entry->{supported_phases},
+            [qw(parse typecheck hial_review bridge_binding execution_plan artifact_generation backend_emission compile simulation runtime result atomic_publication)],
+            "VIAL runtime entry '$entry->{id}' claims the exact public runtime phases",
+        );
+        is_deeply(
+            $entry->{required_capabilities},
+            [qw(vial.backend.sv_portable_verilator.v1 vial.backend.sv_portable_verilator.known_value_runtime_v1 vial.backend.sv_portable_verilator.inactive_edge_scheduler_v1 vial.backend.sv_portable_verilator.declared_probe_adapter_v1 vial.backend.sv_portable_verilator.runtime_trace_v1 vial.result_manifest.v1)],
+            "VIAL runtime entry '$entry->{id}' keeps exact runtime/result capabilities",
+        );
+        is_deeply(
+            $entry->{explicit_nonclaims},
+            [qw(complete_four_state parity uvm vhdl mixed_language scale)],
+            "VIAL runtime entry '$entry->{id}' records every remaining qualification non-claim",
+        );
+    }
     elsif (
         $entry->{source_kind} eq 'fsm'
             || $entry->{source_kind} eq 'dt'
@@ -1359,8 +1378,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    376,
-    'catalog now keeps three hundred seventy-six named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL semantic/tooling/planning fixtures',
+    377,
+    'catalog now keeps three hundred seventy-seven named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL semantic/tooling/planning/runtime fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),

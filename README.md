@@ -92,7 +92,7 @@ Common modes are discoverable through `./bin/fsmgen --help`:
 | Select HDL | `--language systemverilog|verilog|vhdl` |
 | Validate generated SystemVerilog externally | `--verify-hdl` |
 | Emit a supported verification artifact | `--emit-verification-output TARGET --verification-outdir DIR` |
-| Supported/VIAL surfaces | `--capability-manifest`; `vial capabilities|check|format|plan` |
+| Supported/VIAL surfaces | `--capability-manifest`; `vial capabilities|check|format|plan|run` |
 | Enable deterministic trace output | `--trace-verbosity LEVEL --trace-log FILE` |
 
 FSMGen also provides `bin/fsmgen-mcp`, a read-only local JSON-RPC stdio

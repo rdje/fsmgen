@@ -24,6 +24,46 @@ my %RECORD_KIND = map { $_ => 1 } qw(
     header scenario_start events drives samples transactions expectations
     models scoreboards coverage faults fibers scenario_end footer
 );
+my %SEMANTIC_KEYS = (
+    events => [qw(
+        event_id event_occurrence_index logical_time record_id run_id semantic_id
+    )],
+    drives => [qw(
+        effective_value endpoint_id logical_time operation_id record_id run_id
+        transaction_field_id
+    )],
+    samples => [qw(
+        logical_time record_id run_id sample_id semantic_id value
+    )],
+    transactions => [qw(
+        accept_time binding_id complete_time correlation effective_fields handle_id
+        logical_time record_id request_time run_id status
+    )],
+    expectations => [qw(
+        activation_time actual_value diagnostic_id expectation_id expected_value
+        logical_time name outcome property_operation record_id resolution_time run_id
+    )],
+    models => [qw(
+        logical_time model_instance_id new_value old_value record_id run_id state_id
+        trigger_event_record_id
+    )],
+    scoreboards => [qw(
+        actual_value expected_value instance_id key logical_time operation outcome
+        queue_depth_actual queue_depth_expected record_id run_id
+    )],
+    coverage => [qw(
+        bin_id coverpoint_id cross_id cumulative_count delta hit_kind logical_time
+        record_id run_id sampled_value
+    )],
+    faults => [qw(
+        fault_id logical_time original_value record_id run_id status
+        substituted_value target_id
+    )],
+    fibers => [qw(
+        cancel_scope_id cause_id fiber_id logical_time parent_fiber_id record_id
+        run_id status winner_fiber_id
+    )],
+);
 
 sub result_keys($class) {
     confess __PACKAGE__ . "->result_keys requires the exact class invocant\n"
@@ -98,6 +138,8 @@ sub _validate($raw) {
             unless $RECORD_KIND{$record->{record_kind} // ''};
         _throw('VIAL_TRACE_SCHEMA_ERROR', 'trace payload must be one object', "/records/$index/payload")
             unless ref($record->{payload}) eq 'HASH' && !blessed($record->{payload});
+        _validate_semantic_payload($record, $execution, $index)
+            if $SEMANTIC_KEYS{$record->{record_kind}};
         push @records, $record;
     }
     _throw('VIAL_TRACE_SCHEMA_ERROR', 'first trace record must be header', '/records/0/record_kind')
@@ -134,6 +176,94 @@ sub _validate($raw) {
         },
         diagnostics => [],
     });
+}
+
+sub _validate_semantic_payload($record, $execution, $index) {
+    my $kind = $record->{record_kind};
+    my $payload = $record->{payload};
+    my $path = "/records/$index/payload";
+    _require_keys($payload, $SEMANTIC_KEYS{$kind}, "$kind payload", $path);
+    _throw('VIAL_TRACE_IDENTITY_ERROR', "$kind payload run identity is wrong", "$path/run_id")
+        unless defined($record->{run_id}) && !ref($record->{run_id})
+            && defined($payload->{run_id}) && !ref($payload->{run_id})
+            && $payload->{run_id} eq $record->{run_id};
+    my ($scenario_id) = $record->{run_id} =~ m{\Arun/\Q$execution->{plan_id}\E/(.+)\z};
+    _throw('VIAL_TRACE_IDENTITY_ERROR', "$kind payload record identity is wrong", "$path/record_id")
+        unless defined($scenario_id)
+            && defined($payload->{record_id}) && !ref($payload->{record_id})
+            && index($payload->{record_id}, "record/$scenario_id/$kind/") == 0;
+
+    if ($kind eq 'events') {
+        my %event = map { $_->{event_id} => $_ } @{$execution->{events}};
+        my $event = $event{$payload->{event_id} // ''};
+        _throw('VIAL_TRACE_IDENTITY_ERROR', 'event record names an unknown event', "$path/event_id")
+            unless $event && ($payload->{semantic_id} // '') eq $event->{semantic_id};
+        _nonnegative_integer($payload->{event_occurrence_index}, "$path/event_occurrence_index");
+    }
+    elsif ($kind eq 'drives') {
+        my %operation = map { $_->{operation_id} => 1 } @{$execution->{operation_graph}{operations}};
+        _throw('VIAL_TRACE_IDENTITY_ERROR', 'drive record names an unknown operation', "$path/operation_id")
+            unless $operation{$payload->{operation_id} // ''};
+    }
+    elsif ($kind eq 'transactions') {
+        _throw('VIAL_TRACE_SCHEMA_ERROR', 'transaction status is not closed', "$path/status")
+            unless ($payload->{status} // '') =~ /\A(?:completed|failed|cancelled)\z/;
+    }
+    elsif ($kind eq 'expectations') {
+        my %expectation = map { $_ => 1 }
+            map { @{$_->{plan_summary}{expectation_ids}} } @{$execution->{scenarios}};
+        _throw('VIAL_TRACE_IDENTITY_ERROR', 'expectation record names an unknown expectation', "$path/expectation_id")
+            unless $expectation{$payload->{expectation_id} // ''};
+        _json_boolean($payload->{outcome}, "$path/outcome");
+    }
+    elsif ($kind eq 'models') {
+        my %model = map { $_->{instance_id} => 1 } @{$execution->{models}};
+        _throw('VIAL_TRACE_IDENTITY_ERROR', 'model record names an unknown instance', "$path/model_instance_id")
+            unless $model{$payload->{model_instance_id} // ''};
+    }
+    elsif ($kind eq 'scoreboards') {
+        my %scoreboard = map { $_->{instance_id} => 1 } @{$execution->{scoreboards}};
+        _throw('VIAL_TRACE_IDENTITY_ERROR', 'scoreboard record names an unknown instance', "$path/instance_id")
+            unless $scoreboard{$payload->{instance_id} // ''};
+        _throw('VIAL_TRACE_SCHEMA_ERROR', 'scoreboard operation is not closed', "$path/operation")
+            unless ($payload->{operation} // '') =~ /\A(?:enqueue_expected|enqueue_actual|match|mismatch|check)\z/;
+        _json_boolean($payload->{outcome}, "$path/outcome");
+        _nonnegative_integer($payload->{queue_depth_actual}, "$path/queue_depth_actual");
+        _nonnegative_integer($payload->{queue_depth_expected}, "$path/queue_depth_expected");
+    }
+    elsif ($kind eq 'coverage') {
+        my %bin = map { map { $_->{semantic_id} => 1 } @{$_->{bins}} }
+            @{$execution->{coverage}{coverpoints}};
+        _throw('VIAL_TRACE_IDENTITY_ERROR', 'coverage record names an unknown bin', "$path/bin_id")
+            unless $bin{$payload->{bin_id} // ''};
+        _nonnegative_integer($payload->{cumulative_count}, "$path/cumulative_count");
+        _nonnegative_integer($payload->{delta}, "$path/delta");
+    }
+    elsif ($kind eq 'faults') {
+        my %fault = map { $_->{semantic_id} => 1 } @{$execution->{faults}};
+        _throw('VIAL_TRACE_IDENTITY_ERROR', 'fault record names an unknown fault', "$path/fault_id")
+            unless $fault{$payload->{fault_id} // ''};
+        _throw('VIAL_TRACE_SCHEMA_ERROR', 'fault status is not closed', "$path/status")
+            unless ($payload->{status} // '') =~ /\A(?:armed|applied|expired)\z/;
+    }
+    elsif ($kind eq 'fibers') {
+        my %fiber = map { map { $_->{fiber_id} => 1 } @{$_->{fibers}} }
+            @{$execution->{scenarios}};
+        _throw('VIAL_TRACE_IDENTITY_ERROR', 'fiber record names an unknown fiber', "$path/fiber_id")
+            unless $fiber{$payload->{fiber_id} // ''};
+        _throw('VIAL_TRACE_SCHEMA_ERROR', 'fiber status is not closed', "$path/status")
+            unless ($payload->{status} // '') =~ /\A(?:started|completed|failed|cancelled)\z/;
+    }
+}
+
+sub _nonnegative_integer($value, $path) {
+    _throw('VIAL_TRACE_SCHEMA_ERROR', 'semantic count must be a non-negative integer', $path)
+        unless defined($value) && !ref($value) && $value =~ /\A[0-9]+\z/;
+}
+
+sub _json_boolean($value, $path) {
+    _throw('VIAL_TRACE_SCHEMA_ERROR', 'semantic outcome must be a JSON Boolean', $path)
+        unless blessed($value) && $value->isa('JSON::PP::Boolean');
 }
 
 sub _validate_header($record, $execution) {
@@ -190,12 +320,17 @@ sub _validate_scenario_stream($records, $execution) {
             unless defined($record->{run_id}) && !ref($record->{run_id})
                 && $record->{run_id} eq $active_run;
         if ($record->{record_kind} eq 'scenario_end') {
-            _require_keys($record->{payload}, [qw(scenario_id status)], 'scenario_end payload', "/records/$index/payload");
+            _require_keys($record->{payload}, [qw(
+                logical_cycle_count scenario_id status
+            )], 'scenario_end payload', "/records/$index/payload");
             my $scenario = $expected[$scenario_index];
             _throw('VIAL_TRACE_IDENTITY_ERROR', 'scenario_end scenario_id is wrong', "/records/$index/payload/scenario_id")
                 unless $record->{payload}{scenario_id} eq $scenario->{scenario_id};
             _throw('VIAL_TRACE_SCHEMA_ERROR', 'scenario status is not closed', "/records/$index/payload/status")
                 unless ($record->{payload}{status} // '') =~ /\A(?:passed|failed|timeout|error)\z/;
+            _throw('VIAL_TRACE_SCHEMA_ERROR', 'scenario logical cycle count must be a positive integer', "/records/$index/payload/logical_cycle_count")
+                unless !ref($record->{payload}{logical_cycle_count})
+                    && $record->{payload}{logical_cycle_count} =~ /\A[1-9][0-9]*\z/;
             $status{$active_run} = $record->{payload}{status};
             undef $active_run;
         }
@@ -243,8 +378,14 @@ sub _validate_logical_order($records) {
             if grep { !defined($_) || ref($_) || $_ !~ /\A[0-9]+\z/ } @tuple;
         push @tuple, $time->{semantic_id};
         if (my $prior = $previous{$record->{run_id}}) {
-            _throw('VIAL_TRACE_ORDER_ERROR', 'logical-time records are out of deterministic order', "/records/$index/payload/logical_time")
-                if _tuple_cmp(\@tuple, $prior) < 0;
+            if (_tuple_cmp(\@tuple, $prior) < 0) {
+                _throw(
+                    'VIAL_TRACE_ORDER_ERROR',
+                    'logical-time records are out of deterministic order: prior=['
+                        . join(',', @$prior) . '] current=[' . join(',', @tuple) . ']',
+                    "/records/$index/payload/logical_time",
+                );
+            }
         }
         $previous{$record->{run_id}} = \@tuple;
     }

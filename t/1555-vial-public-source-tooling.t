@@ -259,14 +259,14 @@ subtest 'API invocation, style, syntax, and host-object boundaries fail closed' 
 subtest 'CLI is one adapter over the API and preserves legacy dispatch' => sub {
     my ($cap_status, $cap_out, $cap_err) = run_cli(qw(vial capabilities));
     is($cap_status, 0, 'human capabilities exits zero');
-    like($cap_out, qr/VIAL tooling: capabilities, check, format, plan/, 'human capabilities names exact actions');
+    like($cap_out, qr/VIAL tooling: capabilities, check, format, plan, run/, 'human capabilities names exact actions');
     is($cap_err, '', 'human capabilities has no stderr');
 
     my ($json_status, $json_out, $json_err) = run_cli(qw(vial capabilities --json));
     is($json_status, 0, 'JSON capabilities exits zero');
     my $cap_result = JSON::PP->new->decode($json_out);
     is($cap_result->{schema}, 'fsmgen.vial_tool_result.v1', 'CLI JSON uses the API result schema');
-    is_deeply($cap_result->{capability_evidence}{supported_actions}, [qw(capabilities check format plan)], 'CLI capability actions are exact');
+    is_deeply($cap_result->{capability_evidence}{supported_actions}, [qw(capabilities check format plan run)], 'CLI capability actions are exact');
     is($json_err, '', 'JSON capabilities has no stderr');
 
     my ($check_status, $check_out, $check_err) = run_cli('vial', 'check', $source_id);
@@ -304,11 +304,11 @@ subtest 'capability and support accounting compose source tooling with shipped p
     my $contract = build_vial_tooling_contract();
     is_deeply([sort keys %{$contract}], [sort @{vial_tooling_contract_keys()}], 'tooling contract keys are exact');
     is_deeply($contract, vial_tool_capabilities(), 'public capability function returns the canonical contract');
-    is_deeply($contract->{supported_actions}, [qw(capabilities check format plan)], 'contract advertises source actions plus plan');
+    is_deeply($contract->{supported_actions}, [qw(capabilities check format plan run)], 'contract advertises source, plan, and run actions');
     ok($contract->{writes_files}, 'tooling contract records atomic filesystem planning writes');
     ok($contract->{public_embedding_api}, 'tooling contract advertises bounded public API');
     my %nonclaim = map { $_ => 1 } @{$contract->{explicit_nonclaims}};
-    ok($nonclaim{backend} && $nonclaim{runtime} && $nonclaim{parity_pass}, 'backend/runtime/parity non-claims remain explicit');
+    ok($nonclaim{complete_four_state} && $nonclaim{parity_pass}, 'four-state/parity non-claims remain explicit');
 
     my $manifest = build_capability_manifest();
     is_deeply($manifest->{language_surface}{vial_tooling}, $contract, 'ordinary manifest embeds exact VIAL-only tooling contract');

@@ -32113,3 +32113,23 @@ task tree and git.
   artifact, target code, tool invocation, trace, result, public action,
   capability/support claim, parity, UVM, VHDL, mixed-language, scale, README
   landing content, or product behavior.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4 — Verilator run results shipped
+
+- Added the private bounded `Runner` and `ResultProducer`, completed the
+  generated one-scheduler fixture semantics, and exposed public
+  `fsmgen vial run --backend sv_portable_verilator` through the existing
+  closed CLI/API contract.
+- The run path now validates complete command digests and the exact Verilator
+  5.046 argv/version, stages only below the repository, bounds process time and
+  output, captures and validates closed JSONL, and publishes normalized
+  compile/run/backend/output/result evidence before exact cleanup.
+- The checked AHB fixture passes both selected scenarios and emits nonempty
+  event, drive, sample, transaction, expectation, model, scoreboard, coverage,
+  fault, and fiber streams. API reruns are byte-identical; CLI reruns return
+  `unchanged`; a same-barrier `parallel any` tie proves deterministic
+  authored-order winner/cancellation behavior; failures publish no partial
+  graph.
+- Capability/support and the mdBook now report the shipped bounded runtime and
+  result while preserving complete-four-state, parity, UVM, VHDL methodology,
+  mixed-language, and scale non-claims. `.11` retains cross-backend parity.

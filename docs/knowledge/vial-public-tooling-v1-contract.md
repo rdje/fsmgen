@@ -17,8 +17,8 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, public-tooling, cli, api, terse, normal-form, artifacts, manifests, data-locality, compatibility]
-evidence: docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; perl/FSM/VIAL/SourceProjection.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/PlanBuilder.pm; perl/FSM/VIAL/ArtifactTransaction.pm; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/Support/VIALToolingContract.pm; t/1555-vial-public-source-tooling.t; t/1556-vial-public-planning-artifacts.t; t/1557-vial-portable-sv-backend-emission.t; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
-reverify: ./bin/fsmgen vial capabilities --json && ./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t
+evidence: docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; perl/FSM/VIAL/SourceProjection.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/PlanBuilder.pm; perl/FSM/VIAL/ArtifactTransaction.pm; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/Runner.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm; perl/FSM/Support/VIALToolingContract.pm; t/1555-vial-public-source-tooling.t; t/1556-vial-public-planning-artifacts.t; t/1557-vial-portable-sv-backend-emission.t; t/1558-vial-verilator-run-integration.t; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
+reverify: ./bin/fsmgen vial capabilities --json && ./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t
 ---
 
 Decision `0039` selects `fsmgen vial capabilities|check|format|plan|run` as the
@@ -50,7 +50,7 @@ fixtures require matching reviewed IAL1/IAL2 transaction truth. Identical
 trees return `unchanged`; non-identical or unsafe trees are never overwritten.
 
 Existing `.isf` verification-output-manifest v1 skeleton output remains
-unchanged. Future VIAL `run` uses explicit
+unchanged. Shipped VIAL `run` uses explicit
 `fsmgen.verification_output_manifest.v2`; consumers select by schema, not
 filename. Decision `0043` now selects the first plain-SystemVerilog/Verilator
 backend contract. Clean commit `ab3e73b72` activates `.10` as the first
@@ -59,8 +59,7 @@ Completed `.10.1` ships the source-only command/API and five exact public
 capabilities. Completed `.10.2` ships `plan`, the artifact-layout/tool-manifest
 capabilities, and distinct public-plan support accounting. Completed `.10.3`
 ships deterministic portable-SystemVerilog emission and pure trace validation
-only through a private compiler API; neither action is added to the public
-tool request. Public `run`, backend-artifact publication, compile, simulation,
-runtime capture, and results remain unavailable. Active `.10.4` owns those
-surfaces after clean `.10.3` commit `201590d84`; activation itself changes no
-behavior. `.11` retains parity.
+through a private compiler API. Completed `.10.4` adds public `run`, exact
+Verilator 5.046 qualification/execution, backend/result/output artifacts,
+validated runtime capture, deterministic reruns, and atomic cleanup. `.11`
+retains cross-backend parity.

@@ -578,9 +578,10 @@ commit `045629c97` activates `.10.3` alone for backend/trace emission without
 runtime execution. Completed `.10.3` now ships the private deterministic
 portable-SV emitter, eight-artifact virtual graph, full operation/state-family
 source map, one-scheduler lowering, selected-but-unexecuted command records,
-and pure closed-trace validator. Public publication, compile/run, runtime
-capture, and normalized results are active `.10.4` after clean `.10.3` commit
-`201590d84`; activation changes no behavior. `.11` retains parity.
+and pure closed-trace validator. Completed `.10.4` now ships public
+publication, exact Verilator compile/run, validated runtime capture,
+normalized results, deterministic reruns, and atomic cleanup. `.11` retains
+cross-backend parity.
 
 ## Rollback
 

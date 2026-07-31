@@ -2,11 +2,11 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
-Status: selected and partially implemented; `.10.1` ships public
+Status: selected and implemented for the bounded portable profile; `.10.1` ships public
 capabilities/check/normal-terse formatting and `.10.2` ships canonical
-planning plus virtual/repository-local atomic artifacts. Parent `.10` retains
-completed private `.10.3` backend/trace and active `.10.4` public Verilator
-runtime/results after clean commit `201590d84`
+planning plus virtual/repository-local atomic artifacts. `.10.3` ships the
+private backend/trace seam and `.10.4` ships public Verilator runtime/results
+after clean activation commit `8ba4278d8`
 Decision: `0039`
 
 ## Outcome
@@ -209,9 +209,10 @@ fsmgen vial run --dut HIAL_SOURCE --backend BACKEND_PROFILE [PLAN_OPTIONS] SOURC
 emits its artifacts, executes the qualified tool profile, and writes the
 selected result manifest. `sv_portable_verilator` is now a selected known-value
 backend contract under decision `0043`. Private emission/trace validation ships
-through completed `.10.3`, but public publication, tool execution, and result
-production remain unavailable until `.10.4` implements and qualifies them.
-Before then, `run` returns `VIAL_BACKEND_UNAVAILABLE` atomically.
+through completed `.10.3`; completed `.10.4` now ships public publication,
+exact Verilator 5.046 execution, trace capture, and normalized result
+production. Any other backend profile fails atomically as
+`VIAL_BACKEND_UNSUPPORTED`.
 
 ### Incompatible legacy options
 
@@ -325,7 +326,7 @@ OUT/
   vial-plan.json
   verification-output-manifest.json # run only; schema v2
   backends/<backend-profile>/...     # run only
-  results/<run-id>/verification-result-manifest.json # run only
+  results/<result-id-digest>/verification-result-manifest.json # run only
 ```
 
 Direct HIAL inputs are referenced by identity/digest and are not copied.
@@ -467,7 +468,7 @@ feature.vial_public_check_format
 feature.vial_public_plan
   coverage: vial_public_plan_cli_api
 
-feature.vial_<backend_profile>_runtime   # later backend owner only
+feature.vial_sv_portable_verilator_runtime # shipped by .10.4
 ```
 
 The existing `verification.vial_ahb_subordinate_base_output_arbitration`
@@ -484,10 +485,22 @@ The wrapper preserves existing parser/binder diagnostic codes and adds only:
 VIAL_TOOL_INVOCATION_ERROR
 VIAL_SOURCE_STYLE_ERROR
 VIAL_HIAL_SOURCE_ERROR
-VIAL_BACKEND_UNAVAILABLE
+VIAL_BACKEND_UNSUPPORTED
 VIAL_ARTIFACT_PATH_ERROR
 VIAL_ARTIFACT_COLLISION
 VIAL_MANIFEST_SCHEMA_ERROR
+VIAL_RUN_INVOCATION_ERROR
+VIAL_RUN_PATH_ERROR
+VIAL_RUN_TOOL_ERROR
+VIAL_RUN_COMMAND_ERROR
+VIAL_RUN_COLLISION
+VIAL_RUN_COMPILE_ERROR
+VIAL_RUN_RUNTIME_ERROR
+VIAL_RUN_LIMIT_EXCEEDED
+VIAL_RUN_TRACE_ERROR
+VIAL_RUN_RESULT_ERROR
+VIAL_RUN_CLEANUP_ERROR
+VIAL_RUN_HOST_ERROR
 VIAL_HOST_ERROR
 ```
 
@@ -513,8 +526,8 @@ a downgraded pass.
   `sv_portable_verilator`; completed `.10.1` ships source tooling and completed
   `.10.2` ships plan/artifact behavior. Clean `.10.2` commit `045629c97`
   activates `.10.3` for backend/trace emission. Completed `.10.3` ships that
-  private seam without widening the public actions; `.10.4` retains public
-  publication/run/results and `.11` owns parity against the
+  private seam; completed `.10.4` exposes its qualified execution through
+  public run/result publication. `.11` owns parity against the
   handwritten AHB oracle.
 - Factories, phases, objections, UVM component classes, VHDL process plumbing,
   target hierarchy, callbacks, and host-language escape hatches remain backend
@@ -529,6 +542,12 @@ transaction-free DUT binding for direct IAL0 truth, and atomically publishes
 canonical plan trees. It changes no generated HIAL HDL, backend, compile,
 simulation, runtime, result, parity, UVM, VHDL, mixed-language, or scale
 behavior.
+
+Completed `.10.4` adds the public `run` action, exact command/tool validation,
+repository-local bounded execution staging, normalized trace/result/output
+manifests, deterministic virtual and filesystem reruns, atomic publication,
+and exact cleanup. It adds no complete-four-state, parity, UVM, VHDL,
+mixed-language, or scale claim.
 
 ## Validation And Rollback
 
@@ -556,10 +575,12 @@ Completed `.10.2` proves:
   memory, relative paths, task acceptance, doctrines, and exact output cleanup.
 
 Completed `.10.3` independently proves deterministic backend emission and pure
-trace projection without executing a simulator. Active `.10.4` must prove
-public atomic publication, exact tool qualification, runtime capture, and
-result ownership without borrowing `.10.2` planning or `.10.3` emission
-evidence as runtime evidence.
+trace projection without executing a simulator. Completed `.10.4` independently
+proves public API byte determinism, atomic CLI publication/unchanged replay,
+exact tool/argv qualification, bounded runtime capture, both selected scenario
+outcomes, all ten semantic result streams, result-byte identity, and exact
+staging cleanup without borrowing planning or emission evidence as runtime
+evidence.
 
 Selection rollback remains the decision-`0039` path. `.10.1` implementation
 rollback removes only the `vial` source subcommand/API adapter, terse

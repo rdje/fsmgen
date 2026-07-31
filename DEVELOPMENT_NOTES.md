@@ -34500,10 +34500,8 @@ order and semantic IDs and must reparse to one provenance-excluding meaning
 digest; source hashes and spans remain distinct. This makes “terse or normal”
 reversible and prevents convenience defaults from silently changing intent.
 
-Artifacts follow the same honesty rule. A plan root is content-addressed by the
-full plan digest, stays repository-local/same-volume, and is committed only
-after the whole virtual artifact graph validates. Existing non-identical trees
-are never overwritten. Verification-output manifest v1 remains exact for the
-two shipped `.isf` skeletons; VIAL runtime selects explicit schema v2 because
-the actor-centric v1 shape cannot losslessly represent two sources, a bound
-plan, backend artifacts, and results.
+Plan/run roots are content-addressed, same-volume, atomic, and never overwrite
+non-identical trees. `.10.4` executes static emitted meaning under one exact
+Verilator profile; it never reparses VIAL or reruns semantic machinery. The
+validated trace becomes ten methodology-free result streams, while `.11`
+retains parity. VIAL run uses manifest v2; `.isf` v1 remains unchanged.

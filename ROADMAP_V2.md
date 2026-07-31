@@ -9508,8 +9508,10 @@ injection proofs. `.7.3` now implements and verifies the selected private no-
 backend contract: immutable ExecutionIR, deterministic plan-time random/replay,
 defensive in-process plan projection, closed event/adapter bindings, exact
 resource accounting, atomic diagnostics, and private capability/support
-discovery. Result and parity schema names remain selected future contracts
-with explicit `.10`/`.11` owners rather than satisfied `.7.3` capabilities.
+discovery. Result and parity schema names remained selected future contracts
+with explicit `.10`/`.11` owners rather than satisfied `.7.3` capabilities;
+completed `.10.4` now implements the result producer while `.11` retains the
+comparison.
 Clean directional-binding selection commit `2a1b3cefc` permits a continuity-
 only activation of `.7.3`. This transition changes no VIAL source/parser/
 SemanticIR or HIAL bridge/parser/annotation/report. The implementation remains
@@ -9551,9 +9553,11 @@ commit `045629c97` activates `.10.3` alone for backend/trace emission without
 runtime execution. Completed `.10.3` now ships private deterministic portable-
 SV emission, complete source maps, one-scheduler known-value lowering,
 selected-but-unexecuted command records, and pure closed-trace validation.
-Clean `.10.3` implementation commit `201590d84` activates `.10.4` alone for
-public publication and exact compile/runtime/results; activation itself changes
-no behavior. `.11` retains parity.
+Clean `.10.3` implementation commit `201590d84` activated `.10.4` alone.
+Completed `.10.4` now ships public `run`, exact Verilator 5.046 execution,
+validated trace capture, normalized result/output manifests, deterministic
+virtual/filesystem reruns, atomic publication, and exact cleanup. `.11` retains
+cross-backend parity.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

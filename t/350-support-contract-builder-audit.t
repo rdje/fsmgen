@@ -23,6 +23,7 @@ my %allowed_status = map { $_ => 1 } qw(
     shipped_private_target_neutral_no_backend
     shipped_private_execution_and_portable_sv_emission
     shipped_public_source_tooling_and_atomic_planning
+    shipped_public_verilator_execution_and_result
 );
 
 for my $file (@contract_files) {

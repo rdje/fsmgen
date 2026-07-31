@@ -6,24 +6,22 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4: activate Verilator run integration`).
-- active_work_unit: parent `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10`;
-  completed `.10.1`/`.10.2`/`.10.3` own source tooling, planning/artifacts,
-  and private portable-SV emission/trace validation respectively. Active
-  `.10.4` owns public publication, Verilator execution, and result production.
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4: ship Verilator run results`).
+- active_work_unit: parent `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`;
+  completed `.10.1`-.10.4 own public source/planning/run, portable-SV
+  emission, exact Verilator execution, trace validation, normalized results,
+  and atomic publication. `.11` is proposed next for a clean parity activation.
 - current_state: decision `0043` and the portable-SystemVerilog contract remain
-  unchanged. Public `fsmgen vial capabilities|check|format|plan` and the closed
-  API now ship normal/terse equivalence, all three canonical HIAL review routes,
-  and virtual or atomic repository-local artifacts. Private `.10.3` now emits
-  the deterministic eight-artifact portable-SV graph and validates caller-
-  supplied closed traces without simulator execution or result production.
-  This continuity commit activates `.10.4` without changing product behavior.
-- next_action: implement exact public artifact publication, Verilator 5.046
-  compile/run, runtime trace capture, and normalized result production under
-  active `.10.4`; `.11` retains parity.
-- in_flight_uncommitted: none after this activation commit; no background job
+  unchanged. Public `fsmgen vial capabilities|check|format|plan|run` and the
+  closed API ship normal/terse equivalence, all three HIAL review routes,
+  deterministic plain-SV emission, exact Verilator 5.046 compile/runtime,
+  validated JSONL, normalized result/output manifests, and deterministic
+  virtual or atomic repository-local artifacts. Both checked scenarios pass.
+- next_action: after a separate clean activation, implement `.11` comparison
+  against the handwritten AHB oracle; do not infer parity from `.10.4`.
+- in_flight_uncommitted: none after this implementation commit; no background job
   and all repository-local mdBook output is removed exactly.
-- blockers: none for `.10.4` implementation; native UVM/VHDL/mixed-language leaves
+- blockers: none for `.11` activation; native UVM/VHDL/mixed-language leaves
   retain exact tool prerequisites. PGEN/ANVIL feedback remains pending for the
   independent live-document `.15`/`.16` leaves and is not a VIAL blocker.
 
@@ -39,9 +37,8 @@ history; this file carries only the current bounded resume state.
   transaction-free endpoint/reset fixtures but never infers transaction facts.
 - Decision `0043`: Verilator is the first fast known-value runtime profile,
   never the language ceiling or four-state/UVM authority. `.10.3` keeps one
-  generated scheduler as semantic authority, separates backend caps from
-  target-neutral plan identity, and reports compile/runtime/result/parity as
-  unperformed; `.10.4` is now active to implement the first three only.
+  generated scheduler as semantic authority; `.10.4` now qualifies compile,
+  runtime, and normalized results while leaving parity unperformed for `.11`.
 - Decision `0041` and the external review packet remain durable for later
   feedback-sensitive containment work. Push only on explicit request (`0005`);
   PNT runs autonomously (`0003`). Consult the Knowledge Map first.

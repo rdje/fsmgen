@@ -6,8 +6,8 @@ Status: selected; active parent `.10` owns implementation after clean
 activation from commit `ab3e73b72`. Clean activation commit `5fd766600`
 decomposes that work into completed `.10.1` public source tooling, completed
 `.10.2` planning/artifact transactions, completed `.10.3` private backend
-emission/trace projection after clean commit `045629c97`, and active `.10.4`
-Verilator run/result integration after clean commit `201590d84`
+emission/trace projection after clean commit `045629c97`, and completed `.10.4`
+Verilator run/result integration after clean activation commit `8ba4278d8`
 Decision: `0043`
 
 ## Outcome
@@ -156,7 +156,7 @@ backends/sv_portable_verilator/
   src/dut/<unit-slug>.sv
   src/fsmgen_vial_runtime_pkg.sv
   src/<fixture-slug>_tb.sv
-results/<run-id>/verification-result-manifest.json
+results/<result-id-digest>/verification-result-manifest.json
 ```
 
 Names are deterministic slug projections with collision-resistant suffixes
@@ -572,14 +572,16 @@ substrate evidence for selection, not generated-VIAL backend evidence.
 
 The selection itself created no implementation. Completed `.10.1`/`.10.2`
 provide source tooling, public planning, and atomic target-neutral artifacts.
-Completed `.10.3` now provides the private deterministic runtime package,
-fixture module, generated HIAL DUT handoff, backend/source-map/profile/command
-records, and pure closed-trace validator. It creates no filesystem publication,
-Verilator invocation, runtime trace, result producer, or parity claim. Clean
-`.10.2` implementation commit `045629c97` was the separate `.10.3` activation
-predecessor; active `.10.4` retains every tool-execution/result gate.
-Clean `.10.3` implementation commit `201590d84` activates `.10.4` alone;
-activation adds no tool execution or result evidence.
+Completed `.10.3` provides the private deterministic runtime package, fixture
+module, generated HIAL DUT handoff, backend/source-map/profile/command records,
+and pure closed-trace validator. Completed `.10.4` now provides the private
+bounded Runner/ResultProducer seams and public CLI/API composition: it verifies
+the complete exact command records and qualified Verilator identity, executes
+in operation-owned repository-local staging, validates the captured trace,
+publishes the normalized result/output graph atomically, and removes staging.
+The exact runtime regression also forces a same-barrier `parallel any` tie and
+proves authored-order winner selection plus sibling cancellation. `.10.4`
+makes no parity claim.
 
 Selection signoff requires current source/bridge/execution tests, the existing
 AHB Verilator oracle, task/roadmap/audit/decision/book/fact continuity, relative
@@ -588,10 +590,9 @@ Memory, diff hygiene, staged docs-only acceptance, all doctrines, and exact
 cleanup.
 
 Selection rollback removes decision `0043` and this contract and returns `.9`
-to active. Implementation rollback removes the exact `.10.3` private emitter,
-trace validator, planner handoff, tests, and capability/support records while
-preserving public source/planning behavior and every runtime/result non-claim.
-Later `.10.4` rollback remains independently scoped to its tool/result
-implementation and owned artifact/capability entries, retaining this selected
-contract, the private VIAL stages, and every
-legacy verification-output surface.
+to active. Implementation rollback removes the exact `.10.3` private emitter
+and trace validator only with their planner handoff/tests, while `.10.4`
+rollback is independently scoped to Runner/ResultProducer, public `run`,
+executed artifacts, and runtime/result capability entries. Both retain this
+selected contract, public source/planning behavior, private VIAL stages, and
+every legacy verification-output surface.

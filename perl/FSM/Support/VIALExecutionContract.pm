@@ -30,13 +30,16 @@ sub vial_execution_contract_keys {
 sub build_vial_execution_contract {
     return {
         schema_version => 1,
-        status => 'shipped_private_execution_and_portable_sv_emission',
+        status => 'shipped_public_verilator_execution_and_result',
         contract_source => vial_execution_contract_source(),
         implementation_entrypoints => [
             'FSM::VIAL::ExecutionBuilder->build({...})',
             'FSM::VIAL::ExecutionReport->build($execution_ir)',
             'FSM::VIAL::Backend::SVPortableVerilator->emit({...})',
             'FSM::VIAL::Backend::TraceValidator->validate({...})',
+            'FSM::VIAL::Backend::Runner->run({...})',
+            'FSM::VIAL::Backend::ResultProducer->produce({...})',
+            'FSM::VIAL::Tool::execute_vial_tool_request($request, $environment)',
         ],
         execution_schema => 'fsmgen.vial_execution_ir.v1',
         plan_schema => 'fsmgen.vial_plan.v1',
@@ -44,8 +47,8 @@ sub build_vial_execution_contract {
         selected_future_schemas => {
             result_manifest => {
                 schema => 'fsmgen.verification_result_manifest.v1',
-                status => 'selected_not_implemented',
-                implementation_owner => 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10',
+                status => 'shipped',
+                implementation_owner => 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4',
             },
             parity_report => {
                 schema => 'fsmgen.vial_parity_report.v1',
@@ -59,17 +62,22 @@ sub build_vial_execution_contract {
         runtime_trace_schema => 'fsmgen.vial_sv_runtime_trace.v1',
         trace_projection_schema => 'fsmgen.vial_sv_trace_projection.v1',
         backend_stage_status => {
-            negotiation => 'shipped_private',
-            emission => 'shipped_private_virtual_artifact_graph',
-            trace_validation => 'shipped_private_pure_projection',
-            compile => 'not_implemented',
-            runtime => 'not_implemented',
-            result => 'not_implemented',
+            negotiation => 'shipped_public_run_pipeline',
+            emission => 'shipped_public_run_pipeline',
+            trace_validation => 'shipped_public_run_pipeline',
+            compile => 'shipped_exact_verilator_5_046',
+            runtime => 'shipped_known_value_declared_probe_profile',
+            result => 'shipped_verification_result_manifest_v1',
             parity => 'not_implemented',
         },
         capabilities => [qw(
             vial.binding.directional_representation.v1
             vial.backend.sv_portable_verilator.emission.v1
+            vial.backend.sv_portable_verilator.v1
+            vial.backend.sv_portable_verilator.declared_probe_adapter_v1
+            vial.backend.sv_portable_verilator.inactive_edge_scheduler_v1
+            vial.backend.sv_portable_verilator.known_value_runtime_v1
+            vial.backend.sv_portable_verilator.runtime_trace_v1
             vial.backend.sv_portable_verilator.trace_validation.v1
             vial.execution_ir.v1
             vial.execution_profile.core_directed_single_clock_execution_v1
@@ -77,6 +85,7 @@ sub build_vial_execution_contract {
             vial.plan.v1
             vial.random.sha256_counter_rejection_v1
             vial.replay.v1
+            vial.result_manifest.v1
         )],
         limits => {
             selected_fixtures => 1,
@@ -111,22 +120,23 @@ sub build_vial_execution_contract {
             source_map_entries => 1_000_000,
             runtime_trace_records => 8_000_002,
             runtime_trace_bytes => 67_108_864,
+            compile_transcript_bytes => 4_194_304,
+            run_transcript_bytes => 4_194_304,
+            execution_seconds => 120,
         },
         fixture => 'vial/ahb_subordinate_base_output_arbitration.vial',
-        writes_files => JSON::PP::false,
-        public_embedding_api => JSON::PP::false,
+        writes_files => JSON::PP::true,
+        public_embedding_api => JSON::PP::true,
         explicit_nonclaims => [qw(
-            public_vial_cli public_vial_embedding_api plan_file result_file
-            public_backend_action compile simulation runtime result parity_pass
-            uvm vhdl_methodology mixed_language scale
+            complete_four_state parity_pass uvm vhdl_methodology mixed_language scale
         )],
         guidance => [
-            'Consume this contract only for capability discovery; VIAL execution, portable-SystemVerilog emission, and trace validation remain private no-file compiler seams.',
+            'Use the public VIAL run CLI/API for the selected portable-SystemVerilog Verilator pipeline; the backend classes remain private compiler seams.',
             'Treat the directional relation records and normalized plan-time decisions as authoritative; do not reinterpret them as target casts or backend randomization.',
-            'Emission returns a deterministic virtual artifact graph; it does not compile, run, publish a result manifest, or establish runtime/parity evidence.',
-            'Trace validation projects an already-produced closed trace without executing VIAL meaning; no simulator invocation is part of this slice.',
-            'Treat result/parity schema names as selected future contracts, not shipped result or parity capabilities; their implementation owners remain leaves .10 and .11.',
-            'Do not infer a public VIAL backend action, compilation, runtime, result, or parity pass from private emission support.',
+            'Run materializes only an operation-owned repository-local staging tree, invokes exact Verilator 5.046 commands without warning suppressions, and removes staging before publication.',
+            'Trace validation projects the produced closed trace without executing VIAL meaning; ResultProducer converts that validated projection into the closed verification-result contract.',
+            'The result schema is shipped by leaf .10.4; the parity-report schema remains selected but unimplemented under leaf .11.',
+            'Do not infer complete four-state observation, cross-backend parity, UVM, VHDL, mixed-language execution, or scale qualification from the selected runtime profile.',
         ],
     };
 }

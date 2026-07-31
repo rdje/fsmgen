@@ -187,7 +187,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: select portable SV backend contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected public VIAL tool path, bounded plain-SystemVerilog portable backend, Verilator behavioral profile, and normalized result producer.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4`
   Acceptance: `The selected fixture emits efficient, deterministic, readable, source-mapped SystemVerilog plus manifests without requiring SystemVerilog knowledge from a VIAL author, compiles and runs under the exact recorded Verilator --binary --timing profile, produces the normalized result oracle, preserves all non-claims, and leaves UVM/VHDL/mixed-language output unchanged.`
@@ -216,10 +216,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.3: ship portable SV backend emission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4`
-  Status: `active`
+  Status: `done`
   Goal: `Integrate the exact Verilator 5.046 compile/run profile and normalized VIAL result producer through the public run surface.`
   Acceptance: `The public CLI/API run action publishes atomically, invokes only the exact repository-local --binary/--timing/--assert profile with bounded resources, separates compile/executable/run/trace/schema/outcome gates, emits the selected result and verification-output manifests, proves deterministic reruns and cleanup, preserves known-value/non-parity non-claims, and leaves UVM/VHDL/mixed-language output unchanged.`
-  Verification: `Clean .10.3 implementation commit 201590d84 activates only exact Verilator compile/run, runtime-trace capture, normalized result production, and public run integration. Activation changes no source, parser, plan, artifact, backend emission, tool invocation, trace, result, public action/capability/support claim, parity, UVM, VHDL, mixed-language, scale, or product behavior.`
+  Verification: `Clean .10.3 implementation commit 201590d84 and clean activation commit 8ba4278d8 permit only .10.4 implementation. Public CLI/API run now composes the immutable reviewed plan with deterministic portable-SV emission, exact digest/argv-qualified Verilator 5.046 compile/run, bounded repository-local execution staging, closed trace validation, normalized result production, and atomic virtual/filesystem publication. The checked AHB fixture passes both scenarios and emits all ten semantic streams in a deterministic 19-artifact graph; identical API bytes and CLI unchanged replay, exact cleanup, support/capability truth, known-value/four-state/parity non-claims, and unchanged legacy UVM/VHDL/mixed-language surfaces are regression-locked by t1558 plus the guarded VIAL/support suite. Final task/docs/mdBook/Knowledge Map/live-doc/staged-doctrine evidence is recorded below. .11 retains cross-backend parity.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4: activate Verilator run integration`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11`
@@ -332,10 +332,10 @@ now ships canonical HIAL-routed planning and virtual/atomic repository-local
 artifact transactions. Clean `.10.2` commit `045629c97` activates `.10.3`
 alone for backend/trace implementation. Completed `.10.3` now ships the
 private deterministic `sv_portable_verilator` emitter, eight-artifact virtual
-graph, source-mapped one-scheduler fixture, honest unexecuted tool records, and
-pure closed-JSONL trace validator. Public publication, compile, runtime, and
-normalized results are now owned by active `.10.4` after clean `.10.3` commit
-`201590d84`; activation itself changes no product behavior. `.11` retains
+graph, source-mapped one-scheduler fixture, honest emission-only tool records,
+and pure closed-JSONL trace validator. Completed `.10.4` now ships public run,
+exact Verilator 5.046 compile/runtime, validated trace capture, normalized
+results, deterministic reruns, and atomic cleanup. `.11` retains cross-backend
 parity.
 Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
@@ -469,12 +469,16 @@ compiler-owned beneath C/C++ or Rust.
   compile/run, trace capture, and normalized result production. Activation
   changes continuity ownership only and introduces no behavior or capability
   claim.
+- `2026-07-31`: Completed `.10.4` ships public `fsmgen vial run`, exact
+  Verilator execution, validated trace/result/output manifests, deterministic
+  virtual and atomic filesystem publication, and exact cleanup. Known-value,
+  complete-four-state, parity, UVM, VHDL, mixed-language, and scale boundaries
+  remain explicit; `.11` retains parity.
 
 ## Open Questions
 
-- Active `.10.4` must integrate public publication, compile/runtime/results
-  over the completed private backend/trace seam without widening the
-  known-value profile or claiming `.11` parity.
+- `.11` must compare the shipped portable result with the handwritten AHB
+  oracle without widening the known-value profile or inventing parity.
 - `.12` must choose the UVM revision and an actually available qualified
   simulator before native UVM implementation can claim compile/runtime support.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
@@ -487,7 +491,7 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for active `.10.4`. Result parity remains owned by `.11`.
+- None for completed `.10.4`. Result parity remains owned by `.11`.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -525,6 +529,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.10.3` activation | clean `.10.2` implementation predecessor `045629c97`; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; task/docs/live/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.10.3` alone active for portable-SystemVerilog artifact/trace implementation; docs Files=6/Tests=357; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,916 KiB; Knowledge Map 1,096 facts/5,736 keys; README unchanged at 245 lines/9,913 bytes; Memory remains bounded; all nine staged doctrines pass at 20 live-document surfaces and 2,780/2,780 tracked Markdown paths; implementation and product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.10.3` implementation | exact private ExecutionIR/bridge/DUT handoff; deterministic portable-SV emitter; complete source map; one-scheduler parallel lowering; pure closed-trace validator; capability/support truth; syntax/focused/impacted/docs/live/path/task/mdBook/Knowledge Map/Memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; 13 changed/new Perl/test paths syntax OK; guarded impacted VIAL/support suite `All tests successful` at Files=27/Tests=7,190; docs/live/path/task suite `All tests successful` at Files=8/Tests=378; all 37 mdBook chapters test and repository-local build has 73 files/16,952 KiB before exact removal; Knowledge Map 1,096 facts/5,736 keys; task integrity three trees/889 nodes/one segment/one index archive; Memory 47 lines; README 245 lines/9,913 bytes; final staged doctrines cover all nine checks, 20 live-document surfaces, and 2,780/2,780 tracked Markdown paths; public actions unchanged and compile/runtime/result/parity explicitly unclaimed; independently stale t296 PPIF module-name failures reproduce under their existing separate owner and no implicated corpus/pipeline path changes here |
 | `2026-07-31` | `.10.4` activation | clean `.10.3` implementation predecessor `201590d84`; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; task/docs/live/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.10.4` alone active for public publication, Verilator run integration, trace capture, and normalized results; docs/live/path/task Files=8/Tests=378; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,952 KiB; Knowledge Map 1,096 facts/5,736 keys; README unchanged at 245 lines/9,913 bytes; Memory 47 lines; implementation and product behavior unchanged; output removed exactly |
+| `2026-07-31` | `.10.4` implementation | public API/CLI run; exact Verilator 5.046 version/argv/digests; bounded process/output/staging; both selected AHB scenarios; ten semantic trace/result streams; deterministic virtual and unchanged filesystem reruns; same-barrier any-join tie/cancellation; atomic failures/cleanup; syntax/focused/support/docs/live/path/task/mdBook/Knowledge Map/Memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; 19 changed/new Perl/test paths syntax OK; guarded VIAL/support Files=10/Tests=7,170; docs/live/path Files=5/Tests=323; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-local build 73 files/16,964 KiB; Knowledge Map 1,096 facts/5,736 keys; README 245 lines/9,917 bytes; Memory 44 lines; initial default RAM guard stopped on its conservative free-page estimate while kernel pressure reported 83% free, then bounded 100%-host/4,096-MiB-process mdBook gates passed; `.10` complete; `.11` retains parity; output removed exactly |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -743,6 +748,41 @@ compiler-owned beneath C/C++ or Rust.
   simulation, runtime capture, normalized result, parity, public run, UVM,
   VHDL, mixed-language, or scale claim ships.
 
+## Acceptance Checklist (enforced) — `.10.4` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — On clean activation predecessor
+  `8ba4278d8`, `git log -S 'package FSM::VIAL::Backend::Runner' --
+  perl/FSM/VIAL/Backend/Runner.pm` and the equivalent ResultProducer pickaxe
+  return no commit. The public parser named `run`, but the request validator
+  rejected it and no owner could materialize emitted sources, invoke the exact
+  selected tool, capture a trace, produce a result, or publish an executed
+  graph. Direct generated-runtime probes then exposed concrete lowering defects
+  at the final AHB ready barrier and at raw-integer SV string concatenation.
+- [x] **ADDRESSED (verified)** — `t/1558-vial-verilator-run-integration.t`
+  executes the exact Verilator 5.046 profile through public API and CLI. Both
+  selected scenarios pass; all ten semantic streams are nonempty; the observed
+  scoreboard depth is one; the result is content-addressed and byte-sized;
+  the 19-artifact API graph repeats byte-identically; filesystem replay returns
+  `unchanged`; a same-barrier `parallel any` tie selects the first authored
+  child and cancels its sibling; wrong backends/nonempty sinks fail atomically;
+  and both execution and publication staging identities are absent after
+  return. Runner validates
+  complete command digests/argv, bounds process/output resources, and performs
+  bounded process-group termination before cleanup.
+- [x] **NO REGRESSION** — All 19 changed/new Perl modules and test programs
+  report `syntax OK`; the guarded semantic/bridge/execution/tool/backend/
+  support/capability suite reports `All tests successful` at `Files=10,
+  Tests=7170`; documentation/live/path checks report `All tests successful` at
+  `Files=5, Tests=323`; and task integrity remains three trees/889 nodes/one
+  segment/one index archive. All 37 mdBook chapters test and its repository-
+  local 73-file/16,964-KiB build passes before exact removal. `knowledge-map:
+  OK` holds at 1,096 facts/5,736 keys; Memory is 44 lines; README is 245 lines/
+  9,917 bytes; DEVELOPMENT_NOTES is below its zero-growth baseline; final
+  staged acceptance/doctrines and residue census close the commit. Complete
+  four-state observation, parity, UVM, VHDL methodology, mixed-language
+  execution, and scale remain explicit non-claims; legacy HIAL and
+  verification-output-v1 behavior is unchanged.
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -776,9 +816,14 @@ compiler-owned beneath C/C++ or Rust.
 | `.10.3` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.3: activate portable SV backend emission` | Activate only deterministic portable-SystemVerilog artifact emission and closed trace projection after clean `.10.2`; implementation remains unperformed. |
 | `.10.3` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.3: ship portable SV backend emission` | Ship private deterministic plain-SV emission, complete source maps, one-scheduler known-value lowering, honest non-executed tool records, and pure closed-trace projection without public run/compile/runtime/result/parity claims. |
 | `.10.4` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4: activate Verilator run integration` | Activate only public backend publication, exact Verilator compile/run, trace capture, and normalized result integration after clean `.10.3`; implementation remains unperformed. |
+| `.10.4` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4: ship Verilator run results` | Ship public run, exact bounded Verilator execution, validated traces, normalized results, deterministic virtual/filesystem publication, cleanup, and exact capability/support truth without parity. |
 
 ## Changelog
 
+- `2026-07-31`: `.10.4` ships public `run`, exact Verilator 5.046
+  compile/runtime, closed trace/result/output artifacts, deterministic API/CLI
+  reruns, atomic repository-local publication, and exact cleanup. `.11` remains
+  proposed for a separate clean parity activation.
 - `2026-07-31`: Clean `.10.3` implementation commit `201590d84` activates
   `.10.4` alone for public atomic backend publication, exact Verilator 5.046
   compile/run, runtime-trace capture, and normalized result production. This

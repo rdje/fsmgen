@@ -442,7 +442,7 @@ subtest 'semantic corpus claims stay bounded while capability accounting include
 
     my $surface = build_language_surface_section();
     my ($vial) = grep { $_->{suffix} eq '.vial' } @{$surface->{file_surfaces}{entries}};
-    is($vial->{status}, 'shipped_bounded_public_planning_private_execution_and_sv_emission', 'capability manifest includes public planning plus private execution and portable-SystemVerilog emission');
+    is($vial->{status}, 'shipped_bounded_public_verilator_execution_and_result', 'capability manifest includes bounded public Verilator execution and results');
     is_deeply(
         $vial->{supported_cli_modes},
         [
@@ -450,14 +450,15 @@ subtest 'semantic corpus claims stay bounded while capability accounting include
             'fsmgen vial check [--style auto|normal|terse] [--json] SOURCE.vial',
             'fsmgen vial format --style normal|terse SOURCE.vial',
             'fsmgen vial plan --dut HIAL_SOURCE [PLAN_OPTIONS] SOURCE.vial',
+            'fsmgen vial run --dut HIAL_SOURCE --backend sv_portable_verilator [RUN_OPTIONS] SOURCE.vial',
         ],
-        'capability manifest advertises exactly the public VIAL source and plan CLI',
+        'capability manifest advertises exactly the public VIAL source, plan, and run CLI',
     );
     is_deeply($vial->{lowers_to}, [], 'capability manifest advertises no VIAL lowering');
     is_deeply(
         $vial->{generated_review_artifacts},
-        [qw(source/vial-normal.vial review/*.isf review/*.fsm hial-vial-bridge.json vial-plan.json vial-tool-manifest.json)],
-        'capability manifest advertises the exact public VIAL planning artifacts',
+        [qw(source/vial-normal.vial review/*.isf review/*.fsm hial-vial-bridge.json vial-plan.json vial-tool-manifest.json verification-output-manifest.json backends/sv_portable_verilator/** results/*/verification-result-manifest.json)],
+        'capability manifest advertises the exact public VIAL plan/run artifacts',
     );
 };
 
