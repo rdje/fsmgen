@@ -5,18 +5,18 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19:
-  execute declared verifiers`).
-- active_work_unit: `.19` is complete; the next clean selection is `.20`,
-  subject to disposition of the newly supplied PGEN/ANVIL follow-up reviews.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20:
+  activate scoped currency contracts`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20` alone is active
+  from clean `.19` commit `25c815326`.
 - current_state: Generated freshness and version-object retrieval now declare
   `core:`, `adapter:`, or `external:` execution. Core programs run from the
   repository root; the registry-driven adapter runner issues exact one-use
   proofs only after success; external contracts fail closed. The wrapper and
   hosted CI both reach the behavior through the unconditional doctrine driver.
-- next_action: from this clean `.19` commit, read and disposition the supplied
-  PGEN and ANVIL review documents against the existing `.15`-`.23` correction
-  leaves before activating the next implementation leaf.
+- next_action: implement opt-in lifecycle-scoped currency contracts and local
+  calibrated verifiers without a global date heuristic; add the declared
+  positive, self-refutation, legitimate-closure, frozen, and absent fixtures.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: `.8`-`.10`/`.13` wait for utility or
@@ -38,5 +38,6 @@ history; this file carries only the current bounded resume state.
   runtime, and normalized results; `.11` now qualifies only the selected AHB
   handwritten-oracle comparison, not general cross-backend parity.
 - Decisions `0041`/`0042`/`0044`, the packet, and its bounded disposition own
-  feedback-sensitive containment work. Push only on explicit request (`0005`);
-  PNT runs autonomously (`0003`). Consult the Knowledge Map first.
+  feedback-sensitive containment work. The rereferenced PGEN/ANVIL files match
+  the exact `.17` hashes and add no new finding. Push only on explicit request
+  (`0005`); PNT runs autonomously (`0003`). Consult the Knowledge Map first.

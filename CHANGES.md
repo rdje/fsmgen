@@ -32233,3 +32233,12 @@ task tree and git.
 - The local wrapper invokes the runner unconditionally, and the bootstrap gate
   proves hosted CI reaches it through the single doctrine driver. Focused
   execution/failure/deletion/vacuity coverage passes at `Files=3, Tests=21`.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20 — scoped currency activated
+
+- Confirmed the supplied PGEN and ANVIL paths exactly match the sizes and
+  SHA-256 identities already recorded by `.17`; they are not new follow-ups and
+  require no disposition change.
+- From clean `.19` commit `25c815326`, activate `.20` alone for opt-in lifecycle
+  currency. This continuity slice adds no schema, verifier, currency contract,
+  lifecycle, archive, document-family content, or product behavior change.

@@ -122,3 +122,9 @@ duplicate, and unused proofs fail closed. An `external:` contract is reported
 as visible degradation and cannot yield green. The local wrapper invokes the
 adapter runner unconditionally, while the bootstrap gate proves hosted CI
 invokes the single doctrine driver rather than re-enumerating this check.
+
+The rereferenced PGEN and ANVIL paths reproduce the exact sizes and SHA-256
+identities already recorded by `.17`; they are not follow-up revisions. Clean
+`.19` commit `25c815326` activates `.20` alone to implement lifecycle-scoped,
+opt-in currency contracts without a global date-shape heuristic. The activation
+itself changes no currency schema, verifier, or document lifecycle.

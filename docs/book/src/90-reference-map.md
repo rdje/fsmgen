@@ -198,6 +198,10 @@ adapter program and supplies an exact one-use proof to the neutral checker;
 missing or unused proofs fail. External contracts are visible fail-closed
 degradation, never a green presence check. The bootstrap gate proves hosted CI
 reaches this path through the single unconditional doctrine driver.
+The rereferenced PGEN and ANVIL files exactly match the hashes already recorded
+by `.17`, so they add no new review scope. Clean `.19` commit `25c815326`
+activates `.20` alone for lifecycle-scoped, opt-in currency contracts; no
+currency schema or verifier changes in the activation slice.
 
 ## What The Old User Guide Still Does
 
