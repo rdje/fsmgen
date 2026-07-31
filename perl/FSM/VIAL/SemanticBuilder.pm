@@ -719,7 +719,7 @@ sub _build_dut {
     my $unit_ref = _string($unit_items->[1], "$path/unit", 1);
     my $domains_items = _form($items->[3], 'domains', 2, undef, "$path/domains");
     my $endpoints_items = _form($items->[4], 'endpoints', 2, undef, "$path/endpoints");
-    my $transactions_items = _form($items->[5], 'transactions', 2, undef, "$path/transactions");
+    my $transactions_items = _form($items->[5], 'transactions', 1, undef, "$path/transactions");
 
     my (%domain_names, %domain_refs, @domains);
     for my $index (1 .. $#{$domains_items}) {

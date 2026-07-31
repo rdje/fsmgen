@@ -338,15 +338,16 @@ subtest 'private capability/support accounting is exact and makes no backend cla
     my $manifest = build_capability_manifest();
     is_deeply($manifest->{language_surface}{vial_execution}, $contract, 'capability manifest publishes the exact private execution contract');
     my ($surface) = grep { $_->{suffix} eq '.vial' } @{$manifest->{language_surface}{file_surfaces}{entries}};
-    is($surface->{status}, 'shipped_bounded_public_source_tooling_and_private_execution', '.vial status composes public source tooling with private execution');
+    is($surface->{status}, 'shipped_bounded_public_planning_and_private_execution', '.vial status composes public planning with private execution');
     is_deeply(
         $surface->{supported_cli_modes},
         [
             'fsmgen vial capabilities [--json]',
             'fsmgen vial check [--style auto|normal|terse] [--json] SOURCE.vial',
             'fsmgen vial format --style normal|terse SOURCE.vial',
+            'fsmgen vial plan --dut HIAL_SOURCE [PLAN_OPTIONS] SOURCE.vial',
         ],
-        '.vial advertises only the shipped public source-tooling CLI modes',
+        '.vial advertises the shipped public source and planning CLI modes',
     );
 };
 

@@ -9540,8 +9540,13 @@ provenance-free semantic meaning digest. Exact discovery and support accounting
 advertise only those source surfaces; HIAL binding, plans, artifact writes,
 backend emission, compile, runtime, results, and parity remain unavailable.
 Clean `.10.1` implementation commit `50a0d7d39` activates `.10.2` alone for
-planning/artifact implementation; `.10.3` and `.10.4` retain backend/trace and
-exact runtime/result implementation. Activation changes no product behavior.
+planning/artifact implementation. Completed `.10.2` now composes direct IAL0,
+direct IAL1, and IAL2-via-generated/reparsed-IAL1 review routes with the
+private binder; publishes canonical normal source, generated review artifacts,
+defensive bridge/plan/tool-manifest projections through virtual or atomic
+repository-local graphs; and admits transaction-free direct-IAL0 endpoint
+fixtures without inventing transaction truth. `.10.3` and `.10.4` retain
+backend/trace and exact runtime/result implementation; `.11` retains parity.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

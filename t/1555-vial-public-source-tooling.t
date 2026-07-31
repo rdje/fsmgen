@@ -252,21 +252,21 @@ subtest 'API invocation, style, syntax, and host-object boundaries fail closed' 
     is($invalid_quiet_result->{diagnostics}[0]{code}, 'VIAL_TOOL_INVOCATION_ERROR', 'non-Boolean quiet value fails closed');
 
     my $plan = execute_vial_tool_request(request(action => 'plan'), environment());
-    ok(!$plan->{success}, 'plan remains unavailable in the source-only child');
-    is($plan->{diagnostics}[0]{code}, 'VIAL_TOOL_INVOCATION_ERROR', 'unavailable plan fails explicitly');
+    ok(!$plan->{success}, 'plan without its required HIAL source fails closed');
+    is($plan->{diagnostics}[0]{code}, 'VIAL_TOOL_INVOCATION_ERROR', 'missing HIAL source fails invocation validation');
 };
 
 subtest 'CLI is one adapter over the API and preserves legacy dispatch' => sub {
     my ($cap_status, $cap_out, $cap_err) = run_cli(qw(vial capabilities));
     is($cap_status, 0, 'human capabilities exits zero');
-    like($cap_out, qr/VIAL source tooling: capabilities, check, format/, 'human capabilities names exact actions');
+    like($cap_out, qr/VIAL tooling: capabilities, check, format, plan/, 'human capabilities names exact actions');
     is($cap_err, '', 'human capabilities has no stderr');
 
     my ($json_status, $json_out, $json_err) = run_cli(qw(vial capabilities --json));
     is($json_status, 0, 'JSON capabilities exits zero');
     my $cap_result = JSON::PP->new->decode($json_out);
     is($cap_result->{schema}, 'fsmgen.vial_tool_result.v1', 'CLI JSON uses the API result schema');
-    is_deeply($cap_result->{capability_evidence}{supported_actions}, [qw(capabilities check format)], 'CLI capability actions are exact');
+    is_deeply($cap_result->{capability_evidence}{supported_actions}, [qw(capabilities check format plan)], 'CLI capability actions are exact');
     is($json_err, '', 'JSON capabilities has no stderr');
 
     my ($check_status, $check_out, $check_err) = run_cli('vial', 'check', $source_id);
@@ -300,22 +300,26 @@ subtest 'CLI is one adapter over the API and preserves legacy dispatch' => sub {
     is($legacy_err, '', 'legacy capability manifest has no stderr');
 };
 
-subtest 'capability and support accounting advertise only shipped source tooling' => sub {
+subtest 'capability and support accounting compose source tooling with shipped planning' => sub {
     my $contract = build_vial_tooling_contract();
     is_deeply([sort keys %{$contract}], [sort @{vial_tooling_contract_keys()}], 'tooling contract keys are exact');
     is_deeply($contract, vial_tool_capabilities(), 'public capability function returns the canonical contract');
-    is_deeply($contract->{supported_actions}, [qw(capabilities check format)], 'contract advertises source actions only');
-    ok(!$contract->{writes_files}, 'tooling contract denies file writes');
+    is_deeply($contract->{supported_actions}, [qw(capabilities check format plan)], 'contract advertises source actions plus plan');
+    ok($contract->{writes_files}, 'tooling contract records atomic filesystem planning writes');
     ok($contract->{public_embedding_api}, 'tooling contract advertises bounded public API');
     my %nonclaim = map { $_ => 1 } @{$contract->{explicit_nonclaims}};
-    ok($nonclaim{hial_binding} && $nonclaim{backend} && $nonclaim{runtime} && $nonclaim{parity_pass}, 'plan/backend/runtime/parity non-claims are explicit');
+    ok($nonclaim{backend} && $nonclaim{runtime} && $nonclaim{parity_pass}, 'backend/runtime/parity non-claims remain explicit');
 
     my $manifest = build_capability_manifest();
     is_deeply($manifest->{language_surface}{vial_tooling}, $contract, 'ordinary manifest embeds exact VIAL-only tooling contract');
     my ($entry) = grep { $_->{id} eq 'feature.vial_public_check_format' } regression_corpus_entries();
     ok($entry, 'support accounting has a distinct public source-tooling identity');
     is($entry->{coverage}, 'vial_public_check_format_cli_api', 'support coverage is exact');
-    is_deeply($entry->{required_capabilities}, $contract->{capabilities}, 'support and capability IDs agree');
+    is_deeply(
+        $entry->{required_capabilities},
+        [@{$contract->{capabilities}}[0 .. 4]],
+        'source-tooling support entry retains the exact source-only capability subset',
+    );
 };
 
 sub contains_non_json_reference {

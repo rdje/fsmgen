@@ -4,9 +4,9 @@ Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9`
 Status: selected; active parent `.10` owns implementation after clean
 activation from commit `ab3e73b72`. Clean activation commit `5fd766600`
-decomposes that work into `.10.1` public source tooling, `.10.2` planning and
-artifact transactions, `.10.3` backend emission/trace projection, and `.10.4`
-Verilator run/result integration
+decomposes that work into completed `.10.1` public source tooling, completed
+`.10.2` planning/artifact transactions, proposed `.10.3` backend emission/
+trace projection, and proposed `.10.4` Verilator run/result integration
 Decision: `0043`
 
 ## Outcome
@@ -569,10 +569,11 @@ substrate evidence for selection, not generated-VIAL backend evidence.
 
 ## Implementation Ownership, Validation, And Rollback
 
-This selection creates no parser widening, public command/API, artifact,
-backend module, runtime package, Verilator invocation in product code, result
-producer, capability/support entry, or runtime/parity claim. Proposed `.10`
-must be separately activated from a clean repository before implementation.
+The selection itself created no implementation. Completed `.10.1`/`.10.2`
+now provide source tooling, public planning, and atomic target-neutral
+artifacts; they create no backend module, runtime package, Verilator invocation
+in product code, result producer, or runtime/parity claim. `.10.3` must be
+separately activated from a clean repository before backend implementation.
 
 Selection signoff requires current source/bridge/execution tests, the existing
 AHB Verilator oracle, task/roadmap/audit/decision/book/fact continuity, relative

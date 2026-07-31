@@ -1070,6 +1070,16 @@ manifest output while keeping the exact file lists widenable.
 | `contract.duplicate_embedded_rtlif_root` | [t/corpus/duplicate_embedded_rtlif_top.fsm](t/corpus/duplicate_embedded_rtlif_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 
 ## Current locking tests
+- [t/1555-vial-public-source-tooling.t](t/1555-vial-public-source-tooling.t)
+  owns `vial_public_check_format_cli_api`: equivalent normal/terse source,
+  defensive closed requests/results, public capabilities, repository-safe CLI
+  reads, deterministic formatting, and no-write source actions.
+- [t/1556-vial-public-planning-artifacts.t](t/1556-vial-public-planning-artifacts.t)
+  owns `vial_public_plan_cli_api`: direct IAL0, direct IAL1, and IAL2-via-
+  generated/reparsed-IAL1 routes; exact defensive bridge/plan/tool-manifest
+  graphs; transaction-free direct-IAL0 endpoint planning; virtual/API and
+  atomic repository publication; identity, collision, symlink, traversal,
+  sanitization, cleanup, capability, support, and runtime-nonclaim gates.
 - [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t)
   executes explicit structural direct-actual composition through linked-plan,
   pipeline, and CLI coverage, including unsized numeric actuals, typed literal

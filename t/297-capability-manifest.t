@@ -2855,8 +2855,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     my %file_surface_by_suffix = map { $_->{suffix} => $_ } @{$manifest->{language_surface}{file_surfaces}{entries}};
     is(
         $file_surface_by_suffix{'.vial'}{status},
-        'shipped_bounded_public_source_tooling_and_private_execution',
-        'manifest records shipped VIAL public source tooling plus private target-neutral execution',
+        'shipped_bounded_public_planning_and_private_execution',
+        'manifest records shipped VIAL public planning plus private target-neutral execution',
     );
     is_deeply(
         $file_surface_by_suffix{'.vial'}{supported_cli_modes},
@@ -2864,13 +2864,14 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
             'fsmgen vial capabilities [--json]',
             'fsmgen vial check [--style auto|normal|terse] [--json] SOURCE.vial',
             'fsmgen vial format --style normal|terse SOURCE.vial',
+            'fsmgen vial plan --dut HIAL_SOURCE [PLAN_OPTIONS] SOURCE.vial',
         ],
-        'manifest advertises exactly the shipped VIAL source-tooling CLI modes',
+        'manifest advertises exactly the shipped VIAL source and planning CLI modes',
     );
     like(
         $file_surface_by_suffix{'.vial'}{current_boundary},
-        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*private no-file execution seam binds .* into immutable target-neutral VIALExecutionIR.*source-tooling CLI\/API writes no file.*no public plan file, artifact generation, backend, compile, simulation, runtime result, parity pass, UVM, VHDL, mixed-language, or scale claim/,
-        'manifest keeps the public source/private execution boundary and every non-claim explicit',
+        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits the same graph atomically.*no backend, compile, simulation, runtime result, parity pass, UVM, VHDL, mixed-language, or scale claim/,
+        'manifest keeps the public planning/private execution boundary and every runtime non-claim explicit',
     );
     is_deeply(
         [sort keys %{$manifest->{language_surface}{hial_vial_bridge}}],
@@ -2930,8 +2931,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         'manifest advertises the bounded public VIAL source-tooling embedding API',
     );
     ok(
-        !$manifest->{language_surface}{vial_tooling}{writes_files},
-        'manifest records that VIAL source tooling writes no files',
+        $manifest->{language_surface}{vial_tooling}{writes_files},
+        'manifest records that VIAL planning writes atomic repository-local artifacts',
     );
     my %isf_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.isf'}{supported_cli_modes} || []};
     ok(

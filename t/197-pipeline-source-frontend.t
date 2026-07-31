@@ -17,9 +17,7 @@ subtest 'source frontend rebuilds the bounded direct-root parsing and semantic-m
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'source_frontend_direct_root.fsm');
 
-    write_file(
-        $fsm_path,
-        <<'FSM'
+    my $source_text = <<'FSM';
 (?fsm:source_frontend_direct_root
   (+system
     (clock clk)
@@ -33,10 +31,18 @@ subtest 'source frontend rebuilds the bounded direct-root parsing and semantic-m
   )
 )
 FSM
+    write_file(
+        $fsm_path,
+        $source_text,
     );
 
     my $frontend_raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
         fsm_file => $fsm_path,
+        debug_level => 0,
+    );
+    my $in_memory_raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_source(
+        source_text => $source_text,
+        source_label => 'source_frontend_direct_root.fsm',
         debug_level => 0,
     );
     my $frontend_source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($frontend_raw_ast);
@@ -51,6 +57,11 @@ FSM
         $frontend_raw_ast,
         $pipeline_result->{raw_ast},
         'source frontend parses the same raw AST surface the pipeline later carries',
+    );
+    is_deeply(
+        $in_memory_raw_ast,
+        $frontend_raw_ast,
+        'in-memory parsing preserves the exact bounded direct-root AST surface',
     );
     is_deeply(
         $frontend_source_info,

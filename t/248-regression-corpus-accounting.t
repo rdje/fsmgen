@@ -32,6 +32,7 @@ my %allowed_classifications = map { $_ => 1 } qw(
 my %allowed_coverages = map { $_ => 1 } qw(
     vial_semantic_report_private_api
     vial_public_check_format_cli_api
+    vial_public_plan_cli_api
     direct_root_pipeline_cli
     composition_top_pipeline_cli
     isf_pipeline_cli
@@ -397,6 +398,7 @@ my %strict_rejection_coverages = map { $_ => 1 } qw(
 my %coverage_classification = (
     vial_semantic_report_private_api => 'supported_smoke',
     vial_public_check_format_cli_api => 'supported_smoke',
+    vial_public_plan_cli_api => 'supported_smoke',
     direct_root_pipeline_cli => 'supported_smoke',
     composition_top_pipeline_cli => 'supported_smoke',
     isf_pipeline_cli => 'supported_smoke',
@@ -1279,6 +1281,23 @@ for my $entry (@entries) {
             "VIAL tooling entry '$entry->{id}' records every deferred plan/output/runtime claim",
         );
     }
+    elsif ($entry->{source_kind} eq 'vial' && $entry->{coverage} eq 'vial_public_plan_cli_api') {
+        is_deeply(
+            $entry->{supported_phases},
+            [qw(parse typecheck hial_review bridge_binding execution_plan artifact_generation atomic_publication)],
+            "VIAL planning entry '$entry->{id}' claims the exact public planning phases",
+        );
+        is_deeply(
+            $entry->{required_capabilities},
+            [qw(vial.tooling.cli.v1 vial.tooling.api.v1 vial.artifact_layout.v1 vial.tool_manifest.v1 vial.verification_output_manifest.v2)],
+            "VIAL planning entry '$entry->{id}' keeps exact planning capabilities",
+        );
+        is_deeply(
+            $entry->{explicit_nonclaims},
+            [qw(backend compile simulation result parity uvm vhdl mixed_language scale)],
+            "VIAL planning entry '$entry->{id}' records every deferred runtime claim",
+        );
+    }
     elsif (
         $entry->{source_kind} eq 'fsm'
             || $entry->{source_kind} eq 'dt'
@@ -1340,8 +1359,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    375,
-    'catalog now keeps three hundred seventy-five named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL semantic/tooling fixtures',
+    376,
+    'catalog now keeps three hundred seventy-six named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL semantic/tooling/planning fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),

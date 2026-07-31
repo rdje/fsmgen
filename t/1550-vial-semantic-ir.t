@@ -442,18 +442,23 @@ subtest 'semantic corpus claims stay bounded while capability accounting include
 
     my $surface = build_language_surface_section();
     my ($vial) = grep { $_->{suffix} eq '.vial' } @{$surface->{file_surfaces}{entries}};
-    is($vial->{status}, 'shipped_bounded_public_source_tooling_and_private_execution', 'capability manifest includes public source tooling plus private target-neutral execution');
+    is($vial->{status}, 'shipped_bounded_public_planning_and_private_execution', 'capability manifest includes public planning plus private target-neutral execution');
     is_deeply(
         $vial->{supported_cli_modes},
         [
             'fsmgen vial capabilities [--json]',
             'fsmgen vial check [--style auto|normal|terse] [--json] SOURCE.vial',
             'fsmgen vial format --style normal|terse SOURCE.vial',
+            'fsmgen vial plan --dut HIAL_SOURCE [PLAN_OPTIONS] SOURCE.vial',
         ],
-        'capability manifest advertises exactly the public VIAL source-tooling CLI',
+        'capability manifest advertises exactly the public VIAL source and plan CLI',
     );
     is_deeply($vial->{lowers_to}, [], 'capability manifest advertises no VIAL lowering');
-    is_deeply($vial->{generated_review_artifacts}, [], 'capability manifest advertises no generated VIAL artifact');
+    is_deeply(
+        $vial->{generated_review_artifacts},
+        [qw(source/vial-normal.vial review/*.isf review/*.fsm hial-vial-bridge.json vial-plan.json vial-tool-manifest.json)],
+        'capability manifest advertises the exact public VIAL planning artifacts',
+    );
 };
 
 done_testing();

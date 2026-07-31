@@ -122,9 +122,9 @@ The first checked source is
 `vial/ahb_subordinate_base_output_arbitration.vial`. It represents success
 and unsupported-size scenarios, a transaction, event counters, a bounded
 scoreboard, stall coverage, one bounded size-substitution fault, and stable
-wait-cycle decision identity. The current public source tool can check either
-source projection, produce a sanitized semantic report, and format normal or
-terse source. Public bridge binding, plan files, generated fixtures,
+wait-cycle decision identity. The public tool can check either source
+projection, produce a sanitized semantic report, format normal or terse
+source, and bind it to reviewed HIAL through `plan`. Generated target fixtures,
 simulation, and results remain later phases. See
 the exact [VIAL source and SemanticIR v1 contract](../../VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).
 
@@ -495,17 +495,17 @@ event references, sampled endpoints, enum members, and random choices are all
 resolved before execution. The sanitized plan omits private event expressions
 and all target/methodology spelling.
 
-The implementation fails atomically—no partial IR or plan—on unresolved or
+The private implementation fails atomically—no partial IR or plan—on unresolved or
 wrong-access references, disallowed type direction, missing event, unknown
 capability, non-empty first-profile native catalog, bad scenario selection,
 invalid replay identity/value/constraint, random exhaustion, or a safety-limit
-violation. This is compiler elaboration only: there is still no plan file,
-result file, generated SV/UVM/VHDL fixture, compile, simulation, runtime,
-parity pass, mixed-language claim, or scale qualification. Completed `.10.1`
-adds public source-only tooling around the parser and sanitized semantic
-projection; it does not expose this private elaborator.
+violation. Completed `.10.2` now invokes this compiler elaboration behind a
+closed public planner and serializes only sanitized projections. There is still
+no result file, generated SV/UVM/VHDL fixture, compile, simulation, runtime,
+parity pass, mixed-language claim, or scale qualification. The public API does
+not expose this private elaborator or its IR objects.
 
-## Shipped public source tooling and selected plan/run boundary
+## Shipped public source and planning tooling
 
 Decision `0039` selects one intent-oriented command family without exposing
 private compiler objects:
@@ -518,17 +518,24 @@ fsmgen vial plan --dut dut.ppif source.vial
 fsmgen vial run --dut dut.ppif --backend PROFILE source.vial
 ```
 
-The first three commands now ship through `.10.1`. `plan` and `run` remain
-selected but unavailable until `.10.2` through `.10.4` implement their plan,
-artifact, backend, and runtime owners; asking for either fails explicitly
-without writing an artifact. The CLI is an adapter over the same closed,
-JSON-safe source-tool request/result contract available to embedding hosts.
+The first three commands ship through `.10.1`, and `plan` ships through
+`.10.2`. `run` remains unavailable until `.10.3`/`.10.4` implement the backend,
+trace, tool execution, and result owners; asking for it returns
+`VIAL_BACKEND_UNAVAILABLE` without writing an artifact. The CLI is an adapter
+over the same closed, JSON-safe request/result contract available to embedding
+hosts.
 
 The source and DUT are deliberately separate. The VIAL file says how to verify
 meaning; `--dut` names the HIAL source that supplies ports, transactions,
 events, domains, and probes. A `.ppif` DUT is not handed directly to a
 verification backend: FSMGen first generates and reparses IAL1, then generates
 IAL0, and only the review-routed HIAL bridge may bind the VIAL plan.
+
+All three canonical HIAL entry routes are supported. Direct IAL0 has structural
+unit/domain/endpoint truth but no transaction contract, so it can plan a
+transaction-free reset/sample/check fixture. A transaction-bearing fixture
+must bind direct IAL1 metadata or IAL2 protocol facts that have first become
+reviewable generated IAL1. This is capability honesty, not name inference.
 
 Normal and terse VIAL are reversible views of the same semantics. Normal form
 is fully explicit:
@@ -578,10 +585,19 @@ Format that source into terse form on standard output:
 `check --style normal|terse` can require an exact authored style; a mismatch
 is `VIAL_SOURCE_STYLE_ERROR`. `capabilities --json` and `check --json` return
 the closed public result envelope. Formatting intentionally returns source
-text rather than mixing JSON with authored VIAL. These operations read only
+text rather than mixing JSON with authored VIAL. These source operations read only
 repository-root-relative, non-symlink `.vial` files and write nothing.
 
-The future `plan` action will publish only reviewable projections:
+Plan the checked AHB fixture against its canonical IAL2 source:
+
+```console
+$ ./bin/fsmgen vial plan \
+    --dut ppif/ahb_lite_subordinate.ppif \
+    vial/ahb_subordinate_base_output_arbitration.vial
+VIAL plan planned (.artifacts/vial/base-output-arbitration/<full-plan-digest>)
+```
+
+The action publishes only reviewable projections:
 
 ```text
 .artifacts/vial/<fixture>/<full-plan-digest>/
@@ -594,9 +610,21 @@ The future `plan` action will publish only reviewable projections:
 
 The selected tree is repository-local, same-volume, content-addressed, and
 committed atomically. Failed planning leaves no partial tree; a non-identical
-existing tree is never overwritten. `.10.2` will extend the current portable
-request/result and source catalog with the selected artifact sink; the shipped
-source-only API requires neither filesystem paths nor Perl objects.
+existing tree is never overwritten. Repeating the same plan against the exact
+tree returns `unchanged`; it does not rewrite files. Generated IAL1 and IAL0
+sources appear below `review/`, while a direct IAL0 source is referenced by
+identity/digest and is not copied as a generated artifact. The first bounded
+direct-IAL0 route accepts one root `.fsm`; package imports fail closed until a
+later slice defines their complete review graph.
+
+Embedding callers choose an exact `artifact_policy`: `virtual` returns the
+same ordered graph in an initially empty caller-owned sink, while `repository`
+delegates atomic publication to a filesystem adapter such as the CLI. The
+optional artifact root is always repository-relative; null selects the default
+content-addressed root. Every artifact has exact content metadata. The tool
+manifest inventories every artifact except itself, because a self-hash would
+be recursively undefined; exact-tree validation still includes the manifest
+file. Neither mode exposes Perl objects or absolute host paths.
 
 Existing `.isf` UVM/VHDL skeleton commands and their
 `verification-output-manifest.json` version 1 stay unchanged. A future VIAL
@@ -872,6 +900,9 @@ emission and trace projection, and `.10.4` exact Verilator run/results. `.10.1`
 now ships the first three source commands, equivalent normal and terse
 projections, the defensive source-only API, and exact discovery and support
 accounting. Clean `.10.1` commit `50a0d7d39` activates `.10.2` alone for
-planning/artifacts; `.11` retains runtime parity.
-No plan or result file, target artifact, compile/run path, runtime result,
-parity pass, or backend behavior ships in `.10.1`.
+planning/artifacts. Completed `.10.2` now ships all three canonical review
+routes, defensive bridge/plan/tool-manifest projections, transaction-free
+direct-IAL0 endpoint fixtures, and virtual or atomic repository-local artifact
+graphs. `.10.3` is the next backend/trace owner; `.11` retains runtime parity.
+No target backend artifact, result file, compile/run path, runtime result,
+parity pass, or backend behavior ships in `.10.2`.

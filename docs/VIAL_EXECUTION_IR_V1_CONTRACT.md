@@ -2,7 +2,8 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6`
-Status: selected and refined by decision `0037`; bounded private `.7.3` implementation shipped
+Status: selected and refined by decision `0037`; bounded private `.7.3`
+implementation and public `.10.2` plan projection shipped
 
 ## Outcome
 
@@ -29,7 +30,8 @@ fsmgen.vial_parity_report.v1
 No file is written in `.6` or `.7`. Decision `0039` and
 `docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md` now select the public CLI/API,
 repository-local output layout, filenames, artifact discovery, and migration
-contract under `.8`. Decision `0043` and
+contract under `.8`; completed `.10.2` publishes only the sanitized plan and
+bridge projections. Decision `0043` and
 `docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md` select the first
 known-value plain-SystemVerilog backend; implementation remains owned by
 `.10`. The schema names
@@ -50,16 +52,16 @@ implement this contract but never define or leak into authored VIAL meaning.
   + optional replay/native catalogs      selected here; empty in first fixture
   -> bind + elaborate + classify
   -> private immutable VIALExecutionIR   selected here; implementation .7
-  -> sanitized vial-plan projection      selected here; placement selected .8
+  -> sanitized vial-plan projection      shipped publicly by .10.2
   -> target backend                      .9 and later
   -> normalized result manifest          selected here; first runtime .10
   -> parity comparison                    selected here; runtime parity .11+
 ```
 
-Only the future `FSM::VIAL::ExecutionBuilder` constructs
+Only `FSM::VIAL::ExecutionBuilder` constructs
 `FSM::VIAL::ExecutionIR`. A target backend consumes ExecutionIR and never binds
-raw SemanticIR or bridge records independently. The future
-`FSM::VIAL::ExecutionReport` produces the plan projection. Structured inputs
+raw SemanticIR or bridge records independently. `FSM::VIAL::ExecutionReport`
+produces the plan projection. Structured inputs
 are cloned before validation; every object accessor and report returns a deep
 defensive copy.
 
@@ -1270,8 +1272,10 @@ Clean directional-binding selection commit `2a1b3cefc` permits that
 continuity-only activation. The completed implementation now binds the checked
 AHB fixture, constructs immutable ExecutionIR and a defensive in-process plan,
 resolves deterministic random/replay and event/adapter references, enforces
-limits, and fails atomically. It still emits no plan/result file, backend,
-runtime, or parity pass.
+limits, and fails atomically. Completed `.10.2` composes that private builder
+behind the public planner, admits transaction-free direct-IAL0 endpoint
+fixtures, and publishes the defensive plan without exposing ExecutionIR. It
+still emits no backend, result, runtime, or parity pass.
 
 ## Validation And Rollback
 

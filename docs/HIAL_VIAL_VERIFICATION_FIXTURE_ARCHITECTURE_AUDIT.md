@@ -131,11 +131,11 @@ The necessary compiler separation is private and phase-based:
 
 | Boundary | Phase | Owner | Invariant | Exposure |
 | --- | --- | --- | --- | --- |
-| `.vial` | authored source | shipped `fsmgen vial` source tooling over private `FSM::VIAL::Parser` | complete source identity, normal/terse equivalence, and deterministic order | public/versioned source plus closed check/format API; no public plan yet |
+| `.vial` | authored source | shipped `fsmgen vial` tooling over private `FSM::VIAL::Parser` | complete source identity, normal/terse equivalence, and deterministic order | public/versioned source plus closed check/format/plan API |
 | `VIALSemanticIR` | semantic intent | shipped private `FSM::VIAL::SemanticIR` family | typed, validated, immutable, not DUT-bound | private |
-| `HIALVIALBridgeManifest` | report/contract projection | shipped private `FSM::HIAL::VIALBridge` family | sanitized HIAL truth with stable logical IDs and source maps | private in-process v1; public artifact deferred |
+| `HIALVIALBridgeManifest` | report/contract projection | shipped private `FSM::HIAL::VIALBridge` family | sanitized HIAL truth with stable logical IDs and source maps | private producer; defensive public plan projection |
 | `VIALExecutionIR` | bound execution plan | shipped private `FSM::VIAL::ExecutionBuilder` family | every reference bound, capability checked, deterministic operation graph | private |
-| `vial-plan.json` | report projection | future plan-report owner | sanitized binding/schedule/capability/source-map view | bounded public/versioned |
+| `vial-plan.json` | report projection | shipped `.10.2` public planner | sanitized binding/schedule/capability/source-map view | bounded public/versioned |
 
 `VIALSemanticIR` is distinct from SourceHIR and HIAL IR because it represents
 pure verification semantics, not a source route to synthesizable hardware.
@@ -569,9 +569,13 @@ commit `5fd766600` decomposes it into `.10.1` source tooling, `.10.2` planning,
 `.10.3` backend/trace projection, and `.10.4` runtime/results. Completed `.10.1`
 now ships capabilities/check/normal-terse formatting through the closed
 source-only CLI/API with exact discovery and support accounting. Clean commit
-`50a0d7d39` activates `.10.2` alone; `.11` retains runtime parity. No plan,
-target artifact,
-compile/run path, result producer, or backend behavior ships in `.10.1`.
+`50a0d7d39` activates `.10.2` alone. Completed `.10.2` now composes all three
+canonical HIAL review routes with the private binder, publishes canonical
+normal source/review/bridge/plan/tool-manifest graphs virtually or through an
+atomic repository-local transaction, and admits transaction-free endpoint
+fixtures for direct IAL0 without inventing transaction meaning. `.11` retains
+runtime parity. No target backend artifact, compile/run path, result producer,
+or backend behavior ships in `.10.2`.
 
 ## Rollback
 

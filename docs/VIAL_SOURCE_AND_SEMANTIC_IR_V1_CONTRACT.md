@@ -54,8 +54,8 @@ allocation, recursion, unbounded loops/queues/crosses, runtime-created names,
 and backend lifecycle hooks. Decision `0036` and
 `docs/VIAL_EXECUTION_IR_V1_CONTRACT.md` now select typed native, execution,
 replay, plan, result, and parity contracts. Private target-neutral execution
-now ships through `.7.3`; public plan/artifact, backend/runtime/result, and
-parity remain owned by `.10.2` through `.11`.
+now ships through `.7.3`; public plan/artifact ships through `.10.2`, while
+backend/runtime/result and parity remain owned by `.10.3` through `.11`.
 
 Decision `0034` makes this an initial-profile boundary, not VIAL's expressive
 ceiling. VIAL is not constrained by synthesizability: later typed native
@@ -312,7 +312,7 @@ a typed comparator.
   (endpoints
     (endpoint ALIAS STRING TYPE_EXPR public_port|verification_probe)+)
   (transactions
-    (transaction ALIAS STRING TRANSACTION_REF)+))
+    (transaction ALIAS STRING TRANSACTION_REF)*))
 ```
 
 Strings are opaque logical bridge references at the semantic phase. They must
@@ -322,9 +322,14 @@ authored expected type and access class are binding assertions. Core v1 rejects
 `native_hierarchy`; typed native extension binding is selected by `.6` and
 remains unimplemented until its later semantic/profile owners act.
 
-The first profile requires exactly one domain per fixture, at least one public
-endpoint, and at least one transaction binding. Multiple domains parse only as
-`VIAL_PROFILE_UNSUPPORTED` so source capability cannot exceed execution proof.
+The first profile requires exactly one domain per fixture and at least one
+public endpoint. Transaction bindings are optional: a transaction-free fixture
+may reset a direct-IAL0 DUT and sample/check public endpoints, but transaction
+actions, events, models, scoreboards, and transaction-targeted faults still
+require exact declared bindings. This compatibility widening closes the later
+public-tooling contract's direct-IAL0 route without inventing protocol meaning.
+Multiple domains parse only as `VIAL_PROFILE_UNSUPPORTED` so source capability
+cannot exceed execution proof.
 
 ### Model and scoreboard instances
 
@@ -864,8 +869,8 @@ Implemented by separate exact owners without widening this source contract:
 
 Deferred to later exact owners:
 
-- public plan/artifact layout and schema migration (active `.10.2`); source-only
-  capabilities/check/format shipped in `.10.1`;
+- public plan/artifact layout and schema discovery (completed `.10.2`);
+  source-only capabilities/check/format shipped in `.10.1`;
 - plain-SystemVerilog output/runtime/results (`.10.3`/`.10.4`), parity (`.11`),
   and UVM, VHDL, and mixed-language output/runtime;
 - broader property operators, multi-domain fixtures, aggregate model state,

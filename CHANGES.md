@@ -32058,3 +32058,20 @@ task tree and git.
   three trees/889 nodes/one segment/one index archive; Knowledge Map validates
   1,096 facts/5,735 keys; Memory is 38 lines; all 37 mdBook chapters test and
   the 73-file/16,900-KiB repository-root build is removed exactly.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2 — VIAL planning artifacts shipped
+
+- Added public `fsmgen vial plan` and its closed in-memory equivalent over the
+  existing private HIAL bridge and deterministic VIAL execution builders.
+  Direct IAL0, direct IAL1, and IAL2-via-generated/reparsed-IAL1 retain their
+  canonical review routes; direct IAL0 now supports transaction-free endpoint/
+  reset fixtures without inventing transaction or protocol meaning.
+- Planning returns deterministic defensive bridge/plan/tool-manifest data plus
+  an ordered canonical-normal/review/report artifact graph. The CLI publishes
+  that graph atomically below the repository, returns `unchanged` for an exact
+  tree, and rejects collisions, traversal, symlinks, off-volume paths, partial
+  trees, and failures without overwrite or staging residue.
+- Capability/support accounting now reports the distinct public-plan surface.
+  Target backend generation, compile, simulation, runtime, results, parity,
+  UVM, VHDL, mixed-language, and scale remain explicit non-claims owned by
+  later leaves.

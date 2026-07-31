@@ -202,11 +202,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.1: ship public VIAL source tooling`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement public VIAL planning through canonical HIAL review routes and one deterministic repository-local or virtual artifact transaction.`
   Acceptance: `The selected direct IAL0, direct IAL1, and IAL2-via-generated/reparsed-IAL1 routes bind checked VIAL through the existing private bridge and execution builders; CLI paths are repository-relative, in-memory callers use the closed source-catalog/artifact-sink boundary, canonical bridge/plan/tool manifests and review artifacts are hash-ordered and byte-stable, and every failure publishes no partial tree.`
-  Verification: `Clean .10.1 implementation commit 50a0d7d39 activates only canonical planning/artifact implementation .10.2. The selected plan/API/layout/manifest/transaction contract and all product behavior remain unchanged during activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2: activate VIAL planning artifacts`
+  Verification: `Clean .10.1 implementation commit 50a0d7d39 activates only canonical planning/artifact implementation .10.2. Implementation adds the private canonical HIAL PlanBuilder, closed public plan request/result projection, exact virtual artifact graph, and atomic repository-local ArtifactTransaction. Direct IAL0 now admits transaction-free endpoint/reset fixtures, direct IAL1 consumes reviewed bridge metadata then generated IAL0, and IAL2 must generate and reparse IAL1 before generated IAL0; the checked AHB route publishes canonical normal VIAL, exact generated IAL1/IAL0 review sources, defensive bridge/plan projections, and a non-recursive self-excluding tool-manifest inventory. Identical trees return unchanged; unsafe, partial, non-identical, symlinked, traversing, colliding, malformed, or failed graphs publish nothing and leave exact staging clean. Public capability/support accounting now distinguishes plan from source tooling while backend/runtime/result/parity non-claims remain explicit. Final focused/broad/docs/mdBook/Knowledge Map/task-acceptance/doctrine and cleanup evidence is recorded below; .10.3 remains proposed for a separate clean activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2: ship VIAL planning artifacts`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.3`
   Status: `proposed`
@@ -327,9 +327,10 @@ activates `.10` alone for public-tool/backend/result implementation. Clean
 activation commit `5fd766600` decomposes that parent, and completed `.10.1`
 now ships public capabilities/check/canonical normal-terse formatting through
 one defensive source-only CLI/API with exact discovery/support accounting.
-Both source styles enter the unchanged typed semantic builder. Active `.10.2`
-now owns planning and artifact transactions; no HIAL binding, plan,
-artifact, backend, compile, runtime, result, or parity ships in `.10.1`.
+Both source styles enter the same typed semantic builder. Completed `.10.2`
+now ships canonical HIAL-routed planning and virtual/atomic repository-local
+artifact transactions. Proposed `.10.3` retains backend/trace ownership; no
+backend, compile, runtime, result, or parity ships in `.10.2`.
 Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
@@ -438,11 +439,17 @@ compiler-owned beneath C/C++ or Rust.
 - `2026-07-31`: Clean `.10.1` commit `50a0d7d39` activates only `.10.2`
   canonical planning/artifact implementation. Activation changes no API,
   plan/file, artifact transaction, backend, runtime, or product behavior.
+- `2026-07-31`: Completed `.10.2` ships defensive public planning through all
+  three canonical HIAL review routes and virtual or atomic repository-local
+  artifact graphs. The direct-IAL0 compatibility gap is closed by admitting
+  transaction-free endpoint fixtures, while transaction-bearing plans still
+  require exact reviewed transaction truth. `.10.3` remains proposed for a
+  separate clean activation; backend/runtime/parity stay unclaimed.
 
 ## Open Questions
 
-- Active `.10.2` must implement canonical planning/artifacts, then
-  `.10.3` backend/trace and `.10.4` runtime/results, without widening the
+- Proposed `.10.3` must be activated separately, then implement backend/trace;
+  `.10.4` owns runtime/results, without widening the
   known-value profile or claiming `.11` parity.
 - `.12` must choose the UVM revision and an actually available qualified
   simulator before native UVM implementation can claim compile/runtime support.
@@ -456,8 +463,8 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for active `.10.2`; clean `.10.1` commit `50a0d7d39` satisfies its
-  activation prerequisite. Result parity remains owned by `.11`.
+- None for completed `.10.2`. Proposed `.10.3` requires only a separate clean
+  activation commit. Result parity remains owned by `.11`.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -491,6 +498,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.10` decomposition | clean activation predecessor `5fd766600`; four child boundaries; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; task/live-doc/docs/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.10.1` alone active under parent `.10`; focused docs Files=7/Tests=56; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,880 KiB; Knowledge Map 1,096 facts/5,734 keys; Memory 36 lines; all nine doctrines pass at 20 surfaces/2,780 paths; no implementation or product behavior change; output removed exactly |
 | `2026-07-31` | `.10.1` implementation | source projection/CLI/API/discovery/support implementation and syntax; guarded semantic/bridge/execution/tool tests; README/live-doc/docs/path/task gates; mdBook test/build; Knowledge Map; Memory/diff; staged acceptance/doctrines; exact cleanup | `passed`; source suite Files=6/Tests=7,083; docs/live/path/task Files=11/Tests=106; 15 changed/new Perl/test paths report syntax OK; README is 245 lines/9,916 bytes, below its 246-line/9,952-byte predecessor baseline; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,900 KiB; Knowledge Map 1,096 facts/5,735 keys; Memory 37 lines; all nine staged doctrines pass at 20 live-document surfaces and 2,780/2,780 tracked Markdown paths; output removed exactly |
 | `2026-07-31` | `.10.2` activation | clean `.10.1` implementation predecessor `50a0d7d39`; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; task/docs/live/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.10.2` alone active for planning/artifacts; docs Files=4/Tests=8 and live/path/task Files=7/Tests=98; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,900 KiB; Knowledge Map 1,096 facts/5,735 keys; Memory 38 lines; implementation and product behavior unchanged; output removed exactly |
+| `2026-07-31` | `.10.2` implementation | canonical direct-IAL0/direct-IAL1/IAL2-via-IAL1 PlanBuilder; public plan CLI/API; deterministic bridge/plan/tool-manifest graph; virtual and atomic repository-local transactions; direct-IAL0 contract correction; syntax/focused/adjacent/docs/path/task/live-doc/mdBook/Knowledge Map/Memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; guarded focused/adjacent Files=11/Tests=7,108 and all changed/new Perl/test paths report syntax OK; direct IAL0 endpoint/reset planning and IAL1/IAL2 AHB routes pass while transaction-dependent direct IAL0, unsafe paths, collisions, symlinks, traversal, malformed inputs, and unavailable runtime fail atomically; docs Files=6/Tests=357; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,916 KiB; Knowledge Map 1,096 facts/5,736 keys; README 245 lines/9,913 bytes; Memory 39 lines; all nine staged doctrines pass at 20 live-document surfaces and 2,780/2,780 tracked Markdown paths; output and `.bin`/`.log` residue absent |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -642,6 +650,40 @@ compiler-owned beneath C/C++ or Rust.
   nine checks, 20 live-document surfaces, and 2,780/2,780 tracked Markdown
   paths.
 
+## Acceptance Checklist (enforced) — `.10.2` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — On clean activation predecessor
+  `07b7622cc`, both `git log -S 'package FSM::VIAL::PlanBuilder' --
+  perl/FSM/VIAL/PlanBuilder.pm` and `git log -S 'package
+  FSM::VIAL::ArtifactTransaction' -- perl/FSM/VIAL/ArtifactTransaction.pm`
+  return no commit, while the predecessor `FSM::VIAL::Tool` returns `action
+  'plan' is not available in the public source-tooling slice`. Implementation
+  then exposed a second exact contract locus: `SemanticBuilder` required at
+  least one transaction binding while the selected direct-IAL0 bridge
+  deliberately emits none, making every advertised direct-IAL0 plan
+  structurally impossible rather than merely unsupported by one fixture.
+- [x] **ADDRESSED (verified)** — The guarded semantic/bridge/execution/tool/
+  source-frontend/support/capability regression reports `All tests successful`
+  at `Files=11, Tests=7108`. It locks all three canonical HIAL review routes,
+  a positive transaction-free direct-IAL0 endpoint/reset plan, checked IAL1
+  and IAL2 AHB plans, deterministic defensive public graphs, exact hashes and
+  support truth, virtual publication, atomic filesystem publication and
+  unchanged replay, plus fail-closed transaction-dependent direct IAL0,
+  unsafe-root, collision, symlink, traversal, malformed-option, and unavailable
+  runtime cases without partial artifacts.
+- [x] **NO REGRESSION** — All changed/new Perl modules and tests report `syntax
+  OK`; the guarded broader VIAL/support/frontend suite reports `All tests
+  successful` at `Files=11, Tests=7108`, and the documentation/live/path/task
+  set reports `All tests successful` at `Files=6, Tests=357`. All 37 mdBook
+  chapters test; its repository-local 73-file/16,916-KiB build succeeds and is
+  removed exactly. `knowledge-map: OK` holds at 1,096 facts/5,736 keys;
+  README is 245 lines/9,913 bytes, below its zero-growth transition baseline;
+  Memory is 39 lines; and `[doctrine] all doctrine checks passed` covers all
+  nine checks, 20 live-document surfaces, and 2,780/2,780 tracked Markdown
+  paths. No VIAL backend, compile, simulation, result, parity, UVM, VHDL,
+  mixed-language, or scale claim ships, and the exact `.artifacts` staging,
+  `.bin`, and `.log` census is empty.
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -671,6 +713,7 @@ compiler-owned beneath C/C++ or Rust.
 | `.10` decomposition | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10: decompose portable SV implementation` | Split the active parent into independently accepted source-tool, planning/artifact, backend/trace, and runtime/result children; activate `.10.1` alone without product behavior. |
 | `.10.1` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.1: ship public VIAL source tooling` | Ship capabilities/check/canonical normal-terse formatting through a defensive source-only CLI/API, with exact discovery/support and no HIAL binding, artifacts, backend, or runtime. |
 | `.10.2` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2: activate VIAL planning artifacts` | Activate only canonical HIAL review routing, public plan projection, and atomic repository-local/virtual artifact transactions after clean `.10.1`; implementation remains unperformed. |
+| `.10.2` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2: ship VIAL planning artifacts` | Ship all three canonical HIAL plan routes, defensive bridge/plan/tool-manifest graphs, transaction-free direct-IAL0 endpoint planning, and virtual or atomic repository-local publication without a backend/runtime claim. |
 
 ## Changelog
 
@@ -703,6 +746,15 @@ compiler-owned beneath C/C++ or Rust.
 - `2026-07-31`: Clean `.10.1` implementation commit `50a0d7d39` activates only
   `.10.2` planning/artifact implementation. The selected contract and all
   product behavior remain unchanged during activation.
+- `2026-07-31`: `.10.2` ships public `fsmgen vial plan` and the equivalent
+  closed in-memory action. Canonical HIAL review routing, deterministic
+  normal/review/bridge/plan/tool-manifest graphs, identical-tree replay,
+  collision/path/symlink/cleanup safety, and exact discovery/support truth are
+  enforced. A discovered source/public-contract mismatch is corrected by
+  allowing zero DUT transaction bindings only for fixtures that use no
+  transaction-dependent semantics, enabling honest direct-IAL0 planning.
+  `.10.3` remains proposed; no target backend, compile, runtime, result, parity,
+  UVM, VHDL, mixed-language, or scale claim ships.
 
 - `2026-07-31`: `.7.3` ships the bounded private no-backend execution seam.
   The checked AHB SemanticIR and review-routed bridge now bind into immutable

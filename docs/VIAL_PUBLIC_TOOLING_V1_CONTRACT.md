@@ -3,9 +3,9 @@
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
 Status: selected and partially implemented; `.10.1` ships public
-capabilities/check/normal-terse formatting and the closed source-only API.
-Parent `.10` retains active `.10.2` planning/artifacts, `.10.3` backend/trace, and
-`.10.4` Verilator runtime/results
+capabilities/check/normal-terse formatting and `.10.2` ships canonical
+planning plus virtual/repository-local atomic artifacts. Parent `.10` retains
+`.10.3` backend/trace and `.10.4` Verilator runtime/results
 Decision: `0039`
 
 ## Outcome
@@ -22,8 +22,8 @@ fsmgen vial run --dut HIAL_SOURCE --backend BACKEND_PROFILE SOURCE.vial
 
 The first runtime-profile contract is selected by completed `.9` under
 decision `0043`. Completed `.10.1` implements the first three source-only
-actions; later children retain planning, artifact publication, backend
-emission, and runtime. This contract freezes the public syntax,
+actions and completed `.10.2` implements `plan` plus artifact publication;
+later children retain backend emission and runtime. This contract freezes the public syntax,
 request/result API, source-style equivalence, path/artifact/report schemas,
 capability discovery, diagnostics, support accounting, compatibility, and
 atomicity rules before a backend exists.
@@ -185,6 +185,13 @@ sanitized bridge, binds and elaborates the selected fixture/scenarios, then
 materializes only public projections. It does not emit target verification
 code, compile, simulate, or produce a result manifest.
 
+Completed `.10.2` ships this action. Direct IAL0 supports transaction-free
+endpoint/reset fixtures because its bridge truth has no transaction contract;
+transaction-bearing VIAL must use a route that publishes matching reviewed
+transactions. This first direct-IAL0 route accepts one root `.fsm` and rejects
+package imports rather than silently constructing an incomplete review graph.
+Direct IAL1 and IAL2 retain their checked transaction facts.
+
 Version 1 accepts direct `.fsm`, direct `.isf`, or `.ppif` only through
 generated/reparsed IAL1 and generated IAL0 review artifacts, exactly as
 decision `0035` requires. Using `.ppif` as a DUT source is not the legacy
@@ -247,6 +254,13 @@ native_extension_catalogs
 artifact_policy
 quiet
 ```
+
+For `plan`/`run`, `artifact_policy` has exactly `mode` and `artifact_root`.
+`mode` is `virtual` or `repository`; `artifact_root` is null for the default
+content-addressed root or one safe repository-relative directory. In virtual
+mode the caller owns the returned graph and no filesystem commit is claimed.
+In repository mode the host adapter must publish that same graph atomically;
+the shipped CLI is that adapter.
 
 Inapplicable values are null or empty arrays, never absent. The host supplies
 the selected `source_catalog` for dependencies and `artifact_sink` for virtual
@@ -323,6 +337,11 @@ Every virtual artifact has `relpath`, `kind`, `language`, `role`, `content`,
 add `id`, `bytes`, `sha256`, optional `schema`, and optional
 `backend_profile`, but omit `content`.
 
+The tool manifest inventories every other declared artifact but deliberately
+does not hash itself: including its own digest would create a recursive value
+with no finite canonical encoding. The complete returned/committed graph still
+contains `vial-tool-manifest.json`, and exact-tree validation includes it.
+
 Writes are all-or-nothing. The filesystem adapter validates the complete
 artifact graph and hashes in memory, stages only under
 `.artifacts/tmp/vial/<operation-id>/` on the repository volume, fsyncs where
@@ -357,9 +376,11 @@ diagnostics
 cleanup
 ```
 
-`status` is `checked`, `formatted`, `planned`, `executed`, `unchanged`,
-`unsupported`, or `error`. A persisted manifest occurs only for planned,
-executed, or unchanged operations and therefore has empty diagnostics.
+`status` in a persisted manifest is `planned` or `executed` and therefore has
+empty diagnostics. `checked`, `formatted`, `unchanged`, `unsupported`, and
+`error` remain result-envelope statuses. When an identical tree already exists,
+the current result is `unchanged` and the stored manifest remains the original
+byte-identical `planned`/`executed` record because replay performs no write.
 `reports` maps `normal_source`, `bridge`, `plan`, `verification_output`, and
 `result` to relative identity/digest records or null. `cleanup` records the
 repository-relative staging identity, `staging_removed`, and
@@ -422,7 +443,7 @@ vial.source_projection.terse_v1
 vial.semantic_projection.v1
 ```
 
-The following remain selected but unshipped until `.10.2`:
+Completed `.10.2` additionally ships:
 
 ```text
 vial.artifact_layout.v1
@@ -487,19 +508,23 @@ a downgraded pass.
 - Plan mode publishes sanitized bridge/plan files, not public constructors or
   raw IR.
 - No backend was selected by `.8`. Decision `0043` and completed `.9` select
-  `sv_portable_verilator`; completed `.10.1` ships only source tooling, while
-  `.10.2` through `.10.4` retain plan/artifact, backend/trace, and run/result
-  implementation. `.11` owns parity against the handwritten AHB oracle.
+  `sv_portable_verilator`; completed `.10.1` ships source tooling and completed
+  `.10.2` ships plan/artifact behavior, while `.10.3`/`.10.4` retain
+  backend/trace and run/result implementation. `.11` owns parity against the
+  handwritten AHB oracle.
 - Factories, phases, objections, UVM component classes, VHDL process plumbing,
   target hierarchy, callbacks, and host-language escape hatches remain backend
   implementation details unless a later typed VIAL semantic owner selects an
   author-facing abstraction.
 
 Completed `.10.1` adds source-style normalization, canonical formatting, the
-public source-only CLI/API, capability/support discovery, and diagnostics. It
-changes no typed semantic meaning, HIAL bridge, binder, ExecutionIR, plan
-object/file, artifact tree, generated HDL, backend, compile, simulation,
-runtime, result, parity, UVM, VHDL, mixed-language, or scale behavior.
+public source-only CLI/API, capability/support discovery, and diagnostics.
+Completed `.10.2` composes the existing private HIAL bridge and execution
+builders behind public defensive projections, widens core v1 only to admit a
+transaction-free DUT binding for direct IAL0 truth, and atomically publishes
+canonical plan trees. It changes no generated HIAL HDL, backend, compile,
+simulation, runtime, result, parity, UVM, VHDL, mixed-language, or scale
+behavior.
 
 ## Validation And Rollback
 
@@ -513,7 +538,7 @@ Completed `.10.1` adds task-tree-approved
   diagnostics, no artifact writes, legacy dispatch preservation, and exact
   capability/support accounting.
 
-Active `.10.2` and later `.10.3`/`.10.4` must prove:
+Completed `.10.2` proves:
 
 - all three HIAL review routes with the checked `.ppif` path proving the
   generated/reparsed IAL1 bridge boundary;
@@ -525,6 +550,10 @@ Active `.10.2` and later `.10.3`/`.10.4` must prove:
   defensive ownership, and no private-object leakage; and
 - focused source/bridge/execution tests, docs truth, mdBook, Knowledge Map,
   memory, relative paths, task acceptance, doctrines, and exact output cleanup.
+
+Later `.10.3`/`.10.4` must independently prove backend emission, trace
+projection, exact tool qualification, runtime, and result ownership without
+borrowing `.10.2` planning evidence.
 
 Selection rollback remains the decision-`0039` path. `.10.1` implementation
 rollback removes only the `vial` source subcommand/API adapter, terse

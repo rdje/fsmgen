@@ -10,18 +10,19 @@ answers:
   - "does bin/fsmgen reach the APB PPIF implementation?"
   - "does bin/fsmgen reach the portable HDL instance-identifier policy?"
   - "does bin/fsmgen reach public VIAL source tooling?"
+  - "does bin/fsmgen reach public VIAL planning artifacts?"
 date: 2026-07-31
 status: current
 tags: [bootstrap, architecture, import-tree, bin-fsmgen, semantic-introspection, ial2, ppif]
-evidence: docs/BIN_FSMGEN_IMPORT_TREE.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; bin/fsmgen; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/SourceProjection.pm; perl/FSM/Support/VIALToolingContract.pm; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; perl/FSM/ProjectDataLocality.pm; perl/FSM/Support/HDLInstanceIdentifierPolicy.pm; perl/FSM/Adapter/IAL2/PPIF.pm; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN28-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN23-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN22-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN16-REFRESH.md
-reverify: perl -Iperl -MModule::ScanDeps=scan_deps -E 'my $d=scan_deps(files=>["bin/fsmgen"], recurse=>1); my @pm=grep { /(?:^|\/)FSM\/.*\.pm\z/ } keys %$d; say "total=".(scalar(@pm)+1); say "pm=".scalar(@pm); say "ial2=".scalar(grep { /(?:^|\/)FSM\/IAL2\// } @pm);'
+evidence: docs/BIN_FSMGEN_IMPORT_TREE.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; bin/fsmgen; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/SourceProjection.pm; perl/FSM/VIAL/PlanBuilder.pm; perl/FSM/VIAL/ArtifactTransaction.pm; perl/FSM/Support/VIALToolingContract.pm; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; perl/FSM/ProjectDataLocality.pm; perl/FSM/Support/HDLInstanceIdentifierPolicy.pm; perl/FSM/Adapter/IAL2/PPIF.pm; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN28-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN23-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN22-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN16-REFRESH.md
+reverify: perl -Iperl -MModule::ScanDeps=scan_deps -E 'my $d=scan_deps(files=>["bin/fsmgen"], recurse=>1); my @pm=grep { /(?:^|\/)FSM\/.*\.pm\z/ } keys %$d; say "total=".(scalar(@pm)+1); say "pm=".scalar(@pm); say "ial2=".scalar(grep { /(?:^|\/)FSM\/IAL2\// } @pm); say "vial=".scalar(grep { /(?:^|\/)FSM\/VIAL\// } @pm); say "hial=".scalar(grep { /(?:^|\/)FSM\/HIAL\// } @pm);'
 ---
 
 `docs/BIN_FSMGEN_IMPORT_TREE.md` is the canonical live maintainer-facing
 architecture note for the `bin/fsmgen` runtime spine.
 
-As of the 2026-07-31 public-VIAL-source-tooling refresh, the static
-project-owned closure reaches `239` project files total: `238` `FSM::...` `.pm`
+As of the 2026-07-31 public-VIAL-planning refresh, the static
+project-owned closure reaches `248` project files total: `247` `FSM::...` `.pm`
 packages plus
 `bin/fsmgen`, with
 `19` packages under `FSM/IAL2`. The closure includes the `.isf` front door; the
@@ -29,8 +30,10 @@ packages plus
 AXI initiator, APB, and AHB protocol-intent owners; bounded direct/composition
 VHDL owners; semantic-introspection and verification-output support; and the
 repository-local project-data owner; and the shared portable HDL child-instance
-identifier policy. It now also reaches the seven-package VIAL source-tooling
-path and its closed capability contract without reaching a VIAL backend or
-runtime. The canonical maintainer note records the complete reachable package
-inventory, measured family counts (`Support 74`, `VIAL 7`), selected line
-counts, runtime spines, and current hotspots.
+identifier policy. It now also reaches the 13-package VIAL source/planning path
+and three-package private HIAL bridge family for canonical review routing,
+defensive public plan projection, and atomic repository-local artifacts,
+without reaching a VIAL target backend or runtime. The canonical maintainer
+note records the complete reachable package inventory, measured family counts
+(`Support 74`, `VIAL 13`, `HIAL 3`), selected line counts, runtime spines, and
+current hotspots.

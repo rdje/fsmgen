@@ -23,8 +23,8 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, source-language, parser, semantic-ir, types, four-state, property-language, diagnostics, provenance, ahb]
-evidence: docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0008-verification-property-language-unification.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
-reverify: prove -Iperl t/1550-vial-semantic-ir.t t/1555-vial-public-source-tooling.t && rg -n 'core_directed_single_clock_v1|VIALSemanticIR Required IR Record|dedicated VIAL lexer|known_mask|z_mask|same.*value_eq|canonical property|ahb_subordinate_base_output_arbitration\.vial|normal_v1|terse_v1' docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md
+evidence: docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0008-verification-property-language-unification.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; perl/FSM/VIAL/SemanticBuilder.pm; t/1550-vial-semantic-ir.t; t/1556-vial-public-planning-artifacts.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
+reverify: prove -Iperl t/1550-vial-semantic-ir.t t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t && rg -n 'core_directed_single_clock_v1|VIALSemanticIR Required IR Record|dedicated VIAL lexer|known_mask|z_mask|same.*value_eq|canonical property|transaction-free|ahb_subordinate_base_output_arbitration\.vial|normal_v1|terse_v1' docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md
 ---
 
 Decision `0033` selects VIAL version 1 as closed public S-expression syntax
@@ -34,11 +34,13 @@ and stable semantic-record contract required for diagnostics, mapping, and
 later replay.
 
 The first profile is `core_directed_single_clock_v1`: explicit packages and
-in-memory imports, target-neutral types and values, transactions,
+in-memory imports, target-neutral types and values, optional transaction
+bindings,
 deterministic models, bounded scoreboards, unbound typed DUT references,
 coverage, a bounded substitution fault, explicit random-decision identity,
 directed scenarios, bounded repeats, and deterministic `parallel all|any`
-fibers. It parse/typechecks only; binding, plans, output, and runtime are later.
+fibers. Its semantic frontend parse/typechecks only; later owners may bind and
+project that meaning without exposing SemanticIR.
 
 Two-state types are `bool`, `u`, and `s`; four-state types are `logic` and
 `slogic`. `#b` values normalize to value bits, known mask, and Z mask. No
@@ -61,8 +63,11 @@ checking, and a sanitized semantic report with the three exact VIAL v1
 semantic capabilities. Completed `.10.1` additionally ships public
 capabilities/check/format, the `normal_v1` and `terse_v1` projections, and a
 provenance-free semantic meaning digest through one defensive source-only
-CLI/API. Binding, plan, target artifacts, runtime, result, parity, UVM, VHDL,
-mixed-language, and scale support remain explicit non-claims.
+CLI/API. Completed `.10.2` admits a transaction-free DUT binding so direct IAL0
+endpoint/reset fixtures can plan honestly, while every transaction use still
+requires an exact binding. It publishes sanitized plan artifacts. Target
+backend artifacts, runtime, result, parity, UVM, VHDL, mixed-language, and
+scale support remain explicit non-claims.
 
 Decision `0039` selects a public formatter/parser extension where the current
 explicit grammar is `normal_v1` and `terse_v1` removes only closed structural

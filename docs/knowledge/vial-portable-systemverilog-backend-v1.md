@@ -18,7 +18,7 @@ date: 2026-07-31
 status: current
 tags: [vial, systemverilog, verilator, backend, scheduler, known-value, four-state, source-map, result, jsonl]
 evidence: docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; t/data/ahb_generated_subordinate_base_output_arbitration_tb.svt; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
-reverify: verilator --version && rg -n 'sv_portable_verilator|known-value|inactive edge|--binary|--timing|--assert|generated_hierarchical_read_alias_v1|fsmgen.vial_sv_runtime_trace.v1|completed `.10.1`|5fd766600' docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+reverify: verilator --version && rg -n 'sv_portable_verilator|known-value|inactive edge|--binary|--timing|--assert|generated_hierarchical_read_alias_v1|fsmgen.vial_sv_runtime_trace.v1|completed `.10.2`|proposed `.10.3`|5fd766600' docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
 Decision `0043` selects `sv_portable_verilator` as VIAL's first executable
@@ -29,8 +29,9 @@ artifacts. Clean selection commit `ab3e73b72` activates parent `.10`; clean
 activation commit `5fd766600` decomposes it into public source tooling,
 planning/artifact, backend/trace, and exact runtime/result children. Completed
 `.10.1` ships the public capabilities/check/normal-terse source surfaces.
-Clean implementation commit `50a0d7d39` activates `.10.2` for planning and
-artifacts, while `.10.3` still owns this backend and trace implementation.
+Clean implementation commit `50a0d7d39` activates `.10.2`; completed `.10.2`
+ships planning and target-neutral artifacts, while `.10.3` still owns this
+backend and trace implementation.
 
 One scheduler samples at the clock's inactive edge, performs react/check work
 in exact plan order, then applies the next logical cycle's drives before the

@@ -263,9 +263,9 @@ sub _validate_input_profiles($semantic, $bridge) {
             && $bridge->{schema_version} == 1
             && $bridge->{profile} eq 'core_single_unit_v1';
     _throw('VIAL_CAPABILITY_ERROR', 'capability',
-        'the first execution profile requires the IAL2-via-generated-IAL1 AHB bridge route',
+        'the first execution profile requires a canonical IAL0, IAL1, or IAL2-via-generated-IAL1 bridge route',
         '/bridge_manifest/review_route')
-        unless $bridge->{review_route}{authored_layer} eq 'IAL2'
+        unless ($bridge->{review_route}{authored_layer} // '') =~ /\A(?:IAL0|IAL1|IAL2)\z/
             && !$bridge->{review_route}{direct_ial2_to_verification};
 }
 
@@ -1672,9 +1672,12 @@ sub _capability_ledger($semantic, $bridge) {
         qw(vial.source.v1 vial.semantic_ir.v1 vial.profile.core_directed_single_clock_v1),
         qw(
             hial_vial.bridge_manifest.v1
+            hial_vial.bridge_observation.passive_monitor
             hial_vial.bridge_probe.equivalent_adapter_required
             hial_vial.bridge_profile.core_single_unit_v1
             hial_vial.bridge_protocol.ahb_subordinate_v1
+            hial_vial.bridge_source.ial0
+            hial_vial.bridge_source.ial1
             hial_vial.bridge_source.ial2_via_generated_ial1
         ),
         @EXECUTION_CAPABILITIES,

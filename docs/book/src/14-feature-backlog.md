@@ -4333,8 +4333,8 @@ remain deferred behind later selector leaves.
 
 The architecture for full fixture generation is selected and decomposed. Its
 bounded semantic frontend, review-routed private bridge, and private target-
-neutral execution elaborator are shipped; public tooling and executable
-backends are not shipped yet.
+neutral execution elaborator are shipped. Public source tooling and canonical
+planning/artifacts now ship; executable backends do not.
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` names current synthesizable
 IAL0/IAL1/IAL2 collectively as **Hardware IAL (HIAL)** and defines a peer
 **Verification IAL (VIAL)** for pure verification intent:
@@ -4368,10 +4368,12 @@ Implementation `.3` now parses and type-checks the checked
 `vial/ahb_subordinate_base_output_arbitration.vial` source into private
 immutable `VIALSemanticIR` and exposes a defensive sanitized semantic report
 through a private checker. The semantic corpus still claims only parse,
-typecheck, and semantic-report phases. Capability discovery now additionally
-reports the private no-file target-neutral binder/plan seam; it still exposes
-no public CLI/API, plan/result file, generated artifact, compile, simulation,
-runtime, parity pass, UVM, VHDL, mixed-language, or scale claim.
+typecheck, and semantic-report phases. Capability discovery additionally
+reports the private target-neutral binder and public source/plan surfaces. The
+public planner publishes only canonical normal source, generated HIAL review
+artifacts, defensive bridge/plan projections, and its tool manifest; it still
+exposes no private IR, target backend artifact, compile, simulation, runtime,
+result, parity pass, UVM, VHDL, mixed-language, or scale claim.
 
 Decision `0034` sets the longer-term rule: **full power underneath, simpler
 intent above**. Abstraction means simplification, so mastering VIAL does not
@@ -12257,7 +12259,11 @@ source-only `capabilities`, `check`, and canonical normal/terse `format` through
 one defensive JSON-safe API. It adds no DUT binding, plan/artifact write,
 generated backend, compile, runtime, result, or parity claim. Clean `.10.1`
 commit `50a0d7d39` activates `.10.2` alone for canonical planning and atomic
-repository-local or virtual artifacts, without changing product behavior.
+repository-local or virtual artifacts. Completed `.10.2` now ships that
+planner through direct IAL0, direct IAL1, and IAL2-via-generated/reparsed-IAL1
+review routes. Transaction-free direct-IAL0 endpoint fixtures are admitted;
+transaction-bearing fixtures still require exact reviewed transaction truth.
+`.10.3` remains the next portable backend/trace implementation owner.
 See [the public tooling contract](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md) and
 the [architecture chapter](16d-hial-vial-verification-architecture.md).
 

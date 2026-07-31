@@ -3,12 +3,15 @@ package FSM::VIAL::Tool;
 use strict;
 use warnings;
 
+use bytes ();
+use Digest::SHA qw(sha256_hex);
 use Exporter 'import';
 use JSON::PP ();
 use Scalar::Util qw(blessed);
 
 use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
 use FSM::VIAL::Parser;
+use FSM::VIAL::PlanBuilder;
 use FSM::VIAL::SourceProjection;
 
 our @EXPORT_OK = qw(
@@ -52,6 +55,15 @@ sub execute_vial_tool_request {
     return _capabilities_result() if $action eq 'capabilities';
     return _error_result(
         $action,
+        _diagnostic('VIAL_BACKEND_UNAVAILABLE', 'no public VIAL runtime backend is shipped yet', [], '/options/backend_profile'),
+    ) if $action eq 'run';
+    if ($action eq 'plan') {
+        my $result = eval { _execute_plan_action($validated); };
+        return $result if defined $result;
+        return _error_result($action, _host_diagnostic(_sanitize_exception($@)));
+    }
+    return _error_result(
+        $action,
         _invocation_diagnostic("action '$action' is not available in the public source-tooling slice"),
     ) unless $action eq 'check' || $action eq 'format';
 
@@ -67,6 +79,22 @@ sub _cli_error_result {
     my %allowed = map { $_ => 1 } qw(VIAL_TOOL_INVOCATION_ERROR VIAL_HOST_ERROR);
     die "unsupported VIAL CLI diagnostic code\n" unless $allowed{$code};
     return _error_result($action, _diagnostic($code, $message, [], '/'));
+}
+
+sub _cli_artifact_error_result {
+    my ($class, $diagnostics) = @_;
+    die "VIAL artifact error construction is private to FSM::VIAL::ToolCLI\n"
+        unless caller eq 'FSM::VIAL::ToolCLI';
+    die "artifact diagnostics must be a non-empty array\n"
+        unless ref($diagnostics) eq 'ARRAY' && @$diagnostics;
+    return _finalize_result({
+        %{_empty_result('plan')},
+        success => JSON::PP::false,
+        status => 'error',
+        capability_evidence => _plan_capability_evidence(undef),
+        support_accounting => _plan_support_accounting(),
+        diagnostics => _clone($diagnostics),
+    });
 }
 
 sub _execute_source_action {
@@ -151,6 +179,333 @@ sub _execute_source_action {
     );
 }
 
+sub _execute_plan_action {
+    my ($validated) = @_;
+    my $request = $validated->{request};
+    my $source = $request->{vial_source};
+    my $options = $request->{options};
+    my $parser_args = {
+        text => $source->{text},
+        source_name => $source->{source_id},
+        source_catalog => $validated->{source_catalog},
+    };
+    my $checked = FSM::VIAL::Parser->check_source($parser_args);
+    if (!$checked->{ok}) {
+        return _plan_error_result(
+            source_style => undef,
+            diagnostics => [_public_diagnostics($checked->{diagnostics})],
+        );
+    }
+    my $style = FSM::VIAL::SourceProjection->source_style({
+        text => $source->{text},
+        source_name => $source->{source_id},
+    });
+    if ($options->{source_style} ne 'auto' && $options->{source_style} ne $style) {
+        return _plan_error_result(
+            source_style => $style . '_v1',
+            diagnostics => [_style_diagnostic(
+                $source->{source_id},
+                "source is $style but --style requested $options->{source_style}",
+            )],
+        );
+    }
+    my $semantic_ir = FSM::VIAL::Parser->parse_source($parser_args);
+    my $meaning_sha256 = FSM::VIAL::SourceProjection->semantic_projection_sha256($semantic_ir);
+    my $normal = FSM::VIAL::SourceProjection->format_source({
+        text => $source->{text},
+        source_name => $source->{source_id},
+        output_style => 'normal',
+    })->{text};
+
+    my $built = FSM::VIAL::PlanBuilder->build({
+        semantic_ir => $semantic_ir,
+        hial_source => $request->{hial_source},
+        fixture_id => $options->{fixture_id},
+        scenario_ids => $options->{scenario_ids},
+        execution_profile => $options->{execution_profile},
+        replay_manifest => $options->{replay_manifest},
+        native_extension_catalog => $options->{native_extension_catalogs},
+    });
+    return _plan_error_result(
+        source_style => $style . '_v1',
+        diagnostics => $built->{diagnostics},
+    ) unless $built->{ok};
+
+    my $plan = $built->{plan};
+    my $fixture_name = $plan->{fixture}{fixture_name};
+    my $fixture_slug = _slug($fixture_name);
+    my ($plan_digest) = $plan->{plan_id} =~ m{\Aplan/([0-9a-f]{64})\z};
+    die 'plan identity is invalid' unless defined $plan_digest;
+    my $policy = $options->{artifact_policy};
+    my $artifact_root = defined($policy->{artifact_root})
+        ? $policy->{artifact_root}
+        : ".artifacts/vial/$fixture_slug/$plan_digest";
+    my $operation_id = 'op-' . sha256_hex(_canonical_json({
+        action => 'plan',
+        plan_id => $plan->{plan_id},
+        artifact_root => $artifact_root,
+        source_sha256 => sha256_hex($source->{text}),
+        hial_sha256 => sha256_hex($request->{hial_source}{text}),
+    }));
+    my $source_identities = [
+        map { _clone($_) } @{$checked->{semantic_report}{sources}},
+        _source_identity($request->{hial_source}),
+    ];
+    my ($artifacts, $tool_manifest) = _build_plan_artifacts(
+        normal_source => $normal,
+        vial_source_id => $source->{source_id},
+        hial_source_id => $request->{hial_source}{source_id},
+        bridge => $built->{bridge_report},
+        plan => $plan,
+        review_artifacts => $built->{review_artifacts},
+        source_style => $style . '_v1',
+        source_identities => $source_identities,
+        artifact_root => $artifact_root,
+        operation_id => $operation_id,
+        artifact_mode => $policy->{mode},
+        meaning_sha256 => $meaning_sha256,
+    );
+    if (my $diagnostic = _plan_artifact_graph_diagnostic($artifacts)) {
+        return _plan_error_result(
+            source_style => $style . '_v1',
+            diagnostics => [$diagnostic],
+        );
+    }
+
+    my $result = _finalize_result({
+        %{_empty_result('plan')},
+        success => JSON::PP::true,
+        status => 'planned',
+        source_identities => $source_identities,
+        source_style => $style . '_v1',
+        semantic_report => _clone($checked->{semantic_report}),
+        bridge_manifest => _clone($built->{bridge_report}),
+        plan => _clone($plan),
+        tool_manifest => _clone($tool_manifest),
+        artifacts => _clone($artifacts),
+        capability_evidence => _plan_capability_evidence($meaning_sha256),
+        support_accounting => _plan_support_accounting(),
+        diagnostics => [],
+        implementation => {
+            component => 'FSM::VIAL::Tool',
+            version => 1,
+            stage => 'public_planning',
+        },
+    });
+    my $sink = $validated->{artifact_sink};
+    push @$sink, map { _clone($_) } @$artifacts;
+    return $result;
+}
+
+sub _build_plan_artifacts {
+    my (%args) = @_;
+    my @artifacts;
+    push @artifacts, _virtual_artifact(
+        relpath => 'source/vial-normal.vial',
+        kind => 'source',
+        language => 'vial',
+        role => 'canonical_normal_source',
+        content => $args{normal_source},
+        source_layer => 'VIAL',
+        generated_from => [$args{vial_source_id}],
+    );
+    for my $review (@{$args{review_artifacts}}) {
+        push @artifacts, _virtual_artifact(
+            relpath => 'review/' . $review->{artifact_name},
+            kind => 'source',
+            language => lc($review->{layer}),
+            role => 'generated_hial_review',
+            content => $review->{text},
+            source_layer => $review->{layer},
+            generated_from => [$review->{source_id}],
+        );
+    }
+    my $bridge_json = _canonical_pretty_json($args{bridge});
+    my $plan_json = _canonical_pretty_json($args{plan});
+    push @artifacts, _virtual_artifact(
+        relpath => 'hial-vial-bridge.json',
+        kind => 'report',
+        language => 'json',
+        role => 'hial_vial_bridge_manifest',
+        content => $bridge_json,
+        source_layer => 'HIAL',
+        generated_from => [$args{hial_source_id}],
+    );
+    push @artifacts, _virtual_artifact(
+        relpath => 'vial-plan.json',
+        kind => 'report',
+        language => 'json',
+        role => 'vial_plan',
+        content => $plan_json,
+        source_layer => 'VIAL',
+        generated_from => [$args{plan}{plan_id}],
+    );
+    @artifacts = sort { $a->{relpath} cmp $b->{relpath} } @artifacts;
+
+    my @persisted = map { _persisted_artifact($_) } @artifacts;
+    my %by_path = map { $_->{relpath} => $_ } @persisted;
+    my $reports = {
+        normal_source => _report_identity($by_path{'source/vial-normal.vial'}),
+        bridge => _report_identity($by_path{'hial-vial-bridge.json'}),
+        plan => _report_identity($by_path{'vial-plan.json'}),
+        verification_output => undef,
+        result => undef,
+    };
+    my $tool_manifest = {
+        schema => 'fsmgen.vial_tool_manifest.v1',
+        schema_version => 1,
+        operation_id => $args{operation_id},
+        status => 'planned',
+        action => 'plan',
+        source_style => $args{source_style},
+        source_identities => _clone($args{source_identities}),
+        fixture_id => $args{plan}{fixture}{fixture_id},
+        scenario_ids => _clone($args{plan}{fixture}{scenario_ids}),
+        execution_profile => $args{plan}{profile},
+        backend_profile => undef,
+        artifact_root => $args{artifact_root},
+        artifacts => \@persisted,
+        reports => $reports,
+        capability_evidence => _plan_capability_evidence($args{meaning_sha256}),
+        support_accounting => _plan_support_accounting(),
+        diagnostics => [],
+        cleanup => {
+            staging_identity => $args{artifact_mode} eq 'repository'
+                ? ".artifacts/tmp/vial/$args{operation_id}" : undef,
+            staging_removed => $args{artifact_mode} eq 'repository'
+                ? JSON::PP::true : JSON::PP::false,
+            atomic_commit_completed => $args{artifact_mode} eq 'repository'
+                ? JSON::PP::true : JSON::PP::false,
+        },
+    };
+    push @artifacts, _virtual_artifact(
+        relpath => 'vial-tool-manifest.json',
+        kind => 'manifest',
+        language => 'json',
+        role => 'vial_tool_manifest',
+        content => _canonical_pretty_json($tool_manifest),
+        source_layer => 'VIAL',
+        generated_from => [$args{plan}{plan_id}],
+    );
+    @artifacts = sort { $a->{relpath} cmp $b->{relpath} } @artifacts;
+    return (\@artifacts, $tool_manifest);
+}
+
+sub _virtual_artifact {
+    my (%args) = @_;
+    return {
+        relpath => $args{relpath},
+        kind => $args{kind},
+        language => $args{language},
+        role => $args{role},
+        content => $args{content},
+        encoding => 'utf-8',
+        source_layer => $args{source_layer},
+        generated_from => _clone($args{generated_from}),
+    };
+}
+
+sub _persisted_artifact {
+    my ($artifact) = @_;
+    my $sha = sha256_hex($artifact->{content});
+    my $entry = {
+        id => 'artifact/' . sha256_hex($artifact->{relpath} . "\0" . $sha),
+        relpath => $artifact->{relpath},
+        kind => $artifact->{kind},
+        language => $artifact->{language},
+        role => $artifact->{role},
+        encoding => $artifact->{encoding},
+        source_layer => $artifact->{source_layer},
+        generated_from => _clone($artifact->{generated_from}),
+        bytes => bytes::length($artifact->{content}),
+        sha256 => $sha,
+    };
+    $entry->{schema} = 'fsmgen.hial_vial_bridge_manifest.v1'
+        if $artifact->{role} eq 'hial_vial_bridge_manifest';
+    $entry->{schema} = 'fsmgen.vial_plan.v1'
+        if $artifact->{role} eq 'vial_plan';
+    return $entry;
+}
+
+sub _report_identity {
+    my ($artifact) = @_;
+    return {
+        relpath => $artifact->{relpath},
+        sha256 => $artifact->{sha256},
+    };
+}
+
+sub _source_identity {
+    my ($source) = @_;
+    return {
+        source_name => $source->{source_id},
+        content_sha256 => sha256_hex($source->{text}),
+        byte_length => bytes::length($source->{text}),
+        role => 'hial_dut',
+    };
+}
+
+sub _slug {
+    my ($value) = @_;
+    my $slug = lc($value // 'fixture');
+    $slug =~ s/[^a-z0-9]+/-/g;
+    $slug =~ s/\A-+|-+\z//g;
+    return length($slug) ? $slug : 'fixture';
+}
+
+sub _canonical_json {
+    my ($value) = @_;
+    return JSON::PP->new->canonical->encode($value);
+}
+
+sub _canonical_pretty_json {
+    my ($value) = @_;
+    my $text = JSON::PP->new->ascii->canonical->pretty->encode($value);
+    $text .= "\n" unless $text =~ /\n\z/;
+    return $text;
+}
+
+sub _plan_artifact_graph_diagnostic {
+    my ($artifacts) = @_;
+    my $contract = build_vial_tooling_contract();
+    return _diagnostic(
+        'VIAL_MANIFEST_SCHEMA_ERROR',
+        "artifact count exceeds the limit $contract->{limits}{artifacts}",
+        [],
+        '/artifacts',
+    ) if @$artifacts > $contract->{limits}{artifacts};
+    my (%exact, %folded, %directory);
+    my $bytes = 0;
+    for my $artifact (@$artifacts) {
+        my $relpath = $artifact->{relpath};
+        return _diagnostic('VIAL_MANIFEST_SCHEMA_ERROR', "duplicate artifact '$relpath'", [], '/artifacts')
+            if $exact{$relpath}++;
+        my $folded = lc($relpath);
+        return _diagnostic('VIAL_ARTIFACT_COLLISION', "case-fold artifact collision at '$relpath'", [], '/artifacts')
+            if exists($folded{$folded}) && $folded{$folded} ne $relpath;
+        $folded{$folded} = $relpath;
+        my @parts = split m{/}, $relpath;
+        pop @parts;
+        my $prefix = '';
+        for my $part (@parts) {
+            $prefix = length($prefix) ? "$prefix/$part" : $part;
+            return _diagnostic('VIAL_ARTIFACT_COLLISION', "artifact file/directory collision at '$prefix'", [], '/artifacts')
+                if $exact{$prefix};
+            $directory{$prefix} = 1;
+        }
+        return _diagnostic('VIAL_ARTIFACT_COLLISION', "artifact file/directory collision at '$relpath'", [], '/artifacts')
+            if $directory{$relpath};
+        $bytes += bytes::length($artifact->{content});
+    }
+    return _diagnostic(
+        'VIAL_MANIFEST_SCHEMA_ERROR',
+        "artifact bytes exceed the limit $contract->{limits}{artifact_bytes}",
+        [],
+        '/artifacts',
+    ) if $bytes > $contract->{limits}{artifact_bytes};
+    return undef;
+}
+
 sub _validate_invocation {
     my ($request, $environment) = @_;
     die "request must be one unblessed hash"
@@ -171,6 +526,8 @@ sub _validate_invocation {
     die "request action '$request->{action}' is unknown" unless $known_action{$request->{action}};
     die "hial_source must be null for capabilities, check, and format"
         if $request->{action} =~ /\A(?:capabilities|check|format)\z/ && defined($request->{hial_source});
+    _validate_hial_source($request->{hial_source})
+        if $request->{action} eq 'plan' || $request->{action} eq 'run';
 
     die "request options must be one unblessed hash"
         unless ref($request->{options}) eq 'HASH' && !blessed($request->{options});
@@ -194,18 +551,19 @@ sub _validate_invocation {
         unless ref($environment->{source_catalog}) eq 'HASH' && !blessed($environment->{source_catalog});
     my %catalog;
     for my $source_name (sort keys %{$environment->{source_catalog}}) {
-        die "source_catalog key '$source_name' is unsafe" unless _safe_source_id($source_name);
+        die "source_catalog key '$source_name' is unsafe" unless _safe_catalog_source_id($source_name);
         my $text = $environment->{source_catalog}{$source_name};
         die "source_catalog value for '$source_name' must be scalar"
             unless defined($text) && !ref($text);
         $catalog{$source_name} = $text;
     }
-    die "artifact_sink must be an empty array for source-only actions"
+    die "artifact_sink must be an empty array"
         unless ref($environment->{artifact_sink}) eq 'ARRAY' && !@{$environment->{artifact_sink}};
 
     return {
         request => _clone($request),
         source_catalog => \%catalog,
+        artifact_sink => $environment->{artifact_sink},
     };
 }
 
@@ -230,12 +588,57 @@ sub _validate_options {
         die "$action requires null output_style" if defined $options->{output_style};
     }
 
-    for my $key (qw(fixture_id execution_profile backend_profile replay_manifest artifact_policy)) {
-        die "$action requires null $key in the source-tooling slice" if defined $options->{$key};
+    if ($action eq 'plan' || $action eq 'run') {
+        die "fixture_id must be null or a non-empty scalar"
+            if defined($options->{fixture_id})
+                && (ref($options->{fixture_id}) || !length($options->{fixture_id}));
+        die "scenario_ids must be an array"
+            unless ref($options->{scenario_ids}) eq 'ARRAY';
+        for my $index (0 .. $#{$options->{scenario_ids}}) {
+            die "scenario_ids/$index must be a non-empty scalar"
+                unless defined($options->{scenario_ids}[$index])
+                    && !ref($options->{scenario_ids}[$index])
+                    && length($options->{scenario_ids}[$index]);
+        }
+        die "execution_profile must be core_directed_single_clock_execution_v1"
+            unless defined($options->{execution_profile})
+                && !ref($options->{execution_profile})
+                && $options->{execution_profile} eq 'core_directed_single_clock_execution_v1';
+        if ($action eq 'plan') {
+            die "plan requires null backend_profile" if defined $options->{backend_profile};
+        }
+        else {
+            die "run requires a non-empty backend_profile"
+                unless defined($options->{backend_profile})
+                    && !ref($options->{backend_profile})
+                    && length($options->{backend_profile});
+        }
+        die "replay_manifest must be null or an unblessed hash"
+            if defined($options->{replay_manifest})
+                && (ref($options->{replay_manifest}) ne 'HASH'
+                    || blessed($options->{replay_manifest}));
+        die "native_extension_catalogs must be an array"
+            unless ref($options->{native_extension_catalogs}) eq 'ARRAY';
+        die "artifact_policy must be one unblessed hash"
+            unless ref($options->{artifact_policy}) eq 'HASH'
+                && !blessed($options->{artifact_policy});
+        _require_exact_keys($options->{artifact_policy}, [qw(mode artifact_root)], 'artifact_policy');
+        die "artifact_policy mode must be virtual or repository"
+            unless defined($options->{artifact_policy}{mode})
+                && !ref($options->{artifact_policy}{mode})
+                && $options->{artifact_policy}{mode} =~ /\A(?:virtual|repository)\z/;
+        die "artifact_policy artifact_root must be null or a safe repository-relative directory"
+            if defined($options->{artifact_policy}{artifact_root})
+                && !_safe_artifact_root($options->{artifact_policy}{artifact_root});
     }
-    for my $key (qw(scenario_ids native_extension_catalogs)) {
-        die "$key must be an empty array in the source-tooling slice"
-            unless ref($options->{$key}) eq 'ARRAY' && !@{$options->{$key}};
+    else {
+        for my $key (qw(fixture_id execution_profile backend_profile replay_manifest artifact_policy)) {
+            die "$action requires null $key in the source-tooling slice" if defined $options->{$key};
+        }
+        for my $key (qw(scenario_ids native_extension_catalogs)) {
+            die "$key must be an empty array in the source-tooling slice"
+                unless ref($options->{$key}) eq 'ARRAY' && !@{$options->{$key}};
+        }
     }
     my $quiet_is_boolean = blessed($options->{quiet})
         && blessed($options->{quiet})->isa('JSON::PP::Boolean');
@@ -272,10 +675,69 @@ sub _validate_vial_source {
         unless ref($source->{metadata}) eq 'HASH' && !blessed($source->{metadata});
 }
 
+sub _validate_hial_source {
+    my ($source) = @_;
+    die "hial_source must be one unblessed hash"
+        unless ref($source) eq 'HASH' && !blessed($source);
+    my %allowed = map { $_ => 1 } qw(
+        source_id source_kind_hint text encoding origin display_name canonical_id
+        relative_path metadata
+    );
+    my @unknown = sort grep { !$allowed{$_} } keys %$source;
+    die "hial_source has unknown key '$unknown[0]'" if @unknown;
+    for my $required (qw(source_id text encoding origin display_name metadata)) {
+        die "hial_source is missing '$required'" unless exists $source->{$required};
+    }
+    die "hial_source source_id is unsafe" unless _safe_hial_source_id($source->{source_id});
+    die "hial_source text must be scalar" unless defined($source->{text}) && !ref($source->{text});
+    die "hial_source encoding must be utf-8"
+        unless defined($source->{encoding}) && !ref($source->{encoding})
+            && lc($source->{encoding}) eq 'utf-8';
+    for my $key (qw(origin display_name source_kind_hint canonical_id relative_path)) {
+        next unless exists($source->{$key}) && defined($source->{$key});
+        die "hial_source $key must be scalar" if ref($source->{$key});
+    }
+    if (defined $source->{source_kind_hint}) {
+        my %hint = map { $_ => 1 } qw(fsm isf ppif ial0 ial1 ial2);
+        die "hial_source source_kind_hint is unsupported"
+            unless $hint{$source->{source_kind_hint}};
+        my %suffix_hint = (
+            fsm => {fsm => 1, ial0 => 1},
+            isf => {isf => 1, ial1 => 1},
+            ppif => {ppif => 1, ial2 => 1},
+        );
+        my ($suffix) = lc($source->{source_id}) =~ /\.([^.]+)\z/;
+        die "hial_source source_kind_hint does not match source_id suffix"
+            unless $suffix_hint{$suffix}{$source->{source_kind_hint}};
+    }
+    die "hial_source metadata must be one unblessed hash"
+        unless ref($source->{metadata}) eq 'HASH' && !blessed($source->{metadata});
+}
+
 sub _safe_source_id {
     my ($value) = @_;
     return defined($value) && !ref($value)
         && $value =~ /\A[A-Za-z0-9_][A-Za-z0-9_.\/-]*\.vial\z/
+        && $value !~ m{(?:\A/|\A~|\A[A-Za-z]:|://|\\|\x00)}
+        && !grep { $_ eq '' || $_ eq '.' || $_ eq '..' } split m{/}, $value, -1;
+}
+
+sub _safe_hial_source_id {
+    my ($value) = @_;
+    return defined($value) && !ref($value)
+        && $value =~ /\A[A-Za-z0-9_][A-Za-z0-9_.\/-]*\.(?:fsm|isf|ppif)\z/i
+        && $value !~ m{(?:\A/|\A~|\A[A-Za-z]:|://|\\|\x00)}
+        && !grep { $_ eq '' || $_ eq '.' || $_ eq '..' } split m{/}, $value, -1;
+}
+
+sub _safe_catalog_source_id {
+    my ($value) = @_;
+    return _safe_source_id($value) || _safe_hial_source_id($value);
+}
+
+sub _safe_artifact_root {
+    my ($value) = @_;
+    return defined($value) && !ref($value) && length($value)
         && $value !~ m{(?:\A/|\A~|\A[A-Za-z]:|://|\\|\x00)}
         && !grep { $_ eq '' || $_ eq '.' || $_ eq '..' } split m{/}, $value, -1;
 }
@@ -316,15 +778,41 @@ sub _source_result {
     return _finalize_result($result);
 }
 
+sub _plan_error_result {
+    my (%args) = @_;
+    return _finalize_result({
+        %{_empty_result('plan')},
+        success => JSON::PP::false,
+        status => 'error',
+        source_style => $args{source_style},
+        capability_evidence => _plan_capability_evidence(undef),
+        support_accounting => _plan_support_accounting(),
+        diagnostics => _clone($args{diagnostics} || []),
+        implementation => {
+            component => 'FSM::VIAL::Tool',
+            version => 1,
+            stage => 'public_planning',
+        },
+    });
+}
+
 sub _error_result {
     my ($action, $diagnostic) = @_;
+    my $planning = $action eq 'plan' || $action eq 'run';
     return _finalize_result({
         %{_empty_result($action)},
         success => JSON::PP::false,
         status => 'error',
-        capability_evidence => _source_capability_evidence(undef),
-        support_accounting => _support_accounting(),
+        capability_evidence => $planning
+            ? _plan_capability_evidence(undef) : _source_capability_evidence(undef),
+        support_accounting => $planning
+            ? _plan_support_accounting() : _support_accounting(),
         diagnostics => [$diagnostic],
+        implementation => {
+            component => 'FSM::VIAL::Tool',
+            version => 1,
+            stage => $planning ? 'public_planning' : 'public_source_tooling',
+        },
     });
 }
 
@@ -368,12 +856,33 @@ sub _source_capability_evidence {
     };
 }
 
+sub _plan_capability_evidence {
+    my ($meaning_sha256) = @_;
+    my $contract = build_vial_tooling_contract();
+    return {
+        contract_source => $contract->{contract_source},
+        capabilities => [@{$contract->{capabilities}}],
+        semantic_projection_sha256 => $meaning_sha256,
+        writes_files => JSON::PP::true,
+        atomic_artifacts => JSON::PP::true,
+    };
+}
+
 sub _support_accounting {
     return {
         feature_id => 'feature.vial_public_check_format',
         coverage => 'vial_public_check_format_cli_api',
         classification => 'supported_smoke',
         evidence => 't/1555-vial-public-source-tooling.t',
+    };
+}
+
+sub _plan_support_accounting {
+    return {
+        feature_id => 'feature.vial_public_plan',
+        coverage => 'vial_public_plan_cli_api',
+        classification => 'supported_smoke',
+        evidence => 't/1556-vial-public-planning-artifacts.t',
     };
 }
 

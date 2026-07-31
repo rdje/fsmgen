@@ -43,10 +43,30 @@ sub parse_fsm_file ($class, %args) {
         or confess "SourceFrontend requires an fsm_file";
     my $debug_level = $args{debug_level} // 0;
 
-    fsm_trace_enter('Parse FSM file with Lispish', 2);
-    fsm_debug("Parsing FSM file with Lispish parser", 1);
-
     my $source_text = $class->_slurp_fsm_file($fsm_file);
+    return $class->parse_fsm_source(
+        source_text => $source_text,
+        source_label => $fsm_file,
+        debug_level => $debug_level,
+    );
+}
+
+sub parse_fsm_source ($class, %args) {
+    my $source_text = $args{source_text};
+    my $source_label = $args{source_label} // 'in-memory .fsm source';
+    my $debug_level = $args{debug_level} // 0;
+    confess "SourceFrontend parse_fsm_source requires scalar source_text"
+        unless defined($source_text) && !ref($source_text) && length($source_text);
+    confess "SourceFrontend parse_fsm_source requires scalar source_label"
+        unless defined($source_label) && !ref($source_label) && length($source_label);
+    my %allowed = map { $_ => 1 } qw(source_text source_label debug_level);
+    my @unknown = sort grep { !$allowed{$_} } keys %args;
+    confess "SourceFrontend parse_fsm_source received unknown argument(s): "
+        . join(', ', @unknown) if @unknown;
+
+    fsm_trace_enter('Parse FSM source with Lispish', 2);
+    fsm_debug("Parsing FSM source '$source_label' with Lispish parser", 1);
+
     my $prepared_source_text = $class->_protect_braces_inside_slash_tokens($source_text);
 
     my $raw_ast = Lispish::multi(\$prepared_source_text);
@@ -54,7 +74,7 @@ sub parse_fsm_file ($class, %args) {
     $class->_restore_preserved_slash_token_braces($raw_ast);
 
     unless ($raw_ast) {
-        fsm_error("Lispish parser returned undefined AST for '$fsm_file'");
+        fsm_error("Lispish parser returned undefined AST for '$source_label'");
         confess "Error: Failed to parse FSM file with Lispish\n";
     }
 
@@ -68,8 +88,8 @@ sub parse_fsm_file ($class, %args) {
         }
     }
 
-    fsm_debug("FSM file parsed successfully", 1);
-    fsm_trace_exit('FSM file parsed', 2);
+    fsm_debug("FSM source parsed successfully", 1);
+    fsm_trace_exit('FSM source parsed', 2);
     return $raw_ast;
 }
 
@@ -916,6 +936,12 @@ __END__
 =head2 parse_fsm_file
 
 Parses one C<.fsm> file with the Lispish reader and returns the raw AST.
+
+=head2 parse_fsm_source
+
+Parses one non-empty in-memory C<.fsm> source string through the same brace
+preservation and Lispish reader path as C<parse_fsm_file>.  A caller-provided
+source label is used only for bounded diagnostics.
 
 =head2 classify_source_ast
 
