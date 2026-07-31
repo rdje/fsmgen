@@ -3,8 +3,8 @@
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
 Status: selected; decision `0043` and completed `.9` select the plain-
-SystemVerilog/Verilator backend contract, and first implementation remains
-owned by proposed `.10`
+SystemVerilog/Verilator backend contract, and active `.10` owns the first
+implementation after clean commit `ab3e73b72`
 Decision: `0039`
 
 ## Outcome

@@ -45,4 +45,5 @@ unchanged. Future VIAL `run` uses explicit
 `fsmgen.verification_output_manifest.v2`; consumers select by schema, not
 filename. Decision `0043` now selects the first plain-SystemVerilog/Verilator
 backend contract, but selection still ships no parser widening, command, API,
-file, backend, or runtime. Proposed `.10` is the first implementation owner.
+file, backend, or runtime. Clean commit `ab3e73b72` activates `.10` as the first
+implementation owner.

@@ -9529,8 +9529,9 @@ private JSONL trace projected into the normalized result, and six independent
 qualification gates under Verilator 5.046. The profile is explicitly a known-
 value/two-state runtime tier: authored X/Z-sensitive meaning fails negotiation,
 and success cannot imply full four-state observation, full SystemVerilog LRM,
-UVM, parity, or scale. Proposed `.10` is selected next for separate clean
-activation; no backend/public/runtime behavior ships in `.9` selection.
+UVM, parity, or scale. Clean `.9` selection commit `ab3e73b72` activates `.10`
+alone for the selected public-tool/backend/result implementation. Activation
+changes no backend/public/runtime behavior.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

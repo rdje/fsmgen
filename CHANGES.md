@@ -31995,3 +31995,18 @@ task tree and git.
   added. Proposed `.10` is selected next for separate clean activation. No
   compiler, command/API, generated backend, runtime, capability/support result,
   parity, README landing content, or product behavior changes in selection.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10 — portable SV implementation activated
+
+- From clean contract-selection commit `ab3e73b72`, activated `.10` alone for
+  the selected public VIAL tool path, static plain-SystemVerilog backend,
+  exact Verilator runtime, atomic artifact graph, closed trace, and normalized
+  result producer. This continuity-only slice changes no parser, command/API,
+  generated artifact, compile/run behavior, result, capability/support claim,
+  parity, README landing content, or product behavior. Decision `0043` owns the
+  rationale, so no separate development note is warranted. Final task/docs/
+  path evidence passes Files=4/Tests=323 plus Files=1/Tests=2; all 37 mdBook
+  chapters test and the removed 73-file/17,134,244-byte build passes; task
+  integrity is three trees/885 nodes/one segment/one index archive; Knowledge
+  Map validates 1,096 facts/5,733 keys; Memory is 36 lines; all nine staged
+  doctrines pass with 20 surfaces/2,780 paths. Exact cleanup is complete.

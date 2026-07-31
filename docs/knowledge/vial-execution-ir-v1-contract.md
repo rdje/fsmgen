@@ -68,6 +68,7 @@ commit `44dbecd1a` permitted `.8` to select public plan placement under
 decision `0039`. The public API returns only the sanitized plan, never
 ExecutionIR. Decision `0043` now selects the first known-value plain-
 SystemVerilog backend contract, but plan/result files, generated backends,
-compile, simulation, runtime, and parity remain unshipped until `.10`/`.11`.
+compile, simulation, runtime, and parity remain unshipped; active `.10` owns
+the first implementation and `.11` retains parity.
 See
 `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.

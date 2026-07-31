@@ -6,19 +6,18 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: select portable SV backend contract`).
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.9` is
-  complete and no implementation leaf is active across this commit boundary.
-- current_state: decision `0043` and the portable-SystemVerilog contract select
-  static non-UVM SV lowering, inactive-edge deterministic scheduling, declared-
-  probe adapters, exact source maps/artifacts, a closed JSONL trace/result
-  boundary, and exact Verilator 5.046 gates. The profile is explicitly known-
-  value/two-state and cannot imply full four-state SV, UVM, parity, or scale.
-- next_action: from this clean commit, activate proposed `.10` alone for the
-  bounded public-tool/plain-SV/result implementation; `.11` retains parity.
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10: activate portable SV backend implementation`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10`; this
+  continuity slice activates the selected implementation owner alone.
+- current_state: decision `0043` and the portable-SystemVerilog contract remain
+  unchanged. `.10` now owns the selected public `fsmgen vial` tool path, static
+  non-UVM SV backend, exact Verilator 5.046 runtime, atomic artifacts, closed
+  trace, and normalized result producer; no implementation ships in activation.
+- next_action: implement only bounded `.10` with fresh acceptance evidence;
+  `.11` retains handwritten-AHB parity and every native backend stays separate.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for `.10`; native UVM/VHDL/mixed-language leaves retain exact
+- blockers: none for active `.10`; native UVM/VHDL/mixed-language leaves retain exact
   tool prerequisites. PGEN/ANVIL feedback remains pending for the independent
   live-document `.15`/`.16` leaves and is not a VIAL blocker.
 

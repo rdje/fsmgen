@@ -2,7 +2,8 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9`
-Status: selected; implementation remains owned by proposed `.10`
+Status: selected; active `.10` owns implementation after clean activation from
+commit `ab3e73b72`
 Decision: `0043`
 
 ## Outcome

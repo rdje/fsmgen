@@ -94,5 +94,5 @@ separate VIAL/HIAL inputs, a portable source-catalog/artifact-sink API, atomic
 repository-local artifacts, and explicit manifest compatibility. No command,
 API, parser widening, file, backend, or runtime ships in selection. Decision
 `0043` and completed `.9` now select the exact portable backend contract;
-proposed `.10` remains the first implementation owner and `.11` retains
-runtime parity.
+clean selection commit `ab3e73b72` activates `.10` as the first implementation
+owner, and `.11` retains runtime parity.

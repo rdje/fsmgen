@@ -839,7 +839,7 @@ repository-local atomic artifacts, manifests, discovery, diagnostics, and
 compatibility. Clean `.8` selection commit `d34da3254` activates `.9` alone
 for the separate plain-SystemVerilog/Verilator backend-contract selection.
 Decision `0043` and completed `.9` now select the exact deterministic known-
-value contract described above. Proposed `.10` alone owns implementation after
-a separate clean activation, and `.11` retains runtime parity. No parser
-widening, command/API, plan or result file, target artifact, compile/run path,
-runtime result, parity pass, or backend behavior is shipped by selection.
+value contract described above. Clean `.9` commit `ab3e73b72` activates `.10`
+alone for implementation, and `.11` retains runtime parity. No parser widening,
+command/API, plan or result file, target artifact, compile/run path, runtime
+result, parity pass, or backend behavior changes during activation.
