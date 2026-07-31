@@ -99,3 +99,8 @@ health targets versus inclusive ceilings, executed verifiers, scoped currency,
 typed route/index/evidence completeness, retention/migration evidence, and the
 maintained-product-reference lifecycle. Neutral checker identity is already
 mechanically scanned by `t/1554`.
+
+Clean disposition commit `3b782fc10` activates `.18` alone to distinguish
+reviewed healthy targets from inclusive transition enforcement ceilings and to
+prove downward ratchets plus separate increase authority. The activation does
+not change the current JSONL schema, registry values, or enforced limits.

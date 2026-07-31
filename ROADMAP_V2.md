@@ -10428,5 +10428,6 @@ The first honest `R11` slices are now:
   index/route completeness, and undeclared Git-retention assumptions are real.
   Completed bounded disposition `.17` decomposes corrections into `.15`-`.23`; utility
   and maintained-reference selection now precede affected `.8`-`.10`/`.13`
-  family migrations. `.18` is the next clean selection for unambiguous health
-  target, inclusive ceiling, ratchet, and increase-authority semantics.
+  family migrations. Clean disposition commit `3b782fc10` activates `.18`
+  alone for unambiguous health-target, inclusive-ceiling, ratchet, and increase-
+  authority semantics; activation itself changes no schema, value, or limit.

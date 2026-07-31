@@ -184,11 +184,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17: reconcile external containment reviews`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18`
-  Status: `pending`
+  Status: `active`
   Goal: `Separate reviewed health targets from inclusive transition enforcement ceilings.`
   Acceptance: `Every measured surface reports actual, health target, and inclusive enforcement ceiling without using one field for both meanings; healthy and debt states have explicit algebra; hard_pct is removed; immutable baseline plus owned allowance cannot exceed the separately authorized ceiling; ceiling increases require a distinct reviewed authority record while reductions are free; a two-sided ratchet rejects overflow and stale excess headroom; migrated versus pinned/deferred pressure is reported; positive, equality, overflow, lowering, stale-ceiling, and unauthorized-increase fixtures pass without raising a current limit.`
   Verification: `pending`
-  Commit: `pending`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18: distinguish health targets from ceilings`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19`
@@ -289,12 +289,15 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: `.17` proves the apparent 15,727-line IAL2 gap is misleading
   overlap accounting rather than demonstrated loss, reports 86.8% pinned/
   deferred candidate bytes, and routes every accepted correction to `.15`-`.23`.
+- `2026-07-31`: Clean disposition commit `3b782fc10` activates `.18` alone for
+  health-target, inclusive-ceiling, ratchet, increase-authority, and pressure-
+  reporting semantics; activation changes no schema, value, limit, or behavior.
 
 ## Open Questions
 
-- None. The two reviews are fully reconciled in the tracked bounded disposition.
-  The existing four-file review remains authoritative for those files' semantic
-  roles; `.18` is the next clean selection for target/ceiling semantics.
+- None for active `.18`. The two reviews are fully reconciled in the tracked
+  bounded disposition. The existing four-file review remains authoritative for
+  those files' semantic roles.
 
 ## Blockers
 
@@ -351,6 +354,7 @@ no routed destination becomes the next uninstrumented blob.
 
 | `2026-07-31` | `.17` activation | clean `c95160d53` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; focused path/locality/task/live-size, Knowledge Map, Memory, mdBook, diff, staged-doctrine gates; exact cleanup | `passed`; focused Files=4/Tests=65; trees=3/nodes=890/segments=1/compact=0/index archives=1; 20 surfaces and 2,780/2,780 paths; all 37 mdBook chapters test; repository-local build 16,976 KiB and removed exactly; Memory 42 lines; `.17` alone active and `.15`/`.16` wait for its disposition; no disposition file, checker, schema, registry value, threshold, reviewed content, frozen identity, landing content, or product change |
 | `2026-07-31` | `.17` external review disposition | 17 findings plus Q1-Q31; review/source identity; IAL2 overlap root cause; pressure census; decision 0044; leaves `.15`-`.23`; evidence-map/neutrality source inspection; focused/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; disposition 333 lines/17,165 bytes/183-byte longest line; PGEN 393/26,788 and ANVIL 334/44,242 review identities; exact IAL2 source 21,726/4,662,385 at SHA-256 8cff8e7b... plus 844-node segment; pinned/deferred candidates 7,775,451/8,955,512 bytes (86.8%); focused Files=5/Tests=71; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 staged paths; Knowledge Map 1,096 facts/5,741 keys; 37 chapters; removed 73-file/16,984-KiB build; all 17 evidence paths resolve; no enforcement, registry value, threshold, packet content, lifecycle, frozen identity, landing content, or product change |
+| `2026-07-31` | `.18` activation | clean `3b782fc10` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; focused path/task/live-size, Knowledge Map, Memory, mdBook, diff, staged-doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=45; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,741 keys; all 37 chapters test; removed 73-file/16,984-KiB build; Memory 43 lines; `.18` alone active; no checker, test, schema/value/limit, document lifecycle/content, frozen identity, landing content, or product change |
 
 ## Commit Log
 
@@ -367,6 +371,7 @@ no routed destination becomes the next uninstrumented blob.
 
 | `.17` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17: activate external review reconciliation` | Activate only evidence-backed PGEN/ANVIL disposition from clean commit `c95160d53`; implementation and the disposition document remain pending. |
 | `.17` external review disposition | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17: reconcile external containment reviews` | Publish decision 0044, corrected evidence, all finding/question dispositions, and atomic `.15`-`.23` remediation ownership without changing behavior. |
+| `.18` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18: activate health-target and ceiling semantics` | Activate only target/ceiling/ratchet/increase-authority implementation from clean disposition commit `3b782fc10`; implementation remains pending. |
 
 ## Changelog
 
@@ -404,3 +409,6 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: `.17` publishes the bounded disposition and decision 0044,
   proves the IAL2 gap was overlapping-retention accounting rather than
   demonstrated loss, reports residual pressure, and decomposes `.15`-`.23`.
+- `2026-07-31`: Clean disposition commit `3b782fc10` activates `.18` alone;
+  no checker, schema, registry value, limit, document, or product changes in
+  the activation.

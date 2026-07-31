@@ -5,22 +5,22 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17:
-  reconcile external containment reviews`).
-- active_work_unit: parent `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`; `.17` is
-  complete and no implementation leaf is active across this commit boundary.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18:
+  activate health-target and ceiling semantics`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18` alone is active
+  from clean disposition commit `3b782fc10`.
 - current_state: decision `0044` and the 333-line bounded disposition reconcile
   every PGEN/ANVIL finding plus Q1-Q31. Exact revision `44b5f1597` retains the
   full former IAL2 file while the content-addressed segment retains all 844
   authoritative nodes; the packet's 15,727-line gap was overlap accounting,
   not demonstrated loss. Real pressure, execution, currency, route/index,
   retention, utility, and maintained-reference gaps are owned by `.15`-`.23`.
-- next_action: from this clean commit activate `.18` alone, then implement
-  explicit health targets, inclusive enforcement ceilings, ratchets, and
-  separate increase authority without widening a current limit.
-- in_flight_uncommitted: none after this disposition commit; no background job
+- next_action: implement explicit health targets, inclusive enforcement
+  ceilings, two-sided debt ratchets, separate increase authority, and pressure
+  reporting without widening a current limit.
+- in_flight_uncommitted: none after this activation commit; no background job
   and all repository-local mdBook output is removed exactly.
-- blockers: none for `.15`-`.23`; `.8`-`.10`/`.13` wait for utility or
+- blockers: none for `.18`; `.8`-`.10`/`.13` wait for utility or
   maintained-reference predecessors. Frozen/ledger work keeps its prior owner.
 
 ## Durable context

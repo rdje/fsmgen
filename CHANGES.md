@@ -32188,3 +32188,16 @@ task tree and git.
   gates pass at `Files=5, Tests=71`; integrity is three trees/896 nodes; all
   2,782 staged paths, 1,096-fact/5,741-key Knowledge Map, 37 mdBook chapters, and the
   removed 73-file/16,984-KiB repository-local build pass.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18 — health-target semantics activated
+
+- From clean disposition commit `3b782fc10`, activate `.18` alone to separate
+  reviewed health targets from inclusive enforcement ceilings, remove inert
+  `hard_pct`, ratchet debt headroom, authorize increases separately, and report
+  migrated versus pinned pressure.
+- This continuity-only slice changes no checker, test, JSONL schema or value,
+  pressure limit, document content/lifecycle, frozen identity, README landing
+  content, compiler/runtime artifact, or product behavior.
+- Focused path/task/live-size tests pass at `Files=3, Tests=45`; integrity is
+  three trees/896 nodes; all 2,782 paths, Knowledge Map, 43-line Memory, all 37
+  mdBook chapters, and the removed 73-file/16,984-KiB local build pass.

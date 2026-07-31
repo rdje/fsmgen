@@ -179,6 +179,8 @@ reader routes, complete collection indexes, declared version-object retention,
 maximum line/record bytes, and utility outcome `re-form`. Leaves `.15`-`.23`
 keep each correction atomic. No review suggestion changes a threshold,
 lifecycle, frozen file, or product behavior merely by being accepted.
+Clean disposition commit `3b782fc10` activates `.18` alone to implement the
+health-target versus enforcement-ceiling correction without widening a limit.
 
 ## What The Old User Guide Still Does
 
