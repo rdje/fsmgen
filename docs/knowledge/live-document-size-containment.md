@@ -55,3 +55,7 @@ index rows with a 523-byte bounded JSONL version-object manifest while keeping
 three active and eleven proposed rows live. The index falls from 1,078 to 558
 lines; both registered task surfaces are now `normal`, and no completed task
 file or README landing content is removed.
+
+User-directed leaf `.14` is active from clean commit `7f05b41de` to publish a
+self-contained external review packet covering the doctrine, JSONL data plane,
+task-tree migration, evidence, limitations, and structured feedback questions.

@@ -31934,3 +31934,17 @@ task tree and git.
   four-file docs group before test output at 89.6% host use versus its 88%
   cutoff; it was not weakened. README landing content and product behavior are
   unchanged.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14 — external review packet activated
+
+- From clean bounded-task commit `7f05b41de`, activate `.14` alone to author a
+  tracked, self-contained external review packet covering the neutral doctrine,
+  JSONL data plane, exact task-history migration, evidence, limitations, and
+  structured questions. This continuity-only slice creates no packet yet and
+  changes no schema, checker, threshold, archive, README landing content, or
+  product behavior; `.8` remains the next migration after this bounded detour.
+  Paths/task integrity pass Files=2/Tests=36 at three trees/883 nodes/one
+  segment/zero compact terminals/one index archive; Knowledge Map validates
+  1,095 facts/5,717 keys; all 20 live-document surfaces and 2,776/2,776 paths
+  pass; all 37 mdBook chapters test and the 73-file/17,111,406-byte local build
+  passes then is removed; Memory remains 36 lines.

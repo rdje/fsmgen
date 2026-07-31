@@ -153,7 +153,9 @@ from an exact version object. PNT still selects entirely from the live file;
 the optional forms add no migration requirement for ordinary trees. The first
 migration reduces the live IAL2 file from 21,726 to 85 lines and the task index
 from 1,078 to 558 lines. Completed task files remain directly browsable; only
-duplicated cross-tree terminal narration becomes query-first.
+duplicated cross-tree terminal narration becomes query-first. User-directed
+leaf `.14` is active to publish a self-contained external review packet before
+the next migration.
 
 ## What The Old User Guide Still Does
 

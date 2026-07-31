@@ -10370,5 +10370,7 @@ The first honest `R11` slices are now:
   query-first while keeping three active plus eleven proposed rows live. The
   reconstructed result is one segment, zero compact terminals, and one index
   archive; both task surfaces are normal without deleting completed task
-  files. `.8` is the next clean activation; `.3` remains blocked by the
-  existing four-file lifecycle review.
+  files. User-directed `.14` alone is active to publish a self-contained
+  external review packet for this architecture; `.8` remains the next
+  migration and `.3` remains blocked by the existing four-file lifecycle
+  review.
