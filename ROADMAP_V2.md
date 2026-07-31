@@ -10443,4 +10443,5 @@ The first honest `R11` slices are now:
   age heuristic exists. `.21` now preserves distinct author-overflow/reader-
   navigation routes, derives four emitted hints, closes six indexed collection
   contracts and both review evidence maps, and rejects staged-tree divergence.
-  `.22` is the next clean correction frontier.
+  Clean `.21` commit `9c63cf76b` activates `.22` alone for migration identity,
+  retention guarantees, and a bounded review front door.

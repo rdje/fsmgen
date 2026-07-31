@@ -5,17 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21:
-  close route and index completeness`).
-- active_work_unit: `.21` is complete; `.22` is the next clean selection for
-  migration evidence, retention guarantees, and a bounded review front door.
-- current_state: Four emitted author-overflow hints and 15 reader routes remain
-  explicitly distinct. Six indexed collections declare literal, query, or
-  generated completeness; packet/disposition maps resolve 17+5 paths; the Git
-  adapter prevents staged structural inputs from hiding behind the worktree.
-- next_action: activate `.22` from this clean commit, then separate full-source
-  identity, semantic closure, working-set reduction, and true residue while
-  declaring actionable version-object retention and bounding review access.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22:
+  activate migration and retention proof`).
+- active_work_unit: `.22` alone is active from clean `.21` commit `9c63cf76b`.
+- current_state: `.21` mechanically closes typed routes, six collection-index
+  contracts, 22 review-evidence paths, and staged/worktree agreement. The known
+  macOS RAM metric remains owned by its proposed approval-blocked safety task.
+- next_action: audit the existing IAL2 migration/source evidence, version-object
+  contracts, and review-packet topology; then implement only `.22`'s exact
+  identity/closure/retention/front-door checks and fail-closed fixtures.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: `.8`-`.10`/`.13` wait for utility or

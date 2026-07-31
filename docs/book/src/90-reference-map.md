@@ -216,6 +216,10 @@ indexes prove member links, other collection front doors declare query or
 generated contracts, and fenced packet/disposition maps resolve 17 plus 5
 evidence paths. A staged-result adapter prevents the neutral worktree check
 from validating different controlled content than the commit tree.
+Clean `.21` commit `9c63cf76b` activates `.22` alone. That leaf now owns exact
+migration identity and semantic closure, explicit version-history retention,
+and a bounded front door for the detailed external-review material; this
+selection changes no behavior or existing evidence.
 
 ## What The Old User Guide Still Does
 

@@ -152,3 +152,8 @@ ancillary, and task collections name registry-target queries; the Knowledge
 Map names its executed generated surface. Fenced packet and disposition maps
 resolve all 17 and 5 evidence paths. The Git adapter also rejects controlled
 staged content that differs from the worktree supplied to the neutral core.
+
+Clean `.21` commit `9c63cf76b` activates `.22` alone for exact migration
+identity/closure, explicit version-history retention guarantees, and a bounded
+front door to retained external-review evidence. Activation changes no
+checker, evidence, lifecycle, or product behavior.

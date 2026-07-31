@@ -32267,3 +32267,10 @@ task tree and git.
   derived from actual guard output; undeclared or mistyped hints fail closed.
 - Added literal/query/generated collection-index contracts, checked all 17+5
   review evidence paths, and rejected staged-result/worktree divergence.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22 — migration proof activated
+
+- From clean `.21` commit `9c63cf76b`, activated `.22` alone for migration
+  identity/closure, retention guarantees, and a bounded review front door.
+- Reused the existing proposed macOS RAM-metric task and fact card; this
+  selection changes no enforcement, evidence, lifecycle, or product behavior.

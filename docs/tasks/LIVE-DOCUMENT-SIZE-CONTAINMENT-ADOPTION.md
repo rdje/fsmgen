@@ -216,11 +216,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22`
-  Status: `pending`
+  Status: `active`
   Goal: `Make migration completeness, retention guarantees, and review-front-door bounds explicit.`
   Acceptance: `IAL2 migration evidence separately proves exact full-source identity/retrieval, all 844 authoritative task nodes, live working-set dimensions, and any truly omitted-content residue; version_object use declares a retention owner/guarantee and actionable shallow/rewrite failure, while unrecoverable evidence prefers content-addressed repository files; migration records reject false disjoint arithmetic; a bounded architecture/review front door routes the detailed packet to retained evidence under an explicit lifecycle; retrieval, missing-history, mismatch, and loss-residue fixtures fail closed.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated alone from clean `.21` implementation commit `9c63cf76b`; implementation remains pending.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22: activate migration and retention proof`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23`
@@ -312,18 +312,23 @@ no routed destination becomes the next uninstrumented blob.
   harmonizing it: navigation and author guidance remain separately typed even
   when both legitimately resolve to the exact-history terminal. Index and
   evidence completeness are now explicit resulting-tree contracts.
+- `2026-07-31`: Clean `.21` implementation commit `9c63cf76b` activates `.22`
+  alone for migration completeness, retention guarantees, and a bounded review
+  front door. This selection changes no checker, registry, migration evidence,
+  archive contract, or document content.
 
 ## Open Questions
 
 - None for completed `.18`-`.21`. The rereferenced PGEN/ANVIL
   files exactly match the reviews already reconciled in the bounded disposition;
   the existing four-file review retains authority for its named semantic roles.
-- Verification finding for clean follow-up selection: on macOS,
+- Verification finding already owned by proposed task
+  `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT`: on macOS,
   `scripts/run_with_ram_guard.sh` computed 98.3% host use from only free plus
   speculative VM pages while `memory_pressure` simultaneously reported 83%
   system-wide memory free. The guard correctly stopped, but its host metric is
-  not a valid macOS pressure measure; a dedicated task must fix and fixture the
-  metric before later broad gates rely on its default host cutoff.
+  not a valid macOS pressure measure. The existing safety-task blocker remains
+  director approval; this finding does not silently activate or duplicate it.
 
 ## Blockers
 
@@ -412,6 +417,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.20` scoped currency | optional exact currency schema; lifecycle exemptions; independent proof namespace; real active-index oracle; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=17; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,748 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; real self-refutation and low-noise date fixtures pass in both directions; no global date heuristic, lifecycle/content, archive, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.21` activation | clean `8cf8263a2` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,748 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; all nine doctrines pass; `.21` alone active; no checker, registry, route kind, index/evidence contract, document lifecycle/content, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.21` route/index/evidence completeness | exact route kinds/source paths; source-derived author hints; membership/query/generated index contracts; two fenced evidence maps; staged-result agreement; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=25; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 4 author hints and 15 reader routes; 6 indexed collection contracts; packet/disposition paths 17+5; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,752 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; all declared negative controls and nine doctrines pass; the default RAM guard stopped safely on a false macOS 98.3%-used estimate while `memory_pressure` reported 83% free, so the successful retry retained process-tree/RSS monitoring and manually checked actual pressure under a recorded one-run host override; no pressure value, lifecycle, archive, frozen identity, landing content, or product behavior change |
+| `2026-07-31` | `.22` activation | clean `9c63cf76b` predecessor; existing RAM-guard fact/task reuse; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,752 keys; Memory 40 lines; all 37 chapters test; removed 73-file/17,004-KiB build; all nine doctrines pass; `.22` alone active; no checker, registry, migration evidence, archive contract, review artifact content, lifecycle, frozen identity, landing content, or product behavior change |
 
 ## Commit Log
 
@@ -436,6 +442,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.20` scoped currency | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20: enforce scoped currency contracts` | Add opt-in named local currency oracles, exempt terminal/frozen history, and calibrate FSMGen's active index to source alignment rather than date shape. |
 | `.21` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21: activate route and index completeness` | Activate only typed routes, complete collection indexes, and evidence-map checking from clean `.20` commit `8cf8263a2`; implementation remains pending. |
 | `.21` route/index/evidence completeness | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21: close route and index completeness` | Derive typed author hints, retain distinct reader routes, prove collection index/query/generated contracts and both evidence maps, and reject staged-result divergence. |
+| `.22` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22: activate migration and retention proof` | Activate only migration completeness, retention guarantees, and bounded review-front-door enforcement from clean `.21` commit `9c63cf76b`; implementation remains pending. |
 
 ## Changelog
 
@@ -503,5 +510,7 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: The first staged broad gate stopped at the default RAM guard as
   required. Root-cause evidence shows its macOS host formula ignores reclaimable
   inactive memory (98.3% computed use versus 83% free from `memory_pressure`);
-  the correction must be selected as a dedicated task after this dirty slice is
-  committed cleanly.
+  the proposed `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT` task already
+  owns the correction and retains its explicit director-approval blocker.
+- `2026-07-31`: Clean `.21` commit `9c63cf76b` activates `.22` alone; no
+  implementation or behavior changes in this selection slice.

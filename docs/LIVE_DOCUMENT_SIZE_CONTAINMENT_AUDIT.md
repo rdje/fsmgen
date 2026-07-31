@@ -82,6 +82,11 @@ Fenced packet/disposition evidence maps resolve 17 and 5 paths respectively,
 and the local wrapper rejects staged structural inputs that differ from the
 worktree checked by the neutral core.
 
+Clean `.21` commit `9c63cf76b` activates `.22` alone. The active correction
+must now separate source identity, semantic migration closure, working-set
+reduction, and actual loss residue; make version-history retention actionable;
+and bound the detailed review front door without changing current evidence.
+
 Completed `.18` now separates the two pressure meanings. Health targets are
 reviewed working-set acceptance goals: 2,000 lines / 256 KiB for monolithic
 human-maintained snapshots or ledgers, 2,000 lines / 1 MiB for the generated
