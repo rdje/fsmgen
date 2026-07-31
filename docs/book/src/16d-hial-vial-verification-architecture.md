@@ -405,3 +405,8 @@ evidence. The canonical architecture record is
 [HIAL/VIAL Verification Fixture Architecture Audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md),
 and the owning [task tree](../../tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md)
 tracks the exact frontier.
+
+The bounded source/SemanticIR implementation is complete. Documentation-only
+bridge-contract leaf `.4` is now active; it has not yet selected a schema or
+changed any HIAL producer, artifact, report, generated code, or runtime
+behavior.

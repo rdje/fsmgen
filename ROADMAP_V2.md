@@ -8419,6 +8419,11 @@ authored order without dependent cascades. No public CLI/API, bridge, plan,
 target artifact, compilation, simulation, result, parity, UVM, VHDL,
 mixed-language, or scale behavior is claimed. Proposed `.4` is the next
 architecture leaf and requires separate clean activation.
+Clean semantic-frontend commit `be9c74163` activates only bridge-contract
+selection `.4` through a continuity-only transition. No bridge schema,
+producer, public artifact/report/capability/support surface, parser, lowerer,
+generated HDL or verification code, test/runtime, or product behavior changes
+during activation.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

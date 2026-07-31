@@ -123,11 +123,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: implement VIAL semantic intent`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select HIALVIALBridgeManifest version 1 and its HIAL-layer production contract.`
   Acceptance: `A documentation-only contract freezes bridge identity, HIAL review-artifact provenance, unit/config/type/endpoint/domain/transaction/event/protocol/residue/observation/probe/backend-binding/capability/source-map families, public-port/probe/native access classes, schema/defensive-copy/report paths, exact IAL0/IAL1/IAL2 reviewable routes, no-direct-IAL2 bypass, negative boundaries, and the bounded first implementation scope.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Activated continuity-only after clean .3 implementation commit be9c74163. Activation changes task/index, roadmap, audit, mdBook, fact, bounded Memory, changelog, and regenerated Knowledge Map continuity only. Task-tree integrity passes at two active trees / 865 nodes; docs plus relative-path audits pass at Files=4 / Tests=42; all 37 mdBook chapters test and the 73-file / 16,900,280-byte repository-local build passes; Knowledge Map generation/check passes at 1,087 facts / 5,631 question keys; Memory remains bounded at 54 lines; diff, docs-only staged acceptance, all eight doctrines, and exact output cleanup pass. Bridge schema, HIAL producers, report/artifact/capability/support surfaces, parsers, lowerers, generated HDL or verification code, tests, runtime, and product behavior remain unchanged until the contract is selected in a separate commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4: activate HIAL VIAL bridge contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5`
   Status: `proposed`
@@ -248,11 +248,13 @@ Completed `.2` accepts decision `0033` and the exact source/semantic-IR v1
 contract. Clean contract commit `08f59167b` activated `.3` through a separate
 continuity transition; `.3` now ships the bounded semantic-only parser,
 validator, immutable `VIALSemanticIR`, sanitized report, checked AHB source,
-and exact support/capability accounting. Decision `0034` records that this
+and exact support/capability accounting. Clean implementation commit
+`be9c74163` activates only documentation contract `.4` through a separate
+continuity transition. Decision `0034` records that this
 first profile is not VIAL's language ceiling: target SV/UVM/VHDL machinery is
 compiler-owned in the same architectural sense that assembly is compiler-
-owned beneath C/C++ or Rust. Proposed `.4` is the next architecture leaf and
-requires a separate clean activation.
+owned beneath C/C++ or Rust. Bridge selection and product behavior remain
+unchanged during `.4` activation.
 
 ## Decisions
 
@@ -359,6 +361,7 @@ requires a separate clean activation.
 | `2026-07-31` | `.2` selection | decision `0033`; exact source/grammar/type/property/declaration/fixture/IR/report/diagnostic/limit/negative contract; task/roadmap/book/fact consistency; task-tree/docs/relative-path/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.3` alone selected; trees=2 / nodes=864; docs Files=3 / Tests=40; paths Files=1 / Tests=2; 37 chapters; 73 files / 16,842,038 bytes; Knowledge Map 1,086 facts / 5,617 keys; no product behavior change |
 | `2026-07-31` | `.3` activation | clean `.2` predecessor; task/index/roadmap/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.3` alone active; trees=2 / nodes=864; docs Files=3 / Tests=40; 37 chapters; 73 files / 16,845,901 bytes; Knowledge Map 1,086 facts / 5,617 keys; Memory 43 lines; implementation and product behavior unchanged |
 | `2026-07-31` | `.3` implementation | dedicated parser/builder/SemanticIR/report syntax; focused t1550; support/capability/accounting and defensive-copy audits; task-tree/docs/relative-path/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; checked AHB source is 4,986 bytes / 123 lines / SHA-256 2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd; focused Files=3 / Tests=7,055; adjacent Files=9 / Tests=32; docs Files=3 / Tests=40; paths Files=1 / Tests=2; 37 chapters; build 73 files / 16,896,993 bytes; Knowledge Map 1,087 facts / 5,631 keys; explicit semantic-only non-claims; unrelated t261/t296 failures routed to separate proposed task trees; output removed exactly |
+| `2026-07-31` | `.4` activation | clean `.3` predecessor; task/index/roadmap/audit/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; trees=2 / nodes=865; docs Files=4 / Tests=42; 37 chapters; build 73 files / 16,900,280 bytes; Knowledge Map 1,087 facts / 5,631 keys; Memory 54 lines; bridge contract and all product behavior unchanged; output removed exactly |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -395,9 +398,13 @@ requires a separate clean activation.
 | `.2` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: select spanned VIAL semantic contract` | Accept decision `0033`, freeze the complete v1 source/private-IR/report boundary, and select proposed `.3` implementation without product changes. |
 | `.3` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: activate VIAL semantic implementation` | Activate only bounded parser/SemanticIR implementation after clean `.2`; implementation remains unperformed. |
 | `.3` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: implement VIAL semantic intent` | Ship the bounded semantic-only frontend, one checked source, exact reports/capabilities/support, and focused negative/resource coverage without a bridge, plan, backend, or runtime claim. |
+| `.4` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4: activate HIAL VIAL bridge contract` | Activate only the documentation contract for bridge-manifest selection after clean `.3`; selection remains unperformed. |
 
 ## Changelog
 
+- `2026-07-31`: Clean `.3` implementation commit `be9c74163` activates only
+  documentation contract `.4`; no bridge schema, producer, artifact, report,
+  generated code, test, runtime, or product behavior changes in activation.
 - `2026-07-29`: Added the director-agreed portable-Verilator versus
   full-language/SystemVerilog-UVM validation-profile requirement, with separate
   VHDL and mixed-language claim qualification; the tree remains proposed while

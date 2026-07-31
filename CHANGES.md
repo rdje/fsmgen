@@ -31492,3 +31492,17 @@ task tree and git.
   nine adjacent support/runtime/defensive-copy audits at `Files=9, Tests=32`.
   Two pre-existing broad-gate oracle failures are root-caused and durably
   routed to separate proposed task trees; this slice changes neither locus.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4 — bridge contract activated
+
+- Activated only documentation contract `.4` after clean semantic-frontend
+  commit `be9c74163`; task/index, roadmap, audit, mdBook, fact, bounded Memory,
+  changelog, and Knowledge Map continuity move together.
+- Bridge schema, HIAL producers, public artifacts/reports/capabilities/support,
+  parsers, lowerers, generated HDL/verification code, tests, runtime, and
+  product behavior remain unchanged until contract selection commits cleanly.
+- Task-tree integrity passes at two active trees / 865 nodes; docs pass at
+  `Files=4, Tests=42`; all 37 chapters and the 73-file / 16,900,280-byte local
+  build pass; Knowledge Map passes at 1,087 facts / 5,631 keys; Memory remains
+  54 lines; doctrines and exact output cleanup pass.
+- No separate development note is warranted for this continuity-only slice.

@@ -61,3 +61,7 @@ checking, and a sanitized semantic report with the three exact VIAL v1
 capabilities. Public CLI/API, binding, plan, target artifacts, runtime, result,
 parity, UVM, VHDL, mixed-language, and scale support remain explicit
 non-claims.
+
+Clean implementation commit `be9c74163` completes this source/SemanticIR
+slice and activates documentation-only bridge-contract leaf `.4`. Activation
+does not add bridge binding, a producer, an artifact, or runtime behavior.

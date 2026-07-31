@@ -12159,6 +12159,10 @@ VIAL is not synthesis-bounded, but it abstracts and simplifies the expressive
 verification use cases of SV/UVM/VHDL instead of cloning their mechanisms.
 Proposed `.4` is the next architecture leaf and still requires a separate clean
 activation.
+Clean semantic-frontend commit `be9c74163` activates only documentation
+contract `.4`. The bridge schema, HIAL producer route, public reports/artifacts,
+capability/support accounting, generated code, runtime, and product behavior
+remain unchanged until contract selection commits separately.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

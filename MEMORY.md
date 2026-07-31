@@ -6,19 +6,17 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: implement VIAL semantic intent`).
-- active_work_unit: none after `.3` closeout; parent
-  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` remains active and `.4` is
-  proposed/inactive.
-- current_state: `.3` ships the bounded semantic-only `.vial` parser, validator,
-  immutable `VIALSemanticIR`, sanitized report, checked AHB source, and exact
-  support/capability accounting. It emits no bridge, plan, target artifact, or
-  runtime result.
-- next_action: from the clean `.3` commit, activate proposed `.4` in a separate
-  continuity slice, unless a higher-priority clean-tree selection first chooses
-  one of the two newly tracked regression-oracle repairs.
-- in_flight_uncommitted: none after this implementation commit; no background
-  job.
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4: activate HIAL VIAL bridge contract`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`
+  (documentation-only HIAL/VIAL bridge-manifest contract selection).
+- current_state: clean implementation commit `be9c74163` completes `.3` and
+  this continuity transition activates only `.4`. No bridge schema, producer,
+  artifact/report surface, generated code, runtime, or product behavior has
+  changed.
+- next_action: audit canonical HIAL review routes and select the exact bounded
+  `HIALVIALBridgeManifest` v1 identity, schema, production, projection,
+  diagnostics, limits, negative boundaries, and first implementation owner.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. Broader t261 and t296 failures are independently root-caused
   and durably proposed, not blockers or pass claims for `.3`.
 
@@ -40,6 +38,9 @@ history; this file carries only the current bounded resume state.
   adjacent Files=9 / Tests=32; docs Files=3 / Tests=40; paths Files=1 /
   Tests=2; 37 chapters and 73-file / 16,896,993-byte local build; Knowledge
   Map 1,087 facts / 5,631 keys; build output removed exactly.
+- `.4` activation closeout: trees=2 / nodes=865; docs Files=4 / Tests=42;
+  37 chapters and 73-file / 16,900,280-byte local build; Knowledge Map 1,087
+  facts / 5,631 keys; doctrines pass and output is removed exactly.
 - `SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC` owns stale
   t261 unary-shape expectations. `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT`
   owns t296's in-memory-entry versus CLI-aggregate top-name conflation.

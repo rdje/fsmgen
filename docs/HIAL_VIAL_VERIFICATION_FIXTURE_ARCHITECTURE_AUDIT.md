@@ -490,7 +490,10 @@ The owning task tree now decomposes exact leaves for:
 10. architecture-specific large-fixture scale proof; and
 11. full user documentation and end-to-end matrix closeout.
 
-Only the first source/IR contract is selected next. Every behavior-bearing
+The first source/IR contract and bounded implementation are complete.
+Documentation-only bridge-contract leaf `.4` is active after clean commit
+`be9c74163`; it has not selected a schema or changed any HIAL producer,
+artifact, report, generated code, or runtime behavior. Every behavior-bearing
 leaf requires separate clean activation and normal acceptance evidence.
 
 ## Rollback
