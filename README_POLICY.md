@@ -94,6 +94,13 @@ lifecycle class, and pressure control, and follow routes transitively until
 they end at a controlled terminal. An unclassified destination, routing cycle,
 or chain that merely moves the same append pressure again is a failed adoption.
 
+Classify routes as `reader_navigation` or `author_overflow`. The sets may
+legitimately differ: readers may inspect immutable change history, while
+authors must not be told to append new status prose there. Derive overflow
+candidates from path-shaped destinations in the guard's actual emitted
+guidance, not only from a hand-maintained table, and fail when an emitted hint
+has no governed destination.
+
 Use controls appropriate to the destination:
 
 | Destination class | Required pressure control |

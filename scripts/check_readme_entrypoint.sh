@@ -49,6 +49,10 @@ fail=0
 
 note() { printf 'readme-entrypoint: %s\n' "$1" >&2; fail=1; }
 ok()   { printf 'readme-entrypoint: ok:   %s\n' "$1"; }
+route_hint() {
+  local route_kind="$1" target_surface_id="$2" marker="$3" message="$4"
+  note "  ${message}"
+}
 
 if [ ! -f README.md ]; then
   note "README.md is missing (it is the declared single entry point)"
@@ -86,9 +90,10 @@ if [ "${lines}" -le "${LINE_CAP}" ]; then
 else
   note "README.md is ${lines} lines (> cap ${LINE_CAP})"
   note "  README.md is a nearly static landing page (docs/decisions/0024)."
-  note "  Move per-leaf detail to its owning task-tree under docs/tasks/, durable"
-  note "  cross-cutting facts to docs/decisions/, user-facing behavior to docs/book/,"
-  note "  and leave history to git (git log --grep=<UNIT-ID>)."
+  route_hint author_overflow task_evidence 'docs/tasks/' 'Move per-leaf detail to its owning task-tree under docs/tasks/.'
+  route_hint author_overflow rationale 'docs/decisions/' 'Move durable cross-cutting facts to docs/decisions/.'
+  route_hint author_overflow shipped_behavior 'docs/book/' 'Move user-facing behavior to docs/book/.'
+  route_hint author_overflow exact_history 'git log --grep=<UNIT-ID>' 'Leave exact chronology to git log --grep=<UNIT-ID>.'
 fi
 
 bytes=$(wc -c < README.md | tr -d ' ')
@@ -145,7 +150,7 @@ if [ ! -f "${ROUTE_REGISTRY}" ]; then
   note "routed-destination registry is missing: ${ROUTE_REGISTRY}"
 else
   route_records=$(perl -MJSON::PP -e '
-    my @keys = qw(route_id source_surface_id marker target_surface_id);
+    my @keys = qw(route_id route_kind source_path source_surface_id marker target_surface_id);
     while (<>) {
       my $line = $.;
       my $record = eval { decode_json($_) };
@@ -176,12 +181,16 @@ else
     note "${ROUTE_REGISTRY} is invalid JSONL: ${route_records}"
   else
     declare -A seen_routes=()
-    while IFS=$'\t' read -r route_id source_surface_id readme_marker target_surface_id; do
+    while IFS=$'\t' read -r route_id route_kind source_path source_surface_id route_marker target_surface_id; do
       [ -z "${route_id}" ] && continue
       route_failed=0
 
       case "${route_id}" in
         *[!a-z0-9_]*) route_note "has an invalid route_id" ;;
+      esac
+      case "${route_kind}" in
+        author_overflow|reader_navigation) ;;
+        *) route_note "has an invalid route_kind: ${route_kind}" ;;
       esac
       if [ -n "${seen_routes[${route_id}]+x}" ]; then
         route_note "is declared more than once"
@@ -191,14 +200,16 @@ else
       if [ "${source_surface_id}" != "readme_entrypoint" ]; then
         route_note "must originate at readme_entrypoint: ${source_surface_id}"
       fi
-      if [ -z "${readme_marker}" ] || ! grep -Fq -- "${readme_marker}" README.md; then
-        route_note "README marker is absent: ${readme_marker}"
+      if [ ! -f "${source_path}" ]; then
+        route_note "source path is absent: ${source_path}"
+      elif [ -z "${route_marker}" ] || ! grep -Fq -- "${route_marker}" "${source_path}"; then
+        route_note "${source_path} marker is absent: ${route_marker}"
       fi
       if [ -z "${target_surface_id}" ] || ! grep -Fxq -- "${target_surface_id}" <<< "${surface_ids}"; then
         route_note "targets an undeclared live-document surface: ${target_surface_id}"
       fi
       if [ "${route_failed}" -eq 0 ]; then
-        ok "route ${route_id}: README marker -> ${target_surface_id}"
+        ok "route ${route_id}: ${route_kind} ${source_path} marker -> ${target_surface_id}"
       fi
     done <<< "${route_records}"
 

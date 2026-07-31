@@ -447,12 +447,42 @@ subtest 'route graph rejects missing markers, missing edges, unknown targets, an
         $_[0]{routes_to} = ['bounded_entry'];
     });
     append_file($cycle, 'registry/routes.jsonl', json_line({
-        route_id => 'return', source_surface_id => 'bounded_destination',
+        route_id => 'return', route_kind => 'reader_navigation',
+        source_path => 'destination.md', source_surface_id => 'bounded_destination',
         marker => 'entry.md', target_surface_id => 'bounded_entry',
     }));
     my ($cycle_ok, $cycle_output) = run_checker($cycle);
     ok(!$cycle_ok, 'route cycle is rejected');
     like($cycle_output, qr/surface route cycle:/, 'cycle is explicit');
+};
+
+subtest 'typed routes, collection indexes, and evidence maps fail closed' => sub {
+    my $route_kind = make_fixture();
+    mutate_record($route_kind, 'registry/routes.jsonl', 'destination', sub {
+        $_[0]{route_kind} = 'content_route';
+    }, 'route_id');
+    my ($kind_ok, $kind_output) = run_checker($route_kind);
+    ok(!$kind_ok, 'unknown route kind is rejected');
+    like($kind_output, qr/invalid route_kind/, 'wrong route kind is explicit');
+
+    my $membership = make_fixture();
+    write_file($membership, 'index.md', "[Part A](parts/a.md)\n");
+    my ($membership_ok, $membership_output) = run_checker($membership);
+    ok(!$membership_ok, 'omitted collection member is rejected');
+    like($membership_output, qr/collection index omits member: parts\/b\.md/,
+        'missing collection member is named');
+
+    my $evidence = make_fixture();
+    write_file(
+        $evidence,
+        'evidence.md',
+        "<!-- EVIDENCE:BEGIN -->\n| Concern | Evidence |\n| --- | --- |\n"
+            . "| Missing | `absent.md` |\n<!-- EVIDENCE:END -->\n",
+    );
+    my ($evidence_ok, $evidence_output) = run_checker($evidence);
+    ok(!$evidence_ok, 'missing evidence-map path is rejected');
+    like($evidence_output, qr/evidence map fixture path is absent or unsafe: absent\.md/,
+        'missing evidence path names its map and path');
 };
 
 subtest 'projection and terminal verifiers fail closed' => sub {
@@ -595,12 +625,19 @@ sub make_fixture {
     write_file($root, 'destination.md', "destination\n");
     write_file($root, 'parts/a.md', "part a\n");
     write_file($root, 'parts/b.md', "part b\n");
-    write_file($root, 'index.md', "index\n");
+    write_file($root, 'index.md', "[Part A](parts/a.md)\n[Part B](parts/b.md)\n");
     write_file($root, 'canonical/source.md', "canonical\n");
     write_file($root, 'generated.md', "generated\n");
     write_file($root, 'ledger.md', "current entry\n");
     write_file($root, 'frozen.md', "frozen\n");
     write_file($root, 'sealed.md', "sealed bytes\n");
+    write_file($root, 'proof.md', "proof\n");
+    write_file(
+        $root,
+        'evidence.md',
+        "<!-- EVIDENCE:BEGIN -->\n| Concern | Evidence |\n| --- | --- |\n"
+            . "| Fixture | `proof.md` |\n<!-- EVIDENCE:END -->\n",
+    );
     write_file($root, 'bin/query', "#!/bin/sh\nexit 0\n");
     write_file($root, 'bin/freshness', "#!/bin/sh\nprintf 'freshness\\n' > freshness-ran\n");
     write_file($root, 'bin/version', "#!/bin/sh\nprintf 'version\\n' > version-ran\n");
@@ -628,8 +665,14 @@ sub make_fixture {
     );
     write_file($root, 'registry/surfaces.jsonl', join('', map { json_line($_) } @surfaces));
     write_file($root, 'registry/routes.jsonl', json_line({
-        route_id => 'destination', source_surface_id => 'bounded_entry',
+        route_id => 'destination', route_kind => 'reader_navigation',
+        source_path => 'entry.md', source_surface_id => 'bounded_entry',
         marker => 'destination.md', target_surface_id => 'bounded_destination',
+    }));
+    write_file($root, 'registry/evidence.jsonl', json_line({
+        map_id => 'fixture', source_path => 'evidence.md',
+        begin_marker => '<!-- EVIDENCE:BEGIN -->',
+        end_marker => '<!-- EVIDENCE:END -->',
     }));
     write_file($root, 'registry/archive.jsonl',
         json_line({ record_type => 'registry', schema_version => 1 }) . json_line({
@@ -653,7 +696,7 @@ sub make_fixture {
 
 sub measured {
     my ($id, $lifecycle, $locator, $targets, $index, $inputs, $routes, $verifier) = @_;
-    return {
+    my $record = {
         surface_id => $id, lifecycle => $lifecycle, locator => $locator,
         targets => $targets, index => $index, canonical_inputs => $inputs,
         routes_to => $routes, owner => 'fixture-owner',
@@ -663,6 +706,10 @@ sub measured {
         containment_status => 'steady', state => 'normal', baseline => undef,
         verifier => $verifier // 'builtin:budget',
     };
+    $record->{index_contract} = {
+        kind => 'membership', verifier => 'builtin:markdown_links',
+    } if $locator eq 'collection' && defined $index;
+    return $record;
 }
 
 sub terminal {
@@ -713,6 +760,7 @@ sub run_checker {
         '--registry', 'registry/surfaces.jsonl',
         '--routes', 'registry/routes.jsonl',
         '--archives', 'registry/archive.jsonl',
+        '--evidence-maps', 'registry/evidence.jsonl',
     );
     my $input = '';
     if ($options{coverage}) {

@@ -209,6 +209,13 @@ structurally exempt.
 Clean `.20` commit `8cf8263a2` activates `.21` alone to type author-overflow
 versus reader-navigation routes and prove collection-index and review-evidence
 membership. This activation changes no checker, registry, or document content.
+Leaf `.21` now implements that boundary. Fifteen README navigation rows remain
+reader routes; four author-overflow destinations are derived from the guard's
+emitted hints and matched exactly to governed surfaces. Literal book/decision
+indexes prove member links, other collection front doors declare query or
+generated contracts, and fenced packet/disposition maps resolve 17 plus 5
+evidence paths. A staged-result adapter prevents the neutral worktree check
+from validating different controlled content than the commit tree.
 
 ## What The Old User Guide Still Does
 

@@ -6,16 +6,16 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21:
-  activate route and index completeness`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21` alone is active
-  from clean `.20` commit `8cf8263a2`.
-- current_state: Currency is now optional, named, lifecycle-scoped, and executed
-  through core/adapter/external modes. The active task index runs the task-tree
-  source-alignment oracle. Undeclared surfaces are not scanned; terminal/frozen
-  history is exempt; no global date-shape or semantic-truth inference exists.
-- next_action: inventory and type author-overflow versus reader-navigation
-  candidates, prove collection-index membership and both review evidence maps,
-  and add staged/resulting-tree fail-closed fixtures.
+  close route and index completeness`).
+- active_work_unit: `.21` is complete; `.22` is the next clean selection for
+  migration evidence, retention guarantees, and a bounded review front door.
+- current_state: Four emitted author-overflow hints and 15 reader routes remain
+  explicitly distinct. Six indexed collections declare literal, query, or
+  generated completeness; packet/disposition maps resolve 17+5 paths; the Git
+  adapter prevents staged structural inputs from hiding behind the worktree.
+- next_action: activate `.22` from this clean commit, then separate full-source
+  identity, semantic closure, working-set reduction, and true residue while
+  declaring actionable version-object retention and bounding review access.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: `.8`-`.10`/`.13` wait for utility or

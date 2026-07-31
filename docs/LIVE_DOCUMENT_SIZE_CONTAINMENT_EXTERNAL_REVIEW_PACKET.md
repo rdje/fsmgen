@@ -1281,6 +1281,7 @@ Please return one tracked or pasteable Markdown document using this structure:
 Reviewers who want to inspect the implementation can follow these
 repository-relative sources:
 
+<!-- LIVE-DOCUMENT-EVIDENCE-MAP:BEGIN -->
 | Concern | Evidence |
 | --- | --- |
 | Neutral doctrine and local adoption fence | `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` |
@@ -1300,6 +1301,7 @@ repository-relative sources:
 | Task-history fail-closed tests | `t/1549-task-tree-integrity-doctrine.t` |
 | Unconditional doctrine driver | `scripts/check_doctrines.sh` |
 | Owning implementation tree | `docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md` |
+<!-- LIVE-DOCUMENT-EVIDENCE-MAP:END -->
 
 ## Closing request
 

@@ -17,6 +17,9 @@ use FSM::ProjectDataLocality qw(create_project_tempdir);
 
 my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
 my $checker = File::Spec->catfile($repo_root, 'scripts', 'check_readme_entrypoint.sh');
+my $resulting_checker = File::Spec->catfile(
+    $repo_root, 'scripts', 'check_live_document_resulting_tree.pl',
+);
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 
 subtest 'live README routes use the common pressure-controlled surface graph' => sub {
@@ -35,7 +38,8 @@ subtest 'minimal marker-to-surface routes pass without duplicated budgets' => su
     my $fixture = make_fixture();
     my ($ok, $output) = run_checker($fixture);
     ok($ok, 'valid minimal route and surface registries pass') or diag($output);
-    like($output, qr/route shipped_behavior: README marker -> shipped_behavior/, 'README checker reports marker mapping');
+    like($output, qr/route shipped_behavior: reader_navigation README\.md marker -> shipped_behavior/,
+        'README checker reports typed marker mapping');
     like($output, qr/surface shipped_behavior: actual files=1,/, 'common checker owns destination measurement');
 };
 
@@ -89,12 +93,64 @@ subtest 'missing required route fails closed' => sub {
     like($output, qr/required routed destination is undeclared: change_history/, 'missing route is named');
 };
 
+subtest 'undeclared author hint and wrong route kind fail closed' => sub {
+    my $undeclared = make_fixture();
+    mutate_file($undeclared, 'scripts/check_readme_entrypoint.sh', sub {
+        $_[0] .= "route_hint author_overflow change_history 'CHANGES.md' 'Move history to CHANGES.md'\n";
+    });
+    my ($undeclared_ok, $undeclared_output) = run_checker($undeclared);
+    ok(!$undeclared_ok, 'path-shaped emitted hint requires a declared route');
+    like($undeclared_output, qr/undeclared emitted route hint/,
+        'undeclared author hint is diagnosed by the source-derived inventory');
+
+    my $wrong_kind = make_fixture();
+    mutate_file(
+        $wrong_kind,
+        'doctrine/readme_entrypoint/routed_destinations.jsonl',
+        sub { $_[0] =~ s/("route_id":"author_task_evidence".*?"route_kind":)"author_overflow"/${1}"reader_navigation"/ },
+    );
+    my ($wrong_ok, $wrong_output) = run_checker($wrong_kind);
+    ok(!$wrong_ok, 'author and reader route kinds cannot be silently unified');
+    like($wrong_output, qr/undeclared emitted route hint/,
+        'wrong kind breaks the exact author-route match');
+};
+
+subtest 'staged resulting tree cannot diverge from checked structural inputs' => sub {
+    my $fixture = make_fixture();
+    run_git($fixture, 'init');
+    run_git($fixture, 'config', 'user.name', 'Fixture');
+    run_git($fixture, 'config', 'user.email', 'fixture@example.invalid');
+    run_git($fixture, 'add', '.');
+    run_git($fixture, 'commit', '-m', 'fixture baseline');
+    write_file(
+        $fixture,
+        'evidence.md',
+        "<!-- EVIDENCE:BEGIN -->\n| Concern | Evidence |\n| --- | --- |\n"
+            . "| Staged missing | `absent.md` |\n<!-- EVIDENCE:END -->\n",
+    );
+    run_git($fixture, 'add', 'evidence.md');
+    write_file(
+        $fixture,
+        'evidence.md',
+        "<!-- EVIDENCE:BEGIN -->\n| Concern | Evidence |\n| --- | --- |\n"
+            . "| Fixture | `evidence-proof.md` |\n<!-- EVIDENCE:END -->\n",
+    );
+    my ($ok, undef, undef, $stdout, $stderr) = run(
+        command => [$resulting_checker, '--root', $fixture],
+    );
+    my $output = join('', @{$stdout || []}, @{$stderr || []});
+    ok(!$ok, 'staged structural result cannot hide behind different worktree content');
+    like($output, qr/controlled path differs between staged result and worktree: evidence\.md/,
+        'staged/worktree mismatch names the controlled evidence map');
+};
+
 subtest 'stale GitHub landing-page marker fails closed' => sub {
     my $fixture = make_fixture();
     mutate_file($fixture, 'README.md', sub { $_[0] =~ s/^marker-active-index\n//m });
     my ($ok, $output) = run_checker($fixture);
     ok(!$ok, 'missing landing-page marker is rejected');
-    like($output, qr/route active_index: README marker is absent/, 'README-specific diagnostic remains stable');
+    like($output, qr/route active_index: README\.md marker is absent/,
+        'README-specific diagnostic remains stable');
     like($output, qr/route active_index marker is absent from README\.md/, 'common graph also rejects the stale edge');
 };
 
@@ -166,11 +222,28 @@ sub make_fixture {
     write_file($root, 'bounded.md', "one\ntwo\n");
     write_file($root, 'generated.md', "generated\n");
     write_file($root, 'parts/first.md', "part\n");
-    write_file($root, 'index.md', "index\n");
+    write_file($root, 'index.md', "[Part](parts/first.md)\n");
     write_file($root, 'frozen-a.md', "frozen a\n");
     write_file($root, 'frozen-b.md', "frozen b\n");
     write_file($root, 'bin/query', "#!/bin/sh\nexit 0\n");
     write_file($root, 'bin/freshness', "#!/bin/sh\nexit 0\n");
+    write_file($root, 'evidence-proof.md', "proof\n");
+    write_file(
+        $root,
+        'evidence.md',
+        "<!-- EVIDENCE:BEGIN -->\n| Concern | Evidence |\n| --- | --- |\n"
+            . "| Fixture | `evidence-proof.md` |\n<!-- EVIDENCE:END -->\n",
+    );
+    write_file(
+        $root,
+        'scripts/check_readme_entrypoint.sh',
+        join('',
+            "route_hint author_overflow task_evidence 'docs/tasks/' 'Move detail to docs/tasks/'\n",
+            "route_hint author_overflow rationale 'docs/decisions/' 'Move rationale to docs/decisions/'\n",
+            "route_hint author_overflow shipped_behavior 'docs/book/' 'Move behavior to docs/book/'\n",
+            "route_hint author_overflow exact_history 'git log --grep=<UNIT-ID>' 'Leave history to git log --grep=<UNIT-ID>'\n",
+        ),
+    );
     chmod 0755, File::Spec->catfile($root, 'bin', 'query'),
         File::Spec->catfile($root, 'bin', 'freshness')
         or die "cannot chmod fixture executables: $!";
@@ -199,10 +272,17 @@ sub make_fixture {
 
     my @route_rows = map {{
         route_id          => $_,
+        route_kind        => 'reader_navigation',
+        source_path       => 'README.md',
         source_surface_id => 'readme_entrypoint',
         marker            => $markers{$_},
         target_surface_id => $_,
     }} @route_ids;
+    push @route_rows,
+        author_route('author_task_evidence', 'task_evidence', 'docs/tasks/'),
+        author_route('author_rationale', 'rationale', 'docs/decisions/'),
+        author_route('author_shipped_behavior', 'shipped_behavior', 'docs/book/'),
+        author_route('author_exact_history', 'exact_history', 'git log --grep=<UNIT-ID>');
     write_file(
         $root,
         'doctrine/readme_entrypoint/routed_destinations.jsonl',
@@ -213,7 +293,26 @@ sub make_fixture {
         'doctrine/live_document_size/archive_descriptors.jsonl',
         json_line({ record_type => 'registry', schema_version => 1 }),
     );
+    write_file(
+        $root,
+        'doctrine/live_document_size/evidence_maps.jsonl',
+        json_line({
+            map_id => 'fixture', source_path => 'evidence.md',
+            begin_marker => '<!-- EVIDENCE:BEGIN -->',
+            end_marker => '<!-- EVIDENCE:END -->',
+        }),
+    );
     return $root;
+}
+
+sub author_route {
+    my ($route_id, $target, $marker) = @_;
+    return {
+        route_id => $route_id, route_kind => 'author_overflow',
+        source_path => 'scripts/check_readme_entrypoint.sh',
+        source_surface_id => 'readme_entrypoint', marker => $marker,
+        target_surface_id => $target,
+    };
 }
 
 sub measured {
@@ -222,7 +321,7 @@ sub measured {
         $verifier) = @_;
     $verifier //= 'builtin:budget';
     my $generated = $locator eq 'generated_file';
-    return {
+    my $record = {
         surface_id      => $id,
         lifecycle       => $lifecycle,
         locator         => $locator,
@@ -249,6 +348,10 @@ sub measured {
         containment_status => 'steady', state => 'normal', baseline => undef,
         verifier => $verifier,
     };
+    $record->{index_contract} = {
+        kind => 'membership', verifier => 'builtin:markdown_links',
+    } if $locator eq 'collection' && defined $record->{index};
+    return $record;
 }
 
 sub terminal {
@@ -325,4 +428,13 @@ sub run_checker {
         command => [$checker, '--root', $root],
     );
     return ($ok ? 1 : 0, join('', @{$stdout || []}, @{$stderr || []}));
+}
+
+sub run_git {
+    my ($root, @args) = @_;
+    my ($ok, undef, undef, $stdout, $stderr) = run(
+        command => ['git', '-C', $root, @args],
+    );
+    die "fixture git @args failed: " . join('', @{$stdout || []}, @{$stderr || []})
+        if !$ok;
 }

@@ -70,10 +70,13 @@ live_document_files=(
   doctrine/live_document_size/surfaces.jsonl
   doctrine/live_document_size/ceiling_increase_authorities.jsonl
   doctrine/live_document_size/archive_descriptors.jsonl
+  doctrine/live_document_size/evidence_maps.jsonl
   doctrine/readme_entrypoint/routed_destinations.jsonl
   doctrine/task_tree/index_archives.jsonl
   scripts/check_live_document_size.sh
   scripts/check_live_document_ceiling_authority.pl
+  scripts/check_live_document_route_candidates.pl
+  scripts/check_live_document_resulting_tree.pl
   scripts/run_live_document_adapter_verifiers.pl
 )
 for file in "${live_document_files[@]}"; do
@@ -88,6 +91,18 @@ if grep -q 'run_live_document_adapter_verifiers.pl' scripts/check_live_document_
   ok "live-document adapter invokes its verifier runner"
 else
   note "live-document adapter does not invoke its verifier runner"
+fi
+
+if grep -q 'check_live_document_route_candidates.pl' scripts/check_live_document_size.sh; then
+  ok "live-document adapter invokes its route-candidate scanner"
+else
+  note "live-document adapter does not invoke its route-candidate scanner"
+fi
+
+if grep -q 'check_live_document_resulting_tree.pl' scripts/check_live_document_size.sh; then
+  ok "live-document adapter checks staged/resulting-tree agreement"
+else
+  note "live-document adapter does not check staged/resulting-tree agreement"
 fi
 
 if grep -q 'scripts/check_doctrines.sh' .github/workflows/regression.yml \

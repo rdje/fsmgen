@@ -4,25 +4,29 @@ use warnings;
 
 use Cwd qw(abs_path);
 use Digest::SHA;
+use File::Basename qw(dirname);
 use File::Glob qw(bsd_glob GLOB_NOSORT);
 use File::Spec;
 use Getopt::Long qw(GetOptions);
 use JSON::PP;
 
-my ($root_arg, $registry_arg, $routes_arg, $archives_arg, $coverage_stdin, $help);
+my ($root_arg, $registry_arg, $routes_arg, $archives_arg, $evidence_maps_arg,
+    $coverage_stdin, $help);
 my @adapter_proofs;
 GetOptions(
     'root=s'          => \$root_arg,
     'registry=s'      => \$registry_arg,
     'routes=s'        => \$routes_arg,
     'archives=s'      => \$archives_arg,
+    'evidence-maps=s' => \$evidence_maps_arg,
     'coverage-stdin!' => \$coverage_stdin,
     'adapter-proof=s@' => \@adapter_proofs,
     'help|h'          => \$help,
 ) or usage(2);
 usage(0) if $help;
 usage(2) if !defined($root_arg) || !defined($registry_arg)
-    || !defined($routes_arg) || !defined($archives_arg);
+    || !defined($routes_arg) || !defined($archives_arg)
+    || !defined($evidence_maps_arg);
 
 my $root = abs_path($root_arg);
 if (!defined($root) || !-d $root) {
@@ -36,7 +40,7 @@ sub usage {
     my ($status) = @_;
     print STDERR <<'USAGE';
 Usage: check_live_document_size.pl --root DIR --registry FILE --routes FILE
-       --archives FILE [--coverage-stdin]
+       --archives FILE --evidence-maps FILE [--coverage-stdin]
 USAGE
     exit $status;
 }
@@ -372,7 +376,8 @@ for my $row (@{$surface_rows}) {
         state baseline verifier
     );
     next if !validate_keys(
-        'surface registry', $line_number, $json, \@required, ['transition', 'currency'],
+        'surface registry', $line_number, $json, \@required,
+        ['transition', 'currency', 'index_contract'],
     );
 
     my $id = $json->{surface_id};
@@ -545,12 +550,42 @@ for my $row (@{$surface_rows}) {
         problem("surface $id collection index must be a string or null")
             if defined($record{index}) && ref($record{index});
         problem("surface $id collection must not declare canonical_inputs") if @{$canonical};
+        if (!defined $record{index}) {
+            problem("surface $id collection without an index must use null or absent index_contract")
+                if defined $json->{index_contract};
+        } elsif (ref($json->{index_contract}) ne 'HASH') {
+            problem("surface $id indexed collection must declare an index_contract object");
+        } elsif (validate_keys(
+            "surface $id index_contract", $line_number, $json->{index_contract},
+            [qw(kind verifier)], [],
+        )) {
+            my ($kind, $verifier) = @{$json->{index_contract}}{qw(kind verifier)};
+            if (ref($kind) || !defined($kind)
+                    || $kind !~ /\A(?:membership|generated|query)\z/) {
+                problem("surface $id index_contract has invalid kind");
+            } elsif (ref($verifier) || !defined($verifier) || $verifier eq '') {
+                problem("surface $id index_contract must declare a verifier");
+            } elsif ($kind eq 'membership' && $verifier ne 'builtin:markdown_links') {
+                problem("surface $id membership index must use builtin:markdown_links");
+            } elsif ($kind eq 'query' && $verifier ne 'builtin:registry_targets') {
+                problem("surface $id query index must use builtin:registry_targets");
+            } elsif ($kind eq 'generated' && $verifier !~ /\Asurface:[a-z][a-z0-9_]*\z/) {
+                problem("surface $id generated index must name a surface verifier");
+            } else {
+                $record{index_contract_kind} = $kind;
+                $record{index_contract_verifier} = $verifier;
+            }
+        }
     } elsif ($record{locator} eq 'generated_file') {
         problem("surface $id generated file must use null index") if defined $record{index};
         problem("surface $id generated file needs canonical_inputs") if !@{$canonical};
+        problem("surface $id non-collection must use null or absent index_contract")
+            if defined $json->{index_contract};
     } else {
         problem("surface $id must use null index") if defined $record{index};
         problem("surface $id must not declare canonical_inputs") if @{$canonical};
+        problem("surface $id non-collection must use null or absent index_contract")
+            if defined $json->{index_contract};
     }
 
     if (!@{$targets}) {
@@ -651,6 +686,8 @@ for my $id (@surface_order) {
         } elsif (!relative_path_ok($record->{index})
                 || !assert_local_regular_file($id, root_path($record->{index}))) {
             problem("surface $id has an invalid bounded index: $record->{index}");
+        } elsif (!defined $record->{index_contract_kind}) {
+            problem("surface $id bounded index lacks a valid index_contract");
         }
     } elsif ($record->{locator} eq 'generated_file') {
         my @canonical = expand_patterns($id, $record->{input_patterns});
@@ -764,6 +801,44 @@ for my $id (@surface_order) {
             @{$record}{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total)},
             $target_peak_pct, $ceiling_peak_pct, $record->{state}, $record->{containment_status},
         ));
+
+        if ($locator eq 'collection' && defined $record->{index_contract_kind}) {
+            my $kind = $record->{index_contract_kind};
+            if ($kind eq 'membership') {
+                my $index_relative = $record->{index};
+                my $index_path = root_path($index_relative);
+                if (assert_local_regular_file($id, $index_path)) {
+                    if (!open my $fh, '<:raw', $index_path) {
+                        problem("surface $id cannot read collection index $index_relative: $!");
+                    } else {
+                        local $/;
+                        my $contents = <$fh> // '';
+                        close $fh or problem("surface $id cannot close collection index $index_relative: $!");
+                        my %linked;
+                        while ($contents =~ /\]\((?:<([^>]+)>|([^\s\)]+))(?:\s+[^\)]*)?\)/g) {
+                            my $destination = defined($1) ? $1 : $2;
+                            $destination =~ s/[?#].*\z//;
+                            next if $destination eq '' || $destination =~ /\A(?:[a-z]+:|#)/i;
+                            my $resolved = File::Spec->canonpath(File::Spec->catfile(
+                                dirname($index_relative), split(m{/+}, $destination),
+                            ));
+                            $resolved =~ s{\\}{/}g;
+                            $resolved =~ s{\A\./}{};
+                            $linked{$resolved} = 1 if relative_path_ok($resolved);
+                        }
+                        for my $file (@files) {
+                            my $relative = display_path($file);
+                            next if $relative eq $index_relative;
+                            problem("surface $id collection index omits member: $relative")
+                                if !$linked{$relative};
+                        }
+                        ok_note("surface $id collection index membership checked");
+                    }
+                }
+            } elsif ($kind eq 'query') {
+                ok_note("surface $id collection index declares complete registry-target query");
+            }
+        }
     } elsif ($locator eq 'query') {
         my $path = root_path($record->{target});
         problem("surface $id query target is absent or not executable: $record->{target}")
@@ -829,17 +904,26 @@ my %route_ids;
 my %route_pairs;
 for my $row (@{$route_rows}) {
     my ($line_number, $record) = @{$row};
-    my @route_keys = qw(route_id source_surface_id marker target_surface_id);
+    my @route_keys = qw(
+        route_id route_kind source_path source_surface_id marker target_surface_id
+    );
     next if !validate_keys('route registry', $line_number, $record, \@route_keys, []);
-    my ($route_id, $source_id, $marker, $target_id) = @{$record}{@route_keys};
+    my ($route_id, $route_kind, $source_path, $source_id, $marker, $target_id) =
+        @{$record}{@route_keys};
     if (grep { ref($_) || !defined($_) || $_ eq '' }
-            ($route_id, $source_id, $marker, $target_id)) {
+            ($route_id, $route_kind, $source_path, $source_id, $marker, $target_id)) {
         problem("route registry line $line_number must contain non-empty strings");
         next;
     }
     if ($route_id !~ /\A[a-z][a-z0-9_]*\z/) {
         problem("route registry line $line_number has invalid route_id: $route_id");
         next;
+    }
+    problem("route $route_id has invalid route_kind: $route_kind")
+        if $route_kind !~ /\A(?:author_overflow|reader_navigation)\z/;
+    if (!relative_path_ok($source_path)
+            || !assert_local_regular_file("route $route_id", root_path($source_path))) {
+        problem("route $route_id has invalid source_path: $source_path");
     }
     problem("route $route_id is declared more than once") if $route_ids{$route_id}++;
     if (!exists $surfaces{$source_id}) {
@@ -854,17 +938,17 @@ for my $row (@{$route_rows}) {
     problem("route $route_id edge $source_id -> $target_id is absent from source routes_to")
         if !$declared_targets{$target_id};
     $route_pairs{"$source_id\0$target_id"} = 1;
-    if ($surfaces{$source_id}{locator} eq 'file') {
-        my $source_path = root_path($surfaces{$source_id}{target});
-        if (-f $source_path) {
-            open my $fh, '<:raw', $source_path or do {
-                problem("route $route_id cannot read source $surfaces{$source_id}{target}: $!");
+    if (relative_path_ok($source_path)) {
+        my $source_file = root_path($source_path);
+        if (-f $source_file) {
+            open my $fh, '<:raw', $source_file or do {
+                problem("route $route_id cannot read source $source_path: $!");
                 next;
             };
             local $/;
             my $contents = <$fh>;
             close $fh;
-            problem("route $route_id marker is absent from $surfaces{$source_id}{target}: $marker")
+            problem("route $route_id marker is absent from $source_path: $marker")
                 if index($contents, $marker) < 0;
         }
     }
@@ -898,6 +982,75 @@ sub visit_surface {
     $visited{$id} = 1;
 }
 visit_surface($_, []) for @surface_order;
+
+for my $id (@surface_order) {
+    my $record = $surfaces{$id};
+    next if ($record->{index_contract_kind} // '') ne 'generated';
+    my ($generated_id) = $record->{index_contract_verifier} =~ /\Asurface:(.+)\z/;
+    if (!defined($generated_id) || !exists $surfaces{$generated_id}) {
+        problem("surface $id generated index names unknown surface: "
+            . ($generated_id // ''));
+        next;
+    }
+    my $generated = $surfaces{$generated_id};
+    problem("surface $id generated index verifier $generated_id is not a generated_file surface")
+        if $generated->{locator} ne 'generated_file';
+    problem("surface $id generated index does not match $generated_id target")
+        if @{$generated->{target_patterns}} != 1
+            || $generated->{target_patterns}[0] ne $record->{index};
+    ok_note("surface $id collection index is generated by surface $generated_id");
+}
+
+my $evidence_rows = read_jsonl($evidence_maps_arg, 'evidence-map registry');
+my %evidence_map_ids;
+for my $row (@{$evidence_rows}) {
+    my ($line_number, $record) = @{$row};
+    my @keys = qw(map_id source_path begin_marker end_marker);
+    next if !validate_keys('evidence-map registry', $line_number, $record, \@keys, []);
+    my ($map_id, $source_path, $begin, $end) = @{$record}{@keys};
+    if (grep { ref($_) || !defined($_) || $_ eq '' } ($map_id, $source_path, $begin, $end)) {
+        problem("evidence-map registry line $line_number must contain non-empty strings");
+        next;
+    }
+    if ($map_id !~ /\A[a-z][a-z0-9_]*\z/) {
+        problem("evidence map has invalid map_id: $map_id");
+        next;
+    }
+    problem("evidence map $map_id is declared more than once") if $evidence_map_ids{$map_id}++;
+    if (!relative_path_ok($source_path)
+            || !assert_local_regular_file("evidence map $map_id", root_path($source_path))) {
+        problem("evidence map $map_id has invalid source_path: $source_path");
+        next;
+    }
+    open my $fh, '<:raw', root_path($source_path) or do {
+        problem("evidence map $map_id cannot read $source_path: $!");
+        next;
+    };
+    local $/;
+    my $contents = <$fh> // '';
+    close $fh or problem("evidence map $map_id cannot close $source_path: $!");
+    my $begin_at = index($contents, $begin);
+    my $end_at = $begin_at < 0 ? -1 : index($contents, $end, $begin_at + length($begin));
+    if ($begin_at < 0 || $end_at < 0 || index($contents, $begin, $begin_at + 1) >= 0
+            || index($contents, $end, $end_at + 1) >= 0) {
+        problem("evidence map $map_id must contain exactly one ordered marker pair");
+        next;
+    }
+    my $body = substr($contents, $begin_at + length($begin),
+        $end_at - ($begin_at + length($begin)));
+    my @paths = $body =~ /^\|[^\n|]*\|\s*`([^`]+)`\s*\|\s*$/mg;
+    if (!@paths) {
+        problem("evidence map $map_id contains no path rows");
+        next;
+    }
+    for my $path (@paths) {
+        if (!relative_path_ok($path)
+                || !assert_local_regular_file("evidence map $map_id", root_path($path))) {
+            problem("evidence map $map_id path is absent or unsafe: $path");
+        }
+    }
+    ok_note("evidence map $map_id resolves " . scalar(@paths) . " path(s)");
+}
 
 my $archive_rows = read_jsonl($archives_arg, 'archive descriptor registry');
 my %descriptor_ids;

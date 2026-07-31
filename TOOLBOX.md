@@ -63,7 +63,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
 | Need user-facing docs proof | `mdbook build docs/book`. |
 | Need docs path hygiene | `scripts/check_docs_relative_paths.sh`. |
-| Need live-document pressure, routes, ceiling authority, or executed freshness/retrieval/currency truth | `scripts/check_live_document_size.sh`. |
+| Need live-document pressure, typed routes, index/evidence completeness, ceiling authority, or executed freshness/retrieval/currency truth | `scripts/check_live_document_size.sh`. |
 | Need README entry-point hygiene | `scripts/check_readme_entrypoint.sh`. |
 | Need Knowledge Map sync | `knowledge-map/scripts/gen_knowledge_map.sh` then `knowledge-map/scripts/check_knowledge_map.sh`. |
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
@@ -238,7 +238,7 @@ Expected signals:
   health-target, inclusive-ceiling, and migrated/pinned/steady pressure,
   measures every declared lifecycle and tracked Markdown path, and rejects
   schema, locality, coverage, pressure, immutable-baseline, stale-ratchet,
-  unauthorized-increase, route, identity, or descriptor drift.
+  unauthorized-increase, typed-route, index-membership, evidence-path, staged-result, identity, or descriptor drift.
 - README entry-point check confirms `README.md` is under its line and byte caps
   while retaining the purpose, first-use path, architecture summary, and
   navigation expected of the rendered GitHub landing page; it also rejects

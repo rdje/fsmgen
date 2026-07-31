@@ -55,6 +55,9 @@
   Leaf `.20` now makes currency opt-in and lifecycle-scoped; FSMGen's active
   task index declares a source-alignment oracle, while terminal/frozen history
   remains exempt and no global date heuristic exists.
+  Leaf `.21` now types reader navigation separately from author overflow,
+  derives the latter from emitted enforcer hints, closes collection-index
+  contracts, and verifies the packet/disposition evidence maps.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---
@@ -104,6 +107,22 @@ Every governed surface must declare:
 
 Routing is transitive. A bounded file that sends overflow to an unbounded
 neighbor has not contained anything.
+
+Reader navigation and author overflow are different route kinds. A reader may
+legitimately navigate to immutable history. Author guidance may also identify
+exact history already captured by the durable version-history workflow, but it
+must not redirect appendable prose into an immutable or frozen terminal.
+Inventory both without forcing them to have the same destinations. Derive
+author candidates from enforcers' emitted failure guidance as well as
+hand-authored route data; an undeclared path-shaped hint is a real pressure
+edge and must fail closed.
+
+A collection front door must state what completeness means. A literal table of
+contents proves every member, a generated index names its reproducible source,
+or an explicit query contract defines the complete target expansion. Presence
+of an index file alone proves none of these. Likewise, a human evidence map is
+only trustworthy when every fenced repository-relative path resolves
+mechanically in the resulting tree.
 
 ## Boundedness, currency, and truth
 

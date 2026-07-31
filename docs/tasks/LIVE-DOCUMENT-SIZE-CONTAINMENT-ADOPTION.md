@@ -208,11 +208,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21`
-  Status: `active`
+  Status: `done`
   Goal: `Close typed route, collection-index, and evidence-map completeness.`
   Acceptance: `Path-shaped destinations emitted by enforcers are inventoried and classified as author_overflow or reader_navigation; every candidate resolves to a governed surface while legitimate route-kind differences remain explicit; each collection index proves complete target membership or declares a generated/query contract; the packet/disposition evidence maps reject missing paths; checks are unconditional and staged/resulting-tree aware; fail-closed fixtures cover an undeclared hint, wrong route kind, omitted collection member, and missing evidence path.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Route rows now require an exact reader_navigation or author_overflow kind plus the actual source_path. The local source-derived scanner matches four emitted README overflow hints to governed surfaces and rejects undeclared or mistyped hints; fifteen README routes remain reader navigation. Every non-null collection index declares membership, generated, or query semantics: book/decision Markdown links cover every member, root/ancillary/task target expansion is the explicit complete query, and knowledge_cards links to the executed fact_index projection. Two fenced evidence-map records resolve all 17 packet and 5 disposition paths. The Git adapter rejects controlled staged/resulting content that differs from the worktree supplied to the neutral core. Focused t1553+t1554 pass at Files=2/Tests=20; final syntax/path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine evidence is recorded below. No pressure value, ceiling, lifecycle, archive/frozen identity, README landing content, compiler/runtime artifact, or product behavior change.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21: close route and index completeness`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22`
@@ -308,12 +308,22 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: Clean scoped-currency commit `8cf8263a2` activates `.21` alone
   for typed author/reader routes, complete collection indexes, and checked
   review evidence maps. The activation changes no checker or registry.
+- `2026-07-31`: `.21` preserves the reviewers' route distinction instead of
+  harmonizing it: navigation and author guidance remain separately typed even
+  when both legitimately resolve to the exact-history terminal. Index and
+  evidence completeness are now explicit resulting-tree contracts.
 
 ## Open Questions
 
-- None for completed `.18`-`.20` or active `.21`. The rereferenced PGEN/ANVIL
+- None for completed `.18`-`.21`. The rereferenced PGEN/ANVIL
   files exactly match the reviews already reconciled in the bounded disposition;
   the existing four-file review retains authority for its named semantic roles.
+- Verification finding for clean follow-up selection: on macOS,
+  `scripts/run_with_ram_guard.sh` computed 98.3% host use from only free plus
+  speculative VM pages while `memory_pressure` simultaneously reported 83%
+  system-wide memory free. The guard correctly stopped, but its host metric is
+  not a valid macOS pressure measure; a dedicated task must fix and fixture the
+  metric before later broad gates rely on its default host cutoff.
 
 ## Blockers
 
@@ -323,6 +333,12 @@ no routed destination becomes the next uninstrumented blob.
   dependencies. `.17` is complete; `.15`-`.23` become selectable after its
   clean commit, and `.8`-`.10`/`.13` wait for their declared utility or
   maintained-reference predecessors.
+
+## Acceptance Checklist (enforced) — `.21`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'route_id' --oneline -- live-document-size/scripts/check_live_document_size.pl` identifies `18e2dcbc6`; source inspection shows the original four-field route rows validated only remembered file-backed graph edges, accepted index presence without membership/alternate semantics, and had no evidence-map input, so an emitted author hint, incomplete index, or stale packet path could remain green.
+- [x] **ADDRESSED (verified)** — `prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t` reports `All tests successful` at `Files=2, Tests=20`; fixtures reject an undeclared emitted hint, wrong author/reader kind, omitted literal collection member, missing evidence path, and controlled staged-result/worktree divergence while the real four author hints, 15 reader routes, six collection contracts, and two evidence maps pass.
+- [x] **NO REGRESSION** — staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`; all 20 surfaces and 2,782 tracked Markdown paths remain covered, all 22 review evidence paths resolve, task/README/locality/Memory/Knowledge Map/mdBook contracts stay green, and no route destination, pressure ceiling, lifecycle, or product behavior changes.
 
 ## Acceptance Checklist (enforced) — `.20`
 
@@ -395,6 +411,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.20` activation | exact rereferenced-review identity; clean `25c815326` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; PGEN 393/26,788 at SHA-256 5057b147... and ANVIL 334/44,242 at 9dac9f1f... exactly match `.17`; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,745 keys; Memory 43 lines; all 37 chapters test; removed 73-file/16,996-KiB build; all nine doctrines pass; `.20` alone active; no checker, registry, currency contract, lifecycle, archive, document-family content, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.20` scoped currency | optional exact currency schema; lifecycle exemptions; independent proof namespace; real active-index oracle; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=17; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,748 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; real self-refutation and low-noise date fixtures pass in both directions; no global date heuristic, lifecycle/content, archive, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.21` activation | clean `8cf8263a2` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,748 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; all nine doctrines pass; `.21` alone active; no checker, registry, route kind, index/evidence contract, document lifecycle/content, frozen identity, landing content, or product behavior change |
+| `2026-07-31` | `.21` route/index/evidence completeness | exact route kinds/source paths; source-derived author hints; membership/query/generated index contracts; two fenced evidence maps; staged-result agreement; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=25; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 4 author hints and 15 reader routes; 6 indexed collection contracts; packet/disposition paths 17+5; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,752 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; all declared negative controls and nine doctrines pass; the default RAM guard stopped safely on a false macOS 98.3%-used estimate while `memory_pressure` reported 83% free, so the successful retry retained process-tree/RSS monitoring and manually checked actual pressure under a recorded one-run host override; no pressure value, lifecycle, archive, frozen identity, landing content, or product behavior change |
 
 ## Commit Log
 
@@ -418,6 +435,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.20` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20: activate scoped currency contracts` | Confirm the supplied paths exactly match the disposed reviews and activate only opt-in lifecycle currency from clean `.19`. |
 | `.20` scoped currency | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20: enforce scoped currency contracts` | Add opt-in named local currency oracles, exempt terminal/frozen history, and calibrate FSMGen's active index to source alignment rather than date shape. |
 | `.21` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21: activate route and index completeness` | Activate only typed routes, complete collection indexes, and evidence-map checking from clean `.20` commit `8cf8263a2`; implementation remains pending. |
+| `.21` route/index/evidence completeness | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21: close route and index completeness` | Derive typed author hints, retain distinct reader routes, prove collection index/query/generated contracts and both evidence maps, and reject staged-result divergence. |
 
 ## Changelog
 
@@ -479,3 +497,11 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: Clean `.20` commit `8cf8263a2` activates `.21` alone for typed
   author/reader routes plus index/evidence-map completeness; activation changes
   no checker, registry, document, frozen identity, or product behavior.
+- `2026-07-31`: `.21` derives four author-overflow hints from the enforcer,
+  retains 15 reader routes, proves six indexed collection contracts and 22
+  review-evidence paths, and closes staged-result/worktree divergence.
+- `2026-07-31`: The first staged broad gate stopped at the default RAM guard as
+  required. Root-cause evidence shows its macOS host formula ignores reclaimable
+  inactive memory (98.3% computed use versus 83% free from `memory_pressure`);
+  the correction must be selected as a dedicated task after this dirty slice is
+  committed cleanly.

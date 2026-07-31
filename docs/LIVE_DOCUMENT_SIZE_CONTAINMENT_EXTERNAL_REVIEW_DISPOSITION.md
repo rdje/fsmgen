@@ -318,6 +318,20 @@ maintained-reference selection. The four frozen/change/rationale documents keep
 their existing separate lifecycle authority. No review comment authorizes a
 deletion or a threshold increase by itself.
 
+## Evidence map
+
+The bounded disposition depends on these repository-relative authorities:
+
+<!-- LIVE-DOCUMENT-DISPOSITION-EVIDENCE-MAP:BEGIN -->
+| Concern | Evidence |
+| --- | --- |
+| Accepted correction authority | `docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md` |
+| Detailed review input | `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md` |
+| Common checker implementation | `live-document-size/scripts/check_live_document_size.pl` |
+| Local surface graph | `doctrine/live_document_size/surfaces.jsonl` |
+| Owning remediation tree | `docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md` |
+<!-- LIVE-DOCUMENT-DISPOSITION-EVIDENCE-MAP:END -->
+
 ## Reverification
 
 The evidence used for this disposition is reproducible with:

@@ -11,7 +11,7 @@ comments, malformed JSON, missing required keys, and unknown keys fail closed.
 Each surface record has this shape:
 
 ```json
-{"surface_id":"guide","lifecycle":"partitioned_canonical","locator":"collection","targets":["guide/*.md"],"index":"guide/INDEX.md","canonical_inputs":[],"routes_to":[],"owner":"guide-maintainers","health_targets":{"files":32,"lines_each":1000,"bytes_each":65536,"lines_total":12000,"bytes_total":1048576},"enforcement_ceilings":{"files":32,"lines_each":1100,"bytes_each":73728,"lines_total":13000,"bytes_total":1179648},"milestones":{"warning_pct":80,"rollover_pct":90},"containment_status":"steady","state":"normal","baseline":null,"verifier":"builtin:budget","currency":{"contract_id":"guide_source_alignment","verifier":"core:tools/check-guide-alignment"}}
+{"surface_id":"guide","lifecycle":"partitioned_canonical","locator":"collection","targets":["guide/*.md"],"index":"guide/INDEX.md","index_contract":{"kind":"membership","verifier":"builtin:markdown_links"},"canonical_inputs":[],"routes_to":[],"owner":"guide-maintainers","health_targets":{"files":32,"lines_each":1000,"bytes_each":65536,"lines_total":12000,"bytes_total":1048576},"enforcement_ceilings":{"files":32,"lines_each":1100,"bytes_each":73728,"lines_total":13000,"bytes_total":1179648},"milestones":{"warning_pct":80,"rollover_pct":90},"containment_status":"steady","state":"normal","baseline":null,"verifier":"builtin:budget","currency":{"contract_id":"guide_source_alignment","verifier":"core:tools/check-guide-alignment"}}
 ```
 
 `lifecycle` is one of `bounded_snapshot`, `partitioned_canonical`,
@@ -53,6 +53,15 @@ their bounded `index`, except an explicitly owned debt may use `null` until its
 remediation lands. Other locators use a `null` index and an empty
 `canonical_inputs` array.
 
+Every non-null collection index has an exact `index_contract`. `membership`
+with `builtin:markdown_links` resolves the index's relative Markdown links and
+requires every matched collection member except the index itself. `generated`
+with `surface:ID` requires that ID to be an executed generated-file surface
+whose sole target is the index. `query` with `builtin:registry_targets`
+declares that the exact target-pattern expansion is the complete query rather
+than claiming the Markdown front door lists every member. Omitting a member
+from a membership index or mislabeling the alternate contract fails closed.
+
 `currency` is optional (or JSON `null`). When present, it contains exactly a
 stable `contract_id` and a `verifier` using the same `core:`, `adapter:`, or
 `external:` execution modes. Its meaning is local to the adopting project: the
@@ -65,12 +74,29 @@ current-state claims.
 Each route record has this shape:
 
 ```json
-{"route_id":"guide","source_surface_id":"entrypoint","marker":"guide/INDEX.md","target_surface_id":"guide"}
+{"route_id":"guide","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"entrypoint","marker":"guide/INDEX.md","target_surface_id":"guide"}
 ```
 
-Each declared graph edge needs a route row. The marker must occur in the
-source file when the source is file-backed. Unknown endpoints, undeclared
-edges, duplicate route ids, and cycles fail closed.
+`route_kind` is exactly `reader_navigation` or `author_overflow`; the two are
+not interchangeable because readers may legitimately visit append-only
+history while authors must not append new prose there. `source_path` names the
+actual navigation or emitted-hint source, and its literal marker must occur
+there. Each declared graph edge needs at least one route row. Unknown
+endpoints, undeclared edges, duplicate route ids, wrong kinds, missing source
+markers, and cycles fail closed. An adopter-side source scanner must also
+derive author candidates from enforcer output so deleting a registry row
+cannot hide an emitted overflow destination.
+
+Evidence-map records have this shape:
+
+```json
+{"map_id":"review_packet","source_path":"docs/REVIEW.md","begin_marker":"<!-- EVIDENCE:BEGIN -->","end_marker":"<!-- EVIDENCE:END -->"}
+```
+
+The marker pair must occur exactly once and in order. Inside it, each Markdown
+table evidence cell has one backticked repository-relative file path. A map
+with no path rows, an unsafe path, or a missing/non-regular/off-volume file
+fails closed.
 
 The archive registry begins with one durable metadata record so a valid empty
 registry remains trackable, followed by zero or more descriptor records:
@@ -106,8 +132,8 @@ The checker validates schema, lifecycle/locator compatibility, repository-
 relative and same-volume local targets, non-symlink files, per-part and
 aggregate targets/ceilings, inclusive equality, debt acknowledgement and
 ratchets, generated/version-object verifier execution, opt-in currency-oracle
-execution, frozen identity, route closure,
-archive-descriptor shape, and optional inventory coverage. It reports actual,
+execution, frozen identity, typed route closure, collection-index contracts,
+evidence-map paths, archive-descriptor shape, and optional inventory coverage. It reports actual,
 target, ceiling, and migrated/pinned/steady pressure separately. It never
 mutates the project.
 
@@ -124,3 +150,7 @@ every run, pass only the proof tokens emitted after successful execution, and
 remain reachable through the project's one unconditional commit/CI driver.
 The core deliberately rejects a proof token that no current declaration
 consumes, preventing stale or fabricated reachability from passing vacuously.
+When Git supplies the commit tree, the wrapper must also reject controlled
+structural inputs that differ between the staged result and the worktree read
+by the neutral core. This keeps route, index, and evidence checks about the
+tree being committed rather than a convenient neighboring snapshot.

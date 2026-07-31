@@ -32260,3 +32260,10 @@ task tree and git.
 - This continuity slice changes no checker, registry, route kind, index or
   evidence contract, document content/lifecycle, frozen identity, or product
   behavior.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21 — completeness closed
+
+- Typed 15 reader-navigation rows separately from four author-overflow hints
+  derived from actual guard output; undeclared or mistyped hints fail closed.
+- Added literal/query/generated collection-index contracts, checked all 17+5
+  review evidence paths, and rejected staged-result/worktree divergence.

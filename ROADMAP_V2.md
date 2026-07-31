@@ -10440,5 +10440,7 @@ The first honest `R11` slices are now:
   proves the single CI driver path. `.20` now separates boundedness, currency,
   and semantic truth: current surfaces opt into named local oracles, terminal/
   frozen history is exempt, and no global newest-date, distinct-date, or file-
-  age heuristic exists. Clean `.20` commit `8cf8263a2` activates `.21` alone
-  for typed author/reader routes plus complete indexes and evidence maps.
+  age heuristic exists. `.21` now preserves distinct author-overflow/reader-
+  navigation routes, derives four emitted hints, closes six indexed collection
+  contracts and both review evidence maps, and rejects staged-tree divergence.
+  `.22` is the next clean correction frontier.

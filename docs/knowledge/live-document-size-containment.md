@@ -31,10 +31,14 @@ answers:
   - "does live-document size compliance prove that a document is current?"
   - "how are live-document currency contracts declared?"
   - "does FSMGen use a global newest-date or distinct-date staleness check?"
+  - "are author overflow routes different from reader navigation routes?"
+  - "how are live-document collection indexes checked for completeness?"
+  - "are external review evidence-map paths mechanically checked?"
+  - "does the live-document doctrine inspect the staged resulting tree?"
 date: 2026-07-31
 status: current
 tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
-evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_ceiling_authority.pl; scripts/check_doctrine_bootstrap.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
+evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/evidence_maps.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_route_candidates.pl; scripts/check_live_document_resulting_tree.pl; scripts/check_live_document_ceiling_authority.pl; scripts/check_doctrine_bootstrap.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
 reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t
 ---
 
@@ -139,3 +143,12 @@ is made from size compliance.
 Clean `.20` commit `8cf8263a2` activates `.21` alone for typed author-overflow
 and reader-navigation routes, complete collection indexes, and mechanically
 checked review evidence maps. Activation changes no enforcement or lifecycle.
+
+Leaf `.21` now makes the distinctions executable. Route records carry an exact
+kind and source path; the local scanner derives four author-overflow candidates
+from the README guard's emitted messages, while 15 README destinations remain
+reader navigation. Book and decision indexes prove literal membership; root,
+ancillary, and task collections name registry-target queries; the Knowledge
+Map names its executed generated surface. Fenced packet and disposition maps
+resolve all 17 and 5 evidence paths. The Git adapter also rejects controlled
+staged content that differs from the worktree supplied to the neutral core.
