@@ -48,4 +48,6 @@ overflow. FSMGen declares those controls in
 `doctrine/readme_entrypoint/routed_destinations.tsv`; the unconditional README
 doctrine validates them even when neither README nor the destination changed.
 Measured legacy ceilings are stop-growth debt boundaries, not recommended
-defaults.
+defaults. Clean guard commit `45fc6631e` activates the next selection of a
+project-wide live-document size-containment doctrine; no sharding, rollover,
+archive, threshold, or live-document content change has yet occurred.

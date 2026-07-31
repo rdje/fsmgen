@@ -70,7 +70,9 @@ live files, partitioned manuals/task trees, generated indexes, append ledgers,
 query/archive terminals, and frozen legacy records. The same unconditional
 guard checks their per-file/aggregate ceilings, freshness ownership, terminal
 lifecycle, or exact frozen identity. Current legacy ceilings are stop-growth
-debt boundaries, not reusable recommendations.
+debt boundaries, not reusable recommendations. Clean guard commit `45fc6631e`
+activates the follow-up selection of one project-wide live-document size-
+containment doctrine; no document migration or threshold change has occurred.
 
 `TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
 standard. FSMGen's registered checker reads data-only staged-path and evidence

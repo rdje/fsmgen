@@ -63,11 +63,11 @@ into the next append-log sink.
   Commit: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.1: close routed documentation pressure`
 
 - ID: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2`
-  Status: `proposed`
-  Goal: `Select a project-wide live-document size-containment doctrine and exact partition, shard, rotation, or archival owners before a hard ceiling is reached.`
-  Acceptance: `The audit remeasures every registered destination, identifies all per-file or aggregate surfaces at or above 80% of a ceiling plus structural outliers, and selects one shared doctrine for bounded live views, deterministic rollover, sharded durable stores, generated bounded indexes, archival retrieval proofs, frozen terminals, and unconditional data-registry enforcement. It proves why each current outlier is live debt or an acceptable terminal and creates/selects the smallest exact family migrations without rewriting or deleting historical content in this leaf.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Status: `active`
+  Goal: `Select a project-neutral, project-agnostic, and harness-neutral live-document size-containment doctrine plus exact partition, shard, rotation, or archival owners before a hard ceiling is reached.`
+  Acceptance: `The audit remeasures every registered destination, identifies all per-file or aggregate surfaces at or above 80% of a ceiling plus structural outliers, and selects one reusable project-/harness-neutral doctrine for bounded live views, deterministic rollover, sharded durable stores, generated bounded indexes, archival retrieval proofs, frozen terminals, and unconditional data-registry enforcement. Project-specific authority, measurements, caps, paths, and migrations remain in a fenced local adoption record and data registry. The audit proves why each current outlier is live debt or an acceptable terminal and creates/selects the smallest exact family migrations without rewriting or deleting historical content in this leaf.`
+  Verification: `Clean .1 implementation commit 45fc6631e activates only the project-wide live-document size-containment doctrine and high-water remediation-owner selection. No doctrine contract, threshold change, sharding, rollover, archive, file rewrite/delete, or product behavior changes during activation. Final continuity evidence is recorded below.`
+  Commit: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2: activate live-document size containment`
 
 ## Decisions
 
@@ -81,6 +81,10 @@ into the next append-log sink.
 - `2026-07-31`: Name the common architecture a project-wide live-document
   size-containment doctrine. Memory architecture is one specialized consumer;
   all live docs, indexes, ledgers, and archives must share the broader rule.
+- `2026-07-31`: The director requires the reusable doctrine itself to be
+  project-neutral, project-agnostic, and harness-neutral. Keep FSMGen authority,
+  paths, measurements, caps, and migration owners in a fenced local adoption
+  record and data registry, never in the neutral doctrine body.
 
 ## Open Questions
 
@@ -126,12 +130,14 @@ into the next append-log sink.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-07-31` | `.1` | policy/decision/registry/checker/test/doctrine/book/fact/live-doc synchronization; positive and fail-closed route fixtures; docs/path/mdBook/Knowledge Map/Memory/diff/staged implementation acceptance/doctrines; exact cleanup | `passed`; decision 0040; 15 routes; focused Files=1/Tests=7; combined Files=2/Tests=9; docs Files=4/Tests=314; trees=3/nodes=871; 37 chapters; build 73 files/17,087,147 bytes; Knowledge Map 1,093 facts/5,693 keys; Memory 49 lines; staged acceptance identifies root=git_history/no-regression=prove_summary; all eight doctrines pass; README and product behavior unchanged; output removed |
+| `2026-07-31` | `.2` activation | clean `.1` predecessor `45fc6631e`; task/index/roadmap/book/fact/Memory/changelog continuity; task/docs/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.2` alone active for project-/harness-neutral live-document size-containment doctrine selection; trees=3/nodes=871; docs Files=4/Tests=314 and paths Files=1/Tests=2; 37 chapters; build 73 files/17,088,704 bytes; Knowledge Map 1,093 facts/5,693 keys; Memory 50 lines; contract, thresholds, files, and product behavior unchanged; output removed exactly |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.1: close routed documentation pressure` | Integrate the fifth cross-project lesson and enforce local routing closure. |
+| `.2` activation | `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2: activate live-document size containment` | Activate only doctrine/high-water contract selection after clean `.1`; selection remains unperformed. |
 
 ## Changelog
 
@@ -143,3 +149,6 @@ into the next append-log sink.
   and closes without changing README.md or product behavior. Measured local
   high-water debt is retained visibly in proposed `.2`; the decision owns the
   durable rationale, so no duplicate development-note entry is added.
+- `2026-07-31`: Clean `.1` implementation commit `45fc6631e` activates only
+  `.2` doctrine/high-water selection. No threshold, sharding, rollover,
+  archive, live-document content, or product behavior changes in activation.

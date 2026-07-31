@@ -31788,3 +31788,12 @@ task tree and git.
   defaults. README.md, compiler/runtime, generated product output, and VIAL
   behavior remain unchanged; decision `0040` owns the rationale, so no
   duplicate `DEVELOPMENT_NOTES.md` entry is added.
+
+### README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2 — live-document size containment activated
+
+- Clean `.1` implementation commit `45fc6631e` activates only selection of a
+  project-wide live-document size-containment doctrine and exact high-water
+  remediation owners.
+- No threshold, sharding, rollover, archive, live-document content, compiler/
+  runtime, generated product output, or VIAL behavior changes during this
+  continuity-only slice. No separate development note is warranted.

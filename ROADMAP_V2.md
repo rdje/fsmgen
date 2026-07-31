@@ -10346,3 +10346,6 @@ The first honest `R11` slices are now:
   append ledgers, query/archive terminals, and exact frozen legacy identities.
   Existing large measurements are finite stop-growth debt ceilings rather
   than recommended defaults; threshold widening requires a reviewed decision.
+  Clean guard commit `45fc6631e` activates `.2` alone to select the shared
+  project-wide live-document size-containment doctrine before any family-
+  specific sharding, rollover, archive, or migration implementation.

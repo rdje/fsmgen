@@ -7,14 +7,15 @@ history; this file carries only the current bounded resume state.
 
 - latest_commit: this commit
 - latest_commit: this commit
-  (`README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.1: close routed documentation pressure`).
+  (`README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2: activate live-document size containment`).
 - active_work_unit: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE`; `.1`
-  completes the guard and proposed `.2` owns the measured high-water audit.
+  completes the guard and `.2` is active continuity-only for doctrine selection.
 - current_state: decision `0040` and the 15-route registry make README routing
   pressure-closed across bounded files/collections, generated/query/archive
   terminals, append ledgers, and frozen identities. README.md is unchanged.
-- next_action: after this clean `.1` commit, activate `.2` continuity-only for
-  destination high-water measurement and remediation-owner selection.
+- next_action: audit registered high-water debt and select the project-/
+  harness-neutral live-document size-containment doctrine plus fenced local
+  adoption and exact migration owners in `.2`.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: none for `.2`. Proposed `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-
