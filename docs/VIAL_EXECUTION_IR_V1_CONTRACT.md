@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6`
-Status: selected and refined by decision `0037`; `.7.3` implementation is active after separate clean activation
+Status: selected and refined by decision `0037`; bounded private `.7.3` implementation shipped
 
 ## Outcome
 
@@ -110,7 +110,8 @@ diagnostics. No partial object is returned.
   absolute time, real/analog value, or host callback; and
 - every backend requirement classified before plan construction.
 
-The execution profile provides exactly these semantic capabilities:
+The complete selected execution/runtime profile requires these semantic
+capabilities across its staged owners:
 
 ```text
 vial.execution_ir.v1
@@ -123,6 +124,14 @@ vial.plan.v1
 vial.result_manifest.v1
 vial.parity_projection.v1
 ```
+
+Bounded `.7.3` implements and may classify as
+`satisfied_by_execution_profile` only the first seven entries through
+`vial.plan.v1`. The selected result-manifest and parity-projection schema names
+remain `selected_not_implemented`, owned by `.10` and `.11` respectively; they
+must not appear as satisfied capabilities in a `.7.3` plan or private support
+contract. This distinction preserves the phase boundary below: selecting a
+shared data contract is not implementing a runtime producer or parity oracle.
 
 Capabilities from SemanticIR and the bridge remain recorded with their
 origin. A capability ledger entry contains exactly:
@@ -1193,30 +1202,37 @@ Focused `.7` oracles must prove at least:
   scoreboard/coverage/fault records are deterministic and source-mapped;
 - random generation and replay match exact known vectors for multiple widths,
   rejection attempts, constraints, order permutations, and scenario subsets;
-- caller input, ExecutionIR accessors, plan report, result-schema builders, and
-  nested arrays/hashes are mutually defensive;
+- caller input, ExecutionIR accessors, plan report, replay records, and nested
+  arrays/hashes are mutually defensive;
 - canonical IDs/hashes are stable under Perl hash insertion order and change
   when a semantic input changes;
-- every limit and malformed native descriptor/replay/result/parity record
-  fails closed; and
+- every implemented limit and malformed native descriptor/replay record fails
+  closed; result-manifest and parity-report malformed-record oracles remain
+  mandatory for their `.10` and `.11` implementation owners; and
 - no public file/API, backend artifact, compile, simulation, UVM, VHDL,
   mixed-language, runtime pass, parity pass, or scale claim is emitted.
 
 ## Implementation Ownership And Non-Claims
 
-Active `.7` owns private, no-backend implementation of:
+Completed `.7.3` owns the shipped private, no-backend implementation:
 
 ```text
 perl/FSM/VIAL/ExecutionBuilder.pm
 perl/FSM/VIAL/ExecutionIR.pm
 perl/FSM/VIAL/ExecutionReport.pm
-private random/replay and schema-validation support
-focused execution-contract regression
+perl/FSM/VIAL/ExecutionRandom.pm
+perl/FSM/Support/VIALExecutionContract.pm
+t/1552-vial-execution-ir.t
 bounded private capability/support accounting
 ```
 
-Exact file/package decomposition may be refined within `.7` without changing
-the schemas or public/non-public boundary. `.7` must not write a plan/result
+The support contract publishes the selected future result/parity schema names
+with `selected_not_implemented` status and exact later owners. Neither name is
+included in `.7.3`'s shipped capability list or target-neutral plan ledger.
+
+Exact file/package decomposition may be refined in a later task-tree-owned
+slice without changing the schemas or public/non-public boundary. `.7.3` does
+not write a plan/result
 file, modify `.vial` syntax, change SemanticIR or bridge schema, emit target
 verification code, compile/simulate, or claim runtime/parity. `.8` owns public
 tooling and file placement; `.9` onward own backend contracts and execution.
@@ -1228,10 +1244,9 @@ implementation, or broader native semantic taxonomy. Those remain exact later
 owners. In particular, a selected logical `finalize` hook is not an authored
 UVM final phase, and a `required_from_backend` capability is not support.
 
-Clean selection commit `eaf3f95dc` permits a separate continuity-only
-activation of `.7`. Activation changes no binding, ExecutionIR, random/replay,
-plan/result object or file, backend, runtime, or product behavior; exact
-implementation remains unperformed until the activation commits cleanly.
+Clean selection commit `eaf3f95dc` permitted a separate continuity-only
+activation of `.7`; implementation then proceeded only after that activation
+committed cleanly.
 
 Implementation audit `.7.1` proved that the former exact-equivalence wording
 could not bind three fields of the checked fixture. The source and bridge
@@ -1240,21 +1255,24 @@ representation relation between them. The director approved the recommended
 directional proof rule, and decision `0037` plus `.7.2` select the exact
 records above. `.7.3` owns implementation after separate clean activation.
 Clean directional-binding selection commit `2a1b3cefc` permits that
-continuity-only activation. Activation changes no binding, ExecutionIR,
-random/replay, plan/result object or file, backend, runtime, parity, or product
-behavior; exact implementation remains unperformed until activation commits
-cleanly.
+continuity-only activation. The completed implementation now binds the checked
+AHB fixture, constructs immutable ExecutionIR and a defensive in-process plan,
+resolves deterministic random/replay and event/adapter references, enforces
+limits, and fails atomically. It still emits no plan/result file, backend,
+runtime, or parity pass.
 
 ## Validation And Rollback
 
-Contract selection must pass current VIAL parser/SemanticIR and bridge evidence,
+Implementation signoff must pass current VIAL parser/SemanticIR and bridge evidence,
 task-tree integrity, task/roadmap/audit/book/fact consistency, relative-path and
 documentation audits, every mdBook chapter and the repository-local HTML
-build, Knowledge Map generation/check, bounded Memory, diff, staged docs-only
-acceptance, all doctrines, and exact repository-local output cleanup.
+build, Knowledge Map generation/check, bounded Memory, diff, staged
+implementation acceptance, all doctrines, and exact repository-local output
+cleanup.
 
-Rollback removes decision `0036`, this contract and its fact/book/roadmap/task
-continuity, returns `.6` to active, and removes the `.7` selection. It changes
+Implementation rollback removes the `.7.3` private execution packages,
+focused regression, and capability/support entries, returns `.7.3` to active,
+and preserves decisions `0036`/`0037` plus this selected contract. It changes
 no VIAL source/parser/SemanticIR, HIAL bridge/parser/annotation/report,
 generated HIAL artifact, public CLI/API/file, backend, compile, simulation,
 runtime, parity, UVM/VHDL/mixed-language, or product behavior.

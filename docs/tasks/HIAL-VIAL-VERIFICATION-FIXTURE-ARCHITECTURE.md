@@ -144,11 +144,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6: select deterministic VIAL execution contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7`
-  Status: `active`
+  Status: `done`
   Goal: `Implement bounded bridge binding and VIALExecutionIR elaboration without a target-language backend.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3`
-  Acceptance: `The selected .vial fixture plus bridge bind into an immutable deterministic plan, the plan/result projections match their contracts, logical-time and timeout/concurrency oracles pass, unsupported capabilities/native extensions fail before emission, and no SV/UVM/VHDL verification artifact or runtime behavior is yet claimed.`
-  Verification: `Activated continuity-only from clean .6 selection commit eaf3f95dc. This transition changes task/index, roadmap, audit, execution-contract boundary, mdBook, facts, bounded Memory, changelog, and regenerated Knowledge Map continuity only. Task-tree integrity passes at trees=2/nodes=865; docs pass at Files=4/Tests=51; all 37 mdBook chapters test and the 73-file/17,011,689-byte repository-local build passes; Knowledge Map generation/check passes at 1,090 facts/5,658 question keys; Memory is 55 lines; diff, docs-only staged acceptance, all eight doctrines, and exact build-output cleanup pass. Exact binder/ExecutionIR/random-replay/plan implementation remains unperformed until activation commits cleanly. No VIAL source/parser/SemanticIR, HIAL bridge/parser/annotation/report, binding/ExecutionIR implementation, plan/result object or file, scheduler, native extension implementation, backend, CLI/API, capability/support surface, compile, simulation, runtime, parity, or product behavior changes during activation.`
+  Acceptance: `The selected .vial fixture plus bridge bind into an immutable deterministic plan, the plan projection and strict replay match their contracts, selected future result/parity schemas retain explicit later owners rather than false shipped capabilities, logical-time and timeout/concurrency structure passes bounded oracles, unsupported capabilities/native extensions fail before emission, and no SV/UVM/VHDL verification artifact or runtime behavior is claimed.`
+  Verification: `Completed by .7.3 after the .7.1 type-binding audit and decision-0037/.7.2 directional-relation correction. The private exact-class binder now produces immutable target-neutral ExecutionIR and a defensive no-file plan with deterministic logical phases, operation/fiber order, random/replay, bindings, capabilities, source maps, limits, and atomic diagnostics. Signoff caught and corrected an ownership contradiction in the selected oracle prose: result production begins in .10 and parity comparison in .11, so .7.3 publishes those selected schema names with explicit later owners but does not mark their capabilities satisfied. Focused/adjacent code and documentation evidence is recorded below. No public API/file, backend artifact, compile, simulation, runtime result, parity pass, UVM/VHDL methodology, mixed-language, or scale claim ships.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7: activate VIAL execution implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.1`
@@ -166,11 +166,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2: select directional type binding`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3`
-  Status: `active`
-  Goal: `Implement the selected bounded binder, immutable VIALExecutionIR, deterministic random/replay, defensive plan/result schema support, and focused contract oracles.`
+  Status: `done`
+  Goal: `Implement the selected bounded binder, immutable VIALExecutionIR, deterministic random/replay, defensive plan support, explicit future result/parity schema ownership, and focused contract oracles.`
   Acceptance: `Implementation follows the resolved .7.2 binding rule, passes fresh box-scoped implementation acceptance and all focused/broader gates, updates bounded private capability/support accounting, and emits no target backend, public file/API, compile, simulation, runtime, or parity claim.`
-  Verification: `Activated continuity-only from clean .7.2 selection commit 2a1b3cefc. This transition changes task/index, roadmap, audit, execution/type-binding contract boundaries, mdBook, facts, bounded Memory, changelog, and regenerated Knowledge Map continuity only. Final validation counts are recorded in the verification log. Exact binder/ExecutionIR/random-replay/plan implementation remains unperformed until activation commits cleanly. No VIAL source/parser/SemanticIR, HIAL bridge/parser/annotation/report, binding/ExecutionIR implementation, plan/result object or file, scheduler, native extension implementation, backend, CLI/API, capability/support surface, compile, simulation, runtime, parity, or product behavior changes during activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3: activate bounded VIAL execution implementation`
+  Verification: `Private FSM::VIAL ExecutionBuilder/ExecutionIR/ExecutionRandom/ExecutionReport and FSM::Support::VIALExecutionContract now bind the checked SemanticIR and review-routed bridge into a defensive no-file target-neutral plan. The exact AHB oracle has 21 operations, four total fibers, three maximum simultaneous fibers, ten proof-carrying directional relations, 22 bindings, two scalar state cells, scoreboard capacity four, two coverage bins, and one scenario decision occurrence referenced twice. Event expressions resolve through explicit transaction-adapter inputs and opaque adapter state without raw HDL literal or actor-storage leakage. SHA-256 counter/rejection randomness is arbitrary-width and strict replay is sign-aware. Support accounting is private and closed; selected future result/parity schemas name .10/.11 owners and are not satisfied .7.3 capabilities. Focused/adjacent evidence passes at Files=10/Tests=7135; nine changed Perl modules report syntax OK; documentation evidence passes at Files=4/Tests=609 plus relative paths Files=1/Tests=2, all 37 mdBook chapters test, and the 73-file/17,058,063-byte local build succeeds and is removed. Task integrity passes at trees=2/nodes=868; Knowledge Map passes at 1,092 facts/5,674 keys; Memory is 56 lines. Pre-existing t370 verification-output discovery drift remains separately owned by CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.1. Staged acceptance/doctrine and final cleanup evidence is recorded in the verification log. No target backend, public file/API, compile, simulation, runtime result, parity pass, UVM/VHDL methodology, mixed-language, or scale claim ships.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3: implement private VIAL execution plan`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
   Status: `proposed`
@@ -283,11 +283,13 @@ target-neutral ExecutionIR/logical-time/random-replay/native/plan/result/parity
 contract. Clean selection commit `eaf3f95dc` permits this separate continuity
 transition to activate `.7`; activation committed cleanly at `3ec8eab93`.
 Audit `.7.1` then confirmed the exact type-binding mismatch. Completed `.7.2`
-and accepted decision `0037` now select a closed directional proof relation
-between independently authoritative VIAL semantic and HIAL carrier types;
-active `.7.3` alone owns implementation after clean selection commit
-`2a1b3cefc` and its separate continuity activation. Decision
-`0034` records that
+and accepted decision `0037` select a closed directional proof relation
+between independently authoritative VIAL semantic and HIAL carrier types.
+Completed `.7.3` now ships the private bounded binder, immutable ExecutionIR,
+deterministic random/replay, and defensive in-process plan after clean
+selection commit `2a1b3cefc` and its separate continuity activation. Proposed
+`.8` is the next frontier for separate clean activation of public tooling-
+contract selection. Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
 compiler-owned beneath C/C++ or Rust.
@@ -377,10 +379,10 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Open Questions
 
-- Decision `0037` resolves the VIAL-semantic-to-HIAL-carrier representation
-  question found by `.7.1`; active `.7.3` must implement only the three selected
-  proof relations plus the private ExecutionIR/random-replay/plan contract,
-  without target output and while preserving every selected no-runtime claim.
+- `.8` must select the public CLI/API and repository-local artifact contract
+  without promoting the current private builder or implying a backend. Result
+  production and parity comparison remain implementation-owned by `.10` and
+  `.11`, even though their data schemas are already selected.
 - `.12` must choose the UVM revision and an actually available qualified
   simulator before native UVM implementation can claim compile/runtime support.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
@@ -393,8 +395,8 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for active `.7.3`. Implementation begins only after this activation
-  commit is clean; this continuity boundary is not a semantic blocker.
+- None for proposed `.8`; it must be activated only from a clean `.7.3`
+  implementation commit.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -419,6 +421,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.7.1` audit | direct SemanticIR/bridge field projection; source/producer/contract/prior-test root cause; task split; canonical audit/fact/decision/roadmap/book/live-doc sync; focused frontend/bridge and docs evidence; task/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; three transaction type-relation mismatches confirmed; Files=2/Tests=21 and docs Files=4/Tests=309; trees=2/nodes=868; 37 chapters; build 73 files/17,024,906 bytes; Knowledge Map 1,091 facts/5,666 keys; Memory 49 lines; `.7.2` blocked pending director choice; no implementation/product change; output and failed off-route destination absent |
 | `2026-07-31` | `.7.2` selection | decision `0037`; exact directional relation records/proofs/directions/AHB oracle/capability/diagnostics/negative boundaries; source/bridge/execution contracts; audit/book/fact/live-doc continuity; focused frontend/bridge and docs evidence; task/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; director-approved bit-domain identity, known-value injection, and enum-encoding injection selected; Files=2/Tests=21 and docs Files=4/Tests=309; trees=2/nodes=868; 37 chapters; build 73 files/17,029,957 bytes; Knowledge Map 1,092 facts/5,674 keys; Memory 53 lines; `.7.3` alone selected next for clean activation; no implementation/product change; output and `.bin`/`.log` residue absent |
 | `2026-07-31` | `.7.3` activation | clean `.7.2` predecessor; task/index/roadmap/audit/contracts/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.7.3` alone active; trees=2/nodes=868; docs Files=4/Tests=309; 37 chapters; build 73 files/17,031,568 bytes; Knowledge Map 1,092 facts/5,674 keys; Memory 53 lines; implementation and product behavior unchanged; output and `.bin`/`.log` residue absent |
+| `2026-07-31` | `.7.3` implementation | private binder/ExecutionIR/random/replay/plan syntax and t1552; current semantic/bridge/capability/support/accounting/provenance audits; result/parity ownership correction; task/roadmap/audit/book/fact continuity; task-tree/docs/relative-path/mdBook/Knowledge Map/Memory/diff/staged implementation acceptance/doctrines; exact cleanup | `passed`; focused/adjacent Files=10/Tests=7135; nine changed Perl modules syntax OK; exact AHB plan 21 operations/4 fibers/3 simultaneous/10 relations/22 bindings/2 scalar cells/scoreboard capacity 4/2 coverage bins; trees=2/nodes=868; docs Files=4/Tests=609 and paths Files=1/Tests=2; 37 chapters; build 73 files/17,058,063 bytes; Knowledge Map 1,092 facts/5,674 keys; Memory 56 lines; selected result/parity schemas retain .10/.11 owners without false capability claims; known unrelated t370 drift remains separately owned; no target/public/runtime claim; output removed exactly |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -485,6 +488,56 @@ compiler-owned beneath C/C++ or Rust.
   Knowledge Map passes at 1,089 facts/5,643 keys; output cleanup is exact.
   Staged acceptance and all eight doctrine gates pass before commit.
 
+## Acceptance Checklist (enforced) — `.7.3` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — On clean activation commit `97628dc15`,
+  `git log -S 'package FSM::VIAL::ExecutionBuilder' --all --
+  perl/FSM/VIAL/ExecutionBuilder.pm` returns no commit, and
+  `test -e perl/FSM/VIAL/ExecutionBuilder.pm` exits 1. The selected private
+  binder/ExecutionIR/random-replay/plan owner is therefore absent at its exact
+  contracted package locus; the shipped SemanticIR and bridge objects expose
+  only defensive semantic/manifest data and no binding method. The adjacent
+  `t/350-support-contract-builder-audit.t` also proves that the already-shipped
+  private bridge contract introduced a status outside the generic contract
+  audit's closed vocabulary and omitted its mandatory non-empty `guidance`;
+  the new private execution contract would otherwise repeat that integration
+  defect. Final contract review additionally found that the phase table assigns
+  first result production to `.10` and parity comparison to `.11`, while two
+  `.7` oracle bullets and the initial capability list incorrectly implied those
+  later capabilities were already implemented. Direct `rg -n
+  'result-schema builders|malformed .*result/parity|first runtime \.10|runtime
+  parity \.11' docs/VIAL_EXECUTION_IR_V1_CONTRACT.md` located the contradictory
+  ownership claims; `.7.3` must publish selected future schemas without
+  classifying them as shipped capabilities.
+- [x] **ADDRESSED (verified)** — `prove -Iperl
+  t/1550-vial-semantic-ir.t t/1551-hial-vial-bridge-manifest.t
+  t/1552-vial-execution-ir.t t/248-regression-corpus-accounting.t
+  t/297-capability-manifest.t t/350-support-contract-builder-audit.t
+  t/369-manifest-section-builder-audit.t
+  t/381-contract-tested-by-provenance-audit.t
+  t/382-contract-module-provenance-audit.t
+  t/383-contract-family-map-integrity-audit.t` reports `All tests successful`
+  at `Files=10, Tests=7135`. Box-scoped evidence: t1552 proves the exact
+  checked AHB binding, all ten directional proofs, 21-operation/four-fiber
+  deterministic graph, normalized event adapters, arbitrary-width random
+  vectors, strict replay, defensive ownership, exact resource limits, atomic
+  diagnostics, private discovery, and future result/parity ownership without
+  a satisfied runtime capability.
+- [x] **NO REGRESSION** — Nine changed Perl modules report `syntax OK`.
+  Broader adjacent semantic/bridge/capability/support/accounting/provenance
+  evidence reports `All tests successful` at `Files=10, Tests=7135`.
+  Documentation truth reports `All tests successful` at `Files=4, Tests=609`;
+  relative paths pass at `Files=1, Tests=2`; all 37 mdBook chapters test and
+  the 73-file/17,058,063-byte local build passes. Task integrity is
+  trees=2/nodes=868, `knowledge-map: OK` holds at 1,092 facts/5,674 keys,
+  Memory is 56 lines, and generated book output is removed exactly.
+  Independently stale t370 `verification_outputs` presence-map drift
+  reproduces outside this file set and remains owned by proposed
+  `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.1`; this slice
+  changes no implicated verification-output contract and makes no t370 pass
+  claim. Staged acceptance and `[doctrine] all doctrine checks passed` close
+  the commit gate.
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -505,8 +558,20 @@ compiler-owned beneath C/C++ or Rust.
 | `.7.1` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.1: confirm transaction type-binding blocker` | Prove the selected exact-equivalence rule cannot bind three checked AHB transaction fields, correct the historical evidence boundary, and split semantic selection `.7.2` from implementation `.7.3` without product changes. |
 | `.7.2` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2: select directional type binding` | Accept decision `0037`, freeze the closed proof-carrying relation between VIAL semantic types and HIAL carriers, and select proposed `.7.3` without product changes. |
 | `.7.3` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3: activate bounded VIAL execution implementation` | Activate only the selected private no-backend binder/ExecutionIR/random-replay/plan implementation after clean `.7.2`; implementation remains unperformed. |
+| `.7.3` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3: implement private VIAL execution plan` | Ship the private exact-class binder, immutable target-neutral ExecutionIR, deterministic random/replay and defensive no-file plan; retain result/parity as selected future `.10`/`.11` schemas rather than false satisfied capabilities. |
 
 ## Changelog
+
+- `2026-07-31`: `.7.3` ships the bounded private no-backend execution seam.
+  The checked AHB SemanticIR and review-routed bridge now bind into immutable
+  target-neutral ExecutionIR and a defensive in-process plan with exact
+  directional proofs, logical operation/fiber order, resolved event adapters,
+  deterministic arbitrary-width random/replay, resource limits, atomic
+  diagnostics, and closed private capability/support accounting. Signoff also
+  corrects result/parity ownership: their selected schemas retain explicit
+  `.10`/`.11` owners and are not satisfied `.7.3` capabilities. No public
+  CLI/API/file, backend artifact, compile, simulation, runtime result, parity
+  pass, UVM/VHDL methodology, mixed-language, or scale claim ships.
 
 - `2026-07-31`: Clean `.7.2` selection commit `2a1b3cefc` activates only
   private no-backend implementation `.7.3`. No parser, SemanticIR, bridge,

@@ -11,6 +11,7 @@ use FSM::Support::LanguageSurfaceContract qw(
     language_surface_file_surface_entry_keys
 );
 use FSM::Support::HIALVIALBridgeContract qw(build_hial_vial_bridge_contract);
+use FSM::Support::VIALExecutionContract qw(build_vial_execution_contract);
 
 our @EXPORT_OK = qw(
     build_language_surface_section
@@ -174,8 +175,8 @@ sub build_language_surface_section {
                 {
                     suffix => '.vial',
                     intent_layer => 'VIAL',
-                    status => 'shipped_bounded_semantic_only',
-                    role => 'reviewable verification intent parsed and type-checked into private immutable VIALSemanticIR',
+                    status => 'shipped_bounded_semantic_and_private_execution',
+                    role => 'reviewable verification intent parsed and type-checked into private immutable VIALSemanticIR, then privately bound into target-neutral VIALExecutionIR',
                     lowers_to => [],
                     generated_review_artifacts => [],
                     supported_cli_modes => [],
@@ -183,13 +184,15 @@ sub build_language_surface_section {
                     current_boundary => join(' ',
                         'The bounded VIAL version-1 source surface supports dedicated span-aware parsing, exact type checking, private immutable VIALSemanticIR, and a sanitized semantic report under core_directed_single_clock_v1.',
                         'Its semantic report advertises only vial.source.v1, vial.semantic_ir.v1, and vial.profile.core_directed_single_clock_v1.',
-                        'There is no public CLI or supported embedding API in this slice, and no bridge binding, execution plan, artifact generation, compile, simulation, result, parity, UVM, VHDL, mixed-language, or scale claim.',
+                        'The private no-file execution seam binds the checked AHB fixture through compiler-proved directional type relations into immutable target-neutral VIALExecutionIR and a defensive in-process plan.',
+                        'There is no public CLI or supported embedding API in this slice, and no plan file, artifact generation, backend, compile, simulation, runtime result, parity pass, UVM, VHDL, mixed-language, or scale claim.',
                     ),
                 },
             ],
             unsupported_first_slice_aliases => [qw(.pif .ppi .chi .ace .atb .smbus .i2s)],
         },
         hial_vial_bridge => build_hial_vial_bridge_contract(),
+        vial_execution => build_vial_execution_contract(),
         default_mode_compatibility => {
             accepted_but_not_canonical_for_generated_output => [
                 '+fsm root family',

@@ -297,11 +297,16 @@ use FSM::Support::LanguageSurfaceContract qw(
     language_surface_contract_source
     language_surface_file_surface_entry_keys
     language_surface_hial_vial_bridge_keys
+    language_surface_vial_execution_keys
     language_surface_nested_presence_key_map
 );
 use FSM::Support::HIALVIALBridgeContract qw(
     build_hial_vial_bridge_contract
     hial_vial_bridge_contract_source
+);
+use FSM::Support::VIALExecutionContract qw(
+    build_vial_execution_contract
+    vial_execution_contract_source
 );
 use FSM::Support::ProducerContract qw(
     producer_contract_source
@@ -2845,8 +2850,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     my %file_surface_by_suffix = map { $_->{suffix} => $_ } @{$manifest->{language_surface}{file_surfaces}{entries}};
     is(
         $file_surface_by_suffix{'.vial'}{status},
-        'shipped_bounded_semantic_only',
-        'manifest limits .vial to the shipped semantic-only surface',
+        'shipped_bounded_semantic_and_private_execution',
+        'manifest records shipped VIAL semantics plus private target-neutral execution',
     );
     is_deeply(
         $file_surface_by_suffix{'.vial'}{supported_cli_modes},
@@ -2855,8 +2860,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.vial'}{current_boundary},
-        qr/no bridge binding, execution plan, artifact generation, compile, simulation, result, parity, UVM, VHDL, mixed-language, or scale claim/,
-        'manifest keeps every VIAL semantic-only non-claim explicit',
+        qr/private no-file execution seam binds .* into immutable target-neutral VIALExecutionIR.*no public CLI or supported embedding API.*no plan file, artifact generation, backend, compile, simulation, runtime result, parity pass, UVM, VHDL, mixed-language, or scale claim/,
+        'manifest keeps the private VIAL execution boundary and every non-claim explicit',
     );
     is_deeply(
         [sort keys %{$manifest->{language_surface}{hial_vial_bridge}}],
@@ -2876,6 +2881,25 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok(
         !$manifest->{language_surface}{hial_vial_bridge}{public_embedding_api},
         'manifest does not promote the private bridge producer to a supported embedding API',
+    );
+    is_deeply(
+        [sort keys %{$manifest->{language_surface}{vial_execution}}],
+        [sort @{language_surface_vial_execution_keys()}],
+        'manifest publishes the exact bounded VIAL execution discovery keys',
+    );
+    is_deeply(
+        $manifest->{language_surface}{vial_execution},
+        build_vial_execution_contract(),
+        'manifest publishes the canonical private target-neutral execution contract',
+    );
+    is(
+        $manifest->{language_surface}{vial_execution}{contract_source},
+        vial_execution_contract_source(),
+        'manifest names the VIAL execution capability contract owner',
+    );
+    ok(
+        !$manifest->{language_surface}{vial_execution}{public_embedding_api},
+        'manifest does not promote private VIAL execution to a supported embedding API',
     );
     my %isf_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.isf'}{supported_cli_modes} || []};
     ok(

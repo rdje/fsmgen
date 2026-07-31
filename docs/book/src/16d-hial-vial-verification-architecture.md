@@ -195,9 +195,10 @@ forbidden.
 
 That keeps Boolean/numeric/enum intent in VIAL and hardware representation in
 HIAL—the same “simpler language above backend assembly” boundary described in
-this chapter. Clean selection commit `2a1b3cefc` permits active `.7.3` to own
-the first private binder after separate continuity activation; no binder or
-plan ships in activation.
+this chapter. Clean selection commit `2a1b3cefc` permitted `.7.3` to own the
+first private binder after separate continuity activation. `.7.3` now ships
+that private binder and defensive in-process plan; it does not expose a public
+tool or write a plan file.
 
 ## The HIAL/VIAL bridge
 
@@ -452,7 +453,53 @@ A capability ledger distinguishes semantics already satisfied by this target-
 neutral profile from requirements a backend must supply. The checked AHB
 storage probe therefore yields a valid bound plan with an explicit equivalent-
 adapter requirement, not a false runtime-support claim. A backend without that
-adapter fails before output.
+adapter cannot emit a runnable artifact. The selected result-manifest and
+parity-report schema names are likewise future contracts, not `.7.3`
+capabilities: their first implementation owners remain `.10` and `.11`.
+
+## Shipped private execution elaboration
+
+Implementation `.7.3` now realizes that contract in-process. The private
+`FSM::VIAL::ExecutionBuilder` consumes exactly one checked `VIALSemanticIR`,
+one defensive `HIALVIALBridgeManifest`, one fixture ID, authored-order scenario
+IDs, the exact execution profile, an optional strict replay record, and a
+closed native-extension catalog. Success returns an immutable defensive
+`VIALExecutionIR` plus a sanitized `fsmgen.vial_plan.v1` hash. It writes no
+file and is not yet a supported public embedding API or CLI.
+
+For the checked AHB source, elaboration proves all ten directional relations,
+expands both scenarios to 21 static operations in four total fibers, and finds
+three as the maximum simultaneously live fibers. The bound resources include
+two scalar model-state cells, one scoreboard with declared capacity four, two
+materialized coverage bins, and one plan-time random occurrence. The success
+choice is resolved once and both authored uses point to the same occurrence:
+
+```text
+schema: fsmgen.vial_plan.v1
+status: bound_target_neutral
+profile: core_directed_single_clock_execution_v1
+logical phases: drive, sample, react, check
+random algorithm: sha256_counter_rejection_v1
+native extensions: []
+diagnostics: []
+```
+
+Event expressions are rebound to logical execution bindings. Bridge-only AHB
+event inputs become explicit transaction-adapter inputs, and the internal
+capture predicate becomes an opaque adapter-state binding; neither the actor's
+storage spelling nor an HDL literal survives in ExecutionIR. Scenario-handle
+event references, sampled endpoints, enum members, and random choices are all
+resolved before execution. The sanitized plan omits private event expressions
+and all target/methodology spelling.
+
+The implementation fails atomically—no partial IR or plan—on unresolved or
+wrong-access references, disallowed type direction, missing event, unknown
+capability, non-empty first-profile native catalog, bad scenario selection,
+invalid replay identity/value/constraint, random exhaustion, or a safety-limit
+violation. This is compiler elaboration only: there is still no plan file,
+result file, generated SV/UVM/VHDL fixture, compile, simulation, runtime,
+parity pass, mixed-language claim, or scale qualification. Public tooling is
+the next separately activated contract leaf `.8`.
 
 ## Expressive ceiling: verification intent, not synthesis
 
@@ -636,7 +683,8 @@ evidence. The canonical architecture record is
 and the owning [task tree](../../tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md)
 tracks the exact frontier.
 
-The bounded source/SemanticIR and private bridge implementations are complete.
+The bounded source/SemanticIR, private bridge, and private execution-
+elaboration implementations are complete.
 Bridge leaf `.5` ships the 27-key defensive in-process manifest through
 canonical HIAL review routes without writing a file or binding VIAL. Completed
 `.6` accepts decision `0036` and the exact target-neutral execution contract:
@@ -649,6 +697,9 @@ Audit `.7.1` then confirmed that the exact type-identity rule could not bind
 the checked enum/Boolean/unsigned transaction fields to three HIAL four-state
 logic carriers. Director-approved decision `0037` and `.7.2` select the
 directional proof rule described above. Clean selection commit `2a1b3cefc`
-activates `.7.3` continuity only; exact implementation remains unperformed.
-No plan/result file, target artifact, compile, simulation, runtime, parity, or
-product behavior changes in activation.
+activated `.7.3`, which now ships the private binder, immutable ExecutionIR,
+deterministic random/replay elaboration, defensive in-process plan, exact
+resource accounting, and fail-closed contract oracles. Proposed `.8` is next
+for a separate clean activation of public tooling-contract selection. No plan
+or result file, target artifact, compile, simulation, runtime, parity pass, or
+backend behavior is shipped by `.7.3`.

@@ -293,6 +293,7 @@ sub capability_manifest_language_surface_keys {
             strict_mode
             file_surfaces
             hial_vial_bridge
+            vial_execution
             default_mode_compatibility
             assignments
             system_contracts

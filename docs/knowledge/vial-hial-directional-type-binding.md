@@ -41,6 +41,7 @@ for transfer, and known-value injection for write/wait_cycles. All sampled
 public outputs and the declared probe use identity. The probe's separate
 equivalent-adapter capability remains required.
 
-Clean selection commit `2a1b3cefc` permits active `.7.3` to implement these
-records after separate continuity activation. Activation itself changes no
-binder, plan, backend, runtime, or product behavior.
+Clean selection commit `2a1b3cefc` permitted `.7.3` to implement these records
+after separate continuity activation. Completed `.7.3` records them in private
+ExecutionIR and the defensive plan; it still emits no backend, runtime, or
+public artifact.

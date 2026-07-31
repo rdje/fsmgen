@@ -81,10 +81,12 @@ commits cleanly and activation changes no product behavior.
 
 Completed `.6` accepts decision `0036` and the exact target-neutral
 ExecutionIR/logical-time/random-replay/native/plan/result/parity contract.
-Clean selection commit `eaf3f95dc` permits active `.7` to own private no-
-backend work after separate continuity activation. Audit `.7.1` found the
+Clean selection commit `eaf3f95dc` permitted `.7` to own private no-backend
+work after separate continuity activation. Audit `.7.1` found the
 exact-type/carrier mismatch; director-approved decision `0037` and `.7.2`
-select closed directional proof relations without changing VIAL source or the
-bridge schema. Clean selection commit `2a1b3cefc` permits active `.7.3` to own
-implementation after separate continuity activation; activation changes no
-product behavior.
+selected closed directional proof relations without changing VIAL source or
+the bridge schema. `.7.3` now ships the private binder, immutable ExecutionIR,
+deterministic plan-time random/replay, defensive in-process plan, event/
+adapter binding, exact resource accounting, atomic diagnostics, and private
+capability discovery. It emits no file or backend and exposes no supported
+public API. Proposed `.8` is the next public-tooling contract activation.

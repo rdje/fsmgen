@@ -134,7 +134,7 @@ The necessary compiler separation is private and phase-based:
 | `.vial` | authored source | shipped private `FSM::VIAL::Parser` frontend | complete source identity and deterministic order | public/versioned source; no public tool entry yet |
 | `VIALSemanticIR` | semantic intent | shipped private `FSM::VIAL::SemanticIR` family | typed, validated, immutable, not DUT-bound | private |
 | `HIALVIALBridgeManifest` | report/contract projection | shipped private `FSM::HIAL::VIALBridge` family | sanitized HIAL truth with stable logical IDs and source maps | private in-process v1; public artifact deferred |
-| `VIALExecutionIR` | bound execution plan | future VIAL binder/elaborator | every reference bound, capability checked, deterministic schedule | private |
+| `VIALExecutionIR` | bound execution plan | shipped private `FSM::VIAL::ExecutionBuilder` family | every reference bound, capability checked, deterministic operation graph | private |
 | `vial-plan.json` | report projection | future plan-report owner | sanitized binding/schedule/capability/source-map view | bounded public/versioned |
 
 `VIALSemanticIR` is distinct from SourceHIR and HIAL IR because it represents
@@ -514,20 +514,23 @@ target-neutral operational graph, drive/sample/react/check logical time,
 deterministic action/fiber/model/scoreboard/coverage/fault behavior, plan-time
 keyed randomness/replay, declarative typed native manifests, sanitized plan,
 normalized result/parity, diagnostics, limits, and the exact AHB binding oracle.
-Proposed `.7` is selected next for separate clean activation of private no-
-backend implementation. Selection changes no compiler, artifact, backend,
-runtime, parity, or product behavior.
-Clean selection commit `eaf3f95dc` permits that continuity-only activation.
-Active `.7` owns private binder/ExecutionIR/random-replay/plan implementation;
-activation committed cleanly, but implementation audit `.7.1` then proved the
+Clean selection commit `eaf3f95dc` permitted the continuity-only `.7`
+activation. Implementation audit `.7.1` then proved the
 checked transaction is not bindable under the selected exact type-identity
 rule. VIAL enum/Boolean/unsigned fields meet HIAL four-state logic carriers at
 three field boundaries. `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md` records
 the direct evidence. Director-approved decision `0037` and `.7.2` select
 closed bit-domain identity, known-value injection, and enum-encoding injection
-proof relations. Clean selection commit `2a1b3cefc` permits active `.7.3` to
-own implementation after separate continuity activation. No compiler, schema,
-artifact, tool, runtime, parity, or product behavior changes in activation.
+proof relations. Clean selection commit `2a1b3cefc` permitted `.7.3` to own
+implementation after separate continuity activation. Completed `.7.3` ships the
+private immutable ExecutionIR, deterministic plan-time random/replay,
+defensive in-process plan, closed event/adapter bindings, exact resource
+accounting, atomic diagnostics, and private capability/support discovery.
+The result/parity schema names remain selected future contracts with explicit
+`.10`/`.11` owners rather than satisfied `.7.3` capabilities.
+Proposed `.8` is next for separate activation of public tooling-contract
+selection. No plan/result file, generated backend artifact, compile,
+simulation, runtime, parity pass, or target-methodology behavior is shipped.
 
 ## Rollback
 

@@ -29,12 +29,14 @@ expressive authored value semantics; HIAL preserves observable hardware logic
 semantics. The frozen execution contract omitted the representation relation
 between them. Active `.7` is split: audit `.7.1` records the evidence,
 director-approved `.7.2` selects the semantic rule through decision `0037`,
-and clean selection commit `2a1b3cefc` permits active `.7.3` to own
-implementation after separate continuity activation.
+and clean selection commit `2a1b3cefc` permitted `.7.3` to implement the
+selected rule after separate continuity activation. That implementation is now
+complete.
 
 The selected rule is a closed proof-carrying directional relation: known
 two-state values inject into same-width/signed four-state carriers with all
 known bits and no Z, and enums inject through their exact base encoding. It
 does not permit inverse X/Z collapse, width/sign conversion, implicit
 expression coercion, or a target-language cast. This resolves the contract
-blocker without changing VIAL source or the HIAL bridge schema.
+blocker without changing VIAL source or the HIAL bridge schema. The private
+ExecutionIR records the exact relation and proof IDs.

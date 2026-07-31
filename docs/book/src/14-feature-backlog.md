@@ -4332,8 +4332,9 @@ remain deferred behind later selector leaves.
 ### Selected HIAL/VIAL architecture
 
 The architecture for full fixture generation is selected and decomposed. Its
-first bounded semantic-only source frontend is shipped; bridge binding,
-execution, public tooling, and executable backends are not shipped yet.
+bounded semantic frontend, review-routed private bridge, and private target-
+neutral execution elaborator are shipped; public tooling and executable
+backends are not shipped yet.
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` names current synthesizable
 IAL0/IAL1/IAL2 collectively as **Hardware IAL (HIAL)** and defines a peer
 **Verification IAL (VIAL)** for pure verification intent:
@@ -4366,10 +4367,11 @@ extensions with explicit profile and fallback contracts.
 Implementation `.3` now parses and type-checks the checked
 `vial/ahb_subordinate_base_output_arbitration.vial` source into private
 immutable `VIALSemanticIR` and exposes a defensive sanitized semantic report
-through a private checker. The `.vial` surface is support-accounted as
-semantic-only with no public CLI/API, bridge, plan, generated artifact,
-compile, simulation, result, parity, UVM, VHDL, mixed-language, or scale
-claim.
+through a private checker. The semantic corpus still claims only parse,
+typecheck, and semantic-report phases. Capability discovery now additionally
+reports the private no-file target-neutral binder/plan seam; it still exposes
+no public CLI/API, plan/result file, generated artifact, compile, simulation,
+runtime, parity pass, UVM, VHDL, mixed-language, or scale claim.
 
 Decision `0034` sets the longer-term rule: **full power underneath, simpler
 intent above**. Abstraction means simplification, so mastering VIAL does not
@@ -4457,10 +4459,20 @@ The activation committed cleanly at `3ec8eab93`, but pre-code audit `.7.1`
 found that VIAL enum/Boolean/unsigned transaction types are not identical to
 three HIAL four-state logic carrier types. Director-approved decision `0037`
 and `.7.2` now select exact bit-domain identity, known-value injection, and
-enum-encoding injection proofs. Clean selection commit `2a1b3cefc` activates
-`.7.3` continuity only; exact implementation remains unperformed. No binder,
-plan, backend, runtime, parity, or product behavior changes in activation. See the
+enum-encoding injection proofs. Clean selection commit `2a1b3cefc` activated
+`.7.3`, which now ships the private binder, immutable
+`fsmgen.vial_execution_ir.v1`, deterministic
+`sha256_counter_rejection_v1` generation and strict replay, defensive in-
+process `fsmgen.vial_plan.v1`, exact directional relation evidence, explicit
+event/adapter bindings, resource limits, and atomic diagnostics. The checked
+AHB plan has 21 operations, four total fibers, a three-fiber simultaneous
+maximum, ten type relations, and one shared scenario decision occurrence.
+Proposed `.8` is next for separate clean activation of the public tooling
+contract. No plan/result file, backend artifact, compile, simulation, runtime,
+parity pass, or target-methodology behavior ships in `.7.3`. See the
 [type-binding mismatch audit](../../VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md).
+The already-selected result and parity schema names are recorded as future
+contracts with `.10`/`.11` owners, not as satisfied `.7.3` capabilities.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -12220,17 +12232,19 @@ Completed `.6` accepts decision `0036` and freezes the exact target-neutral
 ExecutionIR/logical-time/random-replay/native/plan/result/parity contract.
 SystemVerilog/UVM/VHDL methodology machinery remains backend-private; the
 selected plan carries semantic outcomes and explicit target requirements.
-Proposed `.7` is selected next for separate clean activation of private no-
-backend implementation. No file, backend, runtime, parity, or product behavior
-ships in contract selection. See the
+The later clean activation and `.7.1`/`.7.2` audit-selection sequence led to
+completed `.7.3`, which now ships private no-backend binding, immutable
+ExecutionIR, deterministic random/replay, and defensive in-process plan
+construction. No file, backend, runtime, parity, or target-methodology behavior
+ships. See the
 [execution v1 contract](../../VIAL_EXECUTION_IR_V1_CONTRACT.md).
-Clean selection commit `eaf3f95dc` activates `.7` continuity only; exact
-private implementation remains unperformed and no product behavior changes.
-Audit `.7.1` subsequently confirms an exact-rule mismatch between three
+Clean selection commit `eaf3f95dc` activated `.7` continuity only. Audit
+`.7.1` then confirmed an exact-rule mismatch between three
 expressive VIAL transaction types and their HIAL four-state hardware carriers.
 Decision `0037` and `.7.2` select closed directional proof relations; `.7.3`
-owns implementation afterward. Clean selection commit `2a1b3cefc` activates
-`.7.3` continuity only; implementation and product behavior remain unchanged.
+implements them after clean selection commit `2a1b3cefc` and a separate
+continuity activation. Result/parity schema names remain selected future
+contracts with explicit `.10`/`.11` owners, not satisfied `.7.3` capabilities.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

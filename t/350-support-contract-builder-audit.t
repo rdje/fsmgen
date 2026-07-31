@@ -19,6 +19,8 @@ my %allowed_status = map { $_ => 1 } qw(
     bounded_public_json_fragment
     bounded_top_level_presence
     optional_when_tools_installed
+    shipped_private_in_process
+    shipped_private_target_neutral_no_backend
 );
 
 for my $file (@contract_files) {

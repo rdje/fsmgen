@@ -31693,3 +31693,26 @@ task tree and git.
   build pass; Knowledge Map passes at 1,088 facts / 5,640 keys; Memory remains
   57 lines; doctrines and exact output cleanup pass.
 - No separate development note is warranted for this continuity-only slice.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3 — private VIAL execution elaboration implemented
+
+- Added private immutable `VIALExecutionIR`, a closed binder/elaborator,
+  arbitrary-width deterministic SHA-256 random selection with strict replay,
+  and a defensive target-neutral in-process plan projection.
+- The checked AHB fixture now proves all ten directional VIAL/HIAL type
+  relations, resolves scenario-handle events, event-adapter inputs/state,
+  enum members, and shared choice occurrences, and expands to 21 operations
+  across four fibers with exact resource accounting and safety limits.
+- Added focused success, determinism, replay, defensive-copy, capability,
+  access/type/event/reference/native, resource, and atomic-failure regression
+  coverage; synchronized the semantic and capability-manifest oracles.
+- Corrected the generic support-contract audit integration exposed by the
+  private bridge/execution contracts: both now publish mandatory guidance and
+  their exact private statuses are audited.
+- Capability discovery exposes only a private no-file target-neutral seam.
+  Result-manifest and parity-report schemas remain selected future contracts
+  with explicit `.10`/`.11` owners; `.7.3` does not falsely publish them as
+  satisfied execution capabilities.
+  No public VIAL CLI/API, plan/result file, generated SV/UVM/VHDL artifact,
+  compile, simulation, runtime, parity pass, mixed-language, or scale claim is
+  added. Proposed `.8` is next for separate public-tooling contract activation.

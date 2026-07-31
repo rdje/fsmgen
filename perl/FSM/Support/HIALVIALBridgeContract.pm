@@ -31,6 +31,7 @@ sub hial_vial_bridge_contract_keys {
         writes_files
         public_embedding_api
         explicit_nonclaims
+        guidance
     )];
 }
 
@@ -96,6 +97,11 @@ sub build_hial_vial_bridge_contract {
             mixed_language
             scale
         )],
+        guidance => [
+            'Consume this contract only for capability discovery; the bridge producer remains a private in-process compiler seam.',
+            'Use logical bridge IDs and compiler-proved facts, never backend names or target-language casts, as semantic authority.',
+            'Do not infer a public VIAL API, execution plan, backend, runtime, or parity result from bridge availability.',
+        ],
     };
 }
 

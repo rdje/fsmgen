@@ -21,8 +21,8 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, execution-ir, logical-time, binding, determinism, random, replay, native-extension, plan, result, parity]
-evidence: docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
-reverify: rg -n 'fsmgen\.vial_execution_ir\.v1|core_directed_single_clock_execution_v1|domain.*cycle.*phase.*ordinal|sha256_counter_rejection_v1|fsmgen\.vial_native_extension\.v1|fsmgen\.vial_plan\.v1|fsmgen\.verification_result_manifest\.v1|fsmgen\.vial_parity_report\.v1|bit_domain_identity_v1|known_value_injection_v1|enum_encoding_injection_v1|\.7\.3' docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+evidence: docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/VIAL/ExecutionIR.pm; perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/VIAL/ExecutionReport.pm; perl/FSM/Support/VIALExecutionContract.pm; t/1552-vial-execution-ir.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
+reverify: prove -Iperl t/1550-vial-semantic-ir.t t/1551-hial-vial-bridge-manifest.t t/1552-vial-execution-ir.t t/297-capability-manifest.t && rg -n 'fsmgen\.vial_execution_ir\.v1|core_directed_single_clock_execution_v1|sha256_counter_rejection_v1|bit_domain_identity_v1|known_value_injection_v1|enum_encoding_injection_v1|shipped_private_target_neutral_no_backend' perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/VIAL/ExecutionIR.pm perl/FSM/VIAL/ExecutionRandom.pm perl/FSM/VIAL/ExecutionReport.pm perl/FSM/Support/VIALExecutionContract.pm
 ---
 
 Decision `0036` selects private immutable
@@ -50,15 +50,20 @@ hooks, or anonymous target blocks. The first checked AHB plan has no native
 extension and retains its probe-adapter requirement explicitly.
 
 Sanitized `fsmgen.vial_plan.v1` reports binding/schedule/capability/replay
-facts. Runtime backends later produce
+facts. `.7.3` now ships the private immutable builder/IR/random/report family,
+strict defensive plan construction, all ten checked AHB directional proofs,
+resolved event/adapter bindings, one scenario-scoped decision occurrence,
+exact resource accounting, atomic diagnostics, and private capability
+discovery. Result-manifest and parity-report schemas are selected future
+contracts with explicit `.10`/`.11` implementation owners; neither is
+advertised as a satisfied `.7.3` capability. It writes no file and exposes no
+supported public CLI/API. Runtime backends later produce
 `fsmgen.verification_result_manifest.v1`; parity compares only canonical
 portable/paired-native logical outcomes through a deep-validated parity
-projection/report. Clean selection commit `eaf3f95dc` permits active `.7` to
-own private no-backend implementation after separate continuity activation.
-Audit `.7.1` subsequently proved that the checked transaction could not
+projection/report. Audit `.7.1` proved that the checked transaction could not
 satisfy the former exact VIAL/HIAL field-type rule. Director-approved decision
-`0037` and `.7.2` now select closed directional identity, known-value
-injection, and enum-encoding proof records. Clean selection commit `2a1b3cefc`
-permits active `.7.3` to implement the binder after separate continuity
-activation; activation changes no product behavior. See
-`docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.
+`0037` and `.7.2` selected closed directional identity, known-value injection,
+and enum-encoding proof records; `.7.3` implements them. Proposed `.8` is next
+for separate activation of public tooling-contract selection. Plan/result
+files, generated backends, compile, simulation, runtime, and parity remain
+unshipped. See `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.

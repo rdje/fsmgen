@@ -8479,8 +8479,16 @@ VIAL source/parser/SemanticIR, HIAL bridge/parser/annotation/report, binding or
 `VIALExecutionIR` implementation, random/replay or scheduler behavior,
 plan/result object/schema/file, native extension implementation, target
 backend, CLI/API, capability/support surface, compilation, simulation,
-runtime, parity, or product behavior. Exact implementation remains unperformed
-until activation commits cleanly.
+runtime, parity, or product behavior during activation. Audit `.7.1` then found
+the enum/Boolean/unsigned-to-four-state carrier gap; decision `0037` and `.7.2`
+selected the three closed directional proof relations. Completed `.7.3` now
+ships the private immutable ExecutionIR, deterministic random/replay,
+defensive in-process plan, explicit event/adapter bindings, resource limits,
+atomic diagnostics, and private capability discovery. Proposed `.8` is next
+for separate public-tooling contract activation. No plan/result file, backend,
+compile, simulation, runtime, or parity pass is shipped. Selected result and
+parity schema names retain explicit `.10`/`.11` implementation owners and are
+not classified as satisfied `.7.3` capabilities.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
@@ -9485,16 +9493,19 @@ HIAL bridge's four-state logic carrier types. The source and bridge are each
 internally consistent, but decision `0036` selected exact identity without a
 representation relation. Director-approved decision `0037` and `.7.2` now
 select closed bit-domain identity, known-value injection, and enum-encoding
-injection proofs; `.7.3` owns implementation after separate clean activation. No
-binder, plan, backend, or runtime claim is active until `.7.3` implements and
-verifies the selected private no-backend contract.
+injection proofs. `.7.3` now implements and verifies the selected private no-
+backend contract: immutable ExecutionIR, deterministic plan-time random/replay,
+defensive in-process plan projection, closed event/adapter bindings, exact
+resource accounting, atomic diagnostics, and private capability/support
+discovery. Result and parity schema names remain selected future contracts
+with explicit `.10`/`.11` owners rather than satisfied `.7.3` capabilities.
 Clean directional-binding selection commit `2a1b3cefc` permits a continuity-
 only activation of `.7.3`. This transition changes no VIAL source/parser/
-SemanticIR, HIAL bridge/parser/annotation/report, binding/ExecutionIR or
-random/replay implementation, plan/result object/schema/file, scheduler,
-native extension implementation, backend, CLI/API, capability/support
-surface, compilation, simulation, runtime, parity, or product behavior. Exact
-implementation remains unperformed until activation commits cleanly.
+SemanticIR or HIAL bridge/parser/annotation/report. The implementation remains
+private and writes no file; no plan/result artifact, scheduler/runtime,
+implemented native extension, backend, public CLI/API, compilation,
+simulation, parity pass, or target-methodology behavior is claimed. Proposed
+`.8` is the next separate activation for public tooling-contract selection.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

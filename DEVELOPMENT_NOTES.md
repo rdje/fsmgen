@@ -34405,3 +34405,51 @@ compiler proves the representation at the HIAL seam. It also gives backends a
 target-neutral contract instead of leaking SystemVerilog or VHDL conversion
 rules upward. `.7.3` must implement only the three selected relation kinds and
 remain fail-closed for every inverse or wider conversion.
+
+## VIAL execution elaboration — normalize every backend-facing seam before scheduling (2026-07-31)
+
+Implementation `.7.3` makes `VIALExecutionIR` the sole bound execution truth.
+The builder accepts defensive SemanticIR and bridge objects, proves each
+directional representation relation, resolves authored references, choices,
+and enum values, expands a deterministic operation graph, and hashes the
+complete normalized record into a stable plan identity. Backends therefore do
+not get to reinterpret source forms, bridge expressions, random constraints,
+or target conversion rules independently.
+
+The event boundary needed special care. A bridge event may depend on public
+signals owned by the protocol adapter rather than explicit authored VIAL
+endpoints, and the checked capture event is derived from actor storage. The
+ExecutionIR now creates explicit logical transaction-adapter input bindings
+for the former and an opaque adapter-state binding for the latter. Raw actor-
+storage names and HDL literal spelling are removed during binding. This keeps
+protocol implementation detail below VIAL while still giving every executable
+reference a stable, checkable binding.
+
+Plan-time randomness follows the same rule. Each selected scenario/choice pair
+has one stable occurrence ID, arbitrary-width SHA-256 counter/rejection
+selection, a normalized accepted value, and all referencing operation IDs.
+Strict replay validates plan identity, exact decision shape, type,
+distribution, canonical value, range, and authored constraints. Backends
+consume the accepted value; they do not rerun a simulator PRNG.
+
+Safety accounting is executable contract, not documentation decoration. The
+builder enforces operation/fiber/binding/type/model-state/scoreboard/coverage/
+fault/random/source-map/serialized-plan bounds and publishes the measured
+counts with the limits. Failures are atomic and sanitized: callers receive one
+closed diagnostic and no partial IR or plan.
+
+The capability surface remains deliberately private and no-file. Its generic
+support-contract audit exposed that the earlier private bridge contract used a
+status outside the audit vocabulary and lacked mandatory guidance; `.7.3`
+corrects both private contracts rather than weakening the audit. Public CLI,
+artifact placement, plan/result files, and compatibility remain separate `.8`
+decisions.
+
+Signoff also exposed a subtler capability-accounting boundary: decision `0036`
+selects result and parity data contracts, but the phase table assigns their
+first producers to `.10` and `.11`. A selected schema is not a shipped
+capability. The private `.7.3` contract therefore publishes those schema names
+as `selected_not_implemented` with their exact later owners, while its shipped
+capability list and plan ledger stop at binding, ExecutionIR, logical time,
+random/replay, and plan construction. This prevents downstream discovery from
+mistaking architectural foresight for executable runtime support.

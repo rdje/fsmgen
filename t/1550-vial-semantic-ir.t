@@ -423,7 +423,7 @@ subtest 'independent semantic errors are collected in authored order without cas
     is($checked->{semantic_report}, undef, 'invalid input never exposes partial semantic IR or a report');
 };
 
-subtest 'support and capability accounting state semantic-only claims and every non-claim' => sub {
+subtest 'semantic corpus claims stay bounded while capability accounting includes private execution' => sub {
     my ($entry) = grep { $_->{id} eq 'verification.vial_ahb_subordinate_base_output_arbitration' } regression_corpus_entries();
     ok($entry, 'regression corpus contains the checked VIAL source');
     is($entry->{source_kind}, 'vial', 'support entry identifies VIAL source kind');
@@ -442,7 +442,7 @@ subtest 'support and capability accounting state semantic-only claims and every 
 
     my $surface = build_language_surface_section();
     my ($vial) = grep { $_->{suffix} eq '.vial' } @{$surface->{file_surfaces}{entries}};
-    is($vial->{status}, 'shipped_bounded_semantic_only', 'capability manifest limits VIAL status to semantic-only');
+    is($vial->{status}, 'shipped_bounded_semantic_and_private_execution', 'capability manifest includes bounded semantics plus private target-neutral execution');
     is_deeply($vial->{supported_cli_modes}, [], 'capability manifest advertises no public VIAL CLI');
     is_deeply($vial->{lowers_to}, [], 'capability manifest advertises no VIAL lowering');
     is_deeply($vial->{generated_review_artifacts}, [], 'capability manifest advertises no generated VIAL artifact');
