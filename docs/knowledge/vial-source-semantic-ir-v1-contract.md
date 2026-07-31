@@ -23,7 +23,7 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, source-language, parser, semantic-ir, types, four-state, property-language, diagnostics, provenance, ahb]
-evidence: docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0008-verification-property-language-unification.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
+evidence: docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0008-verification-property-language-unification.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: prove -Iperl t/1550-vial-semantic-ir.t && rg -n 'core_directed_single_clock_v1|VIALSemanticIR Required IR Record|dedicated VIAL lexer|known_mask|z_mask|same.*value_eq|canonical property|ahb_subordinate_base_output_arbitration\.vial|semantic-only profile' docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md
 ---
 
@@ -61,6 +61,11 @@ checking, and a sanitized semantic report with the three exact VIAL v1
 capabilities. Public CLI/API, binding, plan, target artifacts, runtime, result,
 parity, UVM, VHDL, mixed-language, and scale support remain explicit
 non-claims.
+
+Decision `0039` selects a future public formatter/parser extension where the
+current explicit grammar is `normal_v1` and `terse_v1` removes only closed
+structural wrappers. The `.3` parser still accepts normal form only; selection
+does not change the shipped frontend.
 
 Clean implementation commit `be9c74163` completes this source/SemanticIR
 slice. Bridge-contract leaf `.4` now selects review-routed manifest v1 under

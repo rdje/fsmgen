@@ -26,10 +26,11 @@ fsmgen.verification_result_manifest.v1
 fsmgen.vial_parity_report.v1
 ```
 
-No file is written in `.6` or `.7`. Public CLI/API, repository-local output
-layout, filenames, artifact discovery, and migration remain owned by `.8`.
-The schema names make those later surfaces possible without promoting the raw
-IR.
+No file is written in `.6` or `.7`. Decision `0039` and
+`docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md` now select the public CLI/API,
+repository-local output layout, filenames, artifact discovery, and migration
+contract under `.8`; implementation remains owned by `.10`. The schema names
+make those later surfaces possible without promoting the raw IR.
 
 Decision `0036` records the governing rule: VIAL describes verification
 meaning; SV/UVM/VHDL are compiler targets analogous to assembly beneath
@@ -46,7 +47,7 @@ implement this contract but never define or leak into authored VIAL meaning.
   + optional replay/native catalogs      selected here; empty in first fixture
   -> bind + elaborate + classify
   -> private immutable VIALExecutionIR   selected here; implementation .7
-  -> sanitized vial-plan projection      selected here; public placement .8
+  -> sanitized vial-plan projection      selected here; placement selected .8
   -> target backend                      .9 and later
   -> normalized result manifest          selected here; first runtime .10
   -> parity comparison                    selected here; runtime parity .11+
@@ -856,8 +857,10 @@ use the SemanticIR span record. No private IR object or target-language span is
 serialized.
 
 The plan is fully defensive and JSON-safe as a whole. `.7` may return it in
-process. `.8` alone decides whether and where `vial-plan.json` is written and
-how it is discovered beside other verification artifacts.
+process. Decision `0039` selects public `vial plan` placement at
+`.artifacts/vial/<fixture-slug>/<full-plan-sha256>/vial-plan.json`, or the same
+relative identity below an explicit repository-local output root, with
+discovery through `fsmgen.vial_tool_manifest.v1`. No writer ships yet.
 
 ## Normalized Verification Result Manifest
 
@@ -1234,11 +1237,13 @@ Exact file/package decomposition may be refined in a later task-tree-owned
 slice without changing the schemas or public/non-public boundary. `.7.3` does
 not write a plan/result
 file, modify `.vial` syntax, change SemanticIR or bridge schema, emit target
-verification code, compile/simulate, or claim runtime/parity. `.8` owns public
-tooling and file placement; `.9` onward own backend contracts and execution.
-Clean `.7.3` implementation commit `44dbecd1a` permits `.8` to select that
-public tooling contract after a separate continuity-only activation; activation
-does not itself implement a command, API, file, layout, or artifact.
+verification code, compile/simulate, or claim runtime/parity. Completed `.8`
+selects public tooling and file placement under decision `0039`; `.9` selects
+the first backend contract and `.10` is the first implementation owner.
+Clean `.7.3` implementation commit `44dbecd1a` permitted `.8` to select
+decision `0039` and `docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md` after a separate
+continuity-only activation. Selection does not itself implement a command,
+API, source-style widening, file, layout, or artifact.
 
 This contract does not choose a UVM revision, simulator, VHDL methodology,
 GHDL profile, mixed-language tool, clocking-block/process implementation, UVM

@@ -433,18 +433,25 @@ portable result projection for the shared scenario.
 
 ## Public Artifacts, Reports, And Accounting
 
-Later exact owners must select and regression-lock:
+Decision `0039` and `docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md` select and future
+implementation must regression-lock:
 
 ```text
+<out>/vial-tool-manifest.json
+<out>/source/vial-normal.vial
+<out>/review/...
 <out>/hial-vial-bridge.json
 <out>/vial-plan.json
-<out>/verification-output-manifest.json
-<out>/verification-result-manifest.json
-<out>/<backend-profile>/...
+<out>/verification-output-manifest.json       # run only, schema v2
+<out>/backends/<backend-profile>/...          # run only
+<out>/results/<run-id>/verification-result-manifest.json
 ```
 
-The existing verification manifest filename stays available for generated
-artifacts; schema migration must be explicit and compatibility-tested. The
+The default root is repository-local and content-addressed by fixture plus the
+full plan digest. The existing verification manifest v1 filename/schema stays
+unchanged for generated `.isf` skeleton artifacts; VIAL runtime output uses an
+explicit v2 schema, and migration is schema-selected and compatibility-tested.
+The
 bridge, plan, and result each need their own schema/contract owner, presence
 key families, defensive-copy boundary, capability-manifest discovery,
 diagnostics, and source maps. Support accounting distinguishes source/parser,
@@ -528,10 +535,15 @@ defensive in-process plan, closed event/adapter bindings, exact resource
 accounting, atomic diagnostics, and private capability/support discovery.
 The result/parity schema names remain selected future contracts with explicit
 `.10`/`.11` owners rather than satisfied `.7.3` capabilities.
-Clean `.7.3` implementation commit `44dbecd1a` permits active `.8` to select
-the public tooling contract after a separate continuity-only activation. No
-plan/result file, generated backend artifact, compile,
-simulation, runtime, parity pass, or target-methodology behavior is shipped.
+Clean `.7.3` implementation commit `44dbecd1a` permitted `.8` to select
+decision `0039` and the public tooling contract after a separate continuity-
+only activation. The selected `fsmgen vial` capabilities/check/format/plan/run
+family uses equivalent normal/terse projections, separate VIAL/HIAL inputs,
+portable source-catalog/artifact-sink requests, repository-local atomic output,
+and explicit manifest-v1/v2 compatibility. No command/API/parser widening,
+plan/result file, generated backend artifact, compile, simulation, runtime,
+parity pass, or target-methodology behavior is shipped by selection. Proposed
+`.9` is next for a separate clean backend-contract activation.
 
 ## Rollback
 

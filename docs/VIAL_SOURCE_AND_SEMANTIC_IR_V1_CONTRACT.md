@@ -56,9 +56,12 @@ owned by `.7` and later leaves.
 Decision `0034` makes this an initial-profile boundary, not VIAL's expressive
 ceiling. VIAL is not constrained by synthesizability: later typed native
 profiles may abstract full selected SV/UVM/VHDL verification semantics,
-including UVM event/callback behavior. Terse and verbose normal syntax will
-share one semantic model. None of that broader surface is silently accepted by
-the bounded version-1 parser in `.3`.
+including UVM event/callback behavior. Decision `0039` and
+`docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md` now select exact `normal_v1` and
+`terse_v1` source projections of one semantic model: terse form removes only
+closed structural wrappers and adds no implicit meaning. The bounded `.3`
+parser still accepts only normal form; public parsing/formatting and semantic-
+digest equivalence remain unimplemented until `.10`.
 
 “Abstract” means simplify for the author: learning this source language does
 not require prior SV/UVM/VHDL knowledge. Those languages are backend targets,

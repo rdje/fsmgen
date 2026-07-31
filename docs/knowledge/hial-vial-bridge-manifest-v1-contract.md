@@ -14,7 +14,7 @@ answers:
 date: 2026-07-31
 status: current
 tags: [hial, vial, bridge, manifest, ial0, ial1, ial2, review-route, provenance, ahb]
-evidence: docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
+evidence: docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: prove -Iperl t/1551-hial-vial-bridge-manifest.t && rg -n 'core_single_unit_v1|direct_ial2_to_verification|verification-bridge|transaction/ahb_write|probe/reg_data_q|semantic_path|shipped_private_in_process|authoritative hardware carriers|decision `0037`|\.7\.3' perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/Support/HIALVIALBridgeContract.pm docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
@@ -50,14 +50,14 @@ schedule report already exposes a reusable expression AST.
 
 The producer writes no bridge file and does not bind VIAL, create an execution
 plan, generate verification code, compile/simulate, or claim backend parity.
-Public CLI/API/artifact discovery remains owned by `.8`. Clean implementation
-commit `51434a2ae` permits the separate continuity-only activation of `.6` for
-execution-contract selection; that selection remains unperformed until the
-activation commits cleanly and no product behavior changes during activation.
+Decision `0039` and completed `.8` select a future sanitized public bridge file
+inside the VIAL plan artifact tree; `.10` remains its first writer. Clean
+implementation commit `51434a2ae` permitted the separate `.6` execution-
+contract selection.
 Completed `.6` now selects decision `0036` and the exact target-neutral
 execution contract without changing this bridge. Clean selection commit
-`eaf3f95dc` permits active `.7` to own private binding/ExecutionIR
-work after separate continuity activation. Decision `0037` and `.7.2` now
+`eaf3f95dc` permitted `.7` to own private binding/ExecutionIR work after
+separate continuity activation. Decision `0037` and `.7.2` now
 clarify that bridge field types remain authoritative hardware carriers while
 the later ExecutionIR binder proves a closed directional relation from the
 independently owned VIAL semantic type. This bridge schema and producer remain

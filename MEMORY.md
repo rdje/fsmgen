@@ -6,16 +6,15 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`README-POLICY-ANVIL-ADOPTION-FEEDBACK.1: integrate cross-project policy evidence`).
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.7.3` is
-  complete and `.8` remains active for public tooling-contract selection.
-- current_state: decision `0038` and the completed README-policy feedback tree
-  make the project-owned policy locally authoritative and the reusable body
-  harness-neutral. README content and product behavior are unchanged.
-- next_action: resume `.8`; audit and select the exact public VIAL CLI/API,
-  terse/normal projection, repository-local artifact layout, manifest/report,
-  capability, diagnostic, support-accounting, and compatibility contract.
-  Decision `0039` is the next available number.
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8: select public VIAL tooling contract`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.8` is
+  complete as contract selection and proposed `.9` is next.
+- current_state: decision `0039` selects `fsmgen vial`, equivalent normal/
+  terse projections, separate VIAL/HIAL inputs, portable request/result hosts,
+  atomic repository-local artifacts, and manifest compatibility. It ships no
+  command, parser widening, file, backend, or runtime.
+- next_action: after this clean selection commit, activate `.9` continuity-only
+  for the exact `sv_portable_verilator` backend/runtime-library contract.
 - in_flight_uncommitted: none after this commit; no background job and
   repository-local mdBook output is removed exactly.
 - blockers: none for `.8`. Proposed `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-
@@ -39,6 +38,9 @@ history; this file carries only the current bounded resume state.
   not satisfied `.7.3` capabilities.
 - Decisions `0034`-`0037` own VIAL expressiveness, the private review-routed
   bridge, deterministic logical-time execution, and directional type proofs.
+- Decision `0039` owns public VIAL source views, command/API, HIAL input route,
+  artifact/report/discovery/diagnostic/compatibility boundaries; `.10` is the
+  first implementation owner after `.9` selects the backend contract.
 - Decision `0038` owns README policy authority, template independence,
   duplicate proof, derived 275-line/12,288-byte caps, and unconditional guard.
 - Decisions `0025` freezes legacy status files. Push only on explicit request

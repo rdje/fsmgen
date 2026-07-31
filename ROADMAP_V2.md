@@ -8491,7 +8491,14 @@ parity schema names retain explicit `.10`/`.11` implementation owners and are
 not classified as satisfied `.7.3` capabilities. Clean `.7.3` implementation
 commit `44dbecd1a` activates `.8` continuity-only for public tooling-contract
 selection; no command/API/file, artifact, backend, runtime, or product behavior
-changes during activation.
+changes during activation. Completed `.8` now accepts decision `0039` and the
+exact `fsmgen vial` capabilities/check/format/plan/run contract: normal/terse
+source projections share one meaning digest, VIAL and HIAL sources remain
+separate, the portable API reuses source-catalog/artifact-sink hosts, artifacts
+are repository-local/content-addressed/atomic, and verification-manifest v1
+compatibility is explicit beside VIAL v2. Proposed `.9` is next for separate
+clean activation of the first plain-SV/Verilator backend contract. Selection
+implements no parser, command, API, file, backend, runtime, or product change.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
@@ -9508,9 +9515,11 @@ SemanticIR or HIAL bridge/parser/annotation/report. The implementation remains
 private and writes no file; no plan/result artifact, scheduler/runtime,
 implemented native extension, backend, public CLI/API, compilation,
 simulation, parity pass, or target-methodology behavior is claimed. `.8` is
-active after clean `.7.3` commit `44dbecd1a` and a separate continuity-only
-transition for public tooling-contract selection. Activation changes no
-product behavior.
+complete after clean `.7.3` commit `44dbecd1a`, a separate continuity-only
+transition, and decision `0039` public-tooling selection. The selected
+command/API, normal/terse projection, repository-local artifact, and manifest
+contracts change no product behavior; proposed `.9` is the next backend-
+contract activation.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

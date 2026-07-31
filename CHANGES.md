@@ -31744,3 +31744,18 @@ task tree and git.
 - Accepted decision `0038` and recalibrated FSMGen's guard from the reviewed
   246-line / 9,952-byte README to 275 lines / 12,288 bytes without changing
   `README.md` or product behavior.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8 — public VIAL tooling contract selected
+
+- Accepted decision `0039` and selected the intent-oriented `fsmgen vial`
+  capabilities/check/format/plan/run family without implementing it.
+- Froze exact `normal_v1`/`terse_v1` projections of one semantic model,
+  separate VIAL/HIAL sources through canonical review routes, and closed
+  portable request/result records over source-catalog/artifact-sink hosts.
+- Selected repository-relative, same-volume, content-addressed, atomic artifact
+  trees with sanitized bridge/plan/tool/result projections and explicit
+  verification-output-manifest v1 preservation beside VIAL schema v2.
+- Selected capability/support/diagnostic/compatibility/rollback contracts and
+  proposed `.9` next for separate clean activation of the first plain-SV/
+  Verilator backend contract. Parser, CLI/API, files, backend/runtime, and
+  product behavior remain unchanged.

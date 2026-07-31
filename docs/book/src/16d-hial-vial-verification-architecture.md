@@ -499,7 +499,87 @@ invalid replay identity/value/constraint, random exhaustion, or a safety-limit
 violation. This is compiler elaboration only: there is still no plan file,
 result file, generated SV/UVM/VHDL fixture, compile, simulation, runtime,
 parity pass, mixed-language claim, or scale qualification. Public tooling is
-the next separately activated contract leaf `.8`.
+selected separately by completed contract leaf `.8`; it is not implemented by
+the private elaborator.
+
+## Selected public tooling boundary
+
+Decision `0039` selects one intent-oriented command family without exposing
+private compiler objects:
+
+```text
+fsmgen vial capabilities
+fsmgen vial check source.vial
+fsmgen vial format --style normal|terse source.vial
+fsmgen vial plan --dut dut.ppif source.vial
+fsmgen vial run --dut dut.ppif --backend PROFILE source.vial
+```
+
+These commands are a selected contract, not shipped behavior yet. The first
+implementation owner is `.10`, after `.9` freezes the initial plain-
+SystemVerilog/Verilator backend. Until then, the current `.vial` parser remains
+private, accepts the checked normal form only, and writes no file.
+
+The source and DUT are deliberately separate. The VIAL file says how to verify
+meaning; `--dut` names the HIAL source that supplies ports, transactions,
+events, domains, and probes. A `.ppif` DUT is not handed directly to a
+verification backend: FSMGen first generates and reparses IAL1, then generates
+IAL0, and only the review-routed HIAL bridge may bind the VIAL plan.
+
+Normal and terse VIAL are reversible views of the same semantics. Normal form
+is fully explicit:
+
+```text
+(vial
+  (version 1)
+  (package demo
+    (imports)
+    (types (type data_t (logic 32)))
+    (transactions)
+    (models)
+    (scoreboards)
+    (fixtures ...)))
+```
+
+Terse form removes only closed structural wrappers:
+
+```text
+(vial 1
+  (package demo
+    (type data_t (logic 32))
+    (fixture ...)))
+```
+
+It does not infer types, values, clocks, timeouts, seeds, DUT bindings, or
+target behavior. Formatting either view and reparsing it must produce the same
+semantic meaning digest; source hashes and spans remain different and honest.
+This is what “terse or normal” means in VIAL: less ceremony, never less
+meaning.
+
+The future `plan` action publishes only reviewable projections:
+
+```text
+.artifacts/vial/<fixture>/<full-plan-digest>/
+  vial-tool-manifest.json
+  source/vial-normal.vial
+  review/...
+  hial-vial-bridge.json
+  vial-plan.json
+```
+
+The tree is repository-local, same-volume, content-addressed, and committed
+atomically. Failed planning leaves no partial tree; a non-identical existing
+tree is never overwritten. The portable in-memory API exposes the same
+request/result through a source catalog and artifact sink, so it does not
+require filesystem paths or Perl objects.
+
+Existing `.isf` UVM/VHDL skeleton commands and their
+`verification-output-manifest.json` version 1 stay unchanged. A future VIAL
+`run` uses explicit manifest schema
+`fsmgen.verification_output_manifest.v2`; consumers select by schema rather
+than guessing from the shared filename. The full normative field, diagnostic,
+compatibility, and rollback contract is
+[VIAL Public Tooling Version 1](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md).
 
 ## Expressive ceiling: verification intent, not synthesis
 
@@ -684,7 +764,8 @@ and the owning [task tree](../../tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTU
 tracks the exact frontier.
 
 The bounded source/SemanticIR, private bridge, and private execution-
-elaboration implementations are complete.
+elaboration implementations are complete. Public tooling contract `.8` is
+also complete as selection only.
 Bridge leaf `.5` ships the 27-key defensive in-process manifest through
 canonical HIAL review routes without writing a file or binding VIAL. Completed
 `.6` accepts decision `0036` and the exact target-neutral execution contract:
@@ -701,6 +782,10 @@ activated `.7.3`, which now ships the private binder, immutable ExecutionIR,
 deterministic random/replay elaboration, defensive in-process plan, exact
 resource accounting, and fail-closed contract oracles. Clean `.7.3`
 implementation commit `44dbecd1a` activates `.8` continuity-only for public
-tooling-contract selection. No plan or result file, target artifact, compile,
-simulation, runtime, parity pass, or backend behavior is shipped by `.7.3` or
-the activation transition.
+tooling-contract selection. Decision `0039` now freezes `fsmgen vial`, exact
+normal/terse equivalence, separate VIAL/HIAL inputs, the portable API,
+repository-local atomic artifacts, manifests, discovery, diagnostics, and
+compatibility. Proposed `.9` is next for a separate clean backend-contract
+activation. No parser widening, command/API, plan or result file, target
+artifact, compile, simulation, runtime, parity pass, or backend behavior is
+shipped by `.8` selection.

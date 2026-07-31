@@ -25,7 +25,7 @@ answers:
 date: 2026-07-31
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
-evidence: docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://verilator.org/guide/latest/languages.html; https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
+evidence: docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://verilator.org/guide/latest/languages.html; https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
 reverify: scripts/check_task_tree_integrity.pl && rg -n 'one public.*\.vial|VIALSemanticIR|VIALExecutionIR|HIALVIALBridgeManifest|core_directed_single_clock_v1|core_single_unit_v1|core_directed_single_clock_execution_v1|verification-bridge|drive.*sample.*react.*check|sha256_counter_rejection_v1|bit_domain_identity_v1|known_value_injection_v1|enum_encoding_injection_v1|sv_portable_verilator|sv_uvm_qualified|vhdl_portable_ghdl|vhdl_methodology_qualified|mixed_language_qualified|normalized.*result|decision `0037`|\.7\.3' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md ROADMAP_V2.md docs/book/src/16d-hial-vial-verification-architecture.md
 ---
 
@@ -75,9 +75,7 @@ no-file implementation without changing product behavior. Completed `.5` now
 ships that private producer through canonical HIAL review routes, including the
 additive generated/reparsed IAL1 annotation for IAL2. It binds no VIAL and
 emits no file, plan, target artifact, or runtime behavior. Clean implementation
-commit `51434a2ae` permits the separate continuity-only activation of `.6` for
-execution-contract selection; selection remains unperformed until activation
-commits cleanly and activation changes no product behavior.
+commit `51434a2ae` permitted the separate `.6` execution-contract selection.
 
 Completed `.6` accepts decision `0036` and the exact target-neutral
 ExecutionIR/logical-time/random-replay/native/plan/result/parity contract.
@@ -89,7 +87,10 @@ the bridge schema. `.7.3` now ships the private binder, immutable ExecutionIR,
 deterministic plan-time random/replay, defensive in-process plan, event/
 adapter binding, exact resource accounting, atomic diagnostics, and private
 capability discovery. It emits no file or backend and exposes no supported
-public API. Clean `.7.3` implementation commit `44dbecd1a` permits active `.8`
-to select the public-tooling contract after a separate continuity-only
-activation; no command, API, file, artifact, backend, or runtime ships in that
-transition.
+public API. Completed `.8` now accepts decision `0039` and the exact public-
+tooling contract: `fsmgen vial`, equivalent normal/terse source projections,
+separate VIAL/HIAL inputs, a portable source-catalog/artifact-sink API, atomic
+repository-local artifacts, and explicit manifest compatibility. No command,
+API, parser widening, file, backend, or runtime ships in selection. Proposed
+`.9` is next for clean plain-SystemVerilog/Verilator backend-contract
+activation; `.10` remains the first implementation owner.

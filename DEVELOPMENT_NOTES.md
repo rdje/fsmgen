@@ -34476,3 +34476,34 @@ lines, with materially different bytes-per-line density between numbered prose
 and path lists. The guard remains a resulting-tree invariant invoked on every
 commit/CI run; changed-path filtering would miss over-budget merge or revert
 results.
+
+## VIAL public tooling — name intent, keep compiler seams private (2026-07-31)
+
+The existing `.isf` verification-output command is intentionally not reused
+as the VIAL tool. It has one source and one inert output target; VIAL planning
+has two independently authoritative inputs. The `.vial` source owns
+verification intent, while `--dut` owns HIAL hardware truth through the direct
+IAL0, direct IAL1, or generated/reparsed IAL1 review route. Making that
+relationship explicit prevents the public surface from collapsing back into a
+target generator or a PPIF shortcut.
+
+Decision `0039` selects `fsmgen vial capabilities|check|format|plan|run` and a
+portable request/result analogue. Neither exposes SemanticIR, the bridge
+builder, ExecutionIR, callbacks, or methodology objects. The filesystem CLI is
+only an adapter over source-catalog and artifact-sink contracts, which keeps
+the same boundary viable for a browser, Wasm, or embedded host.
+
+Terse syntax is deliberately a projection, not another language. It removes
+only the version, package declaration-family, fixture-scenario, and scenario-
+steps wrappers listed by the contract. Normal and terse sources keep authored
+order and semantic IDs and must reparse to one provenance-excluding meaning
+digest; source hashes and spans remain distinct. This makes “terse or normal”
+reversible and prevents convenience defaults from silently changing intent.
+
+Artifacts follow the same honesty rule. A plan root is content-addressed by the
+full plan digest, stays repository-local/same-volume, and is committed only
+after the whole virtual artifact graph validates. Existing non-identical trees
+are never overwritten. Verification-output manifest v1 remains exact for the
+two shipped `.isf` skeletons; VIAL runtime selects explicit schema v2 because
+the actor-centric v1 shape cannot losslessly represent two sources, a bound
+plan, backend artifacts, and results.

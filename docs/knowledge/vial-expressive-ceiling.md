@@ -18,7 +18,7 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, expressiveness, systemverilog, uvm, vhdl, events, callbacks, syntax, capabilities]
-evidence: docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
+evidence: docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: rg -n 'not synthesis-bounded|uvm_event_callback|terse.*normal|expressive-frontier|initial profile.*language ceiling|backend methodology|fsmgen\.vial_native_extension\.v1|directional proof relations' docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
@@ -67,6 +67,8 @@ forcing exact identity between expressive VIAL enum/Boolean/unsigned values
 and HIAL four-state hardware carriers blocks the checked fixture. `.7.2` is
 now director-approved through decision `0037`: proof-carrying directional
 identity/injection/enum-encoding relations preserve this expressive boundary
-while inverse X/Z collapse stays forbidden. `.7.3` owns implementation after
-separate clean activation. Clean selection commit `2a1b3cefc` permits active
-`.7.3` implementation continuity; activation changes no product behavior.
+while inverse X/Z collapse stays forbidden. Completed `.7.3` implements those
+proofs privately. Decision `0039` now makes the terse/normal rule exact: terse
+form removes only closed structural wrappers and both forms reparse to the
+same semantic meaning digest. It adds no implicit verification behavior.
+Public parsing/formatting remains selected, not shipped.
