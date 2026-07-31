@@ -57,6 +57,14 @@ nodes. Decision 0044 assigns pressure, execution, currency, route/index,
 retention, and maintained-reference corrections to `.15`-`.23` before wider
 reuse or affected family migration.
 
+Completed `.19` closes the execution boundary. Generated projections and
+version-object retrieval descriptors must declare `core:`, `adapter:`, or
+`external:` execution. Core programs run from the project root; the registry-
+driven local adapter runner executes every delegated program and issues an
+exact one-use proof to the neutral core. External contracts remain visible but
+fail closed. The bootstrap gate also proves hosted CI reaches this path through
+the single doctrine driver rather than duplicating its checklist.
+
 Completed `.18` now separates the two pressure meanings. Health targets are
 reviewed working-set acceptance goals: 2,000 lines / 256 KiB for monolithic
 human-maintained snapshots or ledgers, 2,000 lines / 1 MiB for the generated
@@ -127,7 +135,7 @@ normal collection density.
 
 | Family | Selected bounded view and durable store | Exact owner |
 | --- | --- | --- |
-| Common enforcement | JSONL surface records declare every class, path array, owner, independent health targets and inclusive ceilings, 80/90 target milestones, containment status, immutable adoption baseline, bounded growth/ratchet, topology, and verifier; separate JSONL route/archive/ceiling-authority records carry only their own mappings; one unconditional adapter consumes them and proves complete tracked-Markdown coverage plus cross-revision ceiling authority | `.2` ships the common graph; `.18` separates health/quarantine and authorizes increases without widening a predecessor ceiling |
+| Common enforcement | JSONL surface records declare every class, path array, owner, independent health targets and inclusive ceilings, 80/90 target milestones, containment status, immutable adoption baseline, bounded growth/ratchet, topology, and verifier; separate JSONL route/archive/ceiling-authority records carry only their own mappings; one unconditional adapter proves tracked-Markdown coverage, executes delegated verifiers, and checks cross-revision ceiling authority | `.2` ships the common graph; `.18` separates health/quarantine and authorizes increases; `.19` closes execution and doctrine-driver reachability |
 | Control-plane self-containment | Specialized task manifests enforce record/byte caps, but the common surface, route, archive, and ceiling-authority JSONL registries do not yet bound their own record/value/line pressure | `.15` selects and enforces finite reviewable common-registry bounds |
 | Document utility and retirement | Before a family is partitioned, classify its current audience, canonical role, unique value, duplication, staleness, and historical retention; select retain, merge, supersede, archive, or delete with evidence | `.16` audits all families and assigns separate atomic content migrations or retirements; the existing four-file review retains authority over its named files |
 | GitHub landing page and root collection | Preserve README's direct project-introduction/quick-start/architecture/navigation role while removing only proved duplicate dynamic detail; let semantic family owners remove root-ledger pressure before final retained-surface calibration | `.12` performs the final README/root re-audit after semantic migrations |

@@ -74,6 +74,7 @@ live_document_files=(
   doctrine/task_tree/index_archives.jsonl
   scripts/check_live_document_size.sh
   scripts/check_live_document_ceiling_authority.pl
+  scripts/run_live_document_adapter_verifiers.pl
 )
 for file in "${live_document_files[@]}"; do
   if [[ -f "${file}" ]]; then
@@ -82,6 +83,19 @@ for file in "${live_document_files[@]}"; do
     note "${file} is missing"
   fi
 done
+
+if grep -q 'run_live_document_adapter_verifiers.pl' scripts/check_live_document_size.sh; then
+  ok "live-document adapter invokes its verifier runner"
+else
+  note "live-document adapter does not invoke its verifier runner"
+fi
+
+if grep -q 'scripts/check_doctrines.sh' .github/workflows/regression.yml \
+    && ! grep -q 'check_live_document_size.sh' .github/workflows/regression.yml; then
+  ok "hosted CI invokes the doctrine driver without re-enumerating live-document checks"
+else
+  note "hosted CI must invoke only the doctrine driver for live-document enforcement"
+fi
 
 for file in "${bootstrap_files[@]}"; do
   if [[ ! -f "${file}" ]]; then

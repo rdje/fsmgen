@@ -10436,7 +10436,7 @@ The first honest `R11` slices are now:
   debt baselines, bounded owned growth, and banded downward ratchets close both
   sides of transition pressure. Any widening needs an exact new append-only
   authority row plus a new decision in the same Git change; reductions are
-  free. The migration raises no predecessor ceiling and reports two migrated,
-  nine pinned/deferred, and five steady measured surfaces. Clean `.18` commit
-  `9bd081935` now activates `.19` alone for verifier execution and driver
-  reachability; activation changes no schema, verifier, lifecycle, or behavior.
+  free. No predecessor ceiling rises. Completed `.19` now executes declared
+  core freshness/retrieval programs, derives exact one-use adapter proofs from
+  a registry-driven runner, fails closed on external contracts, and proves CI
+  reaches that path only through the unconditional doctrine driver.

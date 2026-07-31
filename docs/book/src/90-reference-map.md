@@ -191,9 +191,13 @@ exact new append-only authority row plus a new decision in the same Git change,
 while lowering is free. Checker output shows actual/target/ceiling values and
 separates migrated, pinned/deferred, and steady surface pressure. This first
 schema migration raises no predecessor ceiling.
-Clean `.18` commit `9bd081935` activates `.19` alone to prove that declared
-freshness/retrieval verifiers execute and remain reachable through the one
-unconditional doctrine driver; the activation itself changes no behavior.
+Leaf `.19` now requires generated freshness and version-object retrieval to
+declare `core:`, `adapter:`, or `external:` execution. Core programs execute
+from the repository root. The registry-driven local runner executes every
+adapter program and supplies an exact one-use proof to the neutral checker;
+missing or unused proofs fail. External contracts are visible fail-closed
+degradation, never a green presence check. The bootstrap gate proves hosted CI
+reaches this path through the single unconditional doctrine driver.
 
 ## What The Old User Guide Still Does
 

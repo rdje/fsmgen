@@ -32223,3 +32223,13 @@ task tree and git.
   reachability, and two-way deletion/vacuity controls.
 - This continuity slice changes no checker, schema, verifier, document
   lifecycle, archive, generated artifact, or product behavior.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19 — declared verifiers execute
+
+- Replaced executable-presence acceptance with explicit `core:`, `adapter:`,
+  and fail-closed `external:` modes for generated freshness and version-object
+  retrieval. Core programs must return zero; adapter programs earn exact
+  one-use proof IDs only after the registry-driven runner executes them.
+- The local wrapper invokes the runner unconditionally, and the bootstrap gate
+  proves hosted CI reaches it through the single doctrine driver. Focused
+  execution/failure/deletion/vacuity coverage passes at `Files=3, Tests=21`.

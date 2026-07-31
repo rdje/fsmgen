@@ -63,7 +63,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
 | Need user-facing docs proof | `mdbook build docs/book`. |
 | Need docs path hygiene | `scripts/check_docs_relative_paths.sh`. |
-| Need live-document actual/target/ceiling, debt-ratchet, increase-authority, or route truth | `scripts/check_live_document_size.sh`. |
+| Need live-document pressure, routes, ceiling authority, or executed freshness/retrieval truth | `scripts/check_live_document_size.sh`. |
 | Need README entry-point hygiene | `scripts/check_readme_entrypoint.sh`. |
 | Need Knowledge Map sync | `knowledge-map/scripts/gen_knowledge_map.sh` then `knowledge-map/scripts/check_knowledge_map.sh`. |
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |

@@ -10,12 +10,14 @@ use Getopt::Long qw(GetOptions);
 use JSON::PP;
 
 my ($root_arg, $registry_arg, $routes_arg, $archives_arg, $coverage_stdin, $help);
+my @adapter_proofs;
 GetOptions(
     'root=s'          => \$root_arg,
     'registry=s'      => \$registry_arg,
     'routes=s'        => \$routes_arg,
     'archives=s'      => \$archives_arg,
     'coverage-stdin!' => \$coverage_stdin,
+    'adapter-proof=s@' => \@adapter_proofs,
     'help|h'          => \$help,
 ) or usage(2);
 usage(0) if $help;
@@ -166,6 +168,71 @@ sub file_sha256 {
     $digest->addfile($fh);
     close $fh or problem("cannot close " . display_path($path) . ": $!");
     return $digest->hexdigest;
+}
+
+my %adapter_proof;
+for my $proof (@adapter_proofs) {
+    if ($proof !~ /\A(?:surface|archive):[a-z][a-z0-9_.-]*\z/) {
+        problem("invalid adapter proof id: $proof");
+        next;
+    }
+    problem("adapter proof is declared more than once: $proof") if $adapter_proof{$proof}++;
+}
+
+sub execute_core_verifier {
+    my ($label, $relative) = @_;
+    if (!relative_path_ok($relative) || !-f root_path($relative) || !-x root_path($relative)) {
+        problem("$label core verifier is absent or not executable: $relative");
+        return;
+    }
+    my $pid = fork();
+    if (!defined $pid) {
+        problem("$label cannot fork core verifier $relative: $!");
+        return;
+    }
+    if ($pid == 0) {
+        chdir $root or do {
+            print STDERR "live-doc-size: $label cannot enter project root: $!\n";
+            exit 126;
+        };
+        open STDIN, '<', File::Spec->devnull() or exit 126;
+        my $absolute = root_path($relative);
+        my $status = system {$absolute} $absolute;
+        if ($status == -1) {
+            print STDERR "live-doc-size: $label cannot execute $relative: $!\n";
+            exit 126;
+        }
+        exit(128 + ($status & 127)) if $status & 127;
+        exit($status >> 8);
+    }
+    waitpid($pid, 0);
+    if ($? != 0) {
+        my $status = $? & 127 ? 'signal ' . ($? & 127) : 'exit ' . ($? >> 8);
+        problem("$label core verifier failed ($status): $relative");
+        return;
+    }
+    ok_note("$label core verifier executed: $relative");
+}
+
+sub verify_execution {
+    my ($label, $proof_id, $verifier) = @_;
+    if ($verifier =~ /\Acore:(.+)\z/) {
+        execute_core_verifier($label, $1);
+    } elsif ($verifier =~ /\Aadapter:(.+)\z/) {
+        my $relative = $1;
+        problem("$label adapter verifier is absent or not executable: $relative")
+            if !relative_path_ok($relative) || !-f root_path($relative) || !-x root_path($relative);
+        if (!$adapter_proof{$proof_id}) {
+            problem("$label adapter verifier lacks executed proof: $proof_id");
+        } else {
+            delete $adapter_proof{$proof_id};
+            ok_note("$label adapter verifier execution proved: $proof_id");
+        }
+    } elsif ($verifier =~ /\Aexternal:(.+)\z/) {
+        problem("$label external verification is declared but not locally proven; degraded result: $1");
+    } else {
+        problem("$label verifier must declare core:, adapter:, or external: execution");
+    }
 }
 
 sub read_jsonl {
@@ -650,14 +717,16 @@ for my $id (@surface_order) {
             }
         }
         if ($record->{verifier} ne 'builtin:budget'
-                && $record->{verifier} !~ /\Afreshness:(.+)\z/) {
+                && $record->{verifier} !~ /\A(?:core|adapter|external):.+\z/) {
             problem("surface $id has invalid measured verifier: $record->{verifier}");
         }
-        if ($record->{verifier} =~ /\Afreshness:(.+)\z/) {
-            my $verifier = $1;
-            if (!relative_path_ok($verifier) || !-x root_path($verifier)) {
-                problem("surface $id freshness verifier is absent or not executable: $verifier");
-            }
+        if ($record->{locator} eq 'generated_file') {
+            problem("surface $id generated projection must declare executed freshness verification")
+                if $record->{verifier} eq 'builtin:budget';
+            verify_execution("surface $id freshness", "surface:$id", $record->{verifier})
+                if $record->{verifier} ne 'builtin:budget';
+        } elsif ($record->{verifier} ne 'builtin:budget') {
+            problem("surface $id non-generated measurement must use builtin:budget");
         }
         push @{$containment_pressure{$record->{containment_status}}}, {
             id => $id, target_peak => $target_peak_pct, ceiling_peak => $ceiling_peak_pct,
@@ -875,9 +944,11 @@ for my $row (@{$archive_rows}) {
     } elsif ($retrieval_kind eq 'version_object') {
         problem("archive descriptor $descriptor_id has empty version-object locator")
             if $retrieval_locator eq '' || $retrieval_locator eq '-';
-        if (!relative_path_ok($verifier) || !-x root_path($verifier)) {
-            problem("archive descriptor $descriptor_id version verifier is absent or not executable: $verifier");
-        }
+        verify_execution(
+            "archive descriptor $descriptor_id version retrieval",
+            "archive:$descriptor_id",
+            $verifier,
+        );
     } elsif ($retrieval_kind eq 'external') {
         problem("archive descriptor $descriptor_id external locator is empty")
             if $retrieval_locator eq '' || $retrieval_locator eq '-';
@@ -889,6 +960,10 @@ for my $row (@{$archive_rows}) {
 }
 problem('archive descriptor registry lacks its schema metadata record')
     if !$archive_registry_metadata;
+
+for my $proof (sort keys %adapter_proof) {
+    problem("adapter proof does not match a declared adapter verifier: $proof");
+}
 
 if ($coverage_stdin) {
     local $/ = "\0";

@@ -75,8 +75,14 @@ Descriptors are optional until content leaves a live surface. When present,
 their schema version, identifiers, relative paths, counts, digest, retrieval
 kind, date, and verifier are validated. A `file` retrieval is also
 digest-checked immediately;
-`version_object` and `external` retrievals require an executable or declared
-external verifier for the adopting project to run.
+Generated projections and `version_object` retrievals use one explicit
+execution mode: `core:PATH`, `adapter:PATH`, or `external:CONTRACT`. The neutral
+core executes a `core:` program from the supplied project root and accepts its
+result only on exit zero. For `adapter:`, the adopter executes the program and
+passes the exact `surface:ID` or `archive:ID` proof token; missing, duplicate,
+or unused tokens fail closed. `external:` is a visible degraded result and
+cannot produce a local green result. Ordinary measured rows use
+`builtin:budget`; file retrievals continue to use `builtin:file`.
 
 ## Coverage input
 
@@ -90,7 +96,8 @@ does not assume a version-control system.
 The checker validates schema, lifecycle/locator compatibility, repository-
 relative and same-volume local targets, non-symlink files, per-part and
 aggregate targets/ceilings, inclusive equality, debt acknowledgement and
-ratchets, generated-verifier presence, frozen identity, route closure,
+ratchets, generated/version-object verifier execution, frozen identity, route
+closure,
 archive-descriptor shape, and optional inventory coverage. It reports actual,
 target, ceiling, and migrated/pinned/steady pressure separately. It never
 mutates the project.
@@ -103,6 +110,8 @@ adapter may also enforce cross-revision baseline immutability. The authority
 mechanism is intentionally separate because a ceiling declaration must not
 authorize its own widening.
 
-An executable verifier's presence does not prove its result. The adopting
-project must register the verifier itself in the same unconditional commit/CI
-driver when freshness or retrieval requires execution.
+An adopting wrapper must discover and execute every `adapter:` verifier on
+every run, pass only the proof tokens emitted after successful execution, and
+remain reachable through the project's one unconditional commit/CI driver.
+The core deliberately rejects a proof token that no current declaration
+consumes, preventing stale or fabricated reachability from passing vacuously.

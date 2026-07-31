@@ -192,11 +192,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19`
-  Status: `active`
+  Status: `done`
   Goal: `Make verifier execution and doctrine-driver reachability mechanically closed.`
   Acceptance: `Generated freshness and version retrieval declare core, adapter, or external execution; a green result proves execution or prints a fail-closed declared degradation rather than executable presence; every adapter verifier is mechanically reachable through the single unconditional doctrine driver and CI invokes that driver instead of re-enumerating checks; deletion/vacuity and both-direction negative fixtures prove each control observes its intended subject.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Generated freshness and version-object retrieval now require core:, adapter:, or external: execution. The neutral core forks core programs from the supplied project root with null stdin and rejects missing, non-executable, signaled, or nonzero programs. The registry-driven local runner executes every adapter program before emitting its exact surface/archive proof; missing, duplicate, unused, and declaration-free proofs fail closed. External contracts emit visible degradation and cannot produce green. The wrapper invokes the runner unconditionally, while bootstrap enforcement proves hosted CI invokes scripts/check_doctrines.sh without re-enumerating the live-document check. The real fact-index path executes the Knowledge Map checker. Perl/Bash syntax is clean; focused Files=3/Tests=21 covers success, nonzero, non-executable, adapter execution side effects, exact proof consumption, external degradation, and stale-proof vacuity. Paths pass Files=1/Tests=2; task integrity is trees=3/nodes=896/segments=1/compact=0/index archives=1; Knowledge Map is 1,096 facts/5,745 keys; Memory is 42 lines; all 37 mdBook chapters test and the 73-file/16,996-KiB repository-local build passes then is removed exactly. Final staged acceptance/doctrine evidence is recorded below. No pressure value, ceiling, lifecycle, archive content, frozen identity, README landing content, compiler/runtime artifact, or product behavior changes.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19: execute declared verifiers`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20`
@@ -292,12 +292,18 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: Clean disposition commit `3b782fc10` activates `.18` alone for
   health-target, inclusive-ceiling, ratchet, increase-authority, and pressure-
   reporting semantics; activation changes no schema, value, limit, or behavior.
+- `2026-07-31`: `.19` gives generated freshness and version-object retrieval
+  three explicit modes: neutral-core execution, local-adapter execution with an
+  exact one-use proof, or visible fail-closed external degradation. The local
+  wrapper derives all adapters from the registries and remains reachable only
+  through the unconditional doctrine driver used by hosted CI.
 
 ## Open Questions
 
-- None for completed `.18` or active `.19`. The two reviews are fully reconciled
-  in the tracked bounded disposition. The existing four-file review remains
-  authoritative for those files' semantic roles.
+- None for completed `.18` or `.19`. The earlier two reviews are reconciled in
+  the bounded disposition. Newly supplied PGEN/ANVIL follow-up reviews will be
+  read and dispositioned from the clean `.19` commit before the next activation;
+  the existing four-file review retains authority for its named semantic roles.
 
 ## Blockers
 
@@ -307,6 +313,12 @@ no routed destination becomes the next uninstrumented blob.
   dependencies. `.17` is complete; `.15`-`.23` become selectable after its
   clean commit, and `.8`-`.10`/`.13` wait for their declared utility or
   maintained-reference predecessors.
+
+## Acceptance Checklist (enforced) — `.19`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'freshness:' --oneline -- live-document-size/scripts/check_live_document_size.pl` identifies `18e2dcbc6`; source inspection shows the original generated and version-object paths accepted only an executable pathname, so a never-run, failing program could still support a green result and no declaration-derived adapter proof closed CI reachability.
+- [x] **ADDRESSED (verified)** — `prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t` reports `All tests successful` at `Files=3, Tests=21`; side-effect probes prove core freshness, core version retrieval, and wrapper-delegated adapter execution, while nonzero, missing/non-executable, missing-proof, unused-proof, external-degradation, and exact-proof fixtures fail or pass in the intended direction.
+- [x] **NO REGRESSION** — staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`; the real Knowledge Map core verifier executes, all 20 live-document surfaces and complete Markdown inventory remain covered, task/README/locality/Memory contracts stay green, and the mdBook tests/build pass with repository-local output removed exactly.
 
 ## Acceptance Checklist (enforced) — `.18`
 
@@ -363,6 +375,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.18` activation | clean `3b782fc10` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; focused path/task/live-size, Knowledge Map, Memory, mdBook, diff, staged-doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=45; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,741 keys; all 37 chapters test; removed 73-file/16,984-KiB build; Memory 43 lines; `.18` alone active; no checker, test, schema/value/limit, document lifecycle/content, frozen identity, landing content, or product change |
 | `2026-07-31` | `.18` target/ceiling enforcement | explicit target/ceiling schema; inclusive equality; debt ratchet; append-only fresh decision authority; migrated/pinned/steady report; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; no predecessor ceiling increase; focused Files=3/Tests=20; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,743 keys; Memory 42 lines; 37 chapters; removed 73-file/16,996-KiB build; all nine doctrines pass; no lifecycle, frozen identity, landing content, archive, or product behavior change |
 | `2026-07-31` | `.19` activation | clean `9bd081935` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; Files=2/Tests=36; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,743 keys; Memory 43 lines; all 37 chapters test; removed 73-file/16,996-KiB build; `.19` alone active; no checker, schema, verifier, lifecycle, archive, or product behavior change |
+| `2026-07-31` | `.19` verifier execution | core/adapter/external modes; registry-derived adapter runner; exact one-use proofs; CI/driver reachability; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=21; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; Knowledge Map 1,096 facts/5,745 keys; Memory 42 lines; real fact-index verifier executes; all 37 chapters test; removed 73-file/16,996-KiB build; no pressure value, lifecycle, archive content, frozen identity, landing content, or product behavior change |
 
 ## Commit Log
 
@@ -382,6 +395,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.18` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18: activate health-target and ceiling semantics` | Activate only target/ceiling/ratchet/increase-authority implementation from clean disposition commit `3b782fc10`; implementation remains pending. |
 | `.18` target/ceiling enforcement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18: distinguish health targets from ceilings` | Separate health from quarantine, ratchet debt downward, and require fresh reviewed authority for widening without raising a predecessor ceiling. |
 | `.19` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19: activate verifier execution closure` | Activate only executed-verifier and unconditional-driver-reachability implementation from clean `.18` commit `9bd081935`; implementation remains pending. |
+| `.19` verifier execution | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19: execute declared verifiers` | Execute core and delegated adapter programs, consume exact one-use proofs, fail closed on external contracts, and prove the wrapper remains on the single CI doctrine path. |
 
 ## Changelog
 
@@ -429,3 +443,7 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: Clean `.18` commit `9bd081935` activates `.19` alone for
   verifier execution, driver reachability, and vacuity controls; activation
   changes no checker, schema, verifier, document lifecycle, or product behavior.
+- `2026-07-31`: `.19` executes core freshness/retrieval programs, derives exact
+  adapter proofs only after registry-driven execution, rejects stale proofs and
+  external degradation, and mechanically keeps the path under the single
+  unconditional doctrine driver used by hosted CI.

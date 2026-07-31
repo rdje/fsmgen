@@ -48,7 +48,10 @@
   checker, registry values, thresholds, and document lifecycles remain in force
   until their individual commits land. Leaf `.18` now implements target versus
   ceiling semantics, immutable baselines, banded downward ratchets, and
-  separately reviewed increase authority without widening a ceiling.
+  separately reviewed increase authority without widening a ceiling. Leaf
+  `.19` now executes `core:` verifiers, requires exact execution proofs from
+  the unconditional local `adapter:` runner, and reports `external:` contracts
+  as fail-closed degradation instead of treating executable presence as proof.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---
@@ -186,7 +189,8 @@ applicable steps:
    when exact reconstruction is promised, prove it byte for byte.
 5. Update the bounded current view, manifest, table of contents, predecessor/
    successor links, and query route.
-6. Run link, freshness, ordering, uniqueness, retrieval, and pressure checks.
+6. Run link, freshness, ordering, uniqueness, retrieval, and pressure checks;
+   a declared executable must actually run successfully, not merely exist.
 7. Only after those checks pass, remove any live duplicate whose retained copy
    or archive retrieval has been proved.
 8. Commit the transition atomically so no durable state exposes half a move.

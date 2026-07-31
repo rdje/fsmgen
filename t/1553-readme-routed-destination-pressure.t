@@ -39,6 +39,28 @@ subtest 'minimal marker-to-surface routes pass without duplicated budgets' => su
     like($output, qr/surface shipped_behavior: actual files=1,/, 'common checker owns destination measurement');
 };
 
+subtest 'project adapter executes delegated verifier before proving it to the core' => sub {
+    my $fixture = make_fixture();
+    write_file(
+        $fixture,
+        'bin/freshness',
+        "#!/bin/sh\nprintf 'adapter-ran\\n' > adapter-ran\n",
+    );
+    chmod 0755, File::Spec->catfile($fixture, 'bin', 'freshness')
+        or die "cannot chmod adapter fixture verifier: $!";
+    mutate_file(
+        $fixture,
+        'doctrine/live_document_size/surfaces.jsonl',
+        sub { $_[0] =~ s/core:bin\/freshness/adapter:bin\/freshness/ },
+    );
+    my ($ok, $output) = run_checker($fixture);
+    ok($ok, 'adapter execution plus matching proof passes') or diag($output);
+    ok(-f File::Spec->catfile($fixture, 'adapter-ran'),
+        'delegated verifier side effect proves actual execution');
+    like($output, qr/adapter verifier execution proved: surface:fact_index/,
+        'core consumes the exact adapter proof');
+};
+
 subtest 'missing required route fails closed' => sub {
     my $fixture = make_fixture();
     mutate_file(
@@ -148,7 +170,7 @@ sub make_fixture {
             qw(task_evidence rationale)),
         (map { measured($_, 'rolling_ledger', 'file', 'bounded.md', 'self', '-', 1, 100, 4096, 100, 4096) }
             qw(engineering_rationale change_history)),
-        measured('fact_index', 'generated_projection', 'generated_file', 'generated.md', 'parts/*.md', '-', 1, 100, 4096, 100, 4096, 'freshness:bin/freshness'),
+        measured('fact_index', 'generated_projection', 'generated_file', 'generated.md', 'parts/*.md', '-', 1, 100, 4096, 100, 4096, 'core:bin/freshness'),
         terminal('exact_history', 'archive_terminal', 'archive', '.git', 'terminal', 'archive:.git'),
         frozen('frozen_roadmap_status', 'frozen-a.md', sha256_hex("frozen a\n")),
         frozen('frozen_achievement_status', 'frozen-b.md', sha256_hex("frozen b\n")),

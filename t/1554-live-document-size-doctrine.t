@@ -37,6 +37,8 @@ subtest 'JSONL fixture covers every lifecycle and retrieval-file descriptor' => 
     like($output, qr/surface archive_terminal: archive terminal/, 'archive terminal is validated');
     like($output, qr/surface external_terminal: external terminal declared/, 'external terminal is validated');
     like($output, qr/surface frozen_record: frozen identity checked/, 'frozen identity is validated');
+    ok(-f File::Spec->catfile($fixture, 'freshness-ran'), 'core freshness verifier actually ran');
+    ok(-f File::Spec->catfile($fixture, 'version-ran'), 'core version retrieval verifier actually ran');
     like($output, qr/all live-document size-containment invariants hold \(9 surfaces\)/,
         'complete graph closes');
 };
@@ -312,7 +314,46 @@ subtest 'projection and terminal verifiers fail closed' => sub {
         or die "cannot remove fixture execute bit: $!";
     my ($fresh_ok, $fresh_output) = run_checker($freshness);
     ok(!$fresh_ok, 'non-executable freshness verifier is rejected');
-    like($fresh_output, qr/freshness verifier is absent or not executable/, 'freshness failure is explicit');
+    like($fresh_output, qr/core verifier is absent or not executable/, 'freshness failure is explicit');
+
+    my $failed = make_fixture();
+    write_file($failed, 'bin/freshness', "#!/bin/sh\nexit 7\n");
+    chmod 0755, File::Spec->catfile($failed, 'bin', 'freshness')
+        or die "cannot chmod failing verifier: $!";
+    my ($failed_ok, $failed_output) = run_checker($failed);
+    ok(!$failed_ok, 'nonzero core freshness verifier is rejected');
+    like($failed_output, qr/core verifier failed \(exit 7\)/,
+        'executed failure status is explicit');
+
+    my $adapter = make_fixture();
+    mutate_record($adapter, 'registry/surfaces.jsonl', 'projection', sub {
+        $_[0]{verifier} = 'adapter:bin/freshness';
+    });
+    my ($missing_proof_ok, $missing_proof_output) = run_checker($adapter);
+    ok(!$missing_proof_ok, 'adapter declaration without executed proof is rejected');
+    like($missing_proof_output, qr/adapter verifier lacks executed proof: surface:projection/,
+        'missing adapter proof is explicit');
+    my ($proof_ok, $proof_output) = run_checker(
+        $adapter, adapter_proofs => ['surface:projection'],
+    );
+    ok($proof_ok, 'matching adapter execution proof passes') or diag($proof_output);
+
+    my $degraded = make_fixture();
+    mutate_record($degraded, 'registry/surfaces.jsonl', 'projection', sub {
+        $_[0]{verifier} = 'external:remote-freshness-contract';
+    });
+    my ($degraded_ok, $degraded_output) = run_checker($degraded);
+    ok(!$degraded_ok, 'external verification cannot produce a local green result');
+    like($degraded_output, qr/external verification is declared but not locally proven; degraded result/,
+        'external degradation is visible and fail-closed');
+
+    my $unused = make_fixture();
+    my ($unused_ok, $unused_output) = run_checker(
+        $unused, adapter_proofs => ['surface:projection'],
+    );
+    ok(!$unused_ok, 'proof without an adapter declaration is rejected');
+    like($unused_output, qr/adapter proof does not match a declared adapter verifier/,
+        'vacuous stale proof is explicit');
 
     my $query = make_fixture();
     chmod 0644, File::Spec->catfile($query, 'bin', 'query')
@@ -414,9 +455,11 @@ sub make_fixture {
     write_file($root, 'frozen.md', "frozen\n");
     write_file($root, 'sealed.md', "sealed bytes\n");
     write_file($root, 'bin/query', "#!/bin/sh\nexit 0\n");
-    write_file($root, 'bin/freshness', "#!/bin/sh\nexit 0\n");
+    write_file($root, 'bin/freshness', "#!/bin/sh\nprintf 'freshness\\n' > freshness-ran\n");
+    write_file($root, 'bin/version', "#!/bin/sh\nprintf 'version\\n' > version-ran\n");
     chmod 0755, File::Spec->catfile($root, 'bin', 'query'),
-        File::Spec->catfile($root, 'bin', 'freshness')
+        File::Spec->catfile($root, 'bin', 'freshness'),
+        File::Spec->catfile($root, 'bin', 'version')
         or die "cannot chmod fixture executables: $!";
     make_path(File::Spec->catdir($root, '.history'));
 
@@ -426,7 +469,7 @@ sub make_fixture {
         measured('bounded_destination', 'bounded_snapshot', 'file', ['destination.md'], undef, [], []),
         measured('partitioned', 'partitioned_canonical', 'collection', ['parts/*.md'], 'index.md', [], []),
         measured('projection', 'generated_projection', 'generated_file', ['generated.md'], undef,
-            ['canonical/*.md'], [], 'freshness:bin/freshness'),
+            ['canonical/*.md'], [], 'core:bin/freshness'),
         terminal('query_terminal', 'generated_projection', 'query', 'bin/query',
             'executable:bin/query'),
         measured('ledger', 'rolling_ledger', 'file', ['ledger.md'], undef, [], []),
@@ -449,6 +492,14 @@ sub make_fixture {
         bytes => length("sealed bytes\n"), sha256 => sha256_hex("sealed bytes\n"),
         retrieval_kind => 'file', retrieval_locator => 'sealed.md',
         current_pointer => 'ledger.md', sealed_on => '2030-01-01', verifier => 'builtin:file',
+    }) . json_line({
+        record_type => 'descriptor', schema_version => 1,
+        descriptor_id => 'ledger_0002', surface_id => 'ledger', former_path => 'ledger-older.md',
+        range_id => 'entries-2-2', revision => 'fixture-revision', lines => 1,
+        bytes => length("sealed bytes\n"), sha256 => sha256_hex("sealed bytes\n"),
+        retrieval_kind => 'version_object', retrieval_locator => 'fixture-object',
+        current_pointer => 'ledger.md', sealed_on => '2030-01-02',
+        verifier => 'core:bin/version',
     }));
     return $root;
 }
@@ -520,6 +571,9 @@ sub run_checker {
     if ($options{coverage}) {
         push @command, '--coverage-stdin';
         $input = join("\0", @{$options{coverage}}) . "\0";
+    }
+    for my $proof (@{$options{adapter_proofs} || []}) {
+        push @command, '--adapter-proof', $proof;
     }
     my $stderr = gensym;
     my $pid = open3(my $stdin, my $stdout, $stderr, @command);

@@ -26,10 +26,12 @@ answers:
   - "how are health targets different from transition ceilings?"
   - "how is an enforcement ceiling increase authorized?"
   - "which live-document families are migrated versus pinned or deferred?"
+  - "are declared live-document freshness verifiers actually executed?"
+  - "how are adapter live-document verifiers proved reachable from CI?"
 date: 2026-07-31
 status: current
 tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
-evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; scripts/check_live_document_ceiling_authority.pl; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
+evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_ceiling_authority.pl; scripts/check_doctrine_bootstrap.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
 reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t
 ---
 
@@ -112,6 +114,11 @@ separately summarizes two migrated surfaces, nine pinned/deferred surfaces,
 and five steady measured surfaces, avoiding a false claim that complete path
 classification means containment is complete.
 
-Clean `.18` commit `9bd081935` activates `.19` alone to close declared-verifier
-execution and unconditional doctrine-driver reachability. The activation does
-not yet change a verifier, checker, schema, lifecycle, or product behavior.
+Leaf `.19` replaces executable-presence checks with three explicit execution
+modes. A `core:` program executes from the repository root and must return
+zero. A registry-derived local `adapter:` program executes before the neutral
+checker and earns one exact `surface:ID` or `archive:ID` proof; missing,
+duplicate, and unused proofs fail closed. An `external:` contract is reported
+as visible degradation and cannot yield green. The local wrapper invokes the
+adapter runner unconditionally, while the bootstrap gate proves hosted CI
+invokes the single doctrine driver rather than re-enumerating this check.

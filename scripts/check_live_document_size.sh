@@ -20,13 +20,24 @@ ARGS=(
   --archives doctrine/live_document_size/archive_descriptors.jsonl
 )
 
+ADAPTER_OUTPUT="$(perl "${SCRIPT_DIR}/run_live_document_adapter_verifiers.pl" \
+  --root "${PROJECT_ROOT}" \
+  --registry doctrine/live_document_size/surfaces.jsonl \
+  --archives doctrine/live_document_size/archive_descriptors.jsonl)"
+adapter_status=$?
+PROOF_ARGS=()
+while IFS= read -r proof; do
+  [ -n "${proof}" ] && PROOF_ARGS+=(--adapter-proof "${proof}")
+done <<< "${ADAPTER_OUTPUT}"
+
 fail=0
+[ "${adapter_status}" -eq 0 ] || fail=1
 GIT_TOP="$(git -C "${PROJECT_ROOT}" rev-parse --show-toplevel 2>/dev/null || true)"
 if [ "${GIT_TOP}" = "${PROJECT_ROOT}" ]; then
   git -C "${PROJECT_ROOT}" ls-files -z -- '*.md' \
-    | perl "${CORE}" "${ARGS[@]}" --coverage-stdin || fail=1
+    | perl "${CORE}" "${ARGS[@]}" "${PROOF_ARGS[@]}" --coverage-stdin || fail=1
 else
-  perl "${CORE}" "${ARGS[@]}" || fail=1
+  perl "${CORE}" "${ARGS[@]}" "${PROOF_ARGS[@]}" || fail=1
 fi
 
 if [ "${GIT_TOP}" = "${PROJECT_ROOT}" ]; then
