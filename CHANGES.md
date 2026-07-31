@@ -31417,3 +31417,20 @@ task tree and git.
   16,810,633-byte HTML build pass; Knowledge Map generation/check passes at
   1,085 facts / 5,600 question keys; memory, diff, staged docs-only acceptance,
   all eight doctrines, and exact repository-local output cleanup pass.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2 — source/semantic-IR contract activated
+
+- Activated only documentation-only `.2` after clean architecture audit commit
+  `2e2f7d25e`; task/index, roadmap, mdBook backlog, fact, bounded Memory,
+  changelog, and regenerated Knowledge Map continuity are aligned.
+- Exact `.vial` syntax, `VIALSemanticIR` records, ownership/invariants,
+  parser/report surfaces, diagnostics, first fixture, negative boundaries, and
+  `.3` implementation selection remain unperformed. No source, parser,
+  lowering, artifact, configuration, public API/report/manifest/accounting,
+  HDL/UVM/VHDL, test/runtime, or product behavior changes during activation.
+- Task-tree integrity passes at two active trees / 864 nodes; docs audits pass
+  at `Files=3, Tests=40`; all 37 mdBook chapters and the 73-file /
+  16,812,484-byte build pass; Knowledge Map passes at 1,085 facts / 5,600 keys;
+  Memory is 46 lines; diff, docs-only staged acceptance, all eight doctrines,
+  and exact repository-local cleanup pass. No separate development note is
+  warranted.

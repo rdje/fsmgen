@@ -8392,6 +8392,10 @@ SystemVerilog/Verilator is the first runnable backend; the current inert UVM
 alone is selected next for the exact `.vial`/`VIALSemanticIR` contract and
 requires a separate clean activation. See
 `docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md`.
+Clean architecture audit commit `2e2f7d25e` activates only `.2` through a
+separate continuity transition. Exact `.vial` syntax, `VIALSemanticIR`, parser,
+reports, diagnostics, first fixture, and implementation ownership remain
+unchanged and unselected during activation; product behavior does not change.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
@@ -9401,6 +9405,8 @@ decomposes source/IR, bridge, execution, public tooling, backends, parity,
 migration, scale, and closeout across `.2`-.18. Proposed `.2` is the only
 selected next leaf. See decision `0032` and
 `docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md`.
+Clean audit commit `2e2f7d25e` activates only `.2`; its exact source and
+semantic-IR contract remains unperformed until the activation commits cleanly.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile

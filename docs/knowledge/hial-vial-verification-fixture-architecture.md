@@ -65,7 +65,8 @@ providers, and exercised capabilities. Existing UVM 1.2 and VHDL observation
 outputs remain inert compatibility surfaces until later migration leaves.
 
 The architecture audit is complete and maps the handwritten AHB arbitration
-fixture, migration, public artifacts, parity, and scale boundaries. Proposed
-`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2` is the only selected next leaf:
-it must freeze the exact `.vial` and `VIALSemanticIR` contract before any
-implementation, and it requires a separate clean activation commit.
+fixture, migration, public artifacts, parity, and scale boundaries. Clean audit
+commit `2e2f7d25e` activates only
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`: it must freeze the exact
+`.vial` and `VIALSemanticIR` contract before any implementation. Activation
+does not itself select syntax, records, reports, or behavior.

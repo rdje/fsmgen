@@ -109,11 +109,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1: select one-source dual-IR architecture`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the exact public .vial version-1 source contract and private immutable VIALSemanticIR version-1 record.`
   Acceptance: `A documentation-only contract selects grammar/topology, types and four-state policy, reusable declarations/packages, DUT references, transactions, scenarios, concurrency, stimulus, observations, expectations, models, scoreboards, coverage, fault intent, randomness/replay identity, diagnostics/source maps, owner/producers/consumers/invariants/defensive-copy policy, parser/report surfaces, first bounded fixture, negative boundaries, and implementation owner without changing product behavior.`
-  Verification: `pending separate clean activation after .1`
-  Commit: `pending activation`
+  Verification: `Activated continuity-only after clean architecture audit commit 2e2f7d25e. Activation changes task/index, roadmap, mdBook backlog, fact, bounded Memory, changelog, and regenerated Knowledge Map continuity only. The exact .vial grammar, VIALSemanticIR record, ownership, reports, diagnostics, first fixture, negative boundaries, and implementation selection remain unperformed; parser/lowering/source/artifact/config, CLI/API/report/manifest/accounting, HDL/UVM/VHDL, tests/runtime, and product behavior remain unchanged until activation commits cleanly. Task-tree integrity passes at two active trees / 864 nodes; docs audits pass at Files=3, Tests=40; all 37 mdBook chapters test and the 73-file / 16,812,484-byte build passes; Knowledge Map passes at 1,085 facts / 5,600 question keys; Memory is 46 lines; diff, docs-only staged acceptance, all eight doctrines, and exact repository-local cleanup pass.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: activate source semantic IR contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3`
   Status: `proposed`
@@ -235,8 +235,9 @@ Architecture audit `.1` is complete. Decision `0032` selects one public
 native extensions, normalized result parity, plain SystemVerilog/Verilator as
 the first runnable backend, and independently qualified UVM, VHDL methodology,
 and mixed-language profiles. The canonical audit maps the handwritten AHB
-fixture and exact migration/scale/public-surface boundaries. Proposed `.2` is
-the only selected next leaf and requires a separate clean activation commit.
+fixture and exact migration/scale/public-surface boundaries. Clean audit commit
+`2e2f7d25e` activates only `.2` through a separate continuity transition. The
+exact `.vial`/`VIALSemanticIR` contract remains unperformed during activation.
 
 ## Decisions
 
@@ -287,6 +288,9 @@ the only selected next leaf and requires a separate clean activation commit.
   bridge, not VIAL0/VIAL1/VIAL2. Plain SystemVerilog/Verilator is first;
   UVM, VHDL methodology, and mixed-language profiles remain separately
   qualified. Proposed `.2` owns the exact source/semantic-IR contract.
+- `2026-07-31`: Clean architecture audit commit `2e2f7d25e` activates only
+  source/semantic-IR contract `.2`; contract findings and product behavior
+  remain unchanged until activation commits cleanly.
 
 ## Open Questions
 
@@ -312,6 +316,7 @@ the only selected next leaf and requires a separate clean activation commit.
 | --- | --- | --- | --- |
 | `2026-07-29` | architecture parking | `knowledge-map/scripts/gen_knowledge_map.sh`; `knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book --dest-dir build`; `scripts/check_doctrines.sh`; task/roadmap/book/fact positive scans; `git diff --check`; all heavyweight commands under authorized `--host-max-pct 100 --process-max-rss-mb 4096` | `passed`; Knowledge Map is current at 1,017 facts / 5,175 question keys; mdBook built 72 files / 15,852 KiB under repository-root `build/`, which was removed with no residue; all doctrine gates passed; exact post-gate Stats-compatible capacity was 46.7% (11.21/24.00 GiB) and kernel pressure was 1 (normal); the guard percentage was not used as capacity truth |
 | `2026-07-31` | `.1` | architecture evidence audit; decision `0032`; exact AHB mapping; `.2`-.18 decomposition; `scripts/check_task_tree_integrity.pl`; docs audits; `mdbook test`; repository-local `mdbook build`; Knowledge Map generation/check; memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; selected one public `.vial`, two private IRs, versioned bridge, portable/native/result/profile contracts, and plain-SV/Verilator first; trees=2 / nodes=864; docs Files=3 / Tests=40; 37 chapters; 73 files / 16,810,633 bytes; Knowledge Map 1,085 facts / 5,600 keys; no product behavior change |
+| `2026-07-31` | `.2` activation | clean `.1` predecessor; task/index/roadmap/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.2` alone active; trees=2 / nodes=864; docs Files=3 / Tests=40; 37 chapters; 73 files / 16,812,484 bytes; Knowledge Map 1,085 facts / 5,600 keys; Memory 46 lines; contract and product behavior unchanged |
 
 ## Commit Log
 
@@ -319,6 +324,7 @@ the only selected next leaf and requires a separate clean activation commit.
 | --- | --- | --- |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE: park dual-intent architecture` | Park the director-approved architecture requirement without activating it or changing IAL2 priority. |
 | `.1` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1: select one-source dual-IR architecture` | Accept decision `0032`, publish the canonical audit and mdBook chapter, decompose `.2`-.18, and select proposed source/semantic-IR contract `.2` without product changes. |
+| `.2` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: activate source semantic IR contract` | Activate only the documentation-only v1 source/semantic-IR contract after clean `.1`; contract findings remain unperformed. |
 
 ## Changelog
 

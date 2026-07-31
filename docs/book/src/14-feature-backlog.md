@@ -4392,6 +4392,10 @@ public-port outcomes from qualified probes and native hierarchy, and defines
 exact source/IR, bridge, execution, tooling, backend, parity, migration, and
 scale leaves. See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 for the topology, profile matrix, worked mapping, and current boundaries.
+Clean architecture audit commit `2e2f7d25e` activates only the exact
+`.vial`/`VIALSemanticIR` contract leaf `.2` through a separate continuity
+transition. Source syntax, semantic records, parser/report behavior, and the
+first fixture remain unselected during activation.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -12105,6 +12109,8 @@ decomposes exact leaves `.2`-.18 and selects proposed source/semantic-IR
 contract `.2` alone for a separate clean activation. See the
 [architecture audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md)
 and [architecture chapter](16d-hial-vial-verification-architecture.md).
+Clean audit commit `2e2f7d25e` activates only `.2`; the contract itself and all
+user-visible behavior remain unchanged during the continuity transition.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
