@@ -31858,3 +31858,16 @@ task tree and git.
   5,706 keys, task integrity trees=3/nodes=882, and all nine staged doctrines.
   No family migration, hard-limit/frozen-content/product behavior change, or
   separate development-note duplication occurs; decision 0041 owns rationale.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6 — task-tree schema contract activated
+
+- From clean common-enforcement commit `18e2dcbc6`, activated `.6` alone to
+  define sealed task-subtree segments and compact completed terminals.
+- This continuity-only slice changes no task-tree schema/checker, existing
+  tree topology, threshold, document-family content, frozen identity, compiler/
+  runtime/generated product output, or VIAL behavior. No separate development
+  note is warranted. Paths/task integrity pass at Files=2/Tests=13; all 37
+  mdBook chapters test and the repository-local 73-file/17,104,418-byte build
+  passes then is removed; Knowledge Map validates 1,094 facts/5,706 keys;
+  Memory is 36 lines; and the live-document census covers 20 surfaces plus
+  2,773/2,773 tracked Markdown paths.

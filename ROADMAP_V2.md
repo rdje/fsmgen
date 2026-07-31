@@ -10360,6 +10360,7 @@ The first honest `R11` slices are now:
   baselines plus owned finite transition growth, and unconditional coverage of
   every tracked Markdown path. `README.md` remains the unchanged 246-line /
   9,952-byte GitHub landing interface. No family migration, hard-limit change,
-  frozen-content change, or product behavior change occurs; the next clean
-  selection is independent task-schema contract leaf `.6` while `.3` remains
-  blocked by the existing four-file lifecycle review.
+  frozen-content change, or product behavior change occurs. From clean commit
+  `18e2dcbc6`, `.6` alone is active to define sealed task-subtree segments and
+  compact completed terminals without migrating an existing tree; `.3`
+  remains blocked by the existing four-file lifecycle review.

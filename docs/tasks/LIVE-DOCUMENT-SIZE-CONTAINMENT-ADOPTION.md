@@ -92,7 +92,7 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6`
-  Status: `pending`
+  Status: `active`
   Goal: `Extend the task-tree schema and checker for sealed subtree segments and compact completed terminals.`
   Acceptance: `The live root retains metadata plus active ancestor/frontier; bounded manifests address immutable node segments; IDs, parent/child closure, status, verification, and commit evidence validate across files; compact completed terminals require exact revision retrieval proofs; existing trees are not migrated in this contract leaf.`
   Verification: `pending`
@@ -179,8 +179,8 @@ no routed destination becomes the next uninstrumented blob.
 ## Open Questions
 
 - None. The existing four-file review remains authoritative for those files'
-  semantic roles. From the clean `.2` commit, `.6` is the next independent
-  contract leaf to activate because `.3` remains blocked by that review.
+  semantic roles. Clean commit `18e2dcbc6` selects `.6` as the sole active
+  implementation leaf because `.3` remains blocked by that review.
 
 ## Blockers
 
@@ -228,6 +228,7 @@ no routed destination becomes the next uninstrumented blob.
 | --- | --- | --- | --- |
 | `2026-07-31` | `.1` activation | clean `139efbf90` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/mdBook/Knowledge Map/task/Memory/route/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; 37 chapters; build 73 files/17,096,423 bytes; Knowledge Map 1,094 facts/5,702 keys; trees=3/nodes=881; Memory 34 lines; all eight staged doctrines pass with docs-only task acceptance; `.2` alone active; no implementation, threshold, topology, document-family content, frozen-file, or product change |
 | `2026-07-31` | `.2` common enforcement | neutral JSONL contract/core; 20-surface local registry; strict lifecycle/debt/route/archive/coverage/neutrality fixtures; README compatibility; docs/path/locality/mdBook/Knowledge Map/task/Memory/diff/staged-acceptance/nine-doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=15; docs Files=4/Tests=310; paths/locality Files=2/Tests=22; 37 chapters; build 73 files/17,103,035 bytes; Knowledge Map 1,094 facts/5,706 keys; trees=3/nodes=882; final staged coverage 2,773/2,773; README 246 lines/9,952 bytes; all nine doctrines pass; no migration, hard-limit, frozen-file, landing-content, or product change |
+| `2026-07-31` | `.6` activation | clean `18e2dcbc6` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/Knowledge Map/Memory/live-document/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths/task Files=2/Tests=13; 37 chapters; build 73 files/17,104,418 bytes; Knowledge Map 1,094 facts/5,706 keys; trees=3/nodes=882; Memory 36 lines; live-document census 20 surfaces and 2,773/2,773 paths; `.6` alone active; no schema, checker, tree migration, threshold, frozen-file, landing-content, or product change |
 
 ## Commit Log
 
@@ -235,6 +236,7 @@ no routed destination becomes the next uninstrumented blob.
 | --- | --- | --- |
 | `.1` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1: activate common enforcement` | Activate `.2` from the clean doctrine-selection commit without implementing it. |
 | `.2` common enforcement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2: enforce live-document containment` | Ship neutral JSONL checker contract/core plus FSMGen data and unconditional ninth-doctrine coverage; next clean selection is `.6`. |
+| `.6` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: activate task-tree schema contract` | Activate only the sealed-segment/compact-terminal schema frontier from clean commit `18e2dcbc6`; implementation remains pending. |
 
 ## Changelog
 
@@ -244,3 +246,7 @@ no routed destination becomes the next uninstrumented blob.
   and the complete tracked-Markdown inventory while preserving README's
   landing content, all existing hard limits/topologies, frozen identities, and
   product behavior; `.6` is the next clean selection frontier.
+- `2026-07-31`: Clean commit `18e2dcbc6` activates `.6` alone to extend the
+  task-tree schema and checker; no schema, checker, tree topology, threshold,
+  document-family content, frozen identity, or product behavior changes in
+  the activation commit.

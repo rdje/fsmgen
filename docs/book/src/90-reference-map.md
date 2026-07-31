@@ -97,7 +97,9 @@ positional ambiguity of the discarded 22-column TSV prototype. The resulting
 unconditional census covers every tracked Markdown path, including README
 itself, broad root/focused/ancillary collections, and canonical knowledge
 cards; no family topology or established limit changes in the enforcement
-slice.
+slice. Clean enforcement commit `18e2dcbc6` leaves `.6` alone active to define
+sealed task-subtree segments and compact completed terminals; that activation
+does not migrate an existing tree.
 
 `TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
 standard. FSMGen's registered checker reads data-only staged-path and evidence

@@ -6,17 +6,17 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2: enforce live-document containment`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`; `.2` is complete
-  and no implementation leaf is active across this commit boundary.
+  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: activate task-tree schema contract`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6` alone is active
+  from clean common-enforcement commit `18e2dcbc6`.
 - current_state: neutral JSONL common enforcement plus FSMGen's 20-surface
   registry now checks every tracked Markdown path, immutable baselines and
   owned finite transition growth, locality, pressure, routes, projections,
   frozen identities, and archive descriptors. README landing content and all
   existing family topologies/hard limits remain unchanged.
-- next_action: from this clean commit, activate `.6` only to define sealed
-  task-subtree segments and compact completed terminals; `.3` remains blocked
-  by `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`.
+- next_action: implement `.6` only: define and prove sealed task-subtree
+  segments plus compact completed terminals without migrating an existing
+  tree; `.3` remains blocked by the four-file lifecycle review.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: none for `.6`-.10 or `.13`; `.3`-.5/.11 wait for the separately

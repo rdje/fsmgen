@@ -42,4 +42,6 @@ arrays, `null`, and strict unknown-key failure. The neutral checker inventories
 all tracked Markdown, including the GitHub README landing page itself, and
 enforces locality, lifecycle, pressure, non-worsening transition baselines,
 routes, projections, frozen identities, and archive descriptors before any
-family migration.
+family migration. Clean enforcement commit `18e2dcbc6` is the activation base
+for `.6`, the sole active leaf defining sealed task-subtree segments and
+compact completed terminals without migrating an existing tree.
