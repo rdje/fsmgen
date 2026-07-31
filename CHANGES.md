@@ -32294,6 +32294,6 @@ task tree and git.
 - Classified the mdBook without deleting prose or weakening Chapter 14 debt;
   `ISF_SPEC.md` remains a candidate under its existing focused-document owner.
 - Added fail-closed core/Git fixtures and synchronized doctrine, audit, book, fact, and tool guidance.
-### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24 — guide waypoints superseded
-- Proved both completed waypoints independently, preserved unique book content, redirected all live consumers, and removed both files.
-- Focused `Files=5, Tests=22`; exact Git recovery plus planted orphan/consumer controls pass; final doctrines pass.
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25 — WARP re-form activated
+- Clean `.24` commit `984448936` activates only the WARP claim/consumer/replacement proof; bootstrap bytes stay unchanged.
+- Final selection gates pass; compact re-form remains the next task-scoped slice.

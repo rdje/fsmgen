@@ -216,3 +216,7 @@ remain recoverable from activation commit `65c646a12` under
 `fsmgen_required_history`, while README, mdBook, manifest, test, and roadmap
 consumers now point to canonical book homes. Fresh token sweeps enumerate 8 and
 39 residues; planted orphans change those counts to 9 and 40 exactly.
+
+Clean `.24` commit `984448936` activates `.25` alone for WARP bootstrap
+re-form. Activation changes only continuity; exact claim, consumer,
+replacement, orphan, and workflow proof must precede any WARP edit.

@@ -10446,5 +10446,5 @@ The first honest `R11` slices are now:
   residue independently; version objects name recovery contracts and a bounded
   front door routes to the frozen packet. Decision `0045` and `.23` now bound
   maintained-reference reads/parts plus exact aggregate change. Clean `.23`
-  `.15` bounds common JSONL/line pressure; `.16` classifies all families; `.24`
-  supersedes both proved guide waypoints, leaving `.25` as the next selection.
+  `.16` classifies all families; `.24` supersedes both guide waypoints; clean
+  `984448936` activates `.25` alone for the WARP bootstrap proof and re-form.

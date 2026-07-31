@@ -316,7 +316,7 @@ generated aggregate change.
 | `.11` | Execute only the separately selected frozen-status decision. |
 | `.13` | Re-form/index focused evidence and `docs/ISF_SPEC.md`; retire only per-file proved duplicates. |
 | `.24` | Complete; both guide waypoints independently proved, superseded, and retained exactly in Git history. |
-| `.25` | Re-form `WARP.md` as a compact tool-neutral-authority bootstrap pointer. |
+| `.25` | Active from clean commit `984448936`; prove WARP claim/consumer coverage before compact re-form. |
 | `.12` | Re-audit and lower steady-state ceilings only after all selected migrations. |
 
 This audit is the decision boundary, not an authorization to combine those

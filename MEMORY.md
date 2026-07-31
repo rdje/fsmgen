@@ -5,14 +5,13 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24:
-  supersede completed guide waypoints`).
-- active_work_unit: `.24` is complete; the tree has no active child in this
-  commit and clean selection should activate `.25` next.
-- current_state: both completed guide waypoints are removed after independent
-  content/consumer proof; canonical book homes and exact Git recovery remain.
-- next_action: activate `.25` alone, then prove and execute bounded WARP
-  bootstrap re-form without changing tool-neutral authority or workflows.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25:
+  activate WARP bootstrap re-form`).
+- active_work_unit: `.25` alone is active from clean `.24` commit `984448936`.
+- current_state: activation changes continuity only; WARP and its bootstrap
+  checker remain byte-for-byte unchanged pending the owned proof.
+- next_action: inventory every WARP claim/consumer, prove canonical homes and
+  planted negative controls, then compact only duplicated representation.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: frozen/ledger work keeps its separate owner; `.13` is now unblocked.
