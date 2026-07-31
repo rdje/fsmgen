@@ -240,11 +240,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25`
-  Status: `active`
-  Goal: `Re-form the verbose WARP bootstrap as a compact pointer to tool-neutral authority.`
-  Acceptance: `Inventory every WARP.md claim and consumer, route any still-unique accurate guidance to README/TOOLBOX/mdBook/fact/decision homes, exercise planted-orphan and unresolved-consumer negative controls, then replace the duplicated project/architecture/command narrative with a bounded harness bootstrap pointer equivalent to the other vendor files; AGENTS authority, bootstrap enforcement, README landing behavior, and all project workflows remain unchanged.`
-  Verification: `Activated alone from clean `.24` supersession commit `984448936`. Only task/index/roadmap/audit/fact/Memory/changelog continuity selects the WARP bootstrap proof and re-form; WARP bytes, bootstrap enforcement, tool-neutral authority, README landing content, mdBook prose, registries, ceilings, frozen identities, and product behavior remain unchanged in activation. Final proof gates are recorded below.`
-  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25: activate WARP bootstrap re-form`
+  Status: `done`
+  Goal: `Retire the unused WARP harness bootstrap without losing unique project guidance or weakening the remaining tool-neutral authority chain.`
+  Acceptance: `Inventory every WARP.md claim and consumer, route any still-unique accurate guidance to README/TOOLBOX/mdBook/fact/decision homes, exercise planted-orphan and unresolved-consumer negative controls, then delete WARP.md and remove it from the required-bootstrap inventory because the director confirms warp.dev is no longer used; AGENTS authority, enforcement of every remaining bootstrap, README landing behavior, and all project workflows remain unchanged.`
+  Verification: `Activation commit f02da976f fixes WARP at 183 lines/6,878 bytes/SHA-256 3b2b47e9.... After the director confirmed warp.dev is unused, a fresh 287-token sweep enumerates 53 non-fact residues and a planted orphan produces 54 exactly. The exact activation tree has five referring files: two factual ledgers, two proof records, and the bootstrap checker; there is no content or active harness consumer. Removing the obsolete checker requirement yields zero unresolved consumers, while a planted consumer yields one. WARP is deleted, exact git-show recovery passes, the bootstrap checker enforces absence, its planted-file control fails, and all remaining authority-marker checks pass. Final focused, path/locality, live-size, task, Knowledge Map, Memory, mdBook, staged-acceptance, doctrine, and cleanup evidence is recorded below.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25: retire unused WARP bootstrap`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
 
 ## Decisions
@@ -357,6 +357,10 @@ no routed destination becomes the next uninstrumented blob.
   and retains exact Git recovery under `fsmgen_required_history`.
 - `2026-07-31`: Clean `.24` commit `984448936` activates `.25` alone to prove
   WARP compaction before changing the harness bootstrap or its enforcement.
+- `2026-07-31`: The director confirms warp.dev is no longer used. `.25`
+  therefore selects `delete`, not `re-form`: preserve the exact source object
+  in Git, remove its sole executable requirement, and make absence a checked
+  local invariant after claim/consumer/negative-control proof.
 
 ## Open Questions
 
@@ -374,10 +378,11 @@ no routed destination becomes the next uninstrumented blob.
 ## Blockers
 
 - `.3`-`.5` and `.11`: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` must first
-  select the four files' long-term roles. `.24` is complete; `.25` is active.
-  `.13` is now unblocked and will inventory the
-  resulting focused collection. `.8`-`.10` are otherwise unblocked; `.12`
-  remains the final post-migration calibration.
+  select the four files' long-term roles. `.24` is complete; `.25` is active
+  only until the director-selected WARP retirement is verified and committed.
+  Per director instruction, no further containment leaf is selected after
+  `.25`; the next clean selection returns to product code. `.12` remains the
+  final post-migration calibration if containment resumes later.
 
 ## Acceptance Checklist (enforced) — `.16` utility/retirement audit
 
@@ -402,6 +407,12 @@ no routed destination becomes the next uninstrumented blob.
 - [x] **ROOT CAUSE (WHY + WHERE)** — completed `.16` identifies 183-line `WARP.md` as a useful harness discovery file whose content below the authority pointers duplicates project overview, commands, architecture, inventory, examples, tests, and design claims; separate `.25` ownership is required before any representation change.
 - [x] **ADDRESSED (verified)** — clean `.24` commit `984448936` activates `.25` alone and names the exact content/consumer/replacement/negative-control proof; WARP and its checker remain byte-for-byte untouched in this selection slice.
 - [x] **NO REGRESSION** — final path/task/live-size/Knowledge Map/Memory/mdBook/staged-diff and all-doctrine evidence is recorded below; no bootstrap content or enforcement, authority, landing page, product documentation, registry, ceiling, frozen identity, or product behavior changes.
+
+## Acceptance Checklist (enforced) — `.25` WARP retirement
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'## Project Overview' --oneline -- WARP.md` identifies `57563dcaa`, and activation revision `f02da976f` fixes the retired bootstrap at 183 lines/6,878 bytes/SHA-256 `3b2b47e9...`; direct inspection shows duplicated or stale overview, command, architecture, inventory, example, and testing prose. The director confirms warp.dev is no longer used, so the assumed harness-discovery role has ended.
+- [x] **ADDRESSED (verified)** — the audit enumerates all 287 normalized source tokens and 53 explained residues; a planted orphan raises residue to 54. All five activation-tree referring files are classified, no content/harness consumer remains, and the post-edit classifier reports zero unresolved consumers versus one planted consumer. `WARP.md` is deleted; `scripts/check_doctrine_bootstrap.sh` removes it from the required set and adds an explicit retired-file absence invariant; `git show f02da976f:WARP.md` reproduces the exact source.
+- [x] **NO REGRESSION** — Bash syntax and the real remaining-bootstrap check pass; a transient planted `WARP.md` makes the same checker fail exactly as required. The RAM-guarded focused cluster reports `All tests successful` at `Files=3, Tests=64`; final path/locality, task/live-size, Knowledge Map, Memory, mdBook, staged-acceptance, and all-doctrine gates plus exact artifact cleanup are recorded below. No remaining bootstrap marker, README landing content, mdBook product prose, registry ceiling, frozen identity, compiler/runtime artifact, or product behavior changes.
 
 ## Acceptance Checklist (enforced) — `.21`
 
@@ -522,6 +533,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.24` activation | clean `b9f2f266c` predecessor; task/index/roadmap/audit/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,785 paths; maintained reference unchanged at 38/47,420/2,514,573; Knowledge Map 1,096/5,759; Memory 37; all 37 chapters; removed build 73 files/17,283,901 bytes; all doctrines pass; `.24` alone active; candidate and consumer bytes unchanged |
 | `2026-07-31` | `.24` guide-waypoint supersession | two exact source identities; 212/8 and 392/39 token/residue sweeps; 19/7 classified consumers; planted orphan and consumer controls; Git recovery; manifest/source/test/README/book/roadmap/audit sync; focused/path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; manifest Files=5/Tests=22; live-document Files=3/Tests=27; zero unresolved and one planted consumer per candidate; paths Files=1/Tests=2; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,783 paths; focused collection 1,003 files/211,931 lines/9,376,208 bytes; reference delta 0/-2/-150 to 38/47,418/2,514,423; README 245/9,921; Knowledge Map 1,096/5,759; Memory 37; all 37 chapters; removed build 73 files/17,282,858 bytes; staged acceptance root=git_history/no-regression=prove_summary; all doctrines pass; both exact historical objects recoverable |
 | `2026-07-31` | `.25` activation | clean `984448936` predecessor; task/index/roadmap/audit/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,783 paths; Knowledge Map 1,096/5,759; Memory 36; all 37 chapters; removed build 73 files/17,282,858 bytes; all doctrines pass; `.25` alone active; WARP remains exact 183 lines/6,878 bytes and bootstrap enforcement is unchanged |
+| `2026-07-31` | `.25` WARP retirement | exact source identity/recovery; 287-token/53-residue sweep; planted orphan and consumer; five-consumer classification; bootstrap absence positive/negative controls; focused/path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 183/6,878/SHA-256 3b2b47e9...; planted residue 54; unresolved consumers 0/1 planted; focused Files=3/Tests=64; paths Files=1/Tests=2; locality passes; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,782 paths; Knowledge Map 1,096/5,759; Memory 37; all 37 book chapters test; removed build 73 files/17,282,858 bytes; zero ceiling increases; no remaining bootstrap, landing, product documentation, ceiling, frozen identity, or product behavior change |
 
 ## Commit Log
 
@@ -557,6 +569,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.24` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24: activate guide-waypoint supersession` | Activate only the independent USER_GUIDE/BOOK_PLAN proof from clean `.16`; candidate and consumer changes remain pending. |
 | `.24` guide-waypoint supersession | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24: supersede completed guide waypoints` | Preserve unique book content, redirect all live consumers, remove both completed waypoints, and retain exact Git recovery. |
 | `.25` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25: activate WARP bootstrap re-form` | Activate only WARP claim/consumer/replacement proof from clean `.24`; bootstrap changes remain pending. |
+| `.25` WARP retirement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25: retire unused WARP bootstrap` | Delete the unused harness bootstrap after exact content/consumer proof, enforce its absence, and retain exact Git recovery. |
 
 ## Changelog
 
@@ -584,6 +597,9 @@ no routed destination becomes the next uninstrumented blob.
   removes the obsolete files, and preserves exact Git recovery.
 - `2026-07-31`: Clean `.24` commit `984448936` activates `.25` alone; WARP,
   bootstrap enforcement, tool-neutral authority, and workflows stay unchanged.
+- `2026-07-31`: `.25` confirms no unique WARP guidance or active consumer,
+  deletes the unused harness bootstrap at the director's instruction, enforces
+  its absence, and preserves the exact source object in Git history.
 - `2026-07-31`: Clean commit `18e2dcbc6` activates `.6` alone to extend the
   task-tree schema and checker; no schema, checker, tree topology, threshold,
   document-family content, frozen identity, or product behavior changes in

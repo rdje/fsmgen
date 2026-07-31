@@ -32294,6 +32294,6 @@ task tree and git.
 - Classified the mdBook without deleting prose or weakening Chapter 14 debt;
   `ISF_SPEC.md` remains a candidate under its existing focused-document owner.
 - Added fail-closed core/Git fixtures and synchronized doctrine, audit, book, fact, and tool guidance.
-### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25 — WARP re-form activated
-- Clean `.24` commit `984448936` activates only the WARP claim/consumer/replacement proof; bootstrap bytes stay unchanged.
-- Final selection gates pass; compact re-form remains the next task-scoped slice.
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25 — unused WARP bootstrap retired
+- Proved the exact 183-line source has no unique durable guidance or active consumer, then deleted it because warp.dev is no longer used.
+- Bootstrap checks now enforce WARP absence while retaining every remaining authority marker; exact Git recovery and all focused gates pass.

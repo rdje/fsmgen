@@ -6,15 +6,16 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25:
-  activate WARP bootstrap re-form`).
-- active_work_unit: `.25` alone is active from clean `.24` commit `984448936`.
-- current_state: activation changes continuity only; WARP and its bootstrap
-  checker remain byte-for-byte unchanged pending the owned proof.
-- next_action: inventory every WARP claim/consumer, prove canonical homes and
-  planted negative controls, then compact only duplicated representation.
+  retire unused WARP bootstrap`).
+- active_work_unit: no containment leaf; `.25` is complete.
+- current_state: WARP is deleted after exact content/consumer proof because
+  warp.dev is unused; the doctrine checker enforces absence and retains every
+  other tool-neutral bootstrap check.
+- next_action: from the clean `.25` boundary, select the next roadmap-aligned
+  FSMGen feature-code leaf; do not open another containment leaf.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: frozen/ledger work keeps its separate owner; `.13` is now unblocked.
+- blockers: containment is director-paused; unrelated feature work is clear.
 
 ## Durable context
 
@@ -31,6 +32,6 @@ history; this file carries only the current bounded resume state.
   generated scheduler as semantic authority; `.10.4` now qualifies compile,
   runtime, and normalized results; `.11` now qualifies only the selected AHB
   handwritten-oracle comparison, not general cross-backend parity.
-- Decisions `0041`/`0042`/`0044`/`0045`, the packet, and its disposition own
-  feedback-sensitive containment work; `.15` closes common JSONL self-bounds.
+- Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; `.25`
+  retires unused WARP and the containment program is director-paused.
   Push only on request (`0005`); PNT runs autonomously (`0003`).

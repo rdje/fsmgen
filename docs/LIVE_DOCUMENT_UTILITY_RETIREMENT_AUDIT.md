@@ -29,9 +29,11 @@ three materially different actions:
   task evidence, Knowledge Cards, and the actively consumed ISF contracts;
 - re-form useful roles whose current representation is the problem, including
   the roadmap, Knowledge Map, Chapter 14, `docs/ISF_SPEC.md`, focused
-  slice-evidence collections, and the verbose `WARP.md` bootstrap;
+  slice-evidence collections;
 - supersede completed migration waypoints `docs/USER_GUIDE.md` and
-  `docs/BOOK_PLAN.md` only after a fresh content/consumer/replacement proof.
+  `docs/BOOK_PLAN.md` only after a fresh content/consumer/replacement proof;
+- delete `WARP.md` after the director confirmed that warp.dev is no longer
+  used and the owned `.25` proof found no surviving discovery role.
 
 The four-file status/changelog review keeps its existing authority. This audit
 therefore selects the current reversible outcome—retain the two ledgers under
@@ -103,7 +105,7 @@ exists.
 | Surface | Current audience and canonical role | Utility evidence and pressure | Outcome | Atomic owner |
 | --- | --- | --- | --- | --- |
 | `readme_entrypoint` | GitHub visitors; direct identity, quick start, architecture, and canonical navigation | 245 lines / 9,917 bytes; first-class rendered landing interface, not an overflow buffer | `retain` | `.12` final calibration only |
-| `root_documents` | Mixed users/maintainers/automation; bounded project entry and continuity contracts | 21 heterogeneous files; group pressure comes from ledgers, frozen records, roadmap, and projection rather than one common role | `re-form` | `.3`-.5, `.9`, `.11`, `.12`, `.24`, `.25` |
+| `root_documents` | Mixed users/maintainers/automation; bounded project entry and continuity contracts | 20 heterogeneous files after WARP retirement; group pressure comes from ledgers, frozen records, roadmap, and projection rather than one common role | `re-form` | `.3`-.5, `.9`, `.11`, `.12`, `.24`, `.25` |
 | `focused_documents` | Users, downstream integrators, maintainers, and auditors; mixed specifications/contracts/slice evidence | 1,004 files; active specifications coexist with large historical readiness/contract cohorts | `re-form` | `.13` after `.24` |
 | `ancillary_documents` | Harnesses and maintainers; compact bootstrap/workflow/audit entry points | 10 files / 1,229 lines; normal and query-indexed | `retain` | `.13` periodic classification |
 | `shipped_behavior` | Users/authors; canonical product explanation and examples | Unique maintained prose, bounded SUMMARY and parts; Chapter 14 is the per-part outlier | `retain` family; `re-form` Chapter 14 | `.8` |
@@ -196,22 +198,49 @@ and reproduce the line, byte, and digest identities above. Contract
 history guarantee, and shallow/rewrite recovery. The resulting-tree and
 planted-consumer gates below must still pass after removal.
 
-### Harness bootstrap representation
+### Retired harness bootstrap
 
-`WARP.md` is 183 lines / 6,878 bytes, last changed at `2cfe9cda3` on
-2026-06-22. Its only non-history literal consumer is
-`scripts/check_doctrine_bootstrap.sh`, which checks bootstrap presence and
-authority routing. Unlike the three-line `CLAUDE.md` and `GEMINI.md` pointers,
-it duplicates project overview, commands, architecture, file inventory,
-language examples, testing advice, and design claims below the tool-neutral
-`AGENTS.md` authority.
+Clean activation revision `f02da976fad6aa0a6f42daa8265fc211f9d78f20`
+identifies `WARP.md` at 183 lines / 6,878 bytes and SHA-256
+`3b2b47e977ea616fb8a17f5c726bcd82e235df5abb8be1a570b66269e3dc7847`.
+It was last substantively changed at `2cfe9cda3` on 2026-06-22. The director
+then confirmed that warp.dev is no longer used, so the discovery role assumed
+by the preliminary audit no longer exists.
 
-The WARP bootstrap role is useful; the duplicated representation is not.
-Outcome `re-form` under `.25` replaces it with a compact pointer equivalent in
-authority to the other harness bootstraps after a token/consumer sweep proves
-that any still-unique accurate guidance has a canonical README, TOOLBOX,
-mdBook, fact, or decision home. The file is not deleted because its harness
-discovery role survives.
+A fresh case-folded whole-file sweep compares 287 normalized tokens of at
+least five characters against `AGENTS.md`, `README.md`, `TOOLBOX.md`, the
+mdBook, decisions, and Knowledge Cards. Its 53 residues are:
+`astfactorization`, `awareness`, `benefits`, `combinatorial`, `complex`,
+`converts`, `cross-dt`, `dependency-aware`, `descriptive`, `dt_name`,
+`ensures`, `factorizer`, `four-registry`, `fsm-to-hdl`, `fsm/mipicsi2`,
+`fsm/mipicsi2_tester_ctrl.fsm`, `fsm:my_fsm`, `fsmgen-specific`, `hffff`,
+`insights`, `intelligently`, `iterative`, `known-good`, `management`,
+`multi-pass`, `multi-stage`, `multi-target`, `multiplexer`, `my_fsm.fsm`,
+`my_fsm.log`, `my_fsm.sv`, `output.v`, `overview`,
+`perl/fsm/adapter/fsmgenfull.pm`, `perl/fsm/hdl/astfactorization.pm`,
+`perl/fsm/hdl/flatteneddt.pm`, `practices`, `pre-scan`, `prevention`,
+`production-quality`, `real-world`, `rescues`, `s_rst_n_and_pready`,
+`self-reference`, `sophisticated`, `subsystems`, `systemverilog/verilog/vhdl`,
+`test_signal`, `underscores`, `visualizations`, `warp.dev`, `warp.md`, and
+`x/11xx/12xx`. They are local source/sample/output names, covered composite
+spellings, obsolete architecture shorthand, or non-contractual adjectives;
+none is unique accurate guidance. The concrete commands and current workflow
+are already canonical in the retained homes, while WARP's debug-level range
+and four-registry summary are stale. Planting
+`fsmgen_orphan_probe_warp_bootstrap` raises residue to 54 and detects that
+token exactly.
+
+The exact activation tree has five referring files: `CHANGES.md` and
+`DEVELOPMENT_NOTES.md` are factual history; this audit and its task are proof
+records; `scripts/check_doctrine_bootstrap.sh` was the only executable
+consumer. No current product, author, harness, or content consumer requires
+the file. After removing that one obsolete requirement, the resulting-tree
+classifier reports zero unresolved consumers; an in-memory
+`probe/warp_bootstrap_consumer.sh` raises it to one exactly. Leaf `.25`
+therefore deletes `WARP.md`, makes the local doctrine checker require its
+absence, and retains every other bootstrap marker check unchanged. Exact
+recovery remains available with `git show f02da976f:WARP.md` under the existing
+`fsmgen_required_history` contract.
 
 ### Active maintained specifications
 
@@ -316,7 +345,7 @@ generated aggregate change.
 | `.11` | Execute only the separately selected frozen-status decision. |
 | `.13` | Re-form/index focused evidence and `docs/ISF_SPEC.md`; retire only per-file proved duplicates. |
 | `.24` | Complete; both guide waypoints independently proved, superseded, and retained exactly in Git history. |
-| `.25` | Active from clean commit `984448936`; prove WARP claim/consumer coverage before compact re-form. |
+| `.25` | Retire unused WARP bootstrap after exact claim/consumer/negative-control proof; enforce absence while preserving Git recovery. |
 | `.12` | Re-audit and lower steady-state ceilings only after all selected migrations. |
 
 This audit is the decision boundary, not an authorization to combine those

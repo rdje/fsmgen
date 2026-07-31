@@ -10445,6 +10445,7 @@ The first honest `R11` slices are now:
   `.22` proves source identity, 844 semantic nodes, the working set, and zero
   residue independently; version objects name recovery contracts and a bounded
   front door routes to the frozen packet. Decision `0045` and `.23` now bound
-  maintained-reference reads/parts plus exact aggregate change. Clean `.23`
-  `.16` classifies all families; `.24` supersedes both guide waypoints; clean
-  `984448936` activates `.25` alone for the WARP bootstrap proof and re-form.
+  maintained-reference reads/parts plus exact aggregate change. `.16`
+  classifies all families; `.24` supersedes both guide waypoints; `.25`
+  retires unused WARP with exact proof. Containment is director-paused; the
+  next clean selection returns to roadmap-aligned FSMGen feature code.

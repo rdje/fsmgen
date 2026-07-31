@@ -27,6 +27,9 @@ bootstrap_files=(
   .cursorrules
   .windsurfrules
   .github/copilot-instructions.md
+)
+
+retired_bootstrap_files=(
   WARP.md
 )
 
@@ -139,6 +142,14 @@ for file in "${bootstrap_files[@]}"; do
       note "${file} does not point at ${marker}"
     fi
   done
+done
+
+for file in "${retired_bootstrap_files[@]}"; do
+  if [[ -e "${file}" ]]; then
+    note "${file} is a retired bootstrap and must remain absent"
+  else
+    ok "${file} retired and absent"
+  fi
 done
 
 if [[ -f .githooks/pre-commit ]] && grep -q 'scripts/check_doctrines.sh' .githooks/pre-commit; then

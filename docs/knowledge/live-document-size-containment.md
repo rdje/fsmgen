@@ -217,6 +217,9 @@ remain recoverable from activation commit `65c646a12` under
 consumers now point to canonical book homes. Fresh token sweeps enumerate 8 and
 39 residues; planted orphans change those counts to 9 and 40 exactly.
 
-Clean `.24` commit `984448936` activates `.25` alone for WARP bootstrap
-re-form. Activation changes only continuity; exact claim, consumer,
-replacement, orphan, and workflow proof must precede any WARP edit.
+Clean `.24` commit `984448936` and selection commit `f02da976f` activated `.25`
+alone for WARP lifecycle resolution. The director subsequently confirmed that
+warp.dev is no longer used, so the owned exact claim/consumer/canonical-home/
+orphan/workflow proof selects deletion rather than a compact compatibility
+pointer. The local bootstrap checker enforces absence while preserving all
+remaining tool-neutral bootstrap checks and exact Git recovery.
