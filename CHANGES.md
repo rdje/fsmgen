@@ -31948,3 +31948,25 @@ task tree and git.
   1,095 facts/5,717 keys; all 20 live-document surfaces and 2,776/2,776 paths
   pass; all 37 mdBook chapters test and the 73-file/17,111,406-byte local build
   passes then is removed; Memory remains 36 lines.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14 — external review packet published
+
+- Added the tracked, self-contained 1,309-line/54,068-byte live-document
+  containment review packet with neutral architecture, local JSONL schemas,
+  lifecycle and pressure semantics, route/archive enforcement, exact task-tree
+  migration evidence, portability boundaries, known limitations, 31 questions,
+  and a pasteable response template. It makes current utility precede size and
+  illustrates retain/merge/supersede/archive/delete using measured FSMGen
+  candidates without deleting or changing any existing document lifecycle.
+- Source review found that common surface/route/archive JSONL registries lack
+  the self-bounds already enforced for task manifests, and that `hard_pct` is
+  ordering-only while absolute failure is currently `actual > budget`. `.15`
+  owns those gaps; `.16` owns the general utility/retirement audit. Focused
+  doctrine/route/task tests pass Files=3/Tests=49; paths/locality pass
+  Files=2/Tests=22; all 20 surfaces and 2,777/2,777 tracked Markdown paths pass;
+  Knowledge Map validates 1,095 facts/5,722 keys; all 37 mdBook chapters test
+  and the repository-local 73-file/17,116,666-byte build passes then is removed;
+  task integrity passes at three trees/885 nodes/one segment/zero compact
+  terminals/one index archive; Memory is 36 lines; all nine staged doctrines
+  pass. No checker, schema, threshold, archive, README landing content, frozen
+  content, product behavior, or deletion/retirement of an existing document.

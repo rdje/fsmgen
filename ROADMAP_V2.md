@@ -10370,7 +10370,11 @@ The first honest `R11` slices are now:
   query-first while keeping three active plus eleven proposed rows live. The
   reconstructed result is one segment, zero compact terminals, and one index
   archive; both task surfaces are normal without deleting completed task
-  files. User-directed `.14` alone is active to publish a self-contained
-  external review packet for this architecture; `.8` remains the next
-  migration and `.3` remains blocked by the existing four-file lifecycle
-  review.
+  files. User-directed `.14` now publishes a self-contained external review
+  packet and response template for this architecture. The packet makes current
+  utility precede containment, illustrates retain/merge/supersede/archive/
+  delete outcomes with measured FSMGen candidates, and records two discovered
+  gaps: common JSONL control-plane self-bounds plus exact hard-threshold
+  semantics (`.15`), and a general utility/retirement audit (`.16`). `.8`
+  remains the next family migration and `.3` remains blocked by the existing
+  four-file lifecycle review.

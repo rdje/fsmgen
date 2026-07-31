@@ -51,7 +51,7 @@ no routed destination becomes the next uninstrumented blob.
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`
   Status: `active`
   Goal: `Bound all live document families over durable, addressable storage.`
-  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14`
+  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1`
   Status: `done`
@@ -140,7 +140,7 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `Every registered surface is remeasured; all live roots and parts are below warning; aggregate transitions and retrieval/reconstruction probes pass; temporary legacy headroom is reduced through a reviewed local registry update; doctrine/book/fact/task/roadmap/Memory agree; no artifact residue remains.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13`
   Status: `pending`
@@ -150,11 +150,27 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `pending`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14`
-  Status: `active`
+  Status: `done`
   Goal: `Publish a self-contained external review packet for the live-document containment and JSONL architecture.`
-  Acceptance: `A tracked Markdown packet explains the problem, goals, terminology, topology, JSONL-versus-TSV decision, schemas, lifecycle classes, pressure model, route closure, task-tree sealing, exact retrieval, migration evidence, tests, failure modes, limits, portability boundary, and open design questions in sufficient detail for another project to review without reading FSMGen source; it provides a structured response template and changes no enforcement or product behavior.`
-  Verification: `pending`
+  Acceptance: `A tracked Markdown packet explains the problem, goals, terminology, topology, utility-before-containment and retirement outcomes, JSONL-versus-TSV decision, schemas, lifecycle classes, pressure model, route closure, task-tree sealing, exact retrieval, migration evidence, tests, failure modes, limits, portability boundary, and open design questions in sufficient detail for another project to review without reading FSMGen source; it illustrates retain/merge/supersede/archive/delete analysis with measured FSMGen candidates, provides a structured response template, tracks discovered gaps without silently fixing them, and changes no enforcement or product behavior.`
+  Verification: `The tracked 1,309-line/54,068-byte packet is self-contained and separates neutral architecture, FSMGen evidence, JSONL schemas, lifecycle/pressure/retrieval mechanics, exact task migration, limitations, portability, 31 questions, and a pasteable response template. It makes utility precede size and illustrates retain/merge/supersede/archive/delete with measured FSMGen candidates without deleting a file. Source inspection confirms the specialized task manifests self-cap while the common surface/route/archive registries do not, and confirms hard_pct is ordering-only while absolute overflow is actual > budget; pending .15 owns those gaps and .16 owns the utility audit. Focused doctrine/route/task tests pass Files=3/Tests=49; path/locality passes Files=2/Tests=22; live coverage is 20 surfaces and 2,777/2,777 paths; Knowledge Map passes at 1,095 facts/5,722 keys; all 37 mdBook chapters test and the repository-local 73-file/17,116,666-byte build passes then is removed; final staged doctrines and cleanup are recorded below. No schema, checker, threshold, archive, README landing content, frozen content, product behavior, or existing document lifecycle changes.`
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14: publish external review packet`
+
+- ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15`
+  Status: `pending`
+  Goal: `Close common JSONL control-plane self-containment and exact hard-threshold semantics.`
+  Acceptance: `The surface, route, and common archive-descriptor registries gain independently reviewed record/byte containment or an equally finite registered topology; positive and fail-closed tests prove the control plane cannot become an unbounded sink; one explicit inclusive/exclusive absolute-limit rule is selected; hard_pct is either executed correctly or removed; doctrine, checker contract, implementation, tests, local data, and book use identical semantics without silently widening a budget.`
+  Verification: `pending`
+  Commit: `pending`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14`
+
+- ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
+  Status: `pending`
+  Goal: `Make current utility and deliberate retirement precede size migration.`
+  Acceptance: `Define reviewable retain/merge/supersede/archive/delete outcomes; audit each governed FSMGen document family for current audience, canonical role, unique value, duplication, staleness, and historical retention; explicitly assess USER_GUIDE.md, the two frozen status files, CHANGES.md, DEVELOPMENT_NOTES.md, ROADMAP_V2.md, generated KNOWLEDGE_MAP.md, ISF_SPEC.md, and focused readiness/contract collections; assign separate atomic migrations for unique content and proved retirement; do not delete or mechanically shard a candidate in this audit leaf.`
+  Verification: `pending`
+  Commit: `pending`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14`
 
 ## Decisions
 
@@ -197,12 +213,20 @@ no routed destination becomes the next uninstrumented blob.
   and converts 540 unique terminal index rows into bounded query-first history.
   The live index is 558 lines with three active and eleven proposed rows; all
   completed task files remain directly browsable.
+- `2026-07-31`: `.14` review found that specialized task manifests are bounded
+  but the common surface/route/archive JSONL control plane is not yet capped,
+  and that `hard_pct` is validated but not executed. `.15` owns both gaps.
+- `2026-07-31`: Document size does not prove current utility. `.14` adds
+  retain/merge/supersede/archive/delete analysis with measured FSMGen examples;
+  `.16` owns the project-wide utility and retirement audit before final limits.
 
 ## Open Questions
 
-- None. The existing four-file review remains authoritative for those files'
-  semantic roles. User-directed `.14` alone is active to publish the external
-  review packet; `.8` remains the next migration after that bounded detour.
+- `.14` is complete and asks external reviewers 31 explicit architecture,
+  format, pressure, durability, usability, and utility questions. Returned
+  reviews can be routed from the packet's response template. The existing
+  four-file review remains authoritative for those files' semantic roles;
+  `.15` and `.16` retain the local findings without prejudging feedback.
 
 ## Blockers
 
@@ -210,6 +234,7 @@ no routed destination becomes the next uninstrumented blob.
   select the four files' long-term roles. `.1`, `.2`, `.6`-`.10`, and `.12`
   remain independently schedulable subject to their ordinary predecessor
   dependencies; `.13` is independently schedulable and `.14` is unblocked.
+  `.15` and `.16` wait only for `.14` to publish the evidence they consume.
 
 ## Acceptance Checklist (enforced) — `.7`
 
@@ -253,6 +278,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.7` activation | clean `78adb81ae` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/Knowledge Map/Memory/live-document/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; all 37 chapters test; build 73 files/17,110,023 bytes; Knowledge Map 1,095 facts/5,714 keys; trees=3/nodes=882/segments=0/compact terminals=0; Memory 35 lines; live-document census 20 surfaces and 2,775/2,775 paths; `.7` alone active; no node/index migration, schema/checker, threshold, frozen-file, landing-content, or product change |
 | `2026-07-31` | `.7` bounded task evidence/index | exact IAL2 source segment; finite exact-index manifest; active/proposed PNT view; syntax/focused/combined/path/locality/mdBook/Knowledge Map/Memory/live-size/diff/staged-acceptance/nine-doctrine gates; exact cleanup | `passed`; 844 sealed nodes; 540 unique terminal rows; index 558 lines/39,851 bytes; live IAL2 85/36,886; segment 5,914/2,366,453; task integrity trees=3/nodes=882/segments=1/compact=0/index archives=1; focused Files=1/Tests=34; combined Files=3/Tests=49; paths/locality Files=2/Tests=22; 37 chapters; removed build 73 files/17,110,777 bytes; Knowledge Map 1,095 facts/5,717 keys; Memory 36 lines; 20 surfaces and 2,776/2,776 paths; all nine staged doctrines pass; broad docs group stopped safely pre-output by RAM guard at 89.6% versus 88% |
 | `2026-07-31` | `.14` activation | clean `7f05b41de` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/Knowledge Map/live-size/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths/task Files=2/Tests=36; trees=3/nodes=883/segments=1/compact=0/index archives=1; Knowledge Map 1,095 facts/5,717 keys; 20 surfaces and 2,776/2,776 paths; all 37 chapters test; removed build 73 files/17,111,406 bytes; Memory 36 lines; `.14` alone active; no review packet, schema, checker, threshold, archive, README landing-content, or product change |
+| `2026-07-31` | `.14` external review packet | tracked self-contained packet; neutral/local boundary; utility outcomes and measured examples; source-backed JSONL/threshold limitations; focused/path/locality/live-size/Knowledge Map/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; packet 1,309 lines/54,068 bytes and 31 questions; focused Files=3/Tests=49; paths/locality Files=2/Tests=22; 20 surfaces and 2,777/2,777 paths; Knowledge Map 1,095 facts/5,722 keys; all 37 chapters test; removed build 73 files/17,116,666 bytes; trees=3/nodes=885/segments=1/compact=0/index archives=1; Memory 36 lines; all nine staged doctrines pass; `.15`/`.16` tracked; no implementation, threshold, archive, deletion, frozen-content, landing-content, or product change |
 
 ## Commit Log
 
@@ -265,6 +291,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.7` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: activate task-tree migration` | Activate only the first IAL2/task/index migration from clean commit `78adb81ae`; migration remains pending. |
 | `.7` bounded task evidence/index | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: bound task evidence and index` | Seal 844 exact-source IAL2 children and 540 unique terminal index rows while keeping current PNT and completed task files direct. |
 | `.14` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14: activate external review packet` | Activate only the tracked external-review-packet leaf from clean commit `7f05b41de`; the packet remains pending. |
+| `.14` external review packet | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14: publish external review packet` | Publish the self-contained review and response template; track control-plane/hard semantics in `.15` and utility/retirement in `.16`. |
 
 ## Changelog
 
@@ -292,3 +319,7 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: User-directed clean pivot from `7f05b41de` activates `.14`
   alone to publish the external review packet; the activation creates no packet
   and changes no enforcement, threshold, archive, landing content, or product.
+- `2026-07-31`: `.14` publishes the 31-question external review packet, makes
+  utility precede size containment, illustrates deliberate retirement with
+  measured FSMGen candidates, and tracks the common JSONL/hard-threshold gaps
+  in `.15` plus the general utility audit in `.16` without changing behavior.

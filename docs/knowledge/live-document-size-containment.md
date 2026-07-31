@@ -14,10 +14,15 @@ answers:
   - "why does the live-document registry use JSONL instead of TSV?"
   - "does the project-wide checker cover README.md itself?"
   - "which tasks own the large roadmap, task, book, changelog, development notes, and knowledge map migrations?"
+  - "where is the external review packet for live-document containment?"
+  - "should an obsolete live document be partitioned or retired?"
+  - "which FSMGen live documents are retirement candidates?"
+  - "are the common JSONL control-plane registries independently bounded?"
+  - "does hard_pct currently enforce the hard pressure threshold?"
 date: 2026-07-31
 status: current
 tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
-evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
+evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
 reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t
 ---
 
@@ -56,6 +61,19 @@ three active and eleven proposed rows live. The index falls from 1,078 to 558
 lines; both registered task surfaces are now `normal`, and no completed task
 file or README landing content is removed.
 
-User-directed leaf `.14` is active from clean commit `7f05b41de` to publish a
-self-contained external review packet covering the doctrine, JSONL data plane,
-task-tree migration, evidence, limitations, and structured feedback questions.
+User-directed leaf `.14` publishes a self-contained external review packet
+covering the doctrine, JSONL data plane, task-tree migration, evidence,
+limitations, 31 structured feedback questions, and a response template.
+The packet makes utility precede containment: review each surface for
+retain/merge/supersede/archive/delete before partitioning it. It illustrates
+the distinction with current FSMGen measurements, including the likely
+supersession of the mdBook compatibility guide, the frozen status candidates,
+the rationale/change ledgers, the generated Knowledge Map, and focused
+contract/audit collections. No file is deleted by the review task.
+
+The same review found two mechanical gaps. Specialized task manifests enforce
+their own record/byte caps, but the common surface, route, and archive JSONL
+registries do not yet self-bound. The checker validates `hard_pct` ordering but
+uses only warning/rollover percentages and rejects actual size only when it
+exceeds the absolute budget. Leaf `.15` owns those gaps; `.16` owns the general
+utility/retirement audit.

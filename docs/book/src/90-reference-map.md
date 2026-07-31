@@ -154,8 +154,15 @@ the optional forms add no migration requirement for ordinary trees. The first
 migration reduces the live IAL2 file from 21,726 to 85 lines and the task index
 from 1,078 to 558 lines. Completed task files remain directly browsable; only
 duplicated cross-tree terminal narration becomes query-first. User-directed
-leaf `.14` is active to publish a self-contained external review packet before
-the next migration.
+leaf `.14` publishes a self-contained external review packet before the next
+migration.
+
+The tracked [external review packet](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md)
+explains the doctrine, JSONL schemas, pressure model, route and archive checks,
+task-history migration, measured results, limitations, and 31 review questions.
+It also adds the missing first question: whether a live document still has a
+distinct current role. Its retain/merge/supersede/archive/delete examples are
+review proposals, not authorization to delete a file.
 
 ## What The Old User Guide Still Does
 
@@ -163,6 +170,10 @@ the next migration.
 reference during the migration, but it should no longer be the only home for
 normative user-facing contract. When the guide contains contractual language,
 that language should be dispatched into the chapter that owns the topic.
+Because all of its current sections now point into named book chapters, the
+external review packet identifies it as a strong retirement candidate. It
+remains live until a separate link-consumer and unique-content audit proves
+supersession and removes it atomically.
 
 Use it when:
 

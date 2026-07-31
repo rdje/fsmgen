@@ -6,20 +6,20 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14: activate external review packet`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14` alone is active
-  from clean bounded-task commit `7f05b41de`.
-- current_state: 844 terminal IAL2 children reconstruct from one exact-source
-  content-addressed segment; its 85-line live file retains the active root.
-  The bounded cross-tree index keeps three active/eleven proposed rows while
-  540 unique terminal rows remain exact-version query history. Integrity is
-  three trees/882 nodes/one segment/zero compact terminals/one index archive;
-  both registered task surfaces are normal.
-- next_action: author and verify `.14`'s tracked, self-contained external review
-  packet; then return to `.8` as the next migration frontier.
+  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14: publish external review packet`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`; `.14` is complete
+  and no implementation leaf is active across this commit boundary.
+- current_state: the tracked external packet explains the full doctrine,
+  JSONL/task implementation, measured migration, limitations, 31 questions,
+  and response template. Utility now precedes size in the review model, with
+  measured retain/merge/supersede/archive/delete examples. `.15` owns common
+  registry self-bounds/hard semantics; `.16` owns the utility/retirement audit.
+- next_action: circulate the packet and route returned reviews; before further
+  containment implementation, cleanly activate `.15`, `.16`, or the independent
+  `.8` family migration according to the reviewed priority.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for `.14`, `.8`-.10, or `.13`; `.3`-.5/.11 wait for the
+- blockers: none for `.15`, `.16`, `.8`-.10, or `.13`; `.3`-.5/.11 wait for the
   separately owned four-file review, and final `.12` waits for all migrations.
 
 ## Durable context
