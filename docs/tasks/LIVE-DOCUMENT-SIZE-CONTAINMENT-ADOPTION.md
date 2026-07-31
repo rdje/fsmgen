@@ -200,11 +200,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20`
-  Status: `active`
+  Status: `done`
   Goal: `Add lifecycle-scoped currency contracts without a global date heuristic.`
   Acceptance: `The doctrine distinguishes boundedness, currency, and semantic truth; only a surface that declares a currency contract is checked by its calibrated local verifier; frozen and historical records remain correctly exempt; newest-date and distinct-date heuristics are not imposed globally; positive, self-refutation, legitimate-closure-date, frozen-date, and absent-contract fixtures prove low-noise behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The neutral surface schema now accepts only an optional exact currency object containing a stable contract_id and core:/adapter:/external: verifier. No declaration means no currency check; archive, external-terminal, and frozen lifecycles cannot declare one. Core and registry-derived adapter execution use an independent currency:surface proof namespace, while external contracts remain visible fail-closed degradation. FSMGen opts only active_index into active_task_tree_alignment through scripts/check_task_tree_integrity.pl, proving source/index agreement without date inference. Positive, real self-refutation, legitimate closure-date, frozen-date, absent-contract, prohibited-frozen-contract, missing-adapter-proof, exact-adapter-proof, and undeclared-schema-field fixtures pass in the intended direction. Perl syntax is clean and focused t1553+t1554 pass at Files=2/Tests=17; final combined/path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine evidence is recorded below. No global newest-date, distinct-date, file-age, or semantic-truth heuristic; no pressure value, ceiling, document lifecycle/content, archive, frozen identity, README landing content, compiler/runtime artifact, or product behavior change.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20: enforce scoped currency contracts`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21`
@@ -301,10 +301,14 @@ no routed destination becomes the next uninstrumented blob.
   reviews already dispositioned by `.17`: their exact sizes and SHA-256 values
   match the tracked evidence table. They introduce no follow-up finding or new
   scope. Clean `.19` commit `25c815326` therefore activates `.20` next.
+- `2026-07-31`: `.20` keeps boundedness, currency, and semantic truth distinct.
+  Currency is an opt-in named local oracle; terminal/frozen history cannot
+  declare it, undeclared surfaces are not scanned, and FSMGen calibrates the
+  active-index contract to task/source alignment rather than date shape.
 
 ## Open Questions
 
-- None for completed `.18`/`.19` or active `.20`. The rereferenced PGEN/ANVIL
+- None for completed `.18`-`.20`. The rereferenced PGEN/ANVIL
   files exactly match the reviews already reconciled in the bounded disposition;
   the existing four-file review retains authority for its named semantic roles.
 
@@ -316,6 +320,12 @@ no routed destination becomes the next uninstrumented blob.
   dependencies. `.17` is complete; `.15`-`.23` become selectable after its
   clean commit, and `.8`-`.10`/`.13` wait for their declared utility or
   maintained-reference predecessors.
+
+## Acceptance Checklist (enforced) — `.20`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'baseline verifier' --oneline -- live-document-size/scripts/check_live_document_size.pl` identifies `18e2dcbc6`; source inspection shows that the introduced exact surface schema had no currency contract or execution path, so bounded/route-closed output could not make or refute a scoped current-state claim and any date scan would have lived outside lifecycle ownership.
+- [x] **ADDRESSED (verified)** — `prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t` reports `All tests successful` at `Files=2, Tests=17`; executed side effects and negative cases cover positive/local currency, real self-refutation, legitimate closure dates, frozen dates, absent contracts, forbidden frozen contracts, strict schema, delegated adapter reachability, missing proofs, and exact proofs.
+- [x] **NO REGRESSION** — staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`; all 20 surfaces and 2,782 tracked Markdown paths remain covered, `active_task_tree_alignment` executes successfully, and task/README/locality/Memory/Knowledge Map/mdBook contracts stay green without a global date heuristic.
 
 ## Acceptance Checklist (enforced) — `.19`
 
@@ -380,6 +390,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.19` activation | clean `9bd081935` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; Files=2/Tests=36; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,743 keys; Memory 43 lines; all 37 chapters test; removed 73-file/16,996-KiB build; `.19` alone active; no checker, schema, verifier, lifecycle, archive, or product behavior change |
 | `2026-07-31` | `.19` verifier execution | core/adapter/external modes; registry-derived adapter runner; exact one-use proofs; CI/driver reachability; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=21; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; Knowledge Map 1,096 facts/5,745 keys; Memory 42 lines; real fact-index verifier executes; all 37 chapters test; removed 73-file/16,996-KiB build; no pressure value, lifecycle, archive content, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.20` activation | exact rereferenced-review identity; clean `25c815326` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; PGEN 393/26,788 at SHA-256 5057b147... and ANVIL 334/44,242 at 9dac9f1f... exactly match `.17`; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,745 keys; Memory 43 lines; all 37 chapters test; removed 73-file/16,996-KiB build; all nine doctrines pass; `.20` alone active; no checker, registry, currency contract, lifecycle, archive, document-family content, frozen identity, landing content, or product behavior change |
+| `2026-07-31` | `.20` scoped currency | optional exact currency schema; lifecycle exemptions; independent proof namespace; real active-index oracle; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=17; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,748 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; real self-refutation and low-noise date fixtures pass in both directions; no global date heuristic, lifecycle/content, archive, frozen identity, landing content, or product behavior change |
 
 ## Commit Log
 
@@ -401,6 +412,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.19` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19: activate verifier execution closure` | Activate only executed-verifier and unconditional-driver-reachability implementation from clean `.18` commit `9bd081935`; implementation remains pending. |
 | `.19` verifier execution | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19: execute declared verifiers` | Execute core and delegated adapter programs, consume exact one-use proofs, fail closed on external contracts, and prove the wrapper remains on the single CI doctrine path. |
 | `.20` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20: activate scoped currency contracts` | Confirm the supplied paths exactly match the disposed reviews and activate only opt-in lifecycle currency from clean `.19`. |
+| `.20` scoped currency | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20: enforce scoped currency contracts` | Add opt-in named local currency oracles, exempt terminal/frozen history, and calibrate FSMGen's active index to source alignment rather than date shape. |
 
 ## Changelog
 
@@ -455,3 +467,7 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: The supplied review paths reproduce the exact `.17` PGEN/ANVIL
   hashes, so no disposition changes. Clean `.19` commit `25c815326` activates
   `.20` alone; currency schema, verifier, lifecycle, and behavior remain pending.
+- `2026-07-31`: `.20` adds optional named currency oracles with executed core/
+  adapter proofs, bans current-state claims on terminal/frozen history, and
+  applies one real task-index/source-alignment contract without globally
+  scanning dates or claiming semantic truth from boundedness.

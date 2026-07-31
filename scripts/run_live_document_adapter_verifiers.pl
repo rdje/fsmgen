@@ -96,7 +96,8 @@ sub execute_adapter {
 }
 
 my @adapters;
-for my $record (@{read_jsonl($registry, 'surface registry')}) {
+my $surface_records = read_jsonl($registry, 'surface registry');
+for my $record (@{$surface_records}) {
     my $verifier = $record->{verifier} // '';
     next if $verifier !~ /\Aadapter:(.+)\z/;
     my $path = $1;
@@ -104,6 +105,20 @@ for my $record (@{read_jsonl($registry, 'surface registry')}) {
     die "live-doc-adapter-verifier: invalid adapter surface id\n"
         if $id !~ /\A[a-z][a-z0-9_]*\z/;
     push @adapters, ["surface:$id", $path];
+}
+for my $record (@{$surface_records}) {
+    my $currency = $record->{currency};
+    next if ref($currency) ne 'HASH';
+    next if ($record->{lifecycle} // '')
+        =~ /\A(?:archive_terminal|external_terminal|frozen_legacy)\z/;
+    next if ($currency->{contract_id} // '') !~ /\A[a-z][a-z0-9_.-]*\z/;
+    my $verifier = $currency->{verifier} // '';
+    next if $verifier !~ /\Aadapter:(.+)\z/;
+    my $path = $1;
+    my $id = $record->{surface_id} // '';
+    die "live-doc-adapter-verifier: invalid currency surface id\n"
+        if $id !~ /\A[a-z][a-z0-9_]*\z/;
+    push @adapters, ["currency:$id", $path];
 }
 for my $record (@{read_jsonl($archives, 'archive descriptor registry')}) {
     next if ($record->{record_type} // '') ne 'descriptor';

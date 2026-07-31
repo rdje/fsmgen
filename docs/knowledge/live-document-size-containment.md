@@ -28,6 +28,9 @@ answers:
   - "which live-document families are migrated versus pinned or deferred?"
   - "are declared live-document freshness verifiers actually executed?"
   - "how are adapter live-document verifiers proved reachable from CI?"
+  - "does live-document size compliance prove that a document is current?"
+  - "how are live-document currency contracts declared?"
+  - "does FSMGen use a global newest-date or distinct-date staleness check?"
 date: 2026-07-31
 status: current
 tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
@@ -124,7 +127,11 @@ adapter runner unconditionally, while the bootstrap gate proves hosted CI
 invokes the single doctrine driver rather than re-enumerating this check.
 
 The rereferenced PGEN and ANVIL paths reproduce the exact sizes and SHA-256
-identities already recorded by `.17`; they are not follow-up revisions. Clean
-`.19` commit `25c815326` activates `.20` alone to implement lifecycle-scoped,
-opt-in currency contracts without a global date-shape heuristic. The activation
-itself changes no currency schema, verifier, or document lifecycle.
+identities already recorded by `.17`; they are not follow-up revisions. Leaf
+`.20` now makes currency lifecycle-scoped and opt-in. A declared object names a
+stable local contract plus a `core:`, `adapter:`, or fail-closed `external:`
+verifier. FSMGen's active task index declares `active_task_tree_alignment` and
+executes the existing task integrity oracle. Undeclared surfaces are not
+scanned; archive/external/frozen terminals cannot claim current-state currency;
+and no global newest-date, distinct-date, file-age, or semantic-truth inference
+is made from size compliance.

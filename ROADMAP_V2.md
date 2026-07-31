@@ -10436,8 +10436,8 @@ The first honest `R11` slices are now:
   debt baselines, bounded owned growth, and banded downward ratchets close both
   sides of transition pressure. Any widening needs an exact new append-only
   authority row plus a new decision in the same Git change; reductions are
-  free. No predecessor ceiling rises. `.19` executes declared core freshness/
-  retrieval programs, derives exact adapter proofs after registry-driven runs,
-  fails closed on external contracts, and proves the single CI driver path.
-  Clean `.19` commit `25c815326` activates `.20` alone for opt-in lifecycle-
-  scoped currency without global date heuristics.
+  free. No predecessor ceiling rises. `.19` executes declared verifiers and
+  proves the single CI driver path. `.20` now separates boundedness, currency,
+  and semantic truth: current surfaces opt into named local oracles, terminal/
+  frozen history is exempt, and no global newest-date, distinct-date, or file-
+  age heuristic exists. `.21` is the next clean correction frontier.

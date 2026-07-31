@@ -11,7 +11,7 @@ comments, malformed JSON, missing required keys, and unknown keys fail closed.
 Each surface record has this shape:
 
 ```json
-{"surface_id":"guide","lifecycle":"partitioned_canonical","locator":"collection","targets":["guide/*.md"],"index":"guide/INDEX.md","canonical_inputs":[],"routes_to":[],"owner":"guide-maintainers","health_targets":{"files":32,"lines_each":1000,"bytes_each":65536,"lines_total":12000,"bytes_total":1048576},"enforcement_ceilings":{"files":32,"lines_each":1100,"bytes_each":73728,"lines_total":13000,"bytes_total":1179648},"milestones":{"warning_pct":80,"rollover_pct":90},"containment_status":"steady","state":"normal","baseline":null,"verifier":"builtin:budget"}
+{"surface_id":"guide","lifecycle":"partitioned_canonical","locator":"collection","targets":["guide/*.md"],"index":"guide/INDEX.md","canonical_inputs":[],"routes_to":[],"owner":"guide-maintainers","health_targets":{"files":32,"lines_each":1000,"bytes_each":65536,"lines_total":12000,"bytes_total":1048576},"enforcement_ceilings":{"files":32,"lines_each":1100,"bytes_each":73728,"lines_total":13000,"bytes_total":1179648},"milestones":{"warning_pct":80,"rollover_pct":90},"containment_status":"steady","state":"normal","baseline":null,"verifier":"builtin:budget","currency":{"contract_id":"guide_source_alignment","verifier":"core:tools/check-guide-alignment"}}
 ```
 
 `lifecycle` is one of `bounded_snapshot`, `partitioned_canonical`,
@@ -53,6 +53,15 @@ their bounded `index`, except an explicitly owned debt may use `null` until its
 remediation lands. Other locators use a `null` index and an empty
 `canonical_inputs` array.
 
+`currency` is optional (or JSON `null`). When present, it contains exactly a
+stable `contract_id` and a `verifier` using the same `core:`, `adapter:`, or
+`external:` execution modes. Its meaning is local to the adopting project: the
+neutral core executes the declared oracle but does not infer currency from
+dates, file age, or size. Adapter proofs use `currency:ID`, independently from
+freshness `surface:ID` proofs. Archive, external-terminal, and frozen
+lifecycles cannot declare currency because their historical dates are not
+current-state claims.
+
 Each route record has this shape:
 
 ```json
@@ -79,8 +88,8 @@ Generated projections and `version_object` retrievals use one explicit
 execution mode: `core:PATH`, `adapter:PATH`, or `external:CONTRACT`. The neutral
 core executes a `core:` program from the supplied project root and accepts its
 result only on exit zero. For `adapter:`, the adopter executes the program and
-passes the exact `surface:ID` or `archive:ID` proof token; missing, duplicate,
-or unused tokens fail closed. `external:` is a visible degraded result and
+passes the exact `surface:ID`, `archive:ID`, or `currency:ID` proof token;
+missing, duplicate, or unused tokens fail closed. `external:` is a visible degraded result and
 cannot produce a local green result. Ordinary measured rows use
 `builtin:budget`; file retrievals continue to use `builtin:file`.
 
@@ -96,8 +105,8 @@ does not assume a version-control system.
 The checker validates schema, lifecycle/locator compatibility, repository-
 relative and same-volume local targets, non-symlink files, per-part and
 aggregate targets/ceilings, inclusive equality, debt acknowledgement and
-ratchets, generated/version-object verifier execution, frozen identity, route
-closure,
+ratchets, generated/version-object verifier execution, opt-in currency-oracle
+execution, frozen identity, route closure,
 archive-descriptor shape, and optional inventory coverage. It reports actual,
 target, ceiling, and migrated/pinned/steady pressure separately. It never
 mutates the project.

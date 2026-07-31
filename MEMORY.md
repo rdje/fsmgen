@@ -6,17 +6,16 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20:
-  activate scoped currency contracts`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20` alone is active
-  from clean `.19` commit `25c815326`.
-- current_state: Generated freshness and version-object retrieval now declare
-  `core:`, `adapter:`, or `external:` execution. Core programs run from the
-  repository root; the registry-driven adapter runner issues exact one-use
-  proofs only after success; external contracts fail closed. The wrapper and
-  hosted CI both reach the behavior through the unconditional doctrine driver.
-- next_action: implement opt-in lifecycle-scoped currency contracts and local
-  calibrated verifiers without a global date heuristic; add the declared
-  positive, self-refutation, legitimate-closure, frozen, and absent fixtures.
+  enforce scoped currency contracts`).
+- active_work_unit: `.20` is complete; `.21` is the next clean selection for
+  typed author/reader routes plus index/evidence-map completeness.
+- current_state: Currency is now optional, named, lifecycle-scoped, and executed
+  through core/adapter/external modes. The active task index runs the task-tree
+  source-alignment oracle. Undeclared surfaces are not scanned; terminal/frozen
+  history is exempt; no global date-shape or semantic-truth inference exists.
+- next_action: activate `.21` from this clean commit, then close undeclared
+  author routes, collection-index membership, and review evidence-map paths
+  with staged/resulting-tree negative fixtures.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: `.8`-`.10`/`.13` wait for utility or

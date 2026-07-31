@@ -80,6 +80,19 @@ subtest 'JSONL schema rejects malformed, blank, missing, and unknown data' => su
     ok(!$hard_pct_ok, 'obsolete hard_pct is rejected');
     like($hard_pct_output, qr/unknown key: hard_pct/, 'inert hard percentage cannot masquerade as a limit');
 
+    my $currency_shape = make_fixture();
+    mutate_record($currency_shape, 'registry/surfaces.jsonl', 'bounded_entry', sub {
+        $_[0]{currency} = {
+            contract_id => 'bad_portable_date_rule',
+            verifier => 'core:bin/freshness',
+            newest_date => '2030-01-01',
+        };
+    });
+    my ($currency_shape_ok, $currency_shape_output) = run_checker($currency_shape);
+    ok(!$currency_shape_ok, 'undeclared global date field is rejected');
+    like($currency_shape_output, qr/unknown key: newest_date/,
+        'currency schema admits only a named local contract and verifier');
+
     my $state = make_fixture();
     mutate_record($state, 'registry/surfaces.jsonl', 'bounded_entry', sub {
         $_[0]{state} = 'terminal';
@@ -98,6 +111,140 @@ subtest 'JSONL schema rejects malformed, blank, missing, and unknown data' => su
     ok(!$metadata_ok, 'archive registry without durable metadata is rejected');
     like($metadata_output, qr/lacks its schema metadata record/,
         'missing archive metadata is explicit');
+};
+
+subtest 'currency contracts are opt-in, lifecycle-scoped, and locally calibrated' => sub {
+    my $positive = make_fixture();
+    write_file(
+        $positive,
+        'bin/currency',
+        "#!/bin/sh\nprintf 'currency-ran\\n' > currency-ran\n",
+    );
+    chmod 0755, File::Spec->catfile($positive, 'bin', 'currency')
+        or die "cannot chmod positive currency verifier: $!";
+    mutate_record($positive, 'registry/surfaces.jsonl', 'bounded_entry', sub {
+        $_[0]{currency} = {
+            contract_id => 'fixture_current_marker',
+            verifier => 'core:bin/currency',
+        };
+    });
+    my ($positive_ok, $positive_output) = run_checker($positive);
+    ok($positive_ok, 'declared local currency verifier passes') or diag($positive_output);
+    ok(-f File::Spec->catfile($positive, 'currency-ran'),
+        'currency verifier side effect proves actual execution');
+    like(
+        $positive_output,
+        qr/surface bounded_entry currency fixture_current_marker core verifier executed/,
+        'currency contract and execution are reported independently from size',
+    );
+
+    my $self_refuting = make_fixture();
+    write_file(
+        $self_refuting,
+        'entry.md',
+        "destination.md\n- Last updated: `2026-01-01`\nlanded 2026-02-03\n",
+    );
+    write_file($self_refuting, 'bin/currency', <<'SCRIPT');
+#!/usr/bin/env perl
+use strict;
+use warnings;
+open my $fh, '<', 'entry.md' or exit 11;
+local $/;
+my $text = <$fh>;
+my ($declared) = $text =~ /Last updated:\s*`?([0-9]{4}-[0-9]{2}-[0-9]{2})/;
+my @dates = sort($text =~ /([0-9]{4}-[0-9]{2}-[0-9]{2})/g);
+exit(!defined($declared) || !@dates || $declared lt $dates[-1] ? 12 : 0);
+SCRIPT
+    chmod 0755, File::Spec->catfile($self_refuting, 'bin', 'currency')
+        or die "cannot chmod self-refutation verifier: $!";
+    mutate_record($self_refuting, 'registry/surfaces.jsonl', 'bounded_entry', sub {
+        $_[0]{currency} = {
+            contract_id => 'self_declared_last_updated',
+            verifier => 'core:bin/currency',
+        };
+    });
+    my ($refuting_ok, $refuting_output) = run_checker($self_refuting);
+    ok(!$refuting_ok, 'declared self-refutation fails its calibrated verifier');
+    like($refuting_output, qr/currency self_declared_last_updated core verifier failed \(exit 12\)/,
+        'self-refutation failure names the local contract and status');
+
+    my $closure = make_fixture();
+    write_file(
+        $closure,
+        'entry.md',
+        "destination.md\nCurrent status: active\nphase closed 2021-03-04\nlane landed 2022-05-06\n",
+    );
+    write_file($closure, 'bin/currency', <<'SCRIPT');
+#!/usr/bin/env perl
+use strict;
+use warnings;
+open my $fh, '<', 'entry.md' or exit 13;
+local $/;
+my $text = <$fh>;
+exit(index($text, "Current status: active\n") >= 0 ? 0 : 14);
+SCRIPT
+    chmod 0755, File::Spec->catfile($closure, 'bin', 'currency')
+        or die "cannot chmod closure-date verifier: $!";
+    mutate_record($closure, 'registry/surfaces.jsonl', 'bounded_entry', sub {
+        $_[0]{currency} = {
+            contract_id => 'current_status_marker',
+            verifier => 'core:bin/currency',
+        };
+    });
+    my ($closure_ok, $closure_output) = run_checker($closure);
+    ok($closure_ok, 'legitimate closure dates pass a non-date local contract')
+        or diag($closure_output);
+
+    my $frozen = make_fixture();
+    my $frozen_text = "- Last updated: 2020-01-01\nclosed 2030-12-31\n";
+    write_file($frozen, 'frozen.md', $frozen_text);
+    mutate_record($frozen, 'registry/surfaces.jsonl', 'frozen_record', sub {
+        $_[0]{verifier} = 'sha256:' . sha256_hex($frozen_text);
+    });
+    my ($frozen_ok, $frozen_output) = run_checker($frozen);
+    ok($frozen_ok, 'frozen dates remain exempt when exact identity holds')
+        or diag($frozen_output);
+    mutate_record($frozen, 'registry/surfaces.jsonl', 'frozen_record', sub {
+        $_[0]{currency} = {
+            contract_id => 'forbidden_frozen_currency',
+            verifier => 'core:bin/currency',
+        };
+    });
+    my ($frozen_contract_ok, $frozen_contract_output) = run_checker($frozen);
+    ok(!$frozen_contract_ok, 'frozen lifecycle cannot opt into a current-state contract');
+    like($frozen_contract_output, qr/historical or frozen lifecycle must not declare currency/,
+        'frozen/history exemption is structural');
+
+    my $absent = make_fixture();
+    write_file(
+        $absent,
+        'entry.md',
+        "destination.md\n- Last updated: 2020-01-01\nlanded 2030-12-31\n",
+    );
+    write_file($absent, 'bin/currency', "#!/bin/sh\nexit 23\n");
+    chmod 0755, File::Spec->catfile($absent, 'bin', 'currency')
+        or die "cannot chmod absent-contract sentinel: $!";
+    my ($absent_ok, $absent_output) = run_checker($absent);
+    ok($absent_ok, 'an undeclared currency heuristic is never run') or diag($absent_output);
+
+    my $adapter = make_fixture();
+    write_file($adapter, 'bin/currency', "#!/bin/sh\nexit 0\n");
+    chmod 0755, File::Spec->catfile($adapter, 'bin', 'currency')
+        or die "cannot chmod adapter currency verifier: $!";
+    mutate_record($adapter, 'registry/surfaces.jsonl', 'bounded_entry', sub {
+        $_[0]{currency} = {
+            contract_id => 'adapter_currency',
+            verifier => 'adapter:bin/currency',
+        };
+    });
+    my ($adapter_missing_ok, $adapter_missing_output) = run_checker($adapter);
+    ok(!$adapter_missing_ok, 'adapter currency requires execution proof');
+    like($adapter_missing_output, qr/lacks executed proof: currency:bounded_entry/,
+        'missing currency proof uses its own namespace');
+    my ($adapter_ok, $adapter_output) = run_checker(
+        $adapter, adapter_proofs => ['currency:bounded_entry'],
+    );
+    ok($adapter_ok, 'exact adapter currency proof passes') or diag($adapter_output);
 };
 
 subtest 'lifecycle, locality, index, and same-tree file rules fail closed' => sub {

@@ -46,19 +46,35 @@ subtest 'project adapter executes delegated verifier before proving it to the co
         'bin/freshness',
         "#!/bin/sh\nprintf 'adapter-ran\\n' > adapter-ran\n",
     );
-    chmod 0755, File::Spec->catfile($fixture, 'bin', 'freshness')
+    write_file(
+        $fixture,
+        'bin/currency',
+        "#!/bin/sh\nprintf 'currency-adapter-ran\\n' > currency-adapter-ran\n",
+    );
+    chmod 0755, File::Spec->catfile($fixture, 'bin', 'freshness'),
+        File::Spec->catfile($fixture, 'bin', 'currency')
         or die "cannot chmod adapter fixture verifier: $!";
     mutate_file(
         $fixture,
         'doctrine/live_document_size/surfaces.jsonl',
         sub { $_[0] =~ s/core:bin\/freshness/adapter:bin\/freshness/ },
     );
+    mutate_surface_record($fixture, 'active_index', sub {
+        $_[0]{currency} = {
+            contract_id => 'active_index_alignment',
+            verifier => 'adapter:bin/currency',
+        };
+    });
     my ($ok, $output) = run_checker($fixture);
     ok($ok, 'adapter execution plus matching proof passes') or diag($output);
     ok(-f File::Spec->catfile($fixture, 'adapter-ran'),
         'delegated verifier side effect proves actual execution');
+    ok(-f File::Spec->catfile($fixture, 'currency-adapter-ran'),
+        'delegated currency side effect proves actual execution');
     like($output, qr/adapter verifier execution proved: surface:fact_index/,
         'core consumes the exact adapter proof');
+    like($output, qr/adapter verifier execution proved: currency:active_index/,
+        'core consumes the exact namespaced currency proof');
 };
 
 subtest 'missing required route fails closed' => sub {
@@ -282,6 +298,25 @@ sub mutate_file {
     close $in or die "cannot close $path: $!";
     $mutator->($contents);
     write_file($root, $relative, $contents);
+}
+
+sub mutate_surface_record {
+    my ($root, $surface_id, $mutator) = @_;
+    mutate_file(
+        $root,
+        'doctrine/live_document_size/surfaces.jsonl',
+        sub {
+            my @records = map { decode_json($_) } grep { $_ ne '' } split /\n/, $_[0];
+            my $found = 0;
+            for my $record (@records) {
+                next if ($record->{surface_id} // '') ne $surface_id;
+                $mutator->($record);
+                $found++;
+            }
+            die "fixture surface $surface_id not found" if !$found;
+            $_[0] = join('', map { json_line($_) } @records);
+        },
+    );
 }
 
 sub run_checker {

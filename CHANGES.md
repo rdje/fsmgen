@@ -32242,3 +32242,12 @@ task tree and git.
 - From clean `.19` commit `25c815326`, activate `.20` alone for opt-in lifecycle
   currency. This continuity slice adds no schema, verifier, currency contract,
   lifecycle, archive, document-family content, or product behavior change.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20 — scoped currency enforced
+
+- Added optional named currency contracts with executed core/adapter proof and
+  fail-closed external modes. Terminal/frozen history cannot declare current-
+  state currency, and undeclared surfaces are never scanned.
+- FSMGen's active task index now runs the task-tree source-alignment oracle.
+  Self-refutation fails while legitimate closure/frozen dates pass; focused
+  wrapper/core coverage is green at `Files=2, Tests=17`.

@@ -172,7 +172,7 @@ sub file_sha256 {
 
 my %adapter_proof;
 for my $proof (@adapter_proofs) {
-    if ($proof !~ /\A(?:surface|archive):[a-z][a-z0-9_.-]*\z/) {
+    if ($proof !~ /\A(?:surface|archive|currency):[a-z][a-z0-9_.-]*\z/) {
         problem("invalid adapter proof id: $proof");
         next;
     }
@@ -371,7 +371,9 @@ for my $row (@{$surface_rows}) {
         owner health_targets enforcement_ceilings milestones containment_status
         state baseline verifier
     );
-    next if !validate_keys('surface registry', $line_number, $json, \@required, ['transition']);
+    next if !validate_keys(
+        'surface registry', $line_number, $json, \@required, ['transition', 'currency'],
+    );
 
     my $id = $json->{surface_id};
     if (ref($id) || !defined($id) || $id !~ /\A[a-z][a-z0-9_]*\z/) {
@@ -419,6 +421,30 @@ for my $row (@{$surface_rows}) {
     }
     if ($record{owner} eq '') {
         problem("surface $id must declare an owner");
+    }
+
+    if (defined $json->{currency}) {
+        if (ref($json->{currency}) ne 'HASH') {
+            problem("surface $id currency must be an object or null");
+        } elsif (validate_keys(
+            "surface $id currency", $line_number, $json->{currency},
+            [qw(contract_id verifier)], [],
+        )) {
+            my ($contract_id, $currency_verifier) =
+                @{$json->{currency}}{qw(contract_id verifier)};
+            if (ref($contract_id) || !defined($contract_id)
+                    || $contract_id !~ /\A[a-z][a-z0-9_.-]*\z/) {
+                problem("surface $id currency has invalid contract_id");
+            } elsif (ref($currency_verifier) || !defined($currency_verifier)
+                    || $currency_verifier !~ /\A(?:core|adapter|external):.+\z/) {
+                problem("surface $id currency verifier must declare core:, adapter:, or external: execution");
+            } elsif ($record{lifecycle} =~ /\A(?:archive_terminal|external_terminal|frozen_legacy)\z/) {
+                problem("surface $id historical or frozen lifecycle must not declare currency");
+            } else {
+                $record{currency_contract_id} = $contract_id;
+                $record{currency_verifier} = $currency_verifier;
+            }
+        }
     }
 
     my @pressure_keys = qw(files lines_each bytes_each lines_total bytes_total);
@@ -771,6 +797,14 @@ for my $id (@surface_order) {
         }
         problem("surface $id frozen target must use frozen state") if $record->{state} ne 'frozen';
         ok_note("surface $id: frozen identity checked");
+    }
+
+    if (defined $record->{currency_contract_id}) {
+        verify_execution(
+            "surface $id currency $record->{currency_contract_id}",
+            "currency:$id",
+            $record->{currency_verifier},
+        );
     }
 }
 

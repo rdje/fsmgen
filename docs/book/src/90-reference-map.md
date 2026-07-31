@@ -199,9 +199,13 @@ missing or unused proofs fail. External contracts are visible fail-closed
 degradation, never a green presence check. The bootstrap gate proves hosted CI
 reaches this path through the single unconditional doctrine driver.
 The rereferenced PGEN and ANVIL files exactly match the hashes already recorded
-by `.17`, so they add no new review scope. Clean `.19` commit `25c815326`
-activates `.20` alone for lifecycle-scoped, opt-in currency contracts; no
-currency schema or verifier changes in the activation slice.
+by `.17`, so they add no new review scope. Leaf `.20` now separates boundedness,
+currency, and semantic truth. Currency is opt-in: a current surface names one
+local contract and an executed core/adapter verifier. The active task index
+uses task-tree integrity as its source-alignment oracle. No universal newest-
+date, distinct-date, or file-age rule exists; legitimate closure dates and
+undeclared surfaces are not scanned, while archive/frozen lifecycles are
+structurally exempt.
 
 ## What The Old User Guide Still Does
 

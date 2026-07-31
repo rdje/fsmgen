@@ -52,6 +52,9 @@
   `.19` now executes `core:` verifiers, requires exact execution proofs from
   the unconditional local `adapter:` runner, and reports `external:` contracts
   as fail-closed degradation instead of treating executable presence as proof.
+  Leaf `.20` now makes currency opt-in and lifecycle-scoped; FSMGen's active
+  task index declares a source-alignment oracle, while terminal/frozen history
+  remains exempt and no global date heuristic exists.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---
@@ -101,6 +104,23 @@ Every governed surface must declare:
 
 Routing is transitive. A bounded file that sends overflow to an unbounded
 neighbor has not contained anything.
+
+## Boundedness, currency, and truth
+
+Boundedness does not imply currency, and currency does not imply unrestricted
+semantic truth. Size and route checks prove only their declared structural
+properties. A current surface may opt into a named, lifecycle-specific
+currency contract backed by a calibrated local verifier. Only that declaration
+authorizes the currency claim; the verifier must execute in the unconditional
+doctrine path and its failure must fail closed.
+
+The neutral doctrine never infers staleness from the newest date, the number of
+distinct dates, file age, or a universal threshold. Closure facts legitimately
+put old dates in current roadmaps, while archive and frozen dates are expected
+to remain old. Historical terminals and frozen records are therefore exempt
+from current-state contracts. A local verifier may detect a document's exact
+self-contradiction or compare a projection with its canonical source, but its
+grammar and false-positive calibration belong to the adopting project.
 
 ## Lifecycle classes
 
