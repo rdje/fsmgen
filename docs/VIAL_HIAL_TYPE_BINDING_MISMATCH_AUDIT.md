@@ -4,8 +4,8 @@ Date: 2026-07-31
 
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.1`
 
-Status: confirmed implementation blocker; semantic choice owned by blocked
-`.7.2`
+Status: resolved by director-approved decision `0037` under `.7.2`;
+implementation remains owned by `.7.3`
 
 ## Outcome
 
@@ -14,14 +14,14 @@ selected by decision `0036`. Three of its six VIAL transaction fields have a
 different semantic type or state domain from the authoritative HIAL bridge
 field type:
 
-| Field | VIALSemanticIR type | HIAL bridge type | Current rule |
+| Field | VIALSemanticIR type | HIAL bridge type | Selected relation |
 | --- | --- | --- | --- |
-| `address` | four-state unsigned `logic(32)` alias | four-state unsigned `logic(32)` | exact match |
-| `transfer` | four-state `htrans_t` enum over `logic(2)` | four-state unsigned `logic(2)` | enum/logic mismatch |
-| `write` | two-state `bool` | four-state unsigned `logic(1)` | state-domain/family mismatch |
-| `size` | four-state unsigned `logic(3)` | four-state unsigned `logic(3)` | exact match |
-| `data` | four-state unsigned `logic(32)` alias | four-state unsigned `logic(32)` | exact match |
-| `wait_cycles` | two-state unsigned `u(4)` | four-state unsigned `logic(4)` | state-domain/family mismatch |
+| `address` | four-state unsigned `logic(32)` alias | four-state unsigned `logic(32)` | `bit_domain_identity_v1` |
+| `transfer` | four-state `htrans_t` enum over `logic(2)` | four-state unsigned `logic(2)` | `enum_encoding_injection_v1` |
+| `write` | two-state `bool` | four-state unsigned `logic(1)` | `known_value_injection_v1` |
+| `size` | four-state unsigned `logic(3)` | four-state unsigned `logic(3)` | `bit_domain_identity_v1` |
+| `data` | four-state unsigned `logic(32)` alias | four-state unsigned `logic(32)` | `bit_domain_identity_v1` |
+| `wait_cycles` | two-state unsigned `u(4)` | four-state unsigned `logic(4)` | `known_value_injection_v1` |
 
 The fixture's sampled `HREADYOUT`, `HRESP`, `HRDATA`, and `reg_data_q` probe
 do match: VIAL deliberately declares them as four-state logic. The blocker is
@@ -54,10 +54,12 @@ transaction field takes its authoritative type ID directly from its hardware
 endpoint. A direct IAL2-via-generated/reparsed-IAL1 manifest build confirms
 that all six bridge field types are four-state `logic_uN` records.
 
-The execution contract currently says transaction fields must be
+The former execution-contract wording said transaction fields must be
 structurally equivalent, including state domain and enum member identity, and
-explicitly rejects width-only coercion, two-/four-state collapse, or target-
-language casts. Applying that rule honestly rejects the three fields above.
+explicitly rejected width-only coercion, two-/four-state collapse, or target-
+language casts. Applying that rule honestly rejected the three fields above;
+decision `0037` replaces only that missing seam with the closed directional
+proof relations selected below.
 
 The prior `.5` bridge regression proved the VIAL unit/domain/endpoint/probe/
 transaction bridge references and endpoint type/access facts. It checked the
@@ -81,9 +83,9 @@ did not select a representation relation for a VIAL semantic value that is
 driven into a HIAL hardware carrier. The checked fixture makes that missing
 relation unavoidable.
 
-## Decision Required
+## Selected Resolution
 
-Blocked `.7.2` must select one of two coherent rules before implementation:
+`.7.2` evaluated two coherent rules before implementation:
 
 1. **Exact identity.** Change the VIAL fixture/types or enrich the bridge type
    model until every field is identical. This preserves the current contract
@@ -99,7 +101,8 @@ Blocked `.7.2` must select one of two coherent rules before implementation:
    expression coercion, width/sign change, truncation, extension, wrap, or
    backend cast is admitted.
 
-The second rule is recommended. It preserves the user's abstraction: VIAL
+The director approved the second rule, now exact in decision `0037`. It
+preserves the user's abstraction: VIAL
 authors write Boolean, numeric, and enum intent, while the compiler proves how
 that value is represented on the HIAL hardware carrier. SV/UVM/VHDL remain
 backend “assembly languages”; target representation does not leak into VIAL.
@@ -107,12 +110,12 @@ It also keeps X/Z handling strict because the relation is directional: a known
 VIAL value can be driven into four-state hardware, but an unknown hardware
 value cannot silently become a two-state VIAL value.
 
-## Unblock Condition
+## Implementation Handoff
 
-The director selects the semantic rule. `.7.2` then synchronizes decision
-`0036`, the source/bridge/execution contracts, the AHB oracle, mdBook examples,
-and negative boundaries in one documentation commit. Only after that clean
-commit may `.7.3` implement binding and ExecutionIR.
+`.7.2` synchronizes decisions `0036`/`0037`, the source/bridge/execution
+contracts, the AHB oracle, mdBook examples, and negative boundaries in one
+documentation commit. Only after that clean commit may `.7.3` activate and
+implement binding and ExecutionIR.
 
 ## Reverification
 
@@ -120,6 +123,6 @@ commit may `.7.3` implement binding and ExecutionIR.
 rg -n 'transfer \(type htrans_t\)|write bool|wait_cycles \(u 4\)' vial/ahb_subordinate_base_output_arbitration.vial
 rg -n "state_domain => 'four_state'" perl/FSM/HIAL/VIALBridge/Builder.pm
 rg -n 'type_id => \$endpoint->\{type_id\}' perl/FSM/HIAL/VIALBridge/Builder.pm
-rg -n 'structurally equivalent|two-/four-state collapse|enum member order/value' docs/VIAL_EXECUTION_IR_V1_CONTRACT.md
+rg -n 'bit_domain_identity_v1|known_value_injection_v1|enum_encoding_injection_v1|four-state-to-two-state' docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md
 prove -Iperl t/1550-vial-semantic-ir.t t/1551-hial-vial-bridge-manifest.t
 ```

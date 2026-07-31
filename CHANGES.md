@@ -31507,6 +31507,26 @@ task tree and git.
   54 lines; doctrines and exact output cleanup pass.
 - No separate development note is warranted for this continuity-only slice.
 
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2 — directional type binding selected
+
+- Accepted director-approved decision `0037`: VIAL semantic types and HIAL
+  hardware carrier types remain independently authoritative and meet through
+  compiler-proved directional representation records.
+- Selected exactly three version-1 relations: equal bit-domain identity for
+  drives or samples, same-width/signed known two-state injection into
+  four-state carriers for drives, and exact enum-base encoding injection for
+  drives.
+- Froze stable type/relation IDs, ordered proof records, the checked AHB field
+  oracle, independent inout-direction proofs, and the separate probe-adapter
+  capability requirement. Inverse X/Z collapse, width/sign conversion,
+  implicit enum decode, general coercion, and target-language casts fail
+  before plan construction.
+- Synchronized decision, execution/source/bridge contracts, mismatch audit,
+  roadmap, task tree, mdBook, facts, and live continuity. Proposed `.7.3`
+  alone owns implementation after separate clean activation; this slice adds
+  no parser, bridge, binder, ExecutionIR, plan, backend, runtime, or product
+  behavior.
+
 ### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.1 — transaction type-binding blocker confirmed
 
 - Audited the checked VIALSemanticIR transaction types directly against the

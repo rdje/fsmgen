@@ -159,18 +159,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.1: confirm transaction type-binding blocker`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2`
-  Status: `blocked`
+  Status: `done`
   Goal: `Select the exact semantic rule for binding expressive VIAL value types to HIAL hardware boundary types.`
   Acceptance: `The director-approved rule either requires exact type identity and aligns the fixture/bridge accordingly, or defines a closed proof-carrying directional representation adapter that preserves VIAL intent without target-language casts or implicit runtime coercion; the execution contract, decision record, source contract, bridge contract, examples, and negative boundaries are synchronized before implementation.`
-  Verification: `Blocked pending director selection after .7.1 proves the checked fixture is not bindable under the currently frozen exact-equivalence rule.`
-  Commit: `pending`
+  Verification: `Director approved the recommended rule on 2026-07-31. Decision 0037 now keeps VIAL semantic and HIAL carrier types independently authoritative and selects exactly three compiler-proved directional relations: bit_domain_identity_v1 for equal state-domain/width/signedness in either direction, known_value_injection_v1 for same-width/signed two-state-to-four-state drives, and enum_encoding_injection_v1 for exact unique representable enum-base encodings into logic drives. Exact stable relation/proof records, the AHB field oracle, drive/sample/inout direction rules, required probe-adapter independence, VIAL execution capability, VIAL/source/bridge ownership, fail-closed inverse X/Z/width/sign/enum/coercion/cast boundaries, diagnostics, book examples, decision/audit/fact/live-doc continuity, and .7.3 implementation ownership are synchronized. Focused frontend/bridge, docs, task-tree, mdBook, Knowledge Map, Memory, diff, staged docs-only acceptance, doctrine, and cleanup evidence is recorded in the verification log. No parser, SemanticIR, bridge, binder, ExecutionIR, plan/result object or file, backend, public API, compile, simulation, runtime, parity, or product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2: select directional type binding`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3`
   Status: `proposed`
   Goal: `Implement the selected bounded binder, immutable VIALExecutionIR, deterministic random/replay, defensive plan/result schema support, and focused contract oracles.`
   Acceptance: `Implementation follows the resolved .7.2 binding rule, passes fresh box-scoped implementation acceptance and all focused/broader gates, updates bounded private capability/support accounting, and emits no target backend, public file/API, compile, simulation, runtime, or parity claim.`
-  Verification: `Blocked by .7.2 semantic selection.`
-  Commit: `pending`
+  Verification: `Selected next after clean .7.2 commit; implementation is not activated or performed in .7.2.`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
   Status: `proposed`
@@ -282,8 +282,11 @@ IAL2. Clean implementation commit `51434a2ae` and activation commit
 target-neutral ExecutionIR/logical-time/random-replay/native/plan/result/parity
 contract. Clean selection commit `eaf3f95dc` permits this separate continuity
 transition to activate `.7`; activation committed cleanly at `3ec8eab93`.
-Audit `.7.1` then confirmed the exact type-binding mismatch and split `.7.2`
-semantic selection from `.7.3` implementation. Decision `0034` records that
+Audit `.7.1` then confirmed the exact type-binding mismatch. Completed `.7.2`
+and accepted decision `0037` now select a closed directional proof relation
+between independently authoritative VIAL semantic and HIAL carrier types;
+proposed `.7.3` alone owns implementation after a clean activation. Decision
+`0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
 compiler-owned beneath C/C++ or Rust.
@@ -360,13 +363,19 @@ compiler-owned beneath C/C++ or Rust.
   usability and backend criterion: an author need not know SV/UVM/VHDL; those
   languages are conceptually backend targets, while the compiler owns target
   expertise and emits efficient, readable, source-mapped artifacts.
+- `2026-07-31`: Director-approved decision `0037` selects compiler-proved
+  directional type relations rather than forcing VIAL semantic types to copy
+  HIAL hardware carriers. Version 1 admits only bit-domain identity,
+  two-state known-value injection, and exact enum-encoding injection; inverse
+  X/Z collapse and every broader coercion remain fail-closed. Proposed `.7.3`
+  owns implementation after separate clean activation.
 
 ## Open Questions
 
-- `.7.2` must choose the exact VIAL-semantic-to-HIAL-carrier representation
-  rule confirmed missing by `.7.1`; `.7.3` then implements the private binder/
-  ExecutionIR/random-replay/plan contract without target output and preserves
-  every selected no-runtime claim.
+- Decision `0037` resolves the VIAL-semantic-to-HIAL-carrier representation
+  question found by `.7.1`; `.7.3` must implement only the three selected
+  proof relations plus the private ExecutionIR/random-replay/plan contract,
+  without target output and while preserving every selected no-runtime claim.
 - `.12` must choose the UVM revision and an actually available qualified
   simulator before native UVM implementation can claim compile/runtime support.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
@@ -379,10 +388,9 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- `.7.2` is blocked on the director's semantic choice between exact
-  cross-boundary type identity and the recommended closed proof-carrying
-  directional representation adapter. This blocks `.7.3` because the checked
-  AHB transaction otherwise cannot satisfy decision `0036` honestly.
+- None for completed `.7.2`. Proposed `.7.3` may activate only after the
+  selection commit is clean; this continuity boundary is not a semantic
+  blocker.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -405,6 +413,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.6` selection | decision `0036`; exact binding/ExecutionIR/logical-time/action/random-replay/native/plan/result/parity/diagnostic/limit/AHB/non-claim contract; current SemanticIR/bridge/extension/report evidence; task/roadmap/audit/book/fact consistency; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; contract 1,148 lines; evidence Files=3/Tests=24; trees=2/nodes=865; docs Files=4/Tests=51; 37 chapters; build 73 files/17,008,064 bytes; Knowledge Map 1,090 facts/5,658 keys; Memory 56 lines; `.7` alone selected next; no implementation/product change; output removed exactly |
 | `2026-07-31` | `.7` activation | clean `.6` predecessor; task/index/roadmap/audit/execution-contract/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.7` alone active; trees=2/nodes=865; docs Files=4/Tests=51; 37 chapters; build 73 files/17,011,689 bytes; Knowledge Map 1,090 facts/5,658 keys; Memory 55 lines; implementation and product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.7.1` audit | direct SemanticIR/bridge field projection; source/producer/contract/prior-test root cause; task split; canonical audit/fact/decision/roadmap/book/live-doc sync; focused frontend/bridge and docs evidence; task/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; three transaction type-relation mismatches confirmed; Files=2/Tests=21 and docs Files=4/Tests=309; trees=2/nodes=868; 37 chapters; build 73 files/17,024,906 bytes; Knowledge Map 1,091 facts/5,666 keys; Memory 49 lines; `.7.2` blocked pending director choice; no implementation/product change; output and failed off-route destination absent |
+| `2026-07-31` | `.7.2` selection | decision `0037`; exact directional relation records/proofs/directions/AHB oracle/capability/diagnostics/negative boundaries; source/bridge/execution contracts; audit/book/fact/live-doc continuity; focused frontend/bridge and docs evidence; task/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; director-approved bit-domain identity, known-value injection, and enum-encoding injection selected; Files=2/Tests=21 and docs Files=4/Tests=309; trees=2/nodes=868; 37 chapters; build 73 files/17,029,957 bytes; Knowledge Map 1,092 facts/5,674 keys; Memory 53 lines; `.7.3` alone selected next for clean activation; no implementation/product change; output and `.bin`/`.log` residue absent |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -489,8 +498,17 @@ compiler-owned beneath C/C++ or Rust.
 | `.6` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6: select deterministic VIAL execution contract` | Accept decision `0036`, freeze the target-neutral operational graph, logical-time/random-replay/native/plan/result/parity contract, and select proposed `.7` without product behavior. |
 | `.7` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7: activate VIAL execution implementation` | Activate only private no-backend binder/ExecutionIR/random-replay/plan implementation after clean `.6`; implementation remains unperformed. |
 | `.7.1` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.1: confirm transaction type-binding blocker` | Prove the selected exact-equivalence rule cannot bind three checked AHB transaction fields, correct the historical evidence boundary, and split semantic selection `.7.2` from implementation `.7.3` without product changes. |
+| `.7.2` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2: select directional type binding` | Accept decision `0037`, freeze the closed proof-carrying relation between VIAL semantic types and HIAL carriers, and select proposed `.7.3` without product changes. |
 
 ## Changelog
+
+- `2026-07-31`: `.7.2` accepts director-approved decision `0037`. VIAL
+  semantic types and HIAL hardware carrier types remain independently
+  authoritative; the binder must prove one closed directional bit-domain,
+  known-value, or enum-encoding relation and record its exact proofs. Sampling
+  cannot collapse X/Z, broader coercions and target casts remain forbidden,
+  and the probe adapter stays independently required. Proposed `.7.3` owns
+  implementation after separate clean activation; no product behavior changes.
 
 - `2026-07-31`: `.7.1` confirms a foundational pre-code contract mismatch:
   VIAL enum/Boolean/unsigned transaction drive types meet three HIAL

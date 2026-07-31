@@ -180,19 +180,23 @@ Implementation audit found one unresolved semantic seam before the private
 execution binder can ship. The checked VIAL transaction uses an enum for
 `transfer`, Boolean for `write`, and unsigned `u(4)` for `wait_cycles`; the
 HIAL bridge correctly describes all three hardware carriers as four-state
-logic. The selected execution contract currently demands exact type identity,
-so those three fields cannot bind honestly.
+logic. The former execution-contract wording demanded exact type identity, so
+those three fields could not bind honestly.
 
-This is deliberately fail-closed. The pending choice is either to align both
-sides to identical types, or to admit a narrow proof-carrying directional
-representation adapter. The recommended adapter would allow a known
-two-state value to drive a same-width/signed four-state carrier and an enum to
-drive its exact base encoding, while still forbidding four-state-to-two-state
-sampling, X/Z collapse, width/sign conversion, or implicit expression casts.
+Decision `0037` resolves this deliberately fail-closed boundary with three
+proof-carrying directional relations. `bit_domain_identity_v1` covers equal
+state domain/width/signedness for drive or sample.
+`known_value_injection_v1` lets a known two-state value drive a same-width/
+signed four-state carrier with all known bits and no Z.
+`enum_encoding_injection_v1` preserves an enum's exact authored base-bit
+encodings. The latter two are drive-only; four-state-to-two-state sampling,
+X/Z collapse, width/sign conversion, and implicit expression casts remain
+forbidden.
+
 That keeps Boolean/numeric/enum intent in VIAL and hardware representation in
 HIAL—the same “simpler language above backend assembly” boundary described in
-this chapter. No binder or plan is shipped until the rule is selected and the
-contracts agree.
+this chapter. `.7.3` owns the first private binder after separate clean
+activation; no binder or plan ships in the decision slice.
 
 ## The HIAL/VIAL bridge
 
@@ -640,8 +644,9 @@ native implementations, plan/result/parity records, diagnostics, limits, and
 the AHB oracle. Proposed `.7` is selected next for separate clean activation of
 private no-backend implementation. Clean selection commit `eaf3f95dc` permits
 that continuity-only activation, which committed cleanly at `3ec8eab93`.
-Audit `.7.1` then confirmed that the exact type-identity rule cannot bind the
-checked enum/Boolean/unsigned transaction fields to three HIAL four-state
-logic carriers. Blocked `.7.2` owns the semantic choice described above;
-`.7.3` owns implementation afterward. No plan/result file, target artifact,
+Audit `.7.1` then confirmed that the exact type-identity rule could not bind
+the checked enum/Boolean/unsigned transaction fields to three HIAL four-state
+logic carriers. Director-approved decision `0037` and `.7.2` select the
+directional proof rule described above; `.7.3` owns implementation afterward.
+No plan/result file, target artifact,
 compile, simulation, runtime, parity, or product behavior is claimed.

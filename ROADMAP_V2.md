@@ -9483,10 +9483,11 @@ Implementation audit `.7.1` found a real pre-binder contract gap: the checked
 VIAL transaction's enum/Boolean/unsigned drive types are not identical to the
 HIAL bridge's four-state logic carrier types. The source and bridge are each
 internally consistent, but decision `0036` selected exact identity without a
-representation relation. `.7.2` is blocked pending the director's choice
-between exact cross-boundary identity and a closed proof-carrying directional
-adapter; `.7.3` owns implementation after the synchronized decision. No
-binder, plan, backend, or runtime claim is active while this remains open.
+representation relation. Director-approved decision `0037` and `.7.2` now
+select closed bit-domain identity, known-value injection, and enum-encoding
+injection proofs; `.7.3` owns implementation after separate clean activation. No
+binder, plan, backend, or runtime claim is active until `.7.3` implements and
+verifies the selected private no-backend contract.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

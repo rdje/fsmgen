@@ -523,9 +523,9 @@ activation committed cleanly, but implementation audit `.7.1` then proved the
 checked transaction is not bindable under the selected exact type-identity
 rule. VIAL enum/Boolean/unsigned fields meet HIAL four-state logic carriers at
 three field boundaries. `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md` records
-the direct evidence and recommends a closed proof-carrying directional
-representation adapter. Blocked `.7.2` requires the director's semantic
-selection; `.7.3` owns implementation afterward. No compiler, schema,
+the direct evidence. Director-approved decision `0037` and `.7.2` select
+closed bit-domain identity, known-value injection, and enum-encoding injection
+proof relations; `.7.3` owns implementation afterward. No compiler, schema,
 artifact, tool, runtime, parity, or product behavior changes in the audit.
 
 ## Rollback

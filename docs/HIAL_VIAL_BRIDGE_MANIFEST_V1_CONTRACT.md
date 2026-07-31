@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`
-Status: implemented privately in-process by completed `.5`; binding and public tooling remain later owners
+Status: implemented privately in-process by completed `.5`; decision `0037` selects later directional VIAL binding without changing this carrier schema
 
 ## Outcome
 
@@ -298,6 +298,14 @@ width must match the validated HIAL source exactly. The first profile supports
 only logic records; enum/record/list shapes are schema-selected but fail
 closed until a later profile implements their existing HIAL contracts.
 
+Bridge types are authoritative **hardware carrier** types; they do not replace
+or duplicate VIAL semantic types. Decision `0037` assigns the later binder a
+closed directional proof between the independently owned types. Consequently,
+the bridge remains four-state for a hardware port even when a VIAL Boolean or
+unsigned value can be injected into it with all bits known and no Z. The
+bridge does not claim the inverse conversion, VIAL arithmetic meaning, or enum
+identity that HIAL did not declare.
+
 A normalized `value` has exactly:
 
 ```json
@@ -365,6 +373,11 @@ name, type_id, endpoint_id, direction, phase_role
 where direction is `drive` or `sample`, and phase role is `address_phase`,
 `data_phase`, `configuration`, or `unspecified`.
 
+Here authoritative means the exact HIAL carrier at the seam, not that a VIAL
+field must discard its own semantic type. The later binder must prove one of
+decision `0037`'s closed relations for this direction; a bridge manifest does
+not contain, forge, or pre-approve that proof.
+
 Each `events[]` record has:
 
 ```text
@@ -387,7 +400,10 @@ The checked AHB route must publish exactly transaction
 `transaction/ahb_write` with fields `address`, `transfer`, `write`, `size`,
 `data`, and `wait_cycles`, and events `requested`, `accepted`, `captured`,
 `held`, `completed`, and `error`. This matches the checked VIAL source without
-teaching VIAL AHB signal or UVM vocabulary.
+teaching VIAL AHB signal or UVM vocabulary. Field names and carrier widths/
+signedness match; `transfer`, `write`, and `wait_cycles` deliberately retain
+richer VIAL enum/two-state semantics and bind through the directional proofs
+selected by decision `0037`.
 
 ### Protocols, observations, and probes
 

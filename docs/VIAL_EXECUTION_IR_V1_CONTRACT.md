@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6`
-Status: selected; implementation is blocked at `.7.2` by the confirmed transaction type-relation mismatch recorded in `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`
+Status: selected and refined by decision `0037`; `.7.3` implementation is selected next after separate clean activation
 
 ## Outcome
 
@@ -115,6 +115,7 @@ The execution profile provides exactly these semantic capabilities:
 ```text
 vial.execution_ir.v1
 vial.execution_profile.core_directed_single_clock_execution_v1
+vial.binding.directional_representation.v1
 vial.logical_time.drive_sample_react_check_v1
 vial.random.sha256_counter_rejection_v1
 vial.replay.v1
@@ -166,28 +167,91 @@ spelling heuristics.
 2. Every domain bridge reference resolves to one domain owned by that unit.
    The active edge, reset endpoint, reset kind, and polarity become explicit
    ExecutionIR facts.
-3. Every endpoint bridge reference resolves to one bridge endpoint with
-   structurally equivalent normalized type and exact `public_port` access.
-4. Every verification-probe reference resolves to one bridge probe with
-   structurally equivalent type, `verification_probe` access, and explicit
-   adapter requirement.
+3. Every endpoint bridge reference resolves to one bridge endpoint with an
+   allowed directional type-representation relation and exact `public_port`
+   access.
+4. Every verification-probe reference resolves to one bridge probe with an
+   allowed sample relation, `verification_probe` access, and explicit adapter
+   requirement.
 5. A sampled endpoint must be an output/inout public port or a read-only probe.
    A driven endpoint must be an input/inout public port. Probes cannot be
    driven. Clock/reset ownership cannot be repurposed as ordinary data drive.
 6. Raw backend binding names are not copied into executable expressions. The
    backend later resolves a logical ID through the bridge binding table.
 
-Type equivalence is recursive and exact: state domain, signedness, width, enum
-member order/value, record field name/order/type, and list length/element type
-must agree. No width-only coercion, two-/four-state collapse, signedness
-reinterpretation, truncation, extension, or target-language cast is allowed.
+VIAL semantic types and HIAL carrier types retain distinct ownership. After
+alias resolution, every VIAL type receives stable
+`execution-type/<sha256>` identity over its canonical normalized shape. A
+binding does not replace that semantic type with the bridge type. Instead, the
+binder proves one closed directional representation relation and records
+exactly:
+
+```text
+relation_id
+kind
+direction
+semantic_type_id
+carrier_type_id
+semantic_state_domain
+carrier_state_domain
+signed
+width
+enum_encoding[]
+proof_ids[]
+```
+
+`relation_id` is
+`type-relation/<binding-id>/<RFC-6901-escaped-field-or-endpoint>/<direction>`.
+`direction` is `drive` or `sample`. Boolean `signed` and positive integer
+`width` describe both sides and therefore must agree. Enum encoding records
+contain exactly `semantic_id`, `name`, and normalized scalar `value` in
+authored member order; the array is empty for non-enums. Proof IDs use the
+fixed order selected below.
+
+Version 1 admits exactly three `kind` values:
+
+1. `bit_domain_identity_v1` requires equal scalar state domain, signedness,
+   and width. Its proof IDs are `state_domain_equal`, `signedness_equal`,
+   `width_equal`, and `bit_pattern_preserved`. It is valid for drive or sample.
+   VIAL alias and scalar-family names remain semantic metadata rather than a
+   requirement that HIAL duplicate VIAL arithmetic vocabulary.
+2. `known_value_injection_v1` requires a two-state VIAL scalar and a four-
+   state HIAL logic carrier with equal signedness and width. Its proof IDs are
+   `semantic_two_state`, `carrier_four_state`, `signedness_equal`,
+   `width_equal`, `value_bits_preserved`, `all_carrier_bits_known`, and
+   `no_carrier_z`. It is drive-only. Mapping copies value bits, sets every
+   in-range known bit, and clears every Z bit.
+3. `enum_encoding_injection_v1` requires a VIAL enum and a HIAL logic carrier.
+   Its base scalar relation must itself satisfy identity or known-value
+   injection; every authored member encoding must be normalized, unique,
+   representable, and unchanged. Its proof IDs are
+   `enum_base_relation_proven`, `enum_members_nonempty`,
+   `enum_member_encodings_unique`, `enum_member_encodings_representable`, and
+   `enum_member_encodings_preserved`. It is drive-only.
+
+A sampled endpoint/probe or sampled transaction field requires
+`bit_domain_identity_v1`. A driven endpoint/transaction field may use any
+allowed drive relation. An inout endpoint must prove independent drive and
+sample records. Aggregate carrier binding remains unsupported in the first
+profile; future records/lists require recursive exact field/item relations in
+a new profile.
+
+These relations are representation proofs, not expression conversions. No
+width-only match, four-state-to-two-state sample, signedness reinterpretation,
+truncation, extension, wrap, saturation, implicit enum decode, invalid enum
+encoding, aggregate flattening, X/Z collapse, or target-language cast is
+allowed. Failure to prove one closed record is `VIAL_BIND_TYPE_ERROR` before
+plan construction.
 
 ### Transaction and event binding
 
 Every VIAL transaction binding resolves to exactly one bridge transaction.
-Its declared fields must match the bridge field set by name and structurally
-equivalent type. Bridge transaction `type_id: null` is valid for the shipped
-scalar-only profile; each field's bridge `type_id` is authoritative.
+Its declared fields must match the bridge field set by name, and every field
+must prove the directional relation selected above from the bridge field's
+declared `drive`/`sample` direction. Bridge transaction `type_id: null` is
+valid for the shipped scalar-only profile; each field's bridge `type_id` is
+the authoritative hardware carrier while the VIAL field type remains the
+authoritative semantic type.
 
 Every event referenced by VIAL resolves through the bound transaction and has
 one bridge event record. The event's declared phase is preserved. Its closed
@@ -696,7 +760,10 @@ defensive SemanticIR data.
 location. `type_table` contains execution type IDs plus semantic/bridge type
 links. `bindings` is divided into exact `unit`, `domains`, `endpoints`,
 `probes`, `transactions`, and `events` arrays. Every executable semantic
-reference has exactly one binding record.
+reference has exactly one binding record. Endpoint/probe/transaction-field
+binding records contain the complete directional type-relation record above;
+inout records contain ordered drive then sample relations. Relation source-map
+entries point to both the VIAL type site and bridge carrier fact path.
 
 The model, scoreboard, coverage, fault, randomness, scenario, and operation
 families contain the executable normalized records selected above. Source map
@@ -746,6 +813,11 @@ records equal the private IR identity slices. The plan includes only logical
 binding IDs and access/type summaries; it omits raw bridge target names,
 private expressions, model implementation state, scoreboard queue contents,
 native artifact contents, and backend paths.
+
+Binding summaries include the complete directional relation records and proof
+IDs. This is reviewable compiler evidence, not target spelling. Backends must
+consume the selected relation and cannot substitute a language cast or a
+different unknown-value policy.
 
 `logical_time` contains exactly:
 
@@ -1070,9 +1142,27 @@ scenarios:
   success unsupported_size
 ```
 
-The exact VIAL endpoint types/access, transaction field names/types, event IDs,
-domain/reset facts, and probe access must match. The plan carries the probe's
-equivalent-adapter requirement and cannot claim any backend eligible before
+The exact VIAL endpoint access, transaction field names, event IDs,
+domain/reset facts, and probe access must match. Type binding uses these exact
+relations:
+
+```text
+address       bit_domain_identity_v1
+transfer      enum_encoding_injection_v1
+write         known_value_injection_v1
+size          bit_domain_identity_v1
+data          bit_domain_identity_v1
+wait_cycles   known_value_injection_v1
+HREADYOUT     bit_domain_identity_v1 (sample)
+HRESP         bit_domain_identity_v1 (sample)
+HRDATA        bit_domain_identity_v1 (sample)
+reg_data_q    bit_domain_identity_v1 (sample)
+```
+
+The `htrans_t` enum encoding preserves `idle=#b00` and `nonseq=#b10` in
+authored order. Boolean `write` drives known `0`/`1`; unsigned `wait_cycles`
+drives all-known four-state logic. The plan carries the probe's equivalent-
+adapter requirement independently and cannot claim any backend eligible before
 that adapter is supplied.
 
 The success scenario has a fixed plan-time `success.wait_cycles` decision,
@@ -1092,6 +1182,11 @@ Focused `.7` oracles must prove at least:
 
 - every checked source bridge reference resolves exactly and all type/access/
   direction/event constraints hold;
+- all ten checked type relations have exact kinds, directions, proof IDs,
+  enum encoding, stable IDs, source maps, and defensive plan projections;
+- four-state-to-two-state sampling, width/sign changes, invalid/duplicate enum
+  encodings, direction misuse, missing proofs, and forged relation records
+  fail with `VIAL_BIND_TYPE_ERROR`;
 - wrong route/profile/unit/domain/endpoint/probe/transaction/field/event/type/
   access/correlation/capability/residue input fails with stable diagnostics;
 - logical phase/action/fiber/join-any/tie/cancel/reset/timeout/property/model/
@@ -1138,15 +1233,12 @@ activation of `.7`. Activation changes no binding, ExecutionIR, random/replay,
 plan/result object or file, backend, runtime, or product behavior; exact
 implementation remains unperformed until the activation commits cleanly.
 
-Implementation audit `.7.1` then proved that the exact-equivalence rule above
-cannot bind three fields of the checked fixture: VIAL `transfer` is an enum
-while the bridge exposes its hardware carrier as logic, and VIAL `write` and
-`wait_cycles` are two-state while their HIAL carriers are four-state logic.
-The source and bridge contracts are each internally correct; this contract
-omitted the semantic representation relation between them. Blocked `.7.2`
-must resolve exact identity versus a closed proof-carrying directional
-adapter before any binder is implemented. The current rule remains normative
-and fail-closed until that decision commits.
+Implementation audit `.7.1` proved that the former exact-equivalence wording
+could not bind three fields of the checked fixture. The source and bridge
+contracts were each internally correct; this contract omitted the semantic
+representation relation between them. The director approved the recommended
+directional proof rule, and decision `0037` plus `.7.2` select the exact
+records above. `.7.3` owns implementation after separate clean activation.
 
 ## Validation And Rollback
 

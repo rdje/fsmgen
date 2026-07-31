@@ -34391,7 +34391,8 @@ Boolean, and unsigned arithmetic type; HIAL deliberately retains four-state
 logic for the corresponding hardware ports. Neither side is wrong. Decision
 `0036` omitted the representation relation that would connect them.
 
-The safe candidate is directional and proof-carrying, not general coercion. A
+The director approved the safe directional, proof-carrying rule in decision
+`0037`; it is not general coercion. A
 known two-state scalar can inject into a same-width/signed four-state carrier
 with a full known mask and no Z, and an enum can inject through its exact base
 encoding. The inverse is not automatic: sampled X/Z cannot become a two-state
@@ -34402,5 +34403,5 @@ This distinction preserves VIAL abstraction. Authors keep Boolean, numeric,
 and enum intent rather than spelling hardware representation details; the
 compiler proves the representation at the HIAL seam. It also gives backends a
 target-neutral contract instead of leaking SystemVerilog or VHDL conversion
-rules upward. The candidate is not accepted until blocked `.7.2` receives the
-director's choice.
+rules upward. `.7.3` must implement only the three selected relation kinds and
+remain fail-closed for every inverse or wider conversion.

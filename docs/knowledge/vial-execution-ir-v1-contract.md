@@ -21,8 +21,8 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, execution-ir, logical-time, binding, determinism, random, replay, native-extension, plan, result, parity]
-evidence: docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
-reverify: rg -n 'fsmgen\.vial_execution_ir\.v1|core_directed_single_clock_execution_v1|domain.*cycle.*phase.*ordinal|sha256_counter_rejection_v1|fsmgen\.vial_native_extension\.v1|fsmgen\.vial_plan\.v1|fsmgen\.verification_result_manifest\.v1|fsmgen\.vial_parity_report\.v1|VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT|\.7\.2' docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+evidence: docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
+reverify: rg -n 'fsmgen\.vial_execution_ir\.v1|core_directed_single_clock_execution_v1|domain.*cycle.*phase.*ordinal|sha256_counter_rejection_v1|fsmgen\.vial_native_extension\.v1|fsmgen\.vial_plan\.v1|fsmgen\.verification_result_manifest\.v1|fsmgen\.vial_parity_report\.v1|bit_domain_identity_v1|known_value_injection_v1|enum_encoding_injection_v1|\.7\.3' docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
 Decision `0036` selects private immutable
@@ -55,7 +55,8 @@ facts. Runtime backends later produce
 portable/paired-native logical outcomes through a deep-validated parity
 projection/report. Clean selection commit `eaf3f95dc` permits active `.7` to
 own private no-backend implementation after separate continuity activation.
-Audit `.7.1` subsequently proved that the checked transaction cannot satisfy
-the current exact VIAL/HIAL field-type rule. Blocked `.7.2` must choose and
-synchronize the representation relation before `.7.3` implements the binder;
-see `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.
+Audit `.7.1` subsequently proved that the checked transaction could not
+satisfy the former exact VIAL/HIAL field-type rule. Director-approved decision
+`0037` and `.7.2` now select closed directional identity, known-value
+injection, and enum-encoding proof records. `.7.3` implements the binder after
+separate clean activation; see `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.

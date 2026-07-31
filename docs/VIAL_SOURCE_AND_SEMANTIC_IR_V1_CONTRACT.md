@@ -166,6 +166,13 @@ signedness, or wrap. `#b` is four-state and must exactly match a `logic` or
 constructed only through transaction field lists or model state declarations;
 there is no positional aggregate literal in version 1.
 
+These are semantic types, not forced hardware-carrier spellings. Decision
+`0037` preserves them through later binding: a VIAL Boolean, numeric value, or
+enum remains that type in SemanticIR and ExecutionIR even when a closed
+directional proof represents it on a same-width HIAL logic carrier. The source
+language never asks an author to insert a SystemVerilog/VHDL cast or weaken a
+two-state/enum declaration merely to match a hardware port.
+
 The normalized four-state value is target-neutral:
 
 ```text
@@ -239,7 +246,10 @@ language and its typed projection for HIAL and VIAL together.
 
 Fields and events are ordered and unique. A transaction is a semantic record,
 not a packed bus or UVM sequence item. DUT bindings later associate it with an
-opaque bridge transaction reference and verify field/event equivalence.
+opaque bridge transaction reference, verify field/event identity, and prove
+each field's direction-specific semantic-type-to-HIAL-carrier relation. That
+proof is owned by ExecutionIR decision `0037`; it is not an implicit source-
+language coercion and does not mutate the authored transaction type.
 
 ### Deterministic models
 
@@ -822,6 +832,8 @@ Focused t1550 must prove at least:
 - enum overflow, recursive aliases, record/list/width limits, type mismatch,
   signedness mismatch, X/Z-to-two-state coercion, incomplete transaction
   fields, unknown arithmetic, and invalid equality/property operands;
+- any future attempt to treat a later carrier relation as source-level width/
+  sign coercion, enum erasure, or four-state-to-two-state conversion;
 - model nondeterminism, missing input/rule/state assignment targets;
 - unbounded/zero timeout, repeat, scoreboard, cross, fault, or window; invalid
   parallel shape and profile-multiple-domain use;

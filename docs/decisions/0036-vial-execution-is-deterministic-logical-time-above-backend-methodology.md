@@ -108,7 +108,9 @@ Boolean, and unsigned numeric type where the HIAL bridge correctly preserves
 their hardware carriers as four-state logic. The evidence and alternatives are
 canonical in `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.
 
-This is not silently resolved here. Blocked `.7.2` must amend this decision
-and all three source/bridge/execution contracts after the director chooses
-exact identity or a closed proof-carrying directional representation adapter.
-Until then, implementation remains fail-closed and no binder exists.
+The director approved the closed proof-carrying directional representation
+rule. Decision `0037` and completed `.7.2` now refine this decision without
+weakening its target-neutral type safety: semantic types remain VIAL-owned,
+carrier types remain HIAL-owned, drive relations are closed and directional,
+and inverse X/Z collapse remains forbidden. `.7.3` owns implementation after
+separate clean activation; no binder exists in the selection slice.
