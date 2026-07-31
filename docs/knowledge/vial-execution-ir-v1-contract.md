@@ -58,5 +58,7 @@ own private no-backend implementation after separate continuity activation.
 Audit `.7.1` subsequently proved that the checked transaction could not
 satisfy the former exact VIAL/HIAL field-type rule. Director-approved decision
 `0037` and `.7.2` now select closed directional identity, known-value
-injection, and enum-encoding proof records. `.7.3` implements the binder after
-separate clean activation; see `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.
+injection, and enum-encoding proof records. Clean selection commit `2a1b3cefc`
+permits active `.7.3` to implement the binder after separate continuity
+activation; activation changes no product behavior. See
+`docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.

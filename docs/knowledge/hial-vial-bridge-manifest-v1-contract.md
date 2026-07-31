@@ -61,4 +61,5 @@ work after separate continuity activation. Decision `0037` and `.7.2` now
 clarify that bridge field types remain authoritative hardware carriers while
 the later ExecutionIR binder proves a closed directional relation from the
 independently owned VIAL semantic type. This bridge schema and producer remain
-unchanged; `.7.3` owns implementation.
+unchanged. Clean selection commit `2a1b3cefc` permits active `.7.3` to own
+implementation after separate continuity activation.

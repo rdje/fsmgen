@@ -29,7 +29,8 @@ expressive authored value semantics; HIAL preserves observable hardware logic
 semantics. The frozen execution contract omitted the representation relation
 between them. Active `.7` is split: audit `.7.1` records the evidence,
 director-approved `.7.2` selects the semantic rule through decision `0037`,
-and `.7.3` owns implementation only after that rule commits cleanly.
+and clean selection commit `2a1b3cefc` permits active `.7.3` to own
+implementation after separate continuity activation.
 
 The selected rule is a closed proof-carrying directional relation: known
 two-state values inject into same-width/signed four-state carriers with all

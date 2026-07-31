@@ -195,8 +195,9 @@ forbidden.
 
 That keeps Boolean/numeric/enum intent in VIAL and hardware representation in
 HIAL—the same “simpler language above backend assembly” boundary described in
-this chapter. `.7.3` owns the first private binder after separate clean
-activation; no binder or plan ships in the decision slice.
+this chapter. Clean selection commit `2a1b3cefc` permits active `.7.3` to own
+the first private binder after separate continuity activation; no binder or
+plan ships in activation.
 
 ## The HIAL/VIAL bridge
 
@@ -647,6 +648,7 @@ that continuity-only activation, which committed cleanly at `3ec8eab93`.
 Audit `.7.1` then confirmed that the exact type-identity rule could not bind
 the checked enum/Boolean/unsigned transaction fields to three HIAL four-state
 logic carriers. Director-approved decision `0037` and `.7.2` select the
-directional proof rule described above; `.7.3` owns implementation afterward.
-No plan/result file, target artifact,
-compile, simulation, runtime, parity, or product behavior is claimed.
+directional proof rule described above. Clean selection commit `2a1b3cefc`
+activates `.7.3` continuity only; exact implementation remains unperformed.
+No plan/result file, target artifact, compile, simulation, runtime, parity, or
+product behavior changes in activation.

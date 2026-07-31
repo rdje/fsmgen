@@ -4457,9 +4457,9 @@ The activation committed cleanly at `3ec8eab93`, but pre-code audit `.7.1`
 found that VIAL enum/Boolean/unsigned transaction types are not identical to
 three HIAL four-state logic carrier types. Director-approved decision `0037`
 and `.7.2` now select exact bit-domain identity, known-value injection, and
-enum-encoding injection proofs; `.7.3` owns implementation afterward. No
-binder, plan, backend, runtime, parity, or
-product behavior is claimed until `.7.3` implements the selected rule. See the
+enum-encoding injection proofs. Clean selection commit `2a1b3cefc` activates
+`.7.3` continuity only; exact implementation remains unperformed. No binder,
+plan, backend, runtime, parity, or product behavior changes in activation. See the
 [type-binding mismatch audit](../../VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md).
 
 Read-data interleaving queue readiness audit:
@@ -12229,7 +12229,8 @@ private implementation remains unperformed and no product behavior changes.
 Audit `.7.1` subsequently confirms an exact-rule mismatch between three
 expressive VIAL transaction types and their HIAL four-state hardware carriers.
 Decision `0037` and `.7.2` select closed directional proof relations; `.7.3`
-owns implementation afterward.
+owns implementation afterward. Clean selection commit `2a1b3cefc` activates
+`.7.3` continuity only; implementation and product behavior remain unchanged.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

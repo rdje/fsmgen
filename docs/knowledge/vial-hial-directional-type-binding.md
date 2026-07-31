@@ -40,3 +40,7 @@ The checked AHB transaction uses identity for address/size/data, enum encoding
 for transfer, and known-value injection for write/wait_cycles. All sampled
 public outputs and the declared probe use identity. The probe's separate
 equivalent-adapter capability remains required.
+
+Clean selection commit `2a1b3cefc` permits active `.7.3` to implement these
+records after separate continuity activation. Activation itself changes no
+binder, plan, backend, runtime, or product behavior.

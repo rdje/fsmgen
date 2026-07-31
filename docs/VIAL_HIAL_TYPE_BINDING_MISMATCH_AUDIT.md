@@ -5,7 +5,7 @@ Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.1`
 
 Status: resolved by director-approved decision `0037` under `.7.2`;
-implementation remains owned by `.7.3`
+implementation is active under `.7.3` after separate continuity activation
 
 ## Outcome
 
@@ -115,7 +115,8 @@ value cannot silently become a two-state VIAL value.
 `.7.2` synchronizes decisions `0036`/`0037`, the source/bridge/execution
 contracts, the AHB oracle, mdBook examples, and negative boundaries in one
 documentation commit. Only after that clean commit may `.7.3` activate and
-implement binding and ExecutionIR.
+implement binding and ExecutionIR. That selection is clean at `2a1b3cefc`;
+this continuity slice activates `.7.3` without implementing it.
 
 ## Reverification
 

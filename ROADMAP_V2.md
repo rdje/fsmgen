@@ -9488,6 +9488,13 @@ select closed bit-domain identity, known-value injection, and enum-encoding
 injection proofs; `.7.3` owns implementation after separate clean activation. No
 binder, plan, backend, or runtime claim is active until `.7.3` implements and
 verifies the selected private no-backend contract.
+Clean directional-binding selection commit `2a1b3cefc` permits a continuity-
+only activation of `.7.3`. This transition changes no VIAL source/parser/
+SemanticIR, HIAL bridge/parser/annotation/report, binding/ExecutionIR or
+random/replay implementation, plan/result object/schema/file, scheduler,
+native extension implementation, backend, CLI/API, capability/support
+surface, compilation, simulation, runtime, parity, or product behavior. Exact
+implementation remains unperformed until activation commits cleanly.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

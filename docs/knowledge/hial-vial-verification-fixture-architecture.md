@@ -85,4 +85,6 @@ Clean selection commit `eaf3f95dc` permits active `.7` to own private no-
 backend work after separate continuity activation. Audit `.7.1` found the
 exact-type/carrier mismatch; director-approved decision `0037` and `.7.2`
 select closed directional proof relations without changing VIAL source or the
-bridge schema. `.7.3` owns implementation after separate clean activation.
+bridge schema. Clean selection commit `2a1b3cefc` permits active `.7.3` to own
+implementation after separate continuity activation; activation changes no
+product behavior.

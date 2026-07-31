@@ -68,4 +68,5 @@ and HIAL four-state hardware carriers blocks the checked fixture. `.7.2` is
 now director-approved through decision `0037`: proof-carrying directional
 identity/injection/enum-encoding relations preserve this expressive boundary
 while inverse X/Z collapse stays forbidden. `.7.3` owns implementation after
-separate clean activation.
+separate clean activation. Clean selection commit `2a1b3cefc` permits active
+`.7.3` implementation continuity; activation changes no product behavior.

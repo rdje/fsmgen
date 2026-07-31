@@ -525,8 +525,9 @@ rule. VIAL enum/Boolean/unsigned fields meet HIAL four-state logic carriers at
 three field boundaries. `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md` records
 the direct evidence. Director-approved decision `0037` and `.7.2` select
 closed bit-domain identity, known-value injection, and enum-encoding injection
-proof relations; `.7.3` owns implementation afterward. No compiler, schema,
-artifact, tool, runtime, parity, or product behavior changes in the audit.
+proof relations. Clean selection commit `2a1b3cefc` permits active `.7.3` to
+own implementation after separate continuity activation. No compiler, schema,
+artifact, tool, runtime, parity, or product behavior changes in activation.
 
 ## Rollback
 

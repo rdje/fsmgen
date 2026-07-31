@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6`
-Status: selected and refined by decision `0037`; `.7.3` implementation is selected next after separate clean activation
+Status: selected and refined by decision `0037`; `.7.3` implementation is active after separate clean activation
 
 ## Outcome
 
@@ -1239,6 +1239,11 @@ contracts were each internally correct; this contract omitted the semantic
 representation relation between them. The director approved the recommended
 directional proof rule, and decision `0037` plus `.7.2` select the exact
 records above. `.7.3` owns implementation after separate clean activation.
+Clean directional-binding selection commit `2a1b3cefc` permits that
+continuity-only activation. Activation changes no binding, ExecutionIR,
+random/replay, plan/result object or file, backend, runtime, parity, or product
+behavior; exact implementation remains unperformed until activation commits
+cleanly.
 
 ## Validation And Rollback
 

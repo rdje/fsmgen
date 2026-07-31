@@ -166,11 +166,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2: select directional type binding`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected bounded binder, immutable VIALExecutionIR, deterministic random/replay, defensive plan/result schema support, and focused contract oracles.`
   Acceptance: `Implementation follows the resolved .7.2 binding rule, passes fresh box-scoped implementation acceptance and all focused/broader gates, updates bounded private capability/support accounting, and emits no target backend, public file/API, compile, simulation, runtime, or parity claim.`
-  Verification: `Selected next after clean .7.2 commit; implementation is not activated or performed in .7.2.`
-  Commit: `pending activation`
+  Verification: `Activated continuity-only from clean .7.2 selection commit 2a1b3cefc. This transition changes task/index, roadmap, audit, execution/type-binding contract boundaries, mdBook, facts, bounded Memory, changelog, and regenerated Knowledge Map continuity only. Final validation counts are recorded in the verification log. Exact binder/ExecutionIR/random-replay/plan implementation remains unperformed until activation commits cleanly. No VIAL source/parser/SemanticIR, HIAL bridge/parser/annotation/report, binding/ExecutionIR implementation, plan/result object or file, scheduler, native extension implementation, backend, CLI/API, capability/support surface, compile, simulation, runtime, parity, or product behavior changes during activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3: activate bounded VIAL execution implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
   Status: `proposed`
@@ -285,7 +285,8 @@ transition to activate `.7`; activation committed cleanly at `3ec8eab93`.
 Audit `.7.1` then confirmed the exact type-binding mismatch. Completed `.7.2`
 and accepted decision `0037` now select a closed directional proof relation
 between independently authoritative VIAL semantic and HIAL carrier types;
-proposed `.7.3` alone owns implementation after a clean activation. Decision
+active `.7.3` alone owns implementation after clean selection commit
+`2a1b3cefc` and its separate continuity activation. Decision
 `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
@@ -369,11 +370,15 @@ compiler-owned beneath C/C++ or Rust.
   two-state known-value injection, and exact enum-encoding injection; inverse
   X/Z collapse and every broader coercion remain fail-closed. Proposed `.7.3`
   owns implementation after separate clean activation.
+- `2026-07-31`: Clean `.7.2` selection commit `2a1b3cefc` permits a separate
+  continuity-only activation of `.7.3`. Activation changes only durable
+  ownership/frontier records; exact binder, ExecutionIR, random/replay, plan,
+  capability/support, backend, runtime, and product behavior remain unchanged.
 
 ## Open Questions
 
 - Decision `0037` resolves the VIAL-semantic-to-HIAL-carrier representation
-  question found by `.7.1`; `.7.3` must implement only the three selected
+  question found by `.7.1`; active `.7.3` must implement only the three selected
   proof relations plus the private ExecutionIR/random-replay/plan contract,
   without target output and while preserving every selected no-runtime claim.
 - `.12` must choose the UVM revision and an actually available qualified
@@ -388,9 +393,8 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for completed `.7.2`. Proposed `.7.3` may activate only after the
-  selection commit is clean; this continuity boundary is not a semantic
-  blocker.
+- None for active `.7.3`. Implementation begins only after this activation
+  commit is clean; this continuity boundary is not a semantic blocker.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -414,6 +418,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.7` activation | clean `.6` predecessor; task/index/roadmap/audit/execution-contract/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.7` alone active; trees=2/nodes=865; docs Files=4/Tests=51; 37 chapters; build 73 files/17,011,689 bytes; Knowledge Map 1,090 facts/5,658 keys; Memory 55 lines; implementation and product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.7.1` audit | direct SemanticIR/bridge field projection; source/producer/contract/prior-test root cause; task split; canonical audit/fact/decision/roadmap/book/live-doc sync; focused frontend/bridge and docs evidence; task/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; three transaction type-relation mismatches confirmed; Files=2/Tests=21 and docs Files=4/Tests=309; trees=2/nodes=868; 37 chapters; build 73 files/17,024,906 bytes; Knowledge Map 1,091 facts/5,666 keys; Memory 49 lines; `.7.2` blocked pending director choice; no implementation/product change; output and failed off-route destination absent |
 | `2026-07-31` | `.7.2` selection | decision `0037`; exact directional relation records/proofs/directions/AHB oracle/capability/diagnostics/negative boundaries; source/bridge/execution contracts; audit/book/fact/live-doc continuity; focused frontend/bridge and docs evidence; task/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; director-approved bit-domain identity, known-value injection, and enum-encoding injection selected; Files=2/Tests=21 and docs Files=4/Tests=309; trees=2/nodes=868; 37 chapters; build 73 files/17,029,957 bytes; Knowledge Map 1,092 facts/5,674 keys; Memory 53 lines; `.7.3` alone selected next for clean activation; no implementation/product change; output and `.bin`/`.log` residue absent |
+| `2026-07-31` | `.7.3` activation | clean `.7.2` predecessor; task/index/roadmap/audit/contracts/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.7.3` alone active; trees=2/nodes=868; docs Files=4/Tests=309; 37 chapters; build 73 files/17,031,568 bytes; Knowledge Map 1,092 facts/5,674 keys; Memory 53 lines; implementation and product behavior unchanged; output and `.bin`/`.log` residue absent |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -499,8 +504,16 @@ compiler-owned beneath C/C++ or Rust.
 | `.7` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7: activate VIAL execution implementation` | Activate only private no-backend binder/ExecutionIR/random-replay/plan implementation after clean `.6`; implementation remains unperformed. |
 | `.7.1` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.1: confirm transaction type-binding blocker` | Prove the selected exact-equivalence rule cannot bind three checked AHB transaction fields, correct the historical evidence boundary, and split semantic selection `.7.2` from implementation `.7.3` without product changes. |
 | `.7.2` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2: select directional type binding` | Accept decision `0037`, freeze the closed proof-carrying relation between VIAL semantic types and HIAL carriers, and select proposed `.7.3` without product changes. |
+| `.7.3` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3: activate bounded VIAL execution implementation` | Activate only the selected private no-backend binder/ExecutionIR/random-replay/plan implementation after clean `.7.2`; implementation remains unperformed. |
 
 ## Changelog
+
+- `2026-07-31`: Clean `.7.2` selection commit `2a1b3cefc` activates only
+  private no-backend implementation `.7.3`. No parser, SemanticIR, bridge,
+  binder, ExecutionIR, random/replay, plan/result object or file, scheduler,
+  native extension implementation, backend, capability/support surface,
+  compile, simulation, runtime, parity, or product behavior changes during
+  activation.
 
 - `2026-07-31`: `.7.2` accepts director-approved decision `0037`. VIAL
   semantic types and HIAL hardware carrier types remain independently

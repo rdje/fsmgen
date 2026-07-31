@@ -6,19 +6,19 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.2: select directional type binding`).
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.3: activate bounded VIAL execution implementation`).
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.7` is an
   active container, `.7.1` audit and `.7.2` selection are complete, and `.7.3`
-  is selected next but remains proposed.
+  is active for private no-backend implementation.
 - current_state: director-approved decision `0037` resolves the VIAL-semantic-
-  to-HIAL-carrier seam with closed compiler-proved directional relations. No
-  binder or ExecutionIR implementation exists yet.
-- next_action: from the clean `.7.2` selection commit, activate only `.7.3`
-  through a separate continuity slice; then establish fresh task-acceptance
-  evidence before any binder/ExecutionIR source change.
-- in_flight_uncommitted: none after this selection commit; no background job
+  to-HIAL-carrier seam with closed compiler-proved directional relations. This
+  commit activates implementation continuity only; no binder exists yet.
+- next_action: establish fresh `.7.3` task-acceptance root-cause evidence, then
+  implement the selected private binder, immutable ExecutionIR, deterministic
+  random/replay, defensive plan/result support, and focused no-backend oracles.
+- in_flight_uncommitted: none after this activation commit; no background job
   and repository-local mdBook output was removed exactly.
-- blockers: none for `.7.2` or `.7.3` activation. Proposed `CAPABILITY-MANIFEST-
+- blockers: none for active `.7.3`. Proposed `CAPABILITY-MANIFEST-
   VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.1` separately owns pre-existing t370
   discovery-map drift.
 
