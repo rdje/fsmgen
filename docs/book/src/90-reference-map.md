@@ -87,8 +87,10 @@ shard from smaller canonical sources, and exact engineering chronology can
 leave the working tree only after digest-verified retrieval exists. Per-part
 sharding never substitutes for file-count and aggregate containment. Decision
 0041 selects this contract and the
-`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` tree owns implementation; selection
-itself changes no document topology or threshold.
+`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` tree owns implementation. Clean
+selection commit `139efbf90` completes `.1` continuity activation and leaves
+`.2` alone active for the common registry/checker; neither selection nor
+activation changes a document topology or threshold.
 
 `TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
 standard. FSMGen's registered checker reads data-only staged-path and evidence

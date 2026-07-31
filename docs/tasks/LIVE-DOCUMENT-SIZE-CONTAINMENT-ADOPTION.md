@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `infra/continuity / project-wide live-document lifecycle`
 - Created: `2026-07-31`
 - Last updated: `2026-07-31`
@@ -49,19 +49,19 @@ no routed destination becomes the next uninstrumented blob.
 ## Task Tree
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`
-  Status: `proposed`
+  Status: `active`
   Goal: `Bound all live document families over durable, addressable storage.`
   Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Activate common enforcement implementation from a clean selection commit.`
   Acceptance: `Only task/index/roadmap/book/fact/Memory/changelog continuity changes; .2 becomes the sole active implementation leaf; no registry, checker, threshold, topology, content, frozen file, or product behavior changes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean selection commit 139efbf90 activates only the common enforcement implementation frontier. .2 alone becomes active; no registry, checker, test, threshold, topology, document-family content, frozen file, or product behavior changes. All 37 mdBook chapters test and the repository-local 73-file/17,096,423-byte build passes and is removed exactly; Knowledge Map passes at 1,094 facts/5,702 keys; task-tree integrity passes at trees=3/nodes=881; relative paths pass Files=1/Tests=2; Memory is 34 lines; all 15 existing route controls, diff hygiene, and all eight staged doctrine checks pass with docs-only task acceptance.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1: activate common enforcement`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement the project data registry and neutral lifecycle checker contract.`
   Acceptance: `A data-only registry inventories every governed surface; one unconditional checker enforces classes, routes, relative/same-volume paths, independent budgets and 80/90/100 state, exact-baseline transition debt limited to containment-program continuity, owned warning debt, frozen/sealed identities, generated freshness, and archive descriptors; positive and fail-closed fixtures cover every class; existing family topology and limits do not change.`
   Verification: `pending`
@@ -152,6 +152,8 @@ no routed destination becomes the next uninstrumented blob.
   obligations; sharding cannot be the final answer for an append ledger.
 - `2026-07-31`: Keep frozen status lifecycle authority with the existing
   `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` owner.
+- `2026-07-31`: Clean decision/doctrine/audit commit `139efbf90` activates `.1`
+  continuity only and leaves `.2` as the sole active implementation frontier.
 
 ## Open Questions
 
@@ -165,3 +167,20 @@ no routed destination becomes the next uninstrumented blob.
   select the four files' long-term roles. `.1`, `.2`, `.6`-`.10`, and `.12`
   remain independently schedulable subject to their ordinary predecessor
   dependencies.
+
+## Verification Log
+
+| Date | Leaf | Checks | Result |
+| --- | --- | --- | --- |
+| `2026-07-31` | `.1` activation | clean `139efbf90` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/mdBook/Knowledge Map/task/Memory/route/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; 37 chapters; build 73 files/17,096,423 bytes; Knowledge Map 1,094 facts/5,702 keys; trees=3/nodes=881; Memory 34 lines; all eight staged doctrines pass with docs-only task acceptance; `.2` alone active; no implementation, threshold, topology, document-family content, frozen-file, or product change |
+
+## Commit Log
+
+| Leaf | Commit subject or reference | Notes |
+| --- | --- | --- |
+| `.1` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1: activate common enforcement` | Activate `.2` from the clean doctrine-selection commit without implementing it. |
+
+## Changelog
+
+- `2026-07-31`: Clean selection commit `139efbf90` activates `.1` continuity;
+  `.2` becomes the sole active common-registry/checker implementation leaf.

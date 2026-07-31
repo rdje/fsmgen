@@ -10354,5 +10354,7 @@ The first honest `R11` slices are now:
   audit assigns implementation leaves for the high-water roadmap, task index/
   tree, Chapter 14, change/rationale ledgers, and structural Knowledge Map
   outlier; frozen status lifecycle remains with its scheduled decision owner.
-  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` is proposed for clean activation;
-  no family migration or threshold change occurs in the selection slice.
+  Clean selection commit `139efbf90` activates
+  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1` continuity only; `.2` alone is
+  active to implement the common data registry/checker before any family
+  migration. No family migration or threshold change occurs in activation.

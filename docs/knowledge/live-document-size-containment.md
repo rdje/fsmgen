@@ -32,7 +32,9 @@ query-first terminal with digest/retrieval proof. Sharding alone is insufficient
 collections also need file-count and aggregate transitions.
 
 Decision 0041 accepts the architecture. The measured revision and exact
-family owners are in `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md`; the
-`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` task tree implements them. The
-selection itself changes no document topology, thresholds, frozen content, or
-product behavior.
+family owners are in `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md`. Clean
+selection commit `139efbf90` completes
+`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1` continuity activation; `.2` alone
+is active to implement the common registry/checker before any family
+migration. Selection and activation change no document topology, thresholds,
+frozen content, or product behavior.

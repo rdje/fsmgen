@@ -31823,3 +31823,18 @@ task tree and git.
   A supplemental broader documentation run passed t1304-t1306 before the RAM
   guard stopped t1307 pre-execution at 95.2% host usage; no failing test was
   observed.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1 — common enforcement activated
+
+- From clean doctrine-selection commit `139efbf90`, activated only the
+  continuity state for the project-wide adoption tree. `.2` alone is now
+  active to implement the common data registry/checker before any document-
+  family migration.
+- No registry, checker, test, threshold, topology, document-family content,
+  frozen file, compiler/runtime output, or VIAL behavior changes in this
+  activation. All 37 mdBook chapters test and the repository-local 73-file/
+  17,096,423-byte build passes then is removed; Knowledge Map validates 1,094
+  facts/5,702 keys; task-tree integrity reports trees=3/nodes=881; relative
+  paths pass Files=1/Tests=2; Memory is 34 lines; all 15 route controls and
+  diff hygiene pass. All eight staged doctrine checks pass with docs-only task
+  acceptance. No separate development note is warranted.
