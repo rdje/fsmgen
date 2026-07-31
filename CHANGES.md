@@ -31894,3 +31894,17 @@ task tree and git.
   chapters, a removed 73-file/17,108,469-byte local build, and Knowledge Map
   1,095 facts/5,714 keys pass. Decision 0042 owns the rationale, so no duplicate
   development note is added.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7 — task-tree migration activated
+
+- From clean bounded-history commit `78adb81ae`, activated `.7` alone for the
+  first IAL2/task/index migration through decision 0042's exact bounded storage
+  forms. This continuity-only slice moves no task node or index row and changes
+  no manifest, checker, threshold, frozen identity, README landing content,
+  compiler/runtime/generated product output, or VIAL behavior. No separate
+  development note is warranted. Paths pass Files=1/Tests=2; all 37 mdBook
+  chapters test and the repository-local 73-file/17,110,023-byte build passes
+  then is removed exactly; Knowledge Map validates 1,095 facts/5,714 keys;
+  task integrity remains three trees/882 nodes/zero segments/zero compact
+  terminals; Memory is 35 lines; and all 20 live-document surfaces plus
+  2,775/2,775 tracked Markdown paths pass.

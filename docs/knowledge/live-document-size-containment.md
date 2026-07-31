@@ -45,3 +45,5 @@ routes, projections, frozen identities, and archive descriptors before any
 family migration. Decision `0042` and `.6` now define optional bounded,
 exact-provenance task segments and compact terminals without migrating an
 existing tree; `.7` owns the first IAL2/outlier/index migration.
+Clean bounded-history commit `78adb81ae` activates `.7` alone; the activation
+does not yet move a task node or cross-tree index row.

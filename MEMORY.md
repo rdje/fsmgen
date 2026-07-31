@@ -6,16 +6,16 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: enforce bounded task-tree history`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`; `.6` is complete
-  and no implementation leaf is active across this commit boundary.
+  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: activate task-tree migration`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7` alone is active
+  from clean bounded-history commit `78adb81ae`.
 - current_state: decision 0042 and the expanded integrity checker support
   finite JSONL manifests, content-addressed exact-source terminal segments,
   and exact version-object compact terminals. Existing trees remain at three /
   882 nodes / zero segments / zero compact terminals; `docs/TASK_TREE.md` is
   below rollover at 89.8% after detailed examples routed to the setup guide.
-- next_action: from this clean commit, activate `.7` only to migrate the active
-  IAL2 task outlier, completed outliers, and bounded cross-tree index.
+- next_action: implement `.7` only: migrate the active IAL2 outlier and completed
+  task/index outliers through decision 0042's exact bounded storage forms.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: none for `.7`-.10 or `.13`; `.3`-.5/.11 wait for the separately

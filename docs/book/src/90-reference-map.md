@@ -148,7 +148,8 @@ content-digested completed subtree segments copied from an exact source
 revision. A compact completed terminal is valid only when the integrity checker
 retrieves, digest-checks, counts, and reconstructs its full terminal subtree
 from an exact version object. PNT still selects entirely from the live file;
-the optional forms add no migration requirement for ordinary trees.
+the optional forms add no migration requirement for ordinary trees. Clean
+commit `78adb81ae` activates `.7` alone for the first IAL2/task/index migration.
 
 ## What The Old User Guide Still Does
 
