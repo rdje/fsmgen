@@ -232,11 +232,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24`
-  Status: `active`
+  Status: `done`
   Goal: `Prove and execute supersession of the completed guide-migration waypoints.`
   Acceptance: `Against exact staged docs/USER_GUIDE.md and docs/BOOK_PLAN.md identities, run whole-document token/ID sweeps with enumerated residue and planted-orphan negative control; classify every documentation/code/test/script/registry consumer; migrate any unique accurate content to a named mdBook/decision/fact home; replace implementation, test, README, book, roadmap, and planning pointers with current canonical destinations; prove exact historical retention; remove each waypoint only if its independent replacement and resulting-tree gates pass, otherwise retain it with the failed proof recorded.`
-  Verification: `Activated alone from clean `.16` audit commit `b9f2f266c`. Only task/index/roadmap/audit/fact/Memory/changelog continuity selects the exact guide-waypoint proof and potential retirement; no candidate content, consumer, replacement, checker, registry, ceiling, lifecycle, frozen identity, README landing content, mdBook product prose, or product behavior changes in activation. Final selection gates are recorded below.`
-  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24: activate guide-waypoint supersession`
+  Verification: `Clean activation commit 65c646a12 fixes exact candidate identities. Fresh case-folded five-character token sweeps enumerate USER_GUIDE 212/8 residue and BOOK_PLAN 392/39; planted orphans change them to 9/40. The one unique case-study link and non-obvious-failure quality rule move into the book. All 19 and 7 pre-change consumers are classified; implementation, test, README, book, roadmap, and planning consumers now use canonical book homes, while historical/evidence mentions remain factual. The post-edit classifier reports zero unresolved and one for each planted consumer. Git show reproduces both exact objects under fsmgen_required_history. Focused and final resulting-tree evidence is recorded below.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24: supersede completed guide waypoints`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25`
@@ -352,6 +352,9 @@ no routed destination becomes the next uninstrumented blob.
   negative controls, retention where needed, and resulting-tree gates.
 - `2026-07-31`: Clean `.16` audit commit `b9f2f266c` activates `.24` alone to
   prove USER_GUIDE/BOOK_PLAN supersession before touching either candidate.
+- `2026-07-31`: `.24` independently proves and removes both completed
+  waypoints, preserves unique content in the book, redirects live consumers,
+  and retains exact Git recovery under `fsmgen_required_history`.
 
 ## Open Questions
 
@@ -369,8 +372,8 @@ no routed destination becomes the next uninstrumented blob.
 ## Blockers
 
 - `.3`-`.5` and `.11`: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` must first
-  select the four files' long-term roles. `.24` is active; `.25` remains the
-  next new atomic migration. `.13` waits for `.24` so it inventories the
+  select the four files' long-term roles. `.24` is complete; `.25` is the next
+  clean atomic migration. `.13` is now unblocked and will inventory the
   resulting focused collection. `.8`-`.10` are otherwise unblocked; `.12`
   remains the final post-migration calibration.
 
@@ -385,6 +388,12 @@ no routed destination becomes the next uninstrumented blob.
 - [x] **ROOT CAUSE (WHY + WHERE)** — completed `.16` classifies `docs/USER_GUIDE.md` and `docs/BOOK_PLAN.md` as probable completed migration waypoints, but its explicit deletion contract forbids acting on the preliminary census without fresh exact-identity, residue, consumer, replacement, negative-control, retention, and resulting-tree proof.
 - [x] **ADDRESSED (verified)** — clean `.16` commit `b9f2f266c` activates `.24` alone and names its exact two independent proof subjects; candidate bytes, consumers, replacements, and lifecycle remain untouched in this selection slice.
 - [x] **NO REGRESSION** — final path/task/live-size, Knowledge Map, Memory, mdBook, staged-diff, and all-doctrine results are recorded below; no candidate, implementation, test, README landing content, book product prose, registry, ceiling, frozen identity, or product behavior changes.
+
+## Acceptance Checklist (enforced) — `.24` guide-waypoint supersession
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'compatibility waypoint' --oneline -- docs/USER_GUIDE.md` identifies the two commits that converted the guide into pointers, while `git log -S'Status: in progress.' --oneline -- docs/BOOK_PLAN.md` identifies the scaffold plan that never retired. Exact activation objects prove completed migration state, not canonical product prose: USER_GUIDE is 130/5,468 at SHA-256 `18de5df2...`; BOOK_PLAN is 310/9,968 at `dd82c598...`. Fresh scans find 19/7 referring files, including a stale public manifest path and README/book/roadmap language that still represented the finished migration as active.
+- [x] **ADDRESSED (verified)** — whole-file probes enumerate USER_GUIDE 212 tokens/8 spelling-navigation residues and BOOK_PLAN 392/39 residues; planted orphans yield 9/40. The AXI intent-capture link and non-obvious-failure example rule move to named book homes. Manifest/test/README/book/roadmap consumers now point at the book, post-edit unresolved consumers are 0/0, planted consumers are 1/1, and `git show 65c646a12:<path>` reproduces both exact identities under `fsmgen_required_history` before the two waypoint files are removed.
+- [x] **NO REGRESSION** — `perl -Iperl -c` passes and the RAM-guarded documentation-manifest cluster reports `All tests successful` at `Files=5, Tests=22`; the first default guard attempt stops pre-test on the tracked false macOS 99.5% metric, while the authorized profile retains the 4,096-MiB process cap after fresh 78.4% Stats usage, kernel pressure 1, and 78% system-free evidence. Final path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates and exact artifact cleanup are recorded below.
 
 ## Acceptance Checklist (enforced) — `.21`
 
@@ -503,6 +512,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.16` activation | clean `2e10cc605` predecessor; task/index/roadmap/fact/audit/Memory/changelog sync; focused path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=43; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096/5,759; Memory 38; all 37 chapters; removed build 73 files/17,284,414 bytes; all doctrines pass; `.16` alone active; no audit outcome, migration, retirement, deletion, checker, registry, threshold, lifecycle/content, frozen identity, landing content, mdBook product prose, or product behavior change |
 | `2026-07-31` | `.16` utility/retirement audit | 22-family utility classification; named guide/status/ledger/roadmap/map/ISF/focused cohort evidence; exact external-review identity; token and consumer probes; outcome/trigger/deletion-proof contract; `.24`/`.25` decomposition; focused/task/path/live-size/Knowledge Map/Memory/mdBook/staged-doctrine gates; exact cleanup | `passed`; audit 272 lines/18,824 bytes; focused Files=4/Tests=68; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,785 paths; focused collection exactly 1,005 files; Knowledge Map 1,096/5,759; Memory 37; all 37 chapters; removed build 73 files/17,283,901 bytes; reference delta 0/-7/-257; zero ceiling increases; all doctrines pass; no deletion, movement, archive, lifecycle/ceiling/frozen/landing/product change |
 | `2026-07-31` | `.24` activation | clean `b9f2f266c` predecessor; task/index/roadmap/audit/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,785 paths; maintained reference unchanged at 38/47,420/2,514,573; Knowledge Map 1,096/5,759; Memory 37; all 37 chapters; removed build 73 files/17,283,901 bytes; all doctrines pass; `.24` alone active; candidate and consumer bytes unchanged |
+| `2026-07-31` | `.24` guide-waypoint supersession | two exact source identities; 212/8 and 392/39 token/residue sweeps; 19/7 classified consumers; planted orphan and consumer controls; Git recovery; manifest/source/test/README/book/roadmap/audit sync; focused/path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; manifest Files=5/Tests=22; live-document Files=3/Tests=27; zero unresolved and one planted consumer per candidate; paths Files=1/Tests=2; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,783 paths; focused collection 1,003 files/211,931 lines/9,376,208 bytes; reference delta 0/-2/-150 to 38/47,418/2,514,423; README 245/9,921; Knowledge Map 1,096/5,759; Memory 37; all 37 chapters; removed build 73 files/17,282,858 bytes; staged acceptance root=git_history/no-regression=prove_summary; all doctrines pass; both exact historical objects recoverable |
 
 ## Commit Log
 
@@ -536,6 +546,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.16` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16: activate utility and retirement audit` | Activate only the evidence-backed retain/merge/supersede/archive/delete/re-form audit from clean `.15`; audit remains pending. |
 | `.16` utility/retirement audit | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16: audit utility before containment` | Select evidence-backed outcomes for every family, assign guide/WARP follow-ups, and require fail-closed deletion proof without deleting a file. |
 | `.24` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24: activate guide-waypoint supersession` | Activate only the independent USER_GUIDE/BOOK_PLAN proof from clean `.16`; candidate and consumer changes remain pending. |
+| `.24` guide-waypoint supersession | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24: supersede completed guide waypoints` | Preserve unique book content, redirect all live consumers, remove both completed waypoints, and retain exact Git recovery. |
 
 ## Changelog
 
@@ -558,6 +569,9 @@ no routed destination becomes the next uninstrumented blob.
   itself deletes or moves nothing.
 - `2026-07-31`: Clean `.16` commit `b9f2f266c` activates `.24` alone; neither
   guide waypoint nor any consumer/replacement changes in this selection slice.
+- `2026-07-31`: `.24` proves both completed guide waypoints independently,
+  moves the only unique link/rule into the book, redirects all live consumers,
+  removes the obsolete files, and preserves exact Git recovery.
 - `2026-07-31`: Clean commit `18e2dcbc6` activates `.6` alone to extend the
   task-tree schema and checker; no schema, checker, tree topology, threshold,
   document-family content, frozen identity, or product behavior changes in

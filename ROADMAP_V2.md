@@ -10369,15 +10369,14 @@ The first honest `R11` slices are now:
   `FSM::Package::AggregateExpressionTypeSupport`, consumed by both the direct
   parser and EnableGraph capture path with local exact-width resolvers instead
   of parallel concat/list/record walkers.
-- Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
-  approachable, the preferred shape is a book-like docs set with one Markdown
-  file per major topic, a landing-page/table-of-contents role for
-  `docs/USER_GUIDE.md`, and progressive beginner-to-advanced examples rather
+- Documentation note: the progressive mdBook is the canonical user-facing
+  product guide, with one semantic chapter per major topic, direct navigation
+  through `docs/book/src/SUMMARY.md`, and beginner-to-advanced examples rather
   than one monolithic reference wall.
-- Documentation planning note: that split is now concrete enough to plan
-  immediately, and the live migration outline now lives in
-  [docs/BOOK_PLAN.md](docs/BOOK_PLAN.md)
-  rather than only in steering notes.
+- Documentation migration note: the guide and book-plan waypoints completed
+  their purpose and were superseded under
+  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24`; the book reference map preserves
+  the old section mapping and the task evidence preserves exact recovery.
 - Documentation-pressure note: decision `0040` closes the reusable README
   policy's destination-routing hole exposed by PGEN's 1,547,057-byte status
   sink, 94.7% of which was dated changelog content. A README route now ends
@@ -10447,5 +10446,5 @@ The first honest `R11` slices are now:
   residue independently; version objects name recovery contracts and a bounded
   front door routes to the frozen packet. Decision `0045` and `.23` now bound
   maintained-reference reads/parts plus exact aggregate change. Clean `.23`
-  commit `425cd7fef` activated `.15`; `.15` bounds common JSONL/line pressure;
-  `.16` classifies all families, and clean `b9f2f266c` activates `.24` alone.
+  `.15` bounds common JSONL/line pressure; `.16` classifies all families; `.24`
+  supersedes both proved guide waypoints, leaving `.25` as the next selection.

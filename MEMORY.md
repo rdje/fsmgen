@@ -6,16 +6,16 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24:
-  activate guide-waypoint supersession`).
-- active_work_unit: `.24` alone is active from clean `.16` commit `b9f2f266c`.
-- current_state: selection changes continuity only; both guide waypoints and
-  all their consumers remain byte-for-byte untouched pending independent proof.
-- next_action: prove USER_GUIDE, then BOOK_PLAN, with fresh exact identity,
-  token/ID residue, consumer, replacement, negative-control, retention, and
-  resulting-tree evidence; remove only candidates whose own proof passes.
+  supersede completed guide waypoints`).
+- active_work_unit: `.24` is complete; the tree has no active child in this
+  commit and clean selection should activate `.25` next.
+- current_state: both completed guide waypoints are removed after independent
+  content/consumer proof; canonical book homes and exact Git recovery remain.
+- next_action: activate `.25` alone, then prove and execute bounded WARP
+  bootstrap re-form without changing tool-neutral authority or workflows.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: frozen/ledger work keeps its separate owner; `.13` waits for `.24`.
+- blockers: frozen/ledger work keeps its separate owner; `.13` is now unblocked.
 
 ## Durable context
 

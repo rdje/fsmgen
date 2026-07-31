@@ -27,6 +27,7 @@ Some docs are intentionally still focused references:
 - [../../EXTENSION_MODEL.md](../../EXTENSION_MODEL.md)
 - [../../REGRESSION_CORPUS.md](../../REGRESSION_CORPUS.md)
 - [../../FEATURE_BACKLOG.md](../../FEATURE_BACKLOG.md)
+- [../../INTENT_CAPTURE_AXI_CASE_STUDY.md](../../INTENT_CAPTURE_AXI_CASE_STUDY.md)
 - [../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md](../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
 - [../../ISF_SPEC.md](../../ISF_SPEC.md)
 - [../../ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md)
@@ -287,15 +288,13 @@ stop at 128 entries. Focused fixtures reject missing/incoherent metadata,
 record/file overflow, oversized fields and arrays, over-wide Markdown lines,
 and CRLF mismeasurement. No predecessor pressure ceiling is widened.
 
-## Old User Guide Supersession Candidate
+## Completed Guide Migration
 
-[../../USER_GUIDE.md](../../USER_GUIDE.md) is now a compatibility waypoint,
-not a normative product home. Every major section points to a chapter below.
-The completed utility audit selects `supersede`, but does not delete the file:
-leaf `.24` must freshly prove whole-document token coverage, classify code/test
-and navigation consumers, update replacements, exercise negative controls,
-and preserve exact history before removal. Until then, use this chapter map
-and `SUMMARY.md` as the current book entry points.
+The former user-guide and book-plan waypoints are superseded. Their unique
+accurate content now lives in the book, decision `0006`, or the focused links
+above; leaf `.24` records exact identities, residue and consumer proofs, planted
+negative controls, and Git recovery. Use this map and `SUMMARY.md` as the
+current entry points.
 
 ## Old Guide To Book Map
 

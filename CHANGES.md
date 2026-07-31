@@ -32294,6 +32294,6 @@ task tree and git.
 - Classified the mdBook without deleting prose or weakening Chapter 14 debt;
   `ISF_SPEC.md` remains a candidate under its existing focused-document owner.
 - Added fail-closed core/Git fixtures and synchronized doctrine, audit, book, fact, and tool guidance.
-### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24 — guide-waypoint proof activated
-- Clean `.16` commit `b9f2f266c` activates only the USER_GUIDE/BOOK_PLAN proof; no candidate or consumer changes.
-- Final selection gates pass; the next slice must prove each candidate independently before any removal.
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24 — guide waypoints superseded
+- Proved both completed waypoints independently, preserved unique book content, redirected all live consumers, and removed both files.
+- Focused `Files=5, Tests=22`; exact Git recovery plus planted orphan/consumer controls pass; final doctrines pass.

@@ -525,7 +525,5 @@ Inline modifiers keep the surrounding assignment family:
 
 This chapter is about the everyday surface.
 
-The active direct-language boundary above is migrated from the live guide into
-the book. `docs/USER_GUIDE.md` remains a broad migration reference, but
-normative `.fsm` syntax found there should have a chapter home here rather than
-remaining only in the monolithic guide.
+The active direct-language boundary belongs in the book. Normative `.fsm`
+syntax must have a chapter home here rather than living in a parallel guide.

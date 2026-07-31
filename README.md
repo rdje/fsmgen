@@ -124,7 +124,7 @@ useful:
 
 | Topic | Canonical reference |
 | --- | --- |
-| Broad language reference during book migration | [docs/USER_GUIDE.md](docs/USER_GUIDE.md) |
+| Progressive language and product guide | [docs/book/src/SUMMARY.md](docs/book/src/SUMMARY.md) |
 | IAL1 syntax and semantics | [docs/ISF_SPEC.md](docs/ISF_SPEC.md) |
 | Downstream IAL1/IAL2 integration | [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md) |
 | Composition boundary | [docs/COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md) |

@@ -291,9 +291,9 @@ exact complete source object that is still retained.
 - **Q28:** deletion requires an immediate whole-document unique-content probe,
   classified consumer census including source/check scripts, named replacement
   pointers, and a negative control proving the probe detects a planted orphan.
-- **Q29:** audit `docs/USER_GUIDE.md` first because it is a temporary 130-line
-  waypoint not blocked by the frozen-file owner; `.16` still audits both status
-  files under their existing authority.
+- **Q29:** `.24` supersedes the proved user-guide and book-plan waypoints after
+  exact content, consumer, replacement, negative-control, and Git-retention
+  checks; `.16` still audits both status files under their existing authority.
 - **Q30:** retain human history only for non-derivable narrative, rejected
   alternatives, and rationale. Derivable “what changed” is a projection.
 - **Q31:** trigger utility review on role/canonical-input/replacement/consumer

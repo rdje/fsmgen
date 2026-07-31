@@ -35,6 +35,10 @@ That means:
   adapting realistic patterns from the book, not by reading implementation
   notes or reverse-engineering tests.
 
+When a feature has several authoring styles or non-obvious failure modes, its
+chapter should show the recommended form and representative rejected forms.
+Examples should progress from the smallest useful case to realistic use.
+
 Internal continuity files still exist in the repo, but they have a different
 job: they help maintainers preserve implementation continuity across crashes,
 handoffs, and long-running feature work. They are not a substitute for putting
@@ -68,8 +72,6 @@ This book is now the progressive learning surface.
 
 The repository still keeps a few focused technical references:
 
-- `docs/USER_GUIDE.md`: broad migration reference during guide-to-book
-  transfer
 - `docs/COMPOSITION_SCOPE.md`: precise composition support boundary
 - `docs/EXTENSION_MODEL.md`: typed extension boundary
 - `ROADMAP_V2.md`: high-level roadmap direction and sequencing

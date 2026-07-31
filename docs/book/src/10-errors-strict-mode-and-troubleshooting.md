@@ -113,9 +113,8 @@ boundaries:
 - strict-mode diagnostics point at this chapter
 - package/import diagnostics point at the symbols/types and package chapters
 
-`docs/USER_GUIDE.md` remains a migration reference while the split continues,
-but diagnostics should not use it as the primary normative target for current
-language, package, strict-mode, or composition boundaries.
+The book summary, reference map, and owning chapters are the canonical targets
+for current language, package, strict-mode, and composition diagnostics.
 
 ## Strict Mode
 

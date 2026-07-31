@@ -131,8 +131,8 @@ exists.
 
 | Candidate | Evidence | Consumer classification | Selected outcome |
 | --- | --- | --- | --- |
-| `docs/USER_GUIDE.md` | 130 lines / 5,468 bytes; every major section declares a named mdBook home; last changed at `ee977fea9` on 2026-05-14 | 15 referring files: 2 executable/test contracts, 5 current navigation/planning links, 6 historical mentions, and 2 review records | `supersede` through `.24`, subject to fresh proof |
-| `docs/BOOK_PLAN.md` | 310 lines / 9,968 bytes; top says “in progress,” while the guide is already reduced and every named chapter exists | One non-history literal consumer, `ROADMAP_V2.md`; its enduring quality rules already belong to mdBook doctrine/decision records | `supersede` through `.24`, migrating any unique rationale first |
+| `docs/USER_GUIDE.md` | 130 lines / 5,468 bytes; every major section declares a named mdBook home; last changed at `ee977fea9` on 2026-05-14 | Fresh `.24` census finds 19 referring files: 2 executable/test, 7 navigation/planning, 4 current governance/evidence, and 6 historical/archive records | `superseded` by `.24`; current consumers now use the mdBook |
+| `docs/BOOK_PLAN.md` | 310 lines / 9,968 bytes; top says “in progress,” while the guide is already reduced and every named chapter exists | Fresh `.24` census finds 7 referring files: 1 live planning, 3 current governance/evidence, and 3 historical records | `superseded` by `.24`; one unique focused link and one quality rule migrated first |
 
 A preliminary case-insensitive sweep of all 212 distinct five-or-more-character
 word/identifier tokens in `docs/USER_GUIDE.md` against the mdBook found nine
@@ -143,6 +143,58 @@ unmapped product contract. This is strong supersession evidence, but it is not
 the deletion proof: `.24` must repeat the sweep on its exact candidate bytes,
 enumerate all residue, exercise the negative control, and update the two
 executable consumers plus every current navigation consumer atomically.
+
+#### Executed `.24` proof
+
+The clean activation commit `65c646a1239f27e032068674709b6f21c4430ab6`
+provides both exact source objects:
+
+- `docs/USER_GUIDE.md`: 130 lines / 5,468 bytes / SHA-256
+  `18de5df2ba5247a6037191f5efd2d18b4ede297537c22de6ab77a823c00916c2`;
+- `docs/BOOK_PLAN.md`: 310 lines / 9,968 bytes / SHA-256
+  `dd82c5987efad596ce40575a26d182b99d46a7c834cde5b99baf84d768ff9b06`.
+
+The fresh USER_GUIDE sweep again finds 212 distinct case-folded tokens of at
+least five characters. Eight are absent from the mdBook:
+`assignment-operator`, `back-end`, `first-run`, `heading`, `linking`,
+`old-guide-to-book`, `overview`, and `result-surface`. Each is a hyphenation,
+heading, or migration-navigation spelling whose concept is already in the
+named owning chapter; none is unique product behavior. Appending the in-memory
+token `fsmgen_orphan_probe_user_guide` changes residue from 8 to 9 and reports
+that exact planted token.
+
+The BOOK_PLAN sweep finds 392 tokens against the mdBook plus decisions `0006`
+and `0045`. Its 39 residues are: `basic-usage`, `book-like`, `breadcrumbs`,
+`buried`, `chapter-level`, `chaptered`, `essential`, `extension-specific`,
+`first-run`, `focused-reference`, `giant`, `harder`,
+`intent_capture_axi_case_study`, `interrupted`, `moderately`, `namespacing`,
+`non-obvious`, `normalized-export`, `old-guide`, `on-ramp`, `orientation`,
+`orients`, `plentiful`, `problems`, `progressively`, `quickstart`, `recurring`,
+`reduce`, `rollout`, `roughly`, `sessions`, `solves`, `study`, `styles`,
+`support-boundary`, `tool-facing`, `topics`, `tutorials`, and `world`.
+The exact case-study identifier is now linked from the book reference map; the
+non-obvious-failure/rejected-form quality rule is now in the introduction.
+The remaining items are compound spellings or completed migration/process
+prose rather than unique product contracts. The in-memory
+`fsmgen_orphan_probe_book_plan` raises this residue from 39 to 40 exactly.
+
+All executable and current reader consumers now name `SUMMARY.md`, the book
+introduction, the reference map, or the owning diagnostic chapter. README's
+GitHub landing table routes directly to the book; the capability manifest
+replaces the obsolete guide path with the introduction and its focused test
+asserts both the replacement and absence. Current book and roadmap planning
+language no longer treats either waypoint as live. Historical ledgers, frozen
+status, completed-task, and frozen review evidence keep factual path mentions;
+the current task, fact, audit, and disposition keep proof references only.
+The post-edit classifier reports zero unresolved consumers for each name; an
+in-memory `probe/current_user_guide_consumer.pl` or
+`probe/current_book_plan_consumer.md` changes its respective result to one.
+
+Both Git objects are reachable with `git show 65c646a1239f27e032068674709b6f21c4430ab6:<path>`
+and reproduce the line, byte, and digest identities above. Contract
+`fsmgen_required_history` names the repository maintainers, authoritative/full-
+history guarantee, and shallow/rewrite recovery. The resulting-tree and
+planted-consumer gates below must still pass after removal.
 
 ### Harness bootstrap representation
 
@@ -263,7 +315,7 @@ generated aggregate change.
 | `.10` | Re-form oversized cards and the generated map while keeping facts canonical. |
 | `.11` | Execute only the separately selected frozen-status decision. |
 | `.13` | Re-form/index focused evidence and `docs/ISF_SPEC.md`; retire only per-file proved duplicates. |
-| `.24` | Active from clean commit `b9f2f266c`; prove each USER_GUIDE/BOOK_PLAN supersession independently before removal. |
+| `.24` | Complete; both guide waypoints independently proved, superseded, and retained exactly in Git history. |
 | `.25` | Re-form `WARP.md` as a compact tool-neutral-authority bootstrap pointer. |
 | `.12` | Re-audit and lower steady-state ceilings only after all selected migrations. |
 

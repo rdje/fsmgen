@@ -3745,12 +3745,13 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
 
     my %human_contract_docs = map { $_ => 1 } @{$manifest->{documentation}{human_contract} || []};
     ok($human_contract_docs{'docs/book/src/SUMMARY.md'}, 'manifest points human readers at the book summary');
+    ok($human_contract_docs{'docs/book/src/00-introduction.md'}, 'manifest points human readers at the book introduction');
     ok($human_contract_docs{'docs/book/src/90-reference-map.md'}, 'manifest points human readers at the book reference map');
     ok(
         $human_contract_docs{'docs/book/src/10-errors-strict-mode-and-troubleshooting.md'},
         'manifest points human readers at runtime diagnostic guidance',
     );
-    ok($human_contract_docs{'docs/USER_GUIDE.md'}, 'manifest points human readers at the live user guide');
+    ok(!$human_contract_docs{'docs/USER_GUIDE.md'}, 'manifest does not advertise the superseded guide waypoint');
 
     my %blocked = map { $_ => 1 } @{$manifest->{language_surface}{intentionally_blocked_or_not_yet_public}};
     ok($blocked{'full check-only JSON diagnostic schema stabilization'}, 'manifest keeps full JSON diagnostic API stabilization blocked');

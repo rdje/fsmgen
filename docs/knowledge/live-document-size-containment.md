@@ -210,6 +210,9 @@ including code/tests/scripts, named replacements, planted negative controls,
 retention where needed, and staged resulting-tree proof. The audit deletes and
 migrates nothing.
 
-Clean `.16` commit `b9f2f266c` activates `.24` alone. The selected leaf must
-prove `docs/USER_GUIDE.md` and `docs/BOOK_PLAN.md` independently against exact
-identities before either completed migration waypoint can be removed.
+Clean `.16` commit `b9f2f266c` activated `.24` alone. The completed proof
+supersedes `docs/USER_GUIDE.md` and `docs/BOOK_PLAN.md`: exact source objects
+remain recoverable from activation commit `65c646a12` under
+`fsmgen_required_history`, while README, mdBook, manifest, test, and roadmap
+consumers now point to canonical book homes. Fresh token sweeps enumerate 8 and
+39 residues; planted orphans change those counts to 9 and 40 exactly.
