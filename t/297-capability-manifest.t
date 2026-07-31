@@ -296,7 +296,12 @@ use FSM::Support::DiagnosticsContract qw(
 use FSM::Support::LanguageSurfaceContract qw(
     language_surface_contract_source
     language_surface_file_surface_entry_keys
+    language_surface_hial_vial_bridge_keys
     language_surface_nested_presence_key_map
+);
+use FSM::Support::HIALVIALBridgeContract qw(
+    build_hial_vial_bridge_contract
+    hial_vial_bridge_contract_source
 );
 use FSM::Support::ProducerContract qw(
     producer_contract_source
@@ -2852,6 +2857,25 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $file_surface_by_suffix{'.vial'}{current_boundary},
         qr/no bridge binding, execution plan, artifact generation, compile, simulation, result, parity, UVM, VHDL, mixed-language, or scale claim/,
         'manifest keeps every VIAL semantic-only non-claim explicit',
+    );
+    is_deeply(
+        [sort keys %{$manifest->{language_surface}{hial_vial_bridge}}],
+        [sort @{language_surface_hial_vial_bridge_keys()}],
+        'manifest publishes the exact bounded HIAL/VIAL bridge discovery keys',
+    );
+    is_deeply(
+        $manifest->{language_surface}{hial_vial_bridge},
+        build_hial_vial_bridge_contract(),
+        'manifest publishes the canonical private in-process bridge contract',
+    );
+    is(
+        $manifest->{language_surface}{hial_vial_bridge}{contract_source},
+        hial_vial_bridge_contract_source(),
+        'manifest names the bridge capability contract owner',
+    );
+    ok(
+        !$manifest->{language_surface}{hial_vial_bridge}{public_embedding_api},
+        'manifest does not promote the private bridge producer to a supported embedding API',
     );
     my %isf_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.isf'}{supported_cli_modes} || []};
     ok(

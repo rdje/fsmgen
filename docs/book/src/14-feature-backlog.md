@@ -4428,7 +4428,17 @@ diagnostics/report projections are selected. Properties reuse the shared
 frontend, defensive report, negative corpus, and bounded semantic-only support
 claims. The exact contract is
 [VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT](../../VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).
-There is still no public CLI/API, bridge, plan, output, or runtime behavior.
+Implementation `.5` also now ships the private in-process bridge producer.
+Direct IAL0 and IAL1 use their canonical review routes; IAL2 emits protocol,
+event, probe, and residue truth as an additive generated-IAL1 annotation that
+the ordinary IAL1 parser and report validate before bridge consumption. The
+result is a defensive JSON-safe 27-key manifest with stable logical IDs,
+normalized types, exact review identities, full semantic provenance, backend
+logical names, capabilities, limits, and explicit residue. It resolves every
+checked AHB VIAL bridge reference without binding VIAL or exposing target
+hierarchy. There is still no public CLI/API, bridge file, execution plan,
+verification output, compile/simulation, backend-methodology, or parity claim.
+Proposed `.6` is next for separate clean activation of the execution contract.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)

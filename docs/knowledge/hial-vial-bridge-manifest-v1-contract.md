@@ -15,7 +15,7 @@ date: 2026-07-31
 status: current
 tags: [hial, vial, bridge, manifest, ial0, ial1, ial2, review-route, provenance, ahb]
 evidence: docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
-reverify: rg -n 'core_single_unit_v1|direct_ial2_to_verification|verification-bridge|transaction/ahb_write|probe/reg_data_q|semantic_path|writes no file|Active `.5`' docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+reverify: prove -Iperl t/1551-hial-vial-bridge-manifest.t && rg -n 'core_single_unit_v1|direct_ial2_to_verification|verification-bridge|transaction/ahb_write|probe/reg_data_q|semantic_path|shipped_private_in_process|Completed `.5`' perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/Support/HIALVIALBridgeContract.pm docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
 Decision `0035` selects `fsmgen.hial_vial_bridge_manifest.v1` with initial
@@ -40,8 +40,15 @@ parser supplies them; otherwise a stable semantic path and null span fields
 state the honest precision. IAL2-derived facts cite authored PPIF and generated
 IAL1 annotation provenance.
 
-Active `.5` owns the private immutable producer/report and focused t1551 after
-clean continuity commit `0366dfe30`. It writes no bridge file and does not bind
-VIAL, create an execution plan, generate verification code, compile/simulate,
-or claim backend parity. Public CLI/API/artifact discovery remains owned by
-`.8`.
+Completed `.5` ships private `FSM::HIAL::VIALBridge::Builder`, `Manifest`, and
+`Report` owners, with focused t1551 coverage and capability/support discovery
+through `FSM::Support::HIALVIALBridgeContract`. The first scalar-only AHB
+profile represents transaction fields individually and leaves aggregate
+transaction `type_id` null. Bridge expressions use a closed canonical record
+owned by this manifest contract rather than pretending that the current IAL1
+schedule report already exposes a reusable expression AST.
+
+The producer writes no bridge file and does not bind VIAL, create an execution
+plan, generate verification code, compile/simulate, or claim backend parity.
+Public CLI/API/artifact discovery remains owned by `.8`; proposed `.6` is
+selected next for separate clean activation of the execution contract.

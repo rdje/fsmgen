@@ -49,6 +49,7 @@ subtest 'actor-level observe metadata reaches bounded schedule report' => sub {
         sorted(isf_public_interface_schedule_report_top_level_keys()),
         'report exposes exactly the advertised top-level keys',
     );
+    is($report->{verification_bridge}, undef, 'ordinary IAL1 reports an explicit null bridge annotation');
     is_deeply(
         sorted([keys %{$report->{verification_observations}[0]}]),
         sorted(isf_public_interface_schedule_report_verification_observation_keys()),

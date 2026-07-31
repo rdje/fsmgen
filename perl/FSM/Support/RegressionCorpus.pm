@@ -141,6 +141,26 @@ my @REGRESSION_CORPUS = (
         strict_supported => 1,
         expected_module_name => 'ahb_lite_subordinate',
         expected_semantic_source_root_kind => 'fsm',
+        private_capabilities => [qw(
+            hial_vial.bridge_manifest.v1
+            hial_vial.bridge_probe.equivalent_adapter_required
+            hial_vial.bridge_profile.core_single_unit_v1
+            hial_vial.bridge_protocol.ahb_subordinate_v1
+            hial_vial.bridge_source.ial2_via_generated_ial1
+        )],
+        private_nonclaims => [qw(
+            vial_binding
+            execution_plan
+            verification_artifact_generation
+            compile
+            simulation
+            result
+            parity
+            uvm
+            vhdl_methodology
+            mixed_language
+            scale
+        )],
     },
     {
         id => 'intent.ppif_ahb_lite_subordinate_byte_lane',

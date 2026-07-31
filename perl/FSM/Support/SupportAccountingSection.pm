@@ -81,6 +81,10 @@ sub _manifest_catalog_entry {
         if ref($entry->{search_path_relpaths}) eq 'ARRAY';
     $manifest{expected_hdl_pattern_count} = scalar(@{$entry->{expected_hdl_patterns}})
         if ref($entry->{expected_hdl_patterns}) eq 'ARRAY';
+    $manifest{private_capabilities} = [@{$entry->{private_capabilities}}]
+        if ref($entry->{private_capabilities}) eq 'ARRAY';
+    $manifest{private_nonclaims} = [@{$entry->{private_nonclaims}}]
+        if ref($entry->{private_nonclaims}) eq 'ARRAY';
     $manifest{has_expected_error_pattern} = $entry->{expected_error_pattern}
         ? JSON::PP::true
         : JSON::PP::false;

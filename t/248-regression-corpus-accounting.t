@@ -1667,6 +1667,24 @@ for my $strict_supported_id (qw(
     ok($by_id{$strict_supported_id}->{strict_supported}, "canonical strict-supported fixture $strict_supported_id stays marked");
 }
 
+my ($ahb_bridge_entry) = grep { $_->{id} eq 'intent.ppif_ahb_lite_subordinate' } @entries;
+is_deeply(
+    $ahb_bridge_entry->{private_capabilities},
+    [qw(
+        hial_vial.bridge_manifest.v1
+        hial_vial.bridge_probe.equivalent_adapter_required
+        hial_vial.bridge_profile.core_single_unit_v1
+        hial_vial.bridge_protocol.ahb_subordinate_v1
+        hial_vial.bridge_source.ial2_via_generated_ial1
+    )],
+    'checked AHB subordinate support entry advertises the exact private bridge capabilities',
+);
+is_deeply(
+    $ahb_bridge_entry->{private_nonclaims},
+    [qw(vial_binding execution_plan verification_artifact_generation compile simulation result parity uvm vhdl_methodology mixed_language scale)],
+    'checked AHB subordinate support entry keeps bridge execution/backend nonclaims explicit',
+);
+
 for my $diagnostic_code (diagnostic_code_ids()) {
     ok($seen_diagnostic_codes{$diagnostic_code}, "stable diagnostic code $diagnostic_code is exercised by the corpus");
 }

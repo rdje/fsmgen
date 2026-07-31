@@ -131,9 +131,9 @@ The necessary compiler separation is private and phase-based:
 
 | Boundary | Phase | Owner | Invariant | Exposure |
 | --- | --- | --- | --- | --- |
-| `.vial` | authored source | future VIAL parser package | complete source identity and deterministic order | public/versioned |
-| `VIALSemanticIR` | semantic intent | future `FSM::VIAL::SemanticIR` family | typed, validated, immutable, not DUT-bound | private |
-| `HIALVIALBridgeManifest` | report/contract projection | future HIAL bridge owner | sanitized HIAL truth with stable logical IDs and source maps | bounded public/versioned |
+| `.vial` | authored source | shipped private `FSM::VIAL::Parser` frontend | complete source identity and deterministic order | public/versioned source; no public tool entry yet |
+| `VIALSemanticIR` | semantic intent | shipped private `FSM::VIAL::SemanticIR` family | typed, validated, immutable, not DUT-bound | private |
+| `HIALVIALBridgeManifest` | report/contract projection | shipped private `FSM::HIAL::VIALBridge` family | sanitized HIAL truth with stable logical IDs and source maps | private in-process v1; public artifact deferred |
 | `VIALExecutionIR` | bound execution plan | future VIAL binder/elaborator | every reference bound, capability checked, deterministic schedule | private |
 | `vial-plan.json` | report projection | future plan-report owner | sanitized binding/schedule/capability/source-map view | bounded public/versioned |
 
@@ -497,11 +497,16 @@ The owning task tree now decomposes exact leaves for:
 11. full user documentation and end-to-end matrix closeout.
 
 The first source/IR contract and bounded implementation are complete. Bridge
-contract `.4` selects decision `0035`; clean commit `0366dfe30` activates
-private implementation `.5` through a continuity-only transition. Activation
-changes no HIAL producer, parser, generated-IAL1 annotation, bridge object/
-report, artifact, capability/support entry, HIAL output, VIAL binding, or
-runtime behavior. Implementation requires normal acceptance evidence.
+contract `.4` selects decision `0035`, and completed `.5` now ships the private
+in-process producer through direct IAL0, direct IAL1, and IAL2 only through an
+additive generated/reparsed IAL1 annotation. The bridge exposes stable logical
+IDs, normalized types and facts, source/review identities, full provenance,
+defensive data, exact capabilities/limits, and explicit residue without a
+bridge file, public API, VIAL binding, execution plan, backend artifact, or
+runtime claim. Generated IAL0 and HIAL SV/VHDL behavior remain preserved.
+Proposed `.6` is selected next for separate clean activation of the exact
+`VIALExecutionIR`, logical-time, native-extension, plan, result, and parity
+contract.
 
 ## Rollback
 

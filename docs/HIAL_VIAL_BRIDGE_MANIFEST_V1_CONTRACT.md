@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`
-Status: selected; implementation is owned only by active `.5`
+Status: implemented privately in-process by completed `.5`; binding and public tooling remain later owners
 
 ## Outcome
 
@@ -352,7 +352,11 @@ ordering, correlation, fields, event_ids
 
 `ordering` is `in_order` in the first profile. `correlation` is
 `single_active` for the first AHB transaction and `declaration_order` for a
-plain IAL1 transaction. Each `fields[]` record has:
+plain IAL1 transaction. Because this profile admits scalar transaction fields
+but no aggregate transaction record type, transaction `type_id` is null;
+field `type_id` values are the authoritative v1 type links. A later aggregate-
+type profile must assign a non-null transaction record type. Each `fields[]`
+record has:
 
 ```text
 name, type_id, endpoint_id, direction, phase_role
@@ -369,9 +373,15 @@ required_endpoint_ids, required_probe_ids
 ```
 
 `kind` is `scenario_start`, `predicate`, or `rising`. `expression` is null for
-`scenario_start` and otherwise the sanitized canonical IAL1 expression record
-selected by the existing expression-report contract. No rendered SV/VHDL text
-is stored. Reference arrays are sorted unique IDs.
+`scenario_start` and otherwise a bridge-owned sanitized canonical expression
+record with exactly `kind`, `operator`, `operands`, `value`,
+`reference_kind`, and `semantic_id`. Calls recursively hold operand records;
+literals hold only `value`; references identify an endpoint or probe by stable
+semantic ID, while validated actor storage is named with null `semantic_id`
+because storage is not otherwise a public bridge family in this profile. This
+record is selected here because the current public IAL1 schedule report does
+not expose a canonical expression AST. No rendered SV/VHDL text is stored.
+Reference arrays are sorted unique IDs.
 
 The checked AHB route must publish exactly transaction
 `transaction/ahb_write` with fields `address`, `transfer`, `write`, `size`,
@@ -617,7 +627,7 @@ backend outputs where locally supported.
 
 ## Implementation Ownership and Non-Claims
 
-Active `.5` alone may implement:
+Completed `.5` implements exactly:
 
 ```text
 perl/FSM/HIAL/VIALBridge/Builder.pm
@@ -629,11 +639,12 @@ t/1551-hial-vial-bridge-manifest.t
 bounded capability/support/language-surface discovery
 ```
 
-It must not change `.vial` syntax or `VIALSemanticIR`, bind VIAL, create
+It does not change `.vial` syntax or `VIALSemanticIR`, bind VIAL, create
 `VIALExecutionIR`, publish a CLI/API, write `hial-vial-bridge.json`, generate a
 verification testbench, select an execution scheduler, expose raw hierarchy,
 or claim backend runtime/parity. Those boundaries remain with `.6`-.16 and
-public tooling `.8`.
+public tooling `.8`. Proposed `.6` is selected next for separate clean
+activation of execution-contract selection.
 
 ## Validation and Rollback
 

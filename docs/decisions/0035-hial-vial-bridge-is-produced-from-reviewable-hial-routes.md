@@ -79,5 +79,28 @@ output paths, and artifact-manifest discovery remain owned by `.8`.
   domains, and other protocols fail closed until qualified.
 - The storage probe used by the checked VIAL source cannot execute until a
   later backend profile supplies an equivalent adapter capability.
-- Proposed `.5` owns implementation and focused t1551. Binding and execution
+- Completed `.5` owns implementation and focused t1551. Binding and execution
   remain with `.6`/`.7`; public tooling remains with `.8`.
+
+## Implementation Note
+
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5` implements this decision. The
+ordinary IAL1 parser and schedule report now carry the validated additive
+metadata; the selected AHB IAL2 generator emits it deterministically; and
+`FSM::HIAL::VIALBridge::{Builder,Manifest,Report}` implement the three private
+review routes with defensive JSON-safe projection and no file output.
+
+Implementation audit refined two details that the selection text had left
+underspecified. The current public IAL1 report had no canonical expression AST
+to reuse, so bridge events now use the exact backend-neutral recursive record
+`kind/operator/operands/value/reference_kind/semantic_id`. Also, the scalar-
+only first profile has no aggregate transaction record type, so transaction
+`type_id` is null and each field's `type_id` is authoritative. These are
+schema clarifications, not target-language escapes.
+
+Focused t1551 resolves every checked VIAL bridge ID/type, proves exact routes,
+source-map completeness/uniqueness, defensive determinism, diagnostics and
+limits, and locks the AHB generated IAL0 plus direct SystemVerilog/VHDL HIAL
+behavior. Capability-manifest and regression-corpus accounting advertise only
+the private no-file bridge seam and retain all binding/runtime/backend
+nonclaims.

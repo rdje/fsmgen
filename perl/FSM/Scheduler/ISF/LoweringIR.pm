@@ -170,6 +170,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),
         verification_observations => _verification_observation_declarations($actor),
+        verification_bridge => _verification_bridge_declaration($actor),
         package_imports => _actor_package_imports($actor),
         package_roots => _actor_package_roots($actor),
         type_declarations => _actor_type_declarations($actor),
@@ -1227,6 +1228,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),
         verification_observations => _verification_observation_declarations($actor),
+        verification_bridge => _verification_bridge_declaration($actor),
         package_imports => _actor_package_imports($actor),
         package_roots => _actor_package_roots($actor),
         type_declarations => _actor_type_declarations($actor),
@@ -4236,6 +4238,12 @@ sub _verification_observation_declarations {
             }
         } @{$actor->{verification_observations} || []}
     ];
+}
+
+sub _verification_bridge_declaration {
+    my ($actor) = @_;
+    return undef unless ref($actor) eq 'HASH' && ref($actor->{verification_bridge}) eq 'HASH';
+    return _clone_isf_value($actor->{verification_bridge});
 }
 
 sub _library_instance_metadata {

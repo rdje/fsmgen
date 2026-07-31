@@ -31507,6 +31507,37 @@ task tree and git.
   54 lines; doctrines and exact output cleanup pass.
 - No separate development note is warranted for this continuity-only slice.
 
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5 — review-routed bridge manifest implemented
+
+- Added private immutable `FSM::HIAL::VIALBridge` Builder/Manifest/Report
+  owners and exact private capability/support discovery with no file or public
+  embedding surface.
+- Added the parsed/reported IAL1 `(verification-bridge ...)` annotation and the
+  exact AHB IAL2 producer so protocol, event, probe, and residue truth reaches
+  VIAL only through generated/reparsed IAL1, never a PPIF bypass.
+- Added t1551 and adjacent regression coverage for direct IAL0, direct IAL1,
+  IAL2-via-IAL1, stable IDs/types/provenance, defensive ownership, diagnostics,
+  limits, checked VIAL reference resolution, and preserved generated IAL0 plus
+  direct SystemVerilog/VHDL behavior.
+- Selected proposed `.6` next for separate clean activation of the
+  `VIALExecutionIR`, logical-time, plan, result, and parity contract. VIAL
+  binding, bridge files, public APIs, verification backends, and runtime remain
+  unclaimed.
+- Synchronized the exact support-accounting runtime oracle with the new private
+  capability/non-claim fields. An independently stale verification-output
+  discovery-map key list exposed by t370 is unchanged at HEAD and parked under
+  proposed `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC`.
+- Updated t1549's live census assertion from the obsolete single-active-tree
+  literal to positive measured tree/node counts; exact synthetic counts and
+  all structural negative cases remain strict.
+- Closeout evidence: focused bridge/IAL1/AHB/support checks pass at
+  `Files=6, Tests=7058`; 28 adjacent schema/runtime/copy audits pass at
+  `Files=28, Tests=56`; task-tree integrity is 2/865; docs pass at
+  `Files=4, Tests=51`; all 37 book chapters and the 73-file / 16,965,845-byte
+  local build pass; Knowledge Map is current at 1,089 facts / 5,643 keys; the
+  staged acceptance and all eight doctrines pass; generated book output is
+  removed exactly.
+
 ### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4 — review-routed bridge manifest selected
 
 - Accepted decision `0035` and selected

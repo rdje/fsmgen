@@ -40,6 +40,9 @@ my %RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS = map { $_ => 1 } qw(
 my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
     & | ! ~ ^ = == != < > <= >= !| ~|
 );
+my %VERIFICATION_BRIDGE_EXPRESSION_OPERATOR = map { $_ => 1 } qw(
+    & | ! ~ ^ = == != < > <= >= !| ~|
+);
 
 use constant {
     ISF_DEFAULT_CLOCK_NAME => 'clk',
@@ -67,6 +70,7 @@ use constant {
 #     storage       => [ { kind => "var"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
 #     constants     => [ { name => ..., value => ... }, ... ],
 #     verification_observations => [ { name => ..., role => ..., signals => [...] }, ... ],
+#     verification_bridge => undef, # or validated report-only HIAL/VIAL metadata
 #     type_declarations => [ ... ],
 #     enum_declarations => [ ... ],
 #     constant_symbols => { packages => ... },
@@ -169,6 +173,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         phases       => [],
         stages       => [],
         verification_observations => [],
+        verification_bridge => undef,
         params       => [],
         imports      => [],
         package_imports => [],
@@ -300,6 +305,9 @@ sub _build_actor($self, $actor_ast, $source_label) {
             confess "Error: duplicate observe declaration '$observation->{name}' in actor '$actor_name'\n"
                 if $verification_observation_names{$observation->{name}}++;
             push @{$result->{verification_observations}}, $observation;
+        } elsif ($keyword eq 'verification-bridge') {
+            $self->_claim_singleton_actor_clause($actor_name, 'verification-bridge', \%singleton_actor_clauses);
+            $result->{verification_bridge} = $self->_parse_verification_bridge($clause, $actor_name);
         } else {
             confess "Error: unknown actor clause '$keyword' in actor '$actor_name'\n";
         }
@@ -377,6 +385,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_transaction_port_widths($result);
     $self->_finalize_actor_type_references($result);
     $self->_finalize_actor_verification_observations($result);
+    $self->_finalize_actor_verification_bridge($result);
     $self->_validate_deferred_atl_drive_sink_expression_candidates($result);
     $self->_validate_rule_pulse_targets($result);
     $self->_validate_actor_aggregate_storage_paths($result);
@@ -10039,6 +10048,331 @@ sub _parse_verification_observation($self, $clause, $actor_name) {
         role    => $role,
         signals => \@signals,
     };
+}
+
+sub _parse_verification_bridge($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' verification-bridge requires domain, protocol, and transaction clauses\n"
+        unless @$clause >= 2;
+
+    my ($domain, $protocol, $transaction);
+    my (@probes, @residues);
+    my %seen_singleton;
+    my (%seen_probe, %seen_residue);
+    for my $part (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' verification-bridge clauses must be list forms\n"
+            unless ref($part) eq 'ARRAY' && @$part;
+        my $head = $part->[0];
+        confess "Error: actor '$actor_name' verification-bridge clause heads must be scalar\n"
+            unless defined($head) && !ref($head) && length($head);
+
+        if ($head eq 'domain') {
+            confess "Error: actor '$actor_name' verification-bridge has duplicate domain clause\n"
+                if $seen_singleton{$head}++;
+            confess "Error: actor '$actor_name' verification-bridge domain requires '(domain NAME)'\n"
+                unless @$part == 2 && _is_hdl_identifier($part->[1]);
+            $domain = $part->[1];
+            next;
+        }
+        if ($head eq 'protocol') {
+            confess "Error: actor '$actor_name' verification-bridge has duplicate protocol clause\n"
+                if $seen_singleton{$head}++;
+            $protocol = $self->_parse_verification_bridge_protocol($part, $actor_name);
+            next;
+        }
+        if ($head eq 'transaction') {
+            confess "Error: actor '$actor_name' verification-bridge has duplicate transaction clause\n"
+                if $seen_singleton{$head}++;
+            $transaction = $self->_parse_verification_bridge_transaction($part, $actor_name);
+            next;
+        }
+        if ($head eq 'probe') {
+            confess "Error: actor '$actor_name' verification-bridge probe requires '(probe NAME read_only)'\n"
+                unless @$part == 3 && _is_hdl_identifier($part->[1])
+                    && defined($part->[2]) && !ref($part->[2]) && $part->[2] eq 'read_only';
+            confess "Error: actor '$actor_name' verification-bridge has duplicate probe '$part->[1]'\n"
+                if $seen_probe{$part->[1]}++;
+            push @probes, { name => $part->[1], access => $part->[2] };
+            next;
+        }
+        if ($head eq 'residue') {
+            confess "Error: actor '$actor_name' verification-bridge residue requires '(residue ID)'\n"
+                unless @$part == 2 && _is_hdl_identifier($part->[1]);
+            confess "Error: actor '$actor_name' verification-bridge has duplicate residue '$part->[1]'\n"
+                if $seen_residue{$part->[1]}++;
+            push @residues, $part->[1];
+            next;
+        }
+        confess "Error: actor '$actor_name' verification-bridge has unsupported clause '$head'\n";
+    }
+
+    confess "Error: actor '$actor_name' verification-bridge requires exactly one '(domain NAME)' clause\n"
+        unless defined $domain;
+    confess "Error: actor '$actor_name' verification-bridge requires exactly one '(protocol ...)' clause\n"
+        unless defined $protocol;
+    confess "Error: actor '$actor_name' verification-bridge requires exactly one '(transaction ...)' clause\n"
+        unless defined $transaction;
+
+    return {
+        domain      => $domain,
+        protocol    => $protocol,
+        transaction => $transaction,
+        probes      => \@probes,
+        residues    => \@residues,
+    };
+}
+
+sub _parse_verification_bridge_protocol($self, $part, $actor_name) {
+    confess "Error: actor '$actor_name' verification-bridge protocol requires a scalar HDL identifier name\n"
+        unless @$part >= 2 && _is_hdl_identifier($part->[1]);
+    my $name = $part->[1];
+    my ($profile, $revision, $role, @facts);
+    my %seen;
+    my %seen_fact;
+    for my $clause (@{$part}[2 .. $#$part]) {
+        confess "Error: actor '$actor_name' verification-bridge protocol '$name' clauses must be list forms\n"
+            unless ref($clause) eq 'ARRAY' && @$clause;
+        my $head = $clause->[0];
+        confess "Error: actor '$actor_name' verification-bridge protocol '$name' clause heads must be scalar\n"
+            unless defined($head) && !ref($head) && length($head);
+        confess "Error: actor '$actor_name' verification-bridge protocol '$name' has duplicate '$head' clause\n"
+            if $seen{$head}++;
+        if ($head eq 'profile' || $head eq 'revision' || $head eq 'role') {
+            confess "Error: actor '$actor_name' verification-bridge protocol '$name' $head requires one non-empty scalar value\n"
+                unless @$clause == 2 && defined($clause->[1]) && !ref($clause->[1]) && length($clause->[1]);
+            $profile = $clause->[1] if $head eq 'profile';
+            $revision = $clause->[1] if $head eq 'revision';
+            $role = $clause->[1] if $head eq 'role';
+            next;
+        }
+        if ($head eq 'facts') {
+            for my $fact (@{$clause}[1 .. $#$clause]) {
+                confess "Error: actor '$actor_name' verification-bridge protocol '$name' facts require '(fact NAME VALUE)' entries\n"
+                    unless ref($fact) eq 'ARRAY' && @$fact == 3 && ($fact->[0] // '') eq 'fact'
+                        && _is_hdl_identifier($fact->[1]) && defined($fact->[2]) && !ref($fact->[2]) && length($fact->[2]);
+                confess "Error: actor '$actor_name' verification-bridge protocol '$name' has duplicate fact '$fact->[1]'\n"
+                    if $seen_fact{$fact->[1]}++;
+                push @facts, { name => $fact->[1], value => $fact->[2] };
+            }
+            next;
+        }
+        confess "Error: actor '$actor_name' verification-bridge protocol '$name' has unsupported clause '$head'\n";
+    }
+    confess "Error: actor '$actor_name' verification-bridge protocol '$name' requires profile, revision, role, and non-empty facts clauses\n"
+        unless defined($profile) && defined($revision) && defined($role) && @facts;
+    return {
+        name     => $name,
+        profile  => $profile,
+        revision => $revision,
+        role     => $role,
+        facts    => \@facts,
+    };
+}
+
+sub _parse_verification_bridge_transaction($self, $part, $actor_name) {
+    confess "Error: actor '$actor_name' verification-bridge transaction requires a scalar HDL identifier name\n"
+        unless @$part >= 2 && _is_hdl_identifier($part->[1]);
+    my $name = $part->[1];
+    my (@fields, @events);
+    my (%seen_clause, %seen_field, %seen_event);
+    for my $clause (@{$part}[2 .. $#$part]) {
+        confess "Error: actor '$actor_name' verification-bridge transaction '$name' clauses must be list forms\n"
+            unless ref($clause) eq 'ARRAY' && @$clause;
+        my $head = $clause->[0];
+        confess "Error: actor '$actor_name' verification-bridge transaction '$name' clause heads must be scalar\n"
+            unless defined($head) && !ref($head) && length($head);
+        confess "Error: actor '$actor_name' verification-bridge transaction '$name' supports only one fields and one events clause\n"
+            if $seen_clause{$head}++;
+        if ($head eq 'fields') {
+            for my $field (@{$clause}[1 .. $#$clause]) {
+                confess "Error: actor '$actor_name' verification-bridge transaction '$name' fields require '(field NAME SOURCE drive|sample PHASE_ROLE)' entries\n"
+                    unless ref($field) eq 'ARRAY' && @$field == 5 && ($field->[0] // '') eq 'field'
+                        && _is_hdl_identifier($field->[1]) && _is_hdl_identifier($field->[2])
+                        && defined($field->[3]) && !ref($field->[3]) && $field->[3] =~ /\A(?:drive|sample)\z/
+                        && defined($field->[4]) && !ref($field->[4]) && $field->[4] =~ /\A(?:address_phase|data_phase|configuration|unspecified)\z/;
+                confess "Error: actor '$actor_name' verification-bridge transaction '$name' has duplicate field '$field->[1]'\n"
+                    if $seen_field{$field->[1]}++;
+                push @fields, {
+                    name       => $field->[1],
+                    source     => $field->[2],
+                    direction  => $field->[3],
+                    phase_role => $field->[4],
+                };
+            }
+            next;
+        }
+        if ($head eq 'events') {
+            for my $event (@{$clause}[1 .. $#$clause]) {
+                confess "Error: actor '$actor_name' verification-bridge transaction '$name' events require '(event NAME scenario_start|predicate|rising PHASE [EXPR])' entries\n"
+                    unless ref($event) eq 'ARRAY' && @$event >= 4 && ($event->[0] // '') eq 'event'
+                        && _is_hdl_identifier($event->[1])
+                        && defined($event->[2]) && !ref($event->[2]) && $event->[2] =~ /\A(?:scenario_start|predicate|rising)\z/
+                        && defined($event->[3]) && !ref($event->[3]) && $event->[3] =~ /\A(?:drive|sample|react|check)\z/;
+                my ($event_name, $kind, $phase) = @{$event}[1, 2, 3];
+                confess "Error: actor '$actor_name' verification-bridge transaction '$name' has duplicate event '$event_name'\n"
+                    if $seen_event{$event_name}++;
+                confess "Error: actor '$actor_name' verification-bridge event '$event_name' scenario_start takes no expression\n"
+                    if $kind eq 'scenario_start' && @$event != 4;
+                confess "Error: actor '$actor_name' verification-bridge event '$event_name' $kind requires exactly one expression\n"
+                    if $kind ne 'scenario_start' && @$event != 5;
+                push @events, {
+                    name       => $event_name,
+                    kind       => $kind,
+                    phase      => $phase,
+                    expression => $kind eq 'scenario_start' ? undef : _clone_isf_value($event->[4]),
+                };
+            }
+            next;
+        }
+        confess "Error: actor '$actor_name' verification-bridge transaction '$name' has unsupported clause '$head'\n";
+    }
+    confess "Error: actor '$actor_name' verification-bridge transaction '$name' requires non-empty fields and events clauses\n"
+        unless @fields && @events;
+    return { name => $name, fields => \@fields, events => \@events };
+}
+
+sub _finalize_actor_verification_bridge($self, $actor) {
+    my $bridge = $actor->{verification_bridge};
+    return 1 unless ref($bridge) eq 'HASH';
+
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    confess "Error: actor '$actor_name' verification-bridge requires a single-clock actor\n"
+        if ref($actor->{clock_domains}) eq 'HASH';
+    confess "Error: actor '$actor_name' verification-bridge requires an explicit clock and reset\n"
+        unless defined($actor->{clock}) && !ref($actor->{clock}) && ref($actor->{reset}) eq 'HASH';
+
+    my %endpoint_by_name;
+    for my $direction (qw(inputs outputs)) {
+        my $public_direction = $direction eq 'inputs' ? 'input' : 'output';
+        for my $port (@{($actor->{interface} || {})->{$direction} || []}) {
+            $endpoint_by_name{$port->{name}} = {
+                kind      => 'endpoint',
+                name      => $port->{name},
+                direction => $public_direction,
+                width     => 0 + $port->{width},
+                signed    => $port->{signed} ? 1 : 0,
+            };
+        }
+    }
+    my %parameter_by_name = map { ($_->{name} => $_) } @{$actor->{params} || []};
+    my %probe_by_name;
+    for my $probe (@{$bridge->{probes} || []}) {
+        my $storage = _actor_storage_signal_by_name($actor, $probe->{name});
+        confess "Error: actor '$actor_name' verification-bridge probe '$probe->{name}' must reference resolved actor-owned scalar storage\n"
+            unless ref($storage) eq 'HASH' && defined($storage->{width}) && !ref($storage->{width})
+                && "$storage->{width}" =~ /\A[1-9][0-9]*\z/;
+        confess "Error: actor '$actor_name' verification-bridge probe '$probe->{name}' cannot reference a public interface endpoint\n"
+            if $endpoint_by_name{$probe->{name}};
+        $probe->{source} = {
+            kind      => 'storage',
+            name      => $probe->{name},
+            direction => 'sample',
+            width     => 0 + $storage->{width},
+            signed    => $storage->{signed} ? 1 : 0,
+        };
+        $probe_by_name{$probe->{name}} = $probe;
+    }
+
+    for my $field (@{$bridge->{transaction}{fields} || []}) {
+        my $source_name = $field->{source};
+        my $source = $endpoint_by_name{$source_name};
+        if (!$source && $parameter_by_name{$source_name}) {
+            my $parameter = $parameter_by_name{$source_name};
+            my $width = $parameter->{width};
+            confess "Error: actor '$actor_name' verification-bridge field '$field->{name}' parameter '$source_name' lacks a resolved positive scalar width\n"
+                unless defined($width) && !ref($width) && "$width" =~ /\A[1-9][0-9]*\z/;
+            $source = {
+                kind      => 'configuration',
+                name      => $source_name,
+                direction => 'configuration',
+                width     => 0 + $width,
+                signed    => $parameter->{signed} ? 1 : 0,
+            };
+        }
+        confess "Error: actor '$actor_name' verification-bridge field '$field->{name}' references unknown endpoint or configuration '$source_name'\n"
+            unless $source;
+        confess "Error: actor '$actor_name' verification-bridge drive field '$field->{name}' must reference an input endpoint or configuration\n"
+            if $field->{direction} eq 'drive'
+                && $source->{direction} ne 'input' && $source->{direction} ne 'configuration';
+        confess "Error: actor '$actor_name' verification-bridge sample field '$field->{name}' must reference an output endpoint\n"
+            if $field->{direction} eq 'sample' && $source->{direction} ne 'output';
+        $field->{source} = _clone_isf_value($source);
+    }
+
+    for my $event (@{$bridge->{transaction}{events} || []}) {
+        next unless defined $event->{expression};
+        my $width = _validate_verification_bridge_expression(
+            $event->{expression},
+            $actor,
+            \%endpoint_by_name,
+            \%probe_by_name,
+            "actor '$actor_name' verification-bridge event '$event->{name}'",
+        );
+        confess "Error: actor '$actor_name' verification-bridge predicate event '$event->{name}' requires a one-bit Boolean expression\n"
+            if $event->{kind} eq 'predicate' && (!defined($width) || $width != 1);
+        if ($event->{kind} eq 'rising') {
+            confess "Error: actor '$actor_name' verification-bridge rising event '$event->{name}' requires one scalar one-bit signal reference\n"
+                if ref($event->{expression});
+            my $width = _verification_bridge_reference_width(
+                $event->{expression}, $actor, \%endpoint_by_name, \%probe_by_name,
+            );
+            confess "Error: actor '$actor_name' verification-bridge rising event '$event->{name}' requires one scalar one-bit signal reference\n"
+                unless defined($width) && $width == 1;
+        }
+    }
+    return 1;
+}
+
+sub _verification_bridge_reference_width {
+    my ($name, $actor, $endpoint_by_name, $probe_by_name) = @_;
+    return $endpoint_by_name->{$name}{width} if $endpoint_by_name->{$name};
+    return $probe_by_name->{$name}{source}{width} if $probe_by_name->{$name};
+    return 1 if $name eq ($actor->{clock} // '') || $name eq (($actor->{reset} || {})->{name} // '');
+    my $storage = _actor_storage_signal_by_name($actor, $name);
+    return ref($storage) eq 'HASH' ? $storage->{width} : undef;
+}
+
+sub _validate_verification_bridge_expression {
+    my ($expression, $actor, $endpoint_by_name, $probe_by_name, $context) = @_;
+    if (ref($expression) eq 'ARRAY') {
+        confess "Error: $context expression list must contain an operator and operand\n"
+            unless @$expression >= 2;
+        my $operator = $expression->[0];
+        confess "Error: $context expression operator must be scalar\n"
+            unless defined($operator) && !ref($operator) && length($operator);
+        confess "Error: $context expression uses unsupported operator '$operator'\n"
+            unless $VERIFICATION_BRIDGE_EXPRESSION_OPERATOR{$operator};
+        my $operand_count = $#$expression;
+        confess "Error: $context unary operator '$operator' requires exactly one operand\n"
+            if ($operator eq '!' || $operator eq '~') && $operand_count != 1;
+        confess "Error: $context comparison operator '$operator' requires exactly two operands\n"
+            if $operator =~ /\A(?:=|==|!=|<|>|<=|>=)\z/ && $operand_count != 2;
+        confess "Error: $context bitwise operator '$operator' requires at least two operands\n"
+            if ($operator eq '&' || $operator eq '|' || $operator eq '^'
+                || $operator eq '!|' || $operator eq '~|') && $operand_count < 2;
+        my @widths;
+        for my $operand (@{$expression}[1 .. $#$expression]) {
+            push @widths, _validate_verification_bridge_expression(
+                $operand, $actor, $endpoint_by_name, $probe_by_name, $context,
+            );
+        }
+        my @known_widths = grep { defined $_ } @widths;
+        my %known_width = map { $_ => 1 } @known_widths;
+        confess "Error: $context operator '$operator' has incompatible operand widths\n"
+            if keys(%known_width) > 1;
+        return 1 if $operator =~ /\A(?:=|==|!=|<|>|<=|>=)\z/;
+        return @known_widths ? $known_widths[0] : undef;
+    }
+    confess "Error: $context expression leaves must be scalar\n"
+        if !defined($expression) || ref($expression);
+    return 1 if $expression =~ /\A(?:true|false)\z/;
+    return undef if $expression =~ /\A[0-9]+\z/;
+    return 0 + $1 if $expression =~ /\A([0-9]+)'[sS]?[bBoOdDhH][0-9a-fA-F_xXzZ?]+\z/;
+    return $endpoint_by_name->{$expression}{width} if $endpoint_by_name->{$expression};
+    return $probe_by_name->{$expression}{source}{width} if $probe_by_name->{$expression};
+    return 1 if $expression eq ($actor->{clock} // '') || $expression eq (($actor->{reset} || {})->{name} // '');
+    my $storage = _actor_storage_signal_by_name($actor, $expression);
+    return $storage->{width} if ref($storage) eq 'HASH';
+    confess "Error: $context expression references unknown endpoint, probe, timing signal, or actor storage '$expression'\n";
 }
 
 sub _finalize_actor_verification_observations($self, $actor) {

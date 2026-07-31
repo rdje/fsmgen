@@ -10,6 +10,7 @@ use FSM::Support::LanguageSurfaceContract qw(
     build_language_surface_contract
     language_surface_file_surface_entry_keys
 );
+use FSM::Support::HIALVIALBridgeContract qw(build_hial_vial_bridge_contract);
 
 our @EXPORT_OK = qw(
     build_language_surface_section
@@ -188,6 +189,7 @@ sub build_language_surface_section {
             ],
             unsupported_first_slice_aliases => [qw(.pif .ppi .chi .ace .atb .smbus .i2s)],
         },
+        hial_vial_bridge => build_hial_vial_bridge_contract(),
         default_mode_compatibility => {
             accepted_but_not_canonical_for_generated_output => [
                 '+fsm root family',

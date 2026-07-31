@@ -2,8 +2,9 @@
 
 FSMGen has selected the architecture for its verification-intent language and
 future generated executable fixtures. This chapter explains the shipped
-semantic frontend, the executable destination, and the compatibility boundary.
-It does **not** mean runnable VIAL output ships today.
+semantic frontend, the shipped private HIAL bridge producer, the executable
+destination, and the compatibility boundary. It does **not** mean runnable
+VIAL output ships today.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -266,11 +267,90 @@ them; otherwise the bridge says `semantic_path` with null span fields instead
 of inventing precision.
 
 The first implementation leaf `.5` is deliberately private and in-process.
-It will return immutable defensive manifest/report data and write no bridge
+It now returns immutable defensive manifest/report data and writes no bridge
 file. Public CLI/API and `hial-vial-bridge.json` discovery remain owned by
 `.8`; VIAL binding, execution plans, generated verification code, compilation,
 simulation, and parity remain later leaves. See the complete
 [bridge v1 contract](../../HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md).
+
+### Using the shipped private producer
+
+The implementation has three closed entrypoints, one for each canonical HIAL
+review route:
+
+```perl
+use FSM::HIAL::VIALBridge::Builder;
+
+my $result = FSM::HIAL::VIALBridge::Builder->build_ial2_via_ial1({
+    profile => 'core_single_unit_v1',
+    authored_source => $exact_ppif_identity,
+    generated_ial1 => {
+        source => $exact_generated_isf_identity,
+        actor => $reparsed_actor,
+        schedule_report => $decoded_schedule_report,
+    },
+    generated_ial0 => $exact_generated_fsm_identity,
+    backend_names => $validated_sv_and_vhdl_names,
+});
+
+die $result->{diagnostics}[0]{message} unless $result->{ok};
+my $manifest = $result->{manifest}; # private immutable object
+my $report   = $result->{report};   # full defensive JSON-safe copy
+```
+
+Each source identity contains exact bytes, a repository-relative path or null
+for a virtual generated artifact, its basename, SHA-256, byte length, and line
+count. The builder verifies those values instead of trusting caller labels.
+It accepts no PPIF AST/report shortcut and no absolute, home-relative,
+temporary, network, or raw-hierarchy identity.
+
+The checked AHB report contains, among its other mandatory families:
+
+```json
+{
+  "schema": "fsmgen.hial_vial_bridge_manifest.v1",
+  "profile": "core_single_unit_v1",
+  "entry_source_id": "source/authored",
+  "review_route": {
+    "authored_layer": "IAL2",
+    "direct_ial2_to_verification": false,
+    "stages": [
+      { "layer": "IAL2", "source_id": "source/authored" },
+      { "layer": "IAL1", "source_id": "source/generated_ial1" },
+      { "layer": "IAL0", "source_id": "source/generated_ial0" }
+    ]
+  },
+  "transactions": [
+    {
+      "transaction_id": "transaction/ahb_write",
+      "type_id": null,
+      "protocol_id": "protocol/ahb_lite_subordinate"
+    }
+  ],
+  "probes": [
+    {
+      "probe_id": "probe/reg_data_q",
+      "access": "verification_probe",
+      "adapter_requirement": "equivalent_adapter_required"
+    }
+  ]
+}
+```
+
+The excerpt omits mandatory keys only for readability; the actual report is a
+closed 27-key manifest projection. Transaction `type_id` is null because this
+first profile admits scalar fields but no aggregate transaction record; each
+field carries its exact logical type. Event predicates use recursive,
+backend-neutral `kind`, `operator`, `operands`, `value`, `reference_kind`, and
+`semantic_id` records—not rendered SV/VHDL expressions.
+
+Discoverability does not promote the producer to a supported embedding API.
+`./bin/fsmgen --capability-manifest` reports
+`language_surface.hial_vial_bridge.status` as
+`shipped_private_in_process`, `writes_files: false`, and
+`public_embedding_api: false`. The support-accounted AHB fixture lists only
+its five exercised bridge capabilities and repeats the no-bind/no-plan/no-
+runtime/no-methodology claims.
 
 ## Portable verification meaning
 

@@ -16,6 +16,7 @@ our @EXPORT_OK = qw(
     language_surface_expressions_keys
     language_surface_file_surface_entry_keys
     language_surface_file_surfaces_keys
+    language_surface_hial_vial_bridge_keys
     language_surface_nested_presence_key_map
     language_surface_public_top_level_keys
     language_surface_strict_mode_keys
@@ -45,6 +46,7 @@ sub build_language_surface_contract {
         strict_mode_presence_keys => language_surface_strict_mode_keys(),
         file_surfaces_presence_keys => language_surface_file_surfaces_keys(),
         file_surface_entry_presence_keys => language_surface_file_surface_entry_keys(),
+        hial_vial_bridge_presence_keys => language_surface_hial_vial_bridge_keys(),
         default_mode_compatibility_presence_keys => language_surface_default_mode_compatibility_keys(),
         assignments_presence_keys => language_surface_assignments_keys(),
         system_contracts_presence_keys => language_surface_system_contracts_keys(),
@@ -67,6 +69,7 @@ sub language_surface_public_top_level_keys {
         qw(
             strict_mode
             file_surfaces
+            hial_vial_bridge
             default_mode_compatibility
             assignments
             system_contracts
@@ -118,6 +121,24 @@ sub language_surface_file_surface_entry_keys {
             current_boundary
         ),
     ];
+}
+
+sub language_surface_hial_vial_bridge_keys {
+    return [qw(
+        schema_version
+        status
+        contract_source
+        implementation_entrypoints
+        manifest_schema
+        profile
+        canonical_review_routes
+        capabilities
+        limits
+        fixture
+        writes_files
+        public_embedding_api
+        explicit_nonclaims
+    )];
 }
 
 sub language_surface_default_mode_compatibility_keys {
@@ -188,6 +209,7 @@ sub language_surface_nested_presence_key_map {
     return {
         strict_mode => language_surface_strict_mode_keys(),
         file_surfaces => language_surface_file_surfaces_keys(),
+        hial_vial_bridge => language_surface_hial_vial_bridge_keys(),
         default_mode_compatibility => language_surface_default_mode_compatibility_keys(),
         assignments => language_surface_assignments_keys(),
         system_contracts => language_surface_system_contracts_keys(),

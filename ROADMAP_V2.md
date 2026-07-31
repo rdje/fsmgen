@@ -8439,6 +8439,18 @@ implementation `.5` through a continuity-only transition. No parser,
 generated-IAL1 annotation, bridge object/report, artifact, capability/support
 entry, HIAL output, VIAL binding, runtime, or product behavior changes during
 activation.
+Completed `.5` ships the bounded private in-process/no-file bridge producer.
+Direct IAL0 and direct IAL1 consume their canonical parsed/review routes;
+IAL2 protocol/event/probe/residue meaning is emitted only as an additive
+generated-IAL1 `(verification-bridge ...)` annotation, reparsed and reported
+by IAL1 before bridge consumption. Exact logical IDs match the checked VIAL
+fixture, all semantic facts carry honest provenance, defensive JSON-safe data
+and exact private support/capability limits are published, and malformed or
+unsupported routes fail closed. Generated IAL0 and HIAL SV/VHDL behavior are
+preserved. No VIAL binding, bridge file, public API, plan, verification
+artifact, runtime, target-methodology, or parity claim is added. Proposed `.6`
+alone is selected next for a separate clean activation of execution-contract
+selection.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

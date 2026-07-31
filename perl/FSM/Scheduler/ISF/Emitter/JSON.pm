@@ -33,6 +33,7 @@ sub report_hash($self, $ir) {
         actor_phases   => $self->_actor_metadata_summary($ir, 'actor_phases'),
         actor_stages   => $self->_actor_metadata_summary($ir, 'actor_stages'),
         verification_observations => $self->_verification_observation_summary($ir),
+        verification_bridge => $self->_verification_bridge_summary($ir),
         actor_params    => $self->_actor_param_summary($ir),
         actor_constants => $self->_actor_constant_summary($ir),
         port_count     => scalar(@{$ir->{ports}}),
@@ -509,6 +510,11 @@ sub _verification_observation_summary($self, $ir) {
             }
         } @{$ir->{verification_observations} || []}
     ];
+}
+
+sub _verification_bridge_summary($self, $ir) {
+    return undef unless ref($ir->{verification_bridge}) eq 'HASH';
+    return _clone_report_value($ir->{verification_bridge});
 }
 
 sub _actor_param_summary($self, $ir) {

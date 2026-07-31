@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Digest::SHA qw(sha256_hex);
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
@@ -11,6 +12,12 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::IAL2::PPIF;
+use FSM::Support::ISFPublicInterfaceContract qw(
+    isf_public_interface_schedule_report_verification_bridge_event_keys
+    isf_public_interface_schedule_report_verification_bridge_keys
+    isf_public_interface_schedule_report_verification_bridge_protocol_keys
+    isf_public_interface_schedule_report_verification_bridge_transaction_keys
+);
 
 subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
     ok(-f sample_ahb_subordinate_ppif_path(), 'tracked runnable AHB subordinate PPIF sample exists');
@@ -32,6 +39,7 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
     my $isf = $result->{generated_ial1}{text};
     is($result->{generated_ial1}{name}, 'ahb_lite_subordinate.isf', 'AHB subordinate exposes generated IAL1 artifact');
     like($isf, qr/\A\(actor ahb_lite_subordinate\b/, 'generated AHB subordinate IAL1 is .isf text');
+    like($isf, qr/\(verification-bridge\b/, 'generated AHB subordinate IAL1 carries additive verification bridge metadata');
     like($isf, qr/\(input HSEL\)/, 'generated AHB subordinate IAL1 declares HSEL');
     like($isf, qr/\(input HREADY\)/, 'generated AHB subordinate IAL1 declares HREADY');
     like($isf, qr/\(input HADDR \(width 32\)\)/, 'generated AHB subordinate IAL1 declares HADDR');
@@ -58,6 +66,7 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
         'AHB subordinate adapter exposes generated AHB IAL0 .fsm file map',
     );
     my $fsm = $result->{generated_ial0}{files}{'ahb_lite_subordinate.fsm'};
+    is(sha256_hex($fsm), '3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf', 'additive generated IAL1 metadata leaves generated IAL0 bytes unchanged');
     like($fsm, qr/\(\?fsm:ahb_lite_subordinate\b/, 'generated AHB subordinate IAL0 names the subordinate FSM');
     like($fsm, qr/\(HREADYOUT 1 \(reset 1\)\)/, 'generated AHB subordinate IAL0 carries HREADYOUT reset metadata');
     like($fsm, qr/\(HRESP 1 \(reset 0\)\)/, 'generated AHB subordinate IAL0 carries HRESP reset metadata');
@@ -86,6 +95,13 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
     is($result->{report}{phase_pipeline}{write_data}{policy}, 'live_data_phase_held_while_stalled', 'report keeps HWDATA live in the data phase');
     is($result->{report}{phase_pipeline}{overflow}, 'stall_before_another_acceptance', 'report exposes phase-bank backpressure');
     is($result->{report}{generated_artifacts}{hdl_entry}{entry_artifact}, 'ahb_lite_subordinate.fsm', 'report selects generated subordinate .fsm as HDL entry');
+
+    my $bridge = $result->{generated_ial1_schedule_report}{verification_bridge};
+    is_deeply(sorted([keys %$bridge]), sorted(isf_public_interface_schedule_report_verification_bridge_keys()), 'reparsed schedule report publishes the exact bridge key family');
+    is_deeply(sorted([keys %{$bridge->{protocol}}]), sorted(isf_public_interface_schedule_report_verification_bridge_protocol_keys()), 'reparsed schedule report publishes the exact bridge protocol key family');
+    is_deeply(sorted([keys %{$bridge->{transaction}}]), sorted(isf_public_interface_schedule_report_verification_bridge_transaction_keys()), 'reparsed schedule report publishes the exact bridge transaction key family');
+    is_deeply(sorted([keys %{$bridge->{transaction}{events}[0]}]), sorted(isf_public_interface_schedule_report_verification_bridge_event_keys()), 'reparsed schedule report publishes the exact bridge event key family');
+    is($bridge->{probes}[0]{name}, 'reg_data_q', 'reparsed bridge annotation retains the declared verification probe');
 
     my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
     ok($residue{ahb_subordinate_profile_alias_deferred}, 'report keeps .ahb subordinate alias residue explicit');

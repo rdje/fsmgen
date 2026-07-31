@@ -292,6 +292,7 @@ sub capability_manifest_language_surface_keys {
         qw(
             strict_mode
             file_surfaces
+            hial_vial_bridge
             default_mode_compatibility
             assignments
             system_contracts

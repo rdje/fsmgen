@@ -34356,3 +34356,29 @@ Provenance follows the same honesty rule. Current IAL0/IAL1 parsers do not
 preserve exact spans uniformly, so bridge v1 records a stable semantic path and
 null span fields where necessary. Invented line/column precision would look
 better in a report but make diagnosis less trustworthy.
+
+## Bridge implementation — normalize meaning at the seam (2026-07-31)
+
+Implementation `.5` confirmed the architectural analogy directly: VIAL owns
+author intent while SV/UVM/VHDL are compiler targets, like assembly beneath
+C/C++ or Rust. The bridge therefore publishes backend-neutral logical IDs,
+types, lifecycle phases, expressions, capabilities, residue, and provenance;
+it rejects raw hierarchy and never exposes methodology plumbing. Backend
+module/entity and port names remain logical integration bindings, not authored
+verification behavior.
+
+Two details required explicit normalization. First, the current IAL1 schedule
+report does not expose a reusable canonical expression AST, so bridge v1 owns a
+closed expression record (`kind`, `operator`, `operands`, `value`,
+`reference_kind`, `semantic_id`) instead of inventing a dependency on an
+absent report contract. Second, `core_single_unit_v1` is scalar-only: its AHB
+transaction fields have authoritative scalar type IDs, while the transaction's
+aggregate `type_id` is null rather than a fabricated record type. Both choices
+preserve semantic truth and leave later aggregate profiles room to add an
+actual normalized transaction record deliberately.
+
+The producer stays private and in-process. Capability/support accounting makes
+that seam discoverable, including exact limits and non-claims, without making
+the manifest a public file or embedding API ahead of `.8`. This permits the
+next binder/execution contract to consume defensive logical data without
+coupling to PPIF internals, parser objects, raw schedules, or backend classes.

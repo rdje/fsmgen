@@ -23,7 +23,7 @@ subtest 'live active task trees satisfy the integrity contract' => sub {
     ok($ok, 'live task-tree integrity passes') or diag($output);
     like(
         $output,
-        qr/all active task-tree invariants hold \(trees=1, nodes=\d+\)/,
+        qr/all active task-tree invariants hold \(trees=[1-9][0-9]*, nodes=[1-9][0-9]*\)/,
         'live result reports measured tree and node counts',
     );
 };

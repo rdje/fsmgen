@@ -121,6 +121,8 @@ sub support_accounting_catalog_entry_optional_keys {
             expected_child_modules
             search_path_relpaths
             expected_hdl_pattern_count
+            private_capabilities
+            private_nonclaims
         ),
     ];
 }

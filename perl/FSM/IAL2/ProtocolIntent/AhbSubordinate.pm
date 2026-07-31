@@ -348,6 +348,7 @@ sub _emit_isf($contract) {
     my @burst_phase_sample_lines = exists($bus->{burst})
         ? "      (sample next_burst_q as burst_q)"
         : ();
+    my @verification_bridge_lines = _verification_bridge_lines($contract);
 
     return join("\n",
         "(actor $contract->{actor_name}",
@@ -382,6 +383,7 @@ sub _emit_isf($contract) {
         @seq_storage_lines,
         "  )",
         "",
+        @verification_bridge_lines,
         "  (drive enter_data_phase",
         "    ($bus->{ready_out} 0)",
         "    ($bus->{response}{name} $response->{okay})",
@@ -443,6 +445,69 @@ sub _emit_isf($contract) {
         "    (complete $internal_done)))",
         "",
     );
+}
+
+sub _verification_bridge_lines($contract) {
+    return () unless _verification_bridge_selected($contract);
+
+    my $bus = $contract->{bus};
+    my $control = $contract->{control};
+    my $storage = $contract->{storage}{register};
+    my $transfer = $contract->{transfer};
+    my $revision = _verification_bridge_revision($contract);
+    my @residue_lines = map { "  (residue $_->{id})" } @{_unsupported_residue($contract)};
+
+    return (
+        "  (verification-bridge",
+        "    (domain ahb_bus)",
+        "    (protocol ahb_lite_subordinate",
+        "      (profile ahb)",
+        "      (revision $revision)",
+        "      (role subordinate)",
+        "      (facts",
+        "        (fact supported_transfer $transfer->{nonseq})",
+        "        (fact okay_response $transfer->{response}{okay})",
+        "        (fact error_response $transfer->{response}{error})",
+        "        (fact error_completion $transfer->{error_completion})))",
+        "    (transaction ahb_write",
+        "      (fields",
+        "        (field address $bus->{address}{name} drive address_phase)",
+        "        (field transfer $bus->{transfer}{name} drive address_phase)",
+        "        (field write $bus->{write} drive address_phase)",
+        "        (field size $bus->{size}{name} drive address_phase)",
+        "        (field data $bus->{write_data}{name} drive data_phase)",
+        "        (field wait_cycles $control->{wait_cycles}{name} drive configuration))",
+        "      (events",
+        "        (event requested scenario_start drive)",
+        "        (event accepted predicate sample (& $bus->{select} $bus->{ready_in} (== $bus->{transfer}{name} $transfer->{nonseq})))",
+        "        (event captured rising sample ahb_phase_pending_q)",
+        "        (event held predicate sample (== $bus->{ready_out} 0))",
+        "        (event completed predicate sample $bus->{ready_out})",
+        "        (event error predicate sample (== $bus->{response}{name} $transfer->{response}{error}))))",
+        "    (probe $storage->{data}{name} read_only)",
+        @residue_lines,
+        "  )",
+        "",
+    );
+}
+
+sub _verification_bridge_selected($contract) {
+    return 0 unless ($contract->{source_object_id} // '') eq 'fsmgen-ahb-lite-subordinate';
+    return 0 unless ($contract->{actor_name} // '') eq 'ahb_lite_subordinate';
+    return 0 if _transfer_supports_narrow_sizes($contract->{transfer});
+    return 0 if _transfer_selects_seq_policy($contract->{transfer});
+    return 1;
+}
+
+sub _verification_bridge_revision($contract) {
+    for my $anchor (@{$contract->{source_anchors} || []}) {
+        return $anchor->{document}
+            if ref($anchor) eq 'HASH'
+                && defined($anchor->{document})
+                && !ref($anchor->{document})
+                && length($anchor->{document});
+    }
+    confess "AHB subordinate verification-bridge requires a source revision document anchor\n";
 }
 
 sub _read_drive_lines($contract) {

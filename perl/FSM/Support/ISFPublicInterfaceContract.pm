@@ -138,6 +138,14 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_verification_observation_keys
     isf_public_interface_schedule_report_verification_observation_signal_keys
     isf_public_interface_schedule_report_verification_observation_role_values
+    isf_public_interface_schedule_report_verification_bridge_keys
+    isf_public_interface_schedule_report_verification_bridge_protocol_keys
+    isf_public_interface_schedule_report_verification_bridge_fact_keys
+    isf_public_interface_schedule_report_verification_bridge_transaction_keys
+    isf_public_interface_schedule_report_verification_bridge_field_keys
+    isf_public_interface_schedule_report_verification_bridge_source_keys
+    isf_public_interface_schedule_report_verification_bridge_event_keys
+    isf_public_interface_schedule_report_verification_bridge_probe_keys
     isf_public_interface_schedule_report_watchdog_shape
     isf_public_interface_shipped_library_definitions
     isf_public_interface_report_return_shape
@@ -236,6 +244,14 @@ sub build_isf_public_interface_contract {
         schedule_report_verification_observation_keys => isf_public_interface_schedule_report_verification_observation_keys(),
         schedule_report_verification_observation_signal_keys => isf_public_interface_schedule_report_verification_observation_signal_keys(),
         schedule_report_verification_observation_role_values => isf_public_interface_schedule_report_verification_observation_role_values(),
+        schedule_report_verification_bridge_keys => isf_public_interface_schedule_report_verification_bridge_keys(),
+        schedule_report_verification_bridge_protocol_keys => isf_public_interface_schedule_report_verification_bridge_protocol_keys(),
+        schedule_report_verification_bridge_fact_keys => isf_public_interface_schedule_report_verification_bridge_fact_keys(),
+        schedule_report_verification_bridge_transaction_keys => isf_public_interface_schedule_report_verification_bridge_transaction_keys(),
+        schedule_report_verification_bridge_field_keys => isf_public_interface_schedule_report_verification_bridge_field_keys(),
+        schedule_report_verification_bridge_source_keys => isf_public_interface_schedule_report_verification_bridge_source_keys(),
+        schedule_report_verification_bridge_event_keys => isf_public_interface_schedule_report_verification_bridge_event_keys(),
+        schedule_report_verification_bridge_probe_keys => isf_public_interface_schedule_report_verification_bridge_probe_keys(),
         schedule_report_actor_network_keys => isf_public_interface_schedule_report_actor_network_keys(),
         schedule_report_actor_network_instance_keys => isf_public_interface_schedule_report_actor_network_instance_keys(),
         schedule_report_actor_network_resolved_instance_keys => isf_public_interface_schedule_report_actor_network_resolved_instance_keys(),
@@ -634,6 +650,14 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_watchdog_shape
             schedule_report_actor_phase_keys
             schedule_report_actor_stage_keys
+            schedule_report_verification_bridge_keys
+            schedule_report_verification_bridge_protocol_keys
+            schedule_report_verification_bridge_fact_keys
+            schedule_report_verification_bridge_transaction_keys
+            schedule_report_verification_bridge_field_keys
+            schedule_report_verification_bridge_source_keys
+            schedule_report_verification_bridge_event_keys
+            schedule_report_verification_bridge_probe_keys
             schedule_report_actor_network_keys
             schedule_report_actor_network_instance_keys
             schedule_report_actor_network_resolved_instance_keys
@@ -997,6 +1021,7 @@ sub isf_public_interface_schedule_report_top_level_keys {
             actor_phases
             actor_stages
             verification_observations
+            verification_bridge
             actor_params
             actor_constants
             port_count
@@ -1449,6 +1474,38 @@ sub isf_public_interface_schedule_report_verification_observation_role_values {
             passive_monitor
         ),
     ];
+}
+
+sub isf_public_interface_schedule_report_verification_bridge_keys {
+    return [qw(domain protocol transaction probes residues)];
+}
+
+sub isf_public_interface_schedule_report_verification_bridge_protocol_keys {
+    return [qw(name profile revision role facts)];
+}
+
+sub isf_public_interface_schedule_report_verification_bridge_fact_keys {
+    return [qw(name value)];
+}
+
+sub isf_public_interface_schedule_report_verification_bridge_transaction_keys {
+    return [qw(name fields events)];
+}
+
+sub isf_public_interface_schedule_report_verification_bridge_field_keys {
+    return [qw(name source direction phase_role)];
+}
+
+sub isf_public_interface_schedule_report_verification_bridge_source_keys {
+    return [qw(kind name direction width signed)];
+}
+
+sub isf_public_interface_schedule_report_verification_bridge_event_keys {
+    return [qw(name kind phase expression)];
+}
+
+sub isf_public_interface_schedule_report_verification_bridge_probe_keys {
+    return [qw(name access source)];
 }
 
 sub isf_public_interface_schedule_report_actor_network_keys {
@@ -1991,6 +2048,14 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_actor_stage_keys => isf_public_interface_schedule_report_actor_stage_keys(),
         schedule_report_verification_observation_keys => isf_public_interface_schedule_report_verification_observation_keys(),
         schedule_report_verification_observation_signal_keys => isf_public_interface_schedule_report_verification_observation_signal_keys(),
+        schedule_report_verification_bridge_keys => isf_public_interface_schedule_report_verification_bridge_keys(),
+        schedule_report_verification_bridge_protocol_keys => isf_public_interface_schedule_report_verification_bridge_protocol_keys(),
+        schedule_report_verification_bridge_fact_keys => isf_public_interface_schedule_report_verification_bridge_fact_keys(),
+        schedule_report_verification_bridge_transaction_keys => isf_public_interface_schedule_report_verification_bridge_transaction_keys(),
+        schedule_report_verification_bridge_field_keys => isf_public_interface_schedule_report_verification_bridge_field_keys(),
+        schedule_report_verification_bridge_source_keys => isf_public_interface_schedule_report_verification_bridge_source_keys(),
+        schedule_report_verification_bridge_event_keys => isf_public_interface_schedule_report_verification_bridge_event_keys(),
+        schedule_report_verification_bridge_probe_keys => isf_public_interface_schedule_report_verification_bridge_probe_keys(),
         schedule_report_actor_network_keys => isf_public_interface_schedule_report_actor_network_keys(),
         schedule_report_actor_network_instance_keys => isf_public_interface_schedule_report_actor_network_instance_keys(),
         schedule_report_actor_network_resolved_instance_keys => isf_public_interface_schedule_report_actor_network_resolved_instance_keys(),
