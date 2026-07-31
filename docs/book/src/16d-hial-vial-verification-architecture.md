@@ -174,6 +174,26 @@ extension hooks, and backend requirements are explicit. It is also private.
 Public reports are bounded sanitized projections. Raw IR object structure is
 not an API, and callers do not receive mutable compiler-owned data.
 
+### Current type-binding decision boundary
+
+Implementation audit found one unresolved semantic seam before the private
+execution binder can ship. The checked VIAL transaction uses an enum for
+`transfer`, Boolean for `write`, and unsigned `u(4)` for `wait_cycles`; the
+HIAL bridge correctly describes all three hardware carriers as four-state
+logic. The selected execution contract currently demands exact type identity,
+so those three fields cannot bind honestly.
+
+This is deliberately fail-closed. The pending choice is either to align both
+sides to identical types, or to admit a narrow proof-carrying directional
+representation adapter. The recommended adapter would allow a known
+two-state value to drive a same-width/signed four-state carrier and an enum to
+drive its exact base encoding, while still forbidding four-state-to-two-state
+sampling, X/Z collapse, width/sign conversion, or implicit expression casts.
+That keeps Boolean/numeric/enum intent in VIAL and hardware representation in
+HIAL—the same “simpler language above backend assembly” boundary described in
+this chapter. No binder or plan is shipped until the rule is selected and the
+contracts agree.
+
 ## The HIAL/VIAL bridge
 
 `HIALVIALBridgeManifest` is the portable DUT-binding authority. Its versioned
@@ -619,6 +639,9 @@ binding, logical phases, actions/fibers, plan-time random/replay, declarative
 native implementations, plan/result/parity records, diagnostics, limits, and
 the AHB oracle. Proposed `.7` is selected next for separate clean activation of
 private no-backend implementation. Clean selection commit `eaf3f95dc` permits
-that continuity-only activation; exact implementation remains unperformed
-until activation commits cleanly. No plan/result file, target artifact,
-compile, simulation, runtime, parity, or product behavior changes in activation.
+that continuity-only activation, which committed cleanly at `3ec8eab93`.
+Audit `.7.1` then confirmed that the exact type-identity rule cannot bind the
+checked enum/Boolean/unsigned transaction fields to three HIAL four-state
+logic carriers. Blocked `.7.2` owns the semantic choice described above;
+`.7.3` owns implementation afterward. No plan/result file, target artifact,
+compile, simulation, runtime, parity, or product behavior is claimed.

@@ -62,6 +62,9 @@ one-to-one catalog of renamed SV/UVM/VHDL syntax, classes, or methods is
 explicitly out of scope. Completed documentation leaf `.6` now selects the
 target-neutral execution/native/result contract that preserves this separation
 under decision `0036`; it implements no behavior. Active `.7` owns private
-no-backend implementation after separate clean activation. Clean selection
-commit `eaf3f95dc` now permits that continuity-only activation; implementation
-remains unperformed and the expressive boundary is unchanged.
+no-backend work after separate clean activation. Audit `.7.1` now proves that
+forcing exact identity between expressive VIAL enum/Boolean/unsigned values
+and HIAL four-state hardware carriers blocks the checked fixture. `.7.2` is
+blocked on the director's semantic choice, with a proof-carrying directional
+adapter recommended precisely because it preserves this expressive boundary;
+`.7.3` owns implementation afterward.

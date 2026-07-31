@@ -34382,3 +34382,25 @@ that seam discoverable, including exact limits and non-claims, without making
 the manifest a public file or embedding API ahead of `.8`. This permits the
 next binder/execution contract to consume defensive logical data without
 coupling to PPIF internals, parser objects, raw schedules, or backend classes.
+
+## VIAL/HIAL binding — distinguish semantic type from hardware carrier (2026-07-31)
+
+Execution audit `.7.1` found that exact type identity is too strong for the
+current authored-to-hardware drive seam. VIAL deliberately retains an enum,
+Boolean, and unsigned arithmetic type; HIAL deliberately retains four-state
+logic for the corresponding hardware ports. Neither side is wrong. Decision
+`0036` omitted the representation relation that would connect them.
+
+The safe candidate is directional and proof-carrying, not general coercion. A
+known two-state scalar can inject into a same-width/signed four-state carrier
+with a full known mask and no Z, and an enum can inject through its exact base
+encoding. The inverse is not automatic: sampled X/Z cannot become a two-state
+value. Width/sign changes, truncation, extension, wrapping, expression-level
+coercion, and target-language casts remain forbidden.
+
+This distinction preserves VIAL abstraction. Authors keep Boolean, numeric,
+and enum intent rather than spelling hardware representation details; the
+compiler proves the representation at the HIAL seam. It also gives backends a
+target-neutral contract instead of leaking SystemVerilog or VHDL conversion
+rules upward. The candidate is not accepted until blocked `.7.2` receives the
+director's choice.

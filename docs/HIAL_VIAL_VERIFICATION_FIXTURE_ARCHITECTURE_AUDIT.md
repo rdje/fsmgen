@@ -519,9 +519,14 @@ backend implementation. Selection changes no compiler, artifact, backend,
 runtime, parity, or product behavior.
 Clean selection commit `eaf3f95dc` permits that continuity-only activation.
 Active `.7` owns private binder/ExecutionIR/random-replay/plan implementation;
-the implementation remains unperformed until activation commits cleanly, and
-activation changes no compiler, schema, artifact, tool, runtime, parity, or
-product behavior.
+activation committed cleanly, but implementation audit `.7.1` then proved the
+checked transaction is not bindable under the selected exact type-identity
+rule. VIAL enum/Boolean/unsigned fields meet HIAL four-state logic carriers at
+three field boundaries. `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md` records
+the direct evidence and recommends a closed proof-carrying directional
+representation adapter. Blocked `.7.2` requires the director's semantic
+selection; `.7.3` owns implementation afterward. No compiler, schema,
+artifact, tool, runtime, parity, or product behavior changes in the audit.
 
 ## Rollback
 

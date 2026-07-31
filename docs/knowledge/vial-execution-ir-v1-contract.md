@@ -17,11 +17,12 @@ answers:
   - "does VIAL reuse the Perl extension callback mechanism?"
   - "do UVM phases and objections appear in VIALExecutionIR?"
   - "what owns VIAL execution implementation next?"
+  - "is VIAL execution implementation currently blocked?"
 date: 2026-07-31
 status: current
 tags: [vial, execution-ir, logical-time, binding, determinism, random, replay, native-extension, plan, result, parity]
 evidence: docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
-reverify: rg -n 'fsmgen\.vial_execution_ir\.v1|core_directed_single_clock_execution_v1|domain.*cycle.*phase.*ordinal|sha256_counter_rejection_v1|fsmgen\.vial_native_extension\.v1|fsmgen\.vial_plan\.v1|fsmgen\.verification_result_manifest\.v1|fsmgen\.vial_parity_report\.v1|Active `.7`|eaf3f95dc' docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+reverify: rg -n 'fsmgen\.vial_execution_ir\.v1|core_directed_single_clock_execution_v1|domain.*cycle.*phase.*ordinal|sha256_counter_rejection_v1|fsmgen\.vial_native_extension\.v1|fsmgen\.vial_plan\.v1|fsmgen\.verification_result_manifest\.v1|fsmgen\.vial_parity_report\.v1|VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT|\.7\.2' docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
 Decision `0036` selects private immutable
@@ -53,5 +54,8 @@ facts. Runtime backends later produce
 `fsmgen.verification_result_manifest.v1`; parity compares only canonical
 portable/paired-native logical outcomes through a deep-validated parity
 projection/report. Clean selection commit `eaf3f95dc` permits active `.7` to
-own private no-backend implementation after separate continuity activation;
-implementation remains unperformed and activation changes no product behavior.
+own private no-backend implementation after separate continuity activation.
+Audit `.7.1` subsequently proved that the checked transaction cannot satisfy
+the current exact VIAL/HIAL field-type rule. Blocked `.7.2` must choose and
+synchronize the representation relation before `.7.3` implements the binder;
+see `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.

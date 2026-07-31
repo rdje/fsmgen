@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6`
-Status: selected; implementation is active under `.7` after separate continuity activation
+Status: selected; implementation is blocked at `.7.2` by the confirmed transaction type-relation mismatch recorded in `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`
 
 ## Outcome
 
@@ -1137,6 +1137,16 @@ Clean selection commit `eaf3f95dc` permits a separate continuity-only
 activation of `.7`. Activation changes no binding, ExecutionIR, random/replay,
 plan/result object or file, backend, runtime, or product behavior; exact
 implementation remains unperformed until the activation commits cleanly.
+
+Implementation audit `.7.1` then proved that the exact-equivalence rule above
+cannot bind three fields of the checked fixture: VIAL `transfer` is an enum
+while the bridge exposes its hardware carrier as logic, and VIAL `write` and
+`wait_cycles` are two-state while their HIAL carriers are four-state logic.
+The source and bridge contracts are each internally correct; this contract
+omitted the semantic representation relation between them. Blocked `.7.2`
+must resolve exact identity versus a closed proof-carrying directional
+adapter before any binder is implemented. The current rule remains normative
+and fail-closed until that decision commits.
 
 ## Validation And Rollback
 

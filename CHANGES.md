@@ -31507,6 +31507,28 @@ task tree and git.
   54 lines; doctrines and exact output cleanup pass.
 - No separate development note is warranted for this continuity-only slice.
 
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7.1 — transaction type-binding blocker confirmed
+
+- Audited the checked VIALSemanticIR transaction types directly against the
+  authoritative IAL2-via-generated/reparsed-IAL1 bridge field types before
+  writing the execution binder.
+- Confirmed three exact-contract mismatches: VIAL `transfer` enum versus HIAL
+  logic, VIAL two-state `write` Boolean versus HIAL four-state logic, and VIAL
+  two-state `wait_cycles` unsigned versus HIAL four-state logic. The other
+  transaction fields, sampled public endpoints, and declared probe match.
+- Split `.7` so blocked `.7.2` owns the director's exact-identity versus
+  proof-carrying directional-adapter choice, and `.7.3` owns implementation
+  only after that semantic rule commits cleanly. The directional adapter is
+  recommended because it preserves VIAL Boolean/numeric/enum intent without
+  allowing inverse X/Z collapse or general coercion.
+- Added the canonical audit, Knowledge Map fact, task/roadmap/decision/
+  contract/mdBook/live-doc continuity, and explicit historical correction:
+  `.5` checked endpoint types and transaction identity/order, but did not
+  compare each VIAL transaction field type to the bridge field type.
+- This is a documentation/audit slice. It adds no binder, ExecutionIR, plan,
+  backend, public API/file, compile, simulation, runtime, parity, or product
+  behavior.
+
 ### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7 — VIAL execution implementation activated
 
 - Activated only private no-backend implementation `.7` after clean execution-

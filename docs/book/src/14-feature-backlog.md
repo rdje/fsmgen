@@ -4453,9 +4453,13 @@ diagnostics, limits, and the exact AHB oracle. The complete contract is
 Proposed `.7` alone is selected next for separate clean activation of private
 no-backend implementation; selection changes no product behavior.
 Clean selection commit `eaf3f95dc` permits that continuity-only activation.
-`.7` is active for private binder/ExecutionIR/random-replay/plan implementation,
-which remains unperformed until activation commits cleanly. Activation changes
-no product behavior.
+The activation committed cleanly at `3ec8eab93`, but pre-code audit `.7.1`
+found that VIAL enum/Boolean/unsigned transaction types are not identical to
+three HIAL four-state logic carrier types. Blocked `.7.2` owns the director's
+exact-identity versus proof-carrying directional-adapter choice; `.7.3` owns
+implementation afterward. No binder, plan, backend, runtime, parity, or
+product behavior is claimed while the rule remains unresolved. See the
+[type-binding mismatch audit](../../VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md).
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -12221,6 +12225,9 @@ ships in contract selection. See the
 [execution v1 contract](../../VIAL_EXECUTION_IR_V1_CONTRACT.md).
 Clean selection commit `eaf3f95dc` activates `.7` continuity only; exact
 private implementation remains unperformed and no product behavior changes.
+Audit `.7.1` subsequently confirms an exact-rule mismatch between three
+expressive VIAL transaction types and their HIAL four-state hardware carriers.
+Blocked `.7.2` owns the semantic choice; `.7.3` owns implementation afterward.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
