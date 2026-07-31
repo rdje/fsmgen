@@ -5,9 +5,8 @@ synthesizable HDL. It emphasizes explicit semantics, reviewable lowering,
 machine-readable diagnostics, and generated output that remains practical to
 inspect and verify.
 
-The repository is under active development. For exact current coverage, use
-the [mdBook](docs/book/src/SUMMARY.md) and the machine-readable capability
-manifest instead of inferring support from parser acceptance.
+For exact current coverage, use the [mdBook](docs/book/src/SUMMARY.md) and
+capability manifest; parser acceptance alone does not imply support.
 
 ## What FSMGen does
 
@@ -76,11 +75,11 @@ Preview higher-level lowering without writing HDL:
 ./bin/fsmgen --quiet --strict --emit-schedule-json ppif/axi_aw_valid_ready.ppif
 ```
 
-Inspect the current machine-readable product surface:
+Inspect current product capabilities and VIAL source:
 
 ```bash
 ./bin/fsmgen --capability-manifest
-./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_aw_valid_ready.ppif
+./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial
 ```
 
 Common modes are discoverable through `./bin/fsmgen --help`:
@@ -93,7 +92,7 @@ Common modes are discoverable through `./bin/fsmgen --help`:
 | Select HDL | `--language systemverilog|verilog|vhdl` |
 | Validate generated SystemVerilog externally | `--verify-hdl` |
 | Emit a supported verification artifact | `--emit-verification-output TARGET --verification-outdir DIR` |
-| Inspect supported surfaces | `--capability-manifest` |
+| Inspect supported/VIAL surfaces | `--capability-manifest`; `vial capabilities|check|format` |
 | Enable deterministic trace output | `--trace-verbosity LEVEL --trace-log FILE` |
 
 FSMGen also provides `bin/fsmgen-mcp`, a read-only local JSON-RPC stdio

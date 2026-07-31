@@ -2,9 +2,9 @@
 
 FSMGen has selected the architecture for its verification-intent language and
 future generated executable fixtures. This chapter explains the shipped
-semantic frontend, the shipped private HIAL bridge producer, the executable
-destination, and the compatibility boundary. It does **not** mean runnable
-VIAL output ships today.
+semantic frontend and public source tooling, the shipped private HIAL bridge
+producer, the executable destination, and the compatibility boundary. It does
+**not** mean generated or runnable VIAL backend output ships today.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -122,41 +122,44 @@ The first checked source is
 `vial/ahb_subordinate_base_output_arbitration.vial`. It represents success
 and unsupported-size scenarios, a transaction, event counters, a bounded
 scoreboard, stall coverage, one bounded size-substitution fault, and stable
-wait-cycle decision identity. The first implementation can only parse,
-type-check, and produce a sanitized semantic report. Bridge binding, execution
-plans, generated fixtures, simulation, and results remain later phases. See
+wait-cycle decision identity. The current public source tool can check either
+source projection, produce a sanitized semantic report, and format normal or
+terse source. Public bridge binding, plan files, generated fixtures,
+simulation, and results remain later phases. See
 the exact [VIAL source and SemanticIR v1 contract](../../VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).
 
-The shipped checker is intentionally private until the public CLI/API contract
-is selected. This repository-local example shows its current shape; it is
-useful for development and tests, not a compatibility promise:
+The public source-only commands are:
 
-```perl
-use FSM::VIAL::Parser;
-
-my $checked = FSM::VIAL::Parser->check_source({
-    text => $source_bytes,
-    source_name => 'vial/example.vial',
-    source_catalog => {},
-});
-
-die $checked->{diagnostics}[0]{message} unless $checked->{ok};
-my $report = $checked->{semantic_report};
+```console
+$ ./bin/fsmgen vial capabilities
+$ ./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial
+$ ./bin/fsmgen vial check --json vial/ahb_subordinate_base_output_arbitration.vial
+$ ./bin/fsmgen vial format --style terse vial/ahb_subordinate_base_output_arbitration.vial
 ```
+
+`check --style normal|terse` additionally asserts the input projection;
+`auto` is the default. `format --style normal|terse` always writes canonical
+UTF-8/LF source to stdout and never writes a repository artifact. The closed
+in-memory API uses `fsmgen.vial_tool_request.v1` and
+`fsmgen.vial_tool_result.v1`; it accepts only JSON-safe source catalogs and an
+empty source-tooling artifact sink, never callbacks, filehandles, raw parser
+forms, or private IR objects.
 
 Success returns stable source identity, package/fixture/declaration summaries,
 unresolved typed bridge references, and exactly these capabilities:
 `vial.source.v1`, `vial.semantic_ir.v1`, and
-`vial.profile.core_directed_single_clock_v1`. Diagnostics retain Unicode-aware
+`vial.profile.core_directed_single_clock_v1` from the semantic report, plus
+the separately discovered public source-tooling capabilities. Diagnostics retain Unicode-aware
 source spans and stable semantic paths. Independent invalid declaration or
 fixture containers are reported in authored order; validation suppresses
 dependent cascades and never exposes partial IR. The source is 4,986 bytes / 123
 lines with SHA-256
 `2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd`.
 
-There is no public `.vial` command or supported embedding API yet. The checker
-does not read imports from disk: callers supply a closed in-memory source
-catalog. It emits no bridge, plan, target code, simulation, or result artifact.
+The CLI resolves repository-relative imports into the same closed source
+catalog used by the API. Absolute/traversing/symlink source paths fail before
+access. Source tooling emits no bridge, plan, target code, simulation, or
+result artifact.
 
 ## The two private IR boundaries
 
@@ -498,11 +501,11 @@ capability, non-empty first-profile native catalog, bad scenario selection,
 invalid replay identity/value/constraint, random exhaustion, or a safety-limit
 violation. This is compiler elaboration only: there is still no plan file,
 result file, generated SV/UVM/VHDL fixture, compile, simulation, runtime,
-parity pass, mixed-language claim, or scale qualification. Public tooling is
-selected separately by completed contract leaf `.8`; it is not implemented by
-the private elaborator.
+parity pass, mixed-language claim, or scale qualification. Completed `.10.1`
+adds public source-only tooling around the parser and sanitized semantic
+projection; it does not expose this private elaborator.
 
-## Selected public tooling boundary
+## Shipped public source tooling and selected plan/run boundary
 
 Decision `0039` selects one intent-oriented command family without exposing
 private compiler objects:
@@ -515,10 +518,11 @@ fsmgen vial plan --dut dut.ppif source.vial
 fsmgen vial run --dut dut.ppif --backend PROFILE source.vial
 ```
 
-These commands are a selected contract, not shipped behavior yet. The first
-implementation owner is `.10`, after `.9` freezes the initial plain-
-SystemVerilog/Verilator backend. Until then, the current `.vial` parser remains
-private, accepts the checked normal form only, and writes no file.
+The first three commands now ship through `.10.1`. `plan` and `run` remain
+selected but unavailable until `.10.2` through `.10.4` implement their plan,
+artifact, backend, and runtime owners; asking for either fails explicitly
+without writing an artifact. The CLI is an adapter over the same closed,
+JSON-safe source-tool request/result contract available to embedding hosts.
 
 The source and DUT are deliberately separate. The VIAL file says how to verify
 meaning; `--dut` names the HIAL source that supplies ports, transactions,
@@ -554,9 +558,30 @@ It does not infer types, values, clocks, timeouts, seeds, DUT bindings, or
 target behavior. Formatting either view and reparsing it must produce the same
 semantic meaning digest; source hashes and spans remain different and honest.
 This is what “terse or normal” means in VIAL: less ceremony, never less
-meaning.
+meaning. Both forms enter the same existing typed `SemanticBuilder`; there is
+no second terse semantic pipeline.
 
-The future `plan` action publishes only reviewable projections:
+Check a normal source without generating a DUT, plan, or HDL:
+
+```console
+$ ./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial
+VIAL check passed (normal_v1)
+```
+
+Format that source into terse form on standard output:
+
+```bash
+./bin/fsmgen vial format --style terse \
+  vial/ahb_subordinate_base_output_arbitration.vial
+```
+
+`check --style normal|terse` can require an exact authored style; a mismatch
+is `VIAL_SOURCE_STYLE_ERROR`. `capabilities --json` and `check --json` return
+the closed public result envelope. Formatting intentionally returns source
+text rather than mixing JSON with authored VIAL. These operations read only
+repository-root-relative, non-symlink `.vial` files and write nothing.
+
+The future `plan` action will publish only reviewable projections:
 
 ```text
 .artifacts/vial/<fixture>/<full-plan-digest>/
@@ -567,11 +592,11 @@ The future `plan` action publishes only reviewable projections:
   vial-plan.json
 ```
 
-The tree is repository-local, same-volume, content-addressed, and committed
-atomically. Failed planning leaves no partial tree; a non-identical existing
-tree is never overwritten. The portable in-memory API exposes the same
-request/result through a source catalog and artifact sink, so it does not
-require filesystem paths or Perl objects.
+The selected tree is repository-local, same-volume, content-addressed, and
+committed atomically. Failed planning leaves no partial tree; a non-identical
+existing tree is never overwritten. `.10.2` will extend the current portable
+request/result and source catalog with the selected artifact sink; the shipped
+source-only API requires neither filesystem paths nor Perl objects.
 
 Existing `.isf` UVM/VHDL skeleton commands and their
 `verification-output-manifest.json` version 1 stay unchanged. A future VIAL
@@ -844,6 +869,8 @@ alone for implementation. Clean activation commit `5fd766600` then decomposes
 that parent into `.10.1` public capabilities/check/normal-terse formatting,
 `.10.2` canonical planning and artifact transactions, `.10.3` portable backend
 emission and trace projection, and `.10.4` exact Verilator run/results. `.10.1`
-is active; `.11` retains runtime parity. No parser widening, command/API, plan
-or result file, target artifact, compile/run path, runtime result, parity pass,
-or backend behavior changes during decomposition.
+now ships the first three source commands, equivalent normal and terse
+projections, the defensive source-only API, and exact discovery and support
+accounting. `.10.2` is the next proposed child; `.11` retains runtime parity.
+No plan or result file, target artifact, compile/run path, runtime result,
+parity pass, or backend behavior ships in `.10.1`.

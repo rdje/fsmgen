@@ -9,24 +9,28 @@ answers:
   - "does bin/fsmgen reach the AXI manager PPIF implementation?"
   - "does bin/fsmgen reach the APB PPIF implementation?"
   - "does bin/fsmgen reach the portable HDL instance-identifier policy?"
-date: 2026-07-30
+  - "does bin/fsmgen reach public VIAL source tooling?"
+date: 2026-07-31
 status: current
 tags: [bootstrap, architecture, import-tree, bin-fsmgen, semantic-introspection, ial2, ppif]
-evidence: docs/BIN_FSMGEN_IMPORT_TREE.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; bin/fsmgen; perl/FSM/ProjectDataLocality.pm; perl/FSM/Support/HDLInstanceIdentifierPolicy.pm; perl/FSM/Adapter/IAL2/PPIF.pm; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN28-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN23-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN22-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN16-REFRESH.md
+evidence: docs/BIN_FSMGEN_IMPORT_TREE.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; bin/fsmgen; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/SourceProjection.pm; perl/FSM/Support/VIALToolingContract.pm; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL30-IDENTIFIER-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUL29-REFRESH.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; perl/FSM/ProjectDataLocality.pm; perl/FSM/Support/HDLInstanceIdentifierPolicy.pm; perl/FSM/Adapter/IAL2/PPIF.pm; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN28-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN23-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN22-REFRESH.md; docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN16-REFRESH.md
 reverify: perl -Iperl -MModule::ScanDeps=scan_deps -E 'my $d=scan_deps(files=>["bin/fsmgen"], recurse=>1); my @pm=grep { /(?:^|\/)FSM\/.*\.pm\z/ } keys %$d; say "total=".(scalar(@pm)+1); say "pm=".scalar(@pm); say "ial2=".scalar(grep { /(?:^|\/)FSM\/IAL2\// } @pm);'
 ---
 
 `docs/BIN_FSMGEN_IMPORT_TREE.md` is the canonical live maintainer-facing
 architecture note for the `bin/fsmgen` runtime spine.
 
-As of the 2026-07-30 identifier-era refresh, the static project-owned closure
-reaches `229` project files total: `228` `FSM::...` `.pm` packages plus
+As of the 2026-07-31 public-VIAL-source-tooling refresh, the static
+project-owned closure reaches `239` project files total: `238` `FSM::...` `.pm`
+packages plus
 `bin/fsmgen`, with
 `19` packages under `FSM/IAL2`. The closure includes the `.isf` front door; the
 `.ppif`/profile-alias IAL2 front door; the Valid-Ready, AXI manager plus bounded
 AXI initiator, APB, and AHB protocol-intent owners; bounded direct/composition
 VHDL owners; semantic-introspection and verification-output support; and the
 repository-local project-data owner; and the shared portable HDL child-instance
-identifier policy. The canonical maintainer note records the complete reachable
-package inventory, measured family counts (`Support 71`), selected line counts,
-runtime spines, and current hotspots.
+identifier policy. It now also reaches the seven-package VIAL source-tooling
+path and its closed capability contract without reaching a VIAL backend or
+runtime. The canonical maintainer note records the complete reachable package
+inventory, measured family counts (`Support 74`, `VIAL 7`), selected line
+counts, runtime spines, and current hotspots.

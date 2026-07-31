@@ -24,7 +24,7 @@ date: 2026-07-31
 status: current
 tags: [vial, source-language, parser, semantic-ir, types, four-state, property-language, diagnostics, provenance, ahb]
 evidence: docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0008-verification-property-language-unification.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
-reverify: prove -Iperl t/1550-vial-semantic-ir.t && rg -n 'core_directed_single_clock_v1|VIALSemanticIR Required IR Record|dedicated VIAL lexer|known_mask|z_mask|same.*value_eq|canonical property|ahb_subordinate_base_output_arbitration\.vial|semantic-only profile' docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md
+reverify: prove -Iperl t/1550-vial-semantic-ir.t t/1555-vial-public-source-tooling.t && rg -n 'core_directed_single_clock_v1|VIALSemanticIR Required IR Record|dedicated VIAL lexer|known_mask|z_mask|same.*value_eq|canonical property|ahb_subordinate_base_output_arbitration\.vial|normal_v1|terse_v1' docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/TASK_TREE.md
 ---
 
 Decision `0033` selects VIAL version 1 as closed public S-expression syntax
@@ -58,14 +58,17 @@ SHA-256 `2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd`),
 the four private implementation packages, and focused
 `t/1550-vial-semantic-ir.t`. The support surface claims only parsing, type
 checking, and a sanitized semantic report with the three exact VIAL v1
-capabilities. Public CLI/API, binding, plan, target artifacts, runtime, result,
-parity, UVM, VHDL, mixed-language, and scale support remain explicit
-non-claims.
+semantic capabilities. Completed `.10.1` additionally ships public
+capabilities/check/format, the `normal_v1` and `terse_v1` projections, and a
+provenance-free semantic meaning digest through one defensive source-only
+CLI/API. Binding, plan, target artifacts, runtime, result, parity, UVM, VHDL,
+mixed-language, and scale support remain explicit non-claims.
 
-Decision `0039` selects a future public formatter/parser extension where the
-current explicit grammar is `normal_v1` and `terse_v1` removes only closed
-structural wrappers. The `.3` parser still accepts normal form only; selection
-does not change the shipped frontend.
+Decision `0039` selects a public formatter/parser extension where the current
+explicit grammar is `normal_v1` and `terse_v1` removes only closed structural
+wrappers. Completed `.10.1` normalizes either form before the unchanged `.3`
+semantic builder; formatting and reparsing prove equal semantic digests rather
+than maintaining a second terse semantic path.
 
 Clean implementation commit `be9c74163` completes this source/SemanticIR
 slice. Bridge-contract leaf `.4` now selects review-routed manifest v1 under

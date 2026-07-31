@@ -12249,6 +12249,16 @@ Decision `0037` and `.7.2` select closed directional proof relations; `.7.3`
 implements them after clean selection commit `2a1b3cefc` and a separate
 continuity activation. Result/parity schema names remain selected future
 contracts with explicit `.10`/`.11` owners, not satisfied `.7.3` capabilities.
+Completed `.8` then selects the exact public `fsmgen vial` and portable API
+contract under decision `0039`; completed `.9` selects the deterministic
+known-value `sv_portable_verilator` backend contract under decision `0043`.
+After clean activation and decomposition of `.10`, completed `.10.1` now ships
+source-only `capabilities`, `check`, and canonical normal/terse `format` through
+one defensive JSON-safe API. It adds no DUT binding, plan/artifact write,
+generated backend, compile, runtime, result, or parity claim. Proposed `.10.2`
+owns canonical planning and atomic repository-local or virtual artifacts next.
+See [the public tooling contract](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md) and
+the [architecture chapter](16d-hial-vial-verification-architecture.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

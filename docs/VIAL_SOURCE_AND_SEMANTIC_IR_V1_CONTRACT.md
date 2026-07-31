@@ -2,7 +2,8 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`
-Status: implemented as the bounded semantic-only profile by `.3`
+Status: bounded semantic profile implemented by `.3`; `.10.1` adds the public
+normal/terse source-tooling projection without changing typed meaning
 
 ## Outcome
 
@@ -16,15 +17,17 @@ a HIAL bridge, elaborate an execution plan, emit a fixture, or run a backend.
 
 The parser and semantic builder construct private immutable
 `FSM::VIAL::SemanticIR`. The object contains normalized typed meaning and exact
-provenance, never the raw token tree. A bounded sanitized semantic report is
-the only projection. Decision `0033` records why VIAL owns a dedicated parser
+provenance, never the raw token tree. Bounded sanitized semantic and
+provenance-free meaning projections cross the public tool boundary; raw forms
+and IR do not. Decision `0033` records why VIAL owns a dedicated parser
 instead of publishing the current `Lispish` representation.
 
 Implementation `.3` now ships the four private `FSM::VIAL` packages, the
 checked source, focused regression, `.vial` language-surface entry, and
-semantic-only support/capability accounting selected here. It still exposes no
-public CLI or supported embedding API and produces no bridge, execution plan,
-HDL/UVM/VHDL artifact, compile, simulation, result, parity, or scale claim.
+semantic-only support/capability accounting selected here. Completed `.10.1`
+adds the separate public capabilities/check/format CLI/API and normal/terse
+normalization. Neither slice produces a bridge, execution plan, artifact,
+compile, simulation, result, parity, or scale claim.
 The checked source is 4,986 bytes / 123 lines with SHA-256
 `2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd`.
 
@@ -50,8 +53,9 @@ host-language callbacks, raw HDL/UVM/VHDL blocks, native hierarchy, dynamic
 allocation, recursion, unbounded loops/queues/crosses, runtime-created names,
 and backend lifecycle hooks. Decision `0036` and
 `docs/VIAL_EXECUTION_IR_V1_CONTRACT.md` now select typed native, execution,
-replay, plan, result, and parity contracts; implementation and backends remain
-owned by `.7` and later leaves.
+replay, plan, result, and parity contracts. Private target-neutral execution
+now ships through `.7.3`; public plan/artifact, backend/runtime/result, and
+parity remain owned by `.10.2` through `.11`.
 
 Decision `0034` makes this an initial-profile boundary, not VIAL's expressive
 ceiling. VIAL is not constrained by synthesizability: later typed native
@@ -59,9 +63,9 @@ profiles may abstract full selected SV/UVM/VHDL verification semantics,
 including UVM event/callback behavior. Decision `0039` and
 `docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md` now select exact `normal_v1` and
 `terse_v1` source projections of one semantic model: terse form removes only
-closed structural wrappers and adds no implicit meaning. The bounded `.3`
-parser still accepts only normal form; public parsing/formatting and semantic-
-digest equivalence remain unimplemented until `.10`.
+closed structural wrappers and adds no implicit meaning. Completed `.10.1`
+normalizes both styles into the unchanged `.3` builder and proves public
+format/reparse semantic-digest equivalence through `t/1555`.
 
 “Abstract” means simplify for the author: learning this source language does
 not require prior SV/UVM/VHDL knowledge. Those languages are backend targets,
@@ -680,8 +684,7 @@ vial/ahb_subordinate_base_output_arbitration.vial
 t/1550-vial-semantic-ir.t
 ```
 
-All module calls are private class-method calls. No public CLI or supported
-embedding API is selected:
+These parser/builder calls remain private compiler seams:
 
 ```perl
 my $checked = FSM::VIAL::Parser->check_source({
@@ -693,6 +696,12 @@ my $checked = FSM::VIAL::Parser->check_source({
 my $semantic_ir = FSM::VIAL::Parser->parse_source({ ... });
 my $report = FSM::VIAL::SemanticReport->build($semantic_ir);
 ```
+
+Completed `.10.1` instead exposes `fsmgen vial capabilities|check|format` and
+the closed `fsmgen.vial_tool_request.v1` / `fsmgen.vial_tool_result.v1` API.
+`FSM::VIAL::SourceProjection` owns only private form normalization/rendering
+and public-result meaning digests; neither raw parse forms nor SemanticIR
+objects cross that boundary.
 
 - Each method accepts exactly one closed hash. `text` and `source_name` are
   required; `source_catalog` defaults to an empty hash. Unknown keys fail.
@@ -846,14 +855,19 @@ Focused t1550 must prove at least:
   diagnostic paths/spans; and
 - explicit no-binding/no-plan/no-output/no-runtime/non-claim accounting.
 
-Deferred to later exact owners:
+Implemented by separate exact owners without widening this source contract:
 
 - bridge-reference existence and type equivalence (selected bridge schema
-  `0035`, implementation `.5`, and binding `.7`);
-- implementation of the selected logical phase scheduling, random/replay,
-  native-extension, plan, result, and parity contracts (`.7` and later);
-- public CLI/API/artifact layout and schema migration (`.8`);
-- plain-SystemVerilog, UVM, VHDL, and mixed-language output/runtime;
+  `0035`, private implementation `.5`, and private binding `.7.3`); and
+- selected logical-phase scheduling, random/replay, native-extension
+  negotiation, and defensive in-process plan construction (`.7.3`).
+
+Deferred to later exact owners:
+
+- public plan/artifact layout and schema migration (`.10.2`); source-only
+  capabilities/check/format shipped in `.10.1`;
+- plain-SystemVerilog output/runtime/results (`.10.3`/`.10.4`), parity (`.11`),
+  and UVM, VHDL, and mixed-language output/runtime;
 - broader property operators, multi-domain fixtures, aggregate model state,
   bounded unordered scoreboards, additional fault kinds, constrained solving,
   reusable coverage templates, and exact scale budgets.

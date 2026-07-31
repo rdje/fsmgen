@@ -37,6 +37,36 @@ my @REGRESSION_CORPUS = (
         )],
     },
     {
+        id => 'feature.vial_public_check_format',
+        relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
+        family => 'verification_intent_tooling',
+        classification => 'supported_smoke',
+        coverage => 'vial_public_check_format_cli_api',
+        source_kind => 'vial',
+        strict_supported => 0,
+        supported_phases => [qw(capabilities parse typecheck semantic_report format)],
+        required_capabilities => [qw(
+            vial.tooling.cli.v1
+            vial.tooling.api.v1
+            vial.source_projection.normal_v1
+            vial.source_projection.terse_v1
+            vial.semantic_projection.v1
+        )],
+        explicit_nonclaims => [qw(
+            bridge_binding
+            execution_plan
+            artifact_generation
+            compile
+            simulation
+            result
+            parity
+            uvm
+            vhdl
+            mixed_language
+            scale
+        )],
+    },
+    {
         id => 'protocol.apb_requester',
         relpath => 'fsm/apb_requester.fsm',
         family => 'protocol_fixture',

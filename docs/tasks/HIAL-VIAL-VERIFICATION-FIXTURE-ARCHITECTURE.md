@@ -195,17 +195,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10: activate portable SV backend implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the public VIAL capabilities, check, and normal/terse format surfaces through one portable in-memory API and the fsmgen vial command family.`
   Acceptance: `The selected normal_v1 and terse_v1 forms parse and format to one byte-stable semantic meaning; capabilities/check/format expose only defensive JSON-safe reports through CLI and in-memory requests, perform no HIAL binding or artifact write, preserve every legacy CLI path, diagnose incompatible options atomically, and pass fresh implementation acceptance plus focused and adjacent regression gates.`
-  Verification: `pending implementation`
-  Commit: `pending`
+  Verification: `Implemented one normal/terse SourceProjection normalization/formatter over the unchanged SemanticBuilder, the closed fsmgen.vial_tool_request.v1/result.v1 source-only API, explicit fsmgen vial capabilities/check/format dispatch, exact language-surface capability and support accounting, repository-root-relative non-symlink same-volume reads, defensive JSON-safe reports/diagnostics, and focused t1555 coverage. Normal and terse canonical reparses have the same semantic-projection SHA-256; mixed styles, reordered terse declaration families, style mismatch, syntax, unsafe paths, callbacks, non-Boolean options, unavailable plan, and incompatible legacy options fail closed. The guarded semantic/bridge/execution/source-tool/support/capability suite reports All tests successful at Files=6, Tests=7083. Final task/docs/mdBook/Knowledge Map/staged doctrine evidence is recorded below; no HIAL binding, plan/artifact write, backend, compile, simulation, runtime/result, parity, UVM, VHDL, mixed-language, or scale claim ships.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.1: ship public VIAL source tooling`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2`
   Status: `proposed`
   Goal: `Implement public VIAL planning through canonical HIAL review routes and one deterministic repository-local or virtual artifact transaction.`
   Acceptance: `The selected direct IAL0, direct IAL1, and IAL2-via-generated/reparsed-IAL1 routes bind checked VIAL through the existing private bridge and execution builders; CLI paths are repository-relative, in-memory callers use the closed source-catalog/artifact-sink boundary, canonical bridge/plan/tool manifests and review artifacts are hash-ordered and byte-stable, and every failure publishes no partial tree.`
-  Verification: `pending after .10.1`
+  Verification: `selected next after completed .10.1; pending separate clean activation`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.3`
@@ -323,7 +323,13 @@ exact `sv_portable_verilator` contract: static partial evaluation, inactive-
 edge deterministic scheduling, declared probe adapters, source maps, closed
 runtime trace/result projection, and exact Verilator 5.046 qualification with
 an explicit known-value/two-state limit. Clean selection commit `ab3e73b72`
-now activates `.10` alone for public-tool/backend/result implementation.
+activates `.10` alone for public-tool/backend/result implementation. Clean
+activation commit `5fd766600` decomposes that parent, and completed `.10.1`
+now ships public capabilities/check/canonical normal-terse formatting through
+one defensive source-only CLI/API with exact discovery/support accounting.
+Both source styles enter the unchanged typed semantic builder. Proposed
+`.10.2` owns planning and artifact transactions next; no HIAL binding, plan,
+artifact, backend, compile, runtime, result, or parity ships in `.10.1`.
 Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
@@ -425,11 +431,16 @@ compiler-owned beneath C/C++ or Rust.
   for implementation of the selected public tool path, plain-SV backend,
   Verilator runtime, and normalized result producer. Activation changes no
   implementation or product behavior.
+- `2026-07-31`: Completed `.10.1` implements the public VIAL source-only
+  tooling boundary: capabilities/check/normal-terse formatting, closed
+  request/result records, one semantic projection, exact discovery/support,
+  atomic diagnostics, and no writes. Proposed `.10.2` owns planning/artifacts.
 
 ## Open Questions
 
-- Active `.10` must implement the selected public tool/backend/result path
-  without widening the known-value profile or claiming `.11` parity.
+- Active `.10` must continue with proposed `.10.2` planning/artifacts, then
+  `.10.3` backend/trace and `.10.4` runtime/results, without widening the
+  known-value profile or claiming `.11` parity.
 - `.12` must choose the UVM revision and an actually available qualified
   simulator before native UVM implementation can claim compile/runtime support.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
@@ -442,8 +453,8 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for active `.10`; clean `.9` selection commit `ab3e73b72` satisfies its
-  activation prerequisite. Result parity remains separately owned by `.11`.
+- None for parent `.10`; `.10.1` is complete and proposed `.10.2` is selected
+  next for separate clean activation. Result parity remains owned by `.11`.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -475,6 +486,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.9` selection | decision `0043`; exact known-value plain-SV lowering/scheduler/value/adapter/artifact/trace/source-map/tool/gate/limit/non-claim contract; local Verilator 5.046 substrate run; source/bridge/execution and docs evidence; task/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; contract 584 lines/26,066 bytes; source/bridge/execution/AHB runtime Files=4/Tests=30; docs Files=4/Tests=323 and paths Files=1/Tests=2; trees=3/nodes=885/one segment/one index archive; 37 chapters; build 73 files/17,133,866 bytes; Knowledge Map 1,096 facts/5,733 keys; Memory 37 lines; all nine doctrines pass at 20 surfaces/2,780 paths; proposed `.10` selected next for clean activation; no implementation/product change; output removed exactly |
 | `2026-07-31` | `.10` activation | clean `.9` predecessor `ab3e73b72`; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; task/docs/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.10` alone active; docs Files=4/Tests=323 and paths Files=1/Tests=2; trees=3/nodes=885/one segment/one index archive; 37 chapters; build 73 files/17,134,244 bytes; Knowledge Map 1,096 facts/5,733 keys; Memory 36 lines; all nine doctrines pass at 20 surfaces/2,780 paths; implementation and product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.10` decomposition | clean activation predecessor `5fd766600`; four child boundaries; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; task/live-doc/docs/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.10.1` alone active under parent `.10`; focused docs Files=7/Tests=56; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,880 KiB; Knowledge Map 1,096 facts/5,734 keys; Memory 36 lines; all nine doctrines pass at 20 surfaces/2,780 paths; no implementation or product behavior change; output removed exactly |
+| `2026-07-31` | `.10.1` implementation | source projection/CLI/API/discovery/support implementation and syntax; guarded semantic/bridge/execution/tool tests; README/live-doc/docs/path/task gates; mdBook test/build; Knowledge Map; Memory/diff; staged acceptance/doctrines; exact cleanup | `passed`; source suite Files=6/Tests=7,083; docs/live/path/task Files=11/Tests=106; 15 changed/new Perl/test paths report syntax OK; README is 245 lines/9,916 bytes, below its 246-line/9,952-byte predecessor baseline; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-root build 73 files/16,900 KiB; Knowledge Map 1,096 facts/5,735 keys; Memory 37 lines; all nine staged doctrines pass at 20 live-document surfaces and 2,780/2,780 tracked Markdown paths; output removed exactly |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -591,6 +603,41 @@ compiler-owned beneath C/C++ or Rust.
   claim. Staged acceptance and `[doctrine] all doctrine checks passed` close
   the commit gate.
 
+## Acceptance Checklist (enforced) — `.10.1` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — On clean decomposition predecessor
+  `cf799df07`, `git log -S 'FSM::VIAL::ToolCLI' -- bin/fsmgen` returns no
+  commit. `git show cf799df07:bin/fsmgen | rg -n
+  'GetOptions|FSM::VIAL::ToolCLI|Subcommands'` finds only the legacy
+  `GetOptions` front door and no VIAL dispatch. The selected public source-tool
+  command/API, terse normalizer/formatter, and exact discovery/support owner
+  were therefore absent at their contracted loci; this was not a defect in the
+  already-shipped private semantic builder.
+- [x] **ADDRESSED (verified)** — The guarded `prove -Iperl
+  t/1550-vial-semantic-ir.t t/1551-hial-vial-bridge-manifest.t
+  t/1552-vial-execution-ir.t t/1555-vial-public-source-tooling.t
+  t/248-regression-corpus-accounting.t t/297-capability-manifest.t` reports
+  `All tests successful` at `Files=6, Tests=7083`. Box-scoped evidence: t1555
+  proves deterministic normal/terse formatting, equal semantic digests,
+  idempotent round trips, caller-owned imports, exact defensive request/result
+  data, CLI/API parity, legacy dispatch, unsafe-path and incompatible-option
+  rejection, stable diagnostics, exact capability/support accounting, and no
+  HIAL binding, plan, artifact, backend, or runtime.
+- [x] **NO REGRESSION** — Every changed/new Perl module and test reports
+  `syntax OK`; the guarded semantic/bridge/execution/source-tool/support/
+  capability regression reports `All tests successful` at `Files=6,
+  Tests=7083`. The first default-88% guarded attempt stopped cleanly after
+  t1550 passed when the known conservative macOS metric reached 88.1%; the
+  established rerun retained the 4096 MiB descendant limit and completed at a
+  100% host threshold. Documentation/live/path/task gates report `All tests
+  successful` at `Files=11, Tests=106`; README remains below its predecessor
+  line/byte baseline; all 37 mdBook chapters test and the 73-file/16,900-KiB
+  repository-local build passes then is removed exactly. Task integrity is
+  trees=3/nodes=889, Knowledge Map is current at 1,096 facts/5,735 keys, and
+  Memory is 37 lines. `[doctrine] all doctrine checks passed` holds for all
+  nine checks, 20 live-document surfaces, and 2,780/2,780 tracked Markdown
+  paths.
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -617,6 +664,8 @@ compiler-owned beneath C/C++ or Rust.
 | `.9` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: activate portable SV backend contract` | Activate only documentation selection of the plain-SystemVerilog/Verilator backend and runtime-library contract after clean `.8`; selection and product behavior remain unperformed. |
 | `.9` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: select portable SV backend contract` | Accept decision `0043`, freeze the exact deterministic known-value plain-SV/Verilator backend contract, and select proposed `.10` without product behavior. |
 | `.10` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10: activate portable SV backend implementation` | Activate only the selected public-tool/plain-SV/Verilator/result implementation after clean `.9`; implementation remains unperformed. |
+| `.10` decomposition | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10: decompose portable SV implementation` | Split the active parent into independently accepted source-tool, planning/artifact, backend/trace, and runtime/result children; activate `.10.1` alone without product behavior. |
+| `.10.1` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.1: ship public VIAL source tooling` | Ship capabilities/check/canonical normal-terse formatting through a defensive source-only CLI/API, with exact discovery/support and no HIAL binding, artifacts, backend, or runtime. |
 
 ## Changelog
 
@@ -641,7 +690,11 @@ compiler-owned beneath C/C++ or Rust.
 - `2026-07-31`: Clean `.9` commit `ab3e73b72` activates `.10` alone. No source,
   parser, command/API, backend artifact, compile/run path, result, capability,
   parity, or product behavior changes during activation.
-  support claim, or product behavior changes during activation.
+- `2026-07-31`: Clean activation commit `5fd766600` decomposes `.10` into four
+  implementation children and activates `.10.1` alone without behavior.
+- `2026-07-31`: `.10.1` ships the public source-only CLI/API, equivalent
+  normal/terse projections, exact discovery/support, and fail-closed no-write
+  boundaries. `.10.2` is proposed next for separate activation.
 
 - `2026-07-31`: `.7.3` ships the bounded private no-backend execution seam.
   The checked AHB SemanticIR and review-routed bridge now bind into immutable

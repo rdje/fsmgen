@@ -196,15 +196,21 @@ sub _visit_source {
     }
 
     push @{$state->{visiting}}, $source_name;
-    my ($form, $token_count) = _lex_and_parse($bytes, $source_name);
+    my ($parsed_form, $token_count) = _lex_and_parse($bytes, $source_name);
     $state->{token_count} += $token_count;
     if ($state->{token_count} > MAX_TOKENS) {
         _throw(
             'VIAL_LIMIT_ERROR', 'limit',
             'tokens across imported sources exceed the 1000000-token limit',
-            $form->{span}, '/',
+            $parsed_form->{span}, '/',
         );
     }
+
+    require FSM::VIAL::SourceProjection;
+    my ($form) = FSM::VIAL::SourceProjection->_normalize_parsed_form({
+        form => $parsed_form,
+        source_name => $source_name,
+    });
 
     $state->{forms}{$source_name} = $form;
     $state->{source_text}{$source_name} = $bytes;
@@ -238,6 +244,29 @@ sub _visit_source {
 
     pop @{$state->{visiting}};
     $state->{visited}{$source_name} = 1;
+}
+
+sub _parse_source_form_for_projection {
+    my ($class, $args) = @_;
+    die "VIAL source-form parsing is private to FSM::VIAL::SourceProjection\n"
+        unless caller eq 'FSM::VIAL::SourceProjection';
+    die "VIAL source-form parsing requires one unblessed hash\n"
+        unless ref($args) eq 'HASH' && !blessed($args);
+    my %allowed = map { $_ => 1 } qw(text source_name);
+    my @unknown = sort grep { !$allowed{$_} } keys %{$args};
+    die "VIAL source-form parsing received unknown key '$unknown[0]'\n" if @unknown;
+    for my $required (qw(text source_name)) {
+        die "VIAL source-form parsing requires scalar '$required'\n"
+            unless exists($args->{$required}) && defined($args->{$required}) && !ref($args->{$required});
+    }
+    _validate_source_name($args->{source_name}, _zero_location(_safe_diagnostic_source_name($args->{source_name})));
+    my $bytes = _as_utf8_bytes($args->{text}, $args->{source_name});
+    _throw(
+        'VIAL_LIMIT_ERROR', 'limit', 'source exceeds the 1048576-byte limit',
+        _zero_location($args->{source_name}), '/',
+    ) if length($bytes) > MAX_SOURCE_BYTES;
+    my ($form, $token_count) = _lex_and_parse($bytes, $args->{source_name});
+    return (_clone($form), $token_count);
 }
 
 sub _imports_from_form {

@@ -18,8 +18,8 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, expressiveness, systemverilog, uvm, vhdl, events, callbacks, syntax, capabilities]
-evidence: docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
-reverify: rg -n 'not synthesis-bounded|uvm_event_callback|terse.*normal|expressive-frontier|initial profile.*language ceiling|backend methodology|fsmgen\.vial_native_extension\.v1|directional proof relations' docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+evidence: docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; perl/FSM/VIAL/SourceProjection.pm; perl/FSM/VIAL/Tool.pm; t/1555-vial-public-source-tooling.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
+reverify: prove -Iperl t/1555-vial-public-source-tooling.t && rg -n 'not synthesis-bounded|uvm_event_callback|terse.*normal|expressive-frontier|initial profile.*language ceiling|backend methodology|fsmgen\.vial_native_extension\.v1|directional proof relations' docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
 Decision `0034` separates HIAL's necessary synthesis constraint from VIAL's
@@ -61,8 +61,7 @@ Every later feature must expose, compose, or compress verification intent; a
 one-to-one catalog of renamed SV/UVM/VHDL syntax, classes, or methods is
 explicitly out of scope. Completed documentation leaf `.6` now selects the
 target-neutral execution/native/result contract that preserves this separation
-under decision `0036`; it implements no behavior. Active `.7` owns private
-no-backend work after separate clean activation. Audit `.7.1` now proves that
+under decision `0036`. Audit `.7.1` proved that
 forcing exact identity between expressive VIAL enum/Boolean/unsigned values
 and HIAL four-state hardware carriers blocks the checked fixture. `.7.2` is
 now director-approved through decision `0037`: proof-carrying directional
@@ -71,4 +70,6 @@ while inverse X/Z collapse stays forbidden. Completed `.7.3` implements those
 proofs privately. Decision `0039` now makes the terse/normal rule exact: terse
 form removes only closed structural wrappers and both forms reparse to the
 same semantic meaning digest. It adds no implicit verification behavior.
-Public parsing/formatting remains selected, not shipped.
+Completed `.10.1` now ships public capabilities/check/normal-terse formatting
+through one source-only CLI/API and unchanged typed builder. Planning,
+artifacts, backends, and runtime remain separately owned and unshipped.

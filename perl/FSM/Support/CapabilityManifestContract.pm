@@ -294,6 +294,7 @@ sub capability_manifest_language_surface_keys {
             file_surfaces
             hial_vial_bridge
             vial_execution
+            vial_tooling
             default_mode_compatibility
             assignments
             system_contracts

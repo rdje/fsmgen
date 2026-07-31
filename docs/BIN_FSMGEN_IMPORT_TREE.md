@@ -11,20 +11,21 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-07-30`.
-- Startup bootstrap refreshed on `2026-07-30`; the live static trace includes
+- Reviewed on `2026-07-31`.
+- Startup bootstrap refreshed on `2026-07-31`; the live static trace includes
   the R14 `.isf` intent-scheduling path, the IAL2 `.ppif` and profile-alias
   protocol-intent pre-lowering path, the Valid-Ready, AXI manager plus bounded
   AXI initiator, APB, and AHB protocol-intent owners, the first-class
   semantic-introspection and verification-output support surfaces, the
   repository-local project-data owner, and the bounded direct/composition VHDL
   backend owners and the shared portable HDL instance-identifier policy. The
-  project-owned closure now reaches `229` project files total / `228` `.pm`
+  public VIAL capabilities/check/normal-terse source tooling. The project-owned
+  closure now reaches `239` project files total / `238` `.pm`
   packages, including `19` packages under `FSM/IAL2`.
   Selected line-count measurements below were refreshed from source.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `229` project files total, `228` `.pm` packages.
+- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `239` project files total, `238` `.pm` packages.
 - The R14 `.isf` front door is reachable from [bin/fsmgen](bin/fsmgen)
   through conditional runtime requires of [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
   and [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm). That path lowers
@@ -61,6 +62,12 @@ Current baseline:
 - The CLI now directly reaches the UVM passive-monitor and VHDL observation
   package skeleton emitters, while the capability manifest reaches their
   bounded verification-output discovery/contract owners.
+- The explicit `fsmgen vial` dispatch now reaches the private span-aware VIAL
+  parser and unchanged typed semantic builder through a source-projection
+  normalizer, plus the defensive source-only tool/API and CLI adapter. The
+  reachable public surface supports capabilities, check, and canonical
+  normal/terse formatting only; it does not reach the private bridge or
+  ExecutionIR builders, artifact publication, a backend, or runtime.
 - The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm), including bounded scalar expressions, matching-shape leafwise aggregate expression folding, and unary aggregate bitwise complement folding.
 - Shared integer literal parsing is now reachable through [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm), keeping common decimal, `0d`, based SystemVerilog, `0x`, `0b`, `0o`, and intent-level sized `.fsm` spellings such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`, and `20'x1` consistent across scalar widths, constants, and direct `+size` expression terms while normalizing to legal target-HDL literals before backend emission.
 - The bounded VHDL generation owners are now reachable from [bin/fsmgen](bin/fsmgen):
@@ -303,9 +310,9 @@ This is the current static measurement view behind the qualitative assessment
 above.
 
 Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
-- total reachable project files: `229`
-- reachable `.pm` packages: `228`
-- `Support`: `71`
+- total reachable project files: `239`
+- reachable `.pm` packages: `238`
+- `Support`: `74`
 - `Composition`: `36`
 - `HDL`: `33`
 - `Package`: `14`
@@ -319,10 +326,11 @@ Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
 - `AST`: `1`
 - `IAL2`: `19`
 - `VerificationOutput`: `2`
+- `VIAL`: `7`
 - singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `ParameterValueSupport.pm`, `ProjectDataLocality.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
 
 Current thin-coordinator / public-surface assembler line counts:
-- [bin/fsmgen](bin/fsmgen): `1825`
+- [bin/fsmgen](bin/fsmgen): `1838`
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm): `495`
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `175`
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `125`
@@ -353,7 +361,7 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Support/SemanticIntrospectionContract.pm](perl/FSM/Support/SemanticIntrospectionContract.pm): `604`
 - [perl/FSM/Support/BackendValidationSection.pm](perl/FSM/Support/BackendValidationSection.pm): `30`
 - [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm): `36`
-- [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm): `259`
+- [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm): `285`
 - [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm): `30`
 - [perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm): `184`
 - [perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm): `256`
@@ -374,7 +382,7 @@ Current largest reachable files by line count:
 - [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2071`
 - [perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm](perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm): `1904`
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm): `1835`
-- [bin/fsmgen](bin/fsmgen): `1825`
+- [bin/fsmgen](bin/fsmgen): `1838`
 - [perl/FSM/Scheduler/ISF/ControlFlowEffects.pm](perl/FSM/Scheduler/ISF/ControlFlowEffects.pm): `1769`
 - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm): `1726`
 - [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](perl/FSM/Synthesis/EnableGraph/ASTSupport.pm): `1694`
@@ -474,7 +482,7 @@ It mainly owns:
 - external HDL validation lifecycle routing
 - user-facing summaries for composition provenance, override/block events, failure summaries, generated children, and shared-datapath metadata
 
-[bin/fsmgen](bin/fsmgen) is `1825` lines today, so it is not tiny, but most of
+[bin/fsmgen](bin/fsmgen) is `1838` lines today, so it is not tiny, but most of
 that weight is presentation/reporting and `.ppif` / `.isf` pre-lowering glue
 rather than semantic compiler ownership.
 
@@ -625,6 +633,20 @@ Important distinction:
 - [perl/FSM/SourcePathResolver.pm](perl/FSM/SourcePathResolver.pm)
 - [perl/FSM/SourceClassifier.pm](perl/FSM/SourceClassifier.pm)
 
+### Public VIAL source tooling
+
+- [perl/FSM/VIAL/ToolCLI.pm](perl/FSM/VIAL/ToolCLI.pm)
+- [perl/FSM/VIAL/Tool.pm](perl/FSM/VIAL/Tool.pm)
+- [perl/FSM/VIAL/SourceProjection.pm](perl/FSM/VIAL/SourceProjection.pm)
+- [perl/FSM/VIAL/Parser.pm](perl/FSM/VIAL/Parser.pm)
+- [perl/FSM/VIAL/SemanticBuilder.pm](perl/FSM/VIAL/SemanticBuilder.pm)
+- [perl/FSM/VIAL/SemanticIR.pm](perl/FSM/VIAL/SemanticIR.pm)
+- [perl/FSM/VIAL/SemanticReport.pm](perl/FSM/VIAL/SemanticReport.pm)
+
+This path is deliberately source-only. Both authored projections normalize
+before the single semantic builder; the public result exposes sanitized,
+JSON-safe data and no private object or filesystem artifact.
+
 ### IAL2 protocol/platform and ISF intent-scheduling pre-lowering
 - [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm)
 - [perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm](perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm)
@@ -680,6 +702,9 @@ create a second HDL backend path.
 - [perl/FSM/Support/DocumentationContract.pm](perl/FSM/Support/DocumentationContract.pm)
 - [perl/FSM/Support/DocumentationHints.pm](perl/FSM/Support/DocumentationHints.pm)
 - [perl/FSM/Support/LanguageSurfaceContract.pm](perl/FSM/Support/LanguageSurfaceContract.pm)
+- [perl/FSM/Support/HIALVIALBridgeContract.pm](perl/FSM/Support/HIALVIALBridgeContract.pm)
+- [perl/FSM/Support/VIALExecutionContract.pm](perl/FSM/Support/VIALExecutionContract.pm)
+- [perl/FSM/Support/VIALToolingContract.pm](perl/FSM/Support/VIALToolingContract.pm)
 - [perl/FSM/Support/ProducerContract.pm](perl/FSM/Support/ProducerContract.pm)
 - [perl/FSM/Support/SemanticExportsContract.pm](perl/FSM/Support/SemanticExportsContract.pm)
 - [perl/FSM/Support/BackendValidationContract.pm](perl/FSM/Support/BackendValidationContract.pm)

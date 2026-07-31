@@ -9533,8 +9533,14 @@ UVM, parity, or scale. Clean `.9` selection commit `ab3e73b72` activates `.10`
 alone for the selected public-tool/backend/result implementation. Clean
 activation commit `5fd766600` decomposes it into `.10.1` public source tooling,
 `.10.2` planning/artifacts, `.10.3` backend/trace projection, and `.10.4` exact
-runtime/results, with `.10.1` active first. Decomposition changes no backend,
-public-tool, or runtime behavior.
+runtime/results. Completed `.10.1` now ships capabilities, check, and canonical
+normal/terse formatting through one closed defensive source-only CLI/API. Both
+styles enter the unchanged typed semantic builder and produce one stable
+provenance-free semantic meaning digest. Exact discovery and support accounting
+advertise only those source surfaces; HIAL binding, plans, artifact writes,
+backend emission, compile, runtime, results, and parity remain unavailable.
+Proposed `.10.2` is the next planning/artifact child; `.10.3` and `.10.4` retain
+backend/trace and exact runtime/result implementation.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

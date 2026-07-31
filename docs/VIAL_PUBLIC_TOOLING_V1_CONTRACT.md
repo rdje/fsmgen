@@ -2,11 +2,10 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
-Status: selected; decision `0043` and completed `.9` select the plain-
-SystemVerilog/Verilator backend contract, and active parent `.10` owns the
-first implementation after clean commit `ab3e73b72`. Its active `.10.1` child
-owns capabilities/check/normal-terse formatting before separately committed
-plan, backend, and runtime children
+Status: selected and partially implemented; `.10.1` ships public
+capabilities/check/normal-terse formatting and the closed source-only API.
+Parent `.10` retains `.10.2` planning/artifacts, `.10.3` backend/trace, and
+`.10.4` Verilator runtime/results
 Decision: `0039`
 
 ## Outcome
@@ -21,9 +20,10 @@ fsmgen vial plan --dut HIAL_SOURCE SOURCE.vial
 fsmgen vial run --dut HIAL_SOURCE --backend BACKEND_PROFILE SOURCE.vial
 ```
 
-The first runtime-profile contract is now selected by completed `.9` under
-decision `0043`; implementation remains separately owned by proposed `.10`.
-This selector freezes the public syntax,
+The first runtime-profile contract is selected by completed `.9` under
+decision `0043`. Completed `.10.1` implements the first three source-only
+actions; later children retain planning, artifact publication, backend
+emission, and runtime. This contract freezes the public syntax,
 request/result API, source-style equivalence, path/artifact/report schemas,
 capability discovery, diagnostics, support accounting, compatibility, and
 atomicity rules before a backend exists.
@@ -113,9 +113,10 @@ lowercase reserved words/literal digits where the lexical contract permits,
 one final newline, declaration/action order preserved, and no comment
 retention in version 1. Formatting never binds a DUT or writes an artifact.
 
-The shipped `.3` parser continues to accept only `normal_v1` until the public
-implementation owner lands both projections and equivalence tests together.
-Selection is not an implementation claim.
+Completed `.10.1` widens the shipped parser through one private normalization
+step: both projections enter the same `SemanticBuilder`, and `t/1555` proves
+format/reparse equality through `fsmgen.vial_semantic_projection.v1`. No
+second terse semantic pipeline exists.
 
 ## CLI Contract
 
@@ -199,8 +200,8 @@ fsmgen vial run --dut HIAL_SOURCE --backend BACKEND_PROFILE [PLAN_OPTIONS] SOURC
 `run` performs the identical plan operation, negotiates the named backend,
 emits its artifacts, executes the qualified tool profile, and writes the
 selected result manifest. `sv_portable_verilator` is now a selected known-value
-backend contract under decision `0043`, but remains unavailable until `.10`
-implements and qualifies it. Before then, `run` returns
+backend contract under decision `0043`, but remains unavailable until `.10.3`
+and `.10.4` implement and qualify emission and runtime. Before then, `run` returns
 `VIAL_BACKEND_UNAVAILABLE` atomically.
 
 ### Incompatible legacy options
@@ -405,13 +406,13 @@ exactly one manifest.
 
 ## Capability Discovery And Support Accounting
 
-The future implementation adds `language_surface.vial_tooling` with exact
+Completed `.10.1` adds `language_surface.vial_tooling` with exact
 discovery families for command/API schemas, source styles, accepted HIAL
 routes, artifact layout, manifest schemas, supported actions, backend
 profiles, diagnostics, limits, and non-claims. It also changes the `.vial`
 file-surface CLI list only for actions actually implemented.
 
-Selected capability IDs are:
+Shipped `.10.1` capability IDs are:
 
 ```text
 vial.tooling.cli.v1
@@ -419,6 +420,11 @@ vial.tooling.api.v1
 vial.source_projection.normal_v1
 vial.source_projection.terse_v1
 vial.semantic_projection.v1
+```
+
+The following remain selected but unshipped until `.10.2`:
+
+```text
 vial.artifact_layout.v1
 vial.tool_manifest.v1
 vial.verification_output_manifest.v2
@@ -442,8 +448,10 @@ feature.vial_<backend_profile>_runtime   # later backend owner only
 ```
 
 The existing `verification.vial_ahb_subordinate_base_output_arbitration`
-entry continues to prove bounded semantic/private-execution meaning. It does
-not silently satisfy either public-tooling entry or any runtime family.
+entry continues to prove bounded semantic/private-execution meaning. Distinct
+`feature.vial_public_check_format` with coverage
+`vial_public_check_format_cli_api` proves `.10.1`; neither entry silently
+satisfies public planning or a runtime family.
 
 ## Diagnostics And Atomic Failure
 
@@ -478,28 +486,35 @@ a downgraded pass.
   authoring language is introduced.
 - Plan mode publishes sanitized bridge/plan files, not public constructors or
   raw IR.
-- No backend was selected by `.8`. Decision `0043` and completed `.9` now
-  select `sv_portable_verilator`; proposed `.10` is the first possible
-  implementation of this tooling contract plus that backend and result
-  producer. `.11` owns runtime parity against the handwritten AHB oracle.
+- No backend was selected by `.8`. Decision `0043` and completed `.9` select
+  `sv_portable_verilator`; completed `.10.1` ships only source tooling, while
+  `.10.2` through `.10.4` retain plan/artifact, backend/trace, and run/result
+  implementation. `.11` owns parity against the handwritten AHB oracle.
 - Factories, phases, objections, UVM component classes, VHDL process plumbing,
   target hierarchy, callbacks, and host-language escape hatches remain backend
   implementation details unless a later typed VIAL semantic owner selects an
   author-facing abstraction.
 
-This selection changes no parser, SemanticIR, HIAL bridge, binder,
-ExecutionIR, plan object, CLI/API, file, artifact, capability/support entry,
-generated HDL, backend, compile, simulation, runtime, result, parity, UVM,
-VHDL, mixed-language, scale, or product behavior.
+Completed `.10.1` adds source-style normalization, canonical formatting, the
+public source-only CLI/API, capability/support discovery, and diagnostics. It
+changes no typed semantic meaning, HIAL bridge, binder, ExecutionIR, plan
+object/file, artifact tree, generated HDL, backend, compile, simulation,
+runtime, result, parity, UVM, VHDL, mixed-language, or scale behavior.
 
 ## Validation And Rollback
 
-The first implementation owner must add `t/1553-vial-public-tooling.t` or its
-task-tree-approved successor and prove:
+Completed `.10.1` adds task-tree-approved
+`t/1555-vial-public-source-tooling.t` and proves:
 
 - normal/terse parse-format-reparse semantic-digest equality and deterministic
   output;
 - exact CLI/API request/result shapes and incompatible options;
+- closed/defensive CLI/API results, incompatible-option/path/host-object
+  diagnostics, no artifact writes, legacy dispatch preservation, and exact
+  capability/support accounting.
+
+Remaining `.10.2` through `.10.4` must prove:
+
 - all three HIAL review routes with the checked `.ppif` path proving the
   generated/reparsed IAL1 bridge boundary;
 - byte-stable canonical bridge/plan files, artifact ordering/hashes, virtual
@@ -511,9 +526,9 @@ task-tree-approved successor and prove:
 - focused source/bridge/execution tests, docs truth, mdBook, Knowledge Map,
   memory, relative paths, task acceptance, doctrines, and exact output cleanup.
 
-Selection rollback removes decision `0039` and this contract, restores `.8`
-to active, and preserves all shipped private VIAL/HIAL behavior. Future
-implementation rollback removes only the `vial` subcommand/API adapters,
-formatter/parser widening, public contract entries, and exact generated VIAL
-trees; it retains the `.3` normal parser, private bridge/ExecutionIR, decisions
-`0032`-`0037`, and all legacy CLI/artifacts.
+Selection rollback remains the decision-`0039` path. `.10.1` implementation
+rollback removes only the `vial` source subcommand/API adapter, terse
+normalizer/formatter, public tooling capability/support entries, and `t/1555`;
+it retains the `.3` normal parser, private bridge/ExecutionIR, decisions
+`0032`-`0037`, and every legacy CLI/artifact. Later artifact/backend rollback
+is independently scoped to `.10.2` through `.10.4`.

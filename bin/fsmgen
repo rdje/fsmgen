@@ -476,6 +476,15 @@ sub clone_jsonish {
     return $value;
 }
 
+if (@ARGV && $ARGV[0] eq 'vial') {
+    shift @ARGV;
+    require FSM::VIAL::ToolCLI;
+    exit FSM::VIAL::ToolCLI->run({
+        argv => \@ARGV,
+        repo_root => File::Spec->catdir($FindBin::Bin, '..'),
+    });
+}
+
 # Command line options
 my $debug_level = 0;  # Numeric compatibility mode (0..4)
 my $help = 0;
@@ -574,6 +583,10 @@ if ($help) {
 FSM HDL Generator - Generate HDL code (SystemVerilog, Verilog, VHDL) from FSM specifications
 
 Usage: ./bin/fsmgen [OPTIONS] <fsm_file>
+
+Subcommands:
+  vial            Public VIAL capabilities, check, and normal/terse formatting
+                  Run './bin/fsmgen vial --help' for the source-tooling boundary
 
 Arguments:
   fsm_file        FSM file specification - one of:

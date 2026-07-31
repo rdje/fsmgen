@@ -32028,3 +32028,18 @@ task tree and git.
   repository-root build contains 73 files/16,880 KiB; Knowledge Map validates
   1,096 facts/5,734 keys; Memory remains 36 lines; all nine doctrines pass at
   20 live-document surfaces and 2,780/2,780 tracked Markdown paths.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.1 — public VIAL source tooling shipped
+
+- Added `fsmgen vial capabilities`, source-only `check`, and canonical
+  normal/terse `format` plus a closed defensive request/result API. Both source
+  projections normalize into the existing typed semantic builder and report
+  one provenance-free semantic digest; imports remain caller-owned.
+- Capability and support accounting advertise only the shipped source tools.
+  Repository-relative CLI reads reject traversal, symlinked paths, and
+  off-volume sources; all actions write no artifact. Plan/run, HIAL binding,
+  backend generation, compile, simulation, results, parity, UVM, VHDL,
+  mixed-language, and scale remain explicit non-claims.
+- Guarded semantic/bridge/execution/tooling/support/capability regression passes
+  at Files=6/Tests=7,083, including legacy CLI dispatch and fail-closed style,
+  request, option, path, host-object, and unavailable-plan boundaries.

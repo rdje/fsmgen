@@ -31,6 +31,7 @@ my %allowed_classifications = map { $_ => 1 } qw(
 
 my %allowed_coverages = map { $_ => 1 } qw(
     vial_semantic_report_private_api
+    vial_public_check_format_cli_api
     direct_root_pipeline_cli
     composition_top_pipeline_cli
     isf_pipeline_cli
@@ -395,6 +396,7 @@ my %strict_rejection_coverages = map { $_ => 1 } qw(
 
 my %coverage_classification = (
     vial_semantic_report_private_api => 'supported_smoke',
+    vial_public_check_format_cli_api => 'supported_smoke',
     direct_root_pipeline_cli => 'supported_smoke',
     composition_top_pipeline_cli => 'supported_smoke',
     isf_pipeline_cli => 'supported_smoke',
@@ -1243,7 +1245,7 @@ for my $entry (@entries) {
     elsif (exists $entry->{diagnostic_code}) {
         fail("non-failure catalog entry '$entry->{id}' must not reserve a diagnostic code");
     }
-    elsif ($entry->{source_kind} eq 'vial') {
+    elsif ($entry->{source_kind} eq 'vial' && $entry->{coverage} eq 'vial_semantic_report_private_api') {
         is_deeply(
             $entry->{supported_phases},
             [qw(parse typecheck semantic_report)],
@@ -1258,6 +1260,23 @@ for my $entry (@entries) {
             $entry->{explicit_nonclaims},
             [qw(bridge_binding execution_plan artifact_generation compile simulation result parity uvm vhdl mixed_language scale)],
             "VIAL entry '$entry->{id}' records every selected non-claim",
+        );
+    }
+    elsif ($entry->{source_kind} eq 'vial' && $entry->{coverage} eq 'vial_public_check_format_cli_api') {
+        is_deeply(
+            $entry->{supported_phases},
+            [qw(capabilities parse typecheck semantic_report format)],
+            "VIAL tooling entry '$entry->{id}' claims only public source-tooling phases",
+        );
+        is_deeply(
+            $entry->{required_capabilities},
+            [qw(vial.tooling.cli.v1 vial.tooling.api.v1 vial.source_projection.normal_v1 vial.source_projection.terse_v1 vial.semantic_projection.v1)],
+            "VIAL tooling entry '$entry->{id}' keeps exact source-tooling capabilities",
+        );
+        is_deeply(
+            $entry->{explicit_nonclaims},
+            [qw(bridge_binding execution_plan artifact_generation compile simulation result parity uvm vhdl mixed_language scale)],
+            "VIAL tooling entry '$entry->{id}' records every deferred plan/output/runtime claim",
         );
     }
     elsif (
@@ -1321,8 +1340,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    374,
-    'catalog now keeps three hundred seventy-four named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL semantic fixtures',
+    375,
+    'catalog now keeps three hundred seventy-five named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL semantic/tooling fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),

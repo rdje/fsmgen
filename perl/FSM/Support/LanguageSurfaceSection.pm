@@ -12,6 +12,7 @@ use FSM::Support::LanguageSurfaceContract qw(
 );
 use FSM::Support::HIALVIALBridgeContract qw(build_hial_vial_bridge_contract);
 use FSM::Support::VIALExecutionContract qw(build_vial_execution_contract);
+use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
 
 our @EXPORT_OK = qw(
     build_language_surface_section
@@ -175,17 +176,21 @@ sub build_language_surface_section {
                 {
                     suffix => '.vial',
                     intent_layer => 'VIAL',
-                    status => 'shipped_bounded_semantic_and_private_execution',
-                    role => 'reviewable verification intent parsed and type-checked into private immutable VIALSemanticIR, then privately bound into target-neutral VIALExecutionIR',
+                    status => 'shipped_bounded_public_source_tooling_and_private_execution',
+                    role => 'reviewable verification intent with public capabilities/check/normal-terse formatting, private immutable VIALSemanticIR, and private target-neutral VIALExecutionIR binding',
                     lowers_to => [],
                     generated_review_artifacts => [],
-                    supported_cli_modes => [],
+                    supported_cli_modes => [
+                        'fsmgen vial capabilities [--json]',
+                        'fsmgen vial check [--style auto|normal|terse] [--json] SOURCE.vial',
+                        'fsmgen vial format --style normal|terse SOURCE.vial',
+                    ],
                     sample_path => 'vial/ahb_subordinate_base_output_arbitration.vial',
                     current_boundary => join(' ',
-                        'The bounded VIAL version-1 source surface supports dedicated span-aware parsing, exact type checking, private immutable VIALSemanticIR, and a sanitized semantic report under core_directed_single_clock_v1.',
-                        'Its semantic report advertises only vial.source.v1, vial.semantic_ir.v1, and vial.profile.core_directed_single_clock_v1.',
+                        'The bounded VIAL version-1 source surface supports dedicated span-aware parsing, exact type checking, private immutable VIALSemanticIR, a sanitized semantic report, and public capabilities/check/normal-terse formatting under core_directed_single_clock_v1.',
+                        'Normal_v1 and terse_v1 deterministically normalize to one typed semantic model and prove equal provenance-free fsmgen.vial_semantic_projection.v1 digests.',
                         'The private no-file execution seam binds the checked AHB fixture through compiler-proved directional type relations into immutable target-neutral VIALExecutionIR and a defensive in-process plan.',
-                        'There is no public CLI or supported embedding API in this slice, and no plan file, artifact generation, backend, compile, simulation, runtime result, parity pass, UVM, VHDL, mixed-language, or scale claim.',
+                        'The source-tooling CLI/API writes no file; there is no public plan file, artifact generation, backend, compile, simulation, runtime result, parity pass, UVM, VHDL, mixed-language, or scale claim.',
                     ),
                 },
             ],
@@ -193,6 +198,7 @@ sub build_language_surface_section {
         },
         hial_vial_bridge => build_hial_vial_bridge_contract(),
         vial_execution => build_vial_execution_contract(),
+        vial_tooling => build_vial_tooling_contract(),
         default_mode_compatibility => {
             accepted_but_not_canonical_for_generated_output => [
                 '+fsm root family',
