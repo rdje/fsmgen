@@ -6,21 +6,20 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18:
-  activate health-target and ceiling semantics`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18` alone is active
-  from clean disposition commit `3b782fc10`.
-- current_state: decision `0044` and the 333-line bounded disposition reconcile
-  every PGEN/ANVIL finding plus Q1-Q31. Exact revision `44b5f1597` retains the
-  full former IAL2 file while the content-addressed segment retains all 844
-  authoritative nodes; the packet's 15,727-line gap was overlap accounting,
-  not demonstrated loss. Real pressure, execution, currency, route/index,
-  retention, utility, and maintained-reference gaps are owned by `.15`-`.23`.
-- next_action: implement explicit health targets, inclusive enforcement
-  ceilings, two-sided debt ratchets, separate increase authority, and pressure
-  reporting without widening a current limit.
-- in_flight_uncommitted: none after this activation commit; no background job
-  and all repository-local mdBook output is removed exactly.
-- blockers: none for `.18`; `.8`-`.10`/`.13` wait for utility or
+  distinguish health targets from ceilings`).
+- active_work_unit: none after `.18` completion; `.19` is the next clean
+  activation frontier.
+- current_state: `.18` implements explicit health targets, inclusive ceilings,
+  immutable debt baselines, bounded growth, downward ratchets, and exact fresh
+  increase authority. No predecessor ceiling rises. Output reports actual,
+  target, ceiling, two migrated, nine pinned/deferred, and five steady measured
+  surfaces. Decision `0044` and the bounded PGEN/ANVIL disposition remain the
+  correction authority for `.15`-`.23`.
+- next_action: from the clean `.18` completion commit, activate `.19` alone to
+  close verifier execution and unconditional doctrine-driver reachability.
+- in_flight_uncommitted: none after this commit; no background job and all
+  repository-local mdBook output is removed exactly.
+- blockers: none for `.19`; `.8`-`.10`/`.13` wait for utility or
   maintained-reference predecessors. Frozen/ledger work keeps its prior owner.
 
 ## Durable context

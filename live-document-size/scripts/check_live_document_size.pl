@@ -301,7 +301,8 @@ for my $row (@{$surface_rows}) {
     my ($line_number, $json) = @{$row};
     my @required = qw(
         surface_id lifecycle locator targets index canonical_inputs routes_to
-        owner budgets milestones state baseline verifier
+        owner health_targets enforcement_ceilings milestones containment_status
+        state baseline verifier
     );
     next if !validate_keys('surface registry', $line_number, $json, \@required, ['transition']);
 
@@ -314,7 +315,7 @@ for my $row (@{$surface_rows}) {
         problem("surface $id is declared more than once");
         next;
     }
-    for my $key (qw(lifecycle locator owner state verifier)) {
+    for my $key (qw(lifecycle locator owner containment_status state verifier)) {
         if (ref($json->{$key}) || !defined($json->{$key}) || $json->{$key} eq '') {
             problem("surface $id has invalid string key: $key");
         }
@@ -353,24 +354,33 @@ for my $row (@{$surface_rows}) {
         problem("surface $id must declare an owner");
     }
 
-    my @budget_keys = qw(files lines_each bytes_each lines_total bytes_total);
-    my @milestone_keys = qw(warning_pct rollover_pct hard_pct);
+    my @pressure_keys = qw(files lines_each bytes_each lines_total bytes_total);
+    my @milestone_keys = qw(warning_pct rollover_pct);
     my $measured = $record{locator} eq 'file' || $record{locator} eq 'collection'
         || $record{locator} eq 'generated_file';
     if ($measured) {
         problem("surface $id measured locator has invalid state: $record{state}")
             if $record{state} !~ /\A(?:normal|warning_debt|rollover_debt|structural_debt)\z/;
-        @record{qw(max_files max_lines_each max_bytes_each max_lines_total max_bytes_total)} = (0) x 5;
-        @record{@milestone_keys} = (0) x 3;
-        my $budgets = exact_numeric_object(
-            "surface $id budgets", $line_number, $json->{budgets}, \@budget_keys,
+        @record{qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total)} = (0) x 5;
+        @record{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total)} = (0) x 5;
+        @record{@milestone_keys} = (0) x 2;
+        my $targets_object = exact_numeric_object(
+            "surface $id health_targets", $line_number, $json->{health_targets}, \@pressure_keys,
+        );
+        my $ceilings = exact_numeric_object(
+            "surface $id enforcement_ceilings", $line_number,
+            $json->{enforcement_ceilings}, \@pressure_keys,
         );
         my $milestones = exact_numeric_object(
             "surface $id milestones", $line_number, $json->{milestones}, \@milestone_keys,
         );
-        if (defined $budgets) {
-            @record{qw(max_files max_lines_each max_bytes_each max_lines_total max_bytes_total)}
-                = @{$budgets}{@budget_keys};
+        if (defined $targets_object) {
+            @record{qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total)}
+                = @{$targets_object}{@pressure_keys};
+        }
+        if (defined $ceilings) {
+            @record{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total)}
+                = @{$ceilings}{@pressure_keys};
         }
         if (defined $milestones) {
             @record{@milestone_keys} = @{$milestones}{@milestone_keys};
@@ -378,19 +388,20 @@ for my $row (@{$surface_rows}) {
         if ($record{state} =~ /\A(?:warning_debt|rollover_debt|structural_debt)\z/) {
             @record{qw(baseline_files baseline_lines_each baseline_bytes_each baseline_lines_total baseline_bytes_total)} = (0) x 5;
             my $baseline = exact_numeric_object(
-                "surface $id baseline", $line_number, $json->{baseline}, \@budget_keys,
+                "surface $id baseline", $line_number, $json->{baseline}, \@pressure_keys,
             );
             if (defined $baseline) {
                 @record{qw(baseline_files baseline_lines_each baseline_bytes_each baseline_lines_total baseline_bytes_total)}
-                    = @{$baseline}{@budget_keys};
+                    = @{$baseline}{@pressure_keys};
             }
             @record{qw(transition_files transition_lines_each transition_bytes_each transition_lines_total transition_bytes_total)} = (0) x 5;
+            @record{qw(ratchet_files ratchet_lines_each ratchet_bytes_each ratchet_lines_total ratchet_bytes_total)} = (0) x 5;
             if (defined $json->{transition}) {
                 if (ref($json->{transition}) ne 'HASH') {
                     problem("surface $id transition must be an object or null");
                 } elsif (validate_keys(
                     "surface $id transition", $line_number, $json->{transition},
-                    [qw(owner max_growth)], [],
+                    [qw(owner max_growth ratchet_step)], [],
                 )) {
                     my $transition_owner = $json->{transition}{owner};
                     if (ref($transition_owner) || !defined($transition_owner)
@@ -401,11 +412,19 @@ for my $row (@{$surface_rows}) {
                     }
                     my $growth = exact_numeric_object(
                         "surface $id transition max_growth", $line_number,
-                        $json->{transition}{max_growth}, \@budget_keys, 1,
+                        $json->{transition}{max_growth}, \@pressure_keys, 1,
                     );
                     if (defined $growth) {
                         @record{qw(transition_files transition_lines_each transition_bytes_each transition_lines_total transition_bytes_total)}
-                            = @{$growth}{@budget_keys};
+                            = @{$growth}{@pressure_keys};
+                    }
+                    my $ratchet = exact_numeric_object(
+                        "surface $id transition ratchet_step", $line_number,
+                        $json->{transition}{ratchet_step}, \@pressure_keys,
+                    );
+                    if (defined $ratchet) {
+                        @record{qw(ratchet_files ratchet_lines_each ratchet_bytes_each ratchet_lines_total ratchet_bytes_total)}
+                            = @{$ratchet}{@pressure_keys};
                     }
                 }
             }
@@ -415,7 +434,10 @@ for my $row (@{$surface_rows}) {
             problem("surface $id non-debt record must use null or absent transition");
         }
     } else {
-        problem("surface $id terminal record must use null budgets") if defined $json->{budgets};
+        problem("surface $id terminal record must use null health_targets")
+            if defined $json->{health_targets};
+        problem("surface $id terminal record must use null enforcement_ceilings")
+            if defined $json->{enforcement_ceilings};
         problem("surface $id terminal record must use null milestones") if defined $json->{milestones};
         problem("surface $id terminal record must use null baseline") if defined $json->{baseline};
         problem("surface $id terminal record must use null or absent transition")
@@ -451,31 +473,33 @@ if (!@surface_order) {
 }
 
 my @coverage_patterns;
+my %containment_pressure;
 for my $id (@surface_order) {
     my $record = $surfaces{$id};
     my $locator = $record->{locator};
     my $measured = $locator eq 'file' || $locator eq 'collection'
         || $locator eq 'generated_file';
-    my @budget_fields = qw(max_files max_lines_each max_bytes_each max_lines_total max_bytes_total);
+    my @target_fields = qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total);
+    my @ceiling_fields = qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total);
     my @baseline_fields = qw(baseline_files baseline_lines_each baseline_bytes_each baseline_lines_total baseline_bytes_total);
 
     if ($measured) {
-        for my $field (@budget_fields) {
+        for my $field (@target_fields, @ceiling_fields) {
             problem("surface $id has invalid positive $field: $record->{$field}")
                 if !positive_integer($record->{$field});
         }
-        for my $field (qw(warning_pct rollover_pct hard_pct)) {
+        for my $field (qw(warning_pct rollover_pct)) {
             problem("surface $id has invalid positive $field: $record->{$field}")
                 if !positive_integer($record->{$field});
         }
         if (positive_integer($record->{warning_pct})
                 && positive_integer($record->{rollover_pct})
-                && positive_integer($record->{hard_pct})
                 && !($record->{warning_pct} < $record->{rollover_pct}
-                    && $record->{rollover_pct} < $record->{hard_pct}
-                    && $record->{hard_pct} <= 100)) {
-            problem("surface $id pressure percentages must satisfy warning < rollover < hard <= 100");
+                    && $record->{rollover_pct} <= 100)) {
+            problem("surface $id pressure percentages must satisfy warning < rollover <= 100");
         }
+        problem("surface $id has invalid containment_status: $record->{containment_status}")
+            if $record->{containment_status} !~ /\A(?:steady|migrated|pinned_deferred)\z/;
         if ($record->{state} =~ /\A(?:warning_debt|rollover_debt|structural_debt)\z/) {
             for my $field (@baseline_fields) {
                 problem("surface $id debt has invalid positive $field: $record->{$field}")
@@ -485,15 +509,21 @@ for my $id (@surface_order) {
                 transition_files transition_lines_each transition_bytes_each
                 transition_lines_total transition_bytes_total
             );
-            for my $index (0 .. $#budget_fields) {
-                next if !positive_integer($record->{$budget_fields[$index]})
+            my @ratchet_fields = qw(
+                ratchet_files ratchet_lines_each ratchet_bytes_each
+                ratchet_lines_total ratchet_bytes_total
+            );
+            for my $index (0 .. $#ceiling_fields) {
+                next if !positive_integer($record->{$ceiling_fields[$index]})
                     || !positive_integer($record->{$baseline_fields[$index]})
                     || !nonnegative_integer($record->{$growth_fields[$index]});
-                problem("surface $id baseline $baseline_fields[$index] exceeds $budget_fields[$index]")
-                    if $record->{$baseline_fields[$index]} > $record->{$budget_fields[$index]};
-                problem("surface $id transition baseline plus growth exceeds $budget_fields[$index]")
+                problem("surface $id baseline $baseline_fields[$index] exceeds $ceiling_fields[$index]")
+                    if $record->{$baseline_fields[$index]} > $record->{$ceiling_fields[$index]};
+                problem("surface $id transition baseline plus growth exceeds $ceiling_fields[$index]")
                     if $record->{$baseline_fields[$index]} + $record->{$growth_fields[$index]}
-                        > $record->{$budget_fields[$index]};
+                        > $record->{$ceiling_fields[$index]};
+                problem("surface $id debt has invalid positive $ratchet_fields[$index]")
+                    if !positive_integer($record->{$ratchet_fields[$index]});
             }
         } else {
             for my $field (@baseline_fields) {
@@ -503,7 +533,9 @@ for my $id (@surface_order) {
         }
         push @coverage_patterns, @{$record->{target_patterns}};
     } else {
-        for my $field (@budget_fields, qw(warning_pct rollover_pct hard_pct), @baseline_fields) {
+        problem("surface $id terminal record must use containment_status not_applicable")
+            if $record->{containment_status} ne 'not_applicable';
+        for my $field (@target_fields, @ceiling_fields, qw(warning_pct rollover_pct), @baseline_fields) {
             problem("surface $id terminal record unexpectedly defines $field")
                 if defined $record->{$field};
         }
@@ -556,29 +588,32 @@ for my $id (@surface_order) {
             $max_bytes = $bytes if $bytes > $max_bytes;
         }
         my @dimensions = (
-            ['max lines', $max_lines, $record->{max_lines_each}, $record->{baseline_lines_each}],
-            ['max bytes', $max_bytes, $record->{max_bytes_each}, $record->{baseline_bytes_each}],
-            ['total lines', $total_lines, $record->{max_lines_total}, $record->{baseline_lines_total}],
-            ['total bytes', $total_bytes, $record->{max_bytes_total}, $record->{baseline_bytes_total}],
+            ['max lines', 'lines_each', $max_lines, $record->{target_lines_each},
+                $record->{ceiling_lines_each}, $record->{baseline_lines_each}],
+            ['max bytes', 'bytes_each', $max_bytes, $record->{target_bytes_each},
+                $record->{ceiling_bytes_each}, $record->{baseline_bytes_each}],
+            ['total lines', 'lines_total', $total_lines, $record->{target_lines_total},
+                $record->{ceiling_lines_total}, $record->{baseline_lines_total}],
+            ['total bytes', 'bytes_total', $total_bytes, $record->{target_bytes_total},
+                $record->{ceiling_bytes_total}, $record->{baseline_bytes_total}],
         );
-        unshift @dimensions, ['files', scalar(@files), $record->{max_files}, $record->{baseline_files}]
-            if $locator eq 'collection';
-        my $peak_pct = 0;
+        unshift @dimensions, ['files', 'files', scalar(@files), $record->{target_files},
+            $record->{ceiling_files}, $record->{baseline_files}];
+        my ($target_peak_pct, $ceiling_peak_pct) = (0, 0);
         for my $dimension (@dimensions) {
-            my ($name, $actual, $limit, $baseline) = @{$dimension};
-            next if !positive_integer($limit);
-            my $pct = 100 * $actual / $limit;
-            $peak_pct = $pct if $pct > $peak_pct;
-            problem(sprintf('surface %s %s is %d (> hard limit %d)', $id, $name, $actual, $limit))
-                if $actual > $limit;
-            my %transition_field = (
-                files => 'transition_files',
-                'max lines' => 'transition_lines_each',
-                'max bytes' => 'transition_bytes_each',
-                'total lines' => 'transition_lines_total',
-                'total bytes' => 'transition_bytes_total',
-            );
-            my $allowance = $record->{$transition_field{$name}} // 0;
+            my ($name, $key, $actual, $target, $ceiling, $baseline) = @{$dimension};
+            next if !positive_integer($target) || !positive_integer($ceiling);
+            my $target_pct = 100 * $actual / $target;
+            my $ceiling_pct = 100 * $actual / $ceiling;
+            if ($key ne 'files' || $locator eq 'collection') {
+                $target_peak_pct = $target_pct if $target_pct > $target_peak_pct;
+                $ceiling_peak_pct = $ceiling_pct if $ceiling_pct > $ceiling_peak_pct;
+            }
+            problem(sprintf(
+                'surface %s %s is %d (> inclusive enforcement ceiling %d)',
+                $id, $name, $actual, $ceiling,
+            )) if $actual > $ceiling;
+            my $allowance = $record->{"transition_$key"} // 0;
             if ($record->{state} =~ /\A(?:warning_debt|rollover_debt|structural_debt)\z/
                     && positive_integer($baseline) && $actual > $baseline + $allowance) {
                 problem(sprintf(
@@ -586,19 +621,32 @@ for my $id (@surface_order) {
                     $id, $name, $actual, $baseline, $allowance,
                 ));
             }
+            if ($record->{state} =~ /\A(?:warning_debt|rollover_debt|structural_debt)\z/) {
+                my $ratchet = $record->{"ratchet_$key"};
+                if (positive_integer($ratchet)) {
+                    my $ratchet_base = $actual > $target ? $actual : $target;
+                    my $ratchet_max = $ratchet_base + (2 * $ratchet);
+                    problem(sprintf(
+                        'surface %s %s ceiling %d retains stale excess headroom (> max(actual %d, target %d) + 2 * ratchet %d = %d)',
+                        $id, $name, $ceiling, $actual, $target, $ratchet, $ratchet_max,
+                    )) if $ceiling > $ratchet_max;
+                }
+            }
         }
         if (positive_integer($record->{warning_pct})
                 && positive_integer($record->{rollover_pct})) {
-            if ($peak_pct >= $record->{rollover_pct}) {
-                problem(sprintf('surface %s is at %.1f%% and must declare rollover_debt', $id, $peak_pct))
-                    if $record->{state} ne 'rollover_debt';
-            } elsif ($peak_pct >= $record->{warning_pct}) {
-                problem(sprintf('surface %s is at %.1f%% and must declare warning_debt', $id, $peak_pct))
+            if ($target_peak_pct >= $record->{rollover_pct}) {
+                problem(sprintf('surface %s is at %.1f%% and must declare rollover_debt', $id, $target_peak_pct))
+                    if $record->{state} ne 'rollover_debt'
+                        && $record->{state} ne 'structural_debt';
+            } elsif ($target_peak_pct >= $record->{warning_pct}) {
+                problem(sprintf('surface %s is at %.1f%% and must declare warning_debt', $id, $target_peak_pct))
                     if $record->{state} ne 'warning_debt'
-                        && $record->{state} ne 'rollover_debt';
+                        && $record->{state} ne 'rollover_debt'
+                        && $record->{state} ne 'structural_debt';
             } elsif ($record->{state} eq 'warning_debt' || $record->{state} eq 'rollover_debt') {
                 problem(sprintf('surface %s is at %.1f%% but retains stale numeric debt state %s',
-                    $id, $peak_pct, $record->{state}));
+                    $id, $target_peak_pct, $record->{state}));
             }
         }
         if ($record->{verifier} ne 'builtin:budget'
@@ -611,8 +659,16 @@ for my $id (@surface_order) {
                 problem("surface $id freshness verifier is absent or not executable: $verifier");
             }
         }
-        ok_note(sprintf('surface %s: %d file(s), %d lines, %d bytes, peak %.1f%% (%s)',
-            $id, scalar(@files), $total_lines, $total_bytes, $peak_pct, $record->{state}));
+        push @{$containment_pressure{$record->{containment_status}}}, {
+            id => $id, target_peak => $target_peak_pct, ceiling_peak => $ceiling_peak_pct,
+        };
+        ok_note(sprintf(
+            'surface %s: actual files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; health target files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; inclusive enforcement ceiling files=%d, lines_each=%d, bytes_each=%d, lines_total=%d, bytes_total=%d; target peak %.1f%%, ceiling peak %.1f%% (%s, %s)',
+            $id, scalar(@files), $max_lines, $max_bytes, $total_lines, $total_bytes,
+            @{$record}{qw(target_files target_lines_each target_bytes_each target_lines_total target_bytes_total)},
+            @{$record}{qw(ceiling_files ceiling_lines_each ceiling_bytes_each ceiling_lines_total ceiling_bytes_total)},
+            $target_peak_pct, $ceiling_peak_pct, $record->{state}, $record->{containment_status},
+        ));
     } elsif ($locator eq 'query') {
         my $path = root_path($record->{target});
         problem("surface $id query target is absent or not executable: $record->{target}")
@@ -647,6 +703,22 @@ for my $id (@surface_order) {
         problem("surface $id frozen target must use frozen state") if $record->{state} ne 'frozen';
         ok_note("surface $id: frozen identity checked");
     }
+}
+
+for my $status (qw(migrated pinned_deferred steady)) {
+    my $entries = $containment_pressure{$status} || [];
+    next if !@{$entries};
+    my ($target_peak, $ceiling_peak) = (0, 0);
+    my @ids;
+    for my $entry (@{$entries}) {
+        push @ids, $entry->{id};
+        $target_peak = $entry->{target_peak} if $entry->{target_peak} > $target_peak;
+        $ceiling_peak = $entry->{ceiling_peak} if $entry->{ceiling_peak} > $ceiling_peak;
+    }
+    ok_note(sprintf(
+        'containment pressure %s: %d surface(s), target peak %.1f%%, ceiling peak %.1f%% [%s]',
+        $status, scalar(@ids), $target_peak, $ceiling_peak, join(',', sort @ids),
+    ));
 }
 
 my $route_rows = read_jsonl($routes_arg, 'route registry');

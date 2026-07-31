@@ -10430,4 +10430,12 @@ The first honest `R11` slices are now:
   and maintained-reference selection now precede affected `.8`-`.10`/`.13`
   family migrations. Clean disposition commit `3b782fc10` activates `.18`
   alone for unambiguous health-target, inclusive-ceiling, ratchet, and increase-
-  authority semantics; activation itself changes no schema, value, or limit.
+  authority semantics. Completed `.18` now reports five-axis actual/target/
+  ceiling values, uses target pressure for 80/90 health state, admits equality
+  at the separately enforced ceiling, and removes inert `hard_pct`. Immutable
+  debt baselines, bounded owned growth, and banded downward ratchets close both
+  sides of transition pressure. Any widening needs an exact new append-only
+  authority row plus a new decision in the same Git change; reductions are
+  free. The migration raises no predecessor ceiling and reports two migrated,
+  nine pinned/deferred, and five steady measured surfaces. `.19` is the next
+  clean activation frontier for verifier execution and driver reachability.

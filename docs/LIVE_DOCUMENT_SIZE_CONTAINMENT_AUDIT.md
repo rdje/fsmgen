@@ -57,6 +57,17 @@ nodes. Decision 0044 assigns pressure, execution, currency, route/index,
 retention, and maintained-reference corrections to `.15`-`.23` before wider
 reuse or affected family migration.
 
+Completed `.18` now separates the two pressure meanings. Health targets are
+reviewed working-set acceptance goals: 2,000 lines / 256 KiB for monolithic
+human-maintained snapshots or ledgers, 2,000 lines / 1 MiB for the generated
+long-line fact index, 5,000 lines per maintained book/focused part, and the
+already selected README and bounded task/index targets. Collection aggregates
+retain enough room for their selected semantic migrations. These targets grant
+no growth: independently lower inclusive ceilings quarantine present debt, and
+no ceiling exceeds its predecessor budget. Family migrations must recalibrate
+both values from the retained survivor rather than inheriting these program
+targets mechanically.
+
 The generated Knowledge Map is also a structural outlier at 6,130,630 bytes
 despite remaining below 80% of its deliberately generous legacy ceiling. Its
 canonical fact cards are already small and addressable, so the monolithic map
@@ -116,8 +127,8 @@ normal collection density.
 
 | Family | Selected bounded view and durable store | Exact owner |
 | --- | --- | --- |
-| Common enforcement | JSONL surface records declare every class, path array, owner, independent budgets, 80/90/100 milestones, immutable adoption baseline, separately owned finite containment-transition growth, topology, and verifier; separate JSONL route/archive records carry only their own mappings; one unconditional neutral checker consumes them and proves complete tracked-Markdown coverage | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2` |
-| Control-plane self-containment | The `.14` review proves that specialized task manifests have record/byte caps while the common surface, route, and archive JSONL registries do not; it also proves that `hard_pct` is validated but not applied as an execution threshold | `.15` selects and enforces common registry bounds plus one exact hard-limit semantic without widening a budget |
+| Common enforcement | JSONL surface records declare every class, path array, owner, independent health targets and inclusive ceilings, 80/90 target milestones, containment status, immutable adoption baseline, bounded growth/ratchet, topology, and verifier; separate JSONL route/archive/ceiling-authority records carry only their own mappings; one unconditional adapter consumes them and proves complete tracked-Markdown coverage plus cross-revision ceiling authority | `.2` ships the common graph; `.18` separates health/quarantine and authorizes increases without widening a predecessor ceiling |
+| Control-plane self-containment | Specialized task manifests enforce record/byte caps, but the common surface, route, archive, and ceiling-authority JSONL registries do not yet bound their own record/value/line pressure | `.15` selects and enforces finite reviewable common-registry bounds |
 | Document utility and retirement | Before a family is partitioned, classify its current audience, canonical role, unique value, duplication, staleness, and historical retention; select retain, merge, supersede, archive, or delete with evidence | `.16` audits all families and assigns separate atomic content migrations or retirements; the existing four-file review retains authority over its named files |
 | GitHub landing page and root collection | Preserve README's direct project-introduction/quick-start/architecture/navigation role while removing only proved duplicate dynamic detail; let semantic family owners remove root-ledger pressure before final retained-surface calibration | `.12` performs the final README/root re-audit after semantic migrations |
 | Change and rationale ledgers | The existing four-file lifecycle review retains authority over their long-term audiences. If change/rationale ledgers remain live, root files become bounded current/index views; records seal on semantic entry boundaries into repository-local range shards, then leave the live collection only through digest-verified version-archive descriptors | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` selects the roles; `.3` consumes that decision and proves the schema; `.4`/`.5` perform only selected migrations |
@@ -127,7 +138,7 @@ normal collection density.
 | Knowledge cards and map | Keep facts canonical while splitting any oversized card on stable fact boundaries; generate a small root index plus deterministic prefix/topic shards and a repository-local query cache under `.artifacts/` | `.10` |
 | Focused and ancillary documents | Classify `docs/*.md` and ancillary families by audience/lifecycle, add a bounded complete index, and partition only semantic outliers without moving unique content out of its maintained home | `.13` |
 | Frozen status files | Remain identity-pinned and untouched until the already scheduled four-file lifecycle review chooses their audiences and fate | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`, then `.11` consumes that decision if migration is selected |
-| Final steady state | Remeasure all surfaces, prove retrieval/reconstruction, and lower temporary legacy ceilings to derived retained-surface budgets | `.12` |
+| Final steady state | Remeasure all surfaces, prove retrieval/reconstruction, and lower health targets plus enforcement ceilings to the derived retained-surface working set | `.12` |
 
 ## Why this is containment rather than displacement
 

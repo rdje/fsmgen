@@ -7,8 +7,10 @@
   bootstrap files may point here, but they are not the policy's authority.
 - Independence: the originating template is not an upstream. There is no
   automatic synchronization; later changes require deliberate local review.
-- Reviewed local budgets: 275 lines and 12,288 bytes, derived with modest
-  headroom from the reviewed 246-line / 9,952-byte landing page.
+- Reviewed health targets: 275 lines and 12,288 bytes. The inclusive
+  enforcement ceilings remain pinned to the adoption baseline of 246 lines
+  and 9,952 bytes until the landing page shrinks; decision 0044 and containment
+  leaf `.18` distinguish health from quarantine without widening either axis.
 - Routed destinations: the project-owned data-only registry at
   `doctrine/readme_entrypoint/routed_destinations.jsonl` maps every local
   README route into the project-wide surfaces declared by

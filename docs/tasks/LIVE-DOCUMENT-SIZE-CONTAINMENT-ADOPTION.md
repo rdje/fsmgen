@@ -184,10 +184,10 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17: reconcile external containment reviews`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18`
-  Status: `active`
+  Status: `done`
   Goal: `Separate reviewed health targets from inclusive transition enforcement ceilings.`
   Acceptance: `Every measured surface reports actual, health target, and inclusive enforcement ceiling without using one field for both meanings; healthy and debt states have explicit algebra; hard_pct is removed; immutable baseline plus owned allowance cannot exceed the separately authorized ceiling; ceiling increases require a distinct reviewed authority record while reductions are free; a two-sided ratchet rejects overflow and stale excess headroom; migrated versus pinned/deferred pressure is reported; positive, equality, overflow, lowering, stale-ceiling, and unauthorized-increase fixtures pass without raising a current limit.`
-  Verification: `pending`
+  Verification: `The neutral schema now requires separate five-axis health_targets and enforcement_ceilings, removes hard_pct, reports actual/target/ceiling values, and classifies two migrated, nine pinned/deferred, and five steady measured surfaces. Target pressure alone owns 80/90 state; actual equal to the inclusive ceiling passes, overflow fails, and singular 1/1 file count cannot falsely dominate health. Debt proves immutable cross-revision baseline, baseline plus growth <= ceiling, and ceiling <= max(actual,target) + 2*ratchet_step. The local Git-aware authority registry is append-only: an increase needs one exact new authority plus a newly added decision with matching id/surface/dimension/delta; reductions need none, and reused/banked authorities fail. All current ceilings are <= their predecessor budgets, and the staged authority gate reports zero increases. Core/authority Perl syntax is OK; focused Files=3/Tests=20; paths Files=1/Tests=2; task integrity is trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces cover 2,782/2,782 Markdown paths; Knowledge Map is 1,096 facts/5,743 keys; Memory is 42 lines; all 37 mdBook chapters test and the 73-file/16,996-KiB repository-local build passes then is removed; all nine staged doctrines pass. No document lifecycle, frozen identity, README landing content, archive, compiler/runtime artifact, or product behavior changes.`
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18: distinguish health targets from ceilings`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
@@ -295,9 +295,9 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Open Questions
 
-- None for active `.18`. The two reviews are fully reconciled in the tracked
-  bounded disposition. The existing four-file review remains authoritative for
-  those files' semantic roles.
+- None for completed `.18` or next `.19`. The two reviews are fully reconciled
+  in the tracked bounded disposition. The existing four-file review remains
+  authoritative for those files' semantic roles.
 
 ## Blockers
 
@@ -307,6 +307,12 @@ no routed destination becomes the next uninstrumented blob.
   dependencies. `.17` is complete; `.15`-`.23` become selectable after its
   clean commit, and `.8`-`.10`/`.13` wait for their declared utility or
   maintained-reference predecessors.
+
+## Acceptance Checklist (enforced) — `.18`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'hard_pct' --oneline -- live-document-size/scripts/check_live_document_size.pl` identifies `18e2dcbc6`; source inspection then shows that the introduced `budgets` object simultaneously described healthy pressure and the hard stop, while `hard_pct` was validated but never used for rejection and mutable registry edits could widen debt headroom.
+- [x] **ADDRESSED (verified)** — `prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t` changes that result to explicit target/ceiling output plus passing equality, overflow, lowering, stale-ratchet, immutable-baseline, exact fresh-authority, reused-authority, and orphan-authority controls (`Files=3, Tests=20`).
+- [x] **NO REGRESSION** — staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`; every 20-surface/2,782-path rule, the 1,096-fact/5,743-key Knowledge Map, three-tree/896-node task graph, README landing contract, locality, and 42-line Memory remain green.
 
 ## Acceptance Checklist (enforced) — `.7`
 
@@ -355,6 +361,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.17` activation | clean `c95160d53` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; focused path/locality/task/live-size, Knowledge Map, Memory, mdBook, diff, staged-doctrine gates; exact cleanup | `passed`; focused Files=4/Tests=65; trees=3/nodes=890/segments=1/compact=0/index archives=1; 20 surfaces and 2,780/2,780 paths; all 37 mdBook chapters test; repository-local build 16,976 KiB and removed exactly; Memory 42 lines; `.17` alone active and `.15`/`.16` wait for its disposition; no disposition file, checker, schema, registry value, threshold, reviewed content, frozen identity, landing content, or product change |
 | `2026-07-31` | `.17` external review disposition | 17 findings plus Q1-Q31; review/source identity; IAL2 overlap root cause; pressure census; decision 0044; leaves `.15`-`.23`; evidence-map/neutrality source inspection; focused/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; disposition 333 lines/17,165 bytes/183-byte longest line; PGEN 393/26,788 and ANVIL 334/44,242 review identities; exact IAL2 source 21,726/4,662,385 at SHA-256 8cff8e7b... plus 844-node segment; pinned/deferred candidates 7,775,451/8,955,512 bytes (86.8%); focused Files=5/Tests=71; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 staged paths; Knowledge Map 1,096 facts/5,741 keys; 37 chapters; removed 73-file/16,984-KiB build; all 17 evidence paths resolve; no enforcement, registry value, threshold, packet content, lifecycle, frozen identity, landing content, or product change |
 | `2026-07-31` | `.18` activation | clean `3b782fc10` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; focused path/task/live-size, Knowledge Map, Memory, mdBook, diff, staged-doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=45; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,741 keys; all 37 chapters test; removed 73-file/16,984-KiB build; Memory 43 lines; `.18` alone active; no checker, test, schema/value/limit, document lifecycle/content, frozen identity, landing content, or product change |
+| `2026-07-31` | `.18` target/ceiling enforcement | explicit target/ceiling schema; inclusive equality; debt ratchet; append-only fresh decision authority; migrated/pinned/steady report; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; no predecessor ceiling increase; focused Files=3/Tests=20; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,743 keys; Memory 42 lines; 37 chapters; removed 73-file/16,996-KiB build; all nine doctrines pass; no lifecycle, frozen identity, landing content, archive, or product behavior change |
 
 ## Commit Log
 
@@ -372,6 +379,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.17` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17: activate external review reconciliation` | Activate only evidence-backed PGEN/ANVIL disposition from clean commit `c95160d53`; implementation and the disposition document remain pending. |
 | `.17` external review disposition | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17: reconcile external containment reviews` | Publish decision 0044, corrected evidence, all finding/question dispositions, and atomic `.15`-`.23` remediation ownership without changing behavior. |
 | `.18` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18: activate health-target and ceiling semantics` | Activate only target/ceiling/ratchet/increase-authority implementation from clean disposition commit `3b782fc10`; implementation remains pending. |
+| `.18` target/ceiling enforcement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18: distinguish health targets from ceilings` | Separate health from quarantine, ratchet debt downward, and require fresh reviewed authority for widening without raising a predecessor ceiling. |
 
 ## Changelog
 
@@ -412,3 +420,7 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: Clean disposition commit `3b782fc10` activates `.18` alone;
   no checker, schema, registry value, limit, document, or product changes in
   the activation.
+- `2026-07-31`: `.18` replaces ambiguous budgets/inert `hard_pct` with explicit
+  health targets and inclusive ceilings, immutable debt baselines, banded
+  ratchets, and exact fresh increase authority. No predecessor ceiling rises;
+  `.19` is the next clean activation frontier.

@@ -29,11 +29,11 @@ subtest 'JSONL fixture covers every lifecycle and retrieval-file descriptor' => 
     my $fixture = make_fixture();
     my ($ok, $output) = run_checker($fixture);
     ok($ok, 'complete lifecycle fixture passes') or diag($output);
-    like($output, qr/surface bounded_entry: 1 file\(s\)/, 'bounded snapshot is measured');
-    like($output, qr/surface partitioned: 2 file\(s\)/, 'partitioned canonical collection is measured');
-    like($output, qr/surface projection: 1 file\(s\)/, 'generated projection is measured');
+    like($output, qr/surface bounded_entry: actual files=1,/, 'bounded snapshot is measured');
+    like($output, qr/surface partitioned: actual files=2,/, 'partitioned canonical collection is measured');
+    like($output, qr/surface projection: actual files=1,/, 'generated projection is measured');
     like($output, qr/surface query_terminal: query terminal/, 'query projection is validated');
-    like($output, qr/surface ledger: 1 file\(s\)/, 'rolling ledger is measured');
+    like($output, qr/surface ledger: actual files=1,/, 'rolling ledger is measured');
     like($output, qr/surface archive_terminal: archive terminal/, 'archive terminal is validated');
     like($output, qr/surface external_terminal: external terminal declared/, 'external terminal is validated');
     like($output, qr/surface frozen_record: frozen identity checked/, 'frozen identity is validated');
@@ -64,11 +64,19 @@ subtest 'JSONL schema rejects malformed, blank, missing, and unknown data' => su
 
     my $missing = make_fixture();
     mutate_record($missing, 'registry/surfaces.jsonl', 'bounded_entry', sub {
-        delete $_[0]{budgets};
+        delete $_[0]{health_targets};
     });
     my ($missing_ok, $missing_output) = run_checker($missing);
     ok(!$missing_ok, 'missing required key is rejected');
-    like($missing_output, qr/missing required key: budgets/, 'missing key is named');
+    like($missing_output, qr/missing required key: health_targets/, 'missing key is named');
+
+    my $obsolete_hard = make_fixture();
+    mutate_record($obsolete_hard, 'registry/surfaces.jsonl', 'bounded_entry', sub {
+        $_[0]{milestones}{hard_pct} = 100;
+    });
+    my ($hard_pct_ok, $hard_pct_output) = run_checker($obsolete_hard);
+    ok(!$hard_pct_ok, 'obsolete hard_pct is rejected');
+    like($hard_pct_output, qr/unknown key: hard_pct/, 'inert hard percentage cannot masquerade as a limit');
 
     my $state = make_fixture();
     mutate_record($state, 'registry/surfaces.jsonl', 'bounded_entry', sub {
@@ -128,13 +136,29 @@ subtest 'lifecycle, locality, index, and same-tree file rules fail closed' => su
     like($index_output, qr/lacks a bounded index without structural debt/, 'index requirement is explicit');
 };
 
-subtest 'budgets, pressure states, ownership, and transition baselines fail closed' => sub {
+subtest 'targets, ceilings, pressure states, ownership, and debt ratchets fail closed' => sub {
     my $hard = make_fixture();
     write_file($hard, 'destination.md', join('', map { "line $_\n" } 1 .. 101));
     my ($hard_ok, $hard_output) = run_checker($hard);
     ok(!$hard_ok, 'hard budget overflow is rejected');
-    like($hard_output, qr/surface bounded_destination max lines is 101 \(> hard limit 100\)/,
+    like($hard_output, qr/surface bounded_destination max lines is 101 \(> inclusive enforcement ceiling 100\)/,
         'overflow dimension is named');
+
+    my $equality = make_fixture();
+    my $equality_contents = join('', map { "line $_\n" } 1 .. 100);
+    write_file($equality, 'destination.md', $equality_contents);
+    mutate_record($equality, 'registry/surfaces.jsonl', 'bounded_destination', sub {
+        $_[0]{state} = 'rollover_debt';
+        $_[0]{containment_status} = 'pinned_deferred';
+        $_[0]{baseline} = {
+            files => 1, lines_each => 100, bytes_each => length($equality_contents),
+            lines_total => 100, bytes_total => length($equality_contents),
+        };
+        $_[0]{transition} = transition(0, 0, 0, 0, 0);
+    });
+    my ($equality_ok, $equality_output) = run_checker($equality);
+    ok($equality_ok, 'actual equal to the inclusive enforcement ceiling passes')
+        or diag($equality_output);
 
     my $warning = make_fixture();
     write_file($warning, 'destination.md', join('', map { "line $_\n" } 1 .. 81));
@@ -146,6 +170,7 @@ subtest 'budgets, pressure states, ownership, and transition baselines fail clos
     write_file($debt, 'destination.md', join('', map { "line $_\n" } 1 .. 81));
     mutate_record($debt, 'registry/surfaces.jsonl', 'bounded_destination', sub {
         $_[0]{state} = 'warning_debt';
+        $_[0]{containment_status} = 'pinned_deferred';
         $_[0]{baseline} = {
             files => 1, lines_each => 80, bytes_each => 10000,
             lines_total => 80, bytes_total => 10000,
@@ -161,17 +186,12 @@ subtest 'budgets, pressure states, ownership, and transition baselines fail clos
     write_file($allowed, 'destination.md', $allowed_contents);
     mutate_record($allowed, 'registry/surfaces.jsonl', 'bounded_destination', sub {
         $_[0]{state} = 'warning_debt';
+        $_[0]{containment_status} = 'pinned_deferred';
         $_[0]{baseline} = {
             files => 1, lines_each => 80, bytes_each => length($allowed_contents),
             lines_total => 80, bytes_total => length($allowed_contents),
         };
-        $_[0]{transition} = {
-            owner => 'containment-program',
-            max_growth => {
-                files => 0, lines_each => 1, bytes_each => 0,
-                lines_total => 1, bytes_total => 0,
-            },
-        };
+        $_[0]{transition} = transition(0, 1, 0, 1, 0);
     });
     my ($allowed_ok, $allowed_output) = run_checker($allowed);
     ok($allowed_ok, 'bounded owned transition growth passes') or diag($allowed_output);
@@ -179,6 +199,7 @@ subtest 'budgets, pressure states, ownership, and transition baselines fail clos
     my $unowned = make_fixture();
     mutate_record($unowned, 'registry/surfaces.jsonl', 'bounded_destination', sub {
         $_[0]{state} = 'warning_debt';
+        $_[0]{containment_status} = 'pinned_deferred';
         $_[0]{baseline} = {
             files => 1, lines_each => 1, bytes_each => 12,
             lines_total => 1, bytes_total => 12,
@@ -189,6 +210,7 @@ subtest 'budgets, pressure states, ownership, and transition baselines fail clos
                 files => 0, lines_each => 1, bytes_each => 1,
                 lines_total => 1, bytes_total => 1,
             },
+            ratchet_step => pressure(1, 10, 1024, 10, 1024),
         };
     });
     my ($unowned_ok, $unowned_output) = run_checker($unowned);
@@ -200,6 +222,7 @@ subtest 'budgets, pressure states, ownership, and transition baselines fail clos
     write_file($oversized_allowance, 'destination.md', join('', map { "line $_\n" } 1 .. 81));
     mutate_record($oversized_allowance, 'registry/surfaces.jsonl', 'bounded_destination', sub {
         $_[0]{state} = 'warning_debt';
+        $_[0]{containment_status} = 'pinned_deferred';
         $_[0]{baseline} = {
             files => 1, lines_each => 80, bytes_each => 1000,
             lines_total => 80, bytes_total => 1000,
@@ -210,12 +233,31 @@ subtest 'budgets, pressure states, ownership, and transition baselines fail clos
                 files => 0, lines_each => 21, bytes_each => 0,
                 lines_total => 21, bytes_total => 0,
             },
+            ratchet_step => pressure(1, 10, 1024, 10, 1024),
         };
     });
     my ($allowance_ok, $allowance_output) = run_checker($oversized_allowance);
     ok(!$allowance_ok, 'transition allowance beyond the hard budget is rejected');
-    like($allowance_output, qr/transition baseline plus growth exceeds max_lines_each/,
-        'allowance/hard-limit conflict is explicit');
+    like($allowance_output, qr/transition baseline plus growth exceeds ceiling_lines_each/,
+        'allowance/ceiling conflict is explicit');
+
+    my $stale = make_fixture();
+    write_file($stale, 'destination.md', join('', map { "line $_\n" } 1 .. 50));
+    mutate_record($stale, 'registry/surfaces.jsonl', 'bounded_destination', sub {
+        $_[0]{health_targets} = pressure(1, 40, 4096, 40, 16384);
+        $_[0]{state} = 'rollover_debt';
+        $_[0]{containment_status} = 'pinned_deferred';
+        $_[0]{baseline} = pressure(1, 50, 1000, 50, 1000);
+        $_[0]{transition} = {
+            owner => 'containment-program',
+            max_growth => pressure(0, 0, 0, 0, 0),
+            ratchet_step => pressure(1, 10, 1024, 10, 1024),
+        };
+    });
+    my ($stale_ok, $stale_output) = run_checker($stale);
+    ok(!$stale_ok, 'stale excess ceiling headroom is rejected');
+    like($stale_output, qr/ceiling 100 retains stale excess headroom/,
+        'downward ratchet failure is explicit');
 
     my $owner = make_fixture();
     mutate_record($owner, 'registry/surfaces.jsonl', 'ledger', sub {
@@ -417,10 +459,11 @@ sub measured {
         surface_id => $id, lifecycle => $lifecycle, locator => $locator,
         targets => $targets, index => $index, canonical_inputs => $inputs,
         routes_to => $routes, owner => 'fixture-owner',
-        budgets => { files => 8, lines_each => 100, bytes_each => 4096,
-            lines_total => 400, bytes_total => 16384 },
-        milestones => { warning_pct => 80, rollover_pct => 90, hard_pct => 100 },
-        state => 'normal', baseline => undef, verifier => $verifier // 'builtin:budget',
+        health_targets => pressure(8, 100, 4096, 400, 16384),
+        enforcement_ceilings => pressure(8, 100, 4096, 400, 16384),
+        milestones => { warning_pct => 80, rollover_pct => 90 },
+        containment_status => 'steady', state => 'normal', baseline => undef,
+        verifier => $verifier // 'builtin:budget',
     };
 }
 
@@ -429,8 +472,10 @@ sub terminal {
     return {
         surface_id => $id, lifecycle => $lifecycle, locator => $locator,
         targets => [$target], index => undef, canonical_inputs => [], routes_to => [],
-        owner => 'fixture-owner', budgets => undef, milestones => undef,
-        state => 'terminal', baseline => undef, verifier => $verifier,
+        owner => 'fixture-owner', health_targets => undef,
+        enforcement_ceilings => undef, milestones => undef,
+        containment_status => 'not_applicable', state => 'terminal',
+        baseline => undef, verifier => $verifier,
     };
 }
 
@@ -439,8 +484,27 @@ sub frozen {
     return {
         surface_id => $id, lifecycle => 'frozen_legacy', locator => 'frozen',
         targets => [$target], index => undef, canonical_inputs => [], routes_to => [],
-        owner => 'fixture-owner', budgets => undef, milestones => undef,
-        state => 'frozen', baseline => undef, verifier => "sha256:$digest",
+        owner => 'fixture-owner', health_targets => undef,
+        enforcement_ceilings => undef, milestones => undef,
+        containment_status => 'not_applicable', state => 'frozen',
+        baseline => undef, verifier => "sha256:$digest",
+    };
+}
+
+sub pressure {
+    my ($files, $lines_each, $bytes_each, $lines_total, $bytes_total) = @_;
+    return {
+        files => $files, lines_each => $lines_each, bytes_each => $bytes_each,
+        lines_total => $lines_total, bytes_total => $bytes_total,
+    };
+}
+
+sub transition {
+    my ($files, $lines_each, $bytes_each, $lines_total, $bytes_total) = @_;
+    return {
+        owner => 'containment-program',
+        max_growth => pressure($files, $lines_each, $bytes_each, $lines_total, $bytes_total),
+        ratchet_step => pressure(1, 10, 1024, 10, 1024),
     };
 }
 

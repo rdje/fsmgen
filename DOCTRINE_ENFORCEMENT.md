@@ -34,11 +34,12 @@ project-agnostic, and harness-neutral lifecycle doctrine for every live
 documentation family. Decision `0041` and the local audit select bounded live
 views over semantic partitions, generated projections, rolling ledgers, or
 exact archive terminals according to information role. The data-only JSONL
-registries under `doctrine/` hold all FSMGen paths, budgets, states, owners,
-routes, and descriptors. `scripts/check_live_document_size.sh` adapts those
+registries under `doctrine/` hold all FSMGen paths, health targets, enforcement
+ceilings, states, owners, routes, and descriptors.
+`scripts/check_live_document_size.sh` adapts those
 declarations to the neutral contract and checker package under
 `live-document-size/`; it inventories every tracked Markdown path on every
-doctrine run.
+doctrine run and invokes the separate cross-revision ceiling-authority guard.
 
 The top-level `README.md` is both a governed bounded snapshot and the rendered
 GitHub project landing page. Containment preserves its purpose, quick start,
@@ -89,7 +90,7 @@ Current registered checks:
 | `MEMORY-ARCH` | `scripts/check_memory_architecture.sh` | `MEMORY_ARCHITECTURE.md`, bounded `MEMORY.md`, bootstrap pointers, decision store, and task-tree index are present and compliant. |
 | `KNOWLEDGE-MAP` | `knowledge-map/scripts/check_knowledge_map.sh` | Fact cards are valid and `KNOWLEDGE_MAP.md` is in sync with them. |
 | `DOC-PATHS` | `scripts/check_docs_relative_paths.sh` | Live docs and the Knowledge Map do not leak machine-local absolute home paths. |
-| `LIVE-DOCUMENT-SIZE` | `scripts/check_live_document_size.sh` | JSONL schema, lifecycle/locator compatibility, project-relative same-volume targets, line/byte/file/aggregate budgets, 80/90/100 pressure state, non-worsening transition baselines, owner debt, indexes, generated-verifier presence, route closure, frozen identities, archive descriptors, and complete tracked-Markdown coverage. |
+| `LIVE-DOCUMENT-SIZE` | `scripts/check_live_document_size.sh` | JSONL schema, lifecycle/locator compatibility, project-relative same-volume targets, five-axis health targets and inclusive ceilings, 80/90 target pressure, immutable transition baselines, owned debt/ratchets, separately authorized ceiling increases, indexes, generated-verifier presence, route closure, frozen identities, archive descriptors, and complete tracked-Markdown coverage. |
 | `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | On every commit/CI tree, the rendered GitHub landing page stays within its locally derived 275-line / 12,288-byte budget, retains its first-use contract, avoids narrated work-unit chronology, and keeps every route in `doctrine/readme_entrypoint/routed_destinations.jsonl` marker-linked to the common surface graph (`docs/decisions/0021`, `0024`, `0038`, `0040`, and `0041`; reusable standard: `README_POLICY.md`). |
 | `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
 | `TASK-TREE-INTEGRITY` | `scripts/check_task_tree_integrity.pl` | Every active indexed tree has one live active root, unique valid nodes, exact direct-child enumeration, canonical statuses, valid ancestry/container state, and complete leaf evidence across the live list plus optional bounded exact-source sealed segments; compact completed terminals reconstruct their full subtree, and bounded completed-index manifests prove query-first terminal rows from exact version objects. |

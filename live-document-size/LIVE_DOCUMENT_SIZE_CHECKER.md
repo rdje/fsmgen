@@ -11,7 +11,7 @@ comments, malformed JSON, missing required keys, and unknown keys fail closed.
 Each surface record has this shape:
 
 ```json
-{"surface_id":"guide","lifecycle":"partitioned_canonical","locator":"collection","targets":["guide/*.md"],"index":"guide/INDEX.md","canonical_inputs":[],"routes_to":[],"owner":"guide-maintainers","budgets":{"files":32,"lines_each":1000,"bytes_each":65536,"lines_total":12000,"bytes_total":1048576},"milestones":{"warning_pct":80,"rollover_pct":90,"hard_pct":100},"state":"normal","baseline":null,"verifier":"builtin:budget"}
+{"surface_id":"guide","lifecycle":"partitioned_canonical","locator":"collection","targets":["guide/*.md"],"index":"guide/INDEX.md","canonical_inputs":[],"routes_to":[],"owner":"guide-maintainers","health_targets":{"files":32,"lines_each":1000,"bytes_each":65536,"lines_total":12000,"bytes_total":1048576},"enforcement_ceilings":{"files":32,"lines_each":1100,"bytes_each":73728,"lines_total":13000,"bytes_total":1179648},"milestones":{"warning_pct":80,"rollover_pct":90},"containment_status":"steady","state":"normal","baseline":null,"verifier":"builtin:budget"}
 ```
 
 `lifecycle` is one of `bounded_snapshot`, `partitioned_canonical`,
@@ -20,15 +20,29 @@ Each surface record has this shape:
 the target is found: `file`, `collection`, `generated_file`, `query`,
 `archive`, `external`, or `frozen`.
 
-Measured file and collection records carry positive `budgets` plus ordered
-warning, rollover, and hard percentages under `milestones`. Terminal records
-use JSON `null` for `budgets`, `milestones`, and `baseline`.
+Measured file and collection records carry independent positive
+`health_targets` and `enforcement_ceilings` plus ordered warning and rollover
+percentages under `milestones`. Terminal records use JSON `null` for both
+pressure objects, `milestones`, and `baseline`. `hard_pct` is not a schema key:
+the absolute ceiling itself is inclusive, so equality passes and overflow
+fails.
+
+Health pressure is `actual / health target`; ceiling pressure is reported
+separately and never determines whether a surface is healthy. File-count
+pressure applies to collections, while singular file locators still enforce
+their declared file-count ceiling without letting the unavoidable `1 / 1`
+dominate health reporting. `containment_status` is `steady`, `migrated`, or
+`pinned_deferred` for measured rows and `not_applicable` for terminal rows.
 Debt states (`warning_debt`, `rollover_debt`, `structural_debt`) require an
 owner and exact adoption-baseline measurements. An optional `transition`
-object may name one containment owner and nonnegative `max_growth` values in
-the same five dimensions. The checker never rewrites the baseline: actual
-measurements may exceed it only within that separately declared bounded
-allowance. Healthy measured records use
+object names one containment owner, nonnegative `max_growth`, and positive
+`ratchet_step` values in the same five dimensions. The checker never rewrites
+the baseline: actual measurements may exceed it only within that separately
+declared bounded allowance, and baseline plus allowance must not exceed the
+ceiling. A debt ceiling also satisfies
+`ceiling <= max(actual, health_target) + 2 * ratchet_step`; this band permits
+one atomic reduction step before the declaration must ratchet down. Healthy
+measured records use
 `normal`; query/archive/external rows use `terminal`; frozen rows use `frozen`.
 
 `targets`, `canonical_inputs`, and `routes_to` are arrays, avoiding delimiter
@@ -75,9 +89,19 @@ does not assume a version-control system.
 
 The checker validates schema, lifecycle/locator compatibility, repository-
 relative and same-volume local targets, non-symlink files, per-part and
-aggregate budgets, debt acknowledgement, generated-verifier presence, frozen
-identity, route closure, archive-descriptor shape, and optional inventory
-coverage. It never mutates the project.
+aggregate targets/ceilings, inclusive equality, debt acknowledgement and
+ratchets, generated-verifier presence, frozen identity, route closure,
+archive-descriptor shape, and optional inventory coverage. It reports actual,
+target, ceiling, and migrated/pinned/steady pressure separately. It never
+mutates the project.
+
+The neutral core validates one resulting tree. An adopting project that uses
+Git may add a separate diff-aware authority registry and checker: every ceiling
+increase must match exactly one newly appended authority row and one newly
+added reviewed decision in the same change; lowering needs no authority. That
+adapter may also enforce cross-revision baseline immutability. The authority
+mechanism is intentionally separate because a ceiling declaration must not
+authorize its own widening.
 
 An executable verifier's presence does not prove its result. The adopting
 project must register the verifier itself in the same unconditional commit/CI

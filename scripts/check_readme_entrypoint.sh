@@ -65,8 +65,8 @@ else
       while (<>) {
         my $record = eval { decode_json($_) } or next;
         next if ($record->{surface_id} // q{}) ne q{readme_entrypoint};
-        print(($record->{budgets}{lines_each} // q{0}), q{ },
-              ($record->{budgets}{bytes_each} // q{0}), qq{\n});
+        print(($record->{enforcement_ceilings}{lines_each} // q{0}), q{ },
+              ($record->{enforcement_ceilings}{bytes_each} // q{0}), qq{\n});
         exit 0;
       }
       exit 1;

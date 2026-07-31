@@ -68,10 +68,12 @@ live_document_files=(
   live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md
   live-document-size/scripts/check_live_document_size.pl
   doctrine/live_document_size/surfaces.jsonl
+  doctrine/live_document_size/ceiling_increase_authorities.jsonl
   doctrine/live_document_size/archive_descriptors.jsonl
   doctrine/readme_entrypoint/routed_destinations.jsonl
   doctrine/task_tree/index_archives.jsonl
   scripts/check_live_document_size.sh
+  scripts/check_live_document_ceiling_authority.pl
 )
 for file in "${live_document_files[@]}"; do
   if [[ -f "${file}" ]]; then

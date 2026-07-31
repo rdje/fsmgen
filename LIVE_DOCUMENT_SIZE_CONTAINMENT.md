@@ -7,22 +7,25 @@
   doctrine's authority.
 - Independence: the originating doctrine is a template, not an upstream.
   Later revisions require deliberate local review; there is no automatic sync.
-- Local pressure milestones: warning at 80%, rollover required at 90%, and a
-  hard failure at 100% of each reviewed limit. Existing stop-growth ceilings
-  remain unchanged until their owning migration recalibrates them from the
-  retained live surface.
+- Local pressure milestones: warning at 80% and rollover required at 90% of
+  each reviewed health target. The separately named enforcement ceiling is an
+  inclusive absolute maximum: equality passes and any excess fails. This
+  adoption raises no predecessor ceiling; several legacy ceilings are lower.
 - Transition debt: the clean adoption census pins each pre-existing warning or
   rollover breach and its owner. The baseline never moves. A separate bounded
   `transition.max_growth` object may authorize only continuity needed to land
-  this containment program before migration; ownerless growth, excess beyond
-  that allowance, baseline widening, and any hard-limit breach remain
+  this containment program before migration. A positive `ratchet_step` bounds
+  stale excess headroom after shrinkage. Ownerless growth, excess beyond that
+  allowance, baseline widening, stale ceilings, and ceiling overflow remain
   forbidden.
 - Locality: durable shards, manifests, and archive descriptors use repository-
   root-relative paths and reside on the repository volume. Regenerable query
   indexes and caches live under `.artifacts/`; they are never the sole copy.
 - Serialization: the local data plane uses one named JSON object per line.
   `doctrine/live_document_size/surfaces.jsonl` is the single authority for
-  lifecycle, paths, owners, budgets, milestones, debt baselines, and verifiers;
+  lifecycle, paths, owners, health targets, enforcement ceilings, milestones,
+  containment status, debt baselines, and verifiers. The append-only
+  `ceiling_increase_authorities.jsonl` carries only exact increase approvals;
   route and archive-descriptor JSONL files carry only their own mappings.
 - Landing-page identity: top-level `README.md` is FSMGen's rendered GitHub
   landing page and remains a first-class bounded interface. Its purpose,
@@ -43,7 +46,9 @@
   full-source retention from sealed-node closure, and lifecycle currency from
   global date heuristics. Leaves `.15`-`.23` own the changes; the current
   checker, registry values, thresholds, and document lifecycles remain in force
-  until their individual commits land.
+  until their individual commits land. Leaf `.18` now implements target versus
+  ceiling semantics, immutable baselines, banded downward ratchets, and
+  separately reviewed increase authority without widening a ceiling.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---
@@ -82,9 +87,9 @@ Every governed surface must declare:
 
 - its stable identifier, owner, audience, and canonical authority;
 - its lifecycle and storage topology;
-- independent line and byte limits for text, plus file-count and aggregate
-  limits for collections when applicable;
-- warning, rollover-required, and hard-failure milestones;
+- independent reviewed health targets and inclusive enforcement ceilings for
+  lines and bytes, plus file-count and aggregate dimensions for collections;
+- warning and rollover-required milestones measured against health targets;
 - the operation that bounds it: overwrite, partition, regenerate, seal,
   rotate, archive, supersede, or freeze;
 - how a reader finds current material and retrieves retained history; and
@@ -135,30 +140,38 @@ collection's long-term aggregate growth.
 ## Derive pressure limits from the retained surface
 
 Measure the deliberately reviewed live survivor and set independent line and
-byte hard limits with enough explicit headroom to complete one atomic rollover.
-For collections, also set per-part, file-count, and aggregate limits. Do not
-copy illustrative numbers from another adoption, and do not treat a current
-legacy size as healthy merely because it was measured.
+byte health targets. For collections, also set per-part, file-count, and
+aggregate targets. Do not copy illustrative numbers from another adoption,
+and do not treat a current legacy size as healthy merely because it was
+measured.
 
-Each local registry selects three ordered milestones below or at the hard
-limit:
+For every measured dimension, declare two different values:
+
+- the **health target** describes the reviewed steady-state working set and is
+  the denominator for warning and rollover pressure; and
+- the **inclusive enforcement ceiling** rejects only `actual > ceiling`. It is
+  a quarantine boundary, not evidence that content below it is healthy.
+
+Each local registry selects two ordered milestones against the health target:
 
 - **warning**: investigation and an owned remediation become mandatory;
 - **rollover required**: ordinary appends stop unless the same change performs
-  the declared rollover; and
-- **hard failure**: the resulting tree is rejected.
+  the declared rollover.
 
 The warning must leave enough capacity for the largest normal update plus the
-rollover transaction. A limit increase requires a reviewed decision that the
-surface's user contract expanded; growth alone is not justification.
+rollover transaction. A ceiling increase requires a new, separate, reviewed
+authority record proving that the surface's user contract expanded; editing
+the surface declaration alone cannot authorize itself. Lowering is free.
 
 At first adoption, a surface already beyond warning or rollover may be entered
 as explicit transition debt only with its exact measured baseline, named
-remediation owner, deadline or ordered frontier, and unchanged hard limit.
+remediation owner, deadline or ordered frontier, and unchanged ceiling.
 Only records required to complete the containment transition may extend a
 rollover-debt surface; ordinary unrelated growth remains prohibited. The debt
-exception ends when the migration lands and can never excuse a hard-limit
-breach.
+exception ends when the migration lands and can never excuse ceiling overflow.
+Its immutable baseline plus owned allowance must fit below the ceiling. A
+declared ratchet band must also reject a ceiling that remains materially above
+both actual use and the health target after pressure falls.
 
 ## Atomic partition, rollover, and archive protocol
 
@@ -216,8 +229,9 @@ At minimum, fail on:
 - a stale generated projection or broken current/history link;
 - a mutable sealed/frozen unit or failed archive digest/retrieval proof;
 - warning without an owned remediation, rollover-required without the atomic
-  transition, or any hard-limit breach; and
-- an unauthorized limit increase.
+  transition, actual usage above an inclusive ceiling, or stale debt headroom;
+  and
+- an unauthorized ceiling increase or rewritten debt baseline.
 
 Generated caches may accelerate the checker or search, but they are disposable
 and never the canonical copy.
@@ -229,7 +243,8 @@ and never the canonical copy.
    historical terminal; follow routes transitively.
 3. Classify each surface by lifecycle and identify its actual canonical source.
 4. Measure lines, bytes, file counts, aggregates, structure, and read path.
-5. Derive local warning, rollover, and hard limits from reviewed survivors.
+5. Derive health targets from reviewed survivors and set separate inclusive
+   ceilings with only transaction-sized headroom.
 6. Open an owner for every surface already at warning or structurally
    monolithic even if it remains below a numeric threshold.
 7. Choose bounded snapshot, semantic partitions, generated shards, rolling

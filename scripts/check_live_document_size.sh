@@ -20,9 +20,18 @@ ARGS=(
   --archives doctrine/live_document_size/archive_descriptors.jsonl
 )
 
-if git -C "${PROJECT_ROOT}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+fail=0
+GIT_TOP="$(git -C "${PROJECT_ROOT}" rev-parse --show-toplevel 2>/dev/null || true)"
+if [ "${GIT_TOP}" = "${PROJECT_ROOT}" ]; then
   git -C "${PROJECT_ROOT}" ls-files -z -- '*.md' \
-    | perl "${CORE}" "${ARGS[@]}" --coverage-stdin
+    | perl "${CORE}" "${ARGS[@]}" --coverage-stdin || fail=1
 else
-  perl "${CORE}" "${ARGS[@]}"
+  perl "${CORE}" "${ARGS[@]}" || fail=1
 fi
+
+if [ "${GIT_TOP}" = "${PROJECT_ROOT}" ]; then
+  perl "${SCRIPT_DIR}/check_live_document_ceiling_authority.pl" \
+    --root "${PROJECT_ROOT}" || fail=1
+fi
+
+exit "${fail}"

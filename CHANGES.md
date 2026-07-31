@@ -32201,3 +32201,17 @@ task tree and git.
 - Focused path/task/live-size tests pass at `Files=3, Tests=45`; integrity is
   three trees/896 nodes; all 2,782 paths, Knowledge Map, 43-line Memory, all 37
   mdBook chapters, and the removed 73-file/16,984-KiB local build pass.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18 — health targets and ceilings separated
+
+- Replaced ambiguous `budgets` plus inert `hard_pct` with five-axis
+  `health_targets` and inclusive `enforcement_ceilings`. Target pressure owns
+  warning/rollover state; equality at a ceiling passes and overflow fails.
+- Debt baselines are cross-revision immutable. Owned growth must fit below the
+  ceiling, and positive band steps force stale headroom downward. A Git-aware,
+  append-only authority registry requires an exact new record and new decision
+  for each increase in the same change; lowering is free.
+- No predecessor ceiling rises. The checker now reports actual/target/ceiling
+  values plus two migrated, nine pinned/deferred, and five steady measured
+  surfaces. Focused equality/overflow/lowering/ratchet/authority tests pass at
+  `Files=3, Tests=20`; the full doctrine and mdBook gates pass.

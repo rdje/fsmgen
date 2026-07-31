@@ -25,6 +25,10 @@ subtest 'live README routes use the common pressure-controlled surface graph' =>
     like($output, qr/all README entry-point invariants hold/, 'landing-page invariant remains explicit');
     like($output, qr/all routed-destination pressure invariants hold/, 'route-pressure invariant remains explicit');
     like($output, qr/all live-document size-containment invariants hold \(20 surfaces\)/, 'common project-wide checker is delegated');
+    like($output, qr/containment pressure migrated: 2 surface\(s\)/,
+        'migrated pressure is reported separately');
+    like($output, qr/containment pressure pinned_deferred: 9 surface\(s\)/,
+        'pinned/deferred pressure remains visible');
 };
 
 subtest 'minimal marker-to-surface routes pass without duplicated budgets' => sub {
@@ -32,7 +36,7 @@ subtest 'minimal marker-to-surface routes pass without duplicated budgets' => su
     my ($ok, $output) = run_checker($fixture);
     ok($ok, 'valid minimal route and surface registries pass') or diag($output);
     like($output, qr/route shipped_behavior: README marker -> shipped_behavior/, 'README checker reports marker mapping');
-    like($output, qr/surface shipped_behavior: 1 file\(s\)/, 'common checker owns destination measurement');
+    like($output, qr/surface shipped_behavior: actual files=1,/, 'common checker owns destination measurement');
 };
 
 subtest 'missing required route fails closed' => sub {
@@ -83,7 +87,8 @@ subtest 'common hard budget and frozen identity still close README destinations'
     write_file($budget_fixture, 'bounded.md', join('', map { "line $_\n" } 1 .. 101));
     my ($budget_ok, $budget_output) = run_checker($budget_fixture);
     ok(!$budget_ok, 'destination hard limit is rejected');
-    like($budget_output, qr/surface high_level_direction max lines is 101 \(> hard limit 100\)/, 'hard failure comes from common authority');
+    like($budget_output, qr/surface high_level_direction max lines is 101 \(> inclusive enforcement ceiling 100\)/,
+        'hard failure comes from common authority');
 
     my $frozen_fixture = make_fixture();
     write_file($frozen_fixture, 'frozen-a.md', "changed\n");
@@ -188,17 +193,23 @@ sub measured {
         canonical_inputs => $generated ? [$index] : [],
         routes_to       => $routes eq '-' ? [] : [split /,/, $routes],
         owner           => 'fixture-owner',
-        budgets         => {
+        health_targets  => {
             files       => $max_files,
             lines_each  => $max_lines,
             bytes_each  => $max_bytes,
             lines_total => $total_lines,
             bytes_total => $total_bytes,
         },
-        milestones => { warning_pct => 80, rollover_pct => 90, hard_pct => 100 },
-        state      => 'normal',
-        baseline   => undef,
-        verifier   => $verifier,
+        enforcement_ceilings => {
+            files       => $max_files,
+            lines_each  => $max_lines,
+            bytes_each  => $max_bytes,
+            lines_total => $total_lines,
+            bytes_total => $total_bytes,
+        },
+        milestones => { warning_pct => 80, rollover_pct => 90 },
+        containment_status => 'steady', state => 'normal', baseline => undef,
+        verifier => $verifier,
     };
 }
 
@@ -207,9 +218,10 @@ sub terminal {
     return {
         surface_id => $id, lifecycle => $lifecycle, locator => $locator,
         targets => [$target], index => undef, canonical_inputs => [],
-        routes_to => [], owner => 'fixture-owner', budgets => undef,
-        milestones => undef, state => $state, baseline => undef,
-        verifier => $verifier,
+        routes_to => [], owner => 'fixture-owner', health_targets => undef,
+        enforcement_ceilings => undef, milestones => undef,
+        containment_status => 'not_applicable', state => $state,
+        baseline => undef, verifier => $verifier,
     };
 }
 
@@ -218,9 +230,10 @@ sub frozen {
     return {
         surface_id => $id, lifecycle => 'frozen_legacy', locator => 'frozen',
         targets => [$target], index => undef, canonical_inputs => [],
-        routes_to => [], owner => 'fixture-owner', budgets => undef,
-        milestones => undef, state => 'frozen', baseline => undef,
-        verifier => "sha256:$sha",
+        routes_to => [], owner => 'fixture-owner', health_targets => undef,
+        enforcement_ceilings => undef, milestones => undef,
+        containment_status => 'not_applicable', state => 'frozen',
+        baseline => undef, verifier => "sha256:$sha",
     };
 }
 

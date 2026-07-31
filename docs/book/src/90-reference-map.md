@@ -78,7 +78,7 @@ debt boundaries, not reusable recommendations.
 
 `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the broader reusable lifecycle
 doctrine. Its normative body is project-neutral, project-agnostic, and
-harness-neutral; FSMGen authority, measurements, 80/90/100 pressure
+harness-neutral; FSMGen authority, measurements, 80/90 pressure
 milestones, repository-local storage rule, and migration paths remain in a
 fenced local adoption note and the focused audit. The architecture separates
 bounded current views from role-appropriate durable stores: user-facing
@@ -91,7 +91,7 @@ sharding never substitutes for file-count and aggregate containment. Decision
 selection commit `139efbf90` completes `.1` continuity activation and leaves
 `.2` as the common-enforcement owner. `.2` now ships a neutral checker plus
 local JSONL data: one named object per line, path and route arrays, nested
-budget/milestone/baseline objects, and strict rejection of malformed, missing,
+target/ceiling/milestone/baseline objects, and strict rejection of malformed, missing,
 or unknown fields. This retains line-oriented diffs and streaming without the
 positional ambiguity of the discarded 22-column TSV prototype. The resulting
 unconditional census covers every tracked Markdown path, including README
@@ -181,6 +181,16 @@ keep each correction atomic. No review suggestion changes a threshold,
 lifecycle, frozen file, or product behavior merely by being accepted.
 Clean disposition commit `3b782fc10` activates `.18` alone to implement the
 health-target versus enforcement-ceiling correction without widening a limit.
+The completed implementation gives every measured surface separate five-axis
+`health_targets` and inclusive `enforcement_ceilings`. Warning and rollover are
+health signals; equality at the ceiling passes and any excess fails. Debt
+baselines are cross-revision immutable, owned allowances fit below the ceiling,
+and a banded downward ratchet rejects stale headroom after pressure falls.
+`hard_pct` is gone. A ceiling increase cannot authorize itself: it requires an
+exact new append-only authority row plus a new decision in the same Git change,
+while lowering is free. Checker output shows actual/target/ceiling values and
+separates migrated, pinned/deferred, and steady surface pressure. This first
+schema migration raises no predecessor ceiling.
 
 ## What The Old User Guide Still Does
 

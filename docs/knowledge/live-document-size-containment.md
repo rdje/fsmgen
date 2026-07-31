@@ -24,11 +24,13 @@ answers:
   - "does tracked-document coverage prove that documents are healthy?"
   - "is neutral live-document checker identity mechanically tested?"
   - "how are health targets different from transition ceilings?"
+  - "how is an enforcement ceiling increase authorized?"
+  - "which live-document families are migrated versus pinned or deferred?"
 date: 2026-07-31
 status: current
 tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
-evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
-reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t
+evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; scripts/check_live_document_ceiling_authority.pl; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
+reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t
 ---
 
 `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the project-owned doctrine. Its reusable
@@ -47,7 +49,7 @@ collections also need file-count and aggregate transitions.
 Decision 0041 accepts the architecture. The measured revision and exact family
 owners are in `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md`. Leaf `.2` uses
 JSONL because one named object per line preserves streaming/diff behavior while
-replacing a brittle 22-column positional prototype with typed nested budgets,
+replacing a brittle 22-column positional prototype with typed nested pressure,
 arrays, `null`, and strict unknown-key failure. The neutral checker inventories
 all tracked Markdown, including the GitHub README landing page itself, and
 enforces locality, lifecycle, pressure, non-worsening transition baselines,
@@ -77,11 +79,9 @@ the rationale/change ledgers, the generated Knowledge Map, and focused
 contract/audit collections. No file is deleted by the review task.
 
 The same review found two mechanical gaps. Specialized task manifests enforce
-their own record/byte caps, but the common surface, route, and archive JSONL
-registries do not yet self-bound. The checker validates `hard_pct` ordering but
-uses only warning/rollover percentages and rejects actual size only when it
-exceeds the absolute budget. Leaf `.15` owns those gaps; `.16` owns the general
-utility/retirement audit.
+their own record/byte caps, but the common surface, route, archive, and ceiling-
+authority JSONL registries do not yet self-bound; leaf `.15` owns that gap.
+Leaf `.16` owns the general utility/retirement audit.
 
 PGEN and ANVIL returned independent reviews of the packet. Completed leaf `.17`
 publishes an evidence-backed accept/refine/reject/already-satisfied disposition
@@ -100,7 +100,14 @@ typed route/index/evidence completeness, retention/migration evidence, and the
 maintained-product-reference lifecycle. Neutral checker identity is already
 mechanically scanned by `t/1554`.
 
-Clean disposition commit `3b782fc10` activates `.18` alone to distinguish
-reviewed healthy targets from inclusive transition enforcement ceilings and to
-prove downward ratchets plus separate increase authority. The activation does
-not change the current JSONL schema, registry values, or enforced limits.
+Leaf `.18` now distinguishes reviewed health targets from inclusive
+enforcement ceilings. Warning and rollover use target pressure; only
+`actual > ceiling` fails, so equality is valid without implying health.
+Debt keeps an immutable baseline, a bounded allowance below its ceiling, and a
+two-step ratchet band that forces the ceiling down after one atomic shrinkage
+step. Any increase must match one newly appended authority row and a newly
+added decision in the same Git change; lowering is free. The implementation
+raises no predecessor ceiling. Output names actual/target/ceiling values and
+separately summarizes two migrated surfaces, nine pinned/deferred surfaces,
+and five steady measured surfaces, avoiding a false claim that complete path
+classification means containment is complete.
