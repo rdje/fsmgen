@@ -6,19 +6,20 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.2: ship VIAL planning artifacts`).
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.3: activate portable SV backend emission`).
 - active_work_unit: parent `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10`;
-  completed `.10.1` ships source tooling and completed `.10.2` ships planning.
+  active `.10.3` owns portable backend/trace emission after completed source
+  tooling `.10.1` and planning/artifacts `.10.2`.
 - current_state: decision `0043` and the portable-SystemVerilog contract remain
   unchanged. Public `fsmgen vial capabilities|check|format|plan` and the closed
   API now ship normal/terse equivalence, all three canonical HIAL review routes,
-  and virtual or atomic repository-local artifacts. Proposed `.10.3` owns
+  and virtual or atomic repository-local artifacts. Active `.10.3` owns
   portable SV emission/trace; `.10.4` owns exact Verilator run/results.
-- next_action: from the clean `.10.2` implementation commit, separately
-  activate only `.10.3`; `.11` retains parity and native backends stay separate.
+- next_action: implement only `.10.3` backend artifacts and closed trace
+  projection without executing a simulator; `.11` retains parity.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for proposed `.10.3`; native UVM/VHDL/mixed-language leaves
+- blockers: none for active `.10.3`; native UVM/VHDL/mixed-language leaves
   retain exact tool prerequisites. PGEN/ANVIL feedback remains pending for the
   independent live-document `.15`/`.16` leaves and is not a VIAL blocker.
 

@@ -59,4 +59,5 @@ Completed `.10.1` ships the source-only command/API and five exact public
 capabilities. Completed `.10.2` ships `plan`, the artifact-layout/tool-manifest
 capabilities, and distinct public-plan support accounting. `run`, backend
 emission, compile, simulation, results, and runtime remain unavailable;
-`.10.3` is the next backend/trace owner.
+clean `.10.2` commit `045629c97` activates `.10.3` as the backend/trace owner
+without changing product behavior.

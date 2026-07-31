@@ -519,8 +519,9 @@ fsmgen vial run --dut dut.ppif --backend PROFILE source.vial
 ```
 
 The first three commands ship through `.10.1`, and `plan` ships through
-`.10.2`. `run` remains unavailable until `.10.3`/`.10.4` implement the backend,
-trace, tool execution, and result owners; asking for it returns
+`.10.2`. Clean `.10.2` commit `045629c97` activates `.10.3` for backend/trace
+emission, but `run` remains unavailable until `.10.3`/`.10.4` implement all
+backend, trace, tool-execution, and result owners; asking for it returns
 `VIAL_BACKEND_UNAVAILABLE` without writing an artifact. The CLI is an adapter
 over the same closed, JSON-safe request/result contract available to embedding
 hosts.
@@ -903,6 +904,7 @@ accounting. Clean `.10.1` commit `50a0d7d39` activates `.10.2` alone for
 planning/artifacts. Completed `.10.2` now ships all three canonical review
 routes, defensive bridge/plan/tool-manifest projections, transaction-free
 direct-IAL0 endpoint fixtures, and virtual or atomic repository-local artifact
-graphs. `.10.3` is the next backend/trace owner; `.11` retains runtime parity.
-No target backend artifact, result file, compile/run path, runtime result,
-parity pass, or backend behavior ships in `.10.2`.
+graphs. Clean `.10.2` commit `045629c97` activates `.10.3` alone for backend/
+trace emission without simulator execution; `.11` retains runtime parity. The
+activation ships no target artifact, result file, compile/run path, runtime
+result, parity pass, or backend behavior.

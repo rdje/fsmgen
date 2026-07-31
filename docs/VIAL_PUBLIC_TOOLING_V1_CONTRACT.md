@@ -5,7 +5,7 @@ Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
 Status: selected and partially implemented; `.10.1` ships public
 capabilities/check/normal-terse formatting and `.10.2` ships canonical
 planning plus virtual/repository-local atomic artifacts. Parent `.10` retains
-`.10.3` backend/trace and `.10.4` Verilator runtime/results
+active `.10.3` backend/trace and proposed `.10.4` Verilator runtime/results
 Decision: `0039`
 
 ## Outcome
@@ -509,8 +509,9 @@ a downgraded pass.
   raw IR.
 - No backend was selected by `.8`. Decision `0043` and completed `.9` select
   `sv_portable_verilator`; completed `.10.1` ships source tooling and completed
-  `.10.2` ships plan/artifact behavior, while `.10.3`/`.10.4` retain
-  backend/trace and run/result implementation. `.11` owns parity against the
+  `.10.2` ships plan/artifact behavior. Clean `.10.2` commit `045629c97`
+  activates `.10.3` for backend/trace emission; `.10.4` retains run/results
+  and `.11` owns parity against the
   handwritten AHB oracle.
 - Factories, phases, objections, UVM component classes, VHDL process plumbing,
   target hierarchy, callbacks, and host-language escape hatches remain backend
@@ -551,9 +552,9 @@ Completed `.10.2` proves:
 - focused source/bridge/execution tests, docs truth, mdBook, Knowledge Map,
   memory, relative paths, task acceptance, doctrines, and exact output cleanup.
 
-Later `.10.3`/`.10.4` must independently prove backend emission, trace
-projection, exact tool qualification, runtime, and result ownership without
-borrowing `.10.2` planning evidence.
+Active `.10.3` must independently prove backend emission and trace projection;
+later `.10.4` must prove exact tool qualification, runtime, and result
+ownership without borrowing `.10.2` planning evidence.
 
 Selection rollback remains the decision-`0039` path. `.10.1` implementation
 rollback removes only the `vial` source subcommand/API adapter, terse

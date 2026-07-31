@@ -9545,8 +9545,9 @@ direct IAL1, and IAL2-via-generated/reparsed-IAL1 review routes with the
 private binder; publishes canonical normal source, generated review artifacts,
 defensive bridge/plan/tool-manifest projections through virtual or atomic
 repository-local graphs; and admits transaction-free direct-IAL0 endpoint
-fixtures without inventing transaction truth. `.10.3` and `.10.4` retain
-backend/trace and exact runtime/result implementation; `.11` retains parity.
+fixtures without inventing transaction truth. Clean `.10.2` implementation
+commit `045629c97` activates `.10.3` alone for backend/trace emission without
+runtime execution; `.10.4` retains exact runtime/results and `.11` parity.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

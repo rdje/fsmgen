@@ -12263,7 +12263,8 @@ repository-local or virtual artifacts. Completed `.10.2` now ships that
 planner through direct IAL0, direct IAL1, and IAL2-via-generated/reparsed-IAL1
 review routes. Transaction-free direct-IAL0 endpoint fixtures are admitted;
 transaction-bearing fixtures still require exact reviewed transaction truth.
-`.10.3` remains the next portable backend/trace implementation owner.
+Clean `.10.2` commit `045629c97` activates `.10.3` alone as the portable
+backend/trace implementation owner without changing product behavior.
 See [the public tooling contract](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md) and
 the [architecture chapter](16d-hial-vial-verification-architecture.md).
 

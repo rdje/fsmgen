@@ -32075,3 +32075,12 @@ task tree and git.
   Target backend generation, compile, simulation, runtime, results, parity,
   UVM, VHDL, mixed-language, and scale remain explicit non-claims owned by
   later leaves.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.3 — portable SV backend emission activated
+
+- From clean `.10.2` implementation commit `045629c97`, activated `.10.3`
+  alone for deterministic portable-SystemVerilog artifact emission and closed
+  trace projection without simulator execution.
+- This continuity-only slice changes no VIAL/HIAL source, parser, plan,
+  artifact graph, target code, trace, capability/support claim, compile/run
+  path, result, parity, UVM, VHDL, mixed-language, scale, or product behavior.
