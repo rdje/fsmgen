@@ -7,6 +7,7 @@ answers:
   - "does a slice have to update the ## Current Frontier table?"
   - "how does PNT select the next leaf?"
   - "why is the ## Current Frontier table in IAL2-FEATURE-COMPLETENESS-FRONTIER.md stale?"
+  - "how can I retrieve the former completed task-tree index?"
 date: 2026-07-12
 status: current
 tags: [task-tree, continuity, convention, frontier, pnt, decision-0019]
@@ -30,13 +31,22 @@ snapshots**. They are **not required to be maintained per-slice**, a slice is
 complete without touching them, and when present they may lag (in
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.md` they had drifted 6–10 slices behind while
 the node list stayed current). Existing stale views are stamped historical, not
-backfilled; completed task-tree files are not swept (their views are accurate
-finished snapshots).
+backfilled. The oversized IAL2 secondary views now live only in exact version
+object `44b5f159789ba1c31b487c6b047097bb27a9770d:docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md`;
+its 844 authoritative child nodes are separately sealed and reconstructed.
+Completed task-tree files are not swept (their views remain accurate finished
+snapshots).
 
 PNT selects the earliest `active`/`pending`, unblocked leaf from the **node
 list**, not from the `## Current Frontier` table (`docs/TASK_TREE.md` PNT
 Selection Rules step 3). This matches practice: PNT continued correctly while the
 `## Current Frontier` table was stale.
+
+The cross-tree index follows the same principle after `.7`: only active and
+proposed rows remain live. Its former 540 unique done/deferred rows are
+digest-proved at the same exact revision through
+`doctrine/task_tree/index_archives.jsonl`; the task files themselves remain at
+their stable repository paths.
 
 Chosen (retire) over a regenerate-and-check approach because the views duplicate
 the node list + git and carry nothing unique (the `0007` re-narration

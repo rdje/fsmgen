@@ -47,3 +47,11 @@ exact-provenance task segments and compact terminals without migrating an
 existing tree; `.7` owns the first IAL2/outlier/index migration.
 Clean bounded-history commit `78adb81ae` activates `.7` alone; the activation
 does not yet move a task node or cross-tree index row.
+
+Implementation `.7` seals all 844 terminal IAL2 children from exact revision
+`44b5f159789ba1c31b487c6b047097bb27a9770d`, retaining an 85-line live root and
+one exact-capped content-addressed segment. It also replaces 540 unique terminal
+index rows with a 523-byte bounded JSONL version-object manifest while keeping
+three active and eleven proposed rows live. The index falls from 1,078 to 558
+lines; both registered task surfaces are now `normal`, and no completed task
+file or README landing content is removed.

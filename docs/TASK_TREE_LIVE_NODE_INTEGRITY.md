@@ -50,6 +50,9 @@ manifests and exact version-object compact terminals. It checks:
   disjoint complete terminal subtrees, and cross-file closure;
 - compact-terminal exact revision retrieval, file digest, original goal,
   subtree cardinality, terminal status/closure, and closed leaf evidence.
+- bounded completed-index manifest schema, exact index retrieval/digest/
+  dimensions, unique terminal rows, revision-local task-file paths, and
+  active/proposed-only live PNT tables.
 
 The checker is project-neutral and read-only. Existing one-file trees remain
 valid and no tree is migrated merely by enabling the optional forms. `--root
@@ -62,6 +65,8 @@ fields, nonterminal children under done containers, and malformed active roots
 fail with deterministic diagnostics. Its expanded fixtures also prove sealed
 segments and compact terminals pass only when manifest bounds, digest,
 provenance, reconstruction, terminal state, and evidence are exact.
+The `.7` fixtures additionally prove completed-index schema/bounds, digest,
+exact task retrieval, and live-view status failures close deterministically.
 
 The doctrine driver and bootstrap meta-check register the executable as
 `TASK-TREE-INTEGRITY`. The ordinary focused command is:
@@ -95,4 +100,10 @@ contract and product behavior remain unchanged.
 `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6` subsequently refines the checker
 under decision `0042` so a long-running tree can bound its live file without
 weakening the original node contract. That capability slice migrates no
-existing tree; `.7` separately owns the first task/index migrations.
+existing tree. `.7` then seals the exact 844 terminal IAL2 children from
+revision `44b5f159789ba1c31b487c6b047097bb27a9770d` into one content-addressed
+segment while retaining the live root, and moves 540 unique terminal cross-tree
+rows to a bounded exact-version JSONL archive. The checker now also proves that
+archive's digest/dimensions, terminal IDs/statuses, revision-local task paths,
+and active/proposed-only live PNT views. The live result remains three trees and
+882 reconstructed nodes, now with one segment and one index archive.

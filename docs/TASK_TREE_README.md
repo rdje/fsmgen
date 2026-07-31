@@ -37,6 +37,7 @@ docs/tasks/TEMPLATE.md
 docs/tasks/<FIRST-TREE>.md
 docs/tasks/segments/<TREE>/manifest.jsonl  # optional for long-running trees
 docs/tasks/segments/<TREE>/<SHA256>.md     # optional sealed subtree
+doctrine/task_tree/index_archives.jsonl    # optional bounded completed-index history
 ```
 
 Recommended project integration files:
@@ -310,6 +311,16 @@ PNT: current work is always selected from the live file, and the historical
 frontier/log/changelog tables remain non-authoritative. Do not migrate a
 healthy tree merely because the format exists.
 
+The cross-tree index follows the same rule. Keep only active rows in its live
+PNT table and proposed rows in its backlog table. When accumulated terminal
+rows make the index a history ledger, seal the exact prior index version in a
+finite JSONL manifest recording revision/path, SHA-256, dimensions, terminal
+row count, unique tree-ID count, allowed terminal statuses, current pointer,
+and sealing date. The integrity checker must retrieve that version, verify each
+task-file link at the same revision, and reject terminal rows that leak back
+into the live active/proposed views. The individual task files may remain
+directly browsable; sealing duplicated index narration does not delete them.
+
 Commit hashes do not have to be written into the same task-file update. The
 hash is only known after commit. The reliable join key is the leaf ID in the
 task file and commit message. Hashes can be backfilled later if the project
@@ -345,6 +356,7 @@ Use this checklist when enabling the workflow in a new project.
 [ ] Durable decisions, user-facing docs, and git each have explicit roles.
 [ ] The setup is committed as one documentation/workflow slice.
 [ ] If sealed segments are used, the manifest has finite bounds and exact source/retrieval fixtures pass.
+[ ] If terminal index rows are query-first, their bounded exact-version manifest and PNT-view checks pass.
 ```
 
 ## Minimal First Commit Message

@@ -31908,3 +31908,29 @@ task tree and git.
   task integrity remains three trees/882 nodes/zero segments/zero compact
   terminals; Memory is 35 lines; and all 20 live-document surfaces plus
   2,775/2,775 tracked Markdown paths pass.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7 — task evidence and index bounded
+
+- Sealed all 844 terminal `IAL2-FEATURE-COMPLETENESS-FRONTIER` children from
+  exact revision `44b5f159789ba1c31b487c6b047097bb27a9770d` into one
+  SHA-256-named 5,914-line/2,366,453-byte segment. The 85-line live task file
+  retains its active root and exact historical-view retrieval pointer; no node
+  ID, field, task file, or evidence is deleted.
+- Reduced `docs/TASK_TREE.md` from 1,078 to 558 lines by retaining three active
+  plus eleven proposed rows and sealing 540 unique terminal rows in a finite
+  JSONL exact-version manifest. The integrity checker now proves source digest/
+  dimensions, terminal IDs/statuses, revision-local task paths, and PNT-view
+  purity. Completed task files remain directly browsable.
+- Expanded `t/1549` from 27 to 34 subtests. Task integrity reconstructs three
+  trees/882 nodes/one segment/zero compact terminals/one index archive; both
+  registered task surfaces move from warning debt to normal without increasing
+  a limit. Decision 0042 owns the rationale, so no duplicate development note
+  is added. Focused t1549 passes Files=1/Tests=34; the combined task/README/
+  live-size set passes Files=3/Tests=49; path/locality passes Files=2/Tests=22;
+  all 37 mdBook chapters test and the repository-local 73-file/17,110,777-byte
+  build passes then is removed; Knowledge Map validates 1,095 facts/5,717 keys;
+  Memory is 36 lines; all nine staged doctrines pass with 20 surfaces and
+  2,776/2,776 document paths covered. The RAM guard stopped the broader
+  four-file docs group before test output at 89.6% host use versus its 88%
+  cutoff; it was not weakened. README landing content and product behavior are
+  unchanged.

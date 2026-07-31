@@ -97,9 +97,11 @@ positional ambiguity of the discarded 22-column TSV prototype. The resulting
 unconditional census covers every tracked Markdown path, including README
 itself, broad root/focused/ancillary collections, and canonical knowledge
 cards; no family topology or established limit changes in the enforcement
-slice. Decision 0042 and `.6` now define optional sealed task-subtree segments
-and compact completed terminals without migrating an existing tree; `.7` owns
-the first IAL2/outlier/index migration.
+slice. Decision 0042 and `.6` define optional sealed task-subtree segments and
+compact completed terminals. `.7` now applies the design: the live IAL2 file
+keeps its active root while one exact-source segment reconstructs all 844
+terminal children, and the cross-tree index keeps only three active plus eleven
+proposed rows while 540 unique terminal rows remain digest-proved query history.
 
 `TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
 standard. FSMGen's registered checker reads data-only staged-path and evidence
@@ -148,8 +150,10 @@ content-digested completed subtree segments copied from an exact source
 revision. A compact completed terminal is valid only when the integrity checker
 retrieves, digest-checks, counts, and reconstructs its full terminal subtree
 from an exact version object. PNT still selects entirely from the live file;
-the optional forms add no migration requirement for ordinary trees. Clean
-commit `78adb81ae` activates `.7` alone for the first IAL2/task/index migration.
+the optional forms add no migration requirement for ordinary trees. The first
+migration reduces the live IAL2 file from 21,726 to 85 lines and the task index
+from 1,078 to 558 lines. Completed task files remain directly browsable; only
+duplicated cross-tree terminal narration becomes query-first.
 
 ## What The Old User Guide Still Does
 

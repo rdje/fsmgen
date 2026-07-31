@@ -10364,7 +10364,11 @@ The first honest `R11` slices are now:
   `.6` now define finite JSONL task manifests, content-addressed exact-source
   terminal subtree segments, and exact version-object compact terminals while
   leaving all existing trees unmigrated. The live integrity result remains
-  three trees / 882 nodes / zero segments / zero compact terminals. From clean
-  commit `78adb81ae`, `.7` alone is active to migrate the active IAL2 outlier,
-  completed task outliers, and bounded cross-tree index; `.3` remains blocked
-  by the existing four-file lifecycle review.
+  three trees / 882 nodes. `.7` now seals all 844 terminal IAL2 children from
+  exact revision `44b5f1597` into one content-addressed segment, retains an
+  85-line active-root file, and makes the 540 unique terminal cross-tree rows
+  query-first while keeping three active plus eleven proposed rows live. The
+  reconstructed result is one segment, zero compact terminals, and one index
+  archive; both task surfaces are normal without deleting completed task
+  files. `.8` is the next clean activation; `.3` remains blocked by the
+  existing four-file lifecycle review.

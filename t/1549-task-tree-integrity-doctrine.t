@@ -25,8 +25,8 @@ subtest 'live active task trees satisfy the integrity contract' => sub {
     ok($ok, 'live task-tree integrity passes') or diag($output);
     like(
         $output,
-        qr/all active task-tree invariants hold \(trees=[1-9][0-9]*, nodes=[1-9][0-9]*, segments=[0-9]+, compact_terminals=[0-9]+\)/,
-        'live result reports measured tree, node, segment, and terminal counts',
+        qr/all active task-tree invariants hold \(trees=[1-9][0-9]*, nodes=[1-9][0-9]*, segments=[0-9]+, compact_terminals=[0-9]+, index_archives=[0-9]+\)/,
+        'live result reports measured tree, node, segment, terminal, and index-archive counts',
     );
 };
 
@@ -36,7 +36,7 @@ subtest 'valid minimal active tree passes unchanged' => sub {
     ok($ok, 'valid active tree passes') or diag($output);
     like(
         $output,
-        qr/trees=1, nodes=3, segments=0, compact_terminals=0/,
+        qr/trees=1, nodes=3, segments=0, compact_terminals=0, index_archives=0/,
         'legacy in-file fixture result reports exact counts',
     );
 };
@@ -122,7 +122,7 @@ subtest 'exact-source sealed subtree segment passes across files' => sub {
     ok($ok, 'sealed segment fixture passes') or diag($output);
     like(
         $output,
-        qr/trees=1, nodes=3, segments=1, compact_terminals=0/,
+        qr/trees=1, nodes=3, segments=1, compact_terminals=0, index_archives=0/,
         'sealed node participates in the combined measured tree',
     );
 };
@@ -236,8 +236,92 @@ subtest 'compact completed version-object terminal passes' => sub {
     ok($ok, 'compact terminal fixture passes') or diag($output);
     like(
         $output,
-        qr/trees=1, nodes=3, segments=0, compact_terminals=1/,
+        qr/trees=1, nodes=3, segments=0, compact_terminals=1, index_archives=0/,
         'compact terminal reports one exact retrieved subtree',
+    );
+};
+
+subtest 'exact completed-index version object passes with bounded PNT views' => sub {
+    my $fixture = make_index_archive_fixture();
+    my ($ok, $output) = run_checker($fixture->{root});
+    ok($ok, 'completed-index archive fixture passes') or diag($output);
+    like(
+        $output,
+        qr/trees=1, nodes=3, segments=0, compact_terminals=0, index_archives=1/,
+        'one exact completed-index archive is measured',
+    );
+};
+
+subtest 'completed-index archive verifies exact retrieved digest' => sub {
+    my $fixture = make_index_archive_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/"sha256":"[0-9a-f]{64}"/"sha256":"@{['0' x 64]}"/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/completed-history digest mismatch/,
+        'completed-index digest mismatch',
+    );
+};
+
+subtest 'completed-index archive rejects unknown schema keys' => sub {
+    my $fixture = make_index_archive_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/"record_type":"version_object"/"mystery":1,"record_type":"version_object"/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/record 2 has unknown key mystery/,
+        'unknown completed-index key',
+    );
+};
+
+subtest 'completed-index archive enforces its declared bound' => sub {
+    my $fixture = make_index_archive_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/"max_records":1/"max_records":0/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/registry max_records must be an integer >=1/,
+        'unbounded completed-index manifest',
+    );
+};
+
+subtest 'completed-index manifest requires an archive record' => sub {
+    my $fixture = make_index_archive_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/\n\{[^\n]+\}\n\z/\n/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/contains no completed-history archive records/,
+        'empty completed-index manifest',
+    );
+};
+
+subtest 'completed-index archive proves exact task-file retrieval' => sub {
+    my $fixture = make_index_archive_fixture(missing_source_task => 1);
+    expect_failure(
+        $fixture->{root}, qr/cannot retrieve .*:docs\/tasks\/MISSING\.md/,
+        'missing archived task version object',
+    );
+};
+
+subtest 'live PNT view rejects terminal row retention' => sub {
+    my $fixture = make_index_archive_fixture();
+    mutate_file(
+        $fixture->{index},
+        sub {
+            $_[0] =~ s/(\| `EXAMPLE` \| `active` .*\n)/$1
+                . "| `ARCHIVED` | `done` | `fixture` | `closed` | "
+                . "[docs\/tasks\/ARCHIVED.md](docs\/tasks\/ARCHIVED.md) |\n"/e;
+        },
+    );
+    expect_failure(
+        $fixture->{root},
+        qr/Active Task Trees row ARCHIVED has status done, expected active/,
+        'terminal row retained in live PNT view',
     );
 };
 
@@ -411,6 +495,89 @@ sub make_compact_fixture {
         . leaf('EXAMPLE.2', 'pending');
     write_file($root, 'docs/tasks/EXAMPLE.md', $live);
     return { root => $root };
+}
+
+sub make_index_archive_fixture {
+    my (%args) = @_;
+    my $root = create_project_tempdir(purpose => 'task-tree-index-archive-tests');
+    my $archived_path = $args{missing_source_task}
+        ? 'docs/tasks/MISSING.md'
+        : 'docs/tasks/ARCHIVED.md';
+    my $source_index = "# Index\n\n"
+        . "## Active Task Trees\n\n"
+        . "| Tree | Status | Roadmap lane | Current frontier | File |\n"
+        . "| --- | --- | --- | --- | --- |\n"
+        . "| `EXAMPLE` | `active` | `fixture` | `EXAMPLE.2` | "
+        . "[docs/tasks/EXAMPLE.md](docs/tasks/EXAMPLE.md) |\n\n"
+        . "## Proposed Task Trees\n\n"
+        . "| Tree | Status | Roadmap lane | Proposed first leaf | File |\n"
+        . "| --- | --- | --- | --- | --- |\n\n"
+        . "## Completed Task Trees\n\n"
+        . "| Tree | Status | Roadmap lane | Completed frontier | File |\n"
+        . "| --- | --- | --- | --- | --- |\n"
+        . "| `ARCHIVED` | `done` | `fixture` | `closed` | "
+        . "[$archived_path]($archived_path) |\n";
+    write_file($root, 'docs/TASK_TREE.md', $source_index);
+    write_file($root, 'docs/tasks/EXAMPLE.md', valid_task());
+    write_file(
+        $root,
+        'docs/tasks/ARCHIVED.md',
+        "# Archived\n\n## Task Tree\n\n"
+            . closed_leaf(
+                'ARCHIVED', 'done', 'Close archived tree.',
+                'archive proof passed', 'ARCHIVED: close tree'
+            ),
+    );
+    run_git($root, 'init', '--quiet');
+    run_git($root, 'add', 'docs/TASK_TREE.md', 'docs/tasks/EXAMPLE.md',
+        'docs/tasks/ARCHIVED.md');
+    run_git(
+        $root, '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+        'commit', '--quiet', '-m', 'fixture index source'
+    );
+    my $revision = run_git($root, 'rev-parse', 'HEAD');
+    $revision =~ s/\s+\z//;
+
+    my $manifest_relative = 'doctrine/task_tree/index_archives.jsonl';
+    my $current_index = "# Index\n\n"
+        . "## Active Task Trees\n\n"
+        . "| Tree | Status | Roadmap lane | Current frontier | File |\n"
+        . "| --- | --- | --- | --- | --- |\n"
+        . "| `EXAMPLE` | `active` | `fixture` | `EXAMPLE.2` | "
+        . "[docs/tasks/EXAMPLE.md](docs/tasks/EXAMPLE.md) |\n\n"
+        . "## Proposed Task Trees\n\n"
+        . "| Tree | Status | Roadmap lane | Proposed first leaf | File |\n"
+        . "| --- | --- | --- | --- | --- |\n\n"
+        . "## Completed Task Trees\n\n"
+        . "- Completed-history manifest: `$manifest_relative`\n";
+    write_file($root, 'docs/TASK_TREE.md', $current_index);
+
+    my $json = JSON::PP->new->canonical;
+    my $lines = ($source_index =~ tr/\n//);
+    my $manifest = join(
+        "\n",
+        $json->encode({
+            record_type => 'registry', schema_version => 1,
+            max_records => 1, max_bytes => 2048,
+        }),
+        $json->encode({
+            record_type => 'version_object', schema_version => 1,
+            archive_id => 'fixture-completed-index', revision => $revision,
+            path => 'docs/TASK_TREE.md', sha256 => sha256_hex($source_index),
+            lines => $lines, bytes => length($source_index), terminal_rows => 1,
+            unique_tree_ids => 1, statuses => ['done', 'deferred', 'superseded'],
+            current_pointer => 'docs/TASK_TREE.md', sealed_on => '2026-07-31',
+        }),
+        '',
+    );
+    write_file($root, $manifest_relative, $manifest);
+    return {
+        root => $root,
+        index => File::Spec->catfile($root, 'docs', 'TASK_TREE.md'),
+        manifest => File::Spec->catfile(
+            $root, 'doctrine', 'task_tree', 'index_archives.jsonl'
+        ),
+    };
 }
 
 sub initialize_versioned_fixture {

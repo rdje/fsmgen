@@ -99,11 +99,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: enforce bounded task-tree history`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7`
-  Status: `active`
+  Status: `done`
   Goal: `Migrate the active IAL2 task outlier, completed task outliers, and cross-tree index.`
   Acceptance: `The active IAL2 root/frontier stays immediately readable; all completed nodes remain uniquely addressable through sealed segments or proved archive terminals; done-tree history becomes query-first; docs/TASK_TREE.md is a bounded active/proposed view; exact node/commit/retrieval and PNT selection tests pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Exact source revision 44b5f159789ba1c31b487c6b047097bb27a9770d supplies all 844 terminal IAL2 child nodes to one 5,914-line/2,366,453-byte SHA-256-named segment; its finite manifest is 35,252 bytes under a derived 40,960-byte bound and exact-caps segment/aggregate nodes, lines, and bytes. The live IAL2 file retains the active root and becomes 85 lines/36,886 bytes. The cross-tree index retains three active and eleven proposed rows and becomes 558 lines/39,851 bytes; a finite 523-byte manifest proves the former 1,078-line/167,249-byte index and its 540 unique terminal rows, exact-revision task paths, digest, dimensions, and live PNT purity. Completed task files remain direct. Task integrity reconstructs three trees/882 nodes/one segment/zero compact terminals/one index archive; focused t1549 passes Files=1/Tests=34 and combined task/README/live-size proof passes Files=3/Tests=49. Both registered task surfaces return from warning debt to normal without a limit increase. Final path/locality, mdBook, Knowledge Map, Memory, staged acceptance, nine-doctrine, and cleanup evidence is recorded below. No frozen identity, README landing content, compiler/runtime/generated output, or product behavior changes.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: bound task evidence and index`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8`
   Status: `pending`
@@ -185,12 +185,17 @@ no routed destination becomes the next uninstrumented blob.
   93.5% of its line budget. The live-document gate rejected it; moving full
   examples to `docs/TASK_TREE_README.md` returns the index to 89.8% without a
   limit/state change. `.7` remains the immediate index-migration owner.
+- `2026-07-31`: `.7` seals the 844 terminal IAL2 children from exact revision
+  `44b5f159789ba1c31b487c6b047097bb27a9770d`, retains an 85-line live root,
+  and converts 540 unique terminal index rows into bounded query-first history.
+  The live index is 558 lines with three active and eleven proposed rows; all
+  completed task files remain directly browsable.
 
 ## Open Questions
 
 - None. The existing four-file review remains authoritative for those files'
-  semantic roles. Clean commit `78adb81ae` activates `.7` alone because `.3`
-  remains blocked by that review.
+  semantic roles. `.7` is complete; `.8` is the next independent clean
+  activation because `.3` remains blocked by that review.
 
 ## Blockers
 
@@ -199,39 +204,36 @@ no routed destination becomes the next uninstrumented blob.
   remain independently schedulable subject to their ordinary predecessor
   dependencies; newly discovered `.13` is independently schedulable.
 
-## Acceptance Checklist (enforced) — `.6`
+## Acceptance Checklist (enforced) — `.7`
 
-- [x] **ROOT CAUSE — WHY + WHERE (current `.6` slice)** — `git log -S'my @nodes' --oneline --
-  scripts/check_task_tree_integrity.pl` identifies `c21765214` as the checker
-  introduction. `git show 8744f31d2:scripts/check_task_tree_integrity.pl`
-  proves it parses one live `## Task Tree` section into one in-memory node map
-  and has no segment manifest, content digest, source revision, or exact
-  version-object retrieval path. The 4,662,385-byte IAL2 task outlier therefore
-  cannot shrink without making its authoritative node/evidence graph invisible
-  to the doctrine.
-- [x] **ADDRESSED / VERIFIED (current `.6` slice)** — Both changed Perl files report `syntax OK`;
-  `prove -Iperl t/1549-task-tree-integrity-doctrine.t` reports `All tests
-  successful` at `Files=1, Tests=27`. Repository-local Git fixtures prove
-  unchanged one-file trees, a finite JSONL manifest over a content-addressed
-  exact-source terminal segment, and an exact version-object compact terminal.
-  Deterministic negative groups reject legacy structural drift, unknown or
-  unbounded manifest or segment/aggregate pressure, unsafe paths, digest/source
-  drift, nonterminal or pending segment evidence, missing revisions, wrong
-  retrieved digest/count, and nonterminal/pending compact subtrees. The live
-  graph remains unmigrated at `trees=3, nodes=882, segments=0,
-  compact_terminals=0`.
-- [x] **NO REGRESSION / BROADER PROOF (current `.6` slice)** — the combined task/README/live-size cluster reports
-  `All tests successful` at `Files=3, Tests=42`; path/locality reports
-  `Files=2, Tests=22`; all 37 mdBook chapters test and the repository-local
-  73-file/17,108,469-byte build passes then is removed. Knowledge Map validates
-  1,095 facts/5,714 keys; Memory is 35 lines; live-document enforcement passes
-  20 surfaces and the final staged tracked-Markdown inventory; staged task
-  acceptance and all nine doctrines pass. The RAM guard stopped the broader
-  four-file documentation group before execution on three attempts because
-  host usage was 88.6%, 89.0%, then 95.0% against its required 88% cutoff; no
-  failing test ran and the guard was not weakened. No tree migration, limit/
-  state widening, frozen identity, compiler/runtime/generated output, README
-  landing content, or product behavior changes.
+- [x] **ROOT CAUSE — WHY + WHERE (current `.7` slice)** — `git log -S'## Completed Task Trees'
+  --oneline -- docs/TASK_TREE.md` identifies `9dc0965fa` as the append-table
+  introduction. Exact activation revision `44b5f1597` measures 540 unique
+  terminal index rows, a 1,078-line/167,249-byte live index, and an IAL2 task
+  file at 21,726 lines/4,662,385 bytes even though only its root remains
+  nonterminal. The mandatory working set therefore grew with terminal history,
+  not current PNT state.
+- [x] **ADDRESSED / VERIFIED (current `.7` slice)** — `scripts/check_task_tree_integrity.pl`
+  reconstructs `trees=3, nodes=882, segments=1, compact_terminals=0,
+  index_archives=1`. All 844 exact-source terminal children match the named
+  content digest and exact node/line/byte caps. The exact-index archive proves
+  540 unique terminal rows and revision-local task files while the live view
+  holds only three active and eleven proposed rows. Both Perl files report
+  `syntax OK`; focused t1549 reports `All tests successful` at `Files=1,
+  Tests=34`, including schema/bound/nonempty, digest, exact-task retrieval, and PNT-view negative
+  fixtures.
+- [x] **NO REGRESSION / BROADER PROOF (current `.7` slice)** — the combined task/
+  README/live-size cluster reports `All tests successful` at `Files=3,
+  Tests=49`; both registered task surfaces pass as `normal`, with the index at
+  46.5% and task evidence at 74.0%. Path/locality passes `Files=2, Tests=22`;
+  all 37 mdBook chapters test and the repository-local 73-file/17,110,777-byte
+  build passes then is removed exactly; Knowledge Map validates 1,095 facts/
+  5,717 keys and Memory is 36 lines. The RAM guard stopped the broader four-file
+  documentation group before test output at 89.6% host use versus its required
+  88% cutoff; no failing test ran and the guard was not weakened. Final staged
+  task acceptance, diff hygiene, and all nine doctrines pass as recorded below.
+  No task ID/file, limit, frozen identity, README landing content, compiler/
+  runtime/generated output, or product behavior is removed or changed.
 
 ## Verification Log
 
@@ -242,6 +244,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.6` activation | clean `18e2dcbc6` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/Knowledge Map/Memory/live-document/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths/task Files=2/Tests=13; 37 chapters; build 73 files/17,104,418 bytes; Knowledge Map 1,094 facts/5,706 keys; trees=3/nodes=882; Memory 36 lines; live-document census 20 surfaces and 2,773/2,773 paths; `.6` alone active; no schema, checker, tree migration, threshold, frozen-file, landing-content, or product change |
 | `2026-07-31` | `.6` bounded task history | decision 0042; optional finite manifest and exact-source sealed-segment schema; exact version-object compact terminal; legacy/positive/fail-closed Git fixtures; task/route/live-size/path/locality/mdBook/Knowledge Map/Memory/diff/staged-acceptance/nine-doctrine gates; exact cleanup | `passed`; syntax OK; focused Files=1/Tests=27; combined Files=3/Tests=42; paths/locality Files=2/Tests=22; 37 chapters; build 73 files/17,108,469 bytes; Knowledge Map 1,095 facts/5,714 keys; live graph trees=3/nodes=882/segments=0/compact_terminals=0; index draft rejected at 93.5%, corrected to 1,078 lines/89.8%; broad docs group safely stopped pre-execution by 88% RAM guard at 88.6%/89.0%/95.0% with no failing test; all nine staged doctrines pass; no migration, limit/state widening, frozen-file, landing-content, or product change |
 | `2026-07-31` | `.7` activation | clean `78adb81ae` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/Knowledge Map/Memory/live-document/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; all 37 chapters test; build 73 files/17,110,023 bytes; Knowledge Map 1,095 facts/5,714 keys; trees=3/nodes=882/segments=0/compact terminals=0; Memory 35 lines; live-document census 20 surfaces and 2,775/2,775 paths; `.7` alone active; no node/index migration, schema/checker, threshold, frozen-file, landing-content, or product change |
+| `2026-07-31` | `.7` bounded task evidence/index | exact IAL2 source segment; finite exact-index manifest; active/proposed PNT view; syntax/focused/combined/path/locality/mdBook/Knowledge Map/Memory/live-size/diff/staged-acceptance/nine-doctrine gates; exact cleanup | `passed`; 844 sealed nodes; 540 unique terminal rows; index 558 lines/39,851 bytes; live IAL2 85/36,886; segment 5,914/2,366,453; task integrity trees=3/nodes=882/segments=1/compact=0/index archives=1; focused Files=1/Tests=34; combined Files=3/Tests=49; paths/locality Files=2/Tests=22; 37 chapters; removed build 73 files/17,110,777 bytes; Knowledge Map 1,095 facts/5,717 keys; Memory 36 lines; 20 surfaces and 2,776/2,776 paths; all nine staged doctrines pass; broad docs group stopped safely pre-output by RAM guard at 89.6% versus 88% |
 
 ## Commit Log
 
@@ -252,6 +255,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.6` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: activate task-tree schema contract` | Activate only the sealed-segment/compact-terminal schema frontier from clean commit `18e2dcbc6`; implementation remains pending. |
 | `.6` bounded task history | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: enforce bounded task-tree history` | Ship decision 0042's optional bounded exact-provenance storage forms and checker proofs without migrating an existing tree; `.7` is next. |
 | `.7` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: activate task-tree migration` | Activate only the first IAL2/task/index migration from clean commit `78adb81ae`; migration remains pending. |
+| `.7` bounded task evidence/index | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: bound task evidence and index` | Seal 844 exact-source IAL2 children and 540 unique terminal index rows while keeping current PNT and completed task files direct. |
 
 ## Changelog
 
@@ -271,3 +275,8 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: `.6` ships bounded manifest/segment/compact-terminal support,
   exact Git-backed retrieval proofs, and 27 focused subtests while leaving all
   existing trees unmigrated; `.7` is the next clean selection frontier.
+- `2026-07-31`: `.7` applies the contract without deleting or renaming a node:
+  844 IAL2 children reconstruct from one content-addressed segment, 540 unique
+  terminal index rows become exact-version query history, and the live index
+  retains only three active plus eleven proposed rows. Both task surfaces are
+  normal; `.8` is the next clean selection frontier.

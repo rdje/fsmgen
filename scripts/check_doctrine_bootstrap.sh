@@ -70,6 +70,7 @@ live_document_files=(
   doctrine/live_document_size/surfaces.jsonl
   doctrine/live_document_size/archive_descriptors.jsonl
   doctrine/readme_entrypoint/routed_destinations.jsonl
+  doctrine/task_tree/index_archives.jsonl
   scripts/check_live_document_size.sh
 )
 for file in "${live_document_files[@]}"; do

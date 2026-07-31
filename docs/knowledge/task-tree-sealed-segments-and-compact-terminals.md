@@ -9,6 +9,7 @@ answers:
   - "what is a compact completed task-tree terminal?"
   - "does PNT need to read archived task-tree history?"
   - "are existing task trees required to migrate to segments?"
+  - "where did the completed task-tree index rows go?"
 date: 2026-07-31
 status: current
 tags: [task-tree, continuity, containment, jsonl, segment, archive, provenance]
@@ -38,5 +39,10 @@ the whole terminal subtree through git. Missing revisions, digest or count
 drift, nonterminal archived nodes, broken child closure, and pending leaf
 evidence all fail closed.
 
-Both forms are optional. Existing one-file trees remain valid and `.6` migrates
-none; `.7` separately owns any real task-tree/index migration.
+Both forms are optional. Existing one-file trees remain valid. `.7` performs
+the first migration: one exact-source segment now holds all 844 terminal IAL2
+children while the 85-line live task file retains its active root. A separate
+bounded JSONL version-object manifest seals 540 unique terminal index rows;
+the live 558-line index contains only active/proposed selection plus retrieval
+instructions. The checker reconstructs 882 nodes and proves one segment plus
+one completed-index archive. Completed task files remain directly browsable.

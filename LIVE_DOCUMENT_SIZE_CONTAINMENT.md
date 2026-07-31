@@ -33,8 +33,10 @@
   `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2` enforces the complete tracked
   Markdown inventory before any family migration. Decision 0042 and leaf `.6`
   additionally define bounded task-tree segment manifests, content-addressed
-  exact-source sealed subtrees, and exact version-object compact terminals;
-  existing task trees remain unmigrated until `.7`.
+  exact-source sealed subtrees, and exact version-object compact terminals.
+  Leaf `.7` now applies those forms to the 844 terminal IAL2 children and the
+  540-row completed cross-tree index: both task surfaces return to `normal`
+  without deleting a completed task file or changing README landing content.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---

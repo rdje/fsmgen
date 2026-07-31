@@ -244,11 +244,10 @@ Expected signals:
   reusable policy: `README_POLICY.md`).
 - Knowledge Map check says facts are valid, IDs are unique, and the map is in sync.
 - memory architecture check confirms `MEMORY.md` is bounded and bootstrap/task/decision stores exist.
-- task-tree integrity reports measured active-tree/node/segment/compact-terminal
-  counts and rejects live or cross-file identity/reference/status/evidence
-  drift, unbounded or digest/source-divergent sealed segments, and failed exact
-  version-object reconstruction while ignoring optional historical views under
-  decisions `0019` and `0042`.
+- task-tree integrity reports active-tree/node/segment/compact-terminal/index-
+  archive counts, rejects cross-file identity/source/retrieval drift, and proves
+  bounded query-first completed rows while ignoring unregistered historical
+  views under decisions `0019` and `0042`.
 - doctrine bootstrap check confirms root doctrine/toolbox docs, bootstrap
   pointers, hook wiring, and CI wiring exist.
 - doctrine driver reports every registered doctrine as `PASS`.

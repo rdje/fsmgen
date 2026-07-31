@@ -18,7 +18,7 @@ DOCTRINES=(
   "LIVE-DOCUMENT-SIZE|scripts/check_live_document_size.sh|Every declared live-document surface stays local, covered, lifecycle-valid, and within owned pressure controls"
   "README-ENTRYPOINT|scripts/check_readme_entrypoint.sh|README.md and every routed destination stay pressure-controlled discovery surfaces"
   "PROJECT-DATA-LOCALITY|scripts/check_project_data_locality.sh|Project-owned data stays on repository-derived same-volume roots"
-  "TASK-TREE-INTEGRITY|scripts/check_task_tree_integrity.pl|Active task-tree roots, live and sealed nodes, compact terminals, child references, statuses, and evidence stay structurally complete and retrievable"
+  "TASK-TREE-INTEGRITY|scripts/check_task_tree_integrity.pl|Active task-tree roots, live and sealed nodes, compact terminals, bounded completed-index archives, child references, statuses, and evidence stay structurally complete and retrievable"
   "TASK-ACCEPTANCE|scripts/check_task_acceptance.sh|Staged implementation changes carry fresh box-scoped task diagnosis and regression evidence"
 )
 

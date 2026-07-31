@@ -28,7 +28,9 @@ my $index = read_file($index_path, $index_relative);
 
 my @active_trees;
 my %seen_index_tree;
-for my $line (split /\n/, $index) {
+my $active_index_section =
+    extract_section($index, 'Active Task Trees') // $index;
+for my $line (split /\n/, $active_index_section) {
     next if $line !~ /^\|\s*`([^`]+)`\s*\|\s*`active`\s*\|/;
     my $tree_id = $1;
     my ($task_path) = $line =~ m{\((docs/tasks/[^)]+\.md)\)};
@@ -49,6 +51,20 @@ my @errors;
 my $total_nodes = 0;
 my $total_segments = 0;
 my $total_compact_terminals = 0;
+my $total_index_archives = 0;
+
+my @index_archive_fields =
+    $index =~ /^- Completed-history manifest: `([^`]+)`\s*$/mg;
+if (@index_archive_fields > 1) {
+    push @errors,
+        "$index_relative: must have at most one Completed-history manifest field";
+}
+elsif (@index_archive_fields == 1) {
+    $total_index_archives = load_index_archive_manifest(
+        manifest => $index_archive_fields[0],
+        index    => $index,
+    );
+}
 
 for my $entry (@active_trees) {
     my ($tree_id, $task_relative) = @{$entry};
@@ -105,10 +121,272 @@ if (@errors) {
 }
 
 printf "[task-tree-integrity] all active task-tree invariants hold "
-    . "(trees=%d, nodes=%d, segments=%d, compact_terminals=%d)\n",
+    . "(trees=%d, nodes=%d, segments=%d, compact_terminals=%d, "
+    . "index_archives=%d)\n",
     scalar(@active_trees), $total_nodes, $total_segments,
-    $total_compact_terminals;
+    $total_compact_terminals, $total_index_archives;
 exit 0;
+
+sub load_index_archive_manifest {
+    my (%args) = @_;
+    my $manifest_relative = $args{manifest};
+    my $current_index = $args{index};
+
+    if (!safe_relative_path($manifest_relative)
+        || $manifest_relative !~ /\.jsonl\z/) {
+        push @errors,
+            "$index_relative: unsafe or non-JSONL completed-history manifest "
+                . $manifest_relative;
+        return 0;
+    }
+    my $manifest_path = checked_local_file(
+        $manifest_relative, "$index_relative: completed-history manifest"
+    );
+    return 0 if !defined $manifest_path;
+
+    my $raw = read_file($manifest_path, $manifest_relative);
+    my @records = decode_jsonl($raw, $manifest_relative);
+    return 0 if !@records;
+
+    my $registry = shift @records;
+    check_keys(
+        $registry,
+        [qw(record_type schema_version max_records max_bytes)],
+        [],
+        "$manifest_relative: registry record",
+    );
+    check_equal($registry->{record_type}, 'registry',
+        "$manifest_relative: registry record_type");
+    check_integer($registry->{schema_version}, 1, 1,
+        "$manifest_relative: registry schema_version");
+    check_integer($registry->{max_records}, 1, undef,
+        "$manifest_relative: registry max_records");
+    check_integer($registry->{max_bytes}, 1, undef,
+        "$manifest_relative: registry max_bytes");
+    if (is_positive_integer($registry->{max_records})
+        && @records > $registry->{max_records}) {
+        push @errors,
+            "$manifest_relative: archive record count " . scalar(@records)
+                . " exceeds max_records $registry->{max_records}";
+    }
+    if (is_positive_integer($registry->{max_bytes})
+        && length($raw) > $registry->{max_bytes}) {
+        push @errors,
+            "$manifest_relative: size " . length($raw)
+                . " exceeds max_bytes $registry->{max_bytes}";
+    }
+    if (!@records) {
+        push @errors,
+            "$manifest_relative: contains no completed-history archive records";
+        return 0;
+    }
+
+    my %seen_archive_id;
+    my $record_number = 1;
+    for my $record (@records) {
+        $record_number++;
+        my $where = "$manifest_relative: record $record_number";
+        check_keys(
+            $record,
+            [qw(record_type schema_version archive_id revision path sha256
+                lines bytes terminal_rows unique_tree_ids statuses
+                current_pointer sealed_on)],
+            [],
+            $where,
+        );
+        check_equal($record->{record_type}, 'version_object',
+            "$where record_type");
+        check_integer($record->{schema_version}, 1, 1,
+            "$where schema_version");
+
+        my $archive_id = $record->{archive_id};
+        if (!defined $archive_id || ref $archive_id
+            || $archive_id !~ /\A[a-z][a-z0-9_.-]*\z/) {
+            push @errors, "$where has invalid archive_id";
+        }
+        elsif ($seen_archive_id{$archive_id}++) {
+            push @errors, "$where duplicates archive_id $archive_id";
+        }
+
+        my $revision = $record->{revision};
+        if (!defined $revision || ref $revision
+            || $revision !~ /\A(?:[0-9a-f]{40}|[0-9a-f]{64})\z/) {
+            push @errors, "$where has invalid exact revision";
+            next;
+        }
+        my $path = $record->{path};
+        my $current_pointer = $record->{current_pointer};
+        for my $path_field (
+            ['path', $path], ['current_pointer', $current_pointer]
+        ) {
+            my ($name, $value) = @{$path_field};
+            push @errors, "$where has unsafe $name"
+                if !defined $value || ref $value
+                    || !safe_relative_path($value) || $value !~ /\.md\z/;
+        }
+        next if !defined $path || ref $path || !safe_relative_path($path);
+        if ($path ne $index_relative) {
+            push @errors, "$where path must identify $index_relative";
+        }
+        if (defined $current_pointer && !ref $current_pointer
+            && $current_pointer ne $index_relative) {
+            push @errors,
+                "$where current_pointer must identify $index_relative";
+        }
+
+        my $digest = $record->{sha256};
+        push @errors, "$where has invalid sha256"
+            if !defined $digest || ref $digest
+                || $digest !~ /\A[0-9a-f]{64}\z/;
+        for my $field (qw(lines bytes terminal_rows unique_tree_ids)) {
+            check_integer($record->{$field}, 1, undef, "$where $field");
+        }
+        my $statuses = $record->{statuses};
+        if (ref($statuses) ne 'ARRAY'
+            || join(',', sort @{$statuses}) ne 'deferred,done,superseded') {
+            push @errors,
+                "$where statuses must be exactly done, deferred, superseded";
+        }
+        my $sealed_on = $record->{sealed_on};
+        push @errors, "$where has invalid sealed_on date"
+            if !defined $sealed_on || ref $sealed_on
+                || $sealed_on !~ /\A[0-9]{4}-[0-9]{2}-[0-9]{2}\z/;
+
+        my $source = retrieve_version_object(
+            $revision, $path, "$where completed-history source"
+        );
+        next if !defined $source;
+        if (defined $digest && !ref $digest
+            && $digest =~ /\A[0-9a-f]{64}\z/
+            && sha256_hex($source) ne $digest) {
+            push @errors, "$where completed-history digest mismatch";
+        }
+        if (is_positive_integer($record->{lines})
+            && line_count($source) != $record->{lines}) {
+            push @errors,
+                "$where completed-history line count $record->{lines} does not "
+                    . "match retrieved count " . line_count($source);
+        }
+        if (is_positive_integer($record->{bytes})
+            && length($source) != $record->{bytes}) {
+            push @errors,
+                "$where completed-history byte count $record->{bytes} does not "
+                    . "match retrieved count " . length($source);
+        }
+
+        my @terminal_rows = terminal_index_rows($source, $where);
+        my %tree_ids;
+        for my $row (@terminal_rows) {
+            if ($tree_ids{$row->{tree_id}}++) {
+                push @errors,
+                    "$where completed-history duplicates tree ID $row->{tree_id}";
+            }
+        }
+        if (is_positive_integer($record->{terminal_rows})
+            && @terminal_rows != $record->{terminal_rows}) {
+            push @errors,
+                "$where terminal_rows $record->{terminal_rows} does not match "
+                    . scalar(@terminal_rows) . " retrieved rows";
+        }
+        if (is_positive_integer($record->{unique_tree_ids})
+            && scalar(keys %tree_ids) != $record->{unique_tree_ids}) {
+            push @errors,
+                "$where unique_tree_ids $record->{unique_tree_ids} does not match "
+                    . scalar(keys %tree_ids) . " retrieved IDs";
+        }
+
+        my ($ok, undef, undef, $stdout, $stderr) = run(
+            command => [
+                'git', '-C', $root, 'ls-tree', '-r', '--name-only',
+                $revision, '--', 'docs/tasks'
+            ],
+        );
+        if (!$ok) {
+            my $detail = join('', @{$stderr || []});
+            $detail =~ s/\s+/ /g;
+            push @errors,
+                "$where cannot enumerate exact task files"
+                    . ($detail ne '' ? " ($detail)" : '');
+        }
+        else {
+            my %source_paths = map { $_ => 1 }
+                grep { $_ ne '' } split /\n/, join('', @{$stdout || []});
+            for my $row (@terminal_rows) {
+                push @errors,
+                    "$where archived tree $row->{tree_id} cannot retrieve "
+                        . "$revision:$row->{task_path}"
+                    if !$source_paths{$row->{task_path}};
+                checked_local_file(
+                    $row->{task_path},
+                    "$where current task $row->{tree_id}",
+                );
+            }
+        }
+    }
+
+    validate_live_index_views($current_index, $index_relative);
+    return scalar @records;
+}
+
+sub terminal_index_rows {
+    my ($contents, $where) = @_;
+    my @rows;
+    for my $heading ('Active Task Trees', 'Completed Task Trees') {
+        my $section = extract_section($contents, $heading);
+        if (!defined $section) {
+            push @errors, "$where source is missing ## $heading";
+            next;
+        }
+        for my $line (split /\n/, $section) {
+            next if $line !~ /^\|\s*`([^`]+)`\s*\|\s*`
+                (done|deferred|superseded)`\s*\|/x;
+            my ($tree_id, $status) = ($1, $2);
+            my ($task_path) =
+                $line =~ m{\((docs/tasks/[^)]+\.md)\)\s*\|\s*\z};
+            if (!defined $task_path || !safe_relative_path($task_path)) {
+                push @errors,
+                    "$where archived tree $tree_id has unsafe or missing task link";
+                next;
+            }
+            push @rows, {
+                tree_id => $tree_id,
+                status => $status,
+                task_path => $task_path,
+            };
+        }
+    }
+    return @rows;
+}
+
+sub validate_live_index_views {
+    my ($contents, $where) = @_;
+    for my $view (
+        ['Active Task Trees', 'active'],
+        ['Proposed Task Trees', 'proposed'],
+    ) {
+        my ($heading, $expected) = @{$view};
+        my $section = extract_section($contents, $heading);
+        if (!defined $section) {
+            push @errors, "$where is missing ## $heading";
+            next;
+        }
+        for my $line (split /\n/, $section) {
+            next if $line !~ /^\|\s*`([^`]+)`\s*\|\s*`([^`]+)`\s*\|/;
+            my ($tree_id, $status) = ($1, $2);
+            push @errors,
+                "$where $heading row $tree_id has status $status, expected $expected"
+                if $status ne $expected;
+        }
+    }
+    my $completed = extract_section($contents, 'Completed Task Trees');
+    if (!defined $completed) {
+        push @errors, "$where is missing ## Completed Task Trees";
+    }
+    elsif ($completed =~ /^\|\s*`([^`]+)`\s*\|/m) {
+        push @errors,
+            "$where Completed Task Trees retains live row $1 instead of query-first history";
+    }
+}
 
 sub load_segment_manifest {
     my (%args) = @_;
@@ -1002,8 +1280,10 @@ Usage:
 Checks active task trees indexed by docs/TASK_TREE.md. The live task file is
 authoritative; optional bounded JSONL manifests may add exact-source sealed
 subtree segments, and compact completed terminals must retrieve their full
-terminal subtree from an exact version object. PATH is intended for focused
-repository-local fixtures.
+terminal subtree from an exact version object. A bounded completed-history
+manifest may prove query-first terminal index rows from an exact version while
+the live PNT tables retain only active/proposed work. PATH is intended for
+focused repository-local fixtures.
 USAGE
     exit $exit;
 }

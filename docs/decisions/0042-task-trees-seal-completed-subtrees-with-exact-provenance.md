@@ -66,3 +66,15 @@ leaf must add the capability without migrating an existing tree.
   reconstruction deterministic and mechanically tested.
 - No existing task file, node, status, threshold, or product behavior changes
   merely because the checker understands the new optional forms.
+
+## First Migration
+
+Leaf `.7` applies the contract without renaming or deleting a node. Exact
+revision `44b5f159789ba1c31b487c6b047097bb27a9770d` supplies all 844 terminal
+IAL2 children to one content-addressed segment; the live file retains its
+active root and a short Git retrieval pointer for decision-0019 historical
+views. The cross-tree index retains only active/proposed work and seals its 540
+unique terminal rows through a separate finite JSONL exact-version manifest.
+The checker proves the archived index digest, dimensions, statuses, unique IDs,
+revision-local task links, and PNT-view purity. Completed task files remain in
+their canonical repository paths.

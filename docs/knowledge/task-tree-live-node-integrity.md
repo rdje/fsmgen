@@ -8,6 +8,7 @@ answers:
   - "why is IAL2-FEATURE-COMPLETENESS-FRONTIER.705 done now?"
   - "which commit field was missing from the IAL2 task tree?"
   - "does TASK-TREE-INTEGRITY validate sealed task-tree segments?"
+  - "does TASK-TREE-INTEGRITY validate completed index archives?"
 date: 2026-07-31
 status: current
 tags: [task-tree, doctrine, continuity, integrity, ial2]
@@ -24,6 +25,14 @@ same checked graph across optional bounded JSONL manifests and content-
 addressed exact-source terminal segments; compact completed terminals must
 retrieve and validate their complete exact version-object subtree. Existing
 one-file trees remain valid.
+
+The first migration seals all 844 terminal IAL2 children from exact revision
+`44b5f159789ba1c31b487c6b047097bb27a9770d` and replaces 540 unique terminal
+cross-tree rows with a bounded exact-version index manifest. The checker now
+also proves archived-index digest/dimensions, terminal identity/status, exact
+task-path retrieval, and active/proposed-only PNT tables. Its live result is
+three trees, 882 reconstructed nodes, one segment, zero compact terminals, and
+one completed-index archive.
 
 The repair restores missing root child `.633`, normalizes `.73` from
 `completed` to `done`, marks historical/resolved blocker `.705` live `done`,
