@@ -48,9 +48,10 @@ accepted as an inert annotation.
 Version 1 deliberately excludes absolute-time behavior, analog/real values,
 host-language callbacks, raw HDL/UVM/VHDL blocks, native hierarchy, dynamic
 allocation, recursion, unbounded loops/queues/crosses, runtime-created names,
-and backend lifecycle hooks. Typed native extensions, execution scheduling,
-replay algorithm, result manifests, and backends remain owned by `.6` and
-later leaves.
+and backend lifecycle hooks. Decision `0036` and
+`docs/VIAL_EXECUTION_IR_V1_CONTRACT.md` now select typed native, execution,
+replay, plan, result, and parity contracts; implementation and backends remain
+owned by `.7` and later leaves.
 
 Decision `0034` makes this an initial-profile boundary, not VIAL's expressive
 ceiling. VIAL is not constrained by synthesizability: later typed native
@@ -301,7 +302,8 @@ Strings are opaque logical bridge references at the semantic phase. They must
 be non-empty single-line strings and unique within kind, but `.3` does not
 pretend they exist. The future bridge binder validates them. An endpoint's
 authored expected type and access class are binding assertions. Core v1 rejects
-`native_hierarchy`; typed native extension binding remains owned by `.6`.
+`native_hierarchy`; typed native extension binding is selected by `.6` and
+remains unimplemented until its later semantic/profile owners act.
 
 The first profile requires exactly one domain per fixture, at least one public
 endpoint, and at least one transaction binding. Multiple domains parse only as
@@ -373,7 +375,8 @@ unique, bounds fit the type and satisfy low <= high, and constraints may refer
 only to the choice and immutable fixture declarations. The semantic IR stores
 the seed, explicit decision ID, distribution, constraint AST, and semantic
 source identity. `.2` does not select a random algorithm or chosen value;
-`VIALExecutionIR` contract `.6` owns algorithm/version and replay records.
+completed `.6` selects exact plan-time `sha256_counter_rejection_v1` and replay
+records without changing this semantic source contract.
 Within one scenario, the first evaluation of one choice creates exactly one
 logical decision and later references reuse that value; a new scenario starts
 a new decision occurrence with the same declared decision ID plus its scenario
@@ -832,8 +835,8 @@ Deferred to later exact owners:
 
 - bridge-reference existence and type equivalence (selected bridge schema
   `0035`, implementation `.5`, and binding `.7`);
-- logical phase scheduling, random algorithm, replay values, native extensions,
-  plans, results, and parity (`.6`/`.7`);
+- implementation of the selected logical phase scheduling, random/replay,
+  native-extension, plan, result, and parity contracts (`.7` and later);
 - public CLI/API/artifact layout and schema migration (`.8`);
 - plain-SystemVerilog, UVM, VHDL, and mixed-language output/runtime;
 - broader property operators, multi-domain fixtures, aggregate model state,

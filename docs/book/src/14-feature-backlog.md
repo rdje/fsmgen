@@ -4443,6 +4443,15 @@ continuity-only activation of `.6` for execution-contract selection. The
 contract itself remains unperformed until activation commits cleanly; no VIAL
 binding/ExecutionIR, plan/result artifact, scheduler, native extension,
 backend, runtime, parity, or product behavior changes during activation.
+Completed `.6` now accepts decision `0036` and selects target-neutral
+`fsmgen.vial_execution_ir.v1` with exact bridge binding, drive/sample/react/
+check logical time, deterministic fibers/ties/cancellation, plan-time
+`sha256_counter_rejection_v1` random/replay values, declarative typed native
+implementation manifests, defensive plan, normalized result/parity schemas,
+diagnostics, limits, and the exact AHB oracle. The complete contract is
+[VIAL_EXECUTION_IR_V1_CONTRACT](../../VIAL_EXECUTION_IR_V1_CONTRACT.md).
+Proposed `.7` alone is selected next for separate clean activation of private
+no-backend implementation; selection changes no product behavior.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -12198,6 +12207,14 @@ commit `51434a2ae` permits the continuity-only activation of `.6` for exact
 `VIALExecutionIR`, deterministic logical-time, native-extension, plan, result,
 and parity contract selection. Selection remains unperformed until activation
 commits cleanly, and activation changes no product behavior.
+Completed `.6` accepts decision `0036` and freezes the exact target-neutral
+ExecutionIR/logical-time/random-replay/native/plan/result/parity contract.
+SystemVerilog/UVM/VHDL methodology machinery remains backend-private; the
+selected plan carries semantic outcomes and explicit target requirements.
+Proposed `.7` is selected next for separate clean activation of private no-
+backend implementation. No file, backend, runtime, parity, or product behavior
+ships in contract selection. See the
+[execution v1 contract](../../VIAL_EXECUTION_IR_V1_CONTRACT.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

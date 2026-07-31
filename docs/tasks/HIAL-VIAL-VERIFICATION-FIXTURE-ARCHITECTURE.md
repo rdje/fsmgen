@@ -137,11 +137,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5: implement review-routed bridge manifest`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6`
-  Status: `active`
+  Status: `done`
   Goal: `Select VIALExecutionIR version 1, deterministic logical-time execution, typed native-extension, plan, result, and parity contracts.`
   Acceptance: `A documentation-only contract freezes binder/elaborator ownership and invariants, drive/sample/react/check phases, fiber/tie/cancel/timeout behavior, stable random-decision/replay identity, model/scoreboard/coverage/fault execution, capability negotiation, methodology-owned native lifecycle hooks and typed external artifacts without imposing a synthesizability ceiling on VIAL, sanitized vial-plan.json, normalized verification-result-manifest.json, cross-backend parity fields, defensive-copy policy, diagnostics, and negative boundaries.`
-  Verification: `Activated continuity-only from clean .5 implementation commit 51434a2ae. This transition changes task/index, roadmap, audit, bridge-contract boundary, mdBook, facts, bounded Memory, changelog, and regenerated Knowledge Map continuity only. Task-tree integrity passes at trees=2/nodes=865; docs pass at Files=4/Tests=51; all 37 mdBook chapters test and the 73-file/16,971,000-byte repository-local build passes; Knowledge Map generation/check passes at 1,089 facts/5,643 question keys; Memory is 51 lines; diff, docs-only staged acceptance, all eight doctrines, and exact build-output cleanup pass. Exact execution-contract selection remains unperformed until activation commits cleanly. No VIAL source/SemanticIR, HIAL bridge/parser/annotation/report, VIAL binding/ExecutionIR, plan/result schema or artifact, scheduler, native extension, target backend, CLI/API, capability/support surface, compile, simulation, parity, or product behavior changes during activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6: activate VIAL execution contract`
+  Verification: `Decision 0036 and the 1,148-line docs/VIAL_EXECUTION_IR_V1_CONTRACT.md select target-neutral fsmgen.vial_execution_ir.v1/core_directed_single_clock_execution_v1, exact SemanticIR/bridge binding, normalized values, deterministic (domain,cycle,drive|sample|react|check,ordinal) execution and tie order, closed action/fiber/temporal/model/scoreboard/coverage/fault semantics, plan-time sha256_counter_rejection_v1 randomness and strict replay, declarative repository-relative typed native manifests distinct from Perl callbacks, defensive fsmgen.vial_plan.v1, normalized fsmgen.verification_result_manifest.v1, canonical portable parity projection/report, diagnostics, limits, exact AHB binding/plan oracle, owners, non-claims, and rollback. Current SemanticIR/bridge/extension evidence passes at Files=3/Tests=24; task-tree integrity passes at trees=2/nodes=865; docs pass at Files=4/Tests=51; all 37 mdBook chapters test and the 73-file/17,008,064-byte repository-local build passes; Knowledge Map passes at 1,090 facts/5,658 question keys; Memory is 56 lines; diff, docs-only staged acceptance, all eight doctrines, and exact build-output cleanup pass. Proposed .7 alone is selected next for separate clean activation. No VIAL source/parser/SemanticIR, HIAL bridge/parser/annotation/report, VIAL binding/ExecutionIR implementation, plan/result file, scheduler, native extension implementation, backend, CLI/API, compile, simulation, runtime, parity, or product behavior changes in selection.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6: select deterministic VIAL execution contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7`
   Status: `proposed`
@@ -255,10 +255,11 @@ review-routed `HIALVIALBridgeManifest` v1 contract. Clean selection commit
 `0366dfe30` activated implementation `.5` through a separate continuity
 transition. Completed `.5` now ships the private in-process/no-file bridge
 producer through direct IAL0, direct IAL1, and generated/reparsed IAL1 for
-IAL2. Documentation contract `.6` is selected next. Clean implementation
-commit `51434a2ae` permits this separate continuity transition to activate
-`.6`; exact contract selection remains
-unperformed until activation commits cleanly. Decision `0034` records that this bounded profile
+IAL2. Clean implementation commit `51434a2ae` and activation commit
+`bf1e25274` permit completed `.6` to accept decision `0036` and the exact
+target-neutral ExecutionIR/logical-time/random-replay/native/plan/result/parity
+contract. Proposed `.7` alone is selected next for separate clean activation
+of private no-backend implementation. Decision `0034` records that this bounded profile
 is not VIAL's language ceiling: target SV/UVM/VHDL machinery is compiler-owned
 in the same architectural sense that assembly is compiler-owned beneath
 C/C++ or Rust.
@@ -338,9 +339,8 @@ C/C++ or Rust.
 
 ## Open Questions
 
-- Active `.6` must select the exact execution, binding, logical-time, plan, result,
-  parity, and typed-native-extension contract without leaking target-language
-  plumbing into authored VIAL.
+- `.7` must implement the exact private binder/ExecutionIR/random-replay/plan
+  contract without target output and preserve every selected no-runtime claim.
 - `.12` must choose the UVM revision and an actually available qualified
   simulator before native UVM implementation can claim compile/runtime support.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
@@ -353,8 +353,8 @@ C/C++ or Rust.
 
 ## Blockers
 
-- None for active `.6`; contract selection may begin only after this
-  continuity transition commits cleanly. Later UVM, VHDL, and mixed-language implementation/
+- None for proposed `.7`; it requires separate clean activation after `.6`
+  selection commits. Later UVM, VHDL, and mixed-language implementation/
   qualification leaves retain explicit tool availability prerequisites and
   cannot borrow the current Verilator result.
 
@@ -373,6 +373,7 @@ C/C++ or Rust.
 | `2026-07-31` | `.5` activation | clean `.4` predecessor; task/index/roadmap/audit/contract/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.5` alone active; trees=2 / nodes=865; docs Files=4 / Tests=42; 37 chapters; build 73 files / 16,932,359 bytes; Knowledge Map 1,088 facts / 5,640 keys; Memory 57 lines; implementation and product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.5` implementation | private bridge Builder/Manifest/Report; additive parsed/reported IAL1 annotation; exact direct IAL0/direct IAL1/IAL2-via-IAL1 routes; t1551 and adjacent support/capability audits; preservation hashes; task/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; focused Files=6 / Tests=7,058; adjacent Files=28 / Tests=56; trees=2 / nodes=865; docs Files=4 / Tests=51; 37 chapters; build 73 files / 16,965,845 bytes; Knowledge Map 1,089 facts / 5,643 keys; generated IAL1 4,174 bytes / SHA-256 b0f3446874367787d0dd134701ff9e89a3b24af6ef9c03d6eb9dc484093f9e4c; generated IAL0 unchanged at 5,854 bytes / SHA-256 3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf; no public file/API, binding, plan, backend, or runtime claim; `.6` selected next for clean activation; output removed exactly |
 | `2026-07-31` | `.6` activation | clean `.5` predecessor; task/index/roadmap/audit/bridge-contract/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.6` alone active; trees=2/nodes=865; docs Files=4/Tests=51; 37 chapters; build 73 files/16,971,000 bytes; Knowledge Map 1,089 facts/5,643 keys; Memory 51 lines; execution contract and product behavior unchanged; output removed exactly |
+| `2026-07-31` | `.6` selection | decision `0036`; exact binding/ExecutionIR/logical-time/action/random-replay/native/plan/result/parity/diagnostic/limit/AHB/non-claim contract; current SemanticIR/bridge/extension/report evidence; task/roadmap/audit/book/fact consistency; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; contract 1,148 lines; evidence Files=3/Tests=24; trees=2/nodes=865; docs Files=4/Tests=51; 37 chapters; build 73 files/17,008,064 bytes; Knowledge Map 1,090 facts/5,658 keys; Memory 56 lines; `.7` alone selected next; no implementation/product change; output removed exactly |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -454,8 +455,16 @@ C/C++ or Rust.
 | `.5` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5: activate bridge manifest implementation` | Activate only private in-process/no-file bridge implementation after clean `.4`; implementation remains unperformed. |
 | `.5` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5: implement review-routed bridge manifest` | Ship the bounded private bridge through canonical HIAL review routes, with additive IAL1 metadata, exact accounting and fail-closed tests; leave VIAL binding, files, public APIs, backends, and runtime unclaimed. |
 | `.6` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6: activate VIAL execution contract` | Activate only documentation selection of the ExecutionIR/logical-time/native-extension/plan/result/parity contract after clean `.5`; selection and product behavior remain unperformed. |
+| `.6` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6: select deterministic VIAL execution contract` | Accept decision `0036`, freeze the target-neutral operational graph, logical-time/random-replay/native/plan/result/parity contract, and select proposed `.7` without product behavior. |
 
 ## Changelog
+
+- `2026-07-31`: `.6` accepts decision `0036` and the exact target-neutral
+  `VIALExecutionIR` v1 contract. Logical drive/sample/react/check ordering,
+  plan-time stable randomness/replay, declarative typed native implementations,
+  sanitized plan, normalized result/parity, exact AHB oracle, limits,
+  diagnostics, and no-backend boundary are frozen. Proposed `.7` is selected
+  next for separate clean activation; no product behavior changes in selection.
 
 - `2026-07-31`: Clean `.5` implementation commit `51434a2ae` permits a
   separate continuity-only activation of documentation contract `.6`. No VIAL

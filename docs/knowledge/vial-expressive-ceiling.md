@@ -18,8 +18,8 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, expressiveness, systemverilog, uvm, vhdl, events, callbacks, syntax, capabilities]
-evidence: docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
-reverify: rg -n 'not synthesis-bounded|uvm_event_callback|terse.*normal|expressive-frontier|initial profile.*language ceiling' docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+evidence: docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
+reverify: rg -n 'not synthesis-bounded|uvm_event_callback|terse.*normal|expressive-frontier|initial profile.*language ceiling|backend methodology|fsmgen\.vial_native_extension\.v1' docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
 Decision `0034` separates HIAL's necessary synthesis constraint from VIAL's
@@ -59,6 +59,7 @@ concepts require exact capability mappings or fail before output. The bounded
 `.3` source/SemanticIR implementation remains the first profile unchanged.
 Every later feature must expose, compose, or compress verification intent; a
 one-to-one catalog of renamed SV/UVM/VHDL syntax, classes, or methods is
-explicitly out of scope. Active documentation leaf `.6` owns selection of the
-execution contract that preserves this separation; its continuity-only
-activation selects no behavior.
+explicitly out of scope. Completed documentation leaf `.6` now selects the
+target-neutral execution/native/result contract that preserves this separation
+under decision `0036`; it implements no behavior. Proposed `.7` owns private
+no-backend implementation after separate clean activation.

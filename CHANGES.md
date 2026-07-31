@@ -31507,6 +31507,32 @@ task tree and git.
   54 lines; doctrines and exact output cleanup pass.
 - No separate development note is warranted for this continuity-only slice.
 
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6 — deterministic VIAL execution contract selected
+
+- Accepted decision `0036` and selected private target-neutral
+  `fsmgen.vial_execution_ir.v1` / `core_directed_single_clock_execution_v1`
+  with exact SemanticIR/bridge binding, normalized values, capability
+  classification, source maps, defensive ownership, and the checked AHB plan
+  oracle.
+- Selected deterministic `(domain, cycle, drive|sample|react|check, ordinal)`
+  time; closed action/fiber/tie/cancellation/timeout/property/model/scoreboard/
+  coverage/fault semantics; and plan-time arbitrary-width
+  `sha256_counter_rejection_v1` decisions with strict replay.
+- Selected declarative repository-relative typed native implementation
+  manifests distinct from Perl callbacks and backend phases, plus sanitized
+  plan, normalized result, canonical portable parity projection/report,
+  diagnostics, limits, exact owners, and negative boundaries.
+- Proposed `.7` alone is selected next for separate clean activation of
+  private no-backend implementation. VIAL source/SemanticIR, HIAL bridge and
+  generated output, public tooling/files, target backends, compile,
+  simulation, runtime, parity, and product behavior remain unchanged.
+- Current SemanticIR/bridge/extension evidence passes at `Files=3, Tests=24`;
+  task-tree integrity is 2/865; docs pass at `Files=4, Tests=51`; all 37 book
+  chapters and the 73-file / 17,008,064-byte local build pass; Knowledge Map
+  is current at 1,090 facts / 5,658 keys; doctrines and exact cleanup pass. The
+  durable rationale is decision `0036`, so no separate development note is
+  warranted.
+
 ### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6 — VIAL execution contract activated
 
 - Activated only documentation contract `.6` after clean bridge-

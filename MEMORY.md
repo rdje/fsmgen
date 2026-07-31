@@ -6,16 +6,17 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6: activate VIAL execution contract`).
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6: select deterministic VIAL execution contract`).
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.6` is
-  active for documentation-only execution-contract selection.
-- current_state: private bridge v1 ships in-process through canonical HIAL
-  review routes; this commit activates `.6` continuity only. VIAL remains
-  unbound and the execution contract remains unselected.
-- next_action: select the exact `VIALExecutionIR`/logical-time/typed-native-
-  extension/plan/result/parity contract under active `.6`, without product
-  behavior, then select `.7` for a separate clean activation.
-- in_flight_uncommitted: none after this activation commit; no background job
+  complete and proposed `.7` is selected next for clean activation.
+- current_state: source/SemanticIR and the review-routed bridge ship privately;
+  decision `0036` now selects exact target-neutral ExecutionIR/logical-time/
+  random-replay/native/plan/result/parity data and semantics. VIAL remains
+  unbound and no backend/runtime behavior ships.
+- next_action: activate only private no-backend implementation leaf
+  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7` from this clean selection,
+  then implement the selected binder/ExecutionIR/plan contract separately.
+- in_flight_uncommitted: none after this selection commit; no background job
   and repository-local mdBook output was removed exactly.
 - blockers: none for `.6`. Proposed
   `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.1` separately owns
@@ -29,6 +30,10 @@ history; this file carries only the current bounded resume state.
 - Decision `0035`: bridge v1 accepts direct IAL0, direct IAL1, or IAL2 only
   through generated/reparsed IAL1 and generated IAL0 review artifacts. PPIF
   AST/report data cannot feed the bridge directly.
+- Decision `0036`: ExecutionIR is a target-neutral operation graph with exact
+  drive/sample/react/check time. Random values are fixed at plan time through
+  keyed SHA-256 rejection/replay; native implementations are declarative typed
+  artifacts, never Perl callbacks or UVM/VHDL lifecycle vocabulary.
 - Private `FSM::HIAL::VIALBridge::{Builder,Manifest,Report}` exposes immutable,
   defensive, JSON-safe 27-key manifest data and writes no file. Public
   embedding/tooling remains `.8`; binding/execution remains `.6`/`.7`.
@@ -41,10 +46,10 @@ history; this file carries only the current bounded resume state.
 - The scalar-only profile leaves transaction `type_id` null and uses field
   type IDs; bridge events use a closed backend-neutral canonical expression
   record because the public IAL1 report has no reusable expression AST.
-- `.6` activation closeout: trees=2/nodes=865; docs Files=4/Tests=51; all 37
-  chapters test; build 73 files/16,971,000 bytes; Knowledge Map 1,089 facts/
-  5,643 keys; Memory/diff/docs-only acceptance/all eight doctrines pass; exact
-  output cleanup passes. No execution behavior is claimed.
+- `.6` closeout: contract 1,148 lines; evidence Files=3/Tests=24; trees=2/
+  nodes=865; docs Files=4/Tests=51; 37 chapters; build 73 files/17,008,064
+  bytes; Knowledge Map 1,090 facts/5,658 keys; Memory/diff/docs-only acceptance/
+  all doctrines/cleanup pass. No binding/file/backend/runtime/parity is claimed.
 - Guarded wider AHB verification stopped at 88.1% host use without a test
   failure; no unfinished broad-suite pass is claimed. t370 is durably parked.
 - Decisions `0025` freezes legacy status files. Push only on explicit request

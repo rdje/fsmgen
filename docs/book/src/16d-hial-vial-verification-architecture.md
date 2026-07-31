@@ -375,22 +375,59 @@ silently coerce unknowns or target-specific logic states.
 
 ## Logical time and reproducibility
 
-Portable execution is defined in four logical phases:
+Decision `0036` now selects private `fsmgen.vial_execution_ir.v1` and initial
+profile `core_directed_single_clock_execution_v1`. It is a target-neutral
+operation graph: one checked fixture is bound by exact semantic ID and
+structural type to one checked bridge. A backend receives that graph; it cannot
+reinterpret raw SemanticIR or bridge data independently.
 
-1. `drive`: apply actions before the selected active edge;
-2. `sample`: capture stable post-edge DUT observations;
-3. `react`: advance scenarios, models, and scoreboards; and
-4. `check`: commit expectations, coverage, transcript, and termination.
+Portable time is the tuple `(domain, cycle, phase, ordinal)`. Cycles and
+ordinals start at zero, and phase order is exact:
 
-SystemVerilog scheduling regions, UVM phases, VHDL processes, and delta cycles
-may implement these phases differently, but they must preserve the same
-logical order. Simultaneous work uses stable domain, phase, fiber, and source
-order. Zero-time unbounded loops fail closed.
+1. `drive`: apply verification-controlled values before the active edge;
+2. `sample`: capture one stable post-edge DUT snapshot and bridge events;
+3. `react`: update event counts, models, scoreboards, faults, and scenario
+   control; and
+4. `check`: resolve properties, coverage, joins/cancellation, timeout, and
+   completion.
 
-Random choices are keyed by stable source/scenario/fiber/decision identities,
-not host threads or callback order. The exact algorithm and replay encoding
-remain for the execution contract; the architecture requires schedule-
-independent reproducibility now.
+Stable operation/fiber ranks and local emission indices decide same-time ties.
+SystemVerilog scheduling regions, UVM callbacks/phases, VHDL processes/delta
+cycles, and host threads may implement the phases, but none has portable
+semantic authority.
+
+For example, this VIAL sequence:
+
+```lisp
+(reset bus 3)
+(scoreboard_expect writes (fields ...))
+(start request write (fields ...))
+(parallel any
+  (fiber completed
+    (await (within (event request completed) 1 256)))
+  (fiber failed
+    (await (within (event request error) 1 256))))
+```
+
+becomes ordered reset drive/sample intervals, one react-phase expected enqueue,
+one drive-phase transaction start, and two statically ranked property fibers.
+If both fibers resolve at one check stamp, the lower authored fiber rank wins;
+the loser is cancelled before another action, without undoing effects already
+committed.
+
+Random choices are resolved once during plan elaboration, not independently by
+each simulator. `sha256_counter_rejection_v1` hashes the source-defined seed
+and scenario-scoped occurrence ID into arbitrary-width unbiased candidates,
+rejects out-of-range or constraint-failing values, and stores the accepted
+normalized value in the plan. Every backend consumes that value. A strict
+`fsmgen.vial_replay.v1` record must match every occurrence exactly—no missing,
+extra, wrong-type, or constraint-breaking replay entry is accepted.
+
+A capability ledger distinguishes semantics already satisfied by this target-
+neutral profile from requirements a backend must supply. The checked AHB
+storage probe therefore yields a valid bound plan with an explicit equivalent-
+adapter requirement, not a false runtime-support claim. A backend without that
+adapter fails before output.
 
 ## Expressive ceiling: verification intent, not synthesis
 
@@ -448,8 +485,11 @@ required capability before output instead of silently weakening it. Decision
 ## Native extensions
 
 Portable `.vial` does not embed anonymous raw SystemVerilog/UVM or VHDL
-blocks. A native extension is an external repository-relative artifact with a
-typed contract containing:
+blocks. Decision `0036` selects declarative
+`fsmgen.vial_native_extension.v1`; it is deliberately unrelated to FSMGen's
+current Perl extension objects and live mutable hook contexts. A native
+implementation is an external repository-relative, content-addressed artifact
+with a typed contract containing:
 
 ```text
 extension identity
@@ -458,15 +498,22 @@ lifecycle hook
 typed inputs and outputs
 required capabilities
 source path, span, and content identity
-declared deterministic side effects
-required-or-fallback policy
-generated artifact identities
+declared deterministic effects
+required, paired-portable, or fallback policy
+shared outcome oracle where parity is claimed
 ```
 
-Hooks come from a closed family such as elaborate, build, drive, sample,
-predict, compare, cover, and finalize. Extensions cannot mutate private IR or
-undeclared DUT state. Backend-only behavior is excluded from portable parity
-unless paired implementations share one logical oracle.
+Hooks are the closed logical family `elaborate`, `configure`, `drive`,
+`sample`, `react`, `check`, and `finalize`. They are compiler seams—not UVM
+phase names, objections, VHDL processes, or host callbacks. Effects are limited
+to typed output, event notification, declared-value transformation, diagnostic,
+and coverage records. Extensions cannot mutate private IR, invent hierarchy,
+perform undeclared I/O, or suppress failures.
+
+The first checked source declares no native semantic node, so its plan contains
+no extension. Later native-family work can attach efficient target-specific
+implementations without turning VIAL into a catalog of renamed SV/UVM/VHDL
+mechanisms.
 
 ## Backend profiles and honest claims
 
@@ -491,8 +538,8 @@ separate qualification.
 
 ## Cross-backend result parity
 
-Every executable backend will emit a normalized
-`verification-result-manifest.json`. Equivalent portable intent must agree on:
+Every executable backend must build the selected closed
+`fsmgen.verification_result_manifest.v1`. Equivalent portable intent agrees on:
 
 - source, bridge, plan, scenario, and profile identities;
 - seeds and stable random-decision identities and values;
@@ -502,8 +549,19 @@ Every executable backend will emit a normalized
 - coverage hit counts and goals; and
 - timeout, cancellation, completion, unsupported exclusions, and final state.
 
-Generated source text can differ across languages. Waveforms and simulator
-transcripts remain diagnostics; neither is the portable semantic oracle.
+The manifest includes backend/tool/artifact evidence, but parity compares only
+its canonical `fsmgen.vial_parity_projection.v1`: portable or paired-native
+logical outcomes in deterministic order. The projection has a SHA-256 digest;
+`fsmgen.vial_parity_report.v1` still validates and deeply compares both shapes
+rather than trusting a digest alone. Native-only exclusions are explicit and
+cannot hide an omitted required portable check.
+
+Generated source text can differ across languages. Simulator timestamps,
+waveforms, host timing, target paths, UVM/VHDL plumbing, and transcripts remain
+diagnostic evidence; none is the portable semantic oracle. The complete record
+shapes, random byte encoding, action/property timing, diagnostics, limits, and
+AHB oracle are in the
+[VIAL execution v1 contract](../../VIAL_EXECUTION_IR_V1_CONTRACT.md).
 
 ## Mapping the AHB arbitration fixture
 
@@ -554,11 +612,11 @@ and the owning [task tree](../../tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTU
 tracks the exact frontier.
 
 The bounded source/SemanticIR and private bridge implementations are complete.
-Bridge leaf `.5` now ships the 27-key defensive in-process manifest through
-canonical HIAL review routes, including generated/reparsed IAL1 annotation for
-IAL2, without writing a bridge file or binding VIAL. Clean implementation
-commit `51434a2ae` permits a separate continuity-only activation of `.6` for
-the exact `VIALExecutionIR`, deterministic logical-time, typed native-
-extension, plan, result, and parity contract. Selection remains unperformed
-until activation commits cleanly. Activation changes no source/IR, bridge,
-artifact, scheduler, backend, runtime, parity, or product behavior.
+Bridge leaf `.5` ships the 27-key defensive in-process manifest through
+canonical HIAL review routes without writing a file or binding VIAL. Completed
+`.6` accepts decision `0036` and the exact target-neutral execution contract:
+binding, logical phases, actions/fibers, plan-time random/replay, declarative
+native implementations, plan/result/parity records, diagnostics, limits, and
+the AHB oracle. Proposed `.7` is selected next for separate clean activation of
+private no-backend implementation. No plan/result file, target artifact,
+compile, simulation, runtime, parity, or product behavior ships in selection.

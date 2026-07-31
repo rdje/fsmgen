@@ -508,7 +508,15 @@ Clean bridge-implementation commit `51434a2ae` permits a separate continuity-
 only activation of `.6` for selection of the exact `VIALExecutionIR`, logical-
 time, native-extension, plan, result, and parity contract. Activation changes
 no compiler, schema, artifact, tool, runtime, parity, or product behavior;
-contract selection remains unperformed until it commits cleanly.
+activation commit `bf1e25274` then permits completed `.6` to accept decision
+`0036` and `docs/VIAL_EXECUTION_IR_V1_CONTRACT.md`. The selection freezes one
+target-neutral operational graph, drive/sample/react/check logical time,
+deterministic action/fiber/model/scoreboard/coverage/fault behavior, plan-time
+keyed randomness/replay, declarative typed native manifests, sanitized plan,
+normalized result/parity, diagnostics, limits, and the exact AHB binding oracle.
+Proposed `.7` is selected next for separate clean activation of private no-
+backend implementation. Selection changes no compiler, artifact, backend,
+runtime, parity, or product behavior.
 
 ## Rollback
 

@@ -643,10 +643,12 @@ It does not change `.vial` syntax or `VIALSemanticIR`, bind VIAL, create
 `VIALExecutionIR`, publish a CLI/API, write `hial-vial-bridge.json`, generate a
 verification testbench, select an execution scheduler, expose raw hierarchy,
 or claim backend runtime/parity. Those boundaries remain with `.6`-.16 and
-public tooling `.8`. Clean implementation commit `51434a2ae` permits active
-documentation leaf `.6` to select the execution contract after this separate
-continuity-only activation commits cleanly; no execution behavior changes in
-activation.
+public tooling `.8`. Completed `.6` now selects decision `0036` and the exact
+target-neutral execution contract in
+`docs/VIAL_EXECUTION_IR_V1_CONTRACT.md`; proposed `.7` alone owns private
+binding/ExecutionIR implementation after separate clean activation. The bridge
+schema and implementation remain unchanged, and no execution behavior ships
+in selection.
 
 ## Validation and Rollback
 

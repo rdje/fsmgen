@@ -54,3 +54,6 @@ Public CLI/API/artifact discovery remains owned by `.8`. Clean implementation
 commit `51434a2ae` permits the separate continuity-only activation of `.6` for
 execution-contract selection; that selection remains unperformed until the
 activation commits cleanly and no product behavior changes during activation.
+Completed `.6` now selects decision `0036` and the exact target-neutral
+execution contract without changing this bridge. Proposed `.7` owns private
+binding/ExecutionIR implementation after separate clean activation.

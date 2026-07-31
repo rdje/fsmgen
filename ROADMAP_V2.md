@@ -8458,6 +8458,21 @@ source/SemanticIR, HIAL bridge/parser/annotation/report, VIAL binding or
 target backend, CLI/API, capability/support surface, compilation, simulation,
 parity, or product behavior. Exact execution-contract selection remains
 unperformed until the activation commits cleanly.
+Completed `.6` accepts decision `0036` and the exact
+`fsmgen.vial_execution_ir.v1` / `core_directed_single_clock_execution_v1`
+contract. One private target-neutral operational graph owns exact bridge
+binding, normalized values, `(domain, cycle, drive|sample|react|check,
+ordinal)` time, deterministic fibers/ties/cancellation, model/scoreboard/
+coverage/fault behavior, plan-time keyed randomness and strict replay, and a
+capability ledger that keeps known target requirements explicit. Declarative
+typed native manifests are repository-relative semantic implementations, not
+Perl callbacks or authored UVM/VHDL plumbing. Sanitized plan, normalized result,
+portable parity projection/report, diagnostics, limits, and the exact AHB
+binding oracle are frozen without implementing or emitting them. Proposed
+`.7` alone is selected next for separate clean activation of private no-backend
+binding/ExecutionIR implementation. VIAL source/SemanticIR, HIAL bridge and
+generated output, public tooling/files, target backends, compile, simulation,
+runtime, parity, and product behavior remain unchanged in contract selection.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
