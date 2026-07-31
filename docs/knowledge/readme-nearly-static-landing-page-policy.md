@@ -1,6 +1,6 @@
 ---
 id: readme-nearly-static-landing-page-policy
-title: README policy is locally authoritative with derived line and byte budgets
+title: README policy closes landing-page and routed-destination pressure
 answers:
   - "what is the README maintenance policy?"
   - "when should README.md change?"
@@ -10,11 +10,15 @@ answers:
   - "may a harness bootstrap file authorize the README policy?"
   - "is the README policy template an upstream?"
   - "does the README guard run when README.md did not change?"
+  - "can README overflow be moved into an unbounded status file?"
+  - "how are README destinations pressure controlled?"
+  - "where is the README routed destination registry?"
+  - "are frozen legacy status files valid README destinations?"
 date: 2026-07-31
 status: current
-tags: [readme, documentation, doctrine, continuity, onboarding]
-evidence: README.md; README_POLICY.md; docs/decisions/0024-readme-is-a-nearly-static-landing-page.md; docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md; scripts/check_readme_entrypoint.sh; scripts/check_doctrines.sh; docs/tasks/README-POLICY-ANVIL-ADOPTION-FEEDBACK.md
-reverify: wc -l -c README.md && scripts/check_readme_entrypoint.sh && rg -n 'README_LINE_CAP|README_BYTE_CAP' scripts/check_readme_entrypoint.sh
+tags: [readme, documentation, doctrine, continuity, onboarding, routing, pressure-control]
+evidence: README.md; README_POLICY.md; docs/decisions/0024-readme-is-a-nearly-static-landing-page.md; docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md; doctrine/readme_entrypoint/routed_destinations.tsv; scripts/check_readme_entrypoint.sh; scripts/check_doctrines.sh; docs/tasks/README-POLICY-ANVIL-ADOPTION-FEEDBACK.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md
+reverify: wc -l -c README.md && scripts/check_readme_entrypoint.sh && rg -n 'README_LINE_CAP|README_BYTE_CAP|ROUTE_REGISTRY|frozen_roadmap_status|frozen_achievement_status' scripts/check_readme_entrypoint.sh doctrine/readme_entrypoint/routed_destinations.tsv
 ---
 
 `README.md` is a concise, nearly static GitHub landing page. It changes only
@@ -33,3 +37,15 @@ dated adopting decisions, never a harness bootstrap. The originating template
 is not an upstream and is not synchronized automatically. Apparent duplicate
 README content is proved against its canonical home before deletion or
 relocation, and richer canonical content is retained through one link.
+
+Decision `0040` adds routing pressure closure. Moving detail out of README is
+not success until every named destination terminates in a classified control:
+live files have line/byte ceilings, partitioned collections have per-part and
+aggregate ceilings, generated indexes retain freshness gates, append ledgers
+must shard before their ceiling, query/archive terminals remain query-first,
+and frozen legacy files are pinned by content identity and cannot receive new
+overflow. FSMGen declares those controls in
+`doctrine/readme_entrypoint/routed_destinations.tsv`; the unconditional README
+doctrine validates them even when neither README nor the destination changed.
+Measured legacy ceilings are stop-growth debt boundaries, not recommended
+defaults.

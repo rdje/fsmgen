@@ -4,6 +4,7 @@
 - Type: convention/feedback
 - Status: accepted
 - Refines: [0024](0024-readme-is-a-nearly-static-landing-page.md)
+- Refined by: [0040](0040-readme-routing-must-close-destination-pressure.md)
 - Evidence owner: `README-POLICY-ANVIL-ADOPTION-FEEDBACK.1`
 
 ## Context

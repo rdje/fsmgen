@@ -48,7 +48,7 @@ FSMGEN uses the same three archetypes as the portable model:
 
 | Archetype | Meaning | FSMGEN examples |
 | --- | --- | --- |
-| Structural | Re-derive an invariant from tracked files. | `MEMORY.md` line cap, `README.md` line/byte caps and chronology density, bootstrap pointers, relative-path docs audit. |
+| Structural | Re-derive an invariant from tracked files. | `MEMORY.md` line cap, `README.md` line/byte caps, chronology density, routed-destination budgets/frozen identities, bootstrap pointers, relative-path docs audit. |
 | Oracle | Re-run a deterministic tool. | Focused `prove` tests, `mdbook build docs/book`, `./bin/ci-regression`, HDL validation. |
 | Evidence | Require a task-tree leaf to carry tool-backed diagnosis and verification evidence. | `TASK-ACCEPTANCE` requires fresh box-scoped project-declared evidence for staged implementation changes. |
 
@@ -72,7 +72,7 @@ Current registered checks:
 | `MEMORY-ARCH` | `scripts/check_memory_architecture.sh` | `MEMORY_ARCHITECTURE.md`, bounded `MEMORY.md`, bootstrap pointers, decision store, and task-tree index are present and compliant. |
 | `KNOWLEDGE-MAP` | `knowledge-map/scripts/check_knowledge_map.sh` | Fact cards are valid and `KNOWLEDGE_MAP.md` is in sync with them. |
 | `DOC-PATHS` | `scripts/check_docs_relative_paths.sh` | Live docs and the Knowledge Map do not leak machine-local absolute home paths. |
-| `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | On every commit/CI tree, `README.md` stays within its locally derived 275-line / 12,288-byte landing-page budget and no line enumerates two or more narrated work-unit leaves (`docs/decisions/0021`, `0024`, and `0038`; authoritative reusable standard: `README_POLICY.md`). |
+| `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | On every commit/CI tree, `README.md` stays within its locally derived 275-line / 12,288-byte landing-page budget, no line enumerates two or more narrated work-unit leaves, and every route in `doctrine/readme_entrypoint/routed_destinations.tsv` remains marker-linked and pressure-controlled by file/collection ceilings, query/archive lifecycle, generated freshness, or frozen identity (`docs/decisions/0021`, `0024`, `0038`, and `0040`; authoritative reusable standard: `README_POLICY.md`). |
 | `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
 | `TASK-TREE-INTEGRITY` | `scripts/check_task_tree_integrity.pl` | Every active indexed tree has one active root, unique valid nodes, exact direct-child enumeration, canonical statuses, valid ancestry/container state, and complete leaf evidence fields. |
 | `TASK-ACCEPTANCE` | `scripts/check_task_acceptance.sh` | A staged implementation change has one staged owning task file with fresh checked ROOT CAUSE, ADDRESSED, and NO REGRESSION boxes plus box-scoped declared root/no-regression evidence (`TASK_ACCEPTANCE.md`, decision `0026`). |

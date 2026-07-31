@@ -1,0 +1,16 @@
+route_id	kind	readme_marker	target	max_files	max_lines_each	max_bytes_each	max_lines_total	max_bytes_total	control
+shipped_behavior	collection	docs/book/src/SUMMARY.md	docs/book/src/*.md	64	20000	1310720	60000	4194304	partitioned-book-plus-mdbook-gate
+reported_capabilities	query	./bin/fsmgen --capability-manifest	bin/fsmgen	-	-	-	-	-	generated-query-plus-capability-contract-tests
+high_level_direction	file	ROADMAP_V2.md	ROADMAP_V2.md	1	12000	1048576	12000	1048576	live-roadmap-ceiling-then-partition
+active_resume	file	MEMORY.md	MEMORY.md	1	60	8192	60	8192	bounded-overwrite-only-resume-pointer
+active_index	file	docs/TASK_TREE.md	docs/TASK_TREE.md	1	1200	196608	1200	196608	live-index-ceiling-over-partitioned-trees
+task_evidence	collection	docs/tasks/	docs/tasks/*.md	768	25000	5242880	150000	16777216	legacy-ceiling-plus-partitioned-task-owners
+rationale	collection	docs/decisions/INDEX.md	docs/decisions/*.md	128	512	262144	10000	2097152	bounded-index-plus-one-decision-per-file
+engineering_rationale	file	DEVELOPMENT_NOTES.md	DEVELOPMENT_NOTES.md	1	38000	3145728	38000	3145728	append-ledger-shard-before-ceiling
+fact_index	generated_file	KNOWLEDGE_MAP.md	KNOWLEDGE_MAP.md	1	20000	8388608	20000	8388608	generated-index-plus-knowledge-map-freshness-gate
+change_history	file	CHANGES.md	CHANGES.md	1	35000	3145728	35000	3145728	append-ledger-shard-before-ceiling
+exact_history	archive	git log --grep=<UNIT-ID>	.git	-	-	-	-	-	query-first-archive-not-bootstrap-loaded
+diagnostics	file	TOOLBOX.md	TOOLBOX.md	1	400	32768	400	32768	bounded-live-procedure-index
+enforced_rules	file	DOCTRINE_ENFORCEMENT.md	DOCTRINE_ENFORCEMENT.md	1	300	32768	300	32768	bounded-live-doctrine-index
+frozen_roadmap_status	frozen	ROADMAP_STATUS.md	ROADMAP_STATUS.md	-	-	-	-	-	sha256:0f8db932c57d883d97f1f92fec8a576795b5b367157d9846088501c52aeb22d8
+frozen_achievement_status	frozen	LIVE_ACHIEVEMENT_STATUS.md	LIVE_ACHIEVEMENT_STATUS.md	-	-	-	-	-	sha256:46c3c8ad2a0b7375a02b0a111bcc65410f78e0dd1df97709aeabe5f97b735d18

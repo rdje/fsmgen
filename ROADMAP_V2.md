@@ -10337,3 +10337,12 @@ The first honest `R11` slices are now:
   immediately, and the live migration outline now lives in
   [docs/BOOK_PLAN.md](docs/BOOK_PLAN.md)
   rather than only in steering notes.
+- Documentation-pressure note: decision `0040` closes the reusable README
+  policy's destination-routing hole exposed by PGEN's 1,547,057-byte status
+  sink, 94.7% of which was dated changelog content. A README route now ends
+  only at a classified pressure-controlled terminal. FSMGen's unconditional
+  `README-ENTRYPOINT` doctrine consumes a data-only registry covering live
+  files, partitioned book/task/decision collections, generated Knowledge Map,
+  append ledgers, query/archive terminals, and exact frozen legacy identities.
+  Existing large measurements are finite stop-growth debt ceilings rather
+  than recommended defaults; threshold widening requires a reviewed decision.

@@ -4,7 +4,8 @@
 - Type: convention
 - Status: accepted
 - Extends: [0021](0021-readme-is-a-bounded-discovery-entrypoint.md)
-- Refined by: [0038](0038-readme-policy-is-harness-neutral-and-locally-authoritative.md)
+- Refined by: [0038](0038-readme-policy-is-harness-neutral-and-locally-authoritative.md),
+  [0040](0040-readme-routing-must-close-destination-pressure.md)
 
 ## Context
 

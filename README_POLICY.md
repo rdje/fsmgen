@@ -2,13 +2,16 @@
 ## Local adoption note — FSMGen
 
 - Authority: FSMGen maintainers, adopted 2026-07-30 under decision 0024 and
-  refined 2026-07-31 under decision 0038.
+  refined 2026-07-31 under decisions 0038 and 0040.
 - Authoritative copy: repository-root `README_POLICY.md`. Agent/harness
   bootstrap files may point here, but they are not the policy's authority.
 - Independence: the originating template is not an upstream. There is no
   automatic synchronization; later changes require deliberate local review.
 - Reviewed local budgets: 275 lines and 12,288 bytes, derived with modest
   headroom from the reviewed 246-line / 9,952-byte landing page.
+- Routed destinations: the project-owned data-only registry at
+  `doctrine/readme_entrypoint/routed_destinations.tsv` classifies every local
+  README route and freezes or budgets its pressure boundary.
 <!-- README-POLICY-LOCAL-ADOPTION:END -->
 
 ---
@@ -74,6 +77,39 @@ canonical home. If that home is already richer and maintained, delete the
 README copy and retain one link. Relocate only information that is unique and
 still belongs in maintained documentation.
 
+## Routing pressure closure
+
+Moving content out of the README is not sufficient if the destination can
+become an unbounded neighboring sink. Inventory every destination named by the
+README, this policy, or the guard's failure guidance. Give each route an owner,
+lifecycle class, and pressure control, and follow routes transitively until
+they end at a controlled terminal. An unclassified destination, routing cycle,
+or chain that merely moves the same append pressure again is a failed adoption.
+
+Use controls appropriate to the destination:
+
+| Destination class | Required pressure control |
+| --- | --- |
+| Hot/live file | Derived line and byte ceilings plus overwrite, review, or staleness semantics |
+| Partitioned manual or task collection | Bounded index plus per-part, file-count, and aggregate ceilings |
+| Generated index | Size ceilings plus a reproducible freshness check against canonical sources |
+| Append-only history | Query-first access plus a shard, rotation, or archival threshold; never a mandatory bootstrap read |
+| External service | Named authority, retention/lifecycle owner, and a stable query/link contract |
+| Frozen legacy record | Content identity or another write prohibition; never an overflow destination |
+
+A legacy destination that is already too large is not exempt. Record its
+current measured ceiling as debt, stop further growth there, and open a
+separately owned partition/compaction task. Do not describe a measured legacy
+ceiling as an ideal reusable default. Raising any destination threshold needs
+the same explicit review as raising the README cap.
+
+In one measured adoption, README status/history guidance routed overflow into
+an otherwise unchecked neighboring status file. That file reached 1,547,057
+bytes, and 94.7% of it was dated changelog content. The README cap had displaced
+the pressure rather than removing it. A destination registry and unconditional
+closure check make that failure visible before it becomes another megabyte-
+scale bootstrap surface.
+
 ## Mechanical growth guard
 
 Enforce both a line cap and a byte cap. Derive both from the landing page that
@@ -100,6 +136,10 @@ size is a property of the resulting tree, so the guard must not short-circuit
 merely because `README.md` is absent from a staged or changed-path set; this
 also catches over-budget merge and revert results.
 
+The same unconditional check must validate the routed-destination inventory
+and each declared pressure control. A commit that does not touch the README can
+still overgrow, unfreeze, remove, or silently retarget one of its destinations.
+
 Line and byte checks are independent. In one real adoption, the retained README
 was 141 lines yet already 10,297 bytes; a numbered prose list measured roughly
 118 bytes per line while a path list measured roughly 57. A line budget alone
@@ -115,9 +155,16 @@ constrain vertical sprawl.
    against its canonical home; delete-with-link when that home is richer, and
    relocate only genuinely unique maintained content.
 4. Verify the retained quick start and links.
-5. Record where each excluded content class belongs.
-6. Derive reviewed line and byte caps from the trimmed survivor with modest
+5. Record where each excluded content class belongs, then inventory every
+   actual route through a controlled terminal; reject cycles and unclassified
+   neighboring sinks.
+6. Give hot/live files line and byte caps; give partitioned, generated,
+   historical, external, and frozen terminals the class-specific controls
+   above. Treat measured legacy ceilings as debt, not examples.
+7. Derive reviewed line and byte caps from the trimmed survivor with modest
    explicit headroom; do not copy illustrative values.
-7. Commit the deterministic check and wire it unconditionally into every local
-   commit and CI build, independent of changed-path scope.
-8. Require an explicit decision before either cap can increase.
+8. Commit the deterministic README and routing-closure check and wire it
+   unconditionally into every local commit and CI build, independent of
+   changed-path scope.
+9. Require an explicit decision before the README cap or any routed-destination
+   threshold can increase.

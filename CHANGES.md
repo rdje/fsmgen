@@ -31772,3 +31772,19 @@ task tree and git.
 - Final task-tree, docs, mdBook, Knowledge Map, Memory, staged docs-only
   acceptance, doctrine, and cleanup evidence is recorded in the owning task
   tree. No separate development note is warranted for this continuity slice.
+
+### README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.1 — routed documentation pressure closed
+
+- Integrated PGEN's measured fifth policy lesson: its uncapped README overflow
+  destination reached 1,547,057 bytes, with 94.7% dated changelog content.
+- Accepted decision `0040`. The neutral policy now requires each README route
+  to terminate in an owned, lifecycle-classified pressure control rather than
+  moving growth into another uninstrumented file.
+- Added a data-only 15-route FSMGen registry and expanded the unconditional
+  README doctrine to enforce README markers, file/collection line and byte
+  ceilings, generated/query/archive lifecycle, repository locality, and exact
+  frozen legacy identities. Added focused positive and fail-closed tests.
+- Current large ceilings are explicit stop-growth debt boundaries, not reusable
+  defaults. README.md, compiler/runtime, generated product output, and VIAL
+  behavior remain unchanged; decision `0040` owns the rationale, so no
+  duplicate `DEVELOPMENT_NOTES.md` entry is added.

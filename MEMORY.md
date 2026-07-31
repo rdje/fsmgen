@@ -6,18 +6,18 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: activate portable SV backend contract`).
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.8` is
-  complete as contract selection and `.9` is active continuity-only.
-- current_state: decision `0039` selects `fsmgen vial`, equivalent normal/
-  terse projections, separate VIAL/HIAL inputs, portable request/result hosts,
-  atomic repository-local artifacts, and manifest compatibility. It ships no
-  command, parser widening, file, backend, or runtime.
-- next_action: select the exact `sv_portable_verilator` backend/runtime-library
-  contract in active `.9`, without implementation.
-- in_flight_uncommitted: none after this commit; no background job and
+- latest_commit: this commit
+  (`README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.1: close routed documentation pressure`).
+- active_work_unit: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE`; `.1`
+  completes the guard and proposed `.2` owns the measured high-water audit.
+- current_state: decision `0040` and the 15-route registry make README routing
+  pressure-closed across bounded files/collections, generated/query/archive
+  terminals, append ledgers, and frozen identities. README.md is unchanged.
+- next_action: after this clean `.1` commit, activate `.2` continuity-only for
+  destination high-water measurement and remediation-owner selection.
+- in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for `.9`. Proposed `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-
+- blockers: none for `.2`. Proposed `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-
   PRESENCE-MAP-SYNC.1` separately owns pre-existing t370 discovery-map drift.
 
 ## Durable context
@@ -43,5 +43,7 @@ history; this file carries only the current bounded resume state.
   first implementation owner after active `.9` selects the backend contract.
 - Decision `0038` owns README policy authority, template independence,
   duplicate proof, derived 275-line/12,288-byte caps, and unconditional guard.
+- Decision `0040` adds routed-destination ownership/lifecycle controls and
+  pins frozen legacy records; current large ceilings are debt, not defaults.
 - Decisions `0025` freezes legacy status files. Push only on explicit request
   (`0005`); PNT runs autonomously (`0003`). Consult the Knowledge Map first.

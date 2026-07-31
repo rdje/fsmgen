@@ -63,7 +63,14 @@ owner/date, decision, and empirically derived cap metadata stays in a fenced
 adoption note above the neutral body. The policy defines stable content, routes
 proven duplicate detail to its canonical home, and requires independent line
 and byte budgets unconditionally on every commit and CI tree. FSMGen's reviewed
-local limits are 275 lines and 12,288 bytes.
+local limits are 275 lines and 12,288 bytes. Decision 0040 closes the next
+boundary: moving detail is not enough unless the destination is also
+pressure-controlled. FSMGen's data-only routed-destination registry classifies
+live files, partitioned manuals/task trees, generated indexes, append ledgers,
+query/archive terminals, and frozen legacy records. The same unconditional
+guard checks their per-file/aggregate ceilings, freshness ownership, terminal
+lifecycle, or exact frozen identity. Current legacy ceilings are stop-growth
+debt boundaries, not reusable recommendations.
 
 `TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
 standard. FSMGen's registered checker reads data-only staged-path and evidence
