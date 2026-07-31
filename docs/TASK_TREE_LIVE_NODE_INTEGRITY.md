@@ -34,7 +34,9 @@ historical under decision `0019`; this repair does not sweep or promote them.
 
 `scripts/check_task_tree_integrity.pl` reads rows marked `active` in
 `docs/TASK_TREE.md`, follows their repository-relative `docs/tasks/*.md`
-links, and validates only each authoritative `## Task Tree` section. It checks:
+links, and validates each authoritative live `## Task Tree` section. Decision
+`0042` later extends that same graph with optional bounded exact-source segment
+manifests and exact version-object compact terminals. It checks:
 
 - one indexed active root, first in the node list;
 - unique IDs with valid root-descendant ancestry and present parents;
@@ -43,14 +45,23 @@ links, and validates only each authoritative `## Task Tree` section. It checks:
 - container status `active` or `done`, with only terminal children under a
   done container;
 - exactly one `Acceptance`, `Verification`, and `Commit` field per leaf.
+- finite JSONL manifest schema, repository-local same-volume non-symlink paths,
+  content-addressed segment identity, exact source-revision node equality,
+  disjoint complete terminal subtrees, and cross-file closure;
+- compact-terminal exact revision retrieval, file digest, original goal,
+  subtree cardinality, terminal status/closure, and closed leaf evidence.
 
-The checker is project-neutral and read-only. `--root PATH` exists only so the
+The checker is project-neutral and read-only. Existing one-file trees remain
+valid and no tree is migrated merely by enabling the optional forms. `--root
+PATH` exists only so the
 focused regression can use same-volume repository-local fixtures through
 `FSM::ProjectDataLocality`. `t/1549-task-tree-integrity-doctrine.t` proves the
 live tree and valid fixture pass, while missing/extra/malformed child
 references, duplicate IDs, unknown statuses, missing ancestry or leaf commit
 fields, nonterminal children under done containers, and malformed active roots
-fail with deterministic diagnostics.
+fail with deterministic diagnostics. Its expanded fixtures also prove sealed
+segments and compact terminals pass only when manifest bounds, digest,
+provenance, reconstruction, terminal state, and evidence are exact.
 
 The doctrine driver and bootstrap meta-check register the executable as
 `TASK-TREE-INTEGRITY`. The ordinary focused command is:
@@ -80,3 +91,8 @@ during activation.
 Completed `.844` selects proposed no-behavior HIAL/VIAL architecture audit
 `.1`; the audit remains inactive until a separate clean commit. The integrity
 contract and product behavior remain unchanged.
+
+`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6` subsequently refines the checker
+under decision `0042` so a long-running tree can bound its live file without
+weakening the original node contract. That capability slice migrates no
+existing tree; `.7` separately owns the first task/index migrations.

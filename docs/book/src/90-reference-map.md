@@ -97,9 +97,9 @@ positional ambiguity of the discarded 22-column TSV prototype. The resulting
 unconditional census covers every tracked Markdown path, including README
 itself, broad root/focused/ancillary collections, and canonical knowledge
 cards; no family topology or established limit changes in the enforcement
-slice. Clean enforcement commit `18e2dcbc6` leaves `.6` alone active to define
-sealed task-subtree segments and compact completed terminals; that activation
-does not migrate an existing tree.
+slice. Decision 0042 and `.6` now define optional sealed task-subtree segments
+and compact completed terminals without migrating an existing tree; `.7` owns
+the first IAL2/outlier/index migration.
 
 `TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
 standard. FSMGen's registered checker reads data-only staged-path and evidence
@@ -141,7 +141,14 @@ standard extraction, parser, lowering, scheduler, or HDL behavior.
 work, it points to the reusable synchronization checklist in
 `docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md` so public specs, book chapters,
 contracts, manifests, tests, live docs, and commit hygiene stay aligned without
-duplicating the checklist in every feature tree.
+duplicating the checklist in every feature tree. Long-running task trees may
+keep only metadata, the root, and the nonterminal ancestor/frontier graph in
+their live file while decision 0042's bounded JSONL manifest addresses
+content-digested completed subtree segments copied from an exact source
+revision. A compact completed terminal is valid only when the integrity checker
+retrieves, digest-checks, counts, and reconstructs its full terminal subtree
+from an exact version object. PNT still selects entirely from the live file;
+the optional forms add no migration requirement for ordinary trees.
 
 ## What The Old User Guide Still Does
 

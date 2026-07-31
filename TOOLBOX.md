@@ -67,7 +67,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need README entry-point hygiene | `scripts/check_readme_entrypoint.sh`. |
 | Need Knowledge Map sync | `knowledge-map/scripts/gen_knowledge_map.sh` then `knowledge-map/scripts/check_knowledge_map.sh`. |
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
-| Need authoritative active task-tree structure truth | `scripts/check_task_tree_integrity.pl`. |
+| Need authoritative active task-tree structure or sealed-history truth | `scripts/check_task_tree_integrity.pl`. |
 | Need code-slice evidence acceptance | Stage the intended slice, then run `scripts/check_task_acceptance.sh`. |
 | Need diff hygiene before commit | `git --no-pager diff --check` and `git status --short`. |
 | Need a downstream repro bundle | `./bin/fsmgen-issue-bundle --case PATH --issue-id ID -- [FSMGEN_OPTIONS...]`. |
@@ -244,9 +244,11 @@ Expected signals:
   reusable policy: `README_POLICY.md`).
 - Knowledge Map check says facts are valid, IDs are unique, and the map is in sync.
 - memory architecture check confirms `MEMORY.md` is bounded and bootstrap/task/decision stores exist.
-- task-tree integrity reports measured active-tree/node counts and rejects
-  live node/reference/status/shape drift while ignoring optional historical
-  views under decision `0019`.
+- task-tree integrity reports measured active-tree/node/segment/compact-terminal
+  counts and rejects live or cross-file identity/reference/status/evidence
+  drift, unbounded or digest/source-divergent sealed segments, and failed exact
+  version-object reconstruction while ignoring optional historical views under
+  decisions `0019` and `0042`.
 - doctrine bootstrap check confirms root doctrine/toolbox docs, bootstrap
   pointers, hook wiring, and CI wiring exist.
 - doctrine driver reports every registered doctrine as `PASS`.

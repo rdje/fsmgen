@@ -10360,7 +10360,10 @@ The first honest `R11` slices are now:
   baselines plus owned finite transition growth, and unconditional coverage of
   every tracked Markdown path. `README.md` remains the unchanged 246-line /
   9,952-byte GitHub landing interface. No family migration, hard-limit change,
-  frozen-content change, or product behavior change occurs. From clean commit
-  `18e2dcbc6`, `.6` alone is active to define sealed task-subtree segments and
-  compact completed terminals without migrating an existing tree; `.3`
+  frozen-content change, or product behavior change occurs. Decision 0042 and
+  `.6` now define finite JSONL task manifests, content-addressed exact-source
+  terminal subtree segments, and exact version-object compact terminals while
+  leaving all existing trees unmigrated. The live integrity result remains
+  three trees / 882 nodes / zero segments / zero compact terminals. `.7` is
+  next to migrate the active IAL2 outlier and bounded cross-tree index; `.3`
   remains blocked by the existing four-file lifecycle review.

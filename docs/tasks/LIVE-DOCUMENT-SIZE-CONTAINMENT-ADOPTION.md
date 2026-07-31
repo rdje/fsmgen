@@ -92,11 +92,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6`
-  Status: `active`
+  Status: `done`
   Goal: `Extend the task-tree schema and checker for sealed subtree segments and compact completed terminals.`
   Acceptance: `The live root retains metadata plus active ancestor/frontier; bounded manifests address immutable node segments; IDs, parent/child closure, status, verification, and commit evidence validate across files; compact completed terminals require exact revision retrieval proofs; existing trees are not migrated in this contract leaf.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Decision 0042 extends the live task node graph with an optional bounded JSONL segment manifest, content-addressed exact-source terminal subtree files, and exact version-object compact terminals. The registry independently caps its records/bytes, each segment's nodes/lines/bytes, and aggregate segment nodes/lines/bytes. The checker validates locality/non-symlink/same-volume paths, digests, disjoint complete source subtrees, cross-file identity/ancestry/child/status/evidence closure, and compact retrieval/digest/goal/count/terminal/evidence reconstruction. Existing one-file trees remain compatible and the live result is trees=3/nodes=882/segments=0/compact_terminals=0. Both changed Perl files compile; focused t1549 passes Files=1/Tests=27 and the combined task/README/live-size cluster passes Files=3/Tests=42; relative-path/locality passes Files=2/Tests=22; all 37 mdBook chapters test and the repository-local 73-file/17,108,469-byte build passes then is removed; Knowledge Map passes at 1,095 facts/5,714 keys; Memory is 35 lines; the live-document gate covers 20 surfaces and the final staged Markdown inventory. Its first draft rejected docs/TASK_TREE.md at 93.5%; detailed examples moved to the setup guide and the unchanged state/limit now passes at 1,078 lines/89.8%. The RAM guard stopped the broader four-file documentation group before execution on three attempts at 88.6%, 89.0%, and 95.0% host usage versus the required 88% cutoff; no failing test ran. Final staged acceptance and all nine doctrine checks pass. No existing task tree, hard limit, frozen identity, README landing content, compiler/runtime/generated output, or product behavior changes.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: enforce bounded task-tree history`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7`
   Status: `pending`
@@ -175,12 +175,22 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: The complete 2,772-path inventory adds `.13` for focused and
   ancillary collections and widens `.10` to own oversized canonical knowledge
   cards as well as the generated map.
+- `2026-07-31`: Decision 0042 keeps every nonterminal ancestor/frontier live,
+  seals only complete terminal subtrees through finite JSONL manifests and
+  content-addressed exact-source Markdown, and permits compact terminals only
+  with exact version-object digest/count/closure/evidence reconstruction.
+  Manifest, per-segment, and aggregate node/line/byte limits independently
+  prevent the segment destination from becoming a new unbounded sink.
+- `2026-07-31`: The first detailed schema draft pushed `docs/TASK_TREE.md` to
+  93.5% of its line budget. The live-document gate rejected it; moving full
+  examples to `docs/TASK_TREE_README.md` returns the index to 89.8% without a
+  limit/state change. `.7` remains the immediate index-migration owner.
 
 ## Open Questions
 
 - None. The existing four-file review remains authoritative for those files'
-  semantic roles. Clean commit `18e2dcbc6` selects `.6` as the sole active
-  implementation leaf because `.3` remains blocked by that review.
+  semantic roles. `.6` is complete; `.7` is the next independent clean
+  activation because `.3` remains blocked by that review.
 
 ## Blockers
 
@@ -189,38 +199,39 @@ no routed destination becomes the next uninstrumented blob.
   remain independently schedulable subject to their ordinary predecessor
   dependencies; newly discovered `.13` is independently schedulable.
 
-## Acceptance Checklist (enforced) — `.2`
+## Acceptance Checklist (enforced) — `.6`
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'ROUTE_REGISTRY' --oneline --
-  scripts/check_readme_entrypoint.sh` identifies `45fc6631e` as the commit that
-  embedded every destination kind, budget, measurement, frozen identity, and
-  terminal rule inside the README-specific checker and ten-column route file.
-  Direct inspection shows no reusable lifecycle checker or project-wide
-  surface registry, while the pre-slice `scripts/check_doctrines.sh --list`
-  reports eight
-  checks and no `LIVE-DOCUMENT-SIZE` doctrine. The clean census also reveals
-  uncovered root/focused/knowledge-card collections, so the current mechanism
-  cannot enforce the decision-0041 contract outside README routes.
-- [x] **ADDRESSED (verified)** — `perl -c` reports the neutral checker and both
-  focused tests `syntax OK`; `prove -Iperl
-  t/1553-readme-routed-destination-pressure.t
-  t/1554-live-document-size-doctrine.t` reports `All tests successful` at
-  `Files=2, Tests=15`. The fixtures cover every lifecycle, JSONL malformed/
-  missing/unknown data, locality/symlinks, budgets and 80/90/100 states,
-  immutable baselines plus owned bounded transition growth, route closure and
-  cycles, generated/query/archive/external/frozen verification, descriptor
-  schema/count/digest/path failures, optional NUL coverage, and neutral-package
-  identity. The live checker reports 20 surfaces and the final staged census
-  reports 2,773/2,773 tracked Markdown paths.
-- [x] **NO REGRESSION** — RAM-guarded documentation truth reports `All tests
-  successful` at `Files=4, Tests=310`; path/locality proof reports `Files=2,
-  Tests=22`; all 37 mdBook chapters test and the repository-local 73-file /
-  17,103,035-byte build passes then is removed exactly. Knowledge Map reports
-  `knowledge-map: OK` at 1,094 facts / 5,706 keys; task integrity reports
-  trees=3/nodes=882; README is unchanged at 246 lines/9,952 bytes; Memory stays
-  bounded; staged task acceptance passes; and the nine-check driver ends
-  `[doctrine] all doctrine checks passed`. No family topology, hard limit,
-  frozen identity, compiler/runtime/generated output, or VIAL behavior changes.
+- [x] **ROOT CAUSE — WHY + WHERE (current `.6` slice)** — `git log -S'my @nodes' --oneline --
+  scripts/check_task_tree_integrity.pl` identifies `c21765214` as the checker
+  introduction. `git show 8744f31d2:scripts/check_task_tree_integrity.pl`
+  proves it parses one live `## Task Tree` section into one in-memory node map
+  and has no segment manifest, content digest, source revision, or exact
+  version-object retrieval path. The 4,662,385-byte IAL2 task outlier therefore
+  cannot shrink without making its authoritative node/evidence graph invisible
+  to the doctrine.
+- [x] **ADDRESSED / VERIFIED (current `.6` slice)** — Both changed Perl files report `syntax OK`;
+  `prove -Iperl t/1549-task-tree-integrity-doctrine.t` reports `All tests
+  successful` at `Files=1, Tests=27`. Repository-local Git fixtures prove
+  unchanged one-file trees, a finite JSONL manifest over a content-addressed
+  exact-source terminal segment, and an exact version-object compact terminal.
+  Deterministic negative groups reject legacy structural drift, unknown or
+  unbounded manifest or segment/aggregate pressure, unsafe paths, digest/source
+  drift, nonterminal or pending segment evidence, missing revisions, wrong
+  retrieved digest/count, and nonterminal/pending compact subtrees. The live
+  graph remains unmigrated at `trees=3, nodes=882, segments=0,
+  compact_terminals=0`.
+- [x] **NO REGRESSION / BROADER PROOF (current `.6` slice)** — the combined task/README/live-size cluster reports
+  `All tests successful` at `Files=3, Tests=42`; path/locality reports
+  `Files=2, Tests=22`; all 37 mdBook chapters test and the repository-local
+  73-file/17,108,469-byte build passes then is removed. Knowledge Map validates
+  1,095 facts/5,714 keys; Memory is 35 lines; live-document enforcement passes
+  20 surfaces and the final staged tracked-Markdown inventory; staged task
+  acceptance and all nine doctrines pass. The RAM guard stopped the broader
+  four-file documentation group before execution on three attempts because
+  host usage was 88.6%, 89.0%, then 95.0% against its required 88% cutoff; no
+  failing test ran and the guard was not weakened. No tree migration, limit/
+  state widening, frozen identity, compiler/runtime/generated output, README
+  landing content, or product behavior changes.
 
 ## Verification Log
 
@@ -229,6 +240,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.1` activation | clean `139efbf90` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/mdBook/Knowledge Map/task/Memory/route/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; 37 chapters; build 73 files/17,096,423 bytes; Knowledge Map 1,094 facts/5,702 keys; trees=3/nodes=881; Memory 34 lines; all eight staged doctrines pass with docs-only task acceptance; `.2` alone active; no implementation, threshold, topology, document-family content, frozen-file, or product change |
 | `2026-07-31` | `.2` common enforcement | neutral JSONL contract/core; 20-surface local registry; strict lifecycle/debt/route/archive/coverage/neutrality fixtures; README compatibility; docs/path/locality/mdBook/Knowledge Map/task/Memory/diff/staged-acceptance/nine-doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=15; docs Files=4/Tests=310; paths/locality Files=2/Tests=22; 37 chapters; build 73 files/17,103,035 bytes; Knowledge Map 1,094 facts/5,706 keys; trees=3/nodes=882; final staged coverage 2,773/2,773; README 246 lines/9,952 bytes; all nine doctrines pass; no migration, hard-limit, frozen-file, landing-content, or product change |
 | `2026-07-31` | `.6` activation | clean `18e2dcbc6` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/Knowledge Map/Memory/live-document/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths/task Files=2/Tests=13; 37 chapters; build 73 files/17,104,418 bytes; Knowledge Map 1,094 facts/5,706 keys; trees=3/nodes=882; Memory 36 lines; live-document census 20 surfaces and 2,773/2,773 paths; `.6` alone active; no schema, checker, tree migration, threshold, frozen-file, landing-content, or product change |
+| `2026-07-31` | `.6` bounded task history | decision 0042; optional finite manifest and exact-source sealed-segment schema; exact version-object compact terminal; legacy/positive/fail-closed Git fixtures; task/route/live-size/path/locality/mdBook/Knowledge Map/Memory/diff/staged-acceptance/nine-doctrine gates; exact cleanup | `passed`; syntax OK; focused Files=1/Tests=27; combined Files=3/Tests=42; paths/locality Files=2/Tests=22; 37 chapters; build 73 files/17,108,469 bytes; Knowledge Map 1,095 facts/5,714 keys; live graph trees=3/nodes=882/segments=0/compact_terminals=0; index draft rejected at 93.5%, corrected to 1,078 lines/89.8%; broad docs group safely stopped pre-execution by 88% RAM guard at 88.6%/89.0%/95.0% with no failing test; all nine staged doctrines pass; no migration, limit/state widening, frozen-file, landing-content, or product change |
 
 ## Commit Log
 
@@ -237,6 +249,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.1` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1: activate common enforcement` | Activate `.2` from the clean doctrine-selection commit without implementing it. |
 | `.2` common enforcement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2: enforce live-document containment` | Ship neutral JSONL checker contract/core plus FSMGen data and unconditional ninth-doctrine coverage; next clean selection is `.6`. |
 | `.6` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: activate task-tree schema contract` | Activate only the sealed-segment/compact-terminal schema frontier from clean commit `18e2dcbc6`; implementation remains pending. |
+| `.6` bounded task history | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: enforce bounded task-tree history` | Ship decision 0042's optional bounded exact-provenance storage forms and checker proofs without migrating an existing tree; `.7` is next. |
 
 ## Changelog
 
@@ -250,3 +263,6 @@ no routed destination becomes the next uninstrumented blob.
   task-tree schema and checker; no schema, checker, tree topology, threshold,
   document-family content, frozen identity, or product behavior changes in
   the activation commit.
+- `2026-07-31`: `.6` ships bounded manifest/segment/compact-terminal support,
+  exact Git-backed retrieval proofs, and 27 focused subtests while leaving all
+  existing trees unmigrated; `.7` is the next clean selection frontier.

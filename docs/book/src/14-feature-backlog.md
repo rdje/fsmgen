@@ -12161,6 +12161,9 @@ decision-`0019` historical views outside enforcement. Proposed `.844` owns the
 next exact roadmap selector; no public product behavior or architecture owner
 is activated. See the
 [integrity record](../../TASK_TREE_LIVE_NODE_INTEGRITY.md).
+Decision `0042` later extends that same read-only doctrine to optional bounded,
+exact-source sealed subtree segments and exact version-object compact
+terminals, without migrating ordinary one-file trees.
 Clean integrity commit `c21765214` activates only `.844` through continuity
 changes. Candidate reconciliation/selection, every product surface, and every
 broader architecture owner remain unchanged until activation commits cleanly.

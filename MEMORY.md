@@ -6,20 +6,19 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: activate task-tree schema contract`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6` alone is active
-  from clean common-enforcement commit `18e2dcbc6`.
-- current_state: neutral JSONL common enforcement plus FSMGen's 20-surface
-  registry now checks every tracked Markdown path, immutable baselines and
-  owned finite transition growth, locality, pressure, routes, projections,
-  frozen identities, and archive descriptors. README landing content and all
-  existing family topologies/hard limits remain unchanged.
-- next_action: implement `.6` only: define and prove sealed task-subtree
-  segments plus compact completed terminals without migrating an existing
-  tree; `.3` remains blocked by the four-file lifecycle review.
+  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: enforce bounded task-tree history`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`; `.6` is complete
+  and no implementation leaf is active across this commit boundary.
+- current_state: decision 0042 and the expanded integrity checker support
+  finite JSONL manifests, content-addressed exact-source terminal segments,
+  and exact version-object compact terminals. Existing trees remain at three /
+  882 nodes / zero segments / zero compact terminals; `docs/TASK_TREE.md` is
+  below rollover at 89.8% after detailed examples routed to the setup guide.
+- next_action: from this clean commit, activate `.7` only to migrate the active
+  IAL2 task outlier, completed outliers, and bounded cross-tree index.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for `.6`-.10 or `.13`; `.3`-.5/.11 wait for the separately
+- blockers: none for `.7`-.10 or `.13`; `.3`-.5/.11 wait for the separately
   owned four-file lifecycle review, and final `.12` waits for all migrations.
 
 ## Durable context

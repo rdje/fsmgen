@@ -31,7 +31,10 @@
 - Adoption state: decision 0041 and the local audit select the architecture
   and exact migration owners. Common registry/checker leaf
   `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2` enforces the complete tracked
-  Markdown inventory before any family migration.
+  Markdown inventory before any family migration. Decision 0042 and leaf `.6`
+  additionally define bounded task-tree segment manifests, content-addressed
+  exact-source sealed subtrees, and exact version-object compact terminals;
+  existing task trees remain unmigrated until `.7`.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---

@@ -31871,3 +31871,26 @@ task tree and git.
   passes then is removed; Knowledge Map validates 1,094 facts/5,706 keys;
   Memory is 36 lines; and the live-document census covers 20 surfaces plus
   2,773/2,773 tracked Markdown paths.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6 — bounded task-tree history enforced
+
+- Accepted decision `0042` and extended `TASK-TREE-INTEGRITY` without changing
+  existing tree syntax. A long-running live task root may now name one finite
+  JSONL manifest over content-addressed terminal subtree segments whose nodes
+  must match a complete subtree at an exact source revision. A compact
+  completed terminal must retrieve, digest-check, count, and structurally
+  validate its full exact version-object subtree.
+- Expanded `t/1549` from 11 to 27 subtests using repository-local Git fixtures.
+  The suite rejects malformed/unbounded manifests, unsafe paths, digest/source
+  drift, nonterminal segments, pending sealed evidence, missing revisions,
+  wrong retrieved digest/count, and nonterminal/pending compact subtrees.
+  Independent manifest, per-segment, and aggregate node/line/byte limits keep
+  the new destination bounded. The unchanged live graph reports three trees,
+  882 nodes, zero segments, and zero compact terminals; `.7` owns migration.
+- The first detailed schema draft made the live index cross rollover at 93.5%.
+  The new size gate rejected it; routing full examples to the setup guide
+  returns `docs/TASK_TREE.md` to 89.8% without widening a limit or relabeling
+  debt. Focused Files=1/Tests=27, path/locality Files=2/Tests=22, all 37 mdBook
+  chapters, a removed 73-file/17,108,469-byte local build, and Knowledge Map
+  1,095 facts/5,714 keys pass. Decision 0042 owns the rationale, so no duplicate
+  development note is added.

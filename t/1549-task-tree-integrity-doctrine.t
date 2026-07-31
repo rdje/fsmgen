@@ -4,11 +4,13 @@ use warnings;
 
 use Test::More;
 use Cwd qw(abs_path);
+use Digest::SHA qw(sha256_hex);
 use File::Basename qw(dirname);
 use File::Path qw(make_path);
 use File::Spec;
 use FindBin;
 use IPC::Cmd qw(run);
+use JSON::PP;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::ProjectDataLocality qw(create_project_tempdir);
@@ -23,19 +25,23 @@ subtest 'live active task trees satisfy the integrity contract' => sub {
     ok($ok, 'live task-tree integrity passes') or diag($output);
     like(
         $output,
-        qr/all active task-tree invariants hold \(trees=[1-9][0-9]*, nodes=[1-9][0-9]*\)/,
-        'live result reports measured tree and node counts',
+        qr/all active task-tree invariants hold \(trees=[1-9][0-9]*, nodes=[1-9][0-9]*, segments=[0-9]+, compact_terminals=[0-9]+\)/,
+        'live result reports measured tree, node, segment, and terminal counts',
     );
 };
 
-subtest 'valid minimal active tree passes' => sub {
+subtest 'valid minimal active tree passes unchanged' => sub {
     my $fixture = make_fixture(valid_task());
     my ($ok, $output) = run_checker($fixture);
     ok($ok, 'valid active tree passes') or diag($output);
-    like($output, qr/trees=1, nodes=3/, 'fixture result reports exact counts');
+    like(
+        $output,
+        qr/trees=1, nodes=3, segments=0, compact_terminals=0/,
+        'legacy in-file fixture result reports exact counts',
+    );
 };
 
-my @negative_cases = (
+my @legacy_negative_cases = (
     [
         'missing direct-child reference',
         sub { my $task = valid_task(); $task =~ s/, EXAMPLE\.2//; return $task; },
@@ -93,11 +99,9 @@ my @negative_cases = (
         sub {
             my $task = valid_task();
             my $old = leaf('EXAMPLE.1', 'done');
-            my $new = "- ID: `EXAMPLE.1`\n"
-                . "  Status: `done`\n"
-                . "  Goal: `Complete EXAMPLE.1.`\n"
-                . "  Children: `EXAMPLE.1.1`\n\n"
-                . leaf('EXAMPLE.1.1', 'pending');
+            my $new = container(
+                'EXAMPLE.1', 'done', 'Complete EXAMPLE.1.', ['EXAMPLE.1.1']
+            ) . leaf('EXAMPLE.1.1', 'pending');
             $task =~ s/\Q$old\E/$new/;
             return $task;
         },
@@ -105,27 +109,332 @@ my @negative_cases = (
     ],
 );
 
-for my $case (@negative_cases) {
+for my $case (@legacy_negative_cases) {
     my ($label, $mutate, $expected) = @{$case};
     subtest $label => sub {
-        my $fixture = make_fixture($mutate->());
-        my ($ok, $output) = run_checker($fixture);
-        ok(!$ok, "$label fails closed");
-        like($output, $expected, 'diagnostic is deterministic and actionable');
+        expect_failure(make_fixture($mutate->()), $expected, $label);
     };
 }
+
+subtest 'exact-source sealed subtree segment passes across files' => sub {
+    my $fixture = make_segment_fixture();
+    my ($ok, $output) = run_checker($fixture->{root});
+    ok($ok, 'sealed segment fixture passes') or diag($output);
+    like(
+        $output,
+        qr/trees=1, nodes=3, segments=1, compact_terminals=0/,
+        'sealed node participates in the combined measured tree',
+    );
+};
+
+subtest 'segment manifest rejects unknown schema keys' => sub {
+    my $fixture = make_segment_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/"record_type":"segment"/"record_type":"segment","mystery":1/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/record 2 has unknown key mystery/,
+        'unknown manifest key',
+    );
+};
+
+subtest 'segment manifest enforces its declared bound' => sub {
+    my $fixture = make_segment_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/"max_records":64/"max_records":0/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/registry max_records must be an integer >=1/,
+        'unbounded or zero-cap manifest',
+    );
+};
+
+subtest 'segment destinations enforce independent per-part bounds' => sub {
+    my $fixture = make_segment_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/"max_segment_bytes":65536/"max_segment_bytes":1/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/bytes [0-9]+ exceeds max_segment_bytes 1/,
+        'oversized segment destination',
+    );
+};
+
+subtest 'segment destinations enforce independent aggregate bounds' => sub {
+    my $fixture = make_segment_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub {
+            $_[0] =~ s/"max_segment_nodes":1024/"max_segment_nodes":1/;
+            $_[0] =~ s/"max_total_nodes":4096/"max_total_nodes":1/;
+            my @lines = split /\n/, $_[0];
+            my $duplicate = $lines[1];
+            $duplicate =~ s/"segment_id":"EXAMPLE\.1"/"segment_id":"EXAMPLE.copy"/;
+            $_[0] = join("\n", @lines[0, 1], $duplicate, '');
+        },
+    );
+    expect_failure(
+        $fixture->{root}, qr/total segment nodes 2 exceeds max_total_nodes 1/,
+        'aggregate segment destination',
+    );
+};
+
+subtest 'segment paths are repository-relative' => sub {
+    my $fixture = make_segment_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/"path":"[^"]+"/"path":"..\/escape.md"/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/unsafe or non-Markdown segment path/,
+        'unsafe segment path',
+    );
+};
+
+subtest 'segment digest is fail-closed' => sub {
+    my $fixture = make_segment_fixture();
+    mutate_file(
+        $fixture->{segment},
+        sub { $_[0] =~ s/Close sealed work/Alter sealed work/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/sha256 mismatch/,
+        'mutated sealed segment',
+    );
+};
+
+subtest 'segment nodes must match the exact source revision' => sub {
+    my $fixture = make_segment_fixture(segment_goal => 'Different sealed goal.');
+    expect_failure(
+        $fixture->{root}, qr/segment node EXAMPLE\.1 differs from exact source/,
+        'source-divergent segment',
+    );
+};
+
+subtest 'segment nodes must be terminal' => sub {
+    my $fixture = make_segment_fixture(segment_status => 'pending');
+    expect_failure(
+        $fixture->{root}, qr/segment node EXAMPLE\.1 is not terminal/,
+        'nonterminal sealed node',
+    );
+};
+
+subtest 'sealed terminal evidence cannot remain pending' => sub {
+    my $fixture = make_segment_fixture(pending_evidence => 1);
+    expect_failure(
+        $fixture->{root}, qr/sealed terminal leaf EXAMPLE\.1 has pending verification or commit evidence/,
+        'pending sealed evidence',
+    );
+};
+
+subtest 'compact completed version-object terminal passes' => sub {
+    my $fixture = make_compact_fixture();
+    my ($ok, $output) = run_checker($fixture->{root});
+    ok($ok, 'compact terminal fixture passes') or diag($output);
+    like(
+        $output,
+        qr/trees=1, nodes=3, segments=0, compact_terminals=1/,
+        'compact terminal reports one exact retrieved subtree',
+    );
+};
+
+subtest 'compact terminal requires retrievable exact revision' => sub {
+    my $fixture = make_compact_fixture(revision => ('0' x 40));
+    expect_failure(
+        $fixture->{root}, qr/cannot retrieve exact version object/,
+        'missing compact revision',
+    );
+};
+
+subtest 'compact terminal verifies retrieved digest' => sub {
+    my $fixture = make_compact_fixture(digest => ('0' x 64));
+    expect_failure(
+        $fixture->{root}, qr/retrieved digest mismatch/,
+        'compact digest mismatch',
+    );
+};
+
+subtest 'compact terminal verifies archived subtree cardinality' => sub {
+    my $fixture = make_compact_fixture(node_count => 3);
+    expect_failure(
+        $fixture->{root}, qr/Archived node count 3 does not match retrieved count 2/,
+        'compact node-count mismatch',
+    );
+};
+
+subtest 'compact terminal rejects nonterminal archived subtree' => sub {
+    my $fixture = make_compact_fixture(archived_status => 'active');
+    expect_failure(
+        $fixture->{root}, qr/retrieves nonterminal node EXAMPLE\.1/,
+        'nonterminal archived subtree',
+    );
+};
+
+subtest 'compact terminal keeps closed live evidence' => sub {
+    my $fixture = make_compact_fixture(pending_evidence => 1);
+    expect_failure(
+        $fixture->{root}, qr/has pending verification or commit evidence/,
+        'pending compact evidence',
+    );
+};
 
 done_testing();
 
 sub valid_task {
     return "# Example\n\n## Task Tree\n\n"
-        . "- ID: `EXAMPLE`\n"
-        . "  Status: `active`\n"
-        . "  Goal: `Exercise task-tree integrity.`\n"
-        . "  Children: `EXAMPLE.1, EXAMPLE.2`\n\n"
+        . container(
+            'EXAMPLE', 'active', 'Exercise task-tree integrity.',
+            ['EXAMPLE.1', 'EXAMPLE.2']
+        )
         . leaf('EXAMPLE.1', 'done')
         . leaf('EXAMPLE.2', 'pending')
         . "## Current Frontier\n";
+}
+
+sub source_task_for_segment {
+    my (%args) = @_;
+    my $status = $args{segment_status} // 'done';
+    my $evidence = $args{pending_evidence} ? 'pending' : 'sealed proof passed';
+    my $commit = $args{pending_evidence} ? 'pending' : 'EXAMPLE.1: close sealed work';
+    return "# Example\n\n## Task Tree\n\n"
+        . container(
+            'EXAMPLE', 'active', 'Exercise segmented task-tree integrity.',
+            ['EXAMPLE.1', 'EXAMPLE.2']
+        )
+        . closed_leaf(
+            'EXAMPLE.1', $status, 'Close sealed work.', $evidence, $commit
+        )
+        . leaf('EXAMPLE.2', 'pending');
+}
+
+sub make_segment_fixture {
+    my (%args) = @_;
+    my $source = source_task_for_segment(%args);
+    my ($root, $revision) = initialize_versioned_fixture($source);
+
+    my $status = $args{segment_status} // 'done';
+    my $goal = $args{segment_goal} // 'Close sealed work.';
+    my $evidence = $args{pending_evidence} ? 'pending' : 'sealed proof passed';
+    my $commit = $args{pending_evidence} ? 'pending' : 'EXAMPLE.1: close sealed work';
+    my $node = closed_leaf('EXAMPLE.1', $status, $goal, $evidence, $commit);
+    my $segment_contents =
+        "# EXAMPLE sealed segment\n\n## Task Tree Segment\n\n$node";
+    my $digest = sha256_hex($segment_contents);
+    my $segment_relative = "docs/tasks/segments/EXAMPLE/$digest.md";
+    write_file($root, $segment_relative, $segment_contents);
+
+    my $manifest_relative = 'docs/tasks/segments/EXAMPLE/manifest.jsonl';
+    my $json = JSON::PP->new->canonical;
+    my $manifest_contents = join(
+        "\n",
+        $json->encode({
+            record_type => 'registry', schema_version => 1,
+            tree_id => 'EXAMPLE', max_records => 64, max_bytes => 65536,
+            max_segment_nodes => 1024, max_segment_lines => 8192,
+            max_segment_bytes => 65536, max_total_nodes => 4096,
+            max_total_lines => 32768, max_total_bytes => 262144,
+        }),
+        $json->encode({
+            record_type => 'segment', schema_version => 1,
+            segment_id => 'EXAMPLE.1', path => $segment_relative,
+            root_ids => ['EXAMPLE.1'], node_count => 1,
+            sha256 => $digest, source_revision => $revision,
+            source_path => 'docs/tasks/EXAMPLE.md',
+        }),
+        '',
+    );
+    write_file($root, $manifest_relative, $manifest_contents);
+
+    my $live = "# Example\n\n"
+        . "- Segment manifest: `$manifest_relative`\n\n"
+        . "## Task Tree\n\n"
+        . container(
+            'EXAMPLE', 'active', 'Exercise segmented task-tree integrity.',
+            ['EXAMPLE.1', 'EXAMPLE.2']
+        )
+        . leaf('EXAMPLE.2', 'pending');
+    write_file($root, 'docs/tasks/EXAMPLE.md', $live);
+    return {
+        root => $root,
+        manifest => File::Spec->catfile($root, split m{/}, $manifest_relative),
+        segment => File::Spec->catfile($root, split m{/}, $segment_relative),
+    };
+}
+
+sub make_compact_fixture {
+    my (%args) = @_;
+    my $archived_status = $args{archived_status} // 'done';
+    my $source = "# Example\n\n## Task Tree\n\n"
+        . container(
+            'EXAMPLE', 'active', 'Exercise compact task-tree integrity.',
+            ['EXAMPLE.1', 'EXAMPLE.2']
+        )
+        . container(
+            'EXAMPLE.1', $archived_status, 'Complete archived subtree.',
+            ['EXAMPLE.1.1']
+        )
+        . closed_leaf(
+            'EXAMPLE.1.1', 'done', 'Close archived leaf.',
+            'archived proof passed', 'EXAMPLE.1.1: close archived leaf'
+        )
+        . leaf('EXAMPLE.2', 'pending');
+    my ($root, $source_revision) = initialize_versioned_fixture($source);
+
+    my $revision = $args{revision} // $source_revision;
+    my $digest = $args{digest} // sha256_hex($source);
+    my $node_count = $args{node_count} // 2;
+    my $verification = $args{pending_evidence}
+        ? 'pending'
+        : 'exact version-object retrieval passed';
+    my $commit = $args{pending_evidence}
+        ? 'pending'
+        : 'EXAMPLE.1: complete archived subtree';
+    my $compact = "- ID: `EXAMPLE.1`\n"
+        . "  Status: `done`\n"
+        . "  Goal: `Complete archived subtree.`\n"
+        . "  Terminal: `version_object`\n"
+        . "  Revision: `$revision`\n"
+        . "  Retrieval path: `docs/tasks/EXAMPLE.md`\n"
+        . "  Retrieved SHA256: `$digest`\n"
+        . "  Archived node count: `$node_count`\n"
+        . "  Verification: `$verification`\n"
+        . "  Commit: `$commit`\n\n";
+    my $live = "# Example\n\n## Task Tree\n\n"
+        . container(
+            'EXAMPLE', 'active', 'Exercise compact task-tree integrity.',
+            ['EXAMPLE.1', 'EXAMPLE.2']
+        )
+        . $compact
+        . leaf('EXAMPLE.2', 'pending');
+    write_file($root, 'docs/tasks/EXAMPLE.md', $live);
+    return { root => $root };
+}
+
+sub initialize_versioned_fixture {
+    my ($task) = @_;
+    my $root = create_project_tempdir(purpose => 'task-tree-integrity-tests');
+    write_index($root);
+    write_file($root, 'docs/tasks/EXAMPLE.md', $task);
+    run_git($root, 'init', '--quiet');
+    run_git($root, 'add', 'docs/TASK_TREE.md', 'docs/tasks/EXAMPLE.md');
+    run_git(
+        $root, '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+        'commit', '--quiet', '-m', 'fixture source'
+    );
+    my $revision = run_git($root, 'rev-parse', 'HEAD');
+    $revision =~ s/\s+\z//;
+    return ($root, $revision);
+}
+
+sub container {
+    my ($id, $status, $goal, $children) = @_;
+    return "- ID: `$id`\n"
+        . "  Status: `$status`\n"
+        . "  Goal: `$goal`\n"
+        . "  Children: `" . join(', ', @{$children}) . "`\n\n";
 }
 
 sub leaf {
@@ -138,9 +447,26 @@ sub leaf {
         . "  Commit: `pending`\n\n";
 }
 
+sub closed_leaf {
+    my ($id, $status, $goal, $verification, $commit) = @_;
+    return "- ID: `$id`\n"
+        . "  Status: `$status`\n"
+        . "  Goal: `$goal`\n"
+        . "  Acceptance: `The closed fixture is structurally complete.`\n"
+        . "  Verification: `$verification`\n"
+        . "  Commit: `$commit`\n\n";
+}
+
 sub make_fixture {
     my ($task) = @_;
     my $root = create_project_tempdir(purpose => 'task-tree-integrity-tests');
+    write_index($root);
+    write_file($root, 'docs/tasks/EXAMPLE.md', $task);
+    return $root;
+}
+
+sub write_index {
+    my ($root) = @_;
     write_file(
         $root,
         'docs/TASK_TREE.md',
@@ -150,17 +476,43 @@ sub make_fixture {
             . "| `EXAMPLE` | `active` | `fixture` | `EXAMPLE.2` | "
             . "[docs/tasks/EXAMPLE.md](docs/tasks/EXAMPLE.md) |\n",
     );
-    write_file($root, 'docs/tasks/EXAMPLE.md', $task);
-    return $root;
+}
+
+sub mutate_file {
+    my ($path, $mutator) = @_;
+    open my $in, '<:raw', $path or die "cannot read $path: $!";
+    local $/;
+    my $contents = <$in>;
+    close $in or die "cannot close $path: $!";
+    $mutator->($contents);
+    open my $out, '>:raw', $path or die "cannot write $path: $!";
+    print {$out} $contents;
+    close $out or die "cannot close $path: $!";
 }
 
 sub write_file {
     my ($root, $relative, $contents) = @_;
     my $path = File::Spec->catfile($root, split m{/}, $relative);
     make_path(dirname($path));
-    open my $fh, '>', $path or die "cannot write $path: $!";
+    open my $fh, '>:raw', $path or die "cannot write $path: $!";
     print {$fh} $contents;
     close $fh or die "cannot close $path: $!";
+}
+
+sub run_git {
+    my ($root, @args) = @_;
+    my ($ok, undef, undef, $stdout, $stderr) = run(
+        command => ['git', '-C', $root, @args],
+    );
+    die "git @args failed: " . join('', @{$stderr || []}) if !$ok;
+    return join('', @{$stdout || []});
+}
+
+sub expect_failure {
+    my ($root, $expected, $label) = @_;
+    my ($ok, $output) = run_checker($root);
+    ok(!$ok, "$label fails closed");
+    like($output, $expected, 'diagnostic is deterministic and actionable');
 }
 
 sub run_checker {

@@ -35,6 +35,8 @@ Minimum required files:
 docs/TASK_TREE.md
 docs/tasks/TEMPLATE.md
 docs/tasks/<FIRST-TREE>.md
+docs/tasks/segments/<TREE>/manifest.jsonl  # optional for long-running trees
+docs/tasks/segments/<TREE>/<SHA256>.md     # optional sealed subtree
 ```
 
 Recommended project integration files:
@@ -115,8 +117,9 @@ At that point the workflow is usable.
 For repositories that adopt FSMGEN's mechanical enforcement layer, copy
 `scripts/check_task_tree_integrity.pl`, add it to the local doctrine/CI driver,
 and add focused fixture tests. The checker derives active task paths from the
-`Active Task Trees` table and validates only authoritative `## Task Tree` node
-lists; it intentionally ignores optional historical views.
+`Active Task Trees` table and validates the authoritative live `## Task Tree`
+node list plus any optional manifest-addressed sealed segments or exact
+version-object terminals; it intentionally ignores optional historical views.
 
 ## Recommended Full Setup
 
@@ -262,6 +265,51 @@ A completed leaf should leave these traces:
   action.
 - Durable decisions and user-facing docs are synchronized when warranted.
 
+## Containing A Long-Running Tree
+
+Keep ordinary trees in one file. When the authoritative task file itself
+approaches its locally reviewed pressure budget, preserve a bounded live root
+rather than splitting by arbitrary line count:
+
+1. Keep task metadata, the top-level root, every nonterminal node, and every
+   ancestor needed to reach the live frontier in `docs/tasks/<TREE>.md`.
+2. Copy one or more fully terminal subtrees into a Markdown file with a
+   `## Task Tree Segment` node list. Do not edit node bodies during the move.
+3. Name the segment file by its SHA-256 and record it in the task's bounded
+   JSONL manifest with disjoint root IDs, node count, digest, and the exact
+   source revision/path.
+4. Add this optional metadata line to the live task file:
+
+```text
+- Segment manifest: `docs/tasks/segments/<TREE>/manifest.jsonl`
+```
+
+5. Run the integrity checker before removing those nodes from the live file.
+   It reconstructs one graph across files and rejects identity, ancestry,
+   direct-child, status, provenance, or evidence drift.
+
+The manifest starts with finite limits for its own records/bytes and for each
+segment plus aggregate nodes/lines/bytes, followed by one record per content-
+addressed segment:
+
+```json
+{"record_type":"registry","schema_version":1,"tree_id":"API-STABILIZATION","max_records":64,"max_bytes":65536,"max_segment_nodes":1024,"max_segment_lines":8192,"max_segment_bytes":524288,"max_total_nodes":4096,"max_total_lines":32768,"max_total_bytes":2097152}
+{"record_type":"segment","schema_version":1,"segment_id":"API-STABILIZATION.1","path":"docs/tasks/segments/API-STABILIZATION/<SHA256>.md","root_ids":["API-STABILIZATION.1"],"node_count":12,"sha256":"<SHA256>","source_revision":"<FULL-REVISION>","source_path":"docs/tasks/API-STABILIZATION.md"}
+```
+
+When a completed subtree no longer warrants a working-tree segment, its root
+may become one compact `version_object` terminal in the live node list. Record
+the original goal, exact revision and path, retrieved-file SHA-256, archived
+node count, closed verification, and commit reference. The checker reloads the
+version object through git and validates the complete terminal subtree; a
+conversation note, abbreviated revision, or unverified archive pointer is not
+a substitute.
+
+This optional topology refines the node-list authority rule without changing
+PNT: current work is always selected from the live file, and the historical
+frontier/log/changelog tables remain non-authoritative. Do not migrate a
+healthy tree merely because the format exists.
+
 Commit hashes do not have to be written into the same task-file update. The
 hash is only known after commit. The reliable join key is the leaf ID in the
 task file and commit message. Hashes can be backfilled later if the project
@@ -296,6 +344,7 @@ Use this checklist when enabling the workflow in a new project.
 [ ] MEMORY.md is bounded and points to the active leaf and next action.
 [ ] Durable decisions, user-facing docs, and git each have explicit roles.
 [ ] The setup is committed as one documentation/workflow slice.
+[ ] If sealed segments are used, the manifest has finite bounds and exact source/retrieval fixtures pass.
 ```
 
 ## Minimal First Commit Message

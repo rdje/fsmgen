@@ -92,7 +92,7 @@ Current registered checks:
 | `LIVE-DOCUMENT-SIZE` | `scripts/check_live_document_size.sh` | JSONL schema, lifecycle/locator compatibility, project-relative same-volume targets, line/byte/file/aggregate budgets, 80/90/100 pressure state, non-worsening transition baselines, owner debt, indexes, generated-verifier presence, route closure, frozen identities, archive descriptors, and complete tracked-Markdown coverage. |
 | `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | On every commit/CI tree, the rendered GitHub landing page stays within its locally derived 275-line / 12,288-byte budget, retains its first-use contract, avoids narrated work-unit chronology, and keeps every route in `doctrine/readme_entrypoint/routed_destinations.jsonl` marker-linked to the common surface graph (`docs/decisions/0021`, `0024`, `0038`, `0040`, and `0041`; reusable standard: `README_POLICY.md`). |
 | `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
-| `TASK-TREE-INTEGRITY` | `scripts/check_task_tree_integrity.pl` | Every active indexed tree has one active root, unique valid nodes, exact direct-child enumeration, canonical statuses, valid ancestry/container state, and complete leaf evidence fields. |
+| `TASK-TREE-INTEGRITY` | `scripts/check_task_tree_integrity.pl` | Every active indexed tree has one live active root, unique valid nodes, exact direct-child enumeration, canonical statuses, valid ancestry/container state, and complete leaf evidence across the live list plus optional bounded exact-source sealed segments; compact completed terminals reconstruct and validate their full exact version-object subtree. |
 | `TASK-ACCEPTANCE` | `scripts/check_task_acceptance.sh` | A staged implementation change has one staged owning task file with fresh checked ROOT CAUSE, ADDRESSED, and NO REGRESSION boxes plus box-scoped declared root/no-regression evidence (`TASK_ACCEPTANCE.md`, decision `0026`). |
 
 List the registry with:
@@ -137,17 +137,24 @@ remain the behavioral oracle.
 ## Task-Tree Integrity Gate
 
 `scripts/check_task_tree_integrity.pl` reads active rows from
-`docs/TASK_TREE.md` and checks only each linked file's authoritative
-`## Task Tree` node list. Optional historical frontier, verification, commit,
-and changelog views remain outside live-state enforcement under decision
-`0019`.
+`docs/TASK_TREE.md` and checks each linked file's authoritative live
+`## Task Tree` node list. Under decision `0042`, an optional finite JSONL
+manifest may add content-addressed terminal subtree segments that match exact
+source-revision nodes; a compact completed terminal must retrieve, digest-check,
+and reconstruct its full terminal subtree from an exact version object.
+Optional historical frontier, verification, commit, and changelog views remain
+outside live-state enforcement under decision `0019`.
 
 The check fails on duplicate or malformed node IDs, unknown statuses, missing
-parents, missing/extra/duplicate direct-child references, non-active indexed
-roots, invalid container states, nonterminal children under a done container,
-or leaves without exactly one `Acceptance`, `Verification`, and `Commit`
-field. Its `--root PATH` option exists for repository-local focused fixtures;
-ordinary use needs no argument:
+parents, missing/extra/duplicate direct-child references across files,
+non-active indexed roots, invalid container states, nonterminal children under
+a done container, or leaves without required evidence. It also rejects
+unbounded/malformed manifests, per-segment or aggregate node/line/byte pressure,
+unsafe/symlinked/off-volume or digest-mismatched segments, overlapping/
+incomplete/nonterminal sealed roots, source-revision drift, and compact-
+terminal retrieval/digest/cardinality/closure/evidence failures. Its `--root
+PATH` option exists for repository-local focused
+fixtures; ordinary use needs no argument:
 
 ```bash
 scripts/check_task_tree_integrity.pl

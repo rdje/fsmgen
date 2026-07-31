@@ -55,7 +55,7 @@ first.
 | `README-POLICY-STORAGE-LOCATION` | `done` | `infra/continuity / entry-point documentation` | complete `.1`: adopting projects keep the canonical tracked README_POLICY.md at repository root beside README.md; external copies are templates only, the mdBook pointer is synchronized, and existing README behavior and enforcement remain unchanged | [docs/tasks/README-POLICY-STORAGE-LOCATION.md](docs/tasks/README-POLICY-STORAGE-LOCATION.md) |
 | `README-POLICY-ANVIL-ADOPTION-FEEDBACK` | `done` | `infra/continuity / entry-point documentation` | complete `.1`: decision 0038 makes the fenced project-owned copy authoritative and independent, keeps the reusable body project-/harness-neutral, derives 275-line / 12,288-byte local caps from the reviewed survivor, proves duplicate routing, and enforces both dimensions on every commit/CI tree | [docs/tasks/README-POLICY-ANVIL-ADOPTION-FEEDBACK.md](docs/tasks/README-POLICY-ANVIL-ADOPTION-FEEDBACK.md) |
 | `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE` | `done` | `infra/continuity / entry-point documentation` | complete `.1`-.2: decision 0040 and the 15-route guard close README routing pressure; decision 0041 selects the neutral bounded-live-view/durable-store doctrine, records the full local census, and assigns every high-water/structural migration without rewriting history | [docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md](docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md) |
-| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity / project-wide live-document lifecycle` | clean common-enforcement commit `18e2dcbc6` is complete; `.6` alone is active to define sealed task-subtree segments and compact completed terminals without migrating an existing tree | [docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
+| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity / project-wide live-document lifecycle` | `.6` ships decision 0042's optional finite manifest, content-addressed exact-source terminal segments, and exact version-object compact terminals without migrating a tree; `.7` is the next clean activation for IAL2/outlier/index migration | [docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `ARTIFACT-CLEANUP-JUL25` | `done` | `artifact cleanup / disk hygiene` | complete (`.1`; classified every git-ignored artifact candidate, deleted 8.3 MiB regenerable `.artifacts/sv` plus root `.DS_Store`, 5 stale foreign-repo vim swaps and 1 unreferenced `.ppif.zip` stray, and kept the live root `.swp`, the imported `.cache/local-references/` mirrors, and legacy `perl/*.sv`) | [docs/tasks/ARTIFACT-CLEANUP-JUL25.md](docs/tasks/ARTIFACT-CLEANUP-JUL25.md) |
 | `RHS-LOGIC-SIMPLIFICATION-FRONTIER` | `done` | `HDL quality / expression minimization` | complete (`.1`-`.2`; generated RHS ASTs now simplify through a shared width-safe logic-equivalence pass before HDL rendering, including boolean and width-proven vector/multi-bit bitwise expressions while preserving unsafe width-changing masks) | [docs/tasks/RHS-LOGIC-SIMPLIFICATION-FRONTIER.md](docs/tasks/RHS-LOGIC-SIMPLIFICATION-FRONTIER.md) |
 | `SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC` | `proposed` | `test integrity / generated HDL expression simplification` | `.1` is pending after the current dirty VIAL slice: classify and repair six stale unary-expression oracles exposed as 24/613 default plus 24/614 strict t261 failures | [docs/tasks/SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC.md](docs/tasks/SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC.md) |
@@ -807,6 +807,9 @@ docs/tasks/
 `docs/TASK_TREE.md` is the workflow and active-tree index.
 Each top-level task owns one file in `docs/tasks/`.
 `docs/tasks/TEMPLATE.md` is copied when creating a new top-level tree.
+Long-running trees may optionally use a bounded segment manifest and
+content-addressed sealed Markdown segments; existing one-file trees remain
+valid without them.
 
 ## Definitions
 
@@ -820,6 +823,10 @@ Each top-level task owns one file in `docs/tasks/`.
   commit workflow.
 - Evidence: the validation output, changed-doc summary, and git commit subject
   that prove a leaf was completed.
+- Long-running-tree containment: a live root keeps metadata and the
+  nonterminal ancestor/frontier; content-addressed sealed segments copy exact
+  completed subtrees, while compact terminals reconstruct them from an exact
+  version object.
 
 ## ID Rules
 
@@ -867,12 +874,18 @@ Every top-level task file must contain:
 - Non-goals: what this tree deliberately does not try to solve.
 - Acceptance criteria: concrete conditions that close the top-level task.
 - Task tree: all known nodes, with status and short result intent. **This node
-  list is the authoritative, live record**: each leaf's `Status` is its live
-  state and its `Verification`/`Commit` fields hold its evidence and completion
-  commit.
+  graph is the authoritative, live record**: by default it is the in-file node
+  list; when a `Segment manifest` is declared, it is the checked union of the
+  live list and manifest-addressed sealed segments. Each leaf's `Status` is its
+  live state and its `Verification`/`Commit` fields hold its evidence and
+  completion commit.
 - Decisions: accepted technical decisions and their rationale.
 - Open questions: unresolved questions that do not block the whole tree yet.
 - Blockers: blockers with unblock conditions.
+
+An optional `Segment manifest` metadata field points to
+`docs/tasks/segments/<TREE>/manifest.jsonl`. The live file still contains the
+root and all nonterminal ancestors; ordinary trees require no manifest.
 
 The following four sections are **optional historical convenience views**, not
 required to be maintained per-slice (decision
@@ -913,11 +926,20 @@ Leaf node:
   Commit: pending
 ```
 
+For a long-running tree only, decision
+[0042](decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md)
+permits finite JSONL manifests over content-addressed, exact-source terminal
+subtree segments, or a compact live `version_object` node whose complete
+terminal subtree is retrieved and proved by revision, digest, goal, count,
+closure, verification, and commit evidence. The full schema and examples live
+in [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md); ordinary trees remain
+in one file.
+
 A node with children must not be marked `done` until every child is `done`,
 `deferred`, or `superseded`, and every non-`done` child has a recorded reason.
 
 The registered `TASK-TREE-INTEGRITY` doctrine mechanically checks these live
-node-list rules for every tree indexed as `active`:
+and optional sealed/version-object rules for every tree indexed as `active`:
 
 ```bash
 scripts/check_task_tree_integrity.pl
@@ -927,8 +949,9 @@ It deliberately does not parse or enforce the optional historical views below.
 
 ## Current Frontier Rules
 
-The frontier is the set of **eligible leaf nodes in the `## Task Tree` node
-list** — leaves whose `Status` is `active` or `pending` and that are not blocked.
+The frontier is the set of **eligible live leaf nodes in the `## Task Tree`
+node list** — leaves whose `Status` is `active` or `pending` and that are not
+blocked. Sealed segments and compact terminals are terminal by construction.
 The node list is authoritative; the optional `## Current Frontier` table is a
 historical snapshot only (decision
 [0019](decisions/0019-task-tree-in-file-secondary-views-are-historical.md)).
@@ -950,7 +973,7 @@ When PNT is asked to continue and at least one active task tree exists:
 
 1. Read `docs/TASK_TREE.md`.
 2. Read the active task file named in the `Active Task Trees` table.
-3. Pick the first eligible leaf from that file's `## Task Tree` node list — the
+3. Pick the first eligible live leaf from that file's `## Task Tree` node list — the
    earliest `active`/`pending`, unblocked leaf (decision
    [0019](decisions/0019-task-tree-in-file-secondary-views-are-historical.md)).
    The optional `## Current Frontier` table is historical and may lag; do not
