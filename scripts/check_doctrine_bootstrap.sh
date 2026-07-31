@@ -14,6 +14,7 @@ ok() { printf '[doctrine-bootstrap] ok:   %s\n' "$1"; }
 required_docs=(
   README.md
   MEMORY_ARCHITECTURE.md
+  LIVE_DOCUMENT_SIZE_CONTAINMENT.md
   DOCTRINE_ENFORCEMENT.md
   TASK_ACCEPTANCE.md
   TOOLBOX.md
@@ -56,6 +57,28 @@ if grep -q 'TASK-TREE-INTEGRITY|scripts/check_task_tree_integrity.pl' scripts/ch
 else
   note "doctrine registry does not include TASK-TREE-INTEGRITY"
 fi
+
+if grep -q 'LIVE-DOCUMENT-SIZE|scripts/check_live_document_size.sh' scripts/check_doctrines.sh; then
+  ok "doctrine registry includes LIVE-DOCUMENT-SIZE"
+else
+  note "doctrine registry does not include LIVE-DOCUMENT-SIZE"
+fi
+
+live_document_files=(
+  live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md
+  live-document-size/scripts/check_live_document_size.pl
+  doctrine/live_document_size/surfaces.jsonl
+  doctrine/live_document_size/archive_descriptors.jsonl
+  doctrine/readme_entrypoint/routed_destinations.jsonl
+  scripts/check_live_document_size.sh
+)
+for file in "${live_document_files[@]}"; do
+  if [[ -f "${file}" ]]; then
+    ok "${file} present"
+  else
+    note "${file} is missing"
+  fi
+done
 
 for file in "${bootstrap_files[@]}"; do
   if [[ ! -f "${file}" ]]; then

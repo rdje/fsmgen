@@ -46,10 +46,13 @@ dishonest; leaving them unclassified would preserve the policy defect.
    or open separately owned remediation. Threshold increases need an explicit
    reviewed decision.
 4. FSMGen declares its actual routes in
-   `doctrine/readme_entrypoint/routed_destinations.tsv`. The registered
-   `README-ENTRYPOINT` doctrine validates README markers, registry structure,
-   repository-relative targets, per-file and aggregate budgets, query/archive
-   terminals, and frozen SHA-256 identities on every commit and CI tree.
+   `doctrine/readme_entrypoint/routed_destinations.jsonl`; decision 0041's
+   common `doctrine/live_document_size/surfaces.jsonl` registry now owns the
+   route endpoints' lifecycle and pressure declarations. The registered
+   `README-ENTRYPOINT` and `LIVE-DOCUMENT-SIZE` doctrines validate README
+   markers, registry structure, repository-relative targets, per-file and
+   aggregate budgets, query/archive terminals, and frozen SHA-256 identities
+   on every commit and CI tree.
 5. `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain frozen under
    decision 0025. Their exact current identities are pinned; they are never
    overflow destinations.

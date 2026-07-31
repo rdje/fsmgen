@@ -6,20 +6,21 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1: activate common enforcement`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`; clean selection
-  commit `139efbf90` completes `.1` activation and `.2` alone is active.
-- current_state: decision `0041`, the neutral doctrine, and the local audit
-  select bounded live views over semantic partitions, generated projections,
-  rolling ledgers, or exact archives. Seven >=80% surfaces and one structural
-  outlier have exact owners; no migration or threshold change has occurred.
-- next_action: implement `.2` only: the common data registry/checker and
-  positive/fail-closed lifecycle fixtures without migrating a document family
-  or changing any existing threshold.
+  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2: enforce live-document containment`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`; `.2` is complete
+  and no implementation leaf is active across this commit boundary.
+- current_state: neutral JSONL common enforcement plus FSMGen's 20-surface
+  registry now checks every tracked Markdown path, immutable baselines and
+  owned finite transition growth, locality, pressure, routes, projections,
+  frozen identities, and archive descriptors. README landing content and all
+  existing family topologies/hard limits remain unchanged.
+- next_action: from this clean commit, activate `.6` only to define sealed
+  task-subtree segments and compact completed terminals; `.3` remains blocked
+  by `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for `.2`, `.6`-.10, or `.12`; `.3`-.5/.11 wait for the
-  separately owned four-file lifecycle review.
+- blockers: none for `.6`-.10 or `.13`; `.3`-.5/.11 wait for the separately
+  owned four-file lifecycle review, and final `.12` waits for all migrations.
 
 ## Durable context
 
@@ -29,6 +30,7 @@ history; this file carries only the current bounded resume state.
   pins frozen legacy records; current large ceilings are debt, not defaults.
 - Decision `0041` generalizes containment project-wide while keeping its body
   project-neutral, project-agnostic, and harness-neutral. Local 80/90/100
-  milestones and migration paths remain fenced local data.
+  milestones, JSONL data, immutable baselines, transition allowances, and
+  migration paths remain fenced local state.
 - Decisions `0025` freezes legacy status files. Push only on explicit request
   (`0005`); PNT runs autonomously (`0003`). Consult the Knowledge Map first.

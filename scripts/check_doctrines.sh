@@ -15,6 +15,7 @@ DOCTRINES=(
   "MEMORY-ARCH|scripts/check_memory_architecture.sh|Durable memory architecture, bounded MEMORY.md, bootstrap pointers, task-tree and decision stores"
   "KNOWLEDGE-MAP|knowledge-map/scripts/check_knowledge_map.sh|Knowledge Map fact cards are valid and KNOWLEDGE_MAP.md is in sync"
   "DOC-PATHS|scripts/check_docs_relative_paths.sh|Live docs and Knowledge Map avoid machine-local absolute paths"
+  "LIVE-DOCUMENT-SIZE|scripts/check_live_document_size.sh|Every declared live-document surface stays local, covered, lifecycle-valid, and within owned pressure controls"
   "README-ENTRYPOINT|scripts/check_readme_entrypoint.sh|README.md and every routed destination stay pressure-controlled discovery surfaces"
   "PROJECT-DATA-LOCALITY|scripts/check_project_data_locality.sh|Project-owned data stays on repository-derived same-volume roots"
   "TASK-TREE-INTEGRITY|scripts/check_task_tree_integrity.pl|Active task-tree roots, nodes, child references, statuses, and leaf evidence fields stay structurally complete"

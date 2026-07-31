@@ -20,17 +20,18 @@
 #                  "documents the .794 shipped aggregate") is legitimate index
 #                  content and is deliberately allowed.
 #   3. ROUTING   - every project-declared destination is still named by the
-#                  README and has its declared size, partition, query/archive,
-#                  freshness, or frozen-content pressure control.
+#                  README and maps to the common live-document surface graph.
+#                  The common checker owns lifecycle and pressure semantics so
+#                  thresholds have one authority rather than two copies.
 #
-# Knobs (env): README_LINE_CAP, README_BYTE_CAP,
-#              README_MAX_LEAF_REFS_PER_LINE.
+# Knob (env): README_MAX_LEAF_REFS_PER_LINE.
 #
 # The doctrine driver invokes this check unconditionally. Do not scope the
 # landing-page tree invariant to staged or changed paths.
 set -uo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 if [ "$#" -gt 0 ]; then
   if [ "$#" -ne 2 ] || [ "$1" != "--root" ] || [ ! -d "$2" ]; then
     printf 'Usage: %s [--root REPOSITORY_ROOT]\n' "$0" >&2
@@ -40,10 +41,10 @@ if [ "$#" -gt 0 ]; then
 fi
 cd "${ROOT_DIR}"
 
-LINE_CAP="${README_LINE_CAP:-275}"
-BYTE_CAP="${README_BYTE_CAP:-12288}"
 MAX_REFS="${README_MAX_LEAF_REFS_PER_LINE:-1}"
-ROUTE_REGISTRY="doctrine/readme_entrypoint/routed_destinations.tsv"
+ROUTE_REGISTRY="doctrine/readme_entrypoint/routed_destinations.jsonl"
+SURFACE_REGISTRY="doctrine/live_document_size/surfaces.jsonl"
+LIVE_DOCUMENT_CHECKER="${SCRIPT_DIR}/check_live_document_size.sh"
 fail=0
 
 note() { printf 'readme-entrypoint: %s\n' "$1" >&2; fail=1; }
@@ -52,6 +53,30 @@ ok()   { printf 'readme-entrypoint: ok:   %s\n' "$1"; }
 if [ ! -f README.md ]; then
   note "README.md is missing (it is the declared single entry point)"
   exit 1
+fi
+
+if [ ! -f "${SURFACE_REGISTRY}" ]; then
+  note "live-document surface registry is missing: ${SURFACE_REGISTRY}"
+  LINE_CAP=0
+  BYTE_CAP=0
+else
+  read -r LINE_CAP BYTE_CAP < <(
+    perl -MJSON::PP -e '
+      while (<>) {
+        my $record = eval { decode_json($_) } or next;
+        next if ($record->{surface_id} // q{}) ne q{readme_entrypoint};
+        print(($record->{budgets}{lines_each} // q{0}), q{ },
+              ($record->{budgets}{bytes_each} // q{0}), qq{\n});
+        exit 0;
+      }
+      exit 1;
+    ' "${SURFACE_REGISTRY}"
+  ) || { LINE_CAP=0; BYTE_CAP=0; }
+  if [[ ! "${LINE_CAP}" =~ ^[1-9][0-9]*$ ]] || [[ ! "${BYTE_CAP}" =~ ^[1-9][0-9]*$ ]]; then
+    note "readme_entrypoint has invalid line/byte limits in ${SURFACE_REGISTRY}"
+    LINE_CAP=0
+    BYTE_CAP=0
+  fi
 fi
 
 # 1. Size cap.
@@ -103,21 +128,13 @@ else
   note "  each leaf did to it."
 fi
 
-# 3. Routed-destination pressure closure.
-expected_header=$'route_id\tkind\treadme_marker\ttarget\tmax_files\tmax_lines_each\tmax_bytes_each\tmax_lines_total\tmax_bytes_total\tcontrol'
+# 3. README marker-to-surface routing plus common pressure closure.
 required_routes=(
   shipped_behavior reported_capabilities high_level_direction active_resume
   active_index task_evidence rationale engineering_rationale fact_index
   change_history exact_history diagnostics enforced_rules
   frozen_roadmap_status frozen_achievement_status
 )
-
-is_positive_integer() {
-  case "$1" in
-    ''|*[!0-9]*|0) return 1 ;;
-    *) return 0 ;;
-  esac
-}
 
 route_note() {
   note "  route ${route_id}: $1"
@@ -127,13 +144,39 @@ route_note() {
 if [ ! -f "${ROUTE_REGISTRY}" ]; then
   note "routed-destination registry is missing: ${ROUTE_REGISTRY}"
 else
-  registry_header=$(head -n 1 "${ROUTE_REGISTRY}")
-  if [ "${registry_header}" != "${expected_header}" ]; then
-    note "${ROUTE_REGISTRY} has an invalid header"
+  route_records=$(perl -MJSON::PP -e '
+    my @keys = qw(route_id source_surface_id marker target_surface_id);
+    while (<>) {
+      my $line = $.;
+      my $record = eval { decode_json($_) };
+      die "line $line is invalid JSON: $@" if $@;
+      die "line $line must be an object\n" if ref($record) ne q{HASH};
+      for my $key (@keys) {
+        die "line $line is missing $key\n" if !exists($record->{$key});
+        die "line $line has invalid $key\n"
+          if ref($record->{$key}) || $record->{$key} eq q{}
+            || $record->{$key} =~ /[\t\r\n]/;
+      }
+      my %allowed = map { $_ => 1 } @keys;
+      for my $key (keys %{$record}) {
+        die "line $line has unknown key $key\n" if !$allowed{$key};
+      }
+      print join(qq{\t}, @{$record}{@keys}), qq{\n};
+    }
+  ' "${ROUTE_REGISTRY}" 2>&1)
+  route_status=$?
+  surface_ids=$(perl -MJSON::PP -e '
+    while (<>) {
+      my $record = eval { decode_json($_) } or next;
+      print $record->{surface_id}, qq{\n}
+        if !ref($record->{surface_id}) && defined($record->{surface_id});
+    }
+  ' "${SURFACE_REGISTRY}" 2>/dev/null)
+  if [ "${route_status}" -ne 0 ]; then
+    note "${ROUTE_REGISTRY} is invalid JSONL: ${route_records}"
   else
     declare -A seen_routes=()
-    while IFS=$'\t' read -r route_id kind readme_marker target max_files \
-        max_lines_each max_bytes_each max_lines_total max_bytes_total control extra; do
+    while IFS=$'\t' read -r route_id source_surface_id readme_marker target_surface_id; do
       [ -z "${route_id}" ] && continue
       route_failed=0
 
@@ -145,109 +188,19 @@ else
       else
         seen_routes["${route_id}"]=1
       fi
-      if [ -n "${extra}" ]; then
-        route_note "has more fields than the registry schema"
+      if [ "${source_surface_id}" != "readme_entrypoint" ]; then
+        route_note "must originate at readme_entrypoint: ${source_surface_id}"
       fi
       if [ -z "${readme_marker}" ] || ! grep -Fq -- "${readme_marker}" README.md; then
         route_note "README marker is absent: ${readme_marker}"
       fi
-      case "${target}" in
-        /*|../*|*/../*|*/..) route_note "target must stay repository-relative: ${target}" ;;
-      esac
-      if [ -z "${control}" ] || [ "${control}" = "-" ]; then
-        route_note "must declare a pressure or lifecycle control"
+      if [ -z "${target_surface_id}" ] || ! grep -Fxq -- "${target_surface_id}" <<< "${surface_ids}"; then
+        route_note "targets an undeclared live-document surface: ${target_surface_id}"
       fi
-
-      case "${kind}" in
-        file|generated_file|collection)
-          for value in "${max_files}" "${max_lines_each}" "${max_bytes_each}" \
-              "${max_lines_total}" "${max_bytes_total}"; do
-            if ! is_positive_integer "${value}"; then
-              route_note "has a missing or invalid positive budget: ${value}"
-            fi
-          done
-
-          route_files=()
-          if [ "${kind}" = "collection" ]; then
-            mapfile -t route_files < <(compgen -G "${target}" | LC_ALL=C sort || true)
-          elif [ -f "${target}" ]; then
-            route_files=("${target}")
-          fi
-          if [ "${#route_files[@]}" -eq 0 ]; then
-            route_note "target matched no regular files: ${target}"
-          elif [ "${route_failed}" -eq 0 ]; then
-            route_lines_total=0
-            route_bytes_total=0
-            if [ "${#route_files[@]}" -gt "${max_files}" ]; then
-              route_note "has ${#route_files[@]} files (> cap ${max_files})"
-            fi
-            for route_file in "${route_files[@]}"; do
-              if [ ! -f "${route_file}" ]; then
-                route_note "matched a non-file target: ${route_file}"
-                continue
-              fi
-              route_lines=$(wc -l < "${route_file}" | tr -d ' ')
-              route_bytes=$(wc -c < "${route_file}" | tr -d ' ')
-              route_lines_total=$((route_lines_total + route_lines))
-              route_bytes_total=$((route_bytes_total + route_bytes))
-              if [ "${route_lines}" -gt "${max_lines_each}" ]; then
-                route_note "${route_file} is ${route_lines} lines (> per-file cap ${max_lines_each})"
-              fi
-              if [ "${route_bytes}" -gt "${max_bytes_each}" ]; then
-                route_note "${route_file} is ${route_bytes} bytes (> per-file cap ${max_bytes_each})"
-              fi
-            done
-            if [ "${route_lines_total}" -gt "${max_lines_total}" ]; then
-              route_note "is ${route_lines_total} lines total (> cap ${max_lines_total})"
-            fi
-            if [ "${route_bytes_total}" -gt "${max_bytes_total}" ]; then
-              route_note "is ${route_bytes_total} bytes total (> cap ${max_bytes_total})"
-            fi
-            if [ "${route_failed}" -eq 0 ]; then
-              ok "route ${route_id}: ${#route_files[@]} file(s), ${route_lines_total} lines, ${route_bytes_total} bytes (${control})"
-            fi
-          fi
-          ;;
-        query)
-          if [ "${max_files}${max_lines_each}${max_bytes_each}${max_lines_total}${max_bytes_total}" != "-----" ]; then
-            route_note "query routes use lifecycle controls, not file budgets"
-          elif [ ! -x "${target}" ]; then
-            route_note "query target is absent or not executable: ${target}"
-          elif [ "${route_failed}" -eq 0 ]; then
-            ok "route ${route_id}: query terminal ${target} (${control})"
-          fi
-          ;;
-        archive)
-          if [ "${max_files}${max_lines_each}${max_bytes_each}${max_lines_total}${max_bytes_total}" != "-----" ]; then
-            route_note "archive routes use lifecycle controls, not file budgets"
-          elif [ ! -d "${target}" ]; then
-            route_note "archive target is absent: ${target}"
-          elif [ "${route_failed}" -eq 0 ]; then
-            ok "route ${route_id}: archive terminal ${target} (${control})"
-          fi
-          ;;
-        frozen)
-          if [ "${max_files}${max_lines_each}${max_bytes_each}${max_lines_total}${max_bytes_total}" != "-----" ]; then
-            route_note "frozen routes use a content identity, not growth budgets"
-          elif [ ! -f "${target}" ]; then
-            route_note "frozen target is absent: ${target}"
-          elif [[ ! "${control}" =~ ^sha256:[0-9a-f]{64}$ ]]; then
-            route_note "frozen control must be sha256:<64 lowercase hex digits>"
-          else
-            expected_sha256="${control#sha256:}"
-            actual_sha256=$(sha256sum "${target}" | awk '{print $1}')
-            if [ "${actual_sha256}" != "${expected_sha256}" ]; then
-              route_note "frozen target changed (${actual_sha256} != ${expected_sha256})"
-            elif [ "${route_failed}" -eq 0 ]; then
-              ok "route ${route_id}: frozen identity ${expected_sha256}"
-            fi
-          fi
-          ;;
-        *)
-          route_note "has unknown kind: ${kind}"
-          ;;
-      esac
-    done < <(tail -n +2 "${ROUTE_REGISTRY}")
+      if [ "${route_failed}" -eq 0 ]; then
+        ok "route ${route_id}: README marker -> ${target_surface_id}"
+      fi
+    done <<< "${route_records}"
 
     for route_id in "${required_routes[@]}"; do
       if [ -z "${seen_routes[${route_id}]+x}" ]; then
@@ -255,6 +208,12 @@ else
       fi
     done
   fi
+fi
+
+if [ ! -x "${LIVE_DOCUMENT_CHECKER}" ]; then
+  note "common live-document checker is missing or not executable: scripts/check_live_document_size.sh"
+elif ! "${LIVE_DOCUMENT_CHECKER}" --root "${ROOT_DIR}"; then
+  note "common live-document size-containment check failed"
 fi
 
 if [ "${fail}" -eq 0 ]; then

@@ -10355,6 +10355,11 @@ The first honest `R11` slices are now:
   tree, Chapter 14, change/rationale ledgers, and structural Knowledge Map
   outlier; frozen status lifecycle remains with its scheduled decision owner.
   Clean selection commit `139efbf90` activates
-  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1` continuity only; `.2` alone is
-  active to implement the common data registry/checker before any family
-  migration. No family migration or threshold change occurs in activation.
+  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1` continuity only. `.2` now ships
+  the neutral JSONL checker contract/core, local 20-surface data, immutable
+  baselines plus owned finite transition growth, and unconditional coverage of
+  every tracked Markdown path. `README.md` remains the unchanged 246-line /
+  9,952-byte GitHub landing interface. No family migration, hard-limit change,
+  frozen-content change, or product behavior change occurs; the next clean
+  selection is independent task-schema contract leaf `.6` while `.3` remains
+  blocked by the existing four-file lifecycle review.

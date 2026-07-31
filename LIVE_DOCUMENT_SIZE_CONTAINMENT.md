@@ -12,19 +12,26 @@
   remain unchanged until their owning migration recalibrates them from the
   retained live surface.
 - Transition debt: the clean adoption census pins each pre-existing warning or
-  rollover breach and its owner. Only continuity needed to land this
-  containment program may extend a rollover-debt ledger before migration;
-  unrelated growth, baseline widening, and any hard-limit breach remain
+  rollover breach and its owner. The baseline never moves. A separate bounded
+  `transition.max_growth` object may authorize only continuity needed to land
+  this containment program before migration; ownerless growth, excess beyond
+  that allowance, baseline widening, and any hard-limit breach remain
   forbidden.
 - Locality: durable shards, manifests, and archive descriptors use repository-
   root-relative paths and reside on the repository volume. Regenerable query
   indexes and caches live under `.artifacts/`; they are never the sole copy.
-- Adoption state: decision 0041 and
-  `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md` select the architecture and
-  exact migration owners. `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` will add
-  the project data registry and common enforcement before any migration.
-  Until then, `doctrine/readme_entrypoint/routed_destinations.tsv` remains the
-  enforced local stop-growth inventory.
+- Serialization: the local data plane uses one named JSON object per line.
+  `doctrine/live_document_size/surfaces.jsonl` is the single authority for
+  lifecycle, paths, owners, budgets, milestones, debt baselines, and verifiers;
+  route and archive-descriptor JSONL files carry only their own mappings.
+- Landing-page identity: top-level `README.md` is FSMGen's rendered GitHub
+  landing page and remains a first-class bounded interface. Its purpose,
+  first-use path, architecture summary, and navigation stay directly visible;
+  only changing detail, inventory, and chronology route outward.
+- Adoption state: decision 0041 and the local audit select the architecture
+  and exact migration owners. Common registry/checker leaf
+  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2` enforces the complete tracked
+  Markdown inventory before any family migration.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---

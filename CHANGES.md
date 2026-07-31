@@ -31838,3 +31838,23 @@ task tree and git.
   paths pass Files=1/Tests=2; Memory is 34 lines; all 15 route controls and
   diff hygiene pass. All eight staged doctrine checks pass with docs-only task
   acceptance. No separate development note is warranted.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2 — common live-document containment enforced
+
+- Added a project-neutral, project-agnostic, harness-neutral JSONL checker
+  contract/core and FSMGen-local surface, route, and archive-descriptor data.
+  The ninth unconditional doctrine now covers 20 lifecycle surfaces and every
+  tracked Markdown path with schema, project-relative same-volume locality,
+  line/byte/file/aggregate pressure, immutable baselines plus finite owned
+  transition growth, indexes, routes, freshness presence, frozen identity, and
+  archive count/digest/retrieval checks.
+- Expanded positive and fail-closed coverage for every lifecycle and retained
+  README compatibility. The 22-column TSV prototype was discarded before
+  commit in favor of named JSONL objects; README itself remains unchanged at
+  246 lines / 9,952 bytes and remains the direct GitHub landing interface.
+- Verification passes at focused Files=2/Tests=15, documentation Files=4/
+  Tests=310, path/locality Files=2/Tests=22, 37 mdBook chapters, a removed
+  repository-local 73-file/17,103,035-byte build, Knowledge Map 1,094 facts/
+  5,706 keys, task integrity trees=3/nodes=882, and all nine staged doctrines.
+  No family migration, hard-limit/frozen-content/product behavior change, or
+  separate development-note duplication occurs; decision 0041 owns rationale.

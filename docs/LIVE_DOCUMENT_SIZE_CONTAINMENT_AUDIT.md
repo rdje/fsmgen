@@ -9,18 +9,30 @@
 This is FSMGen's fenced local adoption evidence, not a reusable threshold
 catalog. Percentages compare the clean activation revision with the local
 stop-growth limits in
-`doctrine/readme_entrypoint/routed_destinations.tsv`. The audit changes no
-limit, content topology, frozen file, or product behavior.
+`doctrine/live_document_size/surfaces.jsonl`. The audit changes no limit,
+content topology, frozen file, or product behavior.
 
 ## Result
 
-Seven live surfaces have reached at least 80% of one declared limit: the roadmap,
-bounded Memory pointer, task index, one task file, one mdBook chapter,
-`DEVELOPMENT_NOTES.md`, and `CHANGES.md` (including the two per-file outliers
-within otherwise-bounded collections). The Memory pointer is
-healthy because it is overwrite-only and carries no required history; it needs
-routine trimming, not sharding. Every other high-water surface has an exact
-migration owner below.
+The first README-destination audit found seven surfaces at or above 80% of a
+declared limit: the roadmap, bounded Memory pointer, task index, one task file,
+one mdBook chapter, `DEVELOPMENT_NOTES.md`, and `CHANGES.md` (including the two
+per-file outliers within otherwise-bounded collections). The complete
+tracked-Markdown inventory then exposed four boundaries that destination-only
+measurement could not see: the README landing page itself, the aggregate root
+document set, focused root-level documents under `docs/`, and the canonical
+knowledge-card collection. Those findings are registered rather than hidden.
+
+`README.md` is especially important: it is not merely a bootstrap file or a
+route source. GitHub renders it as the project's public landing page. At 246
+of 275 lines (89.5%), it has warning debt, but its purpose, minimal first-use
+path, architecture summary, and canonical navigation must remain directly
+visible. Its owner may remove proved duplicate chronology or inventory, but
+must not off-load the landing-page function into another document.
+
+The Memory pointer is currently healthy because it is overwrite-only and
+carries no required history; it needs routine trimming, not sharding. Every
+other high-water or structural surface has an exact migration owner below.
 
 The generated Knowledge Map is also a structural outlier at 6,130,630 bytes
 despite remaining below 80% of its deliberately generous legacy ceiling. Its
@@ -28,6 +40,26 @@ canonical fact cards are already small and addressable, so the monolithic map
 is unnecessary read pressure. The task collection has the inverse pattern:
 its aggregate is below 80%, but one active file is 4,662,385 bytes and holds
 hundreds of completed leaves in the same live unit as the frontier.
+
+## Complete tracked-Markdown coverage
+
+The common checker classifies all 2,772 Markdown paths in the clean adoption
+baseline; the neutral checker contract becomes the 2,773rd tracked path in its
+own implementation commit and is covered by the ancillary collection. Broad
+census surfaces intentionally overlap semantic route surfaces: the former
+prove that no document family escapes measurement, while the latter retain the
+precise audience and lifecycle owner.
+
+| Newly visible boundary | Adoption measurement | Pressure and disposition |
+| --- | --- | --- |
+| GitHub landing page, `README.md` | 246 lines; 9,952 bytes | 89.5% line warning debt; preserve the direct landing interface and route only changing detail/chronology; final retained-surface calibration is `.12` |
+| Root `*.md` collection | 21 files; 126,254 lines; 14,768,752 bytes | 90.8% aggregate rollover debt caused by known root ledgers/frozen records; converge through their semantic owners, then `.12` lowers the broad collection ceiling |
+| Focused `docs/*.md` collection | 1,000 files; 209,724 lines; 9,358,519 bytes; largest 6,254 lines / 392,322 bytes | 89.3% per-part warning debt and no bounded complete index; `.13` owns classification, index, and safe semantic partitions |
+| Canonical knowledge cards | 1,095 files; 41,653 lines; 3,180,691 bytes; largest 855 lines / 62,994 bytes | 96.1% per-part byte rollover debt; `.10` owns both card partitioning and generated-map projection |
+| Ancillary Markdown families | 9 baseline files; 10 / 1,076 lines / 52,065 bytes with the neutral checker contract; largest remains 502 lines / 21,728 bytes | healthy at 78.4% peak; `.13` keeps the family indexed and partitions only if it reaches warning |
+
+Coverage is a property of the resulting tree, not of the changed-path scope.
+The checker therefore receives the full tracked Markdown list on every run.
 
 ## Registered-route census
 
@@ -61,12 +93,14 @@ normal collection density.
 
 | Family | Selected bounded view and durable store | Exact owner |
 | --- | --- | --- |
-| Common enforcement | One project data registry declares every surface, class, route, warning/rollover/hard limits, topology, and verifier; one unconditional checker consumes it | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2` |
+| Common enforcement | JSONL surface records declare every class, path array, owner, independent budgets, 80/90/100 milestones, immutable adoption baseline, separately owned finite containment-transition growth, topology, and verifier; separate JSONL route/archive records carry only their own mappings; one unconditional neutral checker consumes them and proves complete tracked-Markdown coverage | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2` |
+| GitHub landing page and root collection | Preserve README's direct project-introduction/quick-start/architecture/navigation role while removing only proved duplicate dynamic detail; let semantic family owners remove root-ledger pressure before final retained-surface calibration | `.12` performs the final README/root re-audit after semantic migrations |
 | Change and rationale ledgers | The existing four-file lifecycle review retains authority over their long-term audiences. If change/rationale ledgers remain live, root files become bounded current/index views; records seal on semantic entry boundaries into repository-local range shards, then leave the live collection only through digest-verified version-archive descriptors | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` selects the roles; `.3` consumes that decision and proves the schema; `.4`/`.5` perform only selected migrations |
 | Task evidence and index | Each active root keeps metadata plus the live ancestor/frontier; completed node ranges seal into immutable subtree segments with a bounded manifest. Completed trees may become compact terminals only after exact revision retrieval is proved. The cross-tree live index shows active/proposed work; completed history is derived/query-first | `.6` changes the task schema/checker; `.7` migrates the active IAL2 outlier, completed outliers, and cross-tree index |
 | User-facing feature backlog | Split Chapter 14 by stable feature topic and retain all material in mdBook navigation; do not send user-facing reference content only to version history | `.8` |
 | Roadmap | Keep current/future direction and concise milestone outcomes live; prove old shipped narration against the book, task records, and exact history, then delete-with-link or retain only verified archival descriptors | `.9` |
-| Knowledge Map | Keep fact cards canonical; generate a small root index plus deterministic prefix/topic shards and a repository-local query cache under `.artifacts/` | `.10` |
+| Knowledge cards and map | Keep facts canonical while splitting any oversized card on stable fact boundaries; generate a small root index plus deterministic prefix/topic shards and a repository-local query cache under `.artifacts/` | `.10` |
+| Focused and ancillary documents | Classify `docs/*.md` and ancillary families by audience/lifecycle, add a bounded complete index, and partition only semantic outliers without moving unique content out of its maintained home | `.13` |
 | Frozen status files | Remain identity-pinned and untouched until the already scheduled four-file lifecycle review chooses their audiences and fate | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`, then `.11` consumes that decision if migration is selected |
 | Final steady state | Remeasure all surfaces, prove retrieval/reconstruction, and lower temporary legacy ceilings to derived retained-surface budgets | `.12` |
 

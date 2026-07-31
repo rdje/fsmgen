@@ -2,7 +2,7 @@
 ## Local adoption note — FSMGen
 
 - Authority: FSMGen maintainers, adopted 2026-07-30 under decision 0024 and
-  refined 2026-07-31 under decisions 0038 and 0040.
+  refined 2026-07-31 under decisions 0038, 0040, and 0041.
 - Authoritative copy: repository-root `README_POLICY.md`. Agent/harness
   bootstrap files may point here, but they are not the policy's authority.
 - Independence: the originating template is not an upstream. There is no
@@ -10,8 +10,14 @@
 - Reviewed local budgets: 275 lines and 12,288 bytes, derived with modest
   headroom from the reviewed 246-line / 9,952-byte landing page.
 - Routed destinations: the project-owned data-only registry at
-  `doctrine/readme_entrypoint/routed_destinations.tsv` classifies every local
-  README route and freezes or budgets its pressure boundary.
+  `doctrine/readme_entrypoint/routed_destinations.jsonl` maps every local
+  README route into the project-wide surfaces declared by
+  `doctrine/live_document_size/surfaces.jsonl`. The common checker owns their
+  lifecycle and pressure semantics.
+- Landing-page identity: top-level `README.md` is the rendered GitHub project
+  landing page, so its purpose, minimal first-use path, architecture summary,
+  and canonical navigation remain directly visible there. Containment routes
+  changing detail and chronology; it does not off-load the landing function.
 <!-- README-POLICY-LOCAL-ADOPTION:END -->
 
 ---

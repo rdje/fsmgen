@@ -181,10 +181,15 @@ scripts/check_doctrines.sh
 ```
 
 That driver runs every registered repository doctrine, including bootstrap,
-memory architecture, Knowledge Map sync, docs path hygiene, README entry-point
-hygiene, and project-data locality. The local pre-commit hook regenerates the
-Knowledge Map before running the driver, and hosted regression CI runs the same
-driver before the broader regression gate.
+memory architecture, Knowledge Map sync, docs path hygiene, complete
+live-document size/lifecycle coverage, README landing-page hygiene, and
+project-data locality. The local pre-commit hook regenerates the Knowledge Map
+before running the driver, and hosted regression CI runs the same driver before
+the broader regression gate. For a direct document-pressure census, run:
+
+```bash
+scripts/check_live_document_size.sh
+```
 
 Recommended debug run:
 

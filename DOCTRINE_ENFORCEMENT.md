@@ -33,11 +33,18 @@ shared enforcement entrypoint.
 project-agnostic, and harness-neutral lifecycle doctrine for every live
 documentation family. Decision `0041` and the local audit select bounded live
 views over semantic partitions, generated projections, rolling ledgers, or
-exact archive terminals according to information role. Common registry and
-checker implementation is deliberately still pending under
-`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2`; the existing `README-ENTRYPOINT`
-route registry remains the enforced stop-growth boundary until that slice
-lands.
+exact archive terminals according to information role. The data-only JSONL
+registries under `doctrine/` hold all FSMGen paths, budgets, states, owners,
+routes, and descriptors. `scripts/check_live_document_size.sh` adapts those
+declarations to the neutral contract and checker package under
+`live-document-size/`; it inventories every tracked Markdown path on every
+doctrine run.
+
+The top-level `README.md` is both a governed bounded snapshot and the rendered
+GitHub project landing page. Containment preserves its purpose, quick start,
+architecture summary, and navigation in that first-class interface. It routes
+only changing detail, exhaustive inventory, and chronology; it does not replace
+the landing page with an empty pointer list.
 
 ## Check Contract
 
@@ -82,7 +89,8 @@ Current registered checks:
 | `MEMORY-ARCH` | `scripts/check_memory_architecture.sh` | `MEMORY_ARCHITECTURE.md`, bounded `MEMORY.md`, bootstrap pointers, decision store, and task-tree index are present and compliant. |
 | `KNOWLEDGE-MAP` | `knowledge-map/scripts/check_knowledge_map.sh` | Fact cards are valid and `KNOWLEDGE_MAP.md` is in sync with them. |
 | `DOC-PATHS` | `scripts/check_docs_relative_paths.sh` | Live docs and the Knowledge Map do not leak machine-local absolute home paths. |
-| `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | On every commit/CI tree, `README.md` stays within its locally derived 275-line / 12,288-byte landing-page budget, no line enumerates two or more narrated work-unit leaves, and every route in `doctrine/readme_entrypoint/routed_destinations.tsv` remains marker-linked and pressure-controlled by file/collection ceilings, query/archive lifecycle, generated freshness, or frozen identity (`docs/decisions/0021`, `0024`, `0038`, and `0040`; authoritative reusable standard: `README_POLICY.md`). |
+| `LIVE-DOCUMENT-SIZE` | `scripts/check_live_document_size.sh` | JSONL schema, lifecycle/locator compatibility, project-relative same-volume targets, line/byte/file/aggregate budgets, 80/90/100 pressure state, non-worsening transition baselines, owner debt, indexes, generated-verifier presence, route closure, frozen identities, archive descriptors, and complete tracked-Markdown coverage. |
+| `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | On every commit/CI tree, the rendered GitHub landing page stays within its locally derived 275-line / 12,288-byte budget, retains its first-use contract, avoids narrated work-unit chronology, and keeps every route in `doctrine/readme_entrypoint/routed_destinations.jsonl` marker-linked to the common surface graph (`docs/decisions/0021`, `0024`, `0038`, `0040`, and `0041`; reusable standard: `README_POLICY.md`). |
 | `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
 | `TASK-TREE-INTEGRITY` | `scripts/check_task_tree_integrity.pl` | Every active indexed tree has one active root, unique valid nodes, exact direct-child enumeration, canonical statuses, valid ancestry/container state, and complete leaf evidence fields. |
 | `TASK-ACCEPTANCE` | `scripts/check_task_acceptance.sh` | A staged implementation change has one staged owning task file with fresh checked ROOT CAUSE, ADDRESSED, and NO REGRESSION boxes plus box-scoped declared root/no-regression evidence (`TASK_ACCEPTANCE.md`, decision `0026`). |

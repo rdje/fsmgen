@@ -4,16 +4,18 @@ This is the tool-neutral entrypoint (the common `AGENTS.md` convention). Other
 harnesses' bootstrap files (`CLAUDE.md`, `.cursorrules`,
 `.github/copilot-instructions.md`, `GEMINI.md`, `.windsurfrules`) point back here.
 The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`** +
-**`DOCTRINE_ENFORCEMENT.md`** + **`TOOLBOX.md`**.
+**`LIVE_DOCUMENT_SIZE_CONTAINMENT.md`** + **`DOCTRINE_ENFORCEMENT.md`** +
+**`TOOLBOX.md`**.
 
 ## On every session start / resume
 
 1. Read **`README.md`** — project objective, layout, standard commands.
 2. Read **`MEMORY_ARCHITECTURE.md`** — how memory + continuity work here (MANDATORY;
    it is enforced — see below).
-3. Read **`DOCTRINE_ENFORCEMENT.md`** and **`TOOLBOX.md`** — how repository
-   doctrines are mechanically checked and which FSMGEN tools to use first for
-   issue diagnosis.
+3. Read **`LIVE_DOCUMENT_SIZE_CONTAINMENT.md`**,
+   **`DOCTRINE_ENFORCEMENT.md`**, and **`TOOLBOX.md`** — how live documentation
+   stays bounded, how repository doctrines are mechanically checked, and which
+   FSMGEN tools to use first for issue diagnosis.
 4. Resume from **`MEMORY.md`** — the bounded resume pointer: latest commit, the active
    task-tree frontier, the single next action, any in-flight uncommitted work.
 5. Open the active **task-tree** under `docs/tasks/` (index: `docs/TASK_TREE.md`); its

@@ -63,6 +63,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
 | Need user-facing docs proof | `mdbook build docs/book`. |
 | Need docs path hygiene | `scripts/check_docs_relative_paths.sh`. |
+| Need live-document inventory, pressure, debt, or route truth | `scripts/check_live_document_size.sh`. |
 | Need README entry-point hygiene | `scripts/check_readme_entrypoint.sh`. |
 | Need Knowledge Map sync | `knowledge-map/scripts/gen_knowledge_map.sh` then `knowledge-map/scripts/check_knowledge_map.sh`. |
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
@@ -220,6 +221,7 @@ policy.
 ```bash
 mdbook build docs/book
 scripts/check_docs_relative_paths.sh
+scripts/check_live_document_size.sh
 scripts/check_readme_entrypoint.sh
 knowledge-map/scripts/gen_knowledge_map.sh
 knowledge-map/scripts/check_knowledge_map.sh
@@ -232,9 +234,14 @@ Expected signals:
 
 - mdBook completes without broken source or renderer errors.
 - docs relative-path audit reports no machine-local home-directory paths.
+- live-document size check parses the local JSONL registries, measures every
+  declared lifecycle and tracked Markdown path, and rejects schema, locality,
+  coverage, pressure, transition-baseline, route, identity, or descriptor drift.
 - README entry-point check confirms `README.md` is under its line and byte caps
-  and does not re-narrate per-leaf work-unit history (`docs/decisions/0021`
-  and `0024`; reusable policy: `README_POLICY.md`).
+  while retaining the purpose, first-use path, architecture summary, and
+  navigation expected of the rendered GitHub landing page; it also rejects
+  per-leaf work-unit narration (`docs/decisions/0021`, `0024`, and `0041`;
+  reusable policy: `README_POLICY.md`).
 - Knowledge Map check says facts are valid, IDs are unique, and the map is in sync.
 - memory architecture check confirms `MEMORY.md` is bounded and bootstrap/task/decision stores exist.
 - task-tree integrity reports measured active-tree/node counts and rejects

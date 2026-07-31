@@ -67,14 +67,14 @@ proven duplicate detail to its canonical home, and requires independent line
 and byte budgets unconditionally on every commit and CI tree. FSMGen's reviewed
 local limits are 275 lines and 12,288 bytes. Decision 0040 closes the next
 boundary: moving detail is not enough unless the destination is also
-pressure-controlled. FSMGen's data-only routed-destination registry classifies
-live files, partitioned manuals/task trees, generated indexes, append ledgers,
-query/archive terminals, and frozen legacy records. The same unconditional
-guard checks their per-file/aggregate ceilings, freshness ownership, terminal
+pressure-controlled. Top-level `README.md` is also the rendered GitHub project
+landing page, not just a bootstrap file: its purpose, minimal first-use path,
+architecture summary, and canonical navigation remain visible there. FSMGen's
+data-only route registry maps changing detail and chronology into the common
+surface graph without off-loading that landing function. The unconditional
+guards check per-file/aggregate ceilings, freshness ownership, terminal
 lifecycle, or exact frozen identity. Current legacy ceilings are stop-growth
-debt boundaries, not reusable recommendations. Decision 0041 completes the
-follow-up doctrine selection; no document migration or threshold change occurs
-in that selection.
+debt boundaries, not reusable recommendations.
 
 `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the broader reusable lifecycle
 doctrine. Its normative body is project-neutral, project-agnostic, and
@@ -89,8 +89,15 @@ sharding never substitutes for file-count and aggregate containment. Decision
 0041 selects this contract and the
 `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` tree owns implementation. Clean
 selection commit `139efbf90` completes `.1` continuity activation and leaves
-`.2` alone active for the common registry/checker; neither selection nor
-activation changes a document topology or threshold.
+`.2` as the common-enforcement owner. `.2` now ships a neutral checker plus
+local JSONL data: one named object per line, path and route arrays, nested
+budget/milestone/baseline objects, and strict rejection of malformed, missing,
+or unknown fields. This retains line-oriented diffs and streaming without the
+positional ambiguity of the discarded 22-column TSV prototype. The resulting
+unconditional census covers every tracked Markdown path, including README
+itself, broad root/focused/ancillary collections, and canonical knowledge
+cards; no family topology or established limit changes in the enforcement
+slice.
 
 `TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
 standard. FSMGen's registered checker reads data-only staged-path and evidence

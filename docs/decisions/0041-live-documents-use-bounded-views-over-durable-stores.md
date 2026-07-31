@@ -32,6 +32,16 @@ keeps a concise live changelog and conditional rationale ledger while freezing
 two legacy status files pending their own review. Those are specialized cases
 of one broader document-lifecycle rule.
 
+The implementation census added an important boundary that the original
+destination audit missed. Top-level `README.md` is itself a governed surface,
+and GitHub renders its contents as the public project landing page. Containing
+its size must preserve its purpose, first-use path, architecture summary, and
+navigation in that interface; moving the entire landing function behind a link
+would satisfy a byte count while violating the user contract. The complete
+2,772-path Markdown inventory also exposed aggregate root documents, focused
+`docs/*.md`, ancillary documents, and canonical knowledge cards as collections
+that need explicit coverage independent of README routing.
+
 ## Decision
 
 1. Adopt `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` as the project-owned doctrine.
@@ -72,6 +82,19 @@ of one broader document-lifecycle rule.
    Interim decision 0025 continues unchanged. The adoption tree may consume
    the review outcome and apply the selected containment topology, but does
    not pre-empt the files' semantic lifecycle owner.
+9. The local machine registry uses JSON Lines rather than a positional table.
+   Each line is one named, typed object; arrays carry paths and route targets,
+   nested objects carry budgets/milestones/baselines, and unknown or malformed
+   fields fail closed. This avoids the shifting-column and sentinel ambiguity
+   already visible in the 22-column prototype while retaining line-oriented
+   diffs and streaming. JSONL is the local serialization, not the doctrine:
+   the neutral contract remains independent of project and harness identity.
+10. An adoption baseline is immutable. When the containment program itself
+    must add continuity records before a debt surface migrates, a distinct
+    `transition` record names this adoption tree and a finite maximum growth in
+    every budget dimension. The common checker rejects ownerless or excess
+    growth. This preserves the original measurement instead of disguising each
+    accepted append as a refreshed baseline.
 
 ## Consequences
 
@@ -84,3 +107,6 @@ of one broader document-lifecycle rule.
   committable owner before any destructive-looking migration begins.
 - The common policy can be copied into another project or used by another
   harness without inheriting FSMGen nouns, paths, limits, or tool authority.
+- README containment cannot hollow out the rendered project landing page.
+- The common registry is self-describing and extensible without positional
+  column drift; Perl's core `JSON::PP` keeps enforcement dependency-free here.

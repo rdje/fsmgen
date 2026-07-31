@@ -14,17 +14,20 @@ answers:
   - "how are README destinations pressure controlled?"
   - "where is the README routed destination registry?"
   - "are frozen legacy status files valid README destinations?"
+  - "is README.md the GitHub project landing page?"
 date: 2026-07-31
 status: current
 tags: [readme, documentation, doctrine, continuity, onboarding, routing, pressure-control]
-evidence: README.md; README_POLICY.md; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0024-readme-is-a-nearly-static-landing-page.md; docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; doctrine/readme_entrypoint/routed_destinations.tsv; scripts/check_readme_entrypoint.sh; scripts/check_doctrines.sh; docs/tasks/README-POLICY-ANVIL-ADOPTION-FEEDBACK.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md
-reverify: wc -l -c README.md && scripts/check_readme_entrypoint.sh && rg -n 'README_LINE_CAP|README_BYTE_CAP|ROUTE_REGISTRY|frozen_roadmap_status|frozen_achievement_status' scripts/check_readme_entrypoint.sh doctrine/readme_entrypoint/routed_destinations.tsv
+evidence: README.md; README_POLICY.md; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0024-readme-is-a-nearly-static-landing-page.md; docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; doctrine/readme_entrypoint/routed_destinations.jsonl; doctrine/live_document_size/surfaces.jsonl; scripts/check_readme_entrypoint.sh; scripts/check_live_document_size.sh; scripts/check_doctrines.sh; docs/tasks/README-POLICY-ANVIL-ADOPTION-FEEDBACK.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
+reverify: wc -l -c README.md && scripts/check_readme_entrypoint.sh && scripts/check_live_document_size.sh && rg -n 'ROUTE_REGISTRY|SURFACE_REGISTRY|frozen_roadmap_status|frozen_achievement_status' scripts/check_readme_entrypoint.sh doctrine/readme_entrypoint/routed_destinations.jsonl doctrine/live_document_size/surfaces.jsonl
 ---
 
-`README.md` is a concise, nearly static GitHub landing page. It changes only
+`README.md` is a concise, nearly static GitHub landing page and therefore a
+first-class user interface, not merely a bootstrap pointer. It changes only
 when the project objective, first-use path, top-level architecture, or
-canonical navigation changes. Dynamic behavior, status, rationale, facts,
-inventories, and history stay in their canonical maintained layers.
+canonical navigation changes. Those four functions remain directly visible;
+dynamic detail, status, rationale, exhaustive inventories, and history stay in
+their canonical maintained layers.
 
 FSMGen enforces a maximum of 275 lines and 12,288 bytes, derived from its
 reviewed 246-line / 9,952-byte survivor, plus the existing per-leaf chronology
@@ -44,11 +47,15 @@ live files have line/byte ceilings, partitioned collections have per-part and
 aggregate ceilings, generated indexes retain freshness gates, append ledgers
 must shard before their ceiling, query/archive terminals remain query-first,
 and frozen legacy files are pinned by content identity and cannot receive new
-overflow. FSMGen declares those controls in
-`doctrine/readme_entrypoint/routed_destinations.tsv`; the unconditional README
-doctrine validates them even when neither README nor the destination changed.
+overflow. FSMGen maps those routes in
+`doctrine/readme_entrypoint/routed_destinations.jsonl`; common lifecycle and
+pressure declarations live once in `doctrine/live_document_size/surfaces.jsonl`.
+The unconditional doctrines validate them even when neither README nor a
+destination changed.
 Measured legacy ceilings are stop-growth debt boundaries, not recommended
 defaults. Decision `0041` now selects the broader project-neutral,
 project-agnostic, harness-neutral live-document doctrine and assigns each
 high-water/structural migration owner. No sharding, rollover, archive,
 threshold, or live-document content change occurs in the selection itself.
+Implementation leaf `.2` adds the common JSONL registry and neutral checker;
+the direct README landing contract remains unchanged.
