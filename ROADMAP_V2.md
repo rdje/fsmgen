@@ -9520,8 +9520,17 @@ complete after clean `.7.3` commit `44dbecd1a`, a separate continuity-only
 transition, and decision `0039` public-tooling selection. The selected
 command/API, normal/terse projection, repository-local artifact, and manifest
 contracts change no product behavior; clean `.8` selection commit `d34da3254`
-activates `.9` alone for backend-contract selection, which remains
-unperformed.
+activated `.9` alone for backend-contract selection. Decision `0043` and
+completed `.9` now select the exact first backend contract: static partial
+evaluation into readable non-UVM SystemVerilog, one inactive-edge scheduler
+that preserves logical drive/sample/react/check order, generated adapters for
+declared probes, exact source maps and repository-local artifacts, a closed
+private JSONL trace projected into the normalized result, and six independent
+qualification gates under Verilator 5.046. The profile is explicitly a known-
+value/two-state runtime tier: authored X/Z-sensitive meaning fails negotiation,
+and success cannot imply full four-state observation, full SystemVerilog LRM,
+UVM, parity, or scale. Proposed `.10` is selected next for separate clean
+activation; no backend/public/runtime behavior ships in `.9` selection.
 
 Decision `0034` clarifies that the portable core is an initial profile, not
 VIAL's language ceiling. Unlike synthesis-bounded HIAL, VIAL may abstract the

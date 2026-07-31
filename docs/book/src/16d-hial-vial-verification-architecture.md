@@ -683,6 +683,57 @@ Verilator with `--timing` is an event-capable compiled simulator for the
 features it supports; it is not evidence of complete SystemVerilog or UVM
 support.
 
+Decision `0043` selects the exact version-1 profile. The compiler partially
+evaluates the bound plan into a small runtime package plus one fixture module;
+it does not emit a general interpreter or make the author write target code.
+One scheduler uses the clock's inactive edge as a stable barrier:
+
+```text
+inactive edge:
+  sample the state produced by the preceding active edge
+  run react and check in the plan's exact rank order
+  apply the next logical cycle's drive values
+active edge:
+  the DUT consumes those values and settles before the next sample
+```
+
+That arrangement preserves VIAL's logical `drive → sample → react → check`
+meaning without asking an author to understand SystemVerilog event regions,
+clocking blocks, or race-avoidance idioms. Declared HIAL verification probes
+are reached through generated, source-mapped adapters; raw hierarchy still
+cannot appear in VIAL source.
+
+The first factual tool gate is Verilator 5.046 (2026-02-28). Its core command
+profile is:
+
+```text
+verilator --binary --timing --assert -j 1 --threads 1 \
+  --x-initial 0 --x-assign 0 --timescale 1ns/1ps \
+  --top-module GENERATED_TOP --Mdir REPOSITORY_LOCAL_OBJDIR SOURCES...
+```
+
+Compilation, executable creation, runtime exit, trace closure, result-schema
+validation, and semantic scenario status are separate gates. Build objects
+stay in an exact repository-local staging tree and are removed after the
+atomic public result graph validates.
+
+The profile has an important, explicit boundary: it is a **known-value
+runtime**, not complete four-state verification. Authored X/Z-sensitive
+values or checks fail backend negotiation. Sample results retain VIAL's
+normalized value shape, but this profile reports all sampled bits as known and
+cannot prove that a DUT never produced X/Z. A later full four-state backend may
+disagree, and parity must report that mismatch. A Verilator pass can never
+override it or imply full-SystemVerilog/UVM support.
+
+The simulator emits a closed, prefixed line-delimited JSON trace. The host
+validates its plan/run identities, sequence, logical ordering, counts, and
+footer, then projects it into `fsmgen.verification_result_manifest.v1`. It
+does not rerun VIAL scheduling, models, scoreboards, coverage, faults, or
+random decisions. See the
+[portable SystemVerilog backend contract](../../VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md)
+for exact artifacts, mappings, source maps, limits, diagnostics, non-claims,
+and implementation gates.
+
 The current UVM 1.2 output does not silently choose the future UVM revision.
 The VHDL lane does not claim analysis, simulation, complete VHDL-2019, PSL, or
 methodology support until its exact profiles run. Mixed-language support is a
@@ -786,7 +837,9 @@ tooling-contract selection. Decision `0039` now freezes `fsmgen vial`, exact
 normal/terse equivalence, separate VIAL/HIAL inputs, the portable API,
 repository-local atomic artifacts, manifests, discovery, diagnostics, and
 compatibility. Clean `.8` selection commit `d34da3254` activates `.9` alone
-for the separate plain-SystemVerilog/Verilator backend-contract selection;
-the contract remains unselected. No parser widening, command/API, plan or
-result file, target artifact, compile, simulation, runtime, parity pass, or
-backend behavior is shipped by `.8` selection.
+for the separate plain-SystemVerilog/Verilator backend-contract selection.
+Decision `0043` and completed `.9` now select the exact deterministic known-
+value contract described above. Proposed `.10` alone owns implementation after
+a separate clean activation, and `.11` retains runtime parity. No parser
+widening, command/API, plan or result file, target artifact, compile/run path,
+runtime result, parity pass, or backend behavior is shipped by selection.

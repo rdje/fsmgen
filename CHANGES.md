@@ -31970,3 +31970,28 @@ task tree and git.
   terminals/one index archive; Memory is 36 lines; all nine staged doctrines
   pass. No checker, schema, threshold, archive, README landing content, frozen
   content, product behavior, or deletion/retirement of an existing document.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9 — portable SV backend contract selected
+
+- Added decision `0043` and the 584-line portable-SystemVerilog backend
+  contract. The selected `sv_portable_verilator` profile statically partially
+  evaluates the bounded execution plan into readable non-UVM SV, uses one
+  inactive-edge scheduler, source-mapped declared-probe adapters, atomic local
+  artifacts, and a closed JSONL trace projected into the normalized result.
+  The exact reference is Verilator 5.046 with timing/assertions, one build/run
+  thread, deterministic X concretization, explicit top/timescale/local object
+  root, and six independent gates without blanket warning suppression.
+- The profile is explicitly known-value/two-state: authored X/Z-sensitive
+  meaning fails negotiation, and a pass cannot claim full four-state SV, full
+  LRM, UVM, parity, or scale. A repository-local exact-command substrate probe
+  passes the existing AHB success/ERROR oracle and is removed. Source/bridge/
+  execution plus AHB runtime pass Files=4/Tests=30; docs pass Files=4/Tests=323
+  and paths Files=1/Tests=2; all 37 mdBook chapters test and the removed 73-file/
+  17,133,866-byte build passes; task integrity is three trees/885 nodes/one
+  segment/one index archive; Knowledge Map validates 1,096 facts/5,733 keys.
+  All nine staged doctrines pass with 20 live surfaces and 2,780/2,780 tracked
+  Markdown paths covered; Memory is 37 lines.
+  Decision `0043` owns the rationale, so no duplicate development note is
+  added. Proposed `.10` is selected next for separate clean activation. No
+  compiler, command/API, generated backend, runtime, capability/support result,
+  parity, README landing content, or product behavior changes in selection.

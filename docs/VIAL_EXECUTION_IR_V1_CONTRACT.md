@@ -29,7 +29,10 @@ fsmgen.vial_parity_report.v1
 No file is written in `.6` or `.7`. Decision `0039` and
 `docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md` now select the public CLI/API,
 repository-local output layout, filenames, artifact discovery, and migration
-contract under `.8`; implementation remains owned by `.10`. The schema names
+contract under `.8`. Decision `0043` and
+`docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md` select the first
+known-value plain-SystemVerilog backend; implementation remains owned by
+`.10`. The schema names
 make those later surfaces possible without promoting the raw IR.
 
 Decision `0036` records the governing rule: VIAL describes verification
@@ -1238,8 +1241,9 @@ slice without changing the schemas or public/non-public boundary. `.7.3` does
 not write a plan/result
 file, modify `.vial` syntax, change SemanticIR or bridge schema, emit target
 verification code, compile/simulate, or claim runtime/parity. Completed `.8`
-selects public tooling and file placement under decision `0039`; `.9` selects
-the first backend contract and `.10` is the first implementation owner.
+selects public tooling and file placement under decision `0039`; completed
+`.9` selects the first backend contract under decision `0043`, and `.10` is
+the first implementation owner.
 Clean `.7.3` implementation commit `44dbecd1a` permitted `.8` to select
 decision `0039` and `docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md` after a separate
 continuity-only activation. Selection does not itself implement a command,

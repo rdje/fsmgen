@@ -6,31 +6,32 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14: publish external review packet`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`; `.14` is complete
-  and no implementation leaf is active across this commit boundary.
-- current_state: the tracked external packet explains the full doctrine,
-  JSONL/task implementation, measured migration, limitations, 31 questions,
-  and response template. Utility now precedes size in the review model, with
-  measured retain/merge/supersede/archive/delete examples. `.15` owns common
-  registry self-bounds/hard semantics; `.16` owns the utility/retirement audit.
-- next_action: circulate the packet and route returned reviews; before further
-  containment implementation, cleanly activate `.15`, `.16`, or the independent
-  `.8` family migration according to the reviewed priority.
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: select portable SV backend contract`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.9` is
+  complete and no implementation leaf is active across this commit boundary.
+- current_state: decision `0043` and the portable-SystemVerilog contract select
+  static non-UVM SV lowering, inactive-edge deterministic scheduling, declared-
+  probe adapters, exact source maps/artifacts, a closed JSONL trace/result
+  boundary, and exact Verilator 5.046 gates. The profile is explicitly known-
+  value/two-state and cannot imply full four-state SV, UVM, parity, or scale.
+- next_action: from this clean commit, activate proposed `.10` alone for the
+  bounded public-tool/plain-SV/result implementation; `.11` retains parity.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for `.15`, `.16`, `.8`-.10, or `.13`; `.3`-.5/.11 wait for the
-  separately owned four-file review, and final `.12` waits for all migrations.
+- blockers: none for `.10`; native UVM/VHDL/mixed-language leaves retain exact
+  tool prerequisites. PGEN/ANVIL feedback remains pending for the independent
+  live-document `.15`/`.16` leaves and is not a VIAL blocker.
 
 ## Durable context
 
-- Decision `0038` owns README policy authority, template independence,
-  duplicate proof, derived 275-line/12,288-byte caps, and unconditional guard.
-- Decision `0040` adds routed-destination ownership/lifecycle controls and
-  pins frozen legacy records; current large ceilings are debt, not defaults.
-- Decision `0041` generalizes containment project-wide while keeping its body
-  project-neutral, project-agnostic, and harness-neutral. Local 80/90/100
-  milestones, JSONL data, immutable baselines, transition allowances, and
-  migration paths remain fenced local state.
-- Decisions `0025` freezes legacy status files. Push only on explicit request
-  (`0005`); PNT runs autonomously (`0003`). Consult the Knowledge Map first.
+- Decision `0034`: full power underneath, simpler intent above; VIAL is not
+  synthesis-bounded and target methodology stays compiler-private.
+- Decisions `0036`/`0037`: logical drive/sample/react/check time and closed
+  directional type-representation proofs remain backend authority.
+- Decision `0039`: `fsmgen vial` public tooling and atomic repository-local
+  artifacts are selected but unimplemented until `.10`.
+- Decision `0043`: Verilator is the first fast known-value runtime profile,
+  never the language ceiling or four-state/UVM authority.
+- Decision `0041` and the external review packet remain durable for later
+  feedback-sensitive containment work. Push only on explicit request (`0005`);
+  PNT runs autonomously (`0003`). Consult the Knowledge Map first.

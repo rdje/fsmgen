@@ -21,7 +21,7 @@ answers:
 date: 2026-07-31
 status: current
 tags: [vial, execution-ir, logical-time, binding, determinism, random, replay, native-extension, plan, result, parity]
-evidence: docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/VIAL/ExecutionIR.pm; perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/VIAL/ExecutionReport.pm; perl/FSM/Support/VIALExecutionContract.pm; t/1552-vial-execution-ir.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
+evidence: docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/VIAL/ExecutionIR.pm; perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/VIAL/ExecutionReport.pm; perl/FSM/Support/VIALExecutionContract.pm; t/1552-vial-execution-ir.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
 reverify: prove -Iperl t/1550-vial-semantic-ir.t t/1551-hial-vial-bridge-manifest.t t/1552-vial-execution-ir.t t/297-capability-manifest.t && rg -n 'fsmgen\.vial_execution_ir\.v1|core_directed_single_clock_execution_v1|sha256_counter_rejection_v1|bit_domain_identity_v1|known_value_injection_v1|enum_encoding_injection_v1|shipped_private_target_neutral_no_backend' perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/VIAL/ExecutionIR.pm perl/FSM/VIAL/ExecutionRandom.pm perl/FSM/VIAL/ExecutionReport.pm perl/FSM/Support/VIALExecutionContract.pm
 ---
 
@@ -66,6 +66,8 @@ satisfy the former exact VIAL/HIAL field-type rule. Director-approved decision
 and enum-encoding proof records; `.7.3` implements them. Clean implementation
 commit `44dbecd1a` permitted `.8` to select public plan placement under
 decision `0039`. The public API returns only the sanitized plan, never
-ExecutionIR. Plan/result files, generated backends, compile, simulation,
-runtime, and parity remain unshipped. See
+ExecutionIR. Decision `0043` now selects the first known-value plain-
+SystemVerilog backend contract, but plan/result files, generated backends,
+compile, simulation, runtime, and parity remain unshipped until `.10`/`.11`.
+See
 `docs/VIAL_HIAL_TYPE_BINDING_MISMATCH_AUDIT.md`.

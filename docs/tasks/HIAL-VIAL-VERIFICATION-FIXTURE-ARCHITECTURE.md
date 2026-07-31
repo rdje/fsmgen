@@ -180,11 +180,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8: select public VIAL tooling contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9`
-  Status: `active`
+  Status: `done`
   Goal: `Select the plain-SystemVerilog sv_portable_verilator backend and runtime-library contract.`
   Acceptance: `The contract maps the bounded VIALExecutionIR subset to efficient, readable, deterministic, source-mapped non-UVM SystemVerilog without requiring SystemVerilog knowledge from a VIAL author, freezes clock/phase race avoidance, values/types, drivers/samplers, scenarios/fibers, checks/models/scoreboards/coverage/fault subset, artifacts/results, exact Verilator version/capabilities/options, compile/elaboration/runtime gates, non-claims, and implementation fixture.`
-  Verification: `Clean .8 selection commit d34da3254 activates only documentation selection of the plain-SystemVerilog sv_portable_verilator backend and runtime-library contract. No backend contract has yet been selected, and no parser, CLI/API, file, generated SystemVerilog, runtime library, Verilator invocation, compile, elaboration, simulation, result, parity, capability/support claim, or product behavior changes during activation. Final continuity and doctrine evidence is recorded in the verification log.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: activate portable SV backend contract`
+  Verification: `Decision 0043 and docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md select static partial evaluation into a small plain-SV runtime package, one fixture module, the generated DUT, exact source maps, a closed JSONL runtime trace, and the normalized result contract. One inactive-edge scheduler preserves drive/sample/react/check order without exposing simulator regions. The exact reference profile is Verilator 5.046 with --binary/--timing/--assert, one build/runtime thread, deterministic X concretization, explicit timescale/top/local object root, six independent gates, and no blanket warning suppression. The profile is explicitly known-value/two-state at runtime, rejects authored X/Z-sensitive semantics, satisfies only exact declared probe adapters, and cannot imply full four-state SV, full LRM, UVM, parity, or scale. A repository-local substrate probe compiled and ran the existing 178-line AHB oracle at success accepts=1/captures=1/holds=2/completions=1/ready_low=15/storage=cafebabe and ERROR accepts=1/captures=1/holds=2/completions=1/error_cycles=2/storage=00000000, then its exact tree was removed. Final source/bridge/execution, docs, task, mdBook, Knowledge Map, Memory, staged acceptance, doctrine, and cleanup evidence is recorded below. No parser, CLI/API, generated backend, runtime, result producer, capability/support claim, parity, or product behavior ships in selection; proposed .10 is selected next for separate clean activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: select portable SV backend contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10`
   Status: `proposed`
@@ -287,10 +287,14 @@ and accepted decision `0037` select a closed directional proof relation
 between independently authoritative VIAL semantic and HIAL carrier types.
 Completed `.7.3` now ships the private bounded binder, immutable ExecutionIR,
 deterministic random/replay, and defensive in-process plan after clean
-selection commit `2a1b3cefc` and its separate continuity activation. Proposed
-`.8` is now active for public tooling-contract selection after clean `.7.3`
-implementation commit `44dbecd1a` and a separate continuity-only activation.
-Decision `0034` records that
+selection commit `2a1b3cefc` and its separate continuity activation. Completed
+`.8` selects the public tooling contract under decision `0039`; clean commit
+`d34da3254` activated `.9`. Completed `.9` now accepts decision `0043` and the
+exact `sv_portable_verilator` contract: static partial evaluation, inactive-
+edge deterministic scheduling, declared probe adapters, source maps, closed
+runtime trace/result projection, and exact Verilator 5.046 qualification with
+an explicit known-value/two-state limit. Proposed `.10` is selected next for a
+separate clean implementation activation. Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
 compiler-owned beneath C/C++ or Rust.
@@ -382,13 +386,16 @@ compiler-owned beneath C/C++ or Rust.
   Activation changes durable ownership/frontier records only; no CLI/API,
   file/layout/schema implementation, artifact, backend, runtime, parity, or
   product behavior changes.
+- `2026-07-31`: Decision `0043` selects `sv_portable_verilator` as an exact
+  Verilator 5.046 known-value runtime profile. Static partial evaluation,
+  inactive-edge scheduling, generated declared-probe adapters, closed trace,
+  result projection, source maps, artifacts, gates, limits, and non-claims are
+  frozen before `.10` implementation; no target artifact or runtime ships.
 
 ## Open Questions
 
-- Active `.8` must select the public CLI/API and repository-local artifact contract
-  without promoting the current private builder or implying a backend. Result
-  production and parity comparison remain implementation-owned by `.10` and
-  `.11`, even though their data schemas are already selected.
+- Proposed `.10` must implement the selected public tool/backend/result path
+  without widening the known-value profile or claiming `.11` parity.
 - `.12` must choose the UVM revision and an actually available qualified
   simulator before native UVM implementation can claim compile/runtime support.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
@@ -401,8 +408,8 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for active `.9`; clean `.8` selection commit `d34da3254` satisfies its
-  activation prerequisite. Exact backend selection remains unperformed.
+- None for proposed `.10`, but it requires a separate clean activation after
+  `.9` selection commits. Result parity remains separately owned by `.11`.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -431,6 +438,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.8` activation | clean `.7.3` implementation predecessor; task/index/roadmap/audit/execution-contract/book/fact/Memory/changelog continuity; task-tree/docs/relative-path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.8` alone active for public tooling-contract selection; trees=2/nodes=868; docs Files=4/Tests=609 and paths Files=1/Tests=2; 37 chapters; build 73 files/17,058,744 bytes; Knowledge Map 1,092 facts/5,674 keys; Memory 56 lines; CLI/API/file/layout/artifact/backend/runtime and product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.8` selection | decision `0039`; exact source projections/CLI/API/HIAL routes/layout/manifests/capabilities/support/diagnostics/compatibility/non-claims; current source/bridge/execution and docs evidence; task/roadmap/audit/book/fact continuity; task/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; contract 514 lines/19,071 bytes; source/bridge/execution Files=3/Tests=27; docs Files=4/Tests=305 and paths Files=1/Tests=2; trees=2/nodes=868; 37 chapters; build 73 files/17,082,320 bytes; Knowledge Map 1,093 facts/5,689 keys; Memory 47 lines; `.9` selected next for clean activation; parser/CLI/API/files/backend/runtime/product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.9` activation | clean `.8` selection predecessor `d34da3254`; task/index/roadmap/audit/tooling-contract/book/fact/Memory/changelog continuity; task-tree/docs/relative-path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.9` alone active; trees=2/nodes=868; docs Files=4/Tests=314 and paths Files=1/Tests=2; 37 chapters; repository-local build 73 files/17,083,185 bytes; Knowledge Map 1,093 facts/5,689 keys; Memory 47 lines; an initially misresolved same-volume off-repository build was measured at 73 files/16,828 KiB, its exact project-owned directory removed, the corrected local build rerun, and both destinations proven absent; contract selection and product behavior unchanged |
+| `2026-07-31` | `.9` selection | decision `0043`; exact known-value plain-SV lowering/scheduler/value/adapter/artifact/trace/source-map/tool/gate/limit/non-claim contract; local Verilator 5.046 substrate run; source/bridge/execution and docs evidence; task/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; contract 584 lines/26,066 bytes; source/bridge/execution/AHB runtime Files=4/Tests=30; docs Files=4/Tests=323 and paths Files=1/Tests=2; trees=3/nodes=885/one segment/one index archive; 37 chapters; build 73 files/17,133,866 bytes; Knowledge Map 1,096 facts/5,733 keys; Memory 37 lines; all nine doctrines pass at 20 surfaces/2,780 paths; proposed `.10` selected next for clean activation; no implementation/product change; output removed exactly |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -571,6 +579,7 @@ compiler-owned beneath C/C++ or Rust.
 | `.8` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8: activate public VIAL tooling contract` | Activate only documentation selection of the public CLI/API, terse/verbose projection, repository-local artifact, manifest/report, capability/diagnostic/support, and compatibility contract after clean `.7.3`; product behavior remains unchanged. |
 | `.8` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8: select public VIAL tooling contract` | Accept decision `0039`, freeze the public source/CLI/API/artifact/report/discovery/compatibility boundary, and select proposed `.9` without product changes. |
 | `.9` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: activate portable SV backend contract` | Activate only documentation selection of the plain-SystemVerilog/Verilator backend and runtime-library contract after clean `.8`; selection and product behavior remain unperformed. |
+| `.9` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: select portable SV backend contract` | Accept decision `0043`, freeze the exact deterministic known-value plain-SV/Verilator backend contract, and select proposed `.10` without product behavior. |
 
 ## Changelog
 
@@ -588,6 +597,10 @@ compiler-owned beneath C/C++ or Rust.
   portable-SV/Verilator backend-contract selection `.9`. No backend contract,
   parser, command/API/file, generated SystemVerilog, runtime library, tool
   invocation, compile, elaboration, simulation, result, parity, capability,
+  support, or product behavior changes during activation.
+- `2026-07-31`: `.9` accepts decision `0043` and the exact portable-SV backend
+  contract. Proposed `.10` alone owns implementation after a separate clean
+  activation; selection ships no command, artifact, runtime, or result.
   support claim, or product behavior changes during activation.
 
 - `2026-07-31`: `.7.3` ships the bounded private no-backend execution seam.

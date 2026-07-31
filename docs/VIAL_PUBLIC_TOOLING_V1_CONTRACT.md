@@ -2,8 +2,9 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
-Status: selected; active `.9` now owns plain-SystemVerilog/Verilator backend-
-contract selection, and first implementation remains owned by `.10`
+Status: selected; decision `0043` and completed `.9` select the plain-
+SystemVerilog/Verilator backend contract, and first implementation remains
+owned by proposed `.10`
 Decision: `0039`
 
 ## Outcome
@@ -18,8 +19,9 @@ fsmgen vial plan --dut HIAL_SOURCE SOURCE.vial
 fsmgen vial run --dut HIAL_SOURCE --backend BACKEND_PROFILE SOURCE.vial
 ```
 
-The first runtime-profile contract and implementation remain separately owned
-by active `.9` and proposed `.10`. This selector freezes the public syntax,
+The first runtime-profile contract is now selected by completed `.9` under
+decision `0043`; implementation remains separately owned by proposed `.10`.
+This selector freezes the public syntax,
 request/result API, source-style equivalence, path/artifact/report schemas,
 capability discovery, diagnostics, support accounting, compatibility, and
 atomicity rules before a backend exists.
@@ -194,9 +196,10 @@ fsmgen vial run --dut HIAL_SOURCE --backend BACKEND_PROFILE [PLAN_OPTIONS] SOURC
 
 `run` performs the identical plan operation, negotiates the named backend,
 emits its artifacts, executes the qualified tool profile, and writes the
-selected result manifest. `sv_portable_verilator` is only a reserved candidate
-until `.9` selects its exact contract and `.10` implements and qualifies it.
-Before then, `run` returns `VIAL_BACKEND_UNAVAILABLE` atomically.
+selected result manifest. `sv_portable_verilator` is now a selected known-value
+backend contract under decision `0043`, but remains unavailable until `.10`
+implements and qualifies it. Before then, `run` returns
+`VIAL_BACKEND_UNAVAILABLE` atomically.
 
 ### Incompatible legacy options
 
@@ -473,10 +476,10 @@ a downgraded pass.
   authoring language is introduced.
 - Plan mode publishes sanitized bridge/plan files, not public constructors or
   raw IR.
-- No backend is selected here. Active `.9` selects
-  `sv_portable_verilator`; proposed `.10` is the first possible implementation
-  of this tooling contract plus that backend and result producer. `.11` owns
-  runtime parity against the handwritten AHB oracle.
+- No backend was selected by `.8`. Decision `0043` and completed `.9` now
+  select `sv_portable_verilator`; proposed `.10` is the first possible
+  implementation of this tooling contract plus that backend and result
+  producer. `.11` owns runtime parity against the handwritten AHB oracle.
 - Factories, phases, objections, UVM component classes, VHDL process plumbing,
   target hierarchy, callbacks, and host-language escape hatches remain backend
   implementation details unless a later typed VIAL semantic owner selects an

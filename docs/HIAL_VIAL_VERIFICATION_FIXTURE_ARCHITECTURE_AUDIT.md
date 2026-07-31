@@ -324,6 +324,24 @@ OSVVM/UVVM provider mapping and must first make GHDL or another analyzer
 runnable. No full-language, PSL, methodology, or mixed-language claim can be
 derived from artifact-shape tests.
 
+Decision `0043` now freezes the exact first profile. It statically partially
+evaluates the bound plan into a small runtime package and fixture module rather
+than emitting a general interpreter. One scheduler samples at the inactive
+clock edge, performs react/check work in plan order, then applies the next
+drive before the active DUT edge. This avoids active-edge races without making
+SystemVerilog regions or clocking-block folklore part of VIAL.
+
+The reference gate is Verilator 5.046 with `--binary --timing --assert`, one
+build/runtime thread, explicit `1ns/1ps` default timescale, deterministic X
+concretization, explicit top and repository-local object root, and no blanket
+warning suppression. The profile accepts only known-value semantics and
+reports that it cannot observe complete four-state X/Z behavior. Declared
+probes use generated, source-mapped backend adapters; authored raw hierarchy
+remains forbidden. A closed prefixed JSONL trace is validated and projected to
+the normalized result without moving VIAL execution semantics into the host.
+The canonical detail is in
+`docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md`.
+
 ## Cross-Backend Parity
 
 Every backend emits `verification-result-manifest.json` with a normalized
@@ -543,9 +561,12 @@ portable source-catalog/artifact-sink requests, repository-local atomic output,
 and explicit manifest-v1/v2 compatibility. No command/API/parser widening,
 plan/result file, generated backend artifact, compile, simulation, runtime,
 parity pass, or target-methodology behavior is shipped by selection. Clean
-`.8` selection commit `d34da3254` now activates `.9` alone for separate
-plain-SystemVerilog/Verilator backend-contract selection; the contract itself
-and every product behavior remain unchanged by activation.
+`.8` selection commit `d34da3254` activated `.9` alone for separate plain-
+SystemVerilog/Verilator backend-contract selection. Completed `.9` now accepts
+decision `0043` and the exact known-value backend/runtime contract. Proposed
+`.10` alone owns implementation after a separate clean activation; `.11`
+retains runtime parity. No command, target artifact, compile/run path, result
+producer, capability, or product behavior ships in selection.
 
 ## Rollback
 
