@@ -8396,6 +8396,17 @@ Clean architecture audit commit `2e2f7d25e` activates only `.2` through a
 separate continuity transition. Exact `.vial` syntax, `VIALSemanticIR`, parser,
 reports, diagnostics, first fixture, and implementation ownership remain
 unchanged and unselected during activation; product behavior does not change.
+Completed `.2` accepts decision `0033` and freezes `.vial` version 1 as a
+closed span-aware S-expression language with a dedicated parser, target-
+neutral `bool`/`u`/`s`/`logic`/`slogic` values, exact four-state masks,
+explicit packages/imports, typed transactions/DUT assertions, deterministic
+models/fibers, bounded scoreboards/coverage/faults/randomness/scenarios, and
+the canonical shared `=>`/`next`/`within` property forms. Private immutable
+`VIALSemanticIR`, defensive diagnostics/report, exact limits/negative
+boundaries, planned `vial/ahb_subordinate_base_output_arbitration.vial`, four
+implementation packages, and focused t1550 are selected. Proposed `.3` alone
+owns implementation after separate clean activation; no behavior changes in
+contract selection. See `docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md`.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain
@@ -9406,7 +9417,10 @@ migration, scale, and closeout across `.2`-.18. Proposed `.2` is the only
 selected next leaf. See decision `0032` and
 `docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md`.
 Clean audit commit `2e2f7d25e` activates only `.2`; its exact source and
-semantic-IR contract remains unperformed until the activation commits cleanly.
+semantic-IR contract remained unperformed during activation. Completed `.2`
+now selects the closed spanned VIAL v1 source and private typed semantic record
+under decision `0033`. Proposed `.3` is the only next implementation owner and
+requires separate clean activation.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile

@@ -4396,6 +4396,18 @@ Clean architecture audit commit `2e2f7d25e` activates only the exact
 `.vial`/`VIALSemanticIR` contract leaf `.2` through a separate continuity
 transition. Source syntax, semantic records, parser/report behavior, and the
 first fixture remain unselected during activation.
+Completed `.2` selects `.vial` version 1 as a closed span-aware S-expression
+language with a dedicated parser rather than raw Lispish arrays. The initial
+`core_directed_single_clock_v1` profile covers explicit packages/imports,
+target-neutral two-/four-state types, typed transactions and unresolved DUT
+binding assertions, deterministic models and fibers, bounded scoreboards,
+coverage, substitution faults, stable random-decision identity, and directed
+scenarios. `VIALSemanticIR` is private and immutable; only defensive sanitized
+diagnostics/report projections are selected. Properties reuse the shared
+`=>`/`next`/`within` vocabulary. Planned source
+`vial/ahb_subordinate_base_output_arbitration.vial` remains unshipped until
+proposed `.3` is separately activated and implemented. The exact contract is
+[VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT](../../VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -12111,6 +12123,10 @@ contract `.2` alone for a separate clean activation. See the
 and [architecture chapter](16d-hial-vial-verification-architecture.md).
 Clean audit commit `2e2f7d25e` activates only `.2`; the contract itself and all
 user-visible behavior remain unchanged during the continuity transition.
+Completed `.2` accepts decision `0033`, freezes the exact spanned source,
+typed semantic record, report/diagnostic, first-source, resource-limit, and
+negative-boundary contract, and selects proposed implementation `.3` alone for
+a separate clean activation. No source or parser ships in contract selection.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

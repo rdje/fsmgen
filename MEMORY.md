@@ -6,41 +6,41 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: activate source semantic IR contract`).
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`
-  (active documentation-only `.vial`/`VIALSemanticIR` v1 contract).
-- current_state: clean architecture audit commit `2e2f7d25e` selects decision
-  `0032`, decomposes `.2`-.18, and activates only `.2` through this separate
-  continuity transition; no source/IR contract finding or product behavior
-  changes during activation.
-- next_action: execute `.2`: select exact `.vial` syntax/topology, types,
-  semantic records, ownership/invariants, source maps, parser/report surfaces,
-  first bounded fixture, diagnostics/negative boundaries, and `.3` handoff.
-- in_flight_uncommitted: none after this activation commit; no background job.
-- blockers: none for `.2`; later UVM/VHDL/mixed-language qualification retains
-  explicit external-tool prerequisites.
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: select spanned VIAL semantic contract`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3`
+  (proposed exact VIAL v1 parser/SemanticIR implementation; selected, inactive).
+- current_state: `.2` is complete under decision `0033`; the closed spanned
+  `.vial` v1 grammar, `core_directed_single_clock_v1`, types/four-state masks,
+  declarations/fixture semantics, private immutable `VIALSemanticIR`,
+  defensive report/diagnostics, first AHB source, limits, negatives, and exact
+  `.3` packages/source/t1550 ownership are selected without behavior changes.
+- next_action: after this clean commit, activate only proposed `.3` through a
+  separate continuity commit; then implement exactly the selected bounded
+  parser, builder, IR, report, AHB source, support/capabilities, and t1550.
+- in_flight_uncommitted: none after this commit; no background job.
+- blockers: none for `.3`; later bridge/UVM/VHDL/mixed-language leaves retain
+  their separately recorded prerequisites.
 
 ## Durable context
 
-- Decision `0032` is canonical: VIAL uses one public source language, private
-  `VIALSemanticIR`/`VIALExecutionIR`, and a bounded versioned HIAL/VIAL bridge;
-  it does not mirror HIAL as public VIAL0/VIAL1/VIAL2.
-- Plain SystemVerilog/Verilator is first. UVM, VHDL methodology, and mixed-
-  language profiles are independently qualified. Existing inert UVM 1.2 and
-  VHDL observation outputs remain compatibility surfaces.
-- Architecture `.1` closeout: two active trees / 864 nodes; docs
-  `Files=3, Tests=40`; 37 mdBook chapters and 73-file / 16,810,633-byte build;
-  Knowledge Map 1,085 facts / 5,600 keys; exact output removed.
-- `.2` activation closeout: two active trees / 864 nodes; docs
-  `Files=3, Tests=40`; 37 chapters and 73-file / 16,812,484-byte build;
-  Knowledge Map unchanged at 1,085 / 5,600; Memory 46 lines; output removed.
-- IAL2 verification facts still require generated-IAL1 reviewable annotation;
-  direct `.ppif` verification output remains unsupported.
+- Decision `0032`: one public VIAL source, private SemanticIR/ExecutionIR, and
+  a versioned HIAL bridge. Decision `0033`: dedicated span-aware S-expression
+  parser and typed semantic records, not raw Lispish arrays.
+- VIAL v1 reuses canonical `=>`/`next`/`within` property operators; four-state
+  values normalize to value/known/Z masks; `same` is exact and `value_eq`
+  requires known values.
+- `.3` may claim parse/typecheck/sanitized semantic report only. Bridge
+  binding, plans, outputs, runtime, parity, UVM, VHDL, mixed-language, and
+  scale remain explicit non-claims.
+- Contract closeout: two active trees / 864 nodes; docs `Files=3, Tests=40`;
+  paths `Files=1, Tests=2`; 37 chapters and 73-file / 16,842,038-byte build;
+  Knowledge Map 1,086 facts / 5,617 keys; exact output removed.
+- Existing inert UVM 1.2 and VHDL observation outputs remain compatibility
+  surfaces. IAL2 verification facts still require generated-IAL1 reviewable
+  annotation; direct `.ppif` verification output remains unsupported.
 - Decisions `0028`-`0031` remain canonical for SourceHIR/IR policy. Public
-  builder, whole-product scale, MCP-write, and every director-gated owner
-  remain separately proposed/inactive.
-- Decision `0025` freezes `ROADMAP_STATUS.md` and
-  `LIVE_ACHIEVEMENT_STATUS.md`; update `CHANGES.md` every slice and
-  `DEVELOPMENT_NOTES.md` only for durable rationale.
-- Push only on explicit request (decision `0005`). PNT runs autonomously
-  (decision `0003`). Consult `KNOWLEDGE_MAP.md` before re-deriving durable facts.
+  builder, whole-product scale, MCP-write, and director-gated owners remain
+  separately proposed/inactive.
+- Decision `0025` freezes both legacy status files. Push only on explicit
+  request (`0005`); PNT runs autonomously (`0003`). Consult the Knowledge Map
+  before re-deriving durable facts.

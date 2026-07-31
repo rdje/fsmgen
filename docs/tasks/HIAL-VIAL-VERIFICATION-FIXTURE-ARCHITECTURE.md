@@ -109,11 +109,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1: select one-source dual-IR architecture`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`
-  Status: `active`
+  Status: `done`
   Goal: `Select the exact public .vial version-1 source contract and private immutable VIALSemanticIR version-1 record.`
   Acceptance: `A documentation-only contract selects grammar/topology, types and four-state policy, reusable declarations/packages, DUT references, transactions, scenarios, concurrency, stimulus, observations, expectations, models, scoreboards, coverage, fault intent, randomness/replay identity, diagnostics/source maps, owner/producers/consumers/invariants/defensive-copy policy, parser/report surfaces, first bounded fixture, negative boundaries, and implementation owner without changing product behavior.`
-  Verification: `Activated continuity-only after clean architecture audit commit 2e2f7d25e. Activation changes task/index, roadmap, mdBook backlog, fact, bounded Memory, changelog, and regenerated Knowledge Map continuity only. The exact .vial grammar, VIALSemanticIR record, ownership, reports, diagnostics, first fixture, negative boundaries, and implementation selection remain unperformed; parser/lowering/source/artifact/config, CLI/API/report/manifest/accounting, HDL/UVM/VHDL, tests/runtime, and product behavior remain unchanged until activation commits cleanly. Task-tree integrity passes at two active trees / 864 nodes; docs audits pass at Files=3, Tests=40; all 37 mdBook chapters test and the 73-file / 16,812,484-byte build passes; Knowledge Map passes at 1,085 facts / 5,600 question keys; Memory is 46 lines; diff, docs-only staged acceptance, all eight doctrines, and exact repository-local cleanup pass.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: activate source semantic IR contract`
+  Verification: `Clean activation commit d70f07e29 permits only documentation contract selection. docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md and decision 0033 select closed span-aware S-expression .vial version 1, core_directed_single_clock_v1, target-neutral two-/four-state values, reusable declarations, unbound typed DUT bindings, canonical shared =>/next/within properties, deterministic models/fibers, bounded scoreboards/coverage/faults/randomness/scenarios, private immutable VIALSemanticIR, defensive sanitized semantic reports/diagnostics, exact resource/negative boundaries, planned vial/ahb_subordinate_base_output_arbitration.vial, four implementation packages, and focused t1550. Proposed .3 alone owns implementation after separate clean activation. Task-tree integrity passes at two active trees / 864 nodes; docs audits pass at Files=3, Tests=40; relative-path audit passes Files=1, Tests=2; all 37 mdBook chapters test and the 73-file / 16,842,038-byte build passes; Knowledge Map generation/check passes at 1,086 facts / 5,617 question keys; memory, diff, docs-only staged acceptance, all eight doctrines, and exact repository-local cleanup pass. Parser/source/artifacts, CLI/API/report/manifest/accounting, HDL/UVM/VHDL, tests/runtime, and product behavior are unchanged in selection.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: select spanned VIAL semantic contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3`
   Status: `proposed`
@@ -236,8 +236,10 @@ native extensions, normalized result parity, plain SystemVerilog/Verilator as
 the first runnable backend, and independently qualified UVM, VHDL methodology,
 and mixed-language profiles. The canonical audit maps the handwritten AHB
 fixture and exact migration/scale/public-surface boundaries. Clean audit commit
-`2e2f7d25e` activates only `.2` through a separate continuity transition. The
-exact `.vial`/`VIALSemanticIR` contract remains unperformed during activation.
+`2e2f7d25e` activated only `.2` through a separate continuity transition.
+Completed `.2` accepts decision `0033` and the exact source/semantic-IR v1
+contract. Proposed `.3` alone is selected next for implementation and requires
+a separate clean activation commit.
 
 ## Decisions
 
@@ -291,11 +293,16 @@ exact `.vial`/`VIALSemanticIR` contract remains unperformed during activation.
 - `2026-07-31`: Clean architecture audit commit `2e2f7d25e` activates only
   source/semantic-IR contract `.2`; contract findings and product behavior
   remain unchanged until activation commits cleanly.
+- `2026-07-31`: Contract `.2` accepts decision `0033`: VIAL v1 is a closed
+  span-aware S-expression language with target-neutral typed semantics and a
+  private immutable `VIALSemanticIR`, not raw Lispish forms. Proposed `.3`
+  owns the exact bounded implementation after separate activation.
 
 ## Open Questions
 
-- `.2` must choose exact `.vial` concrete syntax and four-state mapping inside
-  the selected semantic families; this is no longer a topology question.
+- `.3` must implement the exact selected grammar, value masks, semantic record,
+  defensive report, diagnostics, resource limits, negative corpus, and first
+  AHB source without widening the profile or adding a public CLI.
 - `.12` must choose the UVM revision and an actually available qualified
   simulator before native UVM implementation can claim compile/runtime support.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
@@ -306,9 +313,10 @@ exact `.vial`/`VIALSemanticIR` contract remains unperformed during activation.
 
 ## Blockers
 
-- None for the selected documentation-only `.2` contract. Later UVM, VHDL,
-  and mixed-language implementation/qualification leaves retain explicit tool
-  availability prerequisites and cannot borrow the current Verilator result.
+- None for selected `.3` after its required separate activation. Later UVM,
+  VHDL, and mixed-language implementation/qualification leaves retain explicit
+  tool availability prerequisites and cannot borrow the current Verilator
+  result.
 
 ## Verification Log
 
@@ -317,6 +325,7 @@ exact `.vial`/`VIALSemanticIR` contract remains unperformed during activation.
 | `2026-07-29` | architecture parking | `knowledge-map/scripts/gen_knowledge_map.sh`; `knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book --dest-dir build`; `scripts/check_doctrines.sh`; task/roadmap/book/fact positive scans; `git diff --check`; all heavyweight commands under authorized `--host-max-pct 100 --process-max-rss-mb 4096` | `passed`; Knowledge Map is current at 1,017 facts / 5,175 question keys; mdBook built 72 files / 15,852 KiB under repository-root `build/`, which was removed with no residue; all doctrine gates passed; exact post-gate Stats-compatible capacity was 46.7% (11.21/24.00 GiB) and kernel pressure was 1 (normal); the guard percentage was not used as capacity truth |
 | `2026-07-31` | `.1` | architecture evidence audit; decision `0032`; exact AHB mapping; `.2`-.18 decomposition; `scripts/check_task_tree_integrity.pl`; docs audits; `mdbook test`; repository-local `mdbook build`; Knowledge Map generation/check; memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; selected one public `.vial`, two private IRs, versioned bridge, portable/native/result/profile contracts, and plain-SV/Verilator first; trees=2 / nodes=864; docs Files=3 / Tests=40; 37 chapters; 73 files / 16,810,633 bytes; Knowledge Map 1,085 facts / 5,600 keys; no product behavior change |
 | `2026-07-31` | `.2` activation | clean `.1` predecessor; task/index/roadmap/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.2` alone active; trees=2 / nodes=864; docs Files=3 / Tests=40; 37 chapters; 73 files / 16,812,484 bytes; Knowledge Map 1,085 facts / 5,600 keys; Memory 46 lines; contract and product behavior unchanged |
+| `2026-07-31` | `.2` selection | decision `0033`; exact source/grammar/type/property/declaration/fixture/IR/report/diagnostic/limit/negative contract; task/roadmap/book/fact consistency; task-tree/docs/relative-path/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.3` alone selected; trees=2 / nodes=864; docs Files=3 / Tests=40; paths Files=1 / Tests=2; 37 chapters; 73 files / 16,842,038 bytes; Knowledge Map 1,086 facts / 5,617 keys; no product behavior change |
 
 ## Commit Log
 
@@ -325,6 +334,7 @@ exact `.vial`/`VIALSemanticIR` contract remains unperformed during activation.
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE: park dual-intent architecture` | Park the director-approved architecture requirement without activating it or changing IAL2 priority. |
 | `.1` | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1: select one-source dual-IR architecture` | Accept decision `0032`, publish the canonical audit and mdBook chapter, decompose `.2`-.18, and select proposed source/semantic-IR contract `.2` without product changes. |
 | `.2` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: activate source semantic IR contract` | Activate only the documentation-only v1 source/semantic-IR contract after clean `.1`; contract findings remain unperformed. |
+| `.2` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2: select spanned VIAL semantic contract` | Accept decision `0033`, freeze the complete v1 source/private-IR/report boundary, and select proposed `.3` implementation without product changes. |
 
 ## Changelog
 

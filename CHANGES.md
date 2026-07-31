@@ -31434,3 +31434,27 @@ task tree and git.
   Memory is 46 lines; diff, docs-only staged acceptance, all eight doctrines,
   and exact repository-local cleanup pass. No separate development note is
   warranted.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2 — spanned VIAL semantic contract selected
+
+- Accepted decision `0033` and the exact VIAL v1 contract: closed span-aware
+  S-expressions parsed by a dedicated VIAL parser, target-neutral two-/four-
+  state values, shared canonical property operators, explicit reusable
+  declarations, typed unresolved DUT bindings, and private immutable
+  `VIALSemanticIR` instead of raw Lispish forms.
+- Selected bounded `core_directed_single_clock_v1` semantics for deterministic
+  models/fibers, scoreboards, coverage, substitution faults, random-decision
+  identity, and directed scenarios; froze defensive semantic reports,
+  diagnostics/source maps, resource limits, negative boundaries, and explicit
+  no-binding/no-plan/no-output/no-runtime claims.
+- Planned exact `.3` ownership: four `FSM::VIAL` packages,
+  `vial/ahb_subordinate_base_output_arbitration.vial`, and focused t1550.
+  Proposed `.3` alone is selected next and requires a separate clean
+  activation. No parser, source, report, capability/support entry, generated
+  artifact, HDL/UVM/VHDL, test runtime, or product behavior changes in this
+  contract slice.
+- Task-tree integrity passes at two active trees / 864 nodes; docs audits pass
+  at `Files=3, Tests=40`; relative-path audit passes at `Files=1, Tests=2`; all
+  37 mdBook chapters and the 73-file / 16,842,038-byte build pass; Knowledge
+  Map passes at 1,086 facts / 5,617 keys; memory, diff, docs-only staged
+  acceptance, all eight doctrines, and exact repository-local cleanup pass.

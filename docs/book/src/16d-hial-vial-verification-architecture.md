@@ -62,6 +62,70 @@ are orthogonal. One `.vial` language keeps those concerns composable; private
 compiler phases preserve strict boundaries without forcing users to choose an
 artificial source level.
 
+## Selected VIAL version-1 source contract
+
+The source/semantic-IR contract is now selected, but its parser and first
+source are not shipped yet. VIAL version 1 uses closed S-expressions and a
+dedicated source-span-aware parser. It deliberately does not expose the
+repository's legacy raw Lispish arrays: exact byte/line/column provenance,
+stable semantic IDs, deterministic diagnostics, and later replay/source maps
+are language requirements.
+
+Every file contains one versioned package with explicit sections:
+
+```lisp
+(vial
+  (version 1)
+  (package example
+    (imports)
+    (types
+      (enum state_t (logic 2)
+        (idle #b00)
+        (busy #b01)))
+    (transactions)
+    (models)
+    (scoreboards)
+    (fixtures ...)))
+```
+
+Imports are repository-relative and explicitly qualified. The parser receives
+their bytes from an in-memory source catalog; it does not search the current
+directory, home caches, temporary directories, or the network.
+
+The first profile, `core_directed_single_clock_v1`, selects enough meaning for
+one bounded AHB arbitration source:
+
+- `bool`, unsigned/signed two-state vectors, unsigned/signed four-state
+  vectors, enums, records, and bounded lists;
+- typed transactions and opaque unbound HIAL bridge references with expected
+  types and `public_port`/`verification_probe` access assertions;
+- deterministic event-driven models and bounded in-order/keyed scoreboards;
+- explicit coverpoints/cross caps, bounded transaction-field substitution
+  faults, seed plus stable random decision IDs;
+- timeout-bounded scenarios, literal-bounded repeats, and deterministic
+  `parallel all`/`parallel any` fibers; and
+- typed observations, event counts, expectations, and waits.
+
+Four-state `#b` literals normalize to value bits, a known mask, and a Z mask;
+target syntax is not semantic truth. There is no implicit truncation,
+signedness conversion, overflow wrap, or X/Z-to-two-state coercion. `same`
+means exact four-state equality, while `value_eq` requires known numeric or
+Boolean operands.
+
+VIAL does not create another property language. Its expectations and waits
+reuse the canonical `=>`, `next`, and one-/two-bound `within` operators already
+selected for verification properties. New temporal operators must extend the
+shared property contract rather than appear only in VIAL.
+
+The planned first checked source is
+`vial/ahb_subordinate_base_output_arbitration.vial`. It will represent success
+and unsupported-size scenarios, a transaction, event counters, a bounded
+scoreboard, stall coverage, one bounded size-substitution fault, and stable
+wait-cycle decision identity. In the first implementation it can only parse,
+type-check, and produce a sanitized semantic report. Bridge binding, execution
+plans, generated fixtures, simulation, and results remain later phases. See
+the exact [VIAL source and SemanticIR v1 contract](../../VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).
+
 ## The two private IR boundaries
 
 `VIALSemanticIR` owns parsed, typed, validated verification meaning before it

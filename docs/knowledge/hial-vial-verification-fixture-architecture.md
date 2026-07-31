@@ -25,8 +25,8 @@ answers:
 date: 2026-07-31
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
-evidence: docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://verilator.org/guide/latest/languages.html; https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
-reverify: scripts/check_task_tree_integrity.pl && rg -n 'one public.*\.vial|VIALSemanticIR|VIALExecutionIR|HIALVIALBridgeManifest|drive.*sample.*react.*check|sv_portable_verilator|sv_uvm_qualified|vhdl_portable_ghdl|vhdl_methodology_qualified|mixed_language_qualified|normalized.*result|Proposed `\.2`' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md ROADMAP_V2.md docs/book/src/16d-hial-vial-verification-architecture.md
+evidence: docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://verilator.org/guide/latest/languages.html; https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
+reverify: scripts/check_task_tree_integrity.pl && rg -n 'one public.*\.vial|VIALSemanticIR|VIALExecutionIR|HIALVIALBridgeManifest|core_directed_single_clock_v1|drive.*sample.*react.*check|sv_portable_verilator|sv_uvm_qualified|vhdl_portable_ghdl|vhdl_methodology_qualified|mixed_language_qualified|normalized.*result|Proposed `\.3`' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md ROADMAP_V2.md docs/book/src/16d-hial-vial-verification-architecture.md
 ---
 
 Hardware IAL (HIAL) is the collective architecture name for FSMGen's current
@@ -66,7 +66,9 @@ outputs remain inert compatibility surfaces until later migration leaves.
 
 The architecture audit is complete and maps the handwritten AHB arbitration
 fixture, migration, public artifacts, parity, and scale boundaries. Clean audit
-commit `2e2f7d25e` activates only
-`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`: it must freeze the exact
-`.vial` and `VIALSemanticIR` contract before any implementation. Activation
-does not itself select syntax, records, reports, or behavior.
+commit `2e2f7d25e` activated only
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2`; completed `.2` now selects the
+exact spanned `.vial` version-1 language and private typed `VIALSemanticIR`
+under decision `0033`. Proposed `.3` alone owns implementation after separate
+clean activation; no parser, source, report, or product behavior ships in the
+contract slice.

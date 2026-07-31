@@ -34279,3 +34279,28 @@ harness already exercises that substrate locally. UVM, VHDL methodology, and
 mixed-language output remain independently capability-qualified profiles;
 existing inert UVM 1.2 and VHDL outputs are compatibility surfaces rather than
 implicit version or simulator selections.
+
+## VIAL v1 — keep the notation, replace the parser boundary (2026-07-31)
+
+VIAL should look familiar beside `.fsm`, `.isf`, and `.ppif`, so decision
+`0033` keeps S-expression source. It must not publish the current `Lispish`
+array shape, though: that reader has normalization quirks and no exact span
+contract. VIAL diagnostics, semantic source maps, stable decision identities,
+and later backend traceability need byte offsets plus line/column provenance.
+A dedicated closed lexer/parser is therefore cheaper long-term than adapting a
+legacy syntax tree into a public compatibility burden.
+
+The semantic boundary stores normalized meaning, never target spellings or raw
+forms. Four-state values use value/known/Z masks; `same` is exact four-state
+equality and `value_eq` is known-only numeric/Boolean equality. This avoids
+inheriting SystemVerilog `==`/`===` behavior or VHDL `std_logic` policy by
+accident. Temporal checks reuse the existing canonical `=>`, `next`, and
+`within` nodes so VIAL does not fork the property language selected by decision
+`0008`.
+
+The first profile is intentionally parse/typecheck-only and single-clock. It
+is broad enough to prove every core declaration family through the AHB fixture,
+but all bridge references remain opaque assertions and every queue, cross,
+fault, loop, source catalog, and source file is explicitly bounded. This makes
+`.3` a real semantic compiler slice without borrowing later binding, execution,
+backend, or scale claims.
