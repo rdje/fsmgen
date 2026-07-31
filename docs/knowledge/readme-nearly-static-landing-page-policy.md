@@ -17,7 +17,7 @@ answers:
 date: 2026-07-31
 status: current
 tags: [readme, documentation, doctrine, continuity, onboarding, routing, pressure-control]
-evidence: README.md; README_POLICY.md; docs/decisions/0024-readme-is-a-nearly-static-landing-page.md; docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md; doctrine/readme_entrypoint/routed_destinations.tsv; scripts/check_readme_entrypoint.sh; scripts/check_doctrines.sh; docs/tasks/README-POLICY-ANVIL-ADOPTION-FEEDBACK.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md
+evidence: README.md; README_POLICY.md; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0024-readme-is-a-nearly-static-landing-page.md; docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; doctrine/readme_entrypoint/routed_destinations.tsv; scripts/check_readme_entrypoint.sh; scripts/check_doctrines.sh; docs/tasks/README-POLICY-ANVIL-ADOPTION-FEEDBACK.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md
 reverify: wc -l -c README.md && scripts/check_readme_entrypoint.sh && rg -n 'README_LINE_CAP|README_BYTE_CAP|ROUTE_REGISTRY|frozen_roadmap_status|frozen_achievement_status' scripts/check_readme_entrypoint.sh doctrine/readme_entrypoint/routed_destinations.tsv
 ---
 
@@ -48,6 +48,7 @@ overflow. FSMGen declares those controls in
 `doctrine/readme_entrypoint/routed_destinations.tsv`; the unconditional README
 doctrine validates them even when neither README nor the destination changed.
 Measured legacy ceilings are stop-growth debt boundaries, not recommended
-defaults. Clean guard commit `45fc6631e` activates the next selection of a
-project-wide live-document size-containment doctrine; no sharding, rollover,
-archive, threshold, or live-document content change has yet occurred.
+defaults. Decision `0041` now selects the broader project-neutral,
+project-agnostic, harness-neutral live-document doctrine and assigns each
+high-water/structural migration owner. No sharding, rollover, archive,
+threshold, or live-document content change occurs in the selection itself.

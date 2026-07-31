@@ -29,6 +29,16 @@ The existing memory and Knowledge Map gates are now doctrine checks registered
 under the general driver. This does not weaken their meaning; it gives them one
 shared enforcement entrypoint.
 
+`LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the selected project-neutral,
+project-agnostic, and harness-neutral lifecycle doctrine for every live
+documentation family. Decision `0041` and the local audit select bounded live
+views over semantic partitions, generated projections, rolling ledgers, or
+exact archive terminals according to information role. Common registry and
+checker implementation is deliberately still pending under
+`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2`; the existing `README-ENTRYPOINT`
+route registry remains the enforced stop-growth boundary until that slice
+lands.
+
 ## Check Contract
 
 Each doctrine check must obey this contract:

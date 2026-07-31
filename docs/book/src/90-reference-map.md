@@ -42,6 +42,8 @@ Some docs are intentionally still focused references:
 - [../../../MEMORY.md](../../../MEMORY.md)
 - [../../../ROADMAP_V2.md](../../../ROADMAP_V2.md)
 - [../../../README_POLICY.md](../../../README_POLICY.md)
+- [../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md](../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md)
+- [../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md)
 - [../../../TASK_ACCEPTANCE.md](../../../TASK_ACCEPTANCE.md)
 - [../../../COMMIT.md](../../../COMMIT.md)
 
@@ -70,9 +72,23 @@ live files, partitioned manuals/task trees, generated indexes, append ledgers,
 query/archive terminals, and frozen legacy records. The same unconditional
 guard checks their per-file/aggregate ceilings, freshness ownership, terminal
 lifecycle, or exact frozen identity. Current legacy ceilings are stop-growth
-debt boundaries, not reusable recommendations. Clean guard commit `45fc6631e`
-activates the follow-up selection of one project-wide live-document size-
-containment doctrine; no document migration or threshold change has occurred.
+debt boundaries, not reusable recommendations. Decision 0041 completes the
+follow-up doctrine selection; no document migration or threshold change occurs
+in that selection.
+
+`LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the broader reusable lifecycle
+doctrine. Its normative body is project-neutral, project-agnostic, and
+harness-neutral; FSMGen authority, measurements, 80/90/100 pressure
+milestones, repository-local storage rule, and migration paths remain in a
+fenced local adoption note and the focused audit. The architecture separates
+bounded current views from role-appropriate durable stores: user-facing
+reference stays in navigable semantic book partitions, generated indexes
+shard from smaller canonical sources, and exact engineering chronology can
+leave the working tree only after digest-verified retrieval exists. Per-part
+sharding never substitutes for file-count and aggregate containment. Decision
+0041 selects this contract and the
+`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` tree owns implementation; selection
+itself changes no document topology or threshold.
 
 `TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
 standard. FSMGen's registered checker reads data-only staged-path and evidence

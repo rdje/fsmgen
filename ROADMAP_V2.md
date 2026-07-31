@@ -10346,6 +10346,13 @@ The first honest `R11` slices are now:
   append ledgers, query/archive terminals, and exact frozen legacy identities.
   Existing large measurements are finite stop-growth debt ceilings rather
   than recommended defaults; threshold widening requires a reviewed decision.
-  Clean guard commit `45fc6631e` activates `.2` alone to select the shared
-  project-wide live-document size-containment doctrine before any family-
-  specific sharding, rollover, archive, or migration implementation.
+  Decision `0041` now selects the shared project-neutral, project-agnostic, and
+  harness-neutral live-document size-containment doctrine: bounded live views
+  sit over semantic user-facing partitions, regenerated projections, rolling
+  ledgers, or digest-proved exact archives according to information role.
+  Sharding must also bound file-count and aggregate pressure. The measured
+  audit assigns implementation leaves for the high-water roadmap, task index/
+  tree, Chapter 14, change/rationale ledgers, and structural Knowledge Map
+  outlier; frozen status lifecycle remains with its scheduled decision owner.
+  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` is proposed for clean activation;
+  no family migration or threshold change occurs in the selection slice.

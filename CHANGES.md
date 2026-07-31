@@ -31797,3 +31797,29 @@ task tree and git.
 - No threshold, sharding, rollover, archive, live-document content, compiler/
   runtime, generated product output, or VIAL behavior changes during this
   continuity-only slice. No separate development note is warranted.
+
+### README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2 — live-document size containment selected
+
+- Accepted decision `0041` and a project-neutral, project-agnostic, harness-
+  neutral doctrine whose FSMGen authority, measurements, thresholds, paths,
+  and migrations remain in a fenced local adoption record and audit.
+- Rechecked all 15 README-route destinations at clean commit `b1cebcdce`:
+  seven live surfaces reached at least 80% of one limit and the 6,130,630-byte
+  generated Knowledge Map is a structural outlier. Each now has an exact
+  common/ledger/task/book/roadmap/map or existing frozen-review owner in the
+  proposed twelve-leaf adoption tree.
+- Selected bounded live views over semantic user-reference partitions,
+  regenerated projections, rolling ledgers, and digest-proved archives, with
+  separate per-part and aggregate containment. No existing content, topology,
+  threshold, frozen file, compiler/runtime output, or VIAL behavior changes;
+  decision `0041` owns the rationale, so no duplicate development note is
+  added.
+- Verification: relevant documentation tests pass at Files=4/Tests=47;
+  relative paths pass Files=1/Tests=2; all 37 mdBook chapters test and the
+  repository-local 73-file/17,095,236-byte build passes then is removed;
+  Knowledge Map validates 1,094 facts/5,702 keys; task-tree integrity reports
+  trees=2/nodes=868; Memory is 34 lines; all 15 existing route controls pass.
+  All eight staged doctrine checks pass with docs-only task acceptance.
+  A supplemental broader documentation run passed t1304-t1306 before the RAM
+  guard stopped t1307 pre-execution at 95.2% host usage; no failing test was
+  observed.

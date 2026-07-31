@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / entry-point documentation`
 - Created: `2026-07-31`
 - Last updated: `2026-07-31`
@@ -51,7 +51,7 @@ into the next append-log sink.
 ## Task Tree
 
 - ID: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE`
-  Status: `active`
+  Status: `done`
   Goal: `Make README overflow routing pressure-closed rather than displacement-only.`
   Children: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.1, README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2`
 
@@ -63,11 +63,11 @@ into the next append-log sink.
   Commit: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.1: close routed documentation pressure`
 
 - ID: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2`
-  Status: `active`
+  Status: `done`
   Goal: `Select a project-neutral, project-agnostic, and harness-neutral live-document size-containment doctrine plus exact partition, shard, rotation, or archival owners before a hard ceiling is reached.`
   Acceptance: `The audit remeasures every registered destination, identifies all per-file or aggregate surfaces at or above 80% of a ceiling plus structural outliers, and selects one reusable project-/harness-neutral doctrine for bounded live views, deterministic rollover, sharded durable stores, generated bounded indexes, archival retrieval proofs, frozen terminals, and unconditional data-registry enforcement. Project-specific authority, measurements, caps, paths, and migrations remain in a fenced local adoption record and data registry. The audit proves why each current outlier is live debt or an acceptable terminal and creates/selects the smallest exact family migrations without rewriting or deleting historical content in this leaf.`
-  Verification: `Clean .1 implementation commit 45fc6631e activates only the project-wide live-document size-containment doctrine and high-water remediation-owner selection. No doctrine contract, threshold change, sharding, rollover, archive, file rewrite/delete, or product behavior changes during activation. Final continuity evidence is recorded below.`
-  Commit: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2: activate live-document size containment`
+  Verification: `Decision 0041 accepts LIVE_DOCUMENT_SIZE_CONTAINMENT.md with a neutral normative body and fenced FSMGen adoption. The clean b1cebcdce census covers all 15 registered routes and identifies seven >=80% live surfaces plus the structural generated-map outlier. docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md classifies each surface and assigns exact common/ledger/task/book/roadmap/map/four-file-review/final-audit owners in the proposed LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION tree. Relevant documentation tests pass at Files=4/Tests=47; all 37 mdBook chapters test and the repository-local 73-file/17,095,236-byte build passes and is removed exactly; Knowledge Map passes at 1,094 facts/5,702 keys; task-tree integrity passes at trees=2/nodes=868; Memory is 34 lines; relative paths pass Files=1/Tests=2; all 15 existing route controls pass; the neutral-body token probe finds no FSMGen/vendor/path/cache token; all eight staged doctrine checks pass with docs-only task acceptance. No existing threshold, topology, frozen file, product behavior, or historical content changes.`
+  Commit: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2: select live-document size containment`
 
 ## Decisions
 
@@ -85,6 +85,11 @@ into the next append-log sink.
   project-neutral, project-agnostic, and harness-neutral. Keep FSMGen authority,
   paths, measurements, caps, and migration owners in a fenced local adoption
   record and data registry, never in the neutral doctrine body.
+- `2026-07-31`: Decision 0041 selects bounded live views over role-appropriate
+  durable stores. User-facing reference remains in navigable semantic shards;
+  generated views rebuild from canonical small units; exact chronology may
+  leave the working tree only through digest-verified retrieval. Per-part and
+  aggregate growth are independent obligations.
 
 ## Open Questions
 
@@ -131,6 +136,7 @@ into the next append-log sink.
 | --- | --- | --- | --- |
 | `2026-07-31` | `.1` | policy/decision/registry/checker/test/doctrine/book/fact/live-doc synchronization; positive and fail-closed route fixtures; docs/path/mdBook/Knowledge Map/Memory/diff/staged implementation acceptance/doctrines; exact cleanup | `passed`; decision 0040; 15 routes; focused Files=1/Tests=7; combined Files=2/Tests=9; docs Files=4/Tests=314; trees=3/nodes=871; 37 chapters; build 73 files/17,087,147 bytes; Knowledge Map 1,093 facts/5,693 keys; Memory 49 lines; staged acceptance identifies root=git_history/no-regression=prove_summary; all eight doctrines pass; README and product behavior unchanged; output removed |
 | `2026-07-31` | `.2` activation | clean `.1` predecessor `45fc6631e`; task/index/roadmap/book/fact/Memory/changelog continuity; task/docs/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.2` alone active for project-/harness-neutral live-document size-containment doctrine selection; trees=3/nodes=871; docs Files=4/Tests=314 and paths Files=1/Tests=2; 37 chapters; build 73 files/17,088,704 bytes; Knowledge Map 1,093 facts/5,693 keys; Memory 50 lines; contract, thresholds, files, and product behavior unchanged; output removed exactly |
+| `2026-07-31` | `.2` selection | clean `b1cebcdce` census of all 15 routes; neutral doctrine/fenced adoption; decision 0041; local audit; exact migration tree; relevant docs/path/mdBook/Knowledge Map/task/Memory/route/diff/staged-doctrine gates; exact cleanup | `passed`; docs Files=4/Tests=47; paths Files=1/Tests=2; 37 chapters; build 73 files/17,095,236 bytes; Knowledge Map 1,094 facts/5,702 keys; trees=2/nodes=868; Memory 34 lines; seven >=80% surfaces plus one structural generated-map outlier; all eight staged doctrines pass with docs-only task acceptance; no migration, threshold, frozen-file, historical-content, or product change. Supplemental broader ISF documentation truth run passed t1304-t1306, then the RAM guard stopped t1307 before execution because host usage reached 95.2% versus the 88% cutoff; the focused documentation and complete mdBook gates remain passed. |
 
 ## Commit Log
 
@@ -138,6 +144,7 @@ into the next append-log sink.
 | --- | --- | --- |
 | `.1` | `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.1: close routed documentation pressure` | Integrate the fifth cross-project lesson and enforce local routing closure. |
 | `.2` activation | `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2: activate live-document size containment` | Activate only doctrine/high-water contract selection after clean `.1`; selection remains unperformed. |
+| `.2` selection | `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2: select live-document size containment` | Accept the neutral doctrine, local census, and exact migration owners without performing a migration. |
 
 ## Changelog
 
@@ -152,3 +159,7 @@ into the next append-log sink.
 - `2026-07-31`: Clean `.1` implementation commit `45fc6631e` activates only
   `.2` doctrine/high-water selection. No threshold, sharding, rollover,
   archive, live-document content, or product behavior changes in activation.
+- `2026-07-31`: `.2` accepts decision 0041, a neutral doctrine with fenced
+  local adoption, the exact 15-route/high-water audit, and a twelve-leaf
+  implementation tree. Existing content/topology/thresholds and all product
+  behavior remain unchanged.
