@@ -168,10 +168,9 @@ missing history reports that recovery action. The 79-line review front door is
 capped at 100 lines / 5 KiB and routes to the detailed 1,311-line packet, whose
 SHA-256 is frozen as retained evidence.
 
-Clean `.22` commit `2bfb32c02` activates `.23` alone to select the lifecycle
-and auditable classification contract for unique product-sized maintained
-reference. Activation changes no checker, registry, lifecycle, content, or
-product behavior.
+Clean `.23` commit `425cd7fef` activates `.15` alone to make common JSONL
+control data finite and reviewable. Activation changes no checker, registry,
+schema, pressure limit, document content, or product behavior.
 
 Decision `0045` and `.23` now make `maintained_reference` distinct from
 `partitioned_canonical`. Unique product/specification prose keeps fixed

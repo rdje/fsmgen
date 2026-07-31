@@ -32285,9 +32285,8 @@ task tree and git.
 
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23 — maintained-reference selection activated
 
-- From clean `.22` commit `2bfb32c02`, activated `.23` alone to select the
-  lifecycle and auditable classification contract for unique product-sized
-  reference prose. No enforcement, lifecycle value, content, or behavior changes.
+- Clean `.22` commit `2bfb32c02` activated `.23` alone for maintained-reference
+  classification; enforcement, content, and behavior remained unchanged.
 
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23 — maintained-reference contract enforced
 
@@ -32295,3 +32294,6 @@ task tree and git.
 - Classified the mdBook without deleting prose or weakening Chapter 14 debt;
   `ISF_SPEC.md` remains a candidate under its existing focused-document owner.
 - Added fail-closed core/Git fixtures and synchronized doctrine, audit, book, fact, and tool guidance.
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15 — common JSONL bounds activated
+
+- Clean `.23` commit `425cd7fef` activates only finite, reviewable common-control-plane bounds; implementation remains pending.

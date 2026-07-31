@@ -172,7 +172,7 @@ normal collection density.
 | Family | Selected bounded view and durable store | Exact owner |
 | --- | --- | --- |
 | Common enforcement | JSONL surface records declare every class, path array, owner, independent health targets and inclusive ceilings, 80/90 target milestones, containment status, immutable adoption baseline, bounded growth/ratchet, topology, index/currency contracts, and verifier; separate JSONL route/evidence/archive/ceiling-authority records carry only their own mappings; one unconditional adapter proves tracked-Markdown coverage, source-derived typed routes, evidence paths, staged-result agreement, delegated execution, and cross-revision ceiling authority | `.2` ships the common graph; `.18` separates health/quarantine and authorizes increases; `.19` closes execution/driver reachability; `.20` adds opt-in lifecycle currency; `.21` closes route/index/evidence completeness |
-| Control-plane self-containment | Specialized task manifests enforce record/byte caps, but the common surface, route, archive, and ceiling-authority JSONL registries do not yet bound their own record/value/line pressure | `.15` selects and enforces finite reviewable common-registry bounds |
+| Control-plane self-containment | Specialized task manifests enforce record/byte caps, but the common surface, route, archive, and ceiling-authority JSONL registries do not yet bound their own record/value/line pressure | Active `.15`, selected from clean `.23` commit `425cd7fef`, enforces finite reviewable common-registry bounds; activation changes no schema or limit |
 | Document utility and retirement | Before a family is partitioned, classify its current audience, canonical role, unique value, duplication, staleness, and historical retention; select retain, merge, supersede, archive, or delete with evidence | `.16` audits all families and assigns separate atomic content migrations or retirements; the existing four-file review retains authority over its named files |
 | GitHub landing page and root collection | Preserve README's direct project-introduction/quick-start/architecture/navigation role while removing only proved duplicate dynamic detail; let semantic family owners remove root-ledger pressure before final retained-surface calibration | `.12` performs the final README/root re-audit after semantic migrations |
 | Change and rationale ledgers | The existing four-file lifecycle review retains authority over their long-term audiences. If change/rationale ledgers remain live, root files become bounded current/index views; records seal on semantic entry boundaries into repository-local range shards, then leave the live collection only through digest-verified version-archive descriptors | `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` selects the roles; `.3` consumes that decision and proves the schema; `.4`/`.5` perform only selected migrations |
@@ -188,6 +188,8 @@ normal collection density.
 Decision 0045 and `.23` select the distinct maintained-reference lifecycle.
 The mdBook changes classification without losing prose or weakening its
 per-part debt; the focused ISF specification remains under the prior controls.
+Clean `.23` commit `425cd7fef` activates `.15` alone for common JSONL
+self-containment; no schema, value, or enforcement changes in activation.
 
 ## Why this is containment rather than displacement
 

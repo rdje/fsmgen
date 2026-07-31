@@ -161,11 +161,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14: publish external review packet`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15`
-  Status: `pending`
+  Status: `active`
   Goal: `Make the common JSONL control plane finite, reviewable, and schema-constrained.`
   Acceptance: `The surface, route, and common archive-descriptor registries declare and enforce finite record/byte/maximum-record controls; scalar bytes, identifier domains, and array cardinalities prevent prose or identity-list displacement; Markdown surfaces gain a deterministic maximum-line-byte dimension where applicable; strict parser semantics and the portable negative fixture corpus remain the executable schema; neutrality remains mechanically tested; no threshold is widened.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated alone from clean `.23` implementation commit `425cd7fef`. Paths/task pass Files=2/Tests=43; 22 surfaces cover 2,784/2,784 paths; Knowledge Map is 1,096 facts/5,759 keys; Memory is 38 lines; all 37 chapters test; the repository-local 73-file/17,020-KiB build passes and is removed exactly. Common-control-plane inventory and enforcement remain pending; no schema, registry value, limit, lifecycle, frozen identity, landing content, or product behavior changes.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: activate common JSONL bounds`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
@@ -324,10 +324,12 @@ no routed destination becomes the next uninstrumented blob.
   replaces decorative aggregate caps with exact fresh change authority,
   classifies the mdBook, and leaves the ISF specification under existing debt
   until its owned semantic partition lands.
+- `2026-07-31`: Clean `.23` implementation commit `425cd7fef` activates `.15`
+  alone for finite common JSONL control-plane bounds before utility `.16`.
 
 ## Open Questions
 
-- None for completed `.18`-`.23`. The rereferenced PGEN/ANVIL
+- None for completed `.18`-`.23` or active `.15`. The rereferenced PGEN/ANVIL
   files exactly match the reviews already reconciled in the bounded disposition;
   the existing four-file review retains authority for its named semantic roles.
 - Verification finding already owned by proposed task
@@ -343,8 +345,8 @@ no routed destination becomes the next uninstrumented blob.
 - `.3`-`.5` and `.11`: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` must first
   select the four files' long-term roles. `.1`, `.2`, `.6`-`.10`, and `.12`
   remain independently schedulable subject to their ordinary predecessor
-  dependencies. `.17`-`.23` are complete except pending `.15`/`.16`; `.15` is
-  the next clean selection frontier, then utility `.16` unblocks affected
+  dependencies. `.17`-`.23` are complete except active `.15` and pending
+  `.16`; utility `.16` follows `.15` and unblocks affected
   `.8`-`.10`/`.13` migrations.
 
 ## Acceptance Checklist (enforced) — `.21`
@@ -370,6 +372,12 @@ no routed destination becomes the next uninstrumented blob.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'partitioned_canonical' --oneline -- live-document-size/scripts/check_live_document_size.pl doctrine/live_document_size/surfaces.jsonl` identifies `18e2dcbc6`; source inspection shows that the original seven-class schema forced unique product-sized book prose into a partition topology with fixed aggregate targets, so legitimate product documentation could only consume a moving decorative cap or eventually be displaced.
 - [x] **ADDRESSED (verified)** — `prove -Iperl t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t t/1561-live-document-reference-authority.t` reports `All tests successful` at `Files=3, Tests=24`; positive and fail-closed fixtures prove bounded classification/read/parts, exact baseline/delta, fresh one-use authority, unchanged-authority continuity, narrow baseline-shape migration, lifecycle protection, and preserved ceiling-authority semantics. The real wrapper reports one changed maintained reference at exact 38 files/47,412 lines/2,513,789 bytes with a 39-line/1,999-byte mandatory index and navigation depth one.
 - [x] **NO REGRESSION** — staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`; task/path/Memory/Knowledge Map/mdBook gates stay green, the review front door is 78 lines and TOOLBOX 315, the 73-file/17,020-KiB book build is removed exactly, and no unique maintained prose, fixed non-reference limit, frozen identity, README landing content, compiler/runtime artifact, or product behavior changes.
+
+## Acceptance Checklist (enforced) — `.15` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `.14` source inspection and the accepted ANVIL/PGEN disposition show that specialized task manifests self-cap while the common surface, route, archive-descriptor, evidence, retention, and authority JSONL control plane can grow or hide oversized values without its own finite schema pressure contract; existing `.15` owns that boundary.
+- [x] **ADDRESSED (verified)** — clean commit `425cd7fef` is the exact predecessor; only task/index/roadmap/book/fact/Memory/audit/changelog continuity activates `.15`, leaving the inventory and enforcement implementation pending.
+- [x] **NO REGRESSION** — focused path/task/live-size, Knowledge Map, Memory, mdBook, staged acceptance, and all-doctrine checks pass; `.15` alone is active and no checker, registry, schema, pressure limit, document content/lifecycle, frozen identity, README landing content, or product behavior changes.
 
 ## Acceptance Checklist (enforced) — `.20`
 
@@ -447,6 +455,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.22` migration/retention proof | exact IAL2 source/node/working-set/residue manifest; bounded retention contracts; actionable missing-history diagnostics; frozen packet plus bounded routed front door; focused/path/task/live-size/Knowledge Map/Memory/mdBook/staged-doctrine gates; exact cleanup | `passed`; source 21,726 lines/4,662,385 bytes/SHA-256 8cff8e7b...; 844 nodes; working set 6,002/2,438,733; zero residue; focused Files=3/Tests=62; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces; Knowledge Map 1,096 facts/5,758 keys; 37 chapters; removed 73-file/17,004-KiB build; packet frozen at SHA-256 49351a2a...; no README or product behavior change |
 | `2026-07-31` | `.23` activation | clean `2bfb32c02` predecessor; task/index/roadmap/book/fact/Memory/audit/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=55; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces and complete Markdown coverage; Knowledge Map 1,096 facts/5,758 keys; Memory 40 lines; all 37 chapters test; removed 73-file/17,012-KiB repository-local build; `.23` alone active; no checker, registry, lifecycle value, limit, maintained content, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.23` maintained-reference contract | decision 0045; neutral lifecycle/schema/core; Git aggregate authority; mdBook and ISF classification; UTF-8 byte bounds; focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=24; maintained mdBook exact prior 38/47,377/2,511,665 plus delta 0/+35/+2,124; mandatory index 39/1,999/depth 1; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096 facts/5,759 keys; Memory 38 lines; review front door 78 and TOOLBOX 315 lines; all 37 chapters test; removed 73-file/17,020-KiB build; all nine doctrines pass; no unique prose deletion, non-reference limit/frozen/landing/product change |
+| `2026-07-31` | `.15` activation | clean `425cd7fef` predecessor; task/index/roadmap/fact/Memory/audit/changelog sync; focused path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; Files=2/Tests=43; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096 facts/5,759 keys; Memory 38 lines; all 37 chapters test; removed 73-file/17,020-KiB build; `.15` alone active; no checker, registry, schema/value/limit, lifecycle/content, frozen identity, landing content, or product behavior change |
 
 ## Commit Log
 
@@ -475,6 +484,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.22` migration/retention proof | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22: enforce migration and retention proof` | Prove four independent migration products, bind version objects to bounded recovery contracts, and freeze the detailed packet behind a bounded routed front door. |
 | `.23` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23: activate maintained-reference selection` | Activate only the maintained product-reference lifecycle and classification contract from clean `.22` commit `2bfb32c02`; implementation remains pending. |
 | `.23` maintained-reference contract | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23: enforce maintained-reference contracts` | Bound the mandatory read and every part, authorize exact aggregate change, classify the mdBook, and preserve ISF-spec debt without deleting unique prose. |
+| `.15` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: activate common JSONL bounds` | Activate only common-control-plane inventory and finite schema pressure from clean `.23` commit `425cd7fef`; implementation remains pending. |
 
 ## Changelog
 
@@ -556,6 +566,8 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-07-31`: Decision 0045 and `.23` add maintained-reference classification,
   bounded mandatory/direct/per-part reading, exact persistent aggregate-change
   authority, and mdBook/ISF examples; `.15` is the next clean frontier.
+- `2026-07-31`: Clean `.23` commit `425cd7fef` activates `.15` alone; common
+  JSONL inventory, schema, and enforcement remain pending.
 - `2026-07-31`: An initial mdBook destination argument resolved outside the
   repository. The exact 73-file/17,012-KiB output and its newly created empty
   parent were removed; the corrected repository-local build passed and was

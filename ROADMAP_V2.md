@@ -10446,4 +10446,5 @@ The first honest `R11` slices are now:
   `.22` proves source identity, 844 semantic nodes, the working set, and zero
   residue independently; version objects name recovery contracts and a bounded
   front door routes to the frozen packet. Decision `0045` and `.23` now bound
-  maintained-reference reads/parts plus exact aggregate change; `.15` is next.
+  maintained-reference reads/parts plus exact aggregate change. Clean `.23`
+  commit `425cd7fef` activates `.15` alone for common JSONL self-containment.
