@@ -123,16 +123,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: implement VIAL semantic intent`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`
-  Status: `active`
+  Status: `done`
   Goal: `Select HIALVIALBridgeManifest version 1 and its HIAL-layer production contract.`
   Acceptance: `A documentation-only contract freezes bridge identity, HIAL review-artifact provenance, unit/config/type/endpoint/domain/transaction/event/protocol/residue/observation/probe/backend-binding/capability/source-map families, public-port/probe/native access classes, schema/defensive-copy/report paths, exact IAL0/IAL1/IAL2 reviewable routes, no-direct-IAL2 bypass, negative boundaries, and the bounded first implementation scope.`
-  Verification: `Activated continuity-only after clean .3 implementation commit be9c74163. Activation changes task/index, roadmap, audit, mdBook, fact, bounded Memory, changelog, and regenerated Knowledge Map continuity only. Task-tree integrity passes at two active trees / 865 nodes; docs plus relative-path audits pass at Files=4 / Tests=42; all 37 mdBook chapters test and the 73-file / 16,900,280-byte repository-local build passes; Knowledge Map generation/check passes at 1,087 facts / 5,631 question keys; Memory remains bounded at 54 lines; diff, docs-only staged acceptance, all eight doctrines, and exact output cleanup pass. Bridge schema, HIAL producers, report/artifact/capability/support surfaces, parsers, lowerers, generated HDL or verification code, tests, runtime, and product behavior remain unchanged until the contract is selected in a separate commit.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4: activate HIAL VIAL bridge contract`
+  Verification: `Accepted decision 0035 and docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md after auditing normalized IAL0/IAL1/IAL2 outputs, the IAL1 observation parser/schedule report, the AHB PPIF generated-IAL1/IAL0/report route, current public semantic/result contracts, the checked VIAL bridge IDs, and decisions 0018/0031-0034. The selected fsmgen.hial_vial_bridge_manifest.v1/core_single_unit_v1 contract freezes direct IAL0, direct IAL1, and IAL2-via-generated-IAL1 routes; an additive parsed (verification-bridge ...) IAL1 annotation; exact units/config/types/endpoints/domains/transactions/events/protocols/observations/probes/backend-name bindings/capabilities/residue/source maps; stable IDs/hash/order; honest semantic-path provenance; private immutable defensive producer/report; limits/diagnostics/negative gates; and focused t1551. Proposed .5 alone owns implementation after separate clean activation. Current IAL1 observation, AHB IAL2, and VIAL source evidence passes at Files=3 / Tests=21; task-tree integrity passes at two active trees / 865 nodes; docs pass at Files=4 / Tests=42; all 37 mdBook chapters test and the 73-file / 16,930,263-byte local build passes; Knowledge Map generation/check passes at 1,088 facts / 5,640 question keys; Memory is bounded at 54 lines; diff, docs-only staged acceptance, all eight doctrines, and exact output cleanup pass. No parser, annotation, bridge object/report, generated review artifact, capability/support entry, HDL, VIAL binding, runtime, or product behavior changes in selection.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4: select review-routed bridge manifest`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5`
   Status: `proposed`
   Goal: `Implement the bounded HIALVIALBridgeManifest producer through canonical HIAL review paths.`
-  Acceptance: `Direct IAL0, direct IAL1, and one IAL2-through-generated-IAL1 fixture emit the selected versioned bridge with stable logical IDs, source maps, defensive public projection, exact artifact/capability/support accounting, and fail-closed unsupported facts; PPIF never calls a VIAL backend directly and current HIAL output remains byte/semantically preserved.`
+  Acceptance: `Direct IAL0, direct IAL1, and ppif/ahb_lite_subordinate.ppif through a deterministically generated, reparsed IAL1 (verification-bridge ...) annotation emit the selected private in-process versioned bridge with stable logical IDs, full field source maps, defensive public-data projection, exact capability/support accounting, and fail-closed unsupported facts. The AHB manifest resolves every checked VIAL bridge ID/type but does not bind VIAL; PPIF AST/report data never bypasses generated IAL1; generated IAL0 and HIAL HDL behavior remain byte/semantically preserved; no bridge file, CLI/API, plan, verification artifact, runtime, or backend-parity claim is emitted.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -249,12 +249,14 @@ contract. Clean contract commit `08f59167b` activated `.3` through a separate
 continuity transition; `.3` now ships the bounded semantic-only parser,
 validator, immutable `VIALSemanticIR`, sanitized report, checked AHB source,
 and exact support/capability accounting. Clean implementation commit
-`be9c74163` activates only documentation contract `.4` through a separate
-continuity transition. Decision `0034` records that this
+`be9c74163` activated documentation contract `.4` through a separate
+continuity transition. Completed `.4` accepts decision `0035` and the exact
+review-routed `HIALVIALBridgeManifest` v1 contract; proposed `.5` alone owns
+implementation after a separate clean activation. Decision `0034` records that this
 first profile is not VIAL's language ceiling: target SV/UVM/VHDL machinery is
 compiler-owned in the same architectural sense that assembly is compiler-
-owned beneath C/C++ or Rust. Bridge selection and product behavior remain
-unchanged during `.4` activation.
+owned beneath C/C++ or Rust. Bridge/product behavior remains unchanged in
+contract selection.
 
 ## Decisions
 
@@ -346,7 +348,8 @@ unchanged during `.4` activation.
 
 ## Blockers
 
-- None for completed `.3`. Later UVM,
+- None for completed `.4`. Proposed `.5` requires its separate clean
+  activation. Later UVM,
   VHDL, and mixed-language implementation/qualification leaves retain explicit
   tool availability prerequisites and cannot borrow the current Verilator
   result.
@@ -362,6 +365,7 @@ unchanged during `.4` activation.
 | `2026-07-31` | `.3` activation | clean `.2` predecessor; task/index/roadmap/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.3` alone active; trees=2 / nodes=864; docs Files=3 / Tests=40; 37 chapters; 73 files / 16,845,901 bytes; Knowledge Map 1,086 facts / 5,617 keys; Memory 43 lines; implementation and product behavior unchanged |
 | `2026-07-31` | `.3` implementation | dedicated parser/builder/SemanticIR/report syntax; focused t1550; support/capability/accounting and defensive-copy audits; task-tree/docs/relative-path/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; checked AHB source is 4,986 bytes / 123 lines / SHA-256 2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd; focused Files=3 / Tests=7,055; adjacent Files=9 / Tests=32; docs Files=3 / Tests=40; paths Files=1 / Tests=2; 37 chapters; build 73 files / 16,896,993 bytes; Knowledge Map 1,087 facts / 5,631 keys; explicit semantic-only non-claims; unrelated t261/t296 failures routed to separate proposed task trees; output removed exactly |
 | `2026-07-31` | `.4` activation | clean `.3` predecessor; task/index/roadmap/audit/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; trees=2 / nodes=865; docs Files=4 / Tests=42; 37 chapters; build 73 files / 16,900,280 bytes; Knowledge Map 1,087 facts / 5,631 keys; Memory 54 lines; bridge contract and all product behavior unchanged; output removed exactly |
+| `2026-07-31` | `.4` selection | decision `0035`; exact review-route/annotation/manifest/identity/type/event/provenance/API/diagnostic/limit/non-claim contract; current IAL0/IAL1/IAL2 and checked VIAL evidence; task/roadmap/audit/book/fact consistency; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; evidence Files=3 / Tests=21; trees=2 / nodes=865; docs Files=4 / Tests=42; 37 chapters; build 73 files / 16,930,263 bytes; Knowledge Map 1,088 facts / 5,640 keys; Memory 54 lines; `.5` alone selected; no product behavior change; output removed exactly |
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -399,9 +403,14 @@ unchanged during `.4` activation.
 | `.3` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: activate VIAL semantic implementation` | Activate only bounded parser/SemanticIR implementation after clean `.2`; implementation remains unperformed. |
 | `.3` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: implement VIAL semantic intent` | Ship the bounded semantic-only frontend, one checked source, exact reports/capabilities/support, and focused negative/resource coverage without a bridge, plan, backend, or runtime claim. |
 | `.4` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4: activate HIAL VIAL bridge contract` | Activate only the documentation contract for bridge-manifest selection after clean `.3`; selection remains unperformed. |
+| `.4` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4: select review-routed bridge manifest` | Accept decision `0035`, freeze the exact public-data/private-producer bridge boundary, and select proposed `.5` implementation without product changes. |
 
 ## Changelog
 
+- `2026-07-31`: `.4` selects the review-routed bridge v1 contract under
+  decision `0035`: generated IAL1 owns additive protocol/event/probe/residue
+  annotations, exact IDs match the checked AHB VIAL fixture, PPIF cannot bypass
+  IAL1, and proposed `.5` alone owns a private no-file implementation.
 - `2026-07-31`: Clean `.3` implementation commit `be9c74163` activates only
   documentation contract `.4`; no bridge schema, producer, artifact, report,
   generated code, test, runtime, or product behavior changes in activation.

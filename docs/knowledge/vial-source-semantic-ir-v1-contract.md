@@ -63,5 +63,7 @@ parity, UVM, VHDL, mixed-language, and scale support remain explicit
 non-claims.
 
 Clean implementation commit `be9c74163` completes this source/SemanticIR
-slice and activates documentation-only bridge-contract leaf `.4`. Activation
-does not add bridge binding, a producer, an artifact, or runtime behavior.
+slice. Bridge-contract leaf `.4` now selects review-routed manifest v1 under
+decision `0035`; proposed `.5` remains the separate private implementation
+owner. Selection does not add bridge binding, a producer, an artifact, or
+runtime behavior.

@@ -830,7 +830,8 @@ Focused t1550 must prove at least:
 
 Deferred to later exact owners:
 
-- bridge-reference existence and type equivalence (`.4`/`.5` and `.7`);
+- bridge-reference existence and type equivalence (selected bridge schema
+  `0035`, implementation `.5`, and binding `.7`);
 - logical phase scheduling, random algorithm, replay values, native extensions,
   plans, results, and parity (`.6`/`.7`);
 - public CLI/API/artifact layout and schema migration (`.8`);

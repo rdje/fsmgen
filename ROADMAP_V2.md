@@ -8424,6 +8424,16 @@ selection `.4` through a continuity-only transition. No bridge schema,
 producer, public artifact/report/capability/support surface, parser, lowerer,
 generated HDL or verification code, test/runtime, or product behavior changes
 during activation.
+Completed `.4` accepts decision `0035` and selects
+`fsmgen.hial_vial_bridge_manifest.v1` with initial
+`core_single_unit_v1`. Direct IAL0 and IAL1 use their canonical review routes;
+IAL2 protocol/event/probe/residue facts must be rendered into an additive,
+parsed generated-IAL1 `(verification-bridge ...)` annotation before the bridge
+may consume them. The contract freezes exact AHB IDs matching the checked VIAL
+source, immutable defensive data, backend-neutral types and names, full field
+provenance, safety limits, diagnostics, and explicit no-binding/no-file/no-
+runtime claims. Proposed `.5` alone owns private implementation after separate
+clean activation. See `docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md`.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

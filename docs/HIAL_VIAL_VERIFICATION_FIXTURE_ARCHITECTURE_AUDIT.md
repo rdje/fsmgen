@@ -150,6 +150,12 @@ projections at caller boundaries; raw objects are not serialized publicly.
 the only portable DUT-binding authority. Version 1 must contain these logical
 families before a backend can claim support:
 
+Decision `0035` now selects that version-1 schema and the initial
+`core_single_unit_v1` profile. The exact route, generated-IAL1 annotation,
+record shapes, stable IDs, provenance, limits, private first producer, and
+non-claims are normative in
+`docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md`.
+
 | Family | Required facts |
 | --- | --- |
 | Identity | schema version; HIAL source kind and repo-relative identity; generated `.isf`/`.fsm` review identities; content/source-map identities |
@@ -490,11 +496,12 @@ The owning task tree now decomposes exact leaves for:
 10. architecture-specific large-fixture scale proof; and
 11. full user documentation and end-to-end matrix closeout.
 
-The first source/IR contract and bounded implementation are complete.
-Documentation-only bridge-contract leaf `.4` is active after clean commit
-`be9c74163`; it has not selected a schema or changed any HIAL producer,
-artifact, report, generated code, or runtime behavior. Every behavior-bearing
-leaf requires separate clean activation and normal acceptance evidence.
+The first source/IR contract and bounded implementation are complete. Bridge
+contract `.4` selects decision `0035` and proposed `.5` alone owns private
+implementation after separate clean activation. Selection changes no HIAL
+producer, parser, annotation, artifact, report, generated code, VIAL binding,
+or runtime behavior. Every behavior-bearing leaf requires separate clean
+activation and normal acceptance evidence.
 
 ## Rollback
 

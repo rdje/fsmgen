@@ -6,46 +6,46 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4: activate HIAL VIAL bridge contract`).
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`
-  (documentation-only HIAL/VIAL bridge-manifest contract selection).
-- current_state: clean implementation commit `be9c74163` completes `.3` and
-  this continuity transition activates only `.4`. No bridge schema, producer,
-  artifact/report surface, generated code, runtime, or product behavior has
-  changed.
-- next_action: audit canonical HIAL review routes and select the exact bounded
-  `HIALVIALBridgeManifest` v1 identity, schema, production, projection,
-  diagnostics, limits, negative boundaries, and first implementation owner.
-- in_flight_uncommitted: none after this activation commit; no background job.
-- blockers: none. Broader t261 and t296 failures are independently root-caused
-  and durably proposed, not blockers or pass claims for `.3`.
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4: select review-routed bridge manifest`).
+- active_work_unit: none after `.4` selection; parent
+  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` remains active and `.5` is
+  proposed/inactive.
+- current_state: decision `0035` and
+  `docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md` select the exact bounded
+  review-routed bridge v1 contract. No parser, annotation, producer, bridge
+  object/report, artifact, HIAL output, VIAL binding, or runtime has changed.
+- next_action: from the clean `.4` commit, activate proposed `.5` in a separate
+  continuity slice before implementing the private bridge producer.
+- in_flight_uncommitted: none after this selection commit; no background job.
+- blockers: none. The separately proposed t261/t296 oracle repairs remain
+  outside this task tree and do not alter the bridge contract.
 
 ## Durable context
 
 - Decision `0032`: one public VIAL source, private SemanticIR/ExecutionIR, and
-  a versioned HIAL bridge. Decision `0033`: dedicated span-aware S-expression
-  parser and typed semantic records, not raw Lispish arrays.
-- Decision `0034`: VIAL is not synthesis-bounded. It covers the expressive use
-  cases of qualified SV/UVM/VHDL targets while hiding their plumbing; those
-  targets relate to VIAL as assembly relates to C/C++ or Rust. Full power
-  underneath, simpler intent above.
-- VIAL v1 reuses canonical `=>`/`next`/`within`; four-state values normalize
-  to value/known/Z masks; `same` is exact and `value_eq` requires known values.
-- `.3` claims parse/typecheck/sanitized semantic report only. Bridge binding,
-  plans, outputs, runtime, parity, UVM, VHDL, mixed-language, and scale remain
-  explicit non-claims.
-- `.3` closeout: trees=2 / nodes=865; focused Files=3 / Tests=7,055;
-  adjacent Files=9 / Tests=32; docs Files=3 / Tests=40; paths Files=1 /
-  Tests=2; 37 chapters and 73-file / 16,896,993-byte local build; Knowledge
-  Map 1,087 facts / 5,631 keys; build output removed exactly.
-- `.4` activation closeout: trees=2 / nodes=865; docs Files=4 / Tests=42;
-  37 chapters and 73-file / 16,900,280-byte local build; Knowledge Map 1,087
-  facts / 5,631 keys; doctrines pass and output is removed exactly.
+  a versioned HIAL bridge. Decision `0033`: dedicated spanned VIAL source and
+  typed semantic records. `.3` ships the semantic-only first profile.
+- Decision `0034`: VIAL is not synthesis-bounded. Qualified SV/UVM/VHDL
+  targets relate to VIAL as assembly relates to C/C++ or Rust: full power
+  underneath, simpler authored intent above.
+- Decision `0035`: bridge v1 accepts direct IAL0, direct IAL1, or IAL2 only
+  through generated/reparsed IAL1 and generated IAL0 review artifacts. PPIF
+  AST/report data may not feed the bridge directly.
+- Generated IAL1 `(verification-bridge ...)` metadata carries protocol,
+  domain, transaction/event, probe, and residue meaning without scheduling
+  hardware behavior. Exact AHB IDs match the checked `.vial` source.
+- `core_single_unit_v1` selects stable semantic IDs, normalized four-state
+  scalar types/values, backend name bindings, full field source maps, honest
+  semantic-path provenance, defensive immutable data, diagnostics, and caps.
+- `.5` will expose private in-process build/report only and write no bridge
+  file. VIAL binding/ExecutionIR remains `.7`; public CLI/API/artifact
+  discovery remains `.8`; backend runtime/parity remains later.
+- `.4` selection closeout: evidence Files=3 / Tests=21; trees=2 / nodes=865;
+  docs Files=4 / Tests=42; 37 chapters and 73-file / 16,930,263-byte local
+  build; Knowledge Map 1,088 facts / 5,640 keys; doctrines and cleanup pass.
 - `SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC` owns stale
   t261 unary-shape expectations. `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT`
-  owns t296's in-memory-entry versus CLI-aggregate top-name conflation.
-- Existing inert UVM 1.2 and VHDL observation outputs remain compatibility
-  surfaces. IAL2 facts still require generated-IAL1 reviewable annotation.
+  owns t296's pipeline-versus-CLI top-name conflation.
 - Decisions `0028`-`0031` remain canonical for SourceHIR/IR policy. Public
   builder, whole-product scale, MCP-write, and director-gated owners remain
   separately proposed/inactive.

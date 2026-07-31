@@ -34330,3 +34330,29 @@ compose, or compress verification intent. Terse and verbose normal forms may
 remove different amounts of ceremony, but they must lower to the same typed
 semantic record. If a proposed feature requires an author to understand the
 target plumbing to use it correctly, the abstraction is not finished.
+
+## HIAL/VIAL bridge v1 — make protocol truth reviewable before binding (2026-07-31)
+
+Decision `0035` rejects the tempting implementation shortcut of building an
+AHB bridge from the PPIF report beside generated IAL1. Although the data would
+be available, the bridge would then depend on protocol truth that never appears
+on the mandatory HIAL review route. The selected solution is an additive IAL1
+`(verification-bridge ...)` metadata form: IAL2 generates it, the ordinary
+IAL1 parser validates it, the schedule report projects it, and only then may
+the bridge consume it. The metadata changes no scheduled hardware behavior.
+
+This keeps base facts layered. Direct IAL0 contributes structural unit, port,
+type, configuration, and timing-domain meaning. Direct IAL1 adds declared
+transactions and observations. Protocol roles, lifecycle events, probes, and
+residue require explicit metadata and are never inferred from names like
+`HREADYOUT` or `reg_data_q`.
+
+The manifest uses semantic IDs rather than target hierarchy. A verification
+probe is a typed, adapter-required promise; it is neither a new DUT port nor an
+SV/VHDL path. This keeps later backends free to choose efficient equivalent
+adapters while forcing capability rejection when none exists.
+
+Provenance follows the same honesty rule. Current IAL0/IAL1 parsers do not
+preserve exact spans uniformly, so bridge v1 records a stable semantic path and
+null span fields where necessary. Invented line/column precision would look
+better in a report but make diagnosis less trustworthy.

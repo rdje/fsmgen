@@ -31506,3 +31506,25 @@ task tree and git.
   build pass; Knowledge Map passes at 1,087 facts / 5,631 keys; Memory remains
   54 lines; doctrines and exact output cleanup pass.
 - No separate development note is warranted for this continuity-only slice.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4 — review-routed bridge manifest selected
+
+- Accepted decision `0035` and selected
+  `fsmgen.hial_vial_bridge_manifest.v1` / `core_single_unit_v1` with exact
+  source/review routes, record families, stable IDs, ordering, hashing,
+  normalized types/values, capabilities, residue, full field provenance,
+  diagnostics, limits, and defensive immutable/public-data boundaries.
+- Selected additive generated-IAL1 `(verification-bridge ...)` metadata so
+  IAL2 protocol/event/probe/residue facts are rendered, reviewed, reparsed, and
+  reported through IAL1 before bridge consumption; direct PPIF-to-bridge input
+  is forbidden.
+- Exact AHB records match the checked `.vial` source while keeping
+  `probe/reg_data_q` adapter-required and target hierarchy private. Proposed
+  `.5` alone owns private no-file implementation after clean activation.
+- Current IAL1/AHB/VIAL evidence passes at `Files=3, Tests=21`; task-tree
+  integrity is 2/865; docs pass at `Files=4, Tests=42`; all 37 chapters and the
+  73-file / 16,930,263-byte local build pass; Knowledge Map passes at 1,088
+  facts / 5,640 keys; doctrines and exact output cleanup pass.
+- No parser, annotation, bridge object/report, artifact, capability/support
+  entry, HIAL output, VIAL binding, runtime, or product behavior changes in
+  this contract slice.

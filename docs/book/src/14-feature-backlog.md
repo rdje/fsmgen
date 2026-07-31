@@ -12163,6 +12163,16 @@ Clean semantic-frontend commit `be9c74163` activates only documentation
 contract `.4`. The bridge schema, HIAL producer route, public reports/artifacts,
 capability/support accounting, generated code, runtime, and product behavior
 remain unchanged until contract selection commits separately.
+Completed `.4` accepts decision `0035` and selects the exact review-routed
+`HIALVIALBridgeManifest` v1 contract. Direct IAL0 and IAL1 project only their
+validated facts. IAL2 must render protocol/event/probe/residue meaning into a
+generated-IAL1 `(verification-bridge ...)` annotation and reparse it; PPIF may
+not feed the bridge directly. Exact AHB IDs match the checked `.vial` source,
+probes remain adapter-required without raw hierarchy, and `.5` is selected as
+the private in-process/no-file implementation after separate clean activation.
+No parser, annotation, bridge object, artifact, generated HDL, binding,
+runtime, or product behavior changes in contract selection. See
+[the bridge v1 contract](../../HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md).
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

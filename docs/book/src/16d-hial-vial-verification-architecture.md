@@ -205,6 +205,73 @@ For IAL2, protocol facts may enter the bridge only after they are present in
 or deliberately annotated onto generated IAL1 review artifacts. VIAL does not
 add a direct PPIF-to-verification backend or a second protocol truth source.
 
+### Selected bridge version 1
+
+Decision `0035` selects schema
+`fsmgen.hial_vial_bridge_manifest.v1` and initial profile
+`core_single_unit_v1`. The bridge accepts three reviewable routes:
+
+| Authored source | Required route |
+| --- | --- |
+| IAL0 `.fsm` | authored IAL0 review source |
+| IAL1 `.isf` | authored IAL1 then generated IAL0 review source |
+| IAL2 `.ppif` | authored IAL2, generated and reparsed IAL1, then generated IAL0 |
+
+The IAL2 route cannot pass its parser object or report directly to the bridge.
+Protocol meaning that is not already ordinary IAL1 is rendered into an
+additive actor metadata form:
+
+```lisp
+(verification-bridge
+  (domain ahb_bus)
+  (protocol ahb_lite_subordinate
+    (profile ahb)
+    (revision ARM-AMBA-AHB-IHI0033-C-2021-09)
+    (role subordinate)
+    (facts
+      (fact supported_transfer 2'b10)
+      (fact error_completion two-cycle)))
+  (transaction ahb_write
+    (fields
+      (field address HADDR drive address_phase)
+      (field data HWDATA drive data_phase))
+    (events
+      (event requested scenario_start drive)
+      (event accepted predicate sample
+        (& HSEL HREADY (== HTRANS 2'b10)))
+      (event completed predicate sample HREADYOUT)
+      (event error predicate sample (== HRESP 1'b1))))
+  (probe reg_data_q read_only))
+```
+
+The generated IAL1 is parsed and validated normally; this metadata produces a
+schedule-report projection but no hardware state or HDL behavior. Direct IAL0
+publishes structural unit, configuration, type, endpoint, and domain facts
+only. Direct IAL1 can additionally publish its transactions and existing
+`(observe ...)` declarations. Protocol roles, events, probes, and residue are
+never guessed from signal names.
+
+The checked AHB route publishes the IDs already named by the checked VIAL
+source: `unit/ahb_lite_subordinate`, `domain/ahb_bus`, the
+`endpoint/HREADYOUT`, `endpoint/HRESP`, and `endpoint/HRDATA` public ports,
+`transaction/ahb_write`, six named lifecycle events, and
+`probe/reg_data_q`. The probe is an adapter-required declaration, not a raw
+SystemVerilog/VHDL hierarchy path or an added public DUT port.
+
+Manifest records include content-addressed sources/review artifacts, stable
+semantic IDs, normalized four-state types/values, target module/entity/port
+names, capabilities, unsupported residue, and an RFC-6901 source map for every
+semantic field. Source spans are exact only when the owning parser supplies
+them; otherwise the bridge says `semantic_path` with null span fields instead
+of inventing precision.
+
+The first implementation leaf `.5` is deliberately private and in-process.
+It will return immutable defensive manifest/report data and write no bridge
+file. Public CLI/API and `hial-vial-bridge.json` discovery remain owned by
+`.8`; VIAL binding, execution plans, generated verification code, compilation,
+simulation, and parity remain later leaves. See the complete
+[bridge v1 contract](../../HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md).
+
 ## Portable verification meaning
 
 The portable language must cover these semantic families:
@@ -406,7 +473,8 @@ evidence. The canonical architecture record is
 and the owning [task tree](../../tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md)
 tracks the exact frontier.
 
-The bounded source/SemanticIR implementation is complete. Documentation-only
-bridge-contract leaf `.4` is now active; it has not yet selected a schema or
-changed any HIAL producer, artifact, report, generated code, or runtime
-behavior.
+The bounded source/SemanticIR implementation is complete. Bridge-contract leaf
+`.4` now selects version 1 under decision `0035`; proposed `.5` is the next
+private implementation owner and requires a separate clean activation. The
+selection itself changes no HIAL producer, parser, annotation, artifact,
+report, generated code, VIAL binding, or runtime behavior.
