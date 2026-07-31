@@ -55,5 +55,7 @@ commit `51434a2ae` permits the separate continuity-only activation of `.6` for
 execution-contract selection; that selection remains unperformed until the
 activation commits cleanly and no product behavior changes during activation.
 Completed `.6` now selects decision `0036` and the exact target-neutral
-execution contract without changing this bridge. Proposed `.7` owns private
-binding/ExecutionIR implementation after separate clean activation.
+execution contract without changing this bridge. Clean selection commit
+`eaf3f95dc` permits active `.7` to own private binding/ExecutionIR
+implementation after separate continuity activation; implementation remains
+unperformed and this bridge is unchanged.

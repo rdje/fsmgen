@@ -618,5 +618,7 @@ canonical HIAL review routes without writing a file or binding VIAL. Completed
 binding, logical phases, actions/fibers, plan-time random/replay, declarative
 native implementations, plan/result/parity records, diagnostics, limits, and
 the AHB oracle. Proposed `.7` is selected next for separate clean activation of
-private no-backend implementation. No plan/result file, target artifact,
-compile, simulation, runtime, parity, or product behavior ships in selection.
+private no-backend implementation. Clean selection commit `eaf3f95dc` permits
+that continuity-only activation; exact implementation remains unperformed
+until activation commits cleanly. No plan/result file, target artifact,
+compile, simulation, runtime, parity, or product behavior changes in activation.

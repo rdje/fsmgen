@@ -61,5 +61,7 @@ Every later feature must expose, compose, or compress verification intent; a
 one-to-one catalog of renamed SV/UVM/VHDL syntax, classes, or methods is
 explicitly out of scope. Completed documentation leaf `.6` now selects the
 target-neutral execution/native/result contract that preserves this separation
-under decision `0036`; it implements no behavior. Proposed `.7` owns private
-no-backend implementation after separate clean activation.
+under decision `0036`; it implements no behavior. Active `.7` owns private
+no-backend implementation after separate clean activation. Clean selection
+commit `eaf3f95dc` now permits that continuity-only activation; implementation
+remains unperformed and the expressive boundary is unchanged.

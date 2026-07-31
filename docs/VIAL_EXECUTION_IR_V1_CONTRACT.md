@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6`
-Status: selected; implementation remains owned by proposed `.7`
+Status: selected; implementation is active under `.7` after separate continuity activation
 
 ## Outcome
 
@@ -1109,7 +1109,7 @@ Focused `.7` oracles must prove at least:
 
 ## Implementation Ownership And Non-Claims
 
-Proposed `.7` owns private, no-backend implementation of:
+Active `.7` owns private, no-backend implementation of:
 
 ```text
 perl/FSM/VIAL/ExecutionBuilder.pm
@@ -1132,6 +1132,11 @@ phase/objection mapping, factory/configuration mechanism, event/callback
 implementation, or broader native semantic taxonomy. Those remain exact later
 owners. In particular, a selected logical `finalize` hook is not an authored
 UVM final phase, and a `required_from_backend` capability is not support.
+
+Clean selection commit `eaf3f95dc` permits a separate continuity-only
+activation of `.7`. Activation changes no binding, ExecutionIR, random/replay,
+plan/result object or file, backend, runtime, or product behavior; exact
+implementation remains unperformed until the activation commits cleanly.
 
 ## Validation And Rollback
 

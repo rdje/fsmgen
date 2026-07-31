@@ -21,7 +21,7 @@ date: 2026-07-31
 status: current
 tags: [vial, execution-ir, logical-time, binding, determinism, random, replay, native-extension, plan, result, parity]
 evidence: docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
-reverify: rg -n 'fsmgen\.vial_execution_ir\.v1|core_directed_single_clock_execution_v1|domain.*cycle.*phase.*ordinal|sha256_counter_rejection_v1|fsmgen\.vial_native_extension\.v1|fsmgen\.vial_plan\.v1|fsmgen\.verification_result_manifest\.v1|fsmgen\.vial_parity_report\.v1|Proposed `.7`' docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+reverify: rg -n 'fsmgen\.vial_execution_ir\.v1|core_directed_single_clock_execution_v1|domain.*cycle.*phase.*ordinal|sha256_counter_rejection_v1|fsmgen\.vial_native_extension\.v1|fsmgen\.vial_plan\.v1|fsmgen\.verification_result_manifest\.v1|fsmgen\.vial_parity_report\.v1|Active `.7`|eaf3f95dc' docs/VIAL_EXECUTION_IR_V1_CONTRACT.md docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
 Decision `0036` selects private immutable
@@ -52,5 +52,6 @@ Sanitized `fsmgen.vial_plan.v1` reports binding/schedule/capability/replay
 facts. Runtime backends later produce
 `fsmgen.verification_result_manifest.v1`; parity compares only canonical
 portable/paired-native logical outcomes through a deep-validated parity
-projection/report. Proposed `.7` owns private no-backend implementation after
-separate clean activation; `.6` selection changes no product behavior.
+projection/report. Clean selection commit `eaf3f95dc` permits active `.7` to
+own private no-backend implementation after separate continuity activation;
+implementation remains unperformed and activation changes no product behavior.

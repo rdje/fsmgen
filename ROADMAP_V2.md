@@ -8473,6 +8473,14 @@ binding oracle are frozen without implementing or emitting them. Proposed
 binding/ExecutionIR implementation. VIAL source/SemanticIR, HIAL bridge and
 generated output, public tooling/files, target backends, compile, simulation,
 runtime, parity, and product behavior remain unchanged in contract selection.
+Clean execution-contract selection commit `eaf3f95dc` permits a continuity-
+only activation of private implementation `.7`. This transition changes no
+VIAL source/parser/SemanticIR, HIAL bridge/parser/annotation/report, binding or
+`VIALExecutionIR` implementation, random/replay or scheduler behavior,
+plan/result object/schema/file, native extension implementation, target
+backend, CLI/API, capability/support surface, compilation, simulation,
+runtime, parity, or product behavior. Exact implementation remains unperformed
+until activation commits cleanly.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

@@ -81,5 +81,6 @@ commits cleanly and activation changes no product behavior.
 
 Completed `.6` accepts decision `0036` and the exact target-neutral
 ExecutionIR/logical-time/random-replay/native/plan/result/parity contract.
-Proposed `.7` is selected next for clean activation of private no-backend
-implementation; no product behavior ships in selection.
+Clean selection commit `eaf3f95dc` permits active `.7` to own private no-
+backend implementation after separate continuity activation; implementation
+remains unperformed and no product behavior changes in activation.

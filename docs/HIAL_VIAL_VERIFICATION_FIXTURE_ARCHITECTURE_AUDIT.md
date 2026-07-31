@@ -517,6 +517,11 @@ normalized result/parity, diagnostics, limits, and the exact AHB binding oracle.
 Proposed `.7` is selected next for separate clean activation of private no-
 backend implementation. Selection changes no compiler, artifact, backend,
 runtime, parity, or product behavior.
+Clean selection commit `eaf3f95dc` permits that continuity-only activation.
+Active `.7` owns private binder/ExecutionIR/random-replay/plan implementation;
+the implementation remains unperformed until activation commits cleanly, and
+activation changes no compiler, schema, artifact, tool, runtime, parity, or
+product behavior.
 
 ## Rollback
 

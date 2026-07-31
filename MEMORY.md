@@ -6,17 +6,16 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6: select deterministic VIAL execution contract`).
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.6` is
-  complete and proposed `.7` is selected next for clean activation.
-- current_state: source/SemanticIR and the review-routed bridge ship privately;
-  decision `0036` now selects exact target-neutral ExecutionIR/logical-time/
-  random-replay/native/plan/result/parity data and semantics. VIAL remains
-  unbound and no backend/runtime behavior ships.
-- next_action: activate only private no-backend implementation leaf
-  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7` from this clean selection,
-  then implement the selected binder/ExecutionIR/plan contract separately.
-- in_flight_uncommitted: none after this selection commit; no background job
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7: activate VIAL execution implementation`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.7` is
+  active for private no-backend implementation.
+- current_state: decision `0036` selects target-neutral ExecutionIR/logical-
+  time/random-replay/native/plan/result/parity semantics; this commit activates
+  implementation continuity only. VIAL remains unbound.
+- next_action: implement the selected private binder, immutable ExecutionIR,
+  deterministic random/replay, defensive plan/result schema support, and
+  focused oracles under active `.7`, with no target backend.
+- in_flight_uncommitted: none after this activation commit; no background job
   and repository-local mdBook output was removed exactly.
 - blockers: none for `.6`. Proposed
   `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.1` separately owns
@@ -46,10 +45,10 @@ history; this file carries only the current bounded resume state.
 - The scalar-only profile leaves transaction `type_id` null and uses field
   type IDs; bridge events use a closed backend-neutral canonical expression
   record because the public IAL1 report has no reusable expression AST.
-- `.6` closeout: contract 1,148 lines; evidence Files=3/Tests=24; trees=2/
-  nodes=865; docs Files=4/Tests=51; 37 chapters; build 73 files/17,008,064
-  bytes; Knowledge Map 1,090 facts/5,658 keys; Memory/diff/docs-only acceptance/
-  all doctrines/cleanup pass. No binding/file/backend/runtime/parity is claimed.
+- `.7` activation closeout: trees=2/nodes=865; docs Files=4/Tests=51; all 37
+  chapters test; build 73 files/17,011,689 bytes; Knowledge Map 1,090 facts/
+  5,658 keys; Memory/diff/docs-only acceptance/all doctrines/cleanup pass. No
+  binding/file/backend/runtime/parity behavior is claimed.
 - Guarded wider AHB verification stopped at 88.1% host use without a test
   failure; no unfinished broad-suite pass is claimed. t370 is durably parked.
 - Decisions `0025` freezes legacy status files. Push only on explicit request

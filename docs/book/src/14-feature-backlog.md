@@ -4452,6 +4452,10 @@ diagnostics, limits, and the exact AHB oracle. The complete contract is
 [VIAL_EXECUTION_IR_V1_CONTRACT](../../VIAL_EXECUTION_IR_V1_CONTRACT.md).
 Proposed `.7` alone is selected next for separate clean activation of private
 no-backend implementation; selection changes no product behavior.
+Clean selection commit `eaf3f95dc` permits that continuity-only activation.
+`.7` is active for private binder/ExecutionIR/random-replay/plan implementation,
+which remains unperformed until activation commits cleanly. Activation changes
+no product behavior.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
@@ -12215,6 +12219,8 @@ Proposed `.7` is selected next for separate clean activation of private no-
 backend implementation. No file, backend, runtime, parity, or product behavior
 ships in contract selection. See the
 [execution v1 contract](../../VIAL_EXECUTION_IR_V1_CONTRACT.md).
+Clean selection commit `eaf3f95dc` activates `.7` continuity only; exact
+private implementation remains unperformed and no product behavior changes.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
