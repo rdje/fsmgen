@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`
-Status: selected; implementation is owned only by proposed `.5`
+Status: selected; implementation is owned only by active `.5`
 
 ## Outcome
 
@@ -617,7 +617,7 @@ backend outputs where locally supported.
 
 ## Implementation Ownership and Non-Claims
 
-Proposed `.5` alone may implement:
+Active `.5` alone may implement:
 
 ```text
 perl/FSM/HIAL/VIALBridge/Builder.pm

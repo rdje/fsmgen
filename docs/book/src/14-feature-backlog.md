@@ -12173,6 +12173,11 @@ the private in-process/no-file implementation after separate clean activation.
 No parser, annotation, bridge object, artifact, generated HDL, binding,
 runtime, or product behavior changes in contract selection. See
 [the bridge v1 contract](../../HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md).
+Clean bridge-contract commit `0366dfe30` activates only private in-process/
+no-file implementation `.5`. The parser, generated-IAL1 annotation, bridge
+object/report, capability/support entries, artifacts, HIAL output, VIAL
+binding, runtime, and product behavior remain unchanged until implementation
+executes after activation commits cleanly.
 
 Post APB surface-sync selector:
 [IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)

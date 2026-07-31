@@ -8434,6 +8434,11 @@ source, immutable defensive data, backend-neutral types and names, full field
 provenance, safety limits, diagnostics, and explicit no-binding/no-file/no-
 runtime claims. Proposed `.5` alone owns private implementation after separate
 clean activation. See `docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md`.
+Clean bridge-contract commit `0366dfe30` activates only private bridge
+implementation `.5` through a continuity-only transition. No parser,
+generated-IAL1 annotation, bridge object/report, artifact, capability/support
+entry, HIAL output, VIAL binding, runtime, or product behavior changes during
+activation.
 Clean selector commit `b0bcb12b5` activates only
 `PROTOCOL-COMPOSITION-HDL-INSTANCE-IDENTIFIER-AUDIT.1` continuity-only. All
 name producers, reports, generated HDL, tests, and target behavior remain

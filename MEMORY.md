@@ -6,17 +6,17 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4: select review-routed bridge manifest`).
-- active_work_unit: none after `.4` selection; parent
-  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` remains active and `.5` is
-  proposed/inactive.
-- current_state: decision `0035` and
-  `docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md` select the exact bounded
-  review-routed bridge v1 contract. No parser, annotation, producer, bridge
-  object/report, artifact, HIAL output, VIAL binding, or runtime has changed.
-- next_action: from the clean `.4` commit, activate proposed `.5` in a separate
-  continuity slice before implementing the private bridge producer.
-- in_flight_uncommitted: none after this selection commit; no background job.
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5: activate bridge manifest implementation`).
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5`
+  (private in-process/no-file bridge-manifest implementation).
+- current_state: clean contract commit `0366dfe30` completes `.4`; this
+  continuity transition activates only `.5`. No parser, generated-IAL1
+  annotation, bridge object/report, artifact, HIAL output, VIAL binding, or
+  runtime has changed.
+- next_action: implement the selected bounded review-routed bridge producer,
+  report, generated/reparsed IAL1 annotation, exact t1551 evidence, and
+  capability/support accounting without adding a public file/API or binding.
+- in_flight_uncommitted: none after this activation commit; no background job.
 - blockers: none. The separately proposed t261/t296 oracle repairs remain
   outside this task tree and do not alter the bridge contract.
 
@@ -37,12 +37,15 @@ history; this file carries only the current bounded resume state.
 - `core_single_unit_v1` selects stable semantic IDs, normalized four-state
   scalar types/values, backend name bindings, full field source maps, honest
   semantic-path provenance, defensive immutable data, diagnostics, and caps.
-- `.5` will expose private in-process build/report only and write no bridge
+- Active `.5` exposes private in-process build/report only and writes no bridge
   file. VIAL binding/ExecutionIR remains `.7`; public CLI/API/artifact
   discovery remains `.8`; backend runtime/parity remains later.
 - `.4` selection closeout: evidence Files=3 / Tests=21; trees=2 / nodes=865;
   docs Files=4 / Tests=42; 37 chapters and 73-file / 16,930,263-byte local
   build; Knowledge Map 1,088 facts / 5,640 keys; doctrines and cleanup pass.
+- `.5` activation closeout: trees=2 / nodes=865; docs Files=4 / Tests=42;
+  37 chapters and 73-file / 16,932,359-byte local build; Knowledge Map 1,088
+  facts / 5,640 keys; doctrines and cleanup pass; implementation is unperformed.
 - `SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC` owns stale
   t261 unary-shape expectations. `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT`
   owns t296's pipeline-versus-CLI top-name conflation.

@@ -68,7 +68,7 @@ The architecture audit is complete and maps the handwritten AHB arbitration
 fixture, migration, public artifacts, parity, and scale boundaries. `.3` now
 ships the bounded semantic-only `.vial` frontend under decision `0033`.
 Completed `.4` selects the exact review-routed bridge v1 contract under
-decision `0035`: IAL2 facts must appear in a generated-Ial1
+decision `0035`: IAL2 facts must appear in a generated-IAL1
 `(verification-bridge ...)` annotation, exact AHB IDs match the checked VIAL
-source, and proposed `.5` alone owns private no-file implementation after a
-separate clean activation.
+source, and clean contract commit `0366dfe30` activates `.5` alone for private
+no-file implementation without changing product behavior.

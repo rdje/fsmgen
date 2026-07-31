@@ -64,6 +64,6 @@ non-claims.
 
 Clean implementation commit `be9c74163` completes this source/SemanticIR
 slice. Bridge-contract leaf `.4` now selects review-routed manifest v1 under
-decision `0035`; proposed `.5` remains the separate private implementation
-owner. Selection does not add bridge binding, a producer, an artifact, or
-runtime behavior.
+decision `0035`; clean contract commit `0366dfe30` activates `.5` as the
+separate private implementation owner. Activation does not add bridge binding,
+a producer, an artifact, or runtime behavior.

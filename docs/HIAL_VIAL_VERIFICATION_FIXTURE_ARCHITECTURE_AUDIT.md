@@ -497,11 +497,11 @@ The owning task tree now decomposes exact leaves for:
 11. full user documentation and end-to-end matrix closeout.
 
 The first source/IR contract and bounded implementation are complete. Bridge
-contract `.4` selects decision `0035` and proposed `.5` alone owns private
-implementation after separate clean activation. Selection changes no HIAL
-producer, parser, annotation, artifact, report, generated code, VIAL binding,
-or runtime behavior. Every behavior-bearing leaf requires separate clean
-activation and normal acceptance evidence.
+contract `.4` selects decision `0035`; clean commit `0366dfe30` activates
+private implementation `.5` through a continuity-only transition. Activation
+changes no HIAL producer, parser, generated-IAL1 annotation, bridge object/
+report, artifact, capability/support entry, HIAL output, VIAL binding, or
+runtime behavior. Implementation requires normal acceptance evidence.
 
 ## Rollback
 

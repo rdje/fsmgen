@@ -474,7 +474,8 @@ and the owning [task tree](../../tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTU
 tracks the exact frontier.
 
 The bounded source/SemanticIR implementation is complete. Bridge-contract leaf
-`.4` now selects version 1 under decision `0035`; proposed `.5` is the next
-private implementation owner and requires a separate clean activation. The
-selection itself changes no HIAL producer, parser, annotation, artifact,
-report, generated code, VIAL binding, or runtime behavior.
+`.4` now selects version 1 under decision `0035`; clean contract commit
+`0366dfe30` activates `.5` as the private in-process/no-file implementation
+owner. Activation itself changes no HIAL producer, parser, generated-IAL1
+annotation, bridge object/report, artifact, capability/support entry, HIAL
+output, VIAL binding, or runtime behavior.
