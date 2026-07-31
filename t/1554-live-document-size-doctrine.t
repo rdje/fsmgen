@@ -588,6 +588,47 @@ subtest 'archive descriptors reject digest drift and unsafe former paths' => sub
     like($version_output, qr/unsupported schema_version: 2/, 'schema version is explicit');
 };
 
+subtest 'version-object descriptors require bounded named retention contracts' => sub {
+    my $missing = make_fixture();
+    mutate_record($missing, 'registry/archive.jsonl', 'ledger_0002', sub {
+        delete $_[0]{retention_contract};
+    }, 'descriptor_id');
+    my ($missing_ok, $missing_output) = run_checker($missing);
+    ok(!$missing_ok, 'missing retention contract is rejected');
+    like($missing_output, qr/invalid or missing retention_contract/,
+        'missing contract diagnostic is explicit');
+
+    my $unknown = make_fixture();
+    mutate_record($unknown, 'registry/archive.jsonl', 'ledger_0002', sub {
+        $_[0]{retention_contract} = 'missing_history';
+    }, 'descriptor_id');
+    my ($unknown_ok, $unknown_output) = run_checker($unknown);
+    ok(!$unknown_ok, 'unknown retention contract is rejected');
+    like($unknown_output, qr/names unknown retention contract: missing_history/,
+        'unknown contract diagnostic is explicit');
+
+    my $failed_retrieval = make_fixture();
+    write_file($failed_retrieval, 'bin/version', "#!/bin/sh\nexit 1\n");
+    chmod 0755, File::Spec->catfile($failed_retrieval, 'bin', 'version')
+        or die "cannot chmod failing version fixture: $!";
+    my ($failed_ok, $failed_output) = run_checker($failed_retrieval);
+    ok(!$failed_ok, 'failed version-object retrieval is rejected');
+    like(
+        $failed_output,
+        qr/retention contract fixture_history owner fixture-maintainers requires recovery: Fetch complete fixture history/,
+        'failed retrieval names the contract owner and recovery action',
+    );
+
+    my $unbounded = make_fixture();
+    mutate_record($unbounded, 'registry/retention.jsonl', '', sub {
+        $_[0]{max_records} = 0;
+    }, 'contract_id');
+    my ($unbounded_ok, $unbounded_output) = run_checker($unbounded);
+    ok(!$unbounded_ok, 'unbounded retention registry is rejected');
+    like($unbounded_output, qr/max_records must be positive/,
+        'retention control-plane bound is explicit');
+};
+
 subtest 'optional NUL coverage rejects undeclared documents' => sub {
     my $covered = make_fixture();
     my ($covered_ok, $covered_output) = run_checker(
@@ -689,8 +730,18 @@ sub make_fixture {
         bytes => length("sealed bytes\n"), sha256 => sha256_hex("sealed bytes\n"),
         retrieval_kind => 'version_object', retrieval_locator => 'fixture-object',
         current_pointer => 'ledger.md', sealed_on => '2030-01-02',
-        verifier => 'core:bin/version',
+        verifier => 'core:bin/version', retention_contract => 'fixture_history',
     }));
+    write_file($root, 'registry/retention.jsonl',
+        json_line({
+            record_type => 'registry', schema_version => 1,
+            max_records => 4, max_bytes => 4096,
+        }) . json_line({
+            record_type => 'contract', schema_version => 1,
+            contract_id => 'fixture_history', owner => 'fixture-maintainers',
+            guarantee => 'Fixture version objects remain reachable.',
+            recovery => 'Fetch complete fixture history, restore the object, and rerun the gate.',
+        }));
     return $root;
 }
 
@@ -761,6 +812,7 @@ sub run_checker {
         '--routes', 'registry/routes.jsonl',
         '--archives', 'registry/archive.jsonl',
         '--evidence-maps', 'registry/evidence.jsonl',
+        '--retention-contracts', 'registry/retention.jsonl',
     );
     my $input = '';
     if ($options{coverage}) {

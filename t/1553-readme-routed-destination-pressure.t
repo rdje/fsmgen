@@ -27,7 +27,7 @@ subtest 'live README routes use the common pressure-controlled surface graph' =>
     ok($ok, 'live README and common surface registries pass') or diag($output);
     like($output, qr/all README entry-point invariants hold/, 'landing-page invariant remains explicit');
     like($output, qr/all routed-destination pressure invariants hold/, 'route-pressure invariant remains explicit');
-    like($output, qr/all live-document size-containment invariants hold \(20 surfaces\)/, 'common project-wide checker is delegated');
+    like($output, qr/all live-document size-containment invariants hold \(22 surfaces\)/, 'common project-wide checker is delegated');
     like($output, qr/containment pressure migrated: 2 surface\(s\)/,
         'migrated pressure is reported separately');
     like($output, qr/containment pressure pinned_deferred: 9 surface\(s\)/,
@@ -292,6 +292,14 @@ sub make_fixture {
         $root,
         'doctrine/live_document_size/archive_descriptors.jsonl',
         json_line({ record_type => 'registry', schema_version => 1 }),
+    );
+    write_file(
+        $root,
+        'doctrine/live_document_size/version_retention_contracts.jsonl',
+        json_line({
+            record_type => 'registry', schema_version => 1,
+            max_records => 4, max_bytes => 4096,
+        }),
     );
     write_file(
         $root,

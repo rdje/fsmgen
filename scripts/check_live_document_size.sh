@@ -19,6 +19,7 @@ ARGS=(
   --routes doctrine/readme_entrypoint/routed_destinations.jsonl
   --archives doctrine/live_document_size/archive_descriptors.jsonl
   --evidence-maps doctrine/live_document_size/evidence_maps.jsonl
+  --retention-contracts doctrine/live_document_size/version_retention_contracts.jsonl
 )
 
 ADAPTER_OUTPUT="$(perl "${SCRIPT_DIR}/run_live_document_adapter_verifiers.pl" \
@@ -41,7 +42,9 @@ perl "${SCRIPT_DIR}/check_live_document_resulting_tree.pl" \
   --root "${PROJECT_ROOT}" \
   --surfaces doctrine/live_document_size/surfaces.jsonl \
   --routes doctrine/readme_entrypoint/routed_destinations.jsonl \
-  --evidence-maps doctrine/live_document_size/evidence_maps.jsonl || fail=1
+  --archives doctrine/live_document_size/archive_descriptors.jsonl \
+  --evidence-maps doctrine/live_document_size/evidence_maps.jsonl \
+  --retention-contracts doctrine/live_document_size/version_retention_contracts.jsonl || fail=1
 GIT_TOP="$(git -C "${PROJECT_ROOT}" rev-parse --show-toplevel 2>/dev/null || true)"
 if [ "${GIT_TOP}" = "${PROJECT_ROOT}" ]; then
   git -C "${PROJECT_ROOT}" ls-files -z -- '*.md' \

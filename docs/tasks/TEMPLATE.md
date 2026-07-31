@@ -116,7 +116,7 @@ State the exact outcome this top-level task must deliver.
      it through a bounded JSONL manifest:
 
 {"record_type":"registry","schema_version":1,"tree_id":"<TREE-ID>","max_records":64,"max_bytes":65536,"max_segment_nodes":1024,"max_segment_lines":8192,"max_segment_bytes":524288,"max_total_nodes":4096,"max_total_lines":32768,"max_total_bytes":2097152}
-{"record_type":"segment","schema_version":1,"segment_id":"<TREE-ID>.1","path":"docs/tasks/segments/<TREE-ID>/<SHA256>.md","root_ids":["<TREE-ID>.1"],"node_count":12,"sha256":"<SHA256>","source_revision":"<FULL-REVISION>","source_path":"docs/tasks/<TREE-ID>.md"}
+{"record_type":"segment","schema_version":1,"segment_id":"<TREE-ID>.1","path":"docs/tasks/segments/<TREE-ID>/<SHA256>.md","root_ids":["<TREE-ID>.1"],"node_count":12,"sha256":"<SHA256>","source_revision":"<FULL-REVISION>","source_path":"docs/tasks/<TREE-ID>.md","retention_contract":"<CONTRACT-ID>"}
 
      A completed subtree may instead become a compact live terminal only when
      the exact version object reconstructs it:
@@ -129,6 +129,7 @@ State the exact outcome this top-level task must deliver.
   Retrieval path: `docs/tasks/<TREE-ID>.md`
   Retrieved SHA256: `<SHA256>`
   Archived node count: `<positive integer>`
+  Retention contract: `<CONTRACT-ID>`
   Verification: `<closed exact-retrieval evidence>`
   Commit: `<completed work-unit subject or reference>`
 

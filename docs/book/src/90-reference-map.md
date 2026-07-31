@@ -154,15 +154,18 @@ the optional forms add no migration requirement for ordinary trees. The first
 migration reduces the live IAL2 file from 21,726 to 85 lines and the task index
 from 1,078 to 558 lines. Completed task files remain directly browsable; only
 duplicated cross-tree terminal narration becomes query-first. User-directed
-leaf `.14` publishes a self-contained external review packet before the next
+leaf `.14` published a self-contained external review packet before the next
 migration.
 
-The tracked [external review packet](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md)
-explains the doctrine, JSONL schemas, pressure model, route and archive checks,
-task-history migration, measured results, limitations, and 31 review questions.
-It also adds the missing first question: whether a live document still has a
-distinct current role. Its retain/merge/supersede/archive/delete examples are
-review proposals, not authorization to delete a file.
+The bounded [review front door](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md)
+summarizes the current architecture and routes forensic readers to the
+content-identified
+[external review packet](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md).
+That detailed packet explains the doctrine, schemas, pressure model, route and
+archive checks, task-history migration, measured results, limitations, and 31
+review questions. It is now immutable retained evidence rather than an
+append-only review page. New review rounds receive new task-tree-owned
+artifacts and dispositions.
 
 PGEN and ANVIL returned independent reviews. The tracked
 [disposition](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md)
@@ -216,10 +219,18 @@ indexes prove member links, other collection front doors declare query or
 generated contracts, and fenced packet/disposition maps resolve 17 plus 5
 evidence paths. A staged-result adapter prevents the neutral worktree check
 from validating different controlled content than the commit tree.
-Clean `.21` commit `9c63cf76b` activates `.22` alone. That leaf now owns exact
-migration identity and semantic closure, explicit version-history retention,
-and a bounded front door for the detailed external-review material; this
-selection changes no behavior or existing evidence.
+Leaf `.22` closes the migration/retention ambiguity. A bounded migration
+manifest independently verifies the IAL2 former source at 21,726 lines and
+4,662,385 bytes, all 844 sealed semantic nodes, and the 6,002-line / 2,438,733-
+byte live root-plus-manifest-plus-segment working set. It declares those
+products `overlapping_non_partition` and records zero unretained residue;
+false partition arithmetic, identity/cardinality drift, and unproved residue
+fail closed. Every task-tree or generic archive `version_object` names a
+bounded retention contract with an owner, guarantee, and recovery action.
+Missing history diagnostics identify that action, while evidence that must not
+depend on history uses content-addressed repository files. The 79-line review
+front door has independent 100-line / 5-KiB caps and a typed route to the
+SHA-256-frozen 1,311-line detailed packet.
 
 ## What The Old User Guide Still Does
 

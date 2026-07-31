@@ -17,3 +17,4 @@
 {"route_id":"author_rationale","route_kind":"author_overflow","source_path":"scripts/check_readme_entrypoint.sh","source_surface_id":"readme_entrypoint","marker":"docs/decisions/","target_surface_id":"rationale"}
 {"route_id":"author_shipped_behavior","route_kind":"author_overflow","source_path":"scripts/check_readme_entrypoint.sh","source_surface_id":"readme_entrypoint","marker":"docs/book/","target_surface_id":"shipped_behavior"}
 {"route_id":"author_exact_history","route_kind":"author_overflow","source_path":"scripts/check_readme_entrypoint.sh","source_surface_id":"readme_entrypoint","marker":"git log --grep=<UNIT-ID>","target_surface_id":"exact_history"}
+{"route_id":"live_document_review_packet","route_kind":"reader_navigation","source_path":"docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md","source_surface_id":"live_document_review","marker":"LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md","target_surface_id":"external_review_packet"}

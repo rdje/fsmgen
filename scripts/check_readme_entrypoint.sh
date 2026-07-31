@@ -140,6 +140,10 @@ required_routes=(
   change_history exact_history diagnostics enforced_rules
   frozen_roadmap_status frozen_achievement_status
 )
+declare -A required_route_ids=()
+for required_route_id in "${required_routes[@]}"; do
+  required_route_ids["${required_route_id}"]=1
+done
 
 route_note() {
   note "  route ${route_id}: $1"
@@ -185,6 +189,13 @@ else
       [ -z "${route_id}" ] && continue
       route_failed=0
 
+      if [ "${source_surface_id}" != "readme_entrypoint" ]; then
+        if [ -n "${required_route_ids[${route_id}]+x}" ]; then
+          route_note "must originate at readme_entrypoint: ${source_surface_id}"
+        fi
+        continue
+      fi
+
       case "${route_id}" in
         *[!a-z0-9_]*) route_note "has an invalid route_id" ;;
       esac
@@ -196,9 +207,6 @@ else
         route_note "is declared more than once"
       else
         seen_routes["${route_id}"]=1
-      fi
-      if [ "${source_surface_id}" != "readme_entrypoint" ]; then
-        route_note "must originate at readme_entrypoint: ${source_surface_id}"
       fi
       if [ ! -f "${source_path}" ]; then
         route_note "source path is absent: ${source_path}"

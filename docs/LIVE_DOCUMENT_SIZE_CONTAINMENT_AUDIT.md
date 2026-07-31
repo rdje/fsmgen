@@ -5,6 +5,7 @@
 - Doctrine: [LIVE_DOCUMENT_SIZE_CONTAINMENT.md](../LIVE_DOCUMENT_SIZE_CONTAINMENT.md)
 - Decision: [0041](decisions/0041-live-documents-use-bounded-views-over-durable-stores.md)
 - Owner tree: [LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION](tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md)
+- Current review view: [bounded front door](LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md)
 
 This is FSMGen's fenced local adoption evidence, not a reusable threshold
 catalog. Percentages compare the clean activation revision with the local
@@ -82,10 +83,12 @@ Fenced packet/disposition evidence maps resolve 17 and 5 paths respectively,
 and the local wrapper rejects staged structural inputs that differ from the
 worktree checked by the neutral core.
 
-Clean `.21` commit `9c63cf76b` activates `.22` alone. The active correction
-must now separate source identity, semantic migration closure, working-set
-reduction, and actual loss residue; make version-history retention actionable;
-and bound the detailed review front door without changing current evidence.
+Completed `.22` separately verifies the IAL2 exact source, all 844 sealed
+nodes, the live root/manifest/segment working set, and zero unretained residue.
+It rejects false partition arithmetic and binds every version-object use to a
+bounded owner/guarantee/recovery contract. The new 79-line review front door
+routes to the SHA-256-frozen 1,311-line packet, so detailed evidence remains
+retrievable without remaining an append target.
 
 Completed `.18` now separates the two pressure meanings. Health targets are
 reviewed working-set acceptance goals: 2,000 lines / 256 KiB for monolithic

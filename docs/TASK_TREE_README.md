@@ -277,8 +277,8 @@ rather than splitting by arbitrary line count:
 2. Copy one or more fully terminal subtrees into a Markdown file with a
    `## Task Tree Segment` node list. Do not edit node bodies during the move.
 3. Name the segment file by its SHA-256 and record it in the task's bounded
-   JSONL manifest with disjoint root IDs, node count, digest, and the exact
-   source revision/path.
+   JSONL manifest with disjoint root IDs, node count, digest, the exact source
+   revision/path, and a named version-retention contract.
 4. Add this optional metadata line to the live task file:
 
 ```text
@@ -295,14 +295,15 @@ addressed segment:
 
 ```json
 {"record_type":"registry","schema_version":1,"tree_id":"API-STABILIZATION","max_records":64,"max_bytes":65536,"max_segment_nodes":1024,"max_segment_lines":8192,"max_segment_bytes":524288,"max_total_nodes":4096,"max_total_lines":32768,"max_total_bytes":2097152}
-{"record_type":"segment","schema_version":1,"segment_id":"API-STABILIZATION.1","path":"docs/tasks/segments/API-STABILIZATION/<SHA256>.md","root_ids":["API-STABILIZATION.1"],"node_count":12,"sha256":"<SHA256>","source_revision":"<FULL-REVISION>","source_path":"docs/tasks/API-STABILIZATION.md"}
+{"record_type":"segment","schema_version":1,"segment_id":"API-STABILIZATION.1","path":"docs/tasks/segments/API-STABILIZATION/<SHA256>.md","root_ids":["API-STABILIZATION.1"],"node_count":12,"sha256":"<SHA256>","source_revision":"<FULL-REVISION>","source_path":"docs/tasks/API-STABILIZATION.md","retention_contract":"<CONTRACT-ID>"}
 ```
 
 When a completed subtree no longer warrants a working-tree segment, its root
 may become one compact `version_object` terminal in the live node list. Record
 the original goal, exact revision and path, retrieved-file SHA-256, archived
-node count, closed verification, and commit reference. The checker reloads the
-version object through git and validates the complete terminal subtree; a
+node count, named retention contract, closed verification, and commit
+reference. The checker reloads the version object through git and validates
+the complete terminal subtree; a
 conversation note, abbreviated revision, or unverified archive pointer is not
 a substitute.
 
@@ -316,7 +317,7 @@ PNT table and proposed rows in its backlog table. When accumulated terminal
 rows make the index a history ledger, seal the exact prior index version in a
 finite JSONL manifest recording revision/path, SHA-256, dimensions, terminal
 row count, unique tree-ID count, allowed terminal statuses, current pointer,
-and sealing date. The integrity checker must retrieve that version, verify each
+sealing date, and retention contract. The integrity checker must retrieve that version, verify each
 task-file link at the same revision, and reject terminal rows that leak back
 into the live active/proposed views. The individual task files may remain
 directly browsable; sealing duplicated index narration does not delete them.

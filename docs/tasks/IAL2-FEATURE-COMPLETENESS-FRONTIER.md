@@ -44,6 +44,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - Each completed leaf is committed through `COMMIT.md`.
 
 - Segment manifest: `docs/tasks/segments/IAL2-FEATURE-COMPLETENESS-FRONTIER/manifest.jsonl`
+- Migration manifest: `docs/tasks/segments/IAL2-FEATURE-COMPLETENESS-FRONTIER/migration.jsonl`
 
 ## Task Tree
 

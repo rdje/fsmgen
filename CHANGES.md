@@ -32274,3 +32274,11 @@ task tree and git.
   identity/closure, retention guarantees, and a bounded review front door.
 - Reused the existing proposed macOS RAM-metric task and fact card; this
   selection changes no enforcement, evidence, lifecycle, or product behavior.
+
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22 — migration and retention proved
+
+- Independently verifies exact source identity, 844-node semantic closure, the
+  6,002-line working set, overlapping products, and zero unretained residue.
+- Requires bounded owner/guarantee/recovery contracts for version objects and
+  freezes the detailed review packet behind a 79-line bounded front door;
+  focused regression passes at `Files=3, Tests=62`.

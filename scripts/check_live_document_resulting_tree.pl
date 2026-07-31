@@ -11,15 +11,21 @@ use IPC::Open3 qw(open3);
 use JSON::PP;
 use Symbol qw(gensym);
 
-my ($root_arg, $surfaces, $routes, $evidence_maps, $help);
+my ($root_arg, $surfaces, $routes, $archives, $evidence_maps,
+    $retention_contracts, $help);
 $surfaces = 'doctrine/live_document_size/surfaces.jsonl';
 $routes = 'doctrine/readme_entrypoint/routed_destinations.jsonl';
+$archives = 'doctrine/live_document_size/archive_descriptors.jsonl';
 $evidence_maps = 'doctrine/live_document_size/evidence_maps.jsonl';
+$retention_contracts =
+    'doctrine/live_document_size/version_retention_contracts.jsonl';
 GetOptions(
     'root=s'          => \$root_arg,
     'surfaces=s'      => \$surfaces,
     'routes=s'        => \$routes,
+    'archives=s'      => \$archives,
     'evidence-maps=s' => \$evidence_maps,
+    'retention-contracts=s' => \$retention_contracts,
     'help|h'          => \$help,
 ) or usage(2);
 usage(0) if $help;
@@ -35,7 +41,8 @@ sub usage {
     my ($status) = @_;
     print STDERR <<'USAGE';
 Usage: check_live_document_resulting_tree.pl [--root DIR]
-       [--surfaces FILE] [--routes FILE] [--evidence-maps FILE]
+       [--surfaces FILE] [--routes FILE] [--archives FILE]
+       [--evidence-maps FILE] [--retention-contracts FILE]
 USAGE
     exit $status;
 }
@@ -96,7 +103,8 @@ if ($staged_status != 0 || $staged eq '') {
     exit 0;
 }
 
-my %controlled = map { $_ => 1 } ($surfaces, $routes, $evidence_maps);
+my %controlled = map { $_ => 1 }
+    ($surfaces, $routes, $archives, $evidence_maps, $retention_contracts);
 for my $record (@{jsonl($surfaces)}) {
     $controlled{$record->{index}} = 1 if relative_path_ok($record->{index});
     for my $pattern (@{$record->{targets} || []}) {

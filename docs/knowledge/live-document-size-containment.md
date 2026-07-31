@@ -35,10 +35,14 @@ answers:
   - "how are live-document collection indexes checked for completeness?"
   - "are external review evidence-map paths mechanically checked?"
   - "does the live-document doctrine inspect the staged resulting tree?"
+  - "how does a live-document migration prove that no content was lost?"
+  - "why are migration products not added as disjoint line counts?"
+  - "what retention contract is required for a version object?"
+  - "where is the bounded live-document architecture review front door?"
 date: 2026-07-31
 status: current
 tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
-evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/evidence_maps.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_route_candidates.pl; scripts/check_live_document_resulting_tree.pl; scripts/check_live_document_ceiling_authority.pl; scripts/check_doctrine_bootstrap.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
+evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/evidence_maps.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_route_candidates.pl; scripts/check_live_document_resulting_tree.pl; scripts/check_live_document_ceiling_authority.pl; scripts/check_doctrine_bootstrap.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/tasks/segments/IAL2-FEATURE-COMPLETENESS-FRONTIER/migration.jsonl; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md
 reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t
 ---
 
@@ -153,7 +157,12 @@ Map names its executed generated surface. Fenced packet and disposition maps
 resolve all 17 and 5 evidence paths. The Git adapter also rejects controlled
 staged content that differs from the worktree supplied to the neutral core.
 
-Clean `.21` commit `9c63cf76b` activates `.22` alone for exact migration
-identity/closure, explicit version-history retention guarantees, and a bounded
-front door to retained external-review evidence. Activation changes no
-checker, evidence, lifecycle, or product behavior.
+Leaf `.22` independently proves complete-source identity, semantic closure,
+live working-set dimensions, and unretained residue. The IAL2 manifest verifies
+the exact 21,726-line source, all 844 sealed nodes, a 6,002-line working set,
+overlapping rather than partitioned products, and zero loss residue. Every
+task-tree or generic archive version object now names a bounded contract whose
+owner guarantees reachability/backup and supplies shallow/rewrite recovery;
+missing history reports that recovery action. The 79-line review front door is
+capped at 100 lines / 5 KiB and routes to the detailed 1,311-line packet, whose
+SHA-256 is frozen as retained evidence.

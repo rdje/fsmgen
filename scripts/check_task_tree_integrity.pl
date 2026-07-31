@@ -52,6 +52,11 @@ my $total_nodes = 0;
 my $total_segments = 0;
 my $total_compact_terminals = 0;
 my $total_index_archives = 0;
+my $total_migrations = 0;
+my $retention_registry_relative =
+    'doctrine/live_document_size/version_retention_contracts.jsonl';
+my %retention_contracts;
+my $retention_contracts_loaded = 0;
 
 my @index_archive_fields =
     $index =~ /^- Completed-history manifest: `([^`]+)`\s*$/mg;
@@ -93,15 +98,33 @@ for my $entry (@active_trees) {
         push @errors, "$task_relative: must have at most one Segment manifest field";
     }
 
-    my @segment_nodes;
+    my (@segment_nodes, @segment_paths);
     if (@manifest_fields == 1) {
-        my ($nodes, $segments) = load_segment_manifest(
+        my ($nodes, $segments, $paths) = load_segment_manifest(
             tree_id       => $tree_id,
             task_relative => $task_relative,
             manifest      => $manifest_fields[0],
         );
         @segment_nodes = @{$nodes};
+        @segment_paths = @{$paths};
         $total_segments += $segments;
+    }
+
+    my @migration_fields =
+        $task =~ /^- Migration manifest: `([^`]+)`\s*$/mg;
+    if (@migration_fields > 1) {
+        push @errors, "$task_relative: must have at most one Migration manifest field";
+    }
+    elsif (@migration_fields == 1) {
+        $total_migrations += load_migration_manifest(
+            tree_id          => $tree_id,
+            task_relative    => $task_relative,
+            task_raw         => $task,
+            manifest         => $migration_fields[0],
+            segment_manifest => $manifest_fields[0],
+            segment_nodes    => \@segment_nodes,
+            segment_paths    => \@segment_paths,
+        );
     }
 
     my @nodes = (@live_nodes, @segment_nodes);
@@ -122,9 +145,9 @@ if (@errors) {
 
 printf "[task-tree-integrity] all active task-tree invariants hold "
     . "(trees=%d, nodes=%d, segments=%d, compact_terminals=%d, "
-    . "index_archives=%d)\n",
+    . "index_archives=%d, migrations=%d)\n",
     scalar(@active_trees), $total_nodes, $total_segments,
-    $total_compact_terminals, $total_index_archives;
+    $total_compact_terminals, $total_index_archives, $total_migrations;
 exit 0;
 
 sub load_index_archive_manifest {
@@ -190,7 +213,7 @@ sub load_index_archive_manifest {
             $record,
             [qw(record_type schema_version archive_id revision path sha256
                 lines bytes terminal_rows unique_tree_ids statuses
-                current_pointer sealed_on)],
+                current_pointer sealed_on retention_contract)],
             [],
             $where,
         );
@@ -253,7 +276,8 @@ sub load_index_archive_manifest {
                 || $sealed_on !~ /\A[0-9]{4}-[0-9]{2}-[0-9]{2}\z/;
 
         my $source = retrieve_version_object(
-            $revision, $path, "$where completed-history source"
+            $revision, $path, "$where completed-history source",
+            $record->{retention_contract},
         );
         next if !defined $source;
         if (defined $digest && !ref $digest
@@ -398,16 +422,16 @@ sub load_segment_manifest {
         || $manifest_relative !~ /\.jsonl\z/) {
         push @errors,
             "$task_relative: unsafe or non-JSONL segment manifest $manifest_relative";
-        return ([], 0);
+        return ([], 0, []);
     }
     my $manifest_path = checked_local_file(
         $manifest_relative, "$task_relative: segment manifest"
     );
-    return ([], 0) if !defined $manifest_path;
+    return ([], 0, []) if !defined $manifest_path;
 
     my $raw = read_file($manifest_path, $manifest_relative);
     my @records = decode_jsonl($raw, $manifest_relative);
-    return ([], 0) if !@records;
+    return ([], 0, []) if !@records;
 
     my $registry = shift @records;
     check_keys(
@@ -470,7 +494,7 @@ sub load_segment_manifest {
         my $where = "$manifest_relative: record $record_number";
         check_keys(
             $record,
-            [qw(record_type schema_version segment_id path root_ids node_count sha256 source_revision source_path)],
+            [qw(record_type schema_version segment_id path root_ids node_count sha256 source_revision source_path retention_contract)],
             [],
             $where,
         );
@@ -616,7 +640,8 @@ sub load_segment_manifest {
             next;
         }
         my $source_raw = retrieve_version_object(
-            $source_revision, $source_path, "$where source"
+            $source_revision, $source_path, "$where source",
+            $record->{retention_contract},
         );
         next if !defined $source_raw;
         my $source_section = extract_section($source_raw, 'Task Tree');
@@ -680,7 +705,232 @@ sub load_segment_manifest {
         }
     }
 
-    return (\@nodes, scalar @records);
+    my @paths = ($manifest_relative, sort keys %seen_segment_path);
+    return (\@nodes, scalar @records, \@paths);
+}
+
+sub load_migration_manifest {
+    my (%args) = @_;
+    my $tree_id = $args{tree_id};
+    my $task_relative = $args{task_relative};
+    my $manifest_relative = $args{manifest};
+
+    if (!safe_relative_path($manifest_relative)
+        || $manifest_relative !~ /\.jsonl\z/) {
+        push @errors,
+            "$task_relative: unsafe or non-JSONL migration manifest $manifest_relative";
+        return 0;
+    }
+    my $manifest_path = checked_local_file(
+        $manifest_relative, "$task_relative: migration manifest"
+    );
+    return 0 if !defined $manifest_path;
+    my $raw = read_file($manifest_path, $manifest_relative);
+    my @records = decode_jsonl($raw, $manifest_relative);
+    return 0 if !@records;
+
+    my $registry = shift @records;
+    check_keys(
+        $registry,
+        [qw(record_type schema_version tree_id max_records max_bytes)],
+        [], "$manifest_relative: registry record",
+    );
+    check_equal($registry->{record_type}, 'registry',
+        "$manifest_relative: registry record_type");
+    check_integer($registry->{schema_version}, 1, 1,
+        "$manifest_relative: registry schema_version");
+    check_equal($registry->{tree_id}, $tree_id,
+        "$manifest_relative: registry tree_id");
+    check_integer($registry->{max_records}, 1, undef,
+        "$manifest_relative: registry max_records");
+    check_integer($registry->{max_bytes}, 1, undef,
+        "$manifest_relative: registry max_bytes");
+    if (is_positive_integer($registry->{max_records})
+        && @records > $registry->{max_records}) {
+        push @errors,
+            "$manifest_relative: migration record count " . scalar(@records)
+                . " exceeds max_records $registry->{max_records}";
+    }
+    if (is_positive_integer($registry->{max_bytes})
+        && length($raw) > $registry->{max_bytes}) {
+        push @errors,
+            "$manifest_relative: size " . length($raw)
+                . " exceeds max_bytes $registry->{max_bytes}";
+    }
+    if (@records != 1) {
+        push @errors,
+            "$manifest_relative: must contain exactly one migration record";
+        return scalar @records;
+    }
+
+    my $record = $records[0];
+    my $where = "$manifest_relative: record 2";
+    check_keys(
+        $record,
+        [qw(record_type schema_version migration_id outcome source_revision
+            source_path source_sha256 source_lines source_bytes
+            retention_contract semantic_manifest authoritative_nodes
+            working_set_paths working_set_lines working_set_bytes
+            product_relationship loss_residue_kind loss_residue_path
+            loss_residue_sha256 loss_residue_lines loss_residue_bytes)],
+        [], $where,
+    );
+    check_equal($record->{record_type}, 'migration', "$where record_type");
+    check_integer($record->{schema_version}, 1, 1, "$where schema_version");
+    my $migration_id = $record->{migration_id};
+    push @errors, "$where has invalid migration_id"
+        if !defined $migration_id || ref $migration_id
+            || $migration_id !~ /\A[a-z][a-z0-9_.-]*\z/;
+    check_equal($record->{outcome}, 're-form', "$where outcome");
+
+    my $source_revision = $record->{source_revision};
+    my $source_path = $record->{source_path};
+    if (!defined $source_revision || ref $source_revision
+        || $source_revision !~ /\A(?:[0-9a-f]{40}|[0-9a-f]{64})\z/) {
+        push @errors, "$where has invalid exact source_revision";
+    }
+    if (!defined $source_path || ref $source_path
+        || !safe_relative_path($source_path) || $source_path !~ /\.md\z/) {
+        push @errors, "$where has unsafe or non-Markdown source_path";
+    }
+    my $source_sha = $record->{source_sha256};
+    push @errors, "$where has invalid source_sha256"
+        if !defined $source_sha || ref $source_sha
+            || $source_sha !~ /\A[0-9a-f]{64}\z/;
+    check_integer($record->{source_lines}, 1, undef, "$where source_lines");
+    check_integer($record->{source_bytes}, 1, undef, "$where source_bytes");
+
+    if (defined $source_revision && !ref $source_revision
+        && $source_revision =~ /\A(?:[0-9a-f]{40}|[0-9a-f]{64})\z/
+        && defined $source_path && !ref $source_path
+        && safe_relative_path($source_path)) {
+        my $source = retrieve_version_object(
+            $source_revision, $source_path, "$where complete source",
+            $record->{retention_contract},
+        );
+        if (defined $source) {
+            push @errors, "$where complete-source digest mismatch"
+                if defined $source_sha && !ref $source_sha
+                    && $source_sha =~ /\A[0-9a-f]{64}\z/
+                    && sha256_hex($source) ne $source_sha;
+            push @errors,
+                "$where source_lines $record->{source_lines} does not match retrieved count "
+                    . line_count($source)
+                if is_positive_integer($record->{source_lines})
+                    && line_count($source) != $record->{source_lines};
+            push @errors,
+                "$where source_bytes $record->{source_bytes} does not match retrieved count "
+                    . length($source)
+                if is_positive_integer($record->{source_bytes})
+                    && length($source) != $record->{source_bytes};
+        }
+    }
+
+    my $semantic_manifest = $record->{semantic_manifest};
+    if (!defined $args{segment_manifest}) {
+        push @errors, "$where semantic closure requires a Segment manifest";
+    }
+    elsif (!defined $semantic_manifest || ref $semantic_manifest
+        || $semantic_manifest ne $args{segment_manifest}) {
+        push @errors,
+            "$where semantic_manifest must match $args{segment_manifest}";
+    }
+    check_integer($record->{authoritative_nodes}, 1, undef,
+        "$where authoritative_nodes");
+    if (is_positive_integer($record->{authoritative_nodes})
+        && $record->{authoritative_nodes} != @{$args{segment_nodes}}) {
+        push @errors,
+            "$where authoritative_nodes $record->{authoritative_nodes} does not "
+                . "match sealed semantic node count " . scalar(@{$args{segment_nodes}});
+    }
+
+    my @expected_paths = ($task_relative, @{$args{segment_paths}});
+    my $declared_paths = $record->{working_set_paths};
+    if (ref($declared_paths) ne 'ARRAY' || !@{$declared_paths}) {
+        push @errors, "$where working_set_paths must be a non-empty array";
+    }
+    else {
+        my %seen;
+        my @unsafe = grep {
+            !defined $_ || ref $_ || !safe_relative_path($_) || $seen{$_}++
+        } @{$declared_paths};
+        push @errors, "$where working_set_paths contains unsafe or duplicate paths"
+            if @unsafe;
+        my $expected = join("\0", sort @expected_paths);
+        my $declared = join("\0", sort @{$declared_paths});
+        push @errors,
+            "$where working_set_paths does not exactly match the live root, segment manifest, and segment files"
+            if $declared ne $expected;
+
+        my ($lines, $bytes) = (0, 0);
+        for my $path (@{$declared_paths}) {
+            next if !defined $path || ref $path || !safe_relative_path($path);
+            my $local = checked_local_file($path, "$where working-set path");
+            next if !defined $local;
+            my $contents = read_file($local, $path);
+            $lines += line_count($contents);
+            $bytes += length($contents);
+        }
+        check_integer($record->{working_set_lines}, 1, undef,
+            "$where working_set_lines");
+        check_integer($record->{working_set_bytes}, 1, undef,
+            "$where working_set_bytes");
+        push @errors,
+            "$where working_set_lines $record->{working_set_lines} does not match measured count $lines"
+            if is_positive_integer($record->{working_set_lines})
+                && $record->{working_set_lines} != $lines;
+        push @errors,
+            "$where working_set_bytes $record->{working_set_bytes} does not match measured count $bytes"
+            if is_positive_integer($record->{working_set_bytes})
+                && $record->{working_set_bytes} != $bytes;
+    }
+
+    check_equal($record->{product_relationship}, 'overlapping_non_partition',
+        "$where product_relationship");
+    validate_loss_residue($record, $where);
+    return 1;
+}
+
+sub validate_loss_residue {
+    my ($record, $where) = @_;
+    my $kind = $record->{loss_residue_kind};
+    check_integer($record->{loss_residue_lines}, 0, undef,
+        "$where loss_residue_lines");
+    check_integer($record->{loss_residue_bytes}, 0, undef,
+        "$where loss_residue_bytes");
+    if (defined $kind && !ref $kind && $kind eq 'none') {
+        push @errors, "$where zero loss residue must use path '-' and sha256 '-'"
+            if ($record->{loss_residue_path} // '') ne '-'
+                || ($record->{loss_residue_sha256} // '') ne '-';
+        push @errors, "$where loss residue declared none but dimensions are nonzero"
+            if ($record->{loss_residue_lines} // -1) != 0
+                || ($record->{loss_residue_bytes} // -1) != 0;
+        return;
+    }
+    if (!defined $kind || ref $kind || $kind ne 'content_addressed_file') {
+        push @errors,
+            "$where loss_residue_kind must be none or content_addressed_file";
+        return;
+    }
+    my $path = $record->{loss_residue_path};
+    my $digest = $record->{loss_residue_sha256};
+    if (!defined $path || ref $path || !safe_relative_path($path)
+        || !defined $digest || ref $digest
+        || $digest !~ /\A[0-9a-f]{64}\z/
+        || basename($path) !~ /\A\Q$digest\E\.(?:md|txt)\z/) {
+        push @errors,
+            "$where loss residue must be a content-addressed repository Markdown/text file";
+        return;
+    }
+    my $local = checked_local_file($path, "$where loss residue");
+    return if !defined $local;
+    my $contents = read_file($local, $path);
+    push @errors, "$where loss-residue digest mismatch"
+        if sha256_hex($contents) ne $digest;
+    push @errors, "$where loss-residue line count mismatch"
+        if line_count($contents) != ($record->{loss_residue_lines} // -1);
+    push @errors, "$where loss-residue byte count mismatch"
+        if length($contents) != ($record->{loss_residue_bytes} // -1);
 }
 
 sub validate_tree {
@@ -854,7 +1104,7 @@ sub validate_compact_terminal {
 
     for my $field (
         'Revision', 'Retrieval path', 'Retrieved SHA256',
-        'Archived node count', 'Verification', 'Commit'
+        'Archived node count', 'Retention contract', 'Verification', 'Commit'
     ) {
         my $count = field_count($node, $field);
         push @errors,
@@ -866,6 +1116,7 @@ sub validate_compact_terminal {
     my $retrieval_path = one_field($node, 'Retrieval path');
     my $digest = one_field($node, 'Retrieved SHA256');
     my $node_count = one_field($node, 'Archived node count');
+    my $retention_contract = one_field($node, 'Retention contract');
     my $verification = one_field($node, 'Verification');
     my $commit = one_field($node, 'Commit');
     return if !defined $revision || !defined $retrieval_path
@@ -899,7 +1150,8 @@ sub validate_compact_terminal {
     }
 
     my $retrieved = retrieve_version_object(
-        $revision, $retrieval_path, "$display: compact terminal $node_id"
+        $revision, $retrieval_path, "$display: compact terminal $node_id",
+        $retention_contract,
     );
     return if !defined $retrieved;
     my $actual_digest = sha256_hex($retrieved);
@@ -1179,8 +1431,86 @@ sub line_count {
     return $lines;
 }
 
+sub load_retention_contracts {
+    return if $retention_contracts_loaded++;
+    my $path = checked_local_file(
+        $retention_registry_relative, 'version-object retention registry'
+    );
+    return if !defined $path;
+    my $raw = read_file($path, $retention_registry_relative);
+    my @records = decode_jsonl($raw, $retention_registry_relative);
+    return if !@records;
+    my $registry = shift @records;
+    check_keys(
+        $registry,
+        [qw(record_type schema_version max_records max_bytes)], [],
+        "$retention_registry_relative: registry record",
+    );
+    check_equal($registry->{record_type}, 'registry',
+        "$retention_registry_relative: registry record_type");
+    check_integer($registry->{schema_version}, 1, 1,
+        "$retention_registry_relative: registry schema_version");
+    check_integer($registry->{max_records}, 1, undef,
+        "$retention_registry_relative: registry max_records");
+    check_integer($registry->{max_bytes}, 1, undef,
+        "$retention_registry_relative: registry max_bytes");
+    push @errors,
+        "$retention_registry_relative: contract count " . scalar(@records)
+            . " exceeds max_records $registry->{max_records}"
+        if is_positive_integer($registry->{max_records})
+            && @records > $registry->{max_records};
+    push @errors,
+        "$retention_registry_relative: size " . length($raw)
+            . " exceeds max_bytes $registry->{max_bytes}"
+        if is_positive_integer($registry->{max_bytes})
+            && length($raw) > $registry->{max_bytes};
+    my $number = 1;
+    for my $record (@records) {
+        $number++;
+        my $where = "$retention_registry_relative: record $number";
+        check_keys(
+            $record,
+            [qw(record_type schema_version contract_id owner guarantee recovery)],
+            [], $where,
+        );
+        check_equal($record->{record_type}, 'contract', "$where record_type");
+        check_integer($record->{schema_version}, 1, 1, "$where schema_version");
+        my $id = $record->{contract_id};
+        if (!defined $id || ref $id || $id !~ /\A[a-z][a-z0-9_.-]*\z/) {
+            push @errors, "$where has invalid contract_id";
+            next;
+        }
+        push @errors, "$where duplicates contract_id $id"
+            if exists $retention_contracts{$id};
+        for my $field (qw(owner guarantee recovery)) {
+            my $value = $record->{$field};
+            push @errors, "$where has empty or multiline $field"
+                if !defined $value || ref $value || $value eq ''
+                    || $value =~ /[\r\n\t]/;
+        }
+        $retention_contracts{$id} = $record;
+    }
+}
+
+sub require_retention_contract {
+    my ($id, $where) = @_;
+    load_retention_contracts();
+    if (!defined $id || ref $id
+        || $id !~ /\A[a-z][a-z0-9_.-]*\z/) {
+        push @errors, "$where has invalid or missing retention contract";
+        return undef;
+    }
+    if (!exists $retention_contracts{$id}) {
+        push @errors, "$where names unknown retention contract $id";
+        return undef;
+    }
+    return $retention_contracts{$id};
+}
+
 sub retrieve_version_object {
-    my ($revision, $path, $where) = @_;
+    my ($revision, $path, $where, $retention_contract) = @_;
+    my $contract = require_retention_contract($retention_contract, $where);
+    return undef if !defined $contract;
     my ($ok, undef, undef, $stdout, $stderr) = run(
         command => ['git', '-C', $root, 'show', "$revision:$path"],
     );
@@ -1190,7 +1520,9 @@ sub retrieve_version_object {
         $detail =~ s/^\s+|\s+$//g;
         push @errors,
             "$where cannot retrieve exact version object $revision:$path"
-                . ($detail ne '' ? " ($detail)" : '');
+                . ($detail ne '' ? " ($detail)" : '')
+                . "; retention contract $retention_contract owner "
+                . "$contract->{owner} requires recovery: $contract->{recovery}";
         return undef;
     }
     return join('', @{$stdout || []});

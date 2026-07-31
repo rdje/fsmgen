@@ -109,7 +109,23 @@ registry remains trackable, followed by zero or more descriptor records:
 Descriptors are optional until content leaves a live surface. When present,
 their schema version, identifiers, relative paths, counts, digest, retrieval
 kind, date, and verifier are validated. A `file` retrieval is also
-digest-checked immediately;
+digest-checked immediately.
+
+Every `version_object` descriptor adds a `retention_contract` identifier. The
+separate bounded registry named by `--retention-contracts` begins with one
+metadata row and then declares its owner, guarantee, and recovery action:
+
+```json
+{"record_type":"registry","schema_version":1,"max_records":16,"max_bytes":8192}
+{"record_type":"contract","schema_version":1,"contract_id":"required_history","owner":"repository-maintainers","guarantee":"Referenced objects remain reachable from the authoritative repository or its controlled backup.","recovery":"Fetch complete history; if rewriting removed the object, restore it from the controlled backup or materialize a content-addressed repository file, then rerun the gate."}
+```
+
+Missing, unknown, duplicate, unbounded, or malformed contracts fail closed.
+The contract makes conditional history retention explicit; evidence that must
+survive independently of repository history should instead use a
+content-addressed `file` retrieval. A failed local version-object verifier
+reports the contract identifier, owner, and recovery action.
+
 Generated projections and `version_object` retrievals use one explicit
 execution mode: `core:PATH`, `adapter:PATH`, or `external:CONTRACT`. The neutral
 core executes a `core:` program from the supplied project root and accepts its
@@ -133,7 +149,8 @@ relative and same-volume local targets, non-symlink files, per-part and
 aggregate targets/ceilings, inclusive equality, debt acknowledgement and
 ratchets, generated/version-object verifier execution, opt-in currency-oracle
 execution, frozen identity, typed route closure, collection-index contracts,
-evidence-map paths, archive-descriptor shape, and optional inventory coverage. It reports actual,
+evidence-map paths, retention-contract and archive-descriptor shape, and
+optional inventory coverage. It reports actual,
 target, ceiling, and migrated/pinned/steady pressure separately. It never
 mutates the project.
 

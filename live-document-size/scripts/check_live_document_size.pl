@@ -11,7 +11,7 @@ use Getopt::Long qw(GetOptions);
 use JSON::PP;
 
 my ($root_arg, $registry_arg, $routes_arg, $archives_arg, $evidence_maps_arg,
-    $coverage_stdin, $help);
+    $retention_contracts_arg, $coverage_stdin, $help);
 my @adapter_proofs;
 GetOptions(
     'root=s'          => \$root_arg,
@@ -19,6 +19,7 @@ GetOptions(
     'routes=s'        => \$routes_arg,
     'archives=s'      => \$archives_arg,
     'evidence-maps=s' => \$evidence_maps_arg,
+    'retention-contracts=s' => \$retention_contracts_arg,
     'coverage-stdin!' => \$coverage_stdin,
     'adapter-proof=s@' => \@adapter_proofs,
     'help|h'          => \$help,
@@ -26,7 +27,7 @@ GetOptions(
 usage(0) if $help;
 usage(2) if !defined($root_arg) || !defined($registry_arg)
     || !defined($routes_arg) || !defined($archives_arg)
-    || !defined($evidence_maps_arg);
+    || !defined($evidence_maps_arg) || !defined($retention_contracts_arg);
 
 my $root = abs_path($root_arg);
 if (!defined($root) || !-d $root) {
@@ -40,7 +41,8 @@ sub usage {
     my ($status) = @_;
     print STDERR <<'USAGE';
 Usage: check_live_document_size.pl --root DIR --registry FILE --routes FILE
-       --archives FILE --evidence-maps FILE [--coverage-stdin]
+       --archives FILE --evidence-maps FILE --retention-contracts FILE
+       [--coverage-stdin]
 USAGE
     exit $status;
 }
@@ -184,14 +186,15 @@ for my $proof (@adapter_proofs) {
 }
 
 sub execute_core_verifier {
-    my ($label, $relative) = @_;
+    my ($label, $relative, $guidance) = @_;
+    $guidance //= '';
     if (!relative_path_ok($relative) || !-f root_path($relative) || !-x root_path($relative)) {
-        problem("$label core verifier is absent or not executable: $relative");
+        problem("$label core verifier is absent or not executable: $relative$guidance");
         return;
     }
     my $pid = fork();
     if (!defined $pid) {
-        problem("$label cannot fork core verifier $relative: $!");
+        problem("$label cannot fork core verifier $relative: $!$guidance");
         return;
     }
     if ($pid == 0) {
@@ -212,30 +215,31 @@ sub execute_core_verifier {
     waitpid($pid, 0);
     if ($? != 0) {
         my $status = $? & 127 ? 'signal ' . ($? & 127) : 'exit ' . ($? >> 8);
-        problem("$label core verifier failed ($status): $relative");
+        problem("$label core verifier failed ($status): $relative$guidance");
         return;
     }
     ok_note("$label core verifier executed: $relative");
 }
 
 sub verify_execution {
-    my ($label, $proof_id, $verifier) = @_;
+    my ($label, $proof_id, $verifier, $guidance) = @_;
+    $guidance //= '';
     if ($verifier =~ /\Acore:(.+)\z/) {
-        execute_core_verifier($label, $1);
+        execute_core_verifier($label, $1, $guidance);
     } elsif ($verifier =~ /\Aadapter:(.+)\z/) {
         my $relative = $1;
-        problem("$label adapter verifier is absent or not executable: $relative")
+        problem("$label adapter verifier is absent or not executable: $relative$guidance")
             if !relative_path_ok($relative) || !-f root_path($relative) || !-x root_path($relative);
         if (!$adapter_proof{$proof_id}) {
-            problem("$label adapter verifier lacks executed proof: $proof_id");
+            problem("$label adapter verifier lacks executed proof: $proof_id$guidance");
         } else {
             delete $adapter_proof{$proof_id};
             ok_note("$label adapter verifier execution proved: $proof_id");
         }
     } elsif ($verifier =~ /\Aexternal:(.+)\z/) {
-        problem("$label external verification is declared but not locally proven; degraded result: $1");
+        problem("$label external verification is declared but not locally proven; degraded result: $1$guidance");
     } else {
-        problem("$label verifier must declare core:, adapter:, or external: execution");
+        problem("$label verifier must declare core:, adapter:, or external: execution$guidance");
     }
 }
 
@@ -1052,6 +1056,70 @@ for my $row (@{$evidence_rows}) {
     ok_note("evidence map $map_id resolves " . scalar(@paths) . " path(s)");
 }
 
+my $retention_rows = read_jsonl(
+    $retention_contracts_arg, 'version-object retention contract registry'
+);
+my %retention_contracts;
+my $retention_registry_metadata = 0;
+my ($retention_max_records, $retention_max_bytes);
+for my $row (@{$retention_rows}) {
+    my ($line_number, $record) = @{$row};
+    if (($record->{record_type} // '') eq 'registry') {
+        my @keys = qw(record_type schema_version max_records max_bytes);
+        if (validate_keys(
+            'version-object retention contract registry', $line_number,
+            $record, \@keys, [],
+        )) {
+            problem('version-object retention contract registry metadata is declared more than once')
+                if $retention_registry_metadata++;
+            problem("version-object retention contract registry has unsupported schema_version: $record->{schema_version}")
+                if !nonnegative_integer($record->{schema_version})
+                    || $record->{schema_version} ne '1';
+            $retention_max_records = $record->{max_records};
+            $retention_max_bytes = $record->{max_bytes};
+            problem('version-object retention contract registry max_records must be positive')
+                if !positive_integer($retention_max_records);
+            problem('version-object retention contract registry max_bytes must be positive')
+                if !positive_integer($retention_max_bytes);
+        }
+        next;
+    }
+    my @keys = qw(record_type schema_version contract_id owner guarantee recovery);
+    next if !validate_keys(
+        'version-object retention contract registry', $line_number,
+        $record, \@keys, [],
+    );
+    my ($type, $version, $id, $owner, $guarantee, $recovery) =
+        @{$record}{@keys};
+    if (grep { ref($_) || !defined($_) || $_ eq '' || $_ =~ /[\t\r\n]/ }
+            ($type, $version, $id, $owner, $guarantee, $recovery)) {
+        problem("version-object retention contract registry line $line_number must contain non-empty single-line strings");
+        next;
+    }
+    problem("version-object retention contract registry line $line_number must use record_type contract")
+        if $type ne 'contract';
+    problem("version-object retention contract $id has unsupported schema_version: $version")
+        if $version ne '1';
+    problem("version-object retention contract has invalid contract_id: $id")
+        if $id !~ /\A[a-z][a-z0-9_.-]*\z/;
+    problem("version-object retention contract $id is declared more than once")
+        if exists $retention_contracts{$id};
+    $retention_contracts{$id} = $record;
+}
+problem('version-object retention contract registry lacks its schema metadata record')
+    if !$retention_registry_metadata;
+my $retention_contract_count = scalar keys %retention_contracts;
+problem("version-object retention contract count $retention_contract_count exceeds max_records $retention_max_records")
+    if positive_integer($retention_max_records)
+        && $retention_contract_count > $retention_max_records;
+if (relative_path_ok($retention_contracts_arg)
+    && -f root_path($retention_contracts_arg)
+    && positive_integer($retention_max_bytes)) {
+    my $actual_bytes = -s root_path($retention_contracts_arg);
+    problem("version-object retention contract registry size $actual_bytes exceeds max_bytes $retention_max_bytes")
+        if $actual_bytes > $retention_max_bytes;
+}
+
 my $archive_rows = read_jsonl($archives_arg, 'archive descriptor registry');
 my %descriptor_ids;
 my $archive_registry_metadata = 0;
@@ -1079,7 +1147,8 @@ for my $row (@{$archive_rows}) {
         retrieval_kind retrieval_locator current_pointer sealed_on verifier
     );
     next if !validate_keys(
-        'archive descriptor registry', $line_number, $record, \@archive_keys, [],
+        'archive descriptor registry', $line_number, $record, \@archive_keys,
+        ['retention_contract'],
     );
     my ($record_type, $schema_version, $descriptor_id, $surface_id, $former_path, $range_id, $revision,
         $lines, $bytes, $sha256, $retrieval_kind, $retrieval_locator,
@@ -1131,10 +1200,25 @@ for my $row (@{$archive_rows}) {
     } elsif ($retrieval_kind eq 'version_object') {
         problem("archive descriptor $descriptor_id has empty version-object locator")
             if $retrieval_locator eq '' || $retrieval_locator eq '-';
+        my $contract_id = $record->{retention_contract};
+        my $guidance = '';
+        if (!defined $contract_id || ref $contract_id
+            || $contract_id !~ /\A[a-z][a-z0-9_.-]*\z/) {
+            problem("archive descriptor $descriptor_id has invalid or missing retention_contract");
+        }
+        elsif (!exists $retention_contracts{$contract_id}) {
+            problem("archive descriptor $descriptor_id names unknown retention contract: $contract_id");
+        }
+        else {
+            my $contract = $retention_contracts{$contract_id};
+            $guidance = "; retention contract $contract_id owner $contract->{owner} "
+                . "requires recovery: $contract->{recovery}";
+        }
         verify_execution(
             "archive descriptor $descriptor_id version retrieval",
             "archive:$descriptor_id",
             $verifier,
+            $guidance,
         );
     } elsif ($retrieval_kind eq 'external') {
         problem("archive descriptor $descriptor_id external locator is empty")

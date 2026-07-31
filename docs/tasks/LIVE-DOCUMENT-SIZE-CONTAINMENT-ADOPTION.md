@@ -216,11 +216,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22`
-  Status: `active`
+  Status: `done`
   Goal: `Make migration completeness, retention guarantees, and review-front-door bounds explicit.`
   Acceptance: `IAL2 migration evidence separately proves exact full-source identity/retrieval, all 844 authoritative task nodes, live working-set dimensions, and any truly omitted-content residue; version_object use declares a retention owner/guarantee and actionable shallow/rewrite failure, while unrecoverable evidence prefers content-addressed repository files; migration records reject false disjoint arithmetic; a bounded architecture/review front door routes the detailed packet to retained evidence under an explicit lifecycle; retrieval, missing-history, mismatch, and loss-residue fixtures fail closed.`
-  Verification: `Activated alone from clean `.21` implementation commit `9c63cf76b`; implementation remains pending.`
-  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22: activate migration and retention proof`
+  Verification: `A bounded IAL2 migration manifest independently retrieves the 21,726-line/4,662,385-byte source at SHA-256 8cff8e7b..., checks all 844 sealed nodes, measures the 6,002-line/2,438,733-byte live root/manifest/segment working set, declares overlapping_non_partition products, and records zero loss residue. Task-tree and neutral archive version objects name a bounded owner/guarantee/recovery contract; missing-history output prints the recovery action. A 79-line/3,946-byte front door with 100-line/5-KiB caps routes to the SHA-256-frozen 1,311-line packet. Focused Files=3/Tests=62, task graph, 22-surface complete Markdown coverage, Knowledge Map, Memory, all 37 book chapters, repository-local render/cleanup, staged acceptance, and all-doctrine evidence are recorded below.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22: enforce migration and retention proof`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23`
@@ -345,6 +345,12 @@ no routed destination becomes the next uninstrumented blob.
 - [x] **ADDRESSED (verified)** — `prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t` reports `All tests successful` at `Files=2, Tests=20`; fixtures reject an undeclared emitted hint, wrong author/reader kind, omitted literal collection member, missing evidence path, and controlled staged-result/worktree divergence while the real four author hints, 15 reader routes, six collection contracts, and two evidence maps pass.
 - [x] **NO REGRESSION** — staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`; all 20 surfaces and 2,782 tracked Markdown paths remain covered, all 22 review evidence paths resolve, task/README/locality/Memory/Knowledge Map/mdBook contracts stay green, and no route destination, pressure ceiling, lifecycle, or product behavior changes.
 
+## Acceptance Checklist (enforced) — `.22`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'source_revision' --oneline -- scripts/check_task_tree_integrity.pl` identifies `78adb81ae`, while `git log -S'retrieval_kind' --oneline -- live-document-size/scripts/check_live_document_size.pl` identifies `18e2dcbc6`; source inspection shows both mechanisms proved an object only while Git retained it, neither named an owner/guarantee/recovery contract, and the IAL2 packet compared overlapping full-source/semantic/live products without a separately checked migration record or loss-residue dimension.
+- [x] **ADDRESSED (verified)** — `prove -Iperl t/1549-task-tree-integrity-doctrine.t t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t` reports `All tests successful` at `Files=3, Tests=62`; the live migration retrieves 21,726 lines/4,662,385 bytes, checks 844 semantic nodes and a 6,002-line/2,438,733-byte working set, declares overlapping products and zero residue, while missing contracts/history, source/node/working-set mismatch, false partition arithmetic, and unretained residue fail closed. The 79-line/3,946-byte bounded review front door routes to the exact SHA-256-frozen 1,311-line packet.
+- [x] **NO REGRESSION** — `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`; all 22 surfaces and the complete tracked Markdown inventory remain covered, task/README/locality/Memory/Knowledge Map/mdBook contracts stay green, the 73-file/17,004-KiB render is removed exactly, and the frozen packet identity plus exact version-object retrieval remain unchanged.
+
 ## Acceptance Checklist (enforced) — `.20`
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'baseline verifier' --oneline -- live-document-size/scripts/check_live_document_size.pl` identifies `18e2dcbc6`; source inspection shows that the introduced exact surface schema had no currency contract or execution path, so bounded/route-closed output could not make or refute a scoped current-state claim and any date scan would have lived outside lifecycle ownership.
@@ -418,6 +424,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.21` activation | clean `8cf8263a2` predecessor; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,748 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; all nine doctrines pass; `.21` alone active; no checker, registry, route kind, index/evidence contract, document lifecycle/content, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.21` route/index/evidence completeness | exact route kinds/source paths; source-derived author hints; membership/query/generated index contracts; two fenced evidence maps; staged-result agreement; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=25; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 4 author hints and 15 reader routes; 6 indexed collection contracts; packet/disposition paths 17+5; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,752 keys; Memory 42 lines; all 37 chapters test; removed 73-file/17,000-KiB build; all declared negative controls and nine doctrines pass; the default RAM guard stopped safely on a false macOS 98.3%-used estimate while `memory_pressure` reported 83% free, so the successful retry retained process-tree/RSS monitoring and manually checked actual pressure under a recorded one-run host override; no pressure value, lifecycle, archive, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.22` activation | clean `9c63cf76b` predecessor; existing RAM-guard fact/task reuse; task/index/roadmap/book/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=896/segments=1/compact=0/index archives=1; 20 surfaces and 2,782/2,782 paths; Knowledge Map 1,096 facts/5,752 keys; Memory 40 lines; all 37 chapters test; removed 73-file/17,004-KiB build; all nine doctrines pass; `.22` alone active; no checker, registry, migration evidence, archive contract, review artifact content, lifecycle, frozen identity, landing content, or product behavior change |
+| `2026-07-31` | `.22` migration/retention proof | exact IAL2 source/node/working-set/residue manifest; bounded retention contracts; actionable missing-history diagnostics; frozen packet plus bounded routed front door; focused/path/task/live-size/Knowledge Map/Memory/mdBook/staged-doctrine gates; exact cleanup | `passed`; source 21,726 lines/4,662,385 bytes/SHA-256 8cff8e7b...; 844 nodes; working set 6,002/2,438,733; zero residue; focused Files=3/Tests=62; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces; Knowledge Map 1,096 facts/5,758 keys; 37 chapters; removed 73-file/17,004-KiB build; packet frozen at SHA-256 49351a2a...; no README or product behavior change |
 
 ## Commit Log
 
@@ -443,6 +450,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.21` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21: activate route and index completeness` | Activate only typed routes, complete collection indexes, and evidence-map checking from clean `.20` commit `8cf8263a2`; implementation remains pending. |
 | `.21` route/index/evidence completeness | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21: close route and index completeness` | Derive typed author hints, retain distinct reader routes, prove collection index/query/generated contracts and both evidence maps, and reject staged-result divergence. |
 | `.22` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22: activate migration and retention proof` | Activate only migration completeness, retention guarantees, and bounded review-front-door enforcement from clean `.21` commit `9c63cf76b`; implementation remains pending. |
+| `.22` migration/retention proof | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22: enforce migration and retention proof` | Prove four independent migration products, bind version objects to bounded recovery contracts, and freeze the detailed packet behind a bounded routed front door. |
 
 ## Changelog
 
@@ -514,3 +522,7 @@ no routed destination becomes the next uninstrumented blob.
   owns the correction and retains its explicit director-approval blocker.
 - `2026-07-31`: Clean `.21` commit `9c63cf76b` activates `.22` alone; no
   implementation or behavior changes in this selection slice.
+- `2026-07-31`: `.22` proves exact source, semantic closure, working-set size,
+  and zero unretained residue independently; history-backed objects name
+  actionable retention contracts, and the frozen packet now sits behind a
+  bounded review front door. `.23` is the next clean selection frontier.

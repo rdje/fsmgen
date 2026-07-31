@@ -6,14 +6,13 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22:
-  activate migration and retention proof`).
-- active_work_unit: `.22` alone is active from clean `.21` commit `9c63cf76b`.
-- current_state: `.21` mechanically closes typed routes, six collection-index
-  contracts, 22 review-evidence paths, and staged/worktree agreement. The known
-  macOS RAM metric remains owned by its proposed approval-blocked safety task.
-- next_action: audit the existing IAL2 migration/source evidence, version-object
-  contracts, and review-packet topology; then implement only `.22`'s exact
-  identity/closure/retention/front-door checks and fail-closed fixtures.
+  enforce migration and retention proof`).
+- active_work_unit: `.22` is complete; `.23` remains the next pending leaf.
+- current_state: `.22` independently proves IAL2 source identity, 844-node
+  closure, working-set size, and zero loss residue; version objects name bounded
+  recovery contracts, and the frozen packet sits behind a bounded front door.
+- next_action: from this clean `.22` commit, activate `.23` alone to select the
+  maintained product-reference lifecycle contract before affected migrations.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: `.8`-`.10`/`.13` wait for utility or
@@ -35,6 +34,6 @@ history; this file carries only the current bounded resume state.
   runtime, and normalized results; `.11` now qualifies only the selected AHB
   handwritten-oracle comparison, not general cross-backend parity.
 - Decisions `0041`/`0042`/`0044`, the packet, and its bounded disposition own
-  feedback-sensitive containment work. The rereferenced PGEN/ANVIL files match
-  the exact `.17` hashes and add no new finding. Push only on explicit request
-  (`0005`); PNT runs autonomously (`0003`). Consult the Knowledge Map first.
+  feedback-sensitive containment work. `.22` now closes migration/retention and
+  review-front-door proof; `.23` is next. Push only on explicit request (`0005`);
+  PNT runs autonomously (`0003`). Consult the Knowledge Map first.

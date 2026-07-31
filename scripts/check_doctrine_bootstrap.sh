@@ -71,6 +71,7 @@ live_document_files=(
   doctrine/live_document_size/ceiling_increase_authorities.jsonl
   doctrine/live_document_size/archive_descriptors.jsonl
   doctrine/live_document_size/evidence_maps.jsonl
+  doctrine/live_document_size/version_retention_contracts.jsonl
   doctrine/readme_entrypoint/routed_destinations.jsonl
   doctrine/task_tree/index_archives.jsonl
   scripts/check_live_document_size.sh
@@ -103,6 +104,13 @@ if grep -q 'check_live_document_resulting_tree.pl' scripts/check_live_document_s
   ok "live-document adapter checks staged/resulting-tree agreement"
 else
   note "live-document adapter does not check staged/resulting-tree agreement"
+fi
+
+if grep -q -- '--retention-contracts' scripts/check_live_document_size.sh \
+    && grep -q -- '--retention-contracts' live-document-size/scripts/check_live_document_size.pl; then
+  ok "live-document adapter and neutral core require retention contracts"
+else
+  note "live-document adapter/core retention-contract wiring is incomplete"
 fi
 
 if grep -q 'scripts/check_doctrines.sh' .github/workflows/regression.yml \

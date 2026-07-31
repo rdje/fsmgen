@@ -25,7 +25,7 @@ subtest 'live active task trees satisfy the integrity contract' => sub {
     ok($ok, 'live task-tree integrity passes') or diag($output);
     like(
         $output,
-        qr/all active task-tree invariants hold \(trees=[1-9][0-9]*, nodes=[1-9][0-9]*, segments=[0-9]+, compact_terminals=[0-9]+, index_archives=[0-9]+\)/,
+        qr/all active task-tree invariants hold \(trees=[1-9][0-9]*, nodes=[1-9][0-9]*, segments=[0-9]+, compact_terminals=[0-9]+, index_archives=[0-9]+, migrations=[0-9]+\)/,
         'live result reports measured tree, node, segment, terminal, and index-archive counts',
     );
 };
@@ -36,7 +36,7 @@ subtest 'valid minimal active tree passes unchanged' => sub {
     ok($ok, 'valid active tree passes') or diag($output);
     like(
         $output,
-        qr/trees=1, nodes=3, segments=0, compact_terminals=0, index_archives=0/,
+        qr/trees=1, nodes=3, segments=0, compact_terminals=0, index_archives=0, migrations=0/,
         'legacy in-file fixture result reports exact counts',
     );
 };
@@ -122,7 +122,7 @@ subtest 'exact-source sealed subtree segment passes across files' => sub {
     ok($ok, 'sealed segment fixture passes') or diag($output);
     like(
         $output,
-        qr/trees=1, nodes=3, segments=1, compact_terminals=0, index_archives=0/,
+        qr/trees=1, nodes=3, segments=1, compact_terminals=0, index_archives=0, migrations=0/,
         'sealed node participates in the combined measured tree',
     );
 };
@@ -230,13 +230,89 @@ subtest 'sealed terminal evidence cannot remain pending' => sub {
     );
 };
 
+subtest 'version-object use requires a declared retention contract' => sub {
+    my $fixture = make_segment_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/,"retention_contract":"fixture_history"//; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/is missing required key retention_contract/,
+        'missing segment retention contract',
+    );
+};
+
+subtest 'missing history reports owner and recovery action' => sub {
+    my $fixture = make_compact_fixture(revision => ('0' x 40));
+    expect_failure(
+        $fixture->{root},
+        qr/retention contract fixture_history owner fixture-maintainers requires recovery: Fetch complete fixture history/,
+        'actionable missing-history diagnostic',
+    );
+};
+
+subtest 'complete migration evidence passes without partition arithmetic' => sub {
+    my $fixture = make_migration_fixture();
+    my ($ok, $output) = run_checker($fixture->{root});
+    ok($ok, 'complete migration fixture passes') or diag($output);
+    like($output, qr/migrations=1/, 'one migration proof is measured');
+};
+
+subtest 'migration semantic node mismatch fails closed' => sub {
+    my $fixture = make_migration_fixture();
+    mutate_file(
+        $fixture->{migration},
+        sub { $_[0] =~ s/"authoritative_nodes":1/"authoritative_nodes":2/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/does not match sealed semantic node count 1/,
+        'migration node-count mismatch',
+    );
+};
+
+subtest 'migration source identity mismatch fails closed' => sub {
+    my $fixture = make_migration_fixture();
+    mutate_file(
+        $fixture->{migration},
+        sub { $_[0] =~ s/"source_sha256":"[0-9a-f]{64}"/"source_sha256":"@{['0' x 64]}"/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/complete-source digest mismatch/,
+        'migration full-source mismatch',
+    );
+};
+
+subtest 'migration rejects false disjoint arithmetic' => sub {
+    my $fixture = make_migration_fixture();
+    mutate_file(
+        $fixture->{migration},
+        sub { $_[0] =~ s/overlapping_non_partition/disjoint_partition/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/product_relationship must be overlapping_non_partition/,
+        'false migration partition',
+    );
+};
+
+subtest 'migration loss residue fails closed unless retained by content' => sub {
+    my $fixture = make_migration_fixture();
+    mutate_file(
+        $fixture->{migration},
+        sub { $_[0] =~ s/"loss_residue_bytes":0/"loss_residue_bytes":1/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/loss residue declared none but dimensions are nonzero/,
+        'unretained loss residue',
+    );
+};
+
 subtest 'compact completed version-object terminal passes' => sub {
     my $fixture = make_compact_fixture();
     my ($ok, $output) = run_checker($fixture->{root});
     ok($ok, 'compact terminal fixture passes') or diag($output);
     like(
         $output,
-        qr/trees=1, nodes=3, segments=0, compact_terminals=1, index_archives=0/,
+        qr/trees=1, nodes=3, segments=0, compact_terminals=1, index_archives=0, migrations=0/,
         'compact terminal reports one exact retrieved subtree',
     );
 };
@@ -247,7 +323,7 @@ subtest 'exact completed-index version object passes with bounded PNT views' => 
     ok($ok, 'completed-index archive fixture passes') or diag($output);
     like(
         $output,
-        qr/trees=1, nodes=3, segments=0, compact_terminals=0, index_archives=1/,
+        qr/trees=1, nodes=3, segments=0, compact_terminals=0, index_archives=1, migrations=0/,
         'one exact completed-index archive is measured',
     );
 };
@@ -427,6 +503,7 @@ sub make_segment_fixture {
             root_ids => ['EXAMPLE.1'], node_count => 1,
             sha256 => $digest, source_revision => $revision,
             source_path => 'docs/tasks/EXAMPLE.md',
+            retention_contract => 'fixture_history',
         }),
         '',
     );
@@ -443,9 +520,66 @@ sub make_segment_fixture {
     write_file($root, 'docs/tasks/EXAMPLE.md', $live);
     return {
         root => $root,
+        revision => $revision,
+        manifest_relative => $manifest_relative,
+        segment_relative => $segment_relative,
         manifest => File::Spec->catfile($root, split m{/}, $manifest_relative),
         segment => File::Spec->catfile($root, split m{/}, $segment_relative),
     };
+}
+
+sub make_migration_fixture {
+    my $fixture = make_segment_fixture();
+    my $task_relative = 'docs/tasks/EXAMPLE.md';
+    my $migration_relative = 'docs/tasks/segments/EXAMPLE/migration.jsonl';
+    my $task_path = File::Spec->catfile($fixture->{root}, split m{/}, $task_relative);
+    mutate_file(
+        $task_path,
+        sub {
+            $_[0] =~ s/(^- Segment manifest: `[^`]+`\n)/$1
+                . "- Migration manifest: `$migration_relative`\n"/me;
+        },
+    );
+
+    my $source = source_task_for_segment();
+    my @working_paths = (
+        $task_relative, $fixture->{manifest_relative}, $fixture->{segment_relative},
+    );
+    my ($working_lines, $working_bytes) = (0, 0);
+    for my $relative (@working_paths) {
+        my $contents = read_fixture_file($fixture->{root}, $relative);
+        $working_lines += fixture_line_count($contents);
+        $working_bytes += length($contents);
+    }
+    my $json = JSON::PP->new->canonical;
+    my $migration = join(
+        "\n",
+        $json->encode({
+            record_type => 'registry', schema_version => 1,
+            tree_id => 'EXAMPLE', max_records => 1, max_bytes => 4096,
+        }),
+        $json->encode({
+            record_type => 'migration', schema_version => 1,
+            migration_id => 'example_reform', outcome => 're-form',
+            source_revision => $fixture->{revision},
+            source_path => $task_relative, source_sha256 => sha256_hex($source),
+            source_lines => fixture_line_count($source), source_bytes => length($source),
+            retention_contract => 'fixture_history',
+            semantic_manifest => $fixture->{manifest_relative},
+            authoritative_nodes => 1, working_set_paths => \@working_paths,
+            working_set_lines => $working_lines, working_set_bytes => $working_bytes,
+            product_relationship => 'overlapping_non_partition',
+            loss_residue_kind => 'none', loss_residue_path => '-',
+            loss_residue_sha256 => '-', loss_residue_lines => 0,
+            loss_residue_bytes => 0,
+        }),
+        '',
+    );
+    write_file($fixture->{root}, $migration_relative, $migration);
+    $fixture->{migration} = File::Spec->catfile(
+        $fixture->{root}, split m{/}, $migration_relative
+    );
+    return $fixture;
 }
 
 sub make_compact_fixture {
@@ -484,6 +618,7 @@ sub make_compact_fixture {
         . "  Retrieval path: `docs/tasks/EXAMPLE.md`\n"
         . "  Retrieved SHA256: `$digest`\n"
         . "  Archived node count: `$node_count`\n"
+        . "  Retention contract: `fixture_history`\n"
         . "  Verification: `$verification`\n"
         . "  Commit: `$commit`\n\n";
     my $live = "# Example\n\n## Task Tree\n\n"
@@ -567,10 +702,12 @@ sub make_index_archive_fixture {
             lines => $lines, bytes => length($source_index), terminal_rows => 1,
             unique_tree_ids => 1, statuses => ['done', 'deferred', 'superseded'],
             current_pointer => 'docs/TASK_TREE.md', sealed_on => '2026-07-31',
+            retention_contract => 'fixture_history',
         }),
         '',
     );
     write_file($root, $manifest_relative, $manifest);
+    write_retention_registry($root);
     return {
         root => $root,
         index => File::Spec->catfile($root, 'docs', 'TASK_TREE.md'),
@@ -593,7 +730,49 @@ sub initialize_versioned_fixture {
     );
     my $revision = run_git($root, 'rev-parse', 'HEAD');
     $revision =~ s/\s+\z//;
+    write_retention_registry($root);
     return ($root, $revision);
+}
+
+sub write_retention_registry {
+    my ($root) = @_;
+    my $json = JSON::PP->new->canonical;
+    write_file(
+        $root,
+        'doctrine/live_document_size/version_retention_contracts.jsonl',
+        join(
+            "\n",
+            $json->encode({
+                record_type => 'registry', schema_version => 1,
+                max_records => 4, max_bytes => 4096,
+            }),
+            $json->encode({
+                record_type => 'contract', schema_version => 1,
+                contract_id => 'fixture_history', owner => 'fixture-maintainers',
+                guarantee => 'Fixture revisions remain reachable.',
+                recovery => 'Fetch complete fixture history, restore the object, and rerun the gate.',
+            }),
+            '',
+        ),
+    );
+}
+
+sub read_fixture_file {
+    my ($root, $relative) = @_;
+    my $path = File::Spec->catfile($root, split m{/}, $relative);
+    open my $fh, '<:raw', $path or die "cannot read $path: $!";
+    local $/;
+    my $contents = <$fh> // '';
+    close $fh or die "cannot close $path: $!";
+    return $contents;
+}
+
+sub fixture_line_count {
+    my ($contents) = @_;
+    return 0 if $contents eq '';
+    my $lines = ($contents =~ tr/\n//);
+    $lines++ if $contents !~ /\n\z/;
+    return $lines;
 }
 
 sub container {

@@ -58,6 +58,10 @@
   Leaf `.21` now types reader navigation separately from author overflow,
   derives the latter from emitted enforcer hints, closes collection-index
   contracts, and verifies the packet/disposition evidence maps.
+  Leaf `.22` independently verifies migration source, semantic closure,
+  working-set dimensions, and loss residue; binds version objects to bounded
+  owner/guarantee/recovery contracts; and freezes the detailed review packet
+  behind a bounded review front door.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---
@@ -226,6 +230,10 @@ applicable steps:
    record order or identity.
 4. Record source and destination line counts, byte counts, and content digests;
    when exact reconstruction is promised, prove it byte for byte.
+   Report complete-source identity, semantic closure, the live working-set
+   dimensions, and any truly unretained residue as four independent products.
+   Declare whether products overlap; never force disjoint arithmetic onto
+   retained source, semantic extracts, and live navigation views.
 5. Update the bounded current view, manifest, table of contents, predecessor/
    successor links, and query route.
 6. Run link, freshness, ordering, uniqueness, retrieval, and pressure checks;
@@ -251,6 +259,13 @@ at least:
 - the sealing reason, date, and verifier identity; and
 - an executable proof that retrieval reproduces the declared content.
 
+A version object is a conditional retention mechanism, not a self-proving
+archive. Every version-object use must name a bounded retention contract with
+an owner, an explicit reachability/backup guarantee, and an actionable
+recovery procedure for shallow history or rewritten objects. If evidence must
+remain recoverable without that condition, prefer a content-addressed file on
+the repository volume.
+
 Retrieval must not depend on a particular AI agent, editor, or harness. An
 archive descriptor is a controlled terminal, not permission to route new live
 content into an opaque dump.
@@ -271,6 +286,8 @@ At minimum, fail on:
 - a route cycle or a route ending at an uncontrolled neighbor;
 - a stale generated projection or broken current/history link;
 - a mutable sealed/frozen unit or failed archive digest/retrieval proof;
+- a version object without a named retention owner, guarantee, and recovery
+  action, or migration evidence that conflates overlapping products;
 - warning without an owned remediation, rollover-required without the atomic
   transition, actual usage above an inclusive ceiling, or stale debt headroom;
   and

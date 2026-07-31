@@ -10443,5 +10443,7 @@ The first honest `R11` slices are now:
   age heuristic exists. `.21` now preserves distinct author-overflow/reader-
   navigation routes, derives four emitted hints, closes six indexed collection
   contracts and both review evidence maps, and rejects staged-tree divergence.
-  Clean `.21` commit `9c63cf76b` activates `.22` alone for migration identity,
-  retention guarantees, and a bounded review front door.
+  `.22` now proves complete-source identity, all 844 semantic nodes, the live
+  working set, and zero unretained residue as independent overlapping products.
+  Version objects name bounded owner/guarantee/recovery contracts, and a
+  79-line bounded front door routes to the SHA-256-frozen detailed packet.

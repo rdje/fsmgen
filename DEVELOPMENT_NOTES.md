@@ -34479,13 +34479,11 @@ results.
 
 ## VIAL public tooling — name intent, keep compiler seams private (2026-07-31)
 
-The existing `.isf` verification-output command is intentionally not reused
-as the VIAL tool. It has one source and one inert output target; VIAL planning
+The existing `.isf` verification-output command is intentionally not reused as the VIAL tool. It has one source and one inert output target; VIAL planning
 has two independently authoritative inputs. The `.vial` source owns
 verification intent, while `--dut` owns HIAL hardware truth through the direct
-IAL0, direct IAL1, or generated/reparsed IAL1 review route. Making that
-relationship explicit prevents the public surface from collapsing back into a
-target generator or a PPIF shortcut.
+IAL0, direct IAL1, or generated/reparsed IAL1 review route. That explicit
+relationship keeps the public surface from collapsing into a target generator or PPIF shortcut.
 
 Decision `0039` selects `fsmgen vial capabilities|check|format|plan|run` and a
 portable request/result analogue. Neither exposes SemanticIR, the bridge
@@ -34505,3 +34503,5 @@ non-identical trees. `.10.4` executes static meaning under exact Verilator.
 `.11` cannot compare the legacy harness to all ten VIAL streams: that would
 invent evidence. It compares 19 shared public/probe outcomes on identical DUT
 bytes, excludes undeclared internals, and leaves general parity unclaimed.
+
+**Live-document migration rule:** prove source, closure, working set, and loss separately; history needs owned guarantee/recovery.

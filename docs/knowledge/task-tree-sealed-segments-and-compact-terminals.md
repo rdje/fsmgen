@@ -10,6 +10,8 @@ answers:
   - "does PNT need to read archived task-tree history?"
   - "are existing task trees required to migrate to segments?"
   - "where did the completed task-tree index rows go?"
+  - "what retention contract does a task-tree version object require?"
+  - "how is task-tree migration completeness proved?"
 date: 2026-07-31
 status: current
 tags: [task-tree, continuity, containment, jsonl, segment, archive, provenance]
@@ -26,7 +28,7 @@ repository-relative JSONL manifest may address content-named Markdown segments.
 The manifest declares finite record/byte bounds for itself plus independent
 per-segment and aggregate node/line/byte bounds, so sharding cannot merely move
 the pressure. Every segment record carries disjoint completed-subtree roots,
-node count, SHA-256, and the exact source revision/path. The checker requires
+node count, SHA-256, exact source revision/path, and a named retention contract. The checker requires
 the segment filename to equal its digest, proves every node matches its exact-
 source node, requires each named root's full source subtree, then validates one
 combined ID/ancestry/child/status/evidence graph across the live file and
@@ -34,7 +36,7 @@ segments.
 
 A fully completed subtree can instead remain as one compact `version_object`
 terminal. Its exact revision/path, retrieved-file digest, archived-node count,
-goal, verification, and commit reference let the checker reload and validate
+retention contract, goal, verification, and commit reference let the checker reload and validate
 the whole terminal subtree through git. Missing revisions, digest or count
 drift, nonterminal archived nodes, broken child closure, and pending leaf
 evidence all fail closed.
@@ -46,3 +48,10 @@ bounded JSONL version-object manifest seals 540 unique terminal index rows;
 the live 558-line index contains only active/proposed selection plus retrieval
 instructions. The checker reconstructs 882 nodes and proves one segment plus
 one completed-index archive. Completed task files remain directly browsable.
+
+Leaf `.22` adds a separate migration manifest rather than pretending these
+retention products are disjoint line ranges. It retrieves and identifies the
+complete former source, checks all 844 semantic nodes, measures the current
+root/manifest/segment working set, and records any unretained residue. The live
+record declares overlapping products and zero residue; source, count,
+working-set, false-partition, missing-history, and residue fixtures fail closed.
