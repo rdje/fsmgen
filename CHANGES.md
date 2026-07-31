@@ -32294,6 +32294,6 @@ task tree and git.
 - Classified the mdBook without deleting prose or weakening Chapter 14 debt;
   `ISF_SPEC.md` remains a candidate under its existing focused-document owner.
 - Added fail-closed core/Git fixtures and synchronized doctrine, audit, book, fact, and tool guidance.
-### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15 — common JSONL bounds enforced
-
-- Self-bounded common JSONL and maximum-line pressure without widening a ceiling; focused `Files=5, Tests=76` and all doctrines pass.
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15/.16 — bounds enforced; utility audit activated
+- `.15` self-bounds common JSONL and maximum-line pressure; focused `Files=5, Tests=76` and all doctrines pass.
+- `.16` activates only the utility/retirement audit from clean `2e10cc605`; focused `Files=2, Tests=43`, outcomes pending.

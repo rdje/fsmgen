@@ -169,11 +169,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
-  Status: `pending`
+  Status: `active`
   Goal: `Make current utility and deliberate retirement precede size migration.`
   Acceptance: `Define reviewable retain/merge/supersede/archive/delete/re-form outcomes and require one before migration; audit each governed FSMGen document family for current audience, canonical role, unique value, duplication, staleness, consumers, and historical retention; explicitly assess USER_GUIDE.md, the two frozen status files, CHANGES.md, DEVELOPMENT_NOTES.md, ROADMAP_V2.md, generated KNOWLEDGE_MAP.md, ISF_SPEC.md, and focused readiness/contract collections; define role/canonical-input/replacement/consumer-change triggers; require fresh token/ID, classified-consumer, replacement-pointer, and negative-control proof before deletion; assign separate atomic migrations and delete nothing in this audit leaf.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated alone from clean `.15` implementation commit `2e10cc605`. The task/index/roadmap/fact/audit/Memory/changelog continuity update selects only the utility/retirement audit. Paths/task pass Files=2/Tests=43; task integrity remains trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces cover 2,784/2,784 paths; Knowledge Map is 1,096 facts/5,759 keys; Memory is 38 lines; all 37 chapters test and the repository-local 73-file/17,284,414-byte build passes then is removed exactly. Final staged doctrines pass. No utility outcome, consumer classification, replacement pointer, migration, retirement, deletion, checker, registry, threshold, lifecycle, frozen identity, README landing content, mdBook product prose, or product behavior changes.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16: activate utility and retirement audit`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17`
@@ -463,6 +463,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.23` maintained-reference contract | decision 0045; neutral lifecycle/schema/core; Git aggregate authority; mdBook and ISF classification; UTF-8 byte bounds; focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=3/Tests=24; maintained mdBook exact prior 38/47,377/2,511,665 plus delta 0/+35/+2,124; mandatory index 39/1,999/depth 1; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096 facts/5,759 keys; Memory 38 lines; review front door 78 and TOOLBOX 315 lines; all 37 chapters test; removed 73-file/17,020-KiB build; all nine doctrines pass; no unique prose deletion, non-reference limit/frozen/landing/product change |
 | `2026-07-31` | `.15` activation | clean `425cd7fef` predecessor; task/index/roadmap/fact/Memory/audit/changelog sync; focused path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; Files=2/Tests=43; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096 facts/5,759 keys; Memory 38 lines; all 37 chapters test; removed 73-file/17,020-KiB build; `.15` alone active; no checker, registry, schema/value/limit, lifecycle/content, frozen identity, landing content, or product behavior change |
 | `2026-07-31` | `.15` common JSONL bounds | bounded headers/scalars/arrays; six-axis pressure and CRLF semantics; Git authority compatibility; neutral/local docs; syntax/focused/path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; portable 10,000-record/16-MiB/64-KiB hard stops plus tighter local declarations; focused Files=5/Tests=76; paths/locality/task Files=3/Tests=63; 22 surfaces/2,784 paths; exact reference delta 0/+15/+1,041; Knowledge Map 1,096/5,759; Memory 38; all 37 chapters; removed build 73 files/17,284,414 bytes; zero ceiling increases; all doctrines pass; no predecessor threshold, lifecycle, frozen identity, landing content, or product behavior change |
+| `2026-07-31` | `.16` activation | clean `2e10cc605` predecessor; task/index/roadmap/fact/audit/Memory/changelog sync; focused path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=43; trees=3/nodes=896/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096/5,759; Memory 38; all 37 chapters; removed build 73 files/17,284,414 bytes; all doctrines pass; `.16` alone active; no audit outcome, migration, retirement, deletion, checker, registry, threshold, lifecycle/content, frozen identity, landing content, mdBook product prose, or product behavior change |
 
 ## Commit Log
 
@@ -493,6 +494,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.23` maintained-reference contract | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23: enforce maintained-reference contracts` | Bound the mandatory read and every part, authorize exact aggregate change, classify the mdBook, and preserve ISF-spec debt without deleting unique prose. |
 | `.15` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: activate common JSONL bounds` | Activate only common-control-plane inventory and finite schema pressure from clean `.23` commit `425cd7fef`; implementation remains pending. |
 | `.15` common JSONL bounds | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15: enforce common JSONL bounds` | Self-bound every common registry, cap fields/arrays, and add deterministic maximum-content-line-byte pressure without widening a predecessor ceiling. |
+| `.16` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16: activate utility and retirement audit` | Activate only the evidence-backed retain/merge/supersede/archive/delete/re-form audit from clean `.15`; audit remains pending. |
 
 ## Changelog
 
@@ -506,6 +508,9 @@ no routed destination becomes the next uninstrumented blob.
   sixth maximum-content-line-byte pressure axis; all predecessor ceilings,
   document lifecycles, frozen identities, landing content, and product behavior
   remain unchanged, and `.16` is the next clean selection frontier.
+- `2026-07-31`: clean `.15` commit `2e10cc605` activates `.16` alone for the
+  utility/retirement audit; no outcome, migration, retirement, deletion,
+  enforcement, document lifecycle/content, or product behavior changes.
 - `2026-07-31`: Clean commit `18e2dcbc6` activates `.6` alone to extend the
   task-tree schema and checker; no schema, checker, tree topology, threshold,
   document-family content, frozen identity, or product behavior changes in

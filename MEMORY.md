@@ -5,14 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15:
-  enforce common JSONL bounds`).
-- active_work_unit: `.15` is complete; `.16` is the next clean selection.
-- current_state: every common JSONL registry has tighter declared record/file/
-  record-byte bounds beneath portable hard stops; field and array limits plus
-  deterministic maximum-content-line bytes close control-plane displacement.
-- next_action: activate `.16` alone for the project-wide document utility and
-  retirement audit, then commit that clean continuity selection before audit.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16:
+  activate utility and retirement audit`).
+- active_work_unit: `.16` alone is active from clean `.15` commit `2e10cc605`.
+- current_state: `.15` self-bounds common JSONL and maximum-line pressure;
+  `.16` changes no utility outcome, lifecycle, document content, or behavior yet.
+- next_action: inventory each governed family for audience, canonical role,
+  unique value, duplication, staleness, consumers, and retention, then select a
+  reviewable retain/merge/supersede/archive/delete/re-form outcome for each.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
 - blockers: `.8`-`.10`/`.13` wait for utility or

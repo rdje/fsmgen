@@ -194,3 +194,8 @@ per-part debt remains unchanged. The mixed `docs/*.md` collection carries an
 auditable rationale naming `docs/ISF_SPEC.md` as a candidate only; its existing
 debt and ceilings remain until `.13` supplies semantic parts and a complete
 bounded index.
+
+Clean `.15` commit `2e10cc605` activates `.16` alone for the project-wide
+utility/retirement audit. No retain/merge/supersede/archive/delete/re-form
+outcome, lifecycle, migration, retirement, deletion, or product behavior
+changes in activation.

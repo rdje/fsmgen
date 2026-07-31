@@ -10448,4 +10448,4 @@ The first honest `R11` slices are now:
   front door routes to the frozen packet. Decision `0045` and `.23` now bound
   maintained-reference reads/parts plus exact aggregate change. Clean `.23`
   commit `425cd7fef` activated `.15`; completed `.15` now self-bounds common
-  JSONL and maximum-line pressure without widening a ceiling. `.16` is next.
+  JSONL/maximum-line pressure; clean `2e10cc605` activates `.16`'s utility audit.
