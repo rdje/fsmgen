@@ -542,8 +542,10 @@ family uses equivalent normal/terse projections, separate VIAL/HIAL inputs,
 portable source-catalog/artifact-sink requests, repository-local atomic output,
 and explicit manifest-v1/v2 compatibility. No command/API/parser widening,
 plan/result file, generated backend artifact, compile, simulation, runtime,
-parity pass, or target-methodology behavior is shipped by selection. Proposed
-`.9` is next for a separate clean backend-contract activation.
+parity pass, or target-methodology behavior is shipped by selection. Clean
+`.8` selection commit `d34da3254` now activates `.9` alone for separate
+plain-SystemVerilog/Verilator backend-contract selection; the contract itself
+and every product behavior remain unchanged by activation.
 
 ## Rollback
 

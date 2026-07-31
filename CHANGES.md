@@ -31759,3 +31759,16 @@ task tree and git.
   proposed `.9` next for separate clean activation of the first plain-SV/
   Verilator backend contract. Parser, CLI/API, files, backend/runtime, and
   product behavior remain unchanged.
+
+### HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9 — portable SV backend contract activated
+
+- Activated only documentation selection of the plain-SystemVerilog
+  `sv_portable_verilator` backend and runtime-library contract after clean `.8`
+  selection commit `d34da3254`.
+- The backend contract itself remains unselected. No parser, command/API/file,
+  generated SystemVerilog, runtime library, Verilator invocation, compile,
+  elaboration, simulation, result, parity, capability/support claim, or
+  product behavior changes during activation.
+- Final task-tree, docs, mdBook, Knowledge Map, Memory, staged docs-only
+  acceptance, doctrine, and cleanup evidence is recorded in the owning task
+  tree. No separate development note is warranted for this continuity slice.

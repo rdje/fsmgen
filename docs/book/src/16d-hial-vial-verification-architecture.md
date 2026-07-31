@@ -785,7 +785,8 @@ implementation commit `44dbecd1a` activates `.8` continuity-only for public
 tooling-contract selection. Decision `0039` now freezes `fsmgen vial`, exact
 normal/terse equivalence, separate VIAL/HIAL inputs, the portable API,
 repository-local atomic artifacts, manifests, discovery, diagnostics, and
-compatibility. Proposed `.9` is next for a separate clean backend-contract
-activation. No parser widening, command/API, plan or result file, target
-artifact, compile, simulation, runtime, parity pass, or backend behavior is
-shipped by `.8` selection.
+compatibility. Clean `.8` selection commit `d34da3254` activates `.9` alone
+for the separate plain-SystemVerilog/Verilator backend-contract selection;
+the contract remains unselected. No parser widening, command/API, plan or
+result file, target artifact, compile, simulation, runtime, parity pass, or
+backend behavior is shipped by `.8` selection.

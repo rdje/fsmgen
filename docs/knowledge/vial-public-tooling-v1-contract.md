@@ -18,7 +18,7 @@ date: 2026-07-31
 status: current
 tags: [vial, public-tooling, cli, api, terse, normal-form, artifacts, manifests, data-locality, compatibility]
 evidence: docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md; ROADMAP_V2.md
-reverify: rg -n 'fsmgen vial|normal_v1|terse_v1|fsmgen.vial_tool_request.v1|fsmgen.vial_tool_result.v1|full-plan-sha256|fsmgen.verification_output_manifest.v2|proposed `.9`' docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+reverify: rg -n 'fsmgen vial|normal_v1|terse_v1|fsmgen.vial_tool_request.v1|fsmgen.vial_tool_result.v1|full-plan-sha256|fsmgen.verification_output_manifest.v2|active `.9`' docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
 Decision `0039` selects `fsmgen vial capabilities|check|format|plan|run` as the
@@ -44,6 +44,6 @@ Existing `.isf` verification-output-manifest v1 skeleton output remains
 unchanged. Future VIAL `run` uses explicit
 `fsmgen.verification_output_manifest.v2`; consumers select by schema, not
 filename. Selection ships no parser widening, command, API, file, backend, or
-runtime. Proposed `.9` is next for clean activation of the first plain-
-SystemVerilog/Verilator backend contract; `.10` is the first implementation
-owner.
+runtime. Clean `.8` selection commit `d34da3254` activates `.9` alone for the
+first plain-SystemVerilog/Verilator backend-contract selection; the contract
+remains unselected, and `.10` is the first implementation owner.

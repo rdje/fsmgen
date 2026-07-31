@@ -6,18 +6,18 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit
-  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8: select public VIAL tooling contract`).
+  (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9: activate portable SV backend contract`).
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.8` is
-  complete as contract selection and proposed `.9` is next.
+  complete as contract selection and `.9` is active continuity-only.
 - current_state: decision `0039` selects `fsmgen vial`, equivalent normal/
   terse projections, separate VIAL/HIAL inputs, portable request/result hosts,
   atomic repository-local artifacts, and manifest compatibility. It ships no
   command, parser widening, file, backend, or runtime.
-- next_action: after this clean selection commit, activate `.9` continuity-only
-  for the exact `sv_portable_verilator` backend/runtime-library contract.
+- next_action: select the exact `sv_portable_verilator` backend/runtime-library
+  contract in active `.9`, without implementation.
 - in_flight_uncommitted: none after this commit; no background job and
   repository-local mdBook output is removed exactly.
-- blockers: none for `.8`. Proposed `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-
+- blockers: none for `.9`. Proposed `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-
   PRESENCE-MAP-SYNC.1` separately owns pre-existing t370 discovery-map drift.
 
 ## Durable context
@@ -40,7 +40,7 @@ history; this file carries only the current bounded resume state.
   bridge, deterministic logical-time execution, and directional type proofs.
 - Decision `0039` owns public VIAL source views, command/API, HIAL input route,
   artifact/report/discovery/diagnostic/compatibility boundaries; `.10` is the
-  first implementation owner after `.9` selects the backend contract.
+  first implementation owner after active `.9` selects the backend contract.
 - Decision `0038` owns README policy authority, template independence,
   duplicate proof, derived 275-line/12,288-byte caps, and unconditional guard.
 - Decisions `0025` freezes legacy status files. Push only on explicit request

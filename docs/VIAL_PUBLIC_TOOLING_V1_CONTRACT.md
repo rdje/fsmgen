@@ -2,8 +2,8 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8`
-Status: selected; first implementation remains owned by `.10` after `.9`
-selects the plain-SystemVerilog/Verilator backend contract
+Status: selected; active `.9` now owns plain-SystemVerilog/Verilator backend-
+contract selection, and first implementation remains owned by `.10`
 Decision: `0039`
 
 ## Outcome
@@ -18,11 +18,11 @@ fsmgen vial plan --dut HIAL_SOURCE SOURCE.vial
 fsmgen vial run --dut HIAL_SOURCE --backend BACKEND_PROFILE SOURCE.vial
 ```
 
-The first implemented runtime profile will remain separately owned by `.9`
-and `.10`. This selector freezes the public syntax, request/result API,
-source-style equivalence, path/artifact/report schemas, capability discovery,
-diagnostics, support accounting, compatibility, and atomicity rules before a
-backend exists.
+The first runtime-profile contract and implementation remain separately owned
+by active `.9` and proposed `.10`. This selector freezes the public syntax,
+request/result API, source-style equivalence, path/artifact/report schemas,
+capability discovery, diagnostics, support accounting, compatibility, and
+atomicity rules before a backend exists.
 
 The public boundary is intent-oriented. A VIAL author names a fixture,
 scenario, DUT source, and requested backend profile; the compiler owns HIAL
@@ -473,10 +473,10 @@ a downgraded pass.
   authoring language is introduced.
 - Plan mode publishes sanitized bridge/plan files, not public constructors or
   raw IR.
-- No backend is selected here. `.9` selects
-  `sv_portable_verilator`; `.10` is the first possible implementation of this
-  tooling contract plus that backend and result producer. `.11` owns runtime
-  parity against the handwritten AHB oracle.
+- No backend is selected here. Active `.9` selects
+  `sv_portable_verilator`; proposed `.10` is the first possible implementation
+  of this tooling contract plus that backend and result producer. `.11` owns
+  runtime parity against the handwritten AHB oracle.
 - Factories, phases, objections, UVM component classes, VHDL process plumbing,
   target hierarchy, callbacks, and host-language escape hatches remain backend
   implementation details unless a later typed VIAL semantic owner selects an

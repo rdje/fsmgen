@@ -91,6 +91,7 @@ public API. Completed `.8` now accepts decision `0039` and the exact public-
 tooling contract: `fsmgen vial`, equivalent normal/terse source projections,
 separate VIAL/HIAL inputs, a portable source-catalog/artifact-sink API, atomic
 repository-local artifacts, and explicit manifest compatibility. No command,
-API, parser widening, file, backend, or runtime ships in selection. Proposed
-`.9` is next for clean plain-SystemVerilog/Verilator backend-contract
-activation; `.10` remains the first implementation owner.
+API, parser widening, file, backend, or runtime ships in selection. Clean `.8`
+selection commit `d34da3254` activates `.9` alone for the plain-SystemVerilog/
+Verilator backend-contract selection; the contract remains unselected, and
+`.10` remains the first implementation owner.
