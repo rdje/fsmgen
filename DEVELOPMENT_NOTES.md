@@ -38,3 +38,19 @@ semantic homes; within each range, original order and bytes remain unchanged.
 The landing page retains the established backend deep-link as a compatibility
 route. This keeps future edits discoverable by subject instead of reviving a
 single chronological monolith.
+## 2026-08-01: The roadmap archives the whole activation object, not only its chronology suffix
+
+The bounded roadmap rewrites strategic material as well as removing the
+9,354-line `Current intent` chronology, so its durable proof names the complete
+10,451-line activation object. This avoids pretending that paraphrased
+workstream and horizon prose is byte-preserved. One exact Git descriptor covers
+every original line, while a six-range disposition states which ideas remain
+live and which roles now route to task trees, the mdBook, decisions, and Git.
+
+The live view keeps product objective, principles, `R8`–`R14` direction,
+dependencies, concise milestone outcomes, current-state routing, and
+`H1`–`H6` horizon intent in 317 lines. Derived 640-line / 64-KiB / 512-byte-line
+bounds leave deliberate growth room without restoring the former transition
+ceiling. An executed verifier binds the descriptor to exact history and rejects
+missing strategic sections, missing canonical routes, pressure regression, or
+a revived `Current intent` chronology sink.

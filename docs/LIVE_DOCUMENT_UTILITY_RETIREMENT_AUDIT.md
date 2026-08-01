@@ -113,7 +113,7 @@ exists.
 | `ancillary_documents` | Harnesses and maintainers; compact bootstrap/workflow/audit entry points | 10 files / 1,229 lines; normal and query-indexed | `retain` | `.13` periodic classification |
 | `shipped_behavior` | Users/authors; canonical product explanation and examples | Unique maintained prose, bounded SUMMARY and parts; Chapter 14 is the per-part outlier | `retain` family; `re-form` Chapter 14 | `.8` |
 | `reported_capabilities` | Tools and users; generated capability query | Executable terminal rather than authored history | `retain` | capability contract tests |
-| `high_level_direction` | Director and maintainers; current/future roadmap | 10,451 lines; shipped chronology obscures current direction | `re-form` | `.9` |
+| `high_level_direction` | Director and maintainers; current/future roadmap | `.9` reduces the 10,451-line activation source to a 317-line strategic view; exact chronology remains descriptor-backed | `re-form` complete | `.9` |
 | `active_resume` | Next session; bounded current resume pointer | 38 lines / 2,278 bytes, overwrite-only, no required history | `retain` | memory architecture |
 | `active_index` | PNT and maintainers; active/proposed task selection | 560 lines; migrated, currency-checked, and normal | `retain` | `.7` |
 | `task_evidence` | Maintainers/auditors; canonical work/evidence graph | 568 files; current root plus exact bounded segment/history contracts | `retain` | `.7` and task workflow |
@@ -343,7 +343,7 @@ generated aggregate change.
 | --- | --- |
 | `.3`-.5 | Consume the separately selected ledger roles; migrate only retained ledgers. |
 | `.8` | Re-form Chapter 14 into stable user-facing topics. |
-| `.9` | Re-form live roadmap direction and separately retain proved chronology. |
+| `.9` | Complete: retain a 317-line strategic roadmap and verify exact recovery of the 10,451-line activation object. |
 | `.10` | Re-form oversized cards and the generated map while keeping facts canonical. |
 | `.11` | Execute only the separately selected frozen-status decision. |
 | `.13` | Re-form/index focused evidence and `docs/ISF_SPEC.md`; retire only per-file proved duplicates. |

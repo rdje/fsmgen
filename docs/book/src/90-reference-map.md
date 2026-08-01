@@ -300,8 +300,12 @@ into a compliant maintained reference.
 
 The roadmap has a different role: it is a bounded current-direction snapshot,
 not shipped-behavior reference or exact chronology. Clean commit `dc1c64afb`
-fixes the exact 10,451-line activation source and activates `.9` alone while
-its current/future, concise-milestone, and historical boundaries are proved.
+fixes the exact 10,451-line activation source. Leaf `.9` retains product
+objective, principles, `R8`–`R14` strategy, dependency policy, concise
+milestone outcomes, and `H1`–`H6` intent in a 317-line live view. The complete
+source remains digest-checked through descriptor
+`roadmap-v2-pre-containment-2026-08-01`; active state routes to Memory and task
+trees, shipped behavior to this book, and exact chronology to Git.
 
 Leaf `.15` closes the neighboring control-plane gap. Each common JSONL
 registry has a schema-versioned metadata record declaring positive maximum

@@ -244,7 +244,10 @@ hold and address later entries; the executed adapter rejects drift. Clean
 activation commit `b88b37323` fixes Chapter 14's source, and completed `.8`
 partitions it exactly once by stable user-facing topic. Clean `.8` commit
 `dc1c64afb` activates `.9` alone and fixes the exact 10,451-line roadmap
-activation source before direction/chronology classification.
+activation source before direction/chronology classification. Completed `.9`
+retains strategy, dependencies, concise outcomes, and horizons in a 317-line /
+14,606-byte live view. Descriptor `roadmap-v2-pre-containment-2026-08-01` and
+its executed adapter preserve and verify the complete original object.
 
 Leaf `.11` independently retires the former achievement journal under decision
 `0048`, exact version retrieval, and live-path/consumer absence enforcement.

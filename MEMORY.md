@@ -6,15 +6,14 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9:
-  activate roadmap/chronology separation`).
-- active_work_unit: `.9` alone is active from clean `.8` commit `dc1c64afb`.
-- current_state: clean `dc1c64afb` fixes the exact 10,451-line / 772,074-byte
-  activation source at SHA-256 `6c7e00fe...`; only its bounded final frontier
-  sentence changes for activation. Direction, history, topology, and behavior
-  remain unchanged.
-- next_action: classify the activation-source roadmap into retained current/
-  future direction, concise milestone outcomes, and duplicate chronology;
-  prove every historical disposition before changing `ROADMAP_V2.md`.
+  bound roadmap and retain chronology`).
+- active_work_unit: `.9` is complete from activation commit `c44c5b20a`; `.10`
+  is the next clean selection.
+- current_state: the live roadmap is a 317-line / 14,606-byte strategic view.
+  Descriptor `roadmap-v2-pre-containment-2026-08-01` and its executed verifier
+  preserve the exact 10,451-line activation object under required Git history.
+- next_action: from this clean commit, activate `.10` alone to bound canonical
+  knowledge cards and shard the generated Knowledge Map for query-first use.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: none for `.9`; `.26` retains the deferred inventory.
@@ -39,4 +38,4 @@ history; this file carries only the current bounded resume state.
   `.11` retires the former achievement and roadmap-status views under decisions
   `0048`/`0049`. Push only on request (`0005`); PNT runs autonomously (`0003`).
   `.5` bounds the rationale ledger; `.8` completes the Chapter 14 partition;
-  clean `dc1c64afb` activates `.9` alone.
+  `.9` bounds strategic direction and preserves exact chronology.
