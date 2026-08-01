@@ -5,21 +5,20 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1:
-  select bounded project-document lifecycles`).
-- active_work_unit: the four-document policy review is complete; no
-  containment implementation leaf is active in this commit.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3:
+  activate retained-ledger schema`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3` is active for
+  the common retained-ledger, sealed-range, and archive-descriptor schema.
 - current_state: decision `0046` retains bounded `CHANGES.md` and conditional
   `DEVELOPMENT_NOTES.md` ledgers, and selects exact archival plus live-path
   retirement for both frozen status files. Decision `0025` remains the
   operational transition rule until migration.
-- next_action: from the clean audit commit, activate
-  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3` alone to prove the common
-  retained-ledger, sealed-range, and archive-descriptor schema without
-  migrating a reviewed document.
+- next_action: implement and prove `.3`'s neutral schema, core validation, and
+  fail-closed fixtures without migrating `CHANGES.md`, `DEVELOPMENT_NOTES.md`,
+  or either frozen status file.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for `.3`; `.4`, `.5`, and `.11` await its common schema.
+- blockers: none for active `.3`; `.4`, `.5`, and `.11` await its schema.
 
 ## Durable context
 

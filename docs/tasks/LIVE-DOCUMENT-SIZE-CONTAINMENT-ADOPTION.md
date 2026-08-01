@@ -26,8 +26,8 @@ no routed destination becomes the next uninstrumented blob.
 - Do not remove live historical bytes until their canonical duplicate or exact
   archive retrieval has been proved.
 - Do not change compiler, runtime, HDL, VIAL, or other product behavior.
-- Do not pre-empt the frozen status-file lifecycle review owned by
-  `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`.
+- Do not migrate a retained ledger or frozen status file outside its selected
+  `.4`, `.5`, or `.11` owner.
 
 ## Acceptance Criteria
 
@@ -68,11 +68,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2: enforce live-document containment`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Consume the four-file lifecycle review and prove the selected rolling-ledger, sealed-segment, and archive-descriptor schema for any retained live ledgers.`
   Acceptance: `Implement decision 0046's common schema for the retained CHANGES and conditional DEVELOPMENT_NOTES ledgers: partition only at whole-entry boundaries, preserve order and identity, use bounded current/index views, record range/revision/line/byte/digest/retrieval metadata, prove exact reconstruction, define aggregate archive transition, and introduce no ledger or frozen-status-file migration yet.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean decision-0046 audit commit b443957c1a activates only the common retained-ledger/sealed-range/archive-descriptor schema leaf. No schema, checker, registry, test, migration, reviewed-document topology, frozen identity, threshold, generated artifact, or product behavior changes in this continuity slice.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3: activate retained-ledger schema`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4`
   Status: `pending`
@@ -373,6 +373,10 @@ no routed destination becomes the next uninstrumented blob.
   rationale ledgers. It supersedes both frozen status files as current views,
   requires distinct exact archive retrieval before retiring their live paths,
   and makes `.3` the next clean selection. No migration occurs in the audit.
+- `2026-08-01`: From clean audit commit `b443957c1a`, activate `.3` alone to
+  implement the common retained-ledger, sealed-range, reconstruction, and
+  archive-descriptor schema. No reviewed document or enforcement changes in
+  the activation slice.
 
 ## Open Questions
 
@@ -389,10 +393,9 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None for `.3`: decision `0046` supplies the required lifecycle selection.
-  After the policy audit commits cleanly, activate schema `.3` alone. Ledger
-  migrations `.4`/`.5` and frozen-status migration `.11` remain blocked by
-  that schema; `.12` remains the final post-migration calibration.
+- None for active `.3`: decision `0046` supplies the lifecycle selection.
+  Ledger migrations `.4`/`.5` and frozen-status migration `.11` remain blocked
+  by this schema; `.12` remains the final post-migration calibration.
 
 ## Acceptance Checklist (enforced) — `.16` utility/retirement audit
 
@@ -544,6 +547,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.24` guide-waypoint supersession | two exact source identities; 212/8 and 392/39 token/residue sweeps; 19/7 classified consumers; planted orphan and consumer controls; Git recovery; manifest/source/test/README/book/roadmap/audit sync; focused/path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; manifest Files=5/Tests=22; live-document Files=3/Tests=27; zero unresolved and one planted consumer per candidate; paths Files=1/Tests=2; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,783 paths; focused collection 1,003 files/211,931 lines/9,376,208 bytes; reference delta 0/-2/-150 to 38/47,418/2,514,423; README 245/9,921; Knowledge Map 1,096/5,759; Memory 37; all 37 chapters; removed build 73 files/17,282,858 bytes; staged acceptance root=git_history/no-regression=prove_summary; all doctrines pass; both exact historical objects recoverable |
 | `2026-07-31` | `.25` activation | clean `984448936` predecessor; task/index/roadmap/audit/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,783 paths; Knowledge Map 1,096/5,759; Memory 36; all 37 chapters; removed build 73 files/17,282,858 bytes; all doctrines pass; `.25` alone active; WARP remains exact 183 lines/6,878 bytes and bootstrap enforcement is unchanged |
 | `2026-07-31` | `.25` WARP retirement | exact source identity/recovery; 287-token/53-residue sweep; planted orphan and consumer; five-consumer classification; bootstrap absence positive/negative controls; focused/path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 183/6,878/SHA-256 3b2b47e9...; planted residue 54; unresolved consumers 0/1 planted; focused Files=3/Tests=64; paths Files=1/Tests=2; locality passes; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,782 paths; Knowledge Map 1,096/5,759; Memory 37; all 37 book chapters test; removed build 73 files/17,282,858 bytes; zero ceiling increases; no remaining bootstrap, landing, product documentation, ceiling, frozen identity, or product behavior change |
+| `2026-08-01` | `.3` activation | clean `b443957c1a` predecessor; task/index/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/diff/staged-doctrine gates | `passed`; trees=3/nodes=898/segments=1/index archives=1/migrations=1; 22 surfaces and 2,784 document paths; Knowledge Map 1,096/5,760; Memory 40 lines; CHANGES held at 32,299 lines; all nine staged doctrines pass with docs-only acceptance; `.3` alone active; no schema, checker, registry, test, migration, reviewed-document topology, frozen identity, threshold, generated artifact, or product behavior change |
 
 ## Commit Log
 
@@ -551,6 +555,7 @@ no routed destination becomes the next uninstrumented blob.
 | --- | --- | --- |
 | `.1` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1: activate common enforcement` | Activate `.2` from the clean doctrine-selection commit without implementing it. |
 | `.2` common enforcement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2: enforce live-document containment` | Ship neutral JSONL checker contract/core plus FSMGen data and unconditional ninth-doctrine coverage; next clean selection is `.6`. |
+| `.3` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3: activate retained-ledger schema` | Activate only the decision-0046 common schema from clean audit commit `b443957c1a`; implementation remains pending. |
 | `.6` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: activate task-tree schema contract` | Activate only the sealed-segment/compact-terminal schema frontier from clean commit `18e2dcbc6`; implementation remains pending. |
 | `.6` bounded task history | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: enforce bounded task-tree history` | Ship decision 0042's optional bounded exact-provenance storage forms and checker proofs without migrating an existing tree; `.7` is next. |
 | `.7` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: activate task-tree migration` | Activate only the first IAL2/task/index migration from clean commit `78adb81ae`; migration remains pending. |
