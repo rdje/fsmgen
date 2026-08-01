@@ -51,7 +51,7 @@ no routed destination becomes the next uninstrumented blob.
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`
   Status: `active`
   Goal: `Bound all live document families over durable, addressable storage.`
-  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25`
+  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1`
   Status: `done`
@@ -75,11 +75,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3: enforce bounded retained-ledger history`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4`
-  Status: `active`
-  Goal: `Migrate CHANGES.md to the bounded rolling-ledger topology.`
-  Acceptance: `Execute only the lifecycle selected by PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 and schema proved by .3; if retained as a ledger, every historical entry is accounted for exactly once, the root current/index view is below its derived warning budget, sealed ranges and version-archive descriptors pass order/digest/retrieval proofs, and the selected append/user-facing workflow remains accurate.`
-  Verification: `Clean schema commit e47b509c9 activates only the CHANGES.md whole-entry migration. No changelog entry moves, no ledger manifest opts in, and no index, seal, archive descriptor, registry, checker, test, threshold, frozen identity, generated artifact, or product behavior changes in this continuity slice.`
-  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4: activate changelog migration`
+  Status: `pending`
+  Goal: `Reassess whether historical CHANGES.md still provides unique current value, then implement only the director-selected lifecycle.`
+  Acceptance: `Do not presume retention from decision 0046 after the director's 2026-08-01 deferral. First compare the current reader question and unique value against task trees, Git, the mdBook, and bounded live status; select retain, supersede/archive, or another explicit outcome with the director. If retained, every historical entry must be accounted for exactly once, the current/index view must stay below its derived warning budget, sealed/version ranges must pass order/digest/retrieval proof, and a post-cutover append must pass without rewriting the immutable migration source. If superseded, prove consumers, unique-content disposition, deterministic exact retrieval, and planted negative controls before retiring the live path.`
+  Verification: `Clean schema commit e47b509c9 and activation commit 241d249a5 moved no changelog entry and opted in no manifest. Before implementation, the director observed that the 32,299-line file may be purely historical and explicitly deferred deciding its value. Source inspection also found that .3's exact complete-source comparison has no post-cutover append case: an unchanged source descriptor cannot equal a reconstructed ledger after its next required entry. Both questions remain open; no content, lifecycle, schema, enforcement, or product change is selected here.`
+  Commit: `pending; activation is 241d249a5 and implementation is director-deferred`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5`
   Status: `pending`
@@ -140,7 +140,7 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `Every registered surface is remeasured; all live roots and parts are below warning; aggregate transitions and retrieval/reconstruction probes pass; temporary legacy headroom is reduced through a reviewed local registry update; doctrine/book/fact/task/roadmap/Memory agree; no artifact residue remains.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13`
   Status: `pending`
@@ -243,6 +243,14 @@ no routed destination becomes the next uninstrumented blob.
   Verification: `Activation commit f02da976f fixes WARP at 183 lines/6,878 bytes/SHA-256 3b2b47e9.... After the director confirmed warp.dev is unused, a fresh 287-token sweep enumerates 53 non-fact residues and a planted orphan produces 54 exactly. The exact activation tree has five referring files: two factual ledgers, two proof records, and the bootstrap checker; there is no content or active harness consumer. Removing the obsolete checker requirement yields zero unresolved consumers, while a planted consumer yields one. WARP is deleted, exact git-show recovery passes, the bootstrap checker enforces absence, its planted-file control fails, and all remaining authority-marker checks pass. Final focused, path/locality, live-size, task, Knowledge Map, Memory, mdBook, staged-acceptance, doctrine, and cleanup evidence is recorded below.`
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25: retire unused WARP bootstrap`
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
+
+- ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26`
+  Status: `pending`
+  Goal: `Inventory and reassess agent-era Markdown continuity documents whose original crash/restart role may now be superseded by the durable memory architecture.`
+  Acceptance: `Do not infer candidates from age, size, or filename alone. Establish provenance and an explicit candidate inventory; for each document, identify its present reader question, unique accurate content, live code/test/script/doc/registry consumers, canonical overlap with MEMORY.md/task trees/decisions/facts/mdBook/Git, and exact recovery requirement. Propose retain, merge, supersede, archive, delete, or re-form independently; require director selection before any lifecycle change; and apply .16's exact identity, residue, consumer, replacement, planted-negative, retention, and resulting-tree proof to every selected removal.`
+  Verification: `pending; the director supplied origin context on 2026-08-01 but intentionally named no exhaustive candidate set and selected no lifecycle.`
+  Commit: `pending`
+  Blocked by: `director review; do not activate during the current deferral`
 
 ## Decisions
 
@@ -383,9 +391,28 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-08-01`: From clean schema commit `e47b509c9`, activate `.4` alone for
   the bounded `CHANGES.md` whole-entry migration. The activation leaves every
   changelog byte at its existing path and does not opt in a ledger manifest.
+- `2026-08-01`: Before migration, the director questions whether the historical
+  32,299-line changelog retains any current value and defers the lifecycle
+  decision. `.4` returns to pending; retain and supersede/archive remain open.
+- `2026-08-01`: Pre-migration source/test inspection also finds that `.3` proves
+  only a static complete source. A retained design must anchor the immutable
+  cutover prefix separately so the next valid append does not fail exact
+  reconstruction. No schema correction is selected while lifecycle is open.
+- `2026-08-01`: The director explains that `CHANGES.md` is one of several
+  Markdown files created early in agent-assisted development to survive
+  session crash/loss/restart before the current continuity architecture.
+  Pending `.26` owns an evidence-first inventory and per-file value review;
+  no candidate list or retain/removal outcome is inferred from this context.
 
 ## Open Questions
 
+- Which Markdown files were created primarily as early agent-session continuity
+  aids, and what present reader question—if any—does each answer better than
+  Memory, task trees, decisions, facts, Git, and maintained user documentation?
+  `.26` must establish the candidate set before asking for lifecycle choices.
+- If retention is selected, should `.3` gain an explicit immutable source-entry
+  anchor? Its current full-source equality has no post-cutover append fixture
+  and would reject the first newly appended entry unless the source moved too.
 - None for completed `.15`-`.23`. The rereferenced PGEN/ANVIL files exactly
   match the reviews already reconciled in the bounded disposition. The
   existing four-file review retains authority for its named semantic roles.
@@ -399,9 +426,17 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None for active `.4`: decision `0046` selects the retained changelog
-  lifecycle and completed `.3` supplies its executable schema. `.5` and `.11`
-  remain later migrations; `.12` remains the final post-migration calibration.
+- `.4` is director-deferred before any migration: decision `0046` records the
+  earlier retained-ledger selection, but the file's present value is reopened.
+  If retention wins, the static-source append flaw must be corrected and proved
+  first. Pending `.26` owns the broader legacy-continuity inventory. Do not
+  activate `.5` or `.11` as a substitute for either deferred review.
+
+## Acceptance Checklist (enforced) — `.4`/`.26` director deferral
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the director identifies `CHANGES.md` as one of several Markdown files created early in agent-assisted development for crash/loss/restart continuity, before the current Memory/task/decision/fact/Git architecture, and explicitly questions present value rather than selecting retention. The clean activation tree fixes CHANGES at 32,299 lines without migration. `git log -S'source_descriptor_id' --oneline -- live-document-size/scripts/check_live_document_size.pl` and the matching `complete-source` pickaxe both identify `.3` commit `e47b509c9`; source/fixture inspection shows that it compares reconstruction with one unchanged complete source but never appends a post-cutover entry, so retention cannot yet claim a durable rolling append workflow.
+- [x] **ADDRESSED (verified)** — BEFORE → AFTER: `.4` was activated under a presumed retained-ledger outcome; it is now pending without moved content, while pending `.26` requires a provenance-derived candidate inventory, current-reader/unique-content/consumer/overlap/recovery evidence, independent outcomes, and director selection before lifecycle change. Roadmap, audit, mdBook, fact, task/index, Memory, and the line-neutral changelog state the deferral without guessing candidates. The focused path/task/live/reference/ceiling cluster reports `All tests successful` at `Files=6, Tests=80`; the real wrapper validates 22 surfaces and all 2,784 paths with exact maintained-reference delta 0/0/-8.
+- [x] **NO REGRESSION** — the focused cluster reports `All tests successful` at `Files=6, Tests=80`. `CHANGES.md` remains one 32,299-line file; `doctrine/live_document_size/ledger_manifests.jsonl` retains only its empty-registry header; no archive descriptor, threshold, frozen file, compiler/runtime/generated artifact, or product behavior changes. Knowledge Map passes at 1,096 facts/5,761 keys; Memory is 39 lines; all 37 mdBook chapters and the removed 73-file/17,286,533-byte repository-local build pass. Final staged acceptance/doctrine evidence is recorded below.
 
 ## Acceptance Checklist (enforced) — `.3` retained-ledger schema
 
@@ -562,6 +597,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.3` activation | clean `b443957c1a` predecessor; task/index/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/diff/staged-doctrine gates | `passed`; trees=3/nodes=898/segments=1/index archives=1/migrations=1; 22 surfaces and 2,784 document paths; Knowledge Map 1,096/5,760; Memory 40 lines; CHANGES held at 32,299 lines; all nine staged doctrines pass with docs-only acceptance; `.3` alone active; no schema, checker, registry, test, migration, reviewed-document topology, frozen identity, threshold, generated artifact, or product behavior change |
 | `2026-08-01` | `.3` retained-ledger schema | finite empty/opt-in ledger registry; whole-entry current/sealed/archive ranges; exact source reconstruction; wrapper/adapter/resulting-tree/bootstrap wiring; syntax/focused/authority/live-size/task/path/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=25 and authority cluster Files=4/Tests=37; trees=3/nodes=898/segments=1/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096/5,761; Memory 39; all 37 chapters; removed build 73 files/17,285,553 bytes; zero ceiling increases; all nine doctrines pass; default RAM guard stopped pre-test on the tracked macOS metric while the documented one-run override retained the 4,096-MiB descendant cap with 82% system-free evidence; no ledger/status migration, frozen/ceiling/landing/product change |
 | `2026-08-01` | `.4` activation | clean `e47b509c9` predecessor; task/index/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; focused paths/task/routes Files=3/Tests=52 and ledger-doctrine Files=1/Tests=16; trees=3/nodes=898/segments=1/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096/5,761; Memory 39; CHANGES held at 32,299 lines; all 37 chapters and removed build 73 files/17,285,553 bytes; all nine staged doctrines pass with docs-only acceptance; `.4` alone active; no changelog movement, ledger opt-in, index/seal/archive, enforcement, threshold, frozen identity, generated artifact, or product behavior change |
+| `2026-08-01` | `.4`/`.26` director deferral | director questions changelog value and identifies a broader agent-era continuity-document cohort; static-source/post-cutover-append root-cause inspection; deferred inventory task; roadmap/audit/book/fact/task/index/Memory/changelog sync; focused/live-size/Knowledge Map/Memory/mdBook/staged-doctrine gates; exact cleanup | `passed`; focused Files=6/Tests=80; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 22 surfaces/2,784 paths; maintained reference exact delta 0 files/0 lines/-8 bytes to 38/47,426/2,515,044; Knowledge Map 1,096/5,761; Memory 39; CHANGES held at 32,299 lines; all 37 chapters and removed build 73 files/17,286,533 bytes; staged acceptance root=git_history/no-regression=prove_summary and all nine doctrines pass; no candidate set inferred and no changelog movement, ledger opt-in, lifecycle selection, ceiling increase, frozen identity, schema/enforcement, or product behavior change |
 
 ## Commit Log
 
@@ -572,6 +608,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.3` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3: activate retained-ledger schema` | Activate only the decision-0046 common schema from clean audit commit `b443957c1a`; implementation remains pending. |
 | `.3` retained-ledger schema | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3: enforce bounded retained-ledger history` | Ship the finite opt-in whole-entry/current-index/reconstruction/archive-transition contract without migrating either selected ledger; `.4` is next. |
 | `.4` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4: activate changelog migration` | Activate only the bounded CHANGES.md whole-entry migration from clean schema commit `e47b509c9`; content movement remains pending. |
+| `.4` director deferral | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4: defer changelog lifecycle decision` | Reopen present value before migration and preserve the append-anchor flaw for a later retain-versus-supersede decision; no lifecycle is selected. |
 | `.6` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: activate task-tree schema contract` | Activate only the sealed-segment/compact-terminal schema frontier from clean commit `18e2dcbc6`; implementation remains pending. |
 | `.6` bounded task history | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: enforce bounded task-tree history` | Ship decision 0042's optional bounded exact-provenance storage forms and checker proofs without migrating an existing tree; `.7` is next. |
 | `.7` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: activate task-tree migration` | Activate only the first IAL2/task/index migration from clean commit `78adb81ae`; migration remains pending. |

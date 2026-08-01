@@ -225,10 +225,10 @@ orphan/workflow proof selects deletion rather than a compact compatibility
 pointer. The local bootstrap checker enforces absence while preserving all
 remaining tool-neutral bootstrap checks and exact Git recovery.
 
-Decision `0046` and completed containment leaf `.3` define the retained-ledger
-contract without migrating a project ledger. Each opt-in manifest binds a
-bounded current file and index to append-only contiguous whole-entry ranges,
-range and endpoint identities, an exact complete-source descriptor, and
-byte-for-byte entry reconstruction. Content-addressed sealed ranges have
-finite live file/line/byte limits; older ranges must cross a matching verified
-archive descriptor. `.4` and `.5` separately own the two real migrations.
+Decision `0046` selected two ledgers; completed `.3` defines bounded current,
+index, whole-entry, reconstruction, seal, and archive-transition controls
+without migration. Before `.4` moved content, the director reopened whether
+`CHANGES.md` and analogous early agent-era crash/restart documents retain
+present value. Pending `.26` must inventory them by provenance and current
+reader value before any outcome. If CHANGES is retained, post-cutover append
+anchoring must be corrected and proved; no lifecycle is presently inferred.

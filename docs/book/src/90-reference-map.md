@@ -61,11 +61,11 @@ retains `CHANGES.md` as a per-completed-slice bounded ledger and
 `DEVELOPMENT_NOTES.md` as a conditional bounded rationale ledger. Decision
 0025 remains operational until containment leaves `.4`, `.5`, and `.11`
 implement the remaining migrations, so neither frozen file may be changed
-meanwhile. Completed schema leaf `.3` adds no ledger migration: its bounded
-JSONL manifests prove literal whole-entry boundaries, contiguous append order,
-range and endpoint digests, exact complete-source reconstruction, a complete
-bounded index, and finite live sealed-history limits before descriptor-backed
-archival. Leaves `.4` and `.5` opt in the two retained ledgers separately.
+meanwhile. Completed schema leaf `.3` adds no ledger migration and proves
+bounded whole-entry ranges, reconstruction, index, and archive transition.
+Before `.4` moved content, the director reopened whether `CHANGES.md` and
+analogous early agent-era crash/restart documents retain present value.
+Pending `.26` inventories that cohort first; no candidate or outcome is inferred.
 
 `README_POLICY.md` is the project- and harness-neutral landing-page maintenance
 standard. Adopting projects keep their authoritative tracked copy at repository

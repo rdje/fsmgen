@@ -6,18 +6,18 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4:
-  activate changelog migration`).
-- active_work_unit: containment `.4` is active for the bounded `CHANGES.md`
-  whole-entry migration.
-- current_state: decision `0046` retains bounded `CHANGES.md` and conditional
-  `DEVELOPMENT_NOTES.md` ledgers, and selects exact archival plus live-path
-  retirement for both frozen status files. Decision `0025` remains the
-  operational transition rule through migrations `.4`, `.5`, and `.11`.
-- next_action: implement and prove `.4`: retain a bounded current/index view,
-  seal exact whole-entry ranges, and preserve complete ordered retrieval.
+  defer changelog lifecycle decision`).
+- active_work_unit: none; `.4` returned to pending before any `CHANGES.md`
+  migration or lifecycle change.
+- current_state: the director reopened whether `CHANGES.md` and analogous
+  early agent-era continuity Markdown still add value after the durable memory
+  architecture. Pending `.26` owns inventory; no candidate set is inferred.
+- next_action: PNT may select another unblocked roadmap activity; do not resume
+  `.4`, `.5`, `.11`, or `.26` during the director-deferred document review.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for active `.4`; `.5` and `.11` remain later migrations.
+- blockers: `.4` and `.26` await later director review; if CHANGES is retained,
+  first correct `.3`'s unproved post-cutover append semantics.
 
 ## Durable context
 

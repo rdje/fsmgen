@@ -32262,9 +32262,7 @@ task tree and git.
   derived from actual guard output; undeclared or mistyped hints fail closed.
 - Added literal/query/generated collection-index contracts, checked all 17+5
   review evidence paths, and rejected staged-result/worktree divergence.
-
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22 — migration proof activated
-
 - From clean `.21` commit `9c63cf76b`, activated `.22` alone for migration
   identity/closure, retention guarantees, and a bounded review front door.
 - Reused the existing proposed macOS RAM-metric task and fact card; this
@@ -32297,3 +32295,5 @@ task tree and git.
 - Added finite opt-in current/index, whole-entry order/identity, exact reconstruction, content-addressed seal, and descriptor-transition proofs; focused Files=2/Tests=25 and authority Files=4/Tests=37 pass without migrating either ledger.
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4 — changelog migration activated
 - Clean `e47b509c9` activation starts only the bounded whole-entry CHANGES.md migration; no entry, ledger manifest, index, seal, archive, enforcement, threshold, or product behavior changes.
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4/.26 — legacy continuity-document value deferred
+- The director reopened whether CHANGES.md and analogous agent-era crash/restart documents retain present value; no candidate set or lifecycle is inferred, nothing migrates, and append safety remains required if CHANGES is retained.

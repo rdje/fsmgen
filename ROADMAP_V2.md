@@ -10448,4 +10448,4 @@ The first honest `R11` slices are now:
   maintained-reference reads/parts plus exact aggregate change. Decision
   `0046` retains two bounded ledgers and supersedes both frozen status views.
   Completed `.3` proves whole-entry order, identity, reconstruction, index, and
-  archive-transition schema without migration; `.4` is the next clean choice.
+  archive-transition schema without migration; deferred `.4`/`.26` will later reassess CHANGES and analogous agent-era continuity documents.
