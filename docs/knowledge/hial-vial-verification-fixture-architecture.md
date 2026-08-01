@@ -36,6 +36,9 @@ answers:
   - "how would IASIM combine HIAL and VIAL?"
   - "what should IASIM execute?"
   - "how does IASIM avoid common-mode code generation bugs?"
+  - "is IASIM constrained by HDL?"
+  - "can IASIM run without generating HDL?"
+  - "how can IASIM be signoff accurate?"
 date: 2026-08-01
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
@@ -45,7 +48,7 @@ evidence: >-
   docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://github.com/accellera-official/uvm-core/releases/tag/2020.3.1; https://github.com/chipsalliance/uvm-verilator; https://verilator.org/guide/latest/languages.html;
   https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
-reverify: scripts/check_task_tree_integrity.pl && rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t
+reverify: scripts/check_task_tree_integrity.pl && rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md && rg -n 'native Intent Abstraction|signoff|direct semantic adapters|HDL-independent' docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t
 ---
 
 Hardware IAL (HIAL) is the collective architecture name for FSMGen's current
@@ -164,19 +167,25 @@ The shipped UVM 1.2 passive-monitor output stays unchanged and unqualified.
 PGEN+NEXSIM runtime blocker.
 
 `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` now preserves a separate proposed
-architecture for an Intent Abstraction Simulator. IASIM would execute HIAL
-through a canonical executable semantic boundary and run the existing
-`VIALExecutionIR` against it, producing normalized traces and results. The
-intended scheduler seam is VIAL drive, HIAL settle/clock/state update, then VIAL
-sample, react, and check. It should use exact declared value/time semantics and
-an implementation independent from the HDL emitters so a shared bug cannot make
-the oracle and generated code agree falsely.
+architecture for an Intent Abstraction Simulator. IASIM is a first-class,
+HDL-independent runtime for the native Intent Abstraction world. Direct
+IAL2/IAL1/IAL0 semantic adapters feed one canonical execution model and engine;
+production tier lowering remains a separately comparable path. IASIM runs the
+existing `VIALExecutionIR` against HIAL and produces normalized traces and
+results. The intended scheduler seam is VIAL drive, HIAL settle/domain/state
+update, then VIAL sample, react, and check. Its values, time, events, and updates
+come from explicit Intent Abstraction semantics rather than inherited HDL event
+regions or least-common-denominator simulator behavior.
 
-IASIM is therefore an executable intent specification and future differential
-oracle, not an HDL simulator. A passing IASIM result can validate HIAL/VIAL
-meaning before a full SV/UVM runtime is available, but it cannot prove generated
-HDL syntax, elaboration, backend translation, or external simulator scheduling.
-The proposed first leaf audits whether the existing HIAL intent/lowered/
-structural projections are executable or whether a private
-`HIALExecutionIR` is needed. IASIM complements PGEN and NEXSIM: later HDL runs
-can compare their normalized results against the IASIM reference.
+IASIM accuracy is qualified natively, without generating HDL: a precise
+versioned semantics, a definition-oriented reference interpreter or equivalent
+independent oracle, manually derived conformance vectors, property/metamorphic
+tests, bounded exhaustive small cases, direct-versus-lowered cross-level
+equivalence, deterministic replay, semantic coverage, and mutation/seeded-defect
+detection. A passing IASIM result can therefore carry its own exact signoff
+claim, while still not proving generated HDL syntax, elaboration, backend
+translation, or external simulator scheduling. The proposed first leaf audits
+whether the existing HIAL projections can support that native contract or
+whether a private execution model is needed. Optional later HDL runs compare
+against IASIM to qualify the lowering, PGEN/NEXSIM, or another simulator; they
+do not define IASIM correctness.
