@@ -15425,7 +15425,7 @@ _Change history uses task trees and Git; rationale remains conditional_
 
 - **answers:** should a changelog be updated for every slice? | where does FSMGen record what changed? | when should DEVELOPMENT_NOTES.md be updated? | should ROADMAP_STATUS.md be updated now? | should LIVE_ACHIEVEMENT_STATUS.md be updated now? | what supersedes the blanket legacy-document freeze? | what is the long-term project document lifecycle policy?
 - **date:** 2026-08-01 · **status:** current
-- **evidence:** `docs/decisions/0047-changes-history-is-task-trees-and-git.md; docs/LEGACY_CONTINUITY_DOCUMENT_VALUE_AUDIT.md; COMMIT.md; AGENTS.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md`
+- **evidence:** `docs/decisions/0047-changes-history-is-task-trees-and-git.md; docs/LEGACY_CONTINUITY_DOCUMENT_VALUE_AUDIT.md; docs/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md; COMMIT.md; AGENTS.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md`
 - **reverify:** `rg -n '0047|DEVELOPMENT_NOTES|ROADMAP_STATUS|LIVE_ACHIEVEMENT_STATUS' AGENTS.md COMMIT.md docs/TASK_TREE.md`
 - **source:** [`docs/knowledge/project-document-interim-lifecycle-policy.md`](docs/knowledge/project-document-interim-lifecycle-policy.md)
 

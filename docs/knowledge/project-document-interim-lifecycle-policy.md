@@ -12,7 +12,7 @@ answers:
 date: 2026-08-01
 status: current
 tags: [workflow, changelog, development-notes, roadmap-status, continuity]
-evidence: docs/decisions/0047-changes-history-is-task-trees-and-git.md; docs/LEGACY_CONTINUITY_DOCUMENT_VALUE_AUDIT.md; COMMIT.md; AGENTS.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
+evidence: docs/decisions/0047-changes-history-is-task-trees-and-git.md; docs/LEGACY_CONTINUITY_DOCUMENT_VALUE_AUDIT.md; docs/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md; COMMIT.md; AGENTS.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
 reverify: rg -n '0047|DEVELOPMENT_NOTES|ROADMAP_STATUS|LIVE_ACHIEVEMENT_STATUS' AGENTS.md COMMIT.md docs/TASK_TREE.md
 ---
 
@@ -29,7 +29,10 @@ canonical home.
 `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain untouched while
 their owned work is pending. Decision `0046` selects exact archival and
 live-path retirement for roadmap status plus a bounded form for the separately
-reviewed rationale ledger. The achievement-status lifecycle awaits an
-independent `.11` value audit and director selection. Decision `0007` still
-governs bounded Memory and canonical routing; `0047` supersedes the
-`0025`/`0046` changelog clauses only.
+reviewed rationale ledger. The independent `.11` audit finds no executable or
+content consumer for achievement status and no current recovery/status role;
+its sole distinct value is direct browsing of a frozen 23-day historical
+digest. The file, README route, and surface remain unchanged while the director
+selects retirement, frozen retention, or a new bounded projection. Decision
+`0007` still governs bounded Memory and canonical routing; `0047` supersedes
+the `0025`/`0046` changelog clauses only.

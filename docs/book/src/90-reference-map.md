@@ -45,6 +45,7 @@ Some docs are intentionally still focused references:
 - [../../../README_POLICY.md](../../../README_POLICY.md)
 - [../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md](../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md)
 - [../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md)
+- [../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md](../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md)
 - [../../../TASK_ACCEPTANCE.md](../../../TASK_ACCEPTANCE.md)
 - [../../../COMMIT.md](../../../COMMIT.md)
 
@@ -60,8 +61,12 @@ direction stays in `ROADMAP_V2.md`, active work and evidence in task trees,
 resume state in `MEMORY.md`, shipped behavior in the mdBook, and exact change
 history in work-unit-bearing Git commits. The exact former changelog object is
 version-retained; no replacement status blob or generated changelog is added.
-Both frozen status files remain unchanged until `.11` asks and implements each
-independently selected lifecycle.
+The independent `.11` audit now finds that `LIVE_ACHIEVEMENT_STATUS.md` has no
+executable/content consumer or current recovery/status role. Its one distinct
+benefit is direct browsing of a frozen 23-day historical digest. The file,
+README route, and frozen surface remain unchanged while the director selects
+retirement, frozen retention, or a deliberately bounded projection;
+`ROADMAP_STATUS.md` will be assessed separately.
 
 `README_POLICY.md` is the project- and harness-neutral landing-page maintenance
 standard. Adopting projects keep their authoritative tracked copy at repository

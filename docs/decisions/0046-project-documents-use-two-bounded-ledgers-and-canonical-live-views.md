@@ -72,3 +72,9 @@ conditional-rationale and roadmap-status selections remain separately owned.
 Because the achievement-status comparison relied partly on the retained
 changelog, `.11` must re-audit its value and obtain an independent director
 selection before changing that lifecycle.
+
+The `2026-08-01` independent audit now finds no executable/content consumer or
+current recovery/status role. Direct browsing of the frozen 23-day prose
+digest is the one distinct retention case. Clause 6 remains dormant while the
+director selects retirement, frozen retention, or a deliberately bounded
+projection; the audit itself changes no achievement-status lifecycle.
