@@ -32257,9 +32257,7 @@ task tree and git.
 - This continuity slice changes no checker, registry, route kind, index or
   evidence contract, document content/lifecycle, frozen identity, or product
   behavior.
-
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21 — completeness closed
-
 - Typed 15 reader-navigation rows separately from four author-overflow hints
   derived from actual guard output; undeclared or mistyped hints fail closed.
 - Added literal/query/generated collection-index contracts, checked all 17+5
@@ -32297,3 +32295,5 @@ task tree and git.
 - Clean `b443957c1a` activation starts the common schema only; no reviewed document, registry, checker, test, archive, threshold, or product behavior changes.
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3 — bounded retained-ledger history enforced
 - Added finite opt-in current/index, whole-entry order/identity, exact reconstruction, content-addressed seal, and descriptor-transition proofs; focused Files=2/Tests=25 and authority Files=4/Tests=37 pass without migrating either ledger.
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4 — changelog migration activated
+- Clean `e47b509c9` activation starts only the bounded whole-entry CHANGES.md migration; no entry, ledger manifest, index, seal, archive, enforcement, threshold, or product behavior changes.

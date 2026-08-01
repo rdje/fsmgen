@@ -5,19 +5,19 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3:
-  enforce bounded retained-ledger history`).
-- active_work_unit: containment `.3` is done; `.4` is the next clean selection
-  for the bounded `CHANGES.md` migration.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4:
+  activate changelog migration`).
+- active_work_unit: containment `.4` is active for the bounded `CHANGES.md`
+  whole-entry migration.
 - current_state: decision `0046` retains bounded `CHANGES.md` and conditional
   `DEVELOPMENT_NOTES.md` ledgers, and selects exact archival plus live-path
   retirement for both frozen status files. Decision `0025` remains the
   operational transition rule through migrations `.4`, `.5`, and `.11`.
-- next_action: after this clean implementation commit, activate only `.4` for
-  the `CHANGES.md` whole-entry migration; do not migrate it during selection.
+- next_action: implement and prove `.4`: retain a bounded current/index view,
+  seal exact whole-entry ranges, and preserve complete ordered retrieval.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for `.4` selection; `.5` and `.11` remain later migrations.
+- blockers: none for active `.4`; `.5` and `.11` remain later migrations.
 
 ## Durable context
 
