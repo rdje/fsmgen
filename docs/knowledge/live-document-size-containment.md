@@ -237,7 +237,8 @@ surface are retired without a replacement changelog. Pending `.26` retains the
 broader agent-era document inventory. Completed `.11` independently retires
 the two frozen status views. Completed `.5` bounds the rationale ledger: 2,843
 entries at `d3c22e003` form its exact prefix, while the current view and index
-hold and address later entries; the executed adapter rejects drift.
+hold and address later entries; the executed adapter rejects drift. Clean
+commit `2e572d9fd` activates `.8` alone for Chapter 14 partitioning.
 
 Leaf `.11` independently retires the former achievement journal under decision
 `0048`, exact version retrieval, and live-path/consumer absence enforcement.

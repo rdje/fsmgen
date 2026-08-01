@@ -5,17 +5,17 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5:
-  bound the engineering rationale ledger`).
-- active_work_unit: `.5` is complete; `.8` is the next clean PNT selection.
-- current_state: `DEVELOPMENT_NOTES.md` is a bounded post-cutover current view;
-  its index and manifest address 2,843 exact immutable source entries plus the
-  first real append. Executed reconstruction and negative controls pass.
-- next_action: from the clean `.5` commit, activate `.8` alone to partition the
-  Chapter 14 feature backlog by stable user-facing topic.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8:
+  activate Chapter 14 partition`).
+- active_work_unit: `.8` alone is active from clean `.5` commit `2e572d9fd`.
+- current_state: selection changes continuity only. Chapter 14 remains the
+  unchanged 18,697-line maintained-reference source; SUMMARY, cross-links,
+  examples, limits, and product behavior are unchanged.
+- next_action: inventory Chapter 14 heading/link/example boundaries, then
+  partition by stable user-facing topic with exact content and link coverage.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: none for `.8` activation; `.26` retains the deferred inventory.
+- blockers: none for `.8`; `.26` retains the deferred inventory.
 
 ## Durable context
 
@@ -36,4 +36,4 @@ history; this file carries only the current bounded resume state.
   retires unused WARP and the director resumed containment on `2026-08-01`.
   `.11` retires the former achievement and roadmap-status views under decisions
   `0048`/`0049`. Push only on request (`0005`); PNT runs autonomously (`0003`).
-  `.5` bounds the retained rationale ledger; `.8` is next from its clean commit.
+  `.5` bounds the rationale ledger; `.8` is active from clean `2e572d9fd`.

@@ -103,12 +103,12 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: bound task evidence and index`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8`
-  Status: `pending`
+  Status: `active`
   Goal: `Partition the Chapter 14 feature backlog by stable user-facing topic.`
   Acceptance: `All existing user-facing material remains in navigable mdBook chapters exactly once; SUMMARY and reference links are complete; every part and aggregate fall below derived warning budgets; examples and all book gates pass.`
-  Verification: `pending`
-  Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23`
+  Verification: `Activated alone from clean .5 commit 2e572d9fd. This selection changes only task/index/roadmap/book/fact/Memory continuity; the 18,697-line / 1,157,040-byte Chapter 14 source, SUMMARY membership, cross-chapter links, maintained-reference limits, and product behavior remain unchanged until the partition proof is complete.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8: activate Chapter 14 partition`
+  Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9`
   Status: `pending`
@@ -436,6 +436,10 @@ no routed destination becomes the next uninstrumented blob.
   current suffix. The index, manifest, adapter, and focused negative controls
   prove order, identity, retrieval, and the formerly missing first append.
   `.8` is the next clean selection.
+- `2026-08-01`: Clean `.5` commit `2e572d9fd` activates `.8` alone. The
+  selection fixes the Chapter 14 partition frontier without changing its
+  18,697-line source, SUMMARY membership, cross-links, examples, limits, or
+  product behavior.
 
 ## Open Questions
 
@@ -456,8 +460,15 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None. Completed `.5` leaves `.8` as the next clean PNT selection. `.26` still
-  owns the broader legacy-continuity inventory and remains separately deferred.
+- None for active `.8`; completed `.16` and `.23` supply the utility and
+  maintained-reference prerequisites. `.26` still owns the broader
+  legacy-continuity inventory and remains separately deferred.
+
+## Acceptance Checklist (enforced) — `.8` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Chapter 14 per-part debt remains owned' --oneline -- docs/book/src/90-reference-map.md` identifies `425cd7fef`; the unchanged `docs/book/src/14-feature-backlog.md` is one 18,697-line / 1,157,040-byte maintained-reference part at SHA-256 `3757214f...`, while completed `.16` and `.23` remove both prerequisite blockers.
+- [x] **ADDRESSED (verified)** — clean `.5` commit `2e572d9fd` activates `.8` alone and records the exact partition boundary. Chapter 14, `SUMMARY.md`, its incoming links, examples, maintained-reference topology, limits, and product behavior remain unchanged in this selection slice.
+- [x] **NO REGRESSION** — the RAM-guarded path/task/README/reference cluster reports `All tests successful` at `Files=4, Tests=56`. The live-document gate covers 19 surfaces and 2,788/2,788 Markdown paths, accepts exact mdBook delta `files=0 / lines=0 / bytes=+53`, and reports zero ceiling increases. Knowledge Map passes at 1,096 facts/5,762 keys and 6,152,312 bytes; Memory is 39 lines; all 37 chapters test and the removed repository-local build is 73 files/17,292,776 bytes. Final staged acceptance and all doctrines pass without changing Chapter 14, SUMMARY, incoming links, examples, compiler/runtime behavior, generated product artifacts, or HDL.
 
 ## Acceptance Checklist (enforced) — `.5` bounded rationale-ledger migration
 
@@ -671,6 +682,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.11` roadmap-status retirement | decision 0049; exact version identity/retrieval; live-path/route/surface/consumer absence; canonical ATL/composition routes; planted recreation/consumer/identity/history/orphan negatives; focused/path/locality/live-size/Knowledge Map/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 15,039/1,638,574/longest 5,716/SHA-256 0f8db932...; focused Files=9/Tests=96; 19 surfaces/2,787 staged paths; root 17 files/62,935 lines/9,540,744 bytes; README 245/9,931; reference delta 0/-5/-347; Knowledge Map 1,096/5,762; paths/locality Files=2/Tests=22; all 37 chapters; removed build 73 files/17,288,264 bytes; zero ceiling increases; all doctrines pass; no replacement projection or compiler/runtime/generated-product change; `.11` done and `.5` next |
 | `2026-08-01` | `.5` activation | clean `3084d8c7b` predecessor; task/index/roadmap/fact/Memory sync; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates | `passed`; paths Files=1/Tests=2; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,787 paths; Knowledge Map current; Memory 40 lines; all 37 chapters test; zero ceiling increases; `.5` alone active; rationale source and registry topology unchanged |
 | `2026-08-01` | `.5` bounded rationale ledger | exact 2,843-entry activation source; descriptor-backed prefix plus real current append; bounded current/index; adapter and negative controls; root/rationale ratchet; focused/path/locality/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=8/Tests=52; paths/locality/task Files=3/Tests=63; source 34,507/2,494,480 at SHA-256 bf5a03fd...; current 25/1,420; index 36/2,039; ordered ledger 2,844 entries/34,520 lines/2,495,325 bytes; root 18/28,488/7,049,705; 19 surfaces/2,788 paths; reference delta 0/+6/+442; Knowledge Map 1,096/5,762 and 6,152,312 bytes; Memory 39; all 37 chapters; removed build 73/17,292,177; zero ceiling increases; all doctrines pass; product behavior unchanged |
+| `2026-08-01` | `.8` activation | clean `2e572d9fd` predecessor; exact Chapter 14 identity; task/index/roadmap/book/fact/Memory sync; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=4/Tests=56; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,788 paths; Chapter 14 unchanged at 18,697/1,157,040 and SHA-256 3757214f...; reference delta 0/0/+53; Knowledge Map 1,096/5,762 and 6,152,312 bytes; Memory 39; all 37 chapters; removed build 73/17,292,776; zero ceiling increases; `.8` alone active; content, navigation, examples, limits, and product behavior unchanged |
 
 ## Commit Log
 
@@ -715,8 +727,13 @@ no routed destination becomes the next uninstrumented blob.
 | `.11` roadmap-status retirement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11: retire roadmap-status board` | Preserve exact Git recovery, retire the false combined live board and its consumers without replacement, close `.11`, and leave `.5` as the next clean selection. |
 | `.5` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5: activate rationale-ledger migration` | Activate only the bounded conditional-rationale migration from clean `.11`; source entries and ledger topology remain unchanged. |
 | `.5` bounded rationale ledger | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5: bound engineering rationale ledger` | Preserve the exact immutable source as the ledger prefix, prove a real first append, and keep the root current/index views bounded. |
+| `.8` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8: activate Chapter 14 partition` | Activate only stable-topic partitioning from the clean `.5` commit; chapter content and navigation remain unchanged. |
 
 ## Changelog
+
+- `2026-08-01`: Clean `.5` commit `2e572d9fd` activates `.8` alone for stable-
+  topic partitioning of Chapter 14. The selection changes only continuity;
+  implementation and user-facing navigation remain pending.
 
 - `2026-08-01`: `.5` migrates the retained conditional rationale history to an
   exact descriptor-backed source prefix, bounded current/index views, and an

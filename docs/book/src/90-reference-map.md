@@ -284,9 +284,9 @@ files, lines, and bytes on every revision that changes the collection.
 
 The mdBook is FSMGen's first `maintained_reference`. Its `SUMMARY.md` mandatory
 read is capped at 64 lines and 4 KiB, every chapter is one direct link away,
-and the existing Chapter 14 per-part debt remains owned by `.8`; lifecycle
-selection does not bless that monolith. The book keeps all unique user-facing
-prose and examples.
+and clean commit `2e572d9fd` activates `.8` alone to partition Chapter 14 by
+stable user-facing topic. Selection does not bless or alter that monolith;
+the book keeps all unique prose and examples until exact partition proof.
 
 `docs/ISF_SPEC.md` demonstrates the opposite boundary. Its classification says
 that the prose is a maintained-reference candidate, but it remains inside the
