@@ -103,11 +103,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: bound task evidence and index`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8`
-  Status: `active`
+  Status: `done`
   Goal: `Partition the Chapter 14 feature backlog by stable user-facing topic.`
   Acceptance: `All existing user-facing material remains in navigable mdBook chapters exactly once; SUMMARY and reference links are complete; every part and aggregate fall below derived warning budgets; examples and all book gates pass.`
-  Verification: `Activated alone from clean .5 commit 2e572d9fd. This selection changes only task/index/roadmap/book/fact/Memory continuity; the 18,697-line / 1,157,040-byte Chapter 14 source, SUMMARY membership, cross-chapter links, maintained-reference limits, and product behavior remain unchanged until the partition proof is complete.`
-  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8: activate Chapter 14 partition`
+  Verification: `Activation commit b88b37323 fixes the exact 18,697-line / 1,157,040-byte source. A complete 15-range map places every source line exactly once in 13 direct Chapter 14 pages organized by stable language/data, composition, actor, IAL2, verification, AXI, APB, AHB, ISF, backend, validation, and API topics. SUMMARY remains a one-step mandatory read at 51/64 lines; the largest new page is 2,726 lines / 192,166 bytes and the longest Chapter 14 line is 303 bytes. The landing page preserves the existing backend deep-link. Exact-source, example, link, build, maintained-reference, rationale-ledger, and final gate evidence is recorded below; product behavior is unchanged.`
+  Commit: `b88b37323 (activation); this commit (partitioned Chapter 14)`
   Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9`
@@ -464,6 +464,12 @@ no routed destination becomes the next uninstrumented blob.
   maintained-reference prerequisites. `.26` still owns the broader
   legacy-continuity inventory and remains separately deferred.
 
+## Acceptance Checklist (enforced) — `.8` Chapter 14 partition
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Chapter 14 per-part debt remains owned' --oneline -- docs/book/src/90-reference-map.md` identifies the maintained-reference debt boundary, while `git show b88b37323:docs/book/src/14-feature-backlog.md` fixes the pre-partition source at 18,697 lines / 1,157,040 bytes / SHA-256 `3757214f...`. Its single part exceeds the 5,000-line / 512-KiB health targets while `SUMMARY.md` has room for twelve direct members below its 80% warning boundary.
+- [x] **ADDRESSED (verified)** — the exact-source partition proof reports `13 pages, 15 ranges, 18697/18697 source lines exactly once`. Stable topic pages reunite the two non-contiguous HIAL/VIAL and APB histories without changing range bytes; `SUMMARY.md` is 51/64 lines at navigation depth one; the largest new page is 2,726 lines / 192,166 bytes and the longest Chapter 14 line is 303 bytes. The landing page preserves the established `#backends-and-validation` route.
+- [x] **NO REGRESSION** — the RAM-guarded focused cluster reports `All tests successful` at `Files=6, Tests=75`; staged containment covers 19 surfaces and 2,800/2,800 document paths, reconstructs 2,845 rationale entries, accepts exact maintained-reference delta `files=+12 / lines=+59 / bytes=+2,498`, and reports zero ceiling increases. All 49 listed chapters test; the repository-local 85-file / 17,695,227-byte build passes and is removed exactly. Knowledge Map remains 1,096 facts / 5,762 keys; Memory is 40 lines. Final staged acceptance and all-doctrine evidence is recorded below; no compiler, runtime, generated-product, HDL, or feature-support behavior changes.
+
 ## Acceptance Checklist (enforced) — `.8` activation
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Chapter 14 per-part debt remains owned' --oneline -- docs/book/src/90-reference-map.md` identifies `425cd7fef`; the unchanged `docs/book/src/14-feature-backlog.md` is one 18,697-line / 1,157,040-byte maintained-reference part at SHA-256 `3757214f...`, while completed `.16` and `.23` remove both prerequisite blockers.
@@ -683,6 +689,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.5` activation | clean `3084d8c7b` predecessor; task/index/roadmap/fact/Memory sync; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates | `passed`; paths Files=1/Tests=2; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,787 paths; Knowledge Map current; Memory 40 lines; all 37 chapters test; zero ceiling increases; `.5` alone active; rationale source and registry topology unchanged |
 | `2026-08-01` | `.5` bounded rationale ledger | exact 2,843-entry activation source; descriptor-backed prefix plus real current append; bounded current/index; adapter and negative controls; root/rationale ratchet; focused/path/locality/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=8/Tests=52; paths/locality/task Files=3/Tests=63; source 34,507/2,494,480 at SHA-256 bf5a03fd...; current 25/1,420; index 36/2,039; ordered ledger 2,844 entries/34,520 lines/2,495,325 bytes; root 18/28,488/7,049,705; 19 surfaces/2,788 paths; reference delta 0/+6/+442; Knowledge Map 1,096/5,762 and 6,152,312 bytes; Memory 39; all 37 chapters; removed build 73/17,292,177; zero ceiling increases; all doctrines pass; product behavior unchanged |
 | `2026-08-01` | `.8` activation | clean `2e572d9fd` predecessor; exact Chapter 14 identity; task/index/roadmap/book/fact/Memory sync; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=4/Tests=56; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,788 paths; Chapter 14 unchanged at 18,697/1,157,040 and SHA-256 3757214f...; reference delta 0/0/+53; Knowledge Map 1,096/5,762 and 6,152,312 bytes; Memory 39; all 37 chapters; removed build 73/17,292,776; zero ceiling increases; `.8` alone active; content, navigation, examples, limits, and product behavior unchanged |
+| `2026-08-01` | `.8` Chapter 14 partition | exact activation-source/range coverage; stable direct topic navigation and backend compatibility anchor; rationale-ledger append; per-part ratchet; focused/path/task/live-size/reference/ceiling/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; 13 pages/15 ranges/18,697 of 18,697 source lines exactly once at SHA-256 3757214f...; largest Chapter 14 part 2,726/192,166/303-byte line; SUMMARY 51/2,765/depth 1; book aggregate 50/47,492/2,518,178 with exact delta +12/+59/+2,498; focused Files=6/Tests=75; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,800 paths; rationale 2,845 entries; Knowledge Map 1,096/5,762; Memory 40; all 49 chapters; removed build 85/17,695,227; line/byte ceilings ratchet to targets with zero increases; product behavior unchanged; `.9` next |
 
 ## Commit Log
 
@@ -728,8 +735,15 @@ no routed destination becomes the next uninstrumented blob.
 | `.5` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5: activate rationale-ledger migration` | Activate only the bounded conditional-rationale migration from clean `.11`; source entries and ledger topology remain unchanged. |
 | `.5` bounded rationale ledger | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5: bound engineering rationale ledger` | Preserve the exact immutable source as the ledger prefix, prove a real first append, and keep the root current/index views bounded. |
 | `.8` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8: activate Chapter 14 partition` | Activate only stable-topic partitioning from the clean `.5` commit; chapter content and navigation remain unchanged. |
+| `.8` Chapter 14 partition | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8: partition Chapter 14 by topic` | Preserve all 18,697 source lines exactly once across 13 direct stable-topic pages, retain compatibility links, and return the former monolith below per-part warning budgets. |
 
 ## Changelog
+
+- `2026-08-01`: `.8` partitions the exact activation-source Chapter 14 into
+  thirteen direct stable-topic pages. A 15-range proof accounts for every
+  source line once, SUMMARY remains below its warning boundary at 51/64 lines,
+  and the established backend deep-link remains valid. `.9` is the next clean
+  selection.
 
 - `2026-08-01`: Clean `.5` commit `2e572d9fd` activates `.8` alone for stable-
   topic partitioning of Chapter 14. The selection changes only continuity;

@@ -283,10 +283,13 @@ ignored.” The separate aggregate-change contract still accounts for the exact
 files, lines, and bytes on every revision that changes the collection.
 
 The mdBook is FSMGen's first `maintained_reference`. Its `SUMMARY.md` mandatory
-read is capped at 64 lines and 4 KiB, every chapter is one direct link away,
-and clean commit `2e572d9fd` activates `.8` alone to partition Chapter 14 by
-stable user-facing topic. Selection does not bless or alter that monolith;
-the book keeps all unique prose and examples until exact partition proof.
+read is capped at 64 lines and 4 KiB, and every chapter remains one direct link
+away. Activation commit `b88b37323` fixes the former 18,697-line Chapter 14
+source. Leaf `.8` maps all of it exactly once into thirteen direct pages by
+stable language/data, composition, actor, IAL2, verification, protocol, ISF,
+backend, validation, and API topics. The mandatory read is 51 lines, the
+largest new page is 2,726 lines / 192,166 bytes, examples remain executable,
+and the former backend deep-link routes through the bounded landing page.
 
 `docs/ISF_SPEC.md` demonstrates the opposite boundary. Its classification says
 that the prose is a maintained-reference candidate, but it remains inside the

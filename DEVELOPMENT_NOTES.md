@@ -23,3 +23,18 @@ repository's named full-history retention contract, while an executed local
 adapter verifies their dimensions, digests, entry endpoints, ordinal closure,
 current suffix, and complete reconstruction. Future rotation may seal or
 archive later whole-entry ranges without changing the original source anchor.
+## 2026-08-01: Chapter 14 partitions by topic while keeping the mandatory read shallow
+
+The partition uses thirteen direct Chapter 14 pages rather than nested or
+equal-sized shards. `SUMMARY.md` started at 39 lines, so twelve additional
+direct members leave it at 51 of its 64-line ceiling and below the 80% warning
+boundary while preserving navigation depth one. Topic boundaries also keep
+the largest new page below 2,800 lines and 200 KiB without raising a limit.
+
+The ranges follow language/data, composition, actor orchestration, IAL2,
+HIAL/VIAL, AXI, APB, AHB, ISF, backend, validation, and API concerns. Two
+chronologically separated HIAL/VIAL and APB ranges are reunited in their
+semantic homes; within each range, original order and bytes remain unchanged.
+The landing page retains the established backend deep-link as a compatibility
+route. This keeps future edits discoverable by subject instead of reviving a
+single chronological monolith.

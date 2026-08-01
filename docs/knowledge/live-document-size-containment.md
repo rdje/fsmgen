@@ -191,11 +191,14 @@ signed current-work-unit delta. The Git adapter rejects missing, stale,
 inexact, reused, or banked authority and silent lifecycle removal.
 
 FSMGen applies the class to `docs/book/src/*.md`: `SUMMARY.md` is the bounded
-mandatory read and all chapters remain direct members. Existing Chapter 14
-per-part debt remains unchanged. The mixed `docs/*.md` collection carries an
-auditable rationale naming `docs/ISF_SPEC.md` as a candidate only; its existing
-debt and ceilings remain until `.13` supplies semantic parts and a complete
-bounded index.
+mandatory read and all chapters remain direct members. Leaf `.8` maps the exact
+18,697-line activation source for Chapter 14 once into thirteen stable-topic
+pages. `SUMMARY.md` remains at depth one and 51/64 lines; the largest new page
+is 2,726 lines / 192,166 bytes, and the former backend anchor remains a routed
+compatibility target. The mixed `docs/*.md` collection carries an auditable
+rationale naming `docs/ISF_SPEC.md` as a candidate only; its existing debt and
+ceilings remain until `.13` supplies semantic parts and a complete bounded
+index.
 
 Clean `.15` commit `2e10cc605` activates `.16` alone for the project-wide
 utility/retirement audit. No retain/merge/supersede/archive/delete/re-form
@@ -238,7 +241,8 @@ broader agent-era document inventory. Completed `.11` independently retires
 the two frozen status views. Completed `.5` bounds the rationale ledger: 2,843
 entries at `d3c22e003` form its exact prefix, while the current view and index
 hold and address later entries; the executed adapter rejects drift. Clean
-commit `2e572d9fd` activates `.8` alone for Chapter 14 partitioning.
+activation commit `b88b37323` fixes Chapter 14's source, and completed `.8`
+partitions it exactly once by stable user-facing topic.
 
 Leaf `.11` independently retires the former achievement journal under decision
 `0048`, exact version retrieval, and live-path/consumer absence enforcement.
