@@ -39,6 +39,16 @@ answers:
   - "is IASIM constrained by HDL?"
   - "can IASIM run without generating HDL?"
   - "how can IASIM be signoff accurate?"
+  - "what does xIAL mean?"
+  - "what is the xIAL native development framework?"
+  - "is IASIM only a simulator command?"
+  - "can all design and verification work happen at xIAL level?"
+  - "what ecosystem should surround IASIM?"
+  - "how does the xIAL framework relate to IASIM?"
+  - "does xIAL intent signoff replace physical design signoff?"
+  - "is HDL export optional in the xIAL framework?"
+  - "how is xIAL to HDL export signed off?"
+  - "must published xIAL HDL meet HDL standards?"
 date: 2026-08-01
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
@@ -46,9 +56,14 @@ evidence: >-
   docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Parity/AHBBaseOutput.pm; t/1557-vial-portable-sv-backend-emission.t; t/1559-vial-ahb-runtime-parity.t;
   docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md;
   docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
-  docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://github.com/accellera-official/uvm-core/releases/tag/2020.3.1; https://github.com/chipsalliance/uvm-verilator; https://verilator.org/guide/latest/languages.html;
+  docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md; docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://github.com/accellera-official/uvm-core/releases/tag/2020.3.1; https://github.com/chipsalliance/uvm-verilator; https://verilator.org/guide/latest/languages.html;
   https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
-reverify: scripts/check_task_tree_integrity.pl && rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md && rg -n 'native Intent Abstraction|signoff|direct semantic adapters|HDL-independent' docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t
+reverify: >-
+  scripts/check_task_tree_integrity.pl &&
+  rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md &&
+  rg -n 'native Intent Abstraction|signoff|direct semantic adapters|HDL-independent|kernel/session' docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md &&
+  rg -n 'complete native framework|xIAL|HIAL IP|VIAL VIP|functional/intent signoff' docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md &&
+  prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t
 ---
 
 Hardware IAL (HIAL) is the collective architecture name for FSMGen's current
@@ -192,3 +207,30 @@ whether the existing HIAL projections can support that native contract or
 whether a private execution model is needed. Optional later HDL runs compare
 against IASIM to qualify the lowering, PGEN/NEXSIM, or another simulator; they
 do not define IASIM correctness.
+
+`XIAL-NATIVE-DEVELOPMENT-FRAMEWORK` broadens the product direction from an
+engine into a complete ecosystem. Here `xIAL` means HIAL or VIAL (`x = H` or
+`x = V`), not another language tier. The primary no-HDL loop is author and
+compose HIAL plus VIAL, elaborate/check, execute in IASIM, inspect/debug,
+measure and close coverage, regress, then issue a scoped native xIAL signoff
+manifest. IASIM stays the small independently qualified semantic kernel; a
+stable session/query API keeps rich framework policy and clients from changing
+execution meaning.
+
+The surrounding framework owns reproducible workspaces and incremental builds,
+authoring/introspection, reusable versioned HIAL IP and VIAL VIP/packages,
+interactive sessions, typed semantic traces, causal debug and time travel,
+verification services, regression/triage, coverage closure and waivers,
+visualization, automation/extensions, scale/recovery, and signoff governance.
+CLI, TUI, IDE, web, and automation clients share one typed service truth.
+Generated HDL and external tools remain unnecessary for operating the native
+inner loop, but supported HDL export is not an optional product-quality
+obligation. Every advertised
+publishable xIAL-to-HDL profile must name exact language/methodology revisions
+and pass professional source/packaging, source-map, LRM conformance, lint/
+warning, parse/compile/elaboration/runtime, IASIM differential, multi-tool
+portability, and applicable synthesis/equivalence gates with a reproducible
+conformance manifest. HDL still does not define xIAL meaning. Native xIAL
+functional/intent signoff also does not silently claim synthesis, timing,
+CDC/RDC, DFT, physical implementation, analog, or silicon signoff; those keep
+separate explicit evidence layers.

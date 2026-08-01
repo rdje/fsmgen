@@ -19,13 +19,17 @@ must come from a precise native Intent Abstraction contract, not from any HDL,
 HDL event scheduler, simulator, methodology library, or currently available
 backend.
 
-IASIM is both an executable specification of HIAL/VIAL meaning and a first-class
-useful runtime even when no HDL is generated. The project must qualify its
+IASIM is both an executable specification of HIAL/VIAL meaning and the small,
+independently qualified execution kernel for the proposed complete xIAL-native
+development framework. It remains directly useful even when no HDL is
+generated. The project must qualify its
 accuracy natively through explicit semantics, independent executable oracles,
 conformance vectors, bounded exhaustive cases, properties, cross-level
 equivalence, deterministic replay, and measured semantic-rule coverage. HDL is
-one optional downstream realization: later comparison with generated HDL tests
-the lowering/backend, not the definition of IASIM semantics.
+a downstream realization rather than IASIM's semantic authority: later
+comparison with generated HDL tests the lowering/backend, not the definition of
+IASIM semantics. The sibling xIAL framework separately requires signoff-grade
+HDL export qualification for every profile FSMGen advertises as publishable.
 
 ## Non-Goals
 
@@ -49,6 +53,11 @@ the lowering/backend, not the definition of IASIM semantics.
   useful pre-HDL oracle and a future differential reference.
 - Do not widen HIAL or VIAL semantics merely to make the first simulator slice
   easy. Unsupported behavior must be capability-gated and reported honestly.
+- Do not absorb workspaces, reusable IP/VIP package management, authoring/IDE
+  services, rich trace storage, interactive clients, regression orchestration,
+  visualization, coverage closure, or signoff governance into the trusted
+  engine. `XIAL-NATIVE-DEVELOPMENT-FRAMEWORK` owns that ecosystem around a
+  stable IASIM kernel/session boundary.
 
 ## Acceptance Criteria
 
@@ -92,6 +101,9 @@ the lowering/backend, not the definition of IASIM semantics.
 - Public commands, artifacts, limits, diagnostics, examples, mdBook guidance,
   Knowledge Map facts, and same-volume storage behavior are documented and
   tested before IASIM becomes a supported surface.
+- A stable versioned kernel/session/query contract exposes IASIM to the xIAL
+  framework without allowing clients or framework orchestration to redefine
+  values, time, events, updates, randomness, or normalized results.
 - Each completed active leaf is committed through `COMMIT.md`.
 
 ## Task Tree
@@ -138,8 +150,8 @@ the lowering/backend, not the definition of IASIM semantics.
 
 - ID: `IASIM-EXECUTABLE-REFERENCE-SEMANTICS.6`
   Status: `proposed`
-  Goal: `Ship bounded public IASIM commands, atomic artifacts, normalized traces/results, and diagnostics.`
-  Acceptance: `Select the smallest intent-oriented CLI/API surface; keep inputs and all outputs repository-relative and same-volume; write artifacts atomically; expose exact engine/schema/profile identity, source identity, seed/replay data, capability truth, limits, and source-mapped diagnostics; preserve normal/terse equivalence where applicable.`
+  Goal: `Ship bounded public IASIM commands plus the stable kernel/session/query contract consumed by the xIAL framework.`
+  Acceptance: `Select the smallest intent-oriented CLI and kernel/session/query API surface; keep inputs and all outputs repository-relative and same-volume; write artifacts atomically; expose exact engine/schema/profile identity, source identity, seed/replay data, capability truth, limits, source-mapped diagnostics, state/control/query boundaries, cancellation, and deterministic normalized traces/results; preserve normal/terse equivalence where applicable; prevent framework/client policy from changing semantic execution.`
   Verification: `pending`
   Commit: `pending`
 
@@ -203,6 +215,14 @@ implemented.
 - `2026-08-01`: Treat PGEN and NEXSIM as complementary. IASIM provides a
   pre-HDL executable oracle now and can later provide golden normalized results
   for PGEN/NEXSIM and commercial-simulator differential qualification.
+- `2026-08-01`: IASIM is the small trusted execution kernel inside the proposed
+  `XIAL-NATIVE-DEVELOPMENT-FRAMEWORK`. The sibling tree owns the complete
+  authoring/reuse/debug/regression/visualization/signoff ecosystem through a
+  stable kernel/session contract; it does not enlarge or redefine IASIM meaning.
+- `2026-08-01`: IASIM does not require HDL for native qualification, but its
+  normalized outcomes are mandatory golden evidence for every supported
+  publishable xIAL-to-HDL framework profile; export quality and standards
+  conformance remain separate first-class product signoff claims.
 
 ## Open Questions
 
@@ -217,7 +237,7 @@ implemented.
   checked AHB fixture, and which multi-clock/event semantics must be present in
   v1 rather than capability-deferred?
 - Should the public entry point be `fsmgen iasim`, a mode under `fsmgen vial`,
-  or both through one underlying API?
+  an xIAL-framework command, or several clients over one underlying kernel API?
 
 ## Blockers
 
@@ -246,3 +266,5 @@ implemented.
 - `2026-08-01`: Refined IASIM as a fully native Intent Abstraction world that
   is neither constrained nor qualified by HDL; added the independent evidence
   stack required for an accurate, signoff-caliber simulator claim.
+- `2026-08-01`: Positioned IASIM as the small independently qualified kernel
+  inside the separately owned complete xIAL-native development framework.
