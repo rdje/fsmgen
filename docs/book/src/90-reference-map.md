@@ -46,6 +46,7 @@ Some docs are intentionally still focused references:
 - [../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md](../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md)
 - [../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md)
 - [../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md](../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md)
+- [../../audits/ROADMAP_STATUS_VALUE_AUDIT.md](../../audits/ROADMAP_STATUS_VALUE_AUDIT.md)
 - [../../../TASK_ACCEPTANCE.md](../../../TASK_ACCEPTANCE.md)
 - [../../../COMMIT.md](../../../COMMIT.md)
 
@@ -54,8 +55,12 @@ These should stay precise and sometimes narrower than the book.
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 `ROADMAP_STATUS.md` remains a frozen legacy record rather than a current view.
-Decision 0046 retains its separate lifecycle owner and the conditional
-rationale-ledger owner. Decision 0047 retires the duplicate
+Its independent `.11` audit finds no unique current authority and recommends
+retirement, while recording the directly browsable March-June 2026 chronology
+and R0-R14 snapshot as its sole distinct retention case. The director's
+retain/retire/re-form selection remains pending, so the audit changes no
+lifecycle. Decision 0046 retains that separate lifecycle owner and the
+conditional rationale-ledger owner. Decision 0047 retires the duplicate
 per-slice changelog after exact current-value and consumer proof: high-level
 direction stays in `ROADMAP_V2.md`, active work and evidence in task trees,
 resume state in `MEMORY.md`, shipped behavior in the mdBook, and exact change

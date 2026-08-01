@@ -78,3 +78,12 @@ current recovery/status role. Direct browsing of the frozen 23-day prose
 digest is the one distinct retention case. The director selects retirement;
 decision `0048` supersedes clause 6, preserves exact version retrieval, and
 routes current questions to task evidence, the mdBook, bounded Memory, and Git.
+
+The separate `ROADMAP_STATUS.md` audit preserves clause 5's outcome as a
+recommendation rather than treating this earlier decision as sufficient
+authorization. It fixes the unchanged 15,039-line object and all 70 referring
+files, finds no product/runtime/build consumer, one stale negative test scan,
+one inaccurate active-source link, and no unique current authority. Direct
+browsing of the March-June 2026 chronology plus R0-R14 snapshot is the sole
+distinct retention case. The frozen file remains unchanged until the director
+independently selects retain, retire, or re-form.

@@ -6,19 +6,19 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11:
-  retire achievement journal`).
+  audit roadmap-status value`).
 - active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11` is active.
-- current_state: decision `0048` retires the former achievement journal after
-  its independent audit and director selection. Exact `b4d07fee5` recovery,
-  live-path absence, and zero current consumers are doctrine-enforced.
-- next_action: audit the still-frozen roadmap-status record independently for
-  provenance, present value, consumers, canonical overlap, and exact recovery,
-  then ask the director to select its lifecycle before changing it.
+- current_state: decision `0048` retires the former achievement journal. The
+  separate roadmap-status audit fixes its exact identity, classifies all 70
+  referring files, finds no unique current authority, and recommends
+  retirement while preserving historical direct browsing as the one distinct
+  retention case.
+- next_action: ask the director to select retain, retire, or re-form for
+  `ROADMAP_STATUS.md`; implement only that answer, then close `.11` cleanly.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: none for the roadmap-status audit; its lifecycle implementation
-  will require the director's independent selection. `.26` retains the broader
-  inventory.
+- blockers: the roadmap-status lifecycle requires the director's independent
+  selection. `.26` retains the broader inventory.
 
 ## Durable context
 
@@ -37,6 +37,6 @@ history; this file carries only the current bounded resume state.
   handwritten-oracle comparison, not general cross-backend parity.
 - Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; `.25`
   retires unused WARP and the director resumed containment on `2026-08-01`.
-  `.11` now retires the former achievement journal under decision `0048` and
-  advances to the independent roadmap-status audit.
+  `.11` now retires the former achievement journal under decision `0048`; its
+  independent roadmap-status audit is complete and awaits director selection.
   Push only on request (`0005`); PNT runs autonomously (`0003`).

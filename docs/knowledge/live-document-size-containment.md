@@ -235,3 +235,12 @@ task evidence, Git, Memory, facts/decisions, and the mdBook. The exact
 under `fsmgen_required_history`; the live path, write obligation, route, and
 surface are retired without a replacement changelog. Pending `.26` retains the
 broader agent-era document inventory, and `.5`/`.11` remain independent.
+
+Leaf `.11` independently retires the former achievement journal under decision
+`0048`, exact version retrieval, and live-path/consumer absence enforcement.
+Its separate `ROADMAP_STATUS.md` value audit leaves the frozen object unchanged:
+the 15,039-line board is 1,786 commits stale, has no unique current authority,
+one stale negative test scan, and one inaccurate active-source link. The audit
+recommends retirement while treating direct browsing of its March-June 2026
+chronology and R0-R14 snapshot as the sole distinct retention case; the
+director's independent lifecycle selection remains required.
