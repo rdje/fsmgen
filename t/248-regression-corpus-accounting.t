@@ -35,6 +35,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     vial_public_plan_cli_api
     vial_sv_portable_verilator_runtime_cli_api
     vial_ahb_handwritten_oracle_parity
+    vial_native_uvm_emission_foundation_private_api
     direct_root_pipeline_cli
     composition_top_pipeline_cli
     isf_pipeline_cli
@@ -403,6 +404,7 @@ my %coverage_classification = (
     vial_public_plan_cli_api => 'supported_smoke',
     vial_sv_portable_verilator_runtime_cli_api => 'supported_smoke',
     vial_ahb_handwritten_oracle_parity => 'supported_smoke',
+    vial_native_uvm_emission_foundation_private_api => 'supported_smoke',
     direct_root_pipeline_cli => 'supported_smoke',
     composition_top_pipeline_cli => 'supported_smoke',
     isf_pipeline_cli => 'supported_smoke',
@@ -1336,6 +1338,23 @@ for my $entry (@entries) {
             "VIAL parity entry '$entry->{id}' preserves every broader qualification non-claim",
         );
     }
+    elsif ($entry->{source_kind} eq 'vial' && $entry->{coverage} eq 'vial_native_uvm_emission_foundation_private_api') {
+        is_deeply(
+            $entry->{supported_phases},
+            [qw(parse typecheck hial_review bridge_binding execution_plan backend_emission static_validation review_gallery atomic_publication)],
+            "native UVM emission entry '$entry->{id}' claims only foundation emission evidence",
+        );
+        is_deeply(
+            $entry->{required_capabilities},
+            [qw(vial.backend.sv_uvm_emit.accellera_2020_3_1.v1 vial.backend.sv_uvm_emit.typed_context.v1 vial.backend.sv_uvm_emit.component_foundations.v1 vial.backend.sv_uvm_emit.interface_foundation.v1 vial.backend.sv_uvm_emit.uvm_top_foundation.v1 vial.backend.sv_uvm_emit.source_map.v1 vial.backend.sv_uvm_emit.static_validation.v1 vial.backend.sv_uvm_emit.deterministic_artifacts.v1)],
+            "native UVM emission entry '$entry->{id}' keeps exact foundation capabilities",
+        );
+        is_deeply(
+            $entry->{explicit_nonclaims},
+            [qw(complete_uvm_emission systemverilog_parse uvm_library_compile fixture_compile elaboration simulation runtime result parity complete_four_state general_cross_backend_parity vhdl mixed_language scale)],
+            "native UVM emission entry '$entry->{id}' records every deferred syntax/runtime/breadth claim",
+        );
+    }
     elsif (
         $entry->{source_kind} eq 'fsm'
             || $entry->{source_kind} eq 'dt'
@@ -1397,8 +1416,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    378,
-    'catalog now keeps three hundred seventy-eight named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL semantic/tooling/planning/runtime/parity fixtures',
+    379,
+    'catalog now keeps three hundred seventy-nine named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL semantic/tooling/planning/runtime/parity/native-UVM-emission fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),

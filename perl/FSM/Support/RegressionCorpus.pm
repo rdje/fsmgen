@@ -140,6 +140,35 @@ my @REGRESSION_CORPUS = (
         )],
     },
     {
+        id => 'feature.vial_native_uvm_emission_foundation',
+        relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
+        family => 'verification_intent_tooling',
+        classification => 'supported_smoke',
+        coverage => 'vial_native_uvm_emission_foundation_private_api',
+        source_kind => 'vial',
+        strict_supported => 0,
+        supported_phases => [qw(
+            parse typecheck hial_review bridge_binding execution_plan
+            backend_emission static_validation review_gallery atomic_publication
+        )],
+        required_capabilities => [qw(
+            vial.backend.sv_uvm_emit.accellera_2020_3_1.v1
+            vial.backend.sv_uvm_emit.typed_context.v1
+            vial.backend.sv_uvm_emit.component_foundations.v1
+            vial.backend.sv_uvm_emit.interface_foundation.v1
+            vial.backend.sv_uvm_emit.uvm_top_foundation.v1
+            vial.backend.sv_uvm_emit.source_map.v1
+            vial.backend.sv_uvm_emit.static_validation.v1
+            vial.backend.sv_uvm_emit.deterministic_artifacts.v1
+        )],
+        explicit_nonclaims => [qw(
+            complete_uvm_emission systemverilog_parse uvm_library_compile
+            fixture_compile elaboration simulation runtime result parity
+            complete_four_state general_cross_backend_parity vhdl
+            mixed_language scale
+        )],
+    },
+    {
         id => 'protocol.apb_requester',
         relpath => 'fsm/apb_requester.fsm',
         family => 'protocol_fixture',

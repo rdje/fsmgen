@@ -298,6 +298,7 @@ use FSM::Support::LanguageSurfaceContract qw(
     language_surface_file_surface_entry_keys
     language_surface_hial_vial_bridge_keys
     language_surface_vial_execution_keys
+    language_surface_vial_native_uvm_emission_keys
     language_surface_vial_tooling_keys
     language_surface_nested_presence_key_map
 );
@@ -308,6 +309,10 @@ use FSM::Support::HIALVIALBridgeContract qw(
 use FSM::Support::VIALExecutionContract qw(
     build_vial_execution_contract
     vial_execution_contract_source
+);
+use FSM::Support::VIALNativeUVMEmissionContract qw(
+    build_vial_native_uvm_emission_contract
+    vial_native_uvm_emission_contract_source
 );
 use FSM::Support::VIALToolingContract qw(
     build_vial_tooling_contract
@@ -2871,8 +2876,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.vial'}{current_boundary},
-        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits that graph atomically.*public sv_portable_verilator run path.*exact Verilator 5\.046.*verification-result manifest.*selected AHB fixture.*parity report.*Complete four-state observation.*general cross-backend parity/,
-        'manifest distinguishes bounded AHB parity from remaining general qualification non-claims',
+        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits that graph atomically.*public sv_portable_verilator run path.*exact Verilator 5\.046.*verification-result manifest.*selected AHB fixture.*parity report.*sv_uvm_emit\.accellera_2020_3_1.*structural-only validation report.*claims emission only.*complete four-state observation.*general cross-backend parity/i,
+        'manifest distinguishes portable AHB runtime/parity, native UVM emission, and remaining qualification non-claims',
     );
     is_deeply(
         [sort keys %{$manifest->{language_surface}{hial_vial_bridge}}],
@@ -2911,6 +2916,35 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok(
         $manifest->{language_surface}{vial_execution}{public_embedding_api},
         'manifest exposes bounded VIAL execution through the supported tool API',
+    );
+    is_deeply(
+        [sort keys %{$manifest->{language_surface}{vial_native_uvm_emission}}],
+        [sort @{language_surface_vial_native_uvm_emission_keys()}],
+        'manifest publishes the exact native UVM emission-only discovery keys',
+    );
+    is_deeply(
+        $manifest->{language_surface}{vial_native_uvm_emission},
+        build_vial_native_uvm_emission_contract(),
+        'manifest publishes the canonical private native UVM emission contract',
+    );
+    is(
+        $manifest->{language_surface}{vial_native_uvm_emission}{contract_source},
+        vial_native_uvm_emission_contract_source(),
+        'manifest names the native UVM emission capability owner',
+    );
+    ok(
+        !$manifest->{language_surface}{vial_native_uvm_emission}{public_embedding_api},
+        'manifest does not promote the private emitter to a supported embedding API',
+    );
+    is(
+        $manifest->{language_surface}{vial_native_uvm_emission}{backend_stage_status}{parse},
+        'not_run',
+        'manifest does not infer a syntax result from static shape validation',
+    );
+    is(
+        $manifest->{language_surface}{vial_native_uvm_emission}{backend_stage_status}{runtime},
+        'not_run',
+        'manifest does not infer native UVM runtime execution',
     );
     is_deeply(
         [sort keys %{$manifest->{language_surface}{vial_tooling}}],

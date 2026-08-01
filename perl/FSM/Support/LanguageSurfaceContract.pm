@@ -18,6 +18,7 @@ our @EXPORT_OK = qw(
     language_surface_file_surfaces_keys
     language_surface_hial_vial_bridge_keys
     language_surface_vial_execution_keys
+    language_surface_vial_native_uvm_emission_keys
     language_surface_vial_tooling_keys
     language_surface_nested_presence_key_map
     language_surface_public_top_level_keys
@@ -50,6 +51,7 @@ sub build_language_surface_contract {
         file_surface_entry_presence_keys => language_surface_file_surface_entry_keys(),
         hial_vial_bridge_presence_keys => language_surface_hial_vial_bridge_keys(),
         vial_execution_presence_keys => language_surface_vial_execution_keys(),
+        vial_native_uvm_emission_presence_keys => language_surface_vial_native_uvm_emission_keys(),
         vial_tooling_presence_keys => language_surface_vial_tooling_keys(),
         default_mode_compatibility_presence_keys => language_surface_default_mode_compatibility_keys(),
         assignments_presence_keys => language_surface_assignments_keys(),
@@ -75,6 +77,7 @@ sub language_surface_public_top_level_keys {
             file_surfaces
             hial_vial_bridge
             vial_execution
+            vial_native_uvm_emission
             vial_tooling
             default_mode_compatibility
             assignments
@@ -160,6 +163,16 @@ sub language_surface_vial_execution_keys {
     )];
 }
 
+sub language_surface_vial_native_uvm_emission_keys {
+    return [qw(
+        schema_version status contract_source implementation_entrypoints
+        execution_schema profile backend_schema source_map_schema
+        static_validation_schema methodology_identity library_materialization
+        backend_stage_status capabilities limits fixture review_gallery
+        writes_files public_embedding_api explicit_nonclaims guidance
+    )];
+}
+
 sub language_surface_vial_tooling_keys {
     return [qw(
         schema_version status contract_source implementation_entrypoints
@@ -239,6 +252,7 @@ sub language_surface_nested_presence_key_map {
         file_surfaces => language_surface_file_surfaces_keys(),
         hial_vial_bridge => language_surface_hial_vial_bridge_keys(),
         vial_execution => language_surface_vial_execution_keys(),
+        vial_native_uvm_emission => language_surface_vial_native_uvm_emission_keys(),
         vial_tooling => language_surface_vial_tooling_keys(),
         default_mode_compatibility => language_surface_default_mode_compatibility_keys(),
         assignments => language_surface_assignments_keys(),

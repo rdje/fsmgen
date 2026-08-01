@@ -5,25 +5,26 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1:
-  activate native UVM emitter substrate`).
-- active_work_unit: `.13.1.1` is active for the native emitter substrate and
-  first review gallery; `.13.2`/`.13.3` remain separate future evidence tiers.
-- current_state: decision `0050` selects simulator-neutral IEEE 1800.2-2020 /
-  Accellera UVM 2020-3.1 at exact tag/commit. Full-shaped reviewable emission
-  is unblocked; `.13.2` probes exact open-tool compile/elaboration from the
-  first gallery; PGEN+NEXSIM retains future runtime qualification. Generated
-  syntax may iterate while VIAL meaning stays fixed. No native code ships yet.
-- next_action: implement `.13.1.1` alone: emitter substrate, static validators,
-  deterministic artifact graph, and first review gallery.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1`: ship native UVM emitter foundation).
+- active_work_unit: `.13.1.1` is done; `.13.1` remains active and proposed
+  `.13.1.2` is its next clean activation for complete topology, lifecycle, and
+  notification/interception emission.
+- current_state: private profile `sv_uvm_emit.accellera_2020_3_1` now emits its
+  exact ten-artifact foundation; its first gallery is byte-checked and atomic
+  publication/cleanup pass. Emission never accesses UVM-library bytes. Manual
+  review is pending; parse through runtime, results, parity, and complete
+  breadth remain unclaimed. `.13.2` is separate and dependency-ready; `.13.3`
+  retains future PGEN+NEXSIM runtime qualification.
+- next_action: after this clean commit, record the director-confirmed Perl-first
+  IASIM kernel and optional measured Rust `.so`/C-ABI accelerators in its parked
+  tree, then resume the `.13.1.2` clean-activation frontier.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` waits on capability-ready PGEN and NEXSIM releases and an
-  exact parser-to-simulator handoff. `.13.1.1` is unblocked. Live-document
+  exact parser-to-simulator handoff. `.13.1.2` is unblocked. Live-document
   `.12` and inventory `.26` remain director-deferred.
 
 ## Durable context
-
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
   synthesis-bounded and target methodology stays compiler-private.
 - Decisions `0036`/`0037`: logical drive/sample/react/check time and closed

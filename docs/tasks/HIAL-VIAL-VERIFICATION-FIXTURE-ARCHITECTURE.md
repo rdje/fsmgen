@@ -248,22 +248,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement complete reviewable simulator-neutral sv_uvm_emit.accellera_2020_3_1 generation through bounded children without a parser or simulator gate.`
   Acceptance: `Representative typed-IR fixtures and public authorable paths where available emit the full selected UVM environment shape across topology, interfaces, lifecycle, notification/interception, stimulus, TLM, factory/configuration, RAL, constrained decisions, coverage/properties, models/scoreboards/faults/results, with efficient readable deterministic artifacts, complete source maps, an accumulating review gallery, and explicit static/manual-review versus compile/elaboration/run/result states. No child waits for a simulator merely to generate broader UVM; unknown defects remain possible and are tracked when found rather than hidden. Raw SV/UVM knowledge stays absent from authored VIAL, legacy UVM 1.2 remains compatible, and neither visual review nor static shape checks become syntax/runtime/full-VIAL qualification.`
-  Verification: `pending children .13.1.1-.13.1.5; all are unblocked by simulator availability`
+  Verification: `.13.1.1` ships the native emitter foundation and first checked gallery; pending children .13.1.2-.13.1.5 remain unblocked by simulator availability`
   Commit: `pending children`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the native UVM emission substrate and first reviewable artifact gallery without requiring UVM library bytes or an executable simulator.`
   Acceptance: `The exact Accellera UVM identity/API target is recorded without making an ordinary emission depend on a network fetch; the backend/profile, deterministic artifact graph, source map, typed packages, interface/top/component foundations, static shape validators, review-gallery fixtures, capability states, atomic repository-local publication, limits, and cleanup ship; library materialization is required only before a later library-dependent parser/compile gate; and parse/compile/elaboration/run/result remain explicitly not run.`
-  Verification: `pending implementation after clean activation`
-  Commit: `pending implementation`
+  Verification: `The private SVUVMAccellera2020_3_1 emitter consumes exact ExecutionIR/bridge/DUT inputs and emits the deterministic ten-artifact sv_uvm_emit.accellera_2020_3_1 foundation: exact methodology profile, typed logical-time context, component bases, AHB timed interface, fixture configuration/environment/test, bound top, deterministic HIAL DUT, complete line/column source map, structural-only validation, and closed backend manifest. Five UVM-facing sources are byte-locked in the first review gallery. Capability discovery, support accounting, fail-closed malformed/provider/balance/digest/profile tests, identical rerender, atomic same-volume publication, collision rejection, exact cleanup, and syntax/non-claim truth pass. Ordinary emission performs no network fetch and does not inspect UVM bytes. Manual review remains pending; preprocessing, parse, UVM-library compile, fixture compile, elaboration, runtime, result, parity, complete UVM breadth, and public emitter API remain explicitly unclaimed. Focused t1560 plus capability/support accounting pass at Files=3/Tests=7095; final doctrine evidence is recorded below.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1: ship native UVM emitter foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2`
   Status: `proposed`
   Goal: `Emit complete selected component topology, timed interfaces, lifecycle control, and notification/interception structures for visual and static review.`
   Acceptance: `Generated tests/environments/agents/interfaces/controllers/result collectors express strict lifecycle/logical-time ownership and the complete notification/interception record, including stable registration order, filters, effects, cancellation, bounded queue/reject reentrancy, source maps, static negative oracles, and representative review-gallery artifacts; no simulator gate or runtime result is required.`
-  Verification: `pending after .13.1.1`
+  Verification: `dependency-ready after completed .13.1.1; pending separate clean activation`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3`
@@ -403,9 +403,11 @@ Clean cross-tree predecessor `ea1b76dd54` activated `.12` alone. Completed
 exact Accellera UVM 2020-3.1 source, and separates deterministic emission from
 optional experimental probes and future PGEN+NEXSIM runtime qualification.
 Active containers `.13`/`.13.1` own five full-shaped reviewable emission
-leaves that do not wait for simulation. Clean predecessor `6c6b70048` now
-activates `.13.1.1` alone for the emitter substrate and first artifact gallery;
-`.13.2` follows that gallery with an exact reusable open-tool compile/
+leaves that do not wait for simulation. Completed `.13.1.1` now ships the
+private emitter substrate, structural validator, exact capability truth, and
+first byte-checked artifact gallery. Proposed `.13.1.2` is the next separate
+clean activation for complete topology/lifecycle/notification structures;
+`.13.2` is dependency-ready for an exact reusable open-tool compile/
 elaboration probe, while `.13.3` remains blocked on capability-ready PGEN and
 NEXSIM releases.
 Decision `0034` records that
@@ -414,6 +416,14 @@ machinery is compiler-owned in the same architectural sense that assembly is
 compiler-owned beneath C/C++ or Rust.
 
 ## Decisions
+
+- `2026-08-01`: Ship the private `sv_uvm_emit.accellera_2020_3_1`
+  foundation without widening public `vial run`. Exact typed/context/
+  component/interface/fixture/top sources, line/column maps, methodology and
+  structural evidence, atomic artifacts, and the checked gallery are product
+  emission evidence; every parser, compile, elaboration, runtime, result,
+  parity, manual-review completion, and complete-breadth state remains
+  separately unclaimed.
 
 - `2026-08-01`: Clean predecessor `6c6b70048913fa1c7ebb5967217bc463bbdfbd2b`
   permits `.13.1.1` to activate alone for the selected native UVM emitter
@@ -580,9 +590,9 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Open Questions
 
-- `.13.2` must select the exact optional open-source feasibility tool after
-  `.13.1.1` publishes the first gallery; an unsupported result is still useful
-  if it is measured and remains experimental.
+- `.13.2` is now dependency-ready and must select the exact optional open-
+  source feasibility tool in a separate activation; an unsupported result is
+  still useful if it is measured and remains experimental.
 - `.13.3` must select exact PGEN/NEXSIM versions and their handoff schema when
   capability-ready releases exist; no version is invented in advance.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
@@ -595,7 +605,7 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for proposed `.13.1.1` or later `.13.1` native UVM emission leaves;
+- None for proposed `.13.1.2` or later `.13.1` native UVM emission leaves;
   they generate and expose review galleries without simulator availability and
   make explicit per-stage not-run/experimental claims.
 - `.13.3` runtime qualification is intentionally blocked on capability-ready
@@ -645,6 +655,44 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-08-01` | `.12` activation | clean `ea1b76dd54` predecessor; exact local simulator command census; task/index/book/fact/Memory continuity; task/live/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.12` alone active for native SystemVerilog/UVM contract selection; Verilator and Icarus present, no qualified UVM simulator found; paths Files=1/Tests=2; trees=3/nodes=899/one segment/one index archive; 22 live surfaces/2,937 paths; maintained-reference delta 0/+6/+361; zero ceiling increases; Knowledge Map 1,104 facts/5,585 questions; Memory 46 lines; all 49 chapters; removed build 85 files/16,600,519 bytes; all nine staged doctrines pass; no revision/profile/backend/artifact/capability/runtime/product behavior selected or changed |
 | `2026-08-01` | `.12` selection | exact Accellera source/release and open-source tool evidence; director PGEN/NEXSIM/commercial-tool/simulator-neutral/full-emission/compiler-iteration clarifications; legacy UVM 1.2 and current VIAL contract audit; decision `0050`; exact mapping/profile/artifact/gate/non-claim contract; task/roadmap/audit/book/fact/Memory continuity; focused docs/live/task/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; simulator-neutral IEEE 1800.2-2020 / Accellera UVM 2020-3.1 tag/commit selected; active `.13.1` decomposes five full-shaped reviewable emission leaves with `.13.1.1` next, `.13.2` probes exact open-tool compile/elaboration from the first gallery, and `.13.3` retains future PGEN+NEXSIM qualification; generated syntax/strategy may iterate under exact emitter identity while VIAL meaning stays fixed; task integrity three trees/907 nodes/one segment/one index archive; focused docs `All tests successful` at Files=4/Tests=13; 22 live surfaces/2,938 paths and exact maintained-reference delta 0/+190/+8,769 pass; all 49 mdBook chapters test and the repository-local 85-file/16,674,248-byte build is removed exactly; Knowledge Map is current at 1,104 facts/5,593 questions/5,759 occurrences; Memory is 46 lines; no native implementation, parser, compile, elaboration, simulation, runtime, result, parity, or commercial-tool dependency ships |
 | `2026-08-01` | `.13.1.1` activation | clean predecessor; task/index/fact/Memory continuity; task integrity; Knowledge Map; relative paths; memory; live-document containment; diff; staged docs-only acceptance; doctrines | `passed`; `.13.1.1` alone active; task integrity remains three trees/907 nodes/one segment/one index archive; Knowledge Map is current at 1,104 facts/5,602 questions/5,768 occurrences; relative paths report `All tests successful` at Files=1/Tests=2; Memory is 46 lines; all 22 live-document surfaces and 2,939/2,939 paths pass with zero maintained-reference changes and zero ceiling increases; all nine staged doctrines pass; no implementation, generated artifact, parser, compile, elaboration, simulation, result, parity, or public capability change |
+| `2026-08-01` | `.13.1.1` implementation | private native emitter/validator/contract syntax; exact AHB ExecutionIR/bridge/DUT handoff; deterministic ten-artifact graph; exact methodology/library state; typed context/component/interface/fixture/top sources; complete line/column source map; structural positive/negative oracles; checked gallery; capability/support truth; atomic publication/collision/cleanup; focused and broader VIAL/support/docs/task/mdBook/Knowledge Map/Memory/staged-doctrine gates | `passed`; three new Perl modules and t1560 report syntax OK; focused native/capability/support Files=3/Tests=7,095 and guarded impacted VIAL/support Files=16/Tests=7,215 pass; docs/history Files=16/Tests=128 pass; task integrity is three trees/907 nodes/one segment/one index archive; all 49 mdBook chapters test and the repository-local 85-file/16,688,654-byte build passes before exact removal; all 22 live surfaces and 2,941/2,941 declared paths pass with exact maintained-reference delta 0/+41/+1,903 and zero ceiling increases; Knowledge Map is current at 1,104 facts/5,615 questions/5,781 occurrences/117 shards; Memory is 47 lines; manual review remains pending and every parser/compile/elaboration/runtime/result/parity/breadth non-claim remains exact |
+
+## Acceptance Checklist (enforced) — `.13.1.1` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — On clean activation predecessor
+  `d04c84dd6`, `git log -S
+  'package FSM::VIAL::Backend::SVUVMAccellera2020_3_1' --all --oneline --
+  perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm` returns no commit and the
+  selected backend, validator, native capability contract, artifact graph, and
+  review-gallery paths are absent. The exact defect is therefore the
+  unimplemented `.13.1.1` emission substrate, not a failure in the shipped
+  portable Verilator backend or an unavailable UVM simulator. During commit
+  recovery, `git check-ignore -v vial/review_gallery/*/*/*.sv` also identified
+  the repository-wide `.gitignore:5:*.sv` rule as the exact reason the first
+  commit attempt retained the gallery README but omitted its five snapshots.
+- [x] **ADDRESSED (verified)** — `prove -Iperl
+  t/1560-vial-native-uvm-emitter-substrate.t
+  t/297-capability-manifest.t t/248-regression-corpus-accounting.t` reports
+  `All tests successful` at `Files=3, Tests=7095`. Box-scoped evidence: t1560
+  proves exact Accellera identity without library access, ten deterministic
+  artifacts, 26 complete line/column source-map entries, typed context/
+  component/interface/fixture/top shapes, byte-identical gallery snapshots,
+  structural-only positive and missing-role/provider/balance/profile/digest
+  negatives, honest per-stage states, identical rerender, atomic same-volume
+  publication, collision rejection, and exact cleanup. The five intentional
+  generated snapshots are force-tracked at their exact gallery paths, and
+  `git ls-files vial/review_gallery` enumerates the README plus all five.
+- [x] **NO REGRESSION** — The three new Perl modules and focused test report
+  `syntax OK`; the focused native/capability/support suite reports `All tests
+  successful` at `Files=3, Tests=7095`; the guarded impacted VIAL/support suite
+  reports `Files=16, Tests=7215`; and the documentation/history suite reports
+  `Files=16, Tests=128`. All 49 mdBook chapters test, its repository-local
+  85-file/16,688,654-byte build passes before exact removal, task integrity and
+  Knowledge Map checks pass, Memory is 47 lines, and all 22 live surfaces plus
+  2,941/2,941 declared paths pass. Public `fsmgen vial run`, portable AHB
+  runtime/parity, HIAL generation, and legacy UVM 1.2 behavior remain
+  unchanged; SystemVerilog parse, UVM compile, elaboration, simulation,
+  runtime result, parity, and complete native-UVM breadth remain unclaimed.
 
 ## Acceptance Checklist (enforced) — `.12` selection
 
@@ -981,8 +1029,23 @@ compiler-owned beneath C/C++ or Rust.
 | `.12` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12: activate native UVM contract selection` | Activate only selection of the native SystemVerilog/UVM revision, intent mapping, existing-skeleton migration, and exact qualified profile after clean `.13` containment completion; implementation and qualification remain unperformed. |
 | `.12` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12: select open-source native UVM architecture` | Accept decision `0050`; select simulator-neutral Accellera UVM 2020-3.1 emission, optional experimental evidence, and future exact PGEN+NEXSIM runtime qualification without requiring a commercial simulator or claiming implementation. |
 | `.13.1.1` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1: activate native UVM emitter substrate` | Activate only the selected simulator-neutral emitter foundation, static validators, deterministic atomic artifact graph, and first review gallery after a clean predecessor; implementation remains unperformed. |
+| `.13.1.1` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1: ship native UVM emitter foundation` | Ship the private exact-Accellera native emitter foundation, structural validator, discoverable emission-only contract, ten-artifact deterministic graph, complete source map, first byte-checked review gallery, atomic publication, and exact non-claims. |
 
 ## Changelog
+
+- `2026-08-01`: `.13.1.1` ships the private deterministic
+  `sv_uvm_emit.accellera_2020_3_1` foundation. The checked AHB fixture emits
+  exact typed logical-time, component-base, timed-interface, fixture, bound-
+  top, and deterministic-DUT sources with a complete line/column source map,
+  exact methodology profile, structural report, and closed manifest. The five
+  UVM-facing files are byte-locked in the first review gallery; atomic
+  publication, identical rerender, collision rejection, cleanup, fail-closed
+  negative checks, capability discovery, and support accounting pass.
+  Ordinary emission fetches or inspects no UVM library bytes. Manual review is
+  pending; preprocessing, parse, compile, elaboration, runtime, result, parity,
+  complete native-UVM breadth, and a public emitter API remain unclaimed.
+  Proposed `.13.1.2` is next for separate clean activation; `.13.2` is now
+  dependency-ready but retains separately owned experimental evidence.
 
 - `2026-08-01`: Clean predecessor `6c6b70048` activates `.13.1.1` alone for
   native UVM emitter-substrate implementation. Activation changes only durable

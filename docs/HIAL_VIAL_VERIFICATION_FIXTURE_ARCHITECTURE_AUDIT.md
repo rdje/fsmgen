@@ -623,7 +623,7 @@ methodology standard:  IEEE 1800.2-2020
 reference library:     Accellera UVM 2020-3.1
 upstream tag:          2020.3.1
 upstream commit:       78c06547a2a0a29b3dc9dcafae62b75b2ff61544
-emission state:        selected, implementation pending
+emission state:        first typed/interface/component/top foundation shipped
 runtime state:         unqualified; provider versions not yet available
 ```
 
@@ -973,24 +973,40 @@ backend mappings.
 
 ### Artifact graph and generated-code quality
 
-The native backend composes with the atomic public tooling layout. A successful
-run publishes a deterministic graph below its content-addressed plan root:
+The shipped `.13.1.1` foundation composes with the existing atomic artifact
+transaction and emits this exact deterministic ten-artifact graph:
 
 ```text
 backends/sv_uvm_emit.accellera_2020_3_1/
   backend-manifest.json
   backend-source-map.json
-  commands/compile-elaborate-command.json
-  commands/run-command.json
-  evidence/tool-profile.json
-  evidence/uvm-library-manifest.json
+  evidence/methodology-profile.json
+  evidence/static-validation.json
   src/fsmgen_vial_uvm_types_pkg.sv
+  src/fsmgen_vial_uvm_components_pkg.sv
   src/<fixture>_if.sv
-  src/<fixture>_uvm_pkg.sv
+  src/<fixture>_pkg.sv
   src/<fixture>_tb.sv
   src/dut/<generated-hial-dut>.sv
-results/<result-id-digest>/verification-result-manifest.json
 ```
+
+The private `FSM::VIAL::Backend::SVUVMAccellera2020_3_1` emitter consumes the
+same immutable ExecutionIR, bridge manifest, and deterministic HIAL DUT input
+as the portable backend. `FSM::VIAL::Backend::SVUVMStaticValidator` checks the
+closed roles, limits, provider neutrality, deterministic text shape, balanced
+generated constructs, and selected UVM foundation shape. The native source map
+uses `fsmgen.vial_uvm_backend_source_map.v1` and records exact start/end line
+and column ranges. The checked gallery under
+`vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/`
+is byte-compared with every rerender. The graph can publish atomically and
+rejects non-identical collisions; focused tests remove the exact graph and
+prove no operation-owned staging residue.
+
+There is intentionally no command record, UVM-library byte manifest, or result
+artifact in this emission-only graph. Those appear only in a later exact
+experimental or qualified library-dependent gate. The methodology profile
+records `not_requested_or_inspected`, no network fetch, and the exact point at
+which a verified project-local Accellera copy becomes mandatory.
 
 Additional generated package files are split by semantic family only when a
 measured size threshold requires it. Stable content and plan identity produce
@@ -1194,8 +1210,18 @@ behavior, or all IEEE 1800.2 optional/deviation behavior. Review or later tool
 findings are fixed in the generator or recorded as exact task-tree defects;
 they do not retroactively turn early emission into a runtime claim.
 
-`.13.1.1` is the next clean activation and is not blocked by simulator or UVM
-library availability. Experimental `.13.2` follows its first gallery so
+Completed `.13.1.1` ships the deterministic private emitter, exact methodology
+record, typed logical-time context, component bases, timed interface, fixture
+configuration/environment/test foundations, bound top, source map, structural
+validator, capability discovery, checked first gallery, atomic publication,
+and cleanup. Preprocessing, parse, UVM-library compile, fixture compile,
+elaboration, runtime, result, parity, visual-review completion, and full native
+UVM emission breadth remain explicitly unclaimed. `.13.1.2` is the next native
+emission frontier for complete topology, lifecycle, and notification/
+interception structures. Experimental `.13.2` is now also dependency-ready
+because the first gallery exists; its eventual activation remains separate so
+open-tool evidence cannot blur the active emission sequence.
+
 Verilator and other available tools can catch whatever they support early.
 `.13.3` alone is blocked until PGEN and NEXSIM expose the required exact
 releases, handoff, and capabilities. An experimental parse, compile, or

@@ -933,6 +933,36 @@ sv_uvm_qualified
     future exact PGEN parser + NEXSIM simulator runtime tuple
 ```
 
+The first emission foundation now ships. For the checked AHB base-output
+fixture it produces ten deterministic virtual artifacts: the generated HIAL
+DUT; typed-context, reusable-component, timed-interface, fixture, and top
+SystemVerilog sources; a complete source map; the exact methodology profile;
+a structural-validation report; and the backend manifest. The private emitter
+and validator are discoverable through the capability manifest; public
+`fsmgen vial run` deliberately remains the separately qualified portable-
+Verilator path.
+
+The [checked review gallery](../../../vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/README.md)
+contains byte-identical copies of the five UVM-facing sources. Its interface
+shows the first concrete logical-time mapping:
+
+```systemverilog
+clocking driver_cb @(negedge clk);
+  default input #1step output #0;
+  output HADDR, HREADY, HSEL, HSIZE, HTRANS, HWDATA, HWRITE, rst_n, wait_cycles;
+  input HRDATA, HREADYOUT, HRESP;
+endclocking
+
+clocking monitor_cb @(posedge clk);
+  default input #1step;
+  input HADDR, HRDATA, HREADY, HREADYOUT, HRESP, HSEL, HSIZE, HTRANS, HWDATA, HWRITE, rst_n, wait_cycles;
+endclocking
+```
+
+That code is intentionally reviewable before a UVM parser or simulator is
+available. It is a foundation, not yet the complete agent/lifecycle/scenario
+implementation owned by the following emission slices.
+
 PGEN and NEXSIM are separate developing projects. PGEN owns HDL parsing;
 NEXSIM aims to provide open-source commercial-grade HDL simulation. When both
 expose the needed capabilities, FSMGen will select exact versions, content
@@ -949,14 +979,17 @@ A review gallery reports each independent maturity state, for example:
 
 ```text
 emission: passed
-static_review: passed
-visual_review: pending
+static_validation: passed_structural_only
+manual_review: pending
+preprocessing: not_run
 parse: not_run
-compile: not_run
+library_compile: not_run
+fixture_compile: not_run
 elaboration: not_run
 runtime: not_run
 result: not_produced
-qualified_profile: unavailable
+parity: not_evaluated
+library_materialization: not_required_for_emission
 ```
 
 Those source artifacts are simulator-neutral IEEE SystemVerilog using the
@@ -1063,13 +1096,21 @@ The selected emission graph is separate and content-addressed:
 backends/sv_uvm_emit.accellera_2020_3_1/
   backend-manifest.json
   backend-source-map.json
-  evidence/uvm-library-manifest.json
+  evidence/methodology-profile.json
+  evidence/static-validation.json
   src/fsmgen_vial_uvm_types_pkg.sv
+  src/fsmgen_vial_uvm_components_pkg.sv
   src/<fixture>_if.sv
-  src/<fixture>_uvm_pkg.sv
+  src/<fixture>_pkg.sv
   src/<fixture>_tb.sv
   src/dut/<generated-hial-dut>.sv
 ```
+
+This is the exact ten-artifact `.13.1.1` foundation graph. Later emission
+slices may add source families under the same versioned profile. A verified
+project-local UVM library manifest is added only by a later library-dependent
+probe or qualification gate; ordinary emission neither downloads nor inspects
+those bytes.
 
 Every generated class, interface, method, field, connection, constraint,
 coverage element, property, notification/interceptor table, and RAL element

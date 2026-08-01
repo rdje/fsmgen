@@ -12,6 +12,9 @@ use FSM::Support::LanguageSurfaceContract qw(
 );
 use FSM::Support::HIALVIALBridgeContract qw(build_hial_vial_bridge_contract);
 use FSM::Support::VIALExecutionContract qw(build_vial_execution_contract);
+use FSM::Support::VIALNativeUVMEmissionContract qw(
+    build_vial_native_uvm_emission_contract
+);
 use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
 
 our @EXPORT_OK = qw(
@@ -205,7 +208,8 @@ sub build_language_surface_section {
                         'Virtual plan/run callers receive one complete defensive artifact sink; the filesystem adapter commits that graph atomically below a repository-relative same-volume root.',
                         'The public sv_portable_verilator run path negotiates the immutable ExecutionIR, emits deterministic plain-SystemVerilog DUT/runtime/fixture sources, executes exact Verilator 5.046 compile/runtime commands from operation-owned repository-local staging, validates the closed trace, publishes a verification-result manifest, and removes staging before return.',
                         'The selected AHB fixture additionally has a closed deterministic parity report over public/shared acceptance, stall, response, data, and declared-storage-probe outcomes from independently executed handwritten and generated-VIAL harnesses using byte-identical DUT source; internal capture/hold/completion signals remain explicitly excluded because they are not declared typed probes.',
-                        'The shipped bounded profile is one unit, one clock, declared probe adapters, and known-value observations. Complete four-state observation, general cross-backend parity beyond the selected AHB oracle, UVM, VHDL, mixed-language execution, and scale remain explicit non-claims.',
+                        'The separate private sv_uvm_emit.accellera_2020_3_1 profile emits deterministic typed-context, reusable component-base, timed-interface, fixture-package, DUT-binding, and top foundations plus complete source maps, a structural-only validation report, and a checked review gallery without fetching or inspecting UVM library bytes.',
+                        'The portable runtime profile remains bounded to one unit, one clock, declared probe adapters, and known-value observations. The native UVM foundation separately claims emission only: complete native-UVM breadth, SystemVerilog parse, UVM compile, elaboration, runtime, result, parity, complete four-state observation, general cross-backend parity beyond the selected AHB oracle, VHDL, mixed-language execution, and scale remain explicit non-claims.',
                     ),
                 },
             ],
@@ -213,6 +217,7 @@ sub build_language_surface_section {
         },
         hial_vial_bridge => build_hial_vial_bridge_contract(),
         vial_execution => build_vial_execution_contract(),
+        vial_native_uvm_emission => build_vial_native_uvm_emission_contract(),
         vial_tooling => build_vial_tooling_contract(),
         default_mode_compatibility => {
             accepted_but_not_canonical_for_generated_output => [
