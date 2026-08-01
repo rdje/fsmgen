@@ -57,8 +57,14 @@ work frontier. `ROADMAP_V2.md` carries high-level direction.
 Decision 0049 retires the former roadmap-status board after its independent
 `.11` audit found no unique current authority; the exact March-June 2026
 chronology and R0-R14 snapshot remain version-retrievable. Decision 0046
-retains the conditional rationale-ledger owner. Decision 0047 retires the duplicate
-per-slice changelog after exact current-value and consumer proof: high-level
+retains the conditional rationale ledger. Its bounded current view is
+`DEVELOPMENT_NOTES.md`; `DEVELOPMENT_NOTES_INDEX.md` lists every ordered range
+and its exact retrieval. Add a whole `## ` entry only for durable engineering
+rationale with no better decision, fact, task, user-document, source-comment,
+or commit home. The ledger verifier reconstructs all 2,843 pre-cutover entries
+from the immutable source at `d3c22e003`, then proves the bounded current range
+is a real ordered suffix. Decision 0047 retires the duplicate per-slice
+changelog after exact current-value and consumer proof: high-level
 direction stays in `ROADMAP_V2.md`, active work and evidence in task trees,
 resume state in `MEMORY.md`, shipped behavior in the mdBook, and exact change
 history in work-unit-bearing Git commits. The exact former changelog object is

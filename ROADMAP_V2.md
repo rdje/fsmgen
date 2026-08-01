@@ -10448,4 +10448,4 @@ The first honest `R11` slices are now:
   maintained-reference reads/parts plus exact aggregate change. Decision
   `0046` retains two bounded ledgers and supersedes both frozen status views.
   Completed `.3` proves the ledger schema; `.4`/`.11` retire the changelog and
-  frozen views; clean `3084d8c7b` activates `.5`; `.26` stays deferred.
+  frozen views; completed `.5` bounds the retained exact rationale ledger; `.8` is the next clean family migration and `.26` stays deferred.

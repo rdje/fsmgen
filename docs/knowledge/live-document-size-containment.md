@@ -235,9 +235,9 @@ task evidence, Git, Memory, facts/decisions, and the mdBook. The exact
 under `fsmgen_required_history`; the live path, write obligation, route, and
 surface are retired without a replacement changelog. Pending `.26` retains the
 broader agent-era document inventory. Completed `.11` independently retires
-the two frozen status views, while clean commit `3084d8c7b` activates `.5`
-alone to migrate the retained conditional rationale ledger through `.3`'s
-bounded whole-entry schema.
+the two frozen status views. Completed `.5` bounds the rationale ledger: 2,843
+entries at `d3c22e003` form its exact prefix, while the current view and index
+hold and address later entries; the executed adapter rejects drift.
 
 Leaf `.11` independently retires the former achievement journal under decision
 `0048`, exact version retrieval, and live-path/consumer absence enforcement.

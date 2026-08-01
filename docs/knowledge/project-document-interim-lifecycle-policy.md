@@ -24,7 +24,8 @@ next slice. Task trees plus Git answer what changed and what proves it.
 
 A slice updates `DEVELOPMENT_NOTES.md` only when it produces durable
 engineering rationale, constraints, or working decisions without a better
-canonical home.
+canonical home. The live file is a bounded post-cutover view;
+`DEVELOPMENT_NOTES_INDEX.md` addresses exact ordered history.
 
 Decision `0049` independently retires the former roadmap-status board after
 the `.11` audit found no unique current authority. Its exact 15,039-line

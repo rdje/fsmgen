@@ -6,17 +6,16 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5:
-  activate rationale-ledger migration`).
-- active_work_unit: `.5` alone is active from clean `.11` commit `3084d8c7b`.
-- current_state: selection changes continuity only. `DEVELOPMENT_NOTES.md`
-  remains the unchanged 34,507-line rationale source; no ledger manifest,
-  archive descriptor, checker, limit, or product behavior changes yet.
-- next_action: inventory whole rationale-entry boundaries, then migrate the
-  source into the bounded current/index and exact sealed-history topology
-  proved by `.3`, including a real post-cutover append proof.
+  bound the engineering rationale ledger`).
+- active_work_unit: `.5` is complete; `.8` is the next clean PNT selection.
+- current_state: `DEVELOPMENT_NOTES.md` is a bounded post-cutover current view;
+  its index and manifest address 2,843 exact immutable source entries plus the
+  first real append. Executed reconstruction and negative controls pass.
+- next_action: from the clean `.5` commit, activate `.8` alone to partition the
+  Chapter 14 feature backlog by stable user-facing topic.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: none for `.5`; `.26` retains the broader deferred inventory.
+- blockers: none for `.8` activation; `.26` retains the deferred inventory.
 
 ## Durable context
 
@@ -37,4 +36,4 @@ history; this file carries only the current bounded resume state.
   retires unused WARP and the director resumed containment on `2026-08-01`.
   `.11` retires the former achievement and roadmap-status views under decisions
   `0048`/`0049`. Push only on request (`0005`); PNT runs autonomously (`0003`).
-  `.5` is active from clean `3084d8c7b`.
+  `.5` bounds the retained rationale ledger; `.8` is next from its clean commit.

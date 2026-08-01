@@ -82,11 +82,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4: retire duplicate changelog`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5`
-  Status: `active`
+  Status: `done`
   Goal: `Migrate DEVELOPMENT_NOTES.md to the bounded rationale-ledger topology.`
   Acceptance: `Execute only the lifecycle selected by PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 and schema proved by .3; if retained as a ledger, whole rationale entries retain order and identity, the root current/index view is below its derived warning budget, sealed ranges and archive descriptors pass exact proofs, decision/fact/task routing remains canonical, and no automatic placeholder growth is introduced.`
-  Verification: `Activated alone from clean .11 commit 3084d8c7b. This selection changes only task/index/roadmap/book/fact/Memory continuity; DEVELOPMENT_NOTES.md, ledger registries, archives, checker behavior, limits, and product behavior remain unchanged until the migration proof is complete.`
-  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5: activate rationale-ledger migration`
+  Verification: `Activation commit d3c22e003 fixes the exact 34,507-line / 2,494,480-byte source with 2,843 whole entries. The migrated root is a 25-line / 1,420-byte bounded current view and the 36-line / 2,039-byte index addresses one exact version-backed historical range plus one real post-cutover entry. Two descriptors preserve complete-source and entry-body identities under fsmgen_required_history; the manifest proves 2,844 contiguous ordered entries, dimensions, range/endpoint digests, and exact prefix-plus-suffix reconstruction. The executed adapter and focused t1565 negative controls reject source, current, index, descriptor, and first-append drift. Root and rationale ceilings ratchet downward with zero increases; user workflow, facts, roadmap, task frontier, Memory, and the mdBook move together. Final gate evidence is recorded below; compiler/runtime/generated-product behavior is unchanged.`
+  Commit: `d3c22e003 (activation); this commit (bounded rationale ledger)`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6`
   Status: `done`
@@ -431,6 +431,11 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-08-01`: Clean `.11` commit `3084d8c7b` activates `.5` alone. The
   selection fixes the rationale-ledger migration frontier without changing
   `DEVELOPMENT_NOTES.md`, its registry topology, or product behavior.
+- `2026-08-01`: `.5` preserves the exact 2,843-entry activation source as a
+  descriptor-backed reconstruction prefix and starts a bounded one-entry
+  current suffix. The index, manifest, adapter, and focused negative controls
+  prove order, identity, retrieval, and the formerly missing first append.
+  `.8` is the next clean selection.
 
 ## Open Questions
 
@@ -438,9 +443,6 @@ no routed destination becomes the next uninstrumented blob.
   aids, and what present reader question—if any—does each answer better than
   Memory, task trees, decisions, facts, Git, and maintained user documentation?
   `.26` must establish the candidate set before asking for lifecycle choices.
-- If retention is selected, should `.3` gain an explicit immutable source-entry
-  anchor? Its current full-source equality has no post-cutover append fixture
-  and would reject the first newly appended entry unless the source moved too.
 - None for completed `.15`-`.23`. The rereferenced PGEN/ANVIL files exactly
   match the reviews already reconciled in the bounded disposition. The
   existing four-file review retains authority for its named semantic roles.
@@ -454,9 +456,14 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None for active `.5`; decision `0046` and completed `.3` own the selected
-  conditional rationale role and generic ledger schema. `.26` still owns the
-  broader legacy-continuity inventory and remains separately deferred.
+- None. Completed `.5` leaves `.8` as the next clean PNT selection. `.26` still
+  owns the broader legacy-continuity inventory and remains separately deferred.
+
+## Acceptance Checklist (enforced) — `.5` bounded rationale-ledger migration
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'# DEVELOPMENT_NOTES' --oneline -- DEVELOPMENT_NOTES.md` identifies `d44ca14d5`, while `git log -S'engineering rationale' --oneline -- DEVELOPMENT_NOTES.md COMMIT.md AGENTS.md` identifies `0ff590b91` as the conditional-write policy. Exact activation object `d3c22e003:DEVELOPMENT_NOTES.md` is one 34,507-line / 2,494,480-byte rollover-debt file containing 2,843 whole entries. The generic `.3` source-equality proof had no post-cutover fixture, so a first append would either rewrite the immutable source or fail reconstruction.
+- [x] **ADDRESSED (verified)** — `scripts/check_engineering_rationale_ledger.pl` proves the exact immutable source body is the prefix of 2,844 ordered entries across descriptor-backed and current ranges, including one independent append. `prove -lv t/1565-engineering-rationale-ledger.t` reports `All tests successful` at `Files=1, Tests=3`; its negative controls reject current mutation, missing append, wrong source descriptor digest, and incomplete range indexing. The current/index files are 25/1,420 and 36/2,039, respectively, and the doctrine gate reports the rationale surface normal at 9.6% of its health/ceiling peak.
+- [x] **NO REGRESSION** — the final RAM-guarded lifecycle cluster reports `All tests successful` at `Files=8, Tests=52`, and the path/locality/task cluster at `Files=3, Tests=63`. The live-document gate executes all six version/ledger adapter proofs, reconstructs 2,844 entries, covers 2,788/2,788 Markdown paths, accepts exact mdBook delta `files=0 / lines=+6 / bytes=+442`, and reports zero ceiling increases. Knowledge Map passes at 1,096 facts/5,762 keys and remains exactly 6,152,312 bytes; Memory is 39 lines; all 37 book chapters test and the removed repository-local build is 73 files/17,292,177 bytes. Historical entry bytes remain retrievable under `fsmgen_required_history`; root totals fall to 18 files/28,488 lines/7,049,705 bytes, and no compiler, runtime, generated-product, or HDL behavior changes.
 
 ## Acceptance Checklist (enforced) — `.5` activation
 
@@ -663,6 +670,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.11` independent roadmap-status audit | exact identity/provenance/content partition; 70-consumer and canonical-overlap classification; three lifecycle options; audit/book/fact/decision/task/index/Memory sync; focused/live-size/Knowledge Map/path/locality/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 15,039/1,638,574/SHA-256 0f8db932... and 1,786 post-freeze commits; focused Files=8/Tests=92; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 20 surfaces/2,787 staged paths; maintained-reference delta 0/+5/+403; Knowledge Map 1,096/5,762; Memory 42; all 37 chapters; removed build 73 files/17,290,550 bytes; zero ceiling increases; all doctrines pass; no frozen-content, lifecycle, route, consumer, compiler/runtime, or product-artifact change; director selection pending |
 | `2026-08-01` | `.11` roadmap-status retirement | decision 0049; exact version identity/retrieval; live-path/route/surface/consumer absence; canonical ATL/composition routes; planted recreation/consumer/identity/history/orphan negatives; focused/path/locality/live-size/Knowledge Map/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 15,039/1,638,574/longest 5,716/SHA-256 0f8db932...; focused Files=9/Tests=96; 19 surfaces/2,787 staged paths; root 17 files/62,935 lines/9,540,744 bytes; README 245/9,931; reference delta 0/-5/-347; Knowledge Map 1,096/5,762; paths/locality Files=2/Tests=22; all 37 chapters; removed build 73 files/17,288,264 bytes; zero ceiling increases; all doctrines pass; no replacement projection or compiler/runtime/generated-product change; `.11` done and `.5` next |
 | `2026-08-01` | `.5` activation | clean `3084d8c7b` predecessor; task/index/roadmap/fact/Memory sync; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates | `passed`; paths Files=1/Tests=2; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,787 paths; Knowledge Map current; Memory 40 lines; all 37 chapters test; zero ceiling increases; `.5` alone active; rationale source and registry topology unchanged |
+| `2026-08-01` | `.5` bounded rationale ledger | exact 2,843-entry activation source; descriptor-backed prefix plus real current append; bounded current/index; adapter and negative controls; root/rationale ratchet; focused/path/locality/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=8/Tests=52; paths/locality/task Files=3/Tests=63; source 34,507/2,494,480 at SHA-256 bf5a03fd...; current 25/1,420; index 36/2,039; ordered ledger 2,844 entries/34,520 lines/2,495,325 bytes; root 18/28,488/7,049,705; 19 surfaces/2,788 paths; reference delta 0/+6/+442; Knowledge Map 1,096/5,762 and 6,152,312 bytes; Memory 39; all 37 chapters; removed build 73/17,292,177; zero ceiling increases; all doctrines pass; product behavior unchanged |
 
 ## Commit Log
 
@@ -706,8 +714,15 @@ no routed destination becomes the next uninstrumented blob.
 | `.11` roadmap-status audit | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11: audit roadmap-status value` | Preserve the frozen object, classify present value and every consumer independently, recommend retirement, and await the director's retain/retire/re-form selection. |
 | `.11` roadmap-status retirement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11: retire roadmap-status board` | Preserve exact Git recovery, retire the false combined live board and its consumers without replacement, close `.11`, and leave `.5` as the next clean selection. |
 | `.5` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5: activate rationale-ledger migration` | Activate only the bounded conditional-rationale migration from clean `.11`; source entries and ledger topology remain unchanged. |
+| `.5` bounded rationale ledger | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5: bound engineering rationale ledger` | Preserve the exact immutable source as the ledger prefix, prove a real first append, and keep the root current/index views bounded. |
 
 ## Changelog
+
+- `2026-08-01`: `.5` migrates the retained conditional rationale history to an
+  exact descriptor-backed source prefix, bounded current/index views, and an
+  executed first-append reconstruction proof. The 2,843 historical entries
+  remain version-retrievable; only durable rationale without a better home may
+  grow the current suffix. `.8` is the next clean PNT selection.
 
 - `2026-08-01`: Clean `.11` commit `3084d8c7b` activates `.5` alone for the
   bounded conditional rationale-ledger migration. The selection changes no
