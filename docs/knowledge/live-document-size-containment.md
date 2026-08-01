@@ -248,6 +248,11 @@ activation source before direction/chronology classification. Completed `.9`
 retains strategy, dependencies, concise outcomes, and horizons in a 317-line /
 14,606-byte live view. Descriptor `roadmap-v2-pre-containment-2026-08-01` and
 its executed adapter preserve and verify the complete original object.
+Clean `.9` commit `a20d38afc` activates `.10` alone against the exact 1,097-card
+/ 42,116-line / 3,214,095-byte canonical collection and its 15,637-line /
+6,152,312-byte generated projection at SHA-256 `aa8fb21b...`. The activation
+records identity and continuity only; fact-boundary splitting, deterministic
+shards, query parity, and repository-local disposable caches remain pending.
 
 Leaf `.11` independently retires the former achievement journal under decision
 `0048`, exact version retrieval, and live-path/consumer absence enforcement.

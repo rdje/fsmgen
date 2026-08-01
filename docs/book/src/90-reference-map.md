@@ -307,6 +307,11 @@ source remains digest-checked through descriptor
 `roadmap-v2-pre-containment-2026-08-01`; active state routes to Memory and task
 trees, shipped behavior to this book, and exact chronology to Git.
 
+Clean `.9` commit `a20d38afc` activates `.10` alone against 1,097 canonical
+knowledge-card files and the exact 15,637-line / 6,152,312-byte generated map.
+The activation changes no fact boundary, projection topology, generator,
+query/cache behavior, or pressure limit; those remain the active frontier.
+
 Leaf `.15` closes the neighboring control-plane gap. Each common JSONL
 registry has a schema-versioned metadata record declaring positive maximum
 data records, whole-file bytes, and raw JSON bytes per record. The neutral
