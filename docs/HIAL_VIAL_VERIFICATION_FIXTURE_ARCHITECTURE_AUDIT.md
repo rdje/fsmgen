@@ -637,9 +637,29 @@ The director's PGEN project owns HDL parsing and the director's NEXSIM project
 aims to own open-source commercial-grade HDL simulation. Both are progressing
 but remain under development. A future concrete `sv_uvm_qualified` profile is
 therefore an exact tuple of PGEN version/content, parser-to-simulator handoff
-schema, NEXSIM version/content, UVM library identity, commands, and exercised
-capabilities. Those values are selected only when executable releases exist;
-inventing them now would be false precision.
+schema, NEXSIM version/content, semantic-introspection API schema, MCP
+protocol/profile, UVM library identity, commands, and exercised capabilities.
+Those values are selected only when executable releases exist; inventing them
+now would be false precision.
+
+NEXSIM will expose deep semantic introspection through a clean API operated via
+MCP. Qualification can therefore inspect structured simulator meaning instead
+of treating logs and waveforms as its only evidence. The future provider
+adapter may query source-mapped hierarchy, types and four-state objects,
+process/event/scheduler state, assertions and coverage, and supported UVM
+topology, phase, objection, factory, configuration, TLM, sequence, and RAL
+objects. Selected controls may run, step, pause, break, checkpoint, replay, or
+cancel an exact session.
+
+That access is trustworthy only when the provider contract versions its
+schemas, gives semantic objects stable replay identities, defines snapshot
+consistency, orders and bounds every query deterministically, separates
+side-effect-free inspection from explicitly authorized control, reports
+permissions/capabilities exactly, and sanitizes errors and paths. The adapter
+correlates NEXSIM objects through generated source maps to UVM artifacts,
+`VIALExecutionIR`, and HIAL/VIAL semantic IDs. NEXSIM remains qualification
+evidence rather than the authority over VIAL meaning, and no provider API is
+emitted into canonical simulator-neutral SystemVerilog.
 
 Commercial Xcelium, VCS, and Questa may later serve as optional comparison or
 user-contributed profiles. They are not required FSMGen roadmap dependencies.
@@ -1117,7 +1137,8 @@ Future `.13.3` activates only when usable PGEN and NEXSIM releases exist. It
 must then select and execute this exact order:
 
 1. **discover tuple** — exact PGEN and NEXSIM version/content/executable
-   identities plus the parser-to-simulator handoff schema;
+   identities plus the parser-to-simulator handoff, semantic-introspection API,
+   and MCP protocol/profile schemas;
 2. **parse** — PGEN accepts every selected UVM/library/fixture source and
    produces the exact validated handoff;
 3. **compile library and fixture** — NEXSIM consumes the selected UVM bytes and
@@ -1126,11 +1147,15 @@ must then select and execute this exact order:
    graph elaborate;
 5. **simulate** — bounded execution exits cleanly with no UVM fatal/error,
    assertion failure, timeout, or trace overflow;
-6. **validate result** — closed native trace/result schemas, scenarios,
+6. **correlate semantic checkpoints** — snapshot-consistent NEXSIM semantic
+   objects map through generated source maps to UVM, HIAL, VIAL, and applicable
+   IASIM/portable checkpoint identities; the first divergence is localized and
+   classified rather than hidden by a final mismatch;
+7. **validate result** — closed native trace/result schemas, scenarios,
    notification/interception outcomes, and capability evidence validate;
-7. **rerun** — identical inputs reproduce portable/native projections and
+8. **rerun** — identical inputs reproduce portable/native projections and
    deterministic artifacts; and
-8. **cleanup** — exact staging removal and residue census pass.
+9. **cleanup** — exact staging removal and residue census pass.
 
 Compile success does not imply elaboration; elaboration does not imply run;
 zero simulator exit does not imply UVM/result success; UVM success does not

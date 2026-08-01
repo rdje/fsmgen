@@ -1046,6 +1046,37 @@ expose the needed capabilities, FSMGen will select exact versions, content
 identities, commands, and their parser-to-simulator handoff before claiming
 runtime support. Until then, no invented version appears in a manifest.
 
+NEXSIM is also planned to expose deep semantic introspection through a clean
+API operated via MCP. That changes the quality of evidence available to a
+future qualification adapter: FSMGen can inspect structured simulator objects
+instead of depending only on text logs and HDL waveforms.
+
+Where NEXSIM declares support, the adapter can inspect hierarchy, types,
+four-state values, processes, pending events and scheduler state, assertions,
+coverage, and UVM topology, phases, objections, factory/configuration state,
+TLM connections, sequences, and RAL objects. Explicitly selected control calls
+can run, step, pause, stop at a semantic breakpoint, checkpoint, replay, or
+cancel a bounded session.
+
+The contract must still be exact. API and MCP schemas are versioned; queries
+are bounded, deterministically ordered, snapshot-consistent, and side-effect
+free; control authority is separate and explicit; semantic objects have stable
+replay identities; permissions, capabilities, pagination, cancellation, and
+errors are machine-readable. Provider paths never leak into canonical source
+or portable result identities.
+
+Complete source maps let FSMGen correlate one NEXSIM object with generated UVM
+code, `VIALExecutionIR`, and HIAL/VIAL semantic IDs. At common checkpoints it
+can compare NEXSIM with IASIM or another applicable normalized oracle and stop
+at the first divergence. That makes it practical to distinguish an intent,
+IAL lowering, UVM generation, PGEN handoff, elaboration, scheduler, or runtime
+defect instead of reporting only that the final results differ.
+
+NEXSIM introspection is exceptionally strong qualification evidence, but it
+does not define VIAL meaning and does not by itself prove complete
+SystemVerilog or UVM support. Canonical generated SystemVerilog/UVM therefore
+remains simulator-neutral; MCP belongs to the provider control/evidence layer.
+
 This separation lets full-shaped generation proceed now. Across bounded
 slices, the emitter can produce reviewable tests, environments, agents,
 interfaces, sequences, TLM/factory/configuration/RAL plumbing, coverage,
@@ -1207,6 +1238,7 @@ exact PGEN parse
   -> NEXSIM UVM and fixture compile
   -> elaboration
   -> bounded four-state timed simulation
+  -> snapshot-consistent semantic checkpoint correlation
   -> closed native result
   -> deterministic rerun
   -> cleanup and residue census

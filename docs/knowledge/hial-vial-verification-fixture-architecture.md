@@ -34,6 +34,9 @@ answers:
   - "where is the native UVM review gallery?"
   - "has the native VIAL UVM gallery been parsed or compiled?"
   - "how will PGEN and NEXSIM qualify VIAL UVM runtime?"
+  - "what can FSMGen do with NEXSIM semantic introspection through MCP?"
+  - "how will NEXSIM MCP help compare IASIM and generated UVM?"
+  - "does NEXSIM semantic introspection define VIAL meaning?"
   - "can Verilator currently qualify full VIAL UVM support?"
   - "can FSMGen generate full UVM before a full simulator exists?"
   - "can Verilator compile or elaborate early generated UVM?"
@@ -73,7 +76,7 @@ evidence: >-
   https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
 reverify: >-
   scripts/check_task_tree_integrity.pl &&
-  rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md &&
+  rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|semantic introspection|MCP|snapshot-consistent|first divergence|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'native Intent Abstraction|signoff|direct semantic adapters|HDL-independent|kernel/session|Perl 5|versioned C ABI|shared library|differential equivalence' docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'complete native framework|xIAL|HIAL IP|VIAL VIP|functional/intent signoff' docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md &&
   prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1560-vial-native-uvm-emitter-substrate.t t/1570-vial-native-uvm-topology-lifecycle-notification.t
@@ -173,6 +176,19 @@ capability-ready PGEN parser plus NEXSIM simulator tuple. PGEN and NEXSIM are
 both progressing external projects; their versions and handoff are not
 invented in advance. Verilator's UVM support remains officially in
 development and cannot currently qualify the full runtime family.
+
+NEXSIM will expose deep semantic introspection through a clean API operated by
+MCP. Future `.13.3` qualification can use versioned structured queries and
+controls to inspect hierarchy, types, four-state values, processes/events,
+scheduler state, assertions/coverage, and supported UVM methodology objects;
+run or step bounded sessions; take consistent checkpoints; and correlate
+stable NEXSIM object identities through generated source maps to UVM,
+`VIALExecutionIR`, and HIAL/VIAL semantic IDs. Common checkpoints can be
+compared with IASIM or another applicable normalized oracle to identify and
+classify the first divergence. Queries must be bounded, deterministic,
+snapshot-consistent, and side-effect free, while control permissions remain
+explicit. This is strong provider evidence, not authority over VIAL meaning or
+permission to put NEXSIM/MCP dependencies into canonical generated source.
 
 The selected contract maps typed notification/interception, lifecycle,
 stimulus, TLM communication, substitution/configuration, RAL, constrained

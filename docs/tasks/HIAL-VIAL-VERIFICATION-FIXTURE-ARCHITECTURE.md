@@ -296,9 +296,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3`
   Status: `proposed`
-  Goal: `Select, integrate, and capability-qualify the first exact PGEN parser plus NEXSIM simulator UVM runtime tuple.`
-  Acceptance: `Once executable provider releases exist, a documentation selection freezes exact PGEN and NEXSIM versions/content/commands, parser-to-simulator handoff schema, Accellera UVM identity, capability matrix, project-local artifacts, and failure boundaries before implementation; implementation then proves parse, UVM/DUT compile, elaboration, four-state timed execution, notification/interception results, deterministic rerun, cleanup, and every applicable normalized parity oracle without borrowing experimental or commercial-tool evidence.`
-  Verification: `blocked on capability-ready PGEN and NEXSIM releases; both external projects are progressing under active development`
+  Goal: `Select, integrate, and capability-qualify the first exact PGEN parser plus MCP-operated NEXSIM simulator UVM runtime tuple.`
+  Acceptance: `Once executable provider releases exist, a documentation selection freezes exact PGEN and NEXSIM versions/content/commands, parser-to-simulator handoff schema, NEXSIM semantic-introspection API schema, MCP protocol/profile, Accellera UVM identity, capability matrix, project-local artifacts, permissions, limits, and failure boundaries before implementation. The selected NEXSIM contract must expose stable source-mapped semantic identities; snapshot-consistent deterministic bounded queries; explicit side-effect-free inspection versus authorized control; hierarchy, types, four-state values, processes/events/scheduler state, assertions/coverage, and UVM topology/phases/objections/factory/configuration/TLM/sequences/RAL state where supported; plus run/step/pause/breakpoint/checkpoint/replay/cancel controls where selected. Implementation then proves parse, UVM/DUT compile, elaboration, four-state timed execution, notification/interception results, semantic checkpoint correlation, first-divergence localization against applicable IASIM/portable normalized oracles, deterministic rerun, cleanup, and every applicable normalized parity oracle without borrowing experimental or commercial-tool evidence. NEXSIM introspection remains provider evidence: it cannot redefine VIAL meaning, leak into canonical generated source, or turn one observed subset into full SystemVerilog/UVM qualification.`
+  Verification: `provider direction is clarified: NEXSIM will expose deep semantic introspection through a clean API operated via MCP; exact release/API/schema/protocol/capability identities remain blocked on capability-ready PGEN and NEXSIM releases`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14`
@@ -589,6 +589,14 @@ compiler-owned beneath C/C++ or Rust.
   open-source commercial-grade simulator provider. Their future exact
   versioned handoff is a qualification tuple, not a current capability claim;
   `.13.1` emission can progress independently now.
+- `2026-08-01`: Director clarification states that NEXSIM will expose deep
+  semantic introspection through a clean API operated via MCP. Future `.13.3`
+  qualification must therefore consume versioned semantic objects and
+  snapshot-consistent read/control operations, correlate them through source
+  maps to generated UVM and HIAL/VIAL identities, and localize the first
+  differential mismatch rather than relying only on logs, waveforms, or a
+  final pass/fail. This strengthens provider evidence without making NEXSIM or
+  MCP the authority over VIAL meaning.
 - `2026-08-01`: Simulator availability does not limit native generation
   breadth. Active `.13.1` is decomposed into five full-shaped reviewable
   emission leaves; `.13.2` probes exact open-tool compile/elaboration as soon
@@ -601,8 +609,10 @@ compiler-owned beneath C/C++ or Rust.
 - `.13.2` is now dependency-ready and must select the exact optional open-
   source feasibility tool in a separate activation; an unsupported result is
   still useful if it is measured and remains experimental.
-- `.13.3` must select exact PGEN/NEXSIM versions and their handoff schema when
-  capability-ready releases exist; no version is invented in advance.
+- `.13.3` must select exact PGEN/NEXSIM versions, handoff schema, semantic-
+  introspection API schema, and MCP profile when capability-ready releases
+  exist; no version or unsupported query/control capability is invented in
+  advance.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
   GHDL and other VHDL tools are currently absent locally.
 - `.16` must choose the first available mixed-language tool/profile.
@@ -617,9 +627,10 @@ compiler-owned beneath C/C++ or Rust.
   they generate and expose review galleries without simulator availability and
   make explicit per-stage not-run/experimental claims.
 - `.13.3` runtime qualification is intentionally blocked on capability-ready
-  PGEN and NEXSIM releases. Commercial simulator availability is not a roadmap
-  prerequisite, and Verilator/Icarus cannot be promoted from experimental
-  evidence to `sv_uvm_qualified`.
+  PGEN and NEXSIM releases. The planned NEXSIM API/MCP direction removes no
+  release/schema/capability prerequisite. Commercial simulator availability
+  is not a roadmap prerequisite, and Verilator/Icarus cannot be promoted from
+  experimental evidence to `sv_uvm_qualified`.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -666,6 +677,30 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-08-01` | `.13.1.1` implementation | private native emitter/validator/contract syntax; exact AHB ExecutionIR/bridge/DUT handoff; deterministic ten-artifact graph; exact methodology/library state; typed context/component/interface/fixture/top sources; complete line/column source map; structural positive/negative oracles; checked gallery; capability/support truth; atomic publication/collision/cleanup; focused and broader VIAL/support/docs/task/mdBook/Knowledge Map/Memory/staged-doctrine gates | `passed`; three new Perl modules and t1560 report syntax OK; focused native/capability/support Files=3/Tests=7,095 and guarded impacted VIAL/support Files=16/Tests=7,215 pass; docs/history Files=16/Tests=128 pass; task integrity is three trees/907 nodes/one segment/one index archive; all 49 mdBook chapters test and the repository-local 85-file/16,688,654-byte build passes before exact removal; all 22 live surfaces and 2,941/2,941 declared paths pass with exact maintained-reference delta 0/+41/+1,903 and zero ceiling increases; Knowledge Map is current at 1,104 facts/5,615 questions/5,781 occurrences/117 shards; Memory is 47 lines; manual review remains pending and every parser/compile/elaboration/runtime/result/parity/breadth non-claim remains exact |
 | `2026-08-01` | `.13.1.2` activation | clean `254806049` predecessor; task/index/fact/Memory continuity; task integrity; Knowledge Map; relative paths; memory; live-document containment; diff; staged docs-only acceptance; doctrines | `passed pre-stage checks`; `.13.1.2` alone active; task integrity remains three trees/907 nodes/one segment/one index archive; Knowledge Map is current at 1,104 facts/5,619 questions/5,785 occurrences/117 shards; relative paths report `All tests successful` at Files=1/Tests=2; Memory remains below its warning boundary; all 22 live-document surfaces and 2,941/2,941 paths pass with zero maintained-reference changes and zero ceiling increases; implementation and product behavior remain unchanged |
 | `2026-08-01` | `.13.1.2` implementation | emitter/static-validator/support/test syntax; revision-2 exact graph; complete passive topology and lifecycle; typed notification/interception order/filter/effect/cancellation/reentrancy; 42-entry source map; six-source gallery; support/capability truth; focused/broader VIAL runtime and structural regressions; docs/task/mdBook/Knowledge Map/Memory/staged-doctrine gates | `passed`; guarded non-runtime VIAL/support suite reports `All tests successful` at Files=15/Tests=7,158; separately captured exact Verilator integration and parity gates pass at Files=1/Tests=5 and Files=1/Tests=4 after one interrupted guard run's exact 30-MiB operation staging residue was identified, removed, and proven absent; docs/task/live/reference/Knowledge Map suite passes at Files=11/Tests=393; all 49 mdBook chapters test and its repository-local 85-file/16,727,608-byte build passes before exact removal; task integrity remains three trees/907 nodes/one segment/one index archive; live containment accepts all 22 surfaces/2,941 paths and exact mdBook aggregate delta 0/+52/+2,400 with zero ceiling increases; Knowledge Map is current at 1,104 facts/5,624 questions/5,790 occurrences/117 shards; Memory is 47 lines; final staged acceptance and all nine doctrine checks pass before commit |
+| `2026-08-01` | `.13.3` semantic-introspection clarification | exact NEXSIM API/MCP qualification-plane requirements; canonical audit/task/index/book/fact/Memory continuity; relative paths/task/live-reference/Knowledge Map; mdBook test/build; diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; docs/live/task/Knowledge Map suite reports `All tests successful` at Files=6/Tests=62; all 49 mdBook chapters test and the corrected repository-local build contains 85 files/16,737,521 bytes before exact removal; an initial incorrectly prefixed destination was rejected before creation and proven absent; task integrity remains three trees/907 nodes/one segment/one index archive; all nine staged doctrines pass; exact mdBook delta is 0/+32/+1,929 with zero ceiling increases; Knowledge Map is current at 1,104 facts/5,627 questions/5,793 occurrences/117 shards; Memory is 47 lines; no NEXSIM/PGEN release, API/schema/protocol version, implementation, runtime, result, parity, or product capability is claimed |
+
+## Acceptance Checklist (enforced) — `.13.3` NEXSIM API/MCP clarification
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'NEXSIM will expose deep semantic introspection' --oneline --all -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` returns no commit. Existing `.13.3` named only PGEN/NEXSIM versions, handoff, commands,
+  and final runtime gates; it did not own the director-confirmed deep semantic
+  API/MCP plane, its trust boundary, or first-divergence use.
+- [x] **ADDRESSED (verified)** — Proposed `.13.3`, the canonical audit, task
+  index, mdBook, fact card/Knowledge Map, and bounded Memory now require exact
+  API/MCP schemas, stable source-mapped semantic identities, snapshot-
+  consistent bounded deterministic queries, separate authorized controls,
+  supported HDL/UVM object domains, checkpoint correlation, first-divergence
+  localization, and an explicit provider-evidence rather than VIAL-authority
+  boundary. The exact maintained-reference change is `0/+32/+1,929`.
+- [x] **NO REGRESSION** — The focused docs/live/task/Knowledge Map suite
+  reports `All tests successful` at `Files=6, Tests=62`; all 49 mdBook chapters
+  test and the corrected repository-local build contains 85 files/16,737,521
+  bytes before exact removal. Task integrity remains three trees/907 nodes/one
+  segment/one index archive; Knowledge Map is current at 1,104 facts/5,627
+  questions/5,793 occurrences/117 shards; Memory is 47 lines; all nine staged
+  doctrines pass with zero ceiling increases. The rejected off-route build
+  destination and the exact successful build destination are both absent.
+  `.13.3` remains proposed/release-blocked, with no invented provider identity,
+  implementation, runtime, result, parity, or product-capability claim.
 
 ## Acceptance Checklist (enforced) — `.13.1.2` implementation
 
@@ -1089,8 +1124,17 @@ compiler-owned beneath C/C++ or Rust.
 | `.13.1.1` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1: ship native UVM emitter foundation` | Ship the private exact-Accellera native emitter foundation, structural validator, discoverable emission-only contract, ten-artifact deterministic graph, complete source map, first byte-checked review gallery, atomic publication, and exact non-claims. |
 | `.13.1.2` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2: activate complete native UVM structures` | Activate only complete selected component topology, timed interfaces, lifecycle control, and notification/interception emission after a clean predecessor; implementation remains unperformed. |
 | `.13.1.2` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2: ship complete native UVM structures` | Ship complete selected passive topology, strict root-owned lifecycle/logical time, ordered typed notification/interception with bounded queue-or-reject reentrancy, expanded static negative oracles, exact source maps, six-source review gallery, and honest compile/runtime/public-authoring boundaries. |
+| `.13.3` provider clarification | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3: capture NEXSIM semantic-introspection MCP contract` | Record the future versioned NEXSIM semantic API/MCP qualification plane, snapshot/control/query requirements, source-mapped checkpoint correlation, first-divergence localization, and provider-evidence boundary without inventing a release or activating runtime work. |
 
 ## Changelog
+
+- `2026-08-01`: `.13.3` now records the director's NEXSIM deep-semantic-
+  introspection API/MCP direction. Future qualification selects exact API and
+  protocol schemas, stable semantic identities, snapshot-consistent bounded
+  queries, explicit inspection/control permissions, source-map correlation,
+  and first-divergence localization against applicable IASIM or portable
+  checkpoints. NEXSIM remains provider evidence rather than VIAL semantic
+  authority; the leaf remains proposed and release-blocked.
 
 - `2026-08-01`: `.13.1.2` expands the simulator-neutral Accellera profile to
   an exact eleven-artifact graph with seven SystemVerilog sources and 42 mapped

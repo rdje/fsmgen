@@ -5,8 +5,7 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2`:
-  ship complete native UVM structures).
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3`: capture NEXSIM semantic-introspection MCP qualification contract).
 - active_work_unit: parent `.13.1` remains active; `.13.1.2` is complete and
   proposed `.13.1.3` is the next clean activation/implementation frontier.
 - current_state: private profile `sv_uvm_emit.accellera_2020_3_1` emits an
@@ -14,16 +13,17 @@ history; this file carries only the current bounded resume state.
   lifecycle, ordered typed notification/interception, 42 mapped symbols, ten
   structural checks, and six byte-checked gallery sources. Manual review and parse
   through runtime/results/parity remain unclaimed; `.13.2` is separately
-  dependency-ready and `.13.3` retains future PGEN+NEXSIM qualification.
-- next_action: from this clean implementation commit, durably route the
-  director's NEXSIM deep-semantic-introspection API/MCP clarification into its
-  `.13.3`/IASIM differential-qualification owners, then separately activate
-  `.13.1.3` for stimulus/TLM/factory/configuration/RAL/constrained decisions.
+  dependency-ready; `.13.3` now requires NEXSIM's versioned API/MCP semantic
+  checkpoint plane while exact PGEN+NEXSIM releases remain unavailable.
+- next_action: from this clean clarification commit, route NEXSIM semantic
+  checkpoints and first-divergence localization into the proposed IASIM `.8`
+  differential owner, then separately activate `.13.1.3` for stimulus/TLM/
+  factory/configuration/RAL/constrained decisions.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: `.13.3` waits on capability-ready PGEN/NEXSIM releases and handoff;
-  NEXSIM's API/MCP semantic identity/snapshot/control contract needs clean
-  follow-on routing. Live-document `.12` and inventory `.26` are deferred.
+- blockers: `.13.3` still waits on capability-ready PGEN/NEXSIM releases and
+  exact handoff/API/MCP identities; IASIM itself remains proposed. Live-
+  document `.12` and inventory `.26` are deferred.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
