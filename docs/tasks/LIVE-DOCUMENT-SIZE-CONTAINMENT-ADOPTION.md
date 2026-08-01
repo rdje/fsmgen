@@ -366,6 +366,9 @@ no routed destination becomes the next uninstrumented blob.
   the next clean selection is `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`,
   whose selected lifecycle contract is required before `.3` can prove the
   retained-ledger schema and `.4` can migrate `CHANGES.md`.
+- `2026-08-01`: Clean commit `8fdd5a22cc` activates prerequisite
+  `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` only. Containment `.3` and
+  `.4` remain blocked until that audit selects the long-term roles.
 
 ## Open Questions
 
@@ -382,13 +385,13 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- `.3`-`.5` and `.11`: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` must first
-  select the four files' long-term roles. `.24` and `.25` are complete, and the
-  director resumed containment on `2026-08-01`; no implementation leaf is
-  active in this handoff state. The next clean selection is the prerequisite
-  policy-review leaf `.1`, followed by containment schema `.3` and then the
-  `CHANGES.md` migration `.4`. `.12` remains the final post-migration
-  calibration.
+- `.3`-`.5` and `.11`: active prerequisite
+  `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` must first select the four
+  files' long-term roles. `.24` and `.25` are complete, and the director
+  resumed containment on `2026-08-01`; no containment implementation leaf is
+  active. After the policy audit commits cleanly, containment schema `.3` and
+  then the `CHANGES.md` migration `.4` are next. `.12` remains the final
+  post-migration calibration.
 
 ## Acceptance Checklist (enforced) — `.16` utility/retirement audit
 

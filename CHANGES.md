@@ -32282,12 +32282,10 @@ task tree and git.
 - Requires bounded owner/guarantee/recovery contracts for version objects and
   freezes the detailed review packet behind a 79-line bounded front door;
   focused regression passes at `Files=3, Tests=62`.
-
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23 — maintained-reference selection activated
 
 - Clean `.22` commit `2bfb32c02` activated `.23` alone for maintained-reference
   classification; enforcement, content, and behavior remained unchanged.
-
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23 — maintained-reference contract enforced
 
 - Added decision `0045`, the neutral `maintained_reference` schema, bounded mandatory-read/direct-navigation/per-part controls, and exact fresh aggregate-change authority.
@@ -32297,3 +32295,5 @@ task tree and git.
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25 — unused WARP bootstrap retired
 - Proved the exact 183-line source has no unique durable guidance or active consumer, then deleted it because warp.dev is no longer used.
 - Bootstrap checks now enforce WARP absence while retaining every remaining authority marker; exact Git recovery and all focused gates pass.
+### PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 — four-document lifecycle audit activated
+- Clean `8fdd5a22cc` activation starts the evidence audit only; task/doctrine gates pass and no reviewed document, policy, archive, or product behavior changes.

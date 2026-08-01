@@ -5,19 +5,22 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION: record
-  director reactivation`).
-- active_work_unit: no implementation leaf; the containment root is
-  director-reactivated after clean `.25` completion.
-- current_state: the reactivation is durable without falsely activating blocked
-  containment `.4`; `CHANGES.md` remains at its enforced 32,299-line ceiling.
-- next_action: activate `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` from the
-  clean boundary; its selected lifecycle contract unlocks containment schema
-  `.3`, which then unlocks the `CHANGES.md` migration `.4`.
+- latest_commit: this commit (`PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1:
+  activate four-document lifecycle audit`).
+- active_work_unit: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` is active
+  for the evidence-backed four-document lifecycle audit.
+- current_state: the interim decision-0025 split remains unchanged;
+  `CHANGES.md` is exactly at its 32,299-line ceiling and the audit is the
+  selected prerequisite for containment schema `.3` and migration `.4`.
+- next_action: audit content, history, audiences, consumers, automation,
+  overlap, and lifecycle alternatives for `CHANGES.md`,
+  `DEVELOPMENT_NOTES.md`, `ROADMAP_STATUS.md`, and
+  `LIVE_ACHIEVEMENT_STATUS.md`, then record a recommendation and exact
+  implementation decomposition without editing the reviewed files.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: `.3` and `.4` retain their declared policy-review dependency; the
-  former director pause is lifted.
+- blockers: none for the audit; containment `.3` and `.4` remain blocked until
+  `.1` selects the long-term roles.
 
 ## Durable context
 
