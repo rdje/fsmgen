@@ -5,17 +5,17 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12:
-  select open-source native UVM architecture`).
-- active_work_unit: `.12` is complete; active `.13`/`.13.1` own five proposed
-  full-emission leaves plus experimental `.13.2` and qualified `.13.3`.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1:
+  activate native UVM emitter substrate`).
+- active_work_unit: `.13.1.1` is active for the native emitter substrate and
+  first review gallery; `.13.2`/`.13.3` remain separate future evidence tiers.
 - current_state: decision `0050` selects simulator-neutral IEEE 1800.2-2020 /
   Accellera UVM 2020-3.1 at exact tag/commit. Full-shaped reviewable emission
   is unblocked; `.13.2` probes exact open-tool compile/elaboration from the
   first gallery; PGEN+NEXSIM retains future runtime qualification. Generated
   syntax may iterate while VIAL meaning stays fixed. No native code ships yet.
-- next_action: activate `.13.1.1` alone for the emitter substrate, static
-  validators, deterministic artifact graph, and first review gallery.
+- next_action: implement `.13.1.1` alone: emitter substrate, static validators,
+  deterministic artifact graph, and first review gallery.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` waits on capability-ready PGEN and NEXSIM releases and an

@@ -163,8 +163,11 @@ may iterate from review and tool diagnostics because they are compiler output.
 Exact emitter identity owns byte determinism; VIAL meaning, capability truth,
 artifact schemas, and source maps remain stable or are explicitly versioned.
 The shipped UVM 1.2 passive-monitor output stays unchanged and unqualified.
-`.13.1.1` is next for clean activation; `.13.3` alone retains the future
-PGEN+NEXSIM runtime blocker.
+Clean predecessor `6c6b70048` activates `.13.1.1` alone for the native emitter
+substrate, deterministic artifact graph, source maps, static validators, atomic
+publication, cleanup, and first review gallery. Activation changes no product
+behavior and claims no parser, compile, elaboration, simulation, result, or
+parity evidence. `.13.3` alone retains the future PGEN+NEXSIM runtime blocker.
 
 `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` now preserves a separate proposed
 architecture for an Intent Abstraction Simulator. IASIM is a first-class,
