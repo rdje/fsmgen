@@ -110,7 +110,10 @@ remain differentially equivalent to the pure-Perl route.
 - Later differential gates distinguish: native IASIM semantic signoff,
   IAL-level lowering equivalence, HDL code-generation validation, open-tool
   parsing/compile/elaboration/runtime evidence, and capability-qualified
-  HDL-simulator parity. None is silently substituted for another.
+  HDL-simulator parity. When an HDL simulator exposes versioned semantic
+  introspection, common source-mapped checkpoints identify the first
+  divergence instead of comparing only final results. None is silently
+  substituted for another.
 - Public commands, artifacts, limits, diagnostics, examples, mdBook guidance,
   Knowledge Map facts, and same-volume storage behavior are documented and
   tested before IASIM becomes a supported surface.
@@ -183,8 +186,8 @@ remain differentially equivalent to the pure-Perl route.
 - ID: `IASIM-EXECUTABLE-REFERENCE-SEMANTICS.8`
   Status: `proposed`
   Goal: `Establish AHB reference execution and optional staged differential parity with available and future HDL realizations.`
-  Acceptance: `Run the checked AHB HIAL/VIAL fixture under IASIM; first judge it by the native .7 signoff contract, then compare its normalized public outcomes with the existing handwritten and Verilator paths; classify disagreements by source intent, IAL lowering, IASIM, HDL generation, or HDL runtime; define future capability-gated comparison with native UVM, VHDL, PGEN plus NEXSIM, and commercial HDL simulators without making any external HDL path an IASIM dependency or semantic authority.`
-  Verification: `pending`
+  Acceptance: `Run the checked AHB HIAL/VIAL fixture under IASIM; first judge it by the native .7 signoff contract, then compare its normalized public outcomes with the existing handwritten and Verilator paths. Define a versioned common-checkpoint vocabulary over source/semantic IDs, logical time, values, transitions, events, transactions, checks, coverage, and results. For future PGEN plus NEXSIM qualification, consume only the exact capability-declared NEXSIM semantic-introspection API/MCP profile selected by HIAL/VIAL .13.3; map stable snapshot identities through generated source maps; compare snapshot-consistent bounded observations against IASIM without allowing MCP control to change either semantic oracle; stop at and preserve the first divergence with replay evidence; and classify disagreements by source intent, direct-versus-lowered IAL meaning, IASIM, UVM generation, PGEN handoff, elaboration, NEXSIM scheduler/runtime, provider adapter, or unsupported capability. Keep final normalized parity as a required closure gate, and define equivalent optional comparisons with native UVM, VHDL, and commercial HDL simulators without making any external HDL path an IASIM dependency or semantic authority.`
+  Verification: `NEXSIM deep-semantic API/MCP direction is captured for future differential design; exact checkpoint schema and provider identities remain pending .1/.2/.3 IASIM contracts plus capability-ready .13.3 releases`
   Commit: `pending`
 
 - ID: `IASIM-EXECUTABLE-REFERENCE-SEMANTICS.9`
@@ -233,6 +236,12 @@ implemented.
 - `2026-08-01`: Treat PGEN and NEXSIM as complementary. IASIM provides a
   pre-HDL executable oracle now and can later provide golden normalized results
   for PGEN/NEXSIM and commercial-simulator differential qualification.
+- `2026-08-01`: NEXSIM's planned deep semantic-introspection API operated via
+  MCP upgrades future differential qualification from final-result comparison
+  to first-divergence localization. IASIM owns the native side of a versioned
+  common-checkpoint vocabulary; `.13.3` owns the exact provider API/MCP profile.
+  Stable source-mapped identities and replay evidence join the two without
+  making NEXSIM, MCP, or the adapter authoritative over Intent Abstraction.
 - `2026-08-01`: IASIM is the small trusted execution kernel inside the proposed
   `XIAL-NATIVE-DEVELOPMENT-FRAMEWORK`. The sibling tree owns the complete
   authoring/reuse/debug/regression/visualization/signoff ecosystem through a
@@ -264,6 +273,9 @@ implemented.
   an xIAL-framework command, or several clients over one underlying kernel API?
 - Which representative xIAL workloads and budgets should establish whether a
   particular Perl kernel path is genuinely hot enough to justify acceleration?
+- What is the smallest common semantic-checkpoint vocabulary that can compare
+  IASIM with NEXSIM deeply enough to localize a first divergence without
+  encoding SystemVerilog scheduler details as native Intent Abstraction rules?
 
 ## Blockers
 
@@ -306,12 +318,14 @@ implemented.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-08-01` | `IASIM-EXECUTABLE-REFERENCE-SEMANTICS.1` | `pending` | `pending` |
+| `2026-08-01` | `IASIM-EXECUTABLE-REFERENCE-SEMANTICS.8` provider clarification | task/index/Memory continuity; relative paths/task integrity/Knowledge Map/diff/staged docs-only acceptance/doctrines | `passed`; focused docs/task checks report `All tests successful` at Files=2/Tests=43; task integrity remains three trees/907 nodes/one segment/one index archive; Knowledge Map remains current at 1,104 facts/5,627 questions/5,793 occurrences/117 shards; Memory is 45 lines; all nine staged doctrines pass; the mdBook/fact API/MCP explanation from clean predecessor `ae2f29f01` remains unchanged; proposed `.8` owns common checkpoints, stable source-map identity correlation, first-divergence replay, and mismatch taxonomy without implementation or provider capability claims |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `IASIM-EXECUTABLE-REFERENCE-SEMANTICS.1` | `pending` | Proposed architecture/proof-boundary audit only; no implementation selected. |
+| `.8` provider clarification | `IASIM-EXECUTABLE-REFERENCE-SEMANTICS.8: capture NEXSIM MCP differential checkpoints` | Refine the proposed future differential boundary only; IASIM and provider work remain inactive. |
 
 ## Changelog
 
@@ -326,3 +340,9 @@ implemented.
 - `2026-08-01`: Recorded the director-confirmed Perl-first implementation
   strategy and optional measured `Rust -> shared library -> Perl` acceleration
   boundary without activating IASIM implementation.
+- `2026-08-01`: Recorded NEXSIM's planned deep-semantic API/MCP surface in
+  proposed `.8`: IASIM-to-NEXSIM qualification will correlate stable
+  source-mapped common checkpoints, preserve the first divergence and replay
+  evidence, and classify the responsible semantic/lowering/generation/
+  handoff/elaboration/runtime/adapter layer instead of relying only on a final
+  result mismatch.

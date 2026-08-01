@@ -5,7 +5,7 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3`: capture NEXSIM semantic-introspection MCP qualification contract).
+- latest_commit: this commit (`IASIM-EXECUTABLE-REFERENCE-SEMANTICS.8`: capture NEXSIM MCP differential checkpoints).
 - active_work_unit: parent `.13.1` remains active; `.13.1.2` is complete and
   proposed `.13.1.3` is the next clean activation/implementation frontier.
 - current_state: private profile `sv_uvm_emit.accellera_2020_3_1` emits an
@@ -15,15 +15,13 @@ history; this file carries only the current bounded resume state.
   through runtime/results/parity remain unclaimed; `.13.2` is separately
   dependency-ready; `.13.3` now requires NEXSIM's versioned API/MCP semantic
   checkpoint plane while exact PGEN+NEXSIM releases remain unavailable.
-- next_action: from this clean clarification commit, route NEXSIM semantic
-  checkpoints and first-divergence localization into the proposed IASIM `.8`
-  differential owner, then separately activate `.13.1.3` for stimulus/TLM/
-  factory/configuration/RAL/constrained decisions.
+- next_action: from this clean clarification commit, separately activate
+  `.13.1.3` for stimulus/TLM/factory/configuration/RAL/constrained decisions.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: `.13.3` still waits on capability-ready PGEN/NEXSIM releases and
-  exact handoff/API/MCP identities; IASIM itself remains proposed. Live-
-  document `.12` and inventory `.26` are deferred.
+- blockers: `.13.3` still waits on exact capability-ready PGEN/NEXSIM handoff/
+  API/MCP identities; IASIM remains proposed. Live-document `.12` and inventory
+  `.26` are deferred.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
