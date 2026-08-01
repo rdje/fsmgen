@@ -3,17 +3,18 @@
 ## Metadata
 
 - Tree ID: `MDBOOK-PARAGRAPH-SPACING`
-- Status: `done`
+- Status: `proposed`
 - Roadmap lane: `project documentation`
 - Created: `2026-05-19`
-- Last updated: `2026-05-19`
+- Last updated: `2026-08-01`
 - Owner: repo-local workflow
 
 ## Goal
 
-Make the mdBook source easier to read and review by ensuring prose
-paragraphs are separated by one blank line instead of running together as
-large text blobs.
+Make the rendered mdBook easier to read and review by ensuring prose
+paragraphs have clear visual separation instead of running together as large
+text blobs, with source changes limited to those needed for the rendered
+result.
 
 ## Non-Goals
 
@@ -30,6 +31,9 @@ large text blobs.
   fenced code blocks, headings, and admonition-like blocks, remain intact.
 - Rendered HTML no longer contains obvious long prose list-item blobs in the
   reported chapters.
+- A browser-based regression audit checks the actual rendered HTML, including
+  representative long chapters, ordinary paragraphs, list-contained prose,
+  and the relevant theme/CSS behavior at recorded viewport and theme settings.
 - `mdbook build docs/book` passes.
 - A focused diff review confirms the slice is formatting-only.
 - Each completed leaf is committed through `COMMIT.md`.
@@ -37,9 +41,9 @@ large text blobs.
 ## Task Tree
 
 - ID: `MDBOOK-PARAGRAPH-SPACING`
-  Status: `done`
+  Status: `proposed`
   Goal: `Normalize mdBook prose paragraph separation without changing technical content.`
-  Children: `MDBOOK-PARAGRAPH-SPACING.1`, `MDBOOK-PARAGRAPH-SPACING.2`, `MDBOOK-PARAGRAPH-SPACING.3`, `MDBOOK-PARAGRAPH-SPACING.4`
+  Children: `MDBOOK-PARAGRAPH-SPACING.1`, `MDBOOK-PARAGRAPH-SPACING.2`, `MDBOOK-PARAGRAPH-SPACING.3`, `MDBOOK-PARAGRAPH-SPACING.4`, `MDBOOK-PARAGRAPH-SPACING.5`
 
 - ID: `MDBOOK-PARAGRAPH-SPACING.1`
   Status: `completed`
@@ -69,11 +73,18 @@ large text blobs.
   Verification: `mdbook build docs/book; rendered HTML audit for long paragraphs and long list items; whitespace-normalized source comparison against HEAD; git diff --check`
   Commit: `3047fd10 MDBOOK-PARAGRAPH-SPACING.4: split rendered book prose blobs`
 
+- ID: `MDBOOK-PARAGRAPH-SPACING.5`
+  Status: `proposed`
+  Goal: `Audit paragraph separation in the actual rendered mdBook with the in-app browser.`
+  Acceptance: `Build and serve the mdBook from repository-local paths; inspect representative long chapters and DOM-metric-selected candidates in the in-app browser; record viewport and theme; visually check ordinary paragraph spacing, list-contained paragraphs, and long list-item prose; inspect the DOM and effective theme/CSS to distinguish Markdown-structure defects from presentation defects; preserve durable repository-local evidence; and select a bounded formatting-only repair leaf only if a rendered regression is confirmed.`
+  Verification: `repository-local mdbook build and server; in-app-browser visual inspection and screenshots; DOM/effective-CSS audit; git diff --check`
+  Commit: `pending separate activation; this non-urgent reminder is parked without book-content changes`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `closed` | `done` | Rendered HTML prose-blob cleanup is complete and validated across the built book. |
+| 1 | `MDBOOK-PARAGRAPH-SPACING.5` | `proposed` | Recheck the actual rendered book in the in-app browser when this non-urgent maintenance leaf is explicitly activated. |
 
 ## Decisions
 
@@ -84,10 +95,14 @@ large text blobs.
   Markdown paragraph splitting did not affect long list items, which still
   render as single `<li>` blobs unless list-contained paragraph breaks are
   inserted.
+- `2026-08-01`: Park a non-urgent browser-based regression audit rather than
+  inferring visual quality from Markdown source or build success alone. The
+  audit must distinguish content structure from effective theme/CSS behavior
+  and must not interrupt the active HIAL/VIAL frontier.
 
 ## Open Questions
 
-- None for `.4`; the remaining work is a rendered-HTML formatting fix.
+- None. `.5` remains proposed until explicitly activated.
 
 ## Blockers
 
@@ -123,3 +138,6 @@ large text blobs.
 - `2026-05-19`: Completed `.4` by splitting the remaining rendered long
   paragraphs and list-item blobs in the mdBook sources and included downstream
   ISF handoff document; generated HTML now passes the long-prose audit.
+- `2026-08-01`: Reopened the tree as proposed and parked `.5` for a future
+  in-app-browser regression audit of the actual rendered book. No mdBook
+  content or presentation changed in this planning-only slice.
