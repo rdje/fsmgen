@@ -5,20 +5,19 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10:
-  bound cards and shard knowledge discovery`).
-- active_work_unit: `.10` completes in this commit; no implementation leaf is
-  active across the clean handoff.
-- current_state: 1,105 bounded canonical cards generate a 135-line root plus
-  117 deterministic topic shards; query-first cached/direct lookup is checked,
-  exact activation-source recovery preserves every split answer, and the stale
-  copied `.276` frontier is replaced by the checked task-tree route.
-- next_action: from this clean `.10` commit, activate `.13` alone for focused
-  and ancillary collection containment; leave director-deferred `.26` pending.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13:
+  activate focused-document containment`).
+- active_work_unit: `.13` alone is active from clean `.10` commit `3b71cb0b1`.
+- current_state: the focused source is 1,005 files / 212,294 lines / 9,400,050
+  bytes, led by the 6,254-line ISF specification and the independent 7,536-byte
+  BIN_FSMGEN import-tree line; 12 ancillary files remain healthy.
+- next_action: classify every focused and ancillary document by audience and
+  lifecycle, design the complete bounded indexes, then partition only stable-
+  topic semantic outliers while preserving unique maintained content.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: none for `.13`; `.26` retains the deferred inventory. The knowledge-
-  card file ceiling is exactly occupied until `.12` derives reviewed budgets,
+- blockers: none for active `.13`; `.26` retains the deferred inventory. The
+  knowledge-card file ceiling is exactly occupied until `.12` derives budgets,
   so interim facts must supersede/consolidate or obtain explicit authority.
 
 ## Durable context
@@ -42,4 +41,5 @@ history; this file carries only the current bounded resume state.
   `0048`/`0049`. Push only on request (`0005`); PNT runs autonomously (`0003`).
   `.5` bounds the rationale ledger; `.8` completes the Chapter 14 partition;
   `.9` bounds strategic direction and preserves exact chronology; `.10` bounds
-  canonical cards and replaces the flat map with checked query-first shards.
+  canonical cards and replaces the flat map with checked query-first shards;
+  clean `3b71cb0b1` activates `.13` alone.

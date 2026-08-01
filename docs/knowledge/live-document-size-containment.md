@@ -285,6 +285,15 @@ new durable fact must supersede or consolidate an existing card, or carry an
 explicit reviewed ceiling authority. Generated shards and query caches can
 never own canonical facts or bypass that control.
 
+Clean `.10` commit `3b71cb0b1` activates `.13` alone against 1,005 focused
+documents totaling 212,294 lines / 9,400,050 bytes and 12 ancillary documents
+totaling 1,558 lines / 79,973 bytes. `docs/ISF_SPEC.md` is the distinct
+6,254-line part outlier; `docs/BIN_FSMGEN_IMPORT_TREE.md:82` owns the separate
+7,536-byte-line outlier. The activation gate also found that `t/1553` retained
+pre-`.10` exact graph counts after the shard surface landed; its three emitted
+count expectations are repaired without changing the checker or topology.
+Activation changes no document, index, or limit.
+
 Leaf `.11` independently retires the former achievement journal under decision
 `0048`, exact version retrieval, and live-path/consumer absence enforcement.
 Its separate roadmap-status audit found the 15,039-line board 1,786 commits

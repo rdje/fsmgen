@@ -143,12 +143,12 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13`
-  Status: `pending`
+  Status: `active`
   Goal: `Classify and bound focused root-level and ancillary Markdown collections.`
   Acceptance: `Every docs/*.md and ancillary Markdown surface has an audience/lifecycle owner and bounded complete index; the current 6,254-line focused outlier and any other semantic outliers are partitioned only at stable topic boundaries; unique maintained content remains in an appropriate browsable home; per-part/file-count/aggregate/freshness/link checks pass below warning without changing product behavior.`
-  Verification: `pending`
-  Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24`
+  Verification: `Activated alone from clean .10 commit 3b71cb0b1. The focused source is 1,005 files / 212,294 lines / 9,400,050 bytes; docs/ISF_SPEC.md is the 6,254-line / 392,322-byte per-part outlier, while docs/BIN_FSMGEN_IMPORT_TREE.md owns the distinct 7,536-byte longest line. The next two largest focused specifications are docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md at 4,485 lines / 227,933 bytes and docs/ISF_PUBLIC_INTERFACE_CONTRACT.md at 3,759 lines / 253,774 bytes. The ancillary source is healthy at 12 files / 1,558 lines / 79,973 bytes, with maxima 502 lines / 21,728 bytes / 780 line bytes. The activation gate exposed and repairs t/1553's committed pre-.10 surface/category counts while preserving the underlying checker result. This selection otherwise changes only task/index/book/fact/Memory continuity and matching maintained-reference authority; no focused or ancillary content, path, partition, index, registry topology, pressure limit, or product behavior changes. Final activation evidence is recorded below.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13: activate focused-document containment`
+  Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14`
   Status: `done`
@@ -481,6 +481,13 @@ no routed destination becomes the next uninstrumented blob.
   The workflow rebuilt at `.artifacts/...`, matched file count, byte count, and
   aggregate SHA-256 `f66183f9...`, deleted only the exact old directory, and
   proved no named residue. `TOOLBOX.md` now records the safe explicit form.
+- `2026-08-01`: Clean `.10` commit `3b71cb0b1` activates `.13` alone. The
+  selection fixes the complete focused and ancillary sources before any
+  lifecycle classification, stable-topic partition, or bounded-index change.
+- `2026-08-01`: The activation suite found that `.10` added the Knowledge Map
+  shard surface without updating `t/1553`'s three exact project-graph counts.
+  The checker already passes all 20 surfaces and 2,925 paths; `.13` repairs only
+  the stale 19/4/6 expectations to the emitted 20/7/4 topology.
 
 ## Open Questions
 
@@ -501,8 +508,15 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- `.10` is complete. `.13` is the next clean containment selection; `.26`
-  still owns the broader legacy-continuity inventory and remains deferred.
+- None for active `.13`; completed `.16`, `.23`, and `.24` supply its utility,
+  maintained-reference, and exact-supersession prerequisites. `.26` still owns
+  the broader legacy-continuity inventory and remains director-deferred.
+
+## Acceptance Checklist (enforced) — `.13` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — ``git log -S'Focused `docs/*.md` collection' --oneline -- docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md`` identifies `18e2dcbc6`, while `git log -S'docs/ISF_SPEC.md is unique product reference' --oneline -- doctrine/live_document_size/surfaces.jsonl docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md docs/book/src/90-reference-map.md` identifies completed prerequisite `425cd7fef`. At clean `.10` commit `3b71cb0b1`, the focused collection has 1,005 files / 212,294 lines / 9,400,050 bytes: `docs/ISF_SPEC.md` is 6,254 lines / 392,322 bytes, and `docs/BIN_FSMGEN_IMPORT_TREE.md:82` is the independent 7,536-byte-line outlier. The 12 ancillary files total 1,558 lines / 79,973 bytes and remain healthy.
+- [x] **ADDRESSED (verified)** — clean `.10` commit `3b71cb0b1` activates `.13` alone and records the exact focused/ancillary source plus distinct line-count, byte-count, and line-width outliers. `git blame -L 29,33 -- t/1553-readme-routed-destination-pressure.t` proves the hard-coded surface/category assertions predate `.10`'s added shard surface; the activation repairs only those emitted project-graph expectations from 19/4/6 to 20/7/4. Classification, document contents and paths, partitions, collection indexes, registry topology, pressure limits, and product behavior remain unchanged.
+- [x] **NO REGRESSION** — the corrected RAM-guarded focused cluster reports `All tests successful` at `Files=5, Tests=73`. The common checker passes 20 surfaces / 2,925 paths, accepts the maintained-reference delta `files=0 / lines=+5 / bytes=+308`, and reports zero ceiling increases; Knowledge Map passes at 1,104 facts / 5,582 unique questions, task integrity at three trees / 899 nodes, and Memory at 45 lines. All 49 mdBook chapters test, and the repository-local 85-file / 17,710,132-byte build passes and is removed exactly. Final staged acceptance and doctrine evidence is recorded below; no document content or path, collection topology, pressure limit, compiler/runtime/generated-HDL behavior, or product behavior changes.
 - The canonical-card file ceiling is intentionally exact after `.10`; `.12`
   owns reviewed retained-surface budgets after its remaining prerequisites.
 
@@ -760,6 +774,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.9` bounded roadmap | complete six-range disposition; exact activation-source descriptor; required-history retrieval adapter; bounded strategic view; negative chronology/route/identity/pressure controls; root/roadmap ratchet; rationale append; focused/path/task/live-size/reference/ceiling/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 10,451/772,074/longest 2,297/SHA-256 6c7e00fe...; live 317/14,606/longest 182 at 49.5% derived peak; root 18/18,387/6,294,386 with ceiling lowered to 6,556,530; focused Files=8/Tests=87; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,800 paths split 4 migrated/6 deferred/6 steady; rationale 2,846 entries; reference delta 0/+4/+269; Knowledge Map 1,096/5,762; Memory 41; all 49 chapters; removed build 85/17,698,695; zero ceiling increases; product behavior unchanged; `.10` next |
 | `2026-08-01` | `.10` activation | clean `a20d38afc` predecessor; exact canonical-card and generated-map identities; task/index/book/fact/Memory continuity; redundant-row and stale-headroom correction; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source cards 1,097/42,116/3,214,095 with max 855/62,994/5,498-byte line; map byte-identical at 15,637/6,152,312/10,275-byte line/SHA-256 aa8fb21b... and 1,096 facts/5,762 keys; focused Files=5/Tests=72; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,800 paths; reference delta 0/+5/+304; Memory 41; all 49 chapters; removed build 85/17,701,192; root baseline/ceiling -2 bytes and zero ceiling increases; no card split, topology/query/cache/limit increase, or product behavior change |
 | `2026-08-01` | `.10` bounded knowledge discovery | exact activation-source descriptors and deterministic answer partitions; constrained metadata folding; UTF-8-safe bounded root/shards; cached/direct fixed-substring query parity and stale-cache repair; generated-collection schema/freshness/index proof; bootstrap/hook/CI/book/fact/task sync; syntax/focused/path/locality/task/live-size/reference/ceiling/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; cards 1,105/41,346/3,126,393 with max 295/20,210/819; root 135/11,257; shards 117/14,363/1,634,587 with max 2,551/313,509/625; 1,104 facts/5,582 unique questions/5,748 occurrences; focused Files=4/Tests=26; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 20 surfaces/2,925 staged paths; reference delta 0/+21/+762; Memory 45; Toolbox 319; all 49 chapters; repository-local build 85/17,707,985; mistaken off-root build matched at SHA-256 f66183f9... then was deleted with zero exact residue; zero ceiling increases; all doctrines pass; product behavior unchanged; `.13` next |
+| `2026-08-01` | `.13` activation | clean `3b71cb0b1` predecessor; exact focused/ancillary collection identities; stale t/1553 project-graph count repair; task/index/book/fact/Memory continuity; focused/path/task/live-size/reference/ceiling/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source focused 1,005/212,294/9,400,050 with max 6,254/392,322/7,536-byte line; ancillary 12/1,558/79,973 with max 502/21,728/780-byte line; focused Files=5/Tests=73; checker 20 surfaces/2,925 paths; reference delta 0/+5/+308; zero ceiling increases; Knowledge Map 1,104/5,582; trees=3/nodes=899; Memory 45; all 49 chapters; removed build 85/17,710,132; all nine staged doctrines pass; exact stale expectations move 19/4/6 to 20/7/4; no content, path, partition, index, topology, limit, or product behavior change |
 
 ## Commit Log
 
@@ -810,8 +825,17 @@ no routed destination becomes the next uninstrumented blob.
 | `.9` bounded roadmap | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9: bound roadmap and retain chronology` | Retain strategy in a 317-line live view and preserve the exact 10,451-line activation object through a descriptor-backed, executed Git recovery contract. |
 | `.10` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10: activate bounded knowledge discovery` | Activate only canonical-card fact-boundary containment and sharded query-first projection work from clean `.9`; topology and lookup behavior remain pending. |
 | `.10` bounded knowledge discovery | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10: bound cards and shard knowledge discovery` | Preserve exact over-limit source history and answers, bound canonical cards, generate a small root plus deterministic topic shards, and make cached/direct query parity executable; `.13` is the next clean selection. |
+| `.13` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13: activate focused-document containment` | Activate only focused/ancillary classification, stable-topic partitioning, and bounded complete-index work from clean `.10`; document topology and enforcement remain pending. |
 
 ## Changelog
+
+- `2026-08-01`: Clean `.10` commit `3b71cb0b1` activates `.13` alone against
+  the exact focused and ancillary source collections. No document content or
+  path, partition, index, registry topology, pressure limit, or product
+  behavior changes in this selection slice.
+- `2026-08-01`: The activation gate also repairs `t/1553`'s stale exact graph
+  expectations after `.10` added the generated shard surface: 20 total, seven
+  migrated, and four pinned/deferred surfaces now match checker truth.
 
 - `2026-08-01`: `.10` re-forms the three over-limit activation cards into
   eleven deterministic bounded cards with exact Git recovery and answer-set

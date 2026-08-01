@@ -298,6 +298,11 @@ Leaf `.13` must first create stable semantic parts and a bounded complete index.
 Classification alone never waives current controls or turns a monolithic file
 into a compliant maintained reference.
 
+Clean `.10` commit `3b71cb0b1` activates `.13` alone against 1,005 focused
+documents and 12 ancillary documents. The 6,254-line ISF specification and the
+independent 7,536-byte import-tree line are separate containment questions;
+activation records them without changing content, paths, indexes, or limits.
+
 The roadmap has a different role: it is a bounded current-direction snapshot,
 not shipped-behavior reference or exact chronology. Clean commit `dc1c64afb`
 fixes the exact 10,451-line activation source. Leaf `.9` retains product
