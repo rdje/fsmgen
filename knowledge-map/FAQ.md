@@ -110,7 +110,17 @@ it is always in sync and you spend zero time on it.
 
 ## "Won't the map get huge and slow to read?"
 
-It is a flat, sorted, greppable list — an agent jumps to the matching question line, it does
-not read top-to-bottom. And because facts are atomic and front-mattered, an agent can skip
-the map entirely and grep the fact files directly. The map is a convenience cache, not a
-load-bearing dependency.
+The root map stays small: it reports counts, shows the query command, and links
+bounded deterministic topic shards. Normal retrieval is a case-insensitive
+fixed-substring query:
+
+```bash
+knowledge-map/scripts/query_knowledge_map.sh 'question words'
+```
+
+Each unique question is emitted once and may link multiple canonical cards.
+The default query cache is disposable and repository-local under `.artifacts/`;
+`--no-cache` proves the same result directly from committed shards. Independent
+card, root, per-shard, shard-count, and aggregate caps prevent moving the old
+monolith into an unbounded neighbor. Facts remain atomic/front-mattered and can
+still be searched directly, so neither projection nor cache is load-bearing.

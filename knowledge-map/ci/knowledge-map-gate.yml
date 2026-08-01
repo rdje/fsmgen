@@ -12,5 +12,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate facts + assert the Knowledge Map is in sync
+      - name: Validate bounded facts, root/shards, freshness, and query parity
         run: bash knowledge-map/scripts/check_knowledge_map.sh

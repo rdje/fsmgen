@@ -19,9 +19,10 @@ git config core.hooksPath .githooks             # if not already set
 # then apply the hook + CI snippets the installer prints
 ```
 
-The only per-project knobs (env, or a repo-root `.knowledge_map.conf`):
-`KM_SCAN_DIRS` (default `docs/knowledge docs/decisions`), `KM_OUTPUT`
-(default `KNOWLEDGE_MAP.md`), `KM_TITLE`.
+The main per-project knobs (env, or a repo-root `.knowledge_map.conf`) are
+`KM_SCAN_DIRS`, `KM_OUTPUT`, `KM_SHARD_DIR`, `KM_QUERY_CACHE_DIR`, and
+`KM_TITLE`. Defaults keep canonical and generated data repository-relative;
+disposable query data lives under `.artifacts/`.
 
 ## What's in the bundle
 
@@ -30,7 +31,9 @@ The only per-project knobs (env, or a repo-root `.knowledge_map.conf`):
 | `KNOWLEDGE_MAP_ARCHITECTURE.md` | the standard: the model, the fact format, what to index / what NEVER to convert, enforcement, the read path |
 | `FAQ.md` | plain-language explainer (no conversion, the ceiling, costs, sizing) |
 | `scripts/gen_knowledge_map.sh` | derives the deterministic map from fact front-matter |
-| `scripts/check_knowledge_map.sh` | validates facts + asserts the map is in sync (hook + CI) |
+| `scripts/query_knowledge_map.sh` | searches unique question rows with cached/direct parity |
+| `scripts/knowledge_map.pl` | shared dependency-free parser, projection, query, and bounds core |
+| `scripts/check_knowledge_map.sh` | validates bounded cards/root/shards, freshness, coverage, and query parity |
 | `scripts/knowledge_map.conf` | bundle-default config (`:=`, so env / repo override win) |
 | `templates/FACT_TEMPLATE.md` | copy this to author a fact |
 | `hooks/pre-commit.snippet` | lines to add to `.githooks/pre-commit` |
@@ -41,16 +44,18 @@ The only per-project knobs (env, or a repo-root `.knowledge_map.conf`):
 
 A **fact** is one `.md` with a non-empty `answers:` list in its YAML front-matter (the
 questions an agent would search for) plus `id`/`title`/`date` and `evidence`/`reverify`. The
-generator harvests those into a deterministic `Questions → fact` map. The pre-commit hook
-regenerates + stages it (zero agent cost), CI checks it (no drift). A fact card is a
+generator harvests those into a bounded root plus deterministic topic shards. The
+pre-commit hook regenerates + stages the complete projection (zero agent cost),
+CI checks it (no drift). A fact card is a
 **signpost** that points at the canonical home (book/code/decision record) — it does not copy
 it. Facts are added **lazily**, one at a time, whenever you establish a durable fact or catch
 yourself re-deriving one. **No migration project.**
 
 ## How a future agent uses it
 
-1. Open `KNOWLEDGE_MAP.md`. 2. Find the question. 3. Follow the one pointer; trust the dated
-fact or run its `reverify` command. 4. Only investigate if the fact genuinely is not there —
-then write a card so it never has to be investigated again.
+1. Run `knowledge-map/scripts/query_knowledge_map.sh 'question words'`.
+2. Follow the returned card path. 3. Trust the dated fact or run its `reverify`
+command. 4. Only investigate if the fact genuinely is not there — then write a
+card so it never has to be investigated again.
 
 > Read `KNOWLEDGE_MAP_ARCHITECTURE.md` and `FAQ.md` before authoring facts.

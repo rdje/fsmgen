@@ -119,11 +119,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10`
-  Status: `active`
+  Status: `done`
   Goal: `Bound canonical knowledge cards, shard the generated Knowledge Map, and add query-first discovery.`
   Acceptance: `Oversized cards split only on stable fact boundaries without duplicating or losing answers; cards remain canonical; a small root projection plus deterministic prefix/topic shards cover every fact/key exactly once; freshness, per-card, per-shard, aggregate, and query-result parity tests pass; disposable query caches remain repository-local under .artifacts/.`
-  Verification: `Activated alone from clean .9 commit a20d38afc. The exact source has 1,097 knowledge-card files / 42,116 lines / 3,214,095 bytes, with one 855-line / 62,994-byte card and a 5,498-byte longest line; the generated map is 15,637 lines / 6,152,312 bytes / longest line 10,275 / SHA-256 aa8fb21b... and covers 1,096 facts / 5,762 question keys. This selection changes only task/index/book/fact/Memory continuity, a byte-identical deterministic projection regeneration, the matching maintained-reference authority, and a two-byte downward root aggregate ratchet; no card split, map topology, generator/config/query/cache behavior, pressure limit increase, or product behavior changes. Final activation evidence is recorded below.`
-  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10: activate bounded knowledge discovery`
+  Verification: `Activation commit aadbd14a5 fixes 1,097 card files / 42,116 lines / 3,214,095 bytes and the 15,637-line / 6,152,312-byte monolithic map. Three exact Git descriptors plus an executable verifier now re-form the three over-limit sources as eleven deterministic bounded cards while proving source identity, answer-set equality, no duplicate replacement answer, and current-frontier routing. The canonical collection is 1,105 files / 41,346 lines / 3,126,393 bytes, with maxima 295 lines / 20,210 bytes / 819 line bytes. One dependency-free core generates a 135-line / 11,257-byte root and 117 deterministic topic shards totaling 14,363 lines / 1,634,587 bytes; the largest shard is 2,551 lines / 313,509 bytes and the longest shard line is 625 bytes. It catalogs 1,104 facts once and owns each of 5,582 unique questions once while retaining 5,748 answer occurrences. Cached and direct fixed-substring queries agree, and disposable cache state remains below .artifacts/knowledge-map/query/. The live-document core now governs deterministic generated collections with canonical inputs and complete bounded indexes. Focused and final gate evidence is recorded below; no ceiling increases or product/compiler/runtime/generated-HDL behavior changes.`
+  Commit: `aadbd14a5 (activation); this commit (bounded cards and query-first shards)`
   Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11`
@@ -450,6 +450,37 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-08-01`: Clean `.9` commit `a20d38afc` activates `.10` alone. The
   selection fixes the exact canonical-card and generated-map source before any
   fact-boundary split, projection sharding, query interface, or cache change.
+- `2026-08-01`: `.10` keeps canonical facts in bounded cards and makes every
+  generated read unit derived. A small root owns topic navigation; the first
+  two fact-ID components deterministically own each shard and fact catalog;
+  the lexically first matching fact owns a shared question row whose links name
+  every matching fact. This preserves one projected question occurrence
+  without suppressing legitimate multi-fact answers.
+- `2026-08-01`: Long `evidence`, `reverify`, and singular `answer` metadata use
+  constrained YAML `>-` folding. The formatter proves parsed-value equality,
+  so line containment changes representation without changing fact meaning.
+  Query cache rows live only below `.artifacts/knowledge-map/query/`; committed
+  root/shards and canonical cards remain sufficient for cache-free recovery.
+- `2026-08-01`: The migration found a stale `.276` “current next slice” claim
+  in `ial2-feature-completeness-next-slice.md`. Exact historical answers move
+  to bounded history cards, while the current card now routes to the checked
+  task-tree frontier instead of copying a numeric frontier into durable facts.
+  Final route review also replaced the inherited retired
+  `14-backends-and-validation.md` evidence target with the live
+  `14l-backends-validation-and-apis.md` chapter in the deterministic VHDL
+  materializer, then re-proved all four generated card routes.
+- `2026-08-01`: The no-ceiling-increase migration exactly occupies the 1,105-
+  file canonical-card ceiling. Until `.12` derives reviewed retained-surface
+  budgets, any net-new fact file must instead supersede/consolidate an existing
+  card or carry explicit reviewed ceiling authority; generated shards and
+  caches cannot bypass canonical storage. This risk is owned by `.12`, not a
+  reason to weaken `.10` fail-closed enforcement.
+- `2026-08-01`: `mdbook build -d` resolves its destination from the invoking
+  working directory, not the book root. A mistaken `../../.artifacts/...`
+  verification path produced 85 files / 17,707,985 bytes outside the repository.
+  The workflow rebuilt at `.artifacts/...`, matched file count, byte count, and
+  aggregate SHA-256 `f66183f9...`, deleted only the exact old directory, and
+  proved no named residue. `TOOLBOX.md` now records the safe explicit form.
 
 ## Open Questions
 
@@ -470,9 +501,16 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None for active `.10`; completed `.16` supplies the evidence-backed
-  retain-facts/re-form-projection selection. `.26` still owns the broader
-  legacy-continuity inventory and remains deferred.
+- `.10` is complete. `.13` is the next clean containment selection; `.26`
+  still owns the broader legacy-continuity inventory and remains deferred.
+- The canonical-card file ceiling is intentionally exact after `.10`; `.12`
+  owns reviewed retained-surface budgets after its remaining prerequisites.
+
+## Acceptance Checklist (enforced) — `.10` bounded knowledge discovery
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'| Knowledge cards and map |' --oneline -- docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md` identifies the original measured family, and activation commit `aadbd14a5` fixes a 1,097-file canonical collection whose largest card is 855 lines / 62,994 bytes with a 5,498-byte line, plus one generated 15,637-line / 6,152,312-byte / 10,275-byte-line root. Source inspection identifies three over-limit cards, repeated mutable numeric-frontier prose, a flat projection that repeats every answer/fact in one read unit, and no bounded query contract.
+- [x] **ADDRESSED (verified)** — `scripts/check_knowledge_card_history.pl` proves exact Git identity and answer-set-preserving deterministic replacement for the three sources. `knowledge-map/scripts/knowledge_map.pl` parses constrained folded metadata, enforces card/root/shard/aggregate limits, emits a bounded root plus deterministic topic shards, owns every fact and unique question once, and provides cached/direct query parity. The live-document core and registry govern the shard collection from canonical inputs through a complete root index; bootstrap, hook, CI, architecture, toolbox, agent entrypoint, fact, and mdBook routes all name the new read path.
+- [x] **NO REGRESSION** — the RAM-guarded focused suite reports `All tests successful` at `Files=4, Tests=26`, including UTF-8 generation, exact source recovery, answer equality, deterministic regeneration, stale/missing/extra projection controls, invalid and structurally-valid-stale cache rebuild, absolute and symlink path breakout, collection-index negatives, and metadata folding. The bounded collection is 1,105 files / 41,346 lines / 3,126,393 bytes; the root is 135 / 11,257 and 117 shards total 14,363 / 1,634,587. Final staged task acceptance, containment, maintained-reference authority, zero-ceiling-increase, mdBook, locality, and all-doctrine evidence is recorded below; no product/compiler/runtime/generated-HDL behavior changes.
 
 ## Acceptance Checklist (enforced) — `.10` activation
 
@@ -721,6 +759,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.9` activation | clean `dc1c64afb` predecessor; exact roadmap identity; task/index/roadmap/book/fact/Memory sync; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; activation source 10,451/772,074/longest 2,297/SHA-256 6c7e00fe...; focused Files=5/Tests=72; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,800 paths; reference delta 0/+5/+310; Knowledge Map 1,096/5,762; Memory 42; all 49 chapters; removed build 85/17,697,234; zero ceiling increases; only the bounded final frontier sentence changes; `.9` alone active; no direction claim, history, link, limit, generated artifact, or product behavior change |
 | `2026-08-01` | `.9` bounded roadmap | complete six-range disposition; exact activation-source descriptor; required-history retrieval adapter; bounded strategic view; negative chronology/route/identity/pressure controls; root/roadmap ratchet; rationale append; focused/path/task/live-size/reference/ceiling/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 10,451/772,074/longest 2,297/SHA-256 6c7e00fe...; live 317/14,606/longest 182 at 49.5% derived peak; root 18/18,387/6,294,386 with ceiling lowered to 6,556,530; focused Files=8/Tests=87; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,800 paths split 4 migrated/6 deferred/6 steady; rationale 2,846 entries; reference delta 0/+4/+269; Knowledge Map 1,096/5,762; Memory 41; all 49 chapters; removed build 85/17,698,695; zero ceiling increases; product behavior unchanged; `.10` next |
 | `2026-08-01` | `.10` activation | clean `a20d38afc` predecessor; exact canonical-card and generated-map identities; task/index/book/fact/Memory continuity; redundant-row and stale-headroom correction; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source cards 1,097/42,116/3,214,095 with max 855/62,994/5,498-byte line; map byte-identical at 15,637/6,152,312/10,275-byte line/SHA-256 aa8fb21b... and 1,096 facts/5,762 keys; focused Files=5/Tests=72; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,800 paths; reference delta 0/+5/+304; Memory 41; all 49 chapters; removed build 85/17,701,192; root baseline/ceiling -2 bytes and zero ceiling increases; no card split, topology/query/cache/limit increase, or product behavior change |
+| `2026-08-01` | `.10` bounded knowledge discovery | exact activation-source descriptors and deterministic answer partitions; constrained metadata folding; UTF-8-safe bounded root/shards; cached/direct fixed-substring query parity and stale-cache repair; generated-collection schema/freshness/index proof; bootstrap/hook/CI/book/fact/task sync; syntax/focused/path/locality/task/live-size/reference/ceiling/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; cards 1,105/41,346/3,126,393 with max 295/20,210/819; root 135/11,257; shards 117/14,363/1,634,587 with max 2,551/313,509/625; 1,104 facts/5,582 unique questions/5,748 occurrences; focused Files=4/Tests=26; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 20 surfaces/2,925 staged paths; reference delta 0/+21/+762; Memory 45; Toolbox 319; all 49 chapters; repository-local build 85/17,707,985; mistaken off-root build matched at SHA-256 f66183f9... then was deleted with zero exact residue; zero ceiling increases; all doctrines pass; product behavior unchanged; `.13` next |
 
 ## Commit Log
 
@@ -770,8 +809,17 @@ no routed destination becomes the next uninstrumented blob.
 | `.9` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9: activate roadmap/chronology separation` | Activate only the exact roadmap classification and disposition proof from clean `.8`; roadmap content and topology remain unchanged. |
 | `.9` bounded roadmap | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9: bound roadmap and retain chronology` | Retain strategy in a 317-line live view and preserve the exact 10,451-line activation object through a descriptor-backed, executed Git recovery contract. |
 | `.10` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10: activate bounded knowledge discovery` | Activate only canonical-card fact-boundary containment and sharded query-first projection work from clean `.9`; topology and lookup behavior remain pending. |
+| `.10` bounded knowledge discovery | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10: bound cards and shard knowledge discovery` | Preserve exact over-limit source history and answers, bound canonical cards, generate a small root plus deterministic topic shards, and make cached/direct query parity executable; `.13` is the next clean selection. |
 
 ## Changelog
+
+- `2026-08-01`: `.10` re-forms the three over-limit activation cards into
+  eleven deterministic bounded cards with exact Git recovery and answer-set
+  equality. A dependency-free core replaces the monolithic map with a small
+  topic root, 117 bounded deterministic shards, and cached/direct query parity;
+  caches stay disposable and repository-local. The migration also replaces a
+  stale copied `.276` current-frontier claim with the checked task-tree route.
+  `.13` is the next clean PNT selection.
 
 - `2026-08-01`: Clean `.9` commit `a20d38afc` activates `.10` alone and fixes
   the exact 1,097-card / 15,637-line generated-map source. No card split,

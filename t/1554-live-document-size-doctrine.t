@@ -853,6 +853,60 @@ subtest 'optional NUL coverage rejects undeclared documents' => sub {
         'uncovered path is named');
 };
 
+subtest 'generated projections may use bounded indexed collections' => sub {
+    my $positive = make_fixture();
+    write_file($positive, 'generated.md', "[Topic shard](generated-shards/topic.md)\n");
+    write_file($positive, 'generated-shards/topic.md', "generated topic\n");
+    mutate_record($positive, 'registry/surfaces.jsonl', 'projection', sub {
+        $_[0]{locator} = 'collection';
+        $_[0]{targets} = ['generated.md', 'generated-shards/*.md'];
+        $_[0]{index} = 'generated.md';
+        $_[0]{index_contract} = {
+            kind => 'membership', verifier => 'builtin:markdown_links',
+        };
+    });
+    my ($positive_ok, $positive_output) = run_checker($positive);
+    ok($positive_ok, 'generated collection with canonical inputs and complete index passes')
+        or diag($positive_output);
+    like($positive_output, qr/surface projection: actual files=2,/,
+        'generated root and shard are measured as one collection');
+    like($positive_output, qr/surface projection collection index membership checked/,
+        'generated collection membership is proved');
+
+    my $missing_link = make_fixture();
+    write_file($missing_link, 'generated.md', "generated root without link\n");
+    write_file($missing_link, 'generated-shards/topic.md', "generated topic\n");
+    mutate_record($missing_link, 'registry/surfaces.jsonl', 'projection', sub {
+        $_[0]{locator} = 'collection';
+        $_[0]{targets} = ['generated.md', 'generated-shards/*.md'];
+        $_[0]{index} = 'generated.md';
+        $_[0]{index_contract} = {
+            kind => 'membership', verifier => 'builtin:markdown_links',
+        };
+    });
+    my ($missing_ok, $missing_output) = run_checker($missing_link);
+    ok(!$missing_ok, 'generated collection with an omitted shard fails');
+    like($missing_output, qr/collection index omits member: generated-shards\/topic\.md/,
+        'missing generated member is explicit');
+
+    my $missing_inputs = make_fixture();
+    write_file($missing_inputs, 'generated.md', "[Topic shard](generated-shards/topic.md)\n");
+    write_file($missing_inputs, 'generated-shards/topic.md', "generated topic\n");
+    mutate_record($missing_inputs, 'registry/surfaces.jsonl', 'projection', sub {
+        $_[0]{locator} = 'collection';
+        $_[0]{targets} = ['generated.md', 'generated-shards/*.md'];
+        $_[0]{index} = 'generated.md';
+        $_[0]{canonical_inputs} = [];
+        $_[0]{index_contract} = {
+            kind => 'membership', verifier => 'builtin:markdown_links',
+        };
+    });
+    my ($inputs_ok, $inputs_output) = run_checker($missing_inputs);
+    ok(!$inputs_ok, 'generated collection without canonical inputs fails');
+    like($inputs_output, qr/generated collection needs canonical_inputs/,
+        'missing generated source contract is explicit');
+};
+
 subtest 'neutral package contains no adopting-project or harness identity' => sub {
     my $contents = slurp($checker) . slurp($contract);
     unlike(

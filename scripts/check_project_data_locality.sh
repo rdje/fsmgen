@@ -69,9 +69,14 @@ if ! grep -qF 'project_data_locality_env.sh' knowledge-map/scripts/check_knowled
 fi
 if grep -qE '="\$\(mktemp\)"' knowledge-map/scripts/check_knowledge_map.sh; then
   note "Knowledge Map validation still uses an unqualified operating-system temporary path"
-fi
-if ! grep -qF 'command mktemp "$scratch_dir/' knowledge-map/scripts/check_knowledge_map.sh; then
-  note "Knowledge Map validation does not bind scratch files to its repository-local directory"
+elif grep -qF 'mktemp' knowledge-map/scripts/check_knowledge_map.sh; then
+  if ! grep -qF 'command mktemp "$scratch_dir/' knowledge-map/scripts/check_knowledge_map.sh; then
+    note "Knowledge Map validation does not bind scratch files to its repository-local directory"
+  fi
+elif ! grep -qF 'knowledge_map.pl" check' knowledge-map/scripts/check_knowledge_map.sh \
+    || ! grep -qF 'query cache is outside the repository' knowledge-map/scripts/knowledge_map.pl \
+    || ! grep -qF 'my $temporary = "$path.tmp.$$"' knowledge-map/scripts/knowledge_map.pl; then
+  note "Knowledge Map validation does not prove delegated cache and atomic scratch locality"
 fi
 
 if [[ ! -f perl/FSM/ProjectDataLocality.pm ]]; then

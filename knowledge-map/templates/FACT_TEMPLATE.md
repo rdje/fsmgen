@@ -1,9 +1,9 @@
 ---
 # Copy this file into a scanned dir (default: docs/knowledge/) and rename it <id>.md.
 # A file becomes a Knowledge Map fact ONLY if `answers:` is a non-empty list.
-# Format = constrained YAML: scalars `key: value`, inline lists `key: [a, b]`, or block
-# lists (key: then "  - item"). Plain/double-quoted scalars only; no tabs in values;
-# questions containing a comma must use the block-list form.
+# Format = constrained YAML: scalars `key: value`, inline/block lists, and `>-` folded
+# scalars whose continuation lines use two spaces. Plain/double-quoted scalars only; no
+# tabs in values; questions containing a comma must use the block-list form.
 
 id: my-fact-stable-kebab-id            # REQUIRED: unique, stable, kebab-case
 title: One-line human title of the fact # REQUIRED
@@ -15,8 +15,14 @@ date: 2026-01-01                        # REQUIRED: when established (absolute Y
 status: current                         # optional: current | superseded | deprecated
 supersedes:                             # optional: id of the fact this replaces
 tags: [topic-a, topic-b]                # optional
-evidence: path/to/file.rs:123; docs/...  # REQUIRED (this OR reverify): what proves it
-reverify: grep -n "Symbol" path/to/file # REQUIRED (this OR evidence): ONE cheap re-check
+# REQUIRED (this OR reverify): what proves it.
+evidence: >-
+  path/to/file.rs:123;
+  docs/canonical-home.md
+# REQUIRED (this OR evidence): one cheap re-check.
+reverify: >-
+  grep -n "Symbol"
+  path/to/file
 ---
 
 State the fact itself here, concisely — the distilled claim, not a narrative. This card is a

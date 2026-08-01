@@ -34,6 +34,9 @@ Each surface record has this shape:
 `archive_terminal`, `external_terminal`, or `frozen_legacy`. `locator`
 independently describes how the target is found: `file`, `collection`,
 `generated_file`, `query`, `archive`, `external`, or `frozen`.
+`generated_projection` accepts a singular `generated_file`, a bounded generated
+`collection`, or a terminal `query`; the generated-collection form is measured
+on per-part, file-count, and aggregate axes like every other collection.
 
 Measured file and collection records carry independent positive
 `health_targets` and `enforcement_ceilings` plus ordered warning and rollover
@@ -104,17 +107,19 @@ and escaping conventions inside values. Each array has a finite cardinality
 and each element has a byte limit; identifiers, paths, owners, rationales,
 markers, guarantees, and recovery text likewise have field-specific byte and
 syntax bounds. Newlines are forbidden inside scalar strings. All local paths and patterns are
-interpreted from the supplied project root. Generated projections name their
-canonical input patterns in `canonical_inputs`; partitioned collections name
-their bounded `index`, except an explicitly owned debt may use `null` until its
-remediation lands. Other locators use a `null` index and an empty
-`canonical_inputs` array.
+interpreted from the supplied project root. Generated files and generated
+collections name their canonical input patterns in `canonical_inputs`;
+partitioned collections name their bounded `index`, except an explicitly owned
+debt may use `null` until its remediation lands. A generated collection also
+names its bounded root index and exact index contract. Other locators use a
+`null` index and an empty `canonical_inputs` array.
 
 Every non-null collection index has an exact `index_contract`. `membership`
 with `builtin:markdown_links` resolves the index's relative Markdown links and
 requires every matched collection member except the index itself. `generated`
-with `surface:ID` requires that ID to be an executed generated-file surface
-whose sole target is the index. `query` with `builtin:registry_targets`
+with `surface:ID` requires that ID to be an executed generated projection: a
+generated file whose sole target is the index, or a generated collection whose
+bounded index is that path. `query` with `builtin:registry_targets`
 declares that the exact target-pattern expansion is the complete query rather
 than claiming the Markdown front door lists every member. Omitting a member
 from a membership index or mislabeling the alternate contract fails closed.

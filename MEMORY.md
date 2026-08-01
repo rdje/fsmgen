@@ -6,16 +6,20 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10:
-  activate bounded knowledge discovery`).
-- active_work_unit: `.10` alone is active from clean `.9` commit `a20d38afc`.
-- current_state: the exact source has 1,097 card files / 42,116 lines /
-  3,214,095 bytes and a 15,637-line / 6,152,312-byte generated root map at
-  SHA-256 `aa8fb21b...`; activation changes no storage or query topology.
-- next_action: classify the oversized cards at stable fact boundaries, then
-  specify deterministic shard ownership and query parity before implementation.
+  bound cards and shard knowledge discovery`).
+- active_work_unit: `.10` completes in this commit; no implementation leaf is
+  active across the clean handoff.
+- current_state: 1,105 bounded canonical cards generate a 135-line root plus
+  117 deterministic topic shards; query-first cached/direct lookup is checked,
+  exact activation-source recovery preserves every split answer, and the stale
+  copied `.276` frontier is replaced by the checked task-tree route.
+- next_action: from this clean `.10` commit, activate `.13` alone for focused
+  and ancillary collection containment; leave director-deferred `.26` pending.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: none for `.10`; `.26` retains the deferred inventory.
+- blockers: none for `.13`; `.26` retains the deferred inventory. The knowledge-
+  card file ceiling is exactly occupied until `.12` derives reviewed budgets,
+  so interim facts must supersede/consolidate or obtain explicit authority.
 
 ## Durable context
 
@@ -37,5 +41,5 @@ history; this file carries only the current bounded resume state.
   `.11` retires the former achievement and roadmap-status views under decisions
   `0048`/`0049`. Push only on request (`0005`); PNT runs autonomously (`0003`).
   `.5` bounds the rationale ledger; `.8` completes the Chapter 14 partition;
-  `.9` bounds strategic direction and preserves exact chronology; clean
-  `a20d38afc` activates `.10` alone.
+  `.9` bounds strategic direction and preserves exact chronology; `.10` bounds
+  canonical cards and replaces the flat map with checked query-first shards.

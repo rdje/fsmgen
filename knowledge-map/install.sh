@@ -16,7 +16,10 @@ cd "$ROOT"
 [ -f "$SCRIPT_DIR/scripts/knowledge_map.conf" ] && . "$SCRIPT_DIR/scripts/knowledge_map.conf"
 : "${KM_SCAN_DIRS:=docs/knowledge docs/decisions}"
 
-chmod +x "$SCRIPT_DIR/scripts/gen_knowledge_map.sh" "$SCRIPT_DIR/scripts/check_knowledge_map.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/gen_knowledge_map.sh" \
+  "$SCRIPT_DIR/scripts/check_knowledge_map.sh" \
+  "$SCRIPT_DIR/scripts/query_knowledge_map.sh" \
+  "$SCRIPT_DIR/scripts/knowledge_map.pl" 2>/dev/null || true
 
 # 1) ensure at least the first scan dir exists, with a pointer to the template
 first_dir="${KM_SCAN_DIRS%% *}"

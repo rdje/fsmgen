@@ -96,6 +96,40 @@ for file in "${live_document_files[@]}"; do
   fi
 done
 
+knowledge_map_files=(
+  KNOWLEDGE_MAP.md
+  knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md
+  knowledge-map/scripts/knowledge_map.pl
+  knowledge-map/scripts/gen_knowledge_map.sh
+  knowledge-map/scripts/check_knowledge_map.sh
+  knowledge-map/scripts/query_knowledge_map.sh
+)
+for file in "${knowledge_map_files[@]}"; do
+  if [[ -f "${file}" ]]; then
+    ok "${file} present"
+  else
+    note "${file} is missing"
+  fi
+done
+
+for file in \
+    knowledge-map/scripts/knowledge_map.pl \
+    knowledge-map/scripts/gen_knowledge_map.sh \
+    knowledge-map/scripts/check_knowledge_map.sh \
+    knowledge-map/scripts/query_knowledge_map.sh; do
+  if [[ -x "${file}" ]]; then
+    ok "${file} executable"
+  else
+    note "${file} is not executable"
+  fi
+done
+
+if grep -q 'KNOWLEDGE-MAP|knowledge-map/scripts/check_knowledge_map.sh' scripts/check_doctrines.sh; then
+  ok "doctrine registry includes bounded Knowledge Map verification"
+else
+  note "doctrine registry does not include bounded Knowledge Map verification"
+fi
+
 if grep -q 'run_live_document_adapter_verifiers.pl' scripts/check_live_document_size.sh; then
   ok "live-document adapter invokes its verifier runner"
 else

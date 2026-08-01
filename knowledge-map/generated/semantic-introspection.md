@@ -1,0 +1,83 @@
+# Knowledge Map: `semantic-introspection`
+
+> **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
+> **1** facts · **67** uniquely owned question entries.
+
+## Questions → facts
+
+- q="are FSMGen MCP error messages sanitized?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="are FSMGen MCP prompt templates implemented?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="are FSMGen MCP tool results still available as text JSON?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="can client capabilities widen FSMGen MCP server capabilities?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP advertise destructiveHint or idempotentHint?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP advertise openWorldHint?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP advertise readOnlyHint?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP advertise tool outputSchema?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP annotate resources or resource templates?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP annotate tool result content?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP echo unsupported protocol versions?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP emit progress notifications?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP expose catalog-backed source discovery?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP handle notifications/cancelled?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP return JSON-RPC error.data?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP return resource_link tool content?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP return structuredContent?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP run as a service?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP source discovery scan the workspace?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP stdio use Content-Length framing?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen MCP support JSON-RPC batch requests?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen advertise MCP completions?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen advertise MCP logging?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen advertise MCP prompts?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen consume MCP client roots?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen emit MCP nextCursor?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen emit MCP resources/list_changed notifications?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen have an MCP task tree?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen initiate MCP model calls or user-input requests?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen support MCP Streamable HTTP?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen support MCP completion/complete?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen support MCP elicitation/create?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen support MCP logging/setLevel?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen support MCP pagination?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen support MCP resource subscriptions?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does FSMGen support MCP sampling/createMessage?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="how do I configure the FSMGen MCP adapter?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="how does FSMGen MCP handle non-object JSON-RPC envelopes?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="how does FSMGen MCP handle progressToken?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="how does FSMGen handle MCP cursor params?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="is FSMGen MCP stdio newline delimited?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="is deep semantic introspection a first-class FSMGen feature?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="is the FSMGen MCP adapter implemented?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="is the immediate FSMGen MCP protocol-hardening pass exhausted?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="is the immediate FSMGen MCP semantic-introspection pass complete?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="should FSMGen be MCP-first?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what can FSMGen apply from an RTL simulator MCP design?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what did SEMANTIC-INTROSPECTION-MCP-FRONTIER.30 select?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what do FSMGen MCP initialize instructions advertise?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what is the FSMGen MCP workspace-root authority?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what is the active priority after FSMGen MCP source discovery?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what is the first MCP-related FSMGen task?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what is the next semantic introspection leaf?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what is the next semantic-introspection frontier after MCP protocol hardening?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what owns semantic introspection for AI automation?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what serverInfo title does FSMGen MCP expose?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what source discovery boundary is selected for FSMGen MCP?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="where are FSMGen MCP schema snapshots?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="where is FSMGen semantic introspection advertised?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="which FSMGen MCP tool annotations are shipped?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="which FSMGen MCP tool discovers source identities?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="which MCP client modes are compatible with FSMGen?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="which MCP protocol version does FSMGen initialize return?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="which MCP resources are selected for FSMGen introspection?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="which MCP tools are selected for FSMGen introspection?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="which MCP transports does FSMGen ship?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="which read-only MCP workflow examples are documented?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+
+## Facts
+
+### semantic-introspection-mcp-frontier
+
+_Deep semantic introspection is an active first-class FSMGen feature_
+
+- **date:** 2026-06-16 · **status:** current
+- **source and verification:** [`docs/knowledge/semantic-introspection-mcp-frontier.md`](../../docs/knowledge/semantic-introspection-mcp-frontier.md)

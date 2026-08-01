@@ -6,16 +6,18 @@ use File::Spec;
 use File::Find;
 use FindBin;
 
-# Decisions 0011/0012: every file-path reference in live docs and the generated
-# Knowledge Map must be relative to the git repo root, never an absolute
+# Decisions 0011/0012: every file-path reference in live docs and every generated
+# Knowledge Map root/shard must be relative to the git repo root, never an absolute
 # machine-local path. Absolute home-directory prefixes (e.g. a /Users/<user>/...
 # or /home/<user>/... path) capture the author's local file structure and break
-# for any other checkout. This guard scans docs/**/*.md plus KNOWLEDGE_MAP.md and
-# fails on any such prefix, keeping the invariant from regressing.
+# for any other checkout. This guard scans docs/**/*.md plus the bounded Knowledge
+# Map projection and fails on any such prefix, keeping the invariant from regressing.
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $docs_root = File::Spec->catdir($repo_root, 'docs');
 my $knowledge_map = File::Spec->catfile($repo_root, 'KNOWLEDGE_MAP.md');
+my $knowledge_shards = File::Spec->catdir(
+    $repo_root, 'knowledge-map', 'generated');
 
 # Machine-local home-directory prefixes that leak local structure. System paths
 # (/usr, /bin, /tmp, /etc) are not local-structure leaks and are not flagged.
@@ -36,8 +38,19 @@ find(
     $docs_root,
 );
 push @md_files, $knowledge_map if -f $knowledge_map;
+if (-d $knowledge_shards) {
+    find(
+        {
+            wanted => sub {
+                push @md_files, $File::Find::name if -f $_ && /\.md\z/;
+            },
+            no_chdir => 1,
+        },
+        $knowledge_shards,
+    );
+}
 
-ok(scalar(@md_files) > 0, 'found docs markdown files and Knowledge Map to audit');
+ok(scalar(@md_files) > 0, 'found docs markdown files and Knowledge Map root/shards to audit');
 
 my @violations;
 for my $file (@md_files) {
@@ -54,7 +67,7 @@ for my $file (@md_files) {
     close $fh;
 }
 
-is(scalar(@violations), 0, 'no absolute machine-local file paths in docs or Knowledge Map (decisions 0011/0012)')
+is(scalar(@violations), 0, 'no absolute machine-local file paths in docs or Knowledge Map root/shards (decisions 0011/0012)')
     or diag("Absolute local paths must be made repo-root-relative:\n  " . join("\n  ", @violations));
 
 done_testing();

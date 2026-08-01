@@ -9,8 +9,8 @@ Drop the `knowledge-map/` bundle into any repository that already uses **task-tr
 `MEMORY_ARCHITECTURE.md` and it applies as-is.
 
 > One-line thesis: **durable facts become findable when each is a small, self-describing,
-> front-mattered file, and a machine derives a question-keyed index from them — so
-> retrieval is one lookup, not an excavation.**
+> front-mattered file, and a machine derives a bounded question-keyed index plus
+> topic shards from them — so retrieval is one query, not an excavation.**
 
 ---
 
@@ -75,10 +75,13 @@ fields:
 | `status` | ⬚ | `current` (default) · `superseded` · `deprecated` |
 | `supersedes` | ⬚ | id of the fact this replaces |
 
-Front-matter format is a **constrained YAML subset** (so it parses in portable awk):
-scalars `key: value`; inline lists `key: [a, b]`; block lists (`key:` then `  - item`).
-Use **plain or double-quoted** scalars; **no tabs** in values; questions containing a comma
-must use the block-list form. Copy `templates/FACT_TEMPLATE.md` to start.
+Front-matter format is a **constrained YAML subset** parsed without third-party
+modules: scalars `key: value`; inline lists `key: [a, b]`; block lists (`key:`
+then `  - item`); and folded `>-` scalars for long `evidence`, `reverify`, or
+`answer` values. Folded continuation lines use at least two spaces and are
+joined with one space. Use **plain or double-quoted** scalars, never tabs;
+questions containing a comma use the block-list form. Copy
+`templates/FACT_TEMPLATE.md` to start.
 
 ---
 
@@ -140,20 +143,32 @@ permanently retires one future archaeology.
 
 ---
 
-## 5. The scripts
+## 5. The scripts and bounded projection
 
-Two portable scripts (POSIX shell + awk; work on BSD/macOS and GNU/Linux):
+The shell entrypoints use one dependency-free Perl core (Perl 5 core modules
+only, on BSD/macOS and GNU/Linux):
 
-- **`scripts/gen_knowledge_map.sh`** — scans `KM_SCAN_DIRS`, parses each fact's
-  front-matter, emits the deterministic `KM_OUTPUT` map (a `Questions → fact` lookup plus a
-  `Facts (by id)` catalog). `--print-map-path` prints the resolved output path.
-- **`scripts/check_knowledge_map.sh`** — fails nonzero if any fact is missing a required
-  field, if two facts share an `id`, or if the committed map differs from a fresh
-  regeneration (derive-and-diff). This is what the hook and CI run.
+- **`scripts/gen_knowledge_map.sh`** scans `KM_SCAN_DIRS` and writes a small
+  `KM_OUTPUT` landing page plus deterministic topic shards under
+  `KM_SHARD_DIR`. A topic is the first two kebab-case fact-ID components. Each
+  fact appears in one topic catalog; each unique question appears in one shard
+  and may point to multiple facts when the source cards deliberately share it.
+- **`scripts/query_knowledge_map.sh`** performs a case-insensitive fixed-
+  substring search over question rows. Its default cache lives beneath
+  `KM_QUERY_CACHE_DIR`; `--no-cache` reads the committed shards directly and
+  `--all` returns every question row. Cache data is disposable and never owns a
+  fact.
+- **`scripts/check_knowledge_map.sh`** rejects missing fields, duplicate IDs,
+  oversized cards/root/shards/aggregate, missing/extra/stale shards, missing or
+  duplicated projected facts/questions, and cached/direct result drift.
 
-Config precedence (`scripts/knowledge_map.conf`, all `:=` assignments): **environment >
-repo-root `.knowledge_map.conf` > bundle default**. Knobs: `KM_SCAN_DIRS`, `KM_OUTPUT`,
-`KM_TITLE`.
+`gen_knowledge_map.sh --print-map-path`, `--print-shard-dir`, and
+`--print-generated-paths` expose hook-safe paths. Config precedence
+(`scripts/knowledge_map.conf`, all `:=` assignments) is **environment >
+repo-root `.knowledge_map.conf` > bundle default**. Main knobs are
+`KM_SCAN_DIRS`, `KM_OUTPUT`, `KM_SHARD_DIR`, `KM_QUERY_CACHE_DIR`, and
+`KM_TITLE`; finite card/projection caps also have `KM_*_MAX_*` overrides for
+fixture testing and deliberate adoption calibration.
 
 ---
 
@@ -162,9 +177,9 @@ repo-root `.knowledge_map.conf` > bundle default**. Knobs: `KM_SCAN_DIRS`, `KM_O
 Mirror the four-layer defense from `MEMORY_ARCHITECTURE.md` §9 (a rule nothing checks is a
 rule nothing follows):
 
-- **Pre-commit hook** regenerates the map, `git add`s it, then runs the check — so the
-  agent spends **zero** time indexing and the map is always in sync. See
-  `hooks/pre-commit.snippet`.
+- **Pre-commit hook** regenerates the root and shards, stages both paths with
+  deletion awareness, then runs the check — so the agent spends **zero** time
+  indexing and the projection is always in sync. See `hooks/pre-commit.snippet`.
 - **CI** runs `check_knowledge_map.sh` (same script) — catches a bypassed hook; a stale map
   or invalid fact **fails the build**. See `ci/knowledge-map-gate.yml`.
 
@@ -175,12 +190,12 @@ structurally impossible: the committed map always equals what the facts produce.
 
 ## 7. Read path — how a future agent uses it (no archaeology)
 
-1. From the bootstrap entrypoint → open `KNOWLEDGE_MAP.md` (your window + the agent's
-   index).
-2. Scan `Questions → fact` for the question at hand → follow the one pointer to the
-   canonical home.
+1. From the bootstrap entrypoint, run
+   `knowledge-map/scripts/query_knowledge_map.sh 'question words'`.
+2. Follow the returned repository-relative canonical card path. Use
+   `KNOWLEDGE_MAP.md` to browse topic counts or a whole shard when needed.
 3. Trust the fact (it is dated + evidenced), or run its one `reverify` command.
-4. Only if the fact is genuinely **not** in the map is new investigation warranted — and
+4. Only if the fact is genuinely absent is new investigation warranted — and
    its conclusion becomes a new card before the turn ends.
 
 ---
@@ -204,11 +219,14 @@ structurally impossible: the committed map always equals what the facts produce.
 
 - ❌ Hand-editing the generated map.
 - ❌ A big-bang "convert all docs to the KM" project.
+- ❌ Letting a root map, topic shard, individual card, or aggregate grow without
+  an independent finite bound.
 - ❌ Cards that duplicate book/prose instead of pointing to it.
 - ❌ Carding volatile metrics instead of durable conclusions.
 - ❌ Cards with no `evidence`/`reverify` (agent re-derives anyway).
 - ❌ Nondeterministic map output (breaks the sync gate).
-- ❌ Treating the map as load-bearing — facts must stay greppable without it.
+- ❌ Treating the projection or disposable query cache as load-bearing — facts
+  must stay greppable without either.
 - ❌ An index with no enforcement — it rots.
 
 ---

@@ -65,7 +65,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need docs path hygiene | `scripts/check_docs_relative_paths.sh`. |
 | Need live-document pressure, maintained-reference aggregate authority, typed routes, index/evidence completeness, retention contracts, ceiling authority, or executed freshness/retrieval/currency truth | `scripts/check_live_document_size.sh`. |
 | Need README entry-point hygiene | `scripts/check_readme_entrypoint.sh`. |
-| Need Knowledge Map sync | `knowledge-map/scripts/gen_knowledge_map.sh` then `knowledge-map/scripts/check_knowledge_map.sh`. |
+| Need an established fact or Knowledge Map sync | Query with `knowledge-map/scripts/query_knowledge_map.sh 'question words'` (`--no-cache` is direct); regenerate/check with the matching `gen_knowledge_map.sh` / `check_knowledge_map.sh` scripts. |
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
 | Need authoritative active task-tree structure or sealed-history truth | `scripts/check_task_tree_integrity.pl`. |
 | Need code-slice evidence acceptance | Stage the intended slice, then run `scripts/check_task_acceptance.sh`. |
@@ -230,6 +230,7 @@ scripts/check_task_tree_integrity.pl
 scripts/check_doctrines.sh
 ```
 
+The default mdBook destination is repository-local; for an explicit disposable path use `mdbook build docs/book -d .artifacts/mdbook` because `-d` resolves from the invoking directory, not `docs/book/`.
 Expected signals:
 
 - mdBook completes without broken source or renderer errors.
@@ -242,7 +243,7 @@ Expected signals:
   navigation expected of the rendered GitHub landing page; it also rejects
   per-leaf work-unit narration (`docs/decisions/0021`, `0024`, and `0041`;
   reusable policy: `README_POLICY.md`).
-- Knowledge Map check says facts are valid, IDs are unique, and the map is in sync.
+- Knowledge Map check says cards/root/shards are bounded, valid, fresh, complete, and cached/direct query results agree.
 - memory architecture check confirms `MEMORY.md` is bounded and bootstrap/task/decision stores exist.
 - task-tree integrity reports active-tree/node/segment/compact-terminal/index-
   archive counts, rejects cross-file identity/source/retrieval drift, and proves

@@ -13,7 +13,7 @@ cd "${ROOT_DIR}"
 DOCTRINES=(
   "DOCTRINE-BOOTSTRAP|scripts/check_doctrine_bootstrap.sh|Doctrine and toolbox docs, bootstrap pointers, hook, and CI driver wiring exist"
   "MEMORY-ARCH|scripts/check_memory_architecture.sh|Durable memory architecture, bounded MEMORY.md, bootstrap pointers, task-tree and decision stores"
-  "KNOWLEDGE-MAP|knowledge-map/scripts/check_knowledge_map.sh|Knowledge Map fact cards are valid and KNOWLEDGE_MAP.md is in sync"
+  "KNOWLEDGE-MAP|knowledge-map/scripts/check_knowledge_map.sh|Knowledge Map cards, bounded root/shards, freshness, coverage, and query parity hold"
   "DOC-PATHS|scripts/check_docs_relative_paths.sh|Live docs and Knowledge Map avoid machine-local absolute paths"
   "LIVE-DOCUMENT-SIZE|scripts/check_live_document_size.sh|Every declared live-document surface stays local, covered, lifecycle-valid, and within owned pressure controls"
   "README-ENTRYPOINT|scripts/check_readme_entrypoint.sh|README.md and every routed destination stay pressure-controlled discovery surfaces"

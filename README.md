@@ -152,7 +152,7 @@ Changing project state does not belong in this landing page:
 | What is active and what comes next? | [MEMORY.md](MEMORY.md), then [docs/TASK_TREE.md](docs/TASK_TREE.md) |
 | What owns a task and its evidence? | The matching tree under [docs/tasks/](docs/tasks/) |
 | Why was a cross-cutting choice made? | [docs/decisions/INDEX.md](docs/decisions/INDEX.md) |
-| Is a fact already established? | [KNOWLEDGE_MAP.md](KNOWLEDGE_MAP.md) |
+| Is a fact already established? | [Query](knowledge-map/README.md) |
 | What changed in a work unit? | The owning task under [docs/tasks/](docs/tasks/), then `git log --grep=<UNIT-ID>` |
 | How do I diagnose a failure? | [TOOLBOX.md](TOOLBOX.md) |
 | Which repository rules are enforced? | [DOCTRINE_ENFORCEMENT.md](DOCTRINE_ENFORCEMENT.md) |

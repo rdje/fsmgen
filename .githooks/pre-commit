@@ -4,9 +4,12 @@
 set -euo pipefail
 ROOT="$(git rev-parse --show-toplevel)"
 
-# Regenerate the Knowledge Map derived artifact and stage it before the doctrine
-# driver checks sync. See knowledge-map/hooks/pre-commit.snippet.
+# Regenerate the bounded Knowledge Map root/topic shards and stage additions or
+# removals before the doctrine driver checks sync.
 "$ROOT/knowledge-map/scripts/gen_knowledge_map.sh" >/dev/null
-git add "$("$ROOT/knowledge-map/scripts/gen_knowledge_map.sh" --print-map-path)" 2>/dev/null || true
+mapfile -t knowledge_map_paths < <(
+  "$ROOT/knowledge-map/scripts/gen_knowledge_map.sh" --print-generated-paths
+)
+git add -A -- "${knowledge_map_paths[@]}"
 
 "$ROOT/scripts/check_doctrines.sh"

@@ -181,11 +181,32 @@ scripts/check_doctrines.sh
 ```
 
 That driver runs every registered repository doctrine, including bootstrap,
-memory architecture, Knowledge Map sync, docs path hygiene, complete
+memory architecture, bounded Knowledge Map root/shard freshness and query
+parity, docs path hygiene, complete
 live-document size/lifecycle coverage, README landing-page hygiene, and
 project-data locality. The local pre-commit hook regenerates the Knowledge Map
-before running the driver, and hosted regression CI runs the same driver before
-the broader regression gate. For a direct document-pressure census, run:
+root and topic shards before running the driver, and hosted regression CI runs
+the same driver before the broader regression gate.
+
+Before diagnosing something that may already be known, query the map with the
+words you would naturally ask:
+
+```bash
+knowledge-map/scripts/query_knowledge_map.sh 'is GHDL validation active?'
+```
+
+The output is tab-separated `question`, fact ID(s), and repository-relative
+canonical card path(s). The search is case-insensitive and uses a fixed
+substring. Its default cache is disposable under `.artifacts/`; to prove the
+same result directly from committed topic shards, run:
+
+```bash
+knowledge-map/scripts/query_knowledge_map.sh --no-cache 'GHDL validation'
+```
+
+`KNOWLEDGE_MAP.md` is the bounded browse page for topic counts and shard links;
+the cards under `docs/knowledge/` remain canonical. For a direct document-
+pressure census, run:
 
 ```bash
 scripts/check_live_document_size.sh

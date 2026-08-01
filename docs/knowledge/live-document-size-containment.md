@@ -41,11 +41,18 @@ answers:
   - "where is the bounded live-document architecture review front door?"
   - "how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?"
   - "how does a bounded rolling ledger preserve whole-entry history and exact reconstruction?"
+  - "how is the Knowledge Map kept bounded?"
+  - "how do I query the Knowledge Map?"
+  - "where does the Knowledge Map query cache live?"
+  - "does a generated projection support deterministic shard collections?"
 date: 2026-08-01
 status: current
 tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
-evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/ledger_manifests.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_resulting_tree.pl; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md; docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; t/1554-live-document-size-doctrine.t
-reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t t/1561-live-document-reference-authority.t
+evidence: >-
+  LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/ledger_manifests.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_resulting_tree.pl; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md;
+  docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; knowledge-map/scripts/knowledge_map.pl; knowledge-map/scripts/query_knowledge_map.sh; scripts/check_knowledge_card_history.pl; t/1554-live-document-size-doctrine.t; t/1567-knowledge-map-shards.t; t/1568-knowledge-card-history.t
+reverify: >-
+  scripts/check_live_document_size.sh && knowledge-map/scripts/check_knowledge_map.sh && scripts/check_knowledge_card_history.pl && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t t/1561-live-document-reference-authority.t t/1567-knowledge-map-shards.t t/1568-knowledge-card-history.t
 ---
 
 `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the project-owned doctrine. Its reusable
@@ -251,8 +258,32 @@ its executed adapter preserve and verify the complete original object.
 Clean `.9` commit `a20d38afc` activates `.10` alone against the exact 1,097-card
 / 42,116-line / 3,214,095-byte canonical collection and its 15,637-line /
 6,152,312-byte generated projection at SHA-256 `aa8fb21b...`. The activation
-records identity and continuity only; fact-boundary splitting, deterministic
-shards, query parity, and repository-local disposable caches remain pending.
+records the pre-migration identity.
+
+Completed `.10` keeps cards canonical while bounding both write and read units.
+The three activation cards above their retained limits are deterministically
+re-formed as eleven stable cards; exact Git descriptors and
+`scripts/check_knowledge_card_history.pl` prove source identity, answer-set
+equality, deterministic contents, and bounded replacements. The generated
+projection is now a small root plus deterministic two-ID-component topic
+shards. Every fact is catalogued exactly once, every unique question is owned
+by exactly one shard, and a shared question links all matching facts rather
+than being duplicated. The query wrapper performs fixed-substring search,
+caches only disposable rows below `.artifacts/knowledge-map/query/`, and has
+checked cached/direct parity.
+
+The migration exposed one stale continuity claim: the former
+`ial2-feature-completeness-next-slice` card still described `.276` as current
+after the active frontier had advanced far beyond it. Historical `.211`–`.276`
+answers remain in bounded history cards; the current card now routes to the
+task-tree frontier rather than copying a numeric frontier that can rot.
+
+The canonical knowledge-card file ceiling is exactly occupied after the
+no-ceiling-increase migration. That is an intentional fail-closed condition,
+not growth capacity: until `.12` derives reviewed retained-surface budgets, a
+new durable fact must supersede or consolidate an existing card, or carry an
+explicit reviewed ceiling authority. Generated shards and query caches can
+never own canonical facts or bypass that control.
 
 Leaf `.11` independently retires the former achievement journal under decision
 `0048`, exact version retrieval, and live-path/consumer absence enforcement.
