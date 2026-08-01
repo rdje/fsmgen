@@ -13,6 +13,10 @@ and deterministic emission of the selected topology, lifecycle, and
 notification/interception structures; its parse, compile, elaboration, and
 runtime profiles do not ship yet.
 
+The active next emission slice is `.13.1.3`, covering reviewable stimulus,
+TLM, factory/configuration, RAL, and constrained-decision structures.
+Activation itself changes no generated artifact or capability.
+
 The current shipped verification-output targets remain deliberately narrow:
 
 - `uvm-passive-monitor` emits inert UVM 1.2 snapshot and passive-monitor class

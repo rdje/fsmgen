@@ -5,9 +5,9 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`IASIM-EXECUTABLE-REFERENCE-SEMANTICS.8`: capture NEXSIM MCP differential checkpoints).
-- active_work_unit: parent `.13.1` remains active; `.13.1.2` is complete and
-  proposed `.13.1.3` is the next clean activation/implementation frontier.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3`: activate native UVM stimulus and services).
+- active_work_unit: parent `.13.1` and child `.13.1.3` are active after clean
+  predecessor `ddfa980a1`; implementation remains unperformed.
 - current_state: private profile `sv_uvm_emit.accellera_2020_3_1` emits an
   exact eleven-artifact/seven-source graph with selected passive topology,
   lifecycle, ordered typed notification/interception, 42 mapped symbols, ten
@@ -15,8 +15,8 @@ history; this file carries only the current bounded resume state.
   through runtime/results/parity remain unclaimed; `.13.2` is separately
   dependency-ready; `.13.3` now requires NEXSIM's versioned API/MCP semantic
   checkpoint plane while exact PGEN+NEXSIM releases remain unavailable.
-- next_action: from this clean clarification commit, separately activate
-  `.13.1.3` for stimulus/TLM/factory/configuration/RAL/constrained decisions.
+- next_action: audit revision-2 emitter/contracts/gallery, then implement only
+  `.13.1.3` stimulus/TLM/factory/configuration/RAL/constrained-decision shapes.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` still waits on exact capability-ready PGEN/NEXSIM handoff/

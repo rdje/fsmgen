@@ -1262,9 +1262,11 @@ Preprocessing, parse, UVM-library compile, fixture compile, elaboration,
 runtime, result, parity, visual-review completion, public interceptor authoring,
 stimulus/TLM/factory/configuration/RAL/randomization, coverage/properties,
 models/scoreboards/faults/results, and full native UVM breadth remain explicitly
-unclaimed. `.13.1.3` is the next native emission frontier. Experimental `.13.2`
-remains separately dependency-ready because the first gallery exists, so
-open-tool evidence cannot blur the active emission sequence.
+unclaimed. Active `.13.1.3` now owns only the stimulus/TLM/factory/
+configuration/RAL/constrained-decision emission frontier; its implementation
+remains unperformed at activation. Experimental `.13.2` remains separately
+dependency-ready because the first gallery exists, so open-tool evidence
+cannot blur the active emission sequence.
 
 Verilator and other available tools can catch whatever they support early.
 `.13.3` alone is blocked until PGEN and NEXSIM expose the required exact
