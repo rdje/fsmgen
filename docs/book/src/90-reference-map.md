@@ -298,6 +298,11 @@ Leaf `.13` must first create stable semantic parts and a bounded complete index.
 Classification alone never waives current controls or turns a monolithic file
 into a compliant maintained reference.
 
+The roadmap has a different role: it is a bounded current-direction snapshot,
+not shipped-behavior reference or exact chronology. Clean commit `dc1c64afb`
+fixes the exact 10,451-line activation source and activates `.9` alone while
+its current/future, concise-milestone, and historical boundaries are proved.
+
 Leaf `.15` closes the neighboring control-plane gap. Each common JSONL
 registry has a schema-versioned metadata record declaring positive maximum
 data records, whole-file bytes, and raw JSON bytes per record. The neutral

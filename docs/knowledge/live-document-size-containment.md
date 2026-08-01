@@ -242,7 +242,9 @@ the two frozen status views. Completed `.5` bounds the rationale ledger: 2,843
 entries at `d3c22e003` form its exact prefix, while the current view and index
 hold and address later entries; the executed adapter rejects drift. Clean
 activation commit `b88b37323` fixes Chapter 14's source, and completed `.8`
-partitions it exactly once by stable user-facing topic.
+partitions it exactly once by stable user-facing topic. Clean `.8` commit
+`dc1c64afb` activates `.9` alone and fixes the exact 10,451-line roadmap
+activation source before direction/chronology classification.
 
 Leaf `.11` independently retires the former achievement journal under decision
 `0048`, exact version retrieval, and live-path/consumer absence enforcement.

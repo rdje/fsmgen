@@ -5,18 +5,19 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8:
-  partition Chapter 14 by topic`).
-- active_work_unit: `.8` is complete from activation commit `b88b37323`; `.9`
-  is the next clean selection.
-- current_state: all 18,697 activation-source lines map exactly once into 13
-  direct Chapter 14 pages. SUMMARY is 51/64 lines at depth one; the largest
-  new page is 2,726 lines / 192,166 bytes; compatibility links remain valid.
-- next_action: from this clean commit, activate `.9` alone to separate the
-  bounded live roadmap from shipped chronology.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9:
+  activate roadmap/chronology separation`).
+- active_work_unit: `.9` alone is active from clean `.8` commit `dc1c64afb`.
+- current_state: clean `dc1c64afb` fixes the exact 10,451-line / 772,074-byte
+  activation source at SHA-256 `6c7e00fe...`; only its bounded final frontier
+  sentence changes for activation. Direction, history, topology, and behavior
+  remain unchanged.
+- next_action: classify the activation-source roadmap into retained current/
+  future direction, concise milestone outcomes, and duplicate chronology;
+  prove every historical disposition before changing `ROADMAP_V2.md`.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: none for `.8`; `.26` retains the deferred inventory.
+- blockers: none for `.9`; `.26` retains the deferred inventory.
 
 ## Durable context
 
@@ -37,4 +38,5 @@ history; this file carries only the current bounded resume state.
   retires unused WARP and the director resumed containment on `2026-08-01`.
   `.11` retires the former achievement and roadmap-status views under decisions
   `0048`/`0049`. Push only on request (`0005`); PNT runs autonomously (`0003`).
-  `.5` bounds the rationale ledger; `.8` completes the Chapter 14 partition.
+  `.5` bounds the rationale ledger; `.8` completes the Chapter 14 partition;
+  clean `dc1c64afb` activates `.9` alone.

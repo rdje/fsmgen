@@ -111,12 +111,12 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9`
-  Status: `pending`
+  Status: `active`
   Goal: `Separate the bounded live roadmap from shipped chronology.`
   Acceptance: `ROADMAP_V2.md retains current/future direction and concise milestone outcomes; every removed historical claim is proved duplicate in maintained book/task/decision homes or covered by an exact archive descriptor; links and roadmap/task alignment pass; the retained roadmap falls below derived warning budgets.`
-  Verification: `pending`
-  Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
+  Verification: `Activated alone from clean .8 commit dc1c64afb. This selection fixes the exact 10,451-line / 772,074-byte roadmap activation source at SHA-256 6c7e00fe... and changes only task/index/book/fact/Memory continuity plus the roadmap's bounded final frontier sentence; no direction claim, history, heading topology, navigation, limit, generated artifact, or product behavior changes until classification and disposition proof are complete.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9: activate roadmap/chronology separation`
+  Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10`
   Status: `pending`
@@ -440,6 +440,9 @@ no routed destination becomes the next uninstrumented blob.
   selection fixes the Chapter 14 partition frontier without changing its
   18,697-line source, SUMMARY membership, cross-links, examples, limits, or
   product behavior.
+- `2026-08-01`: Clean `.8` commit `dc1c64afb` activates `.9` alone. The
+  selection fixes the exact roadmap source and direction/chronology proof
+  boundary; only the bounded final frontier sentence changes before migration.
 
 ## Open Questions
 
@@ -460,9 +463,15 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None for active `.8`; completed `.16` and `.23` supply the utility and
-  maintained-reference prerequisites. `.26` still owns the broader
-  legacy-continuity inventory and remains separately deferred.
+- None for active `.9`; completed `.16` supplies the evidence-backed `re-form`
+  selection and decision `0049` fixes the canonical authority split. `.26`
+  still owns the broader legacy-continuity inventory and remains deferred.
+
+## Acceptance Checklist (enforced) — `.9` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'| Roadmap | Keep current/future direction' --oneline -- docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md` identifies `139efbf90`, and `git log -S'Re-form live roadmap direction and separately retain proved chronology' --oneline -- docs/LIVE_DOCUMENT_UTILITY_RETIREMENT_AUDIT.md` identifies completed prerequisite `b9f2f266c`. The byte-identical source at clean `.8` commit `dc1c64afb` is 10,451 lines / 772,074 bytes / longest line 2,297 / SHA-256 `6c7e00fe...`, exactly at its line ceiling and well above its 2,000-line health target.
+- [x] **ADDRESSED (verified)** — clean `.8` commit `dc1c64afb` activates `.9` alone and records the exact classification boundary. Only the roadmap's bounded final containment-frontier sentence changes; direction claims, history, heading topology, links, pressure controls, generated artifacts, and product behavior remain unchanged.
+- [x] **NO REGRESSION** — the RAM-guarded focused cluster reports `All tests successful` at `Files=5, Tests=72`. Staged containment covers 19 surfaces and 2,800/2,800 document paths, accepts exact maintained-reference delta `files=0 / lines=+5 / bytes=+310`, and reports zero ceiling increases. Knowledge Map passes at 1,096 facts/5,762 keys; Memory is 42 lines. All 49 chapters test and the repository-local 85-file / 17,697,234-byte build passes and is removed exactly. Final staged acceptance and all doctrines pass; no direction claim, history, link, limit, generated-product, compiler/runtime, HDL, or product behavior changes.
 
 ## Acceptance Checklist (enforced) — `.8` Chapter 14 partition
 
@@ -690,6 +699,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.5` bounded rationale ledger | exact 2,843-entry activation source; descriptor-backed prefix plus real current append; bounded current/index; adapter and negative controls; root/rationale ratchet; focused/path/locality/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=8/Tests=52; paths/locality/task Files=3/Tests=63; source 34,507/2,494,480 at SHA-256 bf5a03fd...; current 25/1,420; index 36/2,039; ordered ledger 2,844 entries/34,520 lines/2,495,325 bytes; root 18/28,488/7,049,705; 19 surfaces/2,788 paths; reference delta 0/+6/+442; Knowledge Map 1,096/5,762 and 6,152,312 bytes; Memory 39; all 37 chapters; removed build 73/17,292,177; zero ceiling increases; all doctrines pass; product behavior unchanged |
 | `2026-08-01` | `.8` activation | clean `2e572d9fd` predecessor; exact Chapter 14 identity; task/index/roadmap/book/fact/Memory sync; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=4/Tests=56; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,788 paths; Chapter 14 unchanged at 18,697/1,157,040 and SHA-256 3757214f...; reference delta 0/0/+53; Knowledge Map 1,096/5,762 and 6,152,312 bytes; Memory 39; all 37 chapters; removed build 73/17,292,776; zero ceiling increases; `.8` alone active; content, navigation, examples, limits, and product behavior unchanged |
 | `2026-08-01` | `.8` Chapter 14 partition | exact activation-source/range coverage; stable direct topic navigation and backend compatibility anchor; rationale-ledger append; per-part ratchet; focused/path/task/live-size/reference/ceiling/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; 13 pages/15 ranges/18,697 of 18,697 source lines exactly once at SHA-256 3757214f...; largest Chapter 14 part 2,726/192,166/303-byte line; SUMMARY 51/2,765/depth 1; book aggregate 50/47,492/2,518,178 with exact delta +12/+59/+2,498; focused Files=6/Tests=75; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,800 paths; rationale 2,845 entries; Knowledge Map 1,096/5,762; Memory 40; all 49 chapters; removed build 85/17,695,227; line/byte ceilings ratchet to targets with zero increases; product behavior unchanged; `.9` next |
+| `2026-08-01` | `.9` activation | clean `dc1c64afb` predecessor; exact roadmap identity; task/index/roadmap/book/fact/Memory sync; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; activation source 10,451/772,074/longest 2,297/SHA-256 6c7e00fe...; focused Files=5/Tests=72; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,800 paths; reference delta 0/+5/+310; Knowledge Map 1,096/5,762; Memory 42; all 49 chapters; removed build 85/17,697,234; zero ceiling increases; only the bounded final frontier sentence changes; `.9` alone active; no direction claim, history, link, limit, generated artifact, or product behavior change |
 
 ## Commit Log
 
@@ -736,8 +746,14 @@ no routed destination becomes the next uninstrumented blob.
 | `.5` bounded rationale ledger | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5: bound engineering rationale ledger` | Preserve the exact immutable source as the ledger prefix, prove a real first append, and keep the root current/index views bounded. |
 | `.8` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8: activate Chapter 14 partition` | Activate only stable-topic partitioning from the clean `.5` commit; chapter content and navigation remain unchanged. |
 | `.8` Chapter 14 partition | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8: partition Chapter 14 by topic` | Preserve all 18,697 source lines exactly once across 13 direct stable-topic pages, retain compatibility links, and return the former monolith below per-part warning budgets. |
+| `.9` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9: activate roadmap/chronology separation` | Activate only the exact roadmap classification and disposition proof from clean `.8`; roadmap content and topology remain unchanged. |
 
 ## Changelog
+
+- `2026-08-01`: Clean `.8` commit `dc1c64afb` activates `.9` alone for bounded
+  live-roadmap direction versus separately proved chronology. The exact source
+  stays addressable and only the bounded frontier sentence changes; migration
+  remains pending.
 
 - `2026-08-01`: `.8` partitions the exact activation-source Chapter 14 into
   thirteen direct stable-topic pages. A 15-range proof accounts for every
