@@ -8,8 +8,10 @@ compatibility boundary. Public `run`, exact external compilation, simulation,
 closed runtime traces, and normalized results now ship for the bounded
 `sv_portable_verilator` profile. The selected AHB fixture now has bounded
 runtime parity with its handwritten oracle; general cross-backend parity does
-**not** ship yet. Native UVM now has an exact open-source-first architecture,
-but its emission and runtime profiles do not ship yet.
+**not** ship yet. Native UVM now has an exact open-source-first architecture
+and deterministic emission of the selected topology, lifecycle, and
+notification/interception structures; its parse, compile, elaboration, and
+runtime profiles do not ship yet.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -870,7 +872,7 @@ mechanisms.
 | Profile | Intended target | Qualification boundary |
 | --- | --- | --- |
 | `sv_portable_verilator` | plain SystemVerilog fixture without UVM | exact Verilator version; compile, elaborate, and run with `--binary --timing`; only exercised supported capabilities |
-| `sv_uvm_emit.accellera_2020_3_1` | deterministic native UVM packages, interfaces, components, and source maps | exact Accellera source identity and artifact gates; compile/elaborate/run/result explicitly not run |
+| `sv_uvm_emit.accellera_2020_3_1` | deterministic native UVM packages, interfaces, selected topology/lifecycle/notification structures, and source maps | exact Accellera source identity and artifact/static-structure gates; compile/elaborate/run/result explicitly not run |
 | `sv_uvm_experimental.<tool-and-version>` | optional open-source feasibility probe | exact tool/version and measured deviations; never product runtime support |
 | `sv_uvm_qualified` | executable native UVM components, sequences, monitors, scoreboards, coverage | future exact PGEN parser + NEXSIM simulator tuple; parse/compile/elaborate/run/result gates |
 | `vhdl_portable_ghdl` | VHDL-2008 packages, processes, and testbench | installed GHDL/version with `--std=08`; explicit language/PSL limits |
@@ -961,18 +963,19 @@ sv_uvm_qualified
     future exact PGEN parser + NEXSIM simulator runtime tuple
 ```
 
-The first emission foundation now ships. For the checked AHB base-output
-fixture it produces ten deterministic virtual artifacts: the generated HIAL
-DUT; typed-context, reusable-component, timed-interface, fixture, and top
-SystemVerilog sources; a complete source map; the exact methodology profile;
-a structural-validation report; and the backend manifest. The private emitter
-and validator are discoverable through the capability manifest; public
-`fsmgen vial run` deliberately remains the separately qualified portable-
-Verilator path.
+The first two emission slices now ship. For the checked AHB base-output fixture
+they produce eleven deterministic virtual artifacts: the generated HIAL DUT;
+typed-context, reusable-component, timed-interface, notification/interception,
+fixture, and top SystemVerilog sources; a complete source map; the exact
+methodology profile; a structural-validation report; and the backend manifest.
+
+The private emitter and validator are discoverable through the capability
+manifest. Public `fsmgen vial run` deliberately remains the separately
+qualified portable-Verilator path.
 
 The [checked review gallery](../../../vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/README.md)
-contains byte-identical copies of the five UVM-facing sources. Its interface
-shows the first concrete logical-time mapping:
+contains byte-identical copies of all six UVM-facing sources. Its interface
+shows the concrete logical-time mapping:
 
 ```systemverilog
 clocking driver_cb @(negedge clk);
@@ -988,8 +991,54 @@ endclocking
 ```
 
 That code is intentionally reviewable before a UVM parser or simulator is
-available. It is a foundation, not yet the complete agent/lifecycle/scenario
-implementation owned by the following emission slices.
+available. The selected passive topology now contains a context-owning agent,
+timed monitor, lifecycle controller, result-collector structure, environment,
+and root test. Exactly one root-owned objection encloses execution; explicit
+checked transitions move the shared context from construction through
+finalization.
+
+The notification package gives every public VIAL event a typed
+`uvm_event#(T)` channel and one generated `uvm_event_callback#(T)` dispatcher.
+Interceptors are compiled in strict rank/semantic-ID order, operate on an
+effective payload clone, can filter, observe, cancel, or append a diagnostic,
+and deterministically record skipped successors after cancellation. Nested
+triggers use a finite queue or fail under the declared reject policy; channel
+queues and total occurrences have exact bounds.
+
+For example, the generated root test owns the complete objection interval:
+
+```systemverilog
+virtual task run_phase(uvm_phase phase);
+  phase.raise_objection(this, "VIAL root lifecycle");
+  env.controller.run_selected_lifecycle();
+  env.result_collector.seal();
+  env.controller.complete_lifecycle();
+  phase.drop_objection(this, "VIAL root lifecycle complete");
+endtask
+```
+
+The generated completed-event channel shows the compiled order explicitly:
+
+```systemverilog
+completed_notification.configure(
+  "event/ahb_write/completed", fixture_scope,
+  VIAL_REENTRANCY_QUEUE, 16, 4096
+);
+completed_notification.register_interceptor(observe_at_rank_10);
+completed_notification.register_interceptor(cancel_error_at_rank_20);
+completed_notification.register_interceptor(diagnostic_at_rank_30);
+completed_notification.freeze_registration();
+```
+
+The names shortened in the second excerpt stand for the generated typed
+interceptor objects; the checked gallery contains the complete emitted calls
+with stable semantic IDs and registration scope.
+
+The event identities are publicly authored VIAL v1. The concrete interceptor
+table is a private typed preview until a later slice selects public authoring
+syntax. Stimulus, sequences, TLM, factory/configuration, RAL, constrained
+decisions, coverage, properties, models, scoreboards, faults, and executable
+result production remain later emission work.
 
 PGEN and NEXSIM are separate developing projects. PGEN owns HDL parsing;
 NEXSIM aims to provide open-source commercial-grade HDL simulation. When both
@@ -1129,16 +1178,19 @@ backends/sv_uvm_emit.accellera_2020_3_1/
   src/fsmgen_vial_uvm_types_pkg.sv
   src/fsmgen_vial_uvm_components_pkg.sv
   src/<fixture>_if.sv
+  src/<fixture>_notifications_pkg.sv
   src/<fixture>_pkg.sv
   src/<fixture>_tb.sv
   src/dut/<generated-hial-dut>.sv
 ```
 
-This is the exact ten-artifact `.13.1.1` foundation graph. Later emission
-slices may add source families under the same versioned profile. A verified
-project-local UVM library manifest is added only by a later library-dependent
-probe or qualification gate; ordinary emission neither downloads nor inspects
-those bytes.
+This is the exact eleven-artifact graph after `.13.1.2`. Its seven
+SystemVerilog sources include the generated HIAL DUT and six UVM-facing files.
+Later emission slices may add source families under the same versioned profile.
+
+A verified project-local UVM library manifest is added only by a later
+library-dependent probe or qualification gate. Ordinary emission neither
+downloads nor inspects those bytes.
 
 Every generated class, interface, method, field, connection, constraint,
 coverage element, property, notification/interceptor table, and RAL element

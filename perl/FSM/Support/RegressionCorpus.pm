@@ -144,18 +144,24 @@ my @REGRESSION_CORPUS = (
         relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
         family => 'verification_intent_tooling',
         classification => 'supported_smoke',
-        coverage => 'vial_native_uvm_emission_foundation_private_api',
+        coverage => 'vial_native_uvm_topology_lifecycle_notification_private_api',
         source_kind => 'vial',
         strict_supported => 0,
         supported_phases => [qw(
             parse typecheck hial_review bridge_binding execution_plan
-            backend_emission static_validation review_gallery atomic_publication
+            backend_emission component_topology lifecycle_static
+            notification_interception_static static_validation review_gallery
+            atomic_publication
         )],
         required_capabilities => [qw(
             vial.backend.sv_uvm_emit.accellera_2020_3_1.v1
+            vial.backend.sv_uvm_emit.bounded_reentrancy.v1
             vial.backend.sv_uvm_emit.typed_context.v1
             vial.backend.sv_uvm_emit.component_foundations.v1
+            vial.backend.sv_uvm_emit.component_topology.v1
             vial.backend.sv_uvm_emit.interface_foundation.v1
+            vial.backend.sv_uvm_emit.lifecycle.v1
+            vial.backend.sv_uvm_emit.notification_interception.v1
             vial.backend.sv_uvm_emit.uvm_top_foundation.v1
             vial.backend.sv_uvm_emit.source_map.v1
             vial.backend.sv_uvm_emit.static_validation.v1

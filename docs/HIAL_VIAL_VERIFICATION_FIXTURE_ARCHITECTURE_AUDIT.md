@@ -623,7 +623,7 @@ methodology standard:  IEEE 1800.2-2020
 reference library:     Accellera UVM 2020-3.1
 upstream tag:          2020.3.1
 upstream commit:       78c06547a2a0a29b3dc9dcafae62b75b2ff61544
-emission state:        first typed/interface/component/top foundation shipped
+emission state:        selected topology/lifecycle/notification structures shipped
 runtime state:         unqualified; provider versions not yet available
 ```
 
@@ -828,6 +828,16 @@ one typed occurrence to a bounded FIFO and drains occurrences in trigger order
 after the current dispatch completes. There is no target-stack recursion.
 Queue depth and total occurrences are bounded before result publication.
 
+Completed `.13.1.2` realizes this contract for the checked AHB fixture through
+one typed payload, interceptor record, `uvm_event#(T)` channel, exact
+`uvm_event_callback#(T)` dispatcher, and registry. The dispatcher compiles
+registration order by rank and semantic ID, freezes before triggering, clones
+the immutable occurrence into an effective payload, records cancellation and
+skipped successors, and uses exact queue-or-reject policy per generated
+channel. Public VIAL v1 events own the six channel identities; the concrete
+interceptor table remains a labelled private typed preview until public syntax
+is selected.
+
 The UVM backend creates one `uvm_event#(payload_object)` per notification and
 one generated dispatcher derived from `uvm_event_callback#(payload_object)`.
 The dispatcher owns the ordered VIAL interceptor table; it does not rely on
@@ -973,8 +983,8 @@ backend mappings.
 
 ### Artifact graph and generated-code quality
 
-The shipped `.13.1.1` foundation composes with the existing atomic artifact
-transaction and emits this exact deterministic ten-artifact graph:
+The shipped `.13.1.2` structures compose with the existing atomic artifact
+transaction and emit this exact deterministic eleven-artifact graph:
 
 ```text
 backends/sv_uvm_emit.accellera_2020_3_1/
@@ -985,6 +995,7 @@ backends/sv_uvm_emit.accellera_2020_3_1/
   src/fsmgen_vial_uvm_types_pkg.sv
   src/fsmgen_vial_uvm_components_pkg.sv
   src/<fixture>_if.sv
+  src/<fixture>_notifications_pkg.sv
   src/<fixture>_pkg.sv
   src/<fixture>_tb.sv
   src/dut/<generated-hial-dut>.sv
@@ -994,9 +1005,12 @@ The private `FSM::VIAL::Backend::SVUVMAccellera2020_3_1` emitter consumes the
 same immutable ExecutionIR, bridge manifest, and deterministic HIAL DUT input
 as the portable backend. `FSM::VIAL::Backend::SVUVMStaticValidator` checks the
 closed roles, limits, provider neutrality, deterministic text shape, balanced
-generated constructs, and selected UVM foundation shape. The native source map
-uses `fsmgen.vial_uvm_backend_source_map.v1` and records exact start/end line
-and column ranges. The checked gallery under
+generated constructs, selected UVM foundation shape, notification/callback
+shape and bounds, complete passive topology/lifecycle shape, and single
+root-owned objection policy. The native source map uses
+`fsmgen.vial_uvm_backend_source_map.v1` and records exact start/end line and
+column ranges for the added agent, monitor, controller, collector, dispatcher,
+registry, and six event-channel instances. The checked gallery under
 `vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/`
 is byte-compared with every rerender. The graph can publish atomically and
 rejects non-identical collisions; focused tests remove the exact graph and
@@ -1174,7 +1188,7 @@ Compatibility states are therefore exact:
 | Surface | Revision | Behavior | Qualification |
 | --- | --- | --- | --- |
 | `uvm-passive-monitor` | UVM 1.2 | inert declarations only | shape/inertness tests; no compile/run claim |
-| `sv_uvm_emit.accellera_2020_3_1` | IEEE 1800.2-2020 / Accellera 2020-3.1 | deterministic native intent artifacts | emission/source-map only; compile/run explicitly not run |
+| `sv_uvm_emit.accellera_2020_3_1` | IEEE 1800.2-2020 / Accellera 2020-3.1 | deterministic selected topology, lifecycle, and notification/interception artifacts | emission/source-map/static-structure only; compile/run explicitly not run |
 | future `sv_uvm_qualified` PGEN+NEXSIM tuple | same selected UVM identity unless explicitly revised | executable native intent lowering | unavailable until `.13.3` selects and passes the exact tuple |
 
 A future CLI alias, UVM 1.2 deprecation, upgraded passive-monitor target,
@@ -1210,16 +1224,21 @@ behavior, or all IEEE 1800.2 optional/deviation behavior. Review or later tool
 findings are fixed in the generator or recorded as exact task-tree defects;
 they do not retroactively turn early emission into a runtime claim.
 
-Completed `.13.1.1` ships the deterministic private emitter, exact methodology
-record, typed logical-time context, component bases, timed interface, fixture
-configuration/environment/test foundations, bound top, source map, structural
-validator, capability discovery, checked first gallery, atomic publication,
-and cleanup. Preprocessing, parse, UVM-library compile, fixture compile,
-elaboration, runtime, result, parity, visual-review completion, and full native
-UVM emission breadth remain explicitly unclaimed. `.13.1.2` is the next native
-emission frontier for complete topology, lifecycle, and notification/
-interception structures. Experimental `.13.2` is now also dependency-ready
-because the first gallery exists; its eventual activation remains separate so
+Completed `.13.1.1` established the deterministic private emitter, exact
+methodology record, initial source map, structural validator, checked gallery,
+atomic publication, and cleanup. Completed `.13.1.2` expands that graph to
+typed lifecycle/reentrancy/filter/effect records, a context-owning agent base,
+passive monitor and agent, lifecycle controller, result-collector structure,
+complete environment/test construction, one root-owned objection pair, and
+ordered typed notification/interception channels with bounded queue-or-reject
+reentrancy. The gallery now byte-locks all six UVM-facing source files.
+
+Preprocessing, parse, UVM-library compile, fixture compile, elaboration,
+runtime, result, parity, visual-review completion, public interceptor authoring,
+stimulus/TLM/factory/configuration/RAL/randomization, coverage/properties,
+models/scoreboards/faults/results, and full native UVM breadth remain explicitly
+unclaimed. `.13.1.3` is the next native emission frontier. Experimental `.13.2`
+remains separately dependency-ready because the first gallery exists, so
 open-tool evidence cannot blur the active emission sequence.
 
 Verilator and other available tools can catch whatever they support early.

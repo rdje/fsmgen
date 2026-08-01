@@ -248,7 +248,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement complete reviewable simulator-neutral sv_uvm_emit.accellera_2020_3_1 generation through bounded children without a parser or simulator gate.`
   Acceptance: `Representative typed-IR fixtures and public authorable paths where available emit the full selected UVM environment shape across topology, interfaces, lifecycle, notification/interception, stimulus, TLM, factory/configuration, RAL, constrained decisions, coverage/properties, models/scoreboards/faults/results, with efficient readable deterministic artifacts, complete source maps, an accumulating review gallery, and explicit static/manual-review versus compile/elaboration/run/result states. No child waits for a simulator merely to generate broader UVM; unknown defects remain possible and are tracked when found rather than hidden. Raw SV/UVM knowledge stays absent from authored VIAL, legacy UVM 1.2 remains compatible, and neither visual review nor static shape checks become syntax/runtime/full-VIAL qualification.`
-  Verification: `.13.1.1` ships the native emitter foundation and first checked gallery; pending children .13.1.2-.13.1.5 remain unblocked by simulator availability`
+  Verification: `.13.1.1` ships the native emitter foundation and `.13.1.2` ships complete selected topology, lifecycle, and notification/interception structures; proposed children .13.1.3-.13.1.5 remain unblocked by simulator availability`
   Commit: `pending children`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5`
 
@@ -260,11 +260,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1: ship native UVM emitter foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Emit complete selected component topology, timed interfaces, lifecycle control, and notification/interception structures for visual and static review.`
   Acceptance: `Generated tests/environments/agents/interfaces/controllers/result collectors express strict lifecycle/logical-time ownership and the complete notification/interception record, including stable registration order, filters, effects, cancellation, bounded queue/reject reentrancy, source maps, static negative oracles, and representative review-gallery artifacts; no simulator gate or runtime result is required.`
-  Verification: `pending implementation after clean activation from exact predecessor 254806049bf9d545d36e5a4f5e9666f1ef4cbcb4`
-  Commit: `pending implementation`
+  Verification: `Emitter revision 2 now produces an exact eleven-artifact graph with seven SystemVerilog sources and 42 complete source-map entries. Typed lifecycle/lifetime/reentrancy/filter/effect records, a context-owning agent base, passive timed monitor/agent, lifecycle controller, result-collector structure, complete environment/root-test topology, six typed event channels, exact UVM event callbacks, immutable/effective payload separation, stable rank/semantic-ID registration, cancellation/skipped accounting, and bounded queue-or-reject reentrancy are emitted and byte-locked across six gallery sources. Ten static checks cover roles/text/provider/balance/foundation/notification/topology/single-root-objection boundaries; focused negative oracles reject missing callback/bounds, active-agent residue, duplicate objections, and phase jumps. Public VIAL v1 events own channel identity; interceptor tables remain a private typed preview. Manual review and every parse/compile/elaboration/runtime/result/parity claim remain pending or unclaimed. Focused/broader implementation evidence and documentation/doctrine evidence are recorded below.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2: ship complete native UVM structures`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3`
   Status: `proposed`
@@ -665,6 +665,54 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-08-01` | `.13.1.1` activation | clean predecessor; task/index/fact/Memory continuity; task integrity; Knowledge Map; relative paths; memory; live-document containment; diff; staged docs-only acceptance; doctrines | `passed`; `.13.1.1` alone active; task integrity remains three trees/907 nodes/one segment/one index archive; Knowledge Map is current at 1,104 facts/5,602 questions/5,768 occurrences; relative paths report `All tests successful` at Files=1/Tests=2; Memory is 46 lines; all 22 live-document surfaces and 2,939/2,939 paths pass with zero maintained-reference changes and zero ceiling increases; all nine staged doctrines pass; no implementation, generated artifact, parser, compile, elaboration, simulation, result, parity, or public capability change |
 | `2026-08-01` | `.13.1.1` implementation | private native emitter/validator/contract syntax; exact AHB ExecutionIR/bridge/DUT handoff; deterministic ten-artifact graph; exact methodology/library state; typed context/component/interface/fixture/top sources; complete line/column source map; structural positive/negative oracles; checked gallery; capability/support truth; atomic publication/collision/cleanup; focused and broader VIAL/support/docs/task/mdBook/Knowledge Map/Memory/staged-doctrine gates | `passed`; three new Perl modules and t1560 report syntax OK; focused native/capability/support Files=3/Tests=7,095 and guarded impacted VIAL/support Files=16/Tests=7,215 pass; docs/history Files=16/Tests=128 pass; task integrity is three trees/907 nodes/one segment/one index archive; all 49 mdBook chapters test and the repository-local 85-file/16,688,654-byte build passes before exact removal; all 22 live surfaces and 2,941/2,941 declared paths pass with exact maintained-reference delta 0/+41/+1,903 and zero ceiling increases; Knowledge Map is current at 1,104 facts/5,615 questions/5,781 occurrences/117 shards; Memory is 47 lines; manual review remains pending and every parser/compile/elaboration/runtime/result/parity/breadth non-claim remains exact |
 | `2026-08-01` | `.13.1.2` activation | clean `254806049` predecessor; task/index/fact/Memory continuity; task integrity; Knowledge Map; relative paths; memory; live-document containment; diff; staged docs-only acceptance; doctrines | `passed pre-stage checks`; `.13.1.2` alone active; task integrity remains three trees/907 nodes/one segment/one index archive; Knowledge Map is current at 1,104 facts/5,619 questions/5,785 occurrences/117 shards; relative paths report `All tests successful` at Files=1/Tests=2; Memory remains below its warning boundary; all 22 live-document surfaces and 2,941/2,941 paths pass with zero maintained-reference changes and zero ceiling increases; implementation and product behavior remain unchanged |
+| `2026-08-01` | `.13.1.2` implementation | emitter/static-validator/support/test syntax; revision-2 exact graph; complete passive topology and lifecycle; typed notification/interception order/filter/effect/cancellation/reentrancy; 42-entry source map; six-source gallery; support/capability truth; focused/broader VIAL runtime and structural regressions; docs/task/mdBook/Knowledge Map/Memory/staged-doctrine gates | `passed`; guarded non-runtime VIAL/support suite reports `All tests successful` at Files=15/Tests=7,158; separately captured exact Verilator integration and parity gates pass at Files=1/Tests=5 and Files=1/Tests=4 after one interrupted guard run's exact 30-MiB operation staging residue was identified, removed, and proven absent; docs/task/live/reference/Knowledge Map suite passes at Files=11/Tests=393; all 49 mdBook chapters test and its repository-local 85-file/16,727,608-byte build passes before exact removal; task integrity remains three trees/907 nodes/one segment/one index archive; live containment accepts all 22 surfaces/2,941 paths and exact mdBook aggregate delta 0/+52/+2,400 with zero ceiling increases; Knowledge Map is current at 1,104 facts/5,624 questions/5,790 occurrences/117 shards; Memory is 47 lines; final staged acceptance and all nine doctrine checks pass before commit |
+
+## Acceptance Checklist (enforced) — `.13.1.2` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — On clean activation commit
+  `d3f05e3f2`, `git log -S'package
+  base_output_arbitration_notifications_pkg;' --oneline --
+  perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm` returns no commit. The
+  revision-1 backend emitted only configuration/environment/test foundations;
+  it had no agent context owner, monitor/controller/result-collector topology,
+  lifecycle-state machine, notification package, typed event callback,
+  interceptor ordering/filter/effect/cancellation record, or bounded
+  reentrancy implementation. The initial revision-2 focused run then reported
+  `VIAL_UVM_STATIC_BALANCE_ERROR` at the generated fixture package: the
+  validator counted `endfunction` but its opening-token expression omitted
+  legal `protected function` declarations. This identified the exact
+  validator locus rather than an unavailable simulator or UVM-library defect.
+- [x] **ADDRESSED (verified)** — `prove -Iperl
+  t/1560-vial-native-uvm-emitter-substrate.t
+  t/1570-vial-native-uvm-topology-lifecycle-notification.t` reports `All tests
+  successful` at `Files=2, Tests=15`. Box-scoped evidence: emitter revision 2
+  produces the exact 11-artifact/7-source graph and 42-entry source map; all ten
+  structural checks pass; the six-source gallery is byte-identical; and exact
+  negative mutations reject missing notification roles/pre-trigger/bounds,
+  active-agent residue, duplicate objection ownership, and phase jumps. The
+  protected-function counter accepts generated access qualifiers, the agent
+  owns its retrieved execution context, and support/capability records expose
+  only selected topology/lifecycle/notification/reentrancy emission while
+  retaining every syntax/runtime/breadth non-claim.
+- [x] **NO REGRESSION** — The five changed Perl/support modules and three
+  changed/new tests report `syntax OK`. The RAM-guarded non-runtime VIAL/support
+  suite reports `All tests successful` at `Files=15, Tests=7158`; separately
+  captured exact Verilator runtime and AHB parity gates report `All tests
+  successful` at `Files=1, Tests=5` and `Files=1, Tests=4`. The first combined
+  guard run ended during compilation and left one exact 30-MiB operation-owned
+  staging tree; process census proved it unused, exact cleanup removed it, the
+  two gates then passed, and the staging census is empty. Final documentation,
+  mdBook, Knowledge Map, Memory, staged acceptance, and `[doctrine] all
+  doctrine checks passed` evidence is appended here before commit. The
+  documentation/task/live/reference/Knowledge Map suite reports `All tests
+  successful` at `Files=11, Tests=393`; all 49 mdBook chapters test and its
+  repository-local 85-file/16,727,608-byte build passes before exact removal.
+  Task integrity remains three trees/907 nodes/one segment/one index archive;
+  live containment accepts all 22 surfaces/2,941 paths and the exact mdBook
+  delta `0/+52/+2,400` with zero ceiling increases; `knowledge-map: OK` reports
+  1,104 facts/5,624 questions/5,790 occurrences/117 shards; Memory is 47 lines.
+  Parse, UVM library/fixture compile, elaboration, native runtime/result/parity,
+  public interceptor authoring, and complete UVM breadth remain unclaimed.
 
 ## Acceptance Checklist (enforced) — `.13.1.1` implementation
 
@@ -1040,8 +1088,23 @@ compiler-owned beneath C/C++ or Rust.
 | `.13.1.1` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1: activate native UVM emitter substrate` | Activate only the selected simulator-neutral emitter foundation, static validators, deterministic atomic artifact graph, and first review gallery after a clean predecessor; implementation remains unperformed. |
 | `.13.1.1` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1: ship native UVM emitter foundation` | Ship the private exact-Accellera native emitter foundation, structural validator, discoverable emission-only contract, ten-artifact deterministic graph, complete source map, first byte-checked review gallery, atomic publication, and exact non-claims. |
 | `.13.1.2` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2: activate complete native UVM structures` | Activate only complete selected component topology, timed interfaces, lifecycle control, and notification/interception emission after a clean predecessor; implementation remains unperformed. |
+| `.13.1.2` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2: ship complete native UVM structures` | Ship complete selected passive topology, strict root-owned lifecycle/logical time, ordered typed notification/interception with bounded queue-or-reject reentrancy, expanded static negative oracles, exact source maps, six-source review gallery, and honest compile/runtime/public-authoring boundaries. |
 
 ## Changelog
+
+- `2026-08-01`: `.13.1.2` expands the simulator-neutral Accellera profile to
+  an exact eleven-artifact graph with seven SystemVerilog sources and 42 mapped
+  symbols. A shared context now reaches the passive monitor through a typed
+  agent base; the generated environment also owns the lifecycle controller and
+  result-collector structure, while the root test alone owns one objection
+  pair. Six public VIAL event identities receive typed `uvm_event#(T)` channels
+  and an exact `uvm_event_callback#(T)` dispatcher with strict compiled
+  registration, filters/effects, immutable/effective payload separation,
+  cancellation/skipped accounting, and bounded queue-or-reject reentrancy.
+  Ten structural checks plus targeted negative mutations and six byte-locked
+  gallery sources pass. Interceptor tables remain a private typed preview;
+  manual review, parsing, compilation, elaboration, runtime, result, parity,
+  and complete native-UVM breadth remain unclaimed. Proposed `.13.1.3` is next.
 
 - `2026-08-01`: Clean predecessor `254806049` activates `.13.1.2` alone for
   complete selected native UVM topology, timed-interface, lifecycle, and

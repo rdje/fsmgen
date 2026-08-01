@@ -20,7 +20,8 @@ my @ARTIFACT_KEYS = qw(
 );
 my @REQUIRED_SOURCE_ROLES = qw(
     generated_hial_dut uvm_types_package uvm_component_foundations
-    uvm_fixture_interface uvm_fixture_package uvm_fixture_top
+    uvm_fixture_interface uvm_notification_interception uvm_fixture_package
+    uvm_fixture_top
 );
 
 sub result_keys($class) {
@@ -183,6 +184,100 @@ sub _validate($raw) {
     }
     _record_check(\@checks, 'selected_uvm_foundation_shape', $uvm_shape_ok);
 
+    my @notification_shape = (
+        [qr/\bpackage\s+[a-z_][a-z0-9_]*_notifications_pkg\s*;/i,
+            'notification package declaration'],
+        [qr/\buvm_event\s*#\s*\(/, 'typed UVM event channel'],
+        [qr/\buvm_event_callback\s*#\s*\(/, 'typed UVM event callback'],
+        [qr/\bpre_trigger\s*\(/, 'pre-trigger interception'],
+        [qr/\bpost_trigger\s*\(/, 'post-trigger completion'],
+        [qr/\bordered_interceptors\.insert\s*\(/,
+            'stable ordered interceptor insertion'],
+        [qr/\bVIAL_FILTER_ALWAYS\b.*\bVIAL_FILTER_RESPONSE_ERROR\b/s,
+            'selected filter kinds'],
+        [qr/\bVIAL_EFFECT_OBSERVE\b.*\bVIAL_EFFECT_CANCEL\b.*\bVIAL_EFFECT_APPEND_DIAGNOSTIC\b/s,
+            'selected interception effects'],
+        [qr/\bVIAL_REENTRANCY_REJECT\b.*\bVIAL_REENTRANCY_QUEUE\b/s,
+            'closed reentrancy policies'],
+        [qr/\bpending\.size\s*\(\)\s*>=\s*queue_bound\b/,
+            'notification queue bound'],
+        [qr/\boccurrence_count\s*>=\s*occurrence_bound\b/,
+            'notification occurrence bound'],
+        [qr/\bclone_payload\s*\(\s*"effective"\s*\)/,
+            'immutable-to-effective payload clone'],
+    );
+    my $notification_shape_ok = defined($text_by_role{uvm_notification_interception});
+    for my $requirement (@notification_shape) {
+        my ($pattern, $label) = @$requirement;
+        next if defined($text_by_role{uvm_notification_interception})
+            && $text_by_role{uvm_notification_interception} =~ $pattern;
+        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_NOTIFICATION_SHAPE_ERROR',
+            "generated source is missing $label", '/roles/uvm_notification_interception');
+        $notification_shape_ok = 0;
+    }
+    _record_check(\@checks, 'selected_notification_interception_shape',
+        $notification_shape_ok);
+
+    my @lifecycle_shape = (
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_monitor\s+extends\s+fsmgen_vial_component_base\b/i,
+            'timed interface monitor'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_agent\s+extends\s+fsmgen_vial_agent_base\b/i,
+            'passive timed interface agent'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_controller\s+extends\s+fsmgen_vial_component_base\b/i,
+            'root-owned lifecycle controller'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_result_collector\s+extends\s+fsmgen_vial_component_base\b/i,
+            'closed result collector'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_env\s+extends\s+fsmgen_vial_env_base\b/i,
+            'fixture environment'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_test\s+extends\s+fsmgen_vial_test_base\b/i,
+            'fixture test'],
+        [qr/\bbuild_phase\s*\(.*\bconnect_phase\s*\(.*\bend_of_elaboration_phase\s*\(/s,
+            'deterministic construction phases'],
+        [qr/\btransition_lifecycle\s*\(\s*VIAL_LIFECYCLE_CONSTRUCTED\s*,\s*VIAL_LIFECYCLE_CONFIGURED\s*\)/,
+            'constructed-to-configured transition'],
+        [qr/\btransition_lifecycle\s*\(\s*VIAL_LIFECYCLE_READY\s*,\s*VIAL_LIFECYCLE_RUNNING\s*\)/,
+            'ready-to-running transition'],
+        [qr/\btransition_lifecycle\s*\(\s*VIAL_LIFECYCLE_COMPLETED\s*,\s*VIAL_LIFECYCLE_FINALIZED\s*\)/,
+            'completed-to-finalized transition'],
+    );
+    my $lifecycle_shape_ok = defined($text_by_role{uvm_fixture_package});
+    for my $requirement (@lifecycle_shape) {
+        my ($pattern, $label) = @$requirement;
+        next if defined($text_by_role{uvm_fixture_package})
+            && $text_by_role{uvm_fixture_package} =~ $pattern;
+        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_LIFECYCLE_SHAPE_ERROR',
+            "generated source is missing $label", '/roles/uvm_fixture_package');
+        $lifecycle_shape_ok = 0;
+    }
+    if (defined($text_by_role{uvm_fixture_package})
+            && $text_by_role{uvm_fixture_package} =~ /\b(?:uvm_driver|uvm_sequencer)\b/) {
+        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_LIFECYCLE_SHAPE_ERROR',
+            'passive topology contains an unselected driver or sequencer',
+            '/roles/uvm_fixture_package');
+        $lifecycle_shape_ok = 0;
+    }
+    _record_check(\@checks, 'selected_lifecycle_topology_shape', $lifecycle_shape_ok);
+
+    my $objection_policy_ok = defined($text_by_role{uvm_fixture_package});
+    my $fixture_text = $text_by_role{uvm_fixture_package} // '';
+    my $raise_count = scalar(() = $fixture_text =~ /\bphase\.raise_objection\s*\(/g);
+    my $drop_count = scalar(() = $fixture_text =~ /\bphase\.drop_objection\s*\(/g);
+    my $other_objection = 0;
+    for my $role (grep { $_ ne 'uvm_fixture_package' } @REQUIRED_SOURCE_ROLES) {
+        my $text = $text_by_role{$role} // '';
+        $other_objection = 1
+            if $text =~ /\bphase\.(?:raise|drop)_objection\s*\(/;
+    }
+    if ($raise_count != 1 || $drop_count != 1 || $other_objection
+            || $fixture_text =~ /\bphase\.jump\s*\(/
+            || $fixture_text =~ /\bset_automatic_phase_objection\s*\(/) {
+        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_OBJECTION_POLICY_ERROR',
+            'generated fixture must contain one root-owned objection pair and no phase jump or automatic objection',
+            '/roles/uvm_fixture_package');
+        $objection_policy_ok = 0;
+    }
+    _record_check(\@checks, 'root_owned_objection_policy', $objection_policy_ok);
+
     @reports = sort { $a->{relpath} cmp $b->{relpath} } @reports;
     my $ok = !@diagnostics;
     return _result({
@@ -216,9 +311,9 @@ sub _construct_count($text, $token) {
     my $copy = "$text";
     return scalar(() = $copy =~ /^\s*\Q$token\E\b/gm)
         if $token =~ /\Aend/ || $token =~ /\A(?:package|interface|module)\z/;
-    return scalar(() = $copy =~ /^\s*(?:virtual\s+)?\Q$token\E\b/gm)
+    return scalar(() = $copy =~ /^\s*(?:(?:local|protected|virtual)\s+)*\Q$token\E\b/gm)
         if $token eq 'class';
-    return scalar(() = $copy =~ /^\s*(?:(?:pure\s+)?virtual\s+|static\s+)?\Q$token\E\b/gm);
+    return scalar(() = $copy =~ /^\s*(?:(?:local|protected|static|virtual|pure)\s+)*\Q$token\E\b/gm);
 }
 
 sub _safe_relpath($value) {

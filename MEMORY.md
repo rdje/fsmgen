@@ -6,23 +6,24 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2`:
-  activate complete native UVM structures).
-- active_work_unit: `.13.1.2` is active for topology, interfaces, lifecycle,
-  and notification/interception emission; `.13.1.1` remains complete.
-- current_state: private profile `sv_uvm_emit.accellera_2020_3_1` now emits its
-  exact ten-artifact foundation; its first gallery is byte-checked and atomic
-  publication/cleanup pass. Emission never accesses UVM-library bytes. Manual
-  review is pending; parse through runtime, results, parity, and complete
-  breadth remain unclaimed. `.13.2` is separate and dependency-ready; `.13.3`
-  retains future PGEN+NEXSIM runtime qualification.
-- next_action: implement `.13.1.2` alone with deterministic source-mapped
-  topology/lifecycle/notification structures, static negative oracles, and a
-  representative review gallery; require no simulator result.
+  ship complete native UVM structures).
+- active_work_unit: parent `.13.1` remains active; `.13.1.2` is complete and
+  proposed `.13.1.3` is the next clean activation/implementation frontier.
+- current_state: private profile `sv_uvm_emit.accellera_2020_3_1` emits an
+  exact eleven-artifact/seven-source graph with selected passive topology,
+  lifecycle, ordered typed notification/interception, 42 mapped symbols, ten
+  structural checks, and six byte-checked gallery sources. Manual review and parse
+  through runtime/results/parity remain unclaimed; `.13.2` is separately
+  dependency-ready and `.13.3` retains future PGEN+NEXSIM qualification.
+- next_action: from this clean implementation commit, durably route the
+  director's NEXSIM deep-semantic-introspection API/MCP clarification into its
+  `.13.3`/IASIM differential-qualification owners, then separately activate
+  `.13.1.3` for stimulus/TLM/factory/configuration/RAL/constrained decisions.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: `.13.3` waits on capability-ready PGEN and NEXSIM releases and an
-  exact parser-to-simulator handoff. `.13.1.2` is unblocked. Live-document
-  `.12` and inventory `.26` remain director-deferred.
+- blockers: `.13.3` waits on capability-ready PGEN/NEXSIM releases and handoff;
+  NEXSIM's API/MCP semantic identity/snapshot/control contract needs clean
+  follow-on routing. Live-document `.12` and inventory `.26` are deferred.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
@@ -39,8 +40,7 @@ history; this file carries only the current bounded resume state.
 - Decision `0050`: canonical native output is simulator-neutral Accellera UVM;
   provider-specific requirements stay in isolated adapter/command/evidence
   layers and cannot alter VIAL meaning. Exact emitter identity owns byte
-  determinism; neutral syntax/strategy may evolve. Commercial simulators are
-  optional comparisons, not roadmap dependencies.
+  determinism; neutral syntax/strategy may evolve. Commercial simulators remain optional comparisons.
 - Decisions `0041`/`0042`/`0044`/`0045` retain containment authority. Retired
   views remain Git-retrievable under `0048`/`0049`; `.5`/`.8`/`.9`/`.10`/`.13`
   bound the live layers. Push only on request (`0005`); PNT is autonomous

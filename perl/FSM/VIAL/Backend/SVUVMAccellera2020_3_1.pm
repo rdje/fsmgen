@@ -19,6 +19,7 @@ my $SOURCE_MAP_SCHEMA = 'fsmgen.vial_uvm_backend_source_map.v1';
 my $STATIC_SCHEMA = 'fsmgen.vial_uvm_static_validation.v1';
 my $BASE = 'backends/sv_uvm_emit.accellera_2020_3_1';
 my $CONTRACT = 'docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md';
+my $EMITTER_REVISION = 2;
 my $JSON = JSON::PP->new->canonical(1);
 
 my @RESULT_KEYS = qw(
@@ -119,17 +120,19 @@ sub _emit($raw) {
     _throw('VIAL_UVM_BACKEND_INVOCATION_ERROR', 'execution plan identity is malformed', '/execution_ir/plan_id')
         unless defined $plan_digest;
     my $operation_id = 'op-' . sha256_hex(_canonical_json({
-        action => 'emit_native_uvm_foundation',
+        action => 'emit_native_uvm_topology_lifecycle_notification',
         artifact_root => $raw->{artifact_root},
         backend_profile => $BACKEND_PROFILE,
         bridge_manifest_id => $bridge->{manifest_id},
-        emitter_revision => 1,
+        emitter_revision => $EMITTER_REVISION,
         plan_id => $execution->{plan_id},
     }));
 
     my $types_rel = "$BASE/src/fsmgen_vial_uvm_types_pkg.sv";
     my $components_rel = "$BASE/src/fsmgen_vial_uvm_components_pkg.sv";
     my $interface_rel = "$BASE/src/$interface_name.sv";
+    my $notification_package = $fixture_slug . '_notifications_pkg';
+    my $notification_rel = "$BASE/src/$notification_package.sv";
     my $fixture_rel = "$BASE/src/$fixture_package.sv";
     my $top_rel = "$BASE/src/$top.sv";
     my $dut_rel = "$BASE/src/dut/" . _slug($module_name) . '.sv';
@@ -141,10 +144,17 @@ sub _emit($raw) {
         interface_name => $interface_name,
         relpath => $interface_rel,
     );
+    my ($notifications, $notification_specs) = _render_notification_package(
+        execution => $execution,
+        bridge => $bridge,
+        package_name => $notification_package,
+        relpath => $notification_rel,
+    );
     my ($fixture, $fixture_specs) = _render_fixture_package(
         execution => $execution,
         bridge => $bridge,
         interface_name => $interface_name,
+        notification_package => $notification_package,
         package_name => $fixture_package,
         relpath => $fixture_rel,
     );
@@ -168,6 +178,8 @@ sub _emit($raw) {
             'uvm_component_foundations', $components, [$CONTRACT]),
         _artifact($interface_rel, 'systemverilog_source', 'systemverilog',
             'uvm_fixture_interface', $interface, [$execution->{plan_id}, $bridge->{manifest_id}]),
+        _artifact($notification_rel, 'systemverilog_source', 'systemverilog',
+            'uvm_notification_interception', $notifications, [$execution->{plan_id}, $CONTRACT]),
         _artifact($fixture_rel, 'systemverilog_source', 'systemverilog',
             'uvm_fixture_package', $fixture, [$execution->{plan_id}, $bridge->{manifest_id}]),
         _artifact($top_rel, 'systemverilog_source', 'systemverilog',
@@ -180,7 +192,8 @@ sub _emit($raw) {
         if $source_bytes > 16_777_216;
 
     my @spec = (
-        @$types_specs, @$component_specs, @$interface_specs, @$fixture_specs, @$top_specs,
+        @$types_specs, @$component_specs, @$interface_specs, @$notification_specs,
+        @$fixture_specs, @$top_specs,
         _map_spec(
             relpath => $dut_rel, start => 1, end => _line_count($dut_input->{text}),
             symbol => $module_name, role => 'generated_hial_dut',
@@ -230,7 +243,7 @@ sub _emit($raw) {
         schema => $BACKEND_SCHEMA,
         schema_version => 1,
         backend_profile => $BACKEND_PROFILE,
-        emitter_revision => 1,
+        emitter_revision => $EMITTER_REVISION,
         plan_id => $execution->{plan_id},
         fixture_id => $execution->{fixture}{fixture_id},
         generated_top => $top,
@@ -257,17 +270,23 @@ sub _emit($raw) {
             library_materialization => 'not_required_for_emission',
             emitted_foundations => [qw(
                 typed_context component_bases timed_interface fixture_config
-                fixture_environment fixture_test dut_binding top
+                complete_component_topology lifecycle_execution
+                notification_interception fixture_environment fixture_test
+                dut_binding top
             )],
             deferred_to_later_emission_slices => [qw(
-                lifecycle_execution notification_interception stimulus_sequences
-                tlm factory_overrides scoped_configuration ral randomization
+                stimulus_sequences tlm factory_overrides scoped_configuration ral randomization
                 coverage properties models scoreboards faults results
             )],
+            public_authoring_boundary => {
+                execution_events => 'public_vial_v1',
+                native_interceptor_tables => 'private_typed_preview',
+            },
         },
         limitations => [
             'static validation checks deterministic structure only; it is not a SystemVerilog parser or compiler',
-            'the first gallery emits typed, interface, component, fixture, and top foundations only',
+            'the gallery emits complete selected topology, lifecycle, and notification/interception structures but no stimulus, RAL, coverage, model, scoreboard, fault, or result implementation',
+            'native interceptor records are a private typed preview until public VIAL syntax is selected',
             'UVM library bytes are intentionally absent from and unnecessary for ordinary emission',
             'preprocessing, parse, library compile, fixture compile, elaboration, runtime, result, and parity have not run',
             'one HIAL unit and one VIAL clock domain are selected for the first review gallery',
@@ -275,9 +294,9 @@ sub _emit($raw) {
         limits => {
             selected_units => 1,
             selected_domains => 1,
-            generated_source_artifacts => 6,
+            generated_source_artifacts => 7,
             generated_source_bytes => 16_777_216,
-            total_artifacts => 10,
+            total_artifacts => 11,
             source_map_entries => 1_000_000,
             identifier_bytes => 255,
         },
@@ -315,8 +334,8 @@ sub _emit($raw) {
     my @artifacts = sort { $a->{relpath} cmp $b->{relpath} }
         ($manifest_artifact, @source_artifacts, @support_artifacts);
     _throw('VIAL_UVM_BACKEND_LIMIT_EXCEEDED',
-        'native UVM artifact graph exceeds its ten-artifact foundation cap', '/artifacts')
-        unless @artifacts == 10;
+        'native UVM artifact graph exceeds its eleven-artifact topology cap', '/artifacts')
+        unless @artifacts == 11;
 
     return _result({
         ok => JSON::PP::true,
@@ -343,6 +362,9 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         one_bound_hial_unit_v1
         one_selected_clock_domain_v1
         deterministic_hial_systemverilog_source_v1
+        complete_component_topology_v1
+        root_owned_lifecycle_v1
+        ordered_notification_interception_v1
     );
     push @unsatisfied, 'execution schema must be fsmgen.vial_execution_ir.v1'
         unless ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1';
@@ -387,20 +409,19 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
     }
     @satisfied = @required unless @unsatisfied;
     @deferred = qw(
-        complete_component_topology lifecycle_execution notification_interception
         sequence_and_tlm_execution factory_and_config_semantics ral_semantics
         native_constraints coverage_and_properties model_scoreboard_fault_result
         preprocessing parse library_compile fixture_compile elaboration runtime
         result parity
     );
     return {
-        negotiation_scope => 'native_uvm_emission_foundation_v1',
+        negotiation_scope => 'native_uvm_topology_lifecycle_notification_v1',
         required => [sort @required],
         satisfied => [sort @satisfied],
         unsatisfied => [sort @unsatisfied],
         deferred => [sort @deferred],
         limitations => [
-            'negotiation covers emission foundations, not full VIAL-to-UVM semantic breadth',
+            'negotiation covers selected topology, lifecycle, and notification/interception emission, not full VIAL-to-UVM semantic breadth',
             'library-dependent and executable gates are deliberately outside ordinary emission',
         ],
     };
@@ -430,16 +451,56 @@ sub _render_types_package($relpath) {
     $push->('    vial_phase_e phase;');
     $push->('  } vial_logical_time_s;');
     $push->('');
+    $push->('  typedef enum int unsigned {');
+    $push->('    VIAL_LIFECYCLE_CONSTRUCTED = 0,');
+    $push->('    VIAL_LIFECYCLE_CONFIGURED = 1,');
+    $push->('    VIAL_LIFECYCLE_READY = 2,');
+    $push->('    VIAL_LIFECYCLE_RUNNING = 3,');
+    $push->('    VIAL_LIFECYCLE_DRAINING = 4,');
+    $push->('    VIAL_LIFECYCLE_COMPLETED = 5,');
+    $push->('    VIAL_LIFECYCLE_FINALIZED = 6');
+    $push->('  } vial_lifecycle_state_e;');
+    $push->('');
+    $push->('  typedef enum int unsigned {');
+    $push->('    VIAL_LIFETIME_FIXTURE = 0,');
+    $push->('    VIAL_LIFETIME_SCENARIO = 1,');
+    $push->('    VIAL_LIFETIME_TRANSACTION = 2,');
+    $push->('    VIAL_LIFETIME_NOTIFICATION = 3,');
+    $push->('    VIAL_LIFETIME_OPERATION = 4');
+    $push->('  } vial_lifetime_e;');
+    $push->('');
+    $push->('  typedef enum int unsigned {');
+    $push->('    VIAL_REENTRANCY_REJECT = 0,');
+    $push->('    VIAL_REENTRANCY_QUEUE = 1');
+    $push->('  } vial_reentrancy_e;');
+    $push->('');
+    $push->('  typedef enum int unsigned {');
+    $push->('    VIAL_FILTER_ALWAYS = 0,');
+    $push->('    VIAL_FILTER_NEVER = 1,');
+    $push->('    VIAL_FILTER_RESPONSE_ERROR = 2');
+    $push->('  } vial_filter_e;');
+    $push->('');
+    $push->('  typedef enum int unsigned {');
+    $push->('    VIAL_EFFECT_OBSERVE = 0,');
+    $push->('    VIAL_EFFECT_CANCEL = 1,');
+    $push->('    VIAL_EFFECT_TRANSFORM_DECLARED_VALUE = 2,');
+    $push->('    VIAL_EFFECT_NOTIFY_DECLARED = 3,');
+    $push->('    VIAL_EFFECT_RECORD_COVERAGE = 4,');
+    $push->('    VIAL_EFFECT_APPEND_DIAGNOSTIC = 5');
+    $push->('  } vial_effect_e;');
+    $push->('');
     my $class_start = @line + 1;
     $push->('  class fsmgen_vial_execution_context extends uvm_object;');
     $push->('    `uvm_object_utils(fsmgen_vial_execution_context)');
     $push->('');
     $push->('    string plan_id;');
     $push->('    vial_logical_time_s logical_time;');
+    $push->('    vial_lifecycle_state_e lifecycle_state;');
     $push->('');
     $push->('    function new(string name = "fsmgen_vial_execution_context");');
     $push->('      super.new(name);');
     $push->('      logical_time = \'{cycle: 0, ordinal: 0, phase: VIAL_DRIVE_PHASE};');
+    $push->('      lifecycle_state = VIAL_LIFECYCLE_CONSTRUCTED;');
     $push->('    endfunction');
     $push->('');
     $push->('    function void set_logical_time(');
@@ -450,6 +511,15 @@ sub _render_types_package($relpath) {
     $push->('      logical_time.cycle = cycle;');
     $push->('      logical_time.phase = phase;');
     $push->('      logical_time.ordinal = ordinal;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void transition_lifecycle(');
+    $push->('      vial_lifecycle_state_e expected,');
+    $push->('      vial_lifecycle_state_e next_state');
+    $push->('    );');
+    $push->('      if (lifecycle_state != expected)');
+    $push->('        `uvm_fatal("VIAL/LIFECYCLE", $sformatf("illegal lifecycle transition %0d -> %0d; expected %0d", lifecycle_state, next_state, expected))');
+    $push->('      lifecycle_state = next_state;');
     $push->('    endfunction');
     $push->('  endclass');
     $push->('endpackage');
@@ -494,6 +564,28 @@ sub _render_components_package($relpath) {
     push @spec, _map_spec(
         relpath => $relpath, start => $base_start, end => scalar(@line),
         symbol => 'fsmgen_vial_component_base', role => 'uvm_component_foundation',
+        plan_paths => ['/fixture'], semantic_paths => [], bridge_paths => [$CONTRACT], locations => [],
+    );
+    $push->('');
+    my $agent_start = @line + 1;
+    $push->('  class fsmgen_vial_agent_base extends uvm_agent;');
+    $push->('    `uvm_component_utils(fsmgen_vial_agent_base)');
+    $push->('');
+    $push->('    fsmgen_vial_execution_context context;');
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void build_phase(uvm_phase phase);');
+    $push->('      super.build_phase(phase);');
+    $push->('      if (!uvm_config_db#(fsmgen_vial_execution_context)::get(this, "", "vial_context", context))');
+    $push->('        `uvm_fatal("VIAL/CONTEXT", "missing VIAL execution context")');
+    $push->('    endfunction');
+    $push->('  endclass');
+    push @spec, _map_spec(
+        relpath => $relpath, start => $agent_start, end => scalar(@line),
+        symbol => 'fsmgen_vial_agent_base', role => 'uvm_agent_foundation',
         plan_paths => ['/fixture'], semantic_paths => [], bridge_paths => [$CONTRACT], locations => [],
     );
     $push->('');
@@ -602,11 +694,420 @@ sub _render_interface(%arg) {
     return (join("\n", @line) . "\n", \@spec);
 }
 
+sub _render_notification_package(%arg) {
+    my $execution = $arg{execution};
+    my $bridge = $arg{bridge};
+    my $fixture_slug = _sv_slug($execution->{fixture}{fixture_name});
+    my $payload = $fixture_slug . '_notification_payload';
+    my $interceptor = $fixture_slug . '_interceptor';
+    my $dispatcher = $fixture_slug . '_notification_dispatcher';
+    my $channel = $fixture_slug . '_notification_channel';
+    my $registry = $fixture_slug . '_notification_registry';
+    my %type = map { $_->{type_id} => $_ } @{$bridge->{types}};
+    my %binding = _sv_binding_map($bridge);
+    my $clock_endpoint_id = $bridge->{domains}[0]{clock_endpoint_id};
+    my @payload_endpoint;
+    for my $index (0 .. $#{$bridge->{endpoints}}) {
+        my $endpoint = $bridge->{endpoints}[$index];
+        next if $endpoint->{endpoint_id} eq $clock_endpoint_id;
+        my $target_name = $binding{$endpoint->{endpoint_id}}{target_name};
+        push @payload_endpoint, {
+            %$endpoint,
+            bridge_index => $index,
+            field_name => _sv_slug($target_name),
+            target_name => $target_name,
+            type_record => $type{$endpoint->{type_id}},
+        };
+    }
+    my ($response_endpoint) = grep {
+        $_->{field_name} eq 'hresp' || ($_->{semantic_id} // '') =~ /::response\z/
+    } @payload_endpoint;
+    my $response_filter = $response_endpoint
+        ? '(data.' . $response_endpoint->{field_name} . " === 1'b1)"
+        : "1'b0";
+
+    my (@line, @spec);
+    my $push = sub (@text) { push @line, @text };
+    my $close_class = sub ($start, $symbol, $role, $plan_paths, $semantic_paths, $locations) {
+        push @spec, _map_spec(
+            relpath => $arg{relpath}, start => $start, end => scalar(@line),
+            symbol => $symbol, role => $role, plan_paths => $plan_paths,
+            semantic_paths => $semantic_paths, bridge_paths => [$CONTRACT],
+            locations => $locations,
+        );
+    };
+
+    $push->('// Generated native VIAL notification/interception structures.');
+    $push->('// Interceptor tables are a private typed preview until public VIAL syntax is selected.');
+    $push->("package $arg{package_name};");
+    $push->('  timeunit 1ns;');
+    $push->('  timeprecision 1ps;');
+    $push->('');
+    $push->('  import uvm_pkg::*;');
+    $push->('  `include "uvm_macros.svh"');
+    $push->('  import fsmgen_vial_uvm_types_pkg::*;');
+    $push->('');
+
+    my $payload_start = @line + 1;
+    $push->("  class $payload extends uvm_object;");
+    $push->("    `uvm_object_utils($payload)");
+    $push->('');
+    $push->('    string notification_id;');
+    $push->('    string semantic_id;');
+    $push->('    vial_logical_time_s logical_time;');
+    for my $endpoint (@payload_endpoint) {
+        $push->('    logic ' . _packed_type($endpoint->{type_record}) . $endpoint->{field_name} . ';');
+    }
+    $push->('');
+    $push->("    function new(string name = \"$payload\");");
+    $push->('      super.new(name);');
+    $push->('      notification_id = "";');
+    $push->('      semantic_id = "";');
+    $push->("      logical_time = '{cycle: 0, ordinal: 0, phase: VIAL_DRIVE_PHASE};");
+    $push->('    endfunction');
+    $push->('');
+    $push->("    function $payload clone_payload(string suffix = \"copy\");");
+    $push->("      $payload copy;");
+    $push->('      copy = new({get_name(), "_", suffix});');
+    $push->('      copy.notification_id = notification_id;');
+    $push->('      copy.semantic_id = semantic_id;');
+    $push->('      copy.logical_time = logical_time;');
+    for my $endpoint (@payload_endpoint) {
+        $push->("      copy.$endpoint->{field_name} = $endpoint->{field_name};");
+    }
+    $push->('      return copy;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $close_class->($payload_start, $payload, 'typed_notification_payload',
+        ['/events', '/bindings/endpoints'], [$execution->{fixture}{fixture_id}],
+        [$execution->{fixture}{source_location}]);
+    $push->('');
+
+    my $interceptor_start = @line + 1;
+    $push->("  class $interceptor extends uvm_object;");
+    $push->("    `uvm_object_utils($interceptor)");
+    $push->('');
+    $push->('    string semantic_id;');
+    $push->('    string registration_scope_id;');
+    $push->('    int unsigned rank;');
+    $push->('    vial_filter_e filter_kind;');
+    $push->('    vial_effect_e effect_kind;');
+    $push->('    vial_lifetime_e lifetime;');
+    $push->('');
+    $push->("    function new(string name = \"$interceptor\");");
+    $push->('      super.new(name);');
+    $push->('      semantic_id = "";');
+    $push->('      registration_scope_id = "";');
+    $push->('      rank = 0;');
+    $push->('      filter_kind = VIAL_FILTER_NEVER;');
+    $push->('      effect_kind = VIAL_EFFECT_OBSERVE;');
+    $push->('      lifetime = VIAL_LIFETIME_SCENARIO;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $close_class->($interceptor_start, $interceptor, 'typed_interceptor_record',
+        ['/native_extensions'], [], []);
+    $push->('');
+
+    my $dispatcher_start = @line + 1;
+    $push->("  class $dispatcher extends uvm_event_callback#($payload);");
+    $push->("    `uvm_object_utils($dispatcher)");
+    $push->('');
+    $push->('    string notification_id;');
+    $push->("    protected $interceptor ordered_interceptors[\$];");
+    $push->('    protected bit registration_frozen;');
+    $push->('    protected bit dispatch_live;');
+    $push->("    $payload effective_payload;");
+    $push->('    longint unsigned evaluated_count;');
+    $push->('    longint unsigned skipped_count;');
+    $push->('    longint unsigned observation_count;');
+    $push->('    longint unsigned cancellation_count;');
+    $push->('    longint unsigned diagnostic_count;');
+    $push->('    longint unsigned committed_count;');
+    $push->('');
+    $push->("    function new(string name = \"$dispatcher\");");
+    $push->('      super.new(name);');
+    $push->('      registration_frozen = 0;');
+    $push->('      dispatch_live = 0;');
+    $push->('      evaluated_count = 0;');
+    $push->('      skipped_count = 0;');
+    $push->('      observation_count = 0;');
+    $push->('      cancellation_count = 0;');
+    $push->('      diagnostic_count = 0;');
+    $push->('      committed_count = 0;');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    function void register_interceptor($interceptor candidate);");
+    $push->('      int unsigned insert_index;');
+    $push->('      if (candidate == null)');
+    $push->('        `uvm_fatal("VIAL/NOTIFY/REGISTER", "null interceptor registration")');
+    $push->('      if (registration_frozen)');
+    $push->('        `uvm_fatal("VIAL/NOTIFY/REGISTER", "late interceptor registration")');
+    $push->('      foreach (ordered_interceptors[i]) begin');
+    $push->('        if (ordered_interceptors[i].semantic_id == candidate.semantic_id) begin');
+    $push->('          if (ordered_interceptors[i].rank == candidate.rank &&');
+    $push->('              ordered_interceptors[i].filter_kind == candidate.filter_kind &&');
+    $push->('              ordered_interceptors[i].effect_kind == candidate.effect_kind)');
+    $push->('            return;');
+    $push->('          `uvm_fatal("VIAL/NOTIFY/REGISTER", "non-idempotent duplicate interceptor identity")');
+    $push->('        end');
+    $push->('        if (ordered_interceptors[i].rank == candidate.rank)');
+    $push->('          `uvm_fatal("VIAL/NOTIFY/REGISTER", "duplicate interceptor rank")');
+    $push->('      end');
+    $push->('      insert_index = ordered_interceptors.size();');
+    $push->('      foreach (ordered_interceptors[i]) begin');
+    $push->('        if (candidate.rank < ordered_interceptors[i].rank ||');
+    $push->('            (candidate.rank == ordered_interceptors[i].rank &&');
+    $push->('             candidate.semantic_id < ordered_interceptors[i].semantic_id)) begin');
+    $push->('          insert_index = i;');
+    $push->('          break;');
+    $push->('        end');
+    $push->('      end');
+    $push->('      ordered_interceptors.insert(insert_index, candidate);');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void freeze_registration();');
+    $push->('      registration_frozen = 1;');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    protected function bit filter_matches(vial_filter_e filter_kind, $payload data);");
+    $push->('      case (filter_kind)');
+    $push->("        VIAL_FILTER_ALWAYS: return 1'b1;");
+    $push->("        VIAL_FILTER_NEVER: return 1'b0;");
+    $push->("        VIAL_FILTER_RESPONSE_ERROR: return $response_filter;");
+    $push->("        default: return 1'b0;");
+    $push->('      endcase');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    protected function void apply_effect(vial_effect_e effect_kind, ref bit cancelled);');
+    $push->('      case (effect_kind)');
+    $push->('        VIAL_EFFECT_OBSERVE: observation_count++;');
+    $push->("        VIAL_EFFECT_CANCEL: cancelled = 1'b1;");
+    $push->('        VIAL_EFFECT_APPEND_DIAGNOSTIC: diagnostic_count++;');
+    $push->('        default: `uvm_fatal("VIAL/NOTIFY/EFFECT", "effect is not selected by this typed preview")');
+    $push->('      endcase');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    virtual function bit pre_trigger(uvm_event#($payload) event_h, $payload data);");
+    $push->('      bit cancelled;');
+    $push->('      if (!registration_frozen)');
+    $push->('        `uvm_fatal("VIAL/NOTIFY/DISPATCH", "notification triggered before registration freeze")');
+    $push->('      if (dispatch_live)');
+    $push->('        `uvm_fatal("VIAL/NOTIFY/DISPATCH", "target-stack callback recursion is forbidden")');
+    $push->('      if (data == null)');
+    $push->('        `uvm_fatal("VIAL/NOTIFY/DISPATCH", "notification payload is null")');
+    $push->("      dispatch_live = 1'b1;");
+    $push->("      cancelled = 1'b0;");
+    $push->('      effective_payload = data.clone_payload("effective");');
+    $push->('      foreach (ordered_interceptors[i]) begin');
+    $push->('        if (cancelled) begin');
+    $push->('          skipped_count++;');
+    $push->('          continue;');
+    $push->('        end');
+    $push->('        evaluated_count++;');
+    $push->('        if (filter_matches(ordered_interceptors[i].filter_kind, effective_payload))');
+    $push->('          apply_effect(ordered_interceptors[i].effect_kind, cancelled);');
+    $push->('      end');
+    $push->('      if (cancelled) begin');
+    $push->('        cancellation_count++;');
+    $push->("        dispatch_live = 1'b0;");
+    $push->("        return 1'b1;");
+    $push->('      end');
+    $push->("      return 1'b0;");
+    $push->('    endfunction');
+    $push->('');
+    $push->("    virtual function void post_trigger(uvm_event#($payload) event_h, $payload data);");
+    $push->('      committed_count++;');
+    $push->("      dispatch_live = 1'b0;");
+    $push->('    endfunction');
+    $push->('  endclass');
+    $close_class->($dispatcher_start, $dispatcher, 'ordered_notification_dispatcher',
+        ['/events', '/native_extensions'], [], []);
+    $push->('');
+
+    my $channel_start = @line + 1;
+    $push->("  class $channel extends uvm_object;");
+    $push->("    `uvm_object_utils($channel)");
+    $push->('');
+    $push->('    string notification_id;');
+    $push->('    string scope_id;');
+    $push->('    string persistence;');
+    $push->('    string trigger_policy;');
+    $push->('    vial_lifetime_e lifetime;');
+    $push->('    vial_reentrancy_e reentrancy;');
+    $push->('    int unsigned queue_bound;');
+    $push->('    longint unsigned occurrence_bound;');
+    $push->('    longint unsigned occurrence_count;');
+    $push->("    uvm_event#($payload) event_h;");
+    $push->("    $dispatcher dispatcher_h;");
+    $push->("    protected $payload pending[\$];");
+    $push->('    protected bit trigger_live;');
+    $push->('');
+    $push->("    function new(string name = \"$channel\");");
+    $push->('      super.new(name);');
+    $push->("      trigger_live = 1'b0;");
+    $push->('      occurrence_count = 0;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void configure(');
+    $push->('      string configured_notification_id,');
+    $push->('      string configured_scope_id,');
+    $push->('      vial_reentrancy_e configured_reentrancy,');
+    $push->('      int unsigned configured_queue_bound = 16,');
+    $push->('      longint unsigned configured_occurrence_bound = 4096');
+    $push->('    );');
+    $push->('      notification_id = configured_notification_id;');
+    $push->('      scope_id = configured_scope_id;');
+    $push->('      persistence = "transient";');
+    $push->('      trigger_policy = configured_reentrancy == VIAL_REENTRANCY_QUEUE ? "queued" : "single";');
+    $push->('      lifetime = VIAL_LIFETIME_SCENARIO;');
+    $push->('      reentrancy = configured_reentrancy;');
+    $push->('      queue_bound = configured_queue_bound;');
+    $push->('      occurrence_bound = configured_occurrence_bound;');
+    $push->("      event_h = new({get_name(), \"_event\"});");
+    $push->("      dispatcher_h = ${dispatcher}::type_id::create({get_name(), \"_dispatcher\"});");
+    $push->('      dispatcher_h.notification_id = notification_id;');
+    $push->('      event_h.add_callback(dispatcher_h);');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    function void register_interceptor($interceptor candidate);");
+    $push->('      dispatcher_h.register_interceptor(candidate);');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void freeze_registration();');
+    $push->('      dispatcher_h.freeze_registration();');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    task trigger_notification($payload data);");
+    $push->("      $payload current;");
+    $push->('      if (data == null)');
+    $push->('        `uvm_fatal("VIAL/NOTIFY/TRIGGER", "notification payload is null")');
+    $push->('      if (trigger_live) begin');
+    $push->('        if (reentrancy == VIAL_REENTRANCY_REJECT)');
+    $push->('          `uvm_fatal("VIAL/NOTIFY/REENTRANCY", "nested notification rejected")');
+    $push->('        if (pending.size() >= queue_bound)');
+    $push->('          `uvm_fatal("VIAL/NOTIFY/QUEUE", "notification queue bound exceeded")');
+    $push->('        pending.push_back(data.clone_payload("queued"));');
+    $push->('        return;');
+    $push->('      end');
+    $push->('      current = data;');
+    $push->('      while (current != null) begin');
+    $push->('        if (occurrence_count >= occurrence_bound)');
+    $push->('          `uvm_fatal("VIAL/NOTIFY/OCCURRENCES", "notification occurrence bound exceeded")');
+    $push->("        trigger_live = 1'b1;");
+    $push->('        occurrence_count++;');
+    $push->('        event_h.trigger(current);');
+    $push->("        trigger_live = 1'b0;");
+    $push->('        current = pending.size() ? pending.pop_front() : null;');
+    $push->('      end');
+    $push->('    endtask');
+    $push->('  endclass');
+    $close_class->($channel_start, $channel, 'bounded_notification_channel',
+        ['/events', '/limits'], [], []);
+    $push->('');
+
+    my $registry_start = @line + 1;
+    $push->("  class $registry extends uvm_object;");
+    $push->("    `uvm_object_utils($registry)");
+    $push->('');
+    $push->("    protected $channel channels[\$];");
+    for my $event (@{$execution->{events}}) {
+        my $field = _sv_slug($event->{name}) . '_notification';
+        my $start = @line + 1;
+        $push->("    $channel $field;");
+        push @spec, _map_spec(
+            relpath => $arg{relpath}, start => $start, end => $start,
+            symbol => $field, role => 'notification_channel_instance',
+            plan_paths => ['/events'], semantic_paths => [$event->{semantic_id}],
+            bridge_paths => [$event->{event_id}], locations => [$event->{source_location}],
+        );
+    }
+    $push->('');
+    $push->("    function new(string name = \"$registry\");");
+    $push->('      super.new(name);');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    protected function $interceptor make_interceptor(");
+    $push->('      string semantic_id,');
+    $push->('      string registration_scope_id,');
+    $push->('      int unsigned rank,');
+    $push->('      vial_filter_e filter_kind,');
+    $push->('      vial_effect_e effect_kind');
+    $push->('    );');
+    $push->("      $interceptor item;");
+    $push->("      item = ${interceptor}::type_id::create({\"interceptor_\", semantic_id});");
+    $push->('      item.semantic_id = semantic_id;');
+    $push->('      item.registration_scope_id = registration_scope_id;');
+    $push->('      item.rank = rank;');
+    $push->('      item.filter_kind = filter_kind;');
+    $push->('      item.effect_kind = effect_kind;');
+    $push->('      item.lifetime = VIAL_LIFETIME_SCENARIO;');
+    $push->('      return item;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void configure_preview();');
+    for my $index (0 .. $#{$execution->{events}}) {
+        my $event = $execution->{events}[$index];
+        my $field = _sv_slug($event->{name}) . '_notification';
+        my $policy = $index % 2 ? 'VIAL_REENTRANCY_REJECT' : 'VIAL_REENTRANCY_QUEUE';
+        my $semantic_id = _sv_string($event->{semantic_id});
+        my $event_id = _sv_string($event->{event_id});
+        my $scope_id = _sv_string($execution->{fixture}{fixture_id});
+        $push->("      $field = ${channel}::type_id::create(\"$field\");");
+        $push->("      $field.configure(\"$event_id\", \"$scope_id\", $policy, 16, 4096);");
+        $push->("      $field.register_interceptor(make_interceptor(\"${semantic_id}::observe\", \"$scope_id\", 10, VIAL_FILTER_ALWAYS, VIAL_EFFECT_OBSERVE));");
+        if (($event->{name} // '') eq 'completed') {
+            my $filter = $response_endpoint ? 'VIAL_FILTER_RESPONSE_ERROR' : 'VIAL_FILTER_NEVER';
+            $push->("      $field.register_interceptor(make_interceptor(\"${semantic_id}::cancel_error\", \"$scope_id\", 20, $filter, VIAL_EFFECT_CANCEL));");
+            $push->("      $field.register_interceptor(make_interceptor(\"${semantic_id}::diagnostic\", \"$scope_id\", 30, VIAL_FILTER_ALWAYS, VIAL_EFFECT_APPEND_DIAGNOSTIC));");
+        }
+        $push->("      $field.freeze_registration();");
+        $push->("      channels.push_back($field);");
+    }
+    $push->('    endfunction');
+    $push->('');
+    $push->("    function $channel by_notification_id(string notification_id);");
+    $push->('      foreach (channels[i]) begin');
+    $push->('        if (channels[i].notification_id == notification_id)');
+    $push->('          return channels[i];');
+    $push->('      end');
+    $push->('      `uvm_fatal("VIAL/NOTIFY/LOOKUP", {"unknown notification ", notification_id})');
+    $push->('      return null;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function longint unsigned total_occurrences();');
+    $push->('      longint unsigned total;');
+    $push->('      total = 0;');
+    $push->('      foreach (channels[i]) total += channels[i].occurrence_count;');
+    $push->('      return total;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $close_class->($registry_start, $registry, 'generated_notification_registry',
+        ['/events', '/fixture'], [$execution->{fixture}{fixture_id}],
+        [$execution->{fixture}{source_location}]);
+
+    $push->('endpackage');
+    return (join("\n", @line) . "\n", \@spec);
+}
+
 sub _render_fixture_package(%arg) {
     my $fixture_slug = _sv_slug($arg{execution}{fixture}{fixture_name});
     my $config = $fixture_slug . '_config';
+    my $payload = $fixture_slug . '_notification_payload';
+    my $registry = $fixture_slug . '_notification_registry';
+    my $monitor = $fixture_slug . '_monitor';
+    my $agent = $fixture_slug . '_agent';
+    my $controller = $fixture_slug . '_controller';
+    my $collector = $fixture_slug . '_result_collector';
     my $env = $fixture_slug . '_env';
     my $test = $fixture_slug . '_test';
+    my %binding = _sv_binding_map($arg{bridge});
+    my $domain = $arg{bridge}{domains}[0];
+    my $clock_endpoint_id = $domain->{clock_endpoint_id};
+    my $reset_name = $binding{$domain->{reset_endpoint_id}}{target_name};
+    my $reset_inactive = $domain->{reset_polarity} eq 'active_low' ? "1'b1" : "1'b0";
+    my @payload_endpoint = grep { $_->{endpoint_id} ne $clock_endpoint_id }
+        @{$arg{bridge}{endpoints}};
+    my %event_by_name = map { $_->{name} => $_ } @{$arg{execution}{events}};
     my @line;
     my @spec;
     my $push = sub (@text) { push @line, @text };
@@ -619,6 +1120,7 @@ sub _render_fixture_package(%arg) {
     $push->('  `include "uvm_macros.svh"');
     $push->('  import fsmgen_vial_uvm_types_pkg::*;');
     $push->('  import fsmgen_vial_uvm_components_pkg::*;');
+    $push->("  import $arg{notification_package}::*;");
     $push->('');
     my $config_start = @line + 1;
     $push->("  class $config extends uvm_object;");
@@ -637,11 +1139,238 @@ sub _render_fixture_package(%arg) {
         bridge_paths => ['/units/0', '/domains/0'], locations => [],
     );
     $push->('');
+
+    my $monitor_start = @line + 1;
+    $push->("  class $monitor extends fsmgen_vial_component_base;");
+    $push->("    `uvm_component_utils($monitor)");
+    $push->('');
+    $push->("    $config cfg;");
+    $push->("    $registry notifications;");
+    $push->('    longint unsigned sampled_cycle;');
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('      sampled_cycle = 0;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void build_phase(uvm_phase phase);');
+    $push->('      super.build_phase(phase);');
+    $push->("      if (!uvm_config_db#($config)::get(this, \"\", \"cfg\", cfg))");
+    $push->('        `uvm_fatal("VIAL/CONFIG", "monitor is missing generated fixture configuration")');
+    $push->("      if (!uvm_config_db#($registry)::get(this, \"\", \"notifications\", notifications))");
+    $push->('        `uvm_fatal("VIAL/NOTIFY", "monitor is missing notification registry")');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    protected function $payload sample_payload(string notification_id, string semantic_id);");
+    $push->("      $payload item;");
+    $push->("      item = new(\"sampled_notification\");");
+    $push->('      item.notification_id = notification_id;');
+    $push->('      item.semantic_id = semantic_id;');
+    $push->('      item.logical_time = context.logical_time;');
+    for my $endpoint (@payload_endpoint) {
+        my $target = $binding{$endpoint->{endpoint_id}}{target_name};
+        my $field = _sv_slug($target);
+        $push->("      item.$field = cfg.vif.monitor_cb.$target;");
+    }
+    $push->('      return item;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual task run_phase(uvm_phase phase);');
+    $push->("      $payload item;");
+    $push->('      forever begin');
+    $push->('        @(cfg.vif.monitor_cb);');
+    $push->("        if (cfg.vif.monitor_cb.$reset_name !== $reset_inactive)");
+    $push->('          continue;');
+    $push->('        context.set_logical_time(sampled_cycle, VIAL_SAMPLE_PHASE, 0);');
+    for my $event (@{$arg{execution}{events}}) {
+        next unless ($event->{phase} // '') eq 'sample';
+        my $predicate = _notification_predicate($event->{expression}, $arg{execution}, $arg{bridge});
+        my $field = _sv_slug($event->{name}) . '_notification';
+        if (defined $predicate) {
+            my $event_id = _sv_string($event->{event_id});
+            my $semantic_id = _sv_string($event->{semantic_id});
+            $push->("        if ($predicate) begin");
+            $push->("          item = sample_payload(\"$event_id\", \"$semantic_id\");");
+            $push->("          notifications.$field.trigger_notification(item);");
+            $push->('        end');
+        } else {
+            $push->("        // '$event->{name}' keeps a typed channel; its adapter-state predicate is not executed by this emission-only slice.");
+        }
+    }
+    $push->('        sampled_cycle++;');
+    $push->('      end');
+    $push->('    endtask');
+    $push->('  endclass');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $monitor_start, end => scalar(@line),
+        symbol => $monitor, role => 'timed_interface_monitor',
+        plan_paths => ['/events', '/domains/0', '/bindings'],
+        semantic_paths => [map { $_->{semantic_id} } @{$arg{execution}{events}}],
+        bridge_paths => ['/domains/0', '/endpoints'],
+        locations => [map { $_->{source_location} } @{$arg{execution}{events}}],
+    );
+    $push->('');
+
+    my $agent_start = @line + 1;
+    $push->("  class $agent extends fsmgen_vial_agent_base;");
+    $push->("    `uvm_component_utils($agent)");
+    $push->('');
+    $push->("    $config cfg;");
+    $push->("    $registry notifications;");
+    $push->("    $monitor monitor;");
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void build_phase(uvm_phase phase);');
+    $push->('      super.build_phase(phase);');
+    $push->("      if (!uvm_config_db#($config)::get(this, \"\", \"cfg\", cfg))");
+    $push->('        `uvm_fatal("VIAL/CONFIG", "agent is missing generated fixture configuration")');
+    $push->("      if (!uvm_config_db#($registry)::get(this, \"\", \"notifications\", notifications))");
+    $push->('        `uvm_fatal("VIAL/NOTIFY", "agent is missing notification registry")');
+    $push->("      uvm_config_db#($config)::set(this, \"monitor\", \"cfg\", cfg);");
+    $push->("      uvm_config_db#($registry)::set(this, \"monitor\", \"notifications\", notifications);");
+    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "monitor", "vial_context", context);');
+    $push->("      monitor = ${monitor}::type_id::create(\"monitor\", this);");
+    $push->('    endfunction');
+    $push->('  endclass');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $agent_start, end => scalar(@line),
+        symbol => $agent, role => 'passive_timed_interface_agent',
+        plan_paths => ['/bindings', '/events'],
+        semantic_paths => [$arg{execution}{fixture}{fixture_id}],
+        bridge_paths => ['/units/0', '/domains/0'], locations => [],
+    );
+    $push->('');
+
+    my $controller_start = @line + 1;
+    $push->("  class $controller extends fsmgen_vial_component_base;");
+    $push->("    `uvm_component_utils($controller)");
+    $push->('');
+    $push->("    $config cfg;");
+    $push->("    $registry notifications;");
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void build_phase(uvm_phase phase);');
+    $push->('      super.build_phase(phase);');
+    $push->("      if (!uvm_config_db#($config)::get(this, \"\", \"cfg\", cfg))");
+    $push->('        `uvm_fatal("VIAL/CONFIG", "controller is missing generated fixture configuration")');
+    $push->("      if (!uvm_config_db#($registry)::get(this, \"\", \"notifications\", notifications))");
+    $push->('        `uvm_fatal("VIAL/NOTIFY", "controller is missing notification registry")');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void start_of_simulation_phase(uvm_phase phase);');
+    $push->('      super.start_of_simulation_phase(phase);');
+    $push->('      if (cfg == null || cfg.vif == null || notifications == null)');
+    $push->('        `uvm_fatal("VIAL/READY", "generated controller is not ready")');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    task run_selected_lifecycle();');
+    if ($event_by_name{requested}) {
+        my $requested = $event_by_name{requested};
+        my $requested_id = _sv_string($requested->{event_id});
+        my $requested_semantic = _sv_string($requested->{semantic_id});
+        my $requested_field = _sv_slug($requested->{name}) . '_notification';
+        $push->("      $payload requested;");
+    }
+    $push->("      wait (cfg.vif.$reset_name === $reset_inactive);");
+    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_READY, VIAL_LIFECYCLE_RUNNING);');
+    $push->('      context.set_logical_time(0, VIAL_DRIVE_PHASE, 0);');
+    if ($event_by_name{requested}) {
+        my $requested = $event_by_name{requested};
+        my $requested_id = _sv_string($requested->{event_id});
+        my $requested_semantic = _sv_string($requested->{semantic_id});
+        my $requested_field = _sv_slug($requested->{name}) . '_notification';
+        $push->("      requested = new(\"requested_notification\");");
+        $push->("      requested.notification_id = \"$requested_id\";");
+        $push->("      requested.semantic_id = \"$requested_semantic\";");
+        $push->('      requested.logical_time = context.logical_time;');
+        $push->("      notifications.$requested_field.trigger_notification(requested);");
+    }
+    $push->('      @(cfg.vif.monitor_cb);');
+    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_RUNNING, VIAL_LIFECYCLE_DRAINING);');
+    $push->('    endtask');
+    $push->('');
+    $push->('    function void complete_lifecycle();');
+    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_DRAINING, VIAL_LIFECYCLE_COMPLETED);');
+    $push->('    endfunction');
+    $push->('  endclass');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $controller_start, end => scalar(@line),
+        symbol => $controller, role => 'root_owned_lifecycle_controller',
+        plan_paths => ['/operation_graph', '/domains/0'],
+        semantic_paths => [$arg{execution}{fixture}{fixture_id}],
+        bridge_paths => ['/domains/0'],
+        locations => [$arg{execution}{fixture}{source_location}],
+    );
+    $push->('');
+
+    my $collector_start = @line + 1;
+    $push->("  class $collector extends fsmgen_vial_component_base;");
+    $push->("    `uvm_component_utils($collector)");
+    $push->('');
+    $push->("    $registry notifications;");
+    $push->('    longint unsigned notification_occurrences;');
+    $push->('    bit sealed;');
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->("      sealed = 1'b0;");
+    $push->('      notification_occurrences = 0;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void build_phase(uvm_phase phase);');
+    $push->('      super.build_phase(phase);');
+    $push->("      if (!uvm_config_db#($registry)::get(this, \"\", \"notifications\", notifications))");
+    $push->('        `uvm_fatal("VIAL/NOTIFY", "result collector is missing notification registry")');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void seal();');
+    $push->('      if (sealed)');
+    $push->('        `uvm_fatal("VIAL/RESULT", "result collector sealed more than once")');
+    $push->('      notification_occurrences = notifications.total_occurrences();');
+    $push->("      sealed = 1'b1;");
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void extract_phase(uvm_phase phase);');
+    $push->('      super.extract_phase(phase);');
+    $push->('      if (!sealed)');
+    $push->('        `uvm_fatal("VIAL/RESULT", "result collector reached extract before seal")');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void check_phase(uvm_phase phase);');
+    $push->('      super.check_phase(phase);');
+    $push->('      if (!sealed)');
+    $push->('        `uvm_error("VIAL/RESULT", "result collector is unsealed")');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void report_phase(uvm_phase phase);');
+    $push->('      super.report_phase(phase);');
+    $push->('      `uvm_info("VIAL/RESULT", $sformatf("emission-review notification occurrences=%0d", notification_occurrences), UVM_LOW)');
+    $push->('    endfunction');
+    $push->('  endclass');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $collector_start, end => scalar(@line),
+        symbol => $collector, role => 'closed_result_collector_structure',
+        plan_paths => ['/events', '/fixture'],
+        semantic_paths => [$arg{execution}{fixture}{fixture_id}],
+        bridge_paths => [$CONTRACT], locations => [],
+    );
+    $push->('');
+
     my $env_start = @line + 1;
     $push->("  class $env extends fsmgen_vial_env_base;");
     $push->("    `uvm_component_utils($env)");
     $push->('');
     $push->("    $config cfg;");
+    $push->("    $registry notifications;");
+    $push->("    $agent agent;");
+    $push->("    $controller controller;");
+    $push->("    $collector result_collector;");
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
     $push->('      super.new(name, parent);');
@@ -651,6 +1380,30 @@ sub _render_fixture_package(%arg) {
     $push->('      super.build_phase(phase);');
     $push->("      if (!uvm_config_db#($config)::get(this, \"\", \"cfg\", cfg))");
     $push->('        `uvm_fatal("VIAL/CONFIG", "missing generated fixture configuration")');
+    $push->("      if (!uvm_config_db#($registry)::get(this, \"\", \"notifications\", notifications))");
+    $push->('        `uvm_fatal("VIAL/NOTIFY", "environment is missing notification registry")');
+    $push->("      uvm_config_db#($config)::set(this, \"agent\", \"cfg\", cfg);");
+    $push->("      uvm_config_db#($registry)::set(this, \"agent\", \"notifications\", notifications);");
+    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "agent", "vial_context", context);');
+    $push->("      uvm_config_db#($config)::set(this, \"controller\", \"cfg\", cfg);");
+    $push->("      uvm_config_db#($registry)::set(this, \"controller\", \"notifications\", notifications);");
+    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "controller", "vial_context", context);');
+    $push->("      uvm_config_db#($registry)::set(this, \"result_collector\", \"notifications\", notifications);");
+    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "result_collector", "vial_context", context);');
+    $push->("      agent = ${agent}::type_id::create(\"agent\", this);");
+    $push->("      controller = ${controller}::type_id::create(\"controller\", this);");
+    $push->("      result_collector = ${collector}::type_id::create(\"result_collector\", this);");
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void connect_phase(uvm_phase phase);');
+    $push->('      super.connect_phase(phase);');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void end_of_elaboration_phase(uvm_phase phase);');
+    $push->('      super.end_of_elaboration_phase(phase);');
+    $push->('      if (agent == null || controller == null || result_collector == null)');
+    $push->('        `uvm_fatal("VIAL/TOPOLOGY", "generated component topology is incomplete")');
+    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_CONFIGURED, VIAL_LIFECYCLE_READY);');
     $push->('    endfunction');
     $push->('  endclass');
     push @spec, _map_spec(
@@ -665,6 +1418,7 @@ sub _render_fixture_package(%arg) {
     $push->("    `uvm_component_utils($test)");
     $push->('');
     $push->("    $config cfg;");
+    $push->("    $registry notifications;");
     $push->("    $env env;");
     $push->('    fsmgen_vial_execution_context context;');
     $push->('');
@@ -679,9 +1433,26 @@ sub _render_fixture_package(%arg) {
     $push->('        `uvm_fatal("VIAL/VIF", "missing generated virtual interface")');
     $push->('      context = fsmgen_vial_execution_context::type_id::create("context");');
     $push->('      context.plan_id = "' . _sv_string($arg{execution}{plan_id}) . '";');
+    $push->("      notifications = ${registry}::type_id::create(\"notifications\");");
+    $push->('      notifications.configure_preview();');
     $push->("      uvm_config_db#($config)::set(this, \"env\", \"cfg\", cfg);");
+    $push->("      uvm_config_db#($registry)::set(this, \"env\", \"notifications\", notifications);");
     $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "env", "vial_context", context);');
+    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_CONSTRUCTED, VIAL_LIFECYCLE_CONFIGURED);');
     $push->("      env = ${env}::type_id::create(\"env\", this);");
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual task run_phase(uvm_phase phase);');
+    $push->('      phase.raise_objection(this, "VIAL root lifecycle");');
+    $push->('      env.controller.run_selected_lifecycle();');
+    $push->('      env.result_collector.seal();');
+    $push->('      env.controller.complete_lifecycle();');
+    $push->('      phase.drop_objection(this, "VIAL root lifecycle complete");');
+    $push->('    endtask');
+    $push->('');
+    $push->('    virtual function void final_phase(uvm_phase phase);');
+    $push->('      super.final_phase(phase);');
+    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_COMPLETED, VIAL_LIFECYCLE_FINALIZED);');
     $push->('    endfunction');
     $push->('  endclass');
     push @spec, _map_spec(
@@ -692,6 +1463,52 @@ sub _render_fixture_package(%arg) {
     );
     $push->('endpackage');
     return (join("\n", @line) . "\n", \@spec);
+}
+
+sub _notification_predicate($node, $execution, $bridge) {
+    return undef unless ref($node) eq 'HASH' && !blessed($node);
+    my %backend_binding = _sv_binding_map($bridge);
+    my %target_by_binding;
+    for my $endpoint (@{$execution->{bindings}{endpoints} || []}) {
+        my $binding = $backend_binding{$endpoint->{endpoint_id}};
+        $target_by_binding{$endpoint->{binding_id}} = $binding->{target_name}
+            if $binding && _identifier($binding->{target_name});
+    }
+    for my $transaction (@{$execution->{bindings}{transactions} || []}) {
+        for my $entry (@{$transaction->{fields} || []}, @{$transaction->{event_input_bindings} || []}) {
+            my $binding = $backend_binding{$entry->{endpoint_id}};
+            $target_by_binding{$entry->{binding_id}} = $binding->{target_name}
+                if $binding && _identifier($binding->{target_name});
+        }
+    }
+
+    my $kind = $node->{kind} // '';
+    if ($kind eq 'binding_reference') {
+        return undef unless ($node->{reference_kind} // '') eq 'endpoint';
+        my $target = $target_by_binding{$node->{binding_id}};
+        return defined($target) ? "cfg.vif.monitor_cb.$target" : undef;
+    }
+    if ($kind eq 'literal') {
+        my $value = $node->{value};
+        return undef unless ref($value) eq 'HASH'
+            && ($value->{kind} // '') eq 'scalar'
+            && defined($value->{width}) && $value->{width} =~ /\A[1-9][0-9]*\z/
+            && defined($value->{value_hex}) && $value->{value_hex} =~ /\A[0-9a-f]+\z/i
+            && defined($value->{known_hex}) && $value->{known_hex} =~ /\A[fF]+\z/;
+        return $value->{width} . "'h" . lc($value->{value_hex});
+    }
+    if ($kind eq 'operator') {
+        return undef unless ref($node->{operands}) eq 'ARRAY' && @{$node->{operands}};
+        my @operand = map { _notification_predicate($_, $execution, $bridge) }
+            @{$node->{operands}};
+        return undef if grep { !defined($_) } @operand;
+        my $operator = $node->{operator} // '';
+        return '(' . join(' && ', @operand) . ')' if $operator eq 'logical_all_v1';
+        return '(' . join(' || ', @operand) . ')' if $operator eq 'logical_any_v1';
+        return '(' . join(' === ', @operand) . ')' if $operator eq 'same_bits_v1';
+        return '(' . join(' !== ', @operand) . ')' if $operator eq 'different_bits_v1';
+    }
+    return undef;
 }
 
 sub _render_top(%arg) {

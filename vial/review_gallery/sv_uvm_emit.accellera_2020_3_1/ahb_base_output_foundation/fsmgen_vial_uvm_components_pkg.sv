@@ -23,6 +23,22 @@ package fsmgen_vial_uvm_components_pkg;
     endfunction
   endclass
 
+  class fsmgen_vial_agent_base extends uvm_agent;
+    `uvm_component_utils(fsmgen_vial_agent_base)
+
+    fsmgen_vial_execution_context context;
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    virtual function void build_phase(uvm_phase phase);
+      super.build_phase(phase);
+      if (!uvm_config_db#(fsmgen_vial_execution_context)::get(this, "", "vial_context", context))
+        `uvm_fatal("VIAL/CONTEXT", "missing VIAL execution context")
+    endfunction
+  endclass
+
   class fsmgen_vial_env_base extends fsmgen_vial_component_base;
     `uvm_component_utils(fsmgen_vial_env_base)
 

@@ -41,7 +41,7 @@ subtest 'native emitter produces a deterministic closed unqualified UVM graph' =
     is($first->{status}, 'emitted_unqualified', 'status does not imply compile or runtime qualification');
     is($first->{backend_profile}, $profile, 'backend profile is exact');
     like($first->{operation_id}, qr/\Aop-[0-9a-f]{64}\z/, 'operation identity is deterministic and safe');
-    is(scalar(@{$first->{artifacts}}), 10, 'foundation graph contains the exact ten artifacts');
+    is(scalar(@{$first->{artifacts}}), 11, 'emission graph contains the exact eleven artifacts');
     is_deeply(
         [map { $_->{relpath} } @{$first->{artifacts}}],
         [sort map { $_->{relpath} } @{$first->{artifacts}}],
@@ -123,6 +123,7 @@ subtest 'first review sources contain typed, interface, component, fixture, and 
 
     my $components = artifact_by_role($emission, 'uvm_component_foundations')->{content};
     like($components, qr/class fsmgen_vial_component_base extends uvm_component;/, 'component base is emitted');
+    like($components, qr/class fsmgen_vial_agent_base extends uvm_agent;/, 'agent base is emitted');
     like($components, qr/class fsmgen_vial_env_base extends fsmgen_vial_component_base;/, 'environment base is emitted');
     like($components, qr/class fsmgen_vial_test_base extends uvm_test;/, 'test base is emitted');
 
@@ -132,6 +133,12 @@ subtest 'first review sources contain typed, interface, component, fixture, and 
     like($interface, qr/clocking monitor_cb \@\(posedge clk\);/, 'sample clocking block owns the active edge');
     like($interface, qr/modport driver_mp/, 'driver modport is emitted');
     like($interface, qr/modport monitor_mp/, 'monitor modport is emitted');
+
+    my $notifications = artifact_by_role($emission, 'uvm_notification_interception')->{content};
+    like($notifications, qr/package base_output_arbitration_notifications_pkg;/,
+        'typed notification package is emitted');
+    like($notifications, qr/extends uvm_event_callback#\(base_output_arbitration_notification_payload\)/,
+        'typed UVM callback foundation is emitted');
 
     my $fixture = artifact_by_role($emission, 'uvm_fixture_package')->{content};
     like($fixture, qr/class base_output_arbitration_config extends uvm_object;/,
@@ -162,6 +169,7 @@ subtest 'checked review gallery is byte-identical to deterministic emitter outpu
         uvm_types_package => 'fsmgen_vial_uvm_types_pkg.sv',
         uvm_component_foundations => 'fsmgen_vial_uvm_components_pkg.sv',
         uvm_fixture_interface => 'base_output_arbitration_if.sv',
+        uvm_notification_interception => 'base_output_arbitration_notifications_pkg.sv',
         uvm_fixture_package => 'base_output_arbitration_pkg.sv',
         uvm_fixture_top => 'base_output_arbitration_tb.sv',
     );

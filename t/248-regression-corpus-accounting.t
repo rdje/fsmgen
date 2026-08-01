@@ -35,7 +35,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     vial_public_plan_cli_api
     vial_sv_portable_verilator_runtime_cli_api
     vial_ahb_handwritten_oracle_parity
-    vial_native_uvm_emission_foundation_private_api
+    vial_native_uvm_topology_lifecycle_notification_private_api
     direct_root_pipeline_cli
     composition_top_pipeline_cli
     isf_pipeline_cli
@@ -404,7 +404,7 @@ my %coverage_classification = (
     vial_public_plan_cli_api => 'supported_smoke',
     vial_sv_portable_verilator_runtime_cli_api => 'supported_smoke',
     vial_ahb_handwritten_oracle_parity => 'supported_smoke',
-    vial_native_uvm_emission_foundation_private_api => 'supported_smoke',
+    vial_native_uvm_topology_lifecycle_notification_private_api => 'supported_smoke',
     direct_root_pipeline_cli => 'supported_smoke',
     composition_top_pipeline_cli => 'supported_smoke',
     isf_pipeline_cli => 'supported_smoke',
@@ -1338,16 +1338,16 @@ for my $entry (@entries) {
             "VIAL parity entry '$entry->{id}' preserves every broader qualification non-claim",
         );
     }
-    elsif ($entry->{source_kind} eq 'vial' && $entry->{coverage} eq 'vial_native_uvm_emission_foundation_private_api') {
+    elsif ($entry->{source_kind} eq 'vial' && $entry->{coverage} eq 'vial_native_uvm_topology_lifecycle_notification_private_api') {
         is_deeply(
             $entry->{supported_phases},
-            [qw(parse typecheck hial_review bridge_binding execution_plan backend_emission static_validation review_gallery atomic_publication)],
-            "native UVM emission entry '$entry->{id}' claims only foundation emission evidence",
+            [qw(parse typecheck hial_review bridge_binding execution_plan backend_emission component_topology lifecycle_static notification_interception_static static_validation review_gallery atomic_publication)],
+            "native UVM emission entry '$entry->{id}' claims only selected structural emission evidence",
         );
         is_deeply(
             $entry->{required_capabilities},
-            [qw(vial.backend.sv_uvm_emit.accellera_2020_3_1.v1 vial.backend.sv_uvm_emit.typed_context.v1 vial.backend.sv_uvm_emit.component_foundations.v1 vial.backend.sv_uvm_emit.interface_foundation.v1 vial.backend.sv_uvm_emit.uvm_top_foundation.v1 vial.backend.sv_uvm_emit.source_map.v1 vial.backend.sv_uvm_emit.static_validation.v1 vial.backend.sv_uvm_emit.deterministic_artifacts.v1)],
-            "native UVM emission entry '$entry->{id}' keeps exact foundation capabilities",
+            [qw(vial.backend.sv_uvm_emit.accellera_2020_3_1.v1 vial.backend.sv_uvm_emit.bounded_reentrancy.v1 vial.backend.sv_uvm_emit.typed_context.v1 vial.backend.sv_uvm_emit.component_foundations.v1 vial.backend.sv_uvm_emit.component_topology.v1 vial.backend.sv_uvm_emit.interface_foundation.v1 vial.backend.sv_uvm_emit.lifecycle.v1 vial.backend.sv_uvm_emit.notification_interception.v1 vial.backend.sv_uvm_emit.uvm_top_foundation.v1 vial.backend.sv_uvm_emit.source_map.v1 vial.backend.sv_uvm_emit.static_validation.v1 vial.backend.sv_uvm_emit.deterministic_artifacts.v1)],
+            "native UVM emission entry '$entry->{id}' keeps exact selected-structure capabilities",
         );
         is_deeply(
             $entry->{explicit_nonclaims},
