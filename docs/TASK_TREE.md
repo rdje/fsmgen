@@ -47,7 +47,7 @@ chronology is query-first through the bounded archive described below.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity / project-wide live-document lifecycle` | `.4` is director-deferred before migration; pending `.26` will first inventory analogous agent-era continuity Markdown by provenance and current value. No candidate set or lifecycle is inferred, no entry moved, and `.5`/`.11` must not substitute for either review | [docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
+| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity / project-wide live-document lifecycle` | completed `.4` retires the duplicate changelog with exact version recovery and absence enforcement. Next, `.11` must audit `LIVE_ACHIEVEMENT_STATUS.md` independently and ask the director whether it still adds value before selecting or changing its lifecycle; pending `.26` retains the broader agent-era inventory | [docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `Verification code generation / intent architecture` | `.3` ships bounded VIAL semantics; `.5` the review-routed bridge; `.7.3` the private deterministic plan; `.8` selects public tooling; decision `0043` and completed `.9` select static plain-SV lowering, inactive-edge scheduling, declared-probe adapters, closed trace/results, and exact Verilator 5.046 known-value qualification; completed `.10.1`-.10.4 now ship public source/planning/run, canonical HIAL review routes, deterministic portable-SV emission, exact bounded Verilator execution, validated traces, normalized results, and atomic publication; completed `.11` qualifies 19 shared AHB outcomes against the handwritten oracle while retaining the general cross-backend non-claim; `.12` is proposed next for native UVM contract selection, and decision `0034` keeps VIAL non-synthesis-bounded | [docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | completed `.844` selected HIAL/VIAL `.1`; child `.1` selected architecture under decision `0032`, and child `.2` now selects proposed bounded VIAL parser/SemanticIR implementation `.3` under decision `0033` | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
@@ -526,18 +526,15 @@ The task tree is the detailed execution ledger.
 - `docs/decisions/` carries durable accepted rationale and cross-cutting facts.
 - Git is the chronological audit trail.
 - The mdBook is the user-facing product/language documentation.
-- `CHANGES.md` is the concise per-slice technical changelog.
 - `DEVELOPMENT_NOTES.md` is conditional: update it only for durable engineering
   rationale, constraints, or working decisions that lack a better canonical
   home.
-- Decision [0046](decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md)
-  selects bounded current/index views over sealed history for `CHANGES.md` and
-  conditional `DEVELOPMENT_NOTES.md`, then exact archival and live-path
-  retirement for `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md`.
-  Decision [0025](decisions/0025-project-document-interim-lifecycle.md) remains
-  operational until containment leaves `.4`, `.5`, and `.11` complete that
-  selection; meanwhile do not append to or treat either status file as a
-  live source.
+- Decision [0047](decisions/0047-changes-history-is-task-trees-and-git.md)
+  retires the duplicate per-slice changelog: the owning task node and work-unit
+  Git commit are the change-history authorities. Decision
+  [0046](decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md)
+  retains the separately reviewed rationale/status lifecycle owners; do not
+  append to or treat either frozen status file as a live source.
 
 Do not duplicate the task tree or git history into another hand-maintained
 status narrative.

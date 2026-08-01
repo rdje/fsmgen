@@ -51,11 +51,6 @@ Ignoring it is not a style issue; it is a project-safety failure.
   - Repo-local task-tree workflow and per-top-level task files.
   - Must be updated before commit whenever a task-tree-managed activity changes a node status, current frontier, blocker, decision, validation evidence, or completion evidence.
   - Must stay below this file for commit policy: task-tree docs may require task IDs and evidence, but must not redefine the commit workflow independently.
-- `CHANGES.md`
-  - **Live concise technical changelog.** Add one entry for every completed
-    task, slice, lane, or task-scoped activity in the same commit. Name the
-    work-unit id, summarize the result, and record the decisive verification;
-    do not duplicate the full task-tree log. See `docs/decisions/0025`.
 - `DEVELOPMENT_NOTES.md`
   - **Conditional engineering rationale.** Update it only when the slice
     produces a useful design constraint, implementation rationale, or working
@@ -63,8 +58,9 @@ Ignoring it is not a style issue; it is a project-safety failure.
     task-tree entry, user document, or git. Do not add a placeholder entry for
     slices that do not warrant one. See `docs/decisions/0025`.
 - `LIVE_ACHIEVEMENT_STATUS.md`
-  - **FROZEN legacy blob** (do not append). Decision `0046` selects exact
-    archival and live-path retirement after the owned containment migration.
+  - **FROZEN legacy blob** (do not append). Leaf `.11` must audit its present
+    value and obtain an independent director lifecycle selection before any
+    migration.
 - `TASK_ACCEPTANCE.md`
   - Project-neutral code-slice acceptance contract. Its checker reads staged
     paths, task snapshots, and changed-line freshness from the Git index using
@@ -89,12 +85,14 @@ Ignoring it is not a style issue; it is a project-safety failure.
       durable cross-cutting fact/decision/learning (and update `docs/decisions/INDEX.md`).
    3. `MEMORY.md` (layer A) — **overwrite** its "Current state" block to point at the new
       latest commit / active leaf / next action; keep it ≤ ~60 lines.
-   4. `CHANGES.md` — append one concise entry for this completed slice.
-   5. `DEVELOPMENT_NOTES.md` — update only when the conditional rationale
+   4. `DEVELOPMENT_NOTES.md` — update only when the conditional rationale
       boundary above is met.
    - `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain FROZEN — do
      not append while decision `0025` remains the operational transition rule.
-     Decision `0046` owns their selected post-migration lifecycle.
+     Decision `0046` owns the roadmap-status selection; `.11` must confirm the
+     achievement-status value independently. Decision `0047` retires the former
+     per-slice changelog obligation and routes exact change history to task
+     evidence plus Git.
 4. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.

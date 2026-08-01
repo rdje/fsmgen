@@ -2,7 +2,7 @@
 
 - Date: 2026-07-30
 - Type: convention
-- Status: accepted (executed in `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.2`)
+- Status: partially superseded by `0047` (`CHANGES.md` only)
 
 ## Context
 
@@ -45,3 +45,10 @@ Until the scheduled lifecycle review selects longer-term outcomes:
 - Neither status file is changed by this interim policy; their scheduled
   evidence-based review remains open and unprejudiced.
 - Historical content is not rewritten retroactively.
+
+## Later Refinement
+
+Decision `0047` retires the per-slice `CHANGES.md` obligation after the exact
+current-value and consumer audit found no role independent of task trees, Git,
+Memory, decisions/facts, and the mdBook. The conditional
+`DEVELOPMENT_NOTES.md` rule and both frozen-status boundaries remain in force.

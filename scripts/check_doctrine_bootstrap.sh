@@ -29,7 +29,8 @@ bootstrap_files=(
   .github/copilot-instructions.md
 )
 
-retired_bootstrap_files=(
+retired_project_files=(
+  CHANGES.md
   WARP.md
 )
 
@@ -152,9 +153,9 @@ for file in "${bootstrap_files[@]}"; do
   done
 done
 
-for file in "${retired_bootstrap_files[@]}"; do
+for file in "${retired_project_files[@]}"; do
   if [[ -e "${file}" ]]; then
-    note "${file} is a retired bootstrap and must remain absent"
+    note "${file} is a retired project path and must remain absent"
   else
     ok "${file} retired and absent"
   fi

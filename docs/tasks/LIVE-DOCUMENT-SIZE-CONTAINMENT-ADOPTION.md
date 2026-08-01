@@ -75,11 +75,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3: enforce bounded retained-ledger history`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Reassess whether historical CHANGES.md still provides unique current value, then implement only the director-selected lifecycle.`
   Acceptance: `Do not presume retention from decision 0046 after the director's 2026-08-01 deferral. First compare the current reader question and unique value against task trees, Git, the mdBook, and bounded live status; select retain, supersede/archive, or another explicit outcome with the director. If retained, every historical entry must be accounted for exactly once, the current/index view must stay below its derived warning budget, sealed/version ranges must pass order/digest/retrieval proof, and a post-cutover append must pass without rewriting the immutable migration source. If superseded, prove consumers, unique-content disposition, deterministic exact retrieval, and planted negative controls before retiring the live path.`
-  Verification: `Clean schema commit e47b509c9 and activation commit 241d249a5 moved no changelog entry and opted in no manifest. Before implementation, the director observed that the 32,299-line file may be purely historical and explicitly deferred deciding its value. Source inspection also found that .3's exact complete-source comparison has no post-cutover append case: an unchanged source descriptor cannot equal a reconstructed ledger after its next required entry. Both questions remain open; no content, lifecycle, schema, enforcement, or product change is selected here.`
-  Commit: `pending; activation is 241d249a5 and implementation is director-deferred`
+  Verification: `Exact revision 329d7cf1b fixes the former changelog at 32,299 lines / 2,696,664 bytes / 3,282-byte longest line / SHA-256 6a1b0819... . The current-value audit classifies all 64 referring files and finds zero content consumers; the one executable reference is the circular route fixture. Decision 0047 retires the live path and per-slice write obligation without a replacement. An executed archive descriptor retrieves and verifies the exact Git object under fsmgen_required_history; the focused verifier rejects a recreated path, planted policy consumer, wrong digest, and absent revision, while its token probe detects exactly one planted orphan. README/workflow/book/fact/route/surface consumers now use task evidence plus work-unit Git history. Removing 2.7 MB exposed an impossible immutable-baseline/stale-ceiling conjunction, so the authority gate now permits baseline decreases only and still rejects increases or shape changes; root file/per-document-line/aggregate baselines and ceilings ratchet downward with zero ceiling increases. The RAM-guarded authority/neutrality/retirement cluster passes at Files=6/Tests=82; the staged wrapper covers all 2,785 Markdown paths in 21 surfaces, executes exact retrieval, reports maintained-reference delta 0/-3/-251, and passes path/locality/task/Knowledge Map controls. All 37 mdBook chapters test and the repository-local 73-file/17,283,330-byte build passes, then is removed exactly.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4: retire duplicate changelog`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5`
   Status: `pending`
@@ -128,11 +128,11 @@ no routed destination becomes the next uninstrumented blob.
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11`
   Status: `pending`
-  Goal: `Supersede and archive the two frozen status-file live paths under decision 0046.`
-  Acceptance: `After .3 proves the archive-descriptor contract, preserve the distinct exact ROADMAP_STATUS.md and LIVE_ACHIEVEMENT_STATUS.md identities with deterministic retrieval; migrate current workflow, README-route, book, registry, composition-note, and executable consumers; replace t/1332's stale ROADMAP_STATUS.md negative scan with current canonical truth; prove classified-consumer and planted-negative controls; retire each live path only after its independent pre/post identity, retrieval, and resulting-tree proof; leave historical evidence references intact.`
+  Goal: `Reassess the two frozen status-file values independently, then implement only each director-selected lifecycle.`
+  Acceptance: `After .4 commits cleanly, first apply the same provenance/current-question/unique-content/consumer/canonical-overlap/recovery audit to LIVE_ACHIEVEMENT_STATUS.md and ask the director whether its independent present value justifies retention before changing its lifecycle; assess ROADMAP_STATUS.md independently rather than inferring the same answer. For every selected supersession, preserve the distinct exact identity with deterministic retrieval; migrate current workflow, README-route, book, registry, composition-note, and executable consumers; replace t/1332's stale ROADMAP_STATUS.md negative scan with current canonical truth; prove classified-consumer and planted-negative controls; retire each live path only after its independent pre/post identity, retrieval, and resulting-tree proof; leave historical evidence references intact.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3`
+  Blocked by: `complete .4 cleanly, then director value selection after the exact LIVE_ACHIEVEMENT_STATUS.md audit`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12`
   Status: `pending`
@@ -403,6 +403,18 @@ no routed destination becomes the next uninstrumented blob.
   session crash/loss/restart before the current continuity architecture.
   Pending `.26` owns an evidence-first inventory and per-file value review;
   no candidate list or retain/removal outcome is inferred from this context.
+- `2026-08-01`: The director selects deletion for `CHANGES.md` if the exact
+  `.4` audit finds no value independent of the current continuity doctrines.
+  The audit finds no content or executable consumer: its only live claim is a
+  manually curated work-unit summary already answered by task-tree closure,
+  Git subjects/diffs, and the user-facing mdBook. `.4` resumes to prove exact
+  recovery and retire the obligation, route, surface, and live path atomically;
+  `.26` retains the broader agent-era document inventory.
+- `2026-08-01`: After `.4` commits cleanly, the director requires the same
+  explicit current-value question for `LIVE_ACHIEVEMENT_STATUS.md`. Pending
+  `.11` must first present its independent provenance/value/consumer/overlap/
+  recovery evidence and obtain the director's lifecycle selection; it may not
+  infer deletion from the `CHANGES.md` outcome or silently combine the two.
 
 ## Open Questions
 
@@ -426,11 +438,15 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- `.4` is director-deferred before any migration: decision `0046` records the
-  earlier retained-ledger selection, but the file's present value is reopened.
-  If retention wins, the static-source append flaw must be corrected and proved
-  first. Pending `.26` owns the broader legacy-continuity inventory. Do not
-  activate `.5` or `.11` as a substitute for either deferred review.
+- None for completed `.4`. Pending `.11` awaits the director's independent
+  value selection after its exact achievement-status audit; `.26` still owns
+  the broader legacy-continuity inventory, and `.5` remains separate.
+
+## Acceptance Checklist (enforced) — `.4` duplicate-changelog retirement
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Add one concise' --oneline -- AGENTS.md COMMIT.md` identifies `0ff590b91` as the commit that imposed the duplicate per-slice write. Exact object `329d7cf1b:CHANGES.md` is 32,299 lines / 2,696,664 bytes / SHA-256 `6a1b0819...`; the fresh 64-reference census finds no product, build, runtime, reader, or continuity content consumer. Its only executable reference is the `t/1553` fixture for the circular route policy. Task closure plus the work-unit Git subject/diff already answers what changed, while Memory, decisions/facts, and the mdBook own resume/rationale/behavior. Removing those bytes also proves the old cross-revision immutable baseline incompatible with the mandatory stale-headroom ceiling ratchet: the ceiling had to fall below its historical baseline.
+- [x] **ADDRESSED (verified)** — decision `0047`, `docs/LEGACY_CONTINUITY_DOCUMENT_VALUE_AUDIT.md`, the archive descriptor, and executable `scripts/check_retired_changes_history.pl` retire the live path/obligation/route/surface without a replacement and preserve exact version recovery. The verifier rejects a recreated path, planted `AGENTS.md` consumer, wrong digest, and missing revision; the token fixture detects one planted orphan exactly. Baselines may now decrease only, while increases/shape changes still fail; the root surface ratchets downward with zero ceiling increases. The RAM-guarded `t/1549`/`t/1553`/`t/1554`/`t/1560`/`t/1561`/`t/1562` cluster passes at `Files=6, Tests=82`.
+- [x] **NO REGRESSION** — the final RAM-guarded cluster reports `All tests successful` at `Files=6, Tests=82`. The staged `scripts/check_live_document_size.sh` executes exact recovery and covers all 2,785 tracked Markdown paths in 21 surfaces; maintained-reference authority accepts exact mdBook delta `files=0 / lines=-3 / bytes=-251`, ceiling authority reports zero increases, and task-tree/Knowledge Map/relative-path/project-locality gates pass. All 37 mdBook chapters test and the repository-local 73-file/17,283,330-byte build passes, then is removed exactly. The live file is absent, `DEVELOPMENT_NOTES.md` and both frozen status files remain unchanged, and `.11` explicitly requires an independent `LIVE_ACHIEVEMENT_STATUS.md` value audit plus director selection.
 
 ## Acceptance Checklist (enforced) — `.4`/`.26` director deferral
 

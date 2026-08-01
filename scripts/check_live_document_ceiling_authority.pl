@@ -351,9 +351,14 @@ for my $surface (sort keys %{$current}) {
                 && exists($current->{$surface}{baseline}{$key});
             my $before = $prior->{$surface}{baseline}{$key};
             my $after = $current->{$surface}{baseline}{$key};
-            if (!defined($before) != !defined($after)
-                    || (defined($before) && defined($after) && $before ne $after)) {
-                problem("surface $surface changed its immutable transition baseline");
+            my $shape_changed = !defined($before) != !defined($after);
+            my $invalid_value = defined($before) && defined($after)
+                && (ref($before) || ref($after)
+                    || $before !~ /\A[0-9]+\z/ || $after !~ /\A[0-9]+\z/);
+            my $increased = defined($before) && defined($after)
+                && !$invalid_value && $after > $before;
+            if ($shape_changed || $invalid_value || $increased) {
+                problem("surface $surface increased or reshaped its transition baseline");
                 last;
             }
         }

@@ -47,7 +47,7 @@
   global date heuristics. Leaves `.15`-`.23` own the changes; the current
   checker, registry values, thresholds, and document lifecycles remain in force
   until their individual commits land. Leaf `.18` now implements target versus
-  ceiling semantics, immutable baselines, banded downward ratchets, and
+  ceiling semantics, monotonic non-increasing baselines, banded downward ratchets, and
   separately reviewed increase authority without widening a ceiling. Leaf
   `.19` now executes `core:` verifiers, requires exact execution proofs from
   the unconditional local `adapter:` runner, and reports `external:` contracts
@@ -246,7 +246,9 @@ remediation owner, deadline or ordered frontier, and unchanged ceiling.
 Only records required to complete the containment transition may extend a
 rollover-debt surface; ordinary unrelated growth remains prohibited. The debt
 exception ends when the migration lands and can never excuse ceiling overflow.
-Its immutable baseline plus owned allowance must fit below the ceiling. A
+Its baseline cannot increase across revisions, but an atomic content reduction
+may lower it so the ceiling can ratchet down. The current baseline plus owned
+allowance must fit below the ceiling. A
 declared ratchet band must also reject a ceiling that remains materially above
 both actual use and the health target after pressure falls.
 

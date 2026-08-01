@@ -34,11 +34,14 @@ three materially different actions:
   `docs/BOOK_PLAN.md` only after a fresh content/consumer/replacement proof;
 - delete `WARP.md` after the director confirmed that warp.dev is no longer
   used and the owned `.25` proof found no surviving discovery role.
+- delete `CHANGES.md` after the later director-authorized `.4` audit found no
+  current content consumer or distinct question beyond task trees and Git.
 
-The four-file status/changelog review keeps its existing authority. This audit
-therefore selects the current reversible outcome—retain the two ledgers under
-their interim policy and retain the two status files byte-frozen—without
-claiming that any of those roles should survive the separately owned review.
+Decision `0047` supersedes only the changelog-retention portion of the earlier
+four-file review. The conditional rationale ledger remains separately owned by
+`.5`. Both status files remain byte-frozen; `.11` must audit each independently
+and obtain the director's document-specific lifecycle choice before changing
+either path.
 
 No file is deleted, archived, moved, reclassified, or content-migrated here.
 Leaves `.24` and `.25` below isolate the two newly discovered migrations;
@@ -118,7 +121,7 @@ exists.
 | `engineering_rationale` | Implementers; interim non-derivable rationale ledger | 34,506 lines; only conditional new entries are allowed | `retain` provisionally | four-file review, then `.3`/`.5` |
 | `knowledge_cards` | Agents/maintainers; canonical question-answer facts | Current and addressable, but one card and long lines exceed part targets | `retain` facts; `re-form` outliers | `.10` |
 | `fact_index` | Agents/tools; disposable generated discovery projection | 6,151,941 bytes and 10,275-byte longest line; no unique content | `re-form` | `.10` |
-| `change_history` | Maintainers/users; interim curated per-slice change ledger | 32,299 lines; concise current updates still required, old chronology duplicates task/Git facts | `retain` provisionally | four-file review, then `.3`/`.4` |
+| `change_history` | Formerly maintainers/users; curated per-slice change narration | 32,299 lines; no content consumer or distinct current question beyond task/Git evidence | `delete`, exact version object retained | `.4`, decision `0047` |
 | `exact_history` | Auditors; exact Git objects | Query-only terminal with explicit retention contracts where depended upon | `retain` | version-control audit trail |
 | `diagnostics` | Engineers; bounded procedure/tool index | 317 lines / 12,761 bytes; active bootstrap consumer, still normal | `retain` | toolbox maintainers |
 | `enforced_rules` | All contributors; bounded doctrine index | 223 lines / 12,854 bytes; active mechanical contract | `retain` | doctrine maintainers |

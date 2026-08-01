@@ -17,6 +17,22 @@ remove any reviewed document. Decision
 records the selection. The existing containment leaves perform the schema and
 migrations atomically after this audit commits.
 
+## Later Director Refinement
+
+On `2026-08-01`, before the bounded-ledger migration began, the director
+reopened whether the changelog had any value independent of the now-enforced
+task-tree/Git/Memory/mdBook architecture. The fresh `.4` audit found no content
+consumer or distinct current question, and decision
+[0047](decisions/0047-changes-history-is-task-trees-and-git.md) supersedes only
+this audit's `CHANGES.md` retention clauses: the live changelog is retired,
+task trees plus Git own change history, and the exact former object remains
+retrievable. This does not decide the lifecycle of any other document.
+
+The earlier `LIVE_ACHIEVEMENT_STATUS.md` selection below depended in part on a
+retained changelog. Leaf `.11` must therefore audit that file independently and
+ask the director whether its evidence shows unique value before implementing
+any lifecycle change. No outcome may be inferred from the changelog decision.
+
 ## Evidence Method
 
 The review used:
@@ -85,7 +101,7 @@ mentions are not rewritten.
 
 | Document | Useful audience | Distinct question after canonical routing? |
 | --- | --- | --- |
-| `CHANGES.md` | maintainers and reviewers seeking a curated, human-readable work-unit summary | yes: “What materially changed in this completed slice?” |
+| `CHANGES.md` | formerly maintainers and reviewers seeking a curated work-unit summary | no: the owning task node and work-unit Git commit answer the question more exactly |
 | `DEVELOPMENT_NOTES.md` | maintainers investigating non-obvious local engineering rationale | yes, but only when the rationale is not a decision, fact, task proof, user contract, or self-evident commit |
 | `ROADMAP_STATUS.md` | formerly maintainers seeking direction plus live status | no: its two questions now have separate, fresher canonical homes |
 | `LIVE_ACHIEVEMENT_STATUS.md` | formerly maintainers seeking the latest completed slice | no: its content duplicates the retained changelog and stronger exact evidence |
@@ -98,13 +114,13 @@ mentions are not rewritten.
 | --- | --- | --- | --- | --- |
 | Keep the monolith | one editorial entry per completed slice | simple append; poor bounded retrieval | guaranteed unbounded growth | reject |
 | Generate from Git/task trees | generated per commit or release | reproducible, but loses the deliberately curated “what changed” summary | generation logic must infer significance and wording | reject |
-| Retire | Git/task trees only | exact recovery remains | removes the user's quick human change view | reject |
-| Re-form as a bounded ledger | one concise editorial entry per completed slice; task/Git remain exact authority | automate whole-entry segmentation, digest, order, reconstruction, and retrieval | small continuing editorial cost; bounded drift through one entry and exact ownership | **select** |
+| Retire | Git/task trees only | exact recovery remains through the declared version object | removes a duplicate editorial view, not a unique content consumer | **select under 0047** |
+| Re-form as a bounded ledger | one concise editorial entry per completed slice; task/Git remain exact authority | automate whole-entry segmentation, digest, order, reconstruction, and retrieval | continuing editorial duplication and drift risk without a distinct reader question | superseded by `0047` |
 
-The selected current view is bounded and directly readable. Older whole-entry
-ranges become sealed, ordered, digest-identified history with deterministic
-repository-relative retrieval. Entries are never split. The root is an index
-plus a recent window, not a second complete chronology.
+The selected current view is the owning task node plus the work-unit-bearing
+Git commit. The exact former monolith remains version-retrievable under a
+retention contract; no replacement changelog or generated projection is
+created.
 
 ### `DEVELOPMENT_NOTES.md`
 
@@ -145,37 +161,41 @@ navigation and the working tree only after consumer and retrieval proof.
 | Merge into `CHANGES.md` | editorial changelog | no new data needed | its historical content already overlaps; merging would duplicate entries | reject |
 | Supersede and archive | `CHANGES.md` for human summary; task/Git for exact evidence | cheap, deterministic, no content loss | current consumers must migrate once | **select** |
 
-Leaf `.11` will preserve its exact frozen identity and retire its live path
-under the same proof standard as `ROADMAP_STATUS.md`, while keeping the two
-archive identities distinct.
+This prior selection is reopened because its comparison assumed a retained
+changelog. Leaf `.11` must preserve the exact frozen identity while it performs
+a fresh value/consumer/replacement audit and obtains the director's independent
+lifecycle choice. It may retire the live path only if that later choice and the
+required proof authorize retirement.
 
 ## Selected Cross-Cutting Policy
 
-1. Retain `CHANGES.md` as a curated per-completed-slice rolling ledger, with a
-   bounded current/index view over sealed whole-entry history.
+1. Retire `CHANGES.md`; task-tree evidence plus the work-unit Git commit are the
+   current and exact change-history authorities, and the exact former object
+   remains deterministically retrievable.
 2. Retain `DEVELOPMENT_NOTES.md` as a conditional engineering-rationale
    rolling ledger under the existing “no better canonical home” trigger, with
    a bounded current/index view over sealed whole-entry history.
 3. Supersede `ROADMAP_STATUS.md` as a current source with `ROADMAP_V2.md`,
    `docs/TASK_TREE.md`, and `MEMORY.md`; preserve its exact frozen content
    through an archive/revision retrieval contract, then retire the live path.
-4. Supersede `LIVE_ACHIEVEMENT_STATUS.md` with `CHANGES.md`, task-tree evidence,
-   and Git; preserve its exact frozen content through a distinct
-   archive/revision retrieval contract, then retire the live path.
+4. Keep `LIVE_ACHIEVEMENT_STATUS.md` frozen until `.11` independently audits
+   its unique value and the director selects its lifecycle; do not infer that
+   choice from the retired changelog.
 5. Do not generate or merge a replacement status blob. Each current question
    routes directly to its one canonical layer.
-6. Decision 0025 remains the operational transition policy until the owned
-   migrations land. Selection alone does not authorize a write to either
-   frozen file or a change to the current commit workflow.
+6. Decision `0047` governs change history. Decision `0025` remains the
+   operational transition policy for the other reviewed documents until their
+   owned migrations land. Selection alone does not authorize a write to either
+   frozen file.
 
 ## Implementation Decomposition
 
 | Order | Owner | Exact responsibility |
 | ---: | --- | --- |
 | 1 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3` | implement and prove the neutral bounded-ledger/sealed-range/archive-descriptor schema without migrating either ledger |
-| 2 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4` | migrate `CHANGES.md` at whole-entry boundaries; prove identity, order, coverage, reconstruction, retrieval, bounded current view, and preserved per-slice workflow |
+| 2 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4` | retire the duplicate changelog; prove exact identity/retrieval, consumer closure, planted negatives, and live-path absence |
 | 3 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5` | migrate `DEVELOPMENT_NOTES.md` at whole-entry boundaries; prove the same integrity properties and preserve the conditional trigger |
-| 4 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11` | migrate every current consumer, repair the `t/1332` and composition-note couplings, preserve both distinct exact frozen identities, and retire the two live paths only after negative-control and retrieval proof |
+| 4 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11` | independently audit both frozen status documents, ask the director to select each lifecycle, then implement only the selected outcomes with consumer and retrieval proof |
 | 5 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12` | remeasure steady state and replace transition ceilings with derived retained-surface budgets |
 
 Each migration is a separate commit-workflow slice. A failure in one document

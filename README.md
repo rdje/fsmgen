@@ -153,16 +153,15 @@ Changing project state does not belong in this landing page:
 | What owns a task and its evidence? | The matching tree under [docs/tasks/](docs/tasks/) |
 | Why was a cross-cutting choice made? | [docs/decisions/INDEX.md](docs/decisions/INDEX.md) |
 | Is a fact already established? | [KNOWLEDGE_MAP.md](KNOWLEDGE_MAP.md) |
-| What changed in a work unit? | [CHANGES.md](CHANGES.md), then `git log --grep=<UNIT-ID>` for the exact commit |
+| What changed in a work unit? | The owning task under [docs/tasks/](docs/tasks/), then `git log --grep=<UNIT-ID>` |
 | How do I diagnose a failure? | [TOOLBOX.md](TOOLBOX.md) |
 | Which repository rules are enforced? | [DOCTRINE_ENFORCEMENT.md](DOCTRINE_ENFORCEMENT.md) |
 
-`CHANGES.md` receives one concise entry per completed slice.
 `DEVELOPMENT_NOTES.md` is updated only when durable engineering rationale is
 warranted. `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain frozen
 and are not live status sources. Decision
-[0046](docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md)
-selects bounded ledgers and exact archival; 0025 governs until migration.
+[0047](docs/decisions/0047-changes-history-is-task-trees-and-git.md) retires
+the duplicate changelog; decision 0046 retains the remaining lifecycle owners.
 
 ## Repository orientation
 

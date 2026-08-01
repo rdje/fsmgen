@@ -119,14 +119,20 @@ subtest 'authority is neither reusable nor pre-authorizable' => sub {
         'orphan authority is explicit');
 };
 
-subtest 'transition baseline is immutable across revisions' => sub {
-    my $fixture = make_fixture();
-    mutate_surface($fixture, sub { $_[0]{baseline}{lines_each} = 81 });
-    stage($fixture, 'doctrine/live_document_size/surfaces.jsonl');
-    my ($ok, $output) = run_checker($fixture);
-    ok(!$ok, 'baseline rewrite is rejected');
-    like($output, qr/surface guide changed its immutable transition baseline/,
-        'immutable baseline failure is explicit');
+subtest 'transition baseline can ratchet down but cannot increase' => sub {
+    my $lower = make_fixture();
+    mutate_surface($lower, sub { $_[0]{baseline}{lines_each} = 79 });
+    stage($lower, 'doctrine/live_document_size/surfaces.jsonl');
+    my ($lower_ok, $lower_output) = run_checker($lower);
+    ok($lower_ok, 'baseline reduction is a free tightening') or diag($lower_output);
+
+    my $raise = make_fixture();
+    mutate_surface($raise, sub { $_[0]{baseline}{lines_each} = 81 });
+    stage($raise, 'doctrine/live_document_size/surfaces.jsonl');
+    my ($raise_ok, $raise_output) = run_checker($raise);
+    ok(!$raise_ok, 'baseline increase is rejected');
+    like($raise_output, qr/surface guide increased or reshaped its transition baseline/,
+        'non-monotonic baseline failure is explicit');
 };
 
 subtest 'a lifecycle migration may replace an inapplicable baseline shape' => sub {
@@ -150,12 +156,12 @@ subtest 'unrelated lifecycle relabeling cannot rewrite the baseline' => sub {
     my $fixture = make_fixture();
     mutate_surface($fixture, sub {
         $_[0]{lifecycle} = 'rolling_ledger';
-        $_[0]{baseline}{lines_total} = 79;
+        $_[0]{baseline}{lines_total} = 81;
     });
     stage($fixture, 'doctrine/live_document_size/surfaces.jsonl');
     my ($ok, $output) = run_checker($fixture);
     ok(!$ok, 'an unrelated lifecycle label does not bypass baseline immutability');
-    like($output, qr/changed its immutable transition baseline/,
+    like($output, qr/increased or reshaped its transition baseline/,
         'narrow migration exception cannot be reused');
 };
 

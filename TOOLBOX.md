@@ -279,13 +279,13 @@ truncate -s 0 git_message_brief.txt
 git status --short
 ```
 
-Add one concise `CHANGES.md` entry for every completed slice. Update
+Use the work-unit ID in every task-scoped Git subject; the owning task node and
+Git are the change-history authorities under decision `0047`. Update
 `DEVELOPMENT_NOTES.md` only when durable engineering rationale, constraints,
 or working decisions warrant it. Do not update `ROADMAP_STATUS.md` or
-`LIVE_ACHIEVEMENT_STATUS.md` while decision `0025` remains the operational
-transition rule. Decision `0046` selects their exact archival and live-path
-retirement after the owned containment migration. Route canonical state to
-task-trees, `MEMORY.md`, decisions, facts, the mdBook, and git.
+`LIVE_ACHIEVEMENT_STATUS.md` until their independently reviewed lifecycle is
+implemented. Route canonical state to task-trees, `MEMORY.md`, decisions,
+facts, the mdBook, and Git.
 
 ## 7. Downstream Issue Bundles
 

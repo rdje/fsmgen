@@ -2,7 +2,7 @@
 
 - Date: 2026-08-01
 - Type: architecture/convention
-- Status: accepted
+- Status: partially superseded by `0047` (`CHANGES.md` only)
 - Refines: [0007](0007-memory-architecture-supersedes-blob-narration.md), [0025](0025-project-document-interim-lifecycle.md), [0041](0041-live-documents-use-bounded-views-over-durable-stores.md)
 - Evidence owner: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`
 
@@ -62,3 +62,13 @@ work, not evidence for retaining a stale live authority.
 - Historical task and decision mentions remain intact as truthful evidence.
 - Failed reconstruction, retrieval, consumer, or negative-control proof stops
   the affected migration without changing the other three selected outcomes.
+
+## Later Refinement
+
+Decision `0047` rejects the selected `CHANGES.md` ledger after the director
+reopened its present value and the `.4` audit found no independent content or
+executable consumer. The generic ledger schema remains available, and the
+conditional-rationale and roadmap-status selections remain separately owned.
+Because the achievement-status comparison relied partly on the retained
+changelog, `.11` must re-audit its value and obtain an independent director
+selection before changing that lifecycle.

@@ -53,19 +53,15 @@ These should stay precise and sometimes narrower than the book.
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` are frozen legacy records,
-not current views. Decision 0046 selects their eventual exact archival and
-live-path retirement: high-level direction stays in `ROADMAP_V2.md`, active
-work in `TASK_TREE.md`, resume state in `MEMORY.md`, concise achievements in
-`CHANGES.md`, and exact history in task evidence plus Git. The same decision
-retains `CHANGES.md` as a per-completed-slice bounded ledger and
-`DEVELOPMENT_NOTES.md` as a conditional bounded rationale ledger. Decision
-0025 remains operational until containment leaves `.4`, `.5`, and `.11`
-implement the remaining migrations, so neither frozen file may be changed
-meanwhile. Completed schema leaf `.3` adds no ledger migration and proves
-bounded whole-entry ranges, reconstruction, index, and archive transition.
-Before `.4` moved content, the director reopened whether `CHANGES.md` and
-analogous early agent-era crash/restart documents retain present value.
-Pending `.26` inventories that cohort first; no candidate or outcome is inferred.
+not current views. Decision 0046 retains their separate lifecycle owners and
+the conditional rationale-ledger owner. Decision 0047 retires the duplicate
+per-slice changelog after exact current-value and consumer proof: high-level
+direction stays in `ROADMAP_V2.md`, active work and evidence in task trees,
+resume state in `MEMORY.md`, shipped behavior in the mdBook, and exact change
+history in work-unit-bearing Git commits. The exact former changelog object is
+version-retained; no replacement status blob or generated changelog is added.
+Both frozen status files remain unchanged until `.11` asks and implements each
+independently selected lifecycle.
 
 `README_POLICY.md` is the project- and harness-neutral landing-page maintenance
 standard. Adopting projects keep their authoritative tracked copy at repository
@@ -198,8 +194,9 @@ health-target versus enforcement-ceiling correction without widening a limit.
 The completed implementation gives every measured surface separate six-axis
 `health_targets` and inclusive `enforcement_ceilings`. Warning and rollover are
 health signals; equality at the ceiling passes and any excess fails. Debt
-baselines are cross-revision immutable, owned allowances fit below the ceiling,
-and a banded downward ratchet rejects stale headroom after pressure falls.
+baselines cannot increase across revisions but may ratchet downward after an
+atomic content reduction, owned allowances fit below the ceiling, and a banded
+downward ratchet rejects stale headroom after pressure falls.
 `hard_pct` is gone. A ceiling increase cannot authorize itself: it requires an
 exact new append-only authority row plus a new decision in the same Git change,
 while lowering is free. Checker output shows actual/target/ceiling values and

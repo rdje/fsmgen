@@ -8,7 +8,6 @@
 {"route_id":"rationale","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"docs/decisions/INDEX.md","target_surface_id":"rationale"}
 {"route_id":"engineering_rationale","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"DEVELOPMENT_NOTES.md","target_surface_id":"engineering_rationale"}
 {"route_id":"fact_index","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"KNOWLEDGE_MAP.md","target_surface_id":"fact_index"}
-{"route_id":"change_history","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"CHANGES.md","target_surface_id":"change_history"}
 {"route_id":"exact_history","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"git log --grep=<UNIT-ID>","target_surface_id":"exact_history"}
 {"route_id":"diagnostics","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"TOOLBOX.md","target_surface_id":"diagnostics"}
 {"route_id":"enforced_rules","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"DOCTRINE_ENFORCEMENT.md","target_surface_id":"enforced_rules"}

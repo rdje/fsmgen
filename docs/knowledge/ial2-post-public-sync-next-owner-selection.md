@@ -28,11 +28,16 @@ The bounded child changes only those four opening fences to explicit `text`,
 preserves their content, and requires both full-book doctest and HTML-build
 success. The selector does not activate or edit the child.
 
-The scheduled four-document lifecycle review stays proposed. Interim decision
-`0025` remains controlling: update `CHANGES.md` every slice, update
+At the selector revision, the scheduled four-document lifecycle review was
+still proposed and interim decision `0025` controlled: update the changelog
+every slice, update
 `DEVELOPMENT_NOTES.md` only when useful rationale lacks a better durable home,
 and leave `ROADMAP_STATUS.md` plus `LIVE_ACHIEVEMENT_STATUS.md` untouched.
 Explicitly director-gated items remain inactive.
+
+Decision `0047` later retired that changelog obligation after exact value and
+consumer proof. This later continuity-policy change does not alter the selector,
+four-fence repair, or its completed verification result.
 
 Clean selector commit `9e3308e5c` activates only the selected four-fence
 repair continuity-only. All fence and diagram bytes remain unchanged during

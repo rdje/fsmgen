@@ -1,29 +1,35 @@
 ---
 id: project-document-interim-lifecycle-policy
-title: Project documents use a split interim lifecycle
+title: Change history uses task trees and Git; rationale remains conditional
 answers:
-  - "should CHANGES.md be updated for every slice?"
+  - "should a changelog be updated for every slice?"
+  - "where does FSMGen record what changed?"
   - "when should DEVELOPMENT_NOTES.md be updated?"
   - "should ROADMAP_STATUS.md be updated now?"
   - "should LIVE_ACHIEVEMENT_STATUS.md be updated now?"
   - "what supersedes the blanket legacy-document freeze?"
   - "what is the long-term project document lifecycle policy?"
-date: 2026-07-30
+date: 2026-08-01
 status: current
 tags: [workflow, changelog, development-notes, roadmap-status, continuity]
-evidence: docs/decisions/0025-project-document-interim-lifecycle.md; COMMIT.md; AGENTS.md; docs/tasks/PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.md
-reverify: rg -n 'CHANGES.md|DEVELOPMENT_NOTES.md|ROADMAP_STATUS.md|LIVE_ACHIEVEMENT_STATUS.md' COMMIT.md AGENTS.md docs/TASK_TREE.md TOOLBOX.md
+evidence: docs/decisions/0047-changes-history-is-task-trees-and-git.md; docs/LEGACY_CONTINUITY_DOCUMENT_VALUE_AUDIT.md; COMMIT.md; AGENTS.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
+reverify: rg -n '0047|DEVELOPMENT_NOTES|ROADMAP_STATUS|LIVE_ACHIEVEMENT_STATUS' AGENTS.md COMMIT.md docs/TASK_TREE.md
 ---
 
-Decision `0025` defines distinct interim roles instead of one blanket policy.
-Every completed slice adds one concise `CHANGES.md` entry. A slice updates
-`DEVELOPMENT_NOTES.md` only when it produces durable engineering rationale,
-constraints, or working decisions without a better canonical home.
+Decision `0047` retires the duplicate per-slice changelog and its mandatory
+write. Every completed slice updates its owning task evidence and bounded
+Memory pointer, uses the work-unit ID in the Git subject, synchronizes the
+mdBook/decisions/facts when warranted, passes doctrines, and commits before the
+next slice. Task trees plus Git answer what changed and what proves it.
 
-`ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain untouched while the
-owned migrations are pending. Decision `0046` has selected their exact
-archival and live-path retirement, plus bounded forms for both retained
-ledgers; decision `0025` remains the operational transition policy until those
-migrations land. Decision `0007` still governs bounded Memory and canonical
-routing, but its blanket freeze is superseded for prospective changelog and
-conditional development-note updates.
+A slice updates `DEVELOPMENT_NOTES.md` only when it produces durable
+engineering rationale, constraints, or working decisions without a better
+canonical home.
+
+`ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain untouched while
+their owned work is pending. Decision `0046` selects exact archival and
+live-path retirement for roadmap status plus a bounded form for the separately
+reviewed rationale ledger. The achievement-status lifecycle awaits an
+independent `.11` value audit and director selection. Decision `0007` still
+governs bounded Memory and canonical routing; `0047` supersedes the
+`0025`/`0046` changelog clauses only.

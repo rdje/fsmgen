@@ -120,10 +120,11 @@ mechanically scanned by `t/1554`.
 Leaf `.18` now distinguishes reviewed health targets from inclusive
 enforcement ceilings. Warning and rollover use target pressure; only
 `actual > ceiling` fails, so equality is valid without implying health.
-Debt keeps an immutable baseline, a bounded allowance below its ceiling, and a
-two-step ratchet band that forces the ceiling down after one atomic shrinkage
-step. Any increase must match one newly appended authority row and a newly
-added decision in the same Git change; lowering is free. The implementation
+Debt keeps a baseline that cannot increase but may ratchet down after an atomic
+content reduction, a bounded allowance below its ceiling, and a two-step band
+that forces the ceiling down after shrinkage. Any ceiling increase must match
+one newly appended authority row and a newly added decision in the same Git
+change; lowering is free. The implementation
 raises no predecessor ceiling. Output names actual/target/ceiling values and
 separately summarizes two migrated surfaces, nine pinned/deferred surfaces,
 and five steady measured surfaces, avoiding a false claim that complete path
@@ -225,10 +226,12 @@ orphan/workflow proof selects deletion rather than a compact compatibility
 pointer. The local bootstrap checker enforces absence while preserving all
 remaining tool-neutral bootstrap checks and exact Git recovery.
 
-Decision `0046` selected two ledgers; completed `.3` defines bounded current,
-index, whole-entry, reconstruction, seal, and archive-transition controls
-without migration. Before `.4` moved content, the director reopened whether
-`CHANGES.md` and analogous early agent-era crash/restart documents retain
-present value. Pending `.26` must inventory them by provenance and current
-reader value before any outcome. If CHANGES is retained, post-cutover append
-anchoring must be corrected and proved; no lifecycle is presently inferred.
+Decision `0046` selected two ledgers; completed `.3` defines generic bounded
+current, index, whole-entry, reconstruction, seal, and archive-transition
+controls. Decision `0047` supersedes the changelog half after `.4` proved its
+manual work-unit summary had no content or executable consumer independent of
+task evidence, Git, Memory, facts/decisions, and the mdBook. The exact
+32,299-line object remains deterministically retrievable from `329d7cf1b`
+under `fsmgen_required_history`; the live path, write obligation, route, and
+surface are retired without a replacement changelog. Pending `.26` retains the
+broader agent-era document inventory, and `.5`/`.11` remain independent.

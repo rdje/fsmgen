@@ -27,10 +27,10 @@ subtest 'live README routes use the common pressure-controlled surface graph' =>
     ok($ok, 'live README and common surface registries pass') or diag($output);
     like($output, qr/all README entry-point invariants hold/, 'landing-page invariant remains explicit');
     like($output, qr/all routed-destination pressure invariants hold/, 'route-pressure invariant remains explicit');
-    like($output, qr/all live-document size-containment invariants hold \(22 surfaces\)/, 'common project-wide checker is delegated');
+    like($output, qr/all live-document size-containment invariants hold \(21 surfaces\)/, 'common project-wide checker is delegated');
     like($output, qr/containment pressure migrated: 2 surface\(s\)/,
         'migrated pressure is reported separately');
-    like($output, qr/containment pressure pinned_deferred: 9 surface\(s\)/,
+    like($output, qr/containment pressure pinned_deferred: 8 surface\(s\)/,
         'pinned/deferred pressure remains visible');
 };
 
@@ -86,17 +86,17 @@ subtest 'missing required route fails closed' => sub {
     mutate_file(
         $fixture,
         'doctrine/readme_entrypoint/routed_destinations.jsonl',
-        sub { $_[0] =~ s/^.*"route_id":"change_history".*\n//m },
+        sub { $_[0] =~ s/^.*"route_id":"diagnostics".*\n//m },
     );
     my ($ok, $output) = run_checker($fixture);
     ok(!$ok, 'missing route is rejected');
-    like($output, qr/required routed destination is undeclared: change_history/, 'missing route is named');
+    like($output, qr/required routed destination is undeclared: diagnostics/, 'missing route is named');
 };
 
 subtest 'undeclared author hint and wrong route kind fail closed' => sub {
     my $undeclared = make_fixture();
     mutate_file($undeclared, 'scripts/check_readme_entrypoint.sh', sub {
-        $_[0] .= "route_hint author_overflow change_history 'CHANGES.md' 'Move history to CHANGES.md'\n";
+        $_[0] .= "route_hint author_overflow task_evidence 'probe/tasks/' 'Move evidence to probe/tasks/'\n";
     });
     my ($undeclared_ok, $undeclared_output) = run_checker($undeclared);
     ok(!$undeclared_ok, 'path-shaped emitted hint requires a declared route');
@@ -198,7 +198,7 @@ sub make_fixture {
     my @route_ids = qw(
         shipped_behavior reported_capabilities high_level_direction active_resume
         active_index task_evidence rationale engineering_rationale fact_index
-        change_history exact_history diagnostics enforced_rules
+        exact_history diagnostics enforced_rules
         frozen_roadmap_status frozen_achievement_status
     );
     my %markers = (
@@ -211,7 +211,6 @@ sub make_fixture {
         rationale                 => 'marker-rationale',
         engineering_rationale     => 'marker-engineering',
         fact_index                => 'marker-fact',
-        change_history            => 'marker-changes',
         exact_history             => 'marker-history',
         diagnostics               => 'marker-diagnostics',
         enforced_rules            => 'marker-rules',
@@ -258,7 +257,7 @@ sub make_fixture {
         (map { measured($_, 'partitioned_canonical', 'collection', 'parts/*.md', 'index.md', '-', 4, 100, 4096, 200, 8192) }
             qw(task_evidence rationale)),
         (map { measured($_, 'rolling_ledger', 'file', 'bounded.md', 'self', '-', 1, 100, 4096, 100, 4096) }
-            qw(engineering_rationale change_history)),
+            qw(engineering_rationale)),
         measured('fact_index', 'generated_projection', 'generated_file', 'generated.md', 'parts/*.md', '-', 1, 100, 4096, 100, 4096, 'core:bin/freshness'),
         terminal('exact_history', 'archive_terminal', 'archive', '.git', 'terminal', 'archive:.git'),
         frozen('frozen_roadmap_status', 'frozen-a.md', sha256_hex("frozen a\n")),

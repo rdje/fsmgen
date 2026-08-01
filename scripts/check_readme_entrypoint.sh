@@ -137,7 +137,7 @@ fi
 required_routes=(
   shipped_behavior reported_capabilities high_level_direction active_resume
   active_index task_evidence rationale engineering_rationale fact_index
-  change_history exact_history diagnostics enforced_rules
+  exact_history diagnostics enforced_rules
   frozen_roadmap_status frozen_achievement_status
 )
 declare -A required_route_ids=()
