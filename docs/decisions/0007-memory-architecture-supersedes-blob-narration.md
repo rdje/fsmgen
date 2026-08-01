@@ -46,8 +46,9 @@ parts of `COMMIT.md`:
 
 ## Later Refinement
 
-Decision `0025` reactivates `CHANGES.md` as a concise per-slice technical
-changelog and `DEVELOPMENT_NOTES.md` as a conditional engineering-rationale
-record. This decision continues to govern bounded `MEMORY.md`, canonical
-task-tree/decision/git routing, and the frozen status of `ROADMAP_STATUS.md`
-plus `LIVE_ACHIEVEMENT_STATUS.md` pending their scheduled review.
+Decision `0025` temporarily reactivated `CHANGES.md` as a concise per-slice
+technical changelog and retains `DEVELOPMENT_NOTES.md` as a conditional
+engineering-rationale record. Decisions `0047`, `0048`, and `0049` retire the
+former changelog, achievement journal, and roadmap-status board after separate
+value audits while preserving exact version retrieval. This decision continues
+to govern bounded `MEMORY.md` and canonical task-tree/decision/Git routing.

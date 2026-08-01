@@ -6,7 +6,7 @@ It is context only.
 
 The active source of truth remains:
 - [docs/COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md)
-- [ROADMAP_STATUS.md](ROADMAP_STATUS.md)
+- [ROADMAP_V2.md](ROADMAP_V2.md), especially the `R11` composition workstream
 
 ## Why this note exists
 - The legacy tool already had a real composition path.

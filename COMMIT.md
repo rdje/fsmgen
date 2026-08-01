@@ -42,11 +42,10 @@ Ignoring it is not a style issue; it is a project-safety failure.
     Keep it ≤ ~60 lines; this is mechanically capped by
     `scripts/check_doctrines.sh` (pre-commit hook + CI). Rationale and the
     reconciliation of this workflow with the memory standard: `docs/decisions/0007`.
-- `ROADMAP_STATUS.md`
-  - **FROZEN legacy blob** (do not append). Superseded by the task-trees (layer B,
-    `docs/tasks/` + `docs/TASK_TREE.md`) for live status and by git (layer D) for
-    history — see `docs/decisions/0007`. Decision `0046` selects exact archival
-    and live-path retirement after the owned containment migration.
+- Former roadmap-status board
+  - **RETIRED** under decision `0049`. `ROADMAP_V2.md` owns direction, task
+    trees own live status/evidence, bounded Memory owns resume state, and Git
+    owns exact chronology. Do not recreate a combined status projection.
 - `docs/TASK_TREE.md` and `docs/tasks/*.md`
   - Repo-local task-tree workflow and per-top-level task files.
   - Must be updated before commit whenever a task-tree-managed activity changes a node status, current frontier, blocker, decision, validation evidence, or completion evidence.
@@ -87,11 +86,10 @@ Ignoring it is not a style issue; it is a project-safety failure.
       latest commit / active leaf / next action; keep it ≤ ~60 lines.
    4. `DEVELOPMENT_NOTES.md` — update only when the conditional rationale
       boundary above is met.
-   - `ROADMAP_STATUS.md` remains FROZEN — do not append while decision `0025`
-     remains the operational transition rule. Decision `0046` owns its separate
-     selection. Decision `0048` retires the former achievement journal, and
-     decision `0047` retires the former per-slice changelog obligation; task
-     evidence, the mdBook, bounded Memory, and Git own their former questions.
+   - Decisions `0047`, `0048`, and `0049` retire the former changelog,
+     achievement journal, and roadmap-status board. Task evidence, the mdBook,
+     bounded Memory, the maintained roadmap, and Git own their former current
+     questions; do not recreate replacement narration blobs.
 4. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.
@@ -115,8 +113,7 @@ Ignoring it is not a style issue; it is a project-safety failure.
    - `git --no-pager status --short`
 12. The user-facing close-out should include the current live status from the
    task-trees (`docs/TASK_TREE.md` Active table + the owning `docs/tasks/*.md`
-   frontier), since `ROADMAP_STATUS.md` is now a frozen legacy blob
-   (`docs/decisions/0007`).
+   frontier), since decision `0049` retires the former roadmap-status board.
    - State how the completed task changed the active task-tree's status/frontier, or
      that it is unchanged.
    - Show at least the active work-unit's `Status` + brief description and its next

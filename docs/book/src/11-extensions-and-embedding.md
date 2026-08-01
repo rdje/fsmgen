@@ -3498,4 +3498,4 @@ Treat that as environment-specific compatibility, not the main forward surface.
 For the exact extension boundary and design notes, see:
 
 - [EXTENSION_MODEL.md](../../EXTENSION_MODEL.md)
-- [ROADMAP_STATUS.md](../../ROADMAP_STATUS.md)
+- [ROADMAP_V2.md](../../ROADMAP_V2.md)

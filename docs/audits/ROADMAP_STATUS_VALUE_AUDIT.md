@@ -125,4 +125,10 @@ but it is neither complete through the present nor safe as a current board.
    and Memory. This adds a second maintained view and should be selected only
    if its reader benefit outweighs generation, freshness, and drift controls.
 
-No lifecycle changes until the director selects one of these outcomes.
+## Lifecycle outcome
+
+The director independently selected option 1 after reviewing this audit.
+Decision `0049` owns the atomic retirement: exact Git retrieval and identity,
+consumer closure, canonical route migration, live-path absence, and planted
+negative controls must all pass together. No replacement status projection is
+introduced.

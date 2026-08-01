@@ -4,7 +4,6 @@ use warnings;
 
 use Test::More;
 use Cwd qw(abs_path);
-use Digest::SHA qw(sha256_hex);
 use File::Basename qw(dirname);
 use File::Path qw(make_path);
 use File::Spec;
@@ -27,7 +26,7 @@ subtest 'live README routes use the common pressure-controlled surface graph' =>
     ok($ok, 'live README and common surface registries pass') or diag($output);
     like($output, qr/all README entry-point invariants hold/, 'landing-page invariant remains explicit');
     like($output, qr/all routed-destination pressure invariants hold/, 'route-pressure invariant remains explicit');
-    like($output, qr/all live-document size-containment invariants hold \(20 surfaces\)/, 'common project-wide checker is delegated');
+    like($output, qr/all live-document size-containment invariants hold \(19 surfaces\)/, 'common project-wide checker is delegated');
     like($output, qr/containment pressure migrated: 2 surface\(s\)/,
         'migrated pressure is reported separately');
     like($output, qr/containment pressure pinned_deferred: 8 surface\(s\)/,
@@ -176,7 +175,7 @@ subtest 'unknown target surface and wrong source fail closed' => sub {
     like($source_output, qr/must originate at readme_entrypoint/, 'wrong source is explicit');
 };
 
-subtest 'common hard budget and frozen identity still close README destinations' => sub {
+subtest 'common hard budget still closes README destinations' => sub {
     my $budget_fixture = make_fixture();
     write_file($budget_fixture, 'bounded.md', join('', map { "line $_\n" } 1 .. 101));
     my ($budget_ok, $budget_output) = run_checker($budget_fixture);
@@ -184,11 +183,6 @@ subtest 'common hard budget and frozen identity still close README destinations'
     like($budget_output, qr/surface high_level_direction max lines is 101 \(> inclusive enforcement ceiling 100\)/,
         'hard failure comes from common authority');
 
-    my $frozen_fixture = make_fixture();
-    write_file($frozen_fixture, 'frozen-a.md', "changed\n");
-    my ($frozen_ok, $frozen_output) = run_checker($frozen_fixture);
-    ok(!$frozen_ok, 'frozen destination drift is rejected');
-    like($frozen_output, qr/surface frozen_roadmap_status frozen identity changed/, 'frozen failure comes from common authority');
 };
 
 done_testing();
@@ -199,7 +193,6 @@ sub make_fixture {
         shipped_behavior reported_capabilities high_level_direction active_resume
         active_index task_evidence rationale engineering_rationale fact_index
         exact_history diagnostics enforced_rules
-        frozen_roadmap_status
     );
     my %markers = (
         shipped_behavior          => 'marker-shipped',
@@ -214,14 +207,12 @@ sub make_fixture {
         exact_history             => 'marker-history',
         diagnostics               => 'marker-diagnostics',
         enforced_rules            => 'marker-rules',
-        frozen_roadmap_status     => 'marker-frozen-roadmap',
     );
     write_file($root, 'README.md', join("\n", map { $markers{$_} } @route_ids) . "\n");
     write_file($root, 'bounded.md', "one\ntwo\n");
     write_file($root, 'generated.md', "generated\n");
     write_file($root, 'parts/first.md', "part\n");
     write_file($root, 'index.md', "[Part](parts/first.md)\n");
-    write_file($root, 'frozen-a.md', "frozen a\n");
     write_file($root, 'bin/query', "#!/bin/sh\nexit 0\n");
     write_file($root, 'bin/freshness', "#!/bin/sh\nexit 0\n");
     write_file($root, 'evidence-proof.md', "proof\n");
@@ -258,7 +249,6 @@ sub make_fixture {
             qw(engineering_rationale)),
         measured('fact_index', 'generated_projection', 'generated_file', 'generated.md', 'parts/*.md', '-', 1, 100, 4096, 100, 4096, 'core:bin/freshness'),
         terminal('exact_history', 'archive_terminal', 'archive', '.git', 'terminal', 'archive:.git'),
-        frozen('frozen_roadmap_status', 'frozen-a.md', sha256_hex("frozen a\n")),
     );
     write_file(
         $root,
@@ -376,18 +366,6 @@ sub terminal {
         enforcement_ceilings => undef, milestones => undef,
         containment_status => 'not_applicable', state => $state,
         baseline => undef, verifier => $verifier,
-    };
-}
-
-sub frozen {
-    my ($id, $target, $sha) = @_;
-    return {
-        surface_id => $id, lifecycle => 'frozen_legacy', locator => 'frozen',
-        targets => [$target], index => undef, canonical_inputs => [],
-        routes_to => [], owner => 'fixture-owner', health_targets => undef,
-        enforcement_ceilings => undef, milestones => undef,
-        containment_status => 'not_applicable', state => 'frozen',
-        baseline => undef, verifier => "sha256:$sha",
     };
 }
 

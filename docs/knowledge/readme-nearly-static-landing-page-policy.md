@@ -15,11 +15,11 @@ answers:
   - "where is the README routed destination registry?"
   - "are frozen legacy status files valid README destinations?"
   - "is README.md the GitHub project landing page?"
-date: 2026-07-31
+date: 2026-08-01
 status: current
 tags: [readme, documentation, doctrine, continuity, onboarding, routing, pressure-control]
-evidence: README.md; README_POLICY.md; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0024-readme-is-a-nearly-static-landing-page.md; docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; doctrine/readme_entrypoint/routed_destinations.jsonl; doctrine/live_document_size/surfaces.jsonl; scripts/check_readme_entrypoint.sh; scripts/check_live_document_size.sh; scripts/check_doctrines.sh; docs/tasks/README-POLICY-ANVIL-ADOPTION-FEEDBACK.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
-reverify: wc -l -c README.md && scripts/check_readme_entrypoint.sh && scripts/check_live_document_size.sh && rg -n 'ROUTE_REGISTRY|SURFACE_REGISTRY|frozen_roadmap_status|frozen_achievement_status' scripts/check_readme_entrypoint.sh doctrine/readme_entrypoint/routed_destinations.jsonl doctrine/live_document_size/surfaces.jsonl
+evidence: README.md; README_POLICY.md; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0024-readme-is-a-nearly-static-landing-page.md; docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md; docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md; doctrine/readme_entrypoint/routed_destinations.jsonl; doctrine/live_document_size/surfaces.jsonl; scripts/check_readme_entrypoint.sh; scripts/check_live_document_size.sh; scripts/check_doctrines.sh; docs/tasks/README-POLICY-ANVIL-ADOPTION-FEEDBACK.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
+reverify: wc -l -c README.md && scripts/check_readme_entrypoint.sh && scripts/check_live_document_size.sh && rg -n 'ROUTE_REGISTRY|SURFACE_REGISTRY|exact_history' scripts/check_readme_entrypoint.sh doctrine/readme_entrypoint/routed_destinations.jsonl doctrine/live_document_size/surfaces.jsonl
 ---
 
 `README.md` is a concise, nearly static GitHub landing page and therefore a
@@ -59,3 +59,9 @@ high-water/structural migration owner. No sharding, rollover, archive,
 threshold, or live-document content change occurs in the selection itself.
 Implementation leaf `.2` adds the common JSONL registry and neutral checker;
 the direct README landing contract remains unchanged.
+
+Decisions `0048` and `0049` retire the former frozen achievement and roadmap
+status paths after independent value audits. They are no longer README
+destinations; their exact objects remain available through the bounded
+`exact_history` contract, while README routes current questions directly to
+the task, book, roadmap, Memory, and Git authorities.

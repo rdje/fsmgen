@@ -157,12 +157,12 @@ Changing project state does not belong in this landing page:
 | How do I diagnose a failure? | [TOOLBOX.md](TOOLBOX.md) |
 | Which repository rules are enforced? | [DOCTRINE_ENFORCEMENT.md](DOCTRINE_ENFORCEMENT.md) |
 
-`DEVELOPMENT_NOTES.md` is updated only when durable engineering rationale is
-warranted. `ROADMAP_STATUS.md` remains frozen and is not a live status source.
-Decision [0048](docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md)
-retires the former achievement journal and
-[0047](docs/decisions/0047-changes-history-is-task-trees-and-git.md) the
-duplicate changelog; decision 0046 retains the other lifecycle owners.
+`DEVELOPMENT_NOTES.md` changes only for durable engineering rationale.
+Decisions [0047](docs/decisions/0047-changes-history-is-task-trees-and-git.md),
+[0048](docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md),
+and [0049](docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md)
+retire the former changelog and status journals; decision 0046 keeps the
+rationale-ledger owner.
 
 ## Repository orientation
 

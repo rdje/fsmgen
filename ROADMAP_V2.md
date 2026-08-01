@@ -10,9 +10,9 @@ Use this file for:
 Use [MEMORY.md](MEMORY.md) for the bounded current resume pointer and
 [docs/TASK_TREE.md](docs/TASK_TREE.md) plus the owning tree under
 [docs/tasks/](docs/tasks/) for live status, the active lane, exact frontier,
-and completion evidence. `ROADMAP_STATUS.md` is a frozen legacy record under
-decision [0007](docs/decisions/0007-memory-architecture-supersedes-blob-narration.md),
-not a live status source.
+and completion evidence. Decision
+[0049](docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md)
+retires the former duplicate status board with exact version recovery.
 
 ## Why roadmap v2 exists
 `R0` through `R7` closed the first major modernization roadmap:

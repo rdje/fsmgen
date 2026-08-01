@@ -127,12 +127,12 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11`
-  Status: `active`
+  Status: `done`
   Goal: `Reassess the two frozen status-file values independently, then implement only each director-selected lifecycle.`
   Acceptance: `After .4 commits cleanly, first apply the same provenance/current-question/unique-content/consumer/canonical-overlap/recovery audit to LIVE_ACHIEVEMENT_STATUS.md and ask the director whether its independent present value justifies retention before changing its lifecycle; assess ROADMAP_STATUS.md independently rather than inferring the same answer. For every selected supersession, preserve the distinct exact identity with deterministic retrieval; migrate current workflow, README-route, book, registry, composition-note, and executable consumers; replace t/1332's stale ROADMAP_STATUS.md negative scan with current canonical truth; prove classified-consumer and planted-negative controls; retire each live path only after its independent pre/post identity, retrieval, and resulting-tree proof; leave historical evidence references intact.`
-  Verification: `The independent achievement audit records the exact 16,618-line / 955,308-byte / SHA-256 46c3c8ad... frozen identity, 1,339 path-changing commits, 1,784 later commits, the 55-reference census, zero executable/content consumers, canonical overlap, exact Git recovery, and the directly browsable historical digest as the sole distinct retention case. Audit commit a75a60daf3 preserves the unchanged source before the director independently selects retirement. Decision 0048, a bounded archive descriptor, and an executable verifier retire the live path/route/surface without a replacement, enforce exact b4d07fee5:LIVE_ACHIEVEMENT_STATUS.md recovery, and reject recreation, identity drift, or planted live consumers. The seven focused tests pass at Files=7, Tests=86; 20 surfaces cover 2,786/2,786 Markdown paths; root totals ratchet to 77,980 lines / 11,179,753 bytes with zero ceiling increases; Knowledge Map passes at 1,096 facts/5,762 keys; all 37 mdBook chapters test and the repository-local 73-file/17,286,903-byte build passes and is removed exactly. The separate roadmap audit fixes the unchanged 15,039-line / 1,638,574-byte / SHA-256 0f8db932... object, 2,760 path commits, 1,786 later commits, and 70 referring files. It finds zero product/runtime/build consumers, one stale negative test scan, one inaccurate active-source link, complete current-authority overlap, and a directly browsable March-June 2026 chronology plus R0-R14 snapshot as the sole distinct retention case. The audit recommends retirement but changes no lifecycle before the director selects independently.`
-  Commit: `a75a60daf3 (achievement audit); d0c0e18309 (achievement retirement); this commit (roadmap audit); roadmap lifecycle pending`
-  Blocked by: `director selection of retain, retire, or re-form for ROADMAP_STATUS.md`
+  Verification: `The two independent audits preserve exact identities and consumer classifications before each director selection. Decisions 0048/0049, bounded archive descriptors, and executable verifiers retire both live paths, routes, surfaces, and current consumers without replacement projections while preserving deterministic b4d07fee5 version recovery. The roadmap object remains exact at 15,039 lines / 1,638,574 bytes / longest line 5,716 / SHA-256 0f8db932...; its verifier rejects recreation, identity drift, missing history, and planted consumers, and the ATL/composition consumers now use maintained canonical sources. The RAM-guarded nine-file cluster passes at Files=9/Tests=96; 19 surfaces cover 2,787/2,787 Markdown paths and execute all three retirement adapters; README falls to 245/9,931 and root totals to 17 files / 62,935 lines / 9,540,744 bytes with zero ceiling increases. Knowledge Map passes at 1,096 facts/5,762 keys; relative-path/locality passes Files=2/Tests=22; all 37 mdBook chapters test and the repository-local 73-file/17,288,264-byte build passes and is removed exactly. Final staged acceptance and all doctrines pass.`
+  Commit: `a75a60daf3 (achievement audit); d0c0e18309 (achievement retirement); 59b5196d59 (roadmap audit); this commit (roadmap retirement)`
+  Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12`
   Status: `pending`
@@ -421,6 +421,13 @@ no routed destination becomes the next uninstrumented blob.
   Decision `0048` and the `.11` retirement slice preserve exact version
   recovery, remove the current route/surface/live path, and add absence and
   planted-consumer enforcement. This selection does not decide roadmap status.
+- `2026-08-01`: The separate roadmap-status audit commit `59b5196d59` finds no
+  unique current authority and identifies direct browsing of the March-June
+  chronology plus R0-R14 snapshot as its sole distinct value. The director
+  independently selects retirement. Decision `0049` preserves exact version
+  recovery, removes the current route/surface/live path and stale consumers,
+  and forbids a replacement combined status projection. Leaf `.11` is done;
+  `.5` is the next clean selection.
 
 ## Open Questions
 
@@ -444,10 +451,9 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None for the achievement-history half of active `.11`: audit and director
-  selection are complete and retirement is owned by decision `0048`. The next
-  `.11` action is the independent roadmap-status audit; `.26` still owns the
-  broader legacy-continuity inventory, and `.5` remains separate.
+- None for completed `.11`; decisions `0048`/`0049` own both independent
+  retirements. `.26` still owns the broader legacy-continuity inventory, and
+  `.5` remains the next separate clean selection.
 
 ## Acceptance Checklist (enforced) — `.4` duplicate-changelog retirement
 
@@ -472,6 +478,12 @@ no routed destination becomes the next uninstrumented blob.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'canonical live roadmap status board' -- ROADMAP_STATUS.md` identifies `5b161e0c5` as the origin of the live-board claim; the unchanged 15,039-line object now reports no active tree/frontier despite active task trees and 1,786 later commits. Its 70-reference census finds zero product/runtime/build consumers, one stale negative test scan, and one inaccurate composition-note active-source link.
 - [x] **ADDRESSED (verified)** — `docs/audits/ROADMAP_STATUS_VALUE_AUDIT.md` fixes the exact SHA-256 `0f8db932...` identity and `b4d07fee5` recovery, decomposes the mixed chronology/status/workstream content, classifies all consumers and canonical overlap, records direct browsing of the March-June 2026 chronology plus R0-R14 snapshot as the sole distinct retention case, and recommends retirement among three explicit options. The frozen file, route, surface, composition note, and test remain unchanged until the director independently selects a lifecycle.
 - [x] **NO REGRESSION** — the monitored focused status/task/route/live-size/reference/ceiling/retired-history cluster reports `All tests successful` at `Files=8, Tests=92`; the default 88% and first 96% host thresholds stop before incomplete runs because the known macOS metric ignores reclaimable memory, while the successful one-run 99.5% profile retains the 4,096-MiB descendant cap after `memory_pressure` reports 81% free. The final staged 100% macOS-host profile retains that descendant cap and lets the required gate consume the new audit path. The real staged wrapper covers 20 surfaces and all 2,787 Markdown paths, executes both retired-history adapters, accepts exact mdBook delta 0/+5/+403, and reports zero ceiling increases. Knowledge Map passes at 1,096 facts/5,762 keys; task integrity reports trees=3/nodes=899/segments=1; relative paths pass Files=1/Tests=2; project locality passes; all 37 mdBook chapters test and the repository-local 73-file/17,290,550-byte build passes and is removed exactly. Final staged acceptance and all doctrines pass without changing the frozen identity, lifecycle, route, executable consumer, compiler/runtime behavior, or generated product artifacts.
+
+## Acceptance Checklist (enforced) — `.11` roadmap-status retirement
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'canonical live roadmap status board' -- ROADMAP_STATUS.md` identifies the original live-board claim; audit commit `59b5196d59` proves the unchanged 15,039-line object misses 1,786 later commits, contradicts the active task frontier, and has no product/runtime/build content consumer. The director independently selects retirement after reviewing direct historical browsing as its sole distinct value.
+- [x] **ADDRESSED (verified)** — decision `0049`, descriptor `roadmap-status-retired-2026-08-01`, `scripts/check_retired_roadmap_history.pl`, and `t/1564-retired-roadmap-history.t` preserve exact revision, line, byte, longest-line, and SHA-256 identity while retiring the live path, route, surface, and current consumers. Canonical roadmap/task/Memory/book/Git routes replace the false combined board without introducing another status projection.
+- [x] **NO REGRESSION** — the corrected RAM-guarded status/task/route/live-size/authority/history cluster reports `All tests successful` at `Files=9, Tests=96`. All three exact-history adapters execute; 19 surfaces cover 2,787/2,787 staged Markdown paths; the root and README baselines/ceilings ratchet downward with zero ceiling increases; Knowledge Map reports 1,096 facts/5,762 keys; relative-path/locality reports Files=2/Tests=22; all 37 book chapters test and the 73-file/17,288,264-byte repository-local build passes, then is removed exactly. Final staged task acceptance and `[doctrine] all doctrine checks passed` complete the slice without compiler/runtime/generated-product changes.
 
 ## Acceptance Checklist (enforced) — `.4`/`.26` director deferral
 
@@ -640,6 +652,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.4` activation | clean `e47b509c9` predecessor; task/index/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; focused paths/task/routes Files=3/Tests=52 and ledger-doctrine Files=1/Tests=16; trees=3/nodes=898/segments=1/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096/5,761; Memory 39; CHANGES held at 32,299 lines; all 37 chapters and removed build 73 files/17,285,553 bytes; all nine staged doctrines pass with docs-only acceptance; `.4` alone active; no changelog movement, ledger opt-in, index/seal/archive, enforcement, threshold, frozen identity, generated artifact, or product behavior change |
 | `2026-08-01` | `.4`/`.26` director deferral | director questions changelog value and identifies a broader agent-era continuity-document cohort; static-source/post-cutover-append root-cause inspection; deferred inventory task; roadmap/audit/book/fact/task/index/Memory/changelog sync; focused/live-size/Knowledge Map/Memory/mdBook/staged-doctrine gates; exact cleanup | `passed`; focused Files=6/Tests=80; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 22 surfaces/2,784 paths; maintained reference exact delta 0 files/0 lines/-8 bytes to 38/47,426/2,515,044; Knowledge Map 1,096/5,761; Memory 39; CHANGES held at 32,299 lines; all 37 chapters and removed build 73 files/17,286,533 bytes; staged acceptance root=git_history/no-regression=prove_summary and all nine doctrines pass; no candidate set inferred and no changelog movement, ledger opt-in, lifecycle selection, ceiling increase, frozen identity, schema/enforcement, or product behavior change |
 | `2026-08-01` | `.11` independent roadmap-status audit | exact identity/provenance/content partition; 70-consumer and canonical-overlap classification; three lifecycle options; audit/book/fact/decision/task/index/Memory sync; focused/live-size/Knowledge Map/path/locality/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 15,039/1,638,574/SHA-256 0f8db932... and 1,786 post-freeze commits; focused Files=8/Tests=92; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 20 surfaces/2,787 staged paths; maintained-reference delta 0/+5/+403; Knowledge Map 1,096/5,762; Memory 42; all 37 chapters; removed build 73 files/17,290,550 bytes; zero ceiling increases; all doctrines pass; no frozen-content, lifecycle, route, consumer, compiler/runtime, or product-artifact change; director selection pending |
+| `2026-08-01` | `.11` roadmap-status retirement | decision 0049; exact version identity/retrieval; live-path/route/surface/consumer absence; canonical ATL/composition routes; planted recreation/consumer/identity/history/orphan negatives; focused/path/locality/live-size/Knowledge Map/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 15,039/1,638,574/longest 5,716/SHA-256 0f8db932...; focused Files=9/Tests=96; 19 surfaces/2,787 staged paths; root 17 files/62,935 lines/9,540,744 bytes; README 245/9,931; reference delta 0/-5/-347; Knowledge Map 1,096/5,762; paths/locality Files=2/Tests=22; all 37 chapters; removed build 73 files/17,288,264 bytes; zero ceiling increases; all doctrines pass; no replacement projection or compiler/runtime/generated-product change; `.11` done and `.5` next |
 
 ## Commit Log
 
@@ -681,8 +694,14 @@ no routed destination becomes the next uninstrumented blob.
 | `.25` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25: activate WARP bootstrap re-form` | Activate only WARP claim/consumer/replacement proof from clean `.24`; bootstrap changes remain pending. |
 | `.25` WARP retirement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25: retire unused WARP bootstrap` | Delete the unused harness bootstrap after exact content/consumer proof, enforce its absence, and retain exact Git recovery. |
 | `.11` roadmap-status audit | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11: audit roadmap-status value` | Preserve the frozen object, classify present value and every consumer independently, recommend retirement, and await the director's retain/retire/re-form selection. |
+| `.11` roadmap-status retirement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11: retire roadmap-status board` | Preserve exact Git recovery, retire the false combined live board and its consumers without replacement, close `.11`, and leave `.5` as the next clean selection. |
 
 ## Changelog
+
+- `2026-08-01`: `.11` independently retires the former roadmap-status board
+  under decision `0049`. Exact historical prose remains verifier-protected in
+  Git; maintained roadmap, task, Memory, book, and Git authorities replace its
+  current claims without another generated or hand-maintained status view.
 
 - `2026-08-01`: `.11` independently audits `ROADMAP_STATUS.md` after the
   achievement-journal retirement. The exact frozen object and every lifecycle

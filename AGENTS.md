@@ -42,10 +42,9 @@ The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`** +
   important may live only in this conversation. Use the work-unit ID in the Git
   subject; update `DEVELOPMENT_NOTES.md` only when a slice produces durable
   engineering rationale, constraints, or working decisions.
-  `ROADMAP_STATUS.md` remains frozen until its independently reviewed lifecycle
-  is implemented. Decision `0048` retires the former achievement journal with
-  exact version recovery; decisions `0046`/`0047` govern the remaining project-
-  document transition.
+  Decisions `0047`, `0048`, and `0049` retire the former changelog,
+  achievement journal, and roadmap-status board with exact version recovery;
+  decision `0046` retains the separately owned rationale-ledger transition.
 - **Commit per `COMMIT.md`** after every slice, with the **work-unit id in the subject**
   (e.g. `ISF-SWAP: …`, `MEMORY-ARCHITECTURE-ADOPTION.4: …`).
 - **The mdBook (`docs/book/`) is user-facing** — keep it synced in the same slice with

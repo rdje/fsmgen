@@ -2,7 +2,8 @@
 
 - Date: 2026-08-01
 - Type: architecture/convention
-- Status: partially superseded by `0047` (changelog) and `0048` (achievement history)
+- Status: partially superseded by `0047` (changelog), `0048` (achievement
+  history), and `0049` (roadmap status)
 - Refines: [0007](0007-memory-architecture-supersedes-blob-narration.md), [0025](0025-project-document-interim-lifecycle.md), [0041](0041-live-documents-use-bounded-views-over-durable-stores.md)
 - Evidence owner: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`
 
@@ -79,11 +80,11 @@ digest is the one distinct retention case. The director selects retirement;
 decision `0048` supersedes clause 6, preserves exact version retrieval, and
 routes current questions to task evidence, the mdBook, bounded Memory, and Git.
 
-The separate `ROADMAP_STATUS.md` audit preserves clause 5's outcome as a
-recommendation rather than treating this earlier decision as sufficient
-authorization. It fixes the unchanged 15,039-line object and all 70 referring
-files, finds no product/runtime/build consumer, one stale negative test scan,
-one inaccurate active-source link, and no unique current authority. Direct
-browsing of the March-June 2026 chronology plus R0-R14 snapshot is the sole
-distinct retention case. The frozen file remains unchanged until the director
-independently selects retain, retire, or re-form.
+The separate `ROADMAP_STATUS.md` audit fixed the unchanged 15,039-line object
+and all 70 referring files, found no product/runtime/build consumer, one stale
+negative test scan, one inaccurate active-source link, and no unique current
+authority. Direct browsing of the March-June 2026 chronology plus R0-R14
+snapshot was the sole distinct retention case. The director independently
+selected retirement; decision `0049` supersedes clause 5, preserves exact
+version retrieval, and routes current questions to the maintained roadmap,
+task trees, bounded Memory, the mdBook, and Git.

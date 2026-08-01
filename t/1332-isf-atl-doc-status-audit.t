@@ -13,11 +13,8 @@ my $backlog_path = File::Spec->catfile(
 my $proposal_path = File::Spec->catfile(
     $repo_root, 'docs', 'ISF_ATL_DESIGN_PROPOSAL.md',
 );
-my $roadmap_path = File::Spec->catfile($repo_root, 'ROADMAP_STATUS.md');
-
 my $backlog = slurp($backlog_path);
 my $proposal = slurp($proposal_path);
-my $roadmap = slurp($roadmap_path);
 
 my $atl_section = section_for($backlog, 'Actor Network Orchestration');
 ok(defined $atl_section, 'feature backlog has Actor Network Orchestration section');
@@ -48,9 +45,9 @@ unlike(
 );
 
 unlike(
-    $roadmap,
-    qr{^- Active R14 ATL axis:}m,
-    'roadmap status does not advertise the closed ATL axis as active',
+    $atl_section || '',
+    qr{Active R14 ATL axis},
+    'canonical feature backlog does not advertise the closed ATL axis as active',
 );
 
 done_testing();

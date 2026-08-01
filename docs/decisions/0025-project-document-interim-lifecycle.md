@@ -2,7 +2,7 @@
 
 - Date: 2026-07-30
 - Type: convention
-- Status: partially superseded by `0047` (`CHANGES.md` only)
+- Status: partially superseded by `0047`-`0049` (changelog and status files)
 
 ## Context
 
@@ -50,5 +50,7 @@ Until the scheduled lifecycle review selects longer-term outcomes:
 
 Decision `0047` retires the per-slice `CHANGES.md` obligation after the exact
 current-value and consumer audit found no role independent of task trees, Git,
-Memory, decisions/facts, and the mdBook. The conditional
-`DEVELOPMENT_NOTES.md` rule and both frozen-status boundaries remain in force.
+Memory, decisions/facts, and the mdBook. Decision `0048` independently retires
+the former achievement journal, and decision `0049` independently retires the
+former roadmap-status board; both preserve exact version retrieval. The
+conditional `DEVELOPMENT_NOTES.md` rule remains in force.

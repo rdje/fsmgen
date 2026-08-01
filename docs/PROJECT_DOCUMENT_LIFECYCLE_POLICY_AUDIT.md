@@ -189,9 +189,15 @@ required proof authorize retirement.
 5. Do not generate or merge a replacement status blob. Each current question
    routes directly to its one canonical layer.
 6. Decision `0047` governs change history. Decision `0025` remains the
-   operational transition policy for the other reviewed documents until their
-   owned migrations land. Selection alone does not authorize a write to either
-   frozen file.
+   operational transition policy for the conditional rationale ledger until
+   its owned migration lands.
+
+Leaf `.11` later re-audited both frozen files independently. Decision `0048`
+retires the former achievement journal, and decision `0049` retires the former
+roadmap-status board after the director separately selected each outcome.
+Their exact frozen objects remain version-retrievable under
+`fsmgen_required_history`; task trees, the mdBook, bounded Memory, the
+maintained roadmap, and Git answer the former current questions.
 
 ## Implementation Decomposition
 

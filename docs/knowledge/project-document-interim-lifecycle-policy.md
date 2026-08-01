@@ -12,8 +12,8 @@ answers:
 date: 2026-08-01
 status: current
 tags: [workflow, changelog, development-notes, roadmap-status, continuity]
-evidence: docs/decisions/0047-changes-history-is-task-trees-and-git.md; docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md; docs/LEGACY_CONTINUITY_DOCUMENT_VALUE_AUDIT.md; docs/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md; COMMIT.md; AGENTS.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
-reverify: rg -n '0047|0048|DEVELOPMENT_NOTES|ROADMAP_STATUS|achievement journal' AGENTS.md COMMIT.md docs/TASK_TREE.md
+evidence: docs/decisions/0047-changes-history-is-task-trees-and-git.md; docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md; docs/decisions/0049-roadmap-status-is-roadmap-task-trees-memory-and-git.md; docs/LEGACY_CONTINUITY_DOCUMENT_VALUE_AUDIT.md; docs/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md; docs/audits/ROADMAP_STATUS_VALUE_AUDIT.md; COMMIT.md; AGENTS.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
+reverify: rg -n '0047|0048|0049|DEVELOPMENT_NOTES|former (achievement journal|roadmap-status board)' AGENTS.md COMMIT.md docs/TASK_TREE.md
 ---
 
 Decision `0047` retires the duplicate per-slice changelog and its mandatory
@@ -26,12 +26,11 @@ A slice updates `DEVELOPMENT_NOTES.md` only when it produces durable
 engineering rationale, constraints, or working decisions without a better
 canonical home.
 
-`ROADMAP_STATUS.md` remains untouched while its owned work is pending. Decision
-`0046` selects its exact archival and live-path retirement plus a bounded form
-for the separately reviewed rationale ledger. Decision `0048` independently
-retires the former achievement journal after the `.11` audit found no
-executable/content consumer or current recovery/status role. Its exact 23-day
-digest remains version-retrievable; task evidence, the mdBook, bounded Memory,
-and Git own the current questions. Decision `0007` still governs bounded Memory
-and canonical routing; `0047` and `0048` supersede only their respective
-`0025`/`0046` clauses.
+Decision `0049` independently retires the former roadmap-status board after
+the `.11` audit found no unique current authority. Its exact 15,039-line
+March-June 2026 snapshot remains version-retrievable; `ROADMAP_V2.md`, task
+trees, bounded Memory, the mdBook, and Git own its current questions. Decision
+`0048` likewise retires the former achievement journal after independent
+consumer and value proof. Decision `0007` still governs bounded Memory and
+canonical routing; `0047`-`0049` supersede only their respective `0025`/`0046`
+clauses. The conditional rationale-ledger rule remains separately owned.

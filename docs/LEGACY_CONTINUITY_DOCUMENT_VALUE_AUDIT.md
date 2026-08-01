@@ -26,7 +26,7 @@ session-state narration.
 | `MEMORY.md` | Introduced by `a2725c916` as the live continuity document; now asks what a new session must resume | Unique bounded layer-A pointer over task/decision/Git state | retain under memory architecture |
 | `CHANGES.md` | Introduced with implementation narration in `574a5af00`; later required as one summary per completed slice | Owning task node, work-unit Git subject/diff, and mdBook already answer change/evidence/user-behavior questions | delete under `.4`, selected by director |
 | `DEVELOPMENT_NOTES.md` | Introduced with implementation rationale in `574a5af00`; now conditionally asks why a local engineering choice was made | Decisions/facts/tasks/book cover most content, but non-obvious local rationale may remain distinct | separately reassess/re-form under `.5`; no lifecycle change here |
-| `ROADMAP_STATUS.md` | Introduced by `5b161e0c5` as a live status board | `ROADMAP_V2.md`, `docs/TASK_TREE.md`, and `MEMORY.md` are fresher authorities | supersede/archive remains selected under `.11` |
+| `ROADMAP_STATUS.md` | Introduced by `5b161e0c5` as a live status board | `ROADMAP_V2.md`, `docs/TASK_TREE.md`, and `MEMORY.md` are fresher authorities | retire under `.11`, independently selected by the director; decision `0049` preserves exact recovery |
 | `LIVE_ACHIEVEMENT_STATUS.md` | Introduced by `d4c8d1a92` for fast recovery from the latest completed slice | Task closure and Git provide exact completion; Memory provides recovery | retire under `.11`, independently selected by the director; decision `0048` preserves exact recovery |
 
 `COMMIT.md`, `AGENTS.md`, `MEMORY_ARCHITECTURE.md`, and
