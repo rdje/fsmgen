@@ -27,7 +27,7 @@ subtest 'live README routes use the common pressure-controlled surface graph' =>
     ok($ok, 'live README and common surface registries pass') or diag($output);
     like($output, qr/all README entry-point invariants hold/, 'landing-page invariant remains explicit');
     like($output, qr/all routed-destination pressure invariants hold/, 'route-pressure invariant remains explicit');
-    like($output, qr/all live-document size-containment invariants hold \(21 surfaces\)/, 'common project-wide checker is delegated');
+    like($output, qr/all live-document size-containment invariants hold \(20 surfaces\)/, 'common project-wide checker is delegated');
     like($output, qr/containment pressure migrated: 2 surface\(s\)/,
         'migrated pressure is reported separately');
     like($output, qr/containment pressure pinned_deferred: 8 surface\(s\)/,
@@ -199,7 +199,7 @@ sub make_fixture {
         shipped_behavior reported_capabilities high_level_direction active_resume
         active_index task_evidence rationale engineering_rationale fact_index
         exact_history diagnostics enforced_rules
-        frozen_roadmap_status frozen_achievement_status
+        frozen_roadmap_status
     );
     my %markers = (
         shipped_behavior          => 'marker-shipped',
@@ -215,7 +215,6 @@ sub make_fixture {
         diagnostics               => 'marker-diagnostics',
         enforced_rules            => 'marker-rules',
         frozen_roadmap_status     => 'marker-frozen-roadmap',
-        frozen_achievement_status => 'marker-frozen-achievement',
     );
     write_file($root, 'README.md', join("\n", map { $markers{$_} } @route_ids) . "\n");
     write_file($root, 'bounded.md', "one\ntwo\n");
@@ -223,7 +222,6 @@ sub make_fixture {
     write_file($root, 'parts/first.md', "part\n");
     write_file($root, 'index.md', "[Part](parts/first.md)\n");
     write_file($root, 'frozen-a.md', "frozen a\n");
-    write_file($root, 'frozen-b.md', "frozen b\n");
     write_file($root, 'bin/query', "#!/bin/sh\nexit 0\n");
     write_file($root, 'bin/freshness', "#!/bin/sh\nexit 0\n");
     write_file($root, 'evidence-proof.md', "proof\n");
@@ -261,7 +259,6 @@ sub make_fixture {
         measured('fact_index', 'generated_projection', 'generated_file', 'generated.md', 'parts/*.md', '-', 1, 100, 4096, 100, 4096, 'core:bin/freshness'),
         terminal('exact_history', 'archive_terminal', 'archive', '.git', 'terminal', 'archive:.git'),
         frozen('frozen_roadmap_status', 'frozen-a.md', sha256_hex("frozen a\n")),
-        frozen('frozen_achievement_status', 'frozen-b.md', sha256_hex("frozen b\n")),
     );
     write_file(
         $root,

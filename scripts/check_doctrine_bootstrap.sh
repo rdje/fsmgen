@@ -31,6 +31,7 @@ bootstrap_files=(
 
 retired_project_files=(
   CHANGES.md
+  LIVE_ACHIEVEMENT_STATUS.md
   WARP.md
 )
 

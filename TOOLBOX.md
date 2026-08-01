@@ -282,10 +282,10 @@ git status --short
 Use the work-unit ID in every task-scoped Git subject; the owning task node and
 Git are the change-history authorities under decision `0047`. Update
 `DEVELOPMENT_NOTES.md` only when durable engineering rationale, constraints,
-or working decisions warrant it. Do not update `ROADMAP_STATUS.md` or
-`LIVE_ACHIEVEMENT_STATUS.md` until their independently reviewed lifecycle is
-implemented. Route canonical state to task-trees, `MEMORY.md`, decisions,
-facts, the mdBook, and Git.
+or working decisions warrant it. Do not update `ROADMAP_STATUS.md` until its
+independently reviewed lifecycle is implemented. Decision `0048` retires the
+former achievement journal; route canonical state and completion evidence to
+task-trees, `MEMORY.md`, decisions, facts, the mdBook, and Git.
 
 ## 7. Downstream Issue Bundles
 

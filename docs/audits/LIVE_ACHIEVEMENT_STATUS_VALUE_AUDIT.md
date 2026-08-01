@@ -3,8 +3,8 @@
 - Date: `2026-08-01`
 - Owner: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11`
 - Audited revision: `e8bd8f05ad8e814f2121f886f8425ed7d0c99f43`
-- Lifecycle outcome: pending the director's independent selection
-- Frozen file changed by this audit: no
+- Lifecycle outcome: retire, independently selected by the director
+- Frozen file changed by the audit commit: no; retirement is a later `.11` slice
 
 ## Question
 
@@ -115,6 +115,6 @@ behavior/evidence authority.
    maintained projection and should be selected only if the direct digest is
    worth its new generation, integrity, and navigation contract.
 
-No lifecycle implementation is authorized by this audit. The frozen file,
-README route, and surface registry remain byte-for-byte unchanged until the
-director selects one option.
+The director subsequently selected option 1. Decision `0048` owns the atomic
+live-path retirement and exact version-retention contract; this audit remains
+the unchanged-before-selection evidence.

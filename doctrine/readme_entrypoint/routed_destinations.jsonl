@@ -12,7 +12,6 @@
 {"route_id":"diagnostics","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"TOOLBOX.md","target_surface_id":"diagnostics"}
 {"route_id":"enforced_rules","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"DOCTRINE_ENFORCEMENT.md","target_surface_id":"enforced_rules"}
 {"route_id":"frozen_roadmap_status","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"ROADMAP_STATUS.md","target_surface_id":"frozen_roadmap_status"}
-{"route_id":"frozen_achievement_status","route_kind":"reader_navigation","source_path":"README.md","source_surface_id":"readme_entrypoint","marker":"LIVE_ACHIEVEMENT_STATUS.md","target_surface_id":"frozen_achievement_status"}
 {"route_id":"author_task_evidence","route_kind":"author_overflow","source_path":"scripts/check_readme_entrypoint.sh","source_surface_id":"readme_entrypoint","marker":"docs/tasks/","target_surface_id":"task_evidence"}
 {"route_id":"author_rationale","route_kind":"author_overflow","source_path":"scripts/check_readme_entrypoint.sh","source_surface_id":"readme_entrypoint","marker":"docs/decisions/","target_surface_id":"rationale"}
 {"route_id":"author_shipped_behavior","route_kind":"author_overflow","source_path":"scripts/check_readme_entrypoint.sh","source_surface_id":"readme_entrypoint","marker":"docs/book/","target_surface_id":"shipped_behavior"}

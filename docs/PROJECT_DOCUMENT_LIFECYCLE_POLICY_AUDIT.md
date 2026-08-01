@@ -33,6 +33,11 @@ retained changelog. Leaf `.11` must therefore audit that file independently and
 ask the director whether its evidence shows unique value before implementing
 any lifecycle change. No outcome may be inferred from the changelog decision.
 
+Later `.11` audit `a75a60daf3` independently finds no executable/content
+consumer or current recovery/status role; direct browsing of the frozen 23-day
+digest is the sole retention case. The director selects retirement, and
+decision `0048` preserves exact version recovery without a replacement view.
+
 ## Evidence Method
 
 The review used:
@@ -178,9 +183,9 @@ required proof authorize retirement.
 3. Supersede `ROADMAP_STATUS.md` as a current source with `ROADMAP_V2.md`,
    `docs/TASK_TREE.md`, and `MEMORY.md`; preserve its exact frozen content
    through an archive/revision retrieval contract, then retire the live path.
-4. Keep `LIVE_ACHIEVEMENT_STATUS.md` frozen until `.11` independently audits
-   its unique value and the director selects its lifecycle; do not infer that
-   choice from the retired changelog.
+4. Decision `0048` independently retires `LIVE_ACHIEVEMENT_STATUS.md` after
+   `.11` audits its unique value and the director selects that lifecycle; exact
+   frozen content remains version-retrievable.
 5. Do not generate or merge a replacement status blob. Each current question
    routes directly to its one canonical layer.
 6. Decision `0047` governs change history. Decision `0025` remains the

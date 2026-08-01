@@ -158,10 +158,11 @@ Changing project state does not belong in this landing page:
 | Which repository rules are enforced? | [DOCTRINE_ENFORCEMENT.md](DOCTRINE_ENFORCEMENT.md) |
 
 `DEVELOPMENT_NOTES.md` is updated only when durable engineering rationale is
-warranted. `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain frozen
-and are not live status sources. Decision
-[0047](docs/decisions/0047-changes-history-is-task-trees-and-git.md) retires
-the duplicate changelog; decision 0046 retains the remaining lifecycle owners.
+warranted. `ROADMAP_STATUS.md` remains frozen and is not a live status source.
+Decision [0048](docs/decisions/0048-achievement-history-is-task-trees-book-and-git.md)
+retires the former achievement journal and
+[0047](docs/decisions/0047-changes-history-is-task-trees-and-git.md) the
+duplicate changelog; decision 0046 retains the other lifecycle owners.
 
 ## Repository orientation
 

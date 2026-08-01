@@ -138,7 +138,7 @@ required_routes=(
   shipped_behavior reported_capabilities high_level_direction active_resume
   active_index task_evidence rationale engineering_rationale fact_index
   exact_history diagnostics enforced_rules
-  frozen_roadmap_status frozen_achievement_status
+  frozen_roadmap_status
 )
 declare -A required_route_ids=()
 for required_route_id in "${required_routes[@]}"; do

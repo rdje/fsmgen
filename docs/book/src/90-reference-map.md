@@ -53,20 +53,19 @@ These should stay precise and sometimes narrower than the book.
 
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
-`ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` are frozen legacy records,
-not current views. Decision 0046 retains their separate lifecycle owners and
-the conditional rationale-ledger owner. Decision 0047 retires the duplicate
+`ROADMAP_STATUS.md` remains a frozen legacy record rather than a current view.
+Decision 0046 retains its separate lifecycle owner and the conditional
+rationale-ledger owner. Decision 0047 retires the duplicate
 per-slice changelog after exact current-value and consumer proof: high-level
 direction stays in `ROADMAP_V2.md`, active work and evidence in task trees,
 resume state in `MEMORY.md`, shipped behavior in the mdBook, and exact change
 history in work-unit-bearing Git commits. The exact former changelog object is
 version-retained; no replacement status blob or generated changelog is added.
-The independent `.11` audit now finds that `LIVE_ACHIEVEMENT_STATUS.md` has no
-executable/content consumer or current recovery/status role. Its one distinct
-benefit is direct browsing of a frozen 23-day historical digest. The file,
-README route, and frozen surface remain unchanged while the director selects
-retirement, frozen retention, or a deliberately bounded projection;
-`ROADMAP_STATUS.md` will be assessed separately.
+Decision 0048 likewise retires the former achievement journal after the
+independent `.11` audit found no executable/content consumer or current
+recovery/status role. Its exact frozen 23-day digest remains version-
+retrievable; task evidence, this book, bounded Memory, and Git answer its
+former current questions. The roadmap-status value is assessed separately.
 
 `README_POLICY.md` is the project- and harness-neutral landing-page maintenance
 standard. Adopting projects keep their authoritative tracked copy at repository

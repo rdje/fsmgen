@@ -6,18 +6,19 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11:
-  audit achievement-status value`).
+  retire achievement journal`).
 - active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11` is active.
-- current_state: the independent exact audit finds no executable/content
-  consumer or current recovery/status role for `LIVE_ACHIEVEMENT_STATUS.md`;
-  direct browsing of its frozen 23-day historical digest is its sole distinct
-  value. The file, README route, and surface remain unchanged.
-- next_action: obtain the director's retain/retire/re-form selection for
-  `LIVE_ACHIEVEMENT_STATUS.md`, then implement only that lifecycle under `.11`.
+- current_state: decision `0048` retires the former achievement journal after
+  its independent audit and director selection. Exact `b4d07fee5` recovery,
+  live-path absence, and zero current consumers are doctrine-enforced.
+- next_action: audit the still-frozen roadmap-status record independently for
+  provenance, present value, consumers, canonical overlap, and exact recovery,
+  then ask the director to select its lifecycle before changing it.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: `.11` lifecycle implementation awaits the director's independent
-  selection; `.26` retains the broader inventory.
+- blockers: none for the roadmap-status audit; its lifecycle implementation
+  will require the director's independent selection. `.26` retains the broader
+  inventory.
 
 ## Durable context
 
@@ -36,6 +37,6 @@ history; this file carries only the current bounded resume state.
   handwritten-oracle comparison, not general cross-backend parity.
 - Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; `.25`
   retires unused WARP and the director resumed containment on `2026-08-01`.
-  `.11` now has the exact independent achievement-status audit and awaits the
-  director's lifecycle selection before any change to the frozen file.
+  `.11` now retires the former achievement journal under decision `0048` and
+  advances to the independent roadmap-status audit.
   Push only on request (`0005`); PNT runs autonomously (`0003`).

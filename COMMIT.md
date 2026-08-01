@@ -57,10 +57,10 @@ Ignoring it is not a style issue; it is a project-safety failure.
     decision that is not better owned by a decision record, fact card,
     task-tree entry, user document, or git. Do not add a placeholder entry for
     slices that do not warrant one. See `docs/decisions/0025`.
-- `LIVE_ACHIEVEMENT_STATUS.md`
-  - **FROZEN legacy blob** (do not append). Leaf `.11` must audit its present
-    value and obtain an independent director lifecycle selection before any
-    migration.
+- Former achievement-status journal
+  - **RETIRED** under decision `0048`. Do not recreate a live completion-history
+    projection; task evidence, the mdBook, bounded Memory, and work-unit Git
+    commits own its former questions, with exact old prose version-retrievable.
 - `TASK_ACCEPTANCE.md`
   - Project-neutral code-slice acceptance contract. Its checker reads staged
     paths, task snapshots, and changed-line freshness from the Git index using
@@ -87,12 +87,11 @@ Ignoring it is not a style issue; it is a project-safety failure.
       latest commit / active leaf / next action; keep it ≤ ~60 lines.
    4. `DEVELOPMENT_NOTES.md` — update only when the conditional rationale
       boundary above is met.
-   - `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain FROZEN — do
-     not append while decision `0025` remains the operational transition rule.
-     Decision `0046` owns the roadmap-status selection; `.11` must confirm the
-     achievement-status value independently. Decision `0047` retires the former
-     per-slice changelog obligation and routes exact change history to task
-     evidence plus Git.
+   - `ROADMAP_STATUS.md` remains FROZEN — do not append while decision `0025`
+     remains the operational transition rule. Decision `0046` owns its separate
+     selection. Decision `0048` retires the former achievement journal, and
+     decision `0047` retires the former per-slice changelog obligation; task
+     evidence, the mdBook, bounded Memory, and Git own their former questions.
 4. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.

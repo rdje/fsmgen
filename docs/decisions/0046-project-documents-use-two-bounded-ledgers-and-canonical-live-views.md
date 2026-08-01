@@ -2,7 +2,7 @@
 
 - Date: 2026-08-01
 - Type: architecture/convention
-- Status: partially superseded by `0047` (`CHANGES.md` only)
+- Status: partially superseded by `0047` (changelog) and `0048` (achievement history)
 - Refines: [0007](0007-memory-architecture-supersedes-blob-narration.md), [0025](0025-project-document-interim-lifecycle.md), [0041](0041-live-documents-use-bounded-views-over-durable-stores.md)
 - Evidence owner: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`
 
@@ -75,6 +75,6 @@ selection before changing that lifecycle.
 
 The `2026-08-01` independent audit now finds no executable/content consumer or
 current recovery/status role. Direct browsing of the frozen 23-day prose
-digest is the one distinct retention case. Clause 6 remains dormant while the
-director selects retirement, frozen retention, or a deliberately bounded
-projection; the audit itself changes no achievement-status lifecycle.
+digest is the one distinct retention case. The director selects retirement;
+decision `0048` supersedes clause 6, preserves exact version retrieval, and
+routes current questions to task evidence, the mdBook, bounded Memory, and Git.
