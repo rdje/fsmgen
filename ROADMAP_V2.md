@@ -185,7 +185,12 @@ Direction:
 - use IAL2 for higher protocol/platform intent that lowers through IAL1 and
   IAL0 rather than bypassing them;
 - develop actor-network/ATL composition, protocol profiles, and HIAL/VIAL
-  verification intent without conflating design and verification semantics;
+  verification intent, with future exact PGEN parsing and NEXSIM simulation
+  profiles, without conflating design and verification semantics or inferring
+  runtime support from emitted artifacts;
+- allow complete simulator-neutral UVM generation, static/visual review, and
+  exact open-tool compile/elaboration probes to iterate before full runtime
+  qualification, while keeping VIAL meaning stable as generated syntax evolves;
   and
 - fail with actionable ambiguity/conflict evidence instead of selecting a
   hidden schedule.

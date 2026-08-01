@@ -22,14 +22,24 @@ answers:
   - "does Verilator support events with timing enabled?"
   - "is the HIAL VIAL architecture selected now?"
   - "what is the next HIAL VIAL task?"
-date: 2026-07-31
+  - "which UVM revision does native VIAL target?"
+  - "will FSMGen require Xcelium VCS or Questa for UVM?"
+  - "what is sv_uvm_emit.accellera_2020_3_1?"
+  - "how will PGEN and NEXSIM qualify VIAL UVM runtime?"
+  - "can Verilator currently qualify full VIAL UVM support?"
+  - "can FSMGen generate full UVM before a full simulator exists?"
+  - "can Verilator compile or elaborate early generated UVM?"
+  - "may generated UVM syntax change while VIAL meaning stays stable?"
+date: 2026-08-01
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
 evidence: >-
-  docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Parity/AHBBaseOutput.pm; t/1557-vial-portable-sv-backend-emission.t; t/1559-vial-ahb-runtime-parity.t; docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md;
-  docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://verilator.org/guide/latest/languages.html;
+  docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Parity/AHBBaseOutput.pm; t/1557-vial-portable-sv-backend-emission.t; t/1559-vial-ahb-runtime-parity.t;
+  docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md;
+  docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
+  docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://github.com/accellera-official/uvm-core/releases/tag/2020.3.1; https://github.com/chipsalliance/uvm-verilator; https://verilator.org/guide/latest/languages.html;
   https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
-reverify: scripts/check_task_tree_integrity.pl && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t
+reverify: scripts/check_task_tree_integrity.pl && rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t
 ---
 
 Hardware IAL (HIAL) is the collective architecture name for FSMGen's current
@@ -115,9 +125,34 @@ cleanup. Completed `.11` independently executes both harnesses over byte-identic
 source and compares 19 public/shared AHB outcomes. Undeclared internal metrics
 are explicit exclusions; general cross-backend parity remains unclaimed.
 
-Clean commit `ea1b76dd54` activates `.12` alone for native SystemVerilog/UVM
-contract selection. It must choose the UVM revision, typed intent mappings,
-existing inert-skeleton migration, and exact `sv_uvm_qualified` profile while
-preserving decision `0034`'s compiler-private methodology boundary. The local
-command census currently finds Verilator and Icarus but no qualified UVM
-simulator, so activation creates no backend, capability, or runtime claim.
+Decision `0050` and completed `.12` select IEEE 1800.2-2020 with exact
+Accellera UVM 2020-3.1 tag/commit as the native methodology source. Commercial
+simulators are not a required near-term project dependency. Native work has
+three honest tiers: deterministic
+`sv_uvm_emit.accellera_2020_3_1` artifacts with compile/run explicitly not
+run, optional `sv_uvm_experimental.<tool-and-version>` probes that cannot
+become product support, and future `sv_uvm_qualified` runtime through an exact
+capability-ready PGEN parser plus NEXSIM simulator tuple. PGEN and NEXSIM are
+both progressing external projects; their versions and handoff are not
+invented in advance. Verilator's UVM support remains officially in
+development and cannot currently qualify the full runtime family.
+
+The selected contract maps typed notification/interception, lifecycle,
+stimulus, TLM communication, substitution/configuration, RAL, constrained
+decisions, coverage/properties, timed interfaces, scenarios, models,
+scoreboards, faults, and results to compiler-private UVM mechanisms. Active
+`.13.1` decomposes full-shaped simulator-neutral emission and review galleries
+across five unblocked leaves; typed-IR previews may exercise mappings before
+all public VIAL syntax exists. Static checks and director visual review are
+emission evidence, not compile/runtime qualification. `.13.2` probes exact
+open-tool parsing, compile, elaboration, and any supported smoke runtime as
+soon as `.13.1.1` produces the first gallery. Tool limitations do not block
+broader generation, while demonstrated generator defects are fixed or tracked.
+
+Generated UVM syntax, expressions, helpers, macros, and class decomposition
+may iterate from review and tool diagnostics because they are compiler output.
+Exact emitter identity owns byte determinism; VIAL meaning, capability truth,
+artifact schemas, and source maps remain stable or are explicitly versioned.
+The shipped UVM 1.2 passive-monitor output stays unchanged and unqualified.
+`.13.1.1` is next for clean activation; `.13.3` alone retains the future
+PGEN+NEXSIM runtime blocker.

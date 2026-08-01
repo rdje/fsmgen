@@ -306,20 +306,26 @@ fixture supplies paired implementations and a shared logical outcome oracle.
 | Profile | Generated target | Required gate | Honest limit |
 | --- | --- | --- | --- |
 | `sv_portable_verilator` | plain SystemVerilog fixture, no UVM dependency | exact Verilator version; compile/elaborate/run with `--binary --timing`; transcript/result checks | only exercised Verilator-supported syntax/timing; not full LRM/UVM |
-| `sv_uvm_qualified` | native SystemVerilog/UVM components, sequences, monitors, scoreboards, subscribers/coverage | named simulator/version, selected UVM revision, compile/elaborate/simulate, exercised capability list | unavailable locally; no claim until external profile runs |
+| `sv_uvm_emit.accellera_2020_3_1` | complete reviewable simulator-neutral SystemVerilog/UVM environment artifacts | exact UVM reference identity, artifact/source-map/static-review/compatibility gates, explicit per-stage states | no inferred parse, compile, elaboration, simulation, or result claim |
+| `sv_uvm_experimental.<tool-and-version>` | same native artifacts under an incomplete open-source tool | exact tool/version and exercised probe matrix | experimental evidence only; cannot qualify product runtime |
+| `sv_uvm_qualified` | executable native SystemVerilog/UVM components, sequences, monitors, scoreboards, subscribers/coverage | exact PGEN parser + NEXSIM simulator tuple, handoff, UVM revision, parse/compile/elaborate/simulate/result gates | unavailable until capability-qualified releases exist; no invented version |
 | `vhdl_portable_ghdl` | VHDL-2008 testbench/packages/processes | installed GHDL/version, `--std=08`, analyze/elaborate/run, exercised capability list | unavailable locally; GHDL's VHDL/PSL implementation is explicitly partial |
 | `vhdl_methodology_qualified` | VHDL plus selected methodology provider | provider/revision, compatible simulator/version, compile/elaborate/run, feature list | OSVVM versus UVVM and exact provider mapping remain a later choice |
 | `mixed_language_qualified` | HIAL and VIAL in different HDLs | named mixed-language tool/version, binding adapter, compile/elaborate/run | never inferred from single-language success |
 
 Plain SystemVerilog is the first implementation target because the AHB
 harness already proves the relevant behavioral substrate under Verilator.
-The UVM backend is a separate native target, not the portable runtime. Verilog
-may remain a synthesizable HIAL compatibility output but is not a selected VIAL
-fixture backend.
+The UVM backend is a separate native target, not the portable runtime. Its
+full selected emission breadth can progress independently while PGEN's parser
+and NEXSIM's simulator progress toward the exact future runtime tuple.
+Experimental open-source tools may compile or elaborate the subsets they
+support without becoming semantic or qualification authority. Verilog may remain a
+synthesizable HIAL compatibility output but is not a selected VIAL fixture
+backend.
 
 The current UVM 1.2 skeleton and VHDL observation package stay unchanged. A
-future UVM backend contract must select its UVM revision instead of inheriting
-`1.2` accidentally. A future VHDL contract must select pure VHDL-2008 versus
+native UVM contract selects IEEE 1800.2-2020 / Accellera 2020-3.1 instead of
+inheriting `1.2` accidentally. A future VHDL contract must select pure VHDL-2008 versus
 OSVVM/UVVM provider mapping and must first make GHDL or another analyzer
 runnable. No full-language, PSL, methodology, or mixed-language claim can be
 derived from artifact-shape tests.
@@ -587,6 +593,629 @@ public/shared result paths using independently executed handwritten and
 generated-VIAL harnesses on byte-identical DUT source. Undeclared internal
 capture/hold/completion observations are explicit exclusions, and general
 cross-backend parity remains unclaimed.
+
+## Native SystemVerilog/UVM Backend Version-1 Contract
+
+Date: 2026-08-01
+
+Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12`
+
+Status: selected by decision `0050`; implementation and executed qualification
+remain owned by `.13`
+
+### Outcome and authority
+
+The methodology source contract is exact, while execution qualification is
+deliberately tiered:
+
+```text
+near-term emission:       sv_uvm_emit.accellera_2020_3_1
+experimental probes:     sv_uvm_experimental.<tool-and-version>
+future runtime family:   sv_uvm_qualified
+intended runtime tuple:  PGEN parser + NEXSIM simulator
+```
+
+The exact methodology identity common to all tiers is:
+
+```text
+target language:       SystemVerilog
+methodology standard:  IEEE 1800.2-2020
+reference library:     Accellera UVM 2020-3.1
+upstream tag:          2020.3.1
+upstream commit:       78c06547a2a0a29b3dc9dcafae62b75b2ff61544
+emission state:        selected, implementation pending
+runtime state:         unqualified; provider versions not yet available
+```
+
+Accellera's UVM download page identifies 2020-3.1 as the current reference
+implementation for IEEE 1800.2. The official repository says that the kit
+matches IEEE 1800.2-2020, records deviations, and is Apache-2.0 licensed. That
+primary evidence justifies the exact emission source contract. It does not
+justify a simulator claim.
+
+The director's PGEN project owns HDL parsing and the director's NEXSIM project
+aims to own open-source commercial-grade HDL simulation. Both are progressing
+but remain under development. A future concrete `sv_uvm_qualified` profile is
+therefore an exact tuple of PGEN version/content, parser-to-simulator handoff
+schema, NEXSIM version/content, UVM library identity, commands, and exercised
+capabilities. Those values are selected only when executable releases exist;
+inventing them now would be false precision.
+
+Commercial Xcelium, VCS, and Questa may later serve as optional comparison or
+user-contributed profiles. They are not required FSMGen roadmap dependencies.
+Verilator may serve the experimental tier, but its UVM ecosystem explicitly
+says support is still in development; an experimental success cannot be
+relabelled as full UVM authority.
+
+Canonical emission is simulator-neutral IEEE SystemVerilog using only the
+selected Accellera UVM contract. It contains no simulator-specific source,
+`ifdef`, package, pragma, hierarchy API, command option, or workaround. A
+provider-specific requirement is isolated in a declared adapter or private
+command/evidence record, is capability-negotiated, and cannot alter canonical
+source bytes or VIAL meaning.
+
+### Dependency and licensing boundary
+
+Ordinary deterministic emission records the exact UVM tag/commit/API identity
+but does not require UVM library bytes, a network fetch, or an installed
+simulator. Before any library-dependent parser, compile, elaboration, or
+runtime gate, the responsible probe/qualification leaf must obtain the exact
+open-source UVM source from the official Accellera repository into a
+repository-derived same-volume dependency store such as:
+
+```text
+.cache/dependencies/accellera/uvm-core/
+  2020.3.1-78c06547a2a0a29b3dc9dcafae62b75b2ff61544/
+```
+
+Once materialized, the complete file list, byte lengths, hashes,
+`LICENSE.txt`, `NOTICE.txt`, tag, and commit enter a project-local dependency
+manifest. Before then, the emission manifest reports `library_materialized:
+false` and cannot claim any library-dependent gate. A pre-existing off-volume
+checkout may be read only as an explicitly authorized source and must follow
+copy/verify/use/delete for project-owned data. A user-home cache, ambient
+`UVM_HOME`, network lookup during ordinary execution, mutable branch,
+vendor-bundled UVM library, or UVM 1.2 compatibility package cannot silently
+substitute for the selected bytes.
+
+All selected near-term dependencies are open source. FSMGen does not make
+commercial license availability a gate. If an operator later contributes a
+commercial comparison run, tool/license material remains external and secret;
+the result records only sanitized factual capability evidence. Ordinary open
+CI always runs deterministic emission checks. Experimental open-source probes
+run only when their exact tool is available and report `experimental`, while
+future PGEN+NEXSIM qualification becomes mandatory for a runtime support claim
+only after its integration child is explicitly activated.
+
+### Semantic ownership and negotiation
+
+The backend consumes the exact immutable `VIALExecutionIR`, reviewed
+`HIALVIALBridgeManifest`, normalized generated HIAL DUT source, selected
+native-extension descriptors, and pre-resolved random decisions. It does not
+bind raw `VIALSemanticIR`, reinterpret HIAL names, invent protocol facts, or
+make UVM's object graph the source of VIAL meaning.
+
+Negotiation completes before any target artifact is published. It requires:
+
+- the existing execution and bridge schema/profile identities;
+- the concrete native backend profile above;
+- a satisfied directional representation proof for every DUT binding;
+- a closed classification for every portable, paired-native, native-only, and
+  residual requirement;
+- the exact UVM reference identity plus either a verified library content
+  manifest or an explicit `not_materialized` state;
+- emission-only status unless an exact experimental or qualified provider
+  tuple is selected and available for `run`;
+- finite resource bounds and repository-relative output roots; and
+- no unknown native family, target fragment, raw hierarchy request, ambient
+  callback, or unclassified side effect.
+
+Failure returns an `unsupported` or `error` result envelope as appropriate and
+publishes no partial backend graph. The backend cannot weaken a requirement,
+switch UVM libraries, drop a source-map obligation, or recast a native-only
+effect as portable to obtain a pass.
+
+### Typed native intent record
+
+Decision `0034` requires full target power below a simpler source surface.
+Native family records therefore describe verification intent, not UVM APIs.
+Every native semantic node refines the existing declarative extension carrier
+with these common fields:
+
+```text
+semantic_node_id
+family
+identity
+scope_id
+lifetime
+ordering
+typed_inputs[]
+typed_outputs[]
+capability_ids[]
+effects[]
+failure_policy
+source_location
+```
+
+`identity` is stable and source-derived. `scope_id` identifies a fixture,
+scenario, component intent, transaction, register model, or declared service;
+it is not a UVM hierarchy string. `lifetime` is one of `fixture`, `scenario`,
+`transaction`, `notification`, or `operation`. Ordering is an explicit stable
+rank plus dependency IDs. Inputs, outputs, effects, diagnostics, source maps,
+and normalized results use the already-selected VIAL types and schemas.
+
+The complete family taxonomy selected here is:
+
+| VIAL intent family | Required semantic facts | Compiler-private UVM mapping |
+| --- | --- | --- |
+| notification/interception | notification and payload identity, registration scope, strict rank, filter, lifetime, reentrancy, cancellation, effects | `uvm_event#(T)`, one generated `uvm_event_callback#(T)` dispatcher, generated callback registry |
+| lifecycle control | dependencies, readiness, service start/stop, completion/drain, shutdown, finalization, deadline, failure policy | build/connect/elaboration/start/run/extract/check/report/final phases and root-owned objections |
+| stimulus orchestration | transaction/sequence intent, arbitration policy, parallelism, response/timeout/cancellation | generated sequence items, sequences, sequencers, drivers, virtual sequence coordination |
+| producer/observer communication | typed publisher/subscriber identity, fanout/order/backpressure/loss policy | analysis ports/exports, TLM FIFOs, blocking/nonblocking TLM connections |
+| implementation selection | abstract role, default implementation, scoped substitution, compatibility predicates | generated factory registration and type/instance overrides |
+| scoped configuration | typed key, value, scope, precedence, required/default/locked policy | generated configuration objects and `uvm_config_db` set/get/check plumbing |
+| register intent | address map, access/reset/volatility/prediction/frontdoor/backdoor policy | generated UVM RAL blocks, maps, adapters, predictors, sequences |
+| constrained decisions | stable decision ID, domain, constraints, distribution, seed/replay, accepted value, exhaustion | generated sequence-item constraints and controlled `randomize()` only where selected |
+| coverage/properties | sample event, typed expression, bins/crosses/goals/illegal policy, temporal property | covergroups/coverpoints/crosses and generated SVA bindings/checkers |
+| timed interface interaction | domain, drive/sample edge and skew, directions, reset behavior, race policy | generated interfaces, modports, virtual interfaces, and clocking blocks |
+| transactions/scenarios | typed fields, correlation, lifecycle events, scenario graph, fibers, deadlines | sequence items, sequences, agent topology, and controller services |
+| analysis/models/scoreboards | consumed streams, deterministic state transition, matching/key/order/capacity policy | subscribers, analysis imps/FIFOs, generated model and scoreboard components |
+| faults | target, activation window, substitution/perturbation, restoration, observability | generated driver/interface/model interception under declared access |
+| results/diagnostics | logical identities/time, outcomes, native effects, evidence/exclusions | generated result collector/report catcher plus host-side closed projection |
+
+This table is a mapping contract, not a source grammar. `.13.1` may emit
+representative structures for every row from typed-IR fixtures before every
+family has public VIAL syntax; `.19` still owns the complete post-first-backend
+source taxonomy and leaf decomposition. The emission matrix distinguishes
+private preview fixtures, publicly authorable paths, visually/static-reviewed
+artifacts, experimental-tool outcomes, and qualified runtime. Broad generated
+code therefore neither falsely claims full public VIAL breadth nor lets the
+first runnable subset become VIAL's ceiling.
+
+### Notification and interception semantics
+
+Notification intent is more than a target event handle. A notification record
+contains:
+
+```text
+notification_id
+payload_type_id
+scope_id
+lifetime
+persistence: transient | latched
+trigger_policy: single | coalesced | queued
+reentrancy: reject | queue
+interceptor_ids[]
+observable_effect_ids[]
+source_location
+```
+
+An interceptor record contains:
+
+```text
+interceptor_id
+notification_id
+registration_scope_id
+rank
+filter
+effects[]
+lifetime
+reentrancy
+cancellation_policy
+source_location
+```
+
+Registration is idempotent by interceptor identity. Two different
+interceptors cannot share one `(notification_id, rank)`. The compiler sorts by
+rank then stable semantic ID, and that order is VIAL meaning. Dynamic target
+registration order, UVM callback-pool order, object allocation, and hash order
+cannot replace it. Registration starts at the declared logical lifecycle seam
+and ends exactly at lifetime finalization; late, duplicate, or stale
+registration fails closed.
+
+Filters are typed, side-effect-free predicates over the declared payload,
+configuration, model state, and logical time allowed by the node. Effects are
+closed instances of `observe`, `cancel`, `transform_declared_value`,
+`notify_declared`, `record_coverage`, and `append_diagnostic`. Transformations
+compose in strict interceptor order and must preserve the declared output type.
+Cancellation stops the notification's trigger effect after all earlier ranked
+effects commit; later interceptors are recorded as skipped. It does not
+silently cancel a scenario, UVM phase, or unrelated event.
+
+A notification triggered recursively while its dispatcher is live follows its
+declared policy. `reject` produces a targeted runtime failure. `queue` appends
+one typed occurrence to a bounded FIFO and drains occurrences in trigger order
+after the current dispatch completes. There is no target-stack recursion.
+Queue depth and total occurrences are bounded before result publication.
+
+The UVM backend creates one `uvm_event#(payload_object)` per notification and
+one generated dispatcher derived from `uvm_event_callback#(payload_object)`.
+The dispatcher owns the ordered VIAL interceptor table; it does not rely on
+vendor callback order. `pre_trigger` performs ordered filters/effects and
+returns cancellation to the UVM event only when VIAL cancellation requires
+it. `post_trigger` records the committed occurrence and declared observation
+effects. Generated payload objects are immutable to consumers after dispatch;
+transform effects construct a new typed payload rather than permitting an
+arbitrary callback to mutate shared state.
+
+The normalized result records original/effective payload identities, each
+evaluated interceptor and outcome, cancellation/skipped state, nested queue
+depth, logical time, declared effects, diagnostics, and concrete backend
+profile. UVM event timestamps, callback object addresses, and vendor trace
+names are excluded.
+
+### Lifecycle and logical-time mapping
+
+Only the generated root test owns the run-phase objection. It raises once
+after readiness and drops once after every selected scenario has committed a
+terminal result and background services satisfy their drain contracts.
+Generated child components never use free-form objection counts, automatic
+phase objections, phase jumps, or target-specific drain time to define
+completion.
+
+The mapping is:
+
+| VIAL lifecycle seam | UVM placement |
+| --- | --- |
+| elaborate | generated package/interface/top construction before `run_test` plus component `build_phase` |
+| configure | typed configuration construction and config-DB publication in `build_phase` |
+| connect | compiler-owned component and TLM connections in `connect_phase` |
+| readiness | validation in `end_of_elaboration_phase` and `start_of_simulation_phase` |
+| drive/sample/react/check | controller, sequences, driver/monitor clocking-block operations during `run_phase` |
+| drain/shutdown | root-test completion controller before its single objection drop |
+| finalize | `extract_phase`, `check_phase`, `report_phase`, and `final_phase` with no semantic mutation after result seal |
+
+The existing logical tuple `(domain, cycle, phase, ordinal)` remains the only
+portable time. The generated interface has separate driver and monitor
+clocking blocks whose skews are selected to implement drive-before-edge and
+stable post-edge sample behavior. A generated controller commits react/check
+effects in static VIAL order. UVM process wake order, simulation regions,
+delta counts, and timestamps are recorded only as optional backend evidence.
+
+Portable plan-time decisions remain fixed; the backend may not rerandomize
+them. A later native constrained-decision node may use the UVM/SystemVerilog
+solver only when its constraints, seed, attempt policy, accepted normalized
+value, and replay behavior are selected. Solver identity then enters native
+capability evidence, and portable parity requires replaying the accepted value
+rather than assuming solver equivalence.
+
+### Component and communication graph
+
+The compiler emits the smallest graph required by selected intent. The maximum
+role graph is:
+
+```text
+generated test
+  generated environment
+    one generated agent per timed interface role
+      sequencer (only when stimulus is selected)
+      driver    (only when stimulus is selected)
+      monitor   (only when observation is selected)
+    generated reference-model components as selected
+    generated scoreboard components as selected
+    generated coverage subscribers as selected
+    generated result collector
+```
+
+Passive intent never creates a sequencer or driver. A fixture with no RAL,
+coverage, model, or scoreboard intent emits none of those components. The
+backend does not create one UVM class per VIAL operation; it groups stable
+typed operations into tables/services to keep compilation and runtime cost
+proportional to selected semantic families.
+
+Sequence items mirror VIAL transaction field types and identities but do not
+become semantic authority. Drivers translate items through proved HIAL carrier
+relations and generated virtual-interface bindings. Monitors sample via
+clocking blocks, correlate transactions using bridge rules, and publish
+immutable transaction objects. Analysis fanout uses generated TLM connections;
+model and scoreboard order remains explicit when VIAL says order matters.
+
+Factories and `uvm_config_db` are compiler plumbing. A VIAL author selects a
+typed role substitution or scoped configuration value. The compiler proves
+type/scope compatibility, emits the factory/configuration operations, verifies
+the selected instance graph during readiness, and reports the semantic IDs.
+Authored source never spells a UVM type name, wildcard hierarchy pattern,
+factory API, or config-DB precedence rule.
+
+Register intent similarly owns logical maps, fields, access policy, reset
+values, volatility, prediction, and frontdoor/backdoor choice. The backend may
+emit RAL objects, adapters, predictors, and sequences only for selected facts.
+Raw backdoor paths require a declared HIAL probe/native-access capability and
+cannot be inferred from generated hierarchy.
+
+### Coverage, properties, faults, and results
+
+Portable coverage keeps its normalized bin/cross identity and hit-count
+oracle. Native coverage may add capability-qualified automatic, transition,
+wildcard, or implementation-specific collection only when the semantic node
+states the exact sampling and result contract. Generated covergroups are
+sampled from the VIAL event, not from an arbitrary UVM callback.
+
+Properties retain the shared VIAL/HIAL temporal meaning. The backend may emit
+SVA into a bound checker/module and route failures into the result collector.
+A simulator assertion pass is separate from UVM scenario success; both gates
+must pass. Raw assertion text is never accepted as a native node.
+
+Fault intent names a declared target and finite activation/restoration
+contract. The backend may intercept a driver value, model result, register
+access, or declared interface/probe only with the corresponding capability.
+Force/release, deposit, raw VPI, and hierarchy mutation are native residuals
+that require a later typed access contract; they are not inferred from
+`native SystemVerilog`.
+
+Every successful execution produces the existing
+`fsmgen.verification_result_manifest.v1`. Native event/interceptor records use
+the `native_extensions` stream with stable semantic IDs, logical time, typed
+original/effective values, effects, cancellation, and shared outcome oracle
+where paired portability is claimed. Backend evidence records UVM library,
+tool, compile, elaboration, simulation, transcript, assertion, coverage, and
+artifact identities. It never places absolute paths, license data, object
+handles, or raw vendor diagnostics in the public result.
+
+### Residual-intent taxonomy
+
+Every requested behavior must be classified before emission:
+
+| Class | Meaning | Examples |
+| --- | --- | --- |
+| `portable_semantic` | already defined by target-neutral ExecutionIR and eligible for ordinary parity | scenarios, logical time, fixed decisions, typed transactions, deterministic scoreboards |
+| `native_typed` | VIAL intent with this contract's exact UVM mapping | notification/interception, scoped substitution, RAL, native constraint or coverage family |
+| `compiler_plumbing` | generated mechanism with no authored semantic identity of its own | UVM component registration, phase methods, objections, TLM wiring, config-DB calls |
+| `typed_external_extension` | separately reviewed content-addressed implementation with declared effects | approved third-party checker/model adapter |
+| `qualification_only` | evidence mechanism that cannot alter verification meaning | parser/simulator options, transcript capture, coverage database export, waveform dump |
+| `unsupported_residual` | target capability with no selected VIAL intent/access/result contract | arbitrary raw SV, arbitrary callback code, phase jump, DPI/VPI, force/release, unbounded process spawn |
+
+Unknown and unsupported residuals fail capability negotiation. They cannot be
+hidden in a generated helper, extension artifact, command option, or vendor
+configuration file. `.19` may promote a residual only by selecting a typed
+intent, lifecycle/effect/result contract, source form, capability, tests, and
+backend mappings.
+
+### Artifact graph and generated-code quality
+
+The native backend composes with the atomic public tooling layout. A successful
+run publishes a deterministic graph below its content-addressed plan root:
+
+```text
+backends/sv_uvm_emit.accellera_2020_3_1/
+  backend-manifest.json
+  backend-source-map.json
+  commands/compile-elaborate-command.json
+  commands/run-command.json
+  evidence/tool-profile.json
+  evidence/uvm-library-manifest.json
+  src/fsmgen_vial_uvm_types_pkg.sv
+  src/<fixture>_if.sv
+  src/<fixture>_uvm_pkg.sv
+  src/<fixture>_tb.sv
+  src/dut/<generated-hial-dut>.sv
+results/<result-id-digest>/verification-result-manifest.json
+```
+
+Additional generated package files are split by semantic family only when a
+measured size threshold requires it. Stable content and plan identity produce
+byte-identical source, source maps, and command records. The backend uses
+meaningful semantic-derived identifiers, one class per reusable role rather
+than operation, explicit constructors/connections, and restrained macros.
+Generated files contain no absolute paths, timestamps, license values,
+addresses, random suffixes, or unbounded copied prose.
+
+Quality requirements are:
+
+- every class, interface, package, method, field, connection, generated
+  constraint, coverpoint/bin/cross, property, notification/interceptor table,
+  RAL element, and result record maps to one or more VIAL semantic IDs;
+- compiler-only plumbing maps to a synthetic stable owner and the semantic
+  nodes it serves;
+- generated spans include artifact path, start/end line, and start/end column;
+- lines are at most 240 bytes and generated package/class files are split
+  before 2,000/1,000 lines respectively;
+- repeated declarations use tables/helpers where that preserves readable
+  target code and exact source mapping;
+- no field macro, factory macro, or dynamic reflection is emitted merely for
+  convenience when explicit code is clearer or measurably cheaper; and
+- canonical source contains no simulator-specific conditional, package,
+  pragma, API, workaround, or provider spelling; and
+- deterministic rerender, compile cost, peak descendant RSS, runtime, source
+  bytes, class/component counts, and result bytes enter qualification metrics.
+
+These are review and scale gates, not ceilings on VIAL intent. If a legitimate
+fixture exceeds the first backend's safety limits, the result is an explicit
+bounded unsupported diagnostic and a later measured limit/architecture owner,
+not silent truncation or a claim that VIAL cannot express it.
+
+All compilation objects, dependency copies, command files, logs, transcripts,
+waveforms, coverage databases, and staging work remain under repository-
+derived `.artifacts/` or `.cache/` roots on the repository volume. Exact owned
+staging is removed after publication; persisted artifacts remain declared and
+hashed. The backend never defaults to `/tmp`, a user-home cache, or an
+off-volume vendor work directory.
+
+### Compile, elaboration, simulation, and capability gates
+
+Near-term `.13.1` is broad emission with honest per-stage maturity. Its
+required order is:
+
+1. **identify reference** — exact Accellera tag/commit/API identity and an
+   explicit not-materialized or verified local-library state;
+2. **negotiate** — exact schemas, typed families, mappings, residual classes,
+   limits, and explicit `compile/elaborate/run/result: not_run` states;
+3. **emit** — deterministic source, artifact manifest, complete source map,
+   and provider-neutral command requirements without pretending an executable
+   command exists;
+4. **validate shape** — parse-independent closed artifact, identifier,
+   package/import, class/topology, no-raw-target-input, and compatibility
+   oracles, with no syntax/compile claim;
+5. **publish review gallery** — representative full-shaped environments and
+   exact public-authoring/private-preview status for human inspection;
+6. **rerender** — identical inputs and exact emitter identity produce
+   byte-identical native source, source maps, manifests, and requirements;
+7. **publish** — atomic repository-local graph and exact failure cleanup; and
+8. **census** — no off-volume, temporary, partial, or undeclared residue.
+
+Optional `.13.2` starts after `.13.1.1` produces the first gallery. It freezes
+an exact Verilator or other open-source argv/library variant after inspecting
+the installed tool and runs each supported preprocessing, parse, library
+compile, fixture compile, elaboration, and runtime-smoke stage separately.
+Every outcome remains labelled `experimental`; unsupported UVM constructs,
+local patches, and stage skips are first-class evidence. The reusable probe is
+rerun against later galleries when available. Product support discovery does
+not advertise these results as qualified.
+
+This is an architecture-first convergence loop:
+
+```text
+typed VIAL meaning and UVM mapping
+  -> deterministic full-shaped source
+  -> structural checks and visual review
+  -> exact open-tool parse/compile/elaboration where supported
+  -> later qualified parser/simulator compile/elaboration/runtime
+  -> generator syntax/strategy refinement without semantic drift
+```
+
+Generated UVM is compiler output, not a hand-authored source-compatibility
+surface. FSMGen may revise standards-compliant syntax, helper decomposition,
+macro use, class structure, or expression form to incorporate review and tool
+feedback. Each artifact records the exact FSMGen/emitter identity, so
+determinism is exact-version relative. A representation-only rewrite that
+preserves VIAL meaning, public artifact schema, declared capability, and
+source-map obligations needs regression evidence but not a new VIAL semantic
+version. A semantic, profile, public artifact-schema, or compatibility change
+does require explicit versioning.
+
+Future `.13.3` activates only when usable PGEN and NEXSIM releases exist. It
+must then select and execute this exact order:
+
+1. **discover tuple** — exact PGEN and NEXSIM version/content/executable
+   identities plus the parser-to-simulator handoff schema;
+2. **parse** — PGEN accepts every selected UVM/library/fixture source and
+   produces the exact validated handoff;
+3. **compile library and fixture** — NEXSIM consumes the selected UVM bytes and
+   generated units without substituting a library;
+4. **elaborate** — exactly one selected top and complete component/interface
+   graph elaborate;
+5. **simulate** — bounded execution exits cleanly with no UVM fatal/error,
+   assertion failure, timeout, or trace overflow;
+6. **validate result** — closed native trace/result schemas, scenarios,
+   notification/interception outcomes, and capability evidence validate;
+7. **rerun** — identical inputs reproduce portable/native projections and
+   deterministic artifacts; and
+8. **cleanup** — exact staging removal and residue census pass.
+
+Compile success does not imply elaboration; elaboration does not imply run;
+zero simulator exit does not imply UVM/result success; UVM success does not
+imply portable parity; one profile does not imply another simulator; and no
+bounded test implies complete IEEE 1800/SystemVerilog or UVM breadth.
+
+The minimum honest capability records are:
+
+```text
+vial.backend.sv_uvm_emit.accellera_2020_3_1
+vial.backend.sv_uvm.source_map.v1
+vial.backend.sv_uvm.notification_interception.emitted
+vial.backend.sv_uvm.static_review: passed
+vial.backend.sv_uvm.visual_review: pending | reviewed
+vial.backend.sv_uvm.compile: not_run
+vial.backend.sv_uvm.elaborate: not_run
+vial.backend.sv_uvm.run: not_run
+vial.backend.sv_uvm.result_manifest: not_produced
+vial.backend.sv_uvm_qualified: unavailable
+```
+
+Each entry records `emitted`, `reviewed`, `experimental`, `exercised`,
+`passed`, `missing`, `unavailable`, `not_run`, or `not_selected` plus evidence
+IDs and the exact emitter/tool identity. Capabilities for
+PGEN parsing, NEXSIM compilation/runtime, phases/objections, sequences, TLM,
+factory/config DB, RAL, constrained randomization, coverage, assertions, and
+other families are claimed only when a focused executable oracle actually
+uses them. Product discovery cannot advertise a merely documented row as
+implemented.
+
+### UVM 1.2 compatibility and migration
+
+The existing command remains a frozen compatibility surface:
+
+```text
+./bin/fsmgen --emit-verification-output uvm-passive-monitor \
+  --verification-outdir DIR source.isf
+```
+
+It continues to emit `uvm/<actor>_observation_uvm_pkg.sv`, manifest target
+`uvm_passive_monitor_skeleton`, `uvm_version: 1.2`, inert snapshot/monitor
+classes, and explicit `claimed_uvm_compile_support: false`. No native backend
+file overwrites or imports that package, and native qualification does not
+retroactively change its validation object.
+
+Native VIAL output uses the separate emission profile graph above. Where an
+IAL1 `(observe ...)` declaration and VIAL monitor intent refer to the same
+bridge observation, `.13.1` may reuse the stable observation and signal IDs as
+input provenance. It must generate a new executable native monitor in the
+native package, not mutate, wrap by accidental name, or claim compilation of
+the legacy artifact.
+
+Compatibility states are therefore exact:
+
+| Surface | Revision | Behavior | Qualification |
+| --- | --- | --- | --- |
+| `uvm-passive-monitor` | UVM 1.2 | inert declarations only | shape/inertness tests; no compile/run claim |
+| `sv_uvm_emit.accellera_2020_3_1` | IEEE 1800.2-2020 / Accellera 2020-3.1 | deterministic native intent artifacts | emission/source-map only; compile/run explicitly not run |
+| future `sv_uvm_qualified` PGEN+NEXSIM tuple | same selected UVM identity unless explicitly revised | executable native intent lowering | unavailable until `.13.3` selects and passes the exact tuple |
+
+A future CLI alias, UVM 1.2 deprecation, upgraded passive-monitor target,
+legacy compile gate, or shared package requires a separate compatibility leaf,
+new artifact/manifest version where bytes change, mdBook migration examples,
+and exact old/new regression fixtures.
+
+### First implementation boundary and non-claims
+
+Active container `.13.1` owns complete reviewable emission through five
+bounded children. `.13.1.1` establishes the emitter, artifact graph, source
+maps, static validators, and first gallery. `.13.1.2` closes topology,
+interfaces, lifecycle, and notification/interception. `.13.1.3` adds
+stimulus/sequences/TLM/factory/configuration/RAL/constrained-decision shapes.
+`.13.1.4` adds coverage/properties/models/scoreboards/faults/results. `.13.1.5`
+closes the representative mapping matrix, examples, visual-review workflow,
+and deferred-runtime defect boundary. None waits for full simulation merely to
+emit more of the selected architecture.
+
+An authored construct may name only VIAL intent and types; no
+SystemVerilog/UVM class, method, phase, objection, hierarchy pattern, or
+command option appears in authored source. Where `.19` has not yet selected a
+public source form, `.13.1` may exercise a typed-IR preview fixture but must
+label it non-authorable and withhold the corresponding public capability.
+`emitted`, `static_reviewed`, `visually_reviewed`, `experimental_compiled`,
+`experimental_elaborated`, and `qualified` are separate states.
+
+Broad source emission does not claim a produced normalized runtime result,
+full public VIAL source breadth, or error-free SystemVerilog/UVM. It does not
+claim PGEN parse, NEXSIM compile/runtime, another simulator, vendor-bundled
+UVM, UVM 1.2 runtime, full SystemVerilog LRM conformance, analog/mixed-signal
+behavior, or all IEEE 1800.2 optional/deviation behavior. Review or later tool
+findings are fixed in the generator or recorded as exact task-tree defects;
+they do not retroactively turn early emission into a runtime claim.
+
+`.13.1.1` is the next clean activation and is not blocked by simulator or UVM
+library availability. Experimental `.13.2` follows its first gallery so
+Verilator and other available tools can catch whatever they support early.
+`.13.3` alone is blocked until PGEN and NEXSIM expose the required exact
+releases, handoff, and capabilities. An experimental parse, compile, or
+elaboration result cannot discharge that runtime blocker.
+
+### Primary evidence
+
+- Accellera UVM downloads:
+  `https://www.accellera.org/downloads/standards/uvm`
+- Accellera official UVM 2020-3.1 release:
+  `https://github.com/accellera-official/uvm-core/releases/tag/2020.3.1`
+- Accellera official UVM repository/license/migration notes:
+  `https://github.com/accellera-official/uvm-core`
+- Verilator-targeted UVM fork and its explicit development-status boundary:
+  `https://github.com/chipsalliance/uvm-verilator`
+- PGEN and NEXSIM provider roles/status: director clarification recorded in
+  decision `0050`; exact external versions and handoff remain unselected
+- local legacy references:
+  `docs/vendor/accellera/uvm/UVM_Class_Reference_Manual_1.2.pdf` and
+  `docs/vendor/accellera/uvm/uvm_users_guide_1.2.pdf`
 
 ## Rollback
 

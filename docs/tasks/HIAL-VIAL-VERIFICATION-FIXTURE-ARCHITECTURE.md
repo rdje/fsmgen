@@ -230,17 +230,75 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11: prove portable AHB result parity`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12`
-  Status: `active`
-  Goal: `Select the native SystemVerilog/UVM backend, UVM revision, component/runtime mapping, existing-skeleton migration, and sv_uvm_qualified profile.`
-  Acceptance: `The contract chooses the exact UVM revision and qualified simulator/profile; establishes typed VIAL intent families for notification/interception (identity, registration, ordering, filtering, lifecycle, reentrancy/cancellation, and effects), lifecycle control, stimulus orchestration, producer/observer communication, implementation selection/substitution, scoped configuration, register intent, constrained decisions, coverage/properties, timed interface interaction, transactions/scenarios/analysis/models/scoreboards/faults/results, and an explicit residual-intent taxonomy; maps those intents to UVM events/callbacks, phases/objections, sequences, TLM, factories/config DB, RAL, randomization/coverage/assertions, and virtual interfaces/clocking without leaking those mechanisms into the VIAL surface or requiring SV/UVM knowledge from a VIAL author; selects target-artifact efficiency/readability/source-map criteria; records compile/elaboration/simulation capabilities and licensing/CI policy; and defines compatibility/versioning for the shipped UVM 1.2 inert skeleton without treating the first bounded native implementation as VIAL's expressive ceiling.`
-  Verification: `Clean predecessor ea1b76dd54 activates .12 alone for documentation-only native SystemVerilog/UVM contract selection. The local command-path census finds Verilator and Icarus but no VCS, Xcelium, Questa/ModelSim, or other qualified UVM simulator; this is an input to the selection rather than borrowed qualification. Only task/index/book/fact/Memory continuity changes. No UVM revision, simulator profile, source form, IR, backend, artifact, capability/support claim, compile, runtime, parity, HIAL behavior, or product behavior is selected or changed by activation. Final activation evidence is recorded below.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12: activate native UVM contract selection`
+  Status: `done`
+  Goal: `Select the native SystemVerilog/UVM backend, exact UVM revision, component/runtime mapping, open-source emission/qualification tiers, and existing-skeleton migration.`
+  Acceptance: `The contract chooses the exact UVM revision and source identity; selects deterministic native emission now, optional explicitly experimental open-source probes, and a future capability-qualified runtime tuple without inventing unavailable versions; establishes typed VIAL intent families for notification/interception (identity, registration, ordering, filtering, lifecycle, reentrancy/cancellation, and effects), lifecycle control, stimulus orchestration, producer/observer communication, implementation selection/substitution, scoped configuration, register intent, constrained decisions, coverage/properties, timed interface interaction, transactions/scenarios/analysis/models/scoreboards/faults/results, and an explicit residual-intent taxonomy; maps those intents to UVM events/callbacks, phases/objections, sequences, TLM, factories/config DB, RAL, randomization/coverage/assertions, and virtual interfaces/clocking without leaking those mechanisms into the VIAL surface or requiring SV/UVM knowledge from a VIAL author; selects target-artifact efficiency/readability/source-map criteria; separates emission, experimental, parse, compile, elaboration, simulation, result, and licensing/CI claims; and defines compatibility/versioning for the shipped UVM 1.2 inert skeleton without treating the first bounded native implementation as VIAL's expressive ceiling.`
+  Verification: `Decision 0050 and the canonical architecture audit select IEEE 1800.2-2020 / Accellera UVM 2020-3.1 at exact tag 2020.3.1 and commit 78c06547a2a0a29b3dc9dcafae62b75b2ff61544. Director clarification rejects commercial simulators as a required near-term dependency, identifies PGEN as the developing HDL parser and NEXSIM as the developing open-source commercial-grade simulator, and selects three honest tiers: sv_uvm_emit.accellera_2020_3_1, optional sv_uvm_experimental.<tool-and-version>, and future sv_uvm_qualified through an exact PGEN+NEXSIM tuple once executable versions and their handoff exist. Full-shaped simulator-neutral generation may proceed across all selected mappings using typed-IR preview fixtures and public authoring routes as they exist; static checks and visual review are emission evidence, exact open tools probe compile/elaboration as early as the first gallery, and syntax/implementation strategy may converge iteratively without changing VIAL meaning. The contract freezes typed intent/UVM mappings, ordered notification/interception semantics, lifecycle/logical-time ownership, component/TLM/factory/config/RAL/randomization/coverage/property/interface mappings, residual taxonomy, deterministic artifacts/source maps, open-source data locality, capability gates, and unchanged inert UVM 1.2 compatibility. `.13.1.1` is the next unblocked implementation leaf; no parse/compile/elaboration/simulation/runtime/result capability is selected or claimed by this documentation slice. Final measured doctrine evidence is recorded below.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12: select open-source native UVM architecture`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13`
+  Status: `active`
+  Goal: `Implement native SystemVerilog/UVM through independently honest emission, experimental-probe, and PGEN+NEXSIM qualification slices.`
+  Acceptance: `The parent closes only when deterministic efficient readable source-mapped emission ships, any experimental open-source probe remains explicitly non-product evidence, and an exact PGEN+NEXSIM tuple parses/compiles/elaborates/runs the selected native subset into normalized results. Notification/interception semantics use UVM event/callback machinery without exposing target classes or requiring SV/UVM knowledge in authored VIAL; factory/config/TLM plumbing stays backend-private; every exercised/missing capability and applicable parity oracle is exact; inert UVM 1.2 compatibility follows the selected contract; and no first subset or tool result becomes full UVM/VIAL breadth.`
+  Verification: `pending children .13.1-.13.3`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1`
+  Status: `active`
+  Goal: `Implement complete reviewable simulator-neutral sv_uvm_emit.accellera_2020_3_1 generation through bounded children without a parser or simulator gate.`
+  Acceptance: `Representative typed-IR fixtures and public authorable paths where available emit the full selected UVM environment shape across topology, interfaces, lifecycle, notification/interception, stimulus, TLM, factory/configuration, RAL, constrained decisions, coverage/properties, models/scoreboards/faults/results, with efficient readable deterministic artifacts, complete source maps, an accumulating review gallery, and explicit static/manual-review versus compile/elaboration/run/result states. No child waits for a simulator merely to generate broader UVM; unknown defects remain possible and are tracked when found rather than hidden. Raw SV/UVM knowledge stays absent from authored VIAL, legacy UVM 1.2 remains compatible, and neither visual review nor static shape checks become syntax/runtime/full-VIAL qualification.`
+  Verification: `pending children .13.1.1-.13.1.5; all are unblocked by simulator availability`
+  Commit: `pending children`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1`
   Status: `proposed`
-  Goal: `Implement and capability-qualify the selected native SystemVerilog/UVM backend.`
-  Acceptance: `The selected first native VIAL subset emits efficient, readable, source-mapped native UVM artifacts, compiles/elaborates/runs under the exact available qualified tool and UVM revision, proves notification/interception semantics through UVM event/callback machinery without exposing target classes or requiring SV/UVM knowledge in authored VIAL, keeps factory/config/TLM plumbing backend-private, matches every applicable portable normalized result oracle, reports every exercised and missing capability, migrates or versions the inert skeleton exactly as contracted, and never treats Verilator-only evidence or this first subset as full UVM/VIAL breadth.`
-  Verification: `pending qualified simulator availability`
+  Goal: `Implement the native UVM emission substrate and first reviewable artifact gallery without requiring UVM library bytes or an executable simulator.`
+  Acceptance: `The exact Accellera UVM identity/API target is recorded without making an ordinary emission depend on a network fetch; the backend/profile, deterministic artifact graph, source map, typed packages, interface/top/component foundations, static shape validators, review-gallery fixtures, capability states, atomic repository-local publication, limits, and cleanup ship; library materialization is required only before a later library-dependent parser/compile gate; and parse/compile/elaboration/run/result remain explicitly not run.`
+  Verification: `pending clean activation; next unblocked leaf`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2`
+  Status: `proposed`
+  Goal: `Emit complete selected component topology, timed interfaces, lifecycle control, and notification/interception structures for visual and static review.`
+  Acceptance: `Generated tests/environments/agents/interfaces/controllers/result collectors express strict lifecycle/logical-time ownership and the complete notification/interception record, including stable registration order, filters, effects, cancellation, bounded queue/reject reentrancy, source maps, static negative oracles, and representative review-gallery artifacts; no simulator gate or runtime result is required.`
+  Verification: `pending after .13.1.1`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3`
+  Status: `proposed`
+  Goal: `Emit representative stimulus, sequence, TLM, factory/configuration, RAL, and constrained-decision UVM structures without waiting for runtime qualification.`
+  Acceptance: `Typed-IR fixtures and public source routes where selected generate efficient readable sequence items/sequences/sequencers/drivers, analysis/TLM wiring, scoped factory/configuration plumbing, RAL objects/adapters/predictors, and controlled native constraint structures with exact semantic ownership, source maps, deterministic galleries, static checks, honest unimplemented/public-authoring boundaries, and no inferred compile or simulation claim.`
+  Verification: `pending after .13.1.2`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.4`
+  Status: `proposed`
+  Goal: `Emit representative coverage, property, model, scoreboard, fault, diagnostic, and result UVM structures without waiting for runtime qualification.`
+  Acceptance: `Typed-IR fixtures and selected public routes generate covergroups, bound SVA checkers, analysis/model/scoreboard components, declared fault interception, report/result collection, capability/non-claim records, source maps, and deterministic review-gallery artifacts; structural and visual evidence is recorded separately from syntax/compile/runtime truth, and later simulator findings remain ordinary tracked defects rather than a reason to block emission breadth.`
+  Verification: `pending after .13.1.3`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5`
+  Status: `proposed`
+  Goal: `Close the full native UVM emission matrix, review workflow, examples, and deferred-runtime defect boundary.`
+  Acceptance: `Every selected UVM mapping has an emitted representative or exact unsupported reason; normal/terse and typed-IR entry availability is distinguished from private preview fixtures; the checked gallery is easy to regenerate and inspect; automated static findings and director visual-review findings become exact task-tree defects; all emitted artifacts remain simulator-neutral and deterministic; legacy compatibility and docs are complete; and the matrix says emitted/reviewed/unqualified rather than waiting for or pretending full simulation.`
+  Verification: `pending after .13.1.4; no simulator prerequisite`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2`
+  Status: `proposed`
+  Goal: `Implement the first reusable exact open-source UVM compile/elaboration feasibility probe without converting experimental evidence into product support.`
+  Acceptance: `As soon as .13.1.1 publishes the first gallery, select exact available open-source tool/version and immutable UVM source variant identities; separately attempt preprocessing/parsing, library compile, fixture compile, elaboration, and any supported runtime smoke; record argv, deviations/patches/failures and every not-exercised capability; expose a reusable nonblocking probe for later emission children; classify a demonstrated generator defect separately from a tool limitation; keep discovery labelled experimental; preserve qualified/runtime non-claims; and close honestly even when some or all stages are unsupported.`
+  Verification: `pending immediately after .13.1.1; local Verilator UVM support is officially still in development`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3`
+  Status: `proposed`
+  Goal: `Select, integrate, and capability-qualify the first exact PGEN parser plus NEXSIM simulator UVM runtime tuple.`
+  Acceptance: `Once executable provider releases exist, a documentation selection freezes exact PGEN and NEXSIM versions/content/commands, parser-to-simulator handoff schema, Accellera UVM identity, capability matrix, project-local artifacts, and failure boundaries before implementation; implementation then proves parse, UVM/DUT compile, elaboration, four-state timed execution, notification/interception results, deterministic rerun, cleanup, and every applicable normalized parity oracle without borrowing experimental or commercial-tool evidence.`
+  Verification: `blocked on capability-ready PGEN and NEXSIM releases; both external projects are progressing under active development`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14`
@@ -340,9 +398,16 @@ parity ownership after clean `.10.4` implementation commit `dfe87f536`.
 Completed `.11` now qualifies 19 shared AHB outcome paths against the
 handwritten oracle on byte-identical DUT source, while general cross-backend
 parity remains unclaimed.
-Clean cross-tree predecessor `ea1b76dd54` activates `.12` alone for selection
-of the native SystemVerilog/UVM contract, exact UVM revision, and qualified
-profile. Activation adds no methodology, backend, capability, or runtime claim.
+Clean cross-tree predecessor `ea1b76dd54` activated `.12` alone. Completed
+`.12` accepts decision `0050`, selects simulator-neutral IEEE 1800.2-2020 and
+exact Accellera UVM 2020-3.1 source, and separates deterministic emission from
+optional experimental probes and future PGEN+NEXSIM runtime qualification.
+Active containers `.13`/`.13.1` own five full-shaped reviewable emission
+leaves that do not wait for simulation. Proposed `.13.1.1` is the next
+unblocked leaf for a separate clean activation and first artifact gallery;
+`.13.2` follows that gallery with an exact reusable open-tool compile/
+elaboration probe, while `.13.3` remains blocked on capability-ready PGEN and
+NEXSIM releases.
 Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
@@ -489,11 +554,30 @@ compiler-owned beneath C/C++ or Rust.
   19 public/shared success and ERROR outcome paths, and emits one deterministic
   closed parity report. Undeclared internal capture/hold/completion signals
   are explicit exclusions; general cross-backend parity remains unclaimed.
+- `2026-08-01`: Decision `0050` selects IEEE 1800.2-2020 / exact Accellera UVM
+  2020-3.1 as the native methodology source while rejecting a commercial
+  simulator as a required near-term dependency. Native work is split into
+  deterministic `sv_uvm_emit.accellera_2020_3_1`, optional explicitly
+  experimental open-source probes, and future `sv_uvm_qualified` runtime.
+- `2026-08-01`: Director clarification identifies the separately developing
+  PGEN project as the HDL parser provider and NEXSIM as the intended
+  open-source commercial-grade simulator provider. Their future exact
+  versioned handoff is a qualification tuple, not a current capability claim;
+  `.13.1` emission can progress independently now.
+- `2026-08-01`: Simulator availability does not limit native generation
+  breadth. Active `.13.1` is decomposed into five full-shaped reviewable
+  emission leaves; `.13.2` probes exact open-tool compile/elaboration as soon
+  as the first gallery exists. Static checks and director visual review are
+  honest emission evidence, while generated syntax/strategy may iterate from
+  tool feedback without changing VIAL meaning or implying qualification.
 
 ## Open Questions
 
-- `.12` must choose the UVM revision and an actually available qualified
-  simulator before native UVM implementation can claim compile/runtime support.
+- `.13.2` must select the exact optional open-source feasibility tool after
+  `.13.1.1` publishes the first gallery; an unsupported result is still useful
+  if it is measured and remains experimental.
+- `.13.3` must select exact PGEN/NEXSIM versions and their handoff schema when
+  capability-ready releases exist; no version is invented in advance.
 - `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
   GHDL and other VHDL tools are currently absent locally.
 - `.16` must choose the first available mixed-language tool/profile.
@@ -504,9 +588,13 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for active `.12` contract selection. Its local evidence currently has
-  Verilator and Icarus but no qualified UVM simulator; the contract must record
-  that boundary rather than infer qualification.
+- None for proposed `.13.1.1` or later `.13.1` native UVM emission leaves;
+  they generate and expose review galleries without simulator availability and
+  make explicit per-stage not-run/experimental claims.
+- `.13.3` runtime qualification is intentionally blocked on capability-ready
+  PGEN and NEXSIM releases. Commercial simulator availability is not a roadmap
+  prerequisite, and Verilator/Icarus cannot be promoted from experimental
+  evidence to `sv_uvm_qualified`.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -548,6 +636,13 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.11` activation | clean `.10.4` implementation predecessor `dfe87f536`; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; docs/live/path/task/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.11` alone active for normalized result parity against the handwritten AHB oracle; docs/live/path Files=5/Tests=323; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-local build 73 files/16,964 KiB; Knowledge Map 1,096 facts/5,736 keys; README unchanged at 245 lines/9,917 bytes; Memory 46 lines; implementation and product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.11` implementation | private closed AHB oracle comparator; independent handwritten/generated execution over identical DUT bytes; exact result/oracle projections; mismatches/exclusions/failures; capability/support truth; syntax/focused/impacted/docs/live/path/task/mdBook/Knowledge Map/Memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; all 15 changed/new Perl/test paths syntax OK; exact Verilator 5.046 impacted suite Files=11/Tests=7,183; 19 shared paths compare equivalent across two scenarios while two undeclared-internal families are explicitly excluded; malformed, duplicate, nonzero, ineligible, different-DUT, and semantic-mismatch evidence is regression-locked; docs/live/path Files=5/Tests=323; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-local build 73 files/16,976 KiB before exact removal; Knowledge Map 1,096 facts/5,736 keys; README 245 lines/9,917 bytes; Memory 47 lines; general cross-backend parity remains unclaimed; final staged doctrines and residue census pass |
 | `2026-08-01` | `.12` activation | clean `ea1b76dd54` predecessor; exact local simulator command census; task/index/book/fact/Memory continuity; task/live/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.12` alone active for native SystemVerilog/UVM contract selection; Verilator and Icarus present, no qualified UVM simulator found; paths Files=1/Tests=2; trees=3/nodes=899/one segment/one index archive; 22 live surfaces/2,937 paths; maintained-reference delta 0/+6/+361; zero ceiling increases; Knowledge Map 1,104 facts/5,585 questions; Memory 46 lines; all 49 chapters; removed build 85 files/16,600,519 bytes; all nine staged doctrines pass; no revision/profile/backend/artifact/capability/runtime/product behavior selected or changed |
+| `2026-08-01` | `.12` selection | exact Accellera source/release and open-source tool evidence; director PGEN/NEXSIM/commercial-tool/simulator-neutral/full-emission/compiler-iteration clarifications; legacy UVM 1.2 and current VIAL contract audit; decision `0050`; exact mapping/profile/artifact/gate/non-claim contract; task/roadmap/audit/book/fact/Memory continuity; focused docs/live/task/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; simulator-neutral IEEE 1800.2-2020 / Accellera UVM 2020-3.1 tag/commit selected; active `.13.1` decomposes five full-shaped reviewable emission leaves with `.13.1.1` next, `.13.2` probes exact open-tool compile/elaboration from the first gallery, and `.13.3` retains future PGEN+NEXSIM qualification; generated syntax/strategy may iterate under exact emitter identity while VIAL meaning stays fixed; task integrity three trees/907 nodes/one segment/one index archive; focused docs `All tests successful` at Files=4/Tests=13; 22 live surfaces/2,938 paths and exact maintained-reference delta 0/+190/+8,769 pass; all 49 mdBook chapters test and the repository-local 85-file/16,674,248-byte build is removed exactly; Knowledge Map is current at 1,104 facts/5,593 questions/5,759 occurrences; Memory is 46 lines; no native implementation, parser, compile, elaboration, simulation, runtime, result, parity, or commercial-tool dependency ships |
+
+## Acceptance Checklist (enforced) — `.12` selection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12-NATIVE-UVM-CONTRACT-ACTIVATION' --oneline -- doctrine/live_document_size/surfaces.jsonl` identifies clean activation commit `6740bfaa1`, whose authority covers only the six-line frontier update. Selection necessarily adds exact user-facing methodology/profile semantics, while the director's clarifications reject a commercial-simulator dependency and require canonical UVM to remain simulator-neutral; the active contract therefore needed a new exact maintained-reference authority and an architecture decision rather than an invented Xcelium or unavailable PGEN+NEXSIM runtime profile.
+- [x] **ADDRESSED (verified)** — Decision `0050`, the canonical audit, task tree, roadmap, fact card, and mdBook now select exact Accellera UVM 2020-3.1 tag `2020.3.1` / commit `78c06547a2a0a29b3dc9dcafae62b75b2ff61544`; require simulator-neutral generated UVM; isolate provider adapters/commands/evidence; decompose full-shaped reviewable emission into `.13.1.1`–`.13.1.5` without a simulator gate; start reusable exact open-tool compile/elaboration probes at the first gallery in `.13.2`; reserve `.13.3` for future PGEN+NEXSIM qualification; permit meaning-preserving generated syntax/strategy iteration under exact emitter identity; preserve inert UVM 1.2 unchanged; and make every implementation/runtime claim explicitly absent. Maintained-reference verification accepts the exact mdBook change 50/47,550/2,521,265 → 50/47,740/2,530,034, or delta 0/+190/+8,769.
+- [x] **NO REGRESSION** — The guarded relative-path/reference/Knowledge Map suite reports `All tests successful` at `Files=4, Tests=13`; all 49 mdBook chapters test and the verified repository-local build has 85 files / 16,674,248 bytes before exact removal. Task integrity is three trees / 907 nodes / one segment / one index archive; all 22 live-document surfaces and 2,938/2,938 declared paths pass with zero ceiling increases; `knowledge-map: OK` reports 1,104 facts / 5,593 unique questions / 5,759 answer occurrences; Memory is 46 lines; and final staged `scripts/check_doctrines.sh` reports `[doctrine] all doctrine checks passed` without native implementation or product-behavior change.
 
 ## Acceptance Checklist (enforced) — `.12` activation
 
@@ -876,9 +971,17 @@ compiler-owned beneath C/C++ or Rust.
 | `.11` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11: activate portable AHB result parity` | Activate only normalized comparison of the shipped generated result with the handwritten AHB oracle after clean `.10.4`; implementation and parity claims remain unperformed. |
 | `.11` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11: prove portable AHB result parity` | Ship the private closed AHB oracle comparator, independently execute both harnesses over byte-identical DUT source, compare 19 shared outcomes, exclude undeclared internals, and retain every broader parity/methodology non-claim. |
 | `.12` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12: activate native UVM contract selection` | Activate only selection of the native SystemVerilog/UVM revision, intent mapping, existing-skeleton migration, and exact qualified profile after clean `.13` containment completion; implementation and qualification remain unperformed. |
+| `.12` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12: select open-source native UVM architecture` | Accept decision `0050`; select simulator-neutral Accellera UVM 2020-3.1 emission, optional experimental evidence, and future exact PGEN+NEXSIM runtime qualification without requiring a commercial simulator or claiming implementation. |
 
 ## Changelog
 
+- `2026-08-01`: `.12` accepts decision `0050` and selects simulator-neutral
+  IEEE 1800.2-2020 / Accellera UVM 2020-3.1 as the exact native methodology
+  source. Deterministic emission, optional experimental open-source evidence,
+  and future exact PGEN+NEXSIM runtime qualification are separate children;
+  commercial simulators are optional comparisons rather than roadmap gates.
+  No native implementation, parse, compile, elaboration, simulation, runtime,
+  result, or parity capability ships in this documentation-only selection.
 - `2026-08-01`: Clean containment commit `ea1b76dd54` activates `.12` alone
   for native SystemVerilog/UVM contract selection. The local tool census finds
   Verilator and Icarus but no qualified UVM simulator; activation changes only
