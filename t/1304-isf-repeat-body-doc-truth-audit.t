@@ -10,9 +10,9 @@ my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my @docs = (
     'docs/book/src/13b-transactions.md',
     'docs/book/src/13d-control-flow.md',
-    'docs/ISF_SPEC.md',
-    'docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md',
-    'docs/ISF_PUBLIC_INTERFACE_CONTRACT.md',
+    'docs/isf-spec/02-interface-transactions.md',
+    'docs/isf-spec/11-downstream-actor-transactions.md',
+    'docs/isf-spec/20-public-interface-surface.md',
 );
 
 my @shipped_terms = qw(

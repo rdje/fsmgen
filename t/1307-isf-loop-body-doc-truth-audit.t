@@ -7,21 +7,29 @@ use FindBin;
 
 my $repo_root = File::Spec->rel2abs(File::Spec->catdir($FindBin::Bin, '..'));
 
-my @loop_docs = qw(
-    docs/ISF_SPEC.md
-    docs/book/src/14-feature-backlog.md
-    docs/book/src/13b-transactions.md
+my @loop_docs = (
+    'docs/isf-spec/02-interface-transactions.md',
+    [
+        'docs/book/src/14b-composition-backlog.md',
+        'docs/book/src/14k-isf-language-and-scheduling.md',
+    ],
+    'docs/book/src/13b-transactions.md',
 );
 
-my @prior_observation_second_await_any_truth_docs = qw(
-    docs/ISF_SPEC.md
-    docs/book/src/14-feature-backlog.md
-    docs/book/src/13b-transactions.md
-    docs/book/src/13h-lowering-reference.md
+my @prior_observation_second_await_any_truth_docs = (
+    'docs/isf-spec/02-interface-transactions.md',
+    [
+        'docs/book/src/14b-composition-backlog.md',
+        'docs/book/src/14k-isf-language-and-scheduling.md',
+    ],
+    'docs/book/src/13b-transactions.md',
+    'docs/book/src/13h-lowering-reference.md',
 );
 
-for my $path (@loop_docs) {
-    my $content = read_repo_file($path);
+for my $entry (@loop_docs) {
+    my @paths = ref($entry) eq 'ARRAY' ? @{$entry} : ($entry);
+    my $path = join ' + ', @paths;
+    my $content = join '', map { read_repo_file($_) } @paths;
     like(
         $content,
         qr/named drive[s ]+.*`await`.*`sample`.*`update`.*`set`.*store.*load.*wait/s,
@@ -394,8 +402,10 @@ for my $path (@loop_docs) {
     );
 }
 
-for my $path (@prior_observation_second_await_any_truth_docs) {
-    my $content = read_repo_file($path);
+for my $entry (@prior_observation_second_await_any_truth_docs) {
+    my @paths = ref($entry) eq 'ARRAY' ? @{$entry} : ($entry);
+    my $path = join ' + ', @paths;
+    my $content = join '', map { read_repo_file($_) } @paths;
     ok(
         !documents_stale_prior_await_any_spawn_after_do_deferral($content),
         "$path does not re-defer shipped prior-awaitany spawn-after-do subsets (truth-doc audit)",

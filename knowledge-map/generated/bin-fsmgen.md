@@ -1,7 +1,7 @@
 # Knowledge Map: `bin-fsmgen`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **9** uniquely owned question entries.
+> **1** facts · **10** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -12,6 +12,7 @@
 - q="does bin/fsmgen reach the AXI manager PPIF implementation?" · facts=[bin-fsmgen-import-tree-current-baseline](../../docs/knowledge/bin-fsmgen-import-tree-current-baseline.md)
 - q="does bin/fsmgen reach the portable HDL instance-identifier policy?" · facts=[bin-fsmgen-import-tree-current-baseline](../../docs/knowledge/bin-fsmgen-import-tree-current-baseline.md)
 - q="how many project-owned files does bin/fsmgen currently reach?" · facts=[bin-fsmgen-import-tree-current-baseline](../../docs/knowledge/bin-fsmgen-import-tree-current-baseline.md)
+- q="is BIN_FSMGEN_IMPORT_TREE.md still needed?" · facts=[bin-fsmgen-import-tree-current-baseline](../../docs/knowledge/bin-fsmgen-import-tree-current-baseline.md)
 - q="what is the current bin/fsmgen import-tree baseline?" · facts=[bin-fsmgen-import-tree-current-baseline](../../docs/knowledge/bin-fsmgen-import-tree-current-baseline.md)
 - q="where is the live bin/fsmgen import-tree architecture note?" · facts=[bin-fsmgen-import-tree-current-baseline](../../docs/knowledge/bin-fsmgen-import-tree-current-baseline.md)
 

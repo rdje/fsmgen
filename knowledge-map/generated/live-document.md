@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **43** uniquely owned question entries.
+> **1** facts · **45** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -28,6 +28,7 @@
 - q="how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is an enforcement ceiling increase authorized?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is archived document content proved retrievable?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="how is the ISF reference partitioned?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the Knowledge Map kept bounded?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="is neutral live-document checker identity mechanically tested?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="is the live-document doctrine harness neutral?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
@@ -42,6 +43,7 @@
 - q="where does old changelog or task-tree history go?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="where does the Knowledge Map query cache live?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="where is the bounded live-document architecture review front door?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="where is the complete focused and ancillary document index?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="where is the external review packet for live-document containment?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="which FSMGen live documents are retirement candidates?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="which live-document families are migrated versus pinned or deferred?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)

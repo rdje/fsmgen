@@ -10,8 +10,8 @@ my $repo_root = File::Spec->rel2abs(File::Spec->catdir($FindBin::Bin, '..'));
 my %docs = map {
     $_ => read_repo_file($_)
 } qw(
-    docs/ISF_SPEC.md
-    docs/book/src/14-feature-backlog.md
+    docs/isf-spec/02-interface-transactions.md
+    docs/book/src/14k-isf-language-and-scheduling.md
     docs/book/src/13g-rules.md
     docs/book/src/13j-type-enum-aggregate.md
 );
@@ -32,19 +32,19 @@ for my $path (sort keys %docs) {
 }
 
 like(
-    $docs{'docs/ISF_SPEC.md'},
+    $docs{'docs/isf-spec/02-interface-transactions.md'},
     qr/Standalone enum member rule guards and standalone scalar aggregate\s+storage leaf rule guards are shipped/s,
     'ISF spec states standalone enum and scalar aggregate rule guards are shipped',
 );
 
 like(
-    $docs{'docs/book/src/14-feature-backlog.md'},
+    $docs{'docs/book/src/14k-isf-language-and-scheduling.md'},
     qr/Standalone scalar enum and scalar aggregate rule guards are\s+shipped/s,
     'feature backlog states standalone enum and scalar aggregate rule guards are shipped',
 );
 
 like(
-    $docs{'docs/book/src/14-feature-backlog.md'},
+    $docs{'docs/book/src/14k-isf-language-and-scheduling.md'},
     qr/The remaining backlog is aggregate paths in rule assignment RHS or\s+rule guard expression operator position/s,
     'feature backlog preserves the remaining rule guard/operator deferrals',
 );

@@ -93,7 +93,30 @@ variants, and VHDL remain deferred unless a later exact owner selects them.
 The audit validation was:
 
 ```bash
-perl -MFile::Temp=tempfile -we 'local $/; open my $in, q{<}, q{ppif/apb_completer_multi_register_sideband_data16.ppif} or die $!; my $s=<$in>; close $in; $s =~ s/\(data reg0_data_q width 16 reset 0\)/(data reg0_data_q width 16 reset 0)\n        (access-policy\n          (read require (privileged 1))\n          (write allow))/ or die q{reg0 substitution failed\n}; $s =~ s/\(data reg1_data_q width 16 reset 0\)/(data reg1_data_q width 16 reset 0)\n        (access-policy\n          (read allow)\n          (write require (privileged 0)))/ or die q{reg1 substitution failed\n}; my ($fh,$path)=tempfile(q{fsmgen-data16-policy-XXXX}, SUFFIX=>q{.ppif}, DIR=>q{/tmp}, UNLINK=>1); print $fh $s; close $fh; my $out = qx(./bin/fsmgen --quiet --emit-schedule-json $path 2>&1); my $status = $? >> 8; print "candidate_status=$status\n"; print $out;'
+perl -MFile::Path=make_path,remove_tree -MFile::Temp=tempfile -we '
+my $artifact_dir = q{.artifacts/ial2-apb-data16-probe};
+make_path($artifact_dir);
+END { remove_tree($artifact_dir) if -d $artifact_dir; }
+local $/;
+open my $input, q{<}, q{ppif/apb_completer_multi_register_sideband_data16.ppif}
+    or die $!;
+my $source = <$input>;
+close $input;
+$source =~ s/\(data reg0_data_q width 16 reset 0\)/(data reg0_data_q width 16 reset 0)\n        (access-policy\n          (read require (privileged 1))\n          (write allow))/ or die q{reg0 substitution failed\n};
+$source =~ s/\(data reg1_data_q width 16 reset 0\)/(data reg1_data_q width 16 reset 0)\n        (access-policy\n          (read allow)\n          (write require (privileged 0)))/ or die q{reg1 substitution failed\n};
+my ($fixture, $path) = tempfile(
+    q{fsmgen-data16-policy-XXXX},
+    SUFFIX => q{.ppif},
+    DIR => $artifact_dir,
+    UNLINK => 1,
+);
+print {$fixture} $source;
+close $fixture;
+my $output = qx(./bin/fsmgen --quiet --emit-schedule-json $path 2>&1);
+my $status = $? >> 8;
+print "candidate_status=$status\n";
+print $output;
+'
 bash knowledge-map/scripts/gen_knowledge_map.sh
 bash knowledge-map/scripts/check_knowledge_map.sh
 mdbook build docs/book

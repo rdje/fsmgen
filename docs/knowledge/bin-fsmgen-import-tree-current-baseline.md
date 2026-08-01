@@ -5,6 +5,7 @@ answers:
   - "what is the current bin/fsmgen import-tree baseline?"
   - "how many project-owned files does bin/fsmgen currently reach?"
   - "where is the live bin/fsmgen import-tree architecture note?"
+  - "is BIN_FSMGEN_IMPORT_TREE.md still needed?"
   - "does bin/fsmgen reach semantic-introspection support?"
   - "does bin/fsmgen reach the AXI manager PPIF implementation?"
   - "does bin/fsmgen reach the APB PPIF implementation?"
@@ -37,3 +38,11 @@ without reaching a VIAL target backend or runtime. The canonical maintainer
 note records the complete reachable package inventory, measured family counts
 (`Support 74`, `VIAL 13`, `HIAL 3`), selected line counts, runtime spines, and
 current hotspots.
+
+It remains objectively useful rather than duplicate history: README, roadmap,
+bootstrap, mdBook, task evidence, and executable `Module::ScanDeps` refreshes
+consume it as the current runtime-spine map. Leaf
+`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13` therefore retains it as live
+maintainer reference and fixes its representation by wrapping overlong prose;
+deleting it would remove a current architecture view not supplied by the
+generated file inventory or raw dependency output alone.

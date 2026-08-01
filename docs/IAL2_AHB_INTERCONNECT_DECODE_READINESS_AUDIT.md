@@ -206,7 +206,33 @@ behavior change. It must record:
 The audit used read-only probes:
 
 ```bash
-perl -MJSON::PP=decode_json -MIPC::Cmd=run -e 'for my $p (@ARGV) { my ($ok1, undef, undef, $sout, $serr) = run(command => ["./bin/fsmgen", "--quiet", "--emit-schedule-json", $p]); die "schedule failed $p: @{ $serr || [] }\n" unless $ok1; my $schedule = decode_json(join("", @{ $sout || [] })); my ($ok2, undef, undef, $cout, $cerr) = run(command => ["./bin/fsmgen", "--quiet", "--strict", "--check", "--json", $p]); die "check failed $p: @{ $cerr || [] }\n" unless $ok2; my $check = decode_json(join("", @{ $cout || [] })); my @ids = map { $_->{id} } @{ $schedule->{unsupported_residue} || [] }; my $support = $check->{support_accounting} || {}; print "$p\n"; print "  schema=$schedule->{schema}\n"; print "  target=$schedule->{target_protocol}{object}\n"; print "  entry=$support->{entry_id} source_kind=$support->{source_kind} coverage=$support->{coverage}\n"; print "  module=$check->{result}{module_name}\n"; print "  residue=@ids\n"; }' ppif/ahb_requester.ppif ppif/ahb_requester.ahb ppif/ahb_lite_subordinate.ppif ppif/ahb_lite_subordinate.ahb
+perl -MJSON::PP=decode_json -MIPC::Cmd=run -e '
+for my $path (@ARGV) {
+    my ($schedule_ok, undef, undef, $schedule_out, $schedule_err) = run(
+        command => ["./bin/fsmgen", "--quiet", "--emit-schedule-json", $path],
+    );
+    die "schedule failed $path: @{ $schedule_err || [] }\n" unless $schedule_ok;
+    my $schedule = decode_json(join("", @{ $schedule_out || [] }));
+    my ($check_ok, undef, undef, $check_out, $check_err) = run(
+        command => ["./bin/fsmgen", "--quiet", "--strict", "--check", "--json", $path],
+    );
+    die "check failed $path: @{ $check_err || [] }\n" unless $check_ok;
+    my $check = decode_json(join("", @{ $check_out || [] }));
+    my @residue_ids = map { $_->{id} } @{$schedule->{unsupported_residue} || []};
+    my $support = $check->{support_accounting} || {};
+    print "$path\n";
+    print "  schema=$schedule->{schema}\n";
+    print "  target=$schedule->{target_protocol}{object}\n";
+    print "  entry=$support->{entry_id} source_kind=$support->{source_kind} "
+        . "coverage=$support->{coverage}\n";
+    print "  module=$check->{result}{module_name}\n";
+    print "  residue=@residue_ids\n";
+}
+' \
+  ppif/ahb_requester.ppif \
+  ppif/ahb_requester.ahb \
+  ppif/ahb_lite_subordinate.ppif \
+  ppif/ahb_lite_subordinate.ahb
 ```
 
 Closeout must also run Knowledge Map generation/check, mdBook build, docs path

@@ -6,7 +6,9 @@ use File::Spec;
 use FindBin;
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
-my $spec_path = File::Spec->catfile($repo_root, 'docs', 'ISF_SPEC.md');
+my $spec_path = File::Spec->catfile(
+    $repo_root, 'docs', 'isf-spec', '04-reports-fixtures-deferrals.md',
+);
 
 open my $spec_fh, '<', $spec_path
     or die "Unable to read $spec_path: $!";
@@ -17,7 +19,7 @@ my ($focused_tests_section) = $spec =~ m{\nFocused tests:\n(.*?)\n## 12\. Explic
 ok(defined $focused_tests_section, 'ISF spec exposes the focused tests section');
 
 my @listed_tests = $focused_tests_section
-    ? ($focused_tests_section =~ m{\]\(\.\./(t/[0-9]+-isf-[^)]+\.t)\)}g)
+    ? ($focused_tests_section =~ m{\]\(\.\./\.\./(t/[0-9]+-isf-[^)]+\.t)\)}g)
     : ();
 
 my $test_glob = File::Spec->catfile($repo_root, 't', '*-isf-*.t');

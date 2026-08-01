@@ -108,7 +108,24 @@ The currently shipped composition behavior is intentionally bounded:
   `(attribute)` or `:attribute`. The shipped same-name binding flags are
   canonical `:same-name` plus accepted aliases `(same-name)`,
   `:connect-by-name`, and `(connect-by-name)`,
-- zero or more bounded `+constants` / `+enums` / `+types` blocks plus zero or more bounded `+import` blocks at that `?top` root, with top-root `+constants` now also allowing bounded aggregate values, whole aggregate roots on the live literal path, authored-member-order packing for hash-like roots, and aggregate values that reuse same-scope local constants and enum members regardless of declaration order as long as the symbol dependency graph stays acyclic, and with local `+types` now covering bounded aliases for `bit`, `(bits N)`, `(bits WIDTH_SYMBOL)`, `(signed bit)`, `(signed (bits N))`, `(signed (bits WIDTH_SYMBOL))`, `(two_state ...)`, `(four_state ...)`, packed `(list ...)`, packed `(record (field TYPE) ...)`, same-scope named type aliases on the `?ports` width path, positive integer scalar symbols on that same `?ports` width path and inside scalar `(bits WIDTH_SYMBOL)` type specs, direct package-qualified imported type aliases such as `shared.byte` and `shared.frame_t`, local aliases that themselves target those imported package types including nested imported aggregate members, signedness/state-model-preserving Verilog-family top-port emission when those aliases resolve to explicit signed, two-state, or four-state scalar types, backend-owned local packed typedef emission for aggregate aliases on generated composition-top SystemVerilog boundaries and typed structural nets, and preserved `declared_type_name` / canonical `declared_type_spec` metadata on top ports plus realized generated-child interface ports when those live width contracts came from named type aliases,
+- zero or more bounded `+constants` / `+enums` / `+types` blocks plus zero or more bounded
+  `+import` blocks at that `?top` root, with top-root `+constants` now also allowing bounded
+  aggregate values, whole aggregate roots on the live literal path, authored-member-order
+  packing for hash-like roots, and aggregate values that reuse same-scope local constants and
+  enum members regardless of declaration order as long as the symbol dependency graph stays
+  acyclic, and with local `+types` now covering bounded aliases for `bit`, `(bits N)`, `(bits
+  WIDTH_SYMBOL)`, `(signed bit)`, `(signed (bits N))`, `(signed (bits WIDTH_SYMBOL))`,
+  `(two_state ...)`, `(four_state ...)`, packed `(list ...)`, packed `(record (field TYPE)
+  ...)`, same-scope named type aliases on the `?ports` width path, positive integer scalar
+  symbols on that same `?ports` width path and inside scalar `(bits WIDTH_SYMBOL)` type specs,
+  direct package-qualified imported type aliases such as `shared.byte` and `shared.frame_t`,
+  local aliases that themselves target those imported package types including nested imported
+  aggregate members, signedness/state-model-preserving Verilog-family top-port emission when
+  those aliases resolve to explicit signed, two-state, or four-state scalar types,
+  backend-owned local packed typedef emission for aggregate aliases on generated
+  composition-top SystemVerilog boundaries and typed structural nets, and preserved
+  `declared_type_name` / canonical `declared_type_spec` metadata on top ports plus realized
+  generated-child interface ports when those live width contracts came from named type aliases,
 - zero or more embedded `?pkg:name` roots in the same file and zero or more external `?pkg:name` package sources resolved through the normal search roots, with packages currently carrying shared named scalar values, bounded named aggregate values, enum families, bounded scalar and packed-aggregate type aliases, and aggregate values that reuse same-scope package constants and enum members regardless of declaration order as long as the symbol dependency graph stays acyclic,
 - one or more child instances, currently `?fsmc`, `?dtc`, and `?rtl`,
 - every child instance label uses the simple unescaped spelling
@@ -192,10 +209,29 @@ The currently shipped composition behavior is intentionally bounded:
 - and uneven repeat-width splits now also fail explicitly instead of guessing one per-copy width silently,
 - explicit `?wiring` actual sources may currently appear only on the source side,
 - `=open` is the one width-agnostic explicit actual source in that first slice and still targets only realized child input ports,
-- direct scalar actuals `=0` and `=1` plus unsized binary/decimal/octal/hex direct actuals such as `=0b10100101`, `='b10100101`, `=0d170`, `='d170`, `=0o245`, `='o245`, `=0xA5`, `='hA5`, `=170`, and `=A5` may now target realized child input ports or declared top outputs by widening to the direct binding target width as numeric values, unsized signed decimal direct actuals such as `=-1`, `=0d-1`, and `='sd-1` plus unsized signed binary/octal/hex direct actuals such as `='sb1010`, `='so645`, and `='shA5` may now also target those same direct bindings when the signed value fits the signed range of the target width, while exact-width binary/decimal/signed-decimal/octal/hex literal forms in unsigned or signed form such as `=8'b10100101`, `=8'sb10100101`, `=8'd165`, `=8'sd-1`, `=8'o245`, `=8'so245`, `=8'hA5`, or `=8'shA5` must still match the target width exactly,
+- direct scalar actuals `=0` and `=1` plus unsized binary/decimal/octal/hex direct actuals such
+  as `=0b10100101`, `='b10100101`, `=0d170`, `='d170`, `=0o245`, `='o245`, `=0xA5`, `='hA5`,
+  `=170`, and `=A5` may now target realized child input ports or declared top outputs by
+  widening to the direct binding target width as numeric values, unsized signed decimal direct
+  actuals such as `=-1`, `=0d-1`, and `='sd-1` plus unsized signed binary/octal/hex direct
+  actuals such as `='sb1010`, `='so645`, and `='shA5` may now also target those same direct
+  bindings when the signed value fits the signed range of the target width, while exact-width
+  binary/decimal/signed-decimal/octal/hex literal forms in unsigned or signed form such as
+  `=8'b10100101`, `=8'sb10100101`, `=8'd165`, `=8'sd-1`, `=8'o245`, `=8'so245`, `=8'hA5`, or
+  `=8'shA5` must still match the target width exactly,
 - underscore-separated digit spellings such as `=0b1010_0101`, `=1_70`, `=0o2_45`, `=A_5`, `=8'd1_65`, and `=8'hA_5` are accepted on those same direct literal families,
 - underscore-separated digit spellings are also accepted on the intrinsic-width unsized binary/decimal/octal/hex concat family, for example `=0b1_0`, `=0d1_70`, `=1_70`, `=0xA_5`, or `=A_5`,
-- composition-root `+constants` / `+enums` plus imported `?pkg:name` packages may currently provide named literal actuals such as `=RESET_BYTE`, `=BYTES[1]`, `=FRAME.flag`, `=mode.BUSY`, `=shared.RESET_BYTE`, `=shared.mode.BUSY`, `=shared.BYTES[1]`, or `=shared.FRAME.flag` for explicit `?wiring` direct actuals and concat operands only; aggregate-backed local or imported symbols may now resolve either to one scalar leaf or to one whole aggregate root such as `=FRAME`, `=HEADER`, `=shared.FRAME`, or `=shared.HEADER`, whole aggregate roots stay bounded to aggregates whose leaves all lower to scalar literals, authored member order still defines packing for hash-like whole roots, and when one such whole aggregate root binds directly to a declared top output or realized child input that preserved an aggregate `declared_type_spec`, that inferred whole-aggregate contract must also match that target type contract instead of flattening the decision to packed width alone,
+- composition-root `+constants` / `+enums` plus imported `?pkg:name` packages may currently
+  provide named literal actuals such as `=RESET_BYTE`, `=BYTES[1]`, `=FRAME.flag`,
+  `=mode.BUSY`, `=shared.RESET_BYTE`, `=shared.mode.BUSY`, `=shared.BYTES[1]`, or
+  `=shared.FRAME.flag` for explicit `?wiring` direct actuals and concat operands only;
+  aggregate-backed local or imported symbols may now resolve either to one scalar leaf or to
+  one whole aggregate root such as `=FRAME`, `=HEADER`, `=shared.FRAME`, or `=shared.HEADER`,
+  whole aggregate roots stay bounded to aggregates whose leaves all lower to scalar literals,
+  authored member order still defines packing for hash-like whole roots, and when one such
+  whole aggregate root binds directly to a declared top output or realized child input that
+  preserved an aggregate `declared_type_spec`, that inferred whole-aggregate contract must also
+  match that target type contract instead of flattening the decision to packed width alone,
 - generated child `?fsmc` / `?dtc` sources realized through the direct-root pipeline may now also use bounded `(+import pkg_name ...)`, and namespaced package scalar leaves such as `shared.RESET_BYTE`, `shared.mode.BUSY`, `shared.BYTES[1]`, or `shared.FRAME.flag` now resolve there as literals in assignment RHS expressions and guard equality conditions,
 - the source frontend now preserves brace-grouped slash-token text before composition parsing, so those nested concat groups survive from `.fsm` source through raw AST, composition parsing, and final emitted HDL instead of being flattened away at read time,
 - explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
@@ -239,7 +275,22 @@ The currently shipped composition behavior is intentionally bounded:
 - and it now also covers unsupported child kinds when a composition child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?wiring` / `+constants` / `+enums` / `+types` / `+import` family,
   - and it now also covers malformed generated-child source payloads when `?fsmc` / `?dtc` payloads use nested option structures or the wrong number of flat source names,
   - and `bin/fsmgen` now prints the same provenance summary during non-quiet composition runs,
-- and non-quiet failed composition runs now also print a first bounded composition-failure summary when a blocked composition boundary can be extracted from the raised diagnostic, including a `Lane:` line when the blocked diagnostic already names the active `C1` / `C2` / `C3` / `C4` lane, a `Construct:` line when the blocked diagnostic already points clearly at one active syntax construct such as `?ports`, `?wiring`, `?rtl`, `?fsmc`, `?dtc`, or `=port`, a `Child source file:` line when a blocked `?fsmc` / `?dtc` realization failure already names the resolved external `.fsm` file, an `Expected child source file:` line when a blocked `?fsmc` / `?dtc` resolution failure names the missing external source target, an `Expected RTL metadata file:` line when a blocked `?rtl` resolution failure names the missing sidecar target, an `RTL metadata file:` line when a blocked `.rtlif` structure, token, sizing, typing, system-port direction, flatness, or declaration failure already names the resolved metadata file, a `Search roots:` line when blocked lookup diagnostics already expose the active search roots, a concise context line for the offending child/top-port/top-expression/child-expression/explicit-endpoint/actual-source/actual-endpoint/token/repeated-RTL-port/RTL-root when that context can be separated honestly from the longer failure text, plus a concise blocked-reason line,
+- and non-quiet failed composition runs now also print a first bounded composition-failure
+  summary when a blocked composition boundary can be extracted from the raised diagnostic,
+  including a `Lane:` line when the blocked diagnostic already names the active `C1` / `C2` /
+  `C3` / `C4` lane, a `Construct:` line when the blocked diagnostic already points clearly at
+  one active syntax construct such as `?ports`, `?wiring`, `?rtl`, `?fsmc`, `?dtc`, or `=port`,
+  a `Child source file:` line when a blocked `?fsmc` / `?dtc` realization failure already names
+  the resolved external `.fsm` file, an `Expected child source file:` line when a blocked
+  `?fsmc` / `?dtc` resolution failure names the missing external source target, an `Expected
+  RTL metadata file:` line when a blocked `?rtl` resolution failure names the missing sidecar
+  target, an `RTL metadata file:` line when a blocked `.rtlif` structure, token, sizing,
+  typing, system-port direction, flatness, or declaration failure already names the resolved
+  metadata file, a `Search roots:` line when blocked lookup diagnostics already expose the
+  active search roots, a concise context line for the offending
+  child/top-port/top-expression/child-expression/explicit-endpoint/actual-source/actual-endpoin
+  t/token/repeated-RTL-port/RTL-root when that context can be separated honestly from the
+  longer failure text, plus a concise blocked-reason line,
 - realized child interface currently means:
   - effective system inputs from the active FSM generator contract:
     - explicit conventional `+system` currently yields `clk` / `rstn`,
@@ -252,7 +303,18 @@ The currently shipped composition behavior is intentionally bounded:
   - top-port name, for example `result_data`,
   - or source-side top-port bit/slice expression over a declared top input, for example `payload_bus[15:8]` or `status_bus[0]`, when that explicit link targets a realized child input port or a declared top output,
   - or child endpoint `instance.port`, for example `producer.output_data`,
-- or source actual `=open`, scalar `=0` / `=1`, unsized binary/decimal/signed-decimal/octal/hex direct actual such as `=0b10100101`, `='b10100101`, `=0d170`, `='d170`, `=-1`, `=0d-1`, `='sd-1`, `='sb1010`, `='so645`, `='shA5`, `=0o245`, `='o245`, `=0xA5`, `='hA5`, `=170`, or `=A5`, or exact-width binary/decimal/signed-decimal/octal/hex literal `=N'b...` / `=N'sb...` / `=N'd...` / `=N'sd...` / `=N'o...` / `=N'so...` / `=N'h...` / `=N'sh...`, for example `=8'b10100101`, `=8'sb10100101`, `=8'd165`, `=8'sd-1`, `=8'o245`, `=8'so245`, `=8'hA5`, or `=8'shA5`, where `=open` currently targets only a realized child input port, direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width as numeric values, unsized signed decimal direct actuals plus unsized signed binary/octal/hex direct actuals widen when the signed value fits the signed range of that direct target width, and exact-width literal actuals may target a realized child input port or a declared top output,
+- or source actual `=open`, scalar `=0` / `=1`, unsized binary/decimal/signed-decimal/octal/hex
+  direct actual such as `=0b10100101`, `='b10100101`, `=0d170`, `='d170`, `=-1`, `=0d-1`,
+  `='sd-1`, `='sb1010`, `='so645`, `='shA5`, `=0o245`, `='o245`, `=0xA5`, `='hA5`, `=170`, or
+  `=A5`, or exact-width binary/decimal/signed-decimal/octal/hex literal `=N'b...` / `=N'sb...`
+  / `=N'd...` / `=N'sd...` / `=N'o...` / `=N'so...` / `=N'h...` / `=N'sh...`, for example
+  `=8'b10100101`, `=8'sb10100101`, `=8'd165`, `=8'sd-1`, `=8'o245`, `=8'so245`, `=8'hA5`, or
+  `=8'shA5`, where `=open` currently targets only a realized child input port, direct scalar
+  `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized
+  child-input or declared top-output target width as numeric values, unsized signed decimal
+  direct actuals plus unsized signed binary/octal/hex direct actuals widen when the signed
+  value fits the signed range of that direct target width, and exact-width literal actuals may
+  target a realized child input port or a declared top output,
 - underscore-separated digit spellings are accepted on those same literal forms too, for example `=1_70`, `=0o2_45`, `=8'd1_65`, or `=8'hA_5`,
 - composition output is currently limited to SystemVerilog / Verilog targets.
 

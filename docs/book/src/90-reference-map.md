@@ -291,17 +291,24 @@ backend, validation, and API topics. The mandatory read is 51 lines, the
 largest new page is 2,726 lines / 192,166 bytes, examples remain executable,
 and the former backend deep-link routes through the bounded landing page.
 
-`docs/ISF_SPEC.md` demonstrates the opposite boundary. Its classification says
-that the prose is a maintained-reference candidate, but it remains inside the
-mixed `focused_documents` collection with the existing ceilings and debt.
-Leaf `.13` must first create stable semantic parts and a bounded complete index.
-Classification alone never waives current controls or turns a monolithic file
-into a compliant maintained reference.
+The ISF reference is the second `maintained_reference`. Leaf `.13` preserves the
+exact 6,254-line language specification, 4,485-line downstream contract, and
+3,759-line public-interface contract at activation revision `322d81fac3ce`,
+then re-forms them as three bounded landing pages and eleven stable semantic
+parts under `docs/isf-spec/`. The main `docs/ISF_SPEC.md` landing directly links
+every member, so no reference topic is more than one step away. The largest
+part is 2,453 lines / 171,378 bytes, and the exact transformed activation
+content passes an executable equality check.
 
 Clean `.10` commit `3b71cb0b1` activates `.13` alone against 1,005 focused
 documents and 12 ancillary documents. The 6,254-line ISF specification and the
 independent 7,536-byte import-tree line are separate containment questions;
 activation records them without changing content, paths, indexes, or limits.
+The implementation retains `docs/BIN_FSMGEN_IMPORT_TREE.md` as the live
+runtime-spine architecture map while wrapping its pathological lines. A
+generated index classifies all 1,005 focused and 12 ancillary documents by
+audience, lifecycle, owner, and role; its checker rejects stale, missing,
+duplicate, or unclassified membership.
 
 The roadmap has a different role: it is a bounded current-direction snapshot,
 not shipped-behavior reference or exact chronology. Clean commit `dc1c64afb`

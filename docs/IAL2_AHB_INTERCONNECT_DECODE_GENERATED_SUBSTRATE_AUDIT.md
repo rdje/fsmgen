@@ -133,7 +133,38 @@ backend-language variants, AXI, APB behavior, or VHDL behavior.
 Read-only and temporary probes used during the audit:
 
 ```bash
-perl -Iperl -MJSON::PP=encode_json -MFSM::Adapter::IAL2::PPIF -e 'for my $p (@ARGV) { my $r = FSM::Adapter::IAL2::PPIF->new()->parse_file($p); my $rep = $r->{report}; my @ial1 = ref($r->{generated_ial1}{items}) eq q{ARRAY} ? map { $_->{name} } @{$r->{generated_ial1}{items}} : ($r->{generated_ial1}{name}); my @ial0 = sort keys %{$r->{generated_ial0}{files} || {}}; my @res = map { $_->{id} } @{$rep->{unsupported_residue} || []}; print "$p\n"; print "  kind=$r->{kind} mode=$r->{mode}\n"; print "  schema=$rep->{schema}\n"; print "  ial1=@ial1\n"; print "  ial0=@ial0\n"; print "  hdl_entry=$rep->{generated_artifacts}{hdl_entry}{entry_artifact}\n" if $rep->{generated_artifacts}{hdl_entry}{entry_artifact}; print "  residue=@res\n"; print "  generated_interconnect=$rep->{composition}{generated_interconnect}{ial1_artifact}/$rep->{composition}{generated_interconnect}{ial0_artifact}\n" if $rep->{composition}{generated_interconnect}; print "  response_mux=" . encode_json($rep->{composition}{response_mux}) . "\n" if $rep->{composition}{response_mux}; }' ppif/apb_composition_multi_peripheral.ppif ppif/ahb_requester.ppif ppif/ahb_lite_subordinate.ppif
+perl -Iperl -MJSON::PP=encode_json -MFSM::Adapter::IAL2::PPIF -e '
+for my $path (@ARGV) {
+    my $parsed = FSM::Adapter::IAL2::PPIF->new()->parse_file($path);
+    my $report = $parsed->{report};
+    my @ial1 = ref($parsed->{generated_ial1}{items}) eq q{ARRAY}
+        ? map { $_->{name} } @{$parsed->{generated_ial1}{items}}
+        : ($parsed->{generated_ial1}{name});
+    my @ial0 = sort keys %{$parsed->{generated_ial0}{files} || {}};
+    my @residue = map { $_->{id} } @{$report->{unsupported_residue} || []};
+    print "$path\n";
+    print "  kind=$parsed->{kind} mode=$parsed->{mode}\n";
+    print "  schema=$report->{schema}\n";
+    print "  ial1=@ial1\n";
+    print "  ial0=@ial0\n";
+    if ($report->{generated_artifacts}{hdl_entry}{entry_artifact}) {
+        print "  hdl_entry=$report->{generated_artifacts}{hdl_entry}{entry_artifact}\n";
+    }
+    print "  residue=@residue\n";
+    if ($report->{composition}{generated_interconnect}) {
+        print "  generated_interconnect="
+            . "$report->{composition}{generated_interconnect}{ial1_artifact}/"
+            . "$report->{composition}{generated_interconnect}{ial0_artifact}\n";
+    }
+    if ($report->{composition}{response_mux}) {
+        print "  response_mux="
+            . encode_json($report->{composition}{response_mux}) . "\n";
+    }
+}
+' \
+  ppif/apb_composition_multi_peripheral.ppif \
+  ppif/ahb_requester.ppif \
+  ppif/ahb_lite_subordinate.ppif
 perl -Iperl -MFSM::Adapter::IAL2::PPIF -e 'my $r=FSM::Adapter::IAL2::PPIF->new()->parse_file(q{ppif/apb_composition_multi_peripheral.ppif}); my $fsm=$r->{generated_ial0}{files}{q{apb_interconnect.fsm}}; for my $probe ([q{hit_compare}, qr/>= PADDR/], [q{local_address_subtract}, qr/\(- PADDR /], [q{decoded_select}, qr/PSEL_/], [q{response_mux}, qr/-response_mux/], [q{unmapped_error}, qr/PSLVERR> 1/], [q{ready_mux}, qr/PREADY>/]) { print "$probe->[0]\n" if $fsm =~ $probe->[1]; }'
 perl -Iperl -MFSM::Adapter::IAL2::PPIF -e 'my $r=FSM::Adapter::IAL2::PPIF->new()->parse_file(q{ppif/ahb_lite_subordinate.ppif}); my $isf=$r->{generated_ial1}{text}; my $fsm=$r->{generated_ial0}{files}{q{ahb_lite_subordinate.fsm}}; for my $probe ([q{isf_output_reset_default}, qr/output HREADYOUT \(reset 1\) \(default 1\)/], [q{fsm_two_cycle_error_state}, qr/error_complete/], [q{fsm_hresp_error_drive}, qr/HRESP> 1/]) { my ($name,$re)=@$probe; print "$name\n" if (($name =~ /^isf/ ? $isf : $fsm) =~ $re); }'
 ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif

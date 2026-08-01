@@ -65,14 +65,19 @@
   Leaf `.23` adds the distinct `maintained_reference` lifecycle for unique
   product-sized prose: bounded parts and direct mandatory index, exact fresh
   aggregate-change authority, and no decorative fixed aggregate cap. The
-  mdBook is the first classified surface; `docs/ISF_SPEC.md` remains a candidate
-  under its existing focused-document debt until its separately owned semantic
-  partition lands.
+  mdBook is the first classified surface. Leaf `.13` now promotes the three
+  maintained ISF contracts into a second such surface: bounded landings route
+  directly to eleven stable semantic parts, with exact activation-source
+  retrieval and fresh aggregate authority.
   Leaf `.15` now makes every common JSONL registry self-bounded by data-record,
   whole-file-byte, and raw-record-byte declarations under tighter portable
   hard caps; scalar byte limits, identifier domains, array cardinalities, and
   maximum Markdown content-line bytes close the remaining displacement paths.
   No predecessor pressure ceiling is widened.
+  Leaf `.13` also generates one complete focused/ancillary classification index,
+  keeps the live `bin/fsmgen` import map as current architecture reference, and
+  returns every focused pressure axis below warning without increasing an
+  enforcement ceiling.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---

@@ -680,6 +680,11 @@ The ISF live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
 and present.
 
+Use [the ISF specification landing](../../ISF_SPEC.md) to choose the bounded
+language, downstream-integration, or public-interface topic you need. All
+eleven semantic parts are direct links from that landing, while exact
+pre-partition sources remain digest-verified in Git history.
+
 The public `--emit-schedule-json` path is audited to emit the same
 report as the in-process scheduler with clean stderr.
 

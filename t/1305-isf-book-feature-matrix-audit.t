@@ -15,15 +15,38 @@ my $repo_root = File::Spec->rel2abs(File::Spec->catdir($FindBin::Bin, '..'));
 my $matrix_path = 'docs/book/src/13k-isf-feature-support-matrix.md';
 my $composition_path = 'docs/book/src/13f-composition.md';
 my $backlog_path = 'docs/book/src/14-feature-backlog.md';
-my $downstream_path = 'docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md';
+my @backlog_topic_paths = map {
+    sprintf 'docs/book/src/14%s-%s.md', $_->[0], $_->[1]
+} (
+    ['a', 'language-and-data'],
+    ['b', 'composition-backlog'],
+    ['c', 'actor-network-orchestration'],
+    ['d', 'ial2-foundations'],
+    ['e', 'hial-vial-verification'],
+    ['f', 'axi-manager-core'],
+    ['g', 'axi-dynamic-identity'],
+    ['h', 'protocol-profiles-and-apb'],
+    ['i', 'ahb-and-integration'],
+    ['j', 'extended-axi'],
+    ['k', 'isf-language-and-scheduling'],
+    ['l', 'backends-validation-and-apis'],
+);
+my @downstream_paths = qw(
+    docs/isf-spec/10-downstream-readiness-source.md
+    docs/isf-spec/11-downstream-actor-transactions.md
+    docs/isf-spec/12-downstream-rules-artifacts-reports.md
+    docs/isf-spec/13-downstream-diagnostics-conformance.md
+);
 my $design_path = 'docs/ISF_ATL_DESIGN_PROPOSAL.md';
 my $task_tree_path = 'docs/TASK_TREE.md';
 my $matrix = read_repo_file($matrix_path);
 my $matrix_flat = $matrix;
 $matrix_flat =~ s/\s+/ /g;
 my $composition = read_repo_file($composition_path);
-my $backlog = read_repo_file($backlog_path);
-my $downstream = read_repo_file($downstream_path);
+my $backlog_landing = read_repo_file($backlog_path);
+my $backlog = join '', $backlog_landing,
+    map { read_repo_file($_) } @backlog_topic_paths;
+my $downstream = join '', map { read_repo_file($_) } @downstream_paths;
 my $design = read_repo_file($design_path);
 my $task_tree = read_repo_file($task_tree_path);
 my $summary = read_repo_file('docs/book/src/SUMMARY.md');
@@ -46,18 +69,24 @@ like(
     'ISF feature backlog chapter is reachable from the mdBook summary',
 );
 
-my @book_backlog_categories = $backlog =~ /^## ([^\n]+)$/mg;
+my @book_backlog_topics = $backlog_landing =~ /^- \[([^\]]+)\]\(14[a-l]-[^\)]+\)$/mg;
 is_deeply(
-    \@book_backlog_categories,
+    \@book_backlog_topics,
     [
-        'Language Ergonomics',
-        'Aggregate Types And Data',
+        'Language and Data',
         'Composition',
-        'Intent Scheduling Format',
-        'Backends And Validation',
-        'Embedding And Public APIs',
+        'Actor Network Orchestration',
+        'IAL2 Foundations',
+        'HIAL/VIAL Verification',
+        'AXI Manager Core',
+        'AXI Dynamic Identity',
+        'Protocol Profiles and APB',
+        'AHB and Integration',
+        'Extended AXI',
+        'ISF Language and Scheduling',
+        'Backends, Validation, and Public APIs',
     ],
-    'feature backlog category set is explicit',
+    'feature backlog landing exposes the complete stable-topic set',
 );
 
 like(
@@ -66,7 +95,15 @@ like(
     'task tree documents book-facing feature backlog owner coverage',
 );
 
-for my $category (@book_backlog_categories) {
+my @owner_categories = (
+    'Language Ergonomics',
+    'Aggregate Types And Data',
+    'Composition',
+    'Intent Scheduling Format',
+    'Backends And Validation',
+    'Embedding And Public APIs',
+);
+for my $category (@owner_categories) {
     like(
         $task_tree,
         qr{\|\s*`\Q$category\E`\s*\|},

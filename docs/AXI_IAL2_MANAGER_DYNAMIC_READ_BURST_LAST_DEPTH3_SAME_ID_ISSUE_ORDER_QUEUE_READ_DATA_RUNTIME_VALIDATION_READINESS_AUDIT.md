@@ -75,7 +75,17 @@ Against the unmodified repo code, the candidate failed closed at the expected
 local diagnostic:
 
 ```text
-AXI manager capacity/status IAL2 contract read_data.read dynamic issue-order queue coverage requires generated dynamic read issue-order queue single-beat response_demux with capture_scope single-beat and no burst_length metadata, generated dynamic read issue-order queue burst-last response_demux with capture_scope last-beat and no burst_length metadata over two dynamic transactions or one depth-3 all-dynamic queue, generated dynamic read issue-order queue burst-last response_demux with capture_scope last-beat and report-only/runtime-assertion burst_length metadata over two dynamic transactions, generated dynamic read issue-order queue burst-last response_demux with capture_scope last-beat and report-only burst_length metadata over one depth-3 all-dynamic queue, or generated dynamic read issue-order queue burst-last response_demux with capture_scope multi-beat and runtime-assertion burst_length metadata over two dynamic transactions in this slice
+AXI manager capacity/status IAL2 contract read_data.read dynamic issue-order queue coverage
+requires generated dynamic read issue-order queue single-beat response_demux with capture_scope
+single-beat and no burst_length metadata, generated dynamic read issue-order queue burst-last
+response_demux with capture_scope last-beat and no burst_length metadata over two dynamic
+transactions or one depth-3 all-dynamic queue, generated dynamic read issue-order queue
+burst-last response_demux with capture_scope last-beat and report-only/runtime-assertion
+burst_length metadata over two dynamic transactions, generated dynamic read issue-order queue
+burst-last response_demux with capture_scope last-beat and report-only burst_length metadata
+over one depth-3 all-dynamic queue, or generated dynamic read issue-order queue burst-last
+response_demux with capture_scope multi-beat and runtime-assertion burst_length metadata over
+two dynamic transactions in this slice
 ```
 
 A second RAM-guarded probe used a temporary out-of-tree module overlay that changed

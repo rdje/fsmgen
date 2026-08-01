@@ -38,6 +38,7 @@ semantic homes; within each range, original order and bytes remain unchanged.
 The landing page retains the established backend deep-link as a compatibility
 route. This keeps future edits discoverable by subject instead of reviving a
 single chronological monolith.
+
 ## 2026-08-01: The roadmap archives the whole activation object, not only its chronology suffix
 
 The bounded roadmap rewrites strategic material as well as removing the
@@ -54,3 +55,21 @@ bounds leave deliberate growth room without restoring the former transition
 ceiling. An executed verifier binds the descriptor to exact history and rejects
 missing strategic sections, missing canonical routes, pressure regression, or
 a revived `Current intent` chronology sink.
+
+## 2026-08-01: Focused-document containment separates browse topology from source membership
+
+The root `docs/*.md` collection remains a fixed membership surface, while its
+complete classification index lives at `docs/index/FOCUSED_DOCUMENTS.md` under
+a separate generated-projection surface. That avoids making the index count
+itself or requiring a thousand-path registry record. One deterministic
+generator expands the two registered source collections, assigns every member
+exactly once by audience/lifecycle/owner/role, and rejects unknown filenames.
+
+The ISF language, downstream, and public contracts form a distinct
+`maintained_reference` over bounded landing pages and eleven semantic parts.
+Partition selection considered every pressure axis: the public contract was
+below the line target but above the byte warning, while the root collection's
+aggregate and file-count warning states remained independent. Exact activation
+comparison permits only six declared link rewrites, each replacing a removed
+test path with its surviving owning task record; all other source text changes
+only by the deterministic one-directory link adjustment.

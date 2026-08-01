@@ -79,6 +79,7 @@ live_document_files=(
   doctrine/live_document_size/ledger_manifests.jsonl
   doctrine/live_document_size/evidence_maps.jsonl
   doctrine/live_document_size/version_retention_contracts.jsonl
+  doctrine/live_document_size/isf_reference_partitions.jsonl
   doctrine/readme_entrypoint/routed_destinations.jsonl
   doctrine/task_tree/index_archives.jsonl
   scripts/check_live_document_size.sh
@@ -87,6 +88,8 @@ live_document_files=(
   scripts/check_live_document_route_candidates.pl
   scripts/check_live_document_resulting_tree.pl
   scripts/run_live_document_adapter_verifiers.pl
+  scripts/check_isf_reference_partitions.pl
+  scripts/focused_document_index.pl
 )
 for file in "${live_document_files[@]}"; do
   if [[ -f "${file}" ]]; then
@@ -113,6 +116,8 @@ for file in "${knowledge_map_files[@]}"; do
 done
 
 for file in \
+    scripts/check_isf_reference_partitions.pl \
+    scripts/focused_document_index.pl \
     knowledge-map/scripts/knowledge_map.pl \
     knowledge-map/scripts/gen_knowledge_map.sh \
     knowledge-map/scripts/check_knowledge_map.sh \
@@ -123,6 +128,12 @@ for file in \
     note "${file} is not executable"
   fi
 done
+
+if grep -q 'focused_document_index.pl' .githooks/pre-commit; then
+  ok ".githooks/pre-commit refreshes the focused-document index"
+else
+  note ".githooks/pre-commit does not refresh the focused-document index"
+fi
 
 if grep -q 'KNOWLEDGE-MAP|knowledge-map/scripts/check_knowledge_map.sh' scripts/check_doctrines.sh; then
   ok "doctrine registry includes bounded Knowledge Map verification"

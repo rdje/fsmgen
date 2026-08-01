@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1104** facts · **5582** unique questions · **5748** answer occurrences · **117** topic shards.
+> **1104** facts · **5585** unique questions · **5751** answer occurrences · **117** topic shards.
 
 Query first:
 
@@ -26,7 +26,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `axi-manager` | 2 | 10 | [`axi-manager.md`](knowledge-map/generated/axi-manager.md) |
 | `axi-valid` | 1 | 5 | [`axi-valid.md`](knowledge-map/generated/axi-valid.md) |
 | `backend-language` | 10 | 51 | [`backend-language.md`](knowledge-map/generated/backend-language.md) |
-| `bin-fsmgen` | 1 | 9 | [`bin-fsmgen.md`](knowledge-map/generated/bin-fsmgen.md) |
+| `bin-fsmgen` | 1 | 10 | [`bin-fsmgen.md`](knowledge-map/generated/bin-fsmgen.md) |
 | `capability-manifest` | 1 | 3 | [`capability-manifest.md`](knowledge-map/generated/capability-manifest.md) |
 | `check-json` | 1 | 3 | [`check-json.md`](knowledge-map/generated/check-json.md) |
 | `ci-perl` | 1 | 6 | [`ci-perl.md`](knowledge-map/generated/ci-perl.md) |
@@ -103,7 +103,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `isf-storage` | 1 | 4 | [`isf-storage.md`](knowledge-map/generated/isf-storage.md) |
 | `isf-verification` | 2 | 9 | [`isf-verification.md`](knowledge-map/generated/isf-verification.md) |
 | `isf-while` | 1 | 4 | [`isf-while.md`](knowledge-map/generated/isf-while.md) |
-| `live-document` | 1 | 43 | [`live-document.md`](knowledge-map/generated/live-document.md) |
+| `live-document` | 1 | 45 | [`live-document.md`](knowledge-map/generated/live-document.md) |
 | `loop-early` | 1 | 5 | [`loop-early.md`](knowledge-map/generated/loop-early.md) |
 | `lte-digital` | 1 | 5 | [`lte-digital.md`](knowledge-map/generated/lte-digital.md) |
 | `mdbook-test` | 1 | 5 | [`mdbook-test.md`](knowledge-map/generated/mdbook-test.md) |

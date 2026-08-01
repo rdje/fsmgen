@@ -78,9 +78,136 @@ Current baseline:
   [perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm](perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm).
   The shipped VHDL surface remains scoped by the backend/API validation frontier and
   does not imply GHDL validation availability.
-- The top-level manifest owner [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm) is now intentionally thin: it is a small assembler over dedicated top-level public section builders in [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm), [perl/FSM/Support/SupportAccountingSection.pm](perl/FSM/Support/SupportAccountingSection.pm), [perl/FSM/Support/DiagnosticsSection.pm](perl/FSM/Support/DiagnosticsSection.pm), [perl/FSM/Support/SemanticExportsSection.pm](perl/FSM/Support/SemanticExportsSection.pm), [perl/FSM/Support/SemanticIntrospectionSection.pm](perl/FSM/Support/SemanticIntrospectionSection.pm), [perl/FSM/Support/BackendValidationSection.pm](perl/FSM/Support/BackendValidationSection.pm), [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm), [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm), and [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm), while [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm) continues to own the bounded manifest shell and grouped discovery tables.
-- The machine-readable support/API surface is now reachable through [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm), which builds `bin/fsmgen --capability-manifest` JSON from [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm), the bounded top-level manifest shell contract in [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm), the bounded manifest-facing `embedding` section contract in [perl/FSM/Support/EmbeddingContract.pm](perl/FSM/Support/EmbeddingContract.pm), the bounded manifest-facing `diagnostics` section contract in [perl/FSM/Support/DiagnosticsContract.pm](perl/FSM/Support/DiagnosticsContract.pm), the bounded manifest-facing `producer` section contract in [perl/FSM/Support/ProducerContract.pm](perl/FSM/Support/ProducerContract.pm), the bounded manifest-facing `semantic_exports` section contract in [perl/FSM/Support/SemanticExportsContract.pm](perl/FSM/Support/SemanticExportsContract.pm), the bounded manifest-facing `backend_validation` section contract in [perl/FSM/Support/BackendValidationContract.pm](perl/FSM/Support/BackendValidationContract.pm), the bounded manifest-facing `documentation` section contract in [perl/FSM/Support/DocumentationContract.pm](perl/FSM/Support/DocumentationContract.pm), the bounded manifest-facing `language_surface` section contract in [perl/FSM/Support/LanguageSurfaceContract.pm](perl/FSM/Support/LanguageSurfaceContract.pm), the stable diagnostic-code registry in [perl/FSM/Support/DiagnosticCodes.pm](perl/FSM/Support/DiagnosticCodes.pm), the bounded manifest-facing diagnostic-code registry contract in [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](perl/FSM/Support/DiagnosticCodeRegistryContract.pm), the bounded support-accounting contract in [perl/FSM/Support/SupportAccountingContract.pm](perl/FSM/Support/SupportAccountingContract.pm), the bounded shared support-accounting match-object contract in [perl/FSM/Support/SupportAccountingMatchContract.pm](perl/FSM/Support/SupportAccountingMatchContract.pm), the bounded shared public report-producer object contract in [perl/FSM/Support/ReportProducerContract.pm](perl/FSM/Support/ReportProducerContract.pm), the bounded shared public report-source object contract in [perl/FSM/Support/ReportSourceContract.pm](perl/FSM/Support/ReportSourceContract.pm), the bounded shared public report-command object contract in [perl/FSM/Support/ReportCommandContract.pm](perl/FSM/Support/ReportCommandContract.pm), the bounded shared public report-generated-output object contract in [perl/FSM/Support/ReportGeneratedOutputContract.pm](perl/FSM/Support/ReportGeneratedOutputContract.pm), the bounded check-JSON report builder in [perl/FSM/Support/CheckDiagnostics.pm](perl/FSM/Support/CheckDiagnostics.pm), the bounded check-JSON key-presence contract in [perl/FSM/Support/CheckDiagnosticsContract.pm](perl/FSM/Support/CheckDiagnosticsContract.pm), the bounded shared public failure-diagnostic object contract in [perl/FSM/Support/CheckFailureDiagnosticContract.pm](perl/FSM/Support/CheckFailureDiagnosticContract.pm), the bounded check-JSON success-result object contract in [perl/FSM/Support/CheckResultContract.pm](perl/FSM/Support/CheckResultContract.pm), the bounded normalized semantic report builder in [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm), the bounded normalized semantic composition-summary object contract in [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm), the bounded normalized semantic explicit-system-contract object contract in [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm), the bounded normalized semantic forward-IR object contract in [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](perl/FSM/Support/NormalizedSemanticForwardIRContract.pm), the bounded normalized semantic lowered-RTL object contract in [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm), the bounded normalized semantic intent-hir object contract in [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm), the bounded normalized semantic module-summary object contract in [perl/FSM/Support/NormalizedSemanticModuleContract.pm](perl/FSM/Support/NormalizedSemanticModuleContract.pm), the bounded normalized semantic signal-analysis object contract in [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm), the bounded normalized semantic system-contract object contract in [perl/FSM/Support/NormalizedSemanticSystemContract.pm](perl/FSM/Support/NormalizedSemanticSystemContract.pm), the bounded normalized semantic symbol-contract object contract in [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](perl/FSM/Support/NormalizedSemanticSymbolContract.pm), the bounded normalized semantic success-payload object contract in [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPayloadContract.pm), the bounded normalized semantic key-presence contract in [perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticReportContract.pm), the optional external HDL validation lane in [perl/FSM/Support/HDLExternalValidation.pm](perl/FSM/Support/HDLExternalValidation.pm), the bounded external validation contract in [perl/FSM/Support/HDLExternalValidationContract.pm](perl/FSM/Support/HDLExternalValidationContract.pm), the bounded sanitized composition-report contract in [perl/FSM/Support/CompositionReportContract.pm](perl/FSM/Support/CompositionReportContract.pm), the bounded typed-extension/context contract in [perl/FSM/Support/ExtensionContract.pm](perl/FSM/Support/ExtensionContract.pm), the bounded nested `HDLGenerator` `source_info` contract in [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](perl/FSM/Support/HDLGeneratorSourceInfoContract.pm), the bounded nested `HDLGenerator` `module_info` contract in [perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](perl/FSM/Support/HDLGeneratorModuleInfoContract.pm), the bounded nested `HDLGenerator` `statistics` contract in [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](perl/FSM/Support/HDLGeneratorStatisticsContract.pm), the bounded shell-only `HDLGenerator` `composition_plan` contract in [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm), the bounded shell-only `HDLGenerator` `composition_spec` contract in [perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm), the bounded shell-only `HDLGenerator` `fsm_module` contract in [perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](perl/FSM/Support/HDLGeneratorFSMModuleContract.pm), the bounded shell-only `HDLGenerator` `raw_ast` contract in [perl/FSM/Support/HDLGeneratorRawASTContract.pm](perl/FSM/Support/HDLGeneratorRawASTContract.pm), the bounded shell-only `HDLGenerator` `resolved_package_imports` contract in [perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm), and the bounded in-process `HDLGenerator` result contract in [perl/FSM/Support/HDLGeneratorResultContract.pm](perl/FSM/Support/HDLGeneratorResultContract.pm).
-- The bounded in-process `HDLGenerator` result contract now also makes both halves of the compatibility seam explicit: `fsm_module`, `raw_ast`, `resolved_package_imports`, `composition_spec`, `composition_plan`, and raw `composition_report` are compatibility shells/artifacts for in-process Perl embedders, `source_info`, `module_info`, and `statistics` advertise bounded stable subsurfaces rather than whole-hash promises, `source_info`, `module_info`, and `statistics` now each advertise their own nested-object contract owner, `composition_plan`, `composition_spec`, `fsm_module`, `raw_ast`, and `resolved_package_imports` now also each advertise their own shell-only contract owner, and the top-level `intent_hir` / `lowered_rtl_ir` / `structural_rtl_ir` hashes are explicitly treated as reused normalized-semantic shell contracts rather than separately stabilized full trees; structured downstream consumers should stay on those advertised semantic/summary paths or the sanitized `semantic_exports.normalized_semantic_json.semantic.composition.provenance_report` fragment advertised through [perl/FSM/Support/CompositionReportContract.pm](perl/FSM/Support/CompositionReportContract.pm).
+- The top-level manifest owner
+  [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm) is now
+  intentionally thin: it is a small assembler over dedicated top-level public section builders
+  in [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm),
+  [perl/FSM/Support/SupportAccountingSection.pm](perl/FSM/Support/SupportAccountingSection.pm),
+  [perl/FSM/Support/DiagnosticsSection.pm](perl/FSM/Support/DiagnosticsSection.pm),
+  [perl/FSM/Support/SemanticExportsSection.pm](perl/FSM/Support/SemanticExportsSection.pm),
+  [perl/FSM/Support/SemanticIntrospectionSection.pm](perl/FSM/Support/SemanticIntrospectionSect
+  ion.pm),
+  [perl/FSM/Support/BackendValidationSection.pm](perl/FSM/Support/BackendValidationSection.pm),
+  [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm),
+  [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm), and
+  [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm), while
+  [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.
+  pm) continues to own the bounded manifest shell and grouped discovery tables.
+- The machine-readable support/API surface is now reachable through
+  [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm), which
+  builds `bin/fsmgen --capability-manifest` JSON from
+  [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm), the bounded
+  top-level manifest shell contract in
+  [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.
+  pm), the bounded manifest-facing `embedding` section contract in
+  [perl/FSM/Support/EmbeddingContract.pm](perl/FSM/Support/EmbeddingContract.pm), the bounded
+  manifest-facing `diagnostics` section contract in
+  [perl/FSM/Support/DiagnosticsContract.pm](perl/FSM/Support/DiagnosticsContract.pm), the
+  bounded manifest-facing `producer` section contract in
+  [perl/FSM/Support/ProducerContract.pm](perl/FSM/Support/ProducerContract.pm), the bounded
+  manifest-facing `semantic_exports` section contract in
+  [perl/FSM/Support/SemanticExportsContract.pm](perl/FSM/Support/SemanticExportsContract.pm),
+  the bounded manifest-facing `backend_validation` section contract in
+  [perl/FSM/Support/BackendValidationContract.pm](perl/FSM/Support/BackendValidationContract.pm
+  ), the bounded manifest-facing `documentation` section contract in
+  [perl/FSM/Support/DocumentationContract.pm](perl/FSM/Support/DocumentationContract.pm), the
+  bounded manifest-facing `language_surface` section contract in
+  [perl/FSM/Support/LanguageSurfaceContract.pm](perl/FSM/Support/LanguageSurfaceContract.pm),
+  the stable diagnostic-code registry in
+  [perl/FSM/Support/DiagnosticCodes.pm](perl/FSM/Support/DiagnosticCodes.pm), the bounded
+  manifest-facing diagnostic-code registry contract in
+  [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](perl/FSM/Support/DiagnosticCodeRegistryC
+  ontract.pm), the bounded support-accounting contract in
+  [perl/FSM/Support/SupportAccountingContract.pm](perl/FSM/Support/SupportAccountingContract.pm
+  ), the bounded shared support-accounting match-object contract in
+  [perl/FSM/Support/SupportAccountingMatchContract.pm](perl/FSM/Support/SupportAccountingMatchC
+  ontract.pm), the bounded shared public report-producer object contract in
+  [perl/FSM/Support/ReportProducerContract.pm](perl/FSM/Support/ReportProducerContract.pm), the
+  bounded shared public report-source object contract in
+  [perl/FSM/Support/ReportSourceContract.pm](perl/FSM/Support/ReportSourceContract.pm), the
+  bounded shared public report-command object contract in
+  [perl/FSM/Support/ReportCommandContract.pm](perl/FSM/Support/ReportCommandContract.pm), the
+  bounded shared public report-generated-output object contract in
+  [perl/FSM/Support/ReportGeneratedOutputContract.pm](perl/FSM/Support/ReportGeneratedOutputCon
+  tract.pm), the bounded check-JSON report builder in
+  [perl/FSM/Support/CheckDiagnostics.pm](perl/FSM/Support/CheckDiagnostics.pm), the bounded
+  check-JSON key-presence contract in
+  [perl/FSM/Support/CheckDiagnosticsContract.pm](perl/FSM/Support/CheckDiagnosticsContract.pm),
+  the bounded shared public failure-diagnostic object contract in
+  [perl/FSM/Support/CheckFailureDiagnosticContract.pm](perl/FSM/Support/CheckFailureDiagnosticC
+  ontract.pm), the bounded check-JSON success-result object contract in
+  [perl/FSM/Support/CheckResultContract.pm](perl/FSM/Support/CheckResultContract.pm), the
+  bounded normalized semantic report builder in
+  [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm),
+  the bounded normalized semantic composition-summary object contract in
+  [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemant
+  icCompositionContract.pm), the bounded normalized semantic explicit-system-contract object
+  contract in
+  [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](perl/FSM/Support/NormalizedSem
+  anticExplicitSystemContract.pm), the bounded normalized semantic forward-IR object contract
+  in
+  [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](perl/FSM/Support/NormalizedSemantic
+  ForwardIRContract.pm), the bounded normalized semantic lowered-RTL object contract in
+  [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](perl/FSM/Support/NormalizedSeman
+  ticLoweredRTLIRContract.pm), the bounded normalized semantic intent-hir object contract in
+  [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](perl/FSM/Support/NormalizedSemantic
+  IntentHIRContract.pm), the bounded normalized semantic module-summary object contract in
+  [perl/FSM/Support/NormalizedSemanticModuleContract.pm](perl/FSM/Support/NormalizedSemanticMod
+  uleContract.pm), the bounded normalized semantic signal-analysis object contract in
+  [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](perl/FSM/Support/NormalizedSem
+  anticSignalAnalysisContract.pm), the bounded normalized semantic system-contract object
+  contract in
+  [perl/FSM/Support/NormalizedSemanticSystemContract.pm](perl/FSM/Support/NormalizedSemanticSys
+  temContract.pm), the bounded normalized semantic symbol-contract object contract in
+  [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](perl/FSM/Support/NormalizedSemanticSym
+  bolContract.pm), the bounded normalized semantic success-payload object contract in
+  [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPa
+  yloadContract.pm), the bounded normalized semantic key-presence contract in
+  [perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticRep
+  ortContract.pm), the optional external HDL validation lane in
+  [perl/FSM/Support/HDLExternalValidation.pm](perl/FSM/Support/HDLExternalValidation.pm), the
+  bounded external validation contract in
+  [perl/FSM/Support/HDLExternalValidationContract.pm](perl/FSM/Support/HDLExternalValidationCon
+  tract.pm), the bounded sanitized composition-report contract in
+  [perl/FSM/Support/CompositionReportContract.pm](perl/FSM/Support/CompositionReportContract.pm
+  ), the bounded typed-extension/context contract in
+  [perl/FSM/Support/ExtensionContract.pm](perl/FSM/Support/ExtensionContract.pm), the bounded
+  nested `HDLGenerator` `source_info` contract in
+  [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](perl/FSM/Support/HDLGeneratorSourceInfoC
+  ontract.pm), the bounded nested `HDLGenerator` `module_info` contract in
+  [perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](perl/FSM/Support/HDLGeneratorModuleInfoC
+  ontract.pm), the bounded nested `HDLGenerator` `statistics` contract in
+  [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](perl/FSM/Support/HDLGeneratorStatisticsC
+  ontract.pm), the bounded shell-only `HDLGenerator` `composition_plan` contract in
+  [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](perl/FSM/Support/HDLGeneratorCompos
+  itionPlanContract.pm), the bounded shell-only `HDLGenerator` `composition_spec` contract in
+  [perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](perl/FSM/Support/HDLGeneratorCompos
+  itionSpecContract.pm), the bounded shell-only `HDLGenerator` `fsm_module` contract in
+  [perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](perl/FSM/Support/HDLGeneratorFSMModuleCon
+  tract.pm), the bounded shell-only `HDLGenerator` `raw_ast` contract in
+  [perl/FSM/Support/HDLGeneratorRawASTContract.pm](perl/FSM/Support/HDLGeneratorRawASTContract.
+  pm), the bounded shell-only `HDLGenerator` `resolved_package_imports` contract in
+  [perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](perl/FSM/Support/HDLGenerato
+  rResolvedPackageImportsContract.pm), and the bounded in-process `HDLGenerator` result
+  contract in
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](perl/FSM/Support/HDLGeneratorResultContract.
+  pm).
+- The bounded in-process `HDLGenerator` result contract now also makes both halves of the
+  compatibility seam explicit: `fsm_module`, `raw_ast`, `resolved_package_imports`,
+  `composition_spec`, `composition_plan`, and raw `composition_report` are compatibility
+  shells/artifacts for in-process Perl embedders, `source_info`, `module_info`, and
+  `statistics` advertise bounded stable subsurfaces rather than whole-hash promises,
+  `source_info`, `module_info`, and `statistics` now each advertise their own nested-object
+  contract owner, `composition_plan`, `composition_spec`, `fsm_module`, `raw_ast`, and
+  `resolved_package_imports` now also each advertise their own shell-only contract owner, and
+  the top-level `intent_hir` / `lowered_rtl_ir` / `structural_rtl_ir` hashes are explicitly
+  treated as reused normalized-semantic shell contracts rather than separately stabilized full
+  trees; structured downstream consumers should stay on those advertised semantic/summary paths
+  or the sanitized
+  `semantic_exports.normalized_semantic_json.semantic.composition.provenance_report` fragment
+  advertised through
+  [perl/FSM/Support/CompositionReportContract.pm](perl/FSM/Support/CompositionReportContract.pm
+  ).
 - That same machine-readable support/API surface now also includes the bounded normalized semantic structural-RTL object contract in [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm).
 - The normalized semantic support surface now also reaches the bounded PPIF
   protocol-intent bundle contract in
@@ -430,7 +557,19 @@ Interpretation:
   multi-register, and bounded generalized register-set timing work, so future
   APB decode, register, sideband, width, and back-to-back policy growth should
   continue to land behind exact task-tree leaves,
-- [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) remains a major `R11` planning hotspot because source-expression resolution, aggregate shape checks, carrier allocation, and binding-type preservation still meet there, but open/numeric actual literal policy now has an explicit owner in [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm), source-expression parsing/spec collection now has an explicit owner in [perl/FSM/Composition/SourceExpressionSpecSupport.pm](perl/FSM/Composition/SourceExpressionSpecSupport.pm), parameter/generic scalar plus aggregate value normalization and bounded expression folding now has an explicit neutral owner in [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm), and child override-value symbol resolution now has a post-import owner in [perl/FSM/Composition/ParameterOverrideResolver.pm](perl/FSM/Composition/ParameterOverrideResolver.pm),
+- [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
+  remains a major `R11` planning hotspot because source-expression resolution, aggregate shape
+  checks, carrier allocation, and binding-type preservation still meet there, but open/numeric
+  actual literal policy now has an explicit owner in
+  [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm),
+  source-expression parsing/spec collection now has an explicit owner in
+  [perl/FSM/Composition/SourceExpressionSpecSupport.pm](perl/FSM/Composition/SourceExpressionSp
+  ecSupport.pm), parameter/generic scalar plus aggregate value normalization and bounded
+  expression folding now has an explicit neutral owner in
+  [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm), and child
+  override-value symbol resolution now has a post-import owner in
+  [perl/FSM/Composition/ParameterOverrideResolver.pm](perl/FSM/Composition/ParameterOverrideRes
+  olver.pm),
 - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) is now a real mid-sized owner in its own right rather than a facade wrapper, which is a healthier failure mode than leaving the same frontend mass hidden inside `HDLGenerator`,
 - the active `R11` change-risk gravity is still the direct backend stack plus
   the package/type layer and a few large composition builders, not the thinned
@@ -1477,9 +1616,79 @@ It behaves like a hook system, not a competing architecture.
   one feature family has stopped moving.
 - [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm) is now a thin synthesis-context shell at `75` lines, so the remaining backend gravity lives in the broader `EnableGraph::*` owner family rather than the shell package itself.
 - The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
-- [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) is no longer the largest reachable file after [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm) took ownership of literal actual policy and [perl/FSM/Composition/SourceExpressionSpecSupport.pm](perl/FSM/Composition/SourceExpressionSpecSupport.pm) took ownership of source-expression parsing/spec collection. [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm) is the same good shape at smaller scale for direct, external RTL, and generated-child parameter/generic scalar, aggregate, scalar-expression, leafwise aggregate-expression, and unary aggregate complement values, and [perl/FSM/Composition/ParameterOverrideResolver.pm](perl/FSM/Composition/ParameterOverrideResolver.pm) now owns symbolic override-value resolution, but `LinkedPlanBuilder` remains a real composition hotspot because source-expression resolution, aggregate shape checks, carrier allocation, and binding-type preservation still meet there.
-- [perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm), [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm), [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](perl/FSM/Synthesis/EnableGraph/SignalSupport.pm), [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm), [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm), [perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm](perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm) now carry more of the remaining backend gravity than any single shell package.
-- The remaining `EnableGraph`-family gravity is now narrower than before: module/state/declaration planning, assignment-analysis / mux-emission support, enable-family support, AST capture/conversion support, AST rendering/classification, signal/intermediate support, and factorization policy all have dedicated owners now, and the direct first-pass AST-factorization pipeline plus the iterative fixpoint loop-state/pass helper/pass execution families do too. So the next honest seams are no longer “who owns the first factorization pass,” “who owns the fixpoint pass helpers,” “who owns the fixpoint aggregate loop-state contract,” “who owns the consolidated intermediate dependency graph mechanics,” “who owns the old direct consolidated block shell,” “who owns the old direct consolidated emitter shell,” “who owns the live consolidated intermediate stage-6/prescan handoff,” “who owns the whole post-flattening SystemVerilog assembly sequence,” or “who owns the pre-stage scaffold/declaration/enable/prescan sequence”; they are the remaining lower-level direct-backend planning/stage coordination and broader direct-backend convergence rather than the old direct planning, capture, assembly, or WEN/EN clusters.
+- [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) is no
+  longer the largest reachable file after
+  [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm)
+  took ownership of literal actual policy and
+  [perl/FSM/Composition/SourceExpressionSpecSupport.pm](perl/FSM/Composition/SourceExpressionSp
+  ecSupport.pm) took ownership of source-expression parsing/spec collection.
+  [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm) is the same good shape
+  at smaller scale for direct, external RTL, and generated-child parameter/generic scalar,
+  aggregate, scalar-expression, leafwise aggregate-expression, and unary aggregate complement
+  values, and
+  [perl/FSM/Composition/ParameterOverrideResolver.pm](perl/FSM/Composition/ParameterOverrideRes
+  olver.pm) now owns symbolic override-value resolution, but `LinkedPlanBuilder` remains a real
+  composition hotspot because source-expression resolution, aggregate shape checks, carrier
+  allocation, and binding-type preservation still meet there.
+- [perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](perl/FSM/Synthesis/EnableGraph
+  /FactorizationPolicySupport.pm),
+  [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](perl/FSM/Synthesis/EnableGraph/Facto
+  rizationSupport.pm),
+  [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](perl/FSM/Synthesis/EnableGraph/SignalSuppor
+  t.pm),
+  [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](perl/FSM/Synthesis/EnableGraph/
+  IntermediateSignalSupport.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](perl/FSM/HDL/F
+  lattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](perl/FS
+  M/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](perl/FSM/
+  HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.
+  pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSuppo
+  rt.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](
+  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm]
+  (perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm)
+  ,
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](p
+  erl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.
+  pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSuppo
+  rt.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSuppo
+  rt.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparatio
+  nSupport.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](
+  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm]
+  (perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm)
+  ,
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm
+  ](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.p
+  m),
+  [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](perl/FSM/HDL/Factorization/Fixpoint
+  /LoopStateSupport.pm),
+  [perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm](perl/FSM/HDL/Factorization/Fixp
+  oint/PassExecutionSupport.pm), and
+  [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](perl/FSM/HDL/Factorization/Fixpoint/Pass
+  Support.pm) now carry more of the remaining backend gravity than any single shell package.
+- The remaining `EnableGraph`-family gravity is now narrower than before:
+  module/state/declaration planning, assignment-analysis / mux-emission support, enable-family
+  support, AST capture/conversion support, AST rendering/classification, signal/intermediate
+  support, and factorization policy all have dedicated owners now, and the direct first-pass
+  AST-factorization pipeline plus the iterative fixpoint loop-state/pass helper/pass execution
+  families do too. So the next honest seams are no longer “who owns the first factorization
+  pass,” “who owns the fixpoint pass helpers,” “who owns the fixpoint aggregate
+  loop-state contract,” “who owns the consolidated intermediate dependency graph
+  mechanics,” “who owns the old direct consolidated block shell,” “who owns the old
+  direct consolidated emitter shell,” “who owns the live consolidated intermediate
+  stage-6/prescan handoff,” “who owns the whole post-flattening SystemVerilog assembly
+  sequence,” or “who owns the pre-stage scaffold/declaration/enable/prescan sequence”;
+  they are the remaining lower-level direct-backend planning/stage coordination and broader
+  direct-backend convergence rather than the old direct planning, capture, assembly, or WEN/EN
+  clusters.
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) is now a smaller sequencing handoff that keeps per-run reset, module attachment, recursive flattening, and final post-flattening assembly delegation.
 - `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much, even though the generated-module `module_info` family now has its own explicit owner.
 - `EnableGraph` no longer owns AST rendering/operator-classification directly,

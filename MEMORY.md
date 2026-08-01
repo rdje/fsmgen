@@ -6,14 +6,16 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13:
-  activate focused-document containment`).
-- active_work_unit: `.13` alone is active from clean `.10` commit `3b71cb0b1`.
-- current_state: the focused source is 1,005 files / 212,294 lines / 9,400,050
-  bytes, led by the 6,254-line ISF specification and the independent 7,536-byte
-  BIN_FSMGEN import-tree line; 12 ancillary files remain healthy.
-- next_action: classify every focused and ancillary document by audience and
-  lifecycle, design the complete bounded indexes, then partition only stable-
-  topic semantic outliers while preserving unique maintained content.
+  bound focused document collections`).
+- active_work_unit: `.13` is complete; containment `.12` waits on director-
+  deferred `.26`, so that tree has no PNT-eligible leaf.
+- current_state: all 1,005 focused and 12 ancillary documents are classified in
+  one bounded generated index. Three exact ISF sources now route through three
+  landings and eleven stable-topic parts; focused pressure is below warning on
+  every axis with zero ceiling increases.
+- next_action: from the clean `.13` commit, activate
+  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12` alone for the native
+  SystemVerilog/UVM contract selection.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: none for active `.13`; `.26` retains the deferred inventory. The
@@ -42,4 +44,4 @@ history; this file carries only the current bounded resume state.
   `.5` bounds the rationale ledger; `.8` completes the Chapter 14 partition;
   `.9` bounds strategic direction and preserves exact chronology; `.10` bounds
   canonical cards and replaces the flat map with checked query-first shards;
-  clean `3b71cb0b1` activates `.13` alone.
+  `.13` now bounds the focused/ancillary index and maintained ISF reference.
