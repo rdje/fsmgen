@@ -11,11 +11,12 @@ use IPC::Open3 qw(open3);
 use JSON::PP;
 use Symbol qw(gensym);
 
-my ($root_arg, $surfaces, $routes, $archives, $evidence_maps,
+my ($root_arg, $surfaces, $routes, $archives, $ledgers, $evidence_maps,
     $retention_contracts, $help);
 $surfaces = 'doctrine/live_document_size/surfaces.jsonl';
 $routes = 'doctrine/readme_entrypoint/routed_destinations.jsonl';
 $archives = 'doctrine/live_document_size/archive_descriptors.jsonl';
+$ledgers = 'doctrine/live_document_size/ledger_manifests.jsonl';
 $evidence_maps = 'doctrine/live_document_size/evidence_maps.jsonl';
 $retention_contracts =
     'doctrine/live_document_size/version_retention_contracts.jsonl';
@@ -24,6 +25,7 @@ GetOptions(
     'surfaces=s'      => \$surfaces,
     'routes=s'        => \$routes,
     'archives=s'      => \$archives,
+    'ledgers=s'       => \$ledgers,
     'evidence-maps=s' => \$evidence_maps,
     'retention-contracts=s' => \$retention_contracts,
     'help|h'          => \$help,
@@ -42,6 +44,7 @@ sub usage {
     print STDERR <<'USAGE';
 Usage: check_live_document_resulting_tree.pl [--root DIR]
        [--surfaces FILE] [--routes FILE] [--archives FILE]
+       [--ledgers FILE]
        [--evidence-maps FILE] [--retention-contracts FILE]
 USAGE
     exit $status;
@@ -104,7 +107,7 @@ if ($staged_status != 0 || $staged eq '') {
 }
 
 my %controlled = map { $_ => 1 }
-    ($surfaces, $routes, $archives, $evidence_maps, $retention_contracts);
+    ($surfaces, $routes, $archives, $ledgers, $evidence_maps, $retention_contracts);
 for my $record (@{jsonl($surfaces)}) {
     $controlled{$record->{index}} = 1 if relative_path_ok($record->{index});
     for my $pattern (@{$record->{targets} || []}) {
@@ -120,6 +123,15 @@ for my $record (@{jsonl($surfaces)}) {
 }
 for my $record (@{jsonl($routes)}) {
     $controlled{$record->{source_path}} = 1 if relative_path_ok($record->{source_path});
+}
+for my $record (@{jsonl($ledgers)}) {
+    next if ($record->{record_type} // '') !~ /\A(?:ledger|range)\z/;
+    for my $key (qw(current_path index_path storage_locator)) {
+        my $path = $record->{$key};
+        $controlled{$path} = 1 if relative_path_ok($path) && -f File::Spec->catfile(
+            $root, split m{/+}, $path,
+        );
+    }
 }
 for my $record (@{jsonl($evidence_maps)}) {
     my $source = $record->{source_path};

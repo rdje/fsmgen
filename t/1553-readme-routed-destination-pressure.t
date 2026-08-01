@@ -297,6 +297,11 @@ sub make_fixture {
     );
     write_file(
         $root,
+        'doctrine/live_document_size/ledger_manifests.jsonl',
+        registry_header(8, 8192, 2048),
+    );
+    write_file(
+        $root,
         'doctrine/live_document_size/version_retention_contracts.jsonl',
         json_line({
             record_type => 'registry', schema_version => 1,

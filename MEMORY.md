@@ -6,19 +6,18 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3:
-  activate retained-ledger schema`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3` is active for
-  the common retained-ledger, sealed-range, and archive-descriptor schema.
+  enforce bounded retained-ledger history`).
+- active_work_unit: containment `.3` is done; `.4` is the next clean selection
+  for the bounded `CHANGES.md` migration.
 - current_state: decision `0046` retains bounded `CHANGES.md` and conditional
   `DEVELOPMENT_NOTES.md` ledgers, and selects exact archival plus live-path
   retirement for both frozen status files. Decision `0025` remains the
-  operational transition rule until migration.
-- next_action: implement and prove `.3`'s neutral schema, core validation, and
-  fail-closed fixtures without migrating `CHANGES.md`, `DEVELOPMENT_NOTES.md`,
-  or either frozen status file.
+  operational transition rule through migrations `.4`, `.5`, and `.11`.
+- next_action: after this clean implementation commit, activate only `.4` for
+  the `CHANGES.md` whole-entry migration; do not migrate it during selection.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for active `.3`; `.4`, `.5`, and `.11` await its schema.
+- blockers: none for `.4` selection; `.5` and `.11` remain later migrations.
 
 ## Durable context
 

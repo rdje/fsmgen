@@ -68,11 +68,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2: enforce live-document containment`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3`
-  Status: `active`
+  Status: `done`
   Goal: `Consume the four-file lifecycle review and prove the selected rolling-ledger, sealed-segment, and archive-descriptor schema for any retained live ledgers.`
   Acceptance: `Implement decision 0046's common schema for the retained CHANGES and conditional DEVELOPMENT_NOTES ledgers: partition only at whole-entry boundaries, preserve order and identity, use bounded current/index views, record range/revision/line/byte/digest/retrieval metadata, prove exact reconstruction, define aggregate archive transition, and introduce no ledger or frozen-status-file migration yet.`
-  Verification: `Clean decision-0046 audit commit b443957c1a activates only the common retained-ledger/sealed-range/archive-descriptor schema leaf. No schema, checker, registry, test, migration, reviewed-document topology, frozen identity, threshold, generated artifact, or product behavior changes in this continuity slice.`
-  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3: activate retained-ledger schema`
+  Verification: `The neutral core and bounded empty local ledger registry now support opt-in append-only manifests: a bounded current file routes to a bounded complete index; contiguous whole-entry ranges carry sequence/ordinal/revision/dimension/range and endpoint digests; one exact complete-source descriptor plus built-in or executed reconstruction proves original entry bytes; content-addressed live seals obey independent range/line/byte limits before descriptor-backed archival. The wrapper, adapter runner, staged-resulting-tree checker, bootstrap inventory, neutral contract, audit, book, fact, and fail-closed fixtures move together. Focused t1553+t1554 pass at Files=2/Tests=25 and the authority cluster at Files=4/Tests=37; all 37 book chapters and the removed 73-file/17,285,553-byte build pass; Knowledge Map is 1,096 facts/5,761 keys; 22 surfaces cover 2,784 paths; all nine staged doctrines pass. CHANGES.md, DEVELOPMENT_NOTES.md, both frozen status files, existing surface ceilings, and product behavior do not migrate or change.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3: enforce bounded retained-ledger history`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4`
   Status: `pending`
@@ -80,7 +80,6 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `Execute only the lifecycle selected by PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 and schema proved by .3; if retained as a ledger, every historical entry is accounted for exactly once, the root current/index view is below its derived warning budget, sealed ranges and version-archive descriptors pass order/digest/retrieval proofs, and the selected append/user-facing workflow remains accurate.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5`
   Status: `pending`
@@ -88,7 +87,6 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `Execute only the lifecycle selected by PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 and schema proved by .3; if retained as a ledger, whole rationale entries retain order and identity, the root current/index view is below its derived warning budget, sealed ranges and archive descriptors pass exact proofs, decision/fact/task routing remains canonical, and no automatic placeholder growth is introduced.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6`
   Status: `done`
@@ -377,6 +375,11 @@ no routed destination becomes the next uninstrumented blob.
   implement the common retained-ledger, sealed-range, reconstruction, and
   archive-descriptor schema. No reviewed document or enforcement changes in
   the activation slice.
+- `2026-08-01`: `.3` makes the decision-0046 contract executable without
+  opting in a project ledger: every manifest is finite; current/index views,
+  whole-entry range order and endpoint identity, exact source reconstruction,
+  content-addressed seals, and the descriptor-backed aggregate transition all
+  fail closed. `.4` becomes the next clean selection.
 
 ## Open Questions
 
@@ -396,6 +399,12 @@ no routed destination becomes the next uninstrumented blob.
 - None for active `.3`: decision `0046` supplies the lifecycle selection.
   Ledger migrations `.4`/`.5` and frozen-status migration `.11` remain blocked
   by this schema; `.12` remains the final post-migration calibration.
+
+## Acceptance Checklist (enforced) — `.3` retained-ledger schema
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'rolling_ledger' --oneline -- live-document-size/scripts/check_live_document_size.pl` identifies `18e2dcbc6`; source inspection shows that the original lifecycle only measured one file and validated standalone archive descriptors, so it could not prove a bounded current/index pair, whole-entry segmentation, range order/identity, exact reconstruction, or the point at which sealed history must leave the live collection.
+- [x] **ADDRESSED (verified)** — `prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t` reports `All tests successful` at `Files=2, Tests=25`; positive and fail-closed fixtures cover bounded empty/opted-in manifests, complete current/index routing, printable literal entry boundaries, contiguous sequence/ordinals, range and endpoint digests, exact complete-source entry reconstruction, content-addressed seals, descriptor agreement, executed core/adapter proof, and live range/line/byte archive thresholds.
+- [x] **NO REGRESSION** — the broader live-document authority cluster reports `All tests successful` at `Files=4, Tests=37`, and staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`; every pre-existing lifecycle, pressure, route, index, evidence, verifier, retention, archive, currency, coverage, neutrality, reference-authority, and ceiling-authority control remains green. No project ledger is opted in or migrated; `CHANGES.md`, `DEVELOPMENT_NOTES.md`, both frozen status identities, existing ceilings, README landing content, compiler/runtime artifacts, and product behavior remain unchanged.
 
 ## Acceptance Checklist (enforced) — `.16` utility/retirement audit
 
@@ -548,6 +557,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-07-31` | `.25` activation | clean `984448936` predecessor; task/index/roadmap/audit/fact/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/mdBook/diff/staged-doctrine gates; exact cleanup | `passed`; paths Files=1/Tests=2; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,783 paths; Knowledge Map 1,096/5,759; Memory 36; all 37 chapters; removed build 73 files/17,282,858 bytes; all doctrines pass; `.25` alone active; WARP remains exact 183 lines/6,878 bytes and bootstrap enforcement is unchanged |
 | `2026-07-31` | `.25` WARP retirement | exact source identity/recovery; 287-token/53-residue sweep; planted orphan and consumer; five-consumer classification; bootstrap absence positive/negative controls; focused/path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 183/6,878/SHA-256 3b2b47e9...; planted residue 54; unresolved consumers 0/1 planted; focused Files=3/Tests=64; paths Files=1/Tests=2; locality passes; trees=3/nodes=898/segments=1/compact=0/index archives=1/migrations=1; 22 surfaces/2,782 paths; Knowledge Map 1,096/5,759; Memory 37; all 37 book chapters test; removed build 73 files/17,282,858 bytes; zero ceiling increases; no remaining bootstrap, landing, product documentation, ceiling, frozen identity, or product behavior change |
 | `2026-08-01` | `.3` activation | clean `b443957c1a` predecessor; task/index/Memory/changelog sync; path/task/live-size/Knowledge Map/Memory/diff/staged-doctrine gates | `passed`; trees=3/nodes=898/segments=1/index archives=1/migrations=1; 22 surfaces and 2,784 document paths; Knowledge Map 1,096/5,760; Memory 40 lines; CHANGES held at 32,299 lines; all nine staged doctrines pass with docs-only acceptance; `.3` alone active; no schema, checker, registry, test, migration, reviewed-document topology, frozen identity, threshold, generated artifact, or product behavior change |
+| `2026-08-01` | `.3` retained-ledger schema | finite empty/opt-in ledger registry; whole-entry current/sealed/archive ranges; exact source reconstruction; wrapper/adapter/resulting-tree/bootstrap wiring; syntax/focused/authority/live-size/task/path/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused Files=2/Tests=25 and authority cluster Files=4/Tests=37; trees=3/nodes=898/segments=1/index archives=1/migrations=1; 22 surfaces/2,784 paths; Knowledge Map 1,096/5,761; Memory 39; all 37 chapters; removed build 73 files/17,285,553 bytes; zero ceiling increases; all nine doctrines pass; default RAM guard stopped pre-test on the tracked macOS metric while the documented one-run override retained the 4,096-MiB descendant cap with 82% system-free evidence; no ledger/status migration, frozen/ceiling/landing/product change |
 
 ## Commit Log
 
@@ -556,6 +566,7 @@ no routed destination becomes the next uninstrumented blob.
 | `.1` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1: activate common enforcement` | Activate `.2` from the clean doctrine-selection commit without implementing it. |
 | `.2` common enforcement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2: enforce live-document containment` | Ship neutral JSONL checker contract/core plus FSMGen data and unconditional ninth-doctrine coverage; next clean selection is `.6`. |
 | `.3` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3: activate retained-ledger schema` | Activate only the decision-0046 common schema from clean audit commit `b443957c1a`; implementation remains pending. |
+| `.3` retained-ledger schema | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3: enforce bounded retained-ledger history` | Ship the finite opt-in whole-entry/current-index/reconstruction/archive-transition contract without migrating either selected ledger; `.4` is next. |
 | `.6` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: activate task-tree schema contract` | Activate only the sealed-segment/compact-terminal schema frontier from clean commit `18e2dcbc6`; implementation remains pending. |
 | `.6` bounded task history | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6: enforce bounded task-tree history` | Ship decision 0042's optional bounded exact-provenance storage forms and checker proofs without migrating an existing tree; `.7` is next. |
 | `.7` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7: activate task-tree migration` | Activate only the first IAL2/task/index migration from clean commit `78adb81ae`; migration remains pending. |
@@ -594,6 +605,10 @@ no routed destination becomes the next uninstrumented blob.
   and the complete tracked-Markdown inventory while preserving README's
   landing content, all existing hard limits/topologies, frozen identities, and
   product behavior; `.6` is the next clean selection frontier.
+- `2026-08-01`: `.3` adds finite opt-in ledger manifests with bounded current
+  and index views, contiguous whole-entry range identity, exact source-entry
+  reconstruction, content-addressed seals, and descriptor-backed live-history
+  transition limits. Neither project ledger nor frozen status file migrates.
 - `2026-07-31`: `.15` self-bounds every common JSONL registry and adds the
   sixth maximum-content-line-byte pressure axis; all predecessor ceilings,
   document lifecycles, frozen identities, landing content, and product behavior

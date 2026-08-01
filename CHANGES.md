@@ -32290,10 +32290,10 @@ task tree and git.
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25 — unused WARP bootstrap retired
 - Proved the exact 183-line source has no unique durable guidance or active consumer, then deleted it because warp.dev is no longer used.
 - Bootstrap checks now enforce WARP absence while retaining every remaining authority marker; exact Git recovery and all focused gates pass.
-### PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 — four-document lifecycle audit activated
-- Clean `8fdd5a22cc` activation starts the evidence audit only; task/doctrine gates pass and no reviewed document, policy, archive, or product behavior changes.
-### PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 — bounded project-document lifecycles selected
-- Decision `0046` retains bounded whole-entry change and conditional-rationale ledgers, and selects distinct exact archives before retiring both frozen status live paths.
-- The evidence audit assigns schema/migrations to containment `.3`/`.4`/`.5`/`.11`; all documentation/doctrine gates pass with no reviewed-file migration or product change.
+### PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 — bounded four-document lifecycles selected
+- Clean `8fdd5a22cc` activation led to decision `0046`: retain bounded whole-entry change and conditional-rationale ledgers, then archive and retire both frozen status live paths.
+- The audit assigns schema/migrations to containment `.3`/`.4`/`.5`/`.11`; all documentation/doctrine gates pass without reviewed-file migration or product change.
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3 — retained-ledger schema activated
 - Clean `b443957c1a` activation starts the common schema only; no reviewed document, registry, checker, test, archive, threshold, or product behavior changes.
+### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3 — bounded retained-ledger history enforced
+- Added finite opt-in current/index, whole-entry order/identity, exact reconstruction, content-addressed seal, and descriptor-transition proofs; focused Files=2/Tests=25 and authority Files=4/Tests=37 pass without migrating either ledger.

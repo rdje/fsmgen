@@ -40,10 +40,11 @@ answers:
   - "what retention contract is required for a version object?"
   - "where is the bounded live-document architecture review front door?"
   - "how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?"
-date: 2026-07-31
+  - "how does a bounded rolling ledger preserve whole-entry history and exact reconstruction?"
+date: 2026-08-01
 status: current
 tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
-evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/evidence_maps.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl; doctrine/readme_entrypoint/routed_destinations.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_route_candidates.pl; scripts/check_live_document_resulting_tree.pl; scripts/check_live_document_ceiling_authority.pl; scripts/check_live_document_reference_authority.pl; scripts/check_doctrine_bootstrap.sh; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md; docs/tasks/segments/IAL2-FEATURE-COMPLETENESS-FRONTIER/migration.jsonl; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md; docs/tasks/README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/decisions/0007-memory-architecture-supersedes-blob-narration.md; docs/decisions/0019-task-tree-in-file-secondary-views-are-historical.md; docs/decisions/0025-project-document-interim-lifecycle.md; docs/decisions/0040-readme-routing-must-close-destination-pressure.md; t/1561-live-document-reference-authority.t
+evidence: LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/ledger_manifests.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_resulting_tree.pl; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md; docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; t/1554-live-document-size-doctrine.t
 reverify: scripts/check_live_document_size.sh && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t t/1561-live-document-reference-authority.t
 ---
 
@@ -223,3 +224,11 @@ warp.dev is no longer used, so the owned exact claim/consumer/canonical-home/
 orphan/workflow proof selects deletion rather than a compact compatibility
 pointer. The local bootstrap checker enforces absence while preserving all
 remaining tool-neutral bootstrap checks and exact Git recovery.
+
+Decision `0046` and completed containment leaf `.3` define the retained-ledger
+contract without migrating a project ledger. Each opt-in manifest binds a
+bounded current file and index to append-only contiguous whole-entry ranges,
+range and endpoint identities, an exact complete-source descriptor, and
+byte-for-byte entry reconstruction. Content-addressed sealed ranges have
+finite live file/line/byte limits; older ranges must cross a matching verified
+archive descriptor. `.4` and `.5` separately own the two real migrations.

@@ -8,13 +8,15 @@ use File::Spec;
 use Getopt::Long qw(GetOptions);
 use JSON::PP;
 
-my ($root_arg, $registry, $archives, $help);
+my ($root_arg, $registry, $archives, $ledgers, $help);
 $registry = 'doctrine/live_document_size/surfaces.jsonl';
 $archives = 'doctrine/live_document_size/archive_descriptors.jsonl';
+$ledgers = 'doctrine/live_document_size/ledger_manifests.jsonl';
 GetOptions(
     'root=s'     => \$root_arg,
     'registry=s' => \$registry,
     'archives=s' => \$archives,
+    'ledgers=s'  => \$ledgers,
     'help|h'     => \$help,
 ) or usage(2);
 usage(0) if $help;
@@ -30,7 +32,7 @@ sub usage {
     my ($status) = @_;
     print STDERR <<'USAGE';
 Usage: run_live_document_adapter_verifiers.pl [--root DIR]
-       [--registry FILE] [--archives FILE]
+       [--registry FILE] [--archives FILE] [--ledgers FILE]
 USAGE
     exit $status;
 }
@@ -130,6 +132,16 @@ for my $record (@{read_jsonl($archives, 'archive descriptor registry')}) {
     die "live-doc-adapter-verifier: invalid adapter archive id\n"
         if $id !~ /\A[a-z][a-z0-9_.-]*\z/;
     push @adapters, ["archive:$id", $path];
+}
+for my $record (@{read_jsonl($ledgers, 'ledger manifest registry')}) {
+    next if ($record->{record_type} // '') ne 'ledger';
+    my $verifier = $record->{reconstruction_verifier} // '';
+    next if $verifier !~ /\Aadapter:(.+)\z/;
+    my $path = $1;
+    my $id = $record->{ledger_id} // '';
+    die "live-doc-adapter-verifier: invalid adapter ledger id\n"
+        if $id !~ /\A[a-z][a-z0-9_.-]*\z/;
+    push @adapters, ["ledger:$id", $path];
 }
 
 my %seen;

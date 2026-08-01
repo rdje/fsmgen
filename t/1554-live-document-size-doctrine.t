@@ -35,6 +35,8 @@ subtest 'JSONL fixture covers every lifecycle and retrieval-file descriptor' => 
     like($output, qr/surface projection: actual files=1,/, 'generated projection is measured');
     like($output, qr/surface query_terminal: query terminal/, 'query projection is validated');
     like($output, qr/surface ledger: actual files=1,/, 'rolling ledger is measured');
+    like($output, qr/ledger fixture_ledger: 3 ordered whole entries reconstructed across 3 range\(s\)/,
+        'bounded ledger ranges reconstruct exactly');
     like($output, qr/surface archive_terminal: archive terminal/, 'archive terminal is validated');
     like($output, qr/surface external_terminal: external terminal declared/, 'external terminal is validated');
     like($output, qr/surface frozen_record: frozen identity checked/, 'frozen identity is validated');
@@ -677,7 +679,7 @@ subtest 'projection and terminal verifiers fail closed' => sub {
 
 subtest 'archive descriptors reject digest drift and unsafe former paths' => sub {
     my $digest = make_fixture();
-    write_file($digest, 'sealed.md', "changed sealed bytes\n");
+    write_file($digest, 'archived-range.md', "# Entry 2\nchanged archived bytes\n");
     my ($digest_ok, $digest_output) = run_checker($digest);
     ok(!$digest_ok, 'archive retrieval digest drift is rejected');
     like($digest_output, qr/archive descriptor ledger_0001 retrieval digest changed/,
@@ -698,6 +700,99 @@ subtest 'archive descriptors reject digest drift and unsafe former paths' => sub
     my ($version_ok, $version_output) = run_checker($version);
     ok(!$version_ok, 'unknown descriptor schema version is rejected');
     like($version_output, qr/unsupported schema_version: 2/, 'schema version is explicit');
+};
+
+subtest 'ledger manifests reject split entries, order gaps, reconstruction drift, and live aggregate overflow' => sub {
+    my $split = make_fixture();
+    my $sealed = first_sealed_range_path($split);
+    write_file($split, $sealed, "bytes before entry\n# Entry 1\nold one\n");
+    mutate_record($split, 'registry/ledgers.jsonl', 'fixture_range_0001', sub {
+        my $contents = slurp(File::Spec->catfile($split, split m{/}, $sealed));
+        $_[0]{lines} = ($contents =~ tr/\n//);
+        $_[0]{bytes} = length($contents);
+        $_[0]{sha256} = sha256_hex($contents);
+    }, 'range_id');
+    my ($split_ok, $split_output) = run_checker($split);
+    ok(!$split_ok, 'bytes before a sealed whole entry are rejected');
+    like($split_output, qr/sealed range has bytes before its first whole entry/,
+        'whole-entry boundary failure is explicit');
+
+    my $order = make_fixture();
+    mutate_record($order, 'registry/ledgers.jsonl', 'fixture_range_0002', sub {
+        $_[0]{first_ordinal} = 3;
+        $_[0]{last_ordinal} = 3;
+    }, 'range_id');
+    my ($order_ok, $order_output) = run_checker($order);
+    ok(!$order_ok, 'an ordinal gap is rejected');
+    like($order_output, qr/ordinal range is not contiguous/,
+        'order failure is explicit');
+
+    my $reconstruction = make_fixture();
+    mutate_record($reconstruction, 'registry/ledgers.jsonl', 'fixture_ledger', sub {
+        return if ($_[0]{record_type} // '') ne 'ledger';
+        $_[0]{entries_sha256} = '0' x 64;
+    }, 'ledger_id');
+    my ($reconstruction_ok, $reconstruction_output) = run_checker($reconstruction);
+    ok(!$reconstruction_ok, 'aggregate reconstruction digest drift is rejected');
+    like($reconstruction_output, qr/reconstructed digest changed/,
+        'reconstruction failure is explicit');
+
+    my $aggregate = make_fixture();
+    mutate_record($aggregate, 'registry/ledgers.jsonl', 'fixture_ledger', sub {
+        return if ($_[0]{record_type} // '') ne 'ledger';
+        $_[0]{archive_transition}{max_live_bytes} = 1;
+    }, 'ledger_id');
+    my ($aggregate_ok, $aggregate_output) = run_checker($aggregate);
+    ok(!$aggregate_ok, 'live sealed history beyond the archive transition is rejected');
+    like($aggregate_output, qr/live sealed bytes are .*archive-transition limit 1/,
+        'aggregate archive transition failure is explicit');
+
+    my $index = make_fixture();
+    write_file($index, 'ledger-index.md', "fixture_range_0001\nfixture_range_0003\n");
+    my ($index_ok, $index_output) = run_checker($index);
+    ok(!$index_ok, 'bounded ledger index omitting a range is rejected');
+    like($index_output, qr/index omits range fixture_range_0002/,
+        'index completeness failure is explicit');
+};
+
+subtest 'version-backed ledger reconstruction requires executed proof' => sub {
+    my $core = make_fixture();
+    mutate_record($core, 'registry/archive.jsonl', 'ledger_source', sub {
+        $_[0]{retrieval_kind} = 'version_object';
+        $_[0]{retrieval_locator} = 'fixture-ledger-source';
+        $_[0]{verifier} = 'core:bin/version';
+        $_[0]{retention_contract} = 'fixture_history';
+    }, 'descriptor_id');
+    mutate_record($core, 'registry/ledgers.jsonl', 'fixture_ledger', sub {
+        return if ($_[0]{record_type} // '') ne 'ledger';
+        $_[0]{reconstruction_verifier} = 'core:bin/reconstruct';
+    }, 'ledger_id');
+    my ($core_ok, $core_output) = run_checker($core);
+    ok($core_ok, 'core reconstruction verifier closes a version-backed source')
+        or diag($core_output);
+    ok(-f File::Spec->catfile($core, 'reconstruction-ran'),
+        'core ledger reconstruction verifier actually ran');
+
+    my $missing = make_fixture();
+    mutate_record($missing, 'registry/ledgers.jsonl', 'fixture_ledger', sub {
+        return if ($_[0]{record_type} // '') ne 'ledger';
+        $_[0]{reconstruction_verifier} = 'adapter:bin/reconstruct';
+    }, 'ledger_id');
+    my ($missing_ok, $missing_output) = run_checker($missing);
+    ok(!$missing_ok, 'adapter reconstruction without an executed proof is rejected');
+    like($missing_output, qr/adapter verifier lacks executed proof: ledger:fixture_ledger/,
+        'missing ledger proof is explicit');
+
+    my $proved = make_fixture();
+    mutate_record($proved, 'registry/ledgers.jsonl', 'fixture_ledger', sub {
+        return if ($_[0]{record_type} // '') ne 'ledger';
+        $_[0]{reconstruction_verifier} = 'adapter:bin/reconstruct';
+    }, 'ledger_id');
+    my ($proved_ok, $proved_output) = run_checker(
+        $proved, adapter_proofs => ['ledger:fixture_ledger'],
+    );
+    ok($proved_ok, 'exact one-use adapter reconstruction proof passes')
+        or diag($proved_output);
 };
 
 subtest 'version-object descriptors require bounded named retention contracts' => sub {
@@ -774,6 +869,14 @@ done_testing();
 
 sub make_fixture {
     my $root = create_project_tempdir(purpose => 'live-document-size-tests');
+    my @ledger_entries = (
+        "# Entry 1\nold one\n",
+        "# Entry 2\nold two\n",
+        "# Entry 3\ncurrent entry\n",
+    );
+    my $ledger_source = join('', @ledger_entries);
+    my $sealed_digest = sha256_hex($ledger_entries[0]);
+    my $sealed_path = "ledger-segments/$sealed_digest.md";
     write_file($root, 'entry.md', "destination.md\n");
     write_file($root, 'destination.md', "destination\n");
     write_file($root, 'parts/a.md', "part a\n");
@@ -785,9 +888,14 @@ sub make_fixture {
         "[Reference A](reference/a.md)\n[Reference B](reference/b.md)\n");
     write_file($root, 'canonical/source.md', "canonical\n");
     write_file($root, 'generated.md', "generated\n");
-    write_file($root, 'ledger.md', "current entry\n");
+    write_file($root, 'ledger.md',
+        "# Ledger\nHistory: ledger-index.md\n" . $ledger_entries[2]);
+    write_file($root, 'ledger-index.md',
+        "fixture_range_0001\nfixture_range_0002\nfixture_range_0003\n");
+    write_file($root, 'ledger-source.md', $ledger_source);
+    write_file($root, $sealed_path, $ledger_entries[0]);
+    write_file($root, 'archived-range.md', $ledger_entries[1]);
     write_file($root, 'frozen.md', "frozen\n");
-    write_file($root, 'sealed.md', "sealed bytes\n");
     write_file($root, 'proof.md', "proof\n");
     write_file(
         $root,
@@ -798,9 +906,12 @@ sub make_fixture {
     write_file($root, 'bin/query', "#!/bin/sh\nexit 0\n");
     write_file($root, 'bin/freshness', "#!/bin/sh\nprintf 'freshness\\n' > freshness-ran\n");
     write_file($root, 'bin/version', "#!/bin/sh\nprintf 'version\\n' > version-ran\n");
+    write_file($root, 'bin/reconstruct',
+        "#!/bin/sh\nprintf 'reconstruction\\n' > reconstruction-ran\n");
     chmod 0755, File::Spec->catfile($root, 'bin', 'query'),
         File::Spec->catfile($root, 'bin', 'freshness'),
-        File::Spec->catfile($root, 'bin', 'version')
+        File::Spec->catfile($root, 'bin', 'version'),
+        File::Spec->catfile($root, 'bin', 'reconstruct')
         or die "cannot chmod fixture executables: $!";
     make_path(File::Spec->catdir($root, '.history'));
 
@@ -837,15 +948,22 @@ sub make_fixture {
         registry_header(8, 8192, 2048) . json_line({
         record_type => 'descriptor', schema_version => 1,
         descriptor_id => 'ledger_0001', surface_id => 'ledger', former_path => 'ledger-old.md',
-        range_id => 'entries-1-1', revision => 'fixture-revision', lines => 1,
-        bytes => length("sealed bytes\n"), sha256 => sha256_hex("sealed bytes\n"),
-        retrieval_kind => 'file', retrieval_locator => 'sealed.md',
+        range_id => 'fixture_range_0002', revision => 'fixture-revision', lines => 2,
+        bytes => length($ledger_entries[1]), sha256 => sha256_hex($ledger_entries[1]),
+        retrieval_kind => 'file', retrieval_locator => 'archived-range.md',
+        current_pointer => 'ledger.md', sealed_on => '2030-01-01', verifier => 'builtin:file',
+    }) . json_line({
+        record_type => 'descriptor', schema_version => 1,
+        descriptor_id => 'ledger_source', surface_id => 'ledger', former_path => 'ledger.md',
+        range_id => 'complete-source', revision => 'fixture-revision', lines => 6,
+        bytes => length($ledger_source), sha256 => sha256_hex($ledger_source),
+        retrieval_kind => 'file', retrieval_locator => 'ledger-source.md',
         current_pointer => 'ledger.md', sealed_on => '2030-01-01', verifier => 'builtin:file',
     }) . json_line({
         record_type => 'descriptor', schema_version => 1,
         descriptor_id => 'ledger_0002', surface_id => 'ledger', former_path => 'ledger-older.md',
-        range_id => 'entries-2-2', revision => 'fixture-revision', lines => 1,
-        bytes => length("sealed bytes\n"), sha256 => sha256_hex("sealed bytes\n"),
+        range_id => 'unrelated-version-object', revision => 'fixture-revision', lines => 2,
+        bytes => length($ledger_entries[1]), sha256 => sha256_hex($ledger_entries[1]),
         retrieval_kind => 'version_object', retrieval_locator => 'fixture-object',
         current_pointer => 'ledger.md', sealed_on => '2030-01-02',
         verifier => 'core:bin/version', retention_contract => 'fixture_history',
@@ -860,7 +978,62 @@ sub make_fixture {
             guarantee => 'Fixture version objects remain reachable.',
             recovery => 'Fetch complete fixture history, restore the object, and rerun the gate.',
         }));
+    my @ranges = (
+        ledger_range(
+            'fixture_range_0001', 1, 1, $ledger_entries[0], 'fixture-revision',
+            'sealed_file', $sealed_path, 'builtin:file',
+        ),
+        ledger_range(
+            'fixture_range_0002', 2, 2, $ledger_entries[1], 'fixture-revision',
+            'archive_descriptor', 'ledger_0001', 'builtin:archive_descriptor',
+        ),
+        ledger_range(
+            'fixture_range_0003', 3, 3, $ledger_entries[2], 'worktree',
+            'current', 'ledger.md', 'builtin:current',
+        ),
+    );
+    write_file($root, 'registry/ledgers.jsonl',
+        registry_header(16, 16384, 4096) . json_line({
+            record_type => 'ledger', schema_version => 1,
+            ledger_id => 'fixture_ledger', surface_id => 'ledger',
+            current_path => 'ledger.md', index_path => 'ledger-index.md',
+            entry_start_prefix => '# Entry ', ordering => 'append_only',
+            source_descriptor_id => 'ledger_source', total_entries => 3,
+            entries_lines => 6, entries_bytes => length($ledger_source),
+            entries_sha256 => sha256_hex($ledger_source), current_entry_limit => 2,
+            index_lines_ceiling => 8, index_bytes_ceiling => 512,
+            reconstruction_verifier => 'builtin:concatenate',
+            archive_transition => {
+                archive_surface_id => 'archive_terminal', max_live_ranges => 1,
+                max_live_lines => 4, max_live_bytes => 128,
+            },
+        }) . join('', map { json_line($_) } @ranges));
     return $root;
+}
+
+sub ledger_range {
+    my ($range_id, $sequence, $ordinal, $contents, $revision,
+        $storage_kind, $storage_locator, $verifier) = @_;
+    return {
+        record_type => 'range', schema_version => 1,
+        range_id => $range_id, ledger_id => 'fixture_ledger', sequence => $sequence,
+        first_ordinal => $ordinal, last_ordinal => $ordinal, entry_count => 1,
+        revision => $revision, lines => ($contents =~ tr/\n//), bytes => length($contents),
+        sha256 => sha256_hex($contents), first_entry_sha256 => sha256_hex($contents),
+        last_entry_sha256 => sha256_hex($contents), storage_kind => $storage_kind,
+        storage_locator => $storage_locator, verifier => $verifier,
+    };
+}
+
+sub first_sealed_range_path {
+    my ($root) = @_;
+    my @records = map { decode_json($_) } grep { $_ ne '' }
+        split /\n/, slurp(File::Spec->catfile($root, 'registry', 'ledgers.jsonl'));
+    for my $record (@records) {
+        return $record->{storage_locator}
+            if ($record->{range_id} // '') eq 'fixture_range_0001';
+    }
+    die 'fixture sealed ledger range not found';
 }
 
 sub measured {
@@ -973,6 +1146,7 @@ sub run_checker {
         '--registry', 'registry/surfaces.jsonl',
         '--routes', 'registry/routes.jsonl',
         '--archives', 'registry/archive.jsonl',
+        '--ledgers', 'registry/ledgers.jsonl',
         '--evidence-maps', 'registry/evidence.jsonl',
         '--retention-contracts', 'registry/retention.jsonl',
     );

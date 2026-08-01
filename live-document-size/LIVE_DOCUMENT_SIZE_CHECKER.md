@@ -168,6 +168,36 @@ their schema version, identifiers, relative paths, counts, digest, retrieval
 kind, date, and verifier are validated. A `file` retrieval is also
 digest-checked immediately.
 
+The separately bounded ledger-manifest registry is likewise valid while empty.
+An opted-in `rolling_ledger` has exactly one ledger record followed by ordered
+range records:
+
+```json
+{"record_type":"ledger","schema_version":1,"ledger_id":"changes","surface_id":"change_history","current_path":"CHANGES.md","index_path":"changes/INDEX.md","entry_start_prefix":"### ","ordering":"append_only","source_descriptor_id":"changes_source","total_entries":120,"entries_lines":2400,"entries_bytes":160000,"entries_sha256":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","current_entry_limit":20,"index_lines_ceiling":128,"index_bytes_ceiling":8192,"reconstruction_verifier":"builtin:concatenate","archive_transition":{"archive_surface_id":"exact_history","max_live_ranges":8,"max_live_lines":12000,"max_live_bytes":786432}}
+{"record_type":"range","schema_version":1,"range_id":"changes_0001","ledger_id":"changes","sequence":1,"first_ordinal":1,"last_ordinal":100,"entry_count":100,"revision":"0123456789abcdef","lines":2000,"bytes":130000,"sha256":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","first_entry_sha256":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","last_entry_sha256":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","storage_kind":"sealed_file","storage_locator":"changes/0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef.md","verifier":"builtin:file"}
+```
+
+The ledger record binds a singular rolling-ledger surface to a separately
+bounded index, a literal start-of-line entry prefix, append-only physical
+ordering, one exact complete-source archive descriptor, aggregate entry
+identity, a bounded current window, and finite live sealed-history limits.
+Each range records contiguous sequence and ordinal spans, entry count,
+revision, dimensions, whole-range digest, and first/last entry identities.
+Exactly one `current` range is last. Earlier ranges use content-addressed
+`sealed_file` storage or an `archive_descriptor` whose range, revision,
+dimensions, digest, surface, and current pointer agree exactly.
+
+The built-in verifier extracts only complete prefix-delimited entries,
+concatenates every readable range in sequence, matches aggregate dimensions
+and digest, and compares the result byte for byte with the entries in the
+complete-source descriptor. If any range or source is a version object, a
+declared `core:` or proved `adapter:` reconstruction verifier must perform that
+same comparison; `external:` remains degraded and cannot pass. The index must
+name every range. Live sealed files cannot exceed the declared range, line, or
+byte transition limits; older ranges must cross the already verified archive
+descriptor boundary instead. This bounds the current view, navigation view,
+and repository-live history independently without splitting an entry.
+
 Every `version_object` descriptor adds a `retention_contract` identifier. The
 separate bounded registry named by `--retention-contracts` begins with one
 metadata row and then declares its owner, guarantee, and recovery action:
@@ -208,7 +238,8 @@ applicable aggregate targets/ceilings, maintained-reference classification and
 exact aggregate authority, inclusive equality, debt acknowledgement and
 ratchets, maximum content-line bytes, generated/version-object verifier execution, opt-in currency-oracle
 execution, frozen identity, typed route closure, collection-index contracts,
-evidence-map paths, retention-contract and archive-descriptor shape, and
+evidence-map paths, retention-contract and archive-descriptor shape, bounded
+whole-entry ledger order/reconstruction/archive transition, and
 optional inventory coverage. It reports actual, target, ceiling, and
 migrated/pinned/steady pressure separately. It never mutates the project.
 

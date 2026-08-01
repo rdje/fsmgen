@@ -59,8 +59,13 @@ work in `TASK_TREE.md`, resume state in `MEMORY.md`, concise achievements in
 `CHANGES.md`, and exact history in task evidence plus Git. The same decision
 retains `CHANGES.md` as a per-completed-slice bounded ledger and
 `DEVELOPMENT_NOTES.md` as a conditional bounded rationale ledger. Decision
-0025 remains operational until containment leaves `.3`, `.4`, `.5`, and `.11`
-implement the selection, so neither frozen file may be changed meanwhile.
+0025 remains operational until containment leaves `.4`, `.5`, and `.11`
+implement the remaining migrations, so neither frozen file may be changed
+meanwhile. Completed schema leaf `.3` adds no ledger migration: its bounded
+JSONL manifests prove literal whole-entry boundaries, contiguous append order,
+range and endpoint digests, exact complete-source reconstruction, a complete
+bounded index, and finite live sealed-history limits before descriptor-backed
+archival. Leaves `.4` and `.5` opt in the two retained ledgers separately.
 
 `README_POLICY.md` is the project- and harness-neutral landing-page maintenance
 standard. Adopting projects keep their authoritative tracked copy at repository

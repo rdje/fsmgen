@@ -5,20 +5,21 @@ use warnings;
 use Cwd qw(abs_path);
 use Digest::SHA;
 use Encode qw(encode_utf8);
-use File::Basename qw(dirname);
+use File::Basename qw(basename dirname);
 use File::Glob qw(bsd_glob GLOB_NOSORT);
 use File::Spec;
 use Getopt::Long qw(GetOptions);
 use JSON::PP;
 
-my ($root_arg, $registry_arg, $routes_arg, $archives_arg, $evidence_maps_arg,
-    $retention_contracts_arg, $coverage_stdin, $help);
+my ($root_arg, $registry_arg, $routes_arg, $archives_arg, $ledgers_arg,
+    $evidence_maps_arg, $retention_contracts_arg, $coverage_stdin, $help);
 my @adapter_proofs;
 GetOptions(
     'root=s'          => \$root_arg,
     'registry=s'      => \$registry_arg,
     'routes=s'        => \$routes_arg,
     'archives=s'      => \$archives_arg,
+    'ledgers=s'       => \$ledgers_arg,
     'evidence-maps=s' => \$evidence_maps_arg,
     'retention-contracts=s' => \$retention_contracts_arg,
     'coverage-stdin!' => \$coverage_stdin,
@@ -28,6 +29,7 @@ GetOptions(
 usage(0) if $help;
 usage(2) if !defined($root_arg) || !defined($registry_arg)
     || !defined($routes_arg) || !defined($archives_arg)
+    || !defined($ledgers_arg)
     || !defined($evidence_maps_arg) || !defined($retention_contracts_arg);
 
 my $root = abs_path($root_arg);
@@ -45,7 +47,8 @@ sub usage {
     my ($status) = @_;
     print STDERR <<'USAGE';
 Usage: check_live_document_size.pl --root DIR --registry FILE --routes FILE
-       --archives FILE --evidence-maps FILE --retention-contracts FILE
+       --archives FILE --ledgers FILE --evidence-maps FILE
+       --retention-contracts FILE
        [--coverage-stdin]
 USAGE
     exit $status;
@@ -192,9 +195,53 @@ sub file_sha256 {
     return $digest->hexdigest;
 }
 
+sub read_regular_file {
+    my ($surface_id, $relative) = @_;
+    return undef if !relative_path_ok($relative);
+    my $path = root_path($relative);
+    return undef if !assert_local_regular_file($surface_id, $path);
+    open my $fh, '<:raw', $path or do {
+        problem("cannot read " . display_path($path) . ": $!");
+        return undef;
+    };
+    local $/;
+    my $contents = <$fh> // '';
+    close $fh or problem("cannot close " . display_path($path) . ": $!");
+    return $contents;
+}
+
+sub raw_line_count {
+    my ($contents) = @_;
+    return ($contents =~ tr/\n//);
+}
+
+sub ledger_entries {
+    my ($ledger_id, $contents, $prefix, $allow_preamble) = @_;
+    my @starts;
+    while ($contents =~ /(?:\A|\n)\Q$prefix\E/g) {
+        my $start = $-[0];
+        $start++ if $start > 0;
+        push @starts, $start;
+    }
+    if (!@starts) {
+        problem("ledger $ledger_id contains no entry beginning with its declared prefix");
+        return (undef, []);
+    }
+    if (!$allow_preamble && $starts[0] != 0) {
+        problem("ledger $ledger_id sealed range has bytes before its first whole entry");
+    }
+    my @entries;
+    for my $index (0 .. $#starts) {
+        my $end = $index == $#starts ? length($contents) : $starts[$index + 1];
+        push @entries, substr($contents, $starts[$index], $end - $starts[$index]);
+    }
+    my $body = join('', @entries);
+    return ($body, \@entries);
+}
+
 my %adapter_proof;
 for my $proof (@adapter_proofs) {
-    if ($proof !~ /\A(?:surface|archive|currency):[a-z][a-z0-9_.-]*\z/) {
+    if ($proof !~ /\A(?:surface|archive|currency|ledger):[a-z][a-z0-9_.-]*\z/) {
         problem("invalid adapter proof id: $proof");
         next;
     }
@@ -1413,6 +1460,7 @@ for my $row (@{$retention_rows}) {
 
 my $archive_rows = read_jsonl($archives_arg, 'archive descriptor registry');
 my %descriptor_ids;
+my %archive_descriptors;
 for my $row (@{$archive_rows}) {
     my ($line_number, $record) = @{$row};
     if (($record->{record_type} // '') ne 'descriptor') {
@@ -1448,8 +1496,9 @@ for my $row (@{$archive_rows}) {
         if $schema_version ne '1';
     problem("archive descriptor has invalid descriptor_id: $descriptor_id")
         if $descriptor_id !~ /\A[a-z][a-z0-9_.-]*\z/;
+    my $duplicate_descriptor = $descriptor_ids{$descriptor_id}++;
     problem("archive descriptor $descriptor_id is declared more than once")
-        if $descriptor_ids{$descriptor_id}++;
+        if $duplicate_descriptor;
     problem("archive descriptor $descriptor_id names unknown surface: $surface_id")
         if !exists $surfaces{$surface_id};
     problem("archive descriptor $descriptor_id former_path must stay project-relative")
@@ -1515,6 +1564,355 @@ for my $row (@{$archive_rows}) {
     } else {
         problem("archive descriptor $descriptor_id has unknown retrieval_kind: $retrieval_kind");
     }
+    $archive_descriptors{$descriptor_id} = $record
+        if !$duplicate_descriptor
+            && $descriptor_id =~ /\A[a-z][a-z0-9_.-]*\z/;
+}
+
+my $ledger_rows = read_jsonl($ledgers_arg, 'ledger manifest registry');
+my (%ledgers, %ledger_ranges);
+for my $row (@{$ledger_rows}) {
+    my ($line_number, $record) = @{$row};
+    my $type = $record->{record_type} // '';
+    if ($type eq 'ledger') {
+        my @keys = qw(
+            record_type schema_version ledger_id surface_id current_path index_path
+            entry_start_prefix ordering source_descriptor_id total_entries
+            entries_lines entries_bytes entries_sha256 current_entry_limit
+            index_lines_ceiling index_bytes_ceiling reconstruction_verifier
+            archive_transition
+        );
+        next if !validate_keys(
+            'ledger manifest registry', $line_number, $record, \@keys, [],
+        );
+        my $ledger_id = $record->{ledger_id} // '';
+        for my $field (
+            [record_type => 32], [ledger_id => 128], [surface_id => 128],
+            [current_path => 512], [index_path => 512],
+            [entry_start_prefix => 128], [ordering => 32],
+            [source_descriptor_id => 128], [reconstruction_verifier => 1024],
+        ) {
+            my ($key, $max_bytes) = @{$field};
+            problem("ledger $ledger_id has empty, multiline, or oversized $key")
+                if !bounded_nonempty_string($record->{$key}, $max_bytes);
+        }
+        problem("ledger $ledger_id has unsupported schema_version: $record->{schema_version}")
+            if !nonnegative_integer($record->{schema_version})
+                || $record->{schema_version} ne '1';
+        problem("ledger manifest has invalid ledger_id: $ledger_id")
+            if $ledger_id !~ /\A[a-z][a-z0-9_.-]*\z/;
+        problem("ledger $ledger_id is declared more than once")
+            if exists $ledgers{$ledger_id};
+        problem("ledger $ledger_id must declare append_only ordering")
+            if ($record->{ordering} // '') ne 'append_only';
+        problem("ledger $ledger_id entry_start_prefix must use printable ASCII")
+            if ($record->{entry_start_prefix} // '') !~ /\A[\x20-\x7e]+\z/;
+        problem("ledger $ledger_id current_path must stay project-relative")
+            if !relative_path_ok($record->{current_path});
+        problem("ledger $ledger_id index_path must stay project-relative")
+            if !relative_path_ok($record->{index_path});
+        problem("ledger $ledger_id current_path and index_path must be distinct")
+            if ($record->{current_path} // '') eq ($record->{index_path} // '');
+        for my $key (qw(total_entries entries_lines entries_bytes current_entry_limit index_lines_ceiling index_bytes_ceiling)) {
+            problem("ledger $ledger_id has invalid positive $key")
+                if !positive_integer($record->{$key});
+        }
+        problem("ledger $ledger_id has invalid entries_sha256")
+            if ($record->{entries_sha256} // '') !~ /\A[0-9a-f]{64}\z/;
+        my $transition = $record->{archive_transition};
+        my @transition_keys = qw(
+            archive_surface_id max_live_ranges max_live_lines max_live_bytes
+        );
+        if (ref($transition) ne 'HASH'
+                || !validate_keys(
+                    "ledger $ledger_id archive_transition", $line_number,
+                    $transition, \@transition_keys, [],
+                )) {
+            problem("ledger $ledger_id archive_transition must be an exact object")
+                if ref($transition) ne 'HASH';
+        } else {
+            problem("ledger $ledger_id archive_transition has invalid archive_surface_id")
+                if !bounded_nonempty_string($transition->{archive_surface_id}, 128)
+                    || $transition->{archive_surface_id} !~ /\A[a-z][a-z0-9_]*\z/;
+            for my $key (qw(max_live_ranges max_live_lines max_live_bytes)) {
+                problem("ledger $ledger_id archive_transition has invalid positive $key")
+                    if !positive_integer($transition->{$key});
+            }
+        }
+        $ledgers{$ledger_id} = $record
+            if $ledger_id =~ /\A[a-z][a-z0-9_.-]*\z/;
+    } elsif ($type eq 'range') {
+        my @keys = qw(
+            record_type schema_version range_id ledger_id sequence first_ordinal
+            last_ordinal entry_count revision lines bytes sha256
+            first_entry_sha256 last_entry_sha256 storage_kind storage_locator verifier
+        );
+        next if !validate_keys(
+            'ledger manifest registry', $line_number, $record, \@keys, [],
+        );
+        my ($ledger_id, $range_id) = @{$record}{qw(ledger_id range_id)};
+        $ledger_id //= '';
+        $range_id //= '';
+        for my $field (
+            [record_type => 32], [ledger_id => 128], [range_id => 128],
+            [revision => 128], [storage_kind => 32],
+            [storage_locator => 1024], [verifier => 64],
+        ) {
+            my ($key, $max_bytes) = @{$field};
+            problem("ledger range $range_id has empty, multiline, or oversized $key")
+                if !bounded_nonempty_string($record->{$key}, $max_bytes);
+        }
+        problem("ledger range $range_id has unsupported schema_version: $record->{schema_version}")
+            if !nonnegative_integer($record->{schema_version})
+                || $record->{schema_version} ne '1';
+        problem("ledger range has invalid range_id: $range_id")
+            if $range_id !~ /\A[a-z][a-z0-9_.-]*\z/;
+        problem("ledger range $range_id has invalid ledger_id: $ledger_id")
+            if $ledger_id !~ /\A[a-z][a-z0-9_.-]*\z/;
+        for my $key (qw(sequence first_ordinal last_ordinal entry_count lines bytes)) {
+            problem("ledger range $range_id has invalid positive $key")
+                if !positive_integer($record->{$key});
+        }
+        for my $key (qw(sha256 first_entry_sha256 last_entry_sha256)) {
+            problem("ledger range $range_id has invalid $key")
+                if ($record->{$key} // '') !~ /\A[0-9a-f]{64}\z/;
+        }
+        push @{$ledger_ranges{$ledger_id}}, $record
+            if $ledger_id =~ /\A[a-z][a-z0-9_.-]*\z/;
+    } else {
+        problem("ledger manifest registry line $line_number has unknown record_type");
+    }
+}
+
+for my $orphan (sort keys %ledger_ranges) {
+    problem("ledger range names unknown ledger: $orphan") if !exists $ledgers{$orphan};
+}
+
+for my $ledger_id (sort keys %ledgers) {
+    my $ledger = $ledgers{$ledger_id};
+    my $surface_id = $ledger->{surface_id};
+    my $surface = $surfaces{$surface_id};
+    if (!$surface) {
+        problem("ledger $ledger_id names unknown surface: $surface_id");
+    } else {
+        problem("ledger $ledger_id surface $surface_id is not a rolling ledger")
+            if $surface->{lifecycle} ne 'rolling_ledger';
+        problem("ledger $ledger_id current_path does not match its singular surface target")
+            if @{$surface->{target_patterns}} != 1
+                || $surface->{target_patterns}[0] ne $ledger->{current_path};
+    }
+    my $archive_surface_id = ref($ledger->{archive_transition}) eq 'HASH'
+        ? $ledger->{archive_transition}{archive_surface_id} : '';
+    my $archive_surface = $surfaces{$archive_surface_id};
+    problem("ledger $ledger_id archive transition must name an archive_terminal surface")
+        if !$archive_surface || $archive_surface->{lifecycle} ne 'archive_terminal';
+
+    my $source_descriptor = $archive_descriptors{$ledger->{source_descriptor_id}};
+    if (!$source_descriptor) {
+        problem("ledger $ledger_id names unknown source descriptor: $ledger->{source_descriptor_id}");
+    } else {
+        problem("ledger $ledger_id source descriptor belongs to another surface")
+            if $source_descriptor->{surface_id} ne $surface_id;
+        problem("ledger $ledger_id source descriptor former_path differs from current_path")
+            if $source_descriptor->{former_path} ne $ledger->{current_path};
+        problem("ledger $ledger_id source descriptor current_pointer differs from current_path")
+            if $source_descriptor->{current_pointer} ne $ledger->{current_path};
+    }
+
+    my $index_contents = read_regular_file($surface_id, $ledger->{index_path});
+    if (defined $index_contents) {
+        my $index_lines = raw_line_count($index_contents);
+        my $index_bytes = length($index_contents);
+        problem("ledger $ledger_id index lines are $index_lines (> ceiling $ledger->{index_lines_ceiling})")
+            if positive_integer($ledger->{index_lines_ceiling})
+                && $index_lines > $ledger->{index_lines_ceiling};
+        problem("ledger $ledger_id index bytes are $index_bytes (> ceiling $ledger->{index_bytes_ceiling})")
+            if positive_integer($ledger->{index_bytes_ceiling})
+                && $index_bytes > $ledger->{index_bytes_ceiling};
+    }
+    my $current_view = read_regular_file($surface_id, $ledger->{current_path});
+    problem("ledger $ledger_id current view does not route to its bounded index")
+        if defined($current_view)
+            && index($current_view, $ledger->{index_path}) < 0;
+
+    my @ranges = sort {
+        ($a->{sequence} // 0) <=> ($b->{sequence} // 0)
+    } @{$ledger_ranges{$ledger_id} || []};
+    if (!@ranges) {
+        problem("ledger $ledger_id declares no ranges");
+        next;
+    }
+    my (%range_ids, %sequences, $expected_ordinal, $expected_sequence);
+    my ($current_ranges, $live_ranges, $live_lines, $live_bytes) = (0, 0, 0, 0);
+    my ($total_entries, $total_lines, $total_bytes) = (0, 0, 0);
+    my @available_bodies;
+    my $all_bodies_available = 1;
+    for my $range (@ranges) {
+        my $range_id = $range->{range_id};
+        problem("ledger $ledger_id duplicates range_id $range_id") if $range_ids{$range_id}++;
+        problem("ledger $ledger_id duplicates sequence $range->{sequence}")
+            if $sequences{$range->{sequence}}++;
+        problem("ledger $ledger_id sequence is not contiguous at $range_id")
+            if positive_integer($range->{sequence})
+                && $range->{sequence} != ++$expected_sequence;
+        problem("ledger $ledger_id ordinal range is not contiguous at $range_id")
+            if positive_integer($range->{first_ordinal})
+                && $range->{first_ordinal} != ++$expected_ordinal;
+        if (positive_integer($range->{first_ordinal})
+                && positive_integer($range->{last_ordinal})
+                && positive_integer($range->{entry_count})) {
+            problem("ledger $ledger_id range $range_id ordinal span does not match entry_count")
+                if $range->{last_ordinal} - $range->{first_ordinal} + 1
+                    != $range->{entry_count};
+            $expected_ordinal = $range->{last_ordinal};
+        }
+        $total_entries += $range->{entry_count} if positive_integer($range->{entry_count});
+        $total_lines += $range->{lines} if positive_integer($range->{lines});
+        $total_bytes += $range->{bytes} if positive_integer($range->{bytes});
+        problem("ledger $ledger_id index omits range $range_id")
+            if defined($index_contents)
+                && $index_contents !~ /(?<![a-z0-9_.-])\Q$range_id\E(?![a-z0-9_.-])/;
+
+        my ($contents, $allow_preamble);
+        if ($range->{storage_kind} eq 'current') {
+            $current_ranges++;
+            problem("ledger $ledger_id current range must use current_path")
+                if $range->{storage_locator} ne $ledger->{current_path};
+            problem("ledger $ledger_id current range must use builtin:current")
+                if $range->{verifier} ne 'builtin:current';
+            $contents = read_regular_file($surface_id, $range->{storage_locator});
+            $allow_preamble = 1;
+        } elsif ($range->{storage_kind} eq 'sealed_file') {
+            problem("ledger $ledger_id sealed range path must stay project-relative")
+                if !relative_path_ok($range->{storage_locator});
+            problem("ledger $ledger_id sealed range must use builtin:file")
+                if $range->{verifier} ne 'builtin:file';
+            problem("ledger $ledger_id sealed range path must be content-addressed by its digest")
+                if basename($range->{storage_locator})
+                    !~ /\A\Q$range->{sha256}\E(?:\.[A-Za-z0-9]+)?\z/;
+            $contents = read_regular_file($surface_id, $range->{storage_locator});
+            $allow_preamble = 0;
+            $live_ranges++;
+            $live_lines += $range->{lines} if positive_integer($range->{lines});
+            $live_bytes += $range->{bytes} if positive_integer($range->{bytes});
+        } elsif ($range->{storage_kind} eq 'archive_descriptor') {
+            problem("ledger $ledger_id archived range must use builtin:archive_descriptor")
+                if $range->{verifier} ne 'builtin:archive_descriptor';
+            my $descriptor = $archive_descriptors{$range->{storage_locator}};
+            if (!$descriptor) {
+                problem("ledger $ledger_id range $range_id names unknown archive descriptor");
+            } else {
+                for my $pair (
+                    [range_id => $range_id], [surface_id => $surface_id],
+                    [revision => $range->{revision}], [lines => $range->{lines}],
+                    [bytes => $range->{bytes}], [sha256 => $range->{sha256}],
+                    [current_pointer => $ledger->{current_path}],
+                ) {
+                    my ($key, $expected) = @{$pair};
+                    problem("ledger $ledger_id range $range_id differs from archive descriptor $key")
+                        if ($descriptor->{$key} // '') ne ($expected // '');
+                }
+                if ($descriptor->{retrieval_kind} eq 'file') {
+                    $contents = read_regular_file(
+                        $surface_id, $descriptor->{retrieval_locator},
+                    );
+                    $allow_preamble = 0;
+                }
+            }
+        } else {
+            problem("ledger $ledger_id range $range_id has unknown storage_kind: $range->{storage_kind}");
+        }
+
+        if (defined $contents) {
+            my ($body, $entries) = ledger_entries(
+                $ledger_id, $contents, $ledger->{entry_start_prefix}, $allow_preamble,
+            );
+            if (defined $body) {
+                my $actual_lines = raw_line_count($body);
+                my $actual_bytes = length($body);
+                my $actual_sha = Digest::SHA::sha256_hex($body);
+                problem("ledger $ledger_id range $range_id entry count changed")
+                    if @{$entries} != $range->{entry_count};
+                problem("ledger $ledger_id range $range_id line count changed")
+                    if $actual_lines != $range->{lines};
+                problem("ledger $ledger_id range $range_id byte count changed")
+                    if $actual_bytes != $range->{bytes};
+                problem("ledger $ledger_id range $range_id digest changed")
+                    if $actual_sha ne $range->{sha256};
+                problem("ledger $ledger_id range $range_id first-entry identity changed")
+                    if Digest::SHA::sha256_hex($entries->[0]) ne $range->{first_entry_sha256};
+                problem("ledger $ledger_id range $range_id last-entry identity changed")
+                    if Digest::SHA::sha256_hex($entries->[-1]) ne $range->{last_entry_sha256};
+                push @available_bodies, $body;
+            } else {
+                $all_bodies_available = 0;
+            }
+        } else {
+            $all_bodies_available = 0;
+        }
+    }
+    problem("ledger $ledger_id must declare exactly one current range")
+        if $current_ranges != 1;
+    problem("ledger $ledger_id current range must be the final append-only range")
+        if @ranges && $ranges[-1]{storage_kind} ne 'current';
+    problem("ledger $ledger_id current range exceeds current_entry_limit")
+        if @ranges && positive_integer($ranges[-1]{entry_count})
+            && $ranges[-1]{entry_count} > $ledger->{current_entry_limit};
+    for my $dimension (
+        [ranges => $live_ranges, 'max_live_ranges'],
+        [lines => $live_lines, 'max_live_lines'],
+        [bytes => $live_bytes, 'max_live_bytes'],
+    ) {
+        my ($name, $actual, $key) = @{$dimension};
+        my $limit = ref($ledger->{archive_transition}) eq 'HASH'
+            ? $ledger->{archive_transition}{$key} : undef;
+        problem("ledger $ledger_id live sealed $name are $actual (> archive-transition limit $limit)")
+            if positive_integer($limit) && $actual > $limit;
+    }
+    problem("ledger $ledger_id total_entries differs from its ordered ranges")
+        if positive_integer($ledger->{total_entries})
+            && $total_entries != $ledger->{total_entries};
+    problem("ledger $ledger_id entries_lines differs from its ordered ranges")
+        if positive_integer($ledger->{entries_lines})
+            && $total_lines != $ledger->{entries_lines};
+    problem("ledger $ledger_id entries_bytes differs from its ordered ranges")
+        if positive_integer($ledger->{entries_bytes})
+            && $total_bytes != $ledger->{entries_bytes};
+
+    my $reconstructed = join('', @available_bodies);
+    if ($all_bodies_available) {
+        problem("ledger $ledger_id reconstructed line count changed")
+            if raw_line_count($reconstructed) != $ledger->{entries_lines};
+        problem("ledger $ledger_id reconstructed byte count changed")
+            if length($reconstructed) != $ledger->{entries_bytes};
+        problem("ledger $ledger_id reconstructed digest changed")
+            if Digest::SHA::sha256_hex($reconstructed) ne $ledger->{entries_sha256};
+    }
+    my $source_contents;
+    if ($source_descriptor
+            && $source_descriptor->{retrieval_kind} eq 'file') {
+        $source_contents = read_regular_file(
+            $surface_id, $source_descriptor->{retrieval_locator},
+        );
+    }
+    if (defined($source_contents) && $all_bodies_available) {
+        my ($source_body) = ledger_entries(
+            $ledger_id, $source_contents, $ledger->{entry_start_prefix}, 1,
+        );
+        problem("ledger $ledger_id reconstruction differs from its exact source entries")
+            if !defined($source_body) || $source_body ne $reconstructed;
+    }
+    if ($ledger->{reconstruction_verifier} eq 'builtin:concatenate') {
+        problem("ledger $ledger_id builtin reconstruction requires locally readable ranges and source")
+            if !$all_bodies_available || !defined($source_contents);
+    } else {
+        verify_execution(
+            "ledger $ledger_id reconstruction", "ledger:$ledger_id",
+            $ledger->{reconstruction_verifier},
+        );
+    }
+    ok_note("ledger $ledger_id: $total_entries ordered whole entries reconstructed across "
+        . scalar(@ranges) . " range(s); live sealed $live_ranges/$live_lines/$live_bytes");
 }
 
 for my $proof (sort keys %adapter_proof) {
