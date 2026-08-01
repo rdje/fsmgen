@@ -10447,5 +10447,5 @@ The first honest `R11` slices are now:
   front door routes to the frozen packet. Decision `0045` and `.23` now bound
   maintained-reference reads/parts plus exact aggregate change. Decision
   `0046` retains two bounded ledgers and supersedes both frozen status views.
-  Completed `.3` proves whole-entry order, identity, reconstruction, index, and
-  archive-transition schema without migration; deferred `.4`/`.26` will later reassess CHANGES and analogous agent-era continuity documents.
+  Completed `.3` proves the ledger schema; `.4`/`.11` retire the changelog and
+  frozen views; clean `3084d8c7b` activates `.5`; `.26` stays deferred.

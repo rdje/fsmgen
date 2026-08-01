@@ -5,19 +5,18 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11:
-  retire roadmap-status board`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` remains active;
-  leaf `.11` is complete.
-- current_state: decisions `0048` and `0049` retire the former achievement
-  journal and roadmap-status board after separate value audits. Exact objects
-  remain verifier-protected in Git; maintained roadmap, task, Memory, book,
-  decision/fact, and Git authorities answer their former current questions.
-- next_action: from the clean `.11` commit, activate `.5` alone to migrate the
-  conditional `DEVELOPMENT_NOTES.md` rationale ledger under the `.3` schema.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5:
+  activate rationale-ledger migration`).
+- active_work_unit: `.5` alone is active from clean `.11` commit `3084d8c7b`.
+- current_state: selection changes continuity only. `DEVELOPMENT_NOTES.md`
+  remains the unchanged 34,507-line rationale source; no ledger manifest,
+  archive descriptor, checker, limit, or product behavior changes yet.
+- next_action: inventory whole rationale-entry boundaries, then migrate the
+  source into the bounded current/index and exact sealed-history topology
+  proved by `.3`, including a real post-cutover append proof.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: none for `.11`; `.26` retains the broader inventory.
+- blockers: none for `.5`; `.26` retains the broader deferred inventory.
 
 ## Durable context
 
@@ -38,3 +37,4 @@ history; this file carries only the current bounded resume state.
   retires unused WARP and the director resumed containment on `2026-08-01`.
   `.11` retires the former achievement and roadmap-status views under decisions
   `0048`/`0049`. Push only on request (`0005`); PNT runs autonomously (`0003`).
+  `.5` is active from clean `3084d8c7b`.

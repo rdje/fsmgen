@@ -82,11 +82,11 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4: retire duplicate changelog`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Migrate DEVELOPMENT_NOTES.md to the bounded rationale-ledger topology.`
   Acceptance: `Execute only the lifecycle selected by PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 and schema proved by .3; if retained as a ledger, whole rationale entries retain order and identity, the root current/index view is below its derived warning budget, sealed ranges and archive descriptors pass exact proofs, decision/fact/task routing remains canonical, and no automatic placeholder growth is introduced.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activated alone from clean .11 commit 3084d8c7b. This selection changes only task/index/roadmap/book/fact/Memory continuity; DEVELOPMENT_NOTES.md, ledger registries, archives, checker behavior, limits, and product behavior remain unchanged until the migration proof is complete.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5: activate rationale-ledger migration`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6`
   Status: `done`
@@ -428,6 +428,9 @@ no routed destination becomes the next uninstrumented blob.
   recovery, removes the current route/surface/live path and stale consumers,
   and forbids a replacement combined status projection. Leaf `.11` is done;
   `.5` is the next clean selection.
+- `2026-08-01`: Clean `.11` commit `3084d8c7b` activates `.5` alone. The
+  selection fixes the rationale-ledger migration frontier without changing
+  `DEVELOPMENT_NOTES.md`, its registry topology, or product behavior.
 
 ## Open Questions
 
@@ -451,9 +454,15 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None for completed `.11`; decisions `0048`/`0049` own both independent
-  retirements. `.26` still owns the broader legacy-continuity inventory, and
-  `.5` remains the next separate clean selection.
+- None for active `.5`; decision `0046` and completed `.3` own the selected
+  conditional rationale role and generic ledger schema. `.26` still owns the
+  broader legacy-continuity inventory and remains separately deferred.
+
+## Acceptance Checklist (enforced) — `.5` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — completed `.11` leaves `.5` as the next clean frontier, while `DEVELOPMENT_NOTES.md` remains one 34,507-line rollover-debt file and decision `0046` requires the conditional rationale role to migrate through the whole-entry schema proved by `.3`.
+- [x] **ADDRESSED (verified)** — clean `.11` commit `3084d8c7b` activates `.5` alone and fixes the exact migration boundary; the rationale source, ledger registry, archive descriptors, checker, limits, and product surfaces remain unchanged in this selection slice.
+- [x] **NO REGRESSION** — focused path/task/live-size, Knowledge Map, Memory, mdBook, staged acceptance, and all-doctrine results are recorded below; no source entry, generated artifact, compiler/runtime behavior, or product documentation changes.
 
 ## Acceptance Checklist (enforced) — `.4` duplicate-changelog retirement
 
@@ -653,6 +662,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.4`/`.26` director deferral | director questions changelog value and identifies a broader agent-era continuity-document cohort; static-source/post-cutover-append root-cause inspection; deferred inventory task; roadmap/audit/book/fact/task/index/Memory/changelog sync; focused/live-size/Knowledge Map/Memory/mdBook/staged-doctrine gates; exact cleanup | `passed`; focused Files=6/Tests=80; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 22 surfaces/2,784 paths; maintained reference exact delta 0 files/0 lines/-8 bytes to 38/47,426/2,515,044; Knowledge Map 1,096/5,761; Memory 39; CHANGES held at 32,299 lines; all 37 chapters and removed build 73 files/17,286,533 bytes; staged acceptance root=git_history/no-regression=prove_summary and all nine doctrines pass; no candidate set inferred and no changelog movement, ledger opt-in, lifecycle selection, ceiling increase, frozen identity, schema/enforcement, or product behavior change |
 | `2026-08-01` | `.11` independent roadmap-status audit | exact identity/provenance/content partition; 70-consumer and canonical-overlap classification; three lifecycle options; audit/book/fact/decision/task/index/Memory sync; focused/live-size/Knowledge Map/path/locality/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 15,039/1,638,574/SHA-256 0f8db932... and 1,786 post-freeze commits; focused Files=8/Tests=92; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 20 surfaces/2,787 staged paths; maintained-reference delta 0/+5/+403; Knowledge Map 1,096/5,762; Memory 42; all 37 chapters; removed build 73 files/17,290,550 bytes; zero ceiling increases; all doctrines pass; no frozen-content, lifecycle, route, consumer, compiler/runtime, or product-artifact change; director selection pending |
 | `2026-08-01` | `.11` roadmap-status retirement | decision 0049; exact version identity/retrieval; live-path/route/surface/consumer absence; canonical ATL/composition routes; planted recreation/consumer/identity/history/orphan negatives; focused/path/locality/live-size/Knowledge Map/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source 15,039/1,638,574/longest 5,716/SHA-256 0f8db932...; focused Files=9/Tests=96; 19 surfaces/2,787 staged paths; root 17 files/62,935 lines/9,540,744 bytes; README 245/9,931; reference delta 0/-5/-347; Knowledge Map 1,096/5,762; paths/locality Files=2/Tests=22; all 37 chapters; removed build 73 files/17,288,264 bytes; zero ceiling increases; all doctrines pass; no replacement projection or compiler/runtime/generated-product change; `.11` done and `.5` next |
+| `2026-08-01` | `.5` activation | clean `3084d8c7b` predecessor; task/index/roadmap/fact/Memory sync; path/task/live-size/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates | `passed`; paths Files=1/Tests=2; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 19 surfaces/2,787 paths; Knowledge Map current; Memory 40 lines; all 37 chapters test; zero ceiling increases; `.5` alone active; rationale source and registry topology unchanged |
 
 ## Commit Log
 
@@ -695,8 +705,13 @@ no routed destination becomes the next uninstrumented blob.
 | `.25` WARP retirement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25: retire unused WARP bootstrap` | Delete the unused harness bootstrap after exact content/consumer proof, enforce its absence, and retain exact Git recovery. |
 | `.11` roadmap-status audit | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11: audit roadmap-status value` | Preserve the frozen object, classify present value and every consumer independently, recommend retirement, and await the director's retain/retire/re-form selection. |
 | `.11` roadmap-status retirement | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11: retire roadmap-status board` | Preserve exact Git recovery, retire the false combined live board and its consumers without replacement, close `.11`, and leave `.5` as the next clean selection. |
+| `.5` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5: activate rationale-ledger migration` | Activate only the bounded conditional-rationale migration from clean `.11`; source entries and ledger topology remain unchanged. |
 
 ## Changelog
+
+- `2026-08-01`: Clean `.11` commit `3084d8c7b` activates `.5` alone for the
+  bounded conditional rationale-ledger migration. The selection changes no
+  rationale entry, registry topology, checker, limit, or product behavior.
 
 - `2026-08-01`: `.11` independently retires the former roadmap-status board
   under decision `0049`. Exact historical prose remains verifier-protected in

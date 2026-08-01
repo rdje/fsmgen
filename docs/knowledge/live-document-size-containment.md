@@ -234,7 +234,10 @@ task evidence, Git, Memory, facts/decisions, and the mdBook. The exact
 32,299-line object remains deterministically retrievable from `329d7cf1b`
 under `fsmgen_required_history`; the live path, write obligation, route, and
 surface are retired without a replacement changelog. Pending `.26` retains the
-broader agent-era document inventory, and `.5`/`.11` remain independent.
+broader agent-era document inventory. Completed `.11` independently retires
+the two frozen status views, while clean commit `3084d8c7b` activates `.5`
+alone to migrate the retained conditional rationale ledger through `.3`'s
+bounded whole-entry schema.
 
 Leaf `.11` independently retires the former achievement journal under decision
 `0048`, exact version retrieval, and live-path/consumer absence enforcement.
