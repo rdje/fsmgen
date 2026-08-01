@@ -196,10 +196,12 @@ and backend manifest. The five UVM-facing source files are byte-checked in
 Capability discovery labels emission passed and structural validation passed,
 while manual review is pending and preprocessing, parse, UVM-library compile,
 fixture compile, elaboration, runtime, result, and parity remain not run or not
-produced. Ordinary emission fetches or inspects no UVM library bytes. `.13.1.2`
-is the next emission frontier; `.13.2` is dependency-ready for separately
-owned experimental open-tool probes; `.13.3` alone retains the future
-PGEN+NEXSIM runtime blocker.
+produced. Ordinary emission fetches or inspects no UVM library bytes. Clean
+predecessor `254806049` activates `.13.1.2` alone for complete selected
+component topology, timed interfaces, lifecycle control, and notification/
+interception emission. Activation changes no product behavior or qualification
+claim. `.13.2` is dependency-ready for separately owned experimental open-tool
+probes; `.13.3` alone retains the future PGEN+NEXSIM runtime blocker.
 
 `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` now preserves a separate proposed
 architecture for an Intent Abstraction Simulator. IASIM is a first-class,

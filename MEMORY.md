@@ -5,19 +5,19 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`MDBOOK-PARAGRAPH-SPACING.5`: park rendered HTML regression audit).
-- active_work_unit: `.13.1.1` is done; `.13.1` remains active and proposed
-  `.13.1.2` is its next clean activation for complete topology, lifecycle, and
-  notification/interception emission.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2`:
+  activate complete native UVM structures).
+- active_work_unit: `.13.1.2` is active for topology, interfaces, lifecycle,
+  and notification/interception emission; `.13.1.1` remains complete.
 - current_state: private profile `sv_uvm_emit.accellera_2020_3_1` now emits its
   exact ten-artifact foundation; its first gallery is byte-checked and atomic
   publication/cleanup pass. Emission never accesses UVM-library bytes. Manual
   review is pending; parse through runtime, results, parity, and complete
   breadth remain unclaimed. `.13.2` is separate and dependency-ready; `.13.3`
   retains future PGEN+NEXSIM runtime qualification.
-- next_action: resume the `.13.1.2` clean-activation frontier. The non-urgent
-  rendered-mdBook paragraph regression audit is durably parked as proposed
-  `MDBOOK-PARAGRAPH-SPACING.5` and must not preempt HIAL/VIAL work.
+- next_action: implement `.13.1.2` alone with deterministic source-mapped
+  topology/lifecycle/notification structures, static negative oracles, and a
+  representative review gallery; require no simulator result.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` waits on capability-ready PGEN and NEXSIM releases and an

@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-07-31`
+- Last updated: `2026-08-01`
 - Owner: repo-local workflow
 
 ## Goal
@@ -260,11 +260,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1: ship native UVM emitter foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Emit complete selected component topology, timed interfaces, lifecycle control, and notification/interception structures for visual and static review.`
   Acceptance: `Generated tests/environments/agents/interfaces/controllers/result collectors express strict lifecycle/logical-time ownership and the complete notification/interception record, including stable registration order, filters, effects, cancellation, bounded queue/reject reentrancy, source maps, static negative oracles, and representative review-gallery artifacts; no simulator gate or runtime result is required.`
-  Verification: `dependency-ready after completed .13.1.1; pending separate clean activation`
-  Commit: `pending activation`
+  Verification: `pending implementation after clean activation from exact predecessor 254806049bf9d545d36e5a4f5e9666f1ef4cbcb4`
+  Commit: `pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3`
   Status: `proposed`
@@ -405,8 +405,9 @@ optional experimental probes and future PGEN+NEXSIM runtime qualification.
 Active containers `.13`/`.13.1` own five full-shaped reviewable emission
 leaves that do not wait for simulation. Completed `.13.1.1` now ships the
 private emitter substrate, structural validator, exact capability truth, and
-first byte-checked artifact gallery. Proposed `.13.1.2` is the next separate
-clean activation for complete topology/lifecycle/notification structures;
+first byte-checked artifact gallery. Clean predecessor `254806049` now
+activates `.13.1.2` alone for complete topology, timed interfaces, lifecycle,
+and notification/interception structures;
 `.13.2` is dependency-ready for an exact reusable open-tool compile/
 elaboration probe, while `.13.3` remains blocked on capability-ready PGEN and
 NEXSIM releases.
@@ -416,6 +417,13 @@ machinery is compiler-owned in the same architectural sense that assembly is
 compiler-owned beneath C/C++ or Rust.
 
 ## Decisions
+
+- `2026-08-01`: Clean predecessor
+  `254806049bf9d545d36e5a4f5e9666f1ef4cbcb4` permits `.13.1.2` to activate
+  alone for complete selected component topology, timed interfaces, lifecycle
+  control, and notification/interception structures. Activation changes only
+  durable continuity: no emitter bytes, review artifact, public capability,
+  parser, compile, elaboration, runtime, result, or parity evidence changes.
 
 - `2026-08-01`: Ship the private `sv_uvm_emit.accellera_2020_3_1`
   foundation without widening public `vial run`. Exact typed/context/
@@ -605,7 +613,7 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for proposed `.13.1.2` or later `.13.1` native UVM emission leaves;
+- None for active `.13.1.2` or later `.13.1` native UVM emission leaves;
   they generate and expose review galleries without simulator availability and
   make explicit per-stage not-run/experimental claims.
 - `.13.3` runtime qualification is intentionally blocked on capability-ready
@@ -656,6 +664,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-08-01` | `.12` selection | exact Accellera source/release and open-source tool evidence; director PGEN/NEXSIM/commercial-tool/simulator-neutral/full-emission/compiler-iteration clarifications; legacy UVM 1.2 and current VIAL contract audit; decision `0050`; exact mapping/profile/artifact/gate/non-claim contract; task/roadmap/audit/book/fact/Memory continuity; focused docs/live/task/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; simulator-neutral IEEE 1800.2-2020 / Accellera UVM 2020-3.1 tag/commit selected; active `.13.1` decomposes five full-shaped reviewable emission leaves with `.13.1.1` next, `.13.2` probes exact open-tool compile/elaboration from the first gallery, and `.13.3` retains future PGEN+NEXSIM qualification; generated syntax/strategy may iterate under exact emitter identity while VIAL meaning stays fixed; task integrity three trees/907 nodes/one segment/one index archive; focused docs `All tests successful` at Files=4/Tests=13; 22 live surfaces/2,938 paths and exact maintained-reference delta 0/+190/+8,769 pass; all 49 mdBook chapters test and the repository-local 85-file/16,674,248-byte build is removed exactly; Knowledge Map is current at 1,104 facts/5,593 questions/5,759 occurrences; Memory is 46 lines; no native implementation, parser, compile, elaboration, simulation, runtime, result, parity, or commercial-tool dependency ships |
 | `2026-08-01` | `.13.1.1` activation | clean predecessor; task/index/fact/Memory continuity; task integrity; Knowledge Map; relative paths; memory; live-document containment; diff; staged docs-only acceptance; doctrines | `passed`; `.13.1.1` alone active; task integrity remains three trees/907 nodes/one segment/one index archive; Knowledge Map is current at 1,104 facts/5,602 questions/5,768 occurrences; relative paths report `All tests successful` at Files=1/Tests=2; Memory is 46 lines; all 22 live-document surfaces and 2,939/2,939 paths pass with zero maintained-reference changes and zero ceiling increases; all nine staged doctrines pass; no implementation, generated artifact, parser, compile, elaboration, simulation, result, parity, or public capability change |
 | `2026-08-01` | `.13.1.1` implementation | private native emitter/validator/contract syntax; exact AHB ExecutionIR/bridge/DUT handoff; deterministic ten-artifact graph; exact methodology/library state; typed context/component/interface/fixture/top sources; complete line/column source map; structural positive/negative oracles; checked gallery; capability/support truth; atomic publication/collision/cleanup; focused and broader VIAL/support/docs/task/mdBook/Knowledge Map/Memory/staged-doctrine gates | `passed`; three new Perl modules and t1560 report syntax OK; focused native/capability/support Files=3/Tests=7,095 and guarded impacted VIAL/support Files=16/Tests=7,215 pass; docs/history Files=16/Tests=128 pass; task integrity is three trees/907 nodes/one segment/one index archive; all 49 mdBook chapters test and the repository-local 85-file/16,688,654-byte build passes before exact removal; all 22 live surfaces and 2,941/2,941 declared paths pass with exact maintained-reference delta 0/+41/+1,903 and zero ceiling increases; Knowledge Map is current at 1,104 facts/5,615 questions/5,781 occurrences/117 shards; Memory is 47 lines; manual review remains pending and every parser/compile/elaboration/runtime/result/parity/breadth non-claim remains exact |
+| `2026-08-01` | `.13.1.2` activation | clean `254806049` predecessor; task/index/fact/Memory continuity; task integrity; Knowledge Map; relative paths; memory; live-document containment; diff; staged docs-only acceptance; doctrines | `passed pre-stage checks`; `.13.1.2` alone active; task integrity remains three trees/907 nodes/one segment/one index archive; Knowledge Map is current at 1,104 facts/5,619 questions/5,785 occurrences/117 shards; relative paths report `All tests successful` at Files=1/Tests=2; Memory remains below its warning boundary; all 22 live-document surfaces and 2,941/2,941 paths pass with zero maintained-reference changes and zero ceiling increases; implementation and product behavior remain unchanged |
 
 ## Acceptance Checklist (enforced) — `.13.1.1` implementation
 
@@ -1030,8 +1039,15 @@ compiler-owned beneath C/C++ or Rust.
 | `.12` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12: select open-source native UVM architecture` | Accept decision `0050`; select simulator-neutral Accellera UVM 2020-3.1 emission, optional experimental evidence, and future exact PGEN+NEXSIM runtime qualification without requiring a commercial simulator or claiming implementation. |
 | `.13.1.1` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1: activate native UVM emitter substrate` | Activate only the selected simulator-neutral emitter foundation, static validators, deterministic atomic artifact graph, and first review gallery after a clean predecessor; implementation remains unperformed. |
 | `.13.1.1` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1: ship native UVM emitter foundation` | Ship the private exact-Accellera native emitter foundation, structural validator, discoverable emission-only contract, ten-artifact deterministic graph, complete source map, first byte-checked review gallery, atomic publication, and exact non-claims. |
+| `.13.1.2` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2: activate complete native UVM structures` | Activate only complete selected component topology, timed interfaces, lifecycle control, and notification/interception emission after a clean predecessor; implementation remains unperformed. |
 
 ## Changelog
+
+- `2026-08-01`: Clean predecessor `254806049` activates `.13.1.2` alone for
+  complete selected native UVM topology, timed-interface, lifecycle, and
+  notification/interception emission. Activation changes continuity only; no
+  emitter byte, review artifact, public capability, parser, compile,
+  elaboration, runtime, result, or parity behavior changes.
 
 - `2026-08-01`: `.13.1.1` ships the private deterministic
   `sv_uvm_emit.accellera_2020_3_1` foundation. The checked AHB fixture emits
