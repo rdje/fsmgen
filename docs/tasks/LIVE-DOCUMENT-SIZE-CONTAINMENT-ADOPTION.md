@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `infra/continuity / project-wide live-document lifecycle`
 - Created: `2026-07-31`
-- Last updated: `2026-07-31`
+- Last updated: `2026-08-01`
 - Owner: repo-local workflow
 - Selected by: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2`
 
@@ -361,6 +361,11 @@ no routed destination becomes the next uninstrumented blob.
   therefore selects `delete`, not `re-form`: preserve the exact source object
   in Git, remove its sole executable requirement, and make absence a checked
   local invariant after claim/consumer/negative-control proof.
+- `2026-08-01`: The director resumes the containment program after clean `.25`
+  completion. No blocked containment leaf is activated by this handoff update:
+  the next clean selection is `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`,
+  whose selected lifecycle contract is required before `.3` can prove the
+  retained-ledger schema and `.4` can migrate `CHANGES.md`.
 
 ## Open Questions
 
@@ -378,11 +383,12 @@ no routed destination becomes the next uninstrumented blob.
 ## Blockers
 
 - `.3`-`.5` and `.11`: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` must first
-  select the four files' long-term roles. `.24` is complete; `.25` is active
-  only until the director-selected WARP retirement is verified and committed.
-  Per director instruction, no further containment leaf is selected after
-  `.25`; the next clean selection returns to product code. `.12` remains the
-  final post-migration calibration if containment resumes later.
+  select the four files' long-term roles. `.24` and `.25` are complete, and the
+  director resumed containment on `2026-08-01`; no implementation leaf is
+  active in this handoff state. The next clean selection is the prerequisite
+  policy-review leaf `.1`, followed by containment schema `.3` and then the
+  `CHANGES.md` migration `.4`. `.12` remains the final post-migration
+  calibration.
 
 ## Acceptance Checklist (enforced) — `.16` utility/retirement audit
 

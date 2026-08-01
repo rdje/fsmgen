@@ -5,17 +5,19 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25:
-  retire unused WARP bootstrap`).
-- active_work_unit: no containment leaf; `.25` is complete.
-- current_state: WARP is deleted after exact content/consumer proof because
-  warp.dev is unused; the doctrine checker enforces absence and retains every
-  other tool-neutral bootstrap check.
-- next_action: from the clean `.25` boundary, select the next roadmap-aligned
-  FSMGen feature-code leaf; do not open another containment leaf.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION: record
+  director reactivation`).
+- active_work_unit: no implementation leaf; the containment root is
+  director-reactivated after clean `.25` completion.
+- current_state: the reactivation is durable without falsely activating blocked
+  containment `.4`; `CHANGES.md` remains at its enforced 32,299-line ceiling.
+- next_action: activate `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` from the
+  clean boundary; its selected lifecycle contract unlocks containment schema
+  `.3`, which then unlocks the `CHANGES.md` migration `.4`.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: containment is director-paused; unrelated feature work is clear.
+- blockers: `.3` and `.4` retain their declared policy-review dependency; the
+  former director pause is lifted.
 
 ## Durable context
 
@@ -33,5 +35,5 @@ history; this file carries only the current bounded resume state.
   runtime, and normalized results; `.11` now qualifies only the selected AHB
   handwritten-oracle comparison, not general cross-backend parity.
 - Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; `.25`
-  retires unused WARP and the containment program is director-paused.
+  retires unused WARP and the director resumed containment on `2026-08-01`.
   Push only on request (`0005`); PNT runs autonomously (`0003`).
