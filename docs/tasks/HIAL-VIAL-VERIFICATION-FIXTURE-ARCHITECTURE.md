@@ -230,11 +230,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11: prove portable AHB result parity`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the native SystemVerilog/UVM backend, UVM revision, component/runtime mapping, existing-skeleton migration, and sv_uvm_qualified profile.`
   Acceptance: `The contract chooses the exact UVM revision and qualified simulator/profile; establishes typed VIAL intent families for notification/interception (identity, registration, ordering, filtering, lifecycle, reentrancy/cancellation, and effects), lifecycle control, stimulus orchestration, producer/observer communication, implementation selection/substitution, scoped configuration, register intent, constrained decisions, coverage/properties, timed interface interaction, transactions/scenarios/analysis/models/scoreboards/faults/results, and an explicit residual-intent taxonomy; maps those intents to UVM events/callbacks, phases/objections, sequences, TLM, factories/config DB, RAL, randomization/coverage/assertions, and virtual interfaces/clocking without leaking those mechanisms into the VIAL surface or requiring SV/UVM knowledge from a VIAL author; selects target-artifact efficiency/readability/source-map criteria; records compile/elaboration/simulation capabilities and licensing/CI policy; and defines compatibility/versioning for the shipped UVM 1.2 inert skeleton without treating the first bounded native implementation as VIAL's expressive ceiling.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean predecessor ea1b76dd54 activates .12 alone for documentation-only native SystemVerilog/UVM contract selection. The local command-path census finds Verilator and Icarus but no VCS, Xcelium, Questa/ModelSim, or other qualified UVM simulator; this is an input to the selection rather than borrowed qualification. Only task/index/book/fact/Memory continuity changes. No UVM revision, simulator profile, source form, IR, backend, artifact, capability/support claim, compile, runtime, parity, HIAL behavior, or product behavior is selected or changed by activation. Final activation evidence is recorded below.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12: activate native UVM contract selection`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13`
   Status: `proposed`
@@ -340,6 +340,9 @@ parity ownership after clean `.10.4` implementation commit `dfe87f536`.
 Completed `.11` now qualifies 19 shared AHB outcome paths against the
 handwritten oracle on byte-identical DUT source, while general cross-backend
 parity remains unclaimed.
+Clean cross-tree predecessor `ea1b76dd54` activates `.12` alone for selection
+of the native SystemVerilog/UVM contract, exact UVM revision, and qualified
+profile. Activation adds no methodology, backend, capability, or runtime claim.
 Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
@@ -501,8 +504,9 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for completed `.11`; `.12` retains its exact simulator/UVM selection
-  prerequisite.
+- None for active `.12` contract selection. Its local evidence currently has
+  Verilator and Icarus but no qualified UVM simulator; the contract must record
+  that boundary rather than infer qualification.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -543,6 +547,13 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-07-31` | `.10.4` implementation | public API/CLI run; exact Verilator 5.046 version/argv/digests; bounded process/output/staging; both selected AHB scenarios; ten semantic trace/result streams; deterministic virtual and unchanged filesystem reruns; same-barrier any-join tie/cancellation; atomic failures/cleanup; syntax/focused/support/docs/live/path/task/mdBook/Knowledge Map/Memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; 19 changed/new Perl/test paths syntax OK; guarded VIAL/support Files=10/Tests=7,170; docs/live/path Files=5/Tests=323; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-local build 73 files/16,964 KiB; Knowledge Map 1,096 facts/5,736 keys; README 245 lines/9,917 bytes; Memory 44 lines; initial default RAM guard stopped on its conservative free-page estimate while kernel pressure reported 83% free, then bounded 100%-host/4,096-MiB-process mdBook gates passed; `.10` complete; `.11` retains parity; output removed exactly |
 | `2026-07-31` | `.11` activation | clean `.10.4` implementation predecessor `dfe87f536`; task/index/roadmap/audit/contracts/book/facts/Memory/changelog continuity; docs/live/path/task/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.11` alone active for normalized result parity against the handwritten AHB oracle; docs/live/path Files=5/Tests=323; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-local build 73 files/16,964 KiB; Knowledge Map 1,096 facts/5,736 keys; README unchanged at 245 lines/9,917 bytes; Memory 46 lines; implementation and product behavior unchanged; output removed exactly |
 | `2026-07-31` | `.11` implementation | private closed AHB oracle comparator; independent handwritten/generated execution over identical DUT bytes; exact result/oracle projections; mismatches/exclusions/failures; capability/support truth; syntax/focused/impacted/docs/live/path/task/mdBook/Knowledge Map/Memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; all 15 changed/new Perl/test paths syntax OK; exact Verilator 5.046 impacted suite Files=11/Tests=7,183; 19 shared paths compare equivalent across two scenarios while two undeclared-internal families are explicitly excluded; malformed, duplicate, nonzero, ineligible, different-DUT, and semantic-mismatch evidence is regression-locked; docs/live/path Files=5/Tests=323; trees=3/nodes=889/one segment/one index archive; all 37 chapters test; repository-local build 73 files/16,976 KiB before exact removal; Knowledge Map 1,096 facts/5,736 keys; README 245 lines/9,917 bytes; Memory 47 lines; general cross-backend parity remains unclaimed; final staged doctrines and residue census pass |
+| `2026-08-01` | `.12` activation | clean `ea1b76dd54` predecessor; exact local simulator command census; task/index/book/fact/Memory continuity; task/live/path/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; `.12` alone active for native SystemVerilog/UVM contract selection; Verilator and Icarus present, no qualified UVM simulator found; paths Files=1/Tests=2; trees=3/nodes=899/one segment/one index archive; 22 live surfaces/2,937 paths; maintained-reference delta 0/+6/+361; zero ceiling increases; Knowledge Map 1,104 facts/5,585 questions; Memory 46 lines; all 49 chapters; removed build 85 files/16,600,519 bytes; all nine staged doctrines pass; no revision/profile/backend/artifact/capability/runtime/product behavior selected or changed |
+
+## Acceptance Checklist (enforced) — `.12` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'sv_uvm_qualified' --oneline -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md docs/book/src/16d-hial-vial-verification-architecture.md` identifies `2e2f7d25e HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1: select one-source dual-IR architecture`. Completed `.11` exhausts the portable handwritten-oracle parity frontier, while proposed `.12` is the next dependency-closed child and decision `0032` requires the native UVM revision/profile to be selected independently.
+- [x] **ADDRESSED (verified)** — clean predecessor `ea1b76dd54` changes `.12` from proposed to active and updates only task/index/book/fact/Memory continuity plus the book's exact aggregate-change authority. `command -v` finds `/opt/homebrew/bin/verilator` and `/opt/homebrew/bin/iverilog` but no `vcs`, `xrun`, `qrun`, `vsim`, `questa`, or `irun`; the active selection must preserve this evidence boundary. The maintained-reference checker accepts the exact book before→after change at 50/47,544/2,520,904 → 50/47,550/2,521,265. No UVM revision/profile/backend/artifact/capability/runtime or product behavior is selected by activation.
+- [x] **NO REGRESSION** — relative-path verification reports `All tests successful` at `Files=1, Tests=2`; task integrity remains three trees / 899 nodes / one segment / one index archive, and all 49 mdBook chapters test before the repository-local 85-file / 16,600,519-byte build is removed exactly. Knowledge Map remains 1,104 facts / 5,585 questions, Memory is 46 lines, maintained-reference authority accepts two references / one changed, ceiling authority reports zero increases, and `scripts/check_doctrines.sh` reports `[doctrine] all doctrine checks passed` with no backend or product-behavior change.
 
 ## Acceptance Checklist (enforced) — `.3` implementation
 
@@ -864,9 +875,15 @@ compiler-owned beneath C/C++ or Rust.
 | `.10.4` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10.4: ship Verilator run results` | Ship public run, exact bounded Verilator execution, validated traces, normalized results, deterministic virtual/filesystem publication, cleanup, and exact capability/support truth without parity. |
 | `.11` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11: activate portable AHB result parity` | Activate only normalized comparison of the shipped generated result with the handwritten AHB oracle after clean `.10.4`; implementation and parity claims remain unperformed. |
 | `.11` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11: prove portable AHB result parity` | Ship the private closed AHB oracle comparator, independently execute both harnesses over byte-identical DUT source, compare 19 shared outcomes, exclude undeclared internals, and retain every broader parity/methodology non-claim. |
+| `.12` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12: activate native UVM contract selection` | Activate only selection of the native SystemVerilog/UVM revision, intent mapping, existing-skeleton migration, and exact qualified profile after clean `.13` containment completion; implementation and qualification remain unperformed. |
 
 ## Changelog
 
+- `2026-08-01`: Clean containment commit `ea1b76dd54` activates `.12` alone
+  for native SystemVerilog/UVM contract selection. The local tool census finds
+  Verilator and Icarus but no qualified UVM simulator; activation changes only
+  continuity and adds no revision, profile, backend, artifact, capability,
+  runtime, parity, HIAL, or product-behavior claim.
 - `2026-07-31`: `.11` ships bounded AHB handwritten-oracle parity over 19
   normalized shared paths, exact same-DUT identity, deterministic reports,
   explicit undeclared-internal exclusions, semantic mismatch evidence, and

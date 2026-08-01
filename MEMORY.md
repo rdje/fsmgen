@@ -5,17 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13:
-  bound focused document collections`).
-- active_work_unit: `.13` is complete; containment `.12` waits on director-
-  deferred `.26`, so that tree has no PNT-eligible leaf.
-- current_state: all 1,005 focused and 12 ancillary documents are classified in
-  one bounded generated index. Three exact ISF sources now route through three
-  landings and eleven stable-topic parts; focused pressure is below warning on
-  every axis with zero ceiling increases.
-- next_action: from the clean `.13` commit, activate
-  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12` alone for the native
-  SystemVerilog/UVM contract selection.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12:
+  activate native UVM contract selection`).
+- active_work_unit: `.12` alone is active from clean commit `ea1b76dd54`.
+- current_state: portable Verilator execution and bounded AHB parity remain
+  shipped. The local command census finds Verilator and Icarus but no qualified
+  UVM simulator; activation creates no UVM revision, backend, or runtime claim.
+- next_action: audit the shipped inert UVM 1.2 skeleton, current VIAL contracts,
+  available standards/tool evidence, and licensing/CI boundary; then select the
+  exact native UVM contract and `sv_uvm_qualified` profile in `.12`.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: none for active `.13`; `.26` retains the deferred inventory. The
@@ -44,4 +42,5 @@ history; this file carries only the current bounded resume state.
   `.5` bounds the rationale ledger; `.8` completes the Chapter 14 partition;
   `.9` bounds strategic direction and preserves exact chronology; `.10` bounds
   canonical cards and replaces the flat map with checked query-first shards;
-  `.13` now bounds the focused/ancillary index and maintained ISF reference.
+  `.13` now bounds the focused/ancillary index and maintained ISF reference;
+  clean `ea1b76dd54` activates HIAL/VIAL `.12` contract selection.

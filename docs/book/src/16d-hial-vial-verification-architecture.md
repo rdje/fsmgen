@@ -1063,3 +1063,9 @@ run, exact Verilator execution, trace capture, normalized results,
 deterministic reruns, and atomic cleanup. Completed `.11` now qualifies the
 selected AHB handwritten-oracle
 comparison while leaving general cross-backend parity unclaimed.
+
+Clean commit `ea1b76dd54` activates `.12` alone to select the native
+SystemVerilog/UVM contract: exact UVM revision, typed intent-to-methodology
+mapping, inert-skeleton migration, and the `sv_uvm_qualified` tool profile.
+Activation itself adds no UVM backend or qualification claim; the current
+local command census still finds no full-language UVM simulator.

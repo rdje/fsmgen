@@ -114,3 +114,10 @@ validated trace capture, normalized results, deterministic reruns, and atomic
 cleanup. Completed `.11` independently executes both harnesses over byte-identical DUT
 source and compares 19 public/shared AHB outcomes. Undeclared internal metrics
 are explicit exclusions; general cross-backend parity remains unclaimed.
+
+Clean commit `ea1b76dd54` activates `.12` alone for native SystemVerilog/UVM
+contract selection. It must choose the UVM revision, typed intent mappings,
+existing inert-skeleton migration, and exact `sv_uvm_qualified` profile while
+preserving decision `0034`'s compiler-private methodology boundary. The local
+command census currently finds Verilator and Icarus but no qualified UVM
+simulator, so activation creates no backend, capability, or runtime claim.
