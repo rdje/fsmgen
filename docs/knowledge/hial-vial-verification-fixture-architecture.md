@@ -48,6 +48,10 @@ answers:
   - "can all design and verification work happen at xIAL level?"
   - "what ecosystem should surround IASIM?"
   - "how does the xIAL framework relate to IASIM?"
+  - "what language should implement IASIM?"
+  - "is Perl 5 fast enough for IASIM?"
+  - "does IASIM need to be rewritten in Rust?"
+  - "how may Rust accelerate IASIM?"
   - "does xIAL intent signoff replace physical design signoff?"
   - "is HDL export optional in the xIAL framework?"
   - "how is xIAL to HDL export signed off?"
@@ -64,7 +68,7 @@ evidence: >-
 reverify: >-
   scripts/check_task_tree_integrity.pl &&
   rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md &&
-  rg -n 'native Intent Abstraction|signoff|direct semantic adapters|HDL-independent|kernel/session' docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md &&
+  rg -n 'native Intent Abstraction|signoff|direct semantic adapters|HDL-independent|kernel/session|Perl 5|versioned C ABI|shared library|differential equivalence' docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'complete native framework|xIAL|HIAL IP|VIAL VIP|functional/intent signoff' docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md &&
   prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1560-vial-native-uvm-emitter-substrate.t
 ---
@@ -207,6 +211,15 @@ results. The intended scheduler seam is VIAL drive, HIAL settle/domain/state
 update, then VIAL sample, react, and check. Its values, time, events, and updates
 come from explicit Intent Abstraction semantics rather than inherited HDL event
 regions or least-common-denominator simulator behavior.
+
+The definition-oriented IASIM reference kernel is Perl 5 first. Perl remains
+the semantic orchestrator and authoritative comparison route; representative
+xIAL workloads must demonstrate a real bottleneck before optimization. A
+measured bounded hotspot may later be implemented in Rust and exposed as a
+shared library through a stable versioned C ABI (`Rust -> shared library ->
+Perl`). Such an accelerator must define memory ownership plus error and panic
+boundaries explicitly and prove deterministic normalized differential
+equivalence against the pure-Perl route. No full IASIM rewrite is implied.
 
 IASIM accuracy is qualified natively, without generating HDL: a precise
 versioned semantics, a definition-oriented reference interpreter or equivalent

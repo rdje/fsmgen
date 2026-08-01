@@ -31,6 +31,16 @@ comparison with generated HDL tests the lowering/backend, not the definition of
 IASIM semantics. The sibling xIAL framework separately requires signoff-grade
 HDL export qualification for every profile FSMGen advertises as publishable.
 
+The definition-oriented IASIM reference kernel is Perl 5 first. Perl is an
+appropriate fast implementation language for this control- and semantics-heavy
+work, matches FSMGen's current semantic authority, and optimizes development
+clarity before speculative throughput work. Performance claims must come from
+representative xIAL workloads and profiling. If a measured hot path later
+justifies native acceleration, Rust may implement only that bounded component
+behind a stable versioned C ABI and shared library consumed by Perl; Perl keeps
+semantic orchestration and reference authority, and the accelerated route must
+remain differentially equivalent to the pure-Perl route.
+
 ## Non-Goals
 
 - Do not activate or implement IASIM in this capture; this is a proposed owner
@@ -58,6 +68,9 @@ HDL export qualification for every profile FSMGen advertises as publishable.
   visualization, coverage closure, or signoff governance into the trusted
   engine. `XIAL-NATIVE-DEVELOPMENT-FRAMEWORK` owns that ecosystem around a
   stable IASIM kernel/session boundary.
+- Do not pre-emptively rewrite IASIM in Rust or treat a full-language migration
+  as the default performance plan. Native acceleration is optional, measured,
+  component-scoped, and subordinate to the Perl reference semantics.
 
 ## Acceptance Criteria
 
@@ -104,6 +117,11 @@ HDL export qualification for every profile FSMGen advertises as publishable.
 - A stable versioned kernel/session/query contract exposes IASIM to the xIAL
   framework without allowing clients or framework orchestration to redefine
   values, time, events, updates, randomness, or normalized results.
+- The first definition-oriented engine is implemented in Perl 5. Any later
+  Rust accelerator is admitted only after representative profiling identifies
+  a bounded hotspot, uses a stable versioned C ABI (`Rust -> shared library ->
+  Perl`), defines ownership and error/panic boundaries explicitly, and proves
+  deterministic normalized differential equivalence with the pure-Perl path.
 - Each completed active leaf is committed through `COMMIT.md`.
 
 ## Task Tree
@@ -116,7 +134,7 @@ HDL export qualification for every profile FSMGen advertises as publishable.
 - ID: `IASIM-EXECUTABLE-REFERENCE-SEMANTICS.1`
   Status: `proposed`
   Goal: `Select IASIM's native semantic authority, executable boundary, independence rules, signoff evidence contract, and first bounded profile.`
-  Acceptance: `Define the rule that IASIM semantics are native Intent Abstraction semantics rather than HDL-derived behavior. Inventory the exact HIAL facts exposed by intent_hir, lowered_rtl_ir, structural_rtl_ir, canonical IAL lowering, and the HIALVIALBridgeManifest; inventory VIALExecutionIR and normalized result contracts; identify gaps needed for execution; select one canonical execution engine with direct IAL2/IAL1/IAL0 semantic adapters; define how production lowering remains an independently compared path; define the implementation/common-mode-defect boundary, HIAL/VIAL scheduling seam, and signoff evidence stack; distinguish native intent signoff from backend and HDL-simulator evidence; record capabilities, resource bounds, public/non-public boundaries, risks, alternatives, and the smallest implementation sequence. This leaf is documentation and selection only.`
+  Acceptance: `Define the rule that IASIM semantics are native Intent Abstraction semantics rather than HDL-derived behavior. Inventory the exact HIAL facts exposed by intent_hir, lowered_rtl_ir, structural_rtl_ir, canonical IAL lowering, and the HIALVIALBridgeManifest; inventory VIALExecutionIR and normalized result contracts; identify gaps needed for execution; select one canonical execution engine with direct IAL2/IAL1/IAL0 semantic adapters; define how production lowering remains an independently compared path; define the implementation/common-mode-defect boundary, HIAL/VIAL scheduling seam, and signoff evidence stack; select Perl 5 as the definition-oriented reference-engine language; require representative profiling before optimization; constrain any later Rust acceleration to measured bounded hotspots behind a versioned C ABI/shared-library boundary with explicit ownership, error, panic, determinism, and pure-Perl differential-equivalence rules; distinguish native intent signoff from backend and HDL-simulator evidence; record capabilities, resource bounds, public/non-public boundaries, risks, alternatives, and the smallest implementation sequence. This leaf is documentation and selection only.`
   Verification: `pending`
   Commit: `pending`
 
@@ -137,7 +155,7 @@ HDL export qualification for every profile FSMGen advertises as publishable.
 - ID: `IASIM-EXECUTABLE-REFERENCE-SEMANTICS.4`
   Status: `proposed`
   Goal: `Implement the first simple definition-oriented native IASIM reference engine.`
-  Acceptance: `Implement the .2/.3 contracts for the selected bounded profile with clarity and semantic correspondence as the priority; import no HDL-emitter evaluation, lowering, or scheduling logic; preserve source-to-execution diagnostics; fail closed on unsupported capabilities and exhausted resource limits; prove deterministic byte-identical normalized traces across reruns. Treat this engine as an independently testable oracle, not a performance implementation.`
+  Acceptance: `Implement the .2/.3 contracts in Perl 5 for the selected bounded profile with clarity and semantic correspondence as the priority; import no HDL-emitter evaluation, lowering, or scheduling logic; preserve source-to-execution diagnostics; fail closed on unsupported capabilities and exhausted resource limits; prove deterministic byte-identical normalized traces across reruns. Treat this engine as an independently testable oracle, not a performance implementation, and gather representative profiles before proposing native acceleration.`
   Verification: `pending`
   Commit: `pending`
 
@@ -223,6 +241,12 @@ implemented.
   normalized outcomes are mandatory golden evidence for every supported
   publishable xIAL-to-HDL framework profile; export quality and standards
   conformance remain separate first-class product signoff claims.
+- `2026-08-01`: Use Perl 5 for the definition-oriented IASIM reference kernel.
+  Treat current performance as adequate until representative xIAL profiling
+  proves otherwise. A future measured hotspot may be delegated to Rust as a
+  shared library through a stable versioned C ABI; Perl remains the semantic
+  orchestrator/reference, and differential equivalence is mandatory. A full
+  IASIM rewrite is neither required nor the default plan.
 
 ## Open Questions
 
@@ -238,6 +262,8 @@ implemented.
   v1 rather than capability-deferred?
 - Should the public entry point be `fsmgen iasim`, a mode under `fsmgen vial`,
   an xIAL-framework command, or several clients over one underlying kernel API?
+- Which representative xIAL workloads and budgets should establish whether a
+  particular Perl kernel path is genuinely hot enough to justify acceleration?
 
 ## Blockers
 
@@ -245,6 +271,35 @@ implemented.
   selected by roadmap/director priority; no HDL language, generator, parser,
   simulator, or methodology library is required to audit, implement, or
   signoff the native IASIM engine.
+
+## Acceptance Checklist (enforced) — Perl-first proposal refinement
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Perl 5 first' --all
+  --oneline -- docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md
+  docs/book/src/16d-hial-vial-verification-architecture.md
+  doctrine/live_document_size/surfaces.jsonl` returns no commit. The proposed
+  IASIM tree selected an independent definition-oriented engine and optional
+  optimized-engine differential checking but did not durably select its first
+  implementation language, profiling threshold, or native-acceleration
+  boundary; those facts otherwise existed only in the director conversation.
+- [x] **ADDRESSED (verified)** — The task-tree, task index, mdBook, fact card,
+  generated Knowledge Map, and bounded Memory now select Perl 5 for the
+  proposed reference kernel, require representative xIAL profiling before
+  optimization, and constrain optional Rust acceleration to measured bounded
+  hotspots behind a stable versioned C ABI/shared library while Perl retains
+  semantic authority. Maintained-reference verification accepts the exact
+  mdBook transition 50/47,781/2,531,937 -> 50/47,809/2,533,568, or delta
+  0/+28/+1,631.
+- [x] **NO REGRESSION** — `prove -l t/1414-docs-relative-paths-audit.t
+  t/1549-task-tree-integrity-doctrine.t
+  t/1560-live-document-ceiling-authority.t
+  t/1561-live-document-reference-authority.t
+  t/1567-knowledge-map-shards.t t/1568-knowledge-card-history.t` reports `All
+  tests successful` at `Files=6, Tests=62`. All 49 mdBook chapters test and the
+  repository-local HTML build passes before exact cleanup; Knowledge Map is
+  current at 1,104 facts/5,619 questions/5,785 occurrences/117 shards, Memory
+  is 47 lines, and IASIM remains proposed with no engine, command, artifact,
+  runtime, performance, or signoff claim.
 
 ## Verification Log
 
@@ -268,3 +323,6 @@ implemented.
   stack required for an accurate, signoff-caliber simulator claim.
 - `2026-08-01`: Positioned IASIM as the small independently qualified kernel
   inside the separately owned complete xIAL-native development framework.
+- `2026-08-01`: Recorded the director-confirmed Perl-first implementation
+  strategy and optional measured `Rust -> shared library -> Perl` acceleration
+  boundary without activating IASIM implementation.

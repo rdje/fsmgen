@@ -751,6 +751,34 @@ ExecutionIR's `limits`. This preserves the target-neutral plan identity:
 selecting a SystemVerilog emission limit cannot silently change the semantic
 plan that a future VHDL or UVM backend consumes.
 
+## Native Intent Abstraction simulation direction (proposed)
+
+`IASIM-EXECUTABLE-REFERENCE-SEMANTICS` parks a future Intent Abstraction
+Simulator; it is not active or shipped. IASIM would execute HIAL design intent
+and VIAL verification intent directly through one canonical native execution
+model, with semantic adapters for IAL2, IAL1, and IAL0. HDL generation and
+external simulation would remain separately comparable deployment and backend-
+qualification routes, not the definition of native Intent Abstraction meaning.
+
+The proposed definition-oriented IASIM reference kernel is Perl 5 first. That
+choice favors direct correspondence with the semantic contract and the current
+FSMGen implementation while remaining fast enough until representative xIAL
+profiling proves a concrete bottleneck.
+
+IASIM does not need a wholesale Rust rewrite. A measured bounded hotspot may
+later move behind a stable versioned C ABI into a Rust-built shared library
+called by Perl. Perl remains the semantic orchestrator and reference route;
+ownership plus error and panic boundaries must be explicit, and every
+accelerated route must reproduce the pure-Perl normalized result
+deterministically.
+
+Native IASIM signoff would require a precise versioned semantics, independent
+definition-oriented oracles, manually derived vectors, property/metamorphic and
+bounded exhaustive tests, cross-level direct-versus-lowered equivalence,
+deterministic replay, semantic coverage, and seeded-defect detection. Passing
+IASIM would not by itself prove generated HDL syntax, standards conformance,
+elaboration, runtime behavior, or external-simulator parity.
+
 ## Expressive ceiling: verification intent, not synthesis
 
 The governing rule is **full power underneath, simpler intent above**. VIAL

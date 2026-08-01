@@ -5,7 +5,7 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1`: ship native UVM emitter foundation).
+- latest_commit: this commit (`IASIM-EXECUTABLE-REFERENCE-SEMANTICS`: record Perl-first hybrid kernel constraint).
 - active_work_unit: `.13.1.1` is done; `.13.1` remains active and proposed
   `.13.1.2` is its next clean activation for complete topology, lifecycle, and
   notification/interception emission.
@@ -15,9 +15,9 @@ history; this file carries only the current bounded resume state.
   review is pending; parse through runtime, results, parity, and complete
   breadth remain unclaimed. `.13.2` is separate and dependency-ready; `.13.3`
   retains future PGEN+NEXSIM runtime qualification.
-- next_action: after this clean commit, record the director-confirmed Perl-first
-  IASIM kernel and optional measured Rust `.so`/C-ABI accelerators in its parked
-  tree, then resume the `.13.1.2` clean-activation frontier.
+- next_action: park the non-urgent rendered-mdBook paragraph-regression audit
+  under the existing spacing tree, then resume the `.13.1.2` clean-activation
+  frontier.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` waits on capability-ready PGEN and NEXSIM releases and an
