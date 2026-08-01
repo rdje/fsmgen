@@ -30,6 +30,12 @@ answers:
   - "can FSMGen generate full UVM before a full simulator exists?"
   - "can Verilator compile or elaborate early generated UVM?"
   - "may generated UVM syntax change while VIAL meaning stays stable?"
+  - "what is IASIM?"
+  - "should FSMGen simulate Intent Abstraction directly?"
+  - "can IASIM replace an HDL simulator?"
+  - "how would IASIM combine HIAL and VIAL?"
+  - "what should IASIM execute?"
+  - "how does IASIM avoid common-mode code generation bugs?"
 date: 2026-08-01
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
@@ -37,7 +43,7 @@ evidence: >-
   docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Parity/AHBBaseOutput.pm; t/1557-vial-portable-sv-backend-emission.t; t/1559-vial-ahb-runtime-parity.t;
   docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md;
   docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
-  docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://github.com/accellera-official/uvm-core/releases/tag/2020.3.1; https://github.com/chipsalliance/uvm-verilator; https://verilator.org/guide/latest/languages.html;
+  docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://github.com/accellera-official/uvm-core/releases/tag/2020.3.1; https://github.com/chipsalliance/uvm-verilator; https://verilator.org/guide/latest/languages.html;
   https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
 reverify: scripts/check_task_tree_integrity.pl && rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t
 ---
@@ -156,3 +162,21 @@ artifact schemas, and source maps remain stable or are explicitly versioned.
 The shipped UVM 1.2 passive-monitor output stays unchanged and unqualified.
 `.13.1.1` is next for clean activation; `.13.3` alone retains the future
 PGEN+NEXSIM runtime blocker.
+
+`IASIM-EXECUTABLE-REFERENCE-SEMANTICS` now preserves a separate proposed
+architecture for an Intent Abstraction Simulator. IASIM would execute HIAL
+through a canonical executable semantic boundary and run the existing
+`VIALExecutionIR` against it, producing normalized traces and results. The
+intended scheduler seam is VIAL drive, HIAL settle/clock/state update, then VIAL
+sample, react, and check. It should use exact declared value/time semantics and
+an implementation independent from the HDL emitters so a shared bug cannot make
+the oracle and generated code agree falsely.
+
+IASIM is therefore an executable intent specification and future differential
+oracle, not an HDL simulator. A passing IASIM result can validate HIAL/VIAL
+meaning before a full SV/UVM runtime is available, but it cannot prove generated
+HDL syntax, elaboration, backend translation, or external simulator scheduling.
+The proposed first leaf audits whether the existing HIAL intent/lowered/
+structural projections are executable or whether a private
+`HIALExecutionIR` is needed. IASIM complements PGEN and NEXSIM: later HDL runs
+can compare their normalized results against the IASIM reference.
