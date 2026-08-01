@@ -7,6 +7,7 @@ answers:
   - "should ROADMAP_STATUS.md be updated now?"
   - "should LIVE_ACHIEVEMENT_STATUS.md be updated now?"
   - "what supersedes the blanket legacy-document freeze?"
+  - "what is the long-term project document lifecycle policy?"
 date: 2026-07-30
 status: current
 tags: [workflow, changelog, development-notes, roadmap-status, continuity]
@@ -19,8 +20,10 @@ Every completed slice adds one concise `CHANGES.md` entry. A slice updates
 `DEVELOPMENT_NOTES.md` only when it produces durable engineering rationale,
 constraints, or working decisions without a better canonical home.
 
-`ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain untouched pending
-the evidence-based lifecycle discussion owned by proposed
-`PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`. Decision `0007` still governs
-bounded Memory and canonical routing, but its blanket freeze is superseded for
-prospective changelog and conditional development-note updates.
+`ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain untouched while the
+owned migrations are pending. Decision `0046` has selected their exact
+archival and live-path retirement, plus bounded forms for both retained
+ledgers; decision `0025` remains the operational transition policy until those
+migrations land. Decision `0007` still governs bounded Memory and canonical
+routing, but its blanket freeze is superseded for prospective changelog and
+conditional development-note updates.

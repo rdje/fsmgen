@@ -45,7 +45,8 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - `ROADMAP_STATUS.md`
   - **FROZEN legacy blob** (do not append). Superseded by the task-trees (layer B,
     `docs/tasks/` + `docs/TASK_TREE.md`) for live status and by git (layer D) for
-    history — see `docs/decisions/0007`. Existing content stays in git history.
+    history — see `docs/decisions/0007`. Decision `0046` selects exact archival
+    and live-path retirement after the owned containment migration.
 - `docs/TASK_TREE.md` and `docs/tasks/*.md`
   - Repo-local task-tree workflow and per-top-level task files.
   - Must be updated before commit whenever a task-tree-managed activity changes a node status, current frontier, blocker, decision, validation evidence, or completion evidence.
@@ -62,8 +63,8 @@ Ignoring it is not a style issue; it is a project-safety failure.
     task-tree entry, user document, or git. Do not add a placeholder entry for
     slices that do not warrant one. See `docs/decisions/0025`.
 - `LIVE_ACHIEVEMENT_STATUS.md`
-  - **FROZEN legacy blob** (do not append) pending the scheduled lifecycle
-    review in `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`.
+  - **FROZEN legacy blob** (do not append). Decision `0046` selects exact
+    archival and live-path retirement after the owned containment migration.
 - `TASK_ACCEPTANCE.md`
   - Project-neutral code-slice acceptance contract. Its checker reads staged
     paths, task snapshots, and changed-line freshness from the Git index using
@@ -92,8 +93,8 @@ Ignoring it is not a style issue; it is a project-safety failure.
    5. `DEVELOPMENT_NOTES.md` — update only when the conditional rationale
       boundary above is met.
    - `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain FROZEN — do
-     not append to them before their scheduled review. See
-     `docs/decisions/0025`.
+     not append while decision `0025` remains the operational transition rule.
+     Decision `0046` owns their selected post-migration lifecycle.
 4. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.

@@ -70,10 +70,9 @@ no routed destination becomes the next uninstrumented blob.
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3`
   Status: `pending`
   Goal: `Consume the four-file lifecycle review and prove the selected rolling-ledger, sealed-segment, and archive-descriptor schema for any retained live ledgers.`
-  Acceptance: `Blocked until PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 selects each file's role; the resulting schema partitions retained ledgers only at whole-entry boundaries, preserves order and identity, uses bounded current/index views, records range/revision/line/byte/digest/retrieval metadata, proves exact reconstruction, defines aggregate archive transition, and introduces no CHANGES or DEVELOPMENT_NOTES migration yet.`
+  Acceptance: `Implement decision 0046's common schema for the retained CHANGES and conditional DEVELOPMENT_NOTES ledgers: partition only at whole-entry boundaries, preserve order and identity, use bounded current/index views, record range/revision/line/byte/digest/retrieval metadata, prove exact reconstruction, define aggregate archive transition, and introduce no ledger or frozen-status-file migration yet.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4`
   Status: `pending`
@@ -131,11 +130,11 @@ no routed destination becomes the next uninstrumented blob.
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11`
   Status: `pending`
-  Goal: `Consume the separately owned frozen status-file lifecycle decision if it selects migration.`
-  Acceptance: `Blocked until PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 completes; if that decision retains freezing, record no-op closure; if it selects migration, execute only its declared audience/topology with pre/post identity and retrieval proof.`
+  Goal: `Supersede and archive the two frozen status-file live paths under decision 0046.`
+  Acceptance: `After .3 proves the archive-descriptor contract, preserve the distinct exact ROADMAP_STATUS.md and LIVE_ACHIEVEMENT_STATUS.md identities with deterministic retrieval; migrate current workflow, README-route, book, registry, composition-note, and executable consumers; replace t/1332's stale ROADMAP_STATUS.md negative scan with current canonical truth; prove classified-consumer and planted-negative controls; retire each live path only after its independent pre/post identity, retrieval, and resulting-tree proof; leave historical evidence references intact.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12`
   Status: `pending`
@@ -369,6 +368,11 @@ no routed destination becomes the next uninstrumented blob.
 - `2026-08-01`: Clean commit `8fdd5a22cc` activates prerequisite
   `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` only. Containment `.3` and
   `.4` remain blocked until that audit selects the long-term roles.
+- `2026-08-01`: Decision `0046` selects bounded current/index views over
+  sealed whole-entry history for the retained changelog and conditional
+  rationale ledgers. It supersedes both frozen status files as current views,
+  requires distinct exact archive retrieval before retiring their live paths,
+  and makes `.3` the next clean selection. No migration occurs in the audit.
 
 ## Open Questions
 
@@ -385,13 +389,10 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- `.3`-`.5` and `.11`: active prerequisite
-  `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` must first select the four
-  files' long-term roles. `.24` and `.25` are complete, and the director
-  resumed containment on `2026-08-01`; no containment implementation leaf is
-  active. After the policy audit commits cleanly, containment schema `.3` and
-  then the `CHANGES.md` migration `.4` are next. `.12` remains the final
-  post-migration calibration.
+- None for `.3`: decision `0046` supplies the required lifecycle selection.
+  After the policy audit commits cleanly, activate schema `.3` alone. Ledger
+  migrations `.4`/`.5` and frozen-status migration `.11` remain blocked by
+  that schema; `.12` remains the final post-migration calibration.
 
 ## Acceptance Checklist (enforced) — `.16` utility/retirement audit
 

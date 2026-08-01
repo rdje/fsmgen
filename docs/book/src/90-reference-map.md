@@ -52,12 +52,15 @@ These should stay precise and sometimes narrower than the book.
 
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
-`ROADMAP_STATUS.md` is retained only as a frozen legacy record under decision
-0025 and must not be used as current status. `CHANGES.md` records one concise
-entry for every completed slice; `DEVELOPMENT_NOTES.md` is updated only when a
-slice produces durable engineering rationale that lacks a better canonical
-home. `LIVE_ACHIEVEMENT_STATUS.md` remains frozen with `ROADMAP_STATUS.md`
-pending their scheduled lifecycle review.
+`ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` are frozen legacy records,
+not current views. Decision 0046 selects their eventual exact archival and
+live-path retirement: high-level direction stays in `ROADMAP_V2.md`, active
+work in `TASK_TREE.md`, resume state in `MEMORY.md`, concise achievements in
+`CHANGES.md`, and exact history in task evidence plus Git. The same decision
+retains `CHANGES.md` as a per-completed-slice bounded ledger and
+`DEVELOPMENT_NOTES.md` as a conditional bounded rationale ledger. Decision
+0025 remains operational until containment leaves `.3`, `.4`, `.5`, and `.11`
+implement the selection, so neither frozen file may be changed meanwhile.
 
 `README_POLICY.md` is the project- and harness-neutral landing-page maintenance
 standard. Adopting projects keep their authoritative tracked copy at repository

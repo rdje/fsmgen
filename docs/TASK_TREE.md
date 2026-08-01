@@ -47,8 +47,7 @@ chronology is query-first through the bounded archive described below.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity / project-wide live-document lifecycle` | `.25` is complete and the director has resumed containment; the next clean selection is prerequisite `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`, before containment schema `.3` and `CHANGES.md` migration `.4` | [docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW` | `active` | `infra/continuity / project-document lifecycle` | `.2` keeps the interim split in force; `.1` is active for the evidence-backed four-document lifecycle audit required before containment schema `.3` and `CHANGES.md` migration `.4` | [docs/tasks/PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.md](docs/tasks/PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.md) |
+| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity / project-wide live-document lifecycle` | decision `0046` completes the four-file policy prerequisite; `.3` is the next clean selection for the common retained-ledger/archive schema, before migrations `.4`, `.5`, and `.11` | [docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `Verification code generation / intent architecture` | `.3` ships bounded VIAL semantics; `.5` the review-routed bridge; `.7.3` the private deterministic plan; `.8` selects public tooling; decision `0043` and completed `.9` select static plain-SV lowering, inactive-edge scheduling, declared-probe adapters, closed trace/results, and exact Verilator 5.046 known-value qualification; completed `.10.1`-.10.4 now ship public source/planning/run, canonical HIAL review routes, deterministic portable-SV emission, exact bounded Verilator execution, validated traces, normalized results, and atomic publication; completed `.11` qualifies 19 shared AHB outcomes against the handwritten oracle while retaining the general cross-backend non-claim; `.12` is proposed next for native UVM contract selection, and decision `0034` keeps VIAL non-synthesis-bounded | [docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | completed `.844` selected HIAL/VIAL `.1`; child `.1` selected architecture under decision `0032`, and child `.2` now selects proposed bounded VIAL parser/SemanticIR implementation `.3` under decision `0033` | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
@@ -531,10 +530,14 @@ The task tree is the detailed execution ledger.
 - `DEVELOPMENT_NOTES.md` is conditional: update it only for durable engineering
   rationale, constraints, or working decisions that lack a better canonical
   home.
-- `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain frozen legacy
-  records pending `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1`; do not append
-  to or treat them as live sources. See decision
-  [0025](decisions/0025-project-document-interim-lifecycle.md).
+- Decision [0046](decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md)
+  selects bounded current/index views over sealed history for `CHANGES.md` and
+  conditional `DEVELOPMENT_NOTES.md`, then exact archival and live-path
+  retirement for `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md`.
+  Decision [0025](decisions/0025-project-document-interim-lifecycle.md) remains
+  operational until containment leaves `.3`, `.4`, `.5`, and `.11` implement
+  that selection; meanwhile do not append to or treat either status file as a
+  live source.
 
 Do not duplicate the task tree or git history into another hand-maintained
 status narrative.

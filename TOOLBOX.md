@@ -282,9 +282,10 @@ git status --short
 Add one concise `CHANGES.md` entry for every completed slice. Update
 `DEVELOPMENT_NOTES.md` only when durable engineering rationale, constraints,
 or working decisions warrant it. Do not update `ROADMAP_STATUS.md` or
-`LIVE_ACHIEVEMENT_STATUS.md` before their scheduled lifecycle review. Route
-canonical state to task-trees, `MEMORY.md`, decision records, Knowledge Map
-fact cards, the mdBook, and git.
+`LIVE_ACHIEVEMENT_STATUS.md` while decision `0025` remains the operational
+transition rule. Decision `0046` selects their exact archival and live-path
+retirement after the owned containment migration. Route canonical state to
+task-trees, `MEMORY.md`, decisions, facts, the mdBook, and git.
 
 ## 7. Downstream Issue Bundles
 

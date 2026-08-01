@@ -43,7 +43,8 @@ The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`** +
   entry for every completed slice; update `DEVELOPMENT_NOTES.md` only when a
   slice produces durable engineering rationale, constraints, or working
   decisions. `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain frozen
-  pending their scheduled review (`docs/decisions/0025`).
+  until decision `0046` is implemented; decision `0025` remains the transition
+  workflow.
 - **Commit per `COMMIT.md`** after every slice, with the **work-unit id in the subject**
   (e.g. `ISF-SWAP: …`, `MEMORY-ARCHITECTURE-ADOPTION.4: …`).
 - **The mdBook (`docs/book/`) is user-facing** — keep it synced in the same slice with

@@ -6,21 +6,20 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1:
-  activate four-document lifecycle audit`).
-- active_work_unit: `PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1` is active
-  for the evidence-backed four-document lifecycle audit.
-- current_state: the interim decision-0025 split remains unchanged;
-  `CHANGES.md` is exactly at its 32,299-line ceiling and the audit is the
-  selected prerequisite for containment schema `.3` and migration `.4`.
-- next_action: audit content, history, audiences, consumers, automation,
-  overlap, and lifecycle alternatives for `CHANGES.md`,
-  `DEVELOPMENT_NOTES.md`, `ROADMAP_STATUS.md`, and
-  `LIVE_ACHIEVEMENT_STATUS.md`, then record a recommendation and exact
-  implementation decomposition without editing the reviewed files.
+  select bounded project-document lifecycles`).
+- active_work_unit: the four-document policy review is complete; no
+  containment implementation leaf is active in this commit.
+- current_state: decision `0046` retains bounded `CHANGES.md` and conditional
+  `DEVELOPMENT_NOTES.md` ledgers, and selects exact archival plus live-path
+  retirement for both frozen status files. Decision `0025` remains the
+  operational transition rule until migration.
+- next_action: from the clean audit commit, activate
+  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3` alone to prove the common
+  retained-ledger, sealed-range, and archive-descriptor schema without
+  migrating a reviewed document.
 - in_flight_uncommitted: none after this commit; no background job and all
   repository-local mdBook output is removed exactly.
-- blockers: none for the audit; containment `.3` and `.4` remain blocked until
-  `.1` selects the long-term roles.
+- blockers: none for `.3`; `.4`, `.5`, and `.11` await its common schema.
 
 ## Durable context
 

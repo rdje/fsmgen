@@ -32215,7 +32215,6 @@ task tree and git.
   values plus two migrated, nine pinned/deferred, and five steady measured
   surfaces. Focused equality/overflow/lowering/ratchet/authority tests pass at
   `Files=3, Tests=20`; the full doctrine and mdBook gates pass.
-
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19 — verifier-execution closure activated
 
 - From clean `.18` commit `9bd081935`, activate `.19` alone to prove declared
@@ -32233,7 +32232,6 @@ task tree and git.
 - The local wrapper invokes the runner unconditionally, and the bootstrap gate
   proves hosted CI reaches it through the single doctrine driver. Focused
   execution/failure/deletion/vacuity coverage passes at `Files=3, Tests=21`.
-
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20 — scoped currency activated
 
 - Confirmed the supplied PGEN and ANVIL paths exactly match the sizes and
@@ -32251,7 +32249,6 @@ task tree and git.
 - FSMGen's active task index now runs the task-tree source-alignment oracle.
   Self-refutation fails while legitimate closure/frozen dates pass; focused
   wrapper/core coverage is green at `Files=2, Tests=17`.
-
 ### LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21 — completeness activated
 
 - From clean `.20` commit `8cf8263a2`, activated `.21` alone for typed author-
@@ -32297,3 +32294,6 @@ task tree and git.
 - Bootstrap checks now enforce WARP absence while retaining every remaining authority marker; exact Git recovery and all focused gates pass.
 ### PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 — four-document lifecycle audit activated
 - Clean `8fdd5a22cc` activation starts the evidence audit only; task/doctrine gates pass and no reviewed document, policy, archive, or product behavior changes.
+### PROJECT-STATUS-AND-CHANGELOG-POLICY-REVIEW.1 — bounded project-document lifecycles selected
+- Decision `0046` retains bounded whole-entry change and conditional-rationale ledgers, and selects distinct exact archives before retiring both frozen status live paths.
+- The evidence audit assigns schema/migrations to containment `.3`/`.4`/`.5`/`.11`; all documentation/doctrine gates pass with no reviewed-file migration or product change.

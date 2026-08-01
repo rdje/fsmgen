@@ -160,9 +160,9 @@ Changing project state does not belong in this landing page:
 `CHANGES.md` receives one concise entry per completed slice.
 `DEVELOPMENT_NOTES.md` is updated only when durable engineering rationale is
 warranted. `ROADMAP_STATUS.md` and `LIVE_ACHIEVEMENT_STATUS.md` remain frozen
-legacy records and are not live status sources; decision
-[0025](docs/decisions/0025-project-document-interim-lifecycle.md) defines the
-interim split pending their scheduled lifecycle review.
+and are not live status sources. Decision
+[0046](docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md)
+selects bounded ledgers and exact archival; 0025 governs until migration.
 
 ## Repository orientation
 
