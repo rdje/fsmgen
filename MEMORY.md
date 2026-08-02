@@ -5,9 +5,9 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.4`: ship native UVM checking and results).
-- active_work_unit: parent `.13.1` remains active; child `.13.1.4` is complete,
-  and proposed `.13.1.5` is the next clean activation.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5`: activate native UVM matrix and review closure).
+- active_work_unit: parent `.13.1` and child `.13.1.5` are active; completed
+  `.13.1.4` is the clean implementation predecessor.
 - current_state: private profile `sv_uvm_emit.accellera_2020_3_1` emits an
   exact fourteen-artifact/ten-SystemVerilog-source graph with selected active
   topology, lifecycle, ordered typed notification/interception, stimulus,
@@ -16,8 +16,9 @@ history; this file carries only the current bounded resume state.
   diagnostics, and result collection. It has 75 mapped entries, 14 structural
   checks, and nine byte-checked UVM-facing gallery sources. Manual review and parse through runtime/results/parity remain unclaimed;
   `.13.2` is dependency-ready, while `.13.3` requires NEXSIM's versioned API/MCP semantic checkpoint plane and exact PGEN+NEXSIM releases.
-- next_action: from the clean implementation commit, activate only `.13.1.5` for
-  the native-UVM mapping matrix, review workflow, examples, and deferred-runtime defect boundary.
+- next_action: implement only `.13.1.5`: close the native-UVM mapping matrix,
+  review workflow, examples, and deferred-runtime defect boundary without
+  adding a parser, simulator, runtime-result, or qualification claim.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` still waits on exact capability-ready PGEN/NEXSIM handoff/

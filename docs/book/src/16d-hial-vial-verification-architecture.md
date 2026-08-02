@@ -15,9 +15,10 @@ constrained-decision, coverage, property, model, scoreboard, fault,
 diagnostic, and result-collection structures; its parse, compile, elaboration,
 runtime, and produced-result profiles do not ship yet.
 
-The next native-UVM emission slice is `.13.1.5`. It closes the representative
-mapping matrix, examples, visual-review workflow, and deferred-runtime defect
-boundary without waiting for a simulator.
+Active native-UVM emission slice `.13.1.5` closes the representative mapping
+matrix, examples, visual-review workflow, and deferred-runtime defect boundary
+without waiting for a simulator. Its implementation has not started in this
+activation step.
 
 The current shipped verification-output targets remain deliberately narrow:
 

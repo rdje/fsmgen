@@ -249,9 +249,10 @@ verification-probe-backed expectations still require a qualified adapter.
 Capability discovery labels emission and structural validation passed, while
 manual review is pending and preprocessing, parse, UVM-library compile,
 fixture compile, elaboration, runtime, result, and parity remain not run or not
-produced. Ordinary emission fetches or inspects no UVM library bytes. Proposed
-`.13.1.5` owns mapping-matrix and review-workflow closure next. `.13.2` is
-separately dependency-ready for experimental open-tool
+produced. Ordinary emission fetches or inspects no UVM library bytes. Clean
+implementation predecessor `193d170e0` activates `.13.1.5` alone for mapping-
+matrix and review-workflow closure; implementation remains unperformed.
+`.13.2` is separately dependency-ready for experimental open-tool
 probes; `.13.3` alone retains the future PGEN+NEXSIM runtime blocker.
 
 `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` now preserves a separate proposed

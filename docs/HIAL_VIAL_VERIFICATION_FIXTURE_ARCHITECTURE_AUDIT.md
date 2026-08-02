@@ -1294,8 +1294,9 @@ remain source-mapped until a qualified adapter supplies observation.
 Preprocessing, parse, UVM-library compile, fixture compile, elaboration,
 runtime, result, parity, visual-review completion, public interceptor, RAL, or
 factory-override authoring, matrix closure, produced results, and full native
-UVM breadth remain explicitly unclaimed. Proposed `.13.1.5` now owns that
-bounded matrix/review frontier. Experimental `.13.2` remains separately
+UVM breadth remain explicitly unclaimed. Clean implementation predecessor
+`193d170e0` activates `.13.1.5` alone for that bounded matrix/review frontier;
+implementation remains unperformed. Experimental `.13.2` remains separately
 dependency-ready because the first gallery exists, so open-tool evidence
 cannot blur the active emission sequence.
 
