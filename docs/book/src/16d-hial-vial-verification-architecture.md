@@ -35,6 +35,12 @@ audited but is not selected. GHDL and OSVVM are absent locally, so this is an
 architecture contract—not an analysis, elaboration, simulation, result, or
 support claim.
 
+Implementation parent `.15` is active and decomposed. Active `.15.1` owns the
+provider-free emitter substrate and first deterministic review gallery;
+`.15.2-.15.4` complete portable semantics and review, `.15.5` owns exact GHDL
+qualification, and `.15.6-.15.7` own OSVVM emission and qualification. This
+activation changes no source, artifact, runtime, or support behavior.
+
 The current shipped verification-output targets remain deliberately narrow:
 
 - `uvm-passive-monitor` emits inert UVM 1.2 snapshot and passive-monitor class
@@ -1041,7 +1047,7 @@ normalized result, semantic outcomes, rerun, parity, and cleanup are separate
 gates.
 
 GHDL is not installed in the current workspace. OSVVM is not materialized
-either. Proposed `.15` can therefore implement deterministic source, source
+either. Active `.15.1` can therefore implement deterministic source, source
 maps, structural checks, and a review gallery before tool availability, but it
 cannot advertise VHDL analysis or runtime support. OSVVM-dependent work must
 later verify the recursive release, every submodule identity, licenses, and

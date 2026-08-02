@@ -83,4 +83,7 @@ The legacy `vhdl-observation-package` remains an unchanged inert compatibility
 surface with no analyzer/runtime claim. Native VIAL uses a separate profile,
 artifact graph, metadata package, manifest, and source map. Reviewable emission
 may proceed before GHDL is available, while analysis, elaboration, run, result,
-parity, and OSVVM capability claims wait for `.15` exact gates.
+parity, and OSVVM capability claims wait for `.15` exact gates. Active `.15.1`
+owns the provider-free emitter substrate and first gallery; `.15.2-.15.4`
+complete unblocked portable emission/review before separate `.15.5` GHDL and
+`.15.6-.15.7` OSVVM gates.

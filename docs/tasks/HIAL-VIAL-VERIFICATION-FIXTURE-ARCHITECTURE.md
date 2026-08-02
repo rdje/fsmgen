@@ -309,11 +309,61 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14: select VHDL OSVVM architecture`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement and capability-qualify the selected VHDL verification backend.`
   Acceptance: `The bounded VIAL subset emits deterministic, efficient, readable, source-mapped VHDL artifacts without requiring VHDL knowledge from a VIAL author, analyzes/elaborates/runs under the exact installed profile, matches the portable normalized result oracle, reports exact standard/methodology/PSL capabilities and non-claims, migrates or versions the inert package exactly as contracted, and leaves HIAL VHDL synthesis output distinct.`
-  Verification: `pending GHDL or selected analyzer/simulator availability`
-  Commit: `pending activation`
+  Verification: `Clean decision/selection predecessor e5aa90b7ad4dc0164bbbdffa285b8351158592e5 activates this implementation parent and child .15.1 alone. Children .15.1-.15.4 can complete deterministic provider-free emission and review without an installed analyzer; .15.5 separately owns exact GHDL execution, while .15.6-.15.7 own OSVVM emission and qualification. Activation changes no source, artifact, capability, support, analyzer, elaboration, runtime, result, or parity behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15: activate VHDL backend implementation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.1`
+  Status: `active`
+  Goal: `Implement the provider-free VHDL-2008 emitter substrate and first deterministic review gallery without requiring GHDL or OSVVM bytes.`
+  Acceptance: `The private emitter consumes exact VIALExecutionIR, bridge, and HIAL DUT identities and publishes the selected vhdl_portable_ghdl graph atomically under repository-derived roots: closed backend manifest, complete source map, standard/tool profile, typed value/time/runtime packages, metadata package, top-level testbench foundation, ordered source list and command evidence shapes. Structural validators, capability/support states, malformed-input and collision negatives, identical rerender, exact cleanup, and first byte-locked gallery ship; the legacy vhdl-observation-package remains byte/schema-compatible and unconsumed; ordinary emission performs no provider fetch; and analyze, elaborate, run, result, parity, PSL, full VHDL-2008, and support remain explicitly not run or unclaimed.`
+  Verification: `pending implementation after activation commit`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.2`
+  Status: `proposed`
+  Goal: `Emit the complete selected portable VHDL drivers, samplers, inactive-edge scheduler, scenarios/fibers, models, and probe adapters for review.`
+  Acceptance: `Generated VHDL expresses typed four-state drive/sample normalization with original-symbol evidence, one inactive-edge stable barrier, exact ExecutionIR ranks, bounded scenario/fiber state, deterministic model state, public-port binding and explicit source-mapped probe adapters. Static invariants reject delta-cycle or process-order semantic authority, undeclared hierarchy, unstable/multiple schedulers, unsupported nine-state needs, and multi-clock/asynchronous use; readable gallery artifacts and complete source maps ship without an analyzer prerequisite or runtime claim.`
+  Verification: `pending .15.1`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.3`
+  Status: `proposed`
+  Goal: `Emit portable VHDL scoreboards, coverage, faults, procedural properties, diagnostics, closed trace, and normalized results.`
+  Acceptance: `Generated bounded queues/comparisons, coverage counters, substitution or masking seams, procedural checks, diagnostic records, trace closure, and fsmgen.verification_result_manifest.v1 projection preserve VIAL comparison/bin/fault/property/result meaning. Structural negative oracles cover overflow, unknown-value evidence, trace non-closure, result inconsistency, unsupported PSL/native-provider requests, and probe-backed expectations; deterministic gallery/source-map evidence ships while analyze through parity remain independent states.`
+  Verification: `pending .15.2`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.4`
+  Status: `proposed`
+  Goal: `Close the provider-free VHDL emission matrix, review workflow, examples, migration proof, and deferred-runtime defect boundary.`
+  Acceptance: `Every selected portable mapping has an emitted representative or exact unsupported reason; public authoring, compiler-owned IR, and private previews are distinguished; the checked gallery is easy to regenerate and inspect; automated and director visual-review findings route to exact defect leaves; legacy package byte/schema compatibility and HIAL VHDL separation are proven; and the profile reports emitted/reviewed/unqualified without waiting for or implying GHDL execution.`
+  Verification: `pending .15.3`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5`
+  Status: `proposed`
+  Goal: `Materialize or locate exact GHDL 6.0.0 and capability-qualify the provider-free backend through normalized runtime results.`
+  Acceptance: `An exact GHDL 6.0.0 build identity, backend, repository-local work/cache/output roots, and ordered --std=08 analyze/elaborate/run commands are frozen and executed. Independent gates prove library/source analysis, elaboration, bounded four-state timed execution, closed trace, normalized result/outcomes, deterministic rerun, applicable portable-SV parity, resource limits, and exact cleanup; partial VHDL-2008/PSL and every unexercised feature remain explicit, and no other simulator is inferred.`
+  Verification: `blocked until exact GHDL 6.0.0 is available after .15.4; absence does not block .15.1-.15.4`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.6`
+  Status: `proposed`
+  Goal: `Implement the exact OSVVM 2026.05 advanced-methodology adapter and deterministic provider-dependent gallery.`
+  Acceptance: `The recursive OSVVM release, every gitlink, license, and notice are verified under a repository-derived dependency root before provider-dependent work. Exact negotiated advanced randomization, coverage, scoreboard, reporting, synchronization, data-structure, and verification-component mappings emit behind a versioned adapter/profile with complete source maps and static negatives; portable pre-resolved randomness, phase order, comparison/coverage meaning, trace, and normalized results remain unchanged; no provider presence or structural evidence becomes a compile/runtime claim.`
+  Verification: `pending .15.4 and exact repository-local OSVVM 2026.05 materialization`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7`
+  Status: `proposed`
+  Goal: `Capability-qualify the OSVVM 2026.05 plus GHDL 6.0.0 profile and close VHDL support accounting.`
+  Acceptance: `The exact provider/tool tuple independently proves provider compilation order, adapter and generated-fixture analysis, elaboration, bounded execution, closed trace, normalized semantic outcomes, deterministic rerun, applicable portable-result parity, supplementary provider reports, limits, cleanup, manifest/capability/support truth, and honest unsupported breadth. OSVVM qualification cannot imply UVVM, PSL, complete VHDL-2008, another simulator, mixed-language execution, or legacy-package analyzer support.`
+  Verification: `pending .15.5 and .15.6`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.16`
   Status: `proposed`
@@ -703,9 +753,9 @@ compiler-owned beneath C/C++ or Rust.
   introspection API schema, and MCP profile when capability-ready releases
   exist; no version or unsupported query/control capability is invented in
   advance.
-- `.15` must decompose and implement the selected provider-free/OSVVM VHDL
-  architecture. Reviewable deterministic emission need not wait for GHDL;
-  exact analysis, elaboration, runtime, results, and provider qualification do.
+- Active `.15.1` must implement only the provider-free emitter substrate and
+  first gallery; its exact private module placement and reuse of existing
+  VIAL artifact/publication helpers are routine implementation decisions.
 - `.16` must choose the first available mixed-language tool/profile.
 - `.17` must select measured architecture-specific capacity budgets; the
   separate whole-product scale tree retains big/really-big qualification.
@@ -719,9 +769,9 @@ compiler-owned beneath C/C++ or Rust.
   release/schema/capability prerequisite. Commercial simulator availability
   is not a roadmap prerequisite, and Verilator/Icarus cannot be promoted from
   experimental evidence to `sv_uvm_qualified`.
-- `.14` selection is complete. GHDL 6.0.0 and OSVVM 2026.05 are not locally
-  materialized, which blocks only `.15` executable qualification children;
-  it does not block deterministic source emission/gallery/static-review work.
+- GHDL 6.0.0 and OSVVM 2026.05 are not locally materialized. This blocks
+  `.15.5` execution and later provider-dependent qualification, not active
+  `.15.1` or the provider-free emission/review sequence through `.15.4`.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -779,6 +829,32 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-08-01` | `.13.2` implementation | exact Verilator/UVM source identities and comparison delta; bounded reusable probe module/script; independent preprocess/parse/library compile-elaboration/runtime/fixture compile-elaboration stages; canonical report and byte-check; reserved-keyword generator repair and refreshed gallery; source/support/capability/focused/broader/docs/task/mdBook/Knowledge Map/Memory/staged-doctrine gates; exact staging/build/manual-probe cleanup | `passed`; exact Verilator 5.046 plus uvm-verilator commit/tree frozen; guarded canonical run and independent `--check` deterministically conclude `partial_tool_limited`; UVM control passes through zero-error/fatal runtime, generated fixture preprocesses, ranged SVA is unsupported, blackboxing reaches tool internal fault/139, and fixture runtime/result/parity remain not run; focused native/probe Files=6/Tests=44 and impacted VIAL/support Files=16/Tests=7,183 pass; docs/history Files=12/Tests=70 pass; all 49 mdBook chapters test and its 85-file/16,584-KiB build is removed exactly; final acceptance details are recorded below; product support remains false and `.13.3` remains provider-blocked while `.14` is the next unblocked leaf |
 | `2026-08-01` | `.14` activation | clean `.13.2` implementation predecessor `adc88817e`; task/index/audit/book/fact/Memory continuity; docs/live/task/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; docs/live/task/Knowledge Map Files=6/Tests=76; all 49 mdBook chapters test and the repository-local build contains 85 files/16,588 KiB before exact removal; task integrity remains three trees/907 nodes/one segment/one index archive; exact mdBook delta is 0/+5/+294; all 22 live surfaces and 2,942/2,942 paths pass with zero ceiling increases; Knowledge Map remains 1,104 facts/5,641 questions/5,807 occurrences/117 shards; Memory is 46 lines; `.14` alone is active while every provider/tool/version/migration/artifact/capability/runtime choice remains unchanged; final staged acceptance and all nine doctrine checks pass |
 | `2026-08-01` | `.14` selection | official GHDL/OSVVM/UVVM release and exact tag-identity reads; local inert-package/capability audit; decision `0051`; provider-free/OSVVM mapping, profiles, artifacts, scheduling, values, GHDL gates, migration, PSL/non-claims; legacy/focused/docs/task/live/mdBook/Knowledge Map/Memory/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; provider-free VHDL-2008 plus OSVVM 2026.05 selected, GHDL 6.0.0 and broader families frozen unexecuted, UVVM audited/unselected, and the legacy package unchanged. Legacy Files=2/Tests=6 and focused Files=6/Tests=65 report `All tests successful`; all 49 chapters test; rendered 85-file/16,885,255-byte HTML has distinct paragraphs/table/code blocks and is removed; task integrity remains three trees/907 nodes/one segment/one index archive; live containment covers 22 surfaces/2,942 paths with exact mdBook delta 0/+156/+6,986 and zero ceiling increases; Knowledge Map is current at 1,104 facts/5,656 questions/5,822 occurrences/117 shards; Memory is 47 lines; no backend artifact or VHDL analysis-through-parity capability ships |
+| `2026-08-01` | `.15` activation/decomposition | clean selection predecessor `e5aa90b7a`; seven exact implementation children; task/index/audit/book/fact/Memory continuity; focused docs/live/task/Knowledge Map; mdBook test/build/rendered-paragraph inspection; memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.15` and `.15.1` alone are active, `.15.1-.15.4` are the unblocked provider-free emission/review path, `.15.5` owns GHDL qualification, and `.15.6-.15.7` own OSVVM emission/qualification. Focused Files=6/Tests=65 report `All tests successful`; all 49 chapters test and rendered HTML separates the activation into distinct paragraphs; the repository-local 85-file/16,888,889-byte build is removed exactly. Task integrity is three trees/914 nodes/one segment/one index archive; all 22 live surfaces and 2,943/2,943 paths pass with exact mdBook delta 0/+12/+718 and zero ceiling increases; Knowledge Map remains 1,104 facts/5,656 questions/5,822 occurrences/117 shards; Memory is 47 lines; final staged acceptance and all nine doctrine checks pass; no source, artifact, capability, runtime, result, parity, or support behavior changes |
+
+## Acceptance Checklist (enforced) — `.15` activation/decomposition
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'pending GHDL or selected
+  analyzer/simulator availability' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies
+  architecture commit `2e2f7d25e`, where monolithic `.15` made the whole VHDL
+  backend appear to wait on an analyzer. Selection commit `e5aa90b7a` proves
+  deterministic provider-free emission/review is independent from unavailable
+  GHDL/OSVVM execution and supplies the exact contract to decompose.
+- [x] **ADDRESSED (verified)** — `.15` now owns seven bounded children:
+  `.15.1-.15.4` cover provider-free emitter foundation, portable execution
+  structures, checking/results, and matrix/review closure; `.15.5` owns exact
+  GHDL 6.0.0 qualification; `.15.6-.15.7` own OSVVM 2026.05 emission and
+  qualification. Only `.15.1` is active. Task index, audit, book, fact card,
+  bounded Memory, and exact 50/48,269/2,556,230 book authority agree.
+- [x] **NO REGRESSION** — The canonical focused suite reports `All tests
+  successful` at `Files=6, Tests=65`; all 49 mdBook chapters test and the
+  repository-local 85-file/16,888,889-byte HTML build renders the new prose as
+  distinct `<p>` blocks before exact removal. Task integrity is three trees/
+  914 nodes/one segment/one index archive; live containment covers 22 surfaces
+  and 2,943/2,943 paths with zero ceiling increases; Knowledge Map is current
+  at 1,104 facts/5,656 questions/5,822 occurrences/117 shards; Memory is 47
+  lines. No implementation, artifact, analyzer, elaboration, runtime, result,
+  parity, provider, or product-support behavior changes.
 
 ## Acceptance Checklist (enforced) — `.14` selection
 
@@ -1569,9 +1645,17 @@ compiler-owned beneath C/C++ or Rust.
 | `.13.2` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2: ship exact experimental UVM probe` | Ship the exact bounded Verilator/UVM probe and deterministic report, repair the generated reserved-keyword identifier, and retain tool-limited fixture/runtime/result/parity nonclaims without product support. |
 | `.14` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14: activate VHDL verification contract` | Activate only VHDL-2008 methodology-provider, portable/qualified profile, legacy-package migration, and capability/non-claim contract selection after clean `.13.2`; selection and product behavior remain unperformed. |
 | `.14` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14: select VHDL OSVVM architecture` | Accept decision `0051`; select provider-free VHDL-2008, exact unexecuted GHDL 6.0.0 and OSVVM 2026.05 tiers, explicit mappings/PSL limits, and a parallel versioned successor to the unchanged inert package without a runtime claim. |
+| `.15` activation/decomposition | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15: activate VHDL backend implementation` | Activate `.15` and provider-free emitter/gallery child `.15.1`; separate portable emission/review, exact GHDL execution, and OSVVM emission/qualification into seven evidence-bounded children without changing product behavior. |
 | `.13.3` provider clarification | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3: capture NEXSIM semantic-introspection MCP contract` | Record the future versioned NEXSIM semantic API/MCP qualification plane, snapshot/control/query requirements, source-mapped checkpoint correlation, first-divergence localization, and provider-evidence boundary without inventing a release or activating runtime work. |
 
 ## Changelog
+
+- `2026-08-01`: Clean selection predecessor `e5aa90b7a` activates `.15` and
+  decomposes seven exact implementation children. `.15.1-.15.4` can ship the
+  provider-free emitter and review path without an installed analyzer; `.15.5`
+  separately owns GHDL 6.0.0 execution, and `.15.6-.15.7` own OSVVM 2026.05
+  emission and qualification. `.15.1` alone is active, with no generated
+  artifact, capability, runtime, result, parity, or support change.
 
 - `2026-08-01`: Completed `.14` accepts decision `0051`: portable VHDL is
   provider-free IEEE 1076-2008, OSVVM 2026.05 is the selected advanced

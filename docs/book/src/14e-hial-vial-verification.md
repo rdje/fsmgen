@@ -101,6 +101,12 @@ before the absent tool/library are available, while analysis, elaboration,
 runtime, normalized result, parity, PSL, and methodology support remain
 unclaimed.
 
+Implementation parent `.15` is now active and split along those evidence
+boundaries. Active `.15.1` owns only the provider-free emitter substrate and
+first deterministic review gallery. Later children add portable semantics and
+review before separate GHDL and OSVVM execution gates; activation itself adds
+no generated VHDL or support claim.
+
 Clean architecture audit commit `2e2f7d25e` activates only the exact
 `.vial`/`VIALSemanticIR` contract leaf `.2` through a separate continuity
 transition. Source syntax, semantic records, parser/report behavior, and the

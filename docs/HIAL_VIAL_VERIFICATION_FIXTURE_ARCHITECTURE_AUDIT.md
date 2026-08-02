@@ -1465,9 +1465,16 @@ deprecation, or retirement requires another explicit compatibility owner.
 This selection claims no generated backend, local GHDL/OSVVM installation,
 analysis, elaboration, runtime, result, parity, complete IEEE 1076-2008, PSL,
 formal, mixed-language, VHDL-2019, UVVM, provider-component breadth, or legacy
-package analyzer support. Proposed `.15` may decompose deterministic
-emission/gallery/static review from unavailable GHDL and OSVVM qualification,
-so tool absence does not block reviewable generation.
+package analyzer support.
+
+Clean selection commit `e5aa90b7a` activates `.15` and decomposes seven
+children. Active `.15.1` owns only the provider-free emitter substrate,
+deterministic artifact/source-map/command-evidence shapes, structural checks,
+capability non-claims, and the first byte-locked review gallery. `.15.2-.15.4`
+complete provider-free semantics and review; `.15.5` owns exact GHDL 6.0.0
+execution; `.15.6-.15.7` own OSVVM 2026.05 adapter emission and qualification.
+Activation changes no product behavior or support state, and unavailable tools
+do not block reviewable generation.
 
 ### Primary evidence
 
