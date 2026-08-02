@@ -1276,8 +1276,9 @@ gallery sources.
 Preprocessing, parse, UVM-library compile, fixture compile, elaboration,
 runtime, result, parity, visual-review completion, public interceptor, RAL, or
 factory-override authoring, coverage/properties, models/scoreboards/faults/
-results, and full native UVM breadth remain explicitly unclaimed. Proposed
-`.13.1.4` is the next bounded emission leaf but is not active. Experimental
+results, and full native UVM breadth remain explicitly unclaimed. Active
+`.13.1.4` now owns only that bounded emission frontier; implementation remains
+unperformed at activation. Experimental
 `.13.2` remains separately
 dependency-ready because the first gallery exists, so open-tool evidence
 cannot blur the active emission sequence.

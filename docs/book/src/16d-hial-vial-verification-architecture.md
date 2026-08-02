@@ -14,9 +14,9 @@ notification/interception, stimulus, TLM, factory/configuration, RAL, and
 constrained-decision structures; its parse, compile, elaboration, and runtime
 profiles do not ship yet.
 
-The next proposed emission slice is `.13.1.4`, covering reviewable coverage,
-properties, models, scoreboards, faults, diagnostics, and results. It is not
-active yet and changes no generated artifact or capability.
+The active next emission slice is `.13.1.4`, covering reviewable coverage,
+properties, models, scoreboards, faults, diagnostics, and results. Activation
+itself changes no generated artifact or capability.
 
 The current shipped verification-output targets remain deliberately narrow:
 

@@ -235,9 +235,9 @@ files are byte-checked in the review gallery.
 Capability discovery labels emission and structural validation passed, while
 manual review is pending and preprocessing, parse, UVM-library compile,
 fixture compile, elaboration, runtime, result, and parity remain not run or not
-produced. Ordinary emission fetches or inspects no UVM library bytes. Proposed
-`.13.1.4` owns coverage/properties/models/scoreboards/faults/results next but is
-not active. `.13.2` is separately dependency-ready for experimental open-tool
+produced. Ordinary emission fetches or inspects no UVM library bytes. Active
+`.13.1.4` owns coverage/properties/models/scoreboards/faults/results next;
+activation changes no generated artifact or capability. `.13.2` is separately dependency-ready for experimental open-tool
 probes; `.13.3` alone retains the future PGEN+NEXSIM runtime blocker.
 
 `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` now preserves a separate proposed
