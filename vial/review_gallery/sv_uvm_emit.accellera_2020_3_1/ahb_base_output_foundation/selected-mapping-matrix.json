@@ -1,0 +1,467 @@
+{
+   "backend_profile" : "sv_uvm_emit.accellera_2020_3_1",
+   "coverage_rule" : "every emitted foundation occurs exactly once with entry, evidence, and qualification states",
+   "emitter_revision" : 5,
+   "entrypoint_legend" : {
+      "normal_source" : "normal public VIAL formatter projection",
+      "terse_source" : "terse public VIAL formatter projection",
+      "typed_ir" : "private compiler entry after public parsing or an explicitly labelled preview"
+   },
+   "excluded_qualification" : [
+      "preprocessing",
+      "parse",
+      "uvm_library_compile",
+      "fixture_compile",
+      "elaboration",
+      "runtime",
+      "result",
+      "parity",
+      "full_uvm_breadth"
+   ],
+   "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
+   "mappings" : [
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "active_agent_driver",
+         "generated_roles" : [
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "compiler_owned_from_public_transactions",
+         "mapping_id" : "mapping/active-agent-driver",
+         "normal_source" : "derived_from_public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "derived_from_public_vial_v1",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "typed sequencer and active transaction driver",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "analysis_tlm",
+         "generated_roles" : [
+            "uvm_stimulus_services",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/analysis-tlm",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "typed analysis ports, FIFOs, subscriber, and predictor wiring",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "bound_sva_properties",
+         "generated_roles" : [
+            "bound_sva_checker"
+         ],
+         "intent_owner" : "public_vial_v1_translation",
+         "mapping_id" : "mapping/bound-sva-properties",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "separately bound review checker for selected temporal intent",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "bounded_scoreboard",
+         "generated_roles" : [
+            "uvm_checking_results",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/bounded-scoreboard",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "capacity-bounded typed in-order scoreboard",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "complete_component_topology",
+         "generated_roles" : [
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/complete-component-topology",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "agent, controller, checking components, environment, and test topology",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "component_bases",
+         "generated_roles" : [
+            "uvm_component_foundations"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/component-bases",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "typed UVM object, component, agent, environment, and test bases",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "constrained_decision_replay",
+         "generated_roles" : [
+            "uvm_stimulus_services",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "mixed_public_decision_private_solver_preview",
+         "mapping_id" : "mapping/constrained-decision-replay",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "portable_replay_plus_private_solver_preview",
+         "unsupported_reason" : "public native-constraint authoring syntax is not selected",
+         "uvm_realization" : "immutable portable decision replay plus isolated unused native solver",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "declared_fault_interception",
+         "generated_roles" : [
+            "uvm_checking_results",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/declared-fault-interception",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "declared one-drive-interval typed field substitution",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "dut_binding",
+         "generated_roles" : [
+            "generated_hial_dut",
+            "uvm_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_from_hial_bridge",
+         "mapping_id" : "mapping/dut-binding",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_bridge_manifest",
+         "unsupported_reason" : null,
+         "uvm_realization" : "source-mapped generated HIAL DUT and exact port binding",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "event_models",
+         "generated_roles" : [
+            "uvm_checking_results",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/event-models",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "deterministic bounded event-counter model components",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "fixture_config",
+         "generated_roles" : [
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/fixture-config",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "typed fixture configuration object",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "fixture_environment",
+         "generated_roles" : [
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/fixture-environment",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "fixture-specific UVM environment",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "fixture_test",
+         "generated_roles" : [
+            "uvm_fixture_package",
+            "uvm_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/fixture-test",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "fixture-specific UVM test and selected run-test top",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "functional_coverage",
+         "generated_roles" : [
+            "uvm_checking_results",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/functional-coverage",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "typed covergroup and exact selected bins",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "lifecycle_execution",
+         "generated_roles" : [
+            "uvm_component_foundations",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/lifecycle-execution",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "root-owned lifecycle, logical time, and one objection pair",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "notification_interception",
+         "generated_roles" : [
+            "uvm_notification_interception",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "mixed_public_event_private_interceptor_preview",
+         "mapping_id" : "mapping/notification-interception",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_events_plus_private_interceptor_preview",
+         "unsupported_reason" : "native interceptor authoring syntax is not selected",
+         "uvm_realization" : "typed UVM events plus ordered bounded callback interception",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "ral_preview",
+         "generated_roles" : [
+            "uvm_stimulus_services",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "private_typed_preview",
+         "mapping_id" : "mapping/ral-preview",
+         "normal_source" : "not_available_private_preview",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_available_private_preview",
+         "typed_ir" : "private_typed_preview",
+         "unsupported_reason" : "public VIAL RAL authoring syntax is not selected",
+         "uvm_realization" : "fixture-specific register, block, adapter, and predictor preview",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "result_collection",
+         "generated_roles" : [
+            "uvm_checking_results",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "compiler_owned_from_public_checks",
+         "mapping_id" : "mapping/result-collection",
+         "normal_source" : "derived_from_public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "derived_from_public_vial_v1",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "structured in-memory review snapshot without a produced result manifest",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "scenario_sequences",
+         "generated_roles" : [
+            "uvm_stimulus_services"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/scenario-sequences",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "one typed UVM sequence per selected public scenario",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "scoped_factory_configuration",
+         "generated_roles" : [
+            "uvm_fixture_package",
+            "uvm_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/scoped-factory-configuration",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "non-wildcard configuration paths and compiler-selected driver override",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "structured_diagnostics",
+         "generated_roles" : [
+            "uvm_checking_results",
+            "uvm_fixture_package"
+         ],
+         "intent_owner" : "compiler_owned_from_public_checks",
+         "mapping_id" : "mapping/structured-diagnostics",
+         "normal_source" : "derived_from_public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "derived_from_public_vial_v1",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "defensively copied typed diagnostics and aggregation",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "timed_interface",
+         "generated_roles" : [
+            "uvm_fixture_interface"
+         ],
+         "intent_owner" : "compiler_owned_from_public_bindings",
+         "mapping_id" : "mapping/timed-interface",
+         "normal_source" : "derived_from_public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "derived_from_public_vial_v1",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "clocking blocks and typed driver/monitor modports",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "top",
+         "generated_roles" : [
+            "uvm_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/top",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "clock/reset harness, virtual-interface publication, and generated test launch",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "transaction_items",
+         "generated_roles" : [
+            "uvm_stimulus_services"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/transaction-items",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "typed sequence item with explicit copy, compare, and print behavior",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "typed_context",
+         "generated_roles" : [
+            "uvm_types_package"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/typed-context",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "uvm_realization" : "typed logical-time, lifecycle, and execution-context records",
+         "visual_review_status" : "pending"
+      }
+   ],
+   "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "schema" : "fsmgen.vial_uvm_selected_mapping_matrix.v1",
+   "schema_version" : 1,
+   "scope" : "complete_selected_native_uvm_emission_matrix_not_full_uvm_breadth"
+}

@@ -167,7 +167,8 @@ sub language_surface_vial_native_uvm_emission_keys {
     return [qw(
         schema_version status contract_source implementation_entrypoints
         execution_schema profile backend_schema source_map_schema
-        static_validation_schema methodology_identity library_materialization
+        static_validation_schema mapping_matrix_schema review_workflow_schema
+        methodology_identity library_materialization
         backend_stage_status capabilities limits fixture review_gallery
         writes_files public_embedding_api explicit_nonclaims guidance
     )];

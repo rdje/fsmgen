@@ -176,11 +176,11 @@ subtest 'bound SVA checker retains selected temporal and HIAL binding facts' => 
     }
 };
 
-subtest 'graph, source maps, static checks, and capabilities identify revision four' => sub {
-    is($emission->{backend_manifest}{emitter_revision}, 4,
-        'checking/results graph is emitter revision four');
-    is(scalar(@{$emission->{artifacts}}), 14,
-        'graph contains fourteen exact artifacts');
+subtest 'graph, source maps, static checks, and capabilities survive revision five closure' => sub {
+    is($emission->{backend_manifest}{emitter_revision}, 5,
+        'checking/results graph is retained by emitter revision five');
+    is(scalar(@{$emission->{artifacts}}), 16,
+        'graph contains sixteen exact artifacts');
     is(scalar(grep { $_->{language} eq 'systemverilog' } @{$emission->{artifacts}}), 10,
         'graph contains ten generated SystemVerilog sources');
     is(scalar(@{$emission->{source_map}{entries}}), 75,

@@ -15,10 +15,10 @@ constrained-decision, coverage, property, model, scoreboard, fault,
 diagnostic, and result-collection structures; its parse, compile, elaboration,
 runtime, and produced-result profiles do not ship yet.
 
-Active native-UVM emission slice `.13.1.5` closes the representative mapping
-matrix, examples, visual-review workflow, and deferred-runtime defect boundary
-without waiting for a simulator. Its implementation has not started in this
-activation step.
+Completed native-UVM emission slice `.13.1.5` closes the selected mapping
+matrix, examples, deterministic review workflow, and deferred-runtime defect
+boundary without waiting for a simulator. Visual review and every parser-
+through-runtime qualification state remain independent and honestly pending.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -970,12 +970,13 @@ sv_uvm_qualified
     future exact PGEN parser + NEXSIM simulator runtime tuple
 ```
 
-The first four emission slices now ship. For the checked AHB base-output
-fixture they produce fourteen deterministic virtual artifacts: the generated
+All five emission slices now ship. For the checked AHB base-output fixture they
+produce sixteen deterministic virtual artifacts: the generated
 HIAL DUT; typed-context, reusable-component, timed-interface,
 notification/interception, stimulus/service, checking/result, bound-SVA,
 fixture, and top SystemVerilog sources; a complete source map; the exact
-methodology profile; a structural validation report; and the backend manifest.
+methodology profile; a structural validation report; the selected mapping
+matrix; the review workflow; and the backend manifest.
 
 The private emitter and validator are discoverable through the capability
 manifest. Public `fsmgen vial run` deliberately remains the separately
@@ -1122,6 +1123,43 @@ Verification-probe-backed expectations remain source-mapped but need a
 qualified runtime adapter before they can be evaluated. Revision 4 does not
 pretend that the private RAL preview supplies that observation.
 
+Revision 5 adds no new generated SystemVerilog source. It closes the selected
+emission scope with two canonical JSON evidence files. The 25-row mapping
+matrix accounts exactly once for every foundation advertised by the backend
+manifest and records, independently:
+
+- normal public-source availability;
+- terse public-source availability;
+- public ExecutionIR, compiler-owned IR, or private-preview entry ownership;
+- generated artifact roles and the selected UVM realization; and
+- emission, structural review, visual review, and qualification state.
+
+For example, public transactions are available through both VIAL source styles
+and public ExecutionIR. Fixture-test topology is compiler-owned. RAL has no
+selected public authoring syntax and is labelled `private_typed_preview` with
+that exact reason. Notifications combine public event identities with a
+private interceptor-table preview rather than blurring the two authorities.
+
+The checked workflow makes review reproducible from the repository root:
+
+```console
+perl scripts/refresh_vial_native_uvm_gallery.pl
+perl scripts/refresh_vial_native_uvm_gallery.pl --check
+```
+
+The first command regenerates nine source snapshots and two JSON evidence
+files. The second writes nothing and rejects a missing, unexpected, or byte-
+drifted snapshot. Review defects name the artifact, generated symbol,
+source-map ID, observation, severity, reproduction, expected intent, and
+disposition in the owning task-tree; conversation-only findings are not
+durable evidence.
+
+The workflow currently says `static_shape=passed_structural_only` and
+`visual_review=pending`. Experimental compile and qualified runtime both say
+`not_run`. This is complete selected emission accounting, not complete UVM
+breadth, parser acceptance, compilation, elaboration, simulation, a produced
+result, or parity.
+
 PGEN and NEXSIM are separate developing projects. PGEN owns HDL parsing;
 NEXSIM aims to provide open-source commercial-grade HDL simulation. When both
 expose the needed capabilities, FSMGen will select exact versions, content
@@ -1170,7 +1208,9 @@ A review gallery reports each independent maturity state, for example:
 ```text
 emission: passed
 static_validation: passed_structural_only
-manual_review: pending
+selected_mapping_matrix: passed_selected_scope
+review_workflow: available_review_pending
+manual_review: workflow_available_review_pending
 preprocessing: not_run
 parse: not_run
 library_compile: not_run
@@ -1288,6 +1328,8 @@ backends/sv_uvm_emit.accellera_2020_3_1/
   backend-source-map.json
   evidence/methodology-profile.json
   evidence/static-validation.json
+  evidence/selected-mapping-matrix.json
+  evidence/review-workflow.json
   src/fsmgen_vial_uvm_types_pkg.sv
   src/fsmgen_vial_uvm_components_pkg.sv
   src/<fixture>_if.sv
@@ -1300,11 +1342,15 @@ backends/sv_uvm_emit.accellera_2020_3_1/
   src/dut/<generated-hial-dut>.sv
 ```
 
-This is the exact fourteen-artifact graph after `.13.1.4`. Its ten
-SystemVerilog sources include the generated HIAL DUT and nine UVM-facing
-files. Revision 4 records 75 complete source-map entries and passes 14 static
-structure checks. The later matrix-closure slice may add representative
-mappings under the same versioned profile.
+This is the exact sixteen-artifact graph after `.13.1.5`. Its ten SystemVerilog
+sources include the generated HIAL DUT and nine UVM-facing files. Revision 5
+retains 75 complete source-map entries and 14 static structure checks, adds the
+25-row selected mapping matrix, and records a seven-stage workflow guarded by
+five internal closure invariants.
+
+The older inert `uvm-passive-monitor` target remains a separate UVM 1.2
+artifact contract. Native Accellera-2020.3.1 emission neither replaces it nor
+borrows a compile or runtime claim from it.
 
 A verified project-local UVM library manifest is added only by a later
 library-dependent probe or qualification gate. Ordinary emission neither

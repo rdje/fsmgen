@@ -12,6 +12,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::VIAL::Backend::SVUVMStaticValidator;
+use FSM::VIAL::Backend::SVUVMReviewClosure;
 
 my $BACKEND_PROFILE = 'sv_uvm_emit.accellera_2020_3_1';
 my $BACKEND_SCHEMA = 'fsmgen.vial_backend.sv_uvm_emit.accellera_2020_3_1.v1';
@@ -19,18 +20,19 @@ my $SOURCE_MAP_SCHEMA = 'fsmgen.vial_uvm_backend_source_map.v1';
 my $STATIC_SCHEMA = 'fsmgen.vial_uvm_static_validation.v1';
 my $BASE = 'backends/sv_uvm_emit.accellera_2020_3_1';
 my $CONTRACT = 'docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md';
-my $EMITTER_REVISION = 4;
+my $EMITTER_REVISION = 5;
 my $JSON = JSON::PP->new->canonical(1);
 
 my @RESULT_KEYS = qw(
     ok status backend_profile plan_id generated_top operation_id negotiation
-    backend_manifest source_map static_validation artifacts diagnostics
+    backend_manifest source_map static_validation mapping_matrix review_workflow
+    artifacts diagnostics
 );
 my @MANIFEST_KEYS = qw(
     schema schema_version backend_profile emitter_revision plan_id fixture_id
     generated_top execution_profile methodology_profile capability_evidence
-    limitations limits artifacts source_map static_validation result cleanup
-    diagnostics
+    limitations limits artifacts source_map static_validation mapping_matrix
+    review_workflow result cleanup diagnostics
 );
 my @SOURCE_MAP_KEYS = qw(schema schema_version plan_id artifacts entries);
 my @SOURCE_MAP_ENTRY_KEYS = qw(
@@ -120,7 +122,7 @@ sub _emit($raw) {
     _throw('VIAL_UVM_BACKEND_INVOCATION_ERROR', 'execution plan identity is malformed', '/execution_ir/plan_id')
         unless defined $plan_digest;
     my $operation_id = 'op-' . sha256_hex(_canonical_json({
-        action => 'emit_native_uvm_checking_results',
+        action => 'emit_native_uvm_matrix_review_closure',
         artifact_root => $raw->{artifact_root},
         backend_profile => $BACKEND_PROFILE,
         bridge_manifest_id => $bridge->{manifest_id},
@@ -262,6 +264,26 @@ sub _emit($raw) {
         );
     }
 
+    my $review = FSM::VIAL::Backend::SVUVMReviewClosure->build({
+        plan_id => $execution->{plan_id},
+        fixture_id => $execution->{fixture}{fixture_id},
+        emitter_revision => $EMITTER_REVISION,
+        source_artifacts => \@source_artifacts,
+        review_gallery => join('/', qw(
+            vial review_gallery sv_uvm_emit.accellera_2020_3_1
+            ahb_base_output_foundation
+        )),
+    });
+    if (!$review->{ok}) {
+        my $detail = join('; ', map { "$_->{code}: $_->{message}" }
+            @{$review->{diagnostics}});
+        return _failure(
+            'VIAL_UVM_BACKEND_REVIEW_CLOSURE_ERROR',
+            'generated native UVM foundation failed matrix/review closure: ' . $detail,
+            '/review_closure', $negotiation,
+        );
+    }
+
     my $methodology = _methodology_profile();
     my @support_artifacts = (
         _artifact("$BASE/backend-source-map.json", 'source_map', 'json',
@@ -270,6 +292,12 @@ sub _emit($raw) {
             'selected_methodology_profile', _json_text($methodology), [$CONTRACT]),
         _artifact("$BASE/evidence/static-validation.json", 'validation_report', 'json',
             'static_validation', _json_text($static), [$execution->{plan_id}]),
+        _artifact("$BASE/evidence/selected-mapping-matrix.json", 'mapping_matrix', 'json',
+            'selected_mapping_matrix', _json_text($review->{mapping_matrix}),
+            [$execution->{plan_id}, $CONTRACT]),
+        _artifact("$BASE/evidence/review-workflow.json", 'review_workflow', 'json',
+            'review_workflow', _json_text($review->{review_workflow}),
+            [$execution->{plan_id}, $CONTRACT]),
     );
     my @referenced = sort { $a->{relpath} cmp $b->{relpath} }
         map { _artifact_ref($_) } (@source_artifacts, @support_artifacts);
@@ -292,7 +320,9 @@ sub _emit($raw) {
             negotiation => _clone($negotiation),
             emission => 'passed',
             static_validation => 'passed_structural_only',
-            manual_review => 'pending',
+            selected_mapping_matrix => 'passed_selected_scope',
+            review_workflow => 'available_review_pending',
+            manual_review => 'workflow_available_review_pending',
             preprocessing => 'not_run',
             parse => 'not_run',
             library_compile => 'not_run',
@@ -329,6 +359,8 @@ sub _emit($raw) {
         },
         limitations => [
             'static validation checks deterministic structure only; it is not a SystemVerilog parser or compiler',
+            'the selected mapping matrix is complete for the emitted foundations; it is not a claim of full UVM breadth',
+            'the deterministic gallery workflow is available, but director or delegated visual review remains pending',
             'the gallery emits selected checking and result-collection structures, but no generated verification result manifest exists until an executed backend qualifies and runs them',
             'native interceptor, role-substitution, and RAL records are private typed previews until public VIAL syntax is selected',
             'portable decisions are replayed from the immutable plan; the emitted native constraint solver preview is not invoked',
@@ -342,7 +374,7 @@ sub _emit($raw) {
             selected_domains => 1,
             generated_source_artifacts => 10,
             generated_source_bytes => 16_777_216,
-            total_artifacts => 14,
+            total_artifacts => 16,
             source_map_entries => 1_000_000,
             identifier_bytes => 255,
         },
@@ -359,6 +391,21 @@ sub _emit($raw) {
             sha256 => sha256_hex(_json_text($static)),
             status => $static->{status},
             check_count => scalar(@{$static->{checks}}),
+        },
+        mapping_matrix => {
+            schema => $review->{mapping_matrix}{schema},
+            relpath => "$BASE/evidence/selected-mapping-matrix.json",
+            sha256 => sha256_hex(_json_text($review->{mapping_matrix})),
+            mapping_count => scalar(@{$review->{mapping_matrix}{mappings}}),
+            status => 'passed_selected_scope',
+        },
+        review_workflow => {
+            schema => $review->{review_workflow}{schema},
+            relpath => "$BASE/evidence/review-workflow.json",
+            sha256 => sha256_hex(_json_text($review->{review_workflow})),
+            stage_count => scalar(@{$review->{review_workflow}{stages}}),
+            check_count => scalar(@{$review->{checks}}),
+            status => 'available_review_pending',
         },
         result => {
             schema => 'fsmgen.verification_result_manifest.v1',
@@ -380,8 +427,8 @@ sub _emit($raw) {
     my @artifacts = sort { $a->{relpath} cmp $b->{relpath} }
         ($manifest_artifact, @source_artifacts, @support_artifacts);
     _throw('VIAL_UVM_BACKEND_LIMIT_EXCEEDED',
-        'native UVM artifact graph does not match its fourteen-artifact checking/results contract', '/artifacts')
-        unless @artifacts == 14;
+        'native UVM artifact graph does not match its sixteen-artifact matrix/review contract', '/artifacts')
+        unless @artifacts == 16;
 
     return _result({
         ok => JSON::PP::true,
@@ -394,6 +441,8 @@ sub _emit($raw) {
         backend_manifest => $manifest,
         source_map => $source_map,
         static_validation => $static,
+        mapping_matrix => $review->{mapping_matrix},
+        review_workflow => $review->{review_workflow},
         artifacts => \@artifacts,
         diagnostics => [],
     });
@@ -422,6 +471,8 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         bounded_in_order_scoreboard_v1
         declared_substitution_fault_v1
         structured_diagnostic_result_collection_v1
+        selected_mapping_matrix_v1
+        deterministic_review_workflow_v1
     );
     push @unsatisfied, 'execution schema must be fsmgen.vial_execution_ir.v1'
         unless ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1';
@@ -516,13 +567,13 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         result parity
     );
     return {
-        negotiation_scope => 'native_uvm_checking_results_v1',
+        negotiation_scope => 'native_uvm_selected_matrix_review_v1',
         required => [sort @required],
         satisfied => [sort @satisfied],
         unsatisfied => [sort @unsatisfied],
         deferred => [sort @deferred],
         limitations => [
-            'negotiation covers the selected review-gallery topology, services, checking, fault, diagnostic, and result-collection emission; the later matrix-closure slice still owns full VIAL-to-UVM breadth accounting',
+            'negotiation covers every foundation in the complete selected review-gallery mapping matrix; full UVM breadth remains explicitly unclaimed',
             'library-dependent and executable gates are deliberately outside ordinary emission',
         ],
     };
@@ -3266,6 +3317,8 @@ sub _failure($code, $message, $path, $negotiation = undef) {
         backend_manifest => undef,
         source_map => undef,
         static_validation => undef,
+        mapping_matrix => undef,
+        review_workflow => undef,
         artifacts => [],
         diagnostics => [{code => $code, severity => 'error', message => $message, path => $path}],
     });

@@ -19,7 +19,8 @@ sub vial_native_uvm_emission_contract_keys {
     return [qw(
         schema_version status contract_source implementation_entrypoints
         execution_schema profile backend_schema source_map_schema
-        static_validation_schema methodology_identity library_materialization
+        static_validation_schema mapping_matrix_schema review_workflow_schema
+        methodology_identity library_materialization
         backend_stage_status capabilities limits fixture review_gallery
         writes_files public_embedding_api explicit_nonclaims guidance
     )];
@@ -28,11 +29,12 @@ sub vial_native_uvm_emission_contract_keys {
 sub build_vial_native_uvm_emission_contract {
     return {
         schema_version => 1,
-        status => 'shipped_private_checking_results_emission_and_review_gallery',
+        status => 'shipped_private_selected_matrix_and_review_workflow',
         contract_source => vial_native_uvm_emission_contract_source(),
         implementation_entrypoints => [
             'FSM::VIAL::Backend::SVUVMAccellera2020_3_1->emit({...})',
             'FSM::VIAL::Backend::SVUVMStaticValidator->validate({...})',
+            'FSM::VIAL::Backend::SVUVMReviewClosure->build({...})',
             'FSM::VIAL::ArtifactTransaction->publish({...})',
         ],
         execution_schema => 'fsmgen.vial_execution_ir.v1',
@@ -40,6 +42,8 @@ sub build_vial_native_uvm_emission_contract {
         backend_schema => 'fsmgen.vial_backend.sv_uvm_emit.accellera_2020_3_1.v1',
         source_map_schema => 'fsmgen.vial_uvm_backend_source_map.v1',
         static_validation_schema => 'fsmgen.vial_uvm_static_validation.v1',
+        mapping_matrix_schema => 'fsmgen.vial_uvm_selected_mapping_matrix.v1',
+        review_workflow_schema => 'fsmgen.vial_uvm_review_workflow.v1',
         methodology_identity => {
             language => 'IEEE SystemVerilog',
             standard => 'IEEE 1800.2-2020',
@@ -61,10 +65,12 @@ sub build_vial_native_uvm_emission_contract {
             verified_project_local_copy_required => JSON::PP::true,
         },
         backend_stage_status => {
-            negotiation => 'shipped_checking_results_scope',
+            negotiation => 'shipped_selected_matrix_review_scope',
             emission => 'shipped_deterministic_complete_selected_structures',
             static_validation => 'shipped_structural_only',
-            manual_review => 'gallery_available_review_pending',
+            mapping_matrix => 'shipped_complete_selected_scope',
+            review_workflow => 'shipped_deterministic_check_available',
+            manual_review => 'workflow_available_review_pending',
             preprocessing => 'not_run',
             parse => 'not_run',
             library_compile => 'not_run',
@@ -99,6 +105,8 @@ sub build_vial_native_uvm_emission_contract {
             vial.backend.sv_uvm_emit.result_collection.v1
             vial.backend.sv_uvm_emit.source_map.v1
             vial.backend.sv_uvm_emit.static_validation.v1
+            vial.backend.sv_uvm_emit.selected_mapping_matrix.v1
+            vial.backend.sv_uvm_emit.review_workflow.v1
             vial.backend.sv_uvm_emit.typed_context.v1
             vial.backend.sv_uvm_emit.uvm_top_foundation.v1
         )],
@@ -107,7 +115,7 @@ sub build_vial_native_uvm_emission_contract {
             selected_domains => 1,
             generated_source_artifacts => 10,
             generated_source_bytes => 16_777_216,
-            total_artifacts => 14,
+            total_artifacts => 16,
             source_map_entries => 1_000_000,
             identifier_bytes => 255,
         },
@@ -128,7 +136,9 @@ sub build_vial_native_uvm_emission_contract {
             'Canonical generated source is simulator-neutral and contains no provider-specific branch. Tool commands and workarounds belong to separately identified experimental or qualified adapters.',
             'Public VIAL v1 events, transactions, scenarios, and fixed plan decisions own the selected generated channels and stimulus. Native interceptor tables, role substitutions, RAL metadata, and native constraint solving remain private typed previews until later public authoring decisions.',
             'Portable decisions are replayed from immutable ExecutionIR and are never rerandomized by the backend. The isolated native solver form is emitted for review but not called by the generated fixture.',
-            'The selected coverage, property, model, scoreboard, fault, diagnostic, and result-collection structures are emitted without waiting for a simulator. Matrix closure and executable qualification remain later work, so these structures are not complete VIAL or qualified UVM breadth.',
+            'The selected mapping matrix accounts exactly once for every emitted foundation across normal source, terse source, typed IR, generated roles, and independent maturity states. It closes the selected gallery scope, not full UVM breadth.',
+            'The repository-relative gallery workflow regenerates or byte-checks all nine review sources plus its mapping and workflow evidence. Visual review remains a deliberate human or delegated judgment step; executable qualification remains separate.',
+            'The selected coverage, property, model, scoreboard, fault, diagnostic, and result-collection structures are emitted without waiting for a simulator. They remain unqualified until separately identified compile, elaboration, runtime, result, and parity evidence exists.',
         ],
     };
 }

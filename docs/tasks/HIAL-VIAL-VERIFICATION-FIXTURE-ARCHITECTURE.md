@@ -245,11 +245,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement complete reviewable simulator-neutral sv_uvm_emit.accellera_2020_3_1 generation through bounded children without a parser or simulator gate.`
   Acceptance: `Representative typed-IR fixtures and public authorable paths where available emit the full selected UVM environment shape across topology, interfaces, lifecycle, notification/interception, stimulus, TLM, factory/configuration, RAL, constrained decisions, coverage/properties, models/scoreboards/faults/results, with efficient readable deterministic artifacts, complete source maps, an accumulating review gallery, and explicit static/manual-review versus compile/elaboration/run/result states. No child waits for a simulator merely to generate broader UVM; unknown defects remain possible and are tracked when found rather than hidden. Raw SV/UVM knowledge stays absent from authored VIAL, legacy UVM 1.2 remains compatible, and neither visual review nor static shape checks become syntax/runtime/full-VIAL qualification.`
-  Verification: `.13.1.1` ships the native emitter foundation, `.13.1.2` ships complete selected topology/lifecycle/notification structures, `.13.1.3` ships stimulus/services, and `.13.1.4` ships coverage/properties/models/scoreboards/faults/diagnostics/result collection; active `.13.1.5` owns matrix/review closure without a simulator prerequisite`
-  Commit: `pending children`
+  Verification: `.13.1.1` ships the native emitter foundation, `.13.1.2` ships complete selected topology/lifecycle/notification structures, `.13.1.3` ships stimulus/services, `.13.1.4` ships coverage/properties/models/scoreboards/faults/diagnostics/result collection, and `.13.1.5` closes the exact selected mapping matrix and deterministic review workflow without a simulator prerequisite. The complete selected emission profile remains unqualified and is not full UVM breadth.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5: close native UVM matrix and review workflow`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.1`
@@ -281,11 +281,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.4: ship native UVM checking and results`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5`
-  Status: `active`
+  Status: `done`
   Goal: `Close the full native UVM emission matrix, review workflow, examples, and deferred-runtime defect boundary.`
   Acceptance: `Every selected UVM mapping has an emitted representative or exact unsupported reason; normal/terse and typed-IR entry availability is distinguished from private preview fixtures; the checked gallery is easy to regenerate and inspect; automated static findings and director visual-review findings become exact task-tree defects; all emitted artifacts remain simulator-neutral and deterministic; legacy compatibility and docs are complete; and the matrix says emitted/reviewed/unqualified rather than waiting for or pretending full simulation.`
-  Verification: `clean implementation predecessor 193d170e0 activates this leaf alone after completed .13.1.4; matrix/review implementation remains unperformed until this continuity slice commits`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5: activate native UVM matrix and review closure`
+  Verification: `Emitter revision 5 produces the exact sixteen-artifact/ten-SystemVerilog-source graph while retaining 75 complete source-map entries and 14 structural checks. Two canonical JSON artifacts contain a 25-row selected mapping matrix and seven-stage review workflow guarded by five internal invariants. The matrix equals the emitted-foundation set, distinguishes normal/terse public entry, compiler-owned IR, and private previews, and gives every unavailable public route an exact reason. The repository-relative gallery command regenerates nine sources plus two evidence files; --check writes nothing and rejects missing, extra, or byte-drifted snapshots. Visual review remains pending, defects require exact durable task-tree fields, legacy UVM 1.2 remains separate, and parse/compile/elaboration/runtime/result/parity/full-UVM breadth remain explicitly unclaimed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5: close native UVM matrix and review workflow`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2`
   Status: `proposed`
@@ -402,7 +402,7 @@ Clean cross-tree predecessor `ea1b76dd54` activated `.12` alone. Completed
 `.12` accepts decision `0050`, selects simulator-neutral IEEE 1800.2-2020 and
 exact Accellera UVM 2020-3.1 source, and separates deterministic emission from
 optional experimental probes and future PGEN+NEXSIM runtime qualification.
-Active containers `.13`/`.13.1` own five full-shaped reviewable emission
+Active container `.13` and completed `.13.1` own five full-shaped reviewable emission
 leaves that do not wait for simulation. Completed `.13.1.1` ships the private
 emitter substrate, structural validator, exact capability truth, and first
 byte-checked artifact gallery. Completed `.13.1.2` ships complete topology,
@@ -411,9 +411,10 @@ Completed `.13.1.3` ships active stimulus, TLM, scoped factory/configuration,
 private RAL, and constrained-decision replay/preview structures. Completed
 `.13.1.4` ships public coverage/property/model/scoreboard/fault structures,
 typed diagnostic/result collection, and a bound SVA review checker in the
-revision-4 fourteen-artifact graph. Clean implementation predecessor
-`193d170e0` activates `.13.1.5` alone for matrix/review closure; implementation
-remains unperformed. `.13.2` is dependency-ready for an exact reusable open-tool compile/
+revision-4 fourteen-artifact graph. Completed `.13.1.5` ships the revision-5
+sixteen-artifact graph, 25-row selected mapping matrix, deterministic gallery
+workflow, and exact deferred-runtime defect boundary. `.13.2` is next and
+dependency-ready for an exact reusable open-tool compile/
 elaboration probe, while `.13.3` remains blocked on capability-ready PGEN and
 NEXSIM releases.
 Decision `0034` records that
@@ -422,6 +423,15 @@ machinery is compiler-owned in the same architectural sense that assembly is
 compiler-owned beneath C/C++ or Rust.
 
 ## Decisions
+
+- `2026-08-01`: Close the selected native-UVM emission scope with a canonical
+  matrix and review workflow, not a parser or simulator claim. Each of the 25
+  emitted foundations records normal/terse source availability, typed-IR
+  ownership, generated roles, realization, and independent maturity states.
+  Repository-relative regeneration and non-mutating byte checks own the nine
+  sources and two evidence snapshots; visual findings route to this task-tree
+  with exact defect fields. Full UVM breadth and every parser-through-parity
+  state remain unclaimed.
 
 - `2026-08-01`: Clean implementation predecessor
   `193d170e0f59e837d7671455797ea4d096041c90` permits `.13.1.5` to activate
@@ -715,6 +725,54 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-08-01` | `.13.1.4` activation | clean `.13.1.3` implementation predecessor `6463779be`; task/index/audit/book/fact/Memory continuity; relative paths/task/live-reference/Knowledge Map; mdBook test/build; diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; docs/live/task/Knowledge Map suite reports `All tests successful` at Files=6/Tests=71; all 49 mdBook chapters test and the repository-local build contains 85 files/16,751,669 bytes before exact removal; task integrity remains three trees/907 nodes/one segment/one index archive; exact mdBook delta is 0/0/-9; Knowledge Map remains 1,104 facts/5,630 questions/5,796 occurrences/117 shards; Memory is 47 lines; staged acceptance and all nine doctrine checks pass with zero ceiling increases; implementation, generated artifacts, public capability, parser, compile, elaboration, runtime, result, and parity remain unchanged |
 | `2026-08-01` | `.13.1.4` implementation | revision-4 emitter/static-validator/support syntax; public coverage/property/model/scoreboard/fault emission; typed diagnostic/result collection; bound SVA review checker; width-aware notification-predicate repair; 75-entry map; 14 checks; deterministic nine-source gallery; focused/broader VIAL, portable runtime/parity, docs/task/live/Knowledge Map, mdBook, Memory, and staged-doctrine gates | `passed`; focused Files=6/Tests=7,118; guarded semantic/native/support Files=12/Tests=7,161; portable Verilator execution Files=1/Tests=5 and AHB parity Files=1/Tests=4; docs/task/live/history/map Files=12/Tests=111; all 49 chapters test; removed repository-local build 85 files/16,768,599 bytes; task integrity three trees/907 nodes/one segment/one index archive; exact mdBook delta 0/+47/+2,390; Knowledge Map 1,104 facts/5,633 questions/5,799 occurrences/117 shards; Memory 44 lines; staged acceptance and all nine doctrine checks pass with zero ceiling increases; parse, compile, elaboration, native runtime/result/parity, probe-backed expectation execution, and visual-review completion remain unclaimed |
 | `2026-08-01` | `.13.1.5` activation | clean `.13.1.4` implementation predecessor `193d170e0`; task/index/audit/book/fact/Memory continuity; relative paths/task/live-reference/Knowledge Map; mdBook test/build; diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; docs/live/task/Knowledge Map suite reports `All tests successful` at Files=6/Tests=76; all 49 mdBook chapters test and the repository-local build contains 85 files/16,768,886 bytes before exact removal; task integrity remains three trees/907 nodes/one segment/one index archive; exact mdBook delta is 0/+1/+51; Knowledge Map remains 1,104 facts/5,633 questions/5,799 occurrences/117 shards; Memory is 45 lines; staged acceptance and all nine doctrine checks pass with zero ceiling increases; implementation, generated artifacts, public capability, visual-review evidence, parser, compile, elaboration, runtime, result, and parity remain unchanged |
+| `2026-08-01` | `.13.1.5` implementation | revision-5 emitter/review-closure/support syntax; exact 25-row source/IR/role/state mapping matrix; seven-stage repository-relative review workflow; non-mutating gallery byte check; two canonical JSON evidence snapshots; exact capability/support/non-claims; fail-closed negative oracles; book/task/audit/fact/Memory continuity | `passed`; focused native/support Files=7/Tests=7,125; broader semantic/public/native gates pass in bounded partitions totaling Files=13/Tests=7,168; portable execution Files=1/Tests=5 and parity Files=1/Tests=4; docs/task/live/history/map Files=12/Tests=101; all 49 chapters test; removed repository-local build 85 files/16,787,078 bytes; task integrity three trees/907 nodes/one segment/one index archive; exact mdBook delta 0/+46/+2,327; Knowledge Map 1,104 facts/5,635 questions/5,801 occurrences/117 shards; Memory 47 lines; exact graph is 16 artifacts/10 SystemVerilog sources/75 maps/14 structural checks/25 mappings/7 workflow stages/5 closure invariants/9 source snapshots/2 evidence snapshots; final staged acceptance and all nine doctrine checks pass; visual review and parse through parity remain pending or unclaimed |
+
+## Acceptance Checklist (enforced) — `.13.1.5` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean activation predecessor
+  `e173ae1f4a614a31fa4735e06f4d767b9bfd33e7` records emitter revision 4.
+  `git log -S'SVUVMReviewClosure' --oneline --all --
+  perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm
+  perl/FSM/VIAL/Backend/SVUVMReviewClosure.pm` returns no committed match,
+  while the revision-4 pickaxe identifies implementation commit `193d170e0`.
+  `git show <predecessor>:perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm`
+  contains no selected-mapping-matrix, review-workflow, or review-closure
+  implementation, and the corresponding `SVUVMReviewClosure.pm` object does
+  not exist in that tree. The emitter advertises 25 selected foundations but
+  has no machine-readable one-to-one source/IR/role/state accounting or
+  repository command that can reject gallery drift without writing files.
+- [x] **ADDRESSED (verified)** — Emitter revision 5 adds an exact closed
+  review-closure API and two canonical JSON artifacts. Its 25 rows equal the
+  manifest emitted-foundation set; distinguish normal/terse public source,
+  compiler-owned IR, and private previews with exact unsupported reasons; and
+  retain independent emission, structural, visual, and qualification states.
+  The seven-stage workflow gives repository-relative regenerate/check commands,
+  nine source and two evidence examples, exact durable defect fields, and
+  separate pending visual, experimental compile, and qualified-runtime stages.
+  `--check` performs no write and rejects missing, extra, or byte-drifted
+  snapshots. Five internal invariants and direct malformed-input oracles fail
+  closed. Focused native evidence reports `All tests successful` at
+  `Files=5, Tests=38`.
+- [x] **NO REGRESSION** — Revision 5 retains ten generated SystemVerilog
+  sources, 75 complete source-map entries, and 14 structural checks while
+  expanding only the evidence graph from 14 to 16 artifacts. Capability,
+  language-surface, regression-corpus, and live-document assertions report
+  `All tests successful` in the focused gate at `Files=7, Tests=7,125` and in
+  bounded broader partitions totaling `Files=13, Tests=7,168`. Portable
+  execution and parity independently pass at `Files=1, Tests=5` and `Files=1,
+  Tests=4`. Documentation/task/live/history/Knowledge Map evidence passes at
+  `Files=12, Tests=101`; all 49 mdBook chapters test, and the repository-local
+  build contains 85 files/16,787,078 bytes before exact removal. Task integrity
+  remains three trees/907 nodes/one segment/one index archive; live containment
+  accepts all 22 surfaces and 2,941/2,941 paths; the Knowledge Map is current at
+  1,104 facts/5,635 questions/5,801 occurrences/117 shards; Memory is 47 lines.
+  Canonical workflow evidence
+  contains no simulator-provider name; the legacy UVM 1.2 target remains a
+  separate unchanged contract. Final staged acceptance passes with
+  `root=git_history` and `no-regression=prove_summary`; all nine doctrine checks
+  report `[doctrine] all doctrine checks passed`. Visual review, preprocessing, parse,
+  library/fixture compile, elaboration, runtime, result, parity, and full UVM
+  breadth remain explicitly pending, not run, not produced, or unclaimed.
 
 ## Acceptance Checklist (enforced) — `.13.1.5` activation
 
@@ -1320,9 +1378,20 @@ compiler-owned beneath C/C++ or Rust.
 | `.13.1.4` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.4: activate native UVM checking and results` | Activate only representative coverage/property/model/scoreboard/fault/diagnostic/result emission after clean completed `.13.1.3`; implementation remains unperformed. |
 | `.13.1.4` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.4: ship native UVM checking and results` | Ship revision-4 coverage, bound SVA, deterministic models, bounded scoreboard, declared fault application, property/diagnostic/result collection, 75-entry source map, 14 static checks, and nine-source gallery without a parser/runtime/result claim. |
 | `.13.1.5` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5: activate native UVM matrix and review closure` | Activate only mapping-matrix, examples, review-workflow, compatibility, and deferred-runtime-defect closure after clean completed `.13.1.4`; implementation and visual-review evidence remain unperformed. |
+| `.13.1.5` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5: close native UVM matrix and review workflow` | Ship revision-5 selected-scope accounting through a 25-row matrix, deterministic seven-stage gallery workflow, non-mutating byte check, exact defect routing, and two canonical evidence snapshots while retaining every visual/parser/runtime/full-breadth non-claim. |
 | `.13.3` provider clarification | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3: capture NEXSIM semantic-introspection MCP contract` | Record the future versioned NEXSIM semantic API/MCP qualification plane, snapshot/control/query requirements, source-mapped checkpoint correlation, first-divergence localization, and provider-evidence boundary without inventing a release or activating runtime work. |
 
 ## Changelog
+
+- `2026-08-01`: `.13.1.5` completes the selected native-UVM emission parent.
+  Revision 5 retains ten SystemVerilog sources, 75 map entries, and 14 static
+  checks while adding a selected-mapping-matrix artifact and deterministic
+  review-workflow artifact to form an exact sixteen-artifact graph. Every one
+  of 25 emitted foundations has one source/IR/role/state row; nine source and
+  two evidence snapshots regenerate or byte-check through repository-relative
+  commands. Five closure invariants and negative oracles fail closed. Visual
+  review and every parser-through-parity/full-UVM-breadth claim remain pending
+  or absent; `.13.2` is next.
 
 - `2026-08-01`: Clean implementation predecessor `193d170e0` activates
   `.13.1.5` alone for the native-UVM mapping matrix, examples, review workflow,

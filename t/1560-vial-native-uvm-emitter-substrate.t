@@ -41,7 +41,7 @@ subtest 'native emitter produces a deterministic closed unqualified UVM graph' =
     is($first->{status}, 'emitted_unqualified', 'status does not imply compile or runtime qualification');
     is($first->{backend_profile}, $profile, 'backend profile is exact');
     like($first->{operation_id}, qr/\Aop-[0-9a-f]{64}\z/, 'operation identity is deterministic and safe');
-    is(scalar(@{$first->{artifacts}}), 14, 'emission graph contains the exact fourteen artifacts');
+    is(scalar(@{$first->{artifacts}}), 16, 'emission graph contains the exact sixteen artifacts');
     is_deeply(
         [map { $_->{relpath} } @{$first->{artifacts}}],
         [sort map { $_->{relpath} } @{$first->{artifacts}}],
@@ -102,7 +102,8 @@ subtest 'methodology identity and capability states are exact and honest' => sub
     my $evidence = $emission->{backend_manifest}{capability_evidence};
     is($evidence->{emission}, 'passed', 'emission is the only product stage passed here');
     is($evidence->{static_validation}, 'passed_structural_only', 'static evidence is labelled structural only');
-    is($evidence->{manual_review}, 'pending', 'director visual review remains pending');
+    is($evidence->{manual_review}, 'workflow_available_review_pending',
+        'director or delegated visual review remains pending behind the available workflow');
     is($evidence->{preprocessing}, 'not_run', 'preprocessing is not run');
     is($evidence->{parse}, 'not_run', 'parse is not run');
     is($evidence->{library_compile}, 'not_run', 'UVM library compile is not run');

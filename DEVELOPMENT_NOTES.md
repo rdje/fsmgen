@@ -88,3 +88,20 @@ The same boundary applies to observation. Public-port checks may be wired in
 the review gallery, but verification-probe-backed expectations remain
 source-mapped until a qualified adapter supplies the probe value. The private
 RAL preview is not silently promoted into runtime observation authority.
+
+## 2026-08-01: Native UVM matrix closure is selected-scope accounting, not qualification
+
+Revision 5 treats the backend manifest's emitted-foundation list as a set that
+must equal the mapping matrix exactly. Each foundation then records three
+entry authorities—normal source, terse source, and typed IR—separately from
+generated roles and four independent maturity states. This prevents a private
+typed preview, compiler-owned topology, public source route, or structural
+check from being mistaken for one another.
+
+Review is reproducible but still judgment-bearing. The gallery generator owns
+the canonical nine source and two JSON evidence snapshots; `--check` performs
+an exact non-mutating comparison and rejects missing, extra, or drifted files.
+That automation does not set visual review to passed. Human or delegated
+findings remain durable only when they identify the artifact, generated
+symbol, source-map ID, observation, severity, reproduction, expected intent,
+and disposition in the owning task-tree.

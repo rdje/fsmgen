@@ -14,6 +14,10 @@ use FSM::VIAL::Backend::SVUVMAccellera2020_3_1;
 use FSM::VIAL::Parser;
 use FSM::VIAL::PlanBuilder;
 
+die "usage: perl scripts/refresh_vial_native_uvm_gallery.pl [--check]\n"
+    unless @ARGV <= 1 && (!@ARGV || $ARGV[0] eq '--check');
+my $check_only = @ARGV && $ARGV[0] eq '--check';
+
 my $repo_root = File::Spec->rel2abs(File::Spec->catdir($FindBin::Bin, '..'));
 my $vial_id = 'vial/ahb_subordinate_base_output_arbitration.vial';
 my $hial_id = 'ppif/ahb_lite_subordinate.ppif';
@@ -32,6 +36,8 @@ my %filename = (
     bound_sva_checker => 'base_output_arbitration_sva_checker.sv',
     uvm_fixture_package => 'base_output_arbitration_pkg.sv',
     uvm_fixture_top => 'base_output_arbitration_tb.sv',
+    selected_mapping_matrix => 'selected-mapping-matrix.json',
+    review_workflow => 'review-workflow.json',
 );
 
 my $semantic_ir = FSM::VIAL::Parser->parse_source({
@@ -74,15 +80,43 @@ die "native UVM gallery role set is incomplete\n"
 
 for my $role (sort keys %filename) {
     my $path = _repo_path(@gallery_parts, $filename{$role});
-    open my $fh, '>:raw', $path or die "cannot write $gallery_rel/$filename{$role}: $!\n";
-    print {$fh} $artifact{$role}{content}
-        or die "cannot write bytes to $gallery_rel/$filename{$role}: $!\n";
-    close $fh or die "cannot close $gallery_rel/$filename{$role}: $!\n";
+    if ($check_only) {
+        die "native UVM gallery snapshot is missing: $gallery_rel/$filename{$role}\n"
+            unless -f $path;
+        my $actual = _slurp_path($path, "$gallery_rel/$filename{$role}");
+        die "native UVM gallery snapshot has byte drift: $gallery_rel/$filename{$role}\n"
+            unless $actual eq $artifact{$role}{content};
+    }
+    else {
+        open my $fh, '>:raw', $path
+            or die "cannot write $gallery_rel/$filename{$role}: $!\n";
+        print {$fh} $artifact{$role}{content}
+            or die "cannot write bytes to $gallery_rel/$filename{$role}: $!\n";
+        close $fh or die "cannot close $gallery_rel/$filename{$role}: $!\n";
+    }
 }
 
-print 'refreshed ', scalar(keys %filename), ' native UVM gallery sources; ',
+if ($check_only) {
+    my $gallery_path = _repo_path(@gallery_parts);
+    die "native UVM gallery review guide is missing: $gallery_rel/README.md\n"
+        unless -f File::Spec->catfile($gallery_path, 'README.md');
+    opendir my $dh, $gallery_path
+        or die "cannot inspect $gallery_rel: $!\n";
+    my %allowed = map { $_ => 1 } ('README.md', values %filename);
+    my @extra = sort grep {
+        $_ ne '.' && $_ ne '..' && !$allowed{$_}
+    } readdir $dh;
+    closedir $dh or die "cannot close $gallery_rel: $!\n";
+    die "native UVM gallery has unexpected file: $gallery_rel/$extra[0]\n"
+        if @extra;
+}
+
+print(($check_only ? 'native UVM gallery current: ' : 'refreshed '),
+    9, ' source snapshots; 2 review evidence files; ',
     scalar(@{$emission->{source_map}{entries}}), ' source-map entries; ',
-    scalar(@{$emission->{static_validation}{checks}}), " static checks\n";
+    scalar(@{$emission->{static_validation}{checks}}), ' static checks; ',
+    $emission->{backend_manifest}{review_workflow}{check_count},
+    " review-closure checks\n");
 
 sub _slurp {
     my ($relpath) = @_;
@@ -91,6 +125,15 @@ sub _slurp {
     local $/;
     my $text = <$fh>;
     close $fh or die "cannot close $relpath: $!\n";
+    return $text;
+}
+
+sub _slurp_path {
+    my ($path, $label) = @_;
+    open my $fh, '<:raw', $path or die "cannot read $label: $!\n";
+    local $/;
+    my $text = <$fh>;
+    close $fh or die "cannot close $label: $!\n";
     return $text;
 }
 

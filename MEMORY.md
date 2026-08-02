@@ -5,20 +5,22 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5`: activate native UVM matrix and review closure).
-- active_work_unit: parent `.13.1` and child `.13.1.5` are active; completed
-  `.13.1.4` is the clean implementation predecessor.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5`: close native UVM matrix and review workflow).
+- active_work_unit: `.13.1` and all five emission children are complete;
+  proposed `.13.2` is the next clean activation frontier.
 - current_state: private profile `sv_uvm_emit.accellera_2020_3_1` emits an
-  exact fourteen-artifact/ten-SystemVerilog-source graph with selected active
+  exact sixteen-artifact/ten-SystemVerilog-source graph with selected active
   topology, lifecycle, ordered typed notification/interception, stimulus,
   decision replay, TLM, scoped factory/configuration, private RAL/native-solver
   previews, coverage, bound SVA, models, scoreboard, fault application,
-  diagnostics, and result collection. It has 75 mapped entries, 14 structural
-  checks, and nine byte-checked UVM-facing gallery sources. Manual review and parse through runtime/results/parity remain unclaimed;
+  diagnostics, and result collection. It has 75 source-map entries, 14
+  structural checks, a 25-row selected mapping matrix, and a deterministic
+  gallery workflow over nine sources plus two JSON evidence files. Manual
+  review and parse through runtime/results/parity remain unclaimed;
   `.13.2` is dependency-ready, while `.13.3` requires NEXSIM's versioned API/MCP semantic checkpoint plane and exact PGEN+NEXSIM releases.
-- next_action: implement only `.13.1.5`: close the native-UVM mapping matrix,
-  review workflow, examples, and deferred-runtime defect boundary without
-  adding a parser, simulator, runtime-result, or qualification claim.
+- next_action: activate only `.13.2` for the exact reusable open-source
+  UVM compile/elaboration feasibility probe; do not run or implement it before
+  the clean activation commit.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` still waits on exact capability-ready PGEN/NEXSIM handoff/

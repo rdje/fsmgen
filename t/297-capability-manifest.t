@@ -2876,7 +2876,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.vial'}{current_boundary},
-        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits that graph atomically.*public sv_portable_verilator run path.*exact Verilator 5\.046.*verification-result manifest.*selected AHB fixture.*parity report.*sv_uvm_emit\.accellera_2020_3_1.*structural-only validation report.*claims emission only.*complete four-state observation.*general cross-backend parity/i,
+        qr/public capabilities\/check\/normal-terse formatting.*one typed semantic model.*public plan CLI\/API routes direct IAL0, direct IAL1, or IAL2.*private immutable target-neutral VIALExecutionIR.*filesystem adapter commits that graph atomically.*public sv_portable_verilator run path.*exact Verilator 5\.046.*verification-result manifest.*selected AHB fixture.*parity report.*sv_uvm_emit\.accellera_2020_3_1.*structural-only validation.*twenty-five-row selected mapping matrix.*claims emission only.*complete four-state observation.*general cross-backend parity/i,
         'manifest distinguishes portable AHB runtime/parity, native UVM emission, and remaining qualification non-claims',
     );
     is_deeply(

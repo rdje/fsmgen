@@ -1227,13 +1227,13 @@ and exact old/new regression fixtures.
 
 ### First implementation boundary and non-claims
 
-Active container `.13.1` owns complete reviewable emission through five
-bounded children. `.13.1.1` establishes the emitter, artifact graph, source
+Completed container `.13.1` owns complete selected reviewable emission through
+five bounded children. `.13.1.1` establishes the emitter, artifact graph, source
 maps, static validators, and first gallery. `.13.1.2` closes topology,
 interfaces, lifecycle, and notification/interception. `.13.1.3` adds
 stimulus/sequences/TLM/factory/configuration/RAL/constrained-decision shapes.
 Completed `.13.1.4` adds coverage/properties/models/scoreboards/faults,
-diagnostics, and result collection. `.13.1.5` closes the representative
+diagnostics, and result collection. Completed `.13.1.5` closes the selected
 mapping matrix, examples, visual-review workflow, and deferred-runtime defect
 boundary. None waits for full simulation merely to emit more of the selected
 architecture.
@@ -1285,18 +1285,27 @@ aware scalar validator now also renders exact one- and two-bit notification
 predicates that the revision-3 whole-nibble mask check incorrectly left as
 typed-but-unexecuted channels.
 
-The graph now contains 14 artifacts, ten SystemVerilog sources, 75 source-map
+Revision 5 now contains 16 artifacts, ten SystemVerilog sources, 75 source-map
 entries, 14 static checks, and nine byte-locked UVM-facing gallery sources.
 The structured collector remains generated review code: no runtime executes,
 no verification-result manifest is produced, and probe-backed expectations
 remain source-mapped until a qualified adapter supplies observation.
 
+The two new canonical JSON artifacts close selected-scope accounting without
+changing generated SystemVerilog. A 25-row matrix equals the manifest's
+emitted-foundation set and separates normal/terse public source, public or
+compiler-owned ExecutionIR, and private typed previews. A seven-stage workflow
+defines repository-relative regeneration and non-mutating byte checks, pending
+director/delegated visual review, exact durable defect fields, and separately
+not-run experimental compile and qualified-runtime stages. Five internal
+invariants reject incomplete roles, entry-point drift, workflow drift, or an
+accidental qualification claim.
+
 Preprocessing, parse, UVM-library compile, fixture compile, elaboration,
 runtime, result, parity, visual-review completion, public interceptor, RAL, or
-factory-override authoring, matrix closure, produced results, and full native
-UVM breadth remain explicitly unclaimed. Clean implementation predecessor
-`193d170e0` activates `.13.1.5` alone for that bounded matrix/review frontier;
-implementation remains unperformed. Experimental `.13.2` remains separately
+factory-override authoring, produced results, and full native UVM breadth
+remain explicitly unclaimed. Selected mapping-matrix and deterministic review-
+workflow closure now ship; visual judgment does not. Experimental `.13.2` remains separately
 dependency-ready because the first gallery exists, so open-tool evidence
 cannot blur the active emission sequence.
 
