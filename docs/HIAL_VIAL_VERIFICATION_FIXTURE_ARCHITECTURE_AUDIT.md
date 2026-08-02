@@ -1217,7 +1217,7 @@ Compatibility states are therefore exact:
 | Surface | Revision | Behavior | Qualification |
 | --- | --- | --- | --- |
 | `uvm-passive-monitor` | UVM 1.2 | inert declarations only | shape/inertness tests; no compile/run claim |
-| `sv_uvm_emit.accellera_2020_3_1` | IEEE 1800.2-2020 / Accellera 2020-3.1 | deterministic selected topology, lifecycle, notification/interception, stimulus, TLM, scoped factory/configuration, and private typed RAL/native-decision-preview artifacts | emission/source-map/static-structure only; compile/run explicitly not run |
+| `sv_uvm_emit.accellera_2020_3_1` | IEEE 1800.2-2020 / Accellera 2020-3.1 | deterministic selected topology, lifecycle, notification/interception, stimulus, TLM, scoped factory/configuration, private typed RAL/native-decision previews, coverage, bound SVA, models, scoreboard, fault, diagnostics, and result collection | emission/source-map/static-structure only; compile/run/result explicitly not run |
 | future `sv_uvm_qualified` PGEN+NEXSIM tuple | same selected UVM identity unless explicitly revised | executable native intent lowering | unavailable until `.13.3` selects and passes the exact tuple |
 
 A future CLI alias, UVM 1.2 deprecation, upgraded passive-monitor target,
@@ -1232,10 +1232,11 @@ bounded children. `.13.1.1` establishes the emitter, artifact graph, source
 maps, static validators, and first gallery. `.13.1.2` closes topology,
 interfaces, lifecycle, and notification/interception. `.13.1.3` adds
 stimulus/sequences/TLM/factory/configuration/RAL/constrained-decision shapes.
-`.13.1.4` adds coverage/properties/models/scoreboards/faults/results. `.13.1.5`
-closes the representative mapping matrix, examples, visual-review workflow,
-and deferred-runtime defect boundary. None waits for full simulation merely to
-emit more of the selected architecture.
+Completed `.13.1.4` adds coverage/properties/models/scoreboards/faults,
+diagnostics, and result collection. `.13.1.5` closes the representative
+mapping matrix, examples, visual-review workflow, and deferred-runtime defect
+boundary. None waits for full simulation merely to emit more of the selected
+architecture.
 
 An authored construct may name only VIAL intent and types; no
 SystemVerilog/UVM class, method, phase, objection, hierarchy pattern, or
@@ -1269,17 +1270,32 @@ exact scoped configuration paths, one compiler-selected driver factory
 override, and a monitor-connected private RAL block/adapter/predictor preview.
 Portable constrained-decision values are replayed without UVM rerandomization;
 the isolated bounded native solver preview is not invoked by generated
-scenarios. The graph now contains 12 artifacts, eight SystemVerilog sources,
+scenarios. The revision-3 graph contains 12 artifacts, eight SystemVerilog sources,
 64 source-map entries, 12 static checks, and seven byte-locked UVM-facing
 gallery sources.
 
+Completed `.13.1.4` adds the public two-bin `stall_seen` covergroup, two
+deterministic event-counter instances, the capacity-four in-order `writes`
+scoreboard, exact public expectation construction, one-drive-interval
+`size=3'b111` substitution, public property-outcome collection, a separately
+bound 1-to-256-cycle SVA checker, defensively copied diagnostics, and a
+structured review snapshot. Driver, monitor, controller, checking components,
+and result collector are wired through typed non-wildcard paths. The width-
+aware scalar validator now also renders exact one- and two-bit notification
+predicates that the revision-3 whole-nibble mask check incorrectly left as
+typed-but-unexecuted channels.
+
+The graph now contains 14 artifacts, ten SystemVerilog sources, 75 source-map
+entries, 14 static checks, and nine byte-locked UVM-facing gallery sources.
+The structured collector remains generated review code: no runtime executes,
+no verification-result manifest is produced, and probe-backed expectations
+remain source-mapped until a qualified adapter supplies observation.
+
 Preprocessing, parse, UVM-library compile, fixture compile, elaboration,
 runtime, result, parity, visual-review completion, public interceptor, RAL, or
-factory-override authoring, coverage/properties, models/scoreboards/faults/
-results, and full native UVM breadth remain explicitly unclaimed. Active
-`.13.1.4` now owns only that bounded emission frontier; implementation remains
-unperformed at activation. Experimental
-`.13.2` remains separately
+factory-override authoring, matrix closure, produced results, and full native
+UVM breadth remain explicitly unclaimed. Proposed `.13.1.5` now owns that
+bounded matrix/review frontier. Experimental `.13.2` remains separately
 dependency-ready because the first gallery exists, so open-tool evidence
 cannot blur the active emission sequence.
 

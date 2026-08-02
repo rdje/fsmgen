@@ -28,6 +28,8 @@ my %filename = (
     uvm_fixture_interface => 'base_output_arbitration_if.sv',
     uvm_notification_interception => 'base_output_arbitration_notifications_pkg.sv',
     uvm_stimulus_services => 'base_output_arbitration_services_pkg.sv',
+    uvm_checking_results => 'base_output_arbitration_checking_pkg.sv',
+    bound_sva_checker => 'base_output_arbitration_sva_checker.sv',
     uvm_fixture_package => 'base_output_arbitration_pkg.sv',
     uvm_fixture_top => 'base_output_arbitration_tb.sv',
 );

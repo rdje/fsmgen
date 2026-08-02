@@ -28,6 +28,9 @@ answers:
   - "what native UVM foundation has FSMGen emitted?"
   - "what native UVM topology lifecycle and notification structures has FSMGen emitted?"
   - "what native UVM stimulus and service structures has FSMGen emitted?"
+  - "what native UVM coverage model scoreboard and fault structures has FSMGen emitted?"
+  - "does native UVM result collection mean a result was produced?"
+  - "how are short known scalar notification predicates emitted?"
   - "does generated native UVM rerandomize portable VIAL decisions?"
   - "are RAL and factory overrides publicly authored VIAL?"
   - "who owns objections in generated VIAL UVM?"
@@ -74,7 +77,7 @@ evidence: >-
   docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Parity/AHBBaseOutput.pm; t/1557-vial-portable-sv-backend-emission.t; t/1559-vial-ahb-runtime-parity.t;
   docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md;
   docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md;
-  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm; perl/FSM/VIAL/Backend/SVUVMStaticValidator.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm; scripts/refresh_vial_native_uvm_gallery.pl; t/1560-vial-native-uvm-emitter-substrate.t; t/1570-vial-native-uvm-topology-lifecycle-notification.t; t/1580-vial-native-uvm-stimulus-services.t; vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/README.md;
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm; perl/FSM/VIAL/Backend/SVUVMStaticValidator.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm; scripts/refresh_vial_native_uvm_gallery.pl; t/1560-vial-native-uvm-emitter-substrate.t; t/1570-vial-native-uvm-topology-lifecycle-notification.t; t/1580-vial-native-uvm-stimulus-services.t; t/1590-vial-native-uvm-checking-results.t; vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/README.md;
   docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md; docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://github.com/accellera-official/uvm-core/releases/tag/2020.3.1; https://github.com/chipsalliance/uvm-verilator; https://verilator.org/guide/latest/languages.html;
   https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
 reverify: >-
@@ -82,7 +85,7 @@ reverify: >-
   rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|semantic introspection|MCP|snapshot-consistent|first divergence|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'native Intent Abstraction|signoff|direct semantic adapters|HDL-independent|kernel/session|Perl 5|versioned C ABI|shared library|differential equivalence' docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'complete native framework|xIAL|HIAL IP|VIAL VIP|functional/intent signoff' docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md &&
-  prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1560-vial-native-uvm-emitter-substrate.t t/1570-vial-native-uvm-topology-lifecycle-notification.t t/1580-vial-native-uvm-stimulus-services.t
+  prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1560-vial-native-uvm-emitter-substrate.t t/1570-vial-native-uvm-topology-lifecycle-notification.t t/1580-vial-native-uvm-stimulus-services.t t/1590-vial-native-uvm-checking-results.t
 ---
 
 Hardware IAL (HIAL) is the collective architecture name for FSMGen's current
@@ -212,14 +215,18 @@ artifact schemas, and source maps remain stable or are explicitly versioned.
 The shipped UVM 1.2 passive-monitor output stays unchanged and unqualified.
 Completed `.13.1.1` establishes the private
 `sv_uvm_emit.accellera_2020_3_1` foundation. Completed `.13.1.2` expands the
-topology/lifecycle/notification foundation. Completed `.13.1.3` now emits an
-exact twelve-artifact graph with eight SystemVerilog sources: deterministic
+topology/lifecycle/notification foundation. Completed `.13.1.3` adds active
+stimulus/services. Completed `.13.1.4` now emits an exact fourteen-artifact
+graph with ten SystemVerilog sources: deterministic
 HIAL DUT; typed logical-time/lifecycle/filter/effect/reentrancy context;
 component and agent bases; drive/sample interface; ordered typed notification
 package; active sequencer/driver/monitor agent; generated scenario sequences;
 typed analysis/TLM services; scoped factory/configuration wiring; private RAL
-preview; lifecycle controller; result collector; environment/root test; and
-bound top. Exactly one test-owned objection pair encloses execution. Six public
+preview; public two-bin coverage; a bound SVA checker; two event-counter
+models; one capacity-four in-order scoreboard; one-drive-interval field
+substitution; property/diagnostic/result collection; lifecycle controller;
+environment/root test; and bound top. Exactly one test-owned objection pair
+encloses execution. Six public
 VIAL event identities receive typed channels; the generated interceptor table
 remains a private preview. Stable rank then semantic-ID registration,
 immutable/effective payload separation, cancellation/skipped accounting, and
@@ -228,16 +235,23 @@ bounded queue-or-reject reentrancy are structurally checked.
 Portable constrained decisions are replayed from immutable selected values;
 generated UVM scenarios do not rerandomize them. The bounded native solver,
 RAL objects, and compiler-selected factory override are private typed previews,
-not claims of new public VIAL authoring syntax. The graph has 64 complete
-source-map entries and passes 12 static checks. All seven UVM-facing source
+not claims of new public VIAL authoring syntax. The graph has 75 complete
+source-map entries and passes 14 static checks. All nine UVM-facing source
 files are byte-checked in the review gallery.
+
+The public coverage/model/scoreboard/fault/expectation records own their
+generated structures. Exact one- and two-bit notification predicates now use
+the width-aware scalar-literal validator instead of the former whole-nibble
+known-mask test. The result collector produces only a structured generated
+snapshot shape; no runtime or verification-result manifest is claimed, and
+verification-probe-backed expectations still require a qualified adapter.
 
 Capability discovery labels emission and structural validation passed, while
 manual review is pending and preprocessing, parse, UVM-library compile,
 fixture compile, elaboration, runtime, result, and parity remain not run or not
-produced. Ordinary emission fetches or inspects no UVM library bytes. Active
-`.13.1.4` owns coverage/properties/models/scoreboards/faults/results next;
-activation changes no generated artifact or capability. `.13.2` is separately dependency-ready for experimental open-tool
+produced. Ordinary emission fetches or inspects no UVM library bytes. Proposed
+`.13.1.5` owns mapping-matrix and review-workflow closure next. `.13.2` is
+separately dependency-ready for experimental open-tool
 probes; `.13.3` alone retains the future PGEN+NEXSIM runtime blocker.
 
 `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` now preserves a separate proposed

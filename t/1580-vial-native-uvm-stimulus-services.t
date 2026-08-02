@@ -183,8 +183,8 @@ subtest 'source maps and capability states cover the selected services honestly'
     my $evidence = $emission->{backend_manifest}{capability_evidence};
     is_deeply(
         $evidence->{deferred_to_later_emission_slices},
-        [qw(coverage properties models scoreboards faults results)],
-        'only later semantic-family emission remains deferred');
+        [],
+        'no selected semantic-family emission remains deferred after the checking slice');
     is($evidence->{fixture_compile}, 'not_run', 'fixture compile remains not run');
     is($evidence->{runtime}, 'not_run', 'runtime remains not run');
     is($evidence->{result}, 'not_produced', 'runtime result remains absent');

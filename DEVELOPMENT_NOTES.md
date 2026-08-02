@@ -73,3 +73,18 @@ aggregate and file-count warning states remained independent. Exact activation
 comparison permits only six declared link rewrites, each replacing a removed
 test path with its surviving owning task record; all other source text changes
 only by the deterministic one-directory link adjustment.
+
+## 2026-08-01: Native UVM result collection is generated structure, not result evidence
+
+Revision 4 deliberately keeps the checking/result package separate from the
+normalized runtime-result artifact. Coverage, models, the scoreboard, fault
+application, property checks, and diagnostics can therefore be reviewed as
+ordinary generated UVM while the backend manifest still reports
+`runtime=not_run` and `result=not_produced`. Sealing the generated collector
+creates only an in-memory structural snapshot; it cannot satisfy the portable
+result contract or parity gate.
+
+The same boundary applies to observation. Public-port checks may be wired in
+the review gallery, but verification-probe-backed expectations remain
+source-mapped until a qualified adapter supplies the probe value. The private
+RAL preview is not silently promoted into runtime observation authority.

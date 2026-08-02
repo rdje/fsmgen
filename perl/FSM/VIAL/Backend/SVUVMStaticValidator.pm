@@ -21,7 +21,8 @@ my @ARTIFACT_KEYS = qw(
 my @REQUIRED_SOURCE_ROLES = qw(
     generated_hial_dut uvm_types_package uvm_component_foundations
     uvm_fixture_interface uvm_notification_interception uvm_fixture_package
-    uvm_stimulus_services uvm_fixture_top
+    uvm_stimulus_services uvm_checking_results bound_sva_checker
+    uvm_fixture_top
 );
 
 sub result_keys($class) {
@@ -139,6 +140,7 @@ sub _validate($raw) {
             [qw(package endpackage)], [qw(interface endinterface)],
             [qw(class endclass)], [qw(module endmodule)],
             [qw(function endfunction)], [qw(task endtask)],
+            [qw(covergroup endgroup)],
         );
         for my $pair (@pairs) {
             next if _construct_count($text, $pair->[0]) == _construct_count($text, $pair->[1]);
@@ -300,6 +302,64 @@ sub _validate($raw) {
     }
     _record_check(\@checks, 'selected_stimulus_service_shape', $service_shape_ok);
 
+    my @checking_shape = (
+        [qr/\bpackage\s+[a-z_][a-z0-9_]*_checking_pkg\s*;/i,
+            'checking/result package declaration'],
+        [qr/\bcovergroup\s+[a-z_][a-z0-9_]*_cg\s+with\s+function\s+sample\b/i,
+            'functional covergroup'],
+        [qr/\bbins\s+not_stalled\s*=\s*\{\s*1'b0\s*\}.*\bbins\s+stalled\s*=\s*\{\s*1'b1\s*\}/s,
+            'exact selected coverage bins'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_event_counter_model\s+extends\s+uvm_component\b/i,
+            'deterministic event-counter model'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_write_scoreboard\s+extends\s+uvm_component\b/i,
+            'bounded in-order scoreboard'],
+        [qr/\blocalparam\s+int\s+unsigned\s+CAPACITY\s*=\s*4\s*;/,
+            'selected scoreboard capacity'],
+        [qr/\benqueue_expected\s*\(.*\bcompare_ready\s*\(.*\bcheck_empty\s*\(/s,
+            'scoreboard enqueue/compare/check operations'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_fault_controller\s+extends\s+uvm_component\b/i,
+            'declared fault controller'],
+        [qr/\bfunction\s+void\s+arm\s*\(.*\bapply_next_drive\s*\(/s,
+            'fault arm/apply lifecycle'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_diagnostic\s+extends\s+uvm_object\b/i,
+            'structured diagnostic record'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_result_snapshot\s+extends\s+uvm_object\b/i,
+            'structured result snapshot'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_property_checker\s+extends\s+uvm_component\b/i,
+            'property expectation collector'],
+    );
+    my $checking_shape_ok = defined($text_by_role{uvm_checking_results});
+    for my $requirement (@checking_shape) {
+        my ($pattern, $label) = @$requirement;
+        next if defined($text_by_role{uvm_checking_results})
+            && $text_by_role{uvm_checking_results} =~ $pattern;
+        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_CHECKING_SHAPE_ERROR',
+            "generated source is missing $label", '/roles/uvm_checking_results');
+        $checking_shape_ok = 0;
+    }
+    _record_check(\@checks, 'selected_checking_result_shape', $checking_shape_ok);
+
+    my @sva_shape = (
+        [qr/\bmodule\s+[a-z_][a-z0-9_]*_sva_checker\s*\(/i,
+            'bound SVA checker module'],
+        [qr/\bproperty\s+started_transfer_completes_within_256\b.*##\[1:256\].*\bendproperty\b/s,
+            'selected bounded completion property'],
+        [qr/\bassert\s+property\s*\(\s*started_transfer_completes_within_256\s*\)/,
+            'selected property assertion'],
+        [qr/\bbind\s+[a-z_][a-z0-9_]*\s+[a-z_][a-z0-9_]*_sva_checker\b/i,
+            'checker bind statement'],
+    );
+    my $sva_shape_ok = defined($text_by_role{bound_sva_checker});
+    for my $requirement (@sva_shape) {
+        my ($pattern, $label) = @$requirement;
+        next if defined($text_by_role{bound_sva_checker})
+            && $text_by_role{bound_sva_checker} =~ $pattern;
+        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_SVA_SHAPE_ERROR',
+            "generated source is missing $label", '/roles/bound_sva_checker');
+        $sva_shape_ok = 0;
+    }
+    _record_check(\@checks, 'selected_bound_sva_shape', $sva_shape_ok);
+
     my $fixture_text = $text_by_role{uvm_fixture_package} // '';
     my @wiring_shape = (
         [qr/\bseq_item_port\.connect\s*\(\s*sequencer\.seq_item_export\s*\)/,
@@ -316,6 +376,18 @@ sub _validate($raw) {
             'exact compiler-owned instance factory override'],
         [qr/\buvm_config_db\s*#.*::set\s*\(\s*this\s*,\s*"(?:env|agent|driver|monitor|controller|result_collector)"/s,
             'scoped configuration publication'],
+        [qr/\bfaults\.apply_next_drive\s*\(\s*request\s*\)/,
+            'declared fault application in the driver'],
+        [qr/\bcoverage_collector\.sample_ready\s*\(/,
+            'coverage sampling in the monitor'],
+        [qr/\baccepts_model\.observe_event\s*\(/,
+            'accepted-event model update'],
+        [qr/\bcompletions_model\.observe_event\s*\(/,
+            'completed-event model update'],
+        [qr/\bdriven_ap\.connect\s*\(\s*writes_scoreboard\.actual_export\s*\)/,
+            'completed transaction to scoreboard connection'],
+        [qr/\bdiagnostic_ap\.connect\s*\(\s*result_collector\.diagnostic_export\s*\)/,
+            'checking diagnostic to result collector connection'],
     );
     my $wiring_shape_ok = defined($text_by_role{uvm_fixture_package});
     for my $requirement (@wiring_shape) {

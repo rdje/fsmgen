@@ -26,14 +26,14 @@ ok($emission->{ok}, 'complete native UVM structure emission succeeds');
 diag(JSON::PP->new->canonical(1)->encode($emission->{diagnostics})) unless $emission->{ok};
 
 subtest 'closed graph and capability boundary identify the selected slice exactly' => sub {
-    is(scalar(@{$emission->{artifacts}}), 12, 'closed graph has twelve artifacts');
-    is(scalar(grep { $_->{language} eq 'systemverilog' } @{$emission->{artifacts}}), 8,
-        'closed graph has eight generated SystemVerilog sources');
-    is($emission->{backend_manifest}{emitter_revision}, 3, 'emitter revision is three');
-    is($emission->{backend_manifest}{limits}{generated_source_artifacts}, 8,
-        'manifest records the eight-source limit');
-    is($emission->{backend_manifest}{limits}{total_artifacts}, 12,
-        'manifest records the twelve-artifact limit');
+    is(scalar(@{$emission->{artifacts}}), 14, 'closed graph has fourteen artifacts');
+    is(scalar(grep { $_->{language} eq 'systemverilog' } @{$emission->{artifacts}}), 10,
+        'closed graph has ten generated SystemVerilog sources');
+    is($emission->{backend_manifest}{emitter_revision}, 4, 'emitter revision is four');
+    is($emission->{backend_manifest}{limits}{generated_source_artifacts}, 10,
+        'manifest records the ten-source limit');
+    is($emission->{backend_manifest}{limits}{total_artifacts}, 14,
+        'manifest records the fourteen-artifact limit');
 
     my %required = map { $_ => 1 } @{$emission->{negotiation}{required}};
     ok($required{complete_component_topology_v1}, 'topology capability is required');
@@ -48,12 +48,15 @@ subtest 'closed graph and capability boundary identify the selected slice exactl
     ok($required{constrained_decision_replay_v1},
         'constrained-decision replay capability is required');
     is($emission->{negotiation}{negotiation_scope},
-        'native_uvm_stimulus_services_v1', 'negotiation scope is exact');
+        'native_uvm_checking_results_v1', 'negotiation scope is exact');
     is_deeply(
         $emission->{backend_manifest}{capability_evidence}{public_authoring_boundary},
         {
             execution_events => 'public_vial_v1',
             portable_scenarios_transactions_decisions => 'public_vial_v1',
+            coverage_models_scoreboards_faults_expectations => 'public_vial_v1',
+            bound_sva_translation => 'generated_review_structure',
+            structured_result_collection => 'generated_review_structure_not_result_manifest',
             native_interceptor_tables => 'private_typed_preview',
             native_role_substitution => 'private_typed_preview',
             native_ral => 'private_typed_preview',

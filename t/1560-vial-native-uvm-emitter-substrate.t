@@ -41,7 +41,7 @@ subtest 'native emitter produces a deterministic closed unqualified UVM graph' =
     is($first->{status}, 'emitted_unqualified', 'status does not imply compile or runtime qualification');
     is($first->{backend_profile}, $profile, 'backend profile is exact');
     like($first->{operation_id}, qr/\Aop-[0-9a-f]{64}\z/, 'operation identity is deterministic and safe');
-    is(scalar(@{$first->{artifacts}}), 12, 'emission graph contains the exact twelve artifacts');
+    is(scalar(@{$first->{artifacts}}), 14, 'emission graph contains the exact fourteen artifacts');
     is_deeply(
         [map { $_->{relpath} } @{$first->{artifacts}}],
         [sort map { $_->{relpath} } @{$first->{artifacts}}],
@@ -179,6 +179,8 @@ subtest 'checked review gallery is byte-identical to deterministic emitter outpu
         uvm_fixture_interface => 'base_output_arbitration_if.sv',
         uvm_notification_interception => 'base_output_arbitration_notifications_pkg.sv',
         uvm_stimulus_services => 'base_output_arbitration_services_pkg.sv',
+        uvm_checking_results => 'base_output_arbitration_checking_pkg.sv',
+        bound_sva_checker => 'base_output_arbitration_sva_checker.sv',
         uvm_fixture_package => 'base_output_arbitration_pkg.sv',
         uvm_fixture_top => 'base_output_arbitration_tb.sv',
     );
@@ -190,7 +192,7 @@ subtest 'checked review gallery is byte-identical to deterministic emitter outpu
     my $readme = slurp_raw(File::Spec->catfile($gallery, 'README.md'));
     like($readme, qr/plan\/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574/,
         'gallery records the exact deterministic plan identity');
-    like($readme, qr/have not been preprocessed, parsed, compiled, elaborated, or run/,
+    like($readme, qr/have\s+not been preprocessed, parsed, compiled, elaborated, or run/,
         'gallery preserves every syntax and runtime non-claim');
 };
 

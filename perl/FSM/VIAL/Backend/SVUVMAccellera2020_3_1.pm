@@ -19,7 +19,7 @@ my $SOURCE_MAP_SCHEMA = 'fsmgen.vial_uvm_backend_source_map.v1';
 my $STATIC_SCHEMA = 'fsmgen.vial_uvm_static_validation.v1';
 my $BASE = 'backends/sv_uvm_emit.accellera_2020_3_1';
 my $CONTRACT = 'docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md';
-my $EMITTER_REVISION = 3;
+my $EMITTER_REVISION = 4;
 my $JSON = JSON::PP->new->canonical(1);
 
 my @RESULT_KEYS = qw(
@@ -120,7 +120,7 @@ sub _emit($raw) {
     _throw('VIAL_UVM_BACKEND_INVOCATION_ERROR', 'execution plan identity is malformed', '/execution_ir/plan_id')
         unless defined $plan_digest;
     my $operation_id = 'op-' . sha256_hex(_canonical_json({
-        action => 'emit_native_uvm_stimulus_services',
+        action => 'emit_native_uvm_checking_results',
         artifact_root => $raw->{artifact_root},
         backend_profile => $BACKEND_PROFILE,
         bridge_manifest_id => $bridge->{manifest_id},
@@ -135,6 +135,10 @@ sub _emit($raw) {
     my $notification_rel = "$BASE/src/$notification_package.sv";
     my $services_package = $fixture_slug . '_services_pkg';
     my $services_rel = "$BASE/src/$services_package.sv";
+    my $checking_package = $fixture_slug . '_checking_pkg';
+    my $checking_rel = "$BASE/src/$checking_package.sv";
+    my $checker_module = $fixture_slug . '_sva_checker';
+    my $checker_rel = "$BASE/src/$checker_module.sv";
     my $fixture_rel = "$BASE/src/$fixture_package.sv";
     my $top_rel = "$BASE/src/$top.sv";
     my $dut_rel = "$BASE/src/dut/" . _slug($module_name) . '.sv';
@@ -158,12 +162,27 @@ sub _emit($raw) {
         package_name => $services_package,
         relpath => $services_rel,
     );
+    my ($checking, $checking_specs) = _render_checking_package(
+        execution => $execution,
+        bridge => $bridge,
+        package_name => $checking_package,
+        services_package => $services_package,
+        relpath => $checking_rel,
+    );
+    my ($checker, $checker_specs) = _render_sva_checker(
+        execution => $execution,
+        bridge => $bridge,
+        checker_module => $checker_module,
+        module_name => $module_name,
+        relpath => $checker_rel,
+    );
     my ($fixture, $fixture_specs) = _render_fixture_package(
         execution => $execution,
         bridge => $bridge,
         interface_name => $interface_name,
         notification_package => $notification_package,
         services_package => $services_package,
+        checking_package => $checking_package,
         package_name => $fixture_package,
         relpath => $fixture_rel,
     );
@@ -191,6 +210,10 @@ sub _emit($raw) {
             'uvm_notification_interception', $notifications, [$execution->{plan_id}, $CONTRACT]),
         _artifact($services_rel, 'systemverilog_source', 'systemverilog',
             'uvm_stimulus_services', $services, [$execution->{plan_id}, $bridge->{manifest_id}, $CONTRACT]),
+        _artifact($checking_rel, 'systemverilog_source', 'systemverilog',
+            'uvm_checking_results', $checking, [$execution->{plan_id}, $bridge->{manifest_id}, $CONTRACT]),
+        _artifact($checker_rel, 'systemverilog_source', 'systemverilog',
+            'bound_sva_checker', $checker, [$execution->{plan_id}, $bridge->{manifest_id}, $CONTRACT]),
         _artifact($fixture_rel, 'systemverilog_source', 'systemverilog',
             'uvm_fixture_package', $fixture, [$execution->{plan_id}, $bridge->{manifest_id}]),
         _artifact($top_rel, 'systemverilog_source', 'systemverilog',
@@ -204,7 +227,7 @@ sub _emit($raw) {
 
     my @spec = (
         @$types_specs, @$component_specs, @$interface_specs, @$notification_specs, @$service_specs,
-        @$fixture_specs, @$top_specs,
+        @$checking_specs, @$checker_specs, @$fixture_specs, @$top_specs,
         _map_spec(
             relpath => $dut_rel, start => 1, end => _line_count($dut_input->{text}),
             symbol => $module_name, role => 'generated_hial_dut',
@@ -286,14 +309,18 @@ sub _emit($raw) {
                 transaction_items scenario_sequences active_agent_driver
                 analysis_tlm scoped_factory_configuration ral_preview
                 constrained_decision_replay
+                functional_coverage bound_sva_properties event_models
+                bounded_scoreboard declared_fault_interception
+                structured_diagnostics result_collection
                 dut_binding top
             )],
-            deferred_to_later_emission_slices => [qw(
-                coverage properties models scoreboards faults results
-            )],
+            deferred_to_later_emission_slices => [],
             public_authoring_boundary => {
                 execution_events => 'public_vial_v1',
                 portable_scenarios_transactions_decisions => 'public_vial_v1',
+                coverage_models_scoreboards_faults_expectations => 'public_vial_v1',
+                bound_sva_translation => 'generated_review_structure',
+                structured_result_collection => 'generated_review_structure_not_result_manifest',
                 native_interceptor_tables => 'private_typed_preview',
                 native_role_substitution => 'private_typed_preview',
                 native_ral => 'private_typed_preview',
@@ -302,9 +329,10 @@ sub _emit($raw) {
         },
         limitations => [
             'static validation checks deterministic structure only; it is not a SystemVerilog parser or compiler',
-            'the gallery emits selected stimulus, TLM, factory/configuration, RAL-preview, and constrained-decision structures but no coverage, property, model, scoreboard, fault, or result implementation',
+            'the gallery emits selected checking and result-collection structures, but no generated verification result manifest exists until an executed backend qualifies and runs them',
             'native interceptor, role-substitution, and RAL records are private typed previews until public VIAL syntax is selected',
             'portable decisions are replayed from the immutable plan; the emitted native constraint solver preview is not invoked',
+            'verification-probe-backed expectations remain source-mapped review structures until a qualified adapter supplies runtime observation',
             'UVM library bytes are intentionally absent from and unnecessary for ordinary emission',
             'preprocessing, parse, library compile, fixture compile, elaboration, runtime, result, and parity have not run',
             'one HIAL unit and one VIAL clock domain are selected for the first review gallery',
@@ -312,9 +340,9 @@ sub _emit($raw) {
         limits => {
             selected_units => 1,
             selected_domains => 1,
-            generated_source_artifacts => 8,
+            generated_source_artifacts => 10,
             generated_source_bytes => 16_777_216,
-            total_artifacts => 12,
+            total_artifacts => 14,
             source_map_entries => 1_000_000,
             identifier_bytes => 255,
         },
@@ -352,8 +380,8 @@ sub _emit($raw) {
     my @artifacts = sort { $a->{relpath} cmp $b->{relpath} }
         ($manifest_artifact, @source_artifacts, @support_artifacts);
     _throw('VIAL_UVM_BACKEND_LIMIT_EXCEEDED',
-        'native UVM artifact graph exceeds its twelve-artifact stimulus/services cap', '/artifacts')
-        unless @artifacts == 12;
+        'native UVM artifact graph does not match its fourteen-artifact checking/results contract', '/artifacts')
+        unless @artifacts == 14;
 
     return _result({
         ok => JSON::PP::true,
@@ -388,6 +416,12 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         scoped_factory_configuration_v1
         ral_preview_v1
         constrained_decision_replay_v1
+        functional_coverage_v1
+        bound_sva_properties_v1
+        deterministic_event_models_v1
+        bounded_in_order_scoreboard_v1
+        declared_substitution_fault_v1
+        structured_diagnostic_result_collection_v1
     );
     push @unsatisfied, 'execution schema must be fsmgen.vial_execution_ir.v1'
         unless ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1';
@@ -478,18 +512,17 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
     }
     @satisfied = @required unless @unsatisfied;
     @deferred = qw(
-        coverage_and_properties model_scoreboard_fault_result
         preprocessing parse library_compile fixture_compile elaboration runtime
         result parity
     );
     return {
-        negotiation_scope => 'native_uvm_stimulus_services_v1',
+        negotiation_scope => 'native_uvm_checking_results_v1',
         required => [sort @required],
         satisfied => [sort @satisfied],
         unsatisfied => [sort @unsatisfied],
         deferred => [sort @deferred],
         limitations => [
-            'negotiation covers selected topology, lifecycle, notification/interception, stimulus, TLM, factory/configuration, RAL preview, and decision replay emission, not full VIAL-to-UVM semantic breadth',
+            'negotiation covers the selected review-gallery topology, services, checking, fault, diagnostic, and result-collection emission; the later matrix-closure slice still owns full VIAL-to-UVM breadth accounting',
             'library-dependent and executable gates are deliberately outside ordinary emission',
         ],
     };
@@ -1587,6 +1620,531 @@ sub _sv_scalar_literal($value) {
     return $value->{width} . "'h" . lc($value->{value_hex});
 }
 
+sub _render_checking_package(%arg) {
+    my $execution = $arg{execution};
+    my $fixture_slug = _sv_slug($execution->{fixture}{fixture_name});
+    my $transaction = $execution->{transactions}[0];
+    my $item = $fixture_slug . '_' . _sv_slug($transaction->{definition}{name}) . '_item';
+    my $diagnostic = $fixture_slug . '_diagnostic';
+    my $snapshot = $fixture_slug . '_result_snapshot';
+    my $coverage = $fixture_slug . '_coverage_collector';
+    my $model = $fixture_slug . '_event_counter_model';
+    my $scoreboard = $fixture_slug . '_write_scoreboard';
+    my $fault_controller = $fixture_slug . '_fault_controller';
+    my $property_checker = $fixture_slug . '_property_checker';
+
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        'the checking gallery requires exactly two event-counter model instances',
+        '/execution_ir/models') unless ref($execution->{models}) eq 'ARRAY'
+            && @{$execution->{models}} == 2;
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        'the checking gallery requires exactly one bounded in-order scoreboard',
+        '/execution_ir/scoreboards') unless ref($execution->{scoreboards}) eq 'ARRAY'
+            && @{$execution->{scoreboards}} == 1
+            && ($execution->{scoreboards}[0]{definition}{policy} // '') eq 'in_order'
+            && ($execution->{scoreboards}[0]{definition}{capacity} // 0) == 4;
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        'the checking gallery requires exactly one two-bin coverpoint and no cross',
+        '/execution_ir/coverage') unless ref($execution->{coverage}{coverpoints}) eq 'ARRAY'
+            && @{$execution->{coverage}{coverpoints}} == 1
+            && @{$execution->{coverage}{coverpoints}[0]{bins} || []} == 2
+            && ref($execution->{coverage}{crosses}) eq 'ARRAY'
+            && !@{$execution->{coverage}{crosses}};
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        'the checking gallery requires exactly one one-cycle substitution fault',
+        '/execution_ir/faults') unless ref($execution->{faults}) eq 'ARRAY'
+            && @{$execution->{faults}} == 1
+            && ($execution->{faults}[0]{duration_cycles} // 0) == 1
+            && ($execution->{faults}[0]{field_name} // '') eq 'size';
+
+    my $scoreboard_record = $execution->{scoreboards}[0];
+    my $coverpoint = $execution->{coverage}{coverpoints}[0];
+    my $fault = $execution->{faults}[0];
+    my ($expected_operation) = grep { ($_->{kind} // '') eq 'scoreboard_expect' }
+        @{$execution->{operation_graph}{operations}};
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        'the checking gallery requires exactly one public scoreboard expectation',
+        '/execution_ir/operation_graph') unless $expected_operation
+            && 1 == grep { ($_->{kind} // '') eq 'scoreboard_expect' }
+                @{$execution->{operation_graph}{operations}};
+    my %expected_input = map { $_->{name} => $_->{value} }
+        @{$expected_operation->{typed_inputs}};
+    my %expected_field = map { $_->{field_id} => $_->{value} }
+        @{$expected_input{fields} || []};
+    my ($success_start) = grep {
+        ($_->{kind} // '') eq 'start'
+            && ($_->{scenario_id} // '') eq $expected_operation->{scenario_id}
+    } @{$execution->{operation_graph}{operations}};
+    my %success_input = map { $_->{name} => $_->{value} }
+        @{$success_start->{typed_inputs} || []};
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        'the scoreboard expectation lacks one matching public transaction start',
+        '/execution_ir/operation_graph') unless $success_start
+            && defined($success_input{handle_id});
+
+    my (@line, @spec);
+    my $push = sub (@text) { push @line, @text };
+    my $map_class = sub ($start, $symbol, $role, $plan_paths, $semantic_paths,
+            $bridge_paths, $locations) {
+        push @spec, _map_spec(
+            relpath => $arg{relpath}, start => $start, end => scalar(@line),
+            symbol => $symbol, role => $role, plan_paths => $plan_paths,
+            semantic_paths => $semantic_paths, bridge_paths => $bridge_paths,
+            locations => $locations,
+        );
+    };
+
+    $push->('// Generated native VIAL checking, diagnostic, and result-collection structures.');
+    $push->('// These structures are emitted for review; no runtime result is claimed.');
+    $push->("package $arg{package_name};");
+    $push->('  timeunit 1ns;');
+    $push->('  timeprecision 1ps;');
+    $push->('');
+    $push->('  import uvm_pkg::*;');
+    $push->('  `include "uvm_macros.svh"');
+    $push->('  import fsmgen_vial_uvm_types_pkg::*;');
+    $push->("  import $arg{services_package}::*;");
+    $push->('  `uvm_analysis_imp_decl(_vial_diagnostic)');
+    $push->('');
+
+    my $diagnostic_start = @line + 1;
+    $push->("  class $diagnostic extends uvm_object;");
+    $push->("    `uvm_object_utils($diagnostic)");
+    $push->('');
+    $push->('    string diagnostic_id;');
+    $push->('    string semantic_id;');
+    $push->('    uvm_severity severity;');
+    $push->('    string message;');
+    $push->('    vial_logical_time_s logical_time;');
+    $push->('');
+    $push->("    function new(string name = \"$diagnostic\");");
+    $push->('      super.new(name);');
+    $push->('      diagnostic_id = "";');
+    $push->('      semantic_id = "";');
+    $push->('      severity = UVM_INFO;');
+    $push->('      message = "";');
+    $push->("      logical_time = '{cycle: 0, ordinal: 0, phase: VIAL_CHECK_PHASE};");
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void do_copy(uvm_object rhs);');
+    $push->("      $diagnostic rhs_item;");
+    $push->('      super.do_copy(rhs);');
+    $push->('      if (!$cast(rhs_item, rhs))');
+    $push->('        `uvm_fatal("VIAL/DIAGNOSTIC/COPY", "diagnostic type mismatch")');
+    $push->('      diagnostic_id = rhs_item.diagnostic_id;');
+    $push->('      semantic_id = rhs_item.semantic_id;');
+    $push->('      severity = rhs_item.severity;');
+    $push->('      message = rhs_item.message;');
+    $push->('      logical_time = rhs_item.logical_time;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($diagnostic_start, $diagnostic, 'structured_diagnostic_record',
+        ['/diagnostics', '/fixture'], [$execution->{fixture}{fixture_id}], [],
+        [$execution->{fixture}{source_location}]);
+    $push->('');
+
+    my $snapshot_start = @line + 1;
+    $push->("  class $snapshot extends uvm_object;");
+    $push->("    `uvm_object_utils($snapshot)");
+    $push->('');
+    $push->('    string plan_id;');
+    $push->('    string status;');
+    $push->('    longint unsigned notification_count;');
+    $push->('    longint unsigned diagnostic_count;');
+    $push->('    longint unsigned expectation_count;');
+    $push->('    longint unsigned expectation_failure_count;');
+    $push->('    longint unsigned model_record_count;');
+    $push->('    longint unsigned scoreboard_record_count;');
+    $push->('    longint unsigned coverage_sample_count;');
+    $push->('    longint unsigned fault_record_count;');
+    $push->('');
+    $push->("    function new(string name = \"$snapshot\");");
+    $push->('      super.new(name);');
+    $push->('      plan_id = "";');
+    $push->('      status = "emitted_unqualified";');
+    $push->('      notification_count = 0;');
+    $push->('      diagnostic_count = 0;');
+    $push->('      expectation_count = 0;');
+    $push->('      expectation_failure_count = 0;');
+    $push->('      model_record_count = 0;');
+    $push->('      scoreboard_record_count = 0;');
+    $push->('      coverage_sample_count = 0;');
+    $push->('      fault_record_count = 0;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($snapshot_start, $snapshot, 'normalized_result_snapshot_structure',
+        ['/fixture', '/events', '/models', '/scoreboards', '/coverage', '/faults'],
+        [$execution->{fixture}{fixture_id}], [$CONTRACT],
+        [$execution->{fixture}{source_location}]);
+    $push->('');
+
+    my $coverage_start = @line + 1;
+    my $covergroup = _sv_slug($coverpoint->{name}) . '_cg';
+    $push->("  class $coverage extends uvm_component;");
+    $push->("    `uvm_component_utils($coverage)");
+    $push->('');
+    $push->("    uvm_analysis_port#($diagnostic) diagnostic_ap;");
+    $push->('    longint unsigned sample_count;');
+    $push->("    covergroup $covergroup with function sample(bit stalled);");
+    $push->('      option.per_instance = 1;');
+    $push->('      stall_seen: coverpoint stalled {');
+    $push->("        bins " . _sv_slug($coverpoint->{bins}[0]{name}) . " = {1'b0};");
+    $push->("        bins " . _sv_slug($coverpoint->{bins}[1]{name}) . " = {1'b1};");
+    $push->('      }');
+    $push->('    endgroup');
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('      diagnostic_ap = new("diagnostic_ap", this);');
+    $push->("      $covergroup = new();");
+    $push->('      sample_count = 0;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void sample_ready(logic ready_out, vial_logical_time_s logical_time);');
+    $push->("      $diagnostic item;");
+    $push->('      if ($isunknown(ready_out)) begin');
+    $push->("        item = ${diagnostic}::type_id::create(\"coverage_unknown\");");
+    $push->('        item.diagnostic_id = "diagnostic/coverage/stall_seen/unknown";');
+    $push->('        item.semantic_id = "' . _sv_string($coverpoint->{semantic_id}) . '";');
+    $push->('        item.severity = UVM_ERROR;');
+    $push->('        item.message = "stall_seen requires a known ready_out sample";');
+    $push->('        item.logical_time = logical_time;');
+    $push->('        diagnostic_ap.write(item);');
+    $push->('        return;');
+    $push->('      end');
+    $push->("      $covergroup.sample(ready_out === 1'b0);");
+    $push->('      sample_count++;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($coverage_start, $coverage, 'functional_coverage_collector',
+        ['/coverage/coverpoints/0'], [$coverpoint->{semantic_id},
+            map { $_->{semantic_id} } @{$coverpoint->{bins}}], [], []);
+    $push->('');
+
+    my $model_start = @line + 1;
+    $push->("  class $model extends uvm_component;");
+    $push->("    `uvm_component_utils($model)");
+    $push->('');
+    $push->("    uvm_analysis_port#($diagnostic) diagnostic_ap;");
+    $push->('    string instance_id;');
+    $push->('    string event_id;');
+    $push->('    bit [31:0] count;');
+    $push->('    longint unsigned record_count;');
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('      diagnostic_ap = new("diagnostic_ap", this);');
+    $push->('      count = 0;');
+    $push->('      record_count = 0;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void configure(string configured_instance_id, string configured_event_id);');
+    $push->('      instance_id = configured_instance_id;');
+    $push->('      event_id = configured_event_id;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void observe_event(vial_logical_time_s logical_time);');
+    $push->("      $diagnostic item;");
+    $push->("      if (count == 32'hffffffff) begin");
+    $push->("        item = ${diagnostic}::type_id::create(\"model_overflow\");");
+    $push->('        item.diagnostic_id = {"diagnostic/model/overflow/", instance_id};');
+    $push->('        item.semantic_id = instance_id;');
+    $push->('        item.severity = UVM_ERROR;');
+    $push->('        item.message = "event-counter model overflow";');
+    $push->('        item.logical_time = logical_time;');
+    $push->('        diagnostic_ap.write(item);');
+    $push->('        return;');
+    $push->('      end');
+    $push->('      count++;');
+    $push->('      record_count++;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($model_start, $model, 'deterministic_event_counter_model',
+        ['/models'], [map { $_->{instance_id} } @{$execution->{models}}], [],
+        [map { $_->{source_location} } @{$execution->{models}}]);
+    $push->('');
+
+    my $scoreboard_start = @line + 1;
+    $push->("  class $scoreboard extends uvm_component;");
+    $push->("    `uvm_component_utils($scoreboard)");
+    $push->('');
+    $push->('    localparam int unsigned CAPACITY = 4;');
+    $push->("    uvm_analysis_imp#($item, $scoreboard) actual_export;");
+    $push->("    uvm_analysis_port#($diagnostic) diagnostic_ap;");
+    $push->("    protected $item expected_queue[\$];");
+    $push->("    protected $item actual_queue[\$];");
+    $push->('    longint unsigned match_count;');
+    $push->('    longint unsigned mismatch_count;');
+    $push->('    longint unsigned record_count;');
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('      actual_export = new("actual_export", this);');
+    $push->('      diagnostic_ap = new("diagnostic_ap", this);');
+    $push->('      match_count = 0;');
+    $push->('      mismatch_count = 0;');
+    $push->('      record_count = 0;');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    protected function $item checked_clone($item source, string name);");
+    $push->("      $item copy;");
+    $push->('      if (source == null)');
+    $push->('        `uvm_fatal("VIAL/SCOREBOARD", "scoreboard received a null transaction")');
+    $push->('      if (!$cast(copy, source.clone()))');
+    $push->('        `uvm_fatal("VIAL/SCOREBOARD", "scoreboard transaction clone has an incompatible type")');
+    $push->('      copy.set_name(name);');
+    $push->('      return copy;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void enqueue_expected(' . $item . ' transaction);');
+    $push->('      if (expected_queue.size() >= CAPACITY)');
+    $push->('        `uvm_fatal("VIAL/SCOREBOARD/BOUND", "expected queue capacity exceeded")');
+    $push->('      expected_queue.push_back(checked_clone(transaction, "expected"));');
+    $push->('      record_count++;');
+    $push->('      compare_ready();');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void write(' . $item . ' transaction);');
+    $push->('      if (actual_queue.size() >= CAPACITY)');
+    $push->('        `uvm_fatal("VIAL/SCOREBOARD/BOUND", "actual queue capacity exceeded")');
+    $push->('      actual_queue.push_back(checked_clone(transaction, "actual"));');
+    $push->('      record_count++;');
+    $push->('      compare_ready();');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    protected function void compare_ready();');
+    $push->("      $item expected;");
+    $push->("      $item actual;");
+    $push->("      $diagnostic item;");
+    $push->('      while (expected_queue.size() && actual_queue.size()) begin');
+    $push->('        expected = expected_queue.pop_front();');
+    $push->('        actual = actual_queue.pop_front();');
+    $push->('        record_count++;');
+    $push->('        if (expected.compare(actual)) begin');
+    $push->('          match_count++;');
+    $push->('          continue;');
+    $push->('        end');
+    $push->('        mismatch_count++;');
+    $push->("        item = ${diagnostic}::type_id::create(\"scoreboard_mismatch\");");
+    $push->('        item.diagnostic_id = "diagnostic/scoreboard/writes/mismatch";');
+    $push->('        item.semantic_id = "' . _sv_string($scoreboard_record->{instance_id}) . '";');
+    $push->('        item.severity = UVM_ERROR;');
+    $push->('        item.message = "in-order transaction mismatch";');
+    $push->('        diagnostic_ap.write(item);');
+    $push->('      end');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function bit check_empty();');
+    $push->("      $diagnostic item;");
+    $push->('      record_count++;');
+    $push->('      if (!expected_queue.size() && !actual_queue.size() && mismatch_count == 0)');
+    $push->("        return 1'b1;");
+    $push->("      item = ${diagnostic}::type_id::create(\"scoreboard_pending\");");
+    $push->('      item.diagnostic_id = "diagnostic/scoreboard/writes/not_empty";');
+    $push->('      item.semantic_id = "' . _sv_string($scoreboard_record->{instance_id}) . '";');
+    $push->('      item.severity = UVM_ERROR;');
+    $push->('      item.message = $sformatf("scoreboard check failed: expected=%0d actual=%0d mismatches=%0d", expected_queue.size(), actual_queue.size(), mismatch_count);');
+    $push->('      diagnostic_ap.write(item);');
+    $push->("      return 1'b0;");
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void reset_scenario();');
+    $push->('      expected_queue.delete();');
+    $push->('      actual_queue.delete();');
+    $push->('      mismatch_count = 0;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($scoreboard_start, $scoreboard, 'bounded_in_order_scoreboard',
+        ['/scoreboards/0', '/operation_graph'],
+        [$scoreboard_record->{instance_id}, $scoreboard_record->{scoreboard_id},
+            $expected_operation->{operation_id}], [$transaction->{binding_id}],
+        [$scoreboard_record->{source_location}, $expected_operation->{source_location}]);
+    $push->('');
+
+    my $expected_start = @line + 1;
+    $push->("  function automatic $item make_success_expected();");
+    $push->("    $item expected;");
+    $push->("    expected = ${item}::type_id::create(\"success_expected\");");
+    $push->('    expected.semantic_id = "' . _sv_string($transaction->{semantic_id}) . '";');
+    $push->('    expected.scenario_id = "' . _sv_string($expected_operation->{scenario_id}) . '";');
+    $push->('    expected.handle_id = "' . _sv_string($success_input{handle_id}) . '";');
+    for my $field (@{$transaction->{fields}}) {
+        my $value = $expected_field{$field->{semantic_id}};
+        _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+            "scoreboard expectation lacks field '$field->{semantic_id}'",
+            '/execution_ir/operation_graph') unless ref($value) eq 'HASH'
+                && ref($value->{value}) eq 'HASH';
+        $push->('    expected.' . _sv_slug($field->{name}) . ' = '
+            . _sv_scalar_literal($value->{value}) . ';');
+    }
+    $push->('    return expected;');
+    $push->('  endfunction');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $expected_start, end => scalar(@line),
+        symbol => 'make_success_expected', role => 'public_scoreboard_expectation',
+        plan_paths => ['/operation_graph'], semantic_paths => [$expected_operation->{operation_id}],
+        bridge_paths => [$transaction->{binding_id}], locations => [$expected_operation->{source_location}],
+    );
+    $push->('');
+
+    my $fault_start = @line + 1;
+    my $fault_literal = _sv_scalar_literal($fault->{substitute}{value});
+    $push->("  class $fault_controller extends uvm_component;");
+    $push->("    `uvm_component_utils($fault_controller)");
+    $push->('');
+    $push->("    uvm_analysis_port#($diagnostic) diagnostic_ap;");
+    $push->('    bit armed;');
+    $push->('    int unsigned remaining_drive_intervals;');
+    $push->('    longint unsigned record_count;');
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('      diagnostic_ap = new("diagnostic_ap", this);');
+    $push->("      armed = 1'b0;");
+    $push->('      remaining_drive_intervals = 0;');
+    $push->('      record_count = 0;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void arm();');
+    $push->('      if (armed)');
+    $push->('        `uvm_fatal("VIAL/FAULT/ARM", "substitution fault is already armed")');
+    $push->("      armed = 1'b1;");
+    $push->('      remaining_drive_intervals = 1;');
+    $push->('      record_count++;');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    function void apply_next_drive(ref $item transaction);");
+    $push->('      if (!armed) return;');
+    $push->("      transaction." . _sv_slug($fault->{field_name}) . " = $fault_literal;");
+    $push->('      record_count++;');
+    $push->('      remaining_drive_intervals--;');
+    $push->('      if (remaining_drive_intervals == 0) begin');
+    $push->("        armed = 1'b0;");
+    $push->('        record_count++;');
+    $push->('      end');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($fault_start, $fault_controller, 'declared_substitution_fault_controller',
+        ['/faults/0', '/operation_graph'], [$fault->{semantic_id}],
+        [$fault->{transaction_id}], []);
+    $push->('');
+
+    my $property_start = @line + 1;
+    my @expectation = map { $_->{effects}[0]{target_id} }
+        grep { ($_->{kind} // '') eq 'expect' }
+        @{$execution->{operation_graph}{operations}};
+    $push->("  class $property_checker extends uvm_component;");
+    $push->("    `uvm_component_utils($property_checker)");
+    $push->('');
+    $push->("    uvm_analysis_port#($diagnostic) diagnostic_ap;");
+    $push->('    longint unsigned expectation_count;');
+    $push->('    longint unsigned failure_count;');
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('      diagnostic_ap = new("diagnostic_ap", this);');
+    $push->('      expectation_count = 0;');
+    $push->('      failure_count = 0;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void record(string expectation_id, bit passed, string detail, vial_logical_time_s logical_time);');
+    $push->("      $diagnostic item;");
+    $push->('      expectation_count++;');
+    $push->('      if (passed) return;');
+    $push->('      failure_count++;');
+    $push->("      item = ${diagnostic}::type_id::create(\"expectation_failure\");");
+    $push->('      item.diagnostic_id = {"diagnostic/expectation/", expectation_id};');
+    $push->('      item.semantic_id = expectation_id;');
+    $push->('      item.severity = UVM_ERROR;');
+    $push->('      item.message = detail;');
+    $push->('      item.logical_time = logical_time;');
+    $push->('      diagnostic_ap.write(item);');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($property_start, $property_checker, 'property_expectation_collector',
+        ['/operation_graph'], \@expectation, [],
+        [map { $_->{source_location} } grep { ($_->{kind} // '') eq 'expect' }
+            @{$execution->{operation_graph}{operations}}]);
+
+    $push->('endpackage');
+    return (join("\n", @line) . "\n", \@spec);
+}
+
+sub _render_sva_checker(%arg) {
+    my $execution = $arg{execution};
+    my $bridge = $arg{bridge};
+    my %binding = _sv_binding_map($bridge);
+    my %role = map { ($_->{role} // '') => $_ } @{$bridge->{endpoints}};
+    my $domain = $bridge->{domains}[0];
+    my $clock = $binding{$domain->{clock_endpoint_id}}{target_name};
+    my $reset = $binding{$domain->{reset_endpoint_id}}{target_name};
+    my $select = $binding{$role{select}{endpoint_id}}{target_name};
+    my $ready_in = $binding{$role{ready_in}{endpoint_id}}{target_name};
+    my $ready_out = $binding{$role{ready_out}{endpoint_id}}{target_name};
+    my ($transfer_field) = grep { ($_->{name} // '') eq 'transfer' }
+        @{$bridge->{transactions}[0]{fields}};
+    my $transfer = $binding{$transfer_field->{endpoint_id}}{target_name};
+    my $reset_inactive = $domain->{reset_polarity} eq 'active_low' ? "1'b1" : "1'b0";
+    my @await = grep { ($_->{kind} // '') eq 'await' }
+        @{$execution->{operation_graph}{operations}};
+
+    my @line;
+    my $push = sub (@text) { push @line, @text };
+    $push->('// Generated bound SVA review checker for selected public VIAL temporal intent.');
+    $push->("module $arg{checker_module} (");
+    $push->('  input logic clock,');
+    $push->('  input logic reset,');
+    $push->('  input logic select,');
+    $push->('  input logic ready_in,');
+    $push->('  input logic [1:0] transfer,');
+    $push->('  input logic ready_out');
+    $push->(');');
+    $push->('  timeunit 1ns;');
+    $push->('  timeprecision 1ps;');
+    $push->('');
+    $push->('  default clocking checker_cb @(posedge clock);');
+    $push->('  endclocking');
+    $push->("  default disable iff (reset !== $reset_inactive);");
+    $push->('');
+    my $property_start = @line + 1;
+    $push->('  property started_transfer_completes_within_256;');
+    $push->("    (select && ready_in && transfer == 2'h2) |-> ##[1:256] ready_out;");
+    $push->('  endproperty');
+    $push->('');
+    $push->('  selected_completion_bound: assert property (started_transfer_completes_within_256)');
+    $push->('    else $error("VIAL temporal completion bound failed");');
+    $push->('endmodule');
+    $push->('');
+    my $bind_start = @line + 1;
+    $push->("bind $arg{module_name} $arg{checker_module} ${\($arg{checker_module} . '_i')} (");
+    $push->("  .clock($clock),");
+    $push->("  .reset($reset),");
+    $push->("  .select($select),");
+    $push->("  .ready_in($ready_in),");
+    $push->("  .transfer($transfer),");
+    $push->("  .ready_out($ready_out)");
+    $push->(');');
+
+    my @locations = map { $_->{source_location} } @await;
+    my @semantic = map { $_->{operation_id} } @await;
+    my @spec = (
+        _map_spec(
+            relpath => $arg{relpath}, start => 1, end => scalar(@line),
+            symbol => $arg{checker_module}, role => 'bound_sva_checker',
+            plan_paths => ['/operation_graph'], semantic_paths => \@semantic,
+            bridge_paths => ['/units/0', '/domains/0'], locations => \@locations,
+        ),
+        _map_spec(
+            relpath => $arg{relpath}, start => $property_start,
+            end => $bind_start - 2, symbol => 'started_transfer_completes_within_256',
+            role => 'public_temporal_property', plan_paths => ['/operation_graph'],
+            semantic_paths => \@semantic, bridge_paths => ['/domains/0'],
+            locations => \@locations,
+        ),
+    );
+    return (join("\n", @line) . "\n", \@spec);
+}
+
 sub _render_fixture_package(%arg) {
     my $fixture_slug = _sv_slug($arg{execution}{fixture}{fixture_name});
     my $transaction = $arg{execution}{transactions}[0];
@@ -1601,6 +2159,13 @@ sub _render_fixture_package(%arg) {
     my $reg_block = $fixture_slug . '_reg_block';
     my $reg_adapter = $fixture_slug . '_reg_adapter';
     my $reg_predictor = $fixture_slug . '_reg_predictor';
+    my $diagnostic = $fixture_slug . '_diagnostic';
+    my $snapshot = $fixture_slug . '_result_snapshot';
+    my $coverage = $fixture_slug . '_coverage_collector';
+    my $model = $fixture_slug . '_event_counter_model';
+    my $scoreboard = $fixture_slug . '_write_scoreboard';
+    my $fault_controller = $fixture_slug . '_fault_controller';
+    my $property_checker = $fixture_slug . '_property_checker';
     my $monitor = $fixture_slug . '_monitor';
     my $agent = $fixture_slug . '_agent';
     my $controller = $fixture_slug . '_controller';
@@ -1614,6 +2179,8 @@ sub _render_fixture_package(%arg) {
         @{$arg{bridge}{transactions}[0]{fields}};
     my $select_name = $binding{$endpoint_by_role{select}{endpoint_id}}{target_name};
     my $ready_out_name = $binding{$endpoint_by_role{ready_out}{endpoint_id}}{target_name};
+    my $response_name = $binding{$endpoint_by_role{response}{endpoint_id}}{target_name};
+    my $read_data_name = $binding{$endpoint_by_role{read_data}{endpoint_id}}{target_name};
     my $domain = $arg{bridge}{domains}[0];
     my $clock_endpoint_id = $domain->{clock_endpoint_id};
     my $reset_name = $binding{$domain->{reset_endpoint_id}}{target_name};
@@ -1621,6 +2188,14 @@ sub _render_fixture_package(%arg) {
     my @payload_endpoint = grep { $_->{endpoint_id} ne $clock_endpoint_id }
         @{$arg{bridge}{endpoints}};
     my %event_by_name = map { $_->{name} => $_ } @{$arg{execution}{events}};
+    my %expectation_by_scenario_name;
+    for my $operation (@{$arg{execution}{operation_graph}{operations}}) {
+        next unless ($operation->{kind} // '') eq 'expect';
+        my $expectation_id = $operation->{effects}[0]{target_id};
+        my ($name) = $expectation_id =~ /::expectation::([^:]+)\z/;
+        $expectation_by_scenario_name{$operation->{scenario_id} . "\0" . $name}
+            = $expectation_id if defined $name;
+    }
     my @line;
     my @spec;
     my $push = sub (@text) { push @line, @text };
@@ -1635,6 +2210,7 @@ sub _render_fixture_package(%arg) {
     $push->('  import fsmgen_vial_uvm_components_pkg::*;');
     $push->("  import $arg{notification_package}::*;");
     $push->("  import $arg{services_package}::*;");
+    $push->("  import $arg{checking_package}::*;");
     $push->('');
     my $config_start = @line + 1;
     $push->("  class $config extends uvm_object;");
@@ -1682,6 +2258,7 @@ sub _render_fixture_package(%arg) {
     $push->("    `uvm_component_utils($driver_base)");
     $push->('');
     $push->("    $config cfg;");
+    $push->("    $fault_controller faults;");
     $push->("    uvm_analysis_port#($item) driven_ap;");
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
@@ -1693,6 +2270,8 @@ sub _render_fixture_package(%arg) {
     $push->('      super.build_phase(phase);');
     $push->("      if (!uvm_config_db#($config)::get(this, \"\", \"cfg\", cfg))");
     $push->('        `uvm_fatal("VIAL/CONFIG", "driver is missing generated fixture configuration")');
+    $push->("      if (!uvm_config_db#($fault_controller)::get(this, \"\", \"faults\", faults))");
+    $push->('        `uvm_fatal("VIAL/FAULT", "driver is missing generated fault controller")');
     $push->('    endfunction');
     $push->('');
     $push->("    virtual task drive_item($item request);");
@@ -1706,6 +2285,7 @@ sub _render_fixture_package(%arg) {
     $push->('        seq_item_port.get_next_item(request);');
     $push->('        if (request == null)');
     $push->('          `uvm_fatal("VIAL/DRIVER", "sequencer supplied a null transaction item")');
+    $push->('        faults.apply_next_drive(request);');
     $push->('        drive_item(request);');
     $push->('        if (!$cast(published, request.clone()))');
     $push->('          `uvm_fatal("VIAL/DRIVER", "transaction clone has an incompatible type")');
@@ -1766,6 +2346,9 @@ sub _render_fixture_package(%arg) {
     $push->('');
     $push->("    $config cfg;");
     $push->("    $registry notifications;");
+    $push->("    $coverage coverage_collector;");
+    $push->("    $model accepts_model;");
+    $push->("    $model completions_model;");
     $push->("    uvm_analysis_port#($item) observed_ap;");
     $push->('    longint unsigned sampled_cycle;');
     $push->('');
@@ -1781,6 +2364,12 @@ sub _render_fixture_package(%arg) {
     $push->('        `uvm_fatal("VIAL/CONFIG", "monitor is missing generated fixture configuration")');
     $push->("      if (!uvm_config_db#($registry)::get(this, \"\", \"notifications\", notifications))");
     $push->('        `uvm_fatal("VIAL/NOTIFY", "monitor is missing notification registry")');
+    $push->("      if (!uvm_config_db#($coverage)::get(this, \"\", \"coverage\", coverage_collector))");
+    $push->('        `uvm_fatal("VIAL/COVERAGE", "monitor is missing generated coverage collector")');
+    $push->("      if (!uvm_config_db#($model)::get(this, \"\", \"accepts_model\", accepts_model))");
+    $push->('        `uvm_fatal("VIAL/MODEL", "monitor is missing accepts model")');
+    $push->("      if (!uvm_config_db#($model)::get(this, \"\", \"completions_model\", completions_model))");
+    $push->('        `uvm_fatal("VIAL/MODEL", "monitor is missing completions model")');
     $push->('    endfunction');
     $push->('');
     $push->("    protected function $payload sample_payload(string notification_id, string semantic_id);");
@@ -1827,6 +2416,10 @@ sub _render_fixture_package(%arg) {
             $push->("        if ($predicate) begin");
             $push->("          item = sample_payload(\"$event_id\", \"$semantic_id\");");
             $push->("          notifications.$field.trigger_notification(item);");
+            $push->('          accepts_model.observe_event(context.logical_time);')
+                if ($event->{name} // '') eq 'accepted';
+            $push->('          completions_model.observe_event(context.logical_time);')
+                if ($event->{name} // '') eq 'completed';
             $push->('          observed_ap.write(sample_transaction());')
                 if ($event->{name} // '') eq 'completed';
             $push->('        end');
@@ -1834,6 +2427,7 @@ sub _render_fixture_package(%arg) {
             $push->("        // '$event->{name}' keeps a typed channel; its adapter-state predicate is not executed by this emission-only slice.");
         }
     }
+    $push->("        coverage_collector.sample_ready(cfg.vif.monitor_cb.$ready_out_name, context.logical_time);");
     $push->('        sampled_cycle++;');
     $push->('      end');
     $push->('    endtask');
@@ -1854,6 +2448,10 @@ sub _render_fixture_package(%arg) {
     $push->('');
     $push->("    $config cfg;");
     $push->("    $registry notifications;");
+    $push->("    $coverage coverage_collector;");
+    $push->("    $model accepts_model;");
+    $push->("    $model completions_model;");
+    $push->("    $fault_controller faults;");
     $push->("    $sequencer sequencer;");
     $push->("    $driver_base driver;");
     $push->("    $monitor monitor;");
@@ -1868,10 +2466,22 @@ sub _render_fixture_package(%arg) {
     $push->('        `uvm_fatal("VIAL/CONFIG", "agent is missing generated fixture configuration")');
     $push->("      if (!uvm_config_db#($registry)::get(this, \"\", \"notifications\", notifications))");
     $push->('        `uvm_fatal("VIAL/NOTIFY", "agent is missing notification registry")');
+    $push->("      if (!uvm_config_db#($coverage)::get(this, \"\", \"coverage\", coverage_collector))");
+    $push->('        `uvm_fatal("VIAL/COVERAGE", "agent is missing generated coverage collector")');
+    $push->("      if (!uvm_config_db#($model)::get(this, \"\", \"accepts_model\", accepts_model))");
+    $push->('        `uvm_fatal("VIAL/MODEL", "agent is missing accepts model")');
+    $push->("      if (!uvm_config_db#($model)::get(this, \"\", \"completions_model\", completions_model))");
+    $push->('        `uvm_fatal("VIAL/MODEL", "agent is missing completions model")');
+    $push->("      if (!uvm_config_db#($fault_controller)::get(this, \"\", \"faults\", faults))");
+    $push->('        `uvm_fatal("VIAL/FAULT", "agent is missing generated fault controller")');
     $push->("      uvm_config_db#($config)::set(this, \"monitor\", \"cfg\", cfg);");
     $push->("      uvm_config_db#($registry)::set(this, \"monitor\", \"notifications\", notifications);");
     $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "monitor", "vial_context", context);');
+    $push->("      uvm_config_db#($coverage)::set(this, \"monitor\", \"coverage\", coverage_collector);");
+    $push->("      uvm_config_db#($model)::set(this, \"monitor\", \"accepts_model\", accepts_model);");
+    $push->("      uvm_config_db#($model)::set(this, \"monitor\", \"completions_model\", completions_model);");
     $push->("      uvm_config_db#($config)::set(this, \"driver\", \"cfg\", cfg);");
+    $push->("      uvm_config_db#($fault_controller)::set(this, \"driver\", \"faults\", faults);");
     $push->("      sequencer = ${sequencer}::type_id::create(\"sequencer\", this);");
     $push->("      driver = ${driver_base}::type_id::create(\"driver\", this);");
     $push->("      monitor = ${monitor}::type_id::create(\"monitor\", this);");
@@ -1898,6 +2508,9 @@ sub _render_fixture_package(%arg) {
     $push->("    $config cfg;");
     $push->("    $registry notifications;");
     $push->("    $sequencer sequencer;");
+    $push->("    $scoreboard writes_scoreboard;");
+    $push->("    $fault_controller faults;");
+    $push->("    $property_checker properties;");
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
     $push->('      super.new(name, parent);');
@@ -1909,11 +2522,18 @@ sub _render_fixture_package(%arg) {
     $push->('        `uvm_fatal("VIAL/CONFIG", "controller is missing generated fixture configuration")');
     $push->("      if (!uvm_config_db#($registry)::get(this, \"\", \"notifications\", notifications))");
     $push->('        `uvm_fatal("VIAL/NOTIFY", "controller is missing notification registry")');
+    $push->("      if (!uvm_config_db#($scoreboard)::get(this, \"\", \"scoreboard\", writes_scoreboard))");
+    $push->('        `uvm_fatal("VIAL/SCOREBOARD", "controller is missing generated scoreboard")');
+    $push->("      if (!uvm_config_db#($fault_controller)::get(this, \"\", \"faults\", faults))");
+    $push->('        `uvm_fatal("VIAL/FAULT", "controller is missing generated fault controller")');
+    $push->("      if (!uvm_config_db#($property_checker)::get(this, \"\", \"properties\", properties))");
+    $push->('        `uvm_fatal("VIAL/PROPERTY", "controller is missing generated property checker")');
     $push->('    endfunction');
     $push->('');
     $push->('    virtual function void start_of_simulation_phase(uvm_phase phase);');
     $push->('      super.start_of_simulation_phase(phase);');
-    $push->('      if (cfg == null || cfg.vif == null || notifications == null || sequencer == null)');
+    $push->('      if (cfg == null || cfg.vif == null || notifications == null || sequencer == null ||');
+    $push->('          writes_scoreboard == null || faults == null || properties == null)');
     $push->('        `uvm_fatal("VIAL/READY", "generated controller is not ready")');
     $push->('    endfunction');
     $push->('');
@@ -1923,6 +2543,10 @@ sub _render_fixture_package(%arg) {
         my $variable = _sv_slug($scenario->{name}) . '_sequence';
         $push->("      $sequence $variable;");
     }
+    $push->("      $item expected;");
+    $push->('      longint unsigned accepted_before;');
+    $push->('      longint unsigned completed_before;');
+    $push->('      longint unsigned error_before;');
     if ($event_by_name{requested}) {
         my $requested = $event_by_name{requested};
         my $requested_id = _sv_string($requested->{event_id});
@@ -1947,8 +2571,54 @@ sub _render_fixture_package(%arg) {
     for my $scenario (@{$arg{execution}{scenarios}}) {
         my $sequence = $fixture_slug . '_' . _sv_slug($scenario->{name}) . '_sequence';
         my $variable = _sv_slug($scenario->{name}) . '_sequence';
+        my $scenario_id = $scenario->{scenario_id};
+        $push->('      accepted_before = notifications.accepted_notification.occurrence_count;');
+        $push->('      completed_before = notifications.completed_notification.occurrence_count;');
+        $push->('      error_before = notifications.error_notification.occurrence_count;');
+        if (($scenario->{name} // '') eq 'success') {
+            $push->('      writes_scoreboard.reset_scenario();');
+            $push->('      expected = make_success_expected();');
+            $push->('      writes_scoreboard.enqueue_expected(expected);');
+        }
+        if (($scenario->{name} // '') eq 'unsupported_size') {
+            $push->('      faults.arm();');
+        }
         $push->("      $variable = ${sequence}::type_id::create(\"$variable\");");
         $push->("      $variable.start(sequencer);");
+        my $accepted_id = $expectation_by_scenario_name{$scenario_id . "\0accepted_once"};
+        if (defined $accepted_id) {
+            $push->('      properties.record("' . _sv_string($accepted_id) . '",');
+            $push->("        notifications.accepted_notification.occurrence_count - accepted_before == 1,");
+            $push->('        "accepted event count differs from one", context.logical_time);');
+        }
+        my $completed_id = $expectation_by_scenario_name{$scenario_id . "\0completed_once"};
+        if (defined $completed_id) {
+            $push->('      properties.record("' . _sv_string($completed_id) . '",');
+            $push->("        notifications.completed_notification.occurrence_count - completed_before == 1,");
+            $push->('        "completed event count differs from one", context.logical_time);');
+        }
+        my $error_id = $expectation_by_scenario_name{$scenario_id . "\0two_error_cycles"};
+        if (defined $error_id) {
+            $push->('      properties.record("' . _sv_string($error_id) . '",');
+            $push->("        notifications.error_notification.occurrence_count - error_before == 2,");
+            $push->('        "error event count differs from two", context.logical_time);');
+        }
+        my $response_key = ($scenario->{name} // '') eq 'success'
+            ? 'response_ok' : 'response_returns_ok';
+        my $response_id = $expectation_by_scenario_name{$scenario_id . "\0$response_key"};
+        if (defined $response_id) {
+            $push->('      properties.record("' . _sv_string($response_id) . '",');
+            $push->("        cfg.vif.monitor_cb.$response_name === 1'b0,");
+            $push->('        "response did not return to the expected value", context.logical_time);');
+        }
+        my $read_id = $expectation_by_scenario_name{$scenario_id . "\0read_zero"};
+        if (defined $read_id) {
+            $push->('      properties.record("' . _sv_string($read_id) . '",');
+            $push->("        cfg.vif.monitor_cb.$read_data_name === 32'h00000000,");
+            $push->('        "read data differs from zero", context.logical_time);');
+        }
+        $push->('      void\'(writes_scoreboard.check_empty());')
+            if ($scenario->{name} // '') eq 'success';
     }
     $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_RUNNING, VIAL_LIFECYCLE_DRAINING);');
     $push->('    endtask');
@@ -1972,11 +2642,21 @@ sub _render_fixture_package(%arg) {
     $push->("    `uvm_component_utils($collector)");
     $push->('');
     $push->("    $registry notifications;");
+    $push->("    $coverage coverage_collector;");
+    $push->("    $model accepts_model;");
+    $push->("    $model completions_model;");
+    $push->("    $scoreboard writes_scoreboard;");
+    $push->("    $fault_controller faults;");
+    $push->("    $property_checker properties;");
+    $push->("    uvm_analysis_imp_vial_diagnostic#($diagnostic, $collector) diagnostic_export;");
+    $push->("    protected $diagnostic diagnostics[\$];");
+    $push->("    $snapshot snapshot;");
     $push->('    longint unsigned notification_occurrences;');
     $push->('    bit sealed;');
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
     $push->('      super.new(name, parent);');
+    $push->('      diagnostic_export = new("diagnostic_export", this);');
     $push->("      sealed = 1'b0;");
     $push->('      notification_occurrences = 0;');
     $push->('    endfunction');
@@ -1985,12 +2665,43 @@ sub _render_fixture_package(%arg) {
     $push->('      super.build_phase(phase);');
     $push->("      if (!uvm_config_db#($registry)::get(this, \"\", \"notifications\", notifications))");
     $push->('        `uvm_fatal("VIAL/NOTIFY", "result collector is missing notification registry")');
+    $push->("      if (!uvm_config_db#($coverage)::get(this, \"\", \"coverage\", coverage_collector))");
+    $push->('        `uvm_fatal("VIAL/RESULT", "result collector is missing coverage collector")');
+    $push->("      if (!uvm_config_db#($model)::get(this, \"\", \"accepts_model\", accepts_model))");
+    $push->('        `uvm_fatal("VIAL/RESULT", "result collector is missing accepts model")');
+    $push->("      if (!uvm_config_db#($model)::get(this, \"\", \"completions_model\", completions_model))");
+    $push->('        `uvm_fatal("VIAL/RESULT", "result collector is missing completions model")');
+    $push->("      if (!uvm_config_db#($scoreboard)::get(this, \"\", \"scoreboard\", writes_scoreboard))");
+    $push->('        `uvm_fatal("VIAL/RESULT", "result collector is missing scoreboard")');
+    $push->("      if (!uvm_config_db#($fault_controller)::get(this, \"\", \"faults\", faults))");
+    $push->('        `uvm_fatal("VIAL/RESULT", "result collector is missing fault controller")');
+    $push->("      if (!uvm_config_db#($property_checker)::get(this, \"\", \"properties\", properties))");
+    $push->('        `uvm_fatal("VIAL/RESULT", "result collector is missing property checker")');
+    $push->("      snapshot = ${snapshot}::type_id::create(\"snapshot\");");
+    $push->('    endfunction');
+    $push->('');
+    $push->("    virtual function void write_vial_diagnostic($diagnostic item);");
+    $push->("      $diagnostic copy;");
+    $push->('      if (item == null)');
+    $push->('        `uvm_fatal("VIAL/RESULT/DIAGNOSTIC", "result collector received a null diagnostic")');
+    $push->('      if (!$cast(copy, item.clone()))');
+    $push->('        `uvm_fatal("VIAL/RESULT/DIAGNOSTIC", "diagnostic clone has an incompatible type")');
+    $push->('      diagnostics.push_back(copy);');
     $push->('    endfunction');
     $push->('');
     $push->('    function void seal();');
     $push->('      if (sealed)');
     $push->('        `uvm_fatal("VIAL/RESULT", "result collector sealed more than once")');
     $push->('      notification_occurrences = notifications.total_occurrences();');
+    $push->('      snapshot.plan_id = context.plan_id;');
+    $push->('      snapshot.notification_count = notification_occurrences;');
+    $push->('      snapshot.diagnostic_count = diagnostics.size();');
+    $push->('      snapshot.expectation_count = properties.expectation_count;');
+    $push->('      snapshot.expectation_failure_count = properties.failure_count;');
+    $push->('      snapshot.model_record_count = accepts_model.record_count + completions_model.record_count;');
+    $push->('      snapshot.scoreboard_record_count = writes_scoreboard.record_count;');
+    $push->('      snapshot.coverage_sample_count = coverage_collector.sample_count;');
+    $push->('      snapshot.fault_record_count = faults.record_count;');
     $push->("      sealed = 1'b1;");
     $push->('    endfunction');
     $push->('');
@@ -2008,13 +2719,13 @@ sub _render_fixture_package(%arg) {
     $push->('');
     $push->('    virtual function void report_phase(uvm_phase phase);');
     $push->('      super.report_phase(phase);');
-    $push->('      `uvm_info("VIAL/RESULT", $sformatf("emission-review notification occurrences=%0d", notification_occurrences), UVM_LOW)');
+    $push->('      `uvm_info("VIAL/RESULT", $sformatf("emission-review status=%s notifications=%0d diagnostics=%0d expectations=%0d failures=%0d model-records=%0d scoreboard-records=%0d coverage-samples=%0d fault-records=%0d", snapshot.status, snapshot.notification_count, snapshot.diagnostic_count, snapshot.expectation_count, snapshot.expectation_failure_count, snapshot.model_record_count, snapshot.scoreboard_record_count, snapshot.coverage_sample_count, snapshot.fault_record_count), UVM_LOW)');
     $push->('    endfunction');
     $push->('  endclass');
     push @spec, _map_spec(
         relpath => $arg{relpath}, start => $collector_start, end => scalar(@line),
         symbol => $collector, role => 'closed_result_collector_structure',
-        plan_paths => ['/events', '/fixture'],
+        plan_paths => ['/events', '/models', '/scoreboards', '/coverage', '/faults', '/fixture'],
         semantic_paths => [$arg{execution}{fixture}{fixture_id}],
         bridge_paths => [$CONTRACT], locations => [],
     );
@@ -2029,6 +2740,12 @@ sub _render_fixture_package(%arg) {
     $push->("    $agent agent;");
     $push->("    $controller controller;");
     $push->("    $collector result_collector;");
+    $push->("    $coverage coverage_collector;");
+    $push->("    $model accepts_model;");
+    $push->("    $model completions_model;");
+    $push->("    $scoreboard writes_scoreboard;");
+    $push->("    $fault_controller faults;");
+    $push->("    $property_checker properties;");
     $push->("    uvm_tlm_analysis_fifo#($item) driven_fifo;");
     $push->("    $observer transaction_observer;");
     $push->("    $reg_block ral_model;");
@@ -2045,14 +2762,37 @@ sub _render_fixture_package(%arg) {
     $push->('        `uvm_fatal("VIAL/CONFIG", "missing generated fixture configuration")');
     $push->("      if (!uvm_config_db#($registry)::get(this, \"\", \"notifications\", notifications))");
     $push->('        `uvm_fatal("VIAL/NOTIFY", "environment is missing notification registry")');
+    $push->("      coverage_collector = ${coverage}::type_id::create(\"coverage_collector\", this);");
+    $push->("      accepts_model = ${model}::type_id::create(\"accepts_model\", this);");
+    $push->('      accepts_model.configure("' . _sv_string($arg{execution}{models}[0]{instance_id})
+        . '", "' . _sv_string($arg{execution}{models}[0]{bindings}[0]{value}{semantic_id}) . '");');
+    $push->("      completions_model = ${model}::type_id::create(\"completions_model\", this);");
+    $push->('      completions_model.configure("' . _sv_string($arg{execution}{models}[1]{instance_id})
+        . '", "' . _sv_string($arg{execution}{models}[1]{bindings}[0]{value}{semantic_id}) . '");');
+    $push->("      writes_scoreboard = ${scoreboard}::type_id::create(\"writes_scoreboard\", this);");
+    $push->("      faults = ${fault_controller}::type_id::create(\"faults\", this);");
+    $push->("      properties = ${property_checker}::type_id::create(\"properties\", this);");
     $push->("      uvm_config_db#($config)::set(this, \"agent\", \"cfg\", cfg);");
     $push->("      uvm_config_db#($registry)::set(this, \"agent\", \"notifications\", notifications);");
     $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "agent", "vial_context", context);');
+    $push->("      uvm_config_db#($coverage)::set(this, \"agent\", \"coverage\", coverage_collector);");
+    $push->("      uvm_config_db#($model)::set(this, \"agent\", \"accepts_model\", accepts_model);");
+    $push->("      uvm_config_db#($model)::set(this, \"agent\", \"completions_model\", completions_model);");
+    $push->("      uvm_config_db#($fault_controller)::set(this, \"agent\", \"faults\", faults);");
     $push->("      uvm_config_db#($config)::set(this, \"controller\", \"cfg\", cfg);");
     $push->("      uvm_config_db#($registry)::set(this, \"controller\", \"notifications\", notifications);");
     $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "controller", "vial_context", context);');
+    $push->("      uvm_config_db#($scoreboard)::set(this, \"controller\", \"scoreboard\", writes_scoreboard);");
+    $push->("      uvm_config_db#($fault_controller)::set(this, \"controller\", \"faults\", faults);");
+    $push->("      uvm_config_db#($property_checker)::set(this, \"controller\", \"properties\", properties);");
     $push->("      uvm_config_db#($registry)::set(this, \"result_collector\", \"notifications\", notifications);");
     $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "result_collector", "vial_context", context);');
+    $push->("      uvm_config_db#($coverage)::set(this, \"result_collector\", \"coverage\", coverage_collector);");
+    $push->("      uvm_config_db#($model)::set(this, \"result_collector\", \"accepts_model\", accepts_model);");
+    $push->("      uvm_config_db#($model)::set(this, \"result_collector\", \"completions_model\", completions_model);");
+    $push->("      uvm_config_db#($scoreboard)::set(this, \"result_collector\", \"scoreboard\", writes_scoreboard);");
+    $push->("      uvm_config_db#($fault_controller)::set(this, \"result_collector\", \"faults\", faults);");
+    $push->("      uvm_config_db#($property_checker)::set(this, \"result_collector\", \"properties\", properties);");
     $push->("      agent = ${agent}::type_id::create(\"agent\", this);");
     $push->("      controller = ${controller}::type_id::create(\"controller\", this);");
     $push->("      result_collector = ${collector}::type_id::create(\"result_collector\", this);");
@@ -2069,23 +2809,47 @@ sub _render_fixture_package(%arg) {
     $push->('    virtual function void connect_phase(uvm_phase phase);');
     $push->('      super.connect_phase(phase);');
     $push->('      agent.driver.driven_ap.connect(driven_fifo.analysis_export);');
+    $push->('      agent.driver.driven_ap.connect(writes_scoreboard.actual_export);');
     $push->('      agent.monitor.observed_ap.connect(transaction_observer.analysis_export);');
     $push->('      agent.monitor.observed_ap.connect(ral_predictor.bus_in);');
     $push->('      ral_predictor.map = ral_model.default_map;');
     $push->('      ral_predictor.adapter = ral_adapter;');
     $push->('      controller.sequencer = agent.sequencer;');
+    $push->('      coverage_collector.diagnostic_ap.connect(result_collector.diagnostic_export);');
+    $push->('      accepts_model.diagnostic_ap.connect(result_collector.diagnostic_export);');
+    $push->('      completions_model.diagnostic_ap.connect(result_collector.diagnostic_export);');
+    $push->('      writes_scoreboard.diagnostic_ap.connect(result_collector.diagnostic_export);');
+    $push->('      faults.diagnostic_ap.connect(result_collector.diagnostic_export);');
+    $push->('      properties.diagnostic_ap.connect(result_collector.diagnostic_export);');
     $push->('    endfunction');
     push @spec, _map_spec(
         relpath => $arg{relpath}, start => $connect_start, end => scalar(@line),
         symbol => 'connect_phase', role => 'analysis_tlm_and_ral_connections',
-        plan_paths => ['/transactions/0', '/bindings/transactions/0', '/bindings/probes/0'],
-        semantic_paths => [$transaction->{semantic_id}, $arg{bridge}{probes}[0]{probe_id}],
+        plan_paths => ['/transactions/0', '/bindings/transactions/0', '/bindings/probes/0',
+            '/models', '/scoreboards', '/coverage', '/faults'],
+        semantic_paths => [$transaction->{semantic_id}, $arg{bridge}{probes}[0]{probe_id},
+            (map { $_->{instance_id} } @{$arg{execution}{models}}),
+            $arg{execution}{scoreboards}[0]{instance_id},
+            $arg{execution}{coverage}{coverpoints}[0]{semantic_id},
+            $arg{execution}{faults}[0]{semantic_id}],
         bridge_paths => [$transaction->{binding_id}, '/probes/0'], locations => [],
+    );
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $connect_start, end => scalar(@line),
+        symbol => 'checking_result_connections', role => 'analysis_checking_result_connections',
+        plan_paths => ['/models', '/scoreboards', '/coverage', '/faults', '/diagnostics'],
+        semantic_paths => [(map { $_->{instance_id} } @{$arg{execution}{models}}),
+            $arg{execution}{scoreboards}[0]{instance_id},
+            $arg{execution}{coverage}{coverpoints}[0]{semantic_id},
+            $arg{execution}{faults}[0]{semantic_id}],
+        bridge_paths => [$transaction->{binding_id}], locations => [],
     );
     $push->('');
     $push->('    virtual function void end_of_elaboration_phase(uvm_phase phase);');
     $push->('      super.end_of_elaboration_phase(phase);');
     $push->('      if (agent == null || controller == null || result_collector == null ||');
+    $push->('          coverage_collector == null || accepts_model == null || completions_model == null ||');
+    $push->('          writes_scoreboard == null || faults == null || properties == null ||');
     $push->('          driven_fifo == null || transaction_observer == null ||');
     $push->('          ral_model == null || ral_adapter == null || ral_predictor == null)');
     $push->('        `uvm_fatal("VIAL/TOPOLOGY", "generated component topology is incomplete")');
@@ -2192,12 +2956,8 @@ sub _notification_predicate($node, $execution, $bridge) {
     }
     if ($kind eq 'literal') {
         my $value = $node->{value};
-        return undef unless ref($value) eq 'HASH'
-            && ($value->{kind} // '') eq 'scalar'
-            && defined($value->{width}) && $value->{width} =~ /\A[1-9][0-9]*\z/
-            && defined($value->{value_hex}) && $value->{value_hex} =~ /\A[0-9a-f]+\z/i
-            && defined($value->{known_hex}) && $value->{known_hex} =~ /\A[fF]+\z/;
-        return $value->{width} . "'h" . lc($value->{value_hex});
+        my $literal = eval { _sv_scalar_literal($value) };
+        return defined($literal) && !$@ ? $literal : undef;
     }
     if ($kind eq 'operator') {
         return undef unless ref($node->{operands}) eq 'ARRAY' && @{$node->{operands}};

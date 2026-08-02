@@ -9,14 +9,15 @@ closed runtime traces, and normalized results now ship for the bounded
 `sv_portable_verilator` profile. The selected AHB fixture now has bounded
 runtime parity with its handwritten oracle; general cross-backend parity does
 **not** ship yet. Native UVM now has an exact open-source-first architecture
-and deterministic emission of the selected topology, lifecycle, and
-notification/interception, stimulus, TLM, factory/configuration, RAL, and
-constrained-decision structures; its parse, compile, elaboration, and runtime
-profiles do not ship yet.
+and deterministic emission of the selected topology, lifecycle,
+notification/interception, stimulus, TLM, factory/configuration, RAL,
+constrained-decision, coverage, property, model, scoreboard, fault,
+diagnostic, and result-collection structures; its parse, compile, elaboration,
+runtime, and produced-result profiles do not ship yet.
 
-The active next emission slice is `.13.1.4`, covering reviewable coverage,
-properties, models, scoreboards, faults, diagnostics, and results. Activation
-itself changes no generated artifact or capability.
+The next native-UVM emission slice is `.13.1.5`. It closes the representative
+mapping matrix, examples, visual-review workflow, and deferred-runtime defect
+boundary without waiting for a simulator.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -968,19 +969,19 @@ sv_uvm_qualified
     future exact PGEN parser + NEXSIM simulator runtime tuple
 ```
 
-The first three emission slices now ship. For the checked AHB base-output
-fixture they produce twelve deterministic virtual artifacts: the generated
+The first four emission slices now ship. For the checked AHB base-output
+fixture they produce fourteen deterministic virtual artifacts: the generated
 HIAL DUT; typed-context, reusable-component, timed-interface,
-notification/interception, stimulus/service, fixture, and top SystemVerilog
-sources; a complete source map; the exact methodology profile; a structural
-validation report; and the backend manifest.
+notification/interception, stimulus/service, checking/result, bound-SVA,
+fixture, and top SystemVerilog sources; a complete source map; the exact
+methodology profile; a structural validation report; and the backend manifest.
 
 The private emitter and validator are discoverable through the capability
 manifest. Public `fsmgen vial run` deliberately remains the separately
 qualified portable-Verilator path.
 
 The [checked review gallery](../../../vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/README.md)
-contains byte-identical copies of all seven UVM-facing sources. Its interface
+contains byte-identical copies of all nine UVM-facing sources. Its interface
 shows the concrete logical-time mapping:
 
 ```systemverilog
@@ -1073,8 +1074,52 @@ analysis port. This demonstrates the backend mapping for the checked fixture;
 it does not imply that public VIAL register or factory-override authoring syntax
 has already been selected.
 
-Coverage, properties, models, scoreboards, faults, extended diagnostics, and
-executable result production remain later emission work.
+Revision 4 adds a checking package and a separately bound SVA checker. The
+public `stall_seen` expression samples after the monitor's event work and
+preserves its two explicit bins:
+
+```systemverilog
+covergroup stall_seen_cg with function sample(bit stalled);
+  stall_seen: coverpoint stalled {
+    bins not_stalled = {1'b0};
+    bins stalled = {1'b1};
+  }
+endgroup
+
+stall_seen_cg.sample(ready_out === 1'b0);
+```
+
+The generated event-counter component is instantiated twice, once for the
+public accepted event and once for completed. Its 32-bit state checks overflow
+before incrementing. A previous emitter helper recognized only whole
+hexadecimal `f...f` known masks; revision 4 consolidates predicate literals on
+the width-aware scalar validator, so exact one- and two-bit predicates such as
+`HRESP == 1'b1` and `HTRANS == 2'b10` are executable generated expressions.
+
+The `writes` scoreboard owns capacity-four expected and actual queues. The
+public `scoreboard_expect` becomes an immutable typed item, the driver publishes
+effective transaction data only after completion, and the public
+`scoreboard_check` requires both queues to be empty with no mismatch.
+
+The `unsupported_size` fault remains authored as a one-drive-interval field
+substitution. Generated code arms it before the scenario and applies
+`size = 3'b111` before the driver commits the transaction. The sequence item
+still contains the immutable authored `3'b010`; fault application creates the
+effective driven value rather than mutating the plan.
+
+The separate checker binds to the exact generated HIAL module and carries the
+selected 1-to-256-cycle completion window. This SVA is a reviewable generated
+translation, not evidence that an HDL parser or simulator accepted it.
+
+Diagnostics are typed objects with explicit defensive copying. Coverage,
+models, the scoreboard, faults, and property checks publish diagnostics to one
+result collector. Sealing creates a structured count snapshot for review, but
+the manifest still says `runtime=not_run` and `result=not_produced`. A generated
+collector is not a produced `verification-result-manifest.json`.
+
+Verification-probe-backed expectations remain source-mapped but need a
+qualified runtime adapter before they can be evaluated. Revision 4 does not
+pretend that the private RAL preview supplies that observation.
 
 PGEN and NEXSIM are separate developing projects. PGEN owns HDL parsing;
 NEXSIM aims to provide open-source commercial-grade HDL simulation. When both
@@ -1247,16 +1292,18 @@ backends/sv_uvm_emit.accellera_2020_3_1/
   src/<fixture>_if.sv
   src/<fixture>_notifications_pkg.sv
   src/<fixture>_services_pkg.sv
+  src/<fixture>_checking_pkg.sv
+  src/<fixture>_sva_checker.sv
   src/<fixture>_pkg.sv
   src/<fixture>_tb.sv
   src/dut/<generated-hial-dut>.sv
 ```
 
-This is the exact twelve-artifact graph after `.13.1.3`. Its eight
-SystemVerilog sources include the generated HIAL DUT and seven UVM-facing
-files. Revision 3 records 64 complete source-map entries and passes 12 static
-structure checks. Later emission slices may add source families under the same
-versioned profile.
+This is the exact fourteen-artifact graph after `.13.1.4`. Its ten
+SystemVerilog sources include the generated HIAL DUT and nine UVM-facing
+files. Revision 4 records 75 complete source-map entries and passes 14 static
+structure checks. The later matrix-closure slice may add representative
+mappings under the same versioned profile.
 
 A verified project-local UVM library manifest is added only by a later
 library-dependent probe or qualification gate. Ordinary emission neither
