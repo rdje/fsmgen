@@ -1328,6 +1328,13 @@ Verilator and other available tools can catch whatever they support early.
 releases, handoff, and capabilities. An experimental parse, compile, or
 elaboration result cannot discharge that runtime blocker.
 
+Clean completed-probe predecessor `adc88817e` activates `.14` alone for the
+VHDL-2008 methodology/backend contract. Activation performs no provider or
+tool investigation and selects neither OSVVM, UVVM, nor a provider-free core;
+it changes no VHDL artifact or capability. Exact mapping, package migration,
+GHDL/qualified profiles, PSL boundaries, and implementation gates remain the
+active selection work.
+
 ### Primary evidence
 
 - Accellera UVM downloads:

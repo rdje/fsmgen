@@ -5,9 +5,9 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2`: ship exact experimental UVM probe).
-- active_work_unit: `.13.2` is complete; parent `.13` remains active because
-  `.13.3` is provider-blocked. Proposed `.14` is the next unblocked leaf.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14`: activate VHDL verification contract).
+- active_work_unit: `.14` alone is active after clean completed-probe
+  predecessor `adc88817e`; `.13.3` remains provider-blocked.
 - current_state: `sv_uvm_emit.accellera_2020_3_1` emits 16 artifacts/ten SV
   sources covering the selected native structures, with 75 mapped entries, 14
   structural checks, a 25-row matrix, and deterministic gallery. Experimental
@@ -15,11 +15,11 @@ history; this file carries only the current bounded resume state.
   through runtime plus fixture preprocessing; ranged SVA is unsupported,
   blackboxing reaches a tool internal fault, and fixture runtime/result/parity
   remain not run. Illegal generated identifier `context` is now `vial_context`.
-  Product support stays emission-only; `.13.3` awaits exact PGEN+NEXSIM
-  releases and the NEXSIM API/MCP checkpoint plane.
-- next_action: after this clean completion commit, activate only proposed `.14`
-  for VHDL-2008 methodology/backend contract selection; do not activate the
-  provider-blocked `.13.3`.
+  Product support stays emission-only. `.14` activation selects no VHDL
+  methodology, tool, version, migration, artifact, or capability.
+- next_action: complete only `.14` documentation selection: audit the existing
+  inert VHDL package and exact current provider/tool evidence, then freeze the
+  VHDL-2008 portable/methodology/qualification/migration/non-claim contract.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` still waits on exact capability-ready PGEN/NEXSIM handoff/

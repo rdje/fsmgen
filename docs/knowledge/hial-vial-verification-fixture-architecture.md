@@ -293,7 +293,8 @@ only unsupported `##[1:256]` SVA; separate `--bbox-unsup` compile/elaboration
 reaches a Verilator internal fault/139. `UVM_NO_DPI` is experiment-wide.
 Fixture runtime/results/parity/four-state/full breadth remain unexercised, so
 the byte-checked report is `partial_tool_limited`, `product_support=false`.
-`.13.3` retains the PGEN+NEXSIM blocker.
+`.13.3` stays blocked; `adc88817e` activates `.14` with no VHDL provider, tool,
+migration, or capability selected.
 
 `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` now preserves a separate proposed
 architecture for an Intent Abstraction Simulator. IASIM is a first-class,

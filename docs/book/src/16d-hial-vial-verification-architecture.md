@@ -28,6 +28,11 @@ runs; the generated fixture remains tool-limited before runtime. This is
 explicitly experimental evidence, not a supported native-UVM execution
 profile.
 
+Active slice `.14` now owns selection of the VHDL-2008 verification contract.
+Activation chooses no methodology provider, tool, version, package migration,
+backend artifact, or capability; those decisions require the next documented
+selection before implementation or qualification can begin.
+
 The current shipped verification-output targets remain deliberately narrow:
 
 - `uvm-passive-monitor` emits inert UVM 1.2 snapshot and passive-monitor class

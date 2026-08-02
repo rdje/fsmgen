@@ -302,11 +302,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the VHDL-2008 verification backend, methodology-provider mapping, existing-package migration, and GHDL/qualified profiles.`
   Acceptance: `The contract chooses pure VHDL-2008 portable responsibilities and an exact OSVVM/UVVM/no-provider decision for advanced semantics, maps drivers/samplers/scenarios/models/scoreboards/coverage/faults/results without requiring VHDL knowledge from a VIAL author, freezes efficient/readable/source-mapped artifact criteria plus standard/library/options and GHDL and broader qualified profiles, records PSL and language non-claims, and versions/migrates the inert VHDL observation package without inferring analyzer support.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `clean completed experimental-probe predecessor adc88817e88fee47f1b1bd568761add02a93f655 activates this contract-selection leaf alone; provider/tool/version inspection and every implementation or capability change remain unperformed until this continuity slice commits`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14: activate VHDL verification contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15`
   Status: `proposed`
@@ -418,14 +418,22 @@ the exact reusable Verilator-5.046/UVM-2020.3.1-vlt experimental probe, repairs
 the invalid generated `context` identifier, proves the isolated UVM library
 through runtime smoke, and classifies the complete generated fixture as
 tool-limited before runtime without advertising support. `.13.3` remains
-blocked on capability-ready PGEN and NEXSIM releases; proposed `.14` is the
-next unblocked architecture leaf.
+blocked on capability-ready PGEN and NEXSIM releases. Clean predecessor
+`adc88817e` activates `.14` alone for VHDL-2008 methodology/backend contract
+selection; selection and implementation remain unperformed.
 Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
 compiler-owned beneath C/C++ or Rust.
 
 ## Decisions
+
+- `2026-08-01`: Clean completed experimental-probe predecessor
+  `adc88817e88fee47f1b1bd568761add02a93f655` permits `.14` to activate
+  alone. Activation changes durable continuity only: it does not select
+  OSVVM, UVVM, or no provider; inspect or freeze a tool/library version; alter
+  the inert VHDL package; emit a new artifact; or claim VHDL analysis,
+  elaboration, runtime, result, parity, PSL, or product support.
 
 - `2026-08-01`: Select the exact experimental profile
   `sv_uvm_experimental.verilator_5_046.uvm_verilator_2020_3_1_vlt_656f20d0`.
@@ -688,8 +696,9 @@ compiler-owned beneath C/C++ or Rust.
   introspection API schema, and MCP profile when capability-ready releases
   exist; no version or unsupported query/control capability is invented in
   advance.
-- `.14` must choose the VHDL methodology provider and exact analyzer/simulator;
-  GHDL and other VHDL tools are currently absent locally.
+- Active `.14` must choose the VHDL methodology provider and exact analyzer/
+  simulator contract. Local tool absence does not block documentation
+  selection; it remains an implementation/qualification constraint for `.15`.
 - `.16` must choose the first available mixed-language tool/profile.
 - `.17` must select measured architecture-specific capacity budgets; the
   separate whole-product scale tree retains big/really-big qualification.
@@ -703,6 +712,9 @@ compiler-owned beneath C/C++ or Rust.
   release/schema/capability prerequisite. Commercial simulator availability
   is not a roadmap prerequisite, and Verilator/Icarus cannot be promoted from
   experimental evidence to `sv_uvm_qualified`.
+- No blocker for active `.14` contract selection. Executable `.15` evidence
+  will require the exact selected VHDL analyzer/simulator and any selected
+  methodology library to be available under repository-local data policy.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -758,6 +770,36 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-08-01` | `.13.1.5` implementation | revision-5 emitter/review-closure/support syntax; exact 25-row source/IR/role/state mapping matrix; seven-stage repository-relative review workflow; non-mutating gallery byte check; two canonical JSON evidence snapshots; exact capability/support/non-claims; fail-closed negative oracles; book/task/audit/fact/Memory continuity | `passed`; focused native/support Files=7/Tests=7,125; broader semantic/public/native gates pass in bounded partitions totaling Files=13/Tests=7,168; portable execution Files=1/Tests=5 and parity Files=1/Tests=4; docs/task/live/history/map Files=12/Tests=101; all 49 chapters test; removed repository-local build 85 files/16,787,078 bytes; task integrity three trees/907 nodes/one segment/one index archive; exact mdBook delta 0/+46/+2,327; Knowledge Map 1,104 facts/5,635 questions/5,801 occurrences/117 shards; Memory 47 lines; exact graph is 16 artifacts/10 SystemVerilog sources/75 maps/14 structural checks/25 mappings/7 workflow stages/5 closure invariants/9 source snapshots/2 evidence snapshots; final staged acceptance and all nine doctrine checks pass; visual review and parse through parity remain pending or unclaimed |
 | `2026-08-01` | `.13.2` activation | clean completed-emission predecessor `7725789a4`; task/index/audit/book/fact/Memory continuity; docs/live/task/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; docs/live/task/Knowledge Map Files=6/Tests=76; all 49 mdBook chapters test and the repository-local build contains 85 files/16,788,798 bytes before exact removal; task integrity remains three trees/907 nodes/one segment/one index archive; exact mdBook delta is 0/+5/+305; all 22 live surfaces and 2,941/2,941 paths pass with zero ceiling increases; Knowledge Map remains 1,104 facts/5,635 questions/5,801 occurrences/117 shards; Memory is 47 lines; `.13.2` alone is active while tool/library inspection, implementation, and all emission-through-product-support states remain unchanged; final staged acceptance and all nine doctrine checks pass |
 | `2026-08-01` | `.13.2` implementation | exact Verilator/UVM source identities and comparison delta; bounded reusable probe module/script; independent preprocess/parse/library compile-elaboration/runtime/fixture compile-elaboration stages; canonical report and byte-check; reserved-keyword generator repair and refreshed gallery; source/support/capability/focused/broader/docs/task/mdBook/Knowledge Map/Memory/staged-doctrine gates; exact staging/build/manual-probe cleanup | `passed`; exact Verilator 5.046 plus uvm-verilator commit/tree frozen; guarded canonical run and independent `--check` deterministically conclude `partial_tool_limited`; UVM control passes through zero-error/fatal runtime, generated fixture preprocesses, ranged SVA is unsupported, blackboxing reaches tool internal fault/139, and fixture runtime/result/parity remain not run; focused native/probe Files=6/Tests=44 and impacted VIAL/support Files=16/Tests=7,183 pass; docs/history Files=12/Tests=70 pass; all 49 mdBook chapters test and its 85-file/16,584-KiB build is removed exactly; final acceptance details are recorded below; product support remains false and `.13.3` remains provider-blocked while `.14` is the next unblocked leaf |
+| `2026-08-01` | `.14` activation | clean `.13.2` implementation predecessor `adc88817e`; task/index/audit/book/fact/Memory continuity; docs/live/task/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; docs/live/task/Knowledge Map Files=6/Tests=76; all 49 mdBook chapters test and the repository-local build contains 85 files/16,588 KiB before exact removal; task integrity remains three trees/907 nodes/one segment/one index archive; exact mdBook delta is 0/+5/+294; all 22 live surfaces and 2,942/2,942 paths pass with zero ceiling increases; Knowledge Map remains 1,104 facts/5,641 questions/5,807 occurrences/117 shards; Memory is 46 lines; `.14` alone is active while every provider/tool/version/migration/artifact/capability/runtime choice remains unchanged; final staged acceptance and all nine doctrine checks pass |
+
+## Acceptance Checklist (enforced) — `.14` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14'
+  --oneline -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`
+  identifies architecture-selection commit `2e2f7d25e`; `git show
+  adc88817e:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` records
+  completed `.13.2`, provider-blocked `.13.3`, and proposed dependency-ready
+  `.14`. Therefore `.14` is the next unblocked PNT leaf and requires a clean
+  continuity-only activation before methodology or tool investigation.
+- [x] **ADDRESSED (verified)** — Durable ownership surfaces alone now mark
+  `.14` active: task node/frontier/open-question/blocker records, task index,
+  canonical audit, mdBook status, fact card/Knowledge Map, bounded Memory,
+  commit log, and maintained-reference authority. No methodology, provider,
+  version, command, package migration, backend, artifact, or capability is
+  selected or implemented.
+- [x] **NO REGRESSION** — The focused docs/live/task/Knowledge Map suite reports
+  `All tests successful` at `Files=6, Tests=76`; all 49 mdBook chapters test,
+  and its repository-local build contains 85 files/16,588 KiB before exact
+  removal. Rendered HTML places the activation in its own `<p>` block. Task
+  integrity remains three trees/907 nodes/one segment/one index archive; all
+  22 live surfaces and 2,942/2,942 paths pass with exact mdBook delta
+  0/+5/+294 and zero ceiling increases. Knowledge Map remains current at 1,104
+  facts/5,641 questions/5,807 occurrences/117 shards; Memory is 46 lines; the
+  book build is absent. Final staged acceptance passes with `root=git_history`
+  and `no-regression=prove_summary`; all nine doctrine checks report
+  `[doctrine] all doctrine checks passed`. Generated source, review/probe
+  evidence, discovery/support truth, and every VHDL analysis-through-parity
+  claim remain unchanged.
 
 ## Acceptance Checklist (enforced) — `.13.2` implementation
 
@@ -1482,9 +1524,17 @@ compiler-owned beneath C/C++ or Rust.
 | `.13.1.5` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5: close native UVM matrix and review workflow` | Ship revision-5 selected-scope accounting through a 25-row matrix, deterministic seven-stage gallery workflow, non-mutating byte check, exact defect routing, and two canonical evidence snapshots while retaining every visual/parser/runtime/full-breadth non-claim. |
 | `.13.2` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2: activate experimental UVM probe` | Activate only exact open-source tool/library inspection and reusable experimental probe implementation after clean completed `.13.1`; selection, execution, and support evidence remain unperformed. |
 | `.13.2` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2: ship exact experimental UVM probe` | Ship the exact bounded Verilator/UVM probe and deterministic report, repair the generated reserved-keyword identifier, and retain tool-limited fixture/runtime/result/parity nonclaims without product support. |
+| `.14` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14: activate VHDL verification contract` | Activate only VHDL-2008 methodology-provider, portable/qualified profile, legacy-package migration, and capability/non-claim contract selection after clean `.13.2`; selection and product behavior remain unperformed. |
 | `.13.3` provider clarification | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3: capture NEXSIM semantic-introspection MCP contract` | Record the future versioned NEXSIM semantic API/MCP qualification plane, snapshot/control/query requirements, source-mapped checkpoint correlation, first-divergence localization, and provider-evidence boundary without inventing a release or activating runtime work. |
 
 ## Changelog
+
+- `2026-08-01`: Clean completed experimental-probe predecessor `adc88817e`
+  activates `.14` alone for VHDL-2008 methodology/backend contract selection.
+  Activation changes only durable continuity; provider, library, tool,
+  version, command, legacy-package migration, generated artifacts, and every
+  VHDL analysis-through-parity/product-support claim remain unselected or
+  unchanged.
 
 - `2026-08-01`: Clean completed-emission predecessor `7725789a4` activates
   `.13.2` alone for exact open-source tool/library inspection and reusable
