@@ -194,6 +194,10 @@ Direction:
 - use provider-free VHDL-2008 as the portable VIAL semantic core, exact GHDL
   profiles for open-source qualification, and OSVVM only as a separately
   capability-qualified advanced methodology provider; and
+- maintain a versioned, implementation-neutral NEXSIM semantic API/MCP
+  agent-consumer contract covering exact introspection, causality, controlled
+  execution, replay, UVM, evidence, security, and conformance without treating
+  requested behavior as implemented simulator support; and
 - fail with actionable ambiguity/conflict evidence instead of selecting a
   hidden schedule.
 

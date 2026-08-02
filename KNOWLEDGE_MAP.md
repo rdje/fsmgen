@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1104** facts · **5666** unique questions · **5832** answer occurrences · **117** topic shards.
+> **1105** facts · **5681** unique questions · **5847** answer occurrences · **118** topic shards.
 
 Query first:
 
@@ -107,6 +107,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `loop-early` | 1 | 5 | [`loop-early.md`](knowledge-map/generated/loop-early.md) |
 | `lte-digital` | 1 | 5 | [`lte-digital.md`](knowledge-map/generated/lte-digital.md) |
 | `mdbook-test` | 1 | 5 | [`mdbook-test.md`](knowledge-map/generated/mdbook-test.md) |
+| `nexsim-semantic` | 1 | 15 | [`nexsim-semantic.md`](knowledge-map/generated/nexsim-semantic.md) |
 | `normalized-semantic` | 26 | 109 | [`normalized-semantic.md`](knowledge-map/generated/normalized-semantic.md) |
 | `pdf-extraction` | 1 | 5 | [`pdf-extraction.md`](knowledge-map/generated/pdf-extraction.md) |
 | `ppif-check` | 1 | 4 | [`ppif-check.md`](knowledge-map/generated/ppif-check.md) |

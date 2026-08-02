@@ -48,4 +48,5 @@
   - [APB IAL2 Examples](16b-ial2-apb.md)
   - [AHB Current Boundary](16c-ial2-ahb.md)
   - [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
+  - [NEXSIM Semantic API and MCP Agent-Consumer Requirements](16e-nexsim-api-mcp-consumer-requirements.md)
 - [Reference Map](90-reference-map.md)

@@ -5,21 +5,21 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.2`: ship portable VHDL semantics).
-- active_work_unit: `.15`/`.15.3` are active after completed `.15.2`; `.13.3` remains provider-blocked.
-- current_state: native UVM emits 16 artifacts/ten SV sources, 75 maps, 14
-  checks, a 25-row matrix, and a deterministic gallery. Experimental Verilator
-  5.046/UVM evidence passes its control through runtime and fixture preprocessing;
-  ranged SVA is unsupported, blackboxing faults internally, and fixture runtime/
-  result/parity remain not run. The illegal `context` identifier is repaired.
-  Product support stays emission-only. Decision `0051` selects provider-free
-  VHDL-2008, exact GHDL 6.0.0, and OSVVM 2026.05 for the advanced tier; UVVM
-  is unselected. `.15.2` emits 14 artifacts/six sources, 52 maps, 13 checks,
-  typed drivers/samplers, one scheduler, exact ranks, bounded scenarios/fibers,
-  deterministic models, a declared-probe adapter, and unexecuted tool records.
-  The inert legacy package is unchanged; no VHDL runtime/result/support claim ships.
-- next_action: commit the evolving NEXSIM API/MCP consumer-requirements
-  task/document, then resume `.15.3` portable VHDL checking/results/closed trace.
+- latest_commit: this commit (`NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.1`: publish agent-consumer contract).
+- active_work_unit: NEXSIM `.1` is done with `.2` proposed for evidence-driven
+  amendments; HIAL/VIAL `.15.3` remains the next active implementation leaf.
+- current_state: decision `0052` and the standalone 2,251-line/365-requirement
+  NEXSIM contract make the native typed semantic API authoritative and MCP its
+  bounded projection. The version-1 request covers exact configuration/build/
+  elaboration/static/runtime semantics, scheduler causality, control, mutation,
+  replay, UVM, assertions, coverage, timing/power/mixed language, safe overlays,
+  evidence, security, scale, conformance, and evolution without claiming NEXSIM
+  support or exposing client-private architecture. Its mdBook chapter, roadmap,
+  decision, task, fact card/Knowledge Map, generated index, and exact containment
+  authorities are synchronized. HIAL/VIAL `.15.2` remains shipped at 14
+  artifacts/six VHDL sources/52 maps/13 checks with no runtime/result/support claim.
+- next_action: resume `.15.3` portable VHDL checking, normalized results, and
+  closed trace semantics; amend the NEXSIM contract only from concrete input.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` waits on capability-ready PGEN/NEXSIM handoff/API/MCP

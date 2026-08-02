@@ -1,0 +1,1 @@
+{{#include ../../NEXSIM_API_MCP_AGENT_CONSUMER_REQUIREMENTS.md}}

@@ -25,7 +25,7 @@ ok(-x $partition, 'ISF semantic-part verifier is executable');
 subtest 'real generated index and exact activation partition pass' => sub {
     my ($index_ok, $index_output) = run_command($indexer, '--root', $repo, 'check');
     ok($index_ok, 'repository focused-document index is current') or diag($index_output);
-    like($index_output, qr/1020 members/, 'complete focused plus ancillary census is reported');
+    like($index_output, qr/1021 members/, 'complete focused plus ancillary census is reported');
 
     my ($part_ok, $part_output) = run_command(
         $partition, '--root', $repo, '--verify-activation-content', 'check');
@@ -132,6 +132,7 @@ sub seed_index_fixture {
         HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md
         IAL2_NEW_PROTOCOL_SUPPORT_WORKFLOW.md
         ISF_LIBRARY_CATALOG.md
+        NEXSIM_API_MCP_AGENT_CONSUMER_REQUIREMENTS.md
         PDF_EXTRACTION_WORKFLOW.md
         REGRESSION_CORPUS.md
         TASK_TREE_LIVE_NODE_INTEGRITY.md
