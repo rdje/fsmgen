@@ -19,7 +19,7 @@ my $SOURCE_MAP_SCHEMA = 'fsmgen.vial_uvm_backend_source_map.v1';
 my $STATIC_SCHEMA = 'fsmgen.vial_uvm_static_validation.v1';
 my $BASE = 'backends/sv_uvm_emit.accellera_2020_3_1';
 my $CONTRACT = 'docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md';
-my $EMITTER_REVISION = 2;
+my $EMITTER_REVISION = 3;
 my $JSON = JSON::PP->new->canonical(1);
 
 my @RESULT_KEYS = qw(
@@ -120,7 +120,7 @@ sub _emit($raw) {
     _throw('VIAL_UVM_BACKEND_INVOCATION_ERROR', 'execution plan identity is malformed', '/execution_ir/plan_id')
         unless defined $plan_digest;
     my $operation_id = 'op-' . sha256_hex(_canonical_json({
-        action => 'emit_native_uvm_topology_lifecycle_notification',
+        action => 'emit_native_uvm_stimulus_services',
         artifact_root => $raw->{artifact_root},
         backend_profile => $BACKEND_PROFILE,
         bridge_manifest_id => $bridge->{manifest_id},
@@ -133,6 +133,8 @@ sub _emit($raw) {
     my $interface_rel = "$BASE/src/$interface_name.sv";
     my $notification_package = $fixture_slug . '_notifications_pkg';
     my $notification_rel = "$BASE/src/$notification_package.sv";
+    my $services_package = $fixture_slug . '_services_pkg';
+    my $services_rel = "$BASE/src/$services_package.sv";
     my $fixture_rel = "$BASE/src/$fixture_package.sv";
     my $top_rel = "$BASE/src/$top.sv";
     my $dut_rel = "$BASE/src/dut/" . _slug($module_name) . '.sv';
@@ -150,11 +152,18 @@ sub _emit($raw) {
         package_name => $notification_package,
         relpath => $notification_rel,
     );
+    my ($services, $service_specs) = _render_services_package(
+        execution => $execution,
+        bridge => $bridge,
+        package_name => $services_package,
+        relpath => $services_rel,
+    );
     my ($fixture, $fixture_specs) = _render_fixture_package(
         execution => $execution,
         bridge => $bridge,
         interface_name => $interface_name,
         notification_package => $notification_package,
+        services_package => $services_package,
         package_name => $fixture_package,
         relpath => $fixture_rel,
     );
@@ -180,6 +189,8 @@ sub _emit($raw) {
             'uvm_fixture_interface', $interface, [$execution->{plan_id}, $bridge->{manifest_id}]),
         _artifact($notification_rel, 'systemverilog_source', 'systemverilog',
             'uvm_notification_interception', $notifications, [$execution->{plan_id}, $CONTRACT]),
+        _artifact($services_rel, 'systemverilog_source', 'systemverilog',
+            'uvm_stimulus_services', $services, [$execution->{plan_id}, $bridge->{manifest_id}, $CONTRACT]),
         _artifact($fixture_rel, 'systemverilog_source', 'systemverilog',
             'uvm_fixture_package', $fixture, [$execution->{plan_id}, $bridge->{manifest_id}]),
         _artifact($top_rel, 'systemverilog_source', 'systemverilog',
@@ -192,7 +203,7 @@ sub _emit($raw) {
         if $source_bytes > 16_777_216;
 
     my @spec = (
-        @$types_specs, @$component_specs, @$interface_specs, @$notification_specs,
+        @$types_specs, @$component_specs, @$interface_specs, @$notification_specs, @$service_specs,
         @$fixture_specs, @$top_specs,
         _map_spec(
             relpath => $dut_rel, start => 1, end => _line_count($dut_input->{text}),
@@ -272,21 +283,28 @@ sub _emit($raw) {
                 typed_context component_bases timed_interface fixture_config
                 complete_component_topology lifecycle_execution
                 notification_interception fixture_environment fixture_test
+                transaction_items scenario_sequences active_agent_driver
+                analysis_tlm scoped_factory_configuration ral_preview
+                constrained_decision_replay
                 dut_binding top
             )],
             deferred_to_later_emission_slices => [qw(
-                stimulus_sequences tlm factory_overrides scoped_configuration ral randomization
                 coverage properties models scoreboards faults results
             )],
             public_authoring_boundary => {
                 execution_events => 'public_vial_v1',
+                portable_scenarios_transactions_decisions => 'public_vial_v1',
                 native_interceptor_tables => 'private_typed_preview',
+                native_role_substitution => 'private_typed_preview',
+                native_ral => 'private_typed_preview',
+                native_constraint_solving => 'private_typed_preview_not_executed',
             },
         },
         limitations => [
             'static validation checks deterministic structure only; it is not a SystemVerilog parser or compiler',
-            'the gallery emits complete selected topology, lifecycle, and notification/interception structures but no stimulus, RAL, coverage, model, scoreboard, fault, or result implementation',
-            'native interceptor records are a private typed preview until public VIAL syntax is selected',
+            'the gallery emits selected stimulus, TLM, factory/configuration, RAL-preview, and constrained-decision structures but no coverage, property, model, scoreboard, fault, or result implementation',
+            'native interceptor, role-substitution, and RAL records are private typed previews until public VIAL syntax is selected',
+            'portable decisions are replayed from the immutable plan; the emitted native constraint solver preview is not invoked',
             'UVM library bytes are intentionally absent from and unnecessary for ordinary emission',
             'preprocessing, parse, library compile, fixture compile, elaboration, runtime, result, and parity have not run',
             'one HIAL unit and one VIAL clock domain are selected for the first review gallery',
@@ -294,9 +312,9 @@ sub _emit($raw) {
         limits => {
             selected_units => 1,
             selected_domains => 1,
-            generated_source_artifacts => 7,
+            generated_source_artifacts => 8,
             generated_source_bytes => 16_777_216,
-            total_artifacts => 11,
+            total_artifacts => 12,
             source_map_entries => 1_000_000,
             identifier_bytes => 255,
         },
@@ -334,8 +352,8 @@ sub _emit($raw) {
     my @artifacts = sort { $a->{relpath} cmp $b->{relpath} }
         ($manifest_artifact, @source_artifacts, @support_artifacts);
     _throw('VIAL_UVM_BACKEND_LIMIT_EXCEEDED',
-        'native UVM artifact graph exceeds its eleven-artifact topology cap', '/artifacts')
-        unless @artifacts == 11;
+        'native UVM artifact graph exceeds its twelve-artifact stimulus/services cap', '/artifacts')
+        unless @artifacts == 12;
 
     return _result({
         ok => JSON::PP::true,
@@ -365,6 +383,11 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         complete_component_topology_v1
         root_owned_lifecycle_v1
         ordered_notification_interception_v1
+        typed_stimulus_sequences_v1
+        analysis_tlm_wiring_v1
+        scoped_factory_configuration_v1
+        ral_preview_v1
+        constrained_decision_replay_v1
     );
     push @unsatisfied, 'execution schema must be fsmgen.vial_execution_ir.v1'
         unless ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1';
@@ -376,6 +399,52 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         unless ref($bridge->{units}) eq 'ARRAY' && @{$bridge->{units}} == 1;
     push @unsatisfied, 'exactly one selected execution domain is required'
         unless ref($execution->{domains}) eq 'ARRAY' && @{$execution->{domains}} == 1;
+    push @unsatisfied, 'exactly one typed transaction is required by the first services gallery'
+        unless ref($execution->{transactions}) eq 'ARRAY'
+            && @{$execution->{transactions}} == 1;
+    push @unsatisfied, 'exactly one bridge transaction is required by the first services gallery'
+        unless ref($bridge->{transactions}) eq 'ARRAY'
+            && @{$bridge->{transactions}} == 1
+            && ref($bridge->{transactions}[0]{fields}) eq 'ARRAY';
+    push @unsatisfied, 'at least one public start operation is required by the first services gallery'
+        unless grep { ($_->{kind} // '') eq 'start' }
+            @{$execution->{operation_graph}{operations} || []};
+    push @unsatisfied, 'exactly one fixed portable decision is required by the first services gallery'
+        unless ref($execution->{randomness}{decisions}) eq 'ARRAY'
+            && @{$execution->{randomness}{decisions}} == 1;
+    push @unsatisfied, 'exactly one declared verification probe is required by the first RAL preview'
+        unless ref($bridge->{probes}) eq 'ARRAY' && @{$bridge->{probes}} == 1;
+    if (ref($execution->{transactions}) eq 'ARRAY'
+            && @{$execution->{transactions}} == 1
+            && ref($bridge->{transactions}) eq 'ARRAY'
+            && @{$bridge->{transactions}} == 1
+            && ref($bridge->{transactions}[0]{fields}) eq 'ARRAY') {
+        my (%bridge_field, %bridge_field_count);
+        for my $field (@{$bridge->{transactions}[0]{fields}}) {
+            my $name = $field->{name} // '';
+            $bridge_field{$name} = $field;
+            $bridge_field_count{$name}++;
+        }
+        for my $field (@{$execution->{transactions}[0]{fields} || []}) {
+            my $name = $field->{name} // '';
+            push @unsatisfied, "transaction field '$name' lacks one bridge carrier"
+                unless ($bridge_field_count{$name} // 0) == 1
+                    && ref($bridge_field{$name}) eq 'HASH'
+                    && defined($bridge_field{$name}{endpoint_id});
+        }
+    }
+    my (%endpoint_role, %endpoint_role_count);
+    for my $endpoint (@{$bridge->{endpoints} || []}) {
+        my $role = $endpoint->{role} // '';
+        $endpoint_role{$role} = $endpoint;
+        $endpoint_role_count{$role}++;
+    }
+    for my $role (qw(select ready_in ready_out)) {
+        push @unsatisfied, "required interface role '$role' lacks one endpoint"
+            unless ($endpoint_role_count{$role} // 0) == 1
+                && ref($endpoint_role{$role}) eq 'HASH'
+                && defined($endpoint_role{$role}{endpoint_id});
+    }
     push @unsatisfied, 'native extensions are deferred beyond the first UVM foundation'
         if ref($execution->{native_extensions}) ne 'ARRAY' || @{$execution->{native_extensions} || []};
 
@@ -409,19 +478,18 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
     }
     @satisfied = @required unless @unsatisfied;
     @deferred = qw(
-        sequence_and_tlm_execution factory_and_config_semantics ral_semantics
-        native_constraints coverage_and_properties model_scoreboard_fault_result
+        coverage_and_properties model_scoreboard_fault_result
         preprocessing parse library_compile fixture_compile elaboration runtime
         result parity
     );
     return {
-        negotiation_scope => 'native_uvm_topology_lifecycle_notification_v1',
+        negotiation_scope => 'native_uvm_stimulus_services_v1',
         required => [sort @required],
         satisfied => [sort @satisfied],
         unsatisfied => [sort @unsatisfied],
         deferred => [sort @deferred],
         limitations => [
-            'negotiation covers selected topology, lifecycle, and notification/interception emission, not full VIAL-to-UVM semantic breadth',
+            'negotiation covers selected topology, lifecycle, notification/interception, stimulus, TLM, factory/configuration, RAL preview, and decision replay emission, not full VIAL-to-UVM semantic breadth',
             'library-dependent and executable gates are deliberately outside ordinary emission',
         ],
     };
@@ -652,7 +720,10 @@ sub _render_interface(%arg) {
         );
     }
     my @driven = map { $binding{$_->{endpoint_id}}{target_name} }
-        grep { $_->{direction} eq 'input' && $_->{endpoint_id} ne $domain->{clock_endpoint_id} }
+        grep { $_->{direction} eq 'input'
+            && $_->{endpoint_id} ne $domain->{clock_endpoint_id}
+            && $_->{endpoint_id} ne $domain->{reset_endpoint_id}
+            && ($_->{role} // '') ne 'ready_in' }
         @{$bridge->{endpoints}};
     my @sampled = map { $binding{$_->{endpoint_id}}{target_name} }
         grep { $_->{endpoint_id} ne $domain->{clock_endpoint_id} } @{$bridge->{endpoints}};
@@ -1089,11 +1160,447 @@ sub _render_notification_package(%arg) {
     return (join("\n", @line) . "\n", \@spec);
 }
 
+sub _render_services_package(%arg) {
+    my $execution = $arg{execution};
+    my $bridge = $arg{bridge};
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        'the first native UVM services gallery requires exactly one transaction',
+        '/execution_ir/transactions')
+        unless ref($execution->{transactions}) eq 'ARRAY'
+            && @{$execution->{transactions}} == 1;
+    my $transaction = $execution->{transactions}[0];
+    my %type = map { $_->{type_id} => $_->{semantic_type} }
+        @{$execution->{type_table}};
+    my $fixture_slug = _sv_slug($execution->{fixture}{fixture_name});
+    my $item = $fixture_slug . '_' . _sv_slug($transaction->{definition}{name}) . '_item';
+    my $decision_class = $fixture_slug . '_native_wait_decision';
+    my $observer = $fixture_slug . '_transaction_observer';
+    my $register = $fixture_slug . '_reg_data_reg';
+    my $block = $fixture_slug . '_reg_block';
+    my $adapter = $fixture_slug . '_reg_adapter';
+    my $predictor = $fixture_slug . '_reg_predictor';
+    my $probe = $bridge->{probes}[0];
+    my $decision = $execution->{randomness}{decisions}[0];
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        'the first native UVM services gallery requires one declared probe and one fixed decision',
+        '/execution_ir')
+        unless ref($probe) eq 'HASH' && ref($decision) eq 'HASH';
+
+    my (@line, @spec);
+    my $push = sub (@text) { push @line, @text };
+    my $map_class = sub ($start, $symbol, $role, $plan_paths, $semantic_paths,
+            $bridge_paths, $locations) {
+        push @spec, _map_spec(
+            relpath => $arg{relpath}, start => $start, end => scalar(@line),
+            symbol => $symbol, role => $role, plan_paths => $plan_paths,
+            semantic_paths => $semantic_paths, bridge_paths => $bridge_paths,
+            locations => $locations,
+        );
+    };
+
+    $push->('// Generated native VIAL stimulus and service structures.');
+    $push->('// Native role-substitution, RAL, and constraint forms are private typed previews.');
+    $push->("package $arg{package_name};");
+    $push->('  timeunit 1ns;');
+    $push->('  timeprecision 1ps;');
+    $push->('');
+    $push->('  import uvm_pkg::*;');
+    $push->('  `include "uvm_macros.svh"');
+    $push->('  import fsmgen_vial_uvm_types_pkg::*;');
+    $push->('');
+
+    my $item_start = @line + 1;
+    $push->("  class $item extends uvm_sequence_item;");
+    $push->("    `uvm_object_utils($item)");
+    $push->('');
+    $push->('    string semantic_id;');
+    $push->('    string scenario_id;');
+    $push->('    string handle_id;');
+    for my $field (@{$transaction->{fields}}) {
+        my $field_start = @line + 1;
+        $push->('    ' . _execution_sv_type($type{$field->{type_id}})
+            . _sv_slug($field->{name}) . ';');
+        push @spec, _map_spec(
+            relpath => $arg{relpath}, start => $field_start, end => $field_start,
+            symbol => _sv_slug($field->{name}), role => 'transaction_item_field',
+            plan_paths => ['/transactions/0/fields'],
+            semantic_paths => [$field->{semantic_id}],
+            bridge_paths => [$field->{binding_id}], locations => [],
+        );
+    }
+    $push->('');
+    $push->("    function new(string name = \"$item\");");
+    $push->('      super.new(name);');
+    $push->('      semantic_id = "";');
+    $push->('      scenario_id = "";');
+    $push->('      handle_id = "";');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void do_copy(uvm_object rhs);');
+    $push->("      $item rhs_item;");
+    $push->('      super.do_copy(rhs);');
+    $push->('      if (!$cast(rhs_item, rhs))');
+    $push->('        `uvm_fatal("VIAL/ITEM/COPY", "transaction-item type mismatch")');
+    $push->('      semantic_id = rhs_item.semantic_id;');
+    $push->('      scenario_id = rhs_item.scenario_id;');
+    $push->('      handle_id = rhs_item.handle_id;');
+    for my $field (@{$transaction->{fields}}) {
+        my $name = _sv_slug($field->{name});
+        $push->("      $name = rhs_item.$name;");
+    }
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function bit do_compare(uvm_object rhs, uvm_comparer comparer);');
+    $push->("      $item rhs_item;");
+    $push->('      if (!$cast(rhs_item, rhs)) return 0;');
+    $push->('      if (!super.do_compare(rhs, comparer)) return 0;');
+    $push->('      if (semantic_id != rhs_item.semantic_id ||');
+    $push->('          scenario_id != rhs_item.scenario_id ||');
+    $push->('          handle_id != rhs_item.handle_id) return 0;');
+    for my $index (0 .. $#{$transaction->{fields}}) {
+        my $name = _sv_slug($transaction->{fields}[$index]{name});
+        my $suffix = $index == $#{$transaction->{fields}} ? ';' : ' ||';
+        $push->('      ' . ($index ? '    ' : 'if (')
+            . "$name !== rhs_item.$name$suffix");
+    }
+    $line[-1] =~ s/;\z/\) return 0;/;
+    $push->('      return 1;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void do_print(uvm_printer printer);');
+    $push->('      super.do_print(printer);');
+    $push->('      printer.print_string("semantic_id", semantic_id);');
+    $push->('      printer.print_string("scenario_id", scenario_id);');
+    $push->('      printer.print_string("handle_id", handle_id);');
+    for my $field (@{$transaction->{fields}}) {
+        my $name = _sv_slug($field->{name});
+        my $shape = $type{$field->{type_id}};
+        my $width = $shape->{kind} eq 'enum'
+            ? $shape->{base_type}{width} : $shape->{width};
+        $push->("      printer.print_field(\"$name\", $name, $width, UVM_HEX);");
+    }
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($item_start, $item, 'typed_sequence_item',
+        ['/transactions/0', '/bindings/transactions/0'],
+        [$transaction->{semantic_id}], [$transaction->{binding_id}], []);
+    $push->('');
+
+    my $decision_start = @line + 1;
+    my $decision_type = _execution_sv_type($type{$decision->{type_id}});
+    my $low = _sv_scalar_literal($decision->{distribution}{low});
+    my $high = _sv_scalar_literal($decision->{distribution}{high});
+    $push->("  class $decision_class extends uvm_object;");
+    $push->("    `uvm_object_utils($decision_class)");
+    $push->('');
+    $push->('    string decision_id;');
+    $push->('    int unsigned seed;');
+    $push->('    int unsigned attempt_bound;');
+    $push->('    int unsigned attempt_count;');
+    $push->("    rand ${decision_type}candidate;");
+    $push->("    ${decision_type}accepted_value;");
+    $push->('    bit replayed;');
+    $push->('');
+    $push->('    constraint selected_domain_c {');
+    $push->("      candidate inside {[$low:$high]};");
+    $push->('    }');
+    $push->('');
+    $push->("    function new(string name = \"$decision_class\");");
+    $push->('      super.new(name);');
+    $push->('      attempt_bound = 64;');
+    $push->('      attempt_count = 0;');
+    $push->("      accepted_value = $low;");
+    $push->("      replayed = 1'b0;");
+    $push->('    endfunction');
+    $push->('');
+    $push->('    function void configure(string configured_id, int unsigned configured_seed);');
+    $push->('      decision_id = configured_id;');
+    $push->('      seed = configured_seed;');
+    $push->('    endfunction');
+    $push->('');
+    my $replay_start = @line + 1;
+    $push->("    function void replay_selected(${decision_type}selected);");
+    $push->("      if (!(selected inside {[$low:$high]}))");
+    $push->('        `uvm_fatal("VIAL/DECISION/REPLAY", "replayed decision is outside its selected domain")');
+    $push->('      accepted_value = selected;');
+    $push->("      replayed = 1'b1;");
+    $push->('    endfunction');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $replay_start, end => scalar(@line),
+        symbol => 'replay_selected', role => 'portable_decision_replay',
+        plan_paths => ['/randomness/decisions/0'],
+        semantic_paths => [$decision->{occurrence_id}, $decision->{declaration_semantic_id}],
+        bridge_paths => [], locations => [$decision->{source_location}],
+    );
+    $push->('');
+    $push->('    function bit solve_native_preview();');
+    $push->('      this.srandom(seed);');
+    $push->('      for (attempt_count = 1; attempt_count <= attempt_bound; attempt_count++) begin');
+    $push->('        if (randomize()) begin');
+    $push->('          accepted_value = candidate;');
+    $push->("          replayed = 1'b0;");
+    $push->('          return 1;');
+    $push->('        end');
+    $push->('      end');
+    $push->('      return 0;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($decision_start, $decision_class,
+        'native_constrained_decision_preview', ['/randomness/decisions/0'],
+        [$decision->{occurrence_id}, $decision->{declaration_semantic_id}], [],
+        [$decision->{source_location}]);
+    $push->('');
+
+    my %operation = map { $_->{operation_id} => $_ }
+        @{$execution->{operation_graph}{operations}};
+    for my $scenario_index (0 .. $#{$execution->{scenarios}}) {
+        my $scenario = $execution->{scenarios}[$scenario_index];
+        my $sequence = $fixture_slug . '_' . _sv_slug($scenario->{name}) . '_sequence';
+        my @start = map { $operation{$_} }
+            grep { $operation{$_}{kind} eq 'start' } @{$scenario->{operation_ids}};
+        my $sequence_start = @line + 1;
+        $push->("  class $sequence extends uvm_sequence#($item);");
+        $push->("    `uvm_object_utils($sequence)");
+        $push->('');
+        $push->("    function new(string name = \"$sequence\");");
+        $push->('      super.new(name);');
+        $push->('    endfunction');
+        $push->('');
+        $push->('    virtual task body();');
+        $push->("      $item request;");
+        my $uses_decision = grep { _operation_uses_decision($_, $decision->{occurrence_id}) } @start;
+        $push->("      $decision_class decision;") if $uses_decision;
+        if ($uses_decision) {
+            my $accepted = _sv_scalar_literal($decision->{value});
+            $push->("      decision = ${decision_class}::type_id::create(\"decision\");");
+            $push->('      decision.configure("' . _sv_string($decision->{decision_id})
+                . '", ' . $decision->{seed} . ');');
+            $push->("      decision.replay_selected($accepted);");
+        }
+        for my $start_index (0 .. $#start) {
+            my $op = $start[$start_index];
+            my %input = map { $_->{name} => $_->{value} } @{$op->{typed_inputs}};
+            my %field = map { $_->{field_id} => $_->{value} } @{$input{fields}};
+            $push->("      request = ${item}::type_id::create(\"request_$start_index\");");
+            $push->('      start_item(request);');
+            $push->('      request.semantic_id = "' . _sv_string($transaction->{semantic_id}) . '";');
+            $push->('      request.scenario_id = "' . _sv_string($scenario->{scenario_id}) . '";');
+            $push->('      request.handle_id = "' . _sv_string($input{handle_id}) . '";');
+            for my $field_record (@{$transaction->{fields}}) {
+                my $value = $field{$field_record->{semantic_id}};
+                _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+                    "start operation lacks field '$field_record->{semantic_id}'",
+                    '/execution_ir/operation_graph') unless ref($value) eq 'HASH';
+                my $expression = ($value->{kind} // '') eq 'decision_reference'
+                    && ($value->{occurrence_id} // '') eq $decision->{occurrence_id}
+                    ? 'decision.accepted_value'
+                    : _sv_scalar_literal($value->{value});
+                $push->('      request.' . _sv_slug($field_record->{name})
+                    . " = $expression;");
+            }
+            $push->('      finish_item(request);');
+        }
+        $push->('    endtask');
+        $push->('  endclass');
+        $map_class->($sequence_start, $sequence, 'scenario_sequence',
+            ["/scenarios/$scenario_index", '/operation_graph'],
+            [$scenario->{scenario_id}, map { $_->{operation_id} } @start], [],
+            [$scenario->{source_location}, map { $_->{source_location} } @start]);
+        $push->('');
+    }
+
+    my $observer_start = @line + 1;
+    $push->("  class $observer extends uvm_subscriber#($item);");
+    $push->("    `uvm_component_utils($observer)");
+    $push->('');
+    $push->('    longint unsigned observation_count;');
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('      observation_count = 0;');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    virtual function void write($item transaction);");
+    $push->('      if (transaction == null)');
+    $push->('        `uvm_fatal("VIAL/TLM/WRITE", "analysis subscriber received a null transaction")');
+    $push->('      observation_count++;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($observer_start, $observer, 'analysis_transaction_subscriber',
+        ['/transactions/0'], [$transaction->{semantic_id}],
+        [$transaction->{binding_id}], []);
+    $push->('');
+
+    my $register_start = @line + 1;
+    $push->("  class $register extends uvm_reg;");
+    $push->("    `uvm_object_utils($register)");
+    $push->('');
+    $push->('    rand uvm_reg_field value;');
+    $push->('');
+    $push->("    function new(string name = \"$register\");");
+    $push->('      super.new(name, 32, UVM_NO_COVERAGE);');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void build();');
+    $push->('      value = uvm_reg_field::type_id::create("value");');
+    $push->('      value.configure(this, 32, 0, "RO", 0, 32\'h00000000, 1, 0, 0);');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($register_start, $register, 'ral_register_preview',
+        ['/bindings/probes/0'], [$probe->{probe_id}], ['/probes/0'], []);
+    $push->('');
+
+    my $block_start = @line + 1;
+    $push->("  class $block extends uvm_reg_block;");
+    $push->("    `uvm_object_utils($block)");
+    $push->('');
+    $push->("    rand $register reg_data;");
+    $push->('');
+    $push->("    function new(string name = \"$block\");");
+    $push->('      super.new(name, UVM_NO_COVERAGE);');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void build();');
+    $push->("      reg_data = ${register}::type_id::create(\"reg_data\");");
+    $push->('      reg_data.configure(this);');
+    $push->('      reg_data.build();');
+    $push->('      default_map = create_map("default_map", 0, 4, UVM_LITTLE_ENDIAN, 1);');
+    $push->('      default_map.add_reg(reg_data, 0, "RO");');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($block_start, $block, 'ral_block_preview',
+        ['/bindings/probes/0', '/transactions/0'],
+        [$probe->{probe_id}, $transaction->{semantic_id}],
+        ['/probes/0', '/transactions/0'], []);
+    $push->('');
+
+    my $adapter_start = @line + 1;
+    my %field_name = map { $_->{name} => _sv_slug($_->{name}) }
+        @{$transaction->{fields}};
+    $push->("  class $adapter extends uvm_reg_adapter;");
+    $push->("    `uvm_object_utils($adapter)");
+    $push->('');
+    $push->("    function new(string name = \"$adapter\");");
+    $push->('      super.new(name);');
+    $push->("      supports_byte_enable = 1'b0;");
+    $push->("      provides_responses = 1'b0;");
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function uvm_sequence_item reg2bus(const ref uvm_reg_bus_op rw);');
+    $push->("      $item transaction;");
+    $push->("      transaction = ${item}::type_id::create(\"ral_request\");");
+    $push->('      transaction.semantic_id = "' . _sv_string($transaction->{semantic_id}) . '";');
+    $push->("      transaction.$field_name{address} = rw.addr[31:0];");
+    $push->("      transaction.$field_name{transfer} = 2'h2;");
+    $push->("      transaction.$field_name{write} = (rw.kind == UVM_WRITE);");
+    $push->("      transaction.$field_name{size} = 3'h2;");
+    $push->("      transaction.$field_name{data} = rw.data[31:0];");
+    $push->("      transaction.$field_name{wait_cycles} = 4'h1;");
+    $push->('      return transaction;');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void bus2reg(uvm_sequence_item bus_item, ref uvm_reg_bus_op rw);');
+    $push->("      $item transaction;");
+    $push->('      if (!$cast(transaction, bus_item))');
+    $push->('        `uvm_fatal("VIAL/RAL/ADAPTER", "RAL adapter received an incompatible item")');
+    $push->("      rw.kind = transaction.$field_name{write} ? UVM_WRITE : UVM_READ;");
+    $push->("      rw.addr = transaction.$field_name{address};");
+    $push->("      rw.data = transaction.$field_name{data};");
+    $push->('      rw.status = UVM_IS_OK;');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($adapter_start, $adapter, 'ral_adapter_preview',
+        ['/transactions/0'], [$transaction->{semantic_id}],
+        [$transaction->{binding_id}], []);
+    $push->('');
+
+    my $predictor_start = @line + 1;
+    $push->("  class $predictor extends uvm_reg_predictor#($item);");
+    $push->("    `uvm_component_utils($predictor)");
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('    endfunction');
+    $push->('  endclass');
+    $map_class->($predictor_start, $predictor, 'ral_predictor_preview',
+        ['/transactions/0', '/bindings/probes/0'],
+        [$transaction->{semantic_id}, $probe->{probe_id}],
+        [$transaction->{binding_id}, '/probes/0'], []);
+    $push->('endpackage');
+    return (join("\n", @line) . "\n", \@spec);
+}
+
+sub _operation_uses_decision($operation, $occurrence_id) {
+    return 0 unless ref($operation) eq 'HASH';
+    for my $input (@{$operation->{typed_inputs} || []}) {
+        next unless ($input->{name} // '') eq 'fields';
+        for my $field (@{$input->{value} || []}) {
+            my $value = $field->{value};
+            return 1 if ref($value) eq 'HASH'
+                && ($value->{kind} // '') eq 'decision_reference'
+                && ($value->{occurrence_id} // '') eq $occurrence_id;
+        }
+    }
+    return 0;
+}
+
+sub _execution_sv_type($shape) {
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        'native UVM stimulus fields require one bounded scalar or enum type',
+        '/execution_ir/type_table') unless ref($shape) eq 'HASH';
+    my $base = ($shape->{kind} // '') eq 'enum' ? $shape->{base_type} : $shape;
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        'native UVM stimulus fields require a positive bounded width',
+        '/execution_ir/type_table') unless ref($base) eq 'HASH'
+            && ($base->{kind} // '') eq 'scalar'
+            && defined($base->{width}) && $base->{width} =~ /\A[1-9][0-9]*\z/;
+    my $keyword = ($base->{state_domain} // '') eq 'two_state' ? 'bit' : 'logic';
+    my $signed = $base->{signed} ? ' signed' : '';
+    my $packed = $base->{width} > 1 ? ' [' . ($base->{width} - 1) . ':0]' : '';
+    return "$keyword$signed$packed ";
+}
+
+sub _sv_scalar_literal($value) {
+    my $fully_known = 0;
+    if (ref($value) eq 'HASH' && defined($value->{width})
+            && $value->{width} =~ /\A[1-9][0-9]*\z/
+            && defined($value->{known_hex}) && !ref($value->{known_hex})) {
+        my $nibbles = int(($value->{width} + 3) / 4);
+        my $leading_bits = $value->{width} % 4;
+        my $leading = $leading_bits ? sprintf('%x', (1 << $leading_bits) - 1) : 'f';
+        my $expected = $leading . ('f' x ($nibbles - 1));
+        $fully_known = lc($value->{known_hex}) eq $expected;
+    }
+    my $summary = ref($value) eq 'HASH'
+        ? join(',', map { $_ . '=' . (defined($value->{$_}) && !ref($value->{$_})
+            ? $value->{$_} : '<invalid>') }
+            qw(kind width value_hex known_hex z_hex))
+        : 'not-a-hash';
+    _throw('VIAL_UVM_BACKEND_UNSUPPORTED',
+        "native UVM stimulus values require one fully known scalar ($summary)",
+        '/execution_ir') unless ref($value) eq 'HASH'
+            && ($value->{kind} // '') eq 'scalar'
+            && defined($value->{width}) && $value->{width} =~ /\A[1-9][0-9]*\z/
+            && defined($value->{value_hex}) && $value->{value_hex} =~ /\A[0-9a-f]+\z/i
+            && $fully_known
+            && defined($value->{z_hex}) && $value->{z_hex} =~ /\A0+\z/;
+    return $value->{width} . "'h" . lc($value->{value_hex});
+}
+
 sub _render_fixture_package(%arg) {
     my $fixture_slug = _sv_slug($arg{execution}{fixture}{fixture_name});
+    my $transaction = $arg{execution}{transactions}[0];
     my $config = $fixture_slug . '_config';
     my $payload = $fixture_slug . '_notification_payload';
     my $registry = $fixture_slug . '_notification_registry';
+    my $item = $fixture_slug . '_' . _sv_slug($transaction->{definition}{name}) . '_item';
+    my $sequencer = $fixture_slug . '_sequencer';
+    my $driver_base = $fixture_slug . '_driver_base';
+    my $driver = $fixture_slug . '_driver';
+    my $observer = $fixture_slug . '_transaction_observer';
+    my $reg_block = $fixture_slug . '_reg_block';
+    my $reg_adapter = $fixture_slug . '_reg_adapter';
+    my $reg_predictor = $fixture_slug . '_reg_predictor';
     my $monitor = $fixture_slug . '_monitor';
     my $agent = $fixture_slug . '_agent';
     my $controller = $fixture_slug . '_controller';
@@ -1101,6 +1608,12 @@ sub _render_fixture_package(%arg) {
     my $env = $fixture_slug . '_env';
     my $test = $fixture_slug . '_test';
     my %binding = _sv_binding_map($arg{bridge});
+    my %endpoint_by_role = map { ($_->{role} // '') => $_ }
+        @{$arg{bridge}{endpoints}};
+    my %transaction_field = map { $_->{name} => $_ }
+        @{$arg{bridge}{transactions}[0]{fields}};
+    my $select_name = $binding{$endpoint_by_role{select}{endpoint_id}}{target_name};
+    my $ready_out_name = $binding{$endpoint_by_role{ready_out}{endpoint_id}}{target_name};
     my $domain = $arg{bridge}{domains}[0];
     my $clock_endpoint_id = $domain->{clock_endpoint_id};
     my $reset_name = $binding{$domain->{reset_endpoint_id}}{target_name};
@@ -1121,15 +1634,22 @@ sub _render_fixture_package(%arg) {
     $push->('  import fsmgen_vial_uvm_types_pkg::*;');
     $push->('  import fsmgen_vial_uvm_components_pkg::*;');
     $push->("  import $arg{notification_package}::*;");
+    $push->("  import $arg{services_package}::*;");
     $push->('');
     my $config_start = @line + 1;
     $push->("  class $config extends uvm_object;");
     $push->("    `uvm_object_utils($config)");
     $push->('');
     $push->("    virtual $arg{interface_name} vif;");
+    $push->('    int unsigned scenario_timeout_cycles;');
+    $push->('    string role_substitution_id;');
+    $push->('    string ral_preview_id;');
     $push->('');
     $push->("    function new(string name = \"$config\");");
     $push->('      super.new(name);');
+    $push->('      scenario_timeout_cycles = 256;');
+    $push->('      role_substitution_id = "private-preview/driver/default";');
+    $push->('      ral_preview_id = "private-preview/ral/reg_data";');
     $push->('    endfunction');
     $push->('  endclass');
     push @spec, _map_spec(
@@ -1140,16 +1660,118 @@ sub _render_fixture_package(%arg) {
     );
     $push->('');
 
+    my $sequencer_start = @line + 1;
+    $push->("  class $sequencer extends uvm_sequencer#($item);");
+    $push->("    `uvm_component_utils($sequencer)");
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('    endfunction');
+    $push->('  endclass');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $sequencer_start, end => scalar(@line),
+        symbol => $sequencer, role => 'typed_transaction_sequencer',
+        plan_paths => ['/transactions/0', '/scenarios'],
+        semantic_paths => [$transaction->{semantic_id}],
+        bridge_paths => [$transaction->{binding_id}], locations => [],
+    );
+    $push->('');
+
+    my $driver_base_start = @line + 1;
+    $push->("  class $driver_base extends uvm_driver#($item);");
+    $push->("    `uvm_component_utils($driver_base)");
+    $push->('');
+    $push->("    $config cfg;");
+    $push->("    uvm_analysis_port#($item) driven_ap;");
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('      driven_ap = new("driven_ap", this);');
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void build_phase(uvm_phase phase);');
+    $push->('      super.build_phase(phase);');
+    $push->("      if (!uvm_config_db#($config)::get(this, \"\", \"cfg\", cfg))");
+    $push->('        `uvm_fatal("VIAL/CONFIG", "driver is missing generated fixture configuration")');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    virtual task drive_item($item request);");
+    $push->('      `uvm_fatal("VIAL/DRIVER", "compiler-selected driver override is missing")');
+    $push->('    endtask');
+    $push->('');
+    $push->('    virtual task run_phase(uvm_phase phase);');
+    $push->("      $item request;");
+    $push->("      $item published;");
+    $push->('      forever begin');
+    $push->('        seq_item_port.get_next_item(request);');
+    $push->('        if (request == null)');
+    $push->('          `uvm_fatal("VIAL/DRIVER", "sequencer supplied a null transaction item")');
+    $push->('        drive_item(request);');
+    $push->('        if (!$cast(published, request.clone()))');
+    $push->('          `uvm_fatal("VIAL/DRIVER", "transaction clone has an incompatible type")');
+    $push->('        driven_ap.write(published);');
+    $push->('        seq_item_port.item_done();');
+    $push->('      end');
+    $push->('    endtask');
+    $push->('  endclass');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $driver_base_start, end => scalar(@line),
+        symbol => $driver_base, role => 'typed_transaction_driver_base',
+        plan_paths => ['/transactions/0', '/operation_graph'],
+        semantic_paths => [$transaction->{semantic_id}],
+        bridge_paths => [$transaction->{binding_id}], locations => [],
+    );
+    $push->('');
+
+    my $driver_start = @line + 1;
+    $push->("  class $driver extends $driver_base;");
+    $push->("    `uvm_component_utils($driver)");
+    $push->('');
+    $push->('    function new(string name, uvm_component parent);');
+    $push->('      super.new(name, parent);');
+    $push->('    endfunction');
+    $push->('');
+    $push->("    virtual task drive_item($item request);");
+    $push->('      @(cfg.vif.driver_cb);');
+    for my $field (@{$transaction->{fields}}) {
+        my $carrier = $transaction_field{$field->{name}};
+        my $target = $binding{$carrier->{endpoint_id}}{target_name};
+        my $field_name = _sv_slug($field->{name});
+        $push->("      cfg.vif.driver_cb.$target <= request.$field_name;");
+    }
+    $push->("      cfg.vif.driver_cb.$select_name <= 1'b1;");
+    $push->('      do @(cfg.vif.driver_cb);');
+    $push->("      while (cfg.vif.driver_cb.$ready_out_name !== 1'b1);");
+    $push->("      cfg.vif.driver_cb.$select_name <= 1'b0;");
+    my $transfer_name = $binding{$transaction_field{transfer}{endpoint_id}}{target_name};
+    $push->("      cfg.vif.driver_cb.$transfer_name <= '0;");
+    $push->('    endtask');
+    $push->('  endclass');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $driver_start, end => scalar(@line),
+        symbol => $driver, role => 'compiler_selected_transaction_driver',
+        plan_paths => ['/transactions/0', '/bindings/transactions/0', '/operation_graph'],
+        semantic_paths => [$transaction->{semantic_id},
+            map { $_->{operation_id} }
+                grep { $_->{kind} eq 'start' } @{$arg{execution}{operation_graph}{operations}}],
+        bridge_paths => [$transaction->{binding_id}, '/transactions/0'],
+        locations => [map { $_->{source_location} }
+            grep { $_->{kind} eq 'start' } @{$arg{execution}{operation_graph}{operations}}],
+    );
+    $push->('');
+
     my $monitor_start = @line + 1;
     $push->("  class $monitor extends fsmgen_vial_component_base;");
     $push->("    `uvm_component_utils($monitor)");
     $push->('');
     $push->("    $config cfg;");
     $push->("    $registry notifications;");
+    $push->("    uvm_analysis_port#($item) observed_ap;");
     $push->('    longint unsigned sampled_cycle;');
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
     $push->('      super.new(name, parent);');
+    $push->('      observed_ap = new("observed_ap", this);');
     $push->('      sampled_cycle = 0;');
     $push->('    endfunction');
     $push->('');
@@ -1175,6 +1797,19 @@ sub _render_fixture_package(%arg) {
     $push->('      return item;');
     $push->('    endfunction');
     $push->('');
+    $push->("    protected function $item sample_transaction();");
+    $push->("      $item transaction;");
+    $push->("      transaction = ${item}::type_id::create(\"observed_transaction\");");
+    $push->('      transaction.semantic_id = "' . _sv_string($transaction->{semantic_id}) . '";');
+    for my $field (@{$transaction->{fields}}) {
+        my $carrier = $transaction_field{$field->{name}};
+        my $target = $binding{$carrier->{endpoint_id}}{target_name};
+        my $field_name = _sv_slug($field->{name});
+        $push->("      transaction.$field_name = cfg.vif.monitor_cb.$target;");
+    }
+    $push->('      return transaction;');
+    $push->('    endfunction');
+    $push->('');
     $push->('    virtual task run_phase(uvm_phase phase);');
     $push->("      $payload item;");
     $push->('      forever begin');
@@ -1192,6 +1827,8 @@ sub _render_fixture_package(%arg) {
             $push->("        if ($predicate) begin");
             $push->("          item = sample_payload(\"$event_id\", \"$semantic_id\");");
             $push->("          notifications.$field.trigger_notification(item);");
+            $push->('          observed_ap.write(sample_transaction());')
+                if ($event->{name} // '') eq 'completed';
             $push->('        end');
         } else {
             $push->("        // '$event->{name}' keeps a typed channel; its adapter-state predicate is not executed by this emission-only slice.");
@@ -1217,6 +1854,8 @@ sub _render_fixture_package(%arg) {
     $push->('');
     $push->("    $config cfg;");
     $push->("    $registry notifications;");
+    $push->("    $sequencer sequencer;");
+    $push->("    $driver_base driver;");
     $push->("    $monitor monitor;");
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
@@ -1232,13 +1871,21 @@ sub _render_fixture_package(%arg) {
     $push->("      uvm_config_db#($config)::set(this, \"monitor\", \"cfg\", cfg);");
     $push->("      uvm_config_db#($registry)::set(this, \"monitor\", \"notifications\", notifications);");
     $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "monitor", "vial_context", context);');
+    $push->("      uvm_config_db#($config)::set(this, \"driver\", \"cfg\", cfg);");
+    $push->("      sequencer = ${sequencer}::type_id::create(\"sequencer\", this);");
+    $push->("      driver = ${driver_base}::type_id::create(\"driver\", this);");
     $push->("      monitor = ${monitor}::type_id::create(\"monitor\", this);");
+    $push->('    endfunction');
+    $push->('');
+    $push->('    virtual function void connect_phase(uvm_phase phase);');
+    $push->('      super.connect_phase(phase);');
+    $push->('      driver.seq_item_port.connect(sequencer.seq_item_export);');
     $push->('    endfunction');
     $push->('  endclass');
     push @spec, _map_spec(
         relpath => $arg{relpath}, start => $agent_start, end => scalar(@line),
-        symbol => $agent, role => 'passive_timed_interface_agent',
-        plan_paths => ['/bindings', '/events'],
+        symbol => $agent, role => 'active_timed_interface_agent',
+        plan_paths => ['/bindings', '/events', '/transactions', '/scenarios'],
         semantic_paths => [$arg{execution}{fixture}{fixture_id}],
         bridge_paths => ['/units/0', '/domains/0'], locations => [],
     );
@@ -1250,6 +1897,7 @@ sub _render_fixture_package(%arg) {
     $push->('');
     $push->("    $config cfg;");
     $push->("    $registry notifications;");
+    $push->("    $sequencer sequencer;");
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
     $push->('      super.new(name, parent);');
@@ -1265,11 +1913,16 @@ sub _render_fixture_package(%arg) {
     $push->('');
     $push->('    virtual function void start_of_simulation_phase(uvm_phase phase);');
     $push->('      super.start_of_simulation_phase(phase);');
-    $push->('      if (cfg == null || cfg.vif == null || notifications == null)');
+    $push->('      if (cfg == null || cfg.vif == null || notifications == null || sequencer == null)');
     $push->('        `uvm_fatal("VIAL/READY", "generated controller is not ready")');
     $push->('    endfunction');
     $push->('');
     $push->('    task run_selected_lifecycle();');
+    for my $scenario (@{$arg{execution}{scenarios}}) {
+        my $sequence = $fixture_slug . '_' . _sv_slug($scenario->{name}) . '_sequence';
+        my $variable = _sv_slug($scenario->{name}) . '_sequence';
+        $push->("      $sequence $variable;");
+    }
     if ($event_by_name{requested}) {
         my $requested = $event_by_name{requested};
         my $requested_id = _sv_string($requested->{event_id});
@@ -1291,7 +1944,12 @@ sub _render_fixture_package(%arg) {
         $push->('      requested.logical_time = context.logical_time;');
         $push->("      notifications.$requested_field.trigger_notification(requested);");
     }
-    $push->('      @(cfg.vif.monitor_cb);');
+    for my $scenario (@{$arg{execution}{scenarios}}) {
+        my $sequence = $fixture_slug . '_' . _sv_slug($scenario->{name}) . '_sequence';
+        my $variable = _sv_slug($scenario->{name}) . '_sequence';
+        $push->("      $variable = ${sequence}::type_id::create(\"$variable\");");
+        $push->("      $variable.start(sequencer);");
+    }
     $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_RUNNING, VIAL_LIFECYCLE_DRAINING);');
     $push->('    endtask');
     $push->('');
@@ -1371,6 +2029,11 @@ sub _render_fixture_package(%arg) {
     $push->("    $agent agent;");
     $push->("    $controller controller;");
     $push->("    $collector result_collector;");
+    $push->("    uvm_tlm_analysis_fifo#($item) driven_fifo;");
+    $push->("    $observer transaction_observer;");
+    $push->("    $reg_block ral_model;");
+    $push->("    $reg_adapter ral_adapter;");
+    $push->("    $reg_predictor ral_predictor;");
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
     $push->('      super.new(name, parent);');
@@ -1393,15 +2056,38 @@ sub _render_fixture_package(%arg) {
     $push->("      agent = ${agent}::type_id::create(\"agent\", this);");
     $push->("      controller = ${controller}::type_id::create(\"controller\", this);");
     $push->("      result_collector = ${collector}::type_id::create(\"result_collector\", this);");
+    $push->('      driven_fifo = new("driven_fifo", this);');
+    $push->("      transaction_observer = ${observer}::type_id::create(\"transaction_observer\", this);");
+    $push->("      ral_model = ${reg_block}::type_id::create(\"ral_model\");");
+    $push->('      ral_model.build();');
+    $push->('      ral_model.lock_model();');
+    $push->("      ral_adapter = ${reg_adapter}::type_id::create(\"ral_adapter\");");
+    $push->("      ral_predictor = ${reg_predictor}::type_id::create(\"ral_predictor\", this);");
     $push->('    endfunction');
     $push->('');
+    my $connect_start = @line + 1;
     $push->('    virtual function void connect_phase(uvm_phase phase);');
     $push->('      super.connect_phase(phase);');
+    $push->('      agent.driver.driven_ap.connect(driven_fifo.analysis_export);');
+    $push->('      agent.monitor.observed_ap.connect(transaction_observer.analysis_export);');
+    $push->('      agent.monitor.observed_ap.connect(ral_predictor.bus_in);');
+    $push->('      ral_predictor.map = ral_model.default_map;');
+    $push->('      ral_predictor.adapter = ral_adapter;');
+    $push->('      controller.sequencer = agent.sequencer;');
     $push->('    endfunction');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $connect_start, end => scalar(@line),
+        symbol => 'connect_phase', role => 'analysis_tlm_and_ral_connections',
+        plan_paths => ['/transactions/0', '/bindings/transactions/0', '/bindings/probes/0'],
+        semantic_paths => [$transaction->{semantic_id}, $arg{bridge}{probes}[0]{probe_id}],
+        bridge_paths => [$transaction->{binding_id}, '/probes/0'], locations => [],
+    );
     $push->('');
     $push->('    virtual function void end_of_elaboration_phase(uvm_phase phase);');
     $push->('      super.end_of_elaboration_phase(phase);');
-    $push->('      if (agent == null || controller == null || result_collector == null)');
+    $push->('      if (agent == null || controller == null || result_collector == null ||');
+    $push->('          driven_fifo == null || transaction_observer == null ||');
+    $push->('          ral_model == null || ral_adapter == null || ral_predictor == null)');
     $push->('        `uvm_fatal("VIAL/TOPOLOGY", "generated component topology is incomplete")');
     $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_CONFIGURED, VIAL_LIFECYCLE_READY);');
     $push->('    endfunction');
@@ -1428,6 +2114,19 @@ sub _render_fixture_package(%arg) {
     $push->('');
     $push->('    virtual function void build_phase(uvm_phase phase);');
     $push->('      super.build_phase(phase);');
+    my $factory_override_start = @line + 1;
+    $push->('      uvm_factory::get().set_inst_override_by_type(');
+    $push->("        ${driver_base}::get_type(), ${driver}::get_type(),");
+    $push->('        "uvm_test_top.env.agent.driver"');
+    $push->('      );');
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $factory_override_start,
+        end => scalar(@line), symbol => 'driver_type_override',
+        role => 'scoped_factory_role_substitution',
+        plan_paths => ['/transactions/0', '/fixture'],
+        semantic_paths => [$transaction->{semantic_id}],
+        bridge_paths => [$transaction->{binding_id}, $CONTRACT], locations => [],
+    );
     $push->("      cfg = ${config}::type_id::create(\"cfg\");");
     $push->("      if (!uvm_config_db#(virtual $arg{interface_name})::get(this, \"\", \"vif\", cfg.vif))");
     $push->('        `uvm_fatal("VIAL/VIF", "missing generated virtual interface")');
@@ -1435,6 +2134,9 @@ sub _render_fixture_package(%arg) {
     $push->('      context.plan_id = "' . _sv_string($arg{execution}{plan_id}) . '";');
     $push->("      notifications = ${registry}::type_id::create(\"notifications\");");
     $push->('      notifications.configure_preview();');
+    $push->('      cfg.scenario_timeout_cycles = 256;');
+    $push->('      cfg.role_substitution_id = "private-preview/driver/base-output-arbitration";');
+    $push->('      cfg.ral_preview_id = "private-preview/ral/reg-data-at-zero";');
     $push->("      uvm_config_db#($config)::set(this, \"env\", \"cfg\", cfg);");
     $push->("      uvm_config_db#($registry)::set(this, \"env\", \"notifications\", notifications);");
     $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "env", "vial_context", context);');
@@ -1517,6 +2219,12 @@ sub _render_top(%arg) {
     my $domain = $bridge->{domains}[0];
     my $clock = $binding{$domain->{clock_endpoint_id}}{target_name};
     my $reset = $binding{$domain->{reset_endpoint_id}}{target_name};
+    my ($ready_in_endpoint) = grep { ($_->{role} // '') eq 'ready_in' }
+        @{$bridge->{endpoints}};
+    my ($ready_out_endpoint) = grep { ($_->{role} // '') eq 'ready_out' }
+        @{$bridge->{endpoints}};
+    my $ready_in = $binding{$ready_in_endpoint->{endpoint_id}}{target_name};
+    my $ready_out = $binding{$ready_out_endpoint->{endpoint_id}}{target_name};
     my $reset_active = $domain->{reset_polarity} eq 'active_low' ? "1'b0" : "1'b1";
     my $reset_inactive = $domain->{reset_polarity} eq 'active_low' ? "1'b1" : "1'b0";
     my $fixture_slug = _sv_slug($arg{execution}{fixture}{fixture_name});
@@ -1549,6 +2257,16 @@ sub _render_top(%arg) {
         symbol => 'dut', role => 'bound_dut_instance',
         plan_paths => ['/bindings/unit'], semantic_paths => [$bridge->{units}[0]{unit_id}],
         bridge_paths => ['/units/0'], locations => [],
+    );
+    $push->('');
+    my $ready_start = @line + 1;
+    $push->("  assign vial_if.$ready_in = vial_if.$ready_out;");
+    push @spec, _map_spec(
+        relpath => $arg{relpath}, start => $ready_start, end => $ready_start,
+        symbol => 'ready_loopback', role => 'declared_ready_loopback',
+        plan_paths => ['/bindings/endpoints'],
+        semantic_paths => [$ready_in_endpoint->{endpoint_id}, $ready_out_endpoint->{endpoint_id}],
+        bridge_paths => ['/endpoints'], locations => [],
     );
     $push->('');
     my $clock_start = @line + 1;

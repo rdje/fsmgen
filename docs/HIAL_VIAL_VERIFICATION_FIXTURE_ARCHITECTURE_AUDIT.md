@@ -1003,8 +1003,8 @@ backend mappings.
 
 ### Artifact graph and generated-code quality
 
-The shipped `.13.1.2` structures compose with the existing atomic artifact
-transaction and emit this exact deterministic eleven-artifact graph:
+The shipped `.13.1.3` structures compose with the existing atomic artifact
+transaction and emit this exact deterministic twelve-artifact graph:
 
 ```text
 backends/sv_uvm_emit.accellera_2020_3_1/
@@ -1016,6 +1016,7 @@ backends/sv_uvm_emit.accellera_2020_3_1/
   src/fsmgen_vial_uvm_components_pkg.sv
   src/<fixture>_if.sv
   src/<fixture>_notifications_pkg.sv
+  src/<fixture>_services_pkg.sv
   src/<fixture>_pkg.sv
   src/<fixture>_tb.sv
   src/dut/<generated-hial-dut>.sv
@@ -1026,11 +1027,14 @@ same immutable ExecutionIR, bridge manifest, and deterministic HIAL DUT input
 as the portable backend. `FSM::VIAL::Backend::SVUVMStaticValidator` checks the
 closed roles, limits, provider neutrality, deterministic text shape, balanced
 generated constructs, selected UVM foundation shape, notification/callback
-shape and bounds, complete passive topology/lifecycle shape, and single
+shape and bounds, complete active topology/lifecycle shape, typed stimulus and
+service shapes, exact TLM/factory/configuration/RAL wiring, and the single
 root-owned objection policy. The native source map uses
 `fsmgen.vial_uvm_backend_source_map.v1` and records exact start/end line and
-column ranges for the added agent, monitor, controller, collector, dispatcher,
-registry, and six event-channel instances. The checked gallery under
+column ranges for the agent, sequencer, driver, monitor, controller, collector,
+dispatcher, registry, six event-channel instances, sequences, TLM services,
+and private RAL preview. The graph has 64 mapped entries and passes 12 static
+checks. The checked gallery under
 `vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/`
 is byte-compared with every rerender. The graph can publish atomically and
 rejects non-identical collisions; focused tests remove the exact graph and
@@ -1213,7 +1217,7 @@ Compatibility states are therefore exact:
 | Surface | Revision | Behavior | Qualification |
 | --- | --- | --- | --- |
 | `uvm-passive-monitor` | UVM 1.2 | inert declarations only | shape/inertness tests; no compile/run claim |
-| `sv_uvm_emit.accellera_2020_3_1` | IEEE 1800.2-2020 / Accellera 2020-3.1 | deterministic selected topology, lifecycle, and notification/interception artifacts | emission/source-map/static-structure only; compile/run explicitly not run |
+| `sv_uvm_emit.accellera_2020_3_1` | IEEE 1800.2-2020 / Accellera 2020-3.1 | deterministic selected topology, lifecycle, notification/interception, stimulus, TLM, scoped factory/configuration, and private typed RAL/native-decision-preview artifacts | emission/source-map/static-structure only; compile/run explicitly not run |
 | future `sv_uvm_qualified` PGEN+NEXSIM tuple | same selected UVM identity unless explicitly revised | executable native intent lowering | unavailable until `.13.3` selects and passes the exact tuple |
 
 A future CLI alias, UVM 1.2 deprecation, upgraded passive-monitor target,
@@ -1256,15 +1260,25 @@ typed lifecycle/reentrancy/filter/effect records, a context-owning agent base,
 passive monitor and agent, lifecycle controller, result-collector structure,
 complete environment/test construction, one root-owned objection pair, and
 ordered typed notification/interception channels with bounded queue-or-reject
-reentrancy. The gallery now byte-locks all six UVM-facing source files.
+reentrancy.
+
+Completed `.13.1.3` changes the selected agent from passive to active and adds
+one typed write item, sequencer and driver, two generated public scenario
+sequences, driven and observed analysis streams, typed TLM FIFOs and subscriber,
+exact scoped configuration paths, one compiler-selected driver factory
+override, and a monitor-connected private RAL block/adapter/predictor preview.
+Portable constrained-decision values are replayed without UVM rerandomization;
+the isolated bounded native solver preview is not invoked by generated
+scenarios. The graph now contains 12 artifacts, eight SystemVerilog sources,
+64 source-map entries, 12 static checks, and seven byte-locked UVM-facing
+gallery sources.
 
 Preprocessing, parse, UVM-library compile, fixture compile, elaboration,
-runtime, result, parity, visual-review completion, public interceptor authoring,
-stimulus/TLM/factory/configuration/RAL/randomization, coverage/properties,
-models/scoreboards/faults/results, and full native UVM breadth remain explicitly
-unclaimed. Active `.13.1.3` now owns only the stimulus/TLM/factory/
-configuration/RAL/constrained-decision emission frontier; its implementation
-remains unperformed at activation. Experimental `.13.2` remains separately
+runtime, result, parity, visual-review completion, public interceptor, RAL, or
+factory-override authoring, coverage/properties, models/scoreboards/faults/
+results, and full native UVM breadth remain explicitly unclaimed. Proposed
+`.13.1.4` is the next bounded emission leaf but is not active. Experimental
+`.13.2` remains separately
 dependency-ready because the first gallery exists, so open-tool evidence
 cannot blur the active emission sequence.
 

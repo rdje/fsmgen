@@ -26,27 +26,38 @@ ok($emission->{ok}, 'complete native UVM structure emission succeeds');
 diag(JSON::PP->new->canonical(1)->encode($emission->{diagnostics})) unless $emission->{ok};
 
 subtest 'closed graph and capability boundary identify the selected slice exactly' => sub {
-    is(scalar(@{$emission->{artifacts}}), 11, 'closed graph has eleven artifacts');
-    is(scalar(grep { $_->{language} eq 'systemverilog' } @{$emission->{artifacts}}), 7,
-        'closed graph has seven generated SystemVerilog sources');
-    is($emission->{backend_manifest}{emitter_revision}, 2, 'emitter revision is two');
-    is($emission->{backend_manifest}{limits}{generated_source_artifacts}, 7,
-        'manifest records the seven-source limit');
-    is($emission->{backend_manifest}{limits}{total_artifacts}, 11,
-        'manifest records the eleven-artifact limit');
+    is(scalar(@{$emission->{artifacts}}), 12, 'closed graph has twelve artifacts');
+    is(scalar(grep { $_->{language} eq 'systemverilog' } @{$emission->{artifacts}}), 8,
+        'closed graph has eight generated SystemVerilog sources');
+    is($emission->{backend_manifest}{emitter_revision}, 3, 'emitter revision is three');
+    is($emission->{backend_manifest}{limits}{generated_source_artifacts}, 8,
+        'manifest records the eight-source limit');
+    is($emission->{backend_manifest}{limits}{total_artifacts}, 12,
+        'manifest records the twelve-artifact limit');
 
     my %required = map { $_ => 1 } @{$emission->{negotiation}{required}};
     ok($required{complete_component_topology_v1}, 'topology capability is required');
     ok($required{root_owned_lifecycle_v1}, 'root lifecycle capability is required');
     ok($required{ordered_notification_interception_v1},
         'ordered notification capability is required');
+    ok($required{typed_stimulus_sequences_v1}, 'typed stimulus capability is required');
+    ok($required{analysis_tlm_wiring_v1}, 'analysis TLM capability is required');
+    ok($required{scoped_factory_configuration_v1},
+        'factory/configuration capability is required');
+    ok($required{ral_preview_v1}, 'RAL-preview capability is required');
+    ok($required{constrained_decision_replay_v1},
+        'constrained-decision replay capability is required');
     is($emission->{negotiation}{negotiation_scope},
-        'native_uvm_topology_lifecycle_notification_v1', 'negotiation scope is exact');
+        'native_uvm_stimulus_services_v1', 'negotiation scope is exact');
     is_deeply(
         $emission->{backend_manifest}{capability_evidence}{public_authoring_boundary},
         {
             execution_events => 'public_vial_v1',
+            portable_scenarios_transactions_decisions => 'public_vial_v1',
             native_interceptor_tables => 'private_typed_preview',
+            native_role_substitution => 'private_typed_preview',
+            native_ral => 'private_typed_preview',
+            native_constraint_solving => 'private_typed_preview_not_executed',
         },
         'public events and private interceptor preview are distinguished',
     );
@@ -82,8 +93,12 @@ subtest 'topology owns context, logical time, lifecycle, and one root objection'
     ) {
         like($fixture, $shape->[1], "$shape->[0] structure is emitted");
     }
-    unlike($fixture, qr/\b(?:uvm_driver|uvm_sequencer)\b/,
-        'selected agent remains intentionally passive');
+    like($fixture, qr/class base_output_arbitration_sequencer extends uvm_sequencer#/,
+        'selected stimulus creates a typed sequencer');
+    like($fixture, qr/class base_output_arbitration_driver_base extends uvm_driver#/,
+        'selected stimulus creates a typed driver base');
+    like($fixture, qr/driver\.seq_item_port\.connect\(sequencer\.seq_item_export\);/,
+        'active agent connects its driver and sequencer explicitly');
     like($fixture, qr/\@\(cfg\.vif\.monitor_cb\)/,
         'monitor samples only through the selected clocking block');
     like($fixture, qr/context\.set_logical_time\(sampled_cycle, VIAL_SAMPLE_PHASE, 0\)/,
@@ -182,7 +197,7 @@ subtest 'complete source maps cover every new structure and selected channel' =>
         uvm_agent_foundation typed_notification_payload typed_interceptor_record
         ordered_notification_dispatcher bounded_notification_channel
         generated_notification_registry timed_interface_monitor
-        passive_timed_interface_agent root_owned_lifecycle_controller
+        active_timed_interface_agent root_owned_lifecycle_controller
         closed_result_collector_structure fixture_environment_foundation
         fixture_test_foundation
     )) {
@@ -218,12 +233,12 @@ subtest 'static negative oracles fail at exact topology and notification boundar
     static_failure(\@queue, 'VIAL_UVM_STATIC_NOTIFICATION_SHAPE_ERROR',
         'missing queue bound');
 
-    my @driver = map { clone($_) } @source;
-    artifact_in(\@driver, 'uvm_fixture_package')->{content}
-        =~ s/(\nendpackage\n)/\n  uvm_driver unselected_driver;\n$1/
-        or die "passive-topology mutation did not apply\n";
-    static_failure(\@driver, 'VIAL_UVM_STATIC_LIFECYCLE_SHAPE_ERROR',
-        'unselected active-agent structure');
+    my @driver_connection = map { clone($_) } @source;
+    artifact_in(\@driver_connection, 'uvm_fixture_package')->{content}
+        =~ s/driver\.seq_item_port\.connect\(sequencer\.seq_item_export\);/\/\/ removed driver connection/
+        or die "driver-connection mutation did not apply\n";
+    static_failure(\@driver_connection, 'VIAL_UVM_STATIC_SERVICE_WIRING_ERROR',
+        'missing active-agent connection');
 
     my @objection = map { clone($_) } @source;
     artifact_in(\@objection, 'uvm_fixture_package')->{content}

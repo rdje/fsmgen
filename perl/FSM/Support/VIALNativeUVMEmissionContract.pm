@@ -28,7 +28,7 @@ sub vial_native_uvm_emission_contract_keys {
 sub build_vial_native_uvm_emission_contract {
     return {
         schema_version => 1,
-        status => 'shipped_private_topology_lifecycle_notification_emission_and_review_gallery',
+        status => 'shipped_private_stimulus_services_emission_and_review_gallery',
         contract_source => vial_native_uvm_emission_contract_source(),
         implementation_entrypoints => [
             'FSM::VIAL::Backend::SVUVMAccellera2020_3_1->emit({...})',
@@ -61,7 +61,7 @@ sub build_vial_native_uvm_emission_contract {
             verified_project_local_copy_required => JSON::PP::true,
         },
         backend_stage_status => {
-            negotiation => 'shipped_topology_lifecycle_notification_scope',
+            negotiation => 'shipped_stimulus_services_scope',
             emission => 'shipped_deterministic_complete_selected_structures',
             static_validation => 'shipped_structural_only',
             manual_review => 'gallery_available_review_pending',
@@ -84,6 +84,12 @@ sub build_vial_native_uvm_emission_contract {
             vial.backend.sv_uvm_emit.lifecycle.v1
             vial.backend.sv_uvm_emit.methodology_identity.v1
             vial.backend.sv_uvm_emit.notification_interception.v1
+            vial.backend.sv_uvm_emit.typed_stimulus.v1
+            vial.backend.sv_uvm_emit.scenario_sequences.v1
+            vial.backend.sv_uvm_emit.analysis_tlm.v1
+            vial.backend.sv_uvm_emit.scoped_factory_configuration.v1
+            vial.backend.sv_uvm_emit.ral_preview.v1
+            vial.backend.sv_uvm_emit.constrained_decision_replay.v1
             vial.backend.sv_uvm_emit.source_map.v1
             vial.backend.sv_uvm_emit.static_validation.v1
             vial.backend.sv_uvm_emit.typed_context.v1
@@ -92,9 +98,9 @@ sub build_vial_native_uvm_emission_contract {
         limits => {
             selected_units => 1,
             selected_domains => 1,
-            generated_source_artifacts => 7,
+            generated_source_artifacts => 8,
             generated_source_bytes => 16_777_216,
-            total_artifacts => 11,
+            total_artifacts => 12,
             source_map_entries => 1_000_000,
             identifier_bytes => 255,
         },
@@ -109,12 +115,13 @@ sub build_vial_native_uvm_emission_contract {
             mixed_language scale
         )],
         guidance => [
-            'Use the private emitter to inspect or publish the selected typed context, component topology, timed interface, root-owned lifecycle, bounded notification/interception registry, result-collector structure, DUT binding, and top; public vial run remains the separately qualified portable Verilator pipeline.',
+            'Use the private emitter to inspect or publish the selected typed context, active component topology, timed interface, root-owned lifecycle, bounded notification/interception registry, typed transaction items and scenario sequences, driver/sequencer, analysis TLM, scoped factory/configuration, RAL preview, fixed decision replay, result-collector structure, DUT binding, and top; public vial run remains the separately qualified portable Verilator pipeline.',
             'Treat the checked review gallery and static validator as deterministic emission evidence only, never as SystemVerilog syntax, UVM compile, elaboration, simulation, result, or parity evidence.',
             'Ordinary emission neither downloads nor inspects UVM library bytes. Materialize and verify the exact Accellera source in project-local storage only before a later library-dependent gate.',
             'Canonical generated source is simulator-neutral and contains no provider-specific branch. Tool commands and workarounds belong to separately identified experimental or qualified adapters.',
-            'Public VIAL v1 events drive the selected generated channels. Native interceptor tables remain a private typed preview until a later slice selects their public authoring syntax.',
-            'Later emission leaves add stimulus, TLM, factory/configuration, RAL, constrained decisions, coverage, properties, models, scoreboards, faults, and results without waiting for a simulator; these selected structures are not complete VIAL or UVM breadth.',
+            'Public VIAL v1 events, transactions, scenarios, and fixed plan decisions own the selected generated channels and stimulus. Native interceptor tables, role substitutions, RAL metadata, and native constraint solving remain private typed previews until later public authoring decisions.',
+            'Portable decisions are replayed from immutable ExecutionIR and are never rerandomized by the backend. The isolated native solver form is emitted for review but not called by the generated fixture.',
+            'Later emission leaves add coverage, properties, models, scoreboards, faults, and results without waiting for a simulator; the currently selected structures are not complete VIAL or UVM breadth.',
         ],
     };
 }

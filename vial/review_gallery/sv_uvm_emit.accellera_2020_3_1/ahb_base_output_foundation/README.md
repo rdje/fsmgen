@@ -6,6 +6,11 @@ This accumulating `sv_uvm_emit.accellera_2020_3_1` gallery contains byte-exact e
 - `ppif/ahb_lite_subordinate.ppif`
 - plan `plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574`
 
-The six UVM-facing sources cover typed context, component/agent bases, the timed interface, ordered notification/interception, passive topology, lifecycle/result structures, and the bound top. The eleven-artifact canonical graph additionally contains the deterministic HIAL DUT, manifests, methodology profile, and static report.
+Seven UVM-facing sources cover context/components, timing, notifications,
+active stimulus/scenarios, TLM, scoped factory/configuration, private RAL and
+native-constraint previews, lifecycle/results, and the top. The twelve-artifact
+graph also contains the HIAL DUT, manifests, profiles, and static report. VIAL
+owns transactions, scenarios, and decision replay; generated scenarios never
+call the native solver.
 
 These files prove deterministic emission and structural review only. They have not been preprocessed, parsed, compiled, elaborated, or run, and produce no result or parity claim. Record review findings in the owning task-tree rather than patching only this snapshot.

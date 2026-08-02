@@ -144,14 +144,16 @@ my @REGRESSION_CORPUS = (
         relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
         family => 'verification_intent_tooling',
         classification => 'supported_smoke',
-        coverage => 'vial_native_uvm_topology_lifecycle_notification_private_api',
+        coverage => 'vial_native_uvm_stimulus_services_private_api',
         source_kind => 'vial',
         strict_supported => 0,
         supported_phases => [qw(
             parse typecheck hial_review bridge_binding execution_plan
             backend_emission component_topology lifecycle_static
             notification_interception_static static_validation review_gallery
-            atomic_publication
+            stimulus_sequence_static analysis_tlm_static
+            factory_configuration_static ral_preview_static
+            constrained_decision_replay_static atomic_publication
         )],
         required_capabilities => [qw(
             vial.backend.sv_uvm_emit.accellera_2020_3_1.v1
@@ -162,6 +164,12 @@ my @REGRESSION_CORPUS = (
             vial.backend.sv_uvm_emit.interface_foundation.v1
             vial.backend.sv_uvm_emit.lifecycle.v1
             vial.backend.sv_uvm_emit.notification_interception.v1
+            vial.backend.sv_uvm_emit.typed_stimulus.v1
+            vial.backend.sv_uvm_emit.scenario_sequences.v1
+            vial.backend.sv_uvm_emit.analysis_tlm.v1
+            vial.backend.sv_uvm_emit.scoped_factory_configuration.v1
+            vial.backend.sv_uvm_emit.ral_preview.v1
+            vial.backend.sv_uvm_emit.constrained_decision_replay.v1
             vial.backend.sv_uvm_emit.uvm_top_foundation.v1
             vial.backend.sv_uvm_emit.source_map.v1
             vial.backend.sv_uvm_emit.static_validation.v1

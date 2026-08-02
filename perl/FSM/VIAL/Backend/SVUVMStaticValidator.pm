@@ -21,7 +21,7 @@ my @ARTIFACT_KEYS = qw(
 my @REQUIRED_SOURCE_ROLES = qw(
     generated_hial_dut uvm_types_package uvm_component_foundations
     uvm_fixture_interface uvm_notification_interception uvm_fixture_package
-    uvm_fixture_top
+    uvm_stimulus_services uvm_fixture_top
 );
 
 sub result_keys($class) {
@@ -222,7 +222,13 @@ sub _validate($raw) {
         [qr/\bclass\s+[a-z_][a-z0-9_]*_monitor\s+extends\s+fsmgen_vial_component_base\b/i,
             'timed interface monitor'],
         [qr/\bclass\s+[a-z_][a-z0-9_]*_agent\s+extends\s+fsmgen_vial_agent_base\b/i,
-            'passive timed interface agent'],
+            'timed interface agent'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_sequencer\s+extends\s+uvm_sequencer\s*#/i,
+            'typed transaction sequencer'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_driver_base\s+extends\s+uvm_driver\s*#/i,
+            'typed transaction driver base'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_driver\s+extends\s+[a-z_][a-z0-9_]*_driver_base\b/i,
+            'compiler-selected transaction driver'],
         [qr/\bclass\s+[a-z_][a-z0-9_]*_controller\s+extends\s+fsmgen_vial_component_base\b/i,
             'root-owned lifecycle controller'],
         [qr/\bclass\s+[a-z_][a-z0-9_]*_result_collector\s+extends\s+fsmgen_vial_component_base\b/i,
@@ -249,17 +255,87 @@ sub _validate($raw) {
             "generated source is missing $label", '/roles/uvm_fixture_package');
         $lifecycle_shape_ok = 0;
     }
-    if (defined($text_by_role{uvm_fixture_package})
-            && $text_by_role{uvm_fixture_package} =~ /\b(?:uvm_driver|uvm_sequencer)\b/) {
-        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_LIFECYCLE_SHAPE_ERROR',
-            'passive topology contains an unselected driver or sequencer',
-            '/roles/uvm_fixture_package');
-        $lifecycle_shape_ok = 0;
-    }
     _record_check(\@checks, 'selected_lifecycle_topology_shape', $lifecycle_shape_ok);
 
-    my $objection_policy_ok = defined($text_by_role{uvm_fixture_package});
+    my @service_shape = (
+        [qr/\bpackage\s+[a-z_][a-z0-9_]*_services_pkg\s*;/i,
+            'stimulus/services package declaration'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_item\s+extends\s+uvm_sequence_item\b/i,
+            'typed sequence item'],
+        [qr/\bdo_copy\s*\(.*\bdo_compare\s*\(.*\bdo_print\s*\(/s,
+            'explicit sequence-item copy, compare, and print methods'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_sequence\s+extends\s+uvm_sequence\s*#/i,
+            'typed scenario sequence'],
+        [qr/\breplay_selected\s*\(.*\bsolve_native_preview\s*\(.*\brandomize\s*\(/s,
+            'fixed replay plus isolated native constraint preview'],
+        [qr/\bconstraint\s+selected_domain_c\b.*\bcandidate\s+inside\s*\{/s,
+            'bounded native decision constraint'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_transaction_observer\s+extends\s+uvm_subscriber\s*#/i,
+            'typed analysis subscriber'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_reg_data_reg\s+extends\s+uvm_reg\b/i,
+            'RAL register preview'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_reg_block\s+extends\s+uvm_reg_block\b/i,
+            'RAL block preview'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_reg_adapter\s+extends\s+uvm_reg_adapter\b/i,
+            'RAL adapter preview'],
+        [qr/\bclass\s+[a-z_][a-z0-9_]*_reg_predictor\s+extends\s+uvm_reg_predictor\s*#/i,
+            'RAL predictor preview'],
+    );
+    my $service_shape_ok = defined($text_by_role{uvm_stimulus_services});
+    for my $requirement (@service_shape) {
+        my ($pattern, $label) = @$requirement;
+        next if defined($text_by_role{uvm_stimulus_services})
+            && $text_by_role{uvm_stimulus_services} =~ $pattern;
+        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_SERVICE_SHAPE_ERROR',
+            "generated source is missing $label", '/roles/uvm_stimulus_services');
+        $service_shape_ok = 0;
+    }
+    my $service_text = $text_by_role{uvm_stimulus_services} // '';
+    if ($service_text !~ /\bdecision\.replay_selected\s*\(/
+            || $service_text =~ /\bdecision\.solve_native_preview\s*\(/) {
+        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_SERVICE_SHAPE_ERROR',
+            'generated scenarios must replay the fixed plan decision and must not invoke the native solver preview',
+            '/roles/uvm_stimulus_services');
+        $service_shape_ok = 0;
+    }
+    _record_check(\@checks, 'selected_stimulus_service_shape', $service_shape_ok);
+
     my $fixture_text = $text_by_role{uvm_fixture_package} // '';
+    my @wiring_shape = (
+        [qr/\bseq_item_port\.connect\s*\(\s*sequencer\.seq_item_export\s*\)/,
+            'sequencer-to-driver connection'],
+        [qr/\buvm_analysis_port\s*#.*\bobserved_ap\b/s,
+            'typed monitor analysis port'],
+        [qr/\buvm_tlm_analysis_fifo\s*#.*\bdriven_fifo\b/s,
+            'typed analysis FIFO'],
+        [qr/\bobserved_ap\.connect\s*\(\s*transaction_observer\.analysis_export\s*\)/,
+            'monitor-to-subscriber connection'],
+        [qr/\bobserved_ap\.connect\s*\(\s*ral_predictor\.bus_in\s*\)/,
+            'monitor-to-RAL-predictor connection'],
+        [qr/\bset_inst_override_by_type\s*\(.*"uvm_test_top\.env\.agent\.driver"/s,
+            'exact compiler-owned instance factory override'],
+        [qr/\buvm_config_db\s*#.*::set\s*\(\s*this\s*,\s*"(?:env|agent|driver|monitor|controller|result_collector)"/s,
+            'scoped configuration publication'],
+    );
+    my $wiring_shape_ok = defined($text_by_role{uvm_fixture_package});
+    for my $requirement (@wiring_shape) {
+        my ($pattern, $label) = @$requirement;
+        next if defined($text_by_role{uvm_fixture_package})
+            && $text_by_role{uvm_fixture_package} =~ $pattern;
+        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_SERVICE_WIRING_ERROR',
+            "generated source is missing $label", '/roles/uvm_fixture_package');
+        $wiring_shape_ok = 0;
+    }
+    if ($fixture_text =~ /uvm_config_db\s*#.*::(?:set|get)\s*\([^\n]*"[^"\n]*\*/
+            || $fixture_text =~ /\bsolve_native_preview\s*\(/) {
+        _diagnose(\@diagnostics, 'VIAL_UVM_STATIC_SERVICE_WIRING_ERROR',
+            'generated fixture contains wildcard configuration or executes the native solver preview',
+            '/roles/uvm_fixture_package');
+        $wiring_shape_ok = 0;
+    }
+    _record_check(\@checks, 'selected_tlm_factory_config_ral_wiring', $wiring_shape_ok);
+
+    my $objection_policy_ok = defined($text_by_role{uvm_fixture_package});
     my $raise_count = scalar(() = $fixture_text =~ /\bphase\.raise_objection\s*\(/g);
     my $drop_count = scalar(() = $fixture_text =~ /\bphase\.drop_objection\s*\(/g);
     my $other_objection = 0;

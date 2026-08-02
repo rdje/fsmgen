@@ -19,8 +19,8 @@ interface base_output_arbitration_if;
 
   clocking driver_cb @(negedge clk);
     default input #1step output #0;
-    output HADDR, HREADY, HSEL, HSIZE, HTRANS, HWDATA, HWRITE, rst_n, wait_cycles;
-    input HRDATA, HREADYOUT, HRESP;
+    output HADDR, HSEL, HSIZE, HTRANS, HWDATA, HWRITE, wait_cycles;
+    input HRDATA, HREADY, HREADYOUT, HRESP, rst_n;
   endclocking
 
   clocking monitor_cb @(posedge clk);

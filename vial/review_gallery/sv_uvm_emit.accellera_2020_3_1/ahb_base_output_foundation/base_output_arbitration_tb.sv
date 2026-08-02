@@ -24,6 +24,8 @@ module base_output_arbitration_tb;
     .wait_cycles(vial_if.wait_cycles)
   );
 
+  assign vial_if.HREADY = vial_if.HREADYOUT;
+
   initial begin
     vial_if.clk = 1'b0;
     forever #5ns vial_if.clk = ~vial_if.clk;

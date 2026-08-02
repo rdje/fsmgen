@@ -25,7 +25,7 @@ ok(-x $partition, 'ISF semantic-part verifier is executable');
 subtest 'real generated index and exact activation partition pass' => sub {
     my ($index_ok, $index_output) = run_command($indexer, '--root', $repo, 'check');
     ok($index_ok, 'repository focused-document index is current') or diag($index_output);
-    like($index_output, qr/1017 members/, 'complete focused plus ancillary census is reported');
+    like($index_output, qr/1018 members/, 'complete focused plus ancillary census is reported');
 
     my ($part_ok, $part_output) = run_command(
         $partition, '--root', $repo, '--verify-activation-content', 'check');

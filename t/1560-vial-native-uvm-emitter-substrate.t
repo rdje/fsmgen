@@ -41,7 +41,7 @@ subtest 'native emitter produces a deterministic closed unqualified UVM graph' =
     is($first->{status}, 'emitted_unqualified', 'status does not imply compile or runtime qualification');
     is($first->{backend_profile}, $profile, 'backend profile is exact');
     like($first->{operation_id}, qr/\Aop-[0-9a-f]{64}\z/, 'operation identity is deterministic and safe');
-    is(scalar(@{$first->{artifacts}}), 11, 'emission graph contains the exact eleven artifacts');
+    is(scalar(@{$first->{artifacts}}), 12, 'emission graph contains the exact twelve artifacts');
     is_deeply(
         [map { $_->{relpath} } @{$first->{artifacts}}],
         [sort map { $_->{relpath} } @{$first->{artifacts}}],
@@ -140,6 +140,14 @@ subtest 'first review sources contain typed, interface, component, fixture, and 
     like($notifications, qr/extends uvm_event_callback#\(base_output_arbitration_notification_payload\)/,
         'typed UVM callback foundation is emitted');
 
+    my $services = artifact_by_role($emission, 'uvm_stimulus_services')->{content};
+    like($services, qr/package base_output_arbitration_services_pkg;/,
+        'typed stimulus/services package is emitted');
+    like($services, qr/class base_output_arbitration_ahb_write_item extends uvm_sequence_item;/,
+        'typed transaction item is emitted');
+    like($services, qr/class base_output_arbitration_success_sequence extends uvm_sequence#/,
+        'public scenario sequence structure is emitted');
+
     my $fixture = artifact_by_role($emission, 'uvm_fixture_package')->{content};
     like($fixture, qr/class base_output_arbitration_config extends uvm_object;/,
         'typed fixture configuration is emitted');
@@ -170,6 +178,7 @@ subtest 'checked review gallery is byte-identical to deterministic emitter outpu
         uvm_component_foundations => 'fsmgen_vial_uvm_components_pkg.sv',
         uvm_fixture_interface => 'base_output_arbitration_if.sv',
         uvm_notification_interception => 'base_output_arbitration_notifications_pkg.sv',
+        uvm_stimulus_services => 'base_output_arbitration_services_pkg.sv',
         uvm_fixture_package => 'base_output_arbitration_pkg.sv',
         uvm_fixture_top => 'base_output_arbitration_tb.sv',
     );

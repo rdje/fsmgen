@@ -5,18 +5,20 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3`: activate native UVM stimulus and services).
-- active_work_unit: parent `.13.1` and child `.13.1.3` are active after clean
-  predecessor `ddfa980a1`; implementation remains unperformed.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.3`: ship native UVM stimulus and services).
+- active_work_unit: parent `.13.1` remains active; child `.13.1.3` is complete.
+  No child is active until the next clean activation.
 - current_state: private profile `sv_uvm_emit.accellera_2020_3_1` emits an
-  exact eleven-artifact/seven-source graph with selected passive topology,
-  lifecycle, ordered typed notification/interception, 42 mapped symbols, ten
-  structural checks, and six byte-checked gallery sources. Manual review and parse
-  through runtime/results/parity remain unclaimed; `.13.2` is separately
-  dependency-ready; `.13.3` now requires NEXSIM's versioned API/MCP semantic
-  checkpoint plane while exact PGEN+NEXSIM releases remain unavailable.
-- next_action: audit revision-2 emitter/contracts/gallery, then implement only
-  `.13.1.3` stimulus/TLM/factory/configuration/RAL/constrained-decision shapes.
+  exact twelve-artifact/eight-SystemVerilog-source graph with selected active
+  topology, lifecycle, ordered typed notification/interception, stimulus,
+  decision replay, TLM, scoped factory/configuration, and private RAL/native-
+  solver previews. It has 64 mapped entries, 12 structural checks, and seven
+  byte-checked gallery sources. Manual review and parse through runtime/results/
+  parity remain unclaimed; `.13.2` is separately dependency-ready; `.13.3`
+  requires NEXSIM's versioned API/MCP semantic checkpoint plane while exact
+  PGEN+NEXSIM releases remain unavailable.
+- next_action: cleanly activate proposed `.13.1.4` for coverage/properties/
+  models/scoreboards/faults/diagnostics/results, changing continuity only.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` still waits on exact capability-ready PGEN/NEXSIM handoff/
