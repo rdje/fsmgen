@@ -37,9 +37,11 @@ support claim.
 
 Implementation parent `.15` is active and decomposed. Completed `.15.1` now
 ships the provider-free emitter substrate and first deterministic review
-gallery. Active `.15.2` owns drivers, samplers, the inactive-edge scheduler,
-scenarios, models, and probe adapters; later children add checking/review and
-then independently qualify exact GHDL and OSVVM execution.
+gallery. Completed `.15.2` adds typed drivers and samplers, the single
+inactive-edge scheduler, bounded scenarios and fibers, deterministic models,
+and a declared-probe adapter. Active `.15.3` owns portable checking, results,
+and closed trace; later children close review and independently qualify exact
+GHDL and OSVVM execution.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -1047,20 +1049,20 @@ normalized result, semantic outcomes, rerun, parity, and cleanup are separate
 gates.
 
 GHDL is not installed in the current workspace. OSVVM is not materialized
-either. Completed `.15.1` therefore ships deterministic source, source maps,
-structural checks, and a review gallery without advertising VHDL analysis or
-runtime support. OSVVM-dependent work must later verify the recursive release,
-every submodule identity, licenses, and notices under a repository-derived
-dependency root.
+either. Completed `.15.1-.15.2` therefore ship deterministic source, source
+maps, structural checks, and a review gallery without advertising VHDL
+analysis or runtime support. OSVVM-dependent work must later verify the
+recursive release, every submodule identity, licenses, and notices under a
+repository-derived dependency root.
 
-### Shipped provider-free VHDL foundation
+### Shipped provider-free VHDL semantics
 
 The private backend handoff now carries deterministic generated HIAL VHDL
 beside its existing SystemVerilog source. The VHDL record fixes the semantic
 unit, entity, `.vhd` filename, source identity, exact bytes, byte count, and
 SHA-256 digest; public plan artifacts remain target-neutral and unchanged.
 
-The foundation emitter produces this exact thirteen-artifact graph:
+The emitter now produces this exact fourteen-artifact graph:
 
 ```text
 backends/vhdl_portable_ghdl/
@@ -1072,6 +1074,7 @@ backends/vhdl_portable_ghdl/
   src/fsmgen_vial_{types,runtime}_pkg.vhd
   src/base_output_arbitration_metadata_pkg.vhd
   src/base_output_arbitration_tb.vhd
+  src/base_output_arbitration_probe_adapter.vhd
 ```
 
 The types package defines VIAL `0/1/X/Z`, execution phases, and an observation
@@ -1081,39 +1084,59 @@ strong `0/1/Z` directly, weak `L/H` to `0/1`, and every remaining symbol to
 types. The metadata package freezes plan, fixture, bridge, unit, domain,
 active/inactive-edge, and reset identities.
 
-The testbench foundation declares every bridge-proved endpoint and binds the
-generated HIAL entity through a named port map. It intentionally has no
-process yet. Drivers, samplers, stable-barrier scheduling, scenarios, models,
-and the declared-probe adapter belong to active `.15.2`, so reviewers can see
-exactly where the implementation boundary lies.
+The testbench declares every bridge-proved endpoint and binds the generated
+HIAL entity through a named port map. Its typed strong drivers use the same
+four-state value type as expected data, while every sampler retains both the
+normalized value and original `std_logic` symbol.
+
+One clock process supplies physical time. One semantic scheduler owns logical
+execution. Its nested barrier waits for the selected falling inactive edge,
+then performs `sample`, `react`, `check`, and `drive` in that fixed order. A
+delta count, zero-time wait, or process scheduling race is never semantic
+authority.
+
+The metadata package carries all 21 exact operation identities and static
+ranks, both 256-cycle scenarios, four fibers, and two event-counter model
+instances. The scenario process maintains bounded lifecycle state and updates
+the models deterministically from transaction events. Checking and normalized
+results are still deferred to active `.15.3`.
+
+The sixth source is a source-mapped VHDL-2008 external-name adapter for the one
+bridge-declared `reg_data_q` probe. Generated hierarchy is forbidden anywhere
+else; ordinary DUT access remains through public named ports.
 
 The manifest and machine-readable capability contract say
-`emitted_unqualified_foundation`. Seven static checks prove deterministic,
-bounded, provider-neutral source structure—not VHDL syntax or execution. The
-selected GHDL 6.0.0 `-a`, `-e`, and `-r` command records use `--std=08`, the
-`fsmgen_vial` work library, and repository-relative work paths, but remain
+`emitted_unqualified_portable_semantics`. Thirteen static checks prove the
+closed graph, deterministic provider-neutral source, typed value handling,
+single inactive-edge authority, phase order, exact ranks, bounded scenario and
+fiber metadata, deterministic model updates, and declared-probe-only
+hierarchy—not VHDL syntax or execution. Negotiation also rejects nine-state,
+multi-domain, and asynchronous semantic-event requests.
+
+The selected GHDL 6.0.0 `-a`, `-e`, and `-r` command records use `--std=08`,
+the `fsmgen_vial` work library, and repository-relative work paths, but remain
 `not_run`.
 
 Review the byte-locked output under
-`vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation`. From the
-repository root, regenerate it with:
+`vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics`.
+From the repository root, regenerate it with:
 
 ```text
-perl scripts/refresh_vial_vhdl_foundation_gallery.pl
+perl scripts/refresh_vial_vhdl_portable_gallery.pl
 ```
 
 Check it without writing with:
 
 ```text
-perl scripts/refresh_vial_vhdl_foundation_gallery.pl --check
+perl scripts/refresh_vial_vhdl_portable_gallery.pl --check
 ```
 
 The legacy `vhdl-observation-package` remains byte/schema-compatible,
 unchanged, and unconsumed.
 
-Analysis, elaboration, runtime, trace/result,
-parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language behavior, and
-product support remain explicit non-claims.
+Analysis, elaboration, runtime, checking/trace/result production, parity, PSL,
+complete VHDL-2008, OSVVM/UVVM, mixed-language behavior, and product support
+remain explicit non-claims.
 
 The complete contract is in the selected VHDL section of the
 [HIAL/VIAL architecture audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md#completed-vhdl-contract-selection).

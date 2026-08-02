@@ -1,16 +1,22 @@
 {
    "artifacts" : [
       {
-         "bytes" : 818,
+         "bytes" : 15214,
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
          "role" : "vhdl_fixture_metadata",
-         "sha256" : "5e4dbd0e471829db71f377735750ce5bed4598b99fc25437c62ab49a1c1d66ee"
+         "sha256" : "80403331e71320eadea6fcdc3608a05527b64e6cab2e9de0571c30887632f694"
       },
       {
-         "bytes" : 1414,
+         "bytes" : 623,
+         "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_probe_adapter.vhd",
+         "role" : "vhdl_probe_adapter",
+         "sha256" : "8765d4e8ab6640cd70206d501137be29d05b79bd206be8103b8f0bf5cd3ac45b"
+      },
+      {
+         "bytes" : 15780,
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
          "role" : "vhdl_fixture_top",
-         "sha256" : "6fb162864ad5421cb0c2107328c257d4f16df9fc7399815034686f957377a393"
+         "sha256" : "ae9792be3c63c3f946f53bd5d0996db4282429fd9f2f1c0ae61d3978aff281e5"
       },
       {
          "bytes" : 47685,
@@ -19,16 +25,16 @@
          "sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6"
       },
       {
-         "bytes" : 721,
+         "bytes" : 1045,
          "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
          "role" : "vhdl_runtime_package",
-         "sha256" : "8ab3f90520ff877c885047d8f4ebf8b8ef406119279f340b340ef77fcc4cfb5c"
+         "sha256" : "85e30f1ab4feb47cdbe432c8bd83b3bf0609eb90ad8e48c728f02a3f1ab403bc"
       },
       {
-         "bytes" : 1325,
+         "bytes" : 4530,
          "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
          "role" : "vhdl_types_package",
-         "sha256" : "2fa0c30b251cb043339d908374874c5ded097a570f4feea1784f97daed15dbd5"
+         "sha256" : "6f61afd4d096f6bf9a75466a65388b578816682820ee922bacf41897a3ed7449"
       }
    ],
    "backend_profile" : "vhdl_portable_ghdl",
@@ -54,11 +60,35 @@
          "status" : "passed"
       },
       {
-         "check" : "selected_vhdl_foundation_shape",
+         "check" : "selected_vhdl_portable_semantic_shape",
          "status" : "passed"
       },
       {
          "check" : "closed_std_logic_normalization",
+         "status" : "passed"
+      },
+      {
+         "check" : "typed_four_state_drivers_and_samplers",
+         "status" : "passed"
+      },
+      {
+         "check" : "single_inactive_edge_semantic_authority",
+         "status" : "passed"
+      },
+      {
+         "check" : "stable_sample_react_check_drive_order",
+         "status" : "passed"
+      },
+      {
+         "check" : "complete_rank_scenario_and_fiber_metadata",
+         "status" : "passed"
+      },
+      {
+         "check" : "deterministic_model_state_and_updates",
+         "status" : "passed"
+      },
+      {
+         "check" : "declared_source_mapped_probe_adapters",
          "status" : "passed"
       }
    ],

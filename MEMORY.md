@@ -5,8 +5,8 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.1`: ship portable VHDL foundation).
-- active_work_unit: `.15`/`.15.2` are active after completed `.15.1`; `.13.3` remains provider-blocked.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.2`: ship portable VHDL semantics).
+- active_work_unit: `.15`/`.15.3` are active after completed `.15.2`; `.13.3` remains provider-blocked.
 - current_state: native UVM emits 16 artifacts/ten SV sources, 75 maps, 14
   checks, a 25-row matrix, and a deterministic gallery. Experimental Verilator
   5.046/UVM evidence passes its control through runtime and fixture preprocessing;
@@ -14,12 +14,12 @@ history; this file carries only the current bounded resume state.
   result/parity remain not run. The illegal `context` identifier is repaired.
   Product support stays emission-only. Decision `0051` selects provider-free
   VHDL-2008, exact GHDL 6.0.0, and OSVVM 2026.05 for the advanced tier; UVVM
-  is unselected. `.15.1` now emits a private 13-artifact/5-source foundation
-  with 5 maps, 7 static checks, exact unexecuted tool records, and a byte-locked
-  gallery. The inert legacy package is unchanged/unconsumed; no VHDL analysis,
-  runtime, result, parity, PSL, provider, or support capability ships.
-- next_action: implement only `.15.2`: portable VHDL drivers, samplers,
-  inactive-edge scheduler, scenarios/fibers, models, and probe adapters.
+  is unselected. `.15.2` emits 14 artifacts/six sources, 52 maps, 13 checks,
+  typed drivers/samplers, one scheduler, exact ranks, bounded scenarios/fibers,
+  deterministic models, a declared-probe adapter, and unexecuted tool records.
+  The inert legacy package is unchanged; no VHDL runtime/result/support claim ships.
+- next_action: commit the evolving NEXSIM API/MCP consumer-requirements
+  task/document, then resume `.15.3` portable VHDL checking/results/closed trace.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` waits on capability-ready PGEN/NEXSIM handoff/API/MCP

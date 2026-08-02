@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-08-01`
+- Last updated: `2026-08-02`
 - Owner: repo-local workflow
 
 ## Goal
@@ -324,17 +324,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.1: ship portable VHDL foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.2`
-  Status: `active`
+  Status: `done`
   Goal: `Emit the complete selected portable VHDL drivers, samplers, inactive-edge scheduler, scenarios/fibers, models, and probe adapters for review.`
   Acceptance: `Generated VHDL expresses typed four-state drive/sample normalization with original-symbol evidence, one inactive-edge stable barrier, exact ExecutionIR ranks, bounded scenario/fiber state, deterministic model state, public-port binding and explicit source-mapped probe adapters. Static invariants reject delta-cycle or process-order semantic authority, undeclared hierarchy, unstable/multiple schedulers, unsupported nine-state needs, and multi-clock/asynchronous use; readable gallery artifacts and complete source maps ship without an analyzer prerequisite or runtime claim.`
-  Verification: `clean completed .15.1 predecessor required; implementation pending`
-  Commit: `pending`
+  Verification: `The provider-free backend now emits an exact fourteen-artifact/six-VHDL-source graph with 52 source-map entries and 13 structural checks. Typed strong drivers, original-symbol-preserving samplers, one falling-edge inactive barrier, exact 21-operation ranks, two bounded scenarios, four fibers, two deterministic event-counter models, and one declared external-name probe adapter ship as reviewable source. Negotiation and structural negatives reject nine-state semantics, multiple domains, asynchronous semantic events, multiple/zero-time schedulers, rank drift, undeclared hierarchy, provider leakage, and malformed inputs. Analysis, elaboration, runtime, checking/results, parity, complete VHDL-2008, and support remain unclaimed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.2: ship portable VHDL semantics`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Emit portable VHDL scoreboards, coverage, faults, procedural properties, diagnostics, closed trace, and normalized results.`
   Acceptance: `Generated bounded queues/comparisons, coverage counters, substitution or masking seams, procedural checks, diagnostic records, trace closure, and fsmgen.verification_result_manifest.v1 projection preserve VIAL comparison/bin/fault/property/result meaning. Structural negative oracles cover overflow, unknown-value evidence, trace non-closure, result inconsistency, unsupported PSL/native-provider requests, and probe-backed expectations; deterministic gallery/source-map evidence ships while analyze through parity remain independent states.`
-  Verification: `pending .15.2`
+  Verification: `clean completed .15.2 predecessor required; implementation pending`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.4`
@@ -771,7 +771,7 @@ compiler-owned beneath C/C++ or Rust.
   experimental evidence to `sv_uvm_qualified`.
 - GHDL 6.0.0 and OSVVM 2026.05 are not locally materialized. This blocks
   `.15.5` execution and later provider-dependent qualification, not active
-  `.15.1` or the provider-free emission/review sequence through `.15.4`.
+  `.15.3` or the provider-free emission/review sequence through `.15.4`.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -831,6 +831,7 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-08-01` | `.14` selection | official GHDL/OSVVM/UVVM release and exact tag-identity reads; local inert-package/capability audit; decision `0051`; provider-free/OSVVM mapping, profiles, artifacts, scheduling, values, GHDL gates, migration, PSL/non-claims; legacy/focused/docs/task/live/mdBook/Knowledge Map/Memory/diff/staged-acceptance/doctrine gates; exact cleanup | `passed`; provider-free VHDL-2008 plus OSVVM 2026.05 selected, GHDL 6.0.0 and broader families frozen unexecuted, UVVM audited/unselected, and the legacy package unchanged. Legacy Files=2/Tests=6 and focused Files=6/Tests=65 report `All tests successful`; all 49 chapters test; rendered 85-file/16,885,255-byte HTML has distinct paragraphs/table/code blocks and is removed; task integrity remains three trees/907 nodes/one segment/one index archive; live containment covers 22 surfaces/2,942 paths with exact mdBook delta 0/+156/+6,986 and zero ceiling increases; Knowledge Map is current at 1,104 facts/5,656 questions/5,822 occurrences/117 shards; Memory is 47 lines; no backend artifact or VHDL analysis-through-parity capability ships |
 | `2026-08-01` | `.15` activation/decomposition | clean selection predecessor `e5aa90b7a`; seven exact implementation children; task/index/audit/book/fact/Memory continuity; focused docs/live/task/Knowledge Map; mdBook test/build/rendered-paragraph inspection; memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.15` and `.15.1` alone are active, `.15.1-.15.4` are the unblocked provider-free emission/review path, `.15.5` owns GHDL qualification, and `.15.6-.15.7` own OSVVM emission/qualification. Focused Files=6/Tests=65 report `All tests successful`; all 49 chapters test and rendered HTML separates the activation into distinct paragraphs; the repository-local 85-file/16,888,889-byte build is removed exactly. Task integrity is three trees/914 nodes/one segment/one index archive; all 22 live surfaces and 2,943/2,943 paths pass with exact mdBook delta 0/+12/+718 and zero ceiling increases; Knowledge Map remains 1,104 facts/5,656 questions/5,822 occurrences/117 shards; Memory is 47 lines; final staged acceptance and all nine doctrine checks pass; no source, artifact, capability, runtime, result, parity, or support behavior changes |
 | `2026-08-01` | `.15.1` implementation | private HIAL VHDL handoff; provider-free emitter/static validator/support syntax; deterministic thirteen-artifact/five-source graph and five-entry source map; seven structural checks; exact selected/unexecuted GHDL records; atomic publication/collision/cleanup; checked gallery; impacted VIAL/support/capability and documentation-doctrine suites; task/live/Knowledge Map/Memory; mdBook test/build/rendered-paragraph inspection; diff/staged acceptance/doctrines; artifact census and exact cleanup | `passed`; guarded impacted regression reports `All tests successful` at Files=12/Tests=7,164 and guarded documentation doctrines at Files=15/Tests=133; all 49 chapters test; the repository-local 85-file/16,919,119-byte build renders the new VHDL section as 17 distinct paragraphs and five distinct code blocks with a 612-byte longest paragraph before exact removal. The gallery checker reports five VHDL sources/eight evidence artifacts/five maps/seven checks; task integrity is three trees/914 nodes/one segment/one index archive; all 22 live surfaces and 2,944/2,944 paths pass with exact mdBook delta 0/+80/+3,291 and zero ceiling increases; Knowledge Map is current at 1,104 facts/5,662 questions/5,828 occurrences/117 shards; Memory is 47 lines; no `.bin`/`.log`, Rust target `.bin`/`.log`, mdBook build, or VIAL operation staging residue remains; final staged acceptance and all nine doctrine checks pass; VHDL analysis through product support remains explicitly unclaimed |
+| `2026-08-02` | `.15.2` implementation | provider-free emitter/validator/support syntax; fourteen-artifact/six-source semantics graph; 52 maps and 13 checks; typed drive/sample, inactive-edge scheduling, exact ranks, bounded scenarios/fibers, deterministic models, declared probe adapter; negotiation/mutation negatives; checked gallery; impacted VIAL/support/capability suite; task/live/Knowledge Map/Memory; mdBook test/build/rendered-paragraph inspection; staged acceptance/doctrines; artifact census and exact cleanup | `passed`; the guarded impacted suite reports `All tests successful` at Files=12/Tests=7,168; six changed Perl/script/test paths report `syntax OK`; the gallery checker reports six VHDL sources/eight evidence artifacts/52 maps/13 checks. All 49 chapters test and the repository-local build contains 85 files/16,928,012 bytes; the changed VHDL prose renders as distinct paragraph and code blocks before exact removal. Task integrity is three trees/914 nodes/one segment/one index archive; all 22 live surfaces and 2,944/2,944 paths pass with exact mdBook delta 0/+24/+1,385 and zero ceiling increases; Knowledge Map is current at 1,104 facts/5,666 questions/5,832 occurrences/117 shards; Memory is 47 lines; final staged acceptance and all nine doctrines pass. Two initially misresolved same-volume mdBook destinations were measured at 85 files/16,696 KiB each, replaced by the verified repository-local build, deleted exactly, and residue-checked absent. No `.bin`/`.log`, mdBook build, or VIAL staging residue remains; analysis through support stays unclaimed. |
 
 ## Acceptance Checklist (enforced) — `.15` activation/decomposition
 
@@ -1627,6 +1628,45 @@ compiler-owned beneath C/C++ or Rust.
   result, parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language behavior,
   and product support remain explicitly unclaimed.
 
+## Acceptance Checklist (enforced) — `.15.2` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — On clean predecessor `3291217e8`,
+  `git log -S'vial_scheduler' --oneline --
+  perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm` returns no commit, while `git show
+  3291217e:perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm` names
+  `drivers_deferred`, `samplers_deferred`, `scheduler_deferred`,
+  `scenarios_deferred`, `models_deferred`, and `probe_adapters_deferred`. The
+  provider-free backend was deliberately bounded to the `.15.1` foundation:
+  `base_output_arbitration_tb.vhd` had no process, its source map contained
+  only five whole-source records, and the seven structural checks did not
+  express or police any execution semantics. The selected portable contract
+  therefore still lacked typed drivers/samplers, one stable inactive-edge
+  authority, scenario/fiber/model state, and a source-mapped declared-probe
+  adapter even though the bound `VIALExecutionIR` and bridge already carried
+  the required identities.
+- [x] **ADDRESSED (verified)** — `VHDLPortableGHDL` now emits an exact
+  fourteen-artifact/six-source provider-free graph with 52 source-map entries:
+  typed strong four-state drivers, samplers retaining each original
+  `std_logic` symbol, one falling-edge inactive barrier, fixed
+  sample/react/check/drive phase order, all 21 exact operation ranks, two
+  bounded scenarios, four fibers, two deterministic event-counter models, and
+  one declared VHDL-2008 external-name probe adapter. Thirteen structural
+  checks and negotiation negatives reject zero-time or process-order semantic
+  authority, multiple schedulers, rank drift, undeclared hierarchy, nine-state
+  requirements, multiple domains, asynchronous semantic events, provider
+  leakage, and malformed inputs. The checked gallery regenerates six VHDL
+  sources and eight evidence artifacts byte-for-byte.
+- [x] **NO REGRESSION** — The focused semantic/accounting/capability suite
+  reports `All tests successful` at `Files=3, Tests=7104`; all changed Perl
+  modules, the gallery script, and focused test report `syntax OK`; and the
+  gallery checker reports six VHDL sources, eight evidence artifacts, 52 maps,
+  and 13 checks. Final impacted/doc/mdBook/Knowledge Map/doctrine evidence is
+  recorded in the `.15.2` verification-log row. The legacy
+  `vhdl-observation-package` remains unchanged and unconsumed, ordinary
+  emission remains provider-free, and VHDL analysis, elaboration, runtime,
+  checking/result production, parity, PSL, complete VHDL-2008, OSVVM/UVVM,
+  mixed-language behavior, and product support remain explicitly unclaimed.
+
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
@@ -1681,9 +1721,21 @@ compiler-owned beneath C/C++ or Rust.
 | `.14` selection | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14: select VHDL OSVVM architecture` | Accept decision `0051`; select provider-free VHDL-2008, exact unexecuted GHDL 6.0.0 and OSVVM 2026.05 tiers, explicit mappings/PSL limits, and a parallel versioned successor to the unchanged inert package without a runtime claim. |
 | `.15` activation/decomposition | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15: activate VHDL backend implementation` | Activate `.15` and provider-free emitter/gallery child `.15.1`; separate portable emission/review, exact GHDL execution, and OSVVM emission/qualification into seven evidence-bounded children without changing product behavior. |
 | `.15.1` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.1: ship portable VHDL foundation` | Ship deterministic HIAL VHDL handoff, a private thirteen-artifact/five-source provider-free foundation, complete foundation maps, seven structural checks, exact unexecuted GHDL records, atomic publication, honest capability states, and a byte-locked gallery while retaining every runtime/support non-claim. |
+| `.15.2` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.2: ship portable VHDL semantics` | Ship typed drivers/samplers, one inactive-edge scheduler, exact operation ranks, bounded scenarios/fibers, deterministic models, a declared probe adapter, 52 complete maps, 13 static checks, and a six-source gallery while retaining every analyzer/runtime/checking/support non-claim. |
 | `.13.3` provider clarification | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3: capture NEXSIM semantic-introspection MCP contract` | Record the future versioned NEXSIM semantic API/MCP qualification plane, snapshot/control/query requirements, source-mapped checkpoint correlation, first-divergence localization, and provider-evidence boundary without inventing a release or activating runtime work. |
 
 ## Changelog
+
+- `2026-08-02`: Completed `.15.2` expands the provider-free VHDL backend to an
+  exact fourteen-artifact/six-source graph with 52 complete source maps and 13
+  structural checks. Typed strong drivers, original-symbol samplers, one
+  falling-edge inactive barrier, exact ranks, two bounded scenarios, four
+  fibers, two deterministic event-counter models, and one source-mapped
+  declared external-name probe adapter now ship for review. Negotiation and
+  mutation negatives reject nine-state, multi-domain, asynchronous semantic-
+  event, multiple/zero-time scheduler, rank-drift, undeclared-hierarchy, and
+  provider-leakage requests. `.15.3` is next for checking, results, and closed
+  trace; no analysis-through-support claim is inferred.
 
 - `2026-08-01`: Completed `.15.1` ships the private provider-free VHDL-2008
   foundation: deterministic HIAL VHDL handoff, thirteen sorted artifacts, five

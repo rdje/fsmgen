@@ -1468,13 +1468,14 @@ formal, mixed-language, VHDL-2019, UVVM, provider-component breadth, or legacy
 package analyzer support.
 
 Clean selection commit `e5aa90b7a` activates `.15` and decomposes seven
-children. Active `.15.1` owns only the provider-free emitter substrate,
+children. Completed `.15.1` owns the provider-free emitter substrate,
 deterministic artifact/source-map/command-evidence shapes, structural checks,
-capability non-claims, and the first byte-locked review gallery. `.15.2-.15.4`
-complete provider-free semantics and review; `.15.5` owns exact GHDL 6.0.0
-execution; `.15.6-.15.7` own OSVVM 2026.05 adapter emission and qualification.
-Activation changes no product behavior or support state, and unavailable tools
-do not block reviewable generation.
+capability non-claims, and the first byte-locked review gallery. Completed
+`.15.2` adds the portable driver, sampler, scheduler, scenario, model, and
+probe-adapter semantics described below. `.15.3-.15.4` complete portable
+checking/results and review; `.15.5` owns exact GHDL 6.0.0 execution;
+`.15.6-.15.7` own OSVVM 2026.05 adapter emission and qualification. Unavailable
+tools do not block reviewable generation.
 
 Completed `.15.1` now ships that foundation. `PlanBuilder` preserves one
 deterministic generated HIAL VHDL source beside its existing SystemVerilog
@@ -1484,35 +1485,58 @@ and SystemVerilog and UVM consumers continue to select only their own language
 family.
 
 The private `FSM::VIAL::Backend::VHDLPortableGHDL` emitter consumes the exact
-ExecutionIR, bridge manifest, and VHDL DUT record. It emits thirteen sorted
-artifacts: five provider-free VHDL sources, a closed manifest and source map,
-three unexecuted command records, and tool-profile, source-order, and
-structural-validation evidence. Five whole-source foundation mappings cover
+ExecutionIR, bridge manifest, and VHDL DUT record. After `.15.2` it emits
+fourteen sorted artifacts: six provider-free VHDL sources, a closed manifest
+and source map, three unexecuted command records, and tool-profile,
+source-order, and structural-validation evidence. Fifty-two mappings cover
 the generated HIAL DUT, typed value/phase package, logical-time/runtime
-package, fixture metadata, and direct entity/port-bound testbench.
+package, operation/scenario/fiber/model metadata, testbench semantics, and the
+declared probe adapter.
 
-The types package implements the selected `std_logic` normalization and
-retains the original symbol. The testbench foundation contains typed endpoint
-signals and an explicit named DUT port map, but deliberately contains no
-driver, sampler, scheduler, scenario, model, or probe process; `.15.2` owns
-those semantics. The manifest records the legacy observation package as an
-unchanged, unconsumed parallel surface.
+The types package implements the selected `std_logic` normalization, retains
+the original symbol in every observation, and exposes typed strong drivers.
+The testbench contains typed endpoint signals, an explicit named DUT port map,
+one clock generator, and one semantic scheduler. A single nested procedure
+waits for the selected falling inactive edge, samples the state settled after
+the preceding active edge, applies react and check in the fixed phase order,
+then drives the next logical interval. No zero-time wait, delta count, or
+concurrent-process ordering is semantic authority.
 
-Seven fail-closed structural checks cover closed safe artifacts, required
-roles, bounded input, deterministic text, simulator/methodology neutrality,
-the selected package/top shape, and the complete normalization table. Atomic
-publication distinguishes first creation, identical replay, and byte-different
-collision, and exact cleanup leaves no staging residue. The checked gallery is
-at
-`vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation` and is
-regenerated or checked with
-`perl scripts/refresh_vial_vhdl_foundation_gallery.pl [--check]`.
+All 21 `VIALExecutionIR` operation identities and ranks are emitted as metadata.
+The two scenarios retain their 256-cycle bounds, four fibers have explicit
+lifecycle state, and two event-counter model instances update deterministically
+from the selected accepted/completed transaction events. The source-mapped
+probe adapter contains the only generated hierarchical external name and may
+reference only the bridge-declared `reg_data_q` probe. Public DUT connectivity
+continues to use named ports.
 
-This completion changes the honest capability state from no VHDL backend to
-private foundation emission only. Exact GHDL 6.0.0 remains unavailable and
-unexecuted. VHDL analysis, elaboration, runtime, trace/result production,
-parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language behavior, and
-product support remain explicitly unclaimed.
+Checking, scoreboards, coverage, faults, properties, diagnostics, trace
+closure, and normalized results remain owned by `.15.3`. In particular, the
+unsupported-size scenario's authored injection is present in rank metadata but
+is not applied by `.15.2`; no emitted comment or artifact may imply otherwise.
+The manifest records the legacy observation package as an unchanged,
+unconsumed parallel surface.
+
+Thirteen fail-closed structural checks cover the closed safe graph, required
+roles, bounded input, deterministic text, provider neutrality, selected source
+shapes and normalization, typed drivers/samplers, one inactive-edge authority,
+fixed phase order, exact rank/scenario/fiber metadata, deterministic model
+updates, and declared-probe-only hierarchy. Capability negotiation additionally
+rejects nine-state requirements, multiple domains, asynchronous semantic
+events, and malformed or unsupported binding shapes.
+
+Atomic publication distinguishes first creation, identical replay, and
+byte-different collision, and exact cleanup leaves no staging residue. The
+checked gallery is at
+`vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics` and
+is regenerated or checked with
+`perl scripts/refresh_vial_vhdl_portable_gallery.pl [--check]`.
+
+This completion advances the honest capability state to private, unqualified
+portable-semantics emission. Exact GHDL 6.0.0 remains unavailable and
+unexecuted. VHDL analysis, elaboration, runtime, checking/trace/result
+production, parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language
+behavior, and product support remain explicitly unclaimed.
 
 ### Primary evidence
 

@@ -29,7 +29,7 @@ sub vial_vhdl_emission_contract_keys {
 sub build_vial_vhdl_emission_contract {
     return {
         schema_version => 1,
-        status => 'shipped_private_unqualified_foundation',
+        status => 'shipped_private_unqualified_portable_semantics',
         contract_source => vial_vhdl_emission_contract_source(),
         implementation_entrypoints => [
             'FSM::VIAL::Backend::VHDLPortableGHDL->emit({...})',
@@ -61,23 +61,24 @@ sub build_vial_vhdl_emission_contract {
         },
         library_materialization => {
             required_for_foundation_emission => JSON::PP::false,
+            required_for_portable_emission => JSON::PP::false,
             network_fetch_during_emission => JSON::PP::false,
             current_state => 'no_provider_requested_or_inspected',
             verified_project_local_copy_required_before_provider_use => JSON::PP::true,
         },
         backend_stage_status => {
             hial_vhdl_generation => 'shipped_deterministic_private_handoff',
-            negotiation => 'shipped_foundation_scope',
-            emission => 'shipped_foundation_only',
-            static_validation => 'shipped_structural_only',
-            source_map => 'shipped_foundation_scope',
-            review_gallery => 'shipped_byte_locked_foundation',
-            drivers => 'deferred_to_next_slice',
-            samplers => 'deferred_to_next_slice',
-            scheduler => 'deferred_to_next_slice',
-            scenarios => 'deferred_to_next_slice',
-            models => 'deferred_to_next_slice',
-            probe_adapters => 'deferred_to_next_slice',
+            negotiation => 'shipped_portable_semantics_scope',
+            emission => 'shipped_portable_semantics_emission_only',
+            static_validation => 'shipped_thirteen_structural_checks',
+            source_map => 'shipped_portable_semantics_scope',
+            review_gallery => 'shipped_byte_locked_portable_semantics',
+            drivers => 'shipped_emission_only',
+            samplers => 'shipped_emission_only',
+            scheduler => 'shipped_emission_only',
+            scenarios => 'shipped_emission_only',
+            models => 'shipped_emission_only',
+            probe_adapters => 'shipped_emission_only',
             analysis => 'not_run',
             elaboration => 'not_run',
             runtime => 'not_run',
@@ -93,6 +94,13 @@ sub build_vial_vhdl_emission_contract {
             vial.backend.vhdl_portable_ghdl.typed_logical_time.v1
             vial.backend.vhdl_portable_ghdl.fixture_metadata.v1
             vial.backend.vhdl_portable_ghdl.dut_binding_foundation.v1
+            vial.backend.vhdl_portable_ghdl.typed_drivers.v1
+            vial.backend.vhdl_portable_ghdl.original_symbol_samplers.v1
+            vial.backend.vhdl_portable_ghdl.inactive_edge_scheduler.v1
+            vial.backend.vhdl_portable_ghdl.scenario_fibers.v1
+            vial.backend.vhdl_portable_ghdl.deterministic_models.v1
+            vial.backend.vhdl_portable_ghdl.declared_probe_adapter.v1
+            vial.backend.vhdl_portable_ghdl.exact_rank_maps.v1
             vial.backend.vhdl_portable_ghdl.source_order.v1
             vial.backend.vhdl_portable_ghdl.command_evidence.v1
             vial.backend.vhdl_portable_ghdl.source_map.v1
@@ -102,27 +110,28 @@ sub build_vial_vhdl_emission_contract {
         limits => {
             selected_units => 1,
             selected_domains => 1,
-            generated_vhdl_sources => 5,
+            generated_vhdl_sources => 6,
             generated_source_bytes => 16_777_216,
-            total_artifacts => 13,
+            total_artifacts => 14,
+            source_map_entries => 52,
+            static_validation_checks => 13,
             static_validation_artifacts => 32,
             identifier_bytes => 255,
         },
         fixture => 'vial/ahb_subordinate_base_output_arbitration.vial',
         review_gallery =>
-            'vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation',
+            'vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics',
         writes_files => JSON::PP::true,
         public_embedding_api => JSON::PP::false,
         explicit_nonclaims => [qw(
-            complete_vhdl_backend drivers samplers scheduler scenarios models
-            probe_adapters scoreboards coverage faults properties trace
+            complete_vhdl_backend scoreboards coverage faults properties checks trace
             vhdl_analysis elaboration simulation runtime result parity psl
             complete_vhdl_2008 osvvm uvvm mixed_language product_support scale
         )],
         guidance => [
-            'Use the private foundation emitter to inspect deterministic provider-free VHDL-2008 types, logical-time/runtime metadata, HIAL DUT bytes, entity/port bindings, source order, and command evidence before execution semantics are added.',
-            'Treat structural validation and the checked gallery as emission evidence only; neither proves VHDL analysis, elaboration, runtime behavior, normalized results, parity, PSL, or product support.',
-            'Ordinary foundation emission downloads and inspects no simulator or methodology-provider bytes. Exact GHDL and OSVVM materialization belong to later separately qualified slices.',
+            'Use the private emitter to inspect deterministic provider-free VHDL-2008 typed drivers, original-symbol samplers, inactive-edge scheduling, scenario/fiber state, models, probe adapters, exact ranks, HIAL DUT bytes, and source maps.',
+            'Treat thirteen-check structural validation and the checked gallery as emission evidence only; neither proves VHDL analysis, elaboration, runtime behavior, checking, normalized results, parity, PSL, or product support.',
+            'Ordinary portable emission downloads and inspects no simulator or methodology-provider bytes. Exact GHDL and OSVVM materialization belong to later separately qualified slices.',
             'The generated native VIAL graph is separate from and does not consume, rewrite, or widen the inert vhdl-observation-package compatibility surface.',
             'Canonical VHDL source is provider-neutral. GHDL identity and ordered command shapes live only in JSON evidence until the exact tool is executed.',
         ],

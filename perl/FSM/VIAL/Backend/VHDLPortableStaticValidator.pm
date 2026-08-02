@@ -20,7 +20,7 @@ my @ARTIFACT_KEYS = qw(
 );
 my @REQUIRED_SOURCE_ROLES = qw(
     generated_hial_vhdl_dut vhdl_types_package vhdl_runtime_package
-    vhdl_fixture_metadata vhdl_fixture_top
+    vhdl_fixture_metadata vhdl_fixture_top vhdl_probe_adapter
 );
 
 sub result_keys($class) {
@@ -145,6 +145,10 @@ sub _validate($raw) {
             'runtime package'],
         [vhdl_runtime_package => qr/\btype\s+vial_logical_time_t\s+is\s+record\b/i,
             'typed logical-time record'],
+        [vhdl_runtime_package => qr/\btype\s+vial_fiber_status_t\s+is\s*\(/i,
+            'bounded fiber status'],
+        [vhdl_runtime_package => qr/\btype\s+vial_scenario_status_t\s+is\s*\(/i,
+            'bounded scenario status'],
         [vhdl_fixture_metadata => qr/\bpackage\s+[a-z][a-z0-9_]*_metadata_pkg\s+is\b/i,
             'fixture metadata package'],
         [vhdl_fixture_top => qr/\bentity\s+[a-z][a-z0-9_]*_tb\s+is\b/i,
@@ -153,16 +157,20 @@ sub _validate($raw) {
             'direct HIAL DUT binding'],
         [vhdl_fixture_top => qr/\bport\s+map\s*\(/i,
             'named DUT port map'],
+        [vhdl_fixture_top => qr/^\s*vial_scheduler\s*:\s*process\b/mi,
+            'semantic scheduler process'],
+        [vhdl_probe_adapter => qr/^architecture\s+declared_external_names\s+of\s+[a-z][a-z0-9_]*\s+is/mi,
+            'declared probe-adapter architecture'],
     );
-    my $foundation_ok = 1;
+    my $semantics_ok = 1;
     for my $requirement (@required_shape) {
         my ($role, $pattern, $label) = @$requirement;
         next if $text{$role} =~ $pattern;
-        _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_FOUNDATION_ERROR',
+        _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_SEMANTIC_SHAPE_ERROR',
             "generated source is missing $label", "/roles/$role");
-        $foundation_ok = 0;
+        $semantics_ok = 0;
     }
-    _record_check(\@checks, 'selected_vhdl_foundation_shape', $foundation_ok);
+    _record_check(\@checks, 'selected_vhdl_portable_semantic_shape', $semantics_ok);
 
     my $normalization_ok = $text{vhdl_types_package} =~ /when\s+'0'\s*=>\s*return\s+VIAL_VALUE_0/i
         && $text{vhdl_types_package} =~ /when\s+'1'\s*=>\s*return\s+VIAL_VALUE_1/i
@@ -174,6 +182,121 @@ sub _validate($raw) {
         'types package does not close the selected std_logic normalization table',
         '/roles/vhdl_types_package') unless $normalization_ok;
     _record_check(\@checks, 'closed_std_logic_normalization', $normalization_ok);
+
+    my $typed_io_ok = $text{vhdl_types_package} =~ /\bprocedure\s+drive_vial_value\s*\(/i
+        && $text{vhdl_types_package} =~ /\bprocedure\s+drive_vial_vector\s*\(/i
+        && $text{vhdl_types_package} =~ /\bfunction\s+observe_vial_value\s*\(/i
+        && $text{vhdl_types_package} =~ /\bfunction\s+observe_vial_vector\s*\(/i
+        && $text{vhdl_types_package} =~ /original_symbol\s*:\s*std_logic/i
+        && _count_matches($text{vhdl_fixture_top}, qr/^\s*signal\s+[a-z][a-z0-9_]*\s*:/mi)
+            == _count_matches($text{vhdl_fixture_top}, qr/:=\s*observe_vial_vector\s*\(/mi)
+        && _count_matches($text{vhdl_fixture_top}, qr/\bdrive_vial_(?:value|vector)\s*\(/mi) >= 4;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_TYPED_IO_ERROR',
+        'typed drivers and original-symbol samplers do not cover the generated fixture signals',
+        '/roles/vhdl_fixture_top') unless $typed_io_ok;
+    _record_check(\@checks, 'typed_four_state_drivers_and_samplers', $typed_io_ok);
+
+    my @process_label = $text{vhdl_fixture_top}
+        =~ /^\s*([a-z][a-z0-9_]*)\s*:\s*process\b/gmi;
+    my $inactive = _string_constant($text{vhdl_fixture_metadata}, 'VIAL_INACTIVE_EDGE');
+    my $scheduler_ok = @process_label == 2
+        && join(',', sort @process_label) eq 'vial_clock_generator,vial_scheduler'
+        && _count_matches($text{vhdl_fixture_top}, qr/^\s*vial_scheduler\s*:\s*process\b/mi) == 1
+        && _count_matches($text{vhdl_fixture_top}, qr/^\s*procedure\s+vial_inactive_barrier\s+is\b/mi) == 1
+        && _count_matches($text{vhdl_fixture_top}, qr/\bwait\s+until\s+(?:rising_edge|falling_edge)\s*\(/mi) == 1
+        && defined($inactive)
+        && $text{vhdl_fixture_top} =~ /\bwait\s+until\s+\Q$inactive\E_edge\s*\(/i
+        && _natural_constant($text{vhdl_fixture_metadata}, 'VIAL_SCHEDULER_COUNT') == 1
+        && $text{vhdl_fixture_top} !~ /\b(?:wait\s+for\s+0\s+ns|after|transport|postponed)\b/i
+        && $text{vhdl_fixture_top} !~ /\bprocess\s*\(\s*all\s*\)/i;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_SCHEDULER_AUTHORITY_ERROR',
+        'portable semantics require one inactive-edge scheduler and forbid delta/process-order authority',
+        '/roles/vhdl_fixture_top') unless $scheduler_ok;
+    _record_check(\@checks, 'single_inactive_edge_semantic_authority', $scheduler_ok);
+
+    my @phase_marker = map {
+        index($text{vhdl_fixture_top}, "-- FSMGEN VIAL PHASE: $_")
+    } qw(SAMPLE REACT CHECK DRIVE);
+    my $phase_ok = !(grep { $_ < 0 } @phase_marker)
+        && $phase_marker[0] < $phase_marker[1]
+        && $phase_marker[1] < $phase_marker[2]
+        && $phase_marker[2] < $phase_marker[3]
+        && _count_matches($text{vhdl_fixture_top}, qr/-- FSMGEN VIAL PHASE: (?:SAMPLE|REACT|CHECK|DRIVE)/m) == 4;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_PHASE_ORDER_ERROR',
+        'logical SAMPLE/REACT/CHECK/DRIVE markers are missing, duplicated, or unstable',
+        '/roles/vhdl_fixture_top') unless $phase_ok;
+    _record_check(\@checks, 'stable_sample_react_check_drive_order', $phase_ok);
+
+    my $operation_count = _natural_constant($text{vhdl_fixture_metadata}, 'VIAL_OPERATION_COUNT');
+    my $scenario_count = _natural_constant($text{vhdl_fixture_metadata}, 'VIAL_SCENARIO_COUNT');
+    my $fiber_count = _natural_constant($text{vhdl_fixture_metadata}, 'VIAL_FIBER_COUNT');
+    my $model_count = _natural_constant($text{vhdl_fixture_metadata}, 'VIAL_MODEL_COUNT');
+    my $metadata_ok = defined($operation_count) && $operation_count >= 1
+        && $operation_count <= 65_536
+        && defined($scenario_count) && $scenario_count >= 1 && $scenario_count <= 1_024
+        && defined($fiber_count) && $fiber_count >= 1 && $fiber_count <= 4_096
+        && defined($model_count) && $model_count >= 0 && $model_count <= 4_096
+        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_OPERATION_[0-9]+_ID\s*:/mi) == $operation_count
+        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_OPERATION_[0-9]+_KIND\s*:/mi) == $operation_count
+        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_OPERATION_[0-9]+_STATIC_RANK\s*:/mi) == $operation_count
+        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_OPERATION_[0-9]+_FIBER_ID\s*:/mi) == $operation_count
+        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_SCENARIO_[0-9]+_ID\s*:/mi) == $scenario_count
+        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_FIBER_[0-9]+_ID\s*:/mi) == $fiber_count
+        && _count_matches($text{vhdl_fixture_top}, qr/^\s*variable\s+vial_fiber_[0-9]+_status\s*:/mi) == $fiber_count;
+    if ($metadata_ok) {
+        for my $index (0 .. $operation_count - 1) {
+            my $tag = sprintf('%02d', $index);
+            my ($comment_kind, $comment_rank) = $text{vhdl_fixture_metadata}
+                =~ /^\s*-- VIAL operation \Q$tag\E:\s+([a-z_]+)\s+at static rank ([0-9]+)\s*$/mi;
+            my ($constant_kind) = $text{vhdl_fixture_metadata}
+                =~ /^\s*constant\s+VIAL_OPERATION_\Q$tag\E_KIND\s*:\s*string\s*:=\s*"([a-z_]+)"\s*;/mi;
+            my ($constant_rank) = $text{vhdl_fixture_metadata}
+                =~ /^\s*constant\s+VIAL_OPERATION_\Q$tag\E_STATIC_RANK\s*:\s*natural\s*:=\s*([0-9]+)\s*;/mi;
+            if (!defined($comment_kind) || !defined($comment_rank)
+                    || !defined($constant_kind) || !defined($constant_rank)
+                    || $comment_kind ne $constant_kind
+                    || $comment_rank != $constant_rank) {
+                $metadata_ok = 0;
+                last;
+            }
+        }
+    }
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_METADATA_ERROR',
+        'operation ranks or bounded scenario/fiber metadata are incomplete or inconsistent',
+        '/roles/vhdl_fixture_metadata') unless $metadata_ok;
+    _record_check(\@checks, 'complete_rank_scenario_and_fiber_metadata', $metadata_ok);
+
+    my $model_ok = defined($model_count)
+        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_MODEL_[0-9]+_INSTANCE_ID\s*:/mi) == $model_count
+        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_MODEL_[0-9]+_TRIGGER_EVENT_ID\s*:/mi) == $model_count
+        && _count_matches($text{vhdl_fixture_top}, qr/^\s*variable\s+vial_model_[0-9]+_count\s*:/mi) == $model_count
+        && _count_matches($text{vhdl_fixture_top}, qr/^\s*-- VIAL model update [0-9]+:/mi) == $model_count
+        && $text{vhdl_fixture_top} !~ /\b(?:random|uniform|shared\s+variable)\b/i;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_MODEL_ERROR',
+        'deterministic model declarations and updates do not match metadata',
+        '/roles/vhdl_fixture_top') unless $model_ok;
+    _record_check(\@checks, 'deterministic_model_state_and_updates', $model_ok);
+
+    my ($top_name) = $text{vhdl_fixture_top}
+        =~ /^\s*entity\s+([a-z][a-z0-9_]*)\s+is\b/mi;
+    my $probe_ok = defined($top_name)
+        && _count_matches($text{vhdl_probe_adapter}, qr/^\s*-- VIAL declared probe\s+/mi) >= 1
+        && _count_matches($text{vhdl_probe_adapter}, qr/<<\s*signal\s+/mi)
+            == _count_matches($text{vhdl_probe_adapter}, qr/^\s*-- VIAL declared probe\s+/mi);
+    my $combined_non_adapter = join("\n", map { $text{$_} }
+        grep { $_ ne 'vhdl_probe_adapter' } @REQUIRED_SOURCE_ROLES);
+    $probe_ok = 0 if $combined_non_adapter =~ /<<\s*signal\s+/i;
+    my $parsed_probe = 0;
+    while ($text{vhdl_probe_adapter} =~ /^\s*-- VIAL declared probe\s+(\S+)\s+maps to\s+([A-Za-z][A-Za-z0-9_]*)\s*\n\s*alias\s+([A-Za-z][A-Za-z0-9_]*)\s*:[^\n]+\s+is\s*\n\s*<<\s*signal\s+\.([A-Za-z][A-Za-z0-9_]*)\.dut\.([A-Za-z][A-Za-z0-9_]*)\s*:/gmi) {
+        $parsed_probe++;
+        $probe_ok = 0 unless $2 eq $5 && lc($4) eq lc($top_name);
+    }
+    $probe_ok = 0 unless $parsed_probe
+        == _count_matches($text{vhdl_probe_adapter}, qr/^\s*-- VIAL declared probe\s+/mi);
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_PROBE_ADAPTER_ERROR',
+        'probe hierarchy must occur only in source-mapped declared adapters',
+        '/roles/vhdl_probe_adapter') unless $probe_ok;
+    _record_check(\@checks, 'declared_source_mapped_probe_adapters', $probe_ok);
 
     my $ok = !@diagnostics;
     return {
@@ -189,6 +312,22 @@ sub _validate($raw) {
 
 sub _record_check($checks, $name, $passed) {
     push @$checks, {check => $name, status => $passed ? 'passed' : 'failed'};
+}
+
+sub _count_matches($text, $pattern) {
+    return scalar(() = $text =~ /$pattern/g);
+}
+
+sub _natural_constant($text, $name) {
+    my @value = $text =~ /^\s*constant\s+\Q$name\E\s*:\s*natural\s*:=\s*([0-9]+)\s*;/gmi;
+    return undef unless @value == 1;
+    return 0 + $value[0];
+}
+
+sub _string_constant($text, $name) {
+    my @value = $text =~ /^\s*constant\s+\Q$name\E\s*:\s*string\s*:=\s*"([^"]*)"\s*;/gmi;
+    return undef unless @value == 1;
+    return $value[0];
 }
 
 sub _diagnose($diagnostics, $code, $message, $path) {

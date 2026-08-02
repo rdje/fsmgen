@@ -16,7 +16,7 @@ use FSM::VIAL::Backend::VHDLPortableGHDL;
 use FSM::VIAL::Parser;
 use FSM::VIAL::PlanBuilder;
 
-die "usage: perl scripts/refresh_vial_vhdl_foundation_gallery.pl [--check]\n"
+die "usage: perl scripts/refresh_vial_vhdl_portable_gallery.pl [--check]\n"
     unless @ARGV <= 1 && (!@ARGV || $ARGV[0] eq '--check');
 my $check_only = @ARGV && $ARGV[0] eq '--check';
 
@@ -25,7 +25,7 @@ my $vial_id = 'vial/ahb_subordinate_base_output_arbitration.vial';
 my $hial_id = 'ppif/ahb_lite_subordinate.ppif';
 my $profile = 'vhdl_portable_ghdl';
 my $backend_prefix = "backends/$profile/";
-my $gallery_rel = 'vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation';
+my $gallery_rel = 'vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics';
 my $gallery_root = _repo_path(split m{/}, $gallery_rel);
 
 my $semantic_ir = FSM::VIAL::Parser->parse_source({
@@ -54,7 +54,7 @@ my $emission = FSM::VIAL::Backend::VHDLPortableGHDL->emit({
     execution_ir => $built->{execution_ir},
     bridge_manifest => $built->{bridge_manifest},
     backend_inputs => $built->{backend_inputs},
-    artifact_root => '.artifacts/gallery/vial-vhdl-foundation',
+    artifact_root => '.artifacts/gallery/vial-vhdl-portable-semantics',
     backend_profile => $profile,
 });
 die 'cannot emit portable VHDL gallery: '
@@ -98,7 +98,7 @@ if ($check_only) {
         if @extra;
 }
 
-print(($check_only ? 'portable VHDL foundation gallery current: ' : 'refreshed '),
+print(($check_only ? 'portable VHDL semantics gallery current: ' : 'refreshed '),
     scalar(grep { /\.vhd\z/ } keys %expected), ' VHDL sources; ',
     scalar(keys(%expected)) - scalar(grep { /\.vhd\z/ } keys %expected),
     ' evidence artifacts; ', scalar(@{$emission->{source_map}{entries}}),

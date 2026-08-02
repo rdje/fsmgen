@@ -2971,17 +2971,17 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     is_deeply(
         [sort keys %{$manifest->{language_surface}{vial_vhdl_emission}}],
         [sort @{language_surface_vial_vhdl_emission_keys()}],
-        'manifest publishes the exact portable VHDL foundation discovery keys',
+        'manifest publishes the exact portable VHDL semantics discovery keys',
     );
     is_deeply(
         $manifest->{language_surface}{vial_vhdl_emission},
         build_vial_vhdl_emission_contract(),
-        'manifest publishes the canonical private portable VHDL foundation contract',
+        'manifest publishes the canonical private portable VHDL semantics contract',
     );
     is(
         $manifest->{language_surface}{vial_vhdl_emission}{contract_source},
         vial_vhdl_emission_contract_source(),
-        'manifest names the portable VHDL foundation capability owner',
+        'manifest names the portable VHDL semantics capability owner',
     );
     ok(
         !$manifest->{language_surface}{vial_vhdl_emission}{public_embedding_api},
@@ -2989,8 +2989,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     is(
         $manifest->{language_surface}{vial_vhdl_emission}{backend_stage_status}{emission},
-        'shipped_foundation_only',
-        'manifest advertises only the shipped VHDL foundation scope',
+        'shipped_portable_semantics_emission_only',
+        'manifest advertises only the shipped portable VHDL semantic emission scope',
     );
     is(
         $manifest->{language_surface}{vial_vhdl_emission}{backend_stage_status}{analysis},

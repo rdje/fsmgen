@@ -102,27 +102,28 @@ runtime, normalized result, parity, PSL, and methodology support remain
 unclaimed.
 
 Implementation parent `.15` is now active and split along those evidence
-boundaries. Completed `.15.1` ships a private provider-free VHDL foundation:
-deterministic HIAL VHDL bytes, typed value/phase and logical-time packages,
-fixture metadata, a directly bound testbench shell, complete foundation source
-maps, ordered unexecuted GHDL command records, seven structural checks, atomic
+boundaries. Completed `.15.1-.15.2` ship private provider-free VHDL semantics:
+deterministic HIAL VHDL bytes, typed values and original-symbol observations,
+logical time, exact operation/scenario/fiber/model metadata, a directly bound
+testbench, typed drivers and samplers, one inactive-edge scheduler, a declared
+probe adapter, 52 complete source maps, 13 structural checks, atomic
 publication, and a byte-locked review gallery.
 
-This is deliberately foundation emission, not VHDL execution. Active `.15.2`
-adds drivers, samplers, the inactive-edge scheduler, scenarios, models, and
-probe adapters. Analysis, elaboration, runtime, results, parity, PSL, complete
-VHDL-2008, OSVVM/UVVM, mixed-language behavior, and product support remain
-unclaimed until their separate gates pass.
+This is deliberately reviewable semantics emission, not VHDL execution.
+Active `.15.3` adds checking, scoreboards, coverage, faults, diagnostics,
+closed trace, and normalized results. Analysis, elaboration, runtime, produced
+results, parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language behavior,
+and product support remain unclaimed until their separate gates pass.
 
-Inspect or byte-check the five VHDL sources and eight evidence artifacts with:
+Inspect or byte-check the six VHDL sources and eight evidence artifacts with:
 
 ```text
-perl scripts/refresh_vial_vhdl_foundation_gallery.pl --check
+perl scripts/refresh_vial_vhdl_portable_gallery.pl --check
 ```
 
 The gallery lives at
-`vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation`. Its
-manifest explicitly records the older `vhdl-observation-package` as an
+`vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics`.
+Its manifest explicitly records the older `vhdl-observation-package` as an
 unchanged, unconsumed parallel compatibility surface.
 
 Clean architecture audit commit `2e2f7d25e` activates only the exact

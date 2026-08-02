@@ -1073,7 +1073,7 @@ Git history remain the authoritative chronology for completed work.
 - [README.md](../../rust/fsmgen-portable-api/README.md)
 - [README.md](../../vial/experimental_probes/sv_uvm_experimental.verilator_5_046.uvm_verilator_2020_3_1_vlt_656f20d0/README.md)
 - [README.md](../../vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/README.md)
-- [README.md](../../vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation/README.md)
+- [README.md](../../vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/README.md)
 
 ## Ancillary audit and review records
 

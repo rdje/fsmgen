@@ -35,6 +35,32 @@ my @SOURCE_MAP_ENTRY_KEYS = qw(
     generated_start_column generated_end_column generated_symbol role
     plan_paths semantic_paths bridge_fact_paths source_locations
 );
+my %SUPPORTED_CAPABILITY = map { $_ => 1 } qw(
+    hial_vial.bridge_manifest.v1
+    hial_vial.bridge_probe.equivalent_adapter_required
+    hial_vial.bridge_profile.core_single_unit_v1
+    hial_vial.bridge_protocol.ahb_subordinate_v1
+    hial_vial.bridge_source.ial0_direct
+    hial_vial.bridge_source.ial1_via_generated_ial0
+    hial_vial.bridge_source.ial2_via_generated_ial1
+    vial.binding.directional_representation.v1
+    vial.execution_ir.v1
+    vial.execution_profile.core_directed_single_clock_execution_v1
+    vial.logical_time.drive_sample_react_check_v1
+    vial.plan.v1
+    vial.profile.core_directed_single_clock_v1
+    vial.random.sha256_counter_rejection_v1
+    vial.replay.v1
+    vial.semantic_ir.v1
+    vial.source.v1
+);
+my %SUPPORTED_RELATION = map { $_ => 1 } qw(
+    bit_domain_identity_v1 known_value_injection_v1 enum_encoding_injection_v1
+);
+my %SUPPORTED_OPERATION = map { $_ => 1 } qw(
+    reset drive start await parallel repeat expect scoreboard_expect
+    scoreboard_check inject
+);
 
 sub result_keys($class) {
     confess __PACKAGE__ . "->result_keys requires the exact class invocant\n"
@@ -105,7 +131,7 @@ sub _emit($raw) {
     my $negotiation = _negotiate($execution, $bridge, $raw->{backend_inputs});
     if (@{$negotiation->{unsatisfied}}) {
         return _failure('VIAL_VHDL_BACKEND_UNSUPPORTED',
-            'portable VHDL foundation negotiation rejected one or more requirements',
+            'portable VHDL semantic negotiation rejected one or more requirements',
             '/negotiation', $negotiation);
     }
 
@@ -115,19 +141,23 @@ sub _emit($raw) {
     my $unit = $bridge->{units}[0];
     my $entity_name = _backend_name($bridge, $unit->{unit_id}, 'entity');
     my $operation_id = 'op-' . sha256_hex(_canonical_json({
-        action => 'emit_foundation',
+        action => 'emit_portable_semantics',
         artifact_root => $raw->{artifact_root},
         backend_profile => $BACKEND_PROFILE,
         bridge_manifest_id => $bridge->{manifest_id},
         plan_id => $execution->{plan_id},
     }));
 
+    my $probe_adapter = $fixture_slug . '_probe_adapter';
     my $types_rel = "$BASE/src/fsmgen_vial_types_pkg.vhd";
     my $runtime_rel = "$BASE/src/fsmgen_vial_runtime_pkg.vhd";
     my $metadata_rel = "$BASE/src/$metadata_package.vhd";
     my $dut_rel = "$BASE/src/dut/$raw->{backend_inputs}{dut_vhdl}[0]{artifact_name}";
     my $top_rel = "$BASE/src/$top.vhd";
-    my @source_order = ($types_rel, $runtime_rel, $metadata_rel, $dut_rel, $top_rel);
+    my $probe_rel = "$BASE/src/$probe_adapter.vhd";
+    my $has_probe_adapter = @{$bridge->{probes}} ? 1 : 0;
+    my @source_order = ($types_rel, $runtime_rel, $metadata_rel, $dut_rel,
+        $top_rel, ($has_probe_adapter ? $probe_rel : ()));
 
     my $types = _render_types_package();
     my $runtime = _render_runtime_package();
@@ -136,9 +166,15 @@ sub _emit($raw) {
         execution => $execution,
         bridge => $bridge,
     );
+    my $probe = $has_probe_adapter ? _render_probe_adapter(
+        adapter_name => $probe_adapter,
+        top => $top,
+        bridge => $bridge,
+    ) : undef;
     my $fixture = _render_fixture(
         top => $top,
         entity_name => $entity_name,
+        probe_adapter => $probe_adapter,
         execution => $execution,
         bridge => $bridge,
     );
@@ -155,6 +191,10 @@ sub _emit($raw) {
             [$execution->{plan_id}, $bridge->{manifest_id}]),
         _artifact($top_rel, 'vhdl_source', 'vhdl', 'vhdl_fixture_top', $fixture,
             [$execution->{plan_id}, $bridge->{manifest_id}]),
+        ($has_probe_adapter
+            ? _artifact($probe_rel, 'vhdl_source', 'vhdl', 'vhdl_probe_adapter', $probe,
+                [map { $_->{probe_id} } @{$bridge->{probes}}])
+            : ()),
     );
     my $source_bytes = 0;
     $source_bytes += bytes::length($_->{content}) for @source_artifacts;
@@ -167,7 +207,7 @@ sub _emit($raw) {
         artifacts => \@source_artifacts,
     });
     _throw('VIAL_VHDL_BACKEND_STATIC_VALIDATION_ERROR',
-        'generated VHDL foundation failed structural validation', '/static_validation')
+        'generated portable VHDL semantics failed structural validation', '/static_validation')
         unless $static->{ok};
 
     my $source_map = {
@@ -185,9 +225,11 @@ sub _emit($raw) {
             runtime_rel => $runtime_rel,
             types_rel => $types_rel,
             dut_rel => $dut_rel,
+            probe_rel => $has_probe_adapter ? $probe_rel : undef,
             top => $top,
             metadata_package => $metadata_package,
             entity_name => $entity_name,
+            probe_adapter => $probe_adapter,
         ),
     };
 
@@ -280,10 +322,18 @@ sub _emit($raw) {
         tool_profile => $tool_profile,
         capability_evidence => {
             hial_vhdl_input => 'passed_deterministic_generation',
-            emission => 'passed_foundation_only',
-            static_validation => 'passed_structural_only',
-            source_map => 'passed_foundation_scope',
+            emission => 'passed_portable_semantics',
+            static_validation => 'passed_structural_semantics',
+            source_map => 'passed_portable_semantics_scope',
             review_gallery => 'byte_locked',
+            drivers => 'passed_emission_only',
+            samplers => 'passed_emission_only',
+            scheduler => 'passed_emission_only',
+            scenarios => 'passed_emission_only',
+            models => 'passed_emission_only',
+            probe_adapters => $has_probe_adapter
+                ? 'passed_declared_external_name_emission_only'
+                : 'not_required',
             provider_fetch => 'not_performed',
             analysis => 'not_run',
             elaboration => 'not_run',
@@ -295,9 +345,8 @@ sub _emit($raw) {
             product_support => 'not_claimed',
         },
         limitations => [qw(
-            foundation_only single_unit single_domain drivers_deferred
-            samplers_deferred scheduler_deferred scenarios_deferred
-            models_deferred probe_adapters_deferred scoreboards_deferred
+            portable_semantics_emission_only single_unit single_domain
+            scoreboards_deferred
             coverage_deferred faults_deferred properties_deferred
             trace_deferred results_deferred no_psl no_provider_library
             no_analysis_evidence no_elaboration_evidence no_runtime_evidence
@@ -334,12 +383,12 @@ sub _emit($raw) {
             'backend_manifest', _json_text($manifest), [$execution->{plan_id}]));
     my @artifacts = sort { $a->{relpath} cmp $b->{relpath} } @all;
     _throw('VIAL_VHDL_BACKEND_LIMIT_EXCEEDED',
-        'portable VHDL foundation must emit exactly thirteen artifacts', '/artifacts')
-        unless @artifacts == 13;
+        'portable VHDL semantics emitted an unexpected artifact count', '/artifacts')
+        unless @artifacts == 13 + $has_probe_adapter;
 
     return _result({
         ok => JSON::PP::true,
-        status => 'emitted_unqualified_foundation',
+        status => 'emitted_unqualified_portable_semantics',
         backend_profile => $BACKEND_PROFILE,
         plan_id => $execution->{plan_id},
         generated_top => $top,
@@ -354,8 +403,8 @@ sub _emit($raw) {
 }
 
 sub _negotiate($execution, $bridge, $backend_inputs) {
-    my (@required, @satisfied, @unsatisfied, @limitations);
-    @required = qw(
+    my (@required, @satisfied, @unsatisfied, @native_only, @limitations);
+    push @required, qw(
         fsmgen.vial_execution_ir.v1
         core_directed_single_clock_execution_v1
         fsmgen.hial_vial_bridge_manifest.v1
@@ -363,6 +412,12 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         one_selected_clock_domain_v1
         deterministic_hial_vhdl_source_v1
         declared_vhdl_entity_and_port_bindings_v1
+        typed_four_state_drive_sample_v1
+        one_inactive_edge_scheduler_v1
+        exact_execution_rank_metadata_v1
+        bounded_scenario_fiber_state_v1
+        deterministic_event_counter_models_v1
+        declared_vhdl_probe_adapter_v1
     );
     push @unsatisfied, 'execution schema must be fsmgen.vial_execution_ir.v1'
         unless ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1';
@@ -374,9 +429,148 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         unless ref($bridge->{units}) eq 'ARRAY' && @{$bridge->{units}} == 1;
     push @unsatisfied, 'exactly one selected execution domain is required'
         unless ref($execution->{domains}) eq 'ARRAY' && @{$execution->{domains}} == 1;
-    push @unsatisfied, 'native extensions are deferred beyond the VHDL foundation'
+    push @unsatisfied, 'native extensions are unsupported by portable VHDL semantics'
         unless ref($execution->{native_extensions}) eq 'ARRAY'
             && !@{$execution->{native_extensions}};
+
+    for my $entry (@{$execution->{capability_ledger} || []}) {
+        my $capability = $entry->{capability_id} // '';
+        push @required, $capability;
+        if (($entry->{portable_class} // '') eq 'native_only') {
+            push @native_only, $capability;
+            push @unsatisfied, "native-only-capability:$capability";
+        }
+        elsif (!$SUPPORTED_CAPABILITY{$capability}) {
+            push @unsatisfied, "capability:$capability";
+        }
+        elsif (($entry->{classification} // '') eq 'satisfied_by_execution_profile') {
+            next;
+        }
+        elsif ($capability eq 'hial_vial.bridge_probe.equivalent_adapter_required'
+            && _probe_bindings_are_exact($execution, $bridge)) {
+            next;
+        }
+        else {
+            push @unsatisfied, "capability-state:$capability";
+        }
+    }
+
+    for my $relation (_relations($execution)) {
+        push @unsatisfied, "relation:$relation->{relation_id}"
+            unless $SUPPORTED_RELATION{$relation->{kind} // ''};
+        push @unsatisfied, "width:$relation->{relation_id}"
+            unless defined($relation->{width}) && !ref($relation->{width})
+                && $relation->{width} =~ /\A[0-9]+\z/
+                && $relation->{width} >= 1 && $relation->{width} <= 65_536;
+        for my $key (qw(carrier_state_domain semantic_state_domain)) {
+            next unless exists $relation->{$key};
+            push @unsatisfied, "nine-state-or-unknown-domain:$relation->{relation_id}:$key"
+                unless ($relation->{$key} // '') eq 'two_state'
+                    || ($relation->{$key} // '') eq 'four_state';
+        }
+    }
+
+    my @operation = @{$execution->{operation_graph}{operations} || []};
+    push @unsatisfied, 'operation graph must be nonempty and bounded to 65536 operations'
+        unless @operation && @operation <= 65_536;
+    for my $operation (@operation) {
+        push @unsatisfied, "operation:$operation->{kind}"
+            unless $SUPPORTED_OPERATION{$operation->{kind} // ''};
+        push @unsatisfied, "operation-rank:$operation->{operation_id}"
+            unless defined($operation->{static_rank}) && !ref($operation->{static_rank})
+                && $operation->{static_rank} =~ /\A[0-9]+\z/;
+        push @unsatisfied, "await-shape:$operation->{operation_id}"
+            if ($operation->{kind} // '') eq 'await'
+                && !_await_shape_supported($operation, $execution);
+    }
+
+    my @scenario = @{$execution->{scenarios} || []};
+    push @unsatisfied, 'scenario set must contain between 1 and 1024 scenarios'
+        unless @scenario && @scenario <= 1_024;
+    my $selected_domain = ref($execution->{domains}) eq 'ARRAY'
+        && @{$execution->{domains}} == 1 ? $execution->{domains}[0] : undef;
+    my $selected_domain_id = ref($selected_domain) eq 'HASH'
+        ? ($selected_domain->{semantic_id} // '') : '';
+    if (ref($selected_domain) eq 'HASH') {
+        push @unsatisfied, 'selected domain active edge must be rising or falling'
+            unless ($selected_domain->{active_edge} // '') eq 'rising'
+                || ($selected_domain->{active_edge} // '') eq 'falling';
+        push @unsatisfied, 'selected domain reset polarity must be active_low or active_high'
+            unless ($selected_domain->{reset_polarity} // '') eq 'active_low'
+                || ($selected_domain->{reset_polarity} // '') eq 'active_high';
+    }
+    my %fiber_id;
+    for my $scenario (@scenario) {
+        my @scenario_operation = grep {
+            ($_->{scenario_id} // '') eq ($scenario->{scenario_id} // '')
+        } @operation;
+        my @reset = grep { ($_->{kind} // '') eq 'reset' } @scenario_operation;
+        my @start = grep { ($_->{kind} // '') eq 'start' } @scenario_operation;
+        push @unsatisfied, "scenario-reset:$scenario->{scenario_id}"
+            unless @reset == 1 && _positive_reset_cycles($reset[0]);
+        push @unsatisfied, "scenario-start:$scenario->{scenario_id}"
+            unless @start == 1;
+        push @unsatisfied, "scenario-domain:$scenario->{scenario_id}"
+            unless ($scenario->{domain_id} // '') eq $selected_domain_id;
+        push @unsatisfied, "scenario-timeout:$scenario->{scenario_id}"
+            unless defined($scenario->{timeout_cycles}) && !ref($scenario->{timeout_cycles})
+                && $scenario->{timeout_cycles} =~ /\A[0-9]+\z/
+                && $scenario->{timeout_cycles} >= 1;
+        my @fiber = @{$scenario->{fibers} || []};
+        push @unsatisfied, "scenario-fibers:$scenario->{scenario_id}"
+            unless @fiber && @fiber <= 4_096;
+        for my $fiber (@fiber) {
+            push @unsatisfied, "duplicate-fiber:$fiber->{fiber_id}"
+                if $fiber_id{$fiber->{fiber_id}}++;
+        }
+        my @parallel = grep { ($_->{kind} // '') eq 'parallel' } @scenario_operation;
+        push @unsatisfied, "parallel-count:$scenario->{scenario_id}"
+            if @parallel > 1;
+    }
+
+    push @unsatisfied, 'exactly one typed transaction is required by the portable AHB profile'
+        unless ref($execution->{transactions}) eq 'ARRAY'
+            && @{$execution->{transactions}} == 1;
+    push @unsatisfied, 'exactly one bridge transaction is required by the portable AHB profile'
+        unless ref($bridge->{transactions}) eq 'ARRAY'
+            && @{$bridge->{transactions}} == 1
+            && ref($bridge->{transactions}[0]{fields}) eq 'ARRAY';
+
+    my %role_count;
+    $role_count{$_->{role} // ''}++ for @{$bridge->{endpoints} || []};
+    for my $role (qw(clock reset select ready_in ready_out transfer response)) {
+        push @unsatisfied, "endpoint-role:$role"
+            unless ($role_count{$role} // 0) == 1;
+    }
+    my @event_name = sort map { $_->{name} // '' } @{$execution->{events} || []};
+    my @required_event = sort qw(requested accepted captured held completed error);
+    push @unsatisfied, 'portable AHB event set must be requested/accepted/captured/held/completed/error'
+        unless _canonical_json(\@event_name) eq _canonical_json(\@required_event);
+    for my $event (@{$execution->{events} || []}) {
+        push @unsatisfied, "asynchronous-event:$event->{event_id}"
+            unless ($event->{phase} // '') eq 'drive'
+                || ($event->{phase} // '') eq 'sample';
+    }
+    for my $model (@{$execution->{models} || []}) {
+        my $event_id = ref($model->{bindings}) eq 'ARRAY' && @{$model->{bindings}} == 1
+            ? $model->{bindings}[0]{value}{event_id} : '';
+        push @unsatisfied, "model-shape:$model->{instance_id}"
+            unless ($model->{definition}{name} // '') eq 'event_counter'
+                && ($event_id // '') =~ /::event::(?:accepted|completed)\z/;
+    }
+
+    _walk_values($execution, sub ($value, $path) {
+        if (ref($value) eq 'HASH' && exists($value->{state_domain})) {
+            push @unsatisfied, "nine-state-value:$path"
+                unless ($value->{state_domain} // '') eq 'two_state'
+                    || ($value->{state_domain} // '') eq 'four_state';
+        }
+        return unless ref($value) eq 'HASH' && ($value->{kind} // '') eq 'scalar'
+            && exists($value->{value_hex}) && exists($value->{known_hex})
+            && exists($value->{z_hex});
+        push @unsatisfied, "scalar-shape:$path"
+            unless _scalar_value_shape_is_valid($value);
+    });
 
     my $inputs_ok = eval {
         _require_exact_keys($backend_inputs, [qw(dut_systemverilog dut_vhdl)],
@@ -413,6 +607,12 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         } @{$bridge->{backend_bindings} || []};
         push @unsatisfied, "unit '$unit_id' lacks one declared VHDL entity binding"
             unless @unit_binding == 1;
+        if ($inputs_ok) {
+            push @unsatisfied, "VHDL DUT input does not match bound unit '$unit_id'"
+                unless $backend_inputs->{dut_vhdl}[0]{unit_id} eq $unit_id
+                    && $backend_inputs->{dut_vhdl}[0]{entity_name}
+                        eq $unit_binding[0]{target_name};
+        }
     }
     my %folded_name;
     for my $endpoint (@{$bridge->{endpoints} || []}) {
@@ -432,20 +632,34 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         push @unsatisfied, "case-insensitive VHDL port collision at '$binding[0]{target_name}'"
             if $folded_name{$folded}++;
     }
+    for my $probe (@{$bridge->{probes} || []}) {
+        my @binding = grep {
+            ($_->{target_language} // '') eq 'vhdl'
+                && ($_->{semantic_id} // '') eq $probe->{probe_id}
+                && ($_->{target_kind} // '') eq 'probe_adapter'
+                && ($_->{status} // '') eq 'adapter_required'
+                && _vhdl_identifier($_->{target_name})
+        } @{$bridge->{backend_bindings} || []};
+        push @unsatisfied, "probe '$probe->{probe_id}' lacks one declared VHDL adapter binding"
+            unless @binding == 1;
+    }
+
+    @required = sort _unique(@required);
     @satisfied = @required unless @unsatisfied;
     @limitations = qw(
-        foundation_only provider_free_vhdl_2008 one_unit one_clock_domain
+        portable_semantics_emission_only provider_free_vhdl_2008
+        one_unit one_clock_domain asynchronous_reset_is_dut_interface_only
         analysis_not_run elaboration_not_run runtime_not_run result_not_produced
         parity_not_evaluated psl_not_emitted support_not_claimed
     );
     return {
-        negotiation_scope => 'portable_vhdl_foundation_v1',
+        negotiation_scope => 'portable_vhdl_semantics_v1',
         required => \@required,
         satisfied => \@satisfied,
         unsatisfied => [sort _unique(@unsatisfied)],
+        native_only => [sort _unique(@native_only)],
         deferred => [qw(
-            drivers samplers inactive_edge_scheduler scenarios models
-            probe_adapters scoreboards coverage faults properties trace results
+            scoreboards coverage faults properties checks trace results
             analysis elaboration runtime parity psl osvvm support
         )],
         limitations => \@limitations,
@@ -477,8 +691,28 @@ package fsmgen_vial_types_pkg is
     normalized_value : vial_value_symbol_t;
   end record;
 
+  type vial_value_vector_t is array (natural range <>) of vial_value_symbol_t;
+  type vial_observation_vector_t is array (natural range <>) of vial_observation_t;
+
   function normalize_vial_value(value : std_logic) return vial_value_symbol_t;
+  function to_vial_value_vector(value : std_logic_vector) return vial_value_vector_t;
+  function to_strong_std_logic(value : vial_value_symbol_t) return std_logic;
   function observe_vial_value(value : std_logic) return vial_observation_t;
+  function observe_vial_vector(value : std_logic_vector) return vial_observation_vector_t;
+  function vial_is_known_zero(value : vial_observation_t) return boolean;
+  function vial_is_known_one(value : vial_observation_t) return boolean;
+  function vial_matches(
+    actual : vial_observation_vector_t;
+    expected : vial_value_vector_t
+  ) return boolean;
+  procedure drive_vial_value(
+    signal target : out std_logic;
+    constant value : in vial_value_symbol_t
+  );
+  procedure drive_vial_vector(
+    signal target : out std_logic_vector;
+    constant value : in vial_value_vector_t
+  );
 end package fsmgen_vial_types_pkg;
 
 package body fsmgen_vial_types_pkg is
@@ -501,6 +735,81 @@ package body fsmgen_vial_types_pkg is
       normalized_value => normalize_vial_value(value)
     );
   end function observe_vial_value;
+
+  function to_vial_value_vector(value : std_logic_vector) return vial_value_vector_t is
+    variable result : vial_value_vector_t(value'range);
+  begin
+    for index in value'range loop
+      result(index) := normalize_vial_value(value(index));
+    end loop;
+    return result;
+  end function to_vial_value_vector;
+
+  function to_strong_std_logic(value : vial_value_symbol_t) return std_logic is
+  begin
+    case value is
+      when VIAL_VALUE_0 => return '0';
+      when VIAL_VALUE_1 => return '1';
+      when VIAL_VALUE_X => return 'X';
+      when VIAL_VALUE_Z => return 'Z';
+    end case;
+  end function to_strong_std_logic;
+
+  function observe_vial_vector(value : std_logic_vector) return vial_observation_vector_t is
+    variable result : vial_observation_vector_t(value'range);
+  begin
+    for index in value'range loop
+      result(index) := observe_vial_value(value(index));
+    end loop;
+    return result;
+  end function observe_vial_vector;
+
+  function vial_is_known_zero(value : vial_observation_t) return boolean is
+  begin
+    return value.normalized_value = VIAL_VALUE_0;
+  end function vial_is_known_zero;
+
+  function vial_is_known_one(value : vial_observation_t) return boolean is
+  begin
+    return value.normalized_value = VIAL_VALUE_1;
+  end function vial_is_known_one;
+
+  function vial_matches(
+    actual : vial_observation_vector_t;
+    expected : vial_value_vector_t
+  ) return boolean is
+  begin
+    if actual'length /= expected'length then
+      return false;
+    end if;
+    for index in actual'range loop
+      if actual(index).normalized_value /= expected(index) then
+        return false;
+      end if;
+    end loop;
+    return true;
+  end function vial_matches;
+
+  procedure drive_vial_value(
+    signal target : out std_logic;
+    constant value : in vial_value_symbol_t
+  ) is
+  begin
+    target <= to_strong_std_logic(value);
+  end procedure drive_vial_value;
+
+  procedure drive_vial_vector(
+    signal target : out std_logic_vector;
+    constant value : in vial_value_vector_t
+  ) is
+  begin
+    assert target'length = value'length
+      report "FSMGen VIAL driver width mismatch"
+      severity failure;
+    for index in target'range loop
+      target(index) <= to_strong_std_logic(value(index));
+    end loop;
+  end procedure drive_vial_vector;
 end package body fsmgen_vial_types_pkg;
 VHDL
 }
@@ -513,7 +822,7 @@ use ieee.std_logic_1164.all;
 use work.fsmgen_vial_types_pkg.all;
 
 package fsmgen_vial_runtime_pkg is
-  constant FSMGEN_VIAL_RUNTIME_SCHEMA : string := "fsmgen.vial_vhdl_runtime.v1";
+  constant FSMGEN_VIAL_RUNTIME_SCHEMA : string := "fsmgen.vial_vhdl_runtime.v2";
 
   type vial_logical_time_t is record
     cycle : natural;
@@ -530,6 +839,21 @@ package fsmgen_vial_runtime_pkg is
     VIAL_RUNTIME_FINALIZED
   );
 
+  type vial_fiber_status_t is (
+    VIAL_FIBER_DORMANT,
+    VIAL_FIBER_RUNNING,
+    VIAL_FIBER_COMPLETED,
+    VIAL_FIBER_CANCELLED,
+    VIAL_FIBER_TIMED_OUT
+  );
+
+  type vial_scenario_status_t is (
+    VIAL_SCENARIO_DORMANT,
+    VIAL_SCENARIO_RUNNING,
+    VIAL_SCENARIO_STIMULUS_COMPLETED,
+    VIAL_SCENARIO_TIMED_OUT
+  );
+
   constant VIAL_INITIAL_LOGICAL_TIME : vial_logical_time_t := (
     cycle => 0,
     phase => VIAL_DRIVE_PHASE,
@@ -544,7 +868,8 @@ sub _render_metadata_package(%arg) {
     my $execution = $arg{execution};
     my $bridge = $arg{bridge};
     my $domain = $execution->{domains}[0];
-    return join("\n",
+    my @fiber = map { @{$_->{fibers}} } @{$execution->{scenarios}};
+    my @line = (
         'library ieee;',
         'use ieee.std_logic_1164.all;',
         '',
@@ -555,15 +880,133 @@ sub _render_metadata_package(%arg) {
         '  constant VIAL_UNIT_ID : string := "' . _vhdl_string($bridge->{units}[0]{unit_id}) . '";',
         '  constant VIAL_DOMAIN_ID : string := "' . _vhdl_string($domain->{domain_id}) . '";',
         '  constant VIAL_ACTIVE_EDGE : string := "' . _vhdl_string($domain->{active_edge}) . '";',
-        '  constant VIAL_INACTIVE_EDGE : string := "falling";',
+        '  constant VIAL_INACTIVE_EDGE : string := "'
+            . ($domain->{active_edge} eq 'rising' ? 'falling' : 'rising') . '";',
         '  constant VIAL_RESET_KIND : string := "' . _vhdl_string($domain->{reset_kind}) . '";',
         '  constant VIAL_RESET_POLARITY : string := "' . _vhdl_string($domain->{reset_polarity}) . '";',
-        "end package $arg{package_name};",
+        '  constant VIAL_SCHEDULER_COUNT : natural := 1;',
+        '  constant VIAL_OPERATION_COUNT : natural := '
+            . scalar(@{$execution->{operation_graph}{operations}}) . ';',
+        '  constant VIAL_SCENARIO_COUNT : natural := '
+            . scalar(@{$execution->{scenarios}}) . ';',
+        '  constant VIAL_FIBER_COUNT : natural := ' . scalar(@fiber) . ';',
+        '  constant VIAL_MODEL_COUNT : natural := ' . scalar(@{$execution->{models}}) . ';',
         '',
     );
+    for my $index (0 .. $#{$execution->{operation_graph}{operations}}) {
+        my $operation = $execution->{operation_graph}{operations}[$index];
+        my $tag = sprintf('%02d', $index);
+        push @line,
+            "  -- VIAL operation $tag: $operation->{kind} at static rank $operation->{static_rank}",
+            "  constant VIAL_OPERATION_${tag}_ID : string := \""
+                . _vhdl_string($operation->{operation_id}) . '";',
+            "  constant VIAL_OPERATION_${tag}_KIND : string := \""
+                . _vhdl_string($operation->{kind}) . '";',
+            "  constant VIAL_OPERATION_${tag}_STATIC_RANK : natural := "
+                . $operation->{static_rank} . ';',
+            "  constant VIAL_OPERATION_${tag}_FIBER_ID : string := \""
+                . _vhdl_string($operation->{fiber_id}) . '";',
+            '';
+    }
+    for my $index (0 .. $#{$execution->{scenarios}}) {
+        my $scenario = $execution->{scenarios}[$index];
+        my $tag = sprintf('%02d', $index);
+        push @line,
+            "  -- VIAL scenario $tag: " . _vhdl_string($scenario->{name}),
+            "  constant VIAL_SCENARIO_${tag}_ID : string := \""
+                . _vhdl_string($scenario->{scenario_id}) . '";',
+            "  constant VIAL_SCENARIO_${tag}_TIMEOUT_CYCLES : natural := "
+                . $scenario->{timeout_cycles} . ';',
+            "  constant VIAL_SCENARIO_${tag}_FIBER_COUNT : natural := "
+                . scalar(@{$scenario->{fibers}}) . ';',
+            '';
+    }
+    for my $index (0 .. $#fiber) {
+        my $item = $fiber[$index];
+        my $tag = sprintf('%02d', $index);
+        push @line,
+            "  -- VIAL fiber $tag: " . _vhdl_string($item->{name}),
+            "  constant VIAL_FIBER_${tag}_ID : string := \""
+                . _vhdl_string($item->{fiber_id}) . '";',
+            "  constant VIAL_FIBER_${tag}_CANCEL_SCOPE_ID : string := \""
+                . _vhdl_string($item->{cancel_scope_id}) . '";',
+            '';
+    }
+    for my $index (0 .. $#{$execution->{models}}) {
+        my $model = $execution->{models}[$index];
+        my $tag = sprintf('%02d', $index);
+        my $event = $model->{bindings}[0]{value}{event_id};
+        push @line,
+            "  -- VIAL model $tag: " . _vhdl_string($model->{definition}{name}),
+            "  constant VIAL_MODEL_${tag}_INSTANCE_ID : string := \""
+                . _vhdl_string($model->{instance_id}) . '";',
+            "  constant VIAL_MODEL_${tag}_TRIGGER_EVENT_ID : string := \""
+                . _vhdl_string($event) . '";',
+            '';
+    }
+    push @line, "end package $arg{package_name};", '';
+    return join("\n", @line);
+}
+
+sub _render_probe_adapter(%arg) {
+    my $bridge = $arg{bridge};
+    my %type = map { $_->{type_id} => $_ } @{$bridge->{types}};
+    my %binding = map {
+        ($_->{target_language} // '') eq 'vhdl'
+            && ($_->{target_kind} // '') eq 'probe_adapter'
+            && ($_->{status} // '') eq 'adapter_required'
+            ? ($_->{semantic_id} => $_) : ()
+    } @{$bridge->{backend_bindings}};
+    my @line = (
+        'library ieee;',
+        'use ieee.std_logic_1164.all;',
+        '',
+        "entity $arg{adapter_name} is",
+        '  port (',
+    );
+    my @port;
+    for my $probe (@{$bridge->{probes}}) {
+        my $width = $type{$probe->{type_id}}{width};
+        my $symbol = 'vial_probe_' . _vhdl_slug($probe->{name});
+        my $kind = $width == 1
+            ? 'std_logic'
+            : 'std_logic_vector(' . ($width - 1) . ' downto 0)';
+        push @port, "    $symbol : out $kind";
+    }
+    for my $index (0 .. $#port) {
+        push @line, $port[$index] . ($index == $#port ? '' : ';');
+    }
+    push @line,
+        '  );',
+        "end entity $arg{adapter_name};",
+        '',
+        "architecture declared_external_names of $arg{adapter_name} is";
+    for my $probe (@{$bridge->{probes}}) {
+        my $target = $binding{$probe->{probe_id}}{target_name};
+        my $width = $type{$probe->{type_id}}{width};
+        my $symbol = 'vial_probe_' . _vhdl_slug($probe->{name});
+        my $alias = 'vial_declared_' . _vhdl_slug($target);
+        my $kind = $width == 1
+            ? 'std_logic'
+            : 'std_logic_vector(' . ($width - 1) . ' downto 0)';
+        push @line,
+            "  -- VIAL declared probe $probe->{probe_id} maps to $target",
+            "  alias $alias : $kind is",
+            "    << signal .$arg{top}.dut.$target : $kind >>;";
+    }
+    push @line, 'begin';
+    for my $probe (@{$bridge->{probes}}) {
+        my $target = $binding{$probe->{probe_id}}{target_name};
+        my $symbol = 'vial_probe_' . _vhdl_slug($probe->{name});
+        my $alias = 'vial_declared_' . _vhdl_slug($target);
+        push @line, "  $symbol <= $alias;";
+    }
+    push @line, "end architecture declared_external_names;", '';
+    return join("\n", @line);
 }
 
 sub _render_fixture(%arg) {
+    my $execution = $arg{execution};
     my $bridge = $arg{bridge};
     my %type = map { $_->{type_id} => $_ } @{$bridge->{types}};
     my %binding = map {
@@ -572,6 +1015,33 @@ sub _render_fixture(%arg) {
             && ($_->{status} // '') eq 'declared'
             ? ($_->{semantic_id} => $_) : ()
     } @{$bridge->{backend_bindings}};
+    my %endpoint = map { $_->{endpoint_id} => $_ } @{$bridge->{endpoints}};
+    my $domain = $bridge->{domains}[0];
+    my $clock = $binding{$domain->{clock_endpoint_id}}{target_name};
+    my $reset = $binding{$domain->{reset_endpoint_id}}{target_name};
+    my $inactive_function = $domain->{active_edge} eq 'rising'
+        ? 'falling_edge' : 'rising_edge';
+    my $reset_active = $domain->{reset_polarity} eq 'active_low'
+        ? 'VIAL_VALUE_0' : 'VIAL_VALUE_1';
+    my $reset_inactive = $domain->{reset_polarity} eq 'active_low'
+        ? 'VIAL_VALUE_1' : 'VIAL_VALUE_0';
+    my $ready_in = _endpoint_name_by_role($bridge, \%binding, 'ready_in');
+    my $ready_out = _endpoint_name_by_role($bridge, \%binding, 'ready_out');
+    my $select = _endpoint_name_by_role($bridge, \%binding, 'select');
+    my $transfer = _endpoint_name_by_role($bridge, \%binding, 'transfer');
+    my $response = _endpoint_name_by_role($bridge, \%binding, 'response');
+    my @fiber = map { @{$_->{fibers}} } @{$execution->{scenarios}};
+    my %fiber_index = map { $fiber[$_]{fiber_id} => $_ } 0 .. $#fiber;
+    my %sample_symbol;
+    for my $item (@{$bridge->{endpoints}}) {
+        $sample_symbol{$item->{endpoint_id}}
+            = 'vial_sample_' . _vhdl_slug($binding{$item->{endpoint_id}}{target_name});
+    }
+    for my $item (@{$bridge->{probes}}) {
+        $sample_symbol{$item->{probe_id}}
+            = 'vial_sample_probe_' . _vhdl_slug($item->{name});
+    }
+
     my @line = (
         'library ieee;',
         'use ieee.std_logic_1164.all;',
@@ -582,19 +1052,46 @@ sub _render_fixture(%arg) {
         "entity $arg{top} is",
         "end entity $arg{top};",
         '',
-        "architecture foundation of $arg{top} is",
+        "architecture portable_semantics of $arg{top} is",
     );
     for my $endpoint (@{$bridge->{endpoints}}) {
         my $name = $binding{$endpoint->{endpoint_id}}{target_name};
         my $width = $type{$endpoint->{type_id}}{width};
+        my $is_driver = $endpoint->{direction} eq 'input'
+            && $endpoint->{role} ne 'ready_in';
+        my $initial = $is_driver ? " := "
+            . ($width == 1 ? "'0'" : "(others => '0')") : '';
         my $declaration = $width == 1
-            ? "  signal $name : std_logic := '0';"
+            ? "  signal $name : std_logic$initial;"
             : "  signal $name : std_logic_vector(" . ($width - 1)
-                . " downto 0) := (others => '0');";
+                . " downto 0)$initial;";
         push @line, $declaration;
     }
+    for my $probe (@{$bridge->{probes}}) {
+        my $width = $type{$probe->{type_id}}{width};
+        my $symbol = 'vial_probe_' . _vhdl_slug($probe->{name});
+        push @line, $width == 1
+            ? "  signal $symbol : std_logic;"
+            : "  signal $symbol : std_logic_vector(" . ($width - 1)
+                . ' downto 0);';
+    }
+    if (@{$bridge->{probes}}) {
+        push @line, '', "  component $arg{probe_adapter} is", '    port (';
+        my @port;
+        for my $probe (@{$bridge->{probes}}) {
+            my $width = $type{$probe->{type_id}}{width};
+            my $symbol = 'vial_probe_' . _vhdl_slug($probe->{name});
+            my $kind = $width == 1
+                ? 'std_logic'
+                : 'std_logic_vector(' . ($width - 1) . ' downto 0)';
+            push @port, "      $symbol : out $kind";
+        }
+        for my $index (0 .. $#port) {
+            push @line, $port[$index] . ($index == $#port ? '' : ';');
+        }
+        push @line, '    );', '  end component;';
+    }
     push @line, '', 'begin',
-        '  -- Driver, sampler, scheduler, scenario, and probe processes are emitted by later slices.',
         "  dut : entity work.$arg{entity_name}(rtl)",
         '    port map (';
     my @ports = map {
@@ -604,7 +1101,309 @@ sub _render_fixture(%arg) {
     for my $index (0 .. $#ports) {
         push @line, $ports[$index] . ($index == $#ports ? '' : ',');
     }
-    push @line, '    );', "end architecture foundation;", '';
+    push @line, '    );', '';
+    if (@{$bridge->{probes}}) {
+        push @line, "  probe_adapter : $arg{probe_adapter}", '    port map (';
+        my @probe_port = map {
+            my $symbol = 'vial_probe_' . _vhdl_slug($_->{name});
+            "      $symbol => $symbol"
+        } @{$bridge->{probes}};
+        for my $index (0 .. $#probe_port) {
+            push @line, $probe_port[$index]
+                . ($index == $#probe_port ? '' : ',');
+        }
+        push @line, '    );', '';
+    }
+    push @line,
+        "  $ready_in <= $ready_out;",
+        '',
+        '  vial_clock_generator : process',
+        '  begin',
+        '    loop',
+        '      wait for 1 ns;',
+        "      $clock <= not $clock;",
+        '    end loop;',
+        '  end process vial_clock_generator;',
+        '',
+        '  vial_scheduler : process',
+        '    variable vial_runtime_state : vial_runtime_state_t := VIAL_RUNTIME_CONSTRUCTED;',
+        '    variable vial_time : vial_logical_time_t := VIAL_INITIAL_LOGICAL_TIME;',
+        '    variable vial_scenario_status : vial_scenario_status_t := VIAL_SCENARIO_DORMANT;',
+        '    variable vial_current_scenario : natural := 0;',
+        '    variable vial_scenario_timeout : natural := 0;',
+        '    variable vial_current_operation_rank : natural := 0;',
+        '    variable vial_scenario_started : boolean := false;',
+        '    variable vial_scenario_done : boolean := false;',
+        '    variable vial_transaction_active : boolean := false;',
+        '    variable vial_transaction_accepted : boolean := false;';
+    for my $endpoint (@{$bridge->{endpoints}}) {
+        my $width = $type{$endpoint->{type_id}}{width};
+        push @line, "    variable $sample_symbol{$endpoint->{endpoint_id}}"
+            . ' : vial_observation_vector_t(' . ($width - 1) . ' downto 0);';
+    }
+    for my $probe (@{$bridge->{probes}}) {
+        my $width = $type{$probe->{type_id}}{width};
+        push @line, "    variable $sample_symbol{$probe->{probe_id}}"
+            . ' : vial_observation_vector_t(' . ($width - 1) . ' downto 0);';
+    }
+    for my $index (0 .. $#fiber) {
+        my $tag = sprintf('%02d', $index);
+        push @line,
+            "    -- VIAL fiber state $tag: " . _vhdl_string($fiber[$index]{fiber_id}),
+            "    variable vial_fiber_${tag}_status : vial_fiber_status_t := VIAL_FIBER_DORMANT;";
+    }
+    for my $index (0 .. $#{$execution->{models}}) {
+        my $tag = sprintf('%02d', $index);
+        push @line,
+            "    -- VIAL model state $tag: "
+                . _vhdl_string($execution->{models}[$index]{instance_id}),
+            "    variable vial_model_${tag}_count : natural := 0;";
+    }
+    for my $event (@{$execution->{events}}) {
+        push @line, '    variable vial_event_' . _vhdl_slug($event->{name})
+            . '_count : natural := 0;';
+    }
+    push @line,
+        '',
+        '    procedure vial_inactive_barrier is',
+        '      variable vial_accept_now : boolean := false;',
+        '      variable vial_complete_now : boolean := false;',
+        '    begin',
+        "      wait until $inactive_function($clock);",
+        '      vial_time.cycle := vial_time.cycle + 1;',
+        '      vial_time.phase := VIAL_SAMPLE_PHASE;',
+        '      -- FSMGEN VIAL PHASE: SAMPLE';
+    for my $endpoint (@{$bridge->{endpoints}}) {
+        my $name = $binding{$endpoint->{endpoint_id}}{target_name};
+        my $width = $type{$endpoint->{type_id}}{width};
+        my $value = $width == 1 ? "std_logic_vector'(0 => $name)" : $name;
+        push @line, "      $sample_symbol{$endpoint->{endpoint_id}} := observe_vial_vector($value);";
+    }
+    for my $probe (@{$bridge->{probes}}) {
+        my $name = 'vial_probe_' . _vhdl_slug($probe->{name});
+        my $width = $type{$probe->{type_id}}{width};
+        my $value = $width == 1 ? "std_logic_vector'(0 => $name)" : $name;
+        push @line, "      $sample_symbol{$probe->{probe_id}} := observe_vial_vector($value);";
+    }
+    my $select_sample = $sample_symbol{_endpoint_id_by_role($bridge, 'select')};
+    my $ready_in_sample = $sample_symbol{_endpoint_id_by_role($bridge, 'ready_in')};
+    my $ready_out_sample = $sample_symbol{_endpoint_id_by_role($bridge, 'ready_out')};
+    my $transfer_sample = $sample_symbol{_endpoint_id_by_role($bridge, 'transfer')};
+    my $response_sample = $sample_symbol{_endpoint_id_by_role($bridge, 'response')};
+    push @line,
+        '',
+        '      vial_time.phase := VIAL_REACT_PHASE;',
+        '      -- FSMGEN VIAL PHASE: REACT',
+        '      vial_accept_now := vial_transaction_active',
+        "        and vial_is_known_one(${select_sample}(0))",
+        "        and vial_is_known_one(${ready_in_sample}(0))",
+        "        and vial_matches($transfer_sample,",
+        "          to_vial_value_vector(std_logic_vector'(\"10\")));",
+        '      vial_complete_now := vial_transaction_active',
+        "        and vial_is_known_one(${ready_out_sample}(0))",
+        '        and (vial_transaction_accepted or vial_accept_now);',
+        '      if vial_accept_now and not vial_transaction_accepted then',
+        '        vial_event_accepted_count := vial_event_accepted_count + 1;',
+        '        vial_event_captured_count := vial_event_captured_count + 1;',
+        '        vial_transaction_accepted := true;',
+        '      end if;',
+        "      if vial_transaction_active and vial_is_known_zero(${ready_out_sample}(0)) then",
+        '        vial_event_held_count := vial_event_held_count + 1;',
+        '      end if;',
+        "      if vial_transaction_active and vial_is_known_one(${response_sample}(0)) then",
+        '        vial_event_error_count := vial_event_error_count + 1;',
+        '      end if;',
+        '      if vial_complete_now then',
+        '        vial_event_completed_count := vial_event_completed_count + 1;',
+        '      end if;';
+    my %event_name;
+    for my $event (@{$execution->{events}}) {
+        $event_name{$event->{event_id}} = $event->{name};
+        $event_name{$event->{declaration_semantic_id}} = $event->{name};
+    }
+    for my $index (0 .. $#{$execution->{models}}) {
+        my $model = $execution->{models}[$index];
+        my $trigger = $event_name{$model->{bindings}[0]{value}{event_id}};
+        my $condition = $trigger eq 'accepted' ? 'vial_accept_now'
+            : $trigger eq 'completed' ? 'vial_complete_now'
+            : 'false';
+        my $tag = sprintf('%02d', $index);
+        push @line,
+            "      -- VIAL model update $tag: " . _vhdl_string($model->{instance_id}),
+            "      if $condition then",
+            "        vial_model_${tag}_count := vial_model_${tag}_count + 1;",
+            '      end if;';
+    }
+    push @line, '      if vial_scenario_started then',
+        '        case vial_current_scenario is';
+    for my $scenario_index (0 .. $#{$execution->{scenarios}}) {
+        my $scenario = $execution->{scenarios}[$scenario_index];
+        my @ops = grep { $_->{scenario_id} eq $scenario->{scenario_id} }
+            @{$execution->{operation_graph}{operations}};
+        my %op_by_id = map { $_->{operation_id} => $_ } @ops;
+        my @parallel = grep { $_->{kind} eq 'parallel' } @ops;
+        my @root_await = grep {
+            $_->{kind} eq 'await' && $_->{fiber_id} eq $scenario->{root_fiber_id}
+        } @ops;
+        push @line, "          when $scenario_index =>";
+        for my $operation (grep { $_->{kind} eq 'await' } @ops) {
+            my $fiber_tag = sprintf('%02d', $fiber_index{$operation->{fiber_id}});
+            my $condition = _render_await_condition(
+                operation => $operation,
+                bridge => $bridge,
+                binding => \%binding,
+                sample_symbol => \%sample_symbol,
+                execution => $execution,
+            );
+            push @line,
+                "            vial_current_operation_rank := $operation->{static_rank};",
+                "            if $condition then",
+                "              vial_fiber_${fiber_tag}_status := VIAL_FIBER_COMPLETED;",
+                '            end if;';
+        }
+        if (@parallel == 1) {
+            my ($effect) = grep { $_->{kind} eq 'activate_fibers' }
+                @{$parallel[0]{effects}};
+            my @child = map { $op_by_id{$_} } @{$effect->{child_root_operation_ids}};
+            my @done = map {
+                'vial_fiber_' . sprintf('%02d', $fiber_index{$_->{fiber_id}})
+                    . '_status = VIAL_FIBER_COMPLETED'
+            } @child;
+            my $join = $effect->{join} eq 'all' ? ' and ' : ' or ';
+            my $root_tag = sprintf('%02d', $fiber_index{$scenario->{root_fiber_id}});
+            push @line,
+                "            vial_current_operation_rank := $parallel[0]{static_rank};",
+                '            if ' . join($join, @done) . ' then',
+                "              vial_fiber_${root_tag}_status := VIAL_FIBER_COMPLETED;",
+                '              vial_scenario_done := true;',
+                '            end if;';
+        }
+        elsif (@root_await) {
+            my $root_tag = sprintf('%02d', $fiber_index{$scenario->{root_fiber_id}});
+            push @line,
+                "            if vial_fiber_${root_tag}_status = VIAL_FIBER_COMPLETED then",
+                '              vial_scenario_done := true;',
+                '            end if;';
+        }
+        else {
+            push @line,
+                '            if vial_complete_now then',
+                '              vial_scenario_done := true;',
+                '            end if;';
+        }
+    }
+    push @line,
+        '          when others =>',
+        '            vial_scenario_done := true;',
+        '        end case;',
+        '      end if;',
+        '      if vial_scenario_started and vial_time.cycle >= vial_scenario_timeout then',
+        '        vial_scenario_status := VIAL_SCENARIO_TIMED_OUT;',
+        '        vial_scenario_done := true;',
+        '      end if;',
+        '',
+        '      vial_time.phase := VIAL_CHECK_PHASE;',
+        '      -- FSMGEN VIAL PHASE: CHECK (checking and results are emitted by slice .15.3)',
+        '',
+        '      vial_time.phase := VIAL_DRIVE_PHASE;',
+        '      -- FSMGEN VIAL PHASE: DRIVE',
+        '      if vial_complete_now then',
+        "        drive_vial_value($select, VIAL_VALUE_0);",
+        "        drive_vial_vector($transfer,",
+        "          to_vial_value_vector(std_logic_vector'(\"00\")));",
+        '        vial_transaction_active := false;',
+        '      end if;',
+        '      vial_time.static_rank := vial_current_operation_rank;',
+        '      vial_time.local_index := 0;',
+        '    end procedure vial_inactive_barrier;',
+        '',
+        '  begin',
+        '    vial_runtime_state := VIAL_RUNTIME_READY;',
+        '    vial_time := VIAL_INITIAL_LOGICAL_TIME;',
+        '    vial_runtime_state := VIAL_RUNTIME_RUNNING;',
+        '    for scenario_index in 0 to ' . $#{$execution->{scenarios}} . ' loop',
+        '      vial_current_scenario := scenario_index;',
+        '      vial_scenario_status := VIAL_SCENARIO_RUNNING;',
+        '      vial_scenario_started := false;',
+        '      vial_scenario_done := false;',
+        '      vial_transaction_active := false;',
+        '      vial_transaction_accepted := false;',
+        '      vial_time.cycle := 0;',
+        '      vial_current_operation_rank := 0;';
+    for my $index (0 .. $#fiber) {
+        my $tag = sprintf('%02d', $index);
+        push @line, "      vial_fiber_${tag}_status := VIAL_FIBER_DORMANT;";
+    }
+    for my $index (0 .. $#{$execution->{models}}) {
+        my $tag = sprintf('%02d', $index);
+        push @line, "      vial_model_${tag}_count := 0;";
+    }
+    for my $event (@{$execution->{events}}) {
+        push @line, '      vial_event_' . _vhdl_slug($event->{name}) . '_count := 0;';
+    }
+    push @line, '      case scenario_index is';
+    for my $scenario_index (0 .. $#{$execution->{scenarios}}) {
+        my $scenario = $execution->{scenarios}[$scenario_index];
+        my @ops = grep { $_->{scenario_id} eq $scenario->{scenario_id} }
+            @{$execution->{operation_graph}{operations}};
+        my ($reset_op) = grep { $_->{kind} eq 'reset' } @ops;
+        my ($start_op) = grep { $_->{kind} eq 'start' } @ops;
+        my %reset_input = map { $_->{name} => $_->{value} } @{$reset_op->{typed_inputs}};
+        my %start_input = map { $_->{name} => $_->{value} } @{$start_op->{typed_inputs}};
+        my %field = map { $_->{field_id} => $_->{value}{value} } @{$start_input{fields}};
+        push @line,
+            "        when $scenario_index =>",
+            "          -- VIAL scenario $scenario_index: " . _vhdl_string($scenario->{scenario_id}),
+            "          vial_scenario_timeout := $scenario->{timeout_cycles};",
+            "          vial_current_operation_rank := $reset_op->{static_rank};",
+            "          drive_vial_value($reset, $reset_active);",
+            "          for reset_index in 1 to $reset_input{cycles} loop",
+            '            vial_inactive_barrier;',
+            '          end loop;',
+            "          drive_vial_value($reset, $reset_inactive);";
+        for my $carrier (@{$bridge->{transactions}[0]{fields}}) {
+            my ($field_id) = grep { /::field::\Q$carrier->{name}\E\z/ } keys %field;
+            next unless defined $field_id;
+            my $name = $binding{$carrier->{endpoint_id}}{target_name};
+            my $width = $type{$endpoint{$carrier->{endpoint_id}}{type_id}}{width};
+            my $expression = $width == 1
+                ? _vhdl_value_symbol_expression($field{$field_id})
+                : _vhdl_value_vector_expression($field{$field_id}, $width);
+            push @line, "          -- VIAL drive $field_id",
+                $width == 1
+                    ? "          drive_vial_value($name, $expression);"
+                    : "          drive_vial_vector($name, $expression);";
+        }
+        push @line,
+            "          drive_vial_value($select, VIAL_VALUE_1);",
+            "          vial_current_operation_rank := $start_op->{static_rank};",
+            '          vial_transaction_active := true;',
+            '          vial_transaction_accepted := false;',
+            '          vial_event_requested_count := vial_event_requested_count + 1;';
+        for my $scenario_fiber (@{$scenario->{fibers}}) {
+            my $tag = sprintf('%02d', $fiber_index{$scenario_fiber->{fiber_id}});
+            push @line, "          vial_fiber_${tag}_status := VIAL_FIBER_RUNNING;";
+        }
+        push @line,
+            '          vial_scenario_started := true;',
+            '          while not vial_scenario_done loop',
+            '            vial_inactive_barrier;',
+            '          end loop;',
+            '          if vial_scenario_status /= VIAL_SCENARIO_TIMED_OUT then',
+            '            vial_scenario_status := VIAL_SCENARIO_STIMULUS_COMPLETED;',
+            '          end if;';
+    }
+    push @line,
+        '        when others =>',
+        '          null;',
+        '      end case;',
+        '    end loop;',
+        '    vial_runtime_state := VIAL_RUNTIME_COMPLETED;',
+        '    vial_runtime_state := VIAL_RUNTIME_FINALIZED;',
+        '    wait;',
+        '  end process vial_scheduler;',
+        "end architecture portable_semantics;",
+        '';
     return join("\n", @line);
 }
 
@@ -624,27 +1423,183 @@ sub _source_map_entries(%arg) {
             [$execution->{fixture}{source_location}, $execution->{domains}[0]{source_location}]],
         [$arg{dut_rel}, $arg{entity_name}, 'generated_hial_vhdl_dut',
             ['/bindings/unit'], [$bridge->{units}[0]{unit_id}], ['/units/0'], []],
-        [$arg{top_rel}, $arg{top}, 'fixture_top_foundation',
+        [$arg{top_rel}, $arg{top}, 'portable_fixture_top',
             ['/bindings/unit', '/bindings/endpoints'],
             [$execution->{fixture}{fixture_id}, $bridge->{units}[0]{unit_id},
                 map { $_->{endpoint_id} } @{$bridge->{endpoints}}],
             ['/units/0', '/endpoints', '/backend_bindings'],
             [$execution->{fixture}{source_location}]],
     );
+    if (defined($arg{probe_rel})) {
+        push @spec,
+            [$arg{probe_rel}, $arg{probe_adapter}, 'declared_probe_adapter',
+                ['/bindings/probes'],
+                [map { $_->{probe_id} } @{$bridge->{probes}}],
+                ['/probes', '/backend_bindings'], []];
+    }
+
+    my $metadata_text = $artifact{$arg{metadata_rel}}{content};
+    for my $index (0 .. $#{$execution->{operation_graph}{operations}}) {
+        my $operation = $execution->{operation_graph}{operations}[$index];
+        my $tag = sprintf('%02d', $index);
+        my $start = _find_line($metadata_text, qr/^  -- VIAL operation \Q$tag\E:/m);
+        push @spec, {
+            relpath => $arg{metadata_rel},
+            symbol => "VIAL_OPERATION_${tag}_ID",
+            role => "operation_rank_$operation->{kind}",
+            start => $start,
+            end => $start + 4,
+            plan => ["/operation_graph/operations/$index"],
+            semantic => [$operation->{operation_id}, $operation->{fiber_id}],
+            facts => [],
+            locations => [$operation->{source_location}],
+        };
+    }
+    for my $index (0 .. $#{$execution->{scenarios}}) {
+        my $scenario = $execution->{scenarios}[$index];
+        my $tag = sprintf('%02d', $index);
+        my $start = _find_line($metadata_text, qr/^  -- VIAL scenario \Q$tag\E:/m);
+        push @spec, {
+            relpath => $arg{metadata_rel},
+            symbol => "VIAL_SCENARIO_${tag}_ID",
+            role => 'scenario_metadata',
+            start => $start,
+            end => $start + 3,
+            plan => ["/scenarios/$index"],
+            semantic => [$scenario->{scenario_id}],
+            facts => [],
+            locations => [$scenario->{source_location}],
+        };
+    }
+    my @fiber = map { @{$_->{fibers}} } @{$execution->{scenarios}};
+    for my $index (0 .. $#fiber) {
+        my $tag = sprintf('%02d', $index);
+        my $start = _find_line($metadata_text, qr/^  -- VIAL fiber \Q$tag\E:/m);
+        push @spec, {
+            relpath => $arg{metadata_rel},
+            symbol => "VIAL_FIBER_${tag}_ID",
+            role => 'fiber_metadata',
+            start => $start,
+            end => $start + 2,
+            plan => ['/scenarios'],
+            semantic => [$fiber[$index]{fiber_id}],
+            facts => [],
+            locations => [$fiber[$index]{source_location}],
+        };
+    }
+    for my $index (0 .. $#{$execution->{models}}) {
+        my $model = $execution->{models}[$index];
+        my $tag = sprintf('%02d', $index);
+        my $start = _find_line($metadata_text, qr/^  -- VIAL model \Q$tag\E:/m);
+        push @spec, {
+            relpath => $arg{metadata_rel},
+            symbol => "VIAL_MODEL_${tag}_INSTANCE_ID",
+            role => 'deterministic_model_metadata',
+            start => $start,
+            end => $start + 2,
+            plan => ["/models/$index"],
+            semantic => [$model->{instance_id}, $model->{model_id}],
+            facts => [],
+            locations => [$model->{source_location}],
+        };
+    }
+
+    my $top_text = $artifact{$arg{top_rel}}{content};
+    my %execution_endpoint = map { $_->{endpoint_id} => $_ }
+        @{$execution->{bindings}{endpoints}};
+    for my $index (0 .. $#{$bridge->{endpoints}}) {
+        my $endpoint = $bridge->{endpoints}[$index];
+        my $name = _backend_name($bridge, $endpoint->{endpoint_id}, 'port');
+        my $line = _find_line($top_text, qr/^  signal \Q$name\E\s*:/mi);
+        push @spec, {
+            relpath => $arg{top_rel},
+            symbol => $name,
+            role => $endpoint->{direction} eq 'input'
+                ? 'typed_driver_binding' : 'typed_sample_binding',
+            start => $line,
+            end => $line,
+            plan => ["/bindings/endpoints/$index"],
+            semantic => [$endpoint->{endpoint_id}],
+            facts => ["/endpoints/$index", '/backend_bindings'],
+            locations => [$execution_endpoint{$endpoint->{endpoint_id}}{source_location}],
+        };
+    }
+    my $scheduler_start = _find_line($top_text, qr/^  vial_scheduler\s*:\s*process\b/mi);
+    my $scheduler_end = _find_line($top_text,
+        qr/^  end process vial_scheduler;/mi);
+    push @spec, {
+        relpath => $arg{top_rel},
+        symbol => 'vial_scheduler',
+        role => 'inactive_edge_scheduler',
+        start => $scheduler_start,
+        end => $scheduler_end,
+        plan => ['/domains/0', '/operation_graph', '/scenarios', '/models'],
+        semantic => [$execution->{domains}[0]{semantic_id}],
+        facts => ['/domains/0'],
+        locations => [$execution->{domains}[0]{source_location}],
+    };
+    for my $index (0 .. $#{$execution->{models}}) {
+        my $model = $execution->{models}[$index];
+        my $tag = sprintf('%02d', $index);
+        my $line = _find_line($top_text, qr/^      -- VIAL model update \Q$tag\E:/m);
+        push @spec, {
+            relpath => $arg{top_rel},
+            symbol => "vial_model_${tag}_count",
+            role => 'deterministic_model_update',
+            start => $line,
+            end => $line + 3,
+            plan => ["/models/$index"],
+            semantic => [$model->{instance_id}],
+            facts => [],
+            locations => [$model->{source_location}],
+        };
+    }
+    if (defined($arg{probe_rel})) {
+        my $probe_text = $artifact{$arg{probe_rel}}{content};
+        for my $index (0 .. $#{$bridge->{probes}}) {
+            my $probe = $bridge->{probes}[$index];
+            my $line = _find_line($probe_text,
+                qr/^  -- VIAL declared probe \Q$probe->{probe_id}\E maps to /m);
+            push @spec, {
+                relpath => $arg{probe_rel},
+                symbol => 'vial_probe_' . _vhdl_slug($probe->{name}),
+                role => 'generated_declared_probe_adapter',
+                start => $line,
+                end => $line + 2,
+                plan => ["/bindings/probes/$index"],
+                semantic => [$probe->{probe_id}],
+                facts => ["/probes/$index", '/backend_bindings'],
+                locations => [],
+            };
+        }
+    }
+
     my @entry;
     for my $spec (@spec) {
-        my ($relpath, $symbol, $role, $plan, $semantic, $facts, $locations) = @$spec;
+        my ($relpath, $symbol, $role, $plan, $semantic, $facts, $locations,
+            $start, $end);
+        if (ref($spec) eq 'HASH') {
+            ($relpath, $symbol, $role, $plan, $semantic, $facts, $locations,
+                $start, $end) = @{$spec}{qw(
+                    relpath symbol role plan semantic facts locations start end
+                )};
+        }
+        else {
+            ($relpath, $symbol, $role, $plan, $semantic, $facts, $locations) = @$spec;
+        }
         my $text = $artifact{$relpath}{content};
         my $lines = _line_count($text);
+        $start //= 1;
+        $end //= $lines;
         push @entry, {
             source_map_id => 'source-map/' . sha256_hex(_canonical_json({
                 relpath => $relpath, symbol => $symbol, role => $role,
             })),
             generated_relpath => $relpath,
-            generated_start_line => 1,
-            generated_end_line => $lines,
+            generated_start_line => $start,
+            generated_end_line => $end,
             generated_start_column => 1,
-            generated_end_column => _last_line_column($text),
+            generated_end_column => _line_column($text, $end),
             generated_symbol => $symbol,
             role => $role,
             plan_paths => _clone($plan),
@@ -654,6 +1609,117 @@ sub _source_map_entries(%arg) {
         };
     }
     return \@entry;
+}
+
+sub _probe_bindings_are_exact($execution, $bridge) {
+    my %vhdl = map {
+        ($_->{target_language} // '') eq 'vhdl'
+            ? ($_->{semantic_id} => $_) : ()
+    } @{$bridge->{backend_bindings} || []};
+    for my $probe (@{$execution->{bindings}{probes} || []}) {
+        my $binding = $vhdl{$probe->{probe_id}};
+        return 0 unless ref($binding) eq 'HASH'
+            && ($binding->{target_kind} // '') eq 'probe_adapter'
+            && ($binding->{status} // '') eq 'adapter_required'
+            && _vhdl_identifier($binding->{target_name});
+    }
+    return 1;
+}
+
+sub _relations($execution) {
+    my @relation;
+    for my $key (qw(endpoints probes)) {
+        push @relation, map { @{$_->{relations} || []} }
+            @{$execution->{bindings}{$key} || []};
+    }
+    push @relation, map { $_->{relation} } map { @{$_->{fields} || []} }
+        @{$execution->{bindings}{transactions} || []};
+    return @relation;
+}
+
+sub _positive_reset_cycles($operation) {
+    my @cycles = grep { ($_->{name} // '') eq 'cycles' }
+        @{$operation->{typed_inputs} || []};
+    return @cycles == 1
+        && defined($cycles[0]{value}) && !ref($cycles[0]{value})
+        && $cycles[0]{value} =~ /\A[0-9]+\z/
+        && $cycles[0]{value} >= 1;
+}
+
+sub _await_shape_supported($operation, $execution) {
+    my @property = grep { ($_->{name} // '') eq 'property' }
+        @{$operation->{typed_inputs} || []};
+    return 0 unless @property == 1 && ref($property[0]{value}) eq 'HASH';
+    my $value = $property[0]{value};
+    return 0 unless ($value->{kind} // '') eq 'property'
+        && ($value->{op} // '') eq 'within'
+        && defined($value->{min_cycles}) && !ref($value->{min_cycles})
+        && defined($value->{max_cycles}) && !ref($value->{max_cycles})
+        && $value->{min_cycles} =~ /\A[0-9]+\z/
+        && $value->{max_cycles} =~ /\A[0-9]+\z/
+        && $value->{min_cycles} >= 1
+        && $value->{max_cycles} >= $value->{min_cycles}
+        && ref($value->{operands}) eq 'ARRAY'
+        && @{$value->{operands}} == 1;
+    my $operand = $value->{operands}[0];
+    if (ref($operand) eq 'HASH'
+            && ($operand->{kind} // '') eq 'reference'
+            && ($operand->{op} // '') eq 'event') {
+        return scalar(grep {
+            ($_->{binding_id} // '') eq ($operand->{binding_id} // '')
+        } @{$execution->{events} || []}) == 1;
+    }
+    return 0 unless ref($operand) eq 'HASH'
+        && ($operand->{kind} // '') eq 'operator'
+        && ($operand->{op} // '') eq 'same'
+        && ref($operand->{operands}) eq 'ARRAY'
+        && @{$operand->{operands}} == 2;
+    my ($reference, $literal) = @{$operand->{operands}};
+    return 0 unless ref($reference) eq 'HASH'
+        && ($reference->{kind} // '') eq 'reference'
+        && ($reference->{op} // '') eq 'sample'
+        && defined($reference->{binding_id}) && !ref($reference->{binding_id})
+        && ref($literal) eq 'HASH'
+        && ($literal->{kind} // '') eq 'literal'
+        && _scalar_value_shape_is_valid($literal->{value});
+    my @binding;
+    for my $key (qw(endpoints probes)) {
+        push @binding, grep {
+            ($_->{binding_id} // '') eq $reference->{binding_id}
+        } @{$execution->{bindings}{$key} || []};
+    }
+    return @binding == 1;
+}
+
+sub _scalar_value_shape_is_valid($value) {
+    return 0 unless ref($value) eq 'HASH'
+        && ($value->{kind} // '') eq 'scalar'
+        && defined($value->{width}) && !ref($value->{width})
+        && $value->{width} =~ /\A[0-9]+\z/
+        && $value->{width} >= 1 && $value->{width} <= 65_536;
+    for my $key (qw(value_hex known_hex z_hex)) {
+        return 0 unless defined($value->{$key}) && !ref($value->{$key})
+            && $value->{$key} =~ /\A[0-9a-f]+\z/i
+            && length($value->{$key}) <= int(($value->{width} + 3) / 4);
+    }
+    for my $bit (0 .. $value->{width} - 1) {
+        my $known = _hex_bit($value->{known_hex}, $bit);
+        my $z = _hex_bit($value->{z_hex}, $bit);
+        return 0 if $known && $z;
+        return 0 if ($value->{state_domain} // '') eq 'two_state'
+            && (!$known || $z);
+    }
+    return 1;
+}
+
+sub _walk_values($value, $visit, $path = '') {
+    $visit->($value, length($path) ? $path : '/');
+    if (ref($value) eq 'HASH') {
+        _walk_values($value->{$_}, $visit, "$path/$_") for sort keys %$value;
+    }
+    elsif (ref($value) eq 'ARRAY') {
+        _walk_values($value->[$_], $visit, "$path/$_") for 0 .. $#$value;
+    }
 }
 
 sub _artifact($relpath, $kind, $language, $role, $content, $generated_from) {
@@ -718,6 +1784,163 @@ sub _backend_name($bridge, $semantic_id, $target_kind) {
         '/bridge_manifest/backend_bindings')
         unless @binding == 1 && _vhdl_identifier($binding[0]{target_name});
     return $binding[0]{target_name};
+}
+
+sub _endpoint_id_by_role($bridge, $role) {
+    my @endpoint = grep { ($_->{role} // '') eq $role }
+        @{$bridge->{endpoints} || []};
+    _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+        "bridge requires exactly one '$role' endpoint", '/bridge_manifest/endpoints')
+        unless @endpoint == 1;
+    return $endpoint[0]{endpoint_id};
+}
+
+sub _endpoint_name_by_role($bridge, $binding, $role) {
+    my $endpoint_id = _endpoint_id_by_role($bridge, $role);
+    my $target = $binding->{$endpoint_id};
+    _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+        "endpoint role '$role' lacks one declared VHDL port binding",
+        '/bridge_manifest/backend_bindings')
+        unless ref($target) eq 'HASH'
+            && _vhdl_identifier($target->{target_name});
+    return $target->{target_name};
+}
+
+sub _render_await_condition(%arg) {
+    my $operation = $arg{operation};
+    my @property = grep { ($_->{name} // '') eq 'property' }
+        @{$operation->{typed_inputs} || []};
+    _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+        "await operation '$operation->{operation_id}' lacks one property input",
+        '/execution_ir/operation_graph/operations')
+        unless @property == 1 && ref($property[0]{value}) eq 'HASH';
+    my $value = $property[0]{value};
+    _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+        "await operation '$operation->{operation_id}' is not a bounded event wait",
+        '/execution_ir/operation_graph/operations')
+        unless ($value->{kind} // '') eq 'property'
+            && ($value->{op} // '') eq 'within'
+            && ref($value->{operands}) eq 'ARRAY'
+            && @{$value->{operands}} == 1;
+    return _render_wait_operand(\%arg, $value->{operands}[0],
+        $operation->{operation_id});
+}
+
+sub _render_wait_operand($arg, $value, $operation_id) {
+    if (ref($value) eq 'HASH'
+            && ($value->{kind} // '') eq 'reference'
+            && ($value->{op} // '') eq 'event'
+            && defined($value->{binding_id}) && !ref($value->{binding_id})) {
+        my @event = grep {
+            ($_->{binding_id} // '') eq $value->{binding_id}
+        } @{$arg->{execution}{events} || []};
+        _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+            "await operation '$operation_id' does not resolve one event",
+            '/execution_ir/events')
+            unless @event == 1;
+        return 'vial_event_' . _vhdl_slug($event[0]{name}) . '_count > 0';
+    }
+    if (ref($value) eq 'HASH'
+            && ($value->{kind} // '') eq 'operator'
+            && ($value->{op} // '') eq 'same'
+            && ref($value->{operands}) eq 'ARRAY'
+            && @{$value->{operands}} == 2) {
+        my ($reference, $literal) = @{$value->{operands}};
+        _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+            "await operation '$operation_id' has an unsupported sample predicate",
+            '/execution_ir/operation_graph/operations')
+            unless ref($reference) eq 'HASH'
+                && ($reference->{kind} // '') eq 'reference'
+                && ($reference->{op} // '') eq 'sample'
+                && defined($reference->{binding_id}) && !ref($reference->{binding_id})
+                && ref($literal) eq 'HASH'
+                && ($literal->{kind} // '') eq 'literal'
+                && ref($literal->{value}) eq 'HASH';
+        my @binding;
+        for my $key (qw(endpoints probes)) {
+            push @binding, grep {
+                ($_->{binding_id} // '') eq $reference->{binding_id}
+            } @{$arg->{execution}{bindings}{$key} || []};
+        }
+        _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+            "await operation '$operation_id' does not resolve one sampled binding",
+            '/execution_ir/bindings')
+            unless @binding == 1;
+        my $semantic_id = $binding[0]{endpoint_id} // $binding[0]{probe_id};
+        my $sample = $arg->{sample_symbol}{$semantic_id};
+        my $width = $binding[0]{relations}[0]{width};
+        _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+            "await operation '$operation_id' lacks a sampled VHDL symbol",
+            '/execution_ir/bindings')
+            unless defined($sample) && !ref($sample)
+                && defined($width) && !ref($width);
+        return 'vial_matches(' . $sample . ', '
+            . _vhdl_value_vector_expression($literal->{value}, $width) . ')';
+    }
+    _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+        "await operation '$operation_id' has an unsupported operand",
+        '/execution_ir/operation_graph/operations');
+}
+
+sub _vhdl_value_vector_expression($value, $width) {
+    _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+        'VHDL drive requires one typed scalar value',
+        '/execution_ir/operation_graph/operations')
+        unless ref($value) eq 'HASH'
+            && ($value->{kind} // '') eq 'scalar'
+            && defined($value->{width}) && !ref($value->{width})
+            && $value->{width} == $width
+            && defined($value->{value_hex}) && !ref($value->{value_hex})
+            && defined($value->{known_hex}) && !ref($value->{known_hex})
+            && defined($value->{z_hex}) && !ref($value->{z_hex});
+    my @symbol;
+    for my $bit (reverse 0 .. $width - 1) {
+        push @symbol, _hex_bit($value->{z_hex}, $bit) ? 'Z'
+            : !_hex_bit($value->{known_hex}, $bit) ? 'X'
+            : _hex_bit($value->{value_hex}, $bit) ? '1' : '0';
+    }
+    return q{to_vial_value_vector(std_logic_vector'("}
+        . join('', @symbol) . q{"))};
+}
+
+sub _vhdl_value_symbol_expression($value) {
+    my $vector = _vhdl_value_vector_expression($value, 1);
+    return 'VIAL_VALUE_Z' if $vector =~ /"Z"/;
+    return 'VIAL_VALUE_X' if $vector =~ /"X"/;
+    return 'VIAL_VALUE_1' if $vector =~ /"1"/;
+    return 'VIAL_VALUE_0';
+}
+
+sub _hex_bit($hex, $bit) {
+    return 0 unless defined($hex) && !ref($hex)
+        && $hex =~ /\A[0-9a-f]+\z/i
+        && defined($bit) && !ref($bit) && $bit =~ /\A[0-9]+\z/;
+    my $offset = int($bit / 4);
+    return 0 if $offset >= length($hex);
+    my $digit = hex(substr($hex, length($hex) - 1 - $offset, 1));
+    return ($digit >> ($bit % 4)) & 1;
+}
+
+sub _find_line($text, $pattern) {
+    my @line = split /\n/, $text, -1;
+    my @found;
+    for my $index (0 .. $#line) {
+        push @found, $index + 1 if $line[$index] =~ $pattern;
+    }
+    _throw('VIAL_VHDL_BACKEND_SOURCE_MAP_ERROR',
+        'generated source-map anchor does not occur exactly once', '/source_map')
+        unless @found == 1;
+    return $found[0];
+}
+
+sub _line_column($text, $line_number) {
+    my @line = split /\n/, $text, -1;
+    _throw('VIAL_VHDL_BACKEND_SOURCE_MAP_ERROR',
+        'generated source-map line is outside the artifact', '/source_map')
+        unless defined($line_number) && !ref($line_number)
+            && $line_number =~ /\A[0-9]+\z/
+            && $line_number >= 1 && $line_number < @line;
+    return bytes::length($line[$line_number - 1]) + 1;
 }
 
 sub _vhdl_slug($value) {

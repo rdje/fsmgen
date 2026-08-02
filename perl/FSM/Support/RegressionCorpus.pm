@@ -196,17 +196,20 @@ my @REGRESSION_CORPUS = (
         )],
     },
     {
-        id => 'feature.vial_vhdl_portable_foundation',
+        id => 'feature.vial_vhdl_portable_semantics',
         relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
         family => 'verification_intent_tooling',
         classification => 'supported_smoke',
-        coverage => 'vial_vhdl_provider_free_foundation_private_api',
+        coverage => 'vial_vhdl_provider_free_portable_semantics_private_api',
         source_kind => 'vial',
         strict_supported => 0,
         supported_phases => [qw(
             parse typecheck hial_review bridge_binding execution_plan
-            hial_vhdl_generation backend_foundation_emission static_validation
-            source_map review_gallery atomic_publication
+            hial_vhdl_generation backend_foundation_emission
+            backend_portable_semantics_emission typed_drive_sample
+            inactive_edge_scheduler scenario_fibers deterministic_models
+            declared_probe_adapter static_validation source_map review_gallery
+            atomic_publication
         )],
         required_capabilities => [qw(
             vial.backend.vhdl_portable_ghdl.foundation.v1
@@ -215,6 +218,13 @@ my @REGRESSION_CORPUS = (
             vial.backend.vhdl_portable_ghdl.typed_logical_time.v1
             vial.backend.vhdl_portable_ghdl.fixture_metadata.v1
             vial.backend.vhdl_portable_ghdl.dut_binding_foundation.v1
+            vial.backend.vhdl_portable_ghdl.typed_drivers.v1
+            vial.backend.vhdl_portable_ghdl.original_symbol_samplers.v1
+            vial.backend.vhdl_portable_ghdl.inactive_edge_scheduler.v1
+            vial.backend.vhdl_portable_ghdl.scenario_fibers.v1
+            vial.backend.vhdl_portable_ghdl.deterministic_models.v1
+            vial.backend.vhdl_portable_ghdl.declared_probe_adapter.v1
+            vial.backend.vhdl_portable_ghdl.exact_rank_maps.v1
             vial.backend.vhdl_portable_ghdl.source_order.v1
             vial.backend.vhdl_portable_ghdl.command_evidence.v1
             vial.backend.vhdl_portable_ghdl.source_map.v1
@@ -222,8 +232,7 @@ my @REGRESSION_CORPUS = (
             vial.backend.vhdl_portable_ghdl.deterministic_artifacts.v1
         )],
         explicit_nonclaims => [qw(
-            complete_vhdl_backend drivers samplers scheduler scenarios models
-            probe_adapters scoreboards coverage faults properties trace
+            complete_vhdl_backend scoreboards coverage faults properties checks trace
             vhdl_analysis elaboration simulation runtime result parity psl
             complete_vhdl_2008 osvvm uvvm mixed_language product_support scale
         )],

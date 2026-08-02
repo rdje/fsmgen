@@ -1,0 +1,31 @@
+{
+   "arguments" : [
+      "-a",
+      "--std=08",
+      "--work=fsmgen_vial",
+      "--workdir=.artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/library",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/base_output_arbitration_probe_adapter.vhd"
+   ],
+   "command_digest" : "db640089d05f6819ac82be4dcf5b22e1f77dd939a0b198cfbc73fd88872ce2b5",
+   "execution_status" : "not_run",
+   "expected_outputs" : [
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/library/fsmgen_vial-obj08.cf"
+   ],
+   "inputs" : [
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/input/backends/vhdl_portable_ghdl/src/base_output_arbitration_probe_adapter.vhd"
+   ],
+   "logical_executable" : "ghdl",
+   "schema" : "fsmgen.vial_backend_command.v1",
+   "schema_version" : 1,
+   "working_directory" : "."
+}

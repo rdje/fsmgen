@@ -1,0 +1,21 @@
+{
+   "arguments" : [
+      "-e",
+      "--std=08",
+      "--work=fsmgen_vial",
+      "--workdir=.artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/library",
+      "base_output_arbitration_tb"
+   ],
+   "command_digest" : "8626380bbe480834c9a977b652e4a82576390a940270a34b4e8355f75fe5eaf7",
+   "execution_status" : "not_run",
+   "expected_outputs" : [
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/elaborated/base_output_arbitration_tb"
+   ],
+   "inputs" : [
+      ".artifacts/tmp/vial/op-bd7e346c88db3c77e6b487a502570912b1e6c74d291171b0a737a599a8ddabab/work/vhdl_portable_ghdl/library/fsmgen_vial-obj08.cf"
+   ],
+   "logical_executable" : "ghdl",
+   "schema" : "fsmgen.vial_backend_command.v1",
+   "schema_version" : 1,
+   "working_directory" : "."
+}
