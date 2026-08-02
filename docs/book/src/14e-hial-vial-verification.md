@@ -102,10 +102,28 @@ runtime, normalized result, parity, PSL, and methodology support remain
 unclaimed.
 
 Implementation parent `.15` is now active and split along those evidence
-boundaries. Active `.15.1` owns only the provider-free emitter substrate and
-first deterministic review gallery. Later children add portable semantics and
-review before separate GHDL and OSVVM execution gates; activation itself adds
-no generated VHDL or support claim.
+boundaries. Completed `.15.1` ships a private provider-free VHDL foundation:
+deterministic HIAL VHDL bytes, typed value/phase and logical-time packages,
+fixture metadata, a directly bound testbench shell, complete foundation source
+maps, ordered unexecuted GHDL command records, seven structural checks, atomic
+publication, and a byte-locked review gallery.
+
+This is deliberately foundation emission, not VHDL execution. Active `.15.2`
+adds drivers, samplers, the inactive-edge scheduler, scenarios, models, and
+probe adapters. Analysis, elaboration, runtime, results, parity, PSL, complete
+VHDL-2008, OSVVM/UVVM, mixed-language behavior, and product support remain
+unclaimed until their separate gates pass.
+
+Inspect or byte-check the five VHDL sources and eight evidence artifacts with:
+
+```text
+perl scripts/refresh_vial_vhdl_foundation_gallery.pl --check
+```
+
+The gallery lives at
+`vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation`. Its
+manifest explicitly records the older `vhdl-observation-package` as an
+unchanged, unconsumed parallel compatibility surface.
 
 Clean architecture audit commit `2e2f7d25e` activates only the exact
 `.vial`/`VIALSemanticIR` contract leaf `.2` through a separate continuity

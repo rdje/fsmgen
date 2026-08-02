@@ -42,7 +42,11 @@ subtest 'planning exposes exact private compiler inputs without changing public 
     );
     isa_ok($built->{execution_ir}, 'FSM::VIAL::ExecutionIR');
     isa_ok($built->{bridge_manifest}, 'FSM::HIAL::VIALBridge::Manifest');
-    is_deeply([sort keys %{$built->{backend_inputs}}], ['dut_systemverilog'], 'backend inputs have one selected family');
+    is_deeply(
+        [sort keys %{$built->{backend_inputs}}],
+        [qw(dut_systemverilog dut_vhdl)],
+        'backend inputs carry both generated HIAL language families privately',
+    );
     is(scalar(@{$built->{backend_inputs}{dut_systemverilog}}), 1, 'one bound unit supplies one DUT source');
     my $dut = $built->{backend_inputs}{dut_systemverilog}[0];
     is($dut->{module_name}, 'ahb_lite_subordinate', 'DUT module identity is exact');
@@ -51,6 +55,18 @@ subtest 'planning exposes exact private compiler inputs without changing public 
     is($dut->{content_sha256}, sha256_hex($dut->{text}), 'DUT hash covers exact emitted text');
     like($dut->{text}, qr{// Date: omitted by deterministic VIAL backend}, 'nondeterministic generator date is normalized');
     unlike($dut->{text}, qr{// Date: \d}, 'normalized DUT contains no generated wall-clock date');
+    is(scalar(@{$built->{backend_inputs}{dut_vhdl}}), 1,
+        'one bound unit supplies one VHDL DUT source');
+    my $vhdl_dut = $built->{backend_inputs}{dut_vhdl}[0];
+    is($vhdl_dut->{entity_name}, 'ahb_lite_subordinate', 'VHDL DUT entity identity is exact');
+    is($vhdl_dut->{artifact_name}, 'ahb_lite_subordinate.vhd',
+        'VHDL DUT artifact name is deterministic');
+    is($vhdl_dut->{byte_length}, bytes::length($vhdl_dut->{text}),
+        'VHDL DUT byte count covers exact emitted text');
+    is($vhdl_dut->{content_sha256}, sha256_hex($vhdl_dut->{text}),
+        'VHDL DUT hash covers exact emitted text');
+    like($vhdl_dut->{text}, qr/entity ahb_lite_subordinate is/,
+        'VHDL DUT bytes declare the bridge-bound entity');
 };
 
 subtest 'private emitter produces a deterministic closed portable-SystemVerilog graph' => sub {
@@ -153,7 +169,10 @@ subtest 'negotiation and invocation failures emit nothing' => sub {
     my $unsafe = emit_backend(artifact_root => '../outside');
     backend_failure($unsafe, 'VIAL_BACKEND_INVOCATION_ERROR', 'unsafe artifact root');
 
-    my $missing = emit_backend(backend_inputs => {dut_systemverilog => []});
+    my $missing = emit_backend(backend_inputs => {
+        dut_systemverilog => [],
+        dut_vhdl => $built->{backend_inputs}{dut_vhdl},
+    });
     backend_failure($missing, 'VIAL_BACKEND_UNSUPPORTED', 'missing DUT input');
 
     my $invocation = FSM::VIAL::Backend::SVPortableVerilator->emit({});

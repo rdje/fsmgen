@@ -5,8 +5,8 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15`: activate VHDL backend implementation).
-- active_work_unit: `.15`/`.15.1` are active after clean `e5aa90b7a`; `.13.3` remains provider-blocked.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.1`: ship portable VHDL foundation).
+- active_work_unit: `.15`/`.15.2` are active after completed `.15.1`; `.13.3` remains provider-blocked.
 - current_state: native UVM emits 16 artifacts/ten SV sources, 75 maps, 14
   checks, a 25-row matrix, and a deterministic gallery. Experimental Verilator
   5.046/UVM evidence passes its control through runtime and fixture preprocessing;
@@ -14,15 +14,16 @@ history; this file carries only the current bounded resume state.
   result/parity remain not run. The illegal `context` identifier is repaired.
   Product support stays emission-only. Decision `0051` selects provider-free
   VHDL-2008, exact GHDL 6.0.0, and OSVVM 2026.05 for the advanced tier; UVVM
-  is audited but not selected. The inert legacy package remains unchanged and
-  no VHDL runtime capability ships because GHDL/OSVVM are absent locally.
-- next_action: implement only `.15.1`: provider-free VHDL-2008 emitter
-  substrate, deterministic graph/source map/static checks, and first gallery.
+  is unselected. `.15.1` now emits a private 13-artifact/5-source foundation
+  with 5 maps, 7 static checks, exact unexecuted tool records, and a byte-locked
+  gallery. The inert legacy package is unchanged/unconsumed; no VHDL analysis,
+  runtime, result, parity, PSL, provider, or support capability ships.
+- next_action: implement only `.15.2`: portable VHDL drivers, samplers,
+  inactive-edge scheduler, scenarios/fibers, models, and probe adapters.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
-- blockers: `.13.3` still waits on exact capability-ready PGEN/NEXSIM handoff/
-  API/MCP identities; IASIM remains proposed. Live-document `.12` and inventory
-  `.26` are deferred.
+- blockers: `.13.3` waits on capability-ready PGEN/NEXSIM handoff/API/MCP
+  identities; IASIM is proposed, while live-document `.12` and inventory `.26` are deferred.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
@@ -43,5 +44,4 @@ history; this file carries only the current bounded resume state.
   selected advanced provider and GHDL 6.0.0 is the first exact tool profile.
   Provider/tool behavior cannot redefine logical time, values, or results.
 - `.15.1-.15.4` own unblocked portable emission/review; `.15.5-.15.7` own GHDL/OSVVM qualification.
-- Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; retired
-  views remain Git-retrievable. Push only on request; PNT is autonomous.
+- Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; retired views are Git-retrievable. Push only on request; PNT is autonomous.

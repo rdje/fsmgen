@@ -135,18 +135,8 @@ sub _build_ial0_route($source) {
         unless ($source_info->{kind} // '') eq 'fsm';
     confess 'the direct IAL0 VIAL planning route does not yet accept package imports'
         if @{$source_info->{package_import_names} || []};
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        debug_level => 0,
-        target_language => 'systemverilog',
-        quiet => 1,
-        strict_mode => 1,
-    );
-    my $hdl_result = FSM::Pipeline::DirectGenerationOrchestrator->generate_from_source(
-        pipeline => $pipeline,
-        raw_ast => $raw_ast,
-        source_info => $source_info,
-        fsm_file => undef,
-    );
+    my $hdl_result = _generate_hdl_from_ast($raw_ast, $source_info, 'systemverilog');
+    my $vhdl_result = _generate_hdl_from_ast($raw_ast, $source_info, 'vhdl');
     my $bridge = FSM::HIAL::VIALBridge::Builder->build_ial0({
         profile => 'core_single_unit_v1',
         authored_source => _source_record($source->{text}, $source->{source_id}),
@@ -159,6 +149,10 @@ sub _build_ial0_route($source) {
         backend_inputs => {
             dut_systemverilog => [_systemverilog_artifact(
                 $hdl_result,
+                $source->{source_id},
+            )],
+            dut_vhdl => [_vhdl_artifact(
+                $vhdl_result,
                 $source->{source_id},
             )],
         },
@@ -185,7 +179,11 @@ sub _build_ial1_route($source) {
         review_artifacts => _review_ial0_artifacts($lowered->{files}, $source->{source_id}),
         backend_inputs => {
             dut_systemverilog => [_systemverilog_artifact(
-                _generate_ial0_systemverilog($entry_text, $entry_name),
+                _generate_ial0_hdl($entry_text, $entry_name, 'systemverilog'),
+                $source->{source_id},
+            )],
+            dut_vhdl => [_vhdl_artifact(
+                _generate_ial0_hdl($entry_text, $entry_name, 'vhdl'),
                 $source->{source_id},
             )],
         },
@@ -232,14 +230,18 @@ sub _build_ial2_route($source) {
         ],
         backend_inputs => {
             dut_systemverilog => [_systemverilog_artifact(
-                _generate_ial0_systemverilog($entry_text, $entry_name),
+                _generate_ial0_hdl($entry_text, $entry_name, 'systemverilog'),
+                $source->{source_id},
+            )],
+            dut_vhdl => [_vhdl_artifact(
+                _generate_ial0_hdl($entry_text, $entry_name, 'vhdl'),
                 $source->{source_id},
             )],
         },
     };
 }
 
-sub _generate_ial0_systemverilog($text, $artifact_name) {
+sub _generate_ial0_hdl($text, $artifact_name, $target_language) {
     my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_source(
         source_text => $text,
         source_label => $artifact_name,
@@ -249,9 +251,13 @@ sub _generate_ial0_systemverilog($text, $artifact_name) {
     confess "generated IAL0 review artifact '$artifact_name' is not one direct FSM root"
         unless ($source_info->{kind} // '') eq 'fsm'
             && !@{$source_info->{package_import_names} || []};
+    return _generate_hdl_from_ast($raw_ast, $source_info, $target_language);
+}
+
+sub _generate_hdl_from_ast($raw_ast, $source_info, $target_language) {
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         debug_level => 0,
-        target_language => 'systemverilog',
+        target_language => $target_language,
         quiet => 1,
         strict_mode => 1,
     );
@@ -280,6 +286,29 @@ sub _systemverilog_artifact($hdl_result, $source_id) {
         unit_id => "unit/$module_name",
         module_name => $module_name,
         artifact_name => "$module_name.sv",
+        source_id => $source_id,
+        text => $text,
+        content_sha256 => sha256_hex($text),
+        byte_length => bytes::length($text),
+    };
+}
+
+sub _vhdl_artifact($hdl_result, $source_id) {
+    confess 'HIAL VHDL generation did not return entity metadata and source'
+        unless ref($hdl_result) eq 'HASH'
+            && ref($hdl_result->{module_info}) eq 'HASH'
+            && defined($hdl_result->{module_info}{module_name})
+            && !ref($hdl_result->{module_info}{module_name})
+            && defined($hdl_result->{hdl_code})
+            && !ref($hdl_result->{hdl_code});
+    my $entity_name = $hdl_result->{module_info}{module_name};
+    my $text = $hdl_result->{hdl_code};
+    $text =~ s/\n?/\n/g;
+    $text .= "\n" unless $text =~ /\n\z/;
+    return {
+        unit_id => "unit/$entity_name",
+        entity_name => $entity_name,
+        artifact_name => "$entity_name.vhd",
         source_id => $source_id,
         text => $text,
         content_sha256 => sha256_hex($text),

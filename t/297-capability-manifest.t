@@ -299,6 +299,7 @@ use FSM::Support::LanguageSurfaceContract qw(
     language_surface_hial_vial_bridge_keys
     language_surface_vial_execution_keys
     language_surface_vial_native_uvm_emission_keys
+    language_surface_vial_vhdl_emission_keys
     language_surface_vial_tooling_keys
     language_surface_nested_presence_key_map
 );
@@ -313,6 +314,10 @@ use FSM::Support::VIALExecutionContract qw(
 use FSM::Support::VIALNativeUVMEmissionContract qw(
     build_vial_native_uvm_emission_contract
     vial_native_uvm_emission_contract_source
+);
+use FSM::Support::VIALVHDLEmissionContract qw(
+    build_vial_vhdl_emission_contract
+    vial_vhdl_emission_contract_source
 );
 use FSM::Support::VIALToolingContract qw(
     build_vial_tooling_contract
@@ -2963,6 +2968,40 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         'manifest records the unsupported-feature compile/elaboration internal fault');
     is($uvm_probe->{stage_status}{generated_fixture_runtime}, 'not_run',
         'manifest leaves generated native UVM runtime unexercised');
+    is_deeply(
+        [sort keys %{$manifest->{language_surface}{vial_vhdl_emission}}],
+        [sort @{language_surface_vial_vhdl_emission_keys()}],
+        'manifest publishes the exact portable VHDL foundation discovery keys',
+    );
+    is_deeply(
+        $manifest->{language_surface}{vial_vhdl_emission},
+        build_vial_vhdl_emission_contract(),
+        'manifest publishes the canonical private portable VHDL foundation contract',
+    );
+    is(
+        $manifest->{language_surface}{vial_vhdl_emission}{contract_source},
+        vial_vhdl_emission_contract_source(),
+        'manifest names the portable VHDL foundation capability owner',
+    );
+    ok(
+        !$manifest->{language_surface}{vial_vhdl_emission}{public_embedding_api},
+        'manifest does not promote the private VHDL emitter to a public embedding API',
+    );
+    is(
+        $manifest->{language_surface}{vial_vhdl_emission}{backend_stage_status}{emission},
+        'shipped_foundation_only',
+        'manifest advertises only the shipped VHDL foundation scope',
+    );
+    is(
+        $manifest->{language_surface}{vial_vhdl_emission}{backend_stage_status}{analysis},
+        'not_run',
+        'manifest does not infer VHDL analysis from structural validation',
+    );
+    is(
+        $manifest->{language_surface}{vial_vhdl_emission}{backend_stage_status}{runtime},
+        'not_run',
+        'manifest does not infer portable VHDL runtime execution',
+    );
     is_deeply(
         [sort keys %{$manifest->{language_surface}{vial_tooling}}],
         [sort @{language_surface_vial_tooling_keys()}],

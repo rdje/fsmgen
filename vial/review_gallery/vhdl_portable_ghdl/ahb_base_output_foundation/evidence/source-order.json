@@ -1,0 +1,14 @@
+{
+   "library" : "fsmgen_vial",
+   "order_digest" : "170b96731282263a795d82919b810c77a8a36568b89c9f38159918ce084b81db",
+   "schema" : "fsmgen.vial_vhdl_source_order.v1",
+   "schema_version" : 1,
+   "sources" : [
+      "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
+      "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
+      "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
+      "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+      "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd"
+   ],
+   "standard" : "08"
+}

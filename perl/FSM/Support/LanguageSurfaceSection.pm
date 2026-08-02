@@ -15,6 +15,9 @@ use FSM::Support::VIALExecutionContract qw(build_vial_execution_contract);
 use FSM::Support::VIALNativeUVMEmissionContract qw(
     build_vial_native_uvm_emission_contract
 );
+use FSM::Support::VIALVHDLEmissionContract qw(
+    build_vial_vhdl_emission_contract
+);
 use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
 
 our @EXPORT_OK = qw(
@@ -218,6 +221,7 @@ sub build_language_surface_section {
         hial_vial_bridge => build_hial_vial_bridge_contract(),
         vial_execution => build_vial_execution_contract(),
         vial_native_uvm_emission => build_vial_native_uvm_emission_contract(),
+        vial_vhdl_emission => build_vial_vhdl_emission_contract(),
         vial_tooling => build_vial_tooling_contract(),
         default_mode_compatibility => {
             accepted_but_not_canonical_for_generated_output => [

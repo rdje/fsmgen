@@ -1,0 +1,211 @@
+{
+   "artifacts" : [
+      {
+         "bytes" : 7243,
+         "kind" : "source_map",
+         "relpath" : "backends/vhdl_portable_ghdl/backend-source-map.json",
+         "role" : "backend_source_map",
+         "sha256" : "0b2310228b810e4dbd37ec477a4f360b981733ec8a368952f6dda59df880227e"
+      },
+      {
+         "bytes" : 2588,
+         "kind" : "command_record",
+         "relpath" : "backends/vhdl_portable_ghdl/commands/analyze-command.json",
+         "role" : "analyze_command",
+         "sha256" : "67c392f40a879bba226265648875eefc3596d21b13fecbe218211e0190de2b7a"
+      },
+      {
+         "bytes" : 883,
+         "kind" : "command_record",
+         "relpath" : "backends/vhdl_portable_ghdl/commands/elaborate-command.json",
+         "role" : "elaborate_command",
+         "sha256" : "8dc465ce6bc759b5ffba9c1ea9317b69ef79cb0c74ebd8a539b74fc9ccf0a8ad"
+      },
+      {
+         "bytes" : 860,
+         "kind" : "command_record",
+         "relpath" : "backends/vhdl_portable_ghdl/commands/run-command.json",
+         "role" : "run_command",
+         "sha256" : "fa2ae08b6616a664247835854cb2fad7fe26d7fe16e6af1eca0043968f0741b7"
+      },
+      {
+         "bytes" : 600,
+         "kind" : "source_order",
+         "relpath" : "backends/vhdl_portable_ghdl/evidence/source-order.json",
+         "role" : "ordered_vhdl_sources",
+         "sha256" : "a6ad86426d8252bb0a495f0e272dabb0c29ce7bdf87593a0a1916be2cb623459"
+      },
+      {
+         "bytes" : 2193,
+         "kind" : "static_validation",
+         "relpath" : "backends/vhdl_portable_ghdl/evidence/static-validation.json",
+         "role" : "vhdl_static_validation",
+         "sha256" : "bc783b43882fed99c5eade8712dc62426da58eb81e5b959a43c1bd12e30a5140"
+      },
+      {
+         "bytes" : 516,
+         "kind" : "tool_profile",
+         "relpath" : "backends/vhdl_portable_ghdl/evidence/tool-profile.json",
+         "role" : "selected_tool_profile",
+         "sha256" : "e9ee1bd187e4782b750c09b5b31104136236359ffd1566968e8afc2888e2a4be"
+      },
+      {
+         "bytes" : 818,
+         "kind" : "vhdl_source",
+         "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
+         "role" : "vhdl_fixture_metadata",
+         "sha256" : "5e4dbd0e471829db71f377735750ce5bed4598b99fc25437c62ab49a1c1d66ee"
+      },
+      {
+         "bytes" : 1414,
+         "kind" : "vhdl_source",
+         "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
+         "role" : "vhdl_fixture_top",
+         "sha256" : "6fb162864ad5421cb0c2107328c257d4f16df9fc7399815034686f957377a393"
+      },
+      {
+         "bytes" : 47685,
+         "kind" : "vhdl_source",
+         "relpath" : "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+         "role" : "generated_hial_vhdl_dut",
+         "sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6"
+      },
+      {
+         "bytes" : 721,
+         "kind" : "vhdl_source",
+         "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
+         "role" : "vhdl_runtime_package",
+         "sha256" : "8ab3f90520ff877c885047d8f4ebf8b8ef406119279f340b340ef77fcc4cfb5c"
+      },
+      {
+         "bytes" : 1325,
+         "kind" : "vhdl_source",
+         "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
+         "role" : "vhdl_types_package",
+         "sha256" : "2fa0c30b251cb043339d908374874c5ded097a570f4feea1784f97daed15dbd5"
+      }
+   ],
+   "backend_profile" : "vhdl_portable_ghdl",
+   "capability_evidence" : {
+      "analysis" : "not_run",
+      "elaboration" : "not_run",
+      "emission" : "passed_foundation_only",
+      "full_vhdl_2008" : "not_claimed",
+      "hial_vhdl_input" : "passed_deterministic_generation",
+      "parity" : "not_evaluated",
+      "product_support" : "not_claimed",
+      "provider_fetch" : "not_performed",
+      "psl" : "not_emitted",
+      "result" : "not_produced",
+      "review_gallery" : "byte_locked",
+      "runtime" : "not_run",
+      "source_map" : "passed_foundation_scope",
+      "static_validation" : "passed_structural_only"
+   },
+   "cleanup" : {
+      "staging_identity" : ".artifacts/tmp/vial/op-c06ef8db86f120e03e5b57fa74762ab47e1e72d797bd945e3d557ccb4a9e9063",
+      "state" : "not_created"
+   },
+   "commands" : [
+      {
+         "command_digest" : "7f65c28691a4c8f67a98ebedef8b204431fe1a1a4269638b9429cf6ad14138fb",
+         "execution_status" : "not_run",
+         "relpath" : "backends/vhdl_portable_ghdl/commands/analyze-command.json",
+         "sha256" : "67c392f40a879bba226265648875eefc3596d21b13fecbe218211e0190de2b7a"
+      },
+      {
+         "command_digest" : "c7caf44654af519ffeff1fdb27001a48f93009c78866b893cbe46c2f406917d1",
+         "execution_status" : "not_run",
+         "relpath" : "backends/vhdl_portable_ghdl/commands/elaborate-command.json",
+         "sha256" : "8dc465ce6bc759b5ffba9c1ea9317b69ef79cb0c74ebd8a539b74fc9ccf0a8ad"
+      },
+      {
+         "command_digest" : "b08e57d73f4daa4514b73a4fb9e6e45fc1c558f99abc0b5afa98e5fb96a1cd63",
+         "execution_status" : "not_run",
+         "relpath" : "backends/vhdl_portable_ghdl/commands/run-command.json",
+         "sha256" : "fa2ae08b6616a664247835854cb2fad7fe26d7fe16e6af1eca0043968f0741b7"
+      }
+   ],
+   "diagnostics" : [],
+   "execution_profile" : "core_directed_single_clock_execution_v1",
+   "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
+   "generated_top" : "base_output_arbitration_tb",
+   "limitations" : [
+      "foundation_only",
+      "single_unit",
+      "single_domain",
+      "drivers_deferred",
+      "samplers_deferred",
+      "scheduler_deferred",
+      "scenarios_deferred",
+      "models_deferred",
+      "probe_adapters_deferred",
+      "scoreboards_deferred",
+      "coverage_deferred",
+      "faults_deferred",
+      "properties_deferred",
+      "trace_deferred",
+      "results_deferred",
+      "no_psl",
+      "no_provider_library",
+      "no_analysis_evidence",
+      "no_elaboration_evidence",
+      "no_runtime_evidence",
+      "no_parity_evidence"
+   ],
+   "migration" : {
+      "legacy_state" : "unchanged_not_consumed",
+      "legacy_surface" : "vhdl_observation_package_skeleton",
+      "migration_kind" : "parallel_versioned_surface",
+      "successor_profile" : "vhdl_portable_ghdl"
+   },
+   "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "result" : {
+      "relpath" : null,
+      "schema" : null,
+      "status" : "not_produced"
+   },
+   "schema" : "fsmgen.vial_backend.vhdl_portable.v1",
+   "schema_version" : 1,
+   "source_map" : {
+      "entry_count" : 5,
+      "relpath" : "backends/vhdl_portable_ghdl/backend-source-map.json",
+      "schema" : "fsmgen.vial_vhdl_backend_source_map.v1",
+      "sha256" : "0b2310228b810e4dbd37ec477a4f360b981733ec8a368952f6dda59df880227e"
+   },
+   "source_order" : {
+      "library" : "fsmgen_vial",
+      "order_digest" : "170b96731282263a795d82919b810c77a8a36568b89c9f38159918ce084b81db",
+      "schema" : "fsmgen.vial_vhdl_source_order.v1",
+      "schema_version" : 1,
+      "sources" : [
+         "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
+         "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
+         "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
+         "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+         "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd"
+      ],
+      "standard" : "08"
+   },
+   "standard_profile" : {
+      "language" : "VHDL",
+      "methodology" : "provider_free",
+      "standard" : "IEEE 1076-2008",
+      "standard_option" : "--std=08"
+   },
+   "tool_profile" : {
+      "execution_evidence" : false,
+      "language_standard" : "IEEE 1076-2008",
+      "methodology" : "provider_free_vhdl_2008",
+      "provider_library" : "none",
+      "qualified_version" : "6.0.0",
+      "qualified_version_output" : "not_observed_exact_6_0_0_unavailable",
+      "schema" : "fsmgen.vial_backend_tool_profile.v1",
+      "schema_version" : 1,
+      "selection_status" : "selected_not_executed",
+      "standard_option" : "--std=08",
+      "target_language" : "VHDL",
+      "tool_name" : "ghdl",
+      "work_library" : "fsmgen_vial"
+   }
+}

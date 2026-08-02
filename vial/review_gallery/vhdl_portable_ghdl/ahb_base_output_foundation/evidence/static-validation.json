@@ -1,0 +1,69 @@
+{
+   "artifacts" : [
+      {
+         "bytes" : 818,
+         "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
+         "role" : "vhdl_fixture_metadata",
+         "sha256" : "5e4dbd0e471829db71f377735750ce5bed4598b99fc25437c62ab49a1c1d66ee"
+      },
+      {
+         "bytes" : 1414,
+         "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
+         "role" : "vhdl_fixture_top",
+         "sha256" : "6fb162864ad5421cb0c2107328c257d4f16df9fc7399815034686f957377a393"
+      },
+      {
+         "bytes" : 47685,
+         "relpath" : "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+         "role" : "generated_hial_vhdl_dut",
+         "sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6"
+      },
+      {
+         "bytes" : 721,
+         "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
+         "role" : "vhdl_runtime_package",
+         "sha256" : "8ab3f90520ff877c885047d8f4ebf8b8ef406119279f340b340ef77fcc4cfb5c"
+      },
+      {
+         "bytes" : 1325,
+         "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
+         "role" : "vhdl_types_package",
+         "sha256" : "2fa0c30b251cb043339d908374874c5ded097a570f4feea1784f97daed15dbd5"
+      }
+   ],
+   "backend_profile" : "vhdl_portable_ghdl",
+   "checks" : [
+      {
+         "check" : "closed_safe_vhdl_source_graph",
+         "status" : "passed"
+      },
+      {
+         "check" : "required_vhdl_source_roles",
+         "status" : "passed"
+      },
+      {
+         "check" : "bounded_static_input",
+         "status" : "passed"
+      },
+      {
+         "check" : "deterministic_vhdl_text_shape",
+         "status" : "passed"
+      },
+      {
+         "check" : "simulator_and_methodology_neutral_vhdl",
+         "status" : "passed"
+      },
+      {
+         "check" : "selected_vhdl_foundation_shape",
+         "status" : "passed"
+      },
+      {
+         "check" : "closed_std_logic_normalization",
+         "status" : "passed"
+      }
+   ],
+   "diagnostics" : [],
+   "ok" : true,
+   "status" : "passed",
+   "validator_schema" : "fsmgen.vial_vhdl_static_validation.v1"
+}

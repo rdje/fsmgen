@@ -534,7 +534,7 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         if ref($execution->{native_extensions}) ne 'ARRAY' || @{$execution->{native_extensions} || []};
 
     my $inputs_ok = eval {
-        _require_exact_keys($backend_inputs, [qw(dut_systemverilog)], 'backend inputs');
+        _require_exact_keys($backend_inputs, [qw(dut_systemverilog dut_vhdl)], 'backend inputs');
         confess 'exactly one deterministic DUT source is required'
             unless ref($backend_inputs->{dut_systemverilog}) eq 'ARRAY'
                 && @{$backend_inputs->{dut_systemverilog}} == 1;

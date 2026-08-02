@@ -196,6 +196,39 @@ my @REGRESSION_CORPUS = (
         )],
     },
     {
+        id => 'feature.vial_vhdl_portable_foundation',
+        relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
+        family => 'verification_intent_tooling',
+        classification => 'supported_smoke',
+        coverage => 'vial_vhdl_provider_free_foundation_private_api',
+        source_kind => 'vial',
+        strict_supported => 0,
+        supported_phases => [qw(
+            parse typecheck hial_review bridge_binding execution_plan
+            hial_vhdl_generation backend_foundation_emission static_validation
+            source_map review_gallery atomic_publication
+        )],
+        required_capabilities => [qw(
+            vial.backend.vhdl_portable_ghdl.foundation.v1
+            vial.backend.vhdl_portable_ghdl.deterministic_hial_input.v1
+            vial.backend.vhdl_portable_ghdl.typed_values.v1
+            vial.backend.vhdl_portable_ghdl.typed_logical_time.v1
+            vial.backend.vhdl_portable_ghdl.fixture_metadata.v1
+            vial.backend.vhdl_portable_ghdl.dut_binding_foundation.v1
+            vial.backend.vhdl_portable_ghdl.source_order.v1
+            vial.backend.vhdl_portable_ghdl.command_evidence.v1
+            vial.backend.vhdl_portable_ghdl.source_map.v1
+            vial.backend.vhdl_portable_ghdl.static_validation.v1
+            vial.backend.vhdl_portable_ghdl.deterministic_artifacts.v1
+        )],
+        explicit_nonclaims => [qw(
+            complete_vhdl_backend drivers samplers scheduler scenarios models
+            probe_adapters scoreboards coverage faults properties trace
+            vhdl_analysis elaboration simulation runtime result parity psl
+            complete_vhdl_2008 osvvm uvvm mixed_language product_support scale
+        )],
+    },
+    {
         id => 'protocol.apb_requester',
         relpath => 'fsm/apb_requester.fsm',
         family => 'protocol_fixture',

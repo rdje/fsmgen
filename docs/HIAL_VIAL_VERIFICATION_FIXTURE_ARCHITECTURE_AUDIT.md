@@ -1476,6 +1476,44 @@ execution; `.15.6-.15.7` own OSVVM 2026.05 adapter emission and qualification.
 Activation changes no product behavior or support state, and unavailable tools
 do not block reviewable generation.
 
+Completed `.15.1` now ships that foundation. `PlanBuilder` preserves one
+deterministic generated HIAL VHDL source beside its existing SystemVerilog
+source in the private backend handoff, with exact entity, unit, filename,
+digest, and byte identities. Existing public plan projections do not change,
+and SystemVerilog and UVM consumers continue to select only their own language
+family.
+
+The private `FSM::VIAL::Backend::VHDLPortableGHDL` emitter consumes the exact
+ExecutionIR, bridge manifest, and VHDL DUT record. It emits thirteen sorted
+artifacts: five provider-free VHDL sources, a closed manifest and source map,
+three unexecuted command records, and tool-profile, source-order, and
+structural-validation evidence. Five whole-source foundation mappings cover
+the generated HIAL DUT, typed value/phase package, logical-time/runtime
+package, fixture metadata, and direct entity/port-bound testbench.
+
+The types package implements the selected `std_logic` normalization and
+retains the original symbol. The testbench foundation contains typed endpoint
+signals and an explicit named DUT port map, but deliberately contains no
+driver, sampler, scheduler, scenario, model, or probe process; `.15.2` owns
+those semantics. The manifest records the legacy observation package as an
+unchanged, unconsumed parallel surface.
+
+Seven fail-closed structural checks cover closed safe artifacts, required
+roles, bounded input, deterministic text, simulator/methodology neutrality,
+the selected package/top shape, and the complete normalization table. Atomic
+publication distinguishes first creation, identical replay, and byte-different
+collision, and exact cleanup leaves no staging residue. The checked gallery is
+at
+`vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation` and is
+regenerated or checked with
+`perl scripts/refresh_vial_vhdl_foundation_gallery.pl [--check]`.
+
+This completion changes the honest capability state from no VHDL backend to
+private foundation emission only. Exact GHDL 6.0.0 remains unavailable and
+unexecuted. VHDL analysis, elaboration, runtime, trace/result production,
+parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language behavior, and
+product support remain explicitly unclaimed.
+
 ### Primary evidence
 
 - Accellera UVM downloads:

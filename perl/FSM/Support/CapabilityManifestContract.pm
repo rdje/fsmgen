@@ -294,6 +294,8 @@ sub capability_manifest_language_surface_keys {
             file_surfaces
             hial_vial_bridge
             vial_execution
+            vial_native_uvm_emission
+            vial_vhdl_emission
             vial_tooling
             default_mode_compatibility
             assignments

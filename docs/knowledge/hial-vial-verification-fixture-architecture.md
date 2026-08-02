@@ -55,6 +55,12 @@ answers:
   - "does the native UVM experimental probe advertise product support?"
   - "how do I rerun the native UVM experimental probe?"
   - "may generated UVM syntax change while VIAL meaning stays stable?"
+  - "has FSMGen started emitting native VIAL VHDL?"
+  - "what does the vhdl_portable_ghdl foundation emit?"
+  - "where is the portable VHDL review gallery?"
+  - "how do I regenerate or check the portable VHDL review gallery?"
+  - "has the generated VIAL VHDL been analyzed or run?"
+  - "does portable VIAL VHDL consume the legacy observation package?"
   - "what is IASIM?"
   - "should FSMGen simulate Intent Abstraction directly?"
   - "can IASIM replace an HDL simulator?"
@@ -88,6 +94,7 @@ evidence: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm; perl/FSM/VIAL/Backend/SVUVMStaticValidator.pm; perl/FSM/VIAL/Backend/SVUVMReviewClosure.pm; perl/FSM/VIAL/Backend/SVUVMExperimentalProbe.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm; scripts/refresh_vial_native_uvm_gallery.pl; scripts/run_vial_native_uvm_experimental_probe.pl; t/1560-vial-native-uvm-emitter-substrate.t; t/1570-vial-native-uvm-topology-lifecycle-notification.t; t/1580-vial-native-uvm-stimulus-services.t; t/1590-vial-native-uvm-checking-results.t; t/1591-vial-native-uvm-matrix-review.t; t/1592-vial-native-uvm-experimental-probe.t;
   vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/README.md; vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/selected-mapping-matrix.json; vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/review-workflow.json;
   vial/experimental_probes/sv_uvm_experimental.verilator_5_046.uvm_verilator_2020_3_1_vlt_656f20d0/README.md; vial/experimental_probes/sv_uvm_experimental.verilator_5_046.uvm_verilator_2020_3_1_vlt_656f20d0/probe-report.json;
+  docs/decisions/0051-vial-vhdl-uses-a-provider-free-core-and-osvvm-qualified-tier.md; perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm; perl/FSM/VIAL/Backend/VHDLPortableStaticValidator.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm; scripts/refresh_vial_vhdl_foundation_gallery.pl; t/1593-vial-vhdl-portable-foundation.t; vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation/README.md;
   docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md; docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://github.com/accellera-official/uvm-core/releases/tag/2020.3.1; https://github.com/chipsalliance/uvm-verilator; https://verilator.org/guide/latest/languages.html;
   https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
 reverify: >-
@@ -95,9 +102,10 @@ reverify: >-
   rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|semantic introspection|MCP|snapshot-consistent|first divergence|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'native Intent Abstraction|signoff|direct semantic adapters|HDL-independent|kernel/session|Perl 5|versioned C ABI|shared library|differential equivalence' docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'complete native framework|xIAL|HIAL IP|VIAL VIP|functional/intent signoff' docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md &&
-  prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1560-vial-native-uvm-emitter-substrate.t t/1570-vial-native-uvm-topology-lifecycle-notification.t t/1580-vial-native-uvm-stimulus-services.t t/1590-vial-native-uvm-checking-results.t t/1591-vial-native-uvm-matrix-review.t t/1592-vial-native-uvm-experimental-probe.t &&
+  prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1560-vial-native-uvm-emitter-substrate.t t/1570-vial-native-uvm-topology-lifecycle-notification.t t/1580-vial-native-uvm-stimulus-services.t t/1590-vial-native-uvm-checking-results.t t/1591-vial-native-uvm-matrix-review.t t/1592-vial-native-uvm-experimental-probe.t t/1593-vial-vhdl-portable-foundation.t &&
   perl scripts/refresh_vial_native_uvm_gallery.pl --check &&
-  perl scripts/run_vial_native_uvm_experimental_probe.pl --check
+  perl scripts/run_vial_native_uvm_experimental_probe.pl --check &&
+  perl scripts/refresh_vial_vhdl_foundation_gallery.pl --check
 ---
 
 Hardware IAL (HIAL) is the collective architecture name for FSMGen's current
@@ -295,6 +303,30 @@ Fixture runtime/results/parity/four-state/full breadth remain unexercised, so
 the byte-checked report is `partial_tool_limited`, `product_support=false`.
 `.13.3` stays blocked; `adc88817e` activates `.14` with no VHDL provider, tool,
 migration, or capability selected.
+
+Completed `.15.1` now ships the first private provider-free VHDL foundation.
+The plan handoff preserves one deterministic generated HIAL VHDL source with
+exact entity/unit/file/hash/byte identity beside the existing SystemVerilog
+source. The emitter produces thirteen sorted artifacts: five VHDL sources,
+five whole-source foundation mappings, three unexecuted GHDL command records,
+and manifest/tool/source-order/static evidence. Seven structural checks cover
+closed roles, bounds, deterministic text, provider neutrality, selected
+package/top shapes, and the complete `std_logic` normalization table.
+
+The generated types package preserves the original `std_logic` symbol while
+normalizing VIAL `0/1/X/Z`; runtime and metadata packages type logical time and
+freeze plan/fixture/domain identities. The testbench directly binds every
+declared HIAL VHDL port but contains no process yet. Active `.15.2` owns
+drivers, samplers, inactive-edge scheduling, scenarios, models, and probe
+adapters.
+
+The checked gallery is
+`vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation`; run `perl
+scripts/refresh_vial_vhdl_foundation_gallery.pl --check` to verify it without
+writing. Ordinary emission fetches no provider. The legacy VHDL observation
+package remains unchanged and unconsumed, while analysis, elaboration,
+runtime, results, parity, PSL, complete VHDL-2008, OSVVM/UVVM,
+mixed-language behavior, and product support remain unclaimed.
 
 `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` now preserves a separate proposed
 architecture for an Intent Abstraction Simulator. IASIM is a first-class,

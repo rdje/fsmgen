@@ -1,0 +1,198 @@
+{
+   "artifacts" : [
+      {
+         "bytes" : 818,
+         "kind" : "vhdl_source",
+         "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
+         "role" : "vhdl_fixture_metadata",
+         "sha256" : "5e4dbd0e471829db71f377735750ce5bed4598b99fc25437c62ab49a1c1d66ee"
+      },
+      {
+         "bytes" : 1414,
+         "kind" : "vhdl_source",
+         "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
+         "role" : "vhdl_fixture_top",
+         "sha256" : "6fb162864ad5421cb0c2107328c257d4f16df9fc7399815034686f957377a393"
+      },
+      {
+         "bytes" : 47685,
+         "kind" : "vhdl_source",
+         "relpath" : "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+         "role" : "generated_hial_vhdl_dut",
+         "sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6"
+      },
+      {
+         "bytes" : 721,
+         "kind" : "vhdl_source",
+         "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
+         "role" : "vhdl_runtime_package",
+         "sha256" : "8ab3f90520ff877c885047d8f4ebf8b8ef406119279f340b340ef77fcc4cfb5c"
+      },
+      {
+         "bytes" : 1325,
+         "kind" : "vhdl_source",
+         "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
+         "role" : "vhdl_types_package",
+         "sha256" : "2fa0c30b251cb043339d908374874c5ded097a570f4feea1784f97daed15dbd5"
+      }
+   ],
+   "entries" : [
+      {
+         "bridge_fact_paths" : [
+            "/types"
+         ],
+         "generated_end_column" : 40,
+         "generated_end_line" : 48,
+         "generated_relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
+         "generated_start_column" : 1,
+         "generated_start_line" : 1,
+         "generated_symbol" : "fsmgen_vial_types_pkg",
+         "plan_paths" : [
+            "/types"
+         ],
+         "role" : "typed_value_and_phase_foundation",
+         "semantic_paths" : [
+            "type/logic_u1",
+            "type/logic_u2",
+            "type/logic_u3",
+            "type/logic_u32",
+            "type/logic_u4"
+         ],
+         "source_locations" : [],
+         "source_map_id" : "source-map/f0f3d2fdcebe479cbeed7c838e984b5bd24bd38966b9257f4c63e99113853f37"
+      },
+      {
+         "bridge_fact_paths" : [
+            "/"
+         ],
+         "generated_end_column" : 37,
+         "generated_end_line" : 30,
+         "generated_relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
+         "generated_start_column" : 1,
+         "generated_start_line" : 1,
+         "generated_symbol" : "fsmgen_vial_runtime_pkg",
+         "plan_paths" : [
+            "/execution_profile"
+         ],
+         "role" : "typed_runtime_foundation",
+         "semantic_paths" : [
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ],
+         "source_locations" : [],
+         "source_map_id" : "source-map/f49865392fc669e43ddbbd107f10e710830427326fd48f8650ab632c1abde83d"
+      },
+      {
+         "bridge_fact_paths" : [
+            "/units/0",
+            "/endpoints",
+            "/backend_bindings"
+         ],
+         "generated_end_column" : 50,
+         "generated_end_line" : 14,
+         "generated_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
+         "generated_start_column" : 1,
+         "generated_start_line" : 1,
+         "generated_symbol" : "base_output_arbitration_metadata_pkg",
+         "plan_paths" : [
+            "/fixture",
+            "/domains/0"
+         ],
+         "role" : "fixture_metadata",
+         "semantic_paths" : [
+            "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
+            "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::domain::bus"
+         ],
+         "source_locations" : [
+            {
+               "end_byte_exclusive" : 4982,
+               "end_column" : 83,
+               "end_line" : 123,
+               "source_name" : "vial/ahb_subordinate_base_output_arbitration.vial",
+               "start_byte" : 859,
+               "start_column" : 7,
+               "start_line" : 32
+            },
+            {
+               "end_byte_exclusive" : 1002,
+               "end_column" : 48,
+               "end_line" : 35,
+               "source_name" : "vial/ahb_subordinate_base_output_arbitration.vial",
+               "start_byte" : 973,
+               "start_column" : 20,
+               "start_line" : 35
+            }
+         ],
+         "source_map_id" : "source-map/a585da2981f462c8aa13cc466198121bb8f788abd13f0aaadfe323d1e96936f6"
+      },
+      {
+         "bridge_fact_paths" : [
+            "/units/0"
+         ],
+         "generated_end_column" : 22,
+         "generated_end_line" : 897,
+         "generated_relpath" : "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+         "generated_start_column" : 1,
+         "generated_start_line" : 1,
+         "generated_symbol" : "ahb_lite_subordinate",
+         "plan_paths" : [
+            "/bindings/unit"
+         ],
+         "role" : "generated_hial_vhdl_dut",
+         "semantic_paths" : [
+            "unit/ahb_lite_subordinate"
+         ],
+         "source_locations" : [],
+         "source_map_id" : "source-map/f3fe9f2dee7bb3db397041413545aa9e4b933a2732a164e3ee2ce56854b3c3fb"
+      },
+      {
+         "bridge_fact_paths" : [
+            "/units/0",
+            "/endpoints",
+            "/backend_bindings"
+         ],
+         "generated_end_column" : 29,
+         "generated_end_line" : 43,
+         "generated_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
+         "generated_start_column" : 1,
+         "generated_start_line" : 1,
+         "generated_symbol" : "base_output_arbitration_tb",
+         "plan_paths" : [
+            "/bindings/unit",
+            "/bindings/endpoints"
+         ],
+         "role" : "fixture_top_foundation",
+         "semantic_paths" : [
+            "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
+            "unit/ahb_lite_subordinate",
+            "endpoint/HADDR",
+            "endpoint/HRDATA",
+            "endpoint/HREADY",
+            "endpoint/HREADYOUT",
+            "endpoint/HRESP",
+            "endpoint/HSEL",
+            "endpoint/HSIZE",
+            "endpoint/HTRANS",
+            "endpoint/HWDATA",
+            "endpoint/HWRITE",
+            "endpoint/clk",
+            "endpoint/rst_n",
+            "endpoint/wait_cycles"
+         ],
+         "source_locations" : [
+            {
+               "end_byte_exclusive" : 4982,
+               "end_column" : 83,
+               "end_line" : 123,
+               "source_name" : "vial/ahb_subordinate_base_output_arbitration.vial",
+               "start_byte" : 859,
+               "start_column" : 7,
+               "start_line" : 32
+            }
+         ],
+         "source_map_id" : "source-map/7d7b1bed38c265ea7fcdb6e530cb7f3e739fc91b81a6c8474c369758bf75e6d4"
+      }
+   ],
+   "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "schema" : "fsmgen.vial_vhdl_backend_source_map.v1",
+   "schema_version" : 1
+}

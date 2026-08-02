@@ -35,11 +35,11 @@ audited but is not selected. GHDL and OSVVM are absent locally, so this is an
 architecture contract—not an analysis, elaboration, simulation, result, or
 support claim.
 
-Implementation parent `.15` is active and decomposed. Active `.15.1` owns the
-provider-free emitter substrate and first deterministic review gallery;
-`.15.2-.15.4` complete portable semantics and review, `.15.5` owns exact GHDL
-qualification, and `.15.6-.15.7` own OSVVM emission and qualification. This
-activation changes no source, artifact, runtime, or support behavior.
+Implementation parent `.15` is active and decomposed. Completed `.15.1` now
+ships the provider-free emitter substrate and first deterministic review
+gallery. Active `.15.2` owns drivers, samplers, the inactive-edge scheduler,
+scenarios, models, and probe adapters; later children add checking/review and
+then independently qualify exact GHDL and OSVVM execution.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -1047,11 +1047,73 @@ normalized result, semantic outcomes, rerun, parity, and cleanup are separate
 gates.
 
 GHDL is not installed in the current workspace. OSVVM is not materialized
-either. Active `.15.1` can therefore implement deterministic source, source
-maps, structural checks, and a review gallery before tool availability, but it
-cannot advertise VHDL analysis or runtime support. OSVVM-dependent work must
-later verify the recursive release, every submodule identity, licenses, and
-notices under a repository-derived dependency root.
+either. Completed `.15.1` therefore ships deterministic source, source maps,
+structural checks, and a review gallery without advertising VHDL analysis or
+runtime support. OSVVM-dependent work must later verify the recursive release,
+every submodule identity, licenses, and notices under a repository-derived
+dependency root.
+
+### Shipped provider-free VHDL foundation
+
+The private backend handoff now carries deterministic generated HIAL VHDL
+beside its existing SystemVerilog source. The VHDL record fixes the semantic
+unit, entity, `.vhd` filename, source identity, exact bytes, byte count, and
+SHA-256 digest; public plan artifacts remain target-neutral and unchanged.
+
+The foundation emitter produces this exact thirteen-artifact graph:
+
+```text
+backends/vhdl_portable_ghdl/
+  backend-manifest.json
+  backend-source-map.json
+  commands/{analyze,elaborate,run}-command.json
+  evidence/{source-order,static-validation,tool-profile}.json
+  src/dut/ahb_lite_subordinate.vhd
+  src/fsmgen_vial_{types,runtime}_pkg.vhd
+  src/base_output_arbitration_metadata_pkg.vhd
+  src/base_output_arbitration_tb.vhd
+```
+
+The types package defines VIAL `0/1/X/Z`, execution phases, and an observation
+record that retains the original `std_logic` symbol. Its normalization maps
+strong `0/1/Z` directly, weak `L/H` to `0/1`, and every remaining symbol to
+`X`. The runtime package defines logical cycle/phase/rank/index and lifecycle
+types. The metadata package freezes plan, fixture, bridge, unit, domain,
+active/inactive-edge, and reset identities.
+
+The testbench foundation declares every bridge-proved endpoint and binds the
+generated HIAL entity through a named port map. It intentionally has no
+process yet. Drivers, samplers, stable-barrier scheduling, scenarios, models,
+and the declared-probe adapter belong to active `.15.2`, so reviewers can see
+exactly where the implementation boundary lies.
+
+The manifest and machine-readable capability contract say
+`emitted_unqualified_foundation`. Seven static checks prove deterministic,
+bounded, provider-neutral source structure—not VHDL syntax or execution. The
+selected GHDL 6.0.0 `-a`, `-e`, and `-r` command records use `--std=08`, the
+`fsmgen_vial` work library, and repository-relative work paths, but remain
+`not_run`.
+
+Review the byte-locked output under
+`vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_foundation`. From the
+repository root, regenerate it with:
+
+```text
+perl scripts/refresh_vial_vhdl_foundation_gallery.pl
+```
+
+Check it without writing with:
+
+```text
+perl scripts/refresh_vial_vhdl_foundation_gallery.pl --check
+```
+
+The legacy `vhdl-observation-package` remains byte/schema-compatible,
+unchanged, and unconsumed.
+
+Analysis, elaboration, runtime, trace/result,
+parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language behavior, and
+product support remain explicit non-claims.
 
 The complete contract is in the selected VHDL section of the
 [HIAL/VIAL architecture audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md#completed-vhdl-contract-selection).
