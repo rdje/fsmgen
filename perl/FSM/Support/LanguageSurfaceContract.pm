@@ -170,7 +170,8 @@ sub language_surface_vial_native_uvm_emission_keys {
         static_validation_schema mapping_matrix_schema review_workflow_schema
         methodology_identity library_materialization
         backend_stage_status capabilities limits fixture review_gallery
-        writes_files public_embedding_api explicit_nonclaims guidance
+        experimental_probe writes_files public_embedding_api
+        explicit_nonclaims guidance
     )];
 }
 

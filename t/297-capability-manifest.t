@@ -2946,6 +2946,23 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         'not_run',
         'manifest does not infer native UVM runtime execution',
     );
+    my $uvm_probe =
+        $manifest->{language_surface}{vial_native_uvm_emission}{experimental_probe};
+    is($uvm_probe->{profile},
+        'sv_uvm_experimental.verilator_5_046.uvm_verilator_2020_3_1_vlt_656f20d0',
+        'manifest identifies the exact separate native UVM experimental profile');
+    ok(!$uvm_probe->{product_support},
+        'manifest denies product support from experimental native UVM evidence');
+    is($uvm_probe->{stage_status}{uvm_library_runtime_smoke}, 'passed',
+        'manifest records the isolated UVM control runtime smoke');
+    is($uvm_probe->{stage_status}{generated_fixture_parse},
+        'unsupported_tool_limitation',
+        'manifest assigns the generated-fixture parse stop to the selected tool');
+    is($uvm_probe->{stage_status}{generated_fixture_compile_elaboration},
+        'failed_tool_internal_fault',
+        'manifest records the unsupported-feature compile/elaboration internal fault');
+    is($uvm_probe->{stage_status}{generated_fixture_runtime}, 'not_run',
+        'manifest leaves generated native UVM runtime unexercised');
     is_deeply(
         [sort keys %{$manifest->{language_surface}{vial_tooling}}],
         [sort @{language_surface_vial_tooling_keys()}],

@@ -135,7 +135,7 @@ package base_output_arbitration_pkg;
       item = new("sampled_notification");
       item.notification_id = notification_id;
       item.semantic_id = semantic_id;
-      item.logical_time = context.logical_time;
+      item.logical_time = vial_context.logical_time;
       item.haddr = cfg.vif.monitor_cb.HADDR;
       item.hrdata = cfg.vif.monitor_cb.HRDATA;
       item.hready = cfg.vif.monitor_cb.HREADY;
@@ -170,11 +170,11 @@ package base_output_arbitration_pkg;
         @(cfg.vif.monitor_cb);
         if (cfg.vif.monitor_cb.rst_n !== 1'b1)
           continue;
-        context.set_logical_time(sampled_cycle, VIAL_SAMPLE_PHASE, 0);
+        vial_context.set_logical_time(sampled_cycle, VIAL_SAMPLE_PHASE, 0);
         if ((cfg.vif.monitor_cb.HSEL && cfg.vif.monitor_cb.HREADY && (cfg.vif.monitor_cb.HTRANS === 2'h2))) begin
           item = sample_payload("event/ahb_write/accepted", "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::transaction_binding::write::event::accepted");
           notifications.accepted_notification.trigger_notification(item);
-          accepts_model.observe_event(context.logical_time);
+          accepts_model.observe_event(vial_context.logical_time);
         end
         // 'captured' keeps a typed channel; its adapter-state predicate is not executed by this emission-only slice.
         if ((cfg.vif.monitor_cb.HREADYOUT === 1'h0)) begin
@@ -184,14 +184,14 @@ package base_output_arbitration_pkg;
         if (cfg.vif.monitor_cb.HREADYOUT) begin
           item = sample_payload("event/ahb_write/completed", "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::transaction_binding::write::event::completed");
           notifications.completed_notification.trigger_notification(item);
-          completions_model.observe_event(context.logical_time);
+          completions_model.observe_event(vial_context.logical_time);
           observed_ap.write(sample_transaction());
         end
         if ((cfg.vif.monitor_cb.HRESP === 1'h1)) begin
           item = sample_payload("event/ahb_write/error", "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::transaction_binding::write::event::error");
           notifications.error_notification.trigger_notification(item);
         end
-        coverage_collector.sample_ready(cfg.vif.monitor_cb.HREADYOUT, context.logical_time);
+        coverage_collector.sample_ready(cfg.vif.monitor_cb.HREADYOUT, vial_context.logical_time);
         sampled_cycle++;
       end
     endtask
@@ -230,7 +230,7 @@ package base_output_arbitration_pkg;
         `uvm_fatal("VIAL/FAULT", "agent is missing generated fault controller")
       uvm_config_db#(base_output_arbitration_config)::set(this, "monitor", "cfg", cfg);
       uvm_config_db#(base_output_arbitration_notification_registry)::set(this, "monitor", "notifications", notifications);
-      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "monitor", "vial_context", context);
+      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "monitor", "vial_context", vial_context);
       uvm_config_db#(base_output_arbitration_coverage_collector)::set(this, "monitor", "coverage", coverage_collector);
       uvm_config_db#(base_output_arbitration_event_counter_model)::set(this, "monitor", "accepts_model", accepts_model);
       uvm_config_db#(base_output_arbitration_event_counter_model)::set(this, "monitor", "completions_model", completions_model);
@@ -291,12 +291,12 @@ package base_output_arbitration_pkg;
       longint unsigned error_before;
       base_output_arbitration_notification_payload requested;
       wait (cfg.vif.rst_n === 1'b1);
-      context.transition_lifecycle(VIAL_LIFECYCLE_READY, VIAL_LIFECYCLE_RUNNING);
-      context.set_logical_time(0, VIAL_DRIVE_PHASE, 0);
+      vial_context.transition_lifecycle(VIAL_LIFECYCLE_READY, VIAL_LIFECYCLE_RUNNING);
+      vial_context.set_logical_time(0, VIAL_DRIVE_PHASE, 0);
       requested = new("requested_notification");
       requested.notification_id = "event/ahb_write/requested";
       requested.semantic_id = "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::transaction_binding::write::event::requested";
-      requested.logical_time = context.logical_time;
+      requested.logical_time = vial_context.logical_time;
       notifications.requested_notification.trigger_notification(requested);
       accepted_before = notifications.accepted_notification.occurrence_count;
       completed_before = notifications.completed_notification.occurrence_count;
@@ -308,16 +308,16 @@ package base_output_arbitration_pkg;
       success_sequence.start(sequencer);
       properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::accepted_once",
         notifications.accepted_notification.occurrence_count - accepted_before == 1,
-        "accepted event count differs from one", context.logical_time);
+        "accepted event count differs from one", vial_context.logical_time);
       properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::completed_once",
         notifications.completed_notification.occurrence_count - completed_before == 1,
-        "completed event count differs from one", context.logical_time);
+        "completed event count differs from one", vial_context.logical_time);
       properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::response_ok",
         cfg.vif.monitor_cb.HRESP === 1'b0,
-        "response did not return to the expected value", context.logical_time);
+        "response did not return to the expected value", vial_context.logical_time);
       properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::read_zero",
         cfg.vif.monitor_cb.HRDATA === 32'h00000000,
-        "read data differs from zero", context.logical_time);
+        "read data differs from zero", vial_context.logical_time);
       void'(writes_scoreboard.check_empty());
       accepted_before = notifications.accepted_notification.occurrence_count;
       completed_before = notifications.completed_notification.occurrence_count;
@@ -327,21 +327,21 @@ package base_output_arbitration_pkg;
       unsupported_size_sequence.start(sequencer);
       properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::accepted_once",
         notifications.accepted_notification.occurrence_count - accepted_before == 1,
-        "accepted event count differs from one", context.logical_time);
+        "accepted event count differs from one", vial_context.logical_time);
       properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::two_error_cycles",
         notifications.error_notification.occurrence_count - error_before == 2,
-        "error event count differs from two", context.logical_time);
+        "error event count differs from two", vial_context.logical_time);
       properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::response_returns_ok",
         cfg.vif.monitor_cb.HRESP === 1'b0,
-        "response did not return to the expected value", context.logical_time);
+        "response did not return to the expected value", vial_context.logical_time);
       properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::read_zero",
         cfg.vif.monitor_cb.HRDATA === 32'h00000000,
-        "read data differs from zero", context.logical_time);
-      context.transition_lifecycle(VIAL_LIFECYCLE_RUNNING, VIAL_LIFECYCLE_DRAINING);
+        "read data differs from zero", vial_context.logical_time);
+      vial_context.transition_lifecycle(VIAL_LIFECYCLE_RUNNING, VIAL_LIFECYCLE_DRAINING);
     endtask
 
     function void complete_lifecycle();
-      context.transition_lifecycle(VIAL_LIFECYCLE_DRAINING, VIAL_LIFECYCLE_COMPLETED);
+      vial_context.transition_lifecycle(VIAL_LIFECYCLE_DRAINING, VIAL_LIFECYCLE_COMPLETED);
     endfunction
   endclass
 
@@ -400,7 +400,7 @@ package base_output_arbitration_pkg;
       if (sealed)
         `uvm_fatal("VIAL/RESULT", "result collector sealed more than once")
       notification_occurrences = notifications.total_occurrences();
-      snapshot.plan_id = context.plan_id;
+      snapshot.plan_id = vial_context.plan_id;
       snapshot.notification_count = notification_occurrences;
       snapshot.diagnostic_count = diagnostics.size();
       snapshot.expectation_count = properties.expectation_count;
@@ -470,19 +470,19 @@ package base_output_arbitration_pkg;
       properties = base_output_arbitration_property_checker::type_id::create("properties", this);
       uvm_config_db#(base_output_arbitration_config)::set(this, "agent", "cfg", cfg);
       uvm_config_db#(base_output_arbitration_notification_registry)::set(this, "agent", "notifications", notifications);
-      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "agent", "vial_context", context);
+      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "agent", "vial_context", vial_context);
       uvm_config_db#(base_output_arbitration_coverage_collector)::set(this, "agent", "coverage", coverage_collector);
       uvm_config_db#(base_output_arbitration_event_counter_model)::set(this, "agent", "accepts_model", accepts_model);
       uvm_config_db#(base_output_arbitration_event_counter_model)::set(this, "agent", "completions_model", completions_model);
       uvm_config_db#(base_output_arbitration_fault_controller)::set(this, "agent", "faults", faults);
       uvm_config_db#(base_output_arbitration_config)::set(this, "controller", "cfg", cfg);
       uvm_config_db#(base_output_arbitration_notification_registry)::set(this, "controller", "notifications", notifications);
-      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "controller", "vial_context", context);
+      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "controller", "vial_context", vial_context);
       uvm_config_db#(base_output_arbitration_write_scoreboard)::set(this, "controller", "scoreboard", writes_scoreboard);
       uvm_config_db#(base_output_arbitration_fault_controller)::set(this, "controller", "faults", faults);
       uvm_config_db#(base_output_arbitration_property_checker)::set(this, "controller", "properties", properties);
       uvm_config_db#(base_output_arbitration_notification_registry)::set(this, "result_collector", "notifications", notifications);
-      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "result_collector", "vial_context", context);
+      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "result_collector", "vial_context", vial_context);
       uvm_config_db#(base_output_arbitration_coverage_collector)::set(this, "result_collector", "coverage", coverage_collector);
       uvm_config_db#(base_output_arbitration_event_counter_model)::set(this, "result_collector", "accepts_model", accepts_model);
       uvm_config_db#(base_output_arbitration_event_counter_model)::set(this, "result_collector", "completions_model", completions_model);
@@ -526,7 +526,7 @@ package base_output_arbitration_pkg;
           driven_fifo == null || transaction_observer == null ||
           ral_model == null || ral_adapter == null || ral_predictor == null)
         `uvm_fatal("VIAL/TOPOLOGY", "generated component topology is incomplete")
-      context.transition_lifecycle(VIAL_LIFECYCLE_CONFIGURED, VIAL_LIFECYCLE_READY);
+      vial_context.transition_lifecycle(VIAL_LIFECYCLE_CONFIGURED, VIAL_LIFECYCLE_READY);
     endfunction
   endclass
 
@@ -536,7 +536,7 @@ package base_output_arbitration_pkg;
     base_output_arbitration_config cfg;
     base_output_arbitration_notification_registry notifications;
     base_output_arbitration_env env;
-    fsmgen_vial_execution_context context;
+    fsmgen_vial_execution_context vial_context;
 
     function new(string name, uvm_component parent);
       super.new(name, parent);
@@ -551,8 +551,8 @@ package base_output_arbitration_pkg;
       cfg = base_output_arbitration_config::type_id::create("cfg");
       if (!uvm_config_db#(virtual base_output_arbitration_if)::get(this, "", "vif", cfg.vif))
         `uvm_fatal("VIAL/VIF", "missing generated virtual interface")
-      context = fsmgen_vial_execution_context::type_id::create("context");
-      context.plan_id = "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574";
+      vial_context = fsmgen_vial_execution_context::type_id::create("vial_context");
+      vial_context.plan_id = "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574";
       notifications = base_output_arbitration_notification_registry::type_id::create("notifications");
       notifications.configure_preview();
       cfg.scenario_timeout_cycles = 256;
@@ -560,8 +560,8 @@ package base_output_arbitration_pkg;
       cfg.ral_preview_id = "private-preview/ral/reg-data-at-zero";
       uvm_config_db#(base_output_arbitration_config)::set(this, "env", "cfg", cfg);
       uvm_config_db#(base_output_arbitration_notification_registry)::set(this, "env", "notifications", notifications);
-      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "env", "vial_context", context);
-      context.transition_lifecycle(VIAL_LIFECYCLE_CONSTRUCTED, VIAL_LIFECYCLE_CONFIGURED);
+      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "env", "vial_context", vial_context);
+      vial_context.transition_lifecycle(VIAL_LIFECYCLE_CONSTRUCTED, VIAL_LIFECYCLE_CONFIGURED);
       env = base_output_arbitration_env::type_id::create("env", this);
     endfunction
 
@@ -575,7 +575,7 @@ package base_output_arbitration_pkg;
 
     virtual function void final_phase(uvm_phase phase);
       super.final_phase(phase);
-      context.transition_lifecycle(VIAL_LIFECYCLE_COMPLETED, VIAL_LIFECYCLE_FINALIZED);
+      vial_context.transition_lifecycle(VIAL_LIFECYCLE_COMPLETED, VIAL_LIFECYCLE_FINALIZED);
     endfunction
   endclass
 endpackage

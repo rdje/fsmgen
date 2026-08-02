@@ -288,11 +288,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5: close native UVM matrix and review workflow`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the first reusable exact open-source UVM compile/elaboration feasibility probe without converting experimental evidence into product support.`
   Acceptance: `As soon as .13.1.1 publishes the first gallery, select exact available open-source tool/version and immutable UVM source variant identities; separately attempt preprocessing/parsing, library compile, fixture compile, elaboration, and any supported runtime smoke; record argv, deviations/patches/failures and every not-exercised capability; expose a reusable nonblocking probe for later emission children; classify a demonstrated generator defect separately from a tool limitation; keep discovery labelled experimental; preserve qualified/runtime non-claims; and close honestly even when some or all stages are unsupported.`
-  Verification: `clean completed-emission predecessor 7725789a44f1f4ccdfaadbde4d867b7610661680 activates this leaf alone; exact tool/library inspection and probe implementation remain unperformed until this continuity slice commits`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2: activate experimental UVM probe`
+  Verification: `The exact experimental tuple is Verilator 5.046 plus CHIPS Alliance uvm-verilator uvm-2020-3.1-vlt commit 656f20d087370a7c742e00188d20bbf30fa95339/tree 882930bb7debe79b22234e4a8a53854549046778, with canonical Accellera 2020.3.1 identity retained. A reusable bounded same-volume probe validates identities, records exact argv/deviations/resources/transcript digests, and removes staging. Its UVM library preprocess, parse, compile/elaboration, and zero-error run_phase smoke pass; the generated fixture preprocesses, strict parsing reaches Verilator's unsupported ranged-SVA delay, unsupported-feature blackboxing reaches a Verilator internal fault/exit 139, and fixture runtime/result/parity remain not run. The probe found and this slice repaired the generator's illegal SystemVerilog keyword identifier context to vial_context before the canonical rerun. The checked report deterministically concludes partial_tool_limited with product_support false; ordinary emission remains simulator-neutral and all qualified runtime/breadth nonclaims stay exact. Focused and broader evidence is recorded below.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2: ship exact experimental UVM probe`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3`
   Status: `proposed`
@@ -413,17 +413,45 @@ private RAL, and constrained-decision replay/preview structures. Completed
 typed diagnostic/result collection, and a bound SVA review checker in the
 revision-4 fourteen-artifact graph. Completed `.13.1.5` ships the revision-5
 sixteen-artifact graph, 25-row selected mapping matrix, deterministic gallery
-workflow, and exact deferred-runtime defect boundary. Clean predecessor
-`7725789a4` activates `.13.2` alone for an exact reusable open-tool compile/
-elaboration feasibility probe; inspection and implementation remain
-unperformed. `.13.3` remains blocked on capability-ready PGEN and NEXSIM
-releases.
+workflow, and exact deferred-runtime defect boundary. Completed `.13.2` ships
+the exact reusable Verilator-5.046/UVM-2020.3.1-vlt experimental probe, repairs
+the invalid generated `context` identifier, proves the isolated UVM library
+through runtime smoke, and classifies the complete generated fixture as
+tool-limited before runtime without advertising support. `.13.3` remains
+blocked on capability-ready PGEN and NEXSIM releases; proposed `.14` is the
+next unblocked architecture leaf.
 Decision `0034` records that
 this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
 compiler-owned beneath C/C++ or Rust.
 
 ## Decisions
+
+- `2026-08-01`: Select the exact experimental profile
+  `sv_uvm_experimental.verilator_5_046.uvm_verilator_2020_3_1_vlt_656f20d0`.
+  The repository-local immutable source checkout is CHIPS Alliance
+  `uvm-verilator` ref `uvm-2020-3.1-vlt`, commit
+  `656f20d087370a7c742e00188d20bbf30fa95339`, tree
+  `882930bb7debe79b22234e4a8a53854549046778`; the unmodified comparison and
+  canonical Accellera release identities remain recorded. `UVM_NO_DPI` is an
+  experiment-wide deviation; `--bbox-unsup` belongs only to the separate
+  fixture compile/elaboration attempt. Single-job, single-thread, split,
+  unoptimized C++ is a bounded host-resource control, not a semantic change.
+
+- `2026-08-01`: The first full-fixture diagnostic is a demonstrated FSMGen
+  generator defect because `context` is a SystemVerilog keyword. Rename the
+  emitted field to `vial_context`, regenerate the canonical gallery, and lock
+  out the invalid declaration/dereferences. After correction, strict parsing
+  reaches only Verilator's unsupported ranged-SVA delay; blackboxing that
+  unsupported feature reaches a Verilator internal fault. These are separate
+  tool limitations and do not justify provider conditionals in neutral output.
+
+- `2026-08-01`: Experimental workflow completion is independent of every
+  inner stage passing. The canonical report records pass, unsupported, failed,
+  and not-run states separately, concludes `partial_tool_limited`, and keeps
+  `product_support=false`. A control UVM runtime pass cannot qualify the
+  generated fixture, produce a native result, prove parity, or change ordinary
+  emission's not-run stage claims.
 
 - `2026-08-01`: Clean completed-emission predecessor
   `7725789a44f1f4ccdfaadbde4d867b7610661680` permits `.13.2` to activate
@@ -656,9 +684,6 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Open Questions
 
-- Active `.13.2` must inspect and select the exact available open-source tool
-  and immutable UVM source variant before implementing its reusable probe; an
-  unsupported result is still useful if measured and kept experimental.
 - `.13.3` must select exact PGEN/NEXSIM versions, handoff schema, semantic-
   introspection API schema, and MCP profile when capability-ready releases
   exist; no version or unsupported query/control capability is invented in
@@ -673,8 +698,6 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- None for active `.13.2`; its contract closes honestly even if the inspected
-  open-source tool supports no complete UVM compile or elaboration stage.
 - `.13.3` runtime qualification is intentionally blocked on capability-ready
   PGEN and NEXSIM releases. The planned NEXSIM API/MCP direction removes no
   release/schema/capability prerequisite. Commercial simulator availability
@@ -734,6 +757,44 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-08-01` | `.13.1.5` activation | clean `.13.1.4` implementation predecessor `193d170e0`; task/index/audit/book/fact/Memory continuity; relative paths/task/live-reference/Knowledge Map; mdBook test/build; diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; docs/live/task/Knowledge Map suite reports `All tests successful` at Files=6/Tests=76; all 49 mdBook chapters test and the repository-local build contains 85 files/16,768,886 bytes before exact removal; task integrity remains three trees/907 nodes/one segment/one index archive; exact mdBook delta is 0/+1/+51; Knowledge Map remains 1,104 facts/5,633 questions/5,799 occurrences/117 shards; Memory is 45 lines; staged acceptance and all nine doctrine checks pass with zero ceiling increases; implementation, generated artifacts, public capability, visual-review evidence, parser, compile, elaboration, runtime, result, and parity remain unchanged |
 | `2026-08-01` | `.13.1.5` implementation | revision-5 emitter/review-closure/support syntax; exact 25-row source/IR/role/state mapping matrix; seven-stage repository-relative review workflow; non-mutating gallery byte check; two canonical JSON evidence snapshots; exact capability/support/non-claims; fail-closed negative oracles; book/task/audit/fact/Memory continuity | `passed`; focused native/support Files=7/Tests=7,125; broader semantic/public/native gates pass in bounded partitions totaling Files=13/Tests=7,168; portable execution Files=1/Tests=5 and parity Files=1/Tests=4; docs/task/live/history/map Files=12/Tests=101; all 49 chapters test; removed repository-local build 85 files/16,787,078 bytes; task integrity three trees/907 nodes/one segment/one index archive; exact mdBook delta 0/+46/+2,327; Knowledge Map 1,104 facts/5,635 questions/5,801 occurrences/117 shards; Memory 47 lines; exact graph is 16 artifacts/10 SystemVerilog sources/75 maps/14 structural checks/25 mappings/7 workflow stages/5 closure invariants/9 source snapshots/2 evidence snapshots; final staged acceptance and all nine doctrine checks pass; visual review and parse through parity remain pending or unclaimed |
 | `2026-08-01` | `.13.2` activation | clean completed-emission predecessor `7725789a4`; task/index/audit/book/fact/Memory continuity; docs/live/task/mdBook/Knowledge Map/Memory/diff/staged docs-only acceptance/doctrines; exact cleanup | `passed`; docs/live/task/Knowledge Map Files=6/Tests=76; all 49 mdBook chapters test and the repository-local build contains 85 files/16,788,798 bytes before exact removal; task integrity remains three trees/907 nodes/one segment/one index archive; exact mdBook delta is 0/+5/+305; all 22 live surfaces and 2,941/2,941 paths pass with zero ceiling increases; Knowledge Map remains 1,104 facts/5,635 questions/5,801 occurrences/117 shards; Memory is 47 lines; `.13.2` alone is active while tool/library inspection, implementation, and all emission-through-product-support states remain unchanged; final staged acceptance and all nine doctrine checks pass |
+| `2026-08-01` | `.13.2` implementation | exact Verilator/UVM source identities and comparison delta; bounded reusable probe module/script; independent preprocess/parse/library compile-elaboration/runtime/fixture compile-elaboration stages; canonical report and byte-check; reserved-keyword generator repair and refreshed gallery; source/support/capability/focused/broader/docs/task/mdBook/Knowledge Map/Memory/staged-doctrine gates; exact staging/build/manual-probe cleanup | `passed`; exact Verilator 5.046 plus uvm-verilator commit/tree frozen; guarded canonical run and independent `--check` deterministically conclude `partial_tool_limited`; UVM control passes through zero-error/fatal runtime, generated fixture preprocesses, ranged SVA is unsupported, blackboxing reaches tool internal fault/139, and fixture runtime/result/parity remain not run; focused native/probe Files=6/Tests=44 and impacted VIAL/support Files=16/Tests=7,183 pass; docs/history Files=12/Tests=70 pass; all 49 mdBook chapters test and its 85-file/16,584-KiB build is removed exactly; final acceptance details are recorded below; product support remains false and `.13.3` remains provider-blocked while `.14` is the next unblocked leaf |
+
+## Acceptance Checklist (enforced) — `.13.2` implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean activation predecessor
+  `74815a4fd90aa5386b29a8d3f0642792ad33ea85` leaves the first selected native
+  UVM gallery intentionally unparsed and uncompiled. Exact Verilator/UVM
+  control and full-fixture runs must establish whether each failure is a
+  generator defect, selected-tool limitation, host dependency, or unexercised
+  stage without promoting experiment evidence into support. The first strict
+  generated-fixture run reports `%Error-UNSUPPORTED` at the ranged-SVA delay,
+  while the earlier repaired run identified the illegal generated identifier;
+  these concrete compiler loci require separate tool and generator ownership.
+
+- [x] **ADDRESSED (verified)** — exact selected profile/source identities,
+  immutable-source verification, bounded repository-local process/staging,
+  explicit `UVM_NO_DPI` and attempt-local `--bbox-unsup` deviations, independent
+  stage records, canonical report/check workflow, legal `vial_context`
+  generation, refreshed gallery, capability/support truth, task/fact/book
+  explanation, and deterministic cleanup are implemented. The canonical run
+  separates five passed UVM-control stages plus fixture preprocessing from the
+  unsupported ranged-SVA parser result, Verilator internal fault/139, and
+  not-run fixture runtime/result/parity stages.
+
+- [x] **NO REGRESSION** — all changed Perl, script, and test paths report
+  syntax OK. The guarded canonical probe and an independent `--check` rerun
+  prove byte-identical normalized evidence. Focused native/probe evidence
+  reports `All tests successful` at `Files=6, Tests=44`; the impacted
+  VIAL/support suite passes at `Files=16, Tests=7,183`; and docs/history passes
+  at `Files=12, Tests=70`. All 49 mdBook chapters test, and the rendered prose
+  inspection shows separate paragraphs around the new section; its
+  repository-local 85-file/16,584-KiB build is removed exactly. Task integrity
+  remains three trees/907 nodes/one segment/one index archive. All 22 live
+  surfaces and 2,942/2,942 paths pass with exact mdBook delta 0/+65/+3,370 and
+  zero ceiling increases. Knowledge Map is current at 1,104 facts/5,641
+  questions/5,807 occurrences/117 shards; Memory is 46 lines. The exact probe
+  staging tree, manual reports, UVM source cache, and book build are absent.
+  Final staged acceptance and all nine doctrine checks pass before commit.
 
 ## Acceptance Checklist (enforced) — `.13.2` activation
 
@@ -1420,6 +1481,7 @@ compiler-owned beneath C/C++ or Rust.
 | `.13.1.5` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5: activate native UVM matrix and review closure` | Activate only mapping-matrix, examples, review-workflow, compatibility, and deferred-runtime-defect closure after clean completed `.13.1.4`; implementation and visual-review evidence remain unperformed. |
 | `.13.1.5` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5: close native UVM matrix and review workflow` | Ship revision-5 selected-scope accounting through a 25-row matrix, deterministic seven-stage gallery workflow, non-mutating byte check, exact defect routing, and two canonical evidence snapshots while retaining every visual/parser/runtime/full-breadth non-claim. |
 | `.13.2` activation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2: activate experimental UVM probe` | Activate only exact open-source tool/library inspection and reusable experimental probe implementation after clean completed `.13.1`; selection, execution, and support evidence remain unperformed. |
+| `.13.2` implementation | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2: ship exact experimental UVM probe` | Ship the exact bounded Verilator/UVM probe and deterministic report, repair the generated reserved-keyword identifier, and retain tool-limited fixture/runtime/result/parity nonclaims without product support. |
 | `.13.3` provider clarification | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3: capture NEXSIM semantic-introspection MCP contract` | Record the future versioned NEXSIM semantic API/MCP qualification plane, snapshot/control/query requirements, source-mapped checkpoint correlation, first-divergence localization, and provider-evidence boundary without inventing a release or activating runtime work. |
 
 ## Changelog

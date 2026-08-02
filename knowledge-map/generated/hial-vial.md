@@ -1,7 +1,7 @@
 # Knowledge Map: `hial-vial`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **79** uniquely owned question entries.
+> **2** facts · **85** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -14,6 +14,8 @@
 - q="can Verilator compile or elaborate early generated UVM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="can Verilator currently qualify full VIAL UVM support?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="can all design and verification work happen at xIAL level?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="did Verilator compile and run the selected UVM library?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="did Verilator parse the complete generated VIAL UVM fixture?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="does FSMGen plan a Verification IAL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="does IASIM need to be rewritten in Rust?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="does NEXSIM semantic introspection define VIAL meaning?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -22,6 +24,7 @@
 - q="does native UVM result collection mean a result was produced?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="does the HIAL VIAL bridge bind VIAL yet?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
 - q="does the HIAL VIAL bridge expose hierarchy?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
+- q="does the native UVM experimental probe advertise product support?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="does xIAL intent signoff replace physical design signoff?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="has the native VIAL UVM gallery been parsed or compiled?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how are generated VIAL UVM interceptors ordered?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -30,6 +33,7 @@
 - q="how can VIAL use native SV UVM or VHDL power?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how do HIAL designs connect to VIAL fixtures?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how do I regenerate or check the native UVM review gallery?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="how do I rerun the native UVM experimental probe?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how do IAL2 protocol facts enter the VIAL bridge?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
 - q="how does IASIM avoid common-mode code generation bugs?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how does generated VIAL UVM handle recursive notifications?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -60,6 +64,7 @@
 - q="what does the native UVM selected mapping matrix contain?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what does xIAL mean?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what ecosystem should surround IASIM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="what exact open-source native UVM probe has FSMGen run?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what is HIALVIALBridgeManifest?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what is IASIM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what is VIALExecutionIR?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -73,6 +78,7 @@
 - q="what language should implement IASIM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what native UVM coverage model scoreboard and fault structures has FSMGen emitted?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what native UVM foundation has FSMGen emitted?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="what native UVM generator defect did the experimental probe find?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what native UVM stimulus and service structures has FSMGen emitted?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what native UVM topology lifecycle and notification structures has FSMGen emitted?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what should IASIM execute?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)

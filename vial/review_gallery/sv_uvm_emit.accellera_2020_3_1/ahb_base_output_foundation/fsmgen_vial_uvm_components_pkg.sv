@@ -10,7 +10,7 @@ package fsmgen_vial_uvm_components_pkg;
   class fsmgen_vial_component_base extends uvm_component;
     `uvm_component_utils(fsmgen_vial_component_base)
 
-    fsmgen_vial_execution_context context;
+    fsmgen_vial_execution_context vial_context;
 
     function new(string name, uvm_component parent);
       super.new(name, parent);
@@ -18,7 +18,7 @@ package fsmgen_vial_uvm_components_pkg;
 
     virtual function void build_phase(uvm_phase phase);
       super.build_phase(phase);
-      if (!uvm_config_db#(fsmgen_vial_execution_context)::get(this, "", "vial_context", context))
+      if (!uvm_config_db#(fsmgen_vial_execution_context)::get(this, "", "vial_context", vial_context))
         `uvm_fatal("VIAL/CONTEXT", "missing VIAL execution context")
     endfunction
   endclass
@@ -26,7 +26,7 @@ package fsmgen_vial_uvm_components_pkg;
   class fsmgen_vial_agent_base extends uvm_agent;
     `uvm_component_utils(fsmgen_vial_agent_base)
 
-    fsmgen_vial_execution_context context;
+    fsmgen_vial_execution_context vial_context;
 
     function new(string name, uvm_component parent);
       super.new(name, parent);
@@ -34,7 +34,7 @@ package fsmgen_vial_uvm_components_pkg;
 
     virtual function void build_phase(uvm_phase phase);
       super.build_phase(phase);
-      if (!uvm_config_db#(fsmgen_vial_execution_context)::get(this, "", "vial_context", context))
+      if (!uvm_config_db#(fsmgen_vial_execution_context)::get(this, "", "vial_context", vial_context))
         `uvm_fatal("VIAL/CONTEXT", "missing VIAL execution context")
     endfunction
   endclass

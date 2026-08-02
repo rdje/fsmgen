@@ -41,7 +41,7 @@ subtest 'public coverage and deterministic models preserve selected ExecutionIR 
     like($checking, qr/stall_seen_cg\.sample\(ready_out === 1'b0\);/,
         'coverpoint expression retains same-ready-low meaning');
     like($fixture,
-        qr/coverage_collector\.sample_ready\(cfg\.vif\.monitor_cb\.HREADYOUT, context\.logical_time\);/,
+        qr/coverage_collector\.sample_ready\(cfg\.vif\.monitor_cb\.HREADYOUT, vial_context\.logical_time\);/,
         'monitor samples coverage at the selected observation point');
 
     like($checking,

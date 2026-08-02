@@ -701,7 +701,7 @@ sub _render_components_package($relpath) {
     $push->('  class fsmgen_vial_component_base extends uvm_component;');
     $push->('    `uvm_component_utils(fsmgen_vial_component_base)');
     $push->('');
-    $push->('    fsmgen_vial_execution_context context;');
+    $push->('    fsmgen_vial_execution_context vial_context;');
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
     $push->('      super.new(name, parent);');
@@ -709,7 +709,7 @@ sub _render_components_package($relpath) {
     $push->('');
     $push->('    virtual function void build_phase(uvm_phase phase);');
     $push->('      super.build_phase(phase);');
-    $push->('      if (!uvm_config_db#(fsmgen_vial_execution_context)::get(this, "", "vial_context", context))');
+    $push->('      if (!uvm_config_db#(fsmgen_vial_execution_context)::get(this, "", "vial_context", vial_context))');
     $push->('        `uvm_fatal("VIAL/CONTEXT", "missing VIAL execution context")');
     $push->('    endfunction');
     $push->('  endclass');
@@ -723,7 +723,7 @@ sub _render_components_package($relpath) {
     $push->('  class fsmgen_vial_agent_base extends uvm_agent;');
     $push->('    `uvm_component_utils(fsmgen_vial_agent_base)');
     $push->('');
-    $push->('    fsmgen_vial_execution_context context;');
+    $push->('    fsmgen_vial_execution_context vial_context;');
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
     $push->('      super.new(name, parent);');
@@ -731,7 +731,7 @@ sub _render_components_package($relpath) {
     $push->('');
     $push->('    virtual function void build_phase(uvm_phase phase);');
     $push->('      super.build_phase(phase);');
-    $push->('      if (!uvm_config_db#(fsmgen_vial_execution_context)::get(this, "", "vial_context", context))');
+    $push->('      if (!uvm_config_db#(fsmgen_vial_execution_context)::get(this, "", "vial_context", vial_context))');
     $push->('        `uvm_fatal("VIAL/CONTEXT", "missing VIAL execution context")');
     $push->('    endfunction');
     $push->('  endclass');
@@ -2428,7 +2428,7 @@ sub _render_fixture_package(%arg) {
     $push->("      item = new(\"sampled_notification\");");
     $push->('      item.notification_id = notification_id;');
     $push->('      item.semantic_id = semantic_id;');
-    $push->('      item.logical_time = context.logical_time;');
+    $push->('      item.logical_time = vial_context.logical_time;');
     for my $endpoint (@payload_endpoint) {
         my $target = $binding{$endpoint->{endpoint_id}}{target_name};
         my $field = _sv_slug($target);
@@ -2456,7 +2456,7 @@ sub _render_fixture_package(%arg) {
     $push->('        @(cfg.vif.monitor_cb);');
     $push->("        if (cfg.vif.monitor_cb.$reset_name !== $reset_inactive)");
     $push->('          continue;');
-    $push->('        context.set_logical_time(sampled_cycle, VIAL_SAMPLE_PHASE, 0);');
+    $push->('        vial_context.set_logical_time(sampled_cycle, VIAL_SAMPLE_PHASE, 0);');
     for my $event (@{$arg{execution}{events}}) {
         next unless ($event->{phase} // '') eq 'sample';
         my $predicate = _notification_predicate($event->{expression}, $arg{execution}, $arg{bridge});
@@ -2467,9 +2467,9 @@ sub _render_fixture_package(%arg) {
             $push->("        if ($predicate) begin");
             $push->("          item = sample_payload(\"$event_id\", \"$semantic_id\");");
             $push->("          notifications.$field.trigger_notification(item);");
-            $push->('          accepts_model.observe_event(context.logical_time);')
+            $push->('          accepts_model.observe_event(vial_context.logical_time);')
                 if ($event->{name} // '') eq 'accepted';
-            $push->('          completions_model.observe_event(context.logical_time);')
+            $push->('          completions_model.observe_event(vial_context.logical_time);')
                 if ($event->{name} // '') eq 'completed';
             $push->('          observed_ap.write(sample_transaction());')
                 if ($event->{name} // '') eq 'completed';
@@ -2478,7 +2478,7 @@ sub _render_fixture_package(%arg) {
             $push->("        // '$event->{name}' keeps a typed channel; its adapter-state predicate is not executed by this emission-only slice.");
         }
     }
-    $push->("        coverage_collector.sample_ready(cfg.vif.monitor_cb.$ready_out_name, context.logical_time);");
+    $push->("        coverage_collector.sample_ready(cfg.vif.monitor_cb.$ready_out_name, vial_context.logical_time);");
     $push->('        sampled_cycle++;');
     $push->('      end');
     $push->('    endtask');
@@ -2527,7 +2527,7 @@ sub _render_fixture_package(%arg) {
     $push->('        `uvm_fatal("VIAL/FAULT", "agent is missing generated fault controller")');
     $push->("      uvm_config_db#($config)::set(this, \"monitor\", \"cfg\", cfg);");
     $push->("      uvm_config_db#($registry)::set(this, \"monitor\", \"notifications\", notifications);");
-    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "monitor", "vial_context", context);');
+    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "monitor", "vial_context", vial_context);');
     $push->("      uvm_config_db#($coverage)::set(this, \"monitor\", \"coverage\", coverage_collector);");
     $push->("      uvm_config_db#($model)::set(this, \"monitor\", \"accepts_model\", accepts_model);");
     $push->("      uvm_config_db#($model)::set(this, \"monitor\", \"completions_model\", completions_model);");
@@ -2606,8 +2606,8 @@ sub _render_fixture_package(%arg) {
         $push->("      $payload requested;");
     }
     $push->("      wait (cfg.vif.$reset_name === $reset_inactive);");
-    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_READY, VIAL_LIFECYCLE_RUNNING);');
-    $push->('      context.set_logical_time(0, VIAL_DRIVE_PHASE, 0);');
+    $push->('      vial_context.transition_lifecycle(VIAL_LIFECYCLE_READY, VIAL_LIFECYCLE_RUNNING);');
+    $push->('      vial_context.set_logical_time(0, VIAL_DRIVE_PHASE, 0);');
     if ($event_by_name{requested}) {
         my $requested = $event_by_name{requested};
         my $requested_id = _sv_string($requested->{event_id});
@@ -2616,7 +2616,7 @@ sub _render_fixture_package(%arg) {
         $push->("      requested = new(\"requested_notification\");");
         $push->("      requested.notification_id = \"$requested_id\";");
         $push->("      requested.semantic_id = \"$requested_semantic\";");
-        $push->('      requested.logical_time = context.logical_time;');
+        $push->('      requested.logical_time = vial_context.logical_time;');
         $push->("      notifications.$requested_field.trigger_notification(requested);");
     }
     for my $scenario (@{$arg{execution}{scenarios}}) {
@@ -2640,19 +2640,19 @@ sub _render_fixture_package(%arg) {
         if (defined $accepted_id) {
             $push->('      properties.record("' . _sv_string($accepted_id) . '",');
             $push->("        notifications.accepted_notification.occurrence_count - accepted_before == 1,");
-            $push->('        "accepted event count differs from one", context.logical_time);');
+            $push->('        "accepted event count differs from one", vial_context.logical_time);');
         }
         my $completed_id = $expectation_by_scenario_name{$scenario_id . "\0completed_once"};
         if (defined $completed_id) {
             $push->('      properties.record("' . _sv_string($completed_id) . '",');
             $push->("        notifications.completed_notification.occurrence_count - completed_before == 1,");
-            $push->('        "completed event count differs from one", context.logical_time);');
+            $push->('        "completed event count differs from one", vial_context.logical_time);');
         }
         my $error_id = $expectation_by_scenario_name{$scenario_id . "\0two_error_cycles"};
         if (defined $error_id) {
             $push->('      properties.record("' . _sv_string($error_id) . '",');
             $push->("        notifications.error_notification.occurrence_count - error_before == 2,");
-            $push->('        "error event count differs from two", context.logical_time);');
+            $push->('        "error event count differs from two", vial_context.logical_time);');
         }
         my $response_key = ($scenario->{name} // '') eq 'success'
             ? 'response_ok' : 'response_returns_ok';
@@ -2660,22 +2660,22 @@ sub _render_fixture_package(%arg) {
         if (defined $response_id) {
             $push->('      properties.record("' . _sv_string($response_id) . '",');
             $push->("        cfg.vif.monitor_cb.$response_name === 1'b0,");
-            $push->('        "response did not return to the expected value", context.logical_time);');
+            $push->('        "response did not return to the expected value", vial_context.logical_time);');
         }
         my $read_id = $expectation_by_scenario_name{$scenario_id . "\0read_zero"};
         if (defined $read_id) {
             $push->('      properties.record("' . _sv_string($read_id) . '",');
             $push->("        cfg.vif.monitor_cb.$read_data_name === 32'h00000000,");
-            $push->('        "read data differs from zero", context.logical_time);');
+            $push->('        "read data differs from zero", vial_context.logical_time);');
         }
         $push->('      void\'(writes_scoreboard.check_empty());')
             if ($scenario->{name} // '') eq 'success';
     }
-    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_RUNNING, VIAL_LIFECYCLE_DRAINING);');
+    $push->('      vial_context.transition_lifecycle(VIAL_LIFECYCLE_RUNNING, VIAL_LIFECYCLE_DRAINING);');
     $push->('    endtask');
     $push->('');
     $push->('    function void complete_lifecycle();');
-    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_DRAINING, VIAL_LIFECYCLE_COMPLETED);');
+    $push->('      vial_context.transition_lifecycle(VIAL_LIFECYCLE_DRAINING, VIAL_LIFECYCLE_COMPLETED);');
     $push->('    endfunction');
     $push->('  endclass');
     push @spec, _map_spec(
@@ -2744,7 +2744,7 @@ sub _render_fixture_package(%arg) {
     $push->('      if (sealed)');
     $push->('        `uvm_fatal("VIAL/RESULT", "result collector sealed more than once")');
     $push->('      notification_occurrences = notifications.total_occurrences();');
-    $push->('      snapshot.plan_id = context.plan_id;');
+    $push->('      snapshot.plan_id = vial_context.plan_id;');
     $push->('      snapshot.notification_count = notification_occurrences;');
     $push->('      snapshot.diagnostic_count = diagnostics.size();');
     $push->('      snapshot.expectation_count = properties.expectation_count;');
@@ -2825,19 +2825,19 @@ sub _render_fixture_package(%arg) {
     $push->("      properties = ${property_checker}::type_id::create(\"properties\", this);");
     $push->("      uvm_config_db#($config)::set(this, \"agent\", \"cfg\", cfg);");
     $push->("      uvm_config_db#($registry)::set(this, \"agent\", \"notifications\", notifications);");
-    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "agent", "vial_context", context);');
+    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "agent", "vial_context", vial_context);');
     $push->("      uvm_config_db#($coverage)::set(this, \"agent\", \"coverage\", coverage_collector);");
     $push->("      uvm_config_db#($model)::set(this, \"agent\", \"accepts_model\", accepts_model);");
     $push->("      uvm_config_db#($model)::set(this, \"agent\", \"completions_model\", completions_model);");
     $push->("      uvm_config_db#($fault_controller)::set(this, \"agent\", \"faults\", faults);");
     $push->("      uvm_config_db#($config)::set(this, \"controller\", \"cfg\", cfg);");
     $push->("      uvm_config_db#($registry)::set(this, \"controller\", \"notifications\", notifications);");
-    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "controller", "vial_context", context);');
+    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "controller", "vial_context", vial_context);');
     $push->("      uvm_config_db#($scoreboard)::set(this, \"controller\", \"scoreboard\", writes_scoreboard);");
     $push->("      uvm_config_db#($fault_controller)::set(this, \"controller\", \"faults\", faults);");
     $push->("      uvm_config_db#($property_checker)::set(this, \"controller\", \"properties\", properties);");
     $push->("      uvm_config_db#($registry)::set(this, \"result_collector\", \"notifications\", notifications);");
-    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "result_collector", "vial_context", context);');
+    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "result_collector", "vial_context", vial_context);');
     $push->("      uvm_config_db#($coverage)::set(this, \"result_collector\", \"coverage\", coverage_collector);");
     $push->("      uvm_config_db#($model)::set(this, \"result_collector\", \"accepts_model\", accepts_model);");
     $push->("      uvm_config_db#($model)::set(this, \"result_collector\", \"completions_model\", completions_model);");
@@ -2904,7 +2904,7 @@ sub _render_fixture_package(%arg) {
     $push->('          driven_fifo == null || transaction_observer == null ||');
     $push->('          ral_model == null || ral_adapter == null || ral_predictor == null)');
     $push->('        `uvm_fatal("VIAL/TOPOLOGY", "generated component topology is incomplete")');
-    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_CONFIGURED, VIAL_LIFECYCLE_READY);');
+    $push->('      vial_context.transition_lifecycle(VIAL_LIFECYCLE_CONFIGURED, VIAL_LIFECYCLE_READY);');
     $push->('    endfunction');
     $push->('  endclass');
     push @spec, _map_spec(
@@ -2921,7 +2921,7 @@ sub _render_fixture_package(%arg) {
     $push->("    $config cfg;");
     $push->("    $registry notifications;");
     $push->("    $env env;");
-    $push->('    fsmgen_vial_execution_context context;');
+    $push->('    fsmgen_vial_execution_context vial_context;');
     $push->('');
     $push->('    function new(string name, uvm_component parent);');
     $push->('      super.new(name, parent);');
@@ -2945,8 +2945,8 @@ sub _render_fixture_package(%arg) {
     $push->("      cfg = ${config}::type_id::create(\"cfg\");");
     $push->("      if (!uvm_config_db#(virtual $arg{interface_name})::get(this, \"\", \"vif\", cfg.vif))");
     $push->('        `uvm_fatal("VIAL/VIF", "missing generated virtual interface")');
-    $push->('      context = fsmgen_vial_execution_context::type_id::create("context");');
-    $push->('      context.plan_id = "' . _sv_string($arg{execution}{plan_id}) . '";');
+    $push->('      vial_context = fsmgen_vial_execution_context::type_id::create("vial_context");');
+    $push->('      vial_context.plan_id = "' . _sv_string($arg{execution}{plan_id}) . '";');
     $push->("      notifications = ${registry}::type_id::create(\"notifications\");");
     $push->('      notifications.configure_preview();');
     $push->('      cfg.scenario_timeout_cycles = 256;');
@@ -2954,8 +2954,8 @@ sub _render_fixture_package(%arg) {
     $push->('      cfg.ral_preview_id = "private-preview/ral/reg-data-at-zero";');
     $push->("      uvm_config_db#($config)::set(this, \"env\", \"cfg\", cfg);");
     $push->("      uvm_config_db#($registry)::set(this, \"env\", \"notifications\", notifications);");
-    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "env", "vial_context", context);');
-    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_CONSTRUCTED, VIAL_LIFECYCLE_CONFIGURED);');
+    $push->('      uvm_config_db#(fsmgen_vial_execution_context)::set(this, "env", "vial_context", vial_context);');
+    $push->('      vial_context.transition_lifecycle(VIAL_LIFECYCLE_CONSTRUCTED, VIAL_LIFECYCLE_CONFIGURED);');
     $push->("      env = ${env}::type_id::create(\"env\", this);");
     $push->('    endfunction');
     $push->('');
@@ -2969,7 +2969,7 @@ sub _render_fixture_package(%arg) {
     $push->('');
     $push->('    virtual function void final_phase(uvm_phase phase);');
     $push->('      super.final_phase(phase);');
-    $push->('      context.transition_lifecycle(VIAL_LIFECYCLE_COMPLETED, VIAL_LIFECYCLE_FINALIZED);');
+    $push->('      vial_context.transition_lifecycle(VIAL_LIFECYCLE_COMPLETED, VIAL_LIFECYCLE_FINALIZED);');
     $push->('    endfunction');
     $push->('  endclass');
     push @spec, _map_spec(

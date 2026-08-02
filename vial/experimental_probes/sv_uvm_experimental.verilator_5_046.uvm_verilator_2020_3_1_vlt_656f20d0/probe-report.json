@@ -1,0 +1,341 @@
+{
+   "capabilities" : {
+      "complete_uvm_breadth" : "not_claimed",
+      "cross_backend_parity" : "not_exercised",
+      "generated_fixture_compile_elaboration" : "failed",
+      "generated_fixture_parse" : "unsupported",
+      "generated_fixture_runtime" : "not_run",
+      "normalized_result" : "not_exercised",
+      "preprocessing" : "passed",
+      "uvm_library_compile_elaboration" : "passed",
+      "uvm_library_parse" : "passed",
+      "uvm_library_runtime_smoke" : "passed"
+   },
+   "cleanup" : {
+      "removed" : true,
+      "staging_identity" : ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2"
+   },
+   "conclusion" : "partial_tool_limited",
+   "deviations" : [
+      {
+         "argv" : "+define+UVM_NO_DPI",
+         "consequence" : "DPI-backed UVM facilities are not exercised",
+         "id" : "uvm_no_dpi",
+         "scope" : "all experimental stages"
+      },
+      {
+         "argv" : "--bbox-unsup",
+         "consequence" : "unsupported constructs may be black-boxed; successful use would not qualify semantics",
+         "id" : "bbox_unsupported",
+         "scope" : "generated fixture compile/elaboration attempt only"
+      }
+   ],
+   "emission" : {
+      "backend_profile" : "sv_uvm_emit.accellera_2020_3_1",
+      "generated_source_count" : 10,
+      "generated_sources_sha256" : "56ff1d3679a17bce82238a315f315f1c2564977b35e282dad7a44257abcb6804",
+      "operation_id" : "op-b8102bf27a9443454d04bbfd73ef437f0a9e627ff196cffbc6e8588fde7bbc4c"
+   },
+   "experimental" : true,
+   "probe_completed" : true,
+   "product_support" : false,
+   "profile" : {
+      "id" : "sv_uvm_experimental.verilator_5_046.uvm_verilator_2020_3_1_vlt_656f20d0",
+      "methodology" : {
+         "canonical_accellera_commit" : "78c06547a2a0a29b3dc9dcafae62b75b2ff61544",
+         "canonical_accellera_tag" : "2020.3.1",
+         "release" : "UVM 2020.3.1",
+         "standard" : "IEEE 1800.2-2020"
+      },
+      "source_variant" : {
+         "commit" : "656f20d087370a7c742e00188d20bbf30fa95339",
+         "provider" : "CHIPS Alliance uvm-verilator",
+         "ref" : "uvm-2020-3.1-vlt",
+         "repository" : "https://github.com/chipsalliance/uvm-verilator.git",
+         "tree" : "882930bb7debe79b22234e4a8a53854549046778",
+         "unmodified_commit" : "a457e9c40d5b7af89e4326a9ddab267476318f54",
+         "unmodified_ref" : "standard",
+         "unmodified_tree" : "82c53f85498fd625a950daa8744d87028e052028"
+      },
+      "tool" : {
+         "name" : "Verilator",
+         "version_output" : "Verilator 5.046 2026-02-28 rev vUNKNOWN-built20260228"
+      }
+   },
+   "qualification_status" : "unqualified_experimental_evidence_only",
+   "resource_controls" : {
+      "build_jobs" : 1,
+      "cxx_optimization" : "O0",
+      "output_split_cfuncs_statements" : 5000,
+      "output_split_statements" : 5000,
+      "stage_timeouts_and_output_limits_recorded_inline" : true,
+      "verilator_threads" : 1
+   },
+   "schema" : "fsmgen.vial_uvm_experimental_probe.v1",
+   "schema_version" : 1,
+   "source_identity" : {
+      "commit" : "656f20d087370a7c742e00188d20bbf30fa95339",
+      "repository_relative_root" : ".artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source",
+      "tree" : "882930bb7debe79b22234e4a8a53854549046778",
+      "uvm_pkg_sha256" : "ad84a883a3d723d080304e83bd70f9c0983493e18ff073b039e0ea5daeac38dc"
+   },
+   "stages" : [
+      {
+         "argv" : [
+            "verilator",
+            "--version"
+         ],
+         "conclusion" : "exact selected Verilator identity",
+         "diagnostic_summary" : [],
+         "exit_code" : 0,
+         "id" : "tool_identity",
+         "output_limited" : false,
+         "output_sha256" : "8dfd24528e9a2af24213322f61f4971441d9de53d14a561ab3f4dc5d4619d472",
+         "owner" : "none",
+         "status" : "passed",
+         "timed_out" : false
+      },
+      {
+         "argv" : [
+            "verilator",
+            "-E",
+            "--timing",
+            "--threads",
+            "1",
+            "-sv",
+            "+define+UVM_NO_DPI",
+            "-I.artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src",
+            ".artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src/uvm_pkg.sv"
+         ],
+         "conclusion" : "stage completed with zero exit status",
+         "diagnostic_summary" : [],
+         "exit_code" : 0,
+         "id" : "uvm_library_preprocess",
+         "output_limited" : false,
+         "output_sha256" : "664e36ec3304f14fc0ce9579a1fa7653cfc060a7f68c8603503db78311863b70",
+         "owner" : "none",
+         "status" : "passed",
+         "timed_out" : false
+      },
+      {
+         "argv" : [
+            "verilator",
+            "--lint-only",
+            "--timing",
+            "--threads",
+            "1",
+            "-sv",
+            "+define+UVM_NO_DPI",
+            "-I.artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src",
+            ".artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src/uvm_pkg.sv"
+         ],
+         "conclusion" : "stage completed with zero exit status",
+         "diagnostic_summary" : [],
+         "exit_code" : 0,
+         "id" : "uvm_library_parse",
+         "output_limited" : false,
+         "output_sha256" : "e3898f5d4968cf5fde4f1ac0bf5e2dda41125685560dde5e43ebeead1a9469d4",
+         "owner" : "none",
+         "status" : "passed",
+         "timed_out" : false
+      },
+      {
+         "argv" : [
+            "verilator",
+            "--binary",
+            "--timing",
+            "--assert",
+            "-j",
+            "1",
+            "--threads",
+            "1",
+            "-sv",
+            "+define+UVM_NO_DPI",
+            "--output-split",
+            "5000",
+            "--output-split-cfuncs",
+            "5000",
+            "-CFLAGS",
+            "-O0",
+            "--timescale",
+            "1ns/1ps",
+            "-I.artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src",
+            "--top-module",
+            "fsmgen_uvm_smoke_top",
+            "--Mdir",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/obj-control",
+            ".artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src/uvm_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/control/minimal_uvm_smoke.sv"
+         ],
+         "conclusion" : "stage completed with zero exit status",
+         "diagnostic_summary" : [
+            "<toolchain>:461:17: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only. Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]"
+         ],
+         "exit_code" : 0,
+         "id" : "uvm_library_compile_elaboration",
+         "output_limited" : false,
+         "output_sha256" : "a8fd6f668f831b7d7e48b46fafc19822e9f7cacb8abff51af4e2e506ab88c85c",
+         "owner" : "none",
+         "status" : "passed",
+         "timed_out" : false
+      },
+      {
+         "argv" : [
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/obj-control/Vfsmgen_uvm_smoke_top"
+         ],
+         "conclusion" : "minimal UVM run_phase smoke completed with zero UVM errors and fatals",
+         "diagnostic_summary" : [
+            "UVM_ERROR : 0",
+            "UVM_FATAL : 0"
+         ],
+         "exit_code" : 0,
+         "id" : "uvm_library_runtime_smoke",
+         "output_limited" : false,
+         "output_sha256" : "78c5dc8d23a4424cd88752ebe678e085f9ae3f38072e0382d3979955744e220d",
+         "owner" : "none",
+         "status" : "passed",
+         "timed_out" : false
+      },
+      {
+         "argv" : [
+            "verilator",
+            "-E",
+            "--timing",
+            "--threads",
+            "1",
+            "-sv",
+            "+define+UVM_NO_DPI",
+            "-I.artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src",
+            ".artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src/uvm_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/fsmgen_vial_uvm_types_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/fsmgen_vial_uvm_components_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_if.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_notifications_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_services_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_checking_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_sva_checker.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/ahb-lite-subordinate.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_tb.sv"
+         ],
+         "conclusion" : "stage completed with zero exit status",
+         "diagnostic_summary" : [],
+         "exit_code" : 0,
+         "id" : "generated_fixture_preprocess",
+         "output_limited" : false,
+         "output_sha256" : "4cb3a577c32df1319931ccf0d66c4d32c8467ac26d34d4f78ae5c1cb4e218427",
+         "owner" : "none",
+         "status" : "passed",
+         "timed_out" : false
+      },
+      {
+         "argv" : [
+            "verilator",
+            "--lint-only",
+            "--timing",
+            "--assert",
+            "--threads",
+            "1",
+            "-sv",
+            "+define+UVM_NO_DPI",
+            "-I.artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src",
+            "--top-module",
+            "base_output_arbitration_tb",
+            ".artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src/uvm_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/fsmgen_vial_uvm_types_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/fsmgen_vial_uvm_components_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_if.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_notifications_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_services_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_checking_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_sva_checker.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/ahb-lite-subordinate.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_tb.sv"
+         ],
+         "conclusion" : "selected tool does not implement the emitted ranged SVA delay",
+         "diagnostic_summary" : [
+            "%Error-UNSUPPORTED: <probe>/input/generated/base_output_arbitration_sva_checker.sv:18:50: Unsupported: ## range cycle delay range expression",
+            "%Error: Exiting due to 1 error(s), 4 warning(s)",
+            "%Warning-COVERIGN: <probe>/input/generated/base_output_arbitration_checking_pkg.sv:81:26: Ignoring unsupported: cover bin specification",
+            "%Warning-COVERIGN: <probe>/input/generated/base_output_arbitration_checking_pkg.sv:82:22: Ignoring unsupported: cover bin specification",
+            "%Warning-COVERIGN: <probe>/input/generated/base_output_arbitration_checking_pkg.sv:80:19: Ignoring unsupported: coverpoint",
+            "%Warning-COVERIGN: <probe>/input/generated/base_output_arbitration_checking_pkg.sv:78:5: Ignoring unsupported: covergroup"
+         ],
+         "exit_code" : 1,
+         "id" : "generated_fixture_parse",
+         "output_limited" : false,
+         "output_sha256" : "6eab6f63661e77ec6cc48e8633572c745408e8d3e7ea6f27af07f984e2799deb",
+         "owner" : "tool_limitation",
+         "status" : "unsupported",
+         "timed_out" : false
+      },
+      {
+         "argv" : [
+            "verilator",
+            "--binary",
+            "--timing",
+            "--assert",
+            "--bbox-unsup",
+            "-j",
+            "1",
+            "--threads",
+            "1",
+            "-sv",
+            "+define+UVM_NO_DPI",
+            "--output-split",
+            "5000",
+            "--output-split-cfuncs",
+            "5000",
+            "-CFLAGS",
+            "-O0",
+            "--timescale",
+            "1ns/1ps",
+            "-I.artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src",
+            "--top-module",
+            "base_output_arbitration_tb",
+            "--Mdir",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/obj-fixture",
+            ".artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src/uvm_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/fsmgen_vial_uvm_types_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/fsmgen_vial_uvm_components_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_if.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_notifications_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_services_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_checking_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_pkg.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_sva_checker.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/ahb-lite-subordinate.sv",
+            ".artifacts/tmp/vial-uvm-experimental/probe-9e00db4c95dc993a081f4d3fb435d01fc7d84223d239d6aa6ac845dc458195f2/input/generated/base_output_arbitration_tb.sv"
+         ],
+         "conclusion" : "unsupported-feature blackboxing reached a selected-tool internal fault",
+         "diagnostic_summary" : [
+            "%Error: Verilator internal fault, sorry. Suggest trying --debug --gdbbt",
+            "%Error: Command Failed <toolchain> --binary --timing --assert --bbox-unsup -j 1 --threads 1 -sv +define+UVM_NO_DPI --output-split 5000 --output-split-cfuncs 5000 -CFLAGS -O0 --timescale 1ns/1ps -I.artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src --top-module base_output_arbitration_tb --Mdir <probe>/obj-fixture .artifacts/cache/uvm-verilator/656f20d087370a7c742e00188d20bbf30fa95339/source/src/uvm_pkg.sv <probe>/input/generated/fsmgen_vial_uvm_types_pkg.sv <probe>/input/generated/fsmgen_vial_uvm_components_pkg.sv <probe>/input/generated/base_output_arbitration_if.sv <probe>/input/generated/base_output_arbitration_notifications_pkg.sv <probe>/input/generated/base_output_arbitration_services_pkg.sv <probe>/input/generated/base_output_arbitration_checking_pkg.sv <probe>/input/generated/base_output_arbitration_pkg.sv <probe>/input/generated/base_output_arbitration_sva_checker.sv <probe>/input/generated/ahb-lite-subordinate.sv <probe>/input/generated/base_output_arbitration_tb.sv",
+            "%Warning-WIDTHTRUNC: <probe>/input/generated/base_output_arbitration_checking_pkg.sv:199:36: Logical operator LOGAND expects 1 bit on the LHS, but LHS's CMETHODHARD 'size' generates 32 bits.",
+            "%Warning-WIDTHTRUNC: <probe>/input/generated/base_output_arbitration_checking_pkg.sv:199:36: Logical operator LOGAND expects 1 bit on the RHS, but RHS's CMETHODHARD 'size' generates 32 bits.",
+            "%Warning-WIDTHEXPAND: <probe>/input/generated/base_output_arbitration_services_pkg.sv:68:15: Operator METHODCALL 'print_field' expects 4096 bits on the Function Argument, but Function Argument's VARREF 'address' generates 32 bits.",
+            "%Warning-WIDTHEXPAND: <probe>/input/generated/base_output_arbitration_services_pkg.sv:69:15: Operator METHODCALL 'print_field' expects 4096 bits on the Function Argument, but Function Argument's VARREF 'transfer' generates 2 bits."
+         ],
+         "exit_code" : 139,
+         "id" : "generated_fixture_compile_elaboration",
+         "output_limited" : false,
+         "output_sha256" : "ca262e90b04c61427bc8264e613e452ee5b32b37d6df8d54bcfb2133c8c00149",
+         "owner" : "tool_limitation",
+         "status" : "failed",
+         "timed_out" : false
+      },
+      {
+         "argv" : [],
+         "conclusion" : "fixture compile/elaboration prerequisite did not pass",
+         "diagnostic_summary" : [],
+         "exit_code" : null,
+         "id" : "generated_fixture_runtime_smoke",
+         "output_limited" : false,
+         "output_sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+         "owner" : "prerequisite",
+         "status" : "not_run",
+         "timed_out" : false
+      }
+   ]
+}

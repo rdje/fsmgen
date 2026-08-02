@@ -105,3 +105,29 @@ That automation does not set visual review to passed. Human or delegated
 findings remain durable only when they identify the artifact, generated
 symbol, source-map ID, observation, severity, reproduction, expected intent,
 and disposition in the owning task-tree.
+
+## 2026-08-01: Experimental UVM workflow success is not fixture success
+
+The reusable probe completes successfully when it has measured and classified
+every selected stage, even if an inner stage is unsupported or fails. This is
+why the canonical envelope reports `probe_completed=true` and
+`partial_tool_limited` while generated-fixture parsing is unsupported,
+compile/elaboration reaches a tool internal fault, and runtime is not run. A
+nonzero tool stage remains durable evidence rather than turning the whole
+probe into an opaque host error.
+
+The isolated minimal UVM control is intentionally separate. Its passing
+compile, elaboration, and zero-error runtime prove the exact Verilator/library
+pair can execute UVM, which makes a later full-fixture diagnostic meaningful;
+they do not qualify generated source. Strict fixture parsing runs before the
+`--bbox-unsup` attempt so a generator syntax error cannot be hidden by a tool
+workaround. `UVM_NO_DPI` and unsupported-feature blackboxing are explicit
+deviations and cannot become canonical source conditionals.
+
+Host compilation is also evidence-bounded. One build job and one Verilator
+thread did not prevent Clang's generated UVM class aggregate from crossing a
+4-GiB peak under optimized compilation. `-O0` is therefore part of the exact
+feasibility argv: runtime performance is irrelevant to the control, and the
+lower-memory build passes the repository guard. Transcript identity removes
+variable wall/resource measurements and hashes the control runtime's semantic
+marker/error/fatal/finish proof, so an independent rerun is byte-stable.

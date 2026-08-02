@@ -1107,14 +1107,28 @@ required order is:
 7. **publish** — atomic repository-local graph and exact failure cleanup; and
 8. **census** — no off-volume, temporary, partial, or undeclared residue.
 
-Optional `.13.2` starts after `.13.1.1` produces the first gallery. It freezes
-an exact Verilator or other open-source argv/library variant after inspecting
-the installed tool and runs each supported preprocessing, parse, library
-compile, fixture compile, elaboration, and runtime-smoke stage separately.
-Every outcome remains labelled `experimental`; unsupported UVM constructs,
-local patches, and stage skips are first-class evidence. The reusable probe is
-rerun against later galleries when available. Product support discovery does
-not advertise these results as qualified.
+Completed `.13.2` freezes exact Verilator 5.046 plus CHIPS Alliance
+`uvm-verilator` `uvm-2020-3.1-vlt` commit
+`656f20d087370a7c742e00188d20bbf30fa95339` and tree
+`882930bb7debe79b22234e4a8a53854549046778`. Its reusable bounded probe runs
+preprocessing, parsing, library compile/elaboration, control runtime,
+full-fixture compile/elaboration attempts, and cleanup as independent stages.
+Every outcome remains labelled `experimental`; `UVM_NO_DPI`, attempt-local
+unsupported-feature blackboxing, unsupported constructs, failures, and stage
+skips are first-class evidence. A deterministic checked report records exact
+argv and ownership. Product support discovery does not advertise these results
+as qualified.
+
+The selected UVM library and minimal test preprocess, parse, compile,
+elaborate, and reach `run_phase` with zero UVM errors and fatals. Full generated
+fixture preprocessing also passes. The first strict parser run exposed one
+FSMGen defect—illegal use of SystemVerilog keyword `context` as an identifier—
+which is repaired as `vial_context` in the canonical gallery. After repair,
+strict parsing reaches Verilator's unsupported ranged-SVA delay; an explicit
+`--bbox-unsup` compile/elaboration attempt reaches a Verilator internal fault
+with exit 139. Fixture runtime, result, parity, four-state semantics, and full
+UVM breadth remain unexercised. The report therefore concludes
+`partial_tool_limited` with `product_support=false`.
 
 This is an architecture-first convergence loop:
 
@@ -1301,14 +1315,13 @@ not-run experimental compile and qualified-runtime stages. Five internal
 invariants reject incomplete roles, entry-point drift, workflow drift, or an
 accidental qualification claim.
 
-Preprocessing, parse, UVM-library compile, fixture compile, elaboration,
-runtime, result, parity, visual-review completion, public interceptor, RAL, or
-factory-override authoring, produced results, and full native UVM breadth
-remain explicitly unclaimed. Selected mapping-matrix and deterministic review-
-workflow closure now ship; visual judgment does not. Clean completed-emission
-predecessor `7725789a4` activates experimental `.13.2` alone because the first
-gallery exists. Tool/library inspection and probe implementation remain
-unperformed in activation, so open-tool evidence cannot blur emission truth.
+Ordinary-emission preprocessing, parse, UVM-library compile, fixture compile,
+elaboration, runtime, result, parity, visual-review completion, public
+interceptor, RAL, or factory-override authoring, produced results, and full
+native UVM breadth remain explicitly unclaimed. Selected mapping-matrix and
+deterministic review-workflow closure now ship; visual judgment does not. The
+separate `.13.2` experimental report records its partial evidence without
+changing those product stage states or blurring emission truth.
 
 Verilator and other available tools can catch whatever they support early.
 `.13.3` alone is blocked until PGEN and NEXSIM expose the required exact

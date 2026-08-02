@@ -22,7 +22,8 @@ sub vial_native_uvm_emission_contract_keys {
         static_validation_schema mapping_matrix_schema review_workflow_schema
         methodology_identity library_materialization
         backend_stage_status capabilities limits fixture review_gallery
-        writes_files public_embedding_api explicit_nonclaims guidance
+        experimental_probe writes_files public_embedding_api
+        explicit_nonclaims guidance
     )];
 }
 
@@ -121,6 +122,36 @@ sub build_vial_native_uvm_emission_contract {
         },
         fixture => 'vial/ahb_subordinate_base_output_arbitration.vial',
         review_gallery => 'vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation',
+        experimental_probe => {
+            status => 'observed_partial_tool_limited',
+            profile => 'sv_uvm_experimental.verilator_5_046.uvm_verilator_2020_3_1_vlt_656f20d0',
+            implementation_entrypoint =>
+                'FSM::VIAL::Backend::SVUVMExperimentalProbe->run({...})',
+            command => 'perl scripts/run_vial_native_uvm_experimental_probe.pl [--check]',
+            report_schema => 'fsmgen.vial_uvm_experimental_probe.v1',
+            evidence => 'vial/experimental_probes/sv_uvm_experimental.verilator_5_046.uvm_verilator_2020_3_1_vlt_656f20d0/probe-report.json',
+            product_support => JSON::PP::false,
+            qualification_status => 'unqualified_experimental_evidence_only',
+            source_variant => {
+                provider => 'CHIPS Alliance uvm-verilator',
+                ref => 'uvm-2020-3.1-vlt',
+                commit => '656f20d087370a7c742e00188d20bbf30fa95339',
+                tree => '882930bb7debe79b22234e4a8a53854549046778',
+            },
+            stage_status => {
+                uvm_library_preprocess => 'passed',
+                uvm_library_parse => 'passed',
+                uvm_library_compile_elaboration => 'passed',
+                uvm_library_runtime_smoke => 'passed',
+                generated_fixture_preprocess => 'passed',
+                generated_fixture_parse => 'unsupported_tool_limitation',
+                generated_fixture_compile_elaboration => 'failed_tool_internal_fault',
+                generated_fixture_runtime => 'not_run',
+                normalized_result => 'not_exercised',
+                parity => 'not_exercised',
+            },
+            deviations => [qw(uvm_no_dpi bbox_unsupported_for_fixture_attempt_only)],
+        },
         writes_files => JSON::PP::true,
         public_embedding_api => JSON::PP::false,
         explicit_nonclaims => [qw(
@@ -139,6 +170,7 @@ sub build_vial_native_uvm_emission_contract {
             'The selected mapping matrix accounts exactly once for every emitted foundation across normal source, terse source, typed IR, generated roles, and independent maturity states. It closes the selected gallery scope, not full UVM breadth.',
             'The repository-relative gallery workflow regenerates or byte-checks all nine review sources plus its mapping and workflow evidence. Visual review remains a deliberate human or delegated judgment step; executable qualification remains separate.',
             'The selected coverage, property, model, scoreboard, fault, diagnostic, and result-collection structures are emitted without waiting for a simulator. They remain unqualified until separately identified compile, elaboration, runtime, result, and parity evidence exists.',
+            'The exact Verilator 5.046 plus CHIPS Alliance uvm-verilator 2020.3.1-vlt probe is separate experimental evidence: its isolated UVM library control passes preprocess, parse, compile/elaboration, and zero-error runtime smoke, while the generated fixture reaches an unsupported ranged-SVA parse result and a tool internal fault under unsupported-feature blackboxing. It neither changes ordinary emission stage states nor advertises product runtime support.',
         ],
     };
 }
