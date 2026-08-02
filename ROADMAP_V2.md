@@ -191,7 +191,9 @@ Direction:
 - allow complete simulator-neutral UVM generation, static/visual review, and
   exact open-tool compile/elaboration probes to iterate before full runtime
   qualification, while keeping VIAL meaning stable as generated syntax evolves;
-  and
+- use provider-free VHDL-2008 as the portable VIAL semantic core, exact GHDL
+  profiles for open-source qualification, and OSVVM only as a separately
+  capability-qualified advanced methodology provider; and
 - fail with actionable ambiguity/conflict evidence instead of selecting a
   hidden schedule.
 

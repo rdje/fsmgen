@@ -90,6 +90,17 @@ public-port outcomes from qualified probes and native hierarchy, and defines
 exact source/IR, bridge, execution, tooling, backend, parity, migration, and
 scale leaves. See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 for the topology, profile matrix, worked mapping, and current boundaries.
+
+Decision `0051` now selects the VHDL side without claiming it runs yet:
+provider-free IEEE VHDL-2008 is the portable core, exact GHDL 6.0.0 is the
+first qualification tool, and OSVVM 2026.05 is the advanced methodology
+provider. UVVM was audited but is not the version-1 provider. The native VIAL
+artifact graph is a parallel versioned successor; it does not promote or
+rewrite the inert `vhdl-observation-package`. Reviewable emission may progress
+before the absent tool/library are available, while analysis, elaboration,
+runtime, normalized result, parity, PSL, and methodology support remain
+unclaimed.
+
 Clean architecture audit commit `2e2f7d25e` activates only the exact
 `.vial`/`VIALSemanticIR` contract leaf `.2` through a separate continuity
 transition. Source syntax, semantic records, parser/report behavior, and the

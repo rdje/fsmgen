@@ -5,21 +5,20 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14`: activate VHDL verification contract).
-- active_work_unit: `.14` alone is active after clean completed-probe
-  predecessor `adc88817e`; `.13.3` remains provider-blocked.
-- current_state: `sv_uvm_emit.accellera_2020_3_1` emits 16 artifacts/ten SV
-  sources covering the selected native structures, with 75 mapped entries, 14
-  structural checks, a 25-row matrix, and deterministic gallery. Experimental
-  Verilator 5.046/UVM-2020.3.1-vlt evidence passes library/control preprocess
-  through runtime plus fixture preprocessing; ranged SVA is unsupported,
-  blackboxing reaches a tool internal fault, and fixture runtime/result/parity
-  remain not run. Illegal generated identifier `context` is now `vial_context`.
-  Product support stays emission-only. `.14` activation selects no VHDL
-  methodology, tool, version, migration, artifact, or capability.
-- next_action: complete only `.14` documentation selection: audit the existing
-  inert VHDL package and exact current provider/tool evidence, then freeze the
-  VHDL-2008 portable/methodology/qualification/migration/non-claim contract.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14`: select VHDL OSVVM architecture).
+- active_work_unit: `.14` is complete; proposed `.15` is the next clean
+  activation/decomposition. `.13.3` remains provider-blocked.
+- current_state: native UVM emits 16 artifacts/ten SV sources, 75 maps, 14
+  checks, a 25-row matrix, and a deterministic gallery. Experimental Verilator
+  5.046/UVM evidence passes its control through runtime and fixture preprocessing;
+  ranged SVA is unsupported, blackboxing faults internally, and fixture runtime/
+  result/parity remain not run. The illegal `context` identifier is repaired.
+  Product support stays emission-only. Decision `0051` selects provider-free
+  VHDL-2008, exact GHDL 6.0.0, and OSVVM 2026.05 for the advanced tier; UVVM
+  is audited but not selected. The inert legacy package remains unchanged and
+  no VHDL runtime capability ships because GHDL/OSVVM are absent locally.
+- next_action: cleanly activate/decompose `.15`, advancing deterministic VHDL
+  emission and review independently from unavailable GHDL/OSVVM qualification.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` still waits on exact capability-ready PGEN/NEXSIM handoff/
@@ -40,7 +39,9 @@ history; this file carries only the current bounded resume state.
   handwritten-oracle comparison, not general cross-backend parity.
 - Decision `0050`: canonical native output is simulator-neutral Accellera UVM;
   provider-specific requirements stay in isolated adapter/command/evidence
-  layers and cannot alter VIAL meaning. Exact emitter identity owns byte
-  determinism; neutral syntax/strategy may evolve. Commercial simulators remain optional comparisons.
-- Decisions `0041`/`0042`/`0044`/`0045` retain containment authority. Retired views
-  remain Git-retrievable under `0048`/`0049`; `.5`/`.8`/`.9`/`.10`/`.13` bound the live layers. Push only on request (`0005`); PNT is autonomous (`0003`).
+  layers and cannot alter VIAL meaning; commercial simulators remain optional.
+- Decision `0051`: portable VHDL is provider-free IEEE 1076-2008; OSVVM is the
+  selected advanced provider and GHDL 6.0.0 is the first exact tool profile.
+  Provider/tool behavior cannot redefine logical time, values, or results.
+- Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; retired
+  views remain Git-retrievable. Push only on request; PNT is autonomous.

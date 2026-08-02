@@ -108,9 +108,11 @@ without exposing either private IR.
   of implying full VHDL/PSL coverage:
   <https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html>.
 - OSVVM and UVVM both demonstrate that advanced VHDL verification is a
-  methodology/library concern, not merely VHDL syntax. Methodology-provider
-  selection belongs to a later VHDL backend contract:
-  <https://osvvm.org/about-os-vvm> and <https://uvvm.github.io/>.
+  methodology/library concern, not merely VHDL syntax. Decision `0051`
+  selects provider-free VHDL-2008 for the portable core and exact OSVVM
+  2026.05 for the advanced tier; audited UVVM 2026.03.20 remains unselected:
+  <https://github.com/OSVVM/OsvvmLibraries/releases/tag/2026.05> and
+  <https://github.com/UVVM/UVVM/releases/tag/2026.03.20>.
 - Local audit tools: Verilator `5.046` is available; Yosys and Icarus Verilog
   are available; GHDL, NVC, `vcom`/`vsim`, VCS, Xcelium, and Qrun are absent.
   No absent tool is selected as current runnable evidence.
@@ -309,8 +311,9 @@ fixture supplies paired implementations and a shared logical outcome oracle.
 | `sv_uvm_emit.accellera_2020_3_1` | complete reviewable simulator-neutral SystemVerilog/UVM environment artifacts | exact UVM reference identity, artifact/source-map/static-review/compatibility gates, explicit per-stage states | no inferred parse, compile, elaboration, simulation, or result claim |
 | `sv_uvm_experimental.<tool-and-version>` | same native artifacts under an incomplete open-source tool | exact tool/version and exercised probe matrix | experimental evidence only; cannot qualify product runtime |
 | `sv_uvm_qualified` | executable native SystemVerilog/UVM components, sequences, monitors, scoreboards, subscribers/coverage | exact PGEN parser + NEXSIM simulator tuple, handoff, UVM revision, parse/compile/elaborate/simulate/result gates | unavailable until capability-qualified releases exist; no invented version |
-| `vhdl_portable_ghdl` | VHDL-2008 testbench/packages/processes | installed GHDL/version, `--std=08`, analyze/elaborate/run, exercised capability list | unavailable locally; GHDL's VHDL/PSL implementation is explicitly partial |
-| `vhdl_methodology_qualified` | VHDL plus selected methodology provider | provider/revision, compatible simulator/version, compile/elaborate/run, feature list | OSVVM versus UVVM and exact provider mapping remain a later choice |
+| `vhdl_portable_ghdl` | Provider-free VHDL-2008 packages, scheduler, adapters, testbench, closed trace/result | exact GHDL 6.0.0, `--std=08`, analyze/elaborate/run/result/parity, exercised capability list | selected but unavailable locally; GHDL's VHDL/PSL implementation is explicitly partial |
+| `vhdl_osvvm_qualified` | Same VIAL semantics plus negotiated advanced OSVVM services | exact OSVVM 2026.05 recursive identity plus GHDL 6.0.0 and provider adapter/result gates | selected but unavailable locally; provider presence alone is not capability |
+| `vhdl_*_qualified.<tool-id>` | Portable or OSVVM graph under another VHDL simulator | exact tool/version/build, standard/options, provider where applicable, compile/elaborate/run/result/parity | no broader simulator is inferred from GHDL evidence |
 | `mixed_language_qualified` | HIAL and VIAL in different HDLs | named mixed-language tool/version, binding adapter, compile/elaborate/run | never inferred from single-language success |
 
 Plain SystemVerilog is the first implementation target because the AHB
@@ -325,10 +328,11 @@ backend.
 
 The current UVM 1.2 skeleton and VHDL observation package stay unchanged. A
 native UVM contract selects IEEE 1800.2-2020 / Accellera 2020-3.1 instead of
-inheriting `1.2` accidentally. A future VHDL contract must select pure VHDL-2008 versus
-OSVVM/UVVM provider mapping and must first make GHDL or another analyzer
-runnable. No full-language, PSL, methodology, or mixed-language claim can be
-derived from artifact-shape tests.
+inheriting `1.2` accidentally. Decision `0051` now selects provider-free
+VHDL-2008 plus an OSVVM-qualified advanced tier without promoting the inert
+package. GHDL remains unavailable, so no full-language, PSL, methodology, or
+mixed-language claim can be derived from this selection or artifact-shape
+tests.
 
 Decision `0043` now freezes the exact first profile. It statically partially
 evaluates the bound plan into a small runtime package and fixture module rather
@@ -1328,12 +1332,142 @@ Verilator and other available tools can catch whatever they support early.
 releases, handoff, and capabilities. An experimental parse, compile, or
 elaboration result cannot discharge that runtime blocker.
 
-Clean completed-probe predecessor `adc88817e` activates `.14` alone for the
-VHDL-2008 methodology/backend contract. Activation performs no provider or
-tool investigation and selects neither OSVVM, UVVM, nor a provider-free core;
-it changes no VHDL artifact or capability. Exact mapping, package migration,
-GHDL/qualified profiles, PSL boundaries, and implementation gates remain the
-active selection work.
+## Completed VHDL contract selection
+
+Completed `.14` accepts decision `0051` and selects a two-tier VHDL
+architecture. `vhdl_portable_ghdl` is provider-free IEEE 1076-2008 and exact
+GHDL 6.0.0 is its first selected qualification tool. The exact release identity
+is tag `v6.0.0`, annotated object
+`ecfa637741fe259d284dc0b20936acc15bba44df`, peeled commit
+`e589c698c351369ac5bcfe7abe1f1152ac5d4727`. The tool is absent locally, so
+the profile is selected and unexecuted.
+
+`vhdl_osvvm_qualified` selects OSVVM 2026.05 at commit
+`2f7c391051dfb11890fa4bdbda9918d1db492250` for negotiated advanced
+randomization, coverage, scoreboards, reporting, synchronization, data
+structures, and verification components. The provider is a recursive
+superproject; implementation must verify the top commit, every gitlink,
+content/license/notice identity, and repository-local dependency root before a
+provider-dependent gate. UVVM 2026.03.20 at commit
+`4f1e13bf96dca5571597ca7416b9340e9de94efd` was audited but is not selected;
+adding an overlapping second provider would double adapter/qualification
+surfaces without a demonstrated version-1 semantic benefit.
+
+The portable core itself owns typed drivers, stable-barrier sampling, static
+scenario/fiber scheduling, deterministic models, bounded scoreboards,
+functional-coverage counters, substitution faults, procedural properties,
+closed trace records, and normalized results. OSVVM can implement only exact
+negotiated native/advanced requirements or supplementary reports. It cannot
+rerandomize plan-resolved decisions, change drive/sample/react/check ordering,
+redefine comparison/bin semantics, or replace the normalized parity oracle.
+
+The portable backend schema is `fsmgen.vial_backend.vhdl_portable.v1`; the
+advanced schema is `fsmgen.vial_backend.vhdl_osvvm.v1`. Broader simulator
+families are named `vhdl_portable_qualified.<tool-id>` and
+`vhdl_osvvm_qualified.<tool-id>`. Every broader profile freezes the exact
+tool/version/build, standard/options, provider identity where applicable,
+commands, exercised capabilities, normalized result/parity gates, and limits.
+GHDL evidence cannot silently qualify another simulator.
+
+| VIAL responsibility | Provider-free mapping | OSVVM-qualified extension |
+| --- | --- | --- |
+| drive | typed procedures and generated adapter ports | Model Independent Transaction or verification-component adapter only when negotiated |
+| sample | one stable-barrier scheduler over declared ports/probes | provider synchronization may coordinate components but cannot move the barrier |
+| scenario/fibers | statically evaluated rank/state tables | provider completion projects back into the same ranks |
+| model | pure functions/procedures and bounded state | exact negotiated memory/FIFO utility only |
+| scoreboard | bounded generated queues and typed comparison | `ScoreboardGenericPkg` for advanced/native requirements |
+| coverage | generated VIAL bin/cross counters | `CoveragePkg` plus supplementary provider reports |
+| random decisions | consume plan-resolved keyed values | `RandomPkg` only for a distinct native decision with seed/result evidence |
+| properties/results | procedural checks and closed normalized trace/result | affirmations/HTML/JUnit/transcripts are supplementary evidence |
+| faults | typed generated substitution/masking seams | the provider may carry but cannot redefine the effect |
+
+For a rising-edge DUT, one generated scheduler samples at the falling-edge
+barrier, performs react/check in exact plan-rank order, then applies the next
+rising-edge drives. VHDL process wake-up order, delta order, and provider
+component scheduling never become semantic authority. The standard surface is
+`--std=08` plus `std_logic_1164`, `numeric_std`, and `textio`; non-standard
+arithmetic packages and VHDL-2019 constructs are excluded.
+
+VIAL `0/1/X/Z` drives strong `std_logic` values. Sampling maps `0/1/Z`
+directly, weak `L/H` to known `0/1`, and `U/X/W/-` to VIAL `X`, retaining the
+original symbol as representation evidence. This is an explicit four-state
+normalization, not a claim that VIAL version 1 distinguishes all nine
+`std_logic` values.
+
+Portable properties lower to bounded procedural checks. PSL is not required
+or emitted because GHDL documents a restricted subset and comment-form PSL has
+its own `-fpsl` requirement. Any future PSL extension must freeze its exact
+tool, flags, and exercised subset independently.
+
+Native VIAL uses a new `backends/vhdl_portable_ghdl/` or
+`backends/vhdl_osvvm_qualified/` graph with deterministic runtime/metadata
+packages, probe adapter where needed, testbench, source map, commands,
+evidence, trace, and normalized result. The legacy
+`vhdl-observation-package` command, filename, manifest, inert bytes/schema, and
+no-analysis/no-PSL/no-runtime claims remain unchanged and unconsumed. The new
+metadata package is a parallel versioned successor, not an in-place promotion.
+
+The portable artifact graph is:
+
+```text
+backends/vhdl_portable_ghdl/
+  backend-manifest.json
+  backend-source-map.json
+  commands/{analyze,elaborate,run}-command.json
+  evidence/{tool-profile,analyze-transcript,elaborate-transcript,run-transcript,runtime-trace}.txt
+  src/dut/<unit>.vhd
+  src/fsmgen_vial_{types,runtime}_pkg.vhd
+  src/<fixture>_metadata_pkg.vhd
+  src/<fixture>_probe_adapter.vhd       # omitted when unnecessary
+  src/<fixture>_tb.vhd
+results/<result-id>/verification-result-manifest.json
+```
+
+Every non-boilerplate region maps to VIAL source/span, SemanticIR identity,
+ExecutionIR operation/rank, bridge binding where applicable, and generated
+file/line/column. Shared compiler helpers have a named runtime origin. Static
+partial evaluation and shared packages keep output efficient and readable;
+the backend emits neither an opaque interpreter nor a complete helper copy per
+scenario. Exact input plus emitter identity must rerender byte-for-byte.
+
+Persisted GHDL commands use the logical executable and repository-relative
+paths. The selected representative sequence is:
+
+```text
+ghdl -a --std=08 --work=fsmgen_vial --workdir=<repo-local-workdir> <sources>
+ghdl -e --std=08 --work=fsmgen_vial --workdir=<repo-local-workdir> <top>
+ghdl -r --std=08 --work=fsmgen_vial --workdir=<repo-local-workdir> <top> --assert-level=error --stop-time=<bound>
+```
+
+`.15` must confirm exact option placement against the installed 6.0.0 build.
+Qualification records source/tool/provider/license identity, deterministic
+artifacts/maps, ordered analysis, elaboration, bounded run, trace closure,
+normalized result/schema/outcomes, deterministic rerun, applicable parity,
+and exact repository-local cleanup as independent gates. Analyze is not
+elaboration; elaboration is not runtime; a zero exit without the closed
+trace/result is not semantic success.
+
+The portable libraries are exactly `ieee.std_logic_1164`,
+`ieee.numeric_std`, and `std.textio` plus generated FSMGen libraries.
+Non-standard `std_logic_arith`/`std_logic_unsigned` and VHDL-2019 are excluded.
+Project-owned work libraries, provider sources, caches, logs, and staging stay
+under repository-derived roots. A required operating-system tool installation
+may remain an explicit read-only dependency, but persisted absolute host paths
+are forbidden.
+
+The new backend manifest records legacy migration as
+`legacy_surface=vhdl_observation_package_skeleton`,
+`legacy_state=unchanged_not_consumed`,
+`successor_profile=vhdl_portable_ghdl`, and
+`migration_kind=parallel_versioned_surface`. Any future conversion,
+deprecation, or retirement requires another explicit compatibility owner.
+
+This selection claims no generated backend, local GHDL/OSVVM installation,
+analysis, elaboration, runtime, result, parity, complete IEEE 1076-2008, PSL,
+formal, mixed-language, VHDL-2019, UVVM, provider-component breadth, or legacy
+package analyzer support. Proposed `.15` may decompose deterministic
+emission/gallery/static review from unavailable GHDL and OSVVM qualification,
+so tool absence does not block reviewable generation.
 
 ### Primary evidence
 
@@ -1345,6 +1479,15 @@ active selection work.
   `https://github.com/accellera-official/uvm-core`
 - Verilator-targeted UVM fork and its explicit development-status boundary:
   `https://github.com/chipsalliance/uvm-verilator`
+- GHDL VHDL/PSL implementation boundary and exact 6.0.0 release:
+  `https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html` and
+  `https://github.com/ghdl/ghdl/releases/tag/v6.0.0`
+- OSVVM selected provider repository/release and utility mapping:
+  `https://github.com/OSVVM/OsvvmLibraries`,
+  `https://github.com/OSVVM/OsvvmLibraries/releases/tag/2026.05`, and
+  `https://osvvm.github.io/Overview/Osvvm5UtilityLibrary.html`
+- UVVM audited comparison release:
+  `https://github.com/UVVM/UVVM/releases/tag/2026.03.20`
 - PGEN and NEXSIM provider roles/status: director clarification recorded in
   decision `0050`; exact external versions and handoff remain unselected
 - local legacy references:

@@ -28,10 +28,12 @@ runs; the generated fixture remains tool-limited before runtime. This is
 explicitly experimental evidence, not a supported native-UVM execution
 profile.
 
-Active slice `.14` now owns selection of the VHDL-2008 verification contract.
-Activation chooses no methodology provider, tool, version, package migration,
-backend artifact, or capability; those decisions require the next documented
-selection before implementation or qualification can begin.
+Completed slice `.14` now selects the VHDL-2008 verification contract. The
+portable core is provider-free, OSVVM 2026.05 is the exact advanced-methodology
+provider, and GHDL 6.0.0 is the first exact qualification tool. UVVM was
+audited but is not selected. GHDL and OSVVM are absent locally, so this is an
+architecture contract—not an analysis, elaboration, simulation, result, or
+support claim.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -895,8 +897,9 @@ mechanisms.
 | `sv_uvm_emit.accellera_2020_3_1` | deterministic native UVM packages, interfaces, selected topology/lifecycle/notification structures, and source maps | exact Accellera source identity and artifact/static-structure gates; compile/elaborate/run/result explicitly not run |
 | `sv_uvm_experimental.<tool-and-version>` | optional open-source feasibility probe | exact tool/version and measured deviations; never product runtime support |
 | `sv_uvm_qualified` | executable native UVM components, sequences, monitors, scoreboards, coverage | future exact PGEN parser + NEXSIM simulator tuple; parse/compile/elaborate/run/result gates |
-| `vhdl_portable_ghdl` | VHDL-2008 packages, processes, and testbench | installed GHDL/version with `--std=08`; explicit language/PSL limits |
-| `vhdl_methodology_qualified` | VHDL plus a selected methodology provider | exact provider/revision and compatible simulator; OSVVM/UVVM mapping selected later |
+| `vhdl_portable_ghdl` | provider-free VHDL-2008 packages, scheduler, adapters, testbench, trace/result | exact GHDL 6.0.0 with `--std=08`; analyze/elaborate/run/result/parity and explicit language/PSL limits |
+| `vhdl_osvvm_qualified` | same VIAL semantics plus negotiated advanced OSVVM services | exact OSVVM 2026.05 recursive identity plus GHDL 6.0.0 provider/tool gates |
+| `vhdl_*_qualified.<tool-id>` | portable or OSVVM graph under another VHDL simulator | exact tool/version/build, standard/options, provider where applicable, result/parity gates |
 | `mixed_language_qualified` | HIAL and VIAL in different HDLs | named mixed-language tool/version and binding adapter; never inferred from single-language success |
 
 Plain SystemVerilog/Verilator is first because the existing AHB fixture proves
@@ -904,6 +907,148 @@ the relevant timed behavioral substrate locally without requiring UVM.
 Verilator with `--timing` is an event-capable compiled simulator for the
 features it supports; it is not evidence of complete SystemVerilog or UVM
 support.
+
+## Selected VHDL-2008 architecture
+
+The VHDL backend has two tiers because portability and methodology breadth are
+different claims.
+
+`vhdl_portable_ghdl` is ordinary IEEE VHDL-2008. It uses
+`std_logic_1164`, `numeric_std`, and `textio`, plus FSMGen-generated packages,
+adapters, and a testbench. It does not require OSVVM or UVVM. This small core
+owns the portable drivers, samplers, deterministic scenario scheduler, models,
+bounded scoreboards, coverage counters, faults, procedural checks, trace, and
+normalized result.
+
+`vhdl_osvvm_qualified` adds OSVVM only for negotiated advanced needs such as
+provider-native randomization, coverage, scoreboards, reporting,
+synchronization, data structures, and verification components. OSVVM cannot
+rerandomize the portable plan's pre-resolved decisions, move a logical phase
+barrier, change comparison or coverage meaning, or replace the normalized
+FSMGen result.
+
+The exact selected identities are:
+
+```text
+GHDL 6.0.0
+  tag: v6.0.0
+  commit: e589c698c351369ac5bcfe7abe1f1152ac5d4727
+
+OSVVM 2026.05
+  commit: 2f7c391051dfb11890fa4bdbda9918d1db492250
+
+UVVM 2026.03.20 (audited, not selected)
+  commit: 4f1e13bf96dca5571597ca7416b9340e9de94efd
+```
+
+Selecting one provider avoids two overlapping generated adapter systems and
+two qualification matrices. It does not declare UVVM inferior or permanently
+unsupported; a future UVVM profile needs its own explicit identity and
+evidence.
+
+### Logical time without delta-cycle folklore
+
+For the first rising-edge profile, one generated scheduler uses the falling
+edge as the stable barrier:
+
+```text
+falling edge N:
+  sample the state produced by rising edge N
+  react and check in exact plan-rank order
+  prepare drives for rising edge N+1
+
+rising edge N+1:
+  the DUT consumes the prepared drives
+```
+
+VHDL process wake-up order, delta order, protected-type arbitration, and
+OSVVM component scheduling are implementation details. They do not decide
+which fiber wins, when a timeout occurs, or which value a scoreboard sees.
+Multi-clock and asynchronous profiles require later exact contracts.
+
+### Four-state values over `std_logic`
+
+VIAL drives strong `0`, `1`, `X`, and `Z` values. Sampling normalizes the nine
+`std_logic` symbols explicitly:
+
+| `std_logic` sample | VIAL value | Additional evidence |
+| --- | --- | --- |
+| `0`, `1`, `Z` | same value | strong value |
+| `L`, `H` | `0`, `1` | original weak symbol retained |
+| `U`, `X`, `W`, `-` | `X` | original symbol retained |
+
+This preserves the VIAL four-state oracle without pretending that version 1
+has nine distinct authored values. A fixture that must distinguish all nine
+symbols fails capability negotiation.
+
+### Drivers, checking, coverage, and results
+
+A VIAL author still writes verification intent, not VHDL. FSMGen statically
+partially evaluates that intent into readable named procedures, records,
+state tables, and one scheduler. Public DUT ports bind directly. A declared
+internal probe requires an explicit generated and source-mapped adapter or a
+verification-only instrumented HIAL variant; authored external names and raw
+hierarchy are not the portable mechanism.
+
+The provider-free tier implements bounded queues and comparisons for portable
+scoreboards and explicit counters for portable coverage. The OSVVM tier may
+map an exact advanced scoreboard to `ScoreboardGenericPkg`, coverage to
+`CoveragePkg`, and a native random requirement to `RandomPkg`. Provider HTML,
+JUnit, or transcript reports are useful supplementary evidence. Parity still
+uses `fsmgen.verification_result_manifest.v1`.
+
+Portable VIAL properties lower to procedural checks. PSL is not required or
+emitted by version 1 because GHDL documents only a subset. A future PSL
+profile must name the exact tool, flags, directives, operators, and restrictions
+it exercised.
+
+### Artifact and migration boundary
+
+The selected portable graph is separate from synthesizable HIAL VHDL:
+
+```text
+backends/vhdl_portable_ghdl/
+  backend-manifest.json
+  backend-source-map.json
+  commands/{analyze,elaborate,run}-command.json
+  evidence/{tool-profile,transcripts,runtime-trace}
+  src/dut/<unit>.vhd
+  src/fsmgen_vial_{types,runtime}_pkg.vhd
+  src/<fixture>_metadata_pkg.vhd
+  src/<fixture>_probe_adapter.vhd        # only when required
+  src/<fixture>_tb.vhd
+results/<result-id>/verification-result-manifest.json
+```
+
+Every non-boilerplate generated region maps back to VIAL source, semantic
+identity, execution operation/rank, and bridge binding where applicable.
+Repeated helpers live in shared packages; the backend does not emit one opaque
+interpreter or duplicate a complete helper library per scenario.
+
+The old `vhdl-observation-package` command remains an unchanged inert
+compatibility surface. Its package still has no entity, process, assertion,
+PSL, analyzer, simulator, scoreboard, or coverage claim. Native VIAL emits a
+different metadata package under a different profile and manifest; the old
+package is neither rewritten nor consumed.
+
+### Exact qualification boundary
+
+The selected command shape uses GHDL `-a`, `-e`, and `-r` with `--std=08`, an
+explicit work library, and a repository-local work directory. The installed
+tool must report exactly version 6.0.0; its build backend and complete version
+output become evidence. Analyze, elaborate, bounded run, closed trace,
+normalized result, semantic outcomes, rerun, parity, and cleanup are separate
+gates.
+
+GHDL is not installed in the current workspace. OSVVM is not materialized
+either. Proposed `.15` can therefore implement deterministic source, source
+maps, structural checks, and a review gallery before tool availability, but it
+cannot advertise VHDL analysis or runtime support. OSVVM-dependent work must
+later verify the recursive release, every submodule identity, licenses, and
+notices under a repository-derived dependency root.
+
+The complete contract is in the selected VHDL section of the
+[HIAL/VIAL architecture audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md#completed-vhdl-contract-selection).
 
 Decision `0043` selects the exact version-1 profile. The compiler partially
 evaluates the bound plan into a small runtime package plus one fixture module;
