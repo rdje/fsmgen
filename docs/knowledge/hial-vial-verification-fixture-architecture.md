@@ -271,8 +271,10 @@ is pending, and preprocessing, parse, UVM-library compile,
 fixture compile, elaboration, runtime, result, and parity remain not run or not
 produced. Ordinary emission fetches or inspects no UVM library bytes. Completed
 `.13.1` owns the full selected simulator-neutral emission scope; it does not
-claim complete UVM breadth. `.13.2` is next and separately dependency-ready for experimental open-tool
-probes; `.13.3` alone retains the future PGEN+NEXSIM runtime blocker.
+claim complete UVM breadth. Clean completed-emission predecessor `7725789a4`
+activates `.13.2` alone for exact open-source tool/UVM-source inspection and
+reusable experimental probes; activation selects and runs nothing. `.13.3`
+alone retains the future PGEN+NEXSIM runtime blocker.
 
 `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` now preserves a separate proposed
 architecture for an Intent Abstraction Simulator. IASIM is a first-class,

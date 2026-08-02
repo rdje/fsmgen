@@ -1305,9 +1305,10 @@ Preprocessing, parse, UVM-library compile, fixture compile, elaboration,
 runtime, result, parity, visual-review completion, public interceptor, RAL, or
 factory-override authoring, produced results, and full native UVM breadth
 remain explicitly unclaimed. Selected mapping-matrix and deterministic review-
-workflow closure now ship; visual judgment does not. Experimental `.13.2` remains separately
-dependency-ready because the first gallery exists, so open-tool evidence
-cannot blur the active emission sequence.
+workflow closure now ship; visual judgment does not. Clean completed-emission
+predecessor `7725789a4` activates experimental `.13.2` alone because the first
+gallery exists. Tool/library inspection and probe implementation remain
+unperformed in activation, so open-tool evidence cannot blur emission truth.
 
 Verilator and other available tools can catch whatever they support early.
 `.13.3` alone is blocked until PGEN and NEXSIM expose the required exact

@@ -5,9 +5,9 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1.5`: close native UVM matrix and review workflow).
-- active_work_unit: `.13.1` and all five emission children are complete;
-  proposed `.13.2` is the next clean activation frontier.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2`: activate experimental UVM probe).
+- active_work_unit: `.13.2` alone is active after clean completed-emission
+  predecessor `7725789a4`; `.13.1` and all five children are complete.
 - current_state: private profile `sv_uvm_emit.accellera_2020_3_1` emits an
   exact sixteen-artifact/ten-SystemVerilog-source graph with selected active
   topology, lifecycle, ordered typed notification/interception, stimulus,
@@ -17,10 +17,10 @@ history; this file carries only the current bounded resume state.
   structural checks, a 25-row selected mapping matrix, and a deterministic
   gallery workflow over nine sources plus two JSON evidence files. Manual
   review and parse through runtime/results/parity remain unclaimed;
-  `.13.2` is dependency-ready, while `.13.3` requires NEXSIM's versioned API/MCP semantic checkpoint plane and exact PGEN+NEXSIM releases.
-- next_action: activate only `.13.2` for the exact reusable open-source
-  UVM compile/elaboration feasibility probe; do not run or implement it before
-  the clean activation commit.
+  `.13.2` is active; `.13.3` awaits NEXSIM's API/MCP checkpoint plane and exact PGEN+NEXSIM releases.
+- next_action: implement only `.13.2`: inspect and freeze exact available open-
+  source tool/UVM-source identities, then run and record each supported or
+  unsupported experimental feasibility stage without advertising support.
 - in_flight_uncommitted: none after this commit; no background job remains and
   all repository-local verification output is removed.
 - blockers: `.13.3` still waits on exact capability-ready PGEN/NEXSIM handoff/
